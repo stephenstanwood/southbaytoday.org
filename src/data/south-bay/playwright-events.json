@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-10T02:17:36.976Z",
+    "generatedAt": "2026-09-10T15:08:31.162Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 596,
+    "eventCount": 602,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (130)",
-      "Los Gatos Library (147)",
+      "Mountain View Public Library (134)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (18)",
       "Linden Tree Books (13)",
       "History San Jose (9)",
@@ -19,14 +19,14 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (5)",
       "Santana Row (7)",
-      "City of Cupertino (72)",
-      "Opera San José (5)",
+      "City of Cupertino (71)",
       "TheatreWorks Silicon Valley (90)",
       "Levi's Stadium (10)",
       "SAP Center (12)",
-      "The Tech Interactive (7)",
+      "The Tech Interactive (6)",
       "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (9)"
+      "San Jose Museum of Art (9)",
+      "Opera San José (5)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 133,
+        "count": 137,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 147,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -210,9 +210,9 @@
       {
         "id": "palo-alto-art-center",
         "label": "Palo Alto Art Center",
-        "status": "error",
+        "status": "empty",
         "count": 0,
-        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.cityofpaloalto.org/Departments/Community-Services/Arts-Sciences/Palo-Alto-Art-Center/Events\", waiting until \"domcontentloaded\"\n",
+        "error": null,
         "sources": []
       },
       {
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 72,
+        "count": 71,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -256,12 +256,14 @@
       {
         "id": "opera-san-jos",
         "label": "Opera San José",
-        "status": "ok",
+        "status": "error",
         "count": 5,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 5 future event(s) from Opera San José",
         "sources": [
           "Opera San José"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       },
       {
         "id": "theatreworks-silicon-valley",
@@ -305,7 +307,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -348,29 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "6214ceafd452",
-      "title": "Ukulele Jam Sing and Play Along",
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
-      "time": "6:30 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Would you like to learn some fun songs on the ukulele? Beginners and ukulele enthusiasts are welcome to join us to sing and play together. Ukulele instructor Chuck Monahan will teach participants how to play basic chords on the ukulele and lead the group in an informal performance of popular songs from the last 50 years. Bring your own uke, or use one of ours. Ages 12 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Teens",
-        "Seniors",
-        "Tweens"
-      ],
-      "url": "https://mountainview.libcal.com/event/17028027",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "dc58489cb538",
       "title": "Magical Bridge Storytime",
@@ -2280,6 +2259,26 @@
       "kidFriendly": false
     },
     {
+      "id": "b519f5837027",
+      "title": "Afghan Cassette Archive: Stories, Sounds, and Music from Afghanistan",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "1:00 PM",
+      "endTime": "2:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "music",
+      "cost": "free",
+      "description": "Registration is recommended. Walk-ins are also welcome. Join Omid Jahan, founder of the Afghan Cassette Archive (@afghancassettearchive), for a multimedia listening session exploring Afghanistans rich musical history through rare cassette recordings, archival materials, and personal stories. The program will highlight Afghan music from different eras and communities, including recordings preserved from Afghanistan and the Afghan diaspora. Attendees will have the opportunity to hear selections from the archive, learn about the stories behind the music and artists, and view original cassette tapes and other archival materials. The session offers a unique look at Afghan history, culture, migration, and memory through the music that has traveled across generations. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/17300298",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "a892789fa455",
       "title": "Choose Your Own Adventure Book Club",
       "date": "2026-10-26",
@@ -3136,6 +3135,93 @@
         "Families"
       ],
       "url": "https://mountainview.libcal.com/event/17142495",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "7e9f407e141a",
+      "title": "ESL Conversation Club - IN PERSON",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/15895400",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "93ca9eb1de54",
+      "title": "ESL Conversation Club - ONLINE",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "mountain-view",
+      "virtual": true,
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/17249789",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "138987a39b95",
+      "title": "Bilingual Storytime: Mandarin/English",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "6:30 PM",
+      "endTime": "7:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Stories, rhymes and songs in Mandarin and English with Miss Renee in the Children's Room Octagon. For ages 2-5, no registration required.",
+      "sourceAudiences": [
+        "Preschoolers",
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17329174",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "3c8cb7dc4db1",
+      "title": "Ukulele Jam Sing and Play Along",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "6:30 PM",
+      "endTime": "8:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Would you like to learn some fun songs on the ukulele? Beginners and ukulele enthusiasts are welcome to join us to sing and play together. Ukulele instructor Chuck Monahan will teach participants how to play basic chords on the ukulele and lead the group in an informal performance of popular songs from the last 50 years. Bring your own uke, or use one of ours. Ages 12 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Teens",
+        "Seniors",
+        "Tweens"
+      ],
+      "url": "https://mountainview.libcal.com/event/17028030",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -6146,6 +6232,88 @@
       "kidFriendly": true
     },
     {
+      "id": "975782bb8cec",
+      "title": "Storytime (Ages 0-5)",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "11:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17341970",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "7703fa29010e",
+      "title": "Kids Knitting (Ages 7+)",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16887032",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "6925a257f79e",
+      "title": "STEAM Wednesdays in the Teen Room",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
+      "sourceAudiences": [
+        "Teens"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17261944",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "168b5a060d78",
+      "title": "Cookbook Swap",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Do you have cookbooks that you never use sitting around? Or are you looking to add some new books to your collection? Come to our cookbook swap and meet some fellow cookbook enthusiasts, learn about our Cookbook Club, and maybe get a new book or two while finding a new home for ones you don't use anymore. This will be our very first Cookbook Swap, and if everyone has a good time, we can look into making it a regular event. For now, we will only limit the number of books you can bring to what you can carry yourself and we ask that the books you bring are reasonably clean and in good condition. If you'd like, we'll have note cards for you to mark your favorite recipes in the books so their new owners will have a fun place to start.",
+      "sourceAudiences": [
+        "Teens",
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17377130",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7860,10 +8028,10 @@
       "kidFriendly": false
     },
     {
-      "id": "d30c78a7aa48",
+      "id": "20d00b99e885",
       "title": "Toddler Storytime",
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
+      "date": "2026-09-10",
+      "displayDate": "Thu, Sep 10",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7877,10 +8045,10 @@
       "kidFriendly": true
     },
     {
-      "id": "e61d79c040e7",
+      "id": "560fd69a53f3",
       "title": "All Ages Storytime",
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
+      "date": "2026-09-10",
+      "displayDate": "Thu, Sep 10",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -8752,23 +8920,6 @@
       "kidFriendly": false
     },
     {
-      "id": "ace57465d748",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
       "id": "d154959154a1",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-10-14",
@@ -9345,91 +9496,6 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
       "source": "City of Cupertino",
       "kidFriendly": true
-    },
-    {
-      "id": "baae1e496d31",
-      "title": "Don Giovanni",
-      "date": "2026-09-13",
-      "displayDate": "Sun, Sep 13",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni",
-      "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "9b9493684658",
-      "title": "Don Giovanni",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
-      "time": "7:30 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-2",
-      "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "931076cc71fb",
-      "title": "Don Giovanni",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-3",
-      "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "64fc4df69c15",
-      "title": "Don Giovanni",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
-      "time": "7:30 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-4",
-      "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "a7a780159312",
-      "title": "Don Giovanni",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-5",
-      "source": "Opera San José",
-      "kidFriendly": false
     },
     {
       "id": "d20077df8292",
@@ -11336,23 +11402,6 @@
       "kidFriendly": true
     },
     {
-      "id": "3b4659487b29",
-      "title": "Homeschool Days at The Tech Interactive",
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
-      "time": "10:00AM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "education",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
-    },
-    {
       "id": "ae6e434de9d4",
       "title": "Girl Scout Program: Home Scientist (Brownies)",
       "date": "2026-11-01",
@@ -11656,6 +11705,91 @@
       "description": "",
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
+      "kidFriendly": false
+    },
+    {
+      "id": "baae1e496d31",
+      "title": "Don Giovanni",
+      "date": "2026-09-13",
+      "displayDate": "Sun, Sep 13",
+      "time": "2:00 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "url": "https://www.operasj.org/event/don-giovanni",
+      "source": "Opera San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "9b9493684658",
+      "title": "Don Giovanni",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
+      "time": "7:30 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-2",
+      "source": "Opera San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "931076cc71fb",
+      "title": "Don Giovanni",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
+      "time": "2:00 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-3",
+      "source": "Opera San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "64fc4df69c15",
+      "title": "Don Giovanni",
+      "date": "2026-09-25",
+      "displayDate": "Fri, Sep 25",
+      "time": "7:30 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-4",
+      "source": "Opera San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "a7a780159312",
+      "title": "Don Giovanni",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
+      "time": "2:00 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-5",
+      "source": "Opera San José",
       "kidFriendly": false
     }
   ]
