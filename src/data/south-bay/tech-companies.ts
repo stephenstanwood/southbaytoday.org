@@ -1264,6 +1264,42 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // VideoGen are San Francisco; Algomatic Dynamics, QNu Labs, CloudNC, Limetax,
   // Carrum Mobility, ZeroRisk, Tanda, and Allogenetics are all international).
   // Nothing new against the Clipto near-miss recorded just above either.
+  // Note on the Sep 9-10 2026 sweep: Cylake's $245M convertible note is the one
+  // in-coverage round, and it is a late catch rather than a new day's news. The
+  // company's own GlobeNewswire release datelines "SUNNYVALE, Calif., Sept. 08,
+  // 2026" — inside the Sep 7-8 window swept above — but it did not reach the
+  // daily roundups until Sep 9, which is why the earlier pass recorded that
+  // window as empty. Sweeping a date range by announcement date alone misses
+  // releases that surface a day late; check the following day's roundup against
+  // the prior window before calling it closed. Near-misses recorded so the next
+  // cycle doesn't re-verify them:
+  //   * Lightfield ($47M Series A led by a16z, Sep 9 2026; AI-native CRM) is San
+  //     Francisco — its own PR Newswire release, SiliconANGLE, and Unite.AI all
+  //     agree. The techstartups roundup lists no city at all for it.
+  //   * The rest of the Sep 9 roundup is out of coverage: Harvey and Euno are
+  //     San Francisco, Solstice Oncology is Boston, Clay/Savvy Wealth/WINT are
+  //     New York, Perry Weather is Dallas, CloudNC is London.
+  //   * The Sep 10 roundup carried no US Bay Area rounds at all (Metacognition
+  //     AI is Adelaide, DYU and SinapisAI and Huani and ELEHEAR are China,
+  //     HeyDiga is Madrid, KVector is Birmingham, Bynario is Milan, Medteria is
+  //     Fukuoka, and Wyre AI is the Washington DC area).
+  {
+    id: "cylake-sep-2026",
+    name: "Cylake",
+    city: "Sunnyvale",
+    category: "security",
+    round: "Convertible",
+    amount: "$245M",
+    date: "2026-09-08",
+    tagline:
+      "Six months after leaving stealth with a $45M seed, the Sunnyvale security startup founded by Palo Alto Networks founder Nir Zuk, Wilson Xu, and SentinelOne's Ehud \"Udi\" Shamir has raised $245M more on a convertible note, taking its total to $290M before it has shipped a product. Lightspeed Venture Partners, Picture Capital, and Redpoint Ventures put in the money. The pitch is a bet against the direction the rest of the industry has taken: instead of routing a bank's or a hospital system's telemetry through a vendor's cloud, Cylake is building a complete, AI-native platform meant to run on-premises and in private environments, so institutions under strict data-sovereignty rules keep control of both the data and the infrastructure it moves through. Lightspeed's Ravi Mhatre frames it as a gap existing tools were never designed to close. A beta is due by the end of 2026, with general availability in 2027 — and the round is explicitly to fund product work and hiring until then.",
+    color: "#282F4D",
+    url: "https://cylake.com/resources/cylake-closes-245-million-funding-round/",
+  },
+  // Cylake's March seed stays as its own entry below: the $245M is new money on
+  // top of it, not a restatement — the company's own release says the two
+  // together are the $290M total. Same call as the ChipAgents A1/A2 and Etched
+  // pairs above, not the Upscale AI case.
   {
     id: "tabapay",
     name: "TabaPay",
@@ -1283,7 +1319,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // match the company's stated $272M total raised since 2021.
   // Source: https://lyte.ai/news/series-c
   {
-    id: "lyte",
+    // Suffixed id: the January seed below already holds the bare "lyte", and two
+    // entries sharing one id is the collision the etched / etched-aug-2026 and
+    // chipagents / chipagents-series-a2 pairs exist to avoid.
+    id: "lyte-series-c",
     name: "Lyte",
     city: "Sunnyvale",
     category: "hardware",
@@ -2139,8 +2178,8 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Seed",
     amount: "$45M",
     date: "2026-03-05",
-    tagline: "On-premises AI-native cybersecurity for regulated industries — no public cloud required. Founded by Nir Zuk (Palo Alto Networks) and Udi Shamir (SentinelOne).",
-    color: "#dc2626",
+    tagline: "On-premises AI-native cybersecurity for regulated industries — no public cloud required. Founded by Nir Zuk (Palo Alto Networks), Wilson Xu, and Udi Shamir (SentinelOne).",
+    color: "#282F4D",
     url: "https://cylake.com",
   },
   {
