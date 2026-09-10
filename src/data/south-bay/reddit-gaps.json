@@ -1,103 +1,99 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-09T03:17:00.337Z",
+    "generatedAt": "2026-09-10T03:16:53.682Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 12
   },
   "summary": {
-    "threadsMined": 10,
-    "placesExtracted": 3,
-    "placesMatched": 2,
-    "placeGaps": 1,
-    "eventsExtracted": 3,
+    "threadsMined": 12,
+    "placesExtracted": 4,
+    "placesMatched": 1,
+    "placeGaps": 3,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Orchard Supply Hardware",
+      "name": "Goku",
       "city": "San Jose",
-      "kind": "retail",
-      "context": "closed store site being redeveloped into Sprouts",
+      "kind": "restaurant",
+      "context": "Korean BBQ option, portions considered small",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wb45uz/chile_mole_pozole_fest_on_saturday_912/",
-        "https://www.reddit.com/r/SanJose/comments/1wb2hdi/a_new_san_josé_popup_makes_the_most_unique_bagels/",
-        "https://www.reddit.com/r/Cupertino/comments/1wavv14/sat_912_10am_silicon_valley_fall_fest_svff2026_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wawv0a/sprouts_farmers_market_proposed_for_shuttered_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wavfod/vegan_restaurant_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
+        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
+        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
+        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
+      ]
+    },
+    {
+      "name": "The Preserve",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "baby shower venue that recently closed",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wbw8om/new_insurance_delta_dental_looking_for_a_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wbv4y8/para_siempre_fest_tickets/",
+        "https://www.reddit.com/r/SanJose/comments/1wc2cv2/vet_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wbwvko/indoor_baby_shower_recs_december/",
+        "https://www.reddit.com/r/SanJose/comments/1wbetph/what_are_the_best_solar_companies_in_california/"
+      ]
+    },
+    {
+      "name": "The Ritz",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "trying to contact box office for tickets",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wbcrmc/i_am_looking_for_public_speaking_debate_academy/",
+        "https://www.reddit.com/r/SanJose/comments/1wbccfh/the_ritz/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Chile, Mole, Pozole Fest",
-      "when": "Saturday September 12",
+      "name": "Halloween Upcycle Woodworking Program",
+      "when": "Saturday, 10/10/2026, 12:30-2:30",
       "city": "San Jose",
-      "context": "Mexican Independence Day celebration at La Plaza",
+      "context": "teen program at library needing adult volunteers",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wb45uz/chile_mole_pozole_fest_on_saturday_912/",
-        "https://www.reddit.com/r/SanJose/comments/1wb2hdi/a_new_san_josé_popup_makes_the_most_unique_bagels/",
-        "https://www.reddit.com/r/Cupertino/comments/1wavv14/sat_912_10am_silicon_valley_fall_fest_svff2026_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wawv0a/sprouts_farmers_market_proposed_for_shuttered_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wavfod/vegan_restaurant_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
+        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
+        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
+        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
       ]
     },
     {
-      "name": "Silicon Valley Fall Fest (SVFF2026)",
-      "when": "Saturday 9/12, 10am",
-      "city": "Cupertino",
-      "context": "community festival at Cupertino Memorial Park",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wb45uz/chile_mole_pozole_fest_on_saturday_912/",
-        "https://www.reddit.com/r/SanJose/comments/1wb2hdi/a_new_san_josé_popup_makes_the_most_unique_bagels/",
-        "https://www.reddit.com/r/Cupertino/comments/1wavv14/sat_912_10am_silicon_valley_fall_fest_svff2026_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wawv0a/sprouts_farmers_market_proposed_for_shuttered_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wavfod/vegan_restaurant_recommendations/"
-      ]
-    },
-    {
-      "name": "2026 Peninsula and South Bay Green@Home Tours",
-      "when": "Saturday October 10th, 11 AM – 3 PM",
+      "name": "Para Siempre fest",
+      "when": "",
       "city": "San Jose",
-      "context": "free self-guided tour of electrified homes",
+      "context": "tickets being discussed",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wav7b1/best_mexican_restaurant_that_is_open_right_now/",
-        "https://www.reddit.com/r/SanJose/comments/1wat8un/best_indoor_toddler_play_areas_in_west_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1waxe90/free_event_tour_real_electrified_homes_across_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wauybg/hummus/",
-        "https://www.reddit.com/r/SanJose/comments/1waseur/downtown_peaking_over_the_trees/"
+        "https://www.reddit.com/r/SanJose/comments/1wbw8om/new_insurance_delta_dental_looking_for_a_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wbv4y8/para_siempre_fest_tickets/",
+        "https://www.reddit.com/r/SanJose/comments/1wc2cv2/vet_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wbwvko/indoor_baby_shower_recs_december/",
+        "https://www.reddit.com/r/SanJose/comments/1wbetph/what_are_the_best_solar_companies_in_california/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Mexican Heritage Plaza (La Plaza)",
+      "name": "Educational Park Branch Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Chile, Mole, Pozole Fest",
+      "context": "hosting Halloween upcycle woodworking program",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wb45uz/chile_mole_pozole_fest_on_saturday_912/",
-        "https://www.reddit.com/r/SanJose/comments/1wb2hdi/a_new_san_josé_popup_makes_the_most_unique_bagels/",
-        "https://www.reddit.com/r/Cupertino/comments/1wavv14/sat_912_10am_silicon_valley_fall_fest_svff2026_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wawv0a/sprouts_farmers_market_proposed_for_shuttered_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wavfod/vegan_restaurant_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
+        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
+        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
+        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
       ],
-      "matchedName": "Mexican Heritage Plaza"
-    },
-    {
-      "name": "Sprouts Farmers Market",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "proposed for shuttered Orchard Supply Hardware site",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wb45uz/chile_mole_pozole_fest_on_saturday_912/",
-        "https://www.reddit.com/r/SanJose/comments/1wb2hdi/a_new_san_josé_popup_makes_the_most_unique_bagels/",
-        "https://www.reddit.com/r/Cupertino/comments/1wavv14/sat_912_10am_silicon_valley_fall_fest_svff2026_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wawv0a/sprouts_farmers_market_proposed_for_shuttered_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wavfod/vegan_restaurant_recommendations/"
-      ],
-      "matchedName": "Sprouts Farmers Market"
+      "matchedName": "Educational Park Branch Library"
     }
   ],
   "eventMatches": []

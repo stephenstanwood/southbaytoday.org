@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-09T03:09:02.662Z",
+      "generatedAt": "2026-09-10T03:09:07.153Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 1 – Sep 8",
+      "dateRange": "Sep 2 – Sep 9",
       "stats": {
-        "total": 348,
-        "notable": 40,
-        "newUnits": 289,
-        "totalValuation": 129116926
+        "total": 250,
+        "notable": 32,
+        "newUnits": 286,
+        "totalValuation": 112378967
       },
       "permits": [
         {
@@ -137,42 +137,30 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-09T03:09:04.963Z",
+      "generatedAt": "2026-09-10T03:09:09.391Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 1 – Sep 8",
+      "dateRange": "Sep 2 – Sep 9",
       "stats": {
-        "total": 76,
-        "notable": 2,
+        "total": 79,
+        "notable": 1,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02486",
-          "address": "1585 Edgewood Dr",
+          "id": "26BLD-02540",
+          "address": "939 Paradise Wy",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-02",
+          "issueDate": "2026-09-08",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00248",
-          "address": "3000 Hanover St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "New exterior security bollards",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-02",
-          "subtype": "Over the Counter Approved"
         }
       ]
     }
