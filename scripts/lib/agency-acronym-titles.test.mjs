@@ -108,3 +108,25 @@ test("cleanTitle is idempotent, so a second pass is safe and strips exposed mark
     assert.equal(cleanTitle(cleanTitle(title)), cleanTitle(title), title);
   }
 });
+
+// ---------------------------------------------------------------------------
+// College-program abbreviations in schedule listings (added 2026-09-09)
+// ---------------------------------------------------------------------------
+// The City Newsletter ships Stanford's football slate as mostly-lowercase
+// titles ("Stanford football vs. NC State"), which puts cleanTitle on its 2+
+// branch and downcased the opponent to "Nc State" — a misspelled school name
+// on a live card. SMU/TCU/BYU/LSU/UNC/UCF/VCU arrive through the same feeds
+// with the same shape.
+// ---------------------------------------------------------------------------
+
+test("keeps college-program abbreviations uppercase in schedule titles", () => {
+  assert.equal(
+    cleanTitle("Stanford football vs. NC State"),
+    "Stanford football vs. NC State",
+  );
+  assert.equal(cleanTitle("Stanford football vs. SMU"), "Stanford football vs. SMU");
+  assert.equal(cleanTitle("Santa Clara men's soccer vs. BYU"), "Santa Clara men's soccer vs. BYU");
+  assert.equal(cleanTitle("Stanford women's volleyball vs. UNC"), "Stanford women's volleyball vs. UNC");
+  // The guard: adding these must not keep every two-letter shouted run.
+  assert.equal(cleanTitle("Stanford football vs. OH State"), "Stanford football vs. Oh State");
+});

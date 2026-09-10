@@ -298,6 +298,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Federal Realty Investment Trust",
     timeline: "Ongoing phases",
     featured: false,
+    sourceNote: "Rollup of Federal Realty's ongoing Santana Row residential phases, not one tracked entitlement — tower counts and phase dates are approximate. Verify at sanjoseca.gov planning records or federalrealty.com property pages.",
   },
 
   // ── PROPOSED ────────────────────────────────────────────────────────────
@@ -332,6 +333,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "City of Sunnyvale + private developers",
     timeline: "In planning",
     featured: false,
+    sourceNote: "Rollup of the Downtown Specific Plan area's separate Murphy Ave / Mathilda proposals, not one tracked development — individual blocks are at different stages and some have already delivered, so the single \"proposed\" status is a summary. Verify parcel-level status at sunnyvale.ca.gov downtown planning records.",
   },
 
   // ── COMPLETED ───────────────────────────────────────────────────────────

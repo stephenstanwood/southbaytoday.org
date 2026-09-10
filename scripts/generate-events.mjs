@@ -1072,6 +1072,12 @@ function cleanTitle(title) {
     // family of bug (Bay FC CSU Night vs. an alumni mailer with more body copy)
     // can flip it.
     "LAFC", "NWSL", "WNBA", "PGA", "LPGA", "CSU",
+    // College-program abbreviations that appear as opponents in Stanford / SCU
+    // schedule listings. The mostly-lowercase City Newsletter titles ("Stanford
+    // football vs. NC State") trip the 2+ rule, and a downcased "Nc State"
+    // reads as a misspelling of the school. SMU/TCU/BYU/LSU/UNC/UCF/VCU are the
+    // same shape and travel with the same feeds.
+    "NC", "UNC", "SMU", "TCU", "BYU", "LSU", "UCF", "VCU", "USC", "UCLA",
     // Medical / academic acronyms that legitimately appear in titles. Without
     // these the 2+ rule lowercases "AIDS" → "Aids" and "MFA" → "Mfa".
     "AIDS", "HIV", "PTSD", "ADHD", "MFA", "BFA", "MBA",

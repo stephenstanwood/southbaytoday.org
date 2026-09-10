@@ -64,8 +64,11 @@ function formatAddress(raw) {
 function cleanDescription(raw, workType, subtype) {
   if (!raw) return workType ?? "";
   let s = raw.trim();
-  // Strip "(BEPM100%)", "(BEPM 80%)" etc.
-  s = s.replace(/\(BEPM\s*\d+%\)\s*/gi, "");
+  // Strip the below-market-rate flag San José appends to affordable filings.
+  // The feed spells it BEMP; the original pattern only matched a transposed
+  // "BEPM", so "Block A Family Affordable Apts (BEMP 100%)" shipped the flag
+  // through title-case as a fake proper noun ("(Bemp 100%)"). Accept both.
+  s = s.replace(/\((?:BEMP|BEPM)\s*\d+%\)\s*/gi, "");
   // Strip "(STAR)" flag
   s = s.replace(/\(STAR\)\s*/gi, "");
   // Strip "(B)" or "(E)" standalone flags
@@ -86,8 +89,18 @@ function cleanDescription(raw, workType, subtype) {
     // dwelling unit, TI = tenant improvement, SFR = single family residence,
     // ADUs as plural, PLD = Prologis project prefix common in San José
     // industrial filings).
-    .replace(/\b(Adu|Adus|Ti|Sfr|Hvac|Pld)\b/g, (m) => m.toUpperCase())
+    // SFD = single-family dwelling, MF = multi-family, DU = dwelling unit —
+    // the same shape as ADU/SFR and just as unreadable title-cased ("Mf ADU
+    // Unit 10", "Comm Hill 3.2 New Sfd").
+    .replace(/\b(Adu|Adus|Ti|Sfr|Sfd|Mf|Du|Hvac|Pld)\b/g, (m) => m.toUpperCase())
     .replace(/\bAdu's\b/g, "ADU's")
+    // Restore the single-letter block/phase/building designation the small-word
+    // rule above downcases. "Block A Family Affordable Apts" is a phase name,
+    // not an article, and "Block a Family…" reads as a verb phrase.
+    .replace(/\b(Block|Bldg|Building|Phase|Lot|Parcel|Tower|Unit|Area)\s+a\b/g, (_, w) => `${w} A`)
+    // KB Home files hundreds of San José tract permits under its own name; the
+    // generic title-case turns the brand into "Kb Home".
+    .replace(/\bKb Home\b/g, "KB Home")
     .replace(/^(\w)/, (c) => c.toUpperCase());
 }
 
