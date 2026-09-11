@@ -5124,11 +5124,13 @@ async function fetchSJGiantsSchedule() {
     const today = todayPT();
     const season = new Date().getFullYear();
     // `gameType=R` hid the postseason, which is the best baseball of the year at
-    // Excite Ballpark. In 2026 the Giants clinched the California League North
-    // first half (37–29, standings API `clinched: true`) and were awarded two
-    // home Division Series dates — Sep 10 and Sep 11 — while this source
-    // reported "empty" for the whole month, because the only regular-season
-    // games left were six road games in Fresno. F/D/L/W are the StatsAPI
+    // Excite Ballpark. Postseason uses F/D/L/W on StatsAPI; the window runs to
+    // Oct 5 so a championship round stays visible instead of falling off a Sep
+    // 30 cliff. In 2026 the league awarded Sep 10 and Sep 11 as home Division
+    // Series dates, then dropped Sep 11 once Stockton was eliminated in two —
+    // a startDate of todayPT() ages unplayed slots out automatically; skip
+    // Final/Cancelled/Postponed rows so a same-day refresh never republishes
+    // a game that already finished. F/D/L/W are the StatsAPI
     // postseason codes; the window runs to Oct 5 so a run through the
     // championship round stays visible instead of falling off a Sep 30 cliff.
     const res = await fetch(
@@ -5142,6 +5144,11 @@ async function fetchSJGiantsSchedule() {
       for (const game of dateRec.games || []) {
         const homeTeam = game.teams?.home?.team?.name || "";
         if (!homeTeam.toLowerCase().includes("san jose")) continue; // home games only
+        const abstractState = game.status?.abstractGameState || "";
+        const codedState = game.status?.codedGameState || "";
+        const detailedState = game.status?.detailedState || "";
+        if (abstractState === "Final" || codedState === "F") continue;
+        if (/\bcancel/i.test(detailedState) || /\bpostpon/i.test(detailedState)) continue;
         // Use locationName + teamName for the canonical opponent name. The
         // top-level `name` field can return Copa de la Diversión promotional
         // identities ("Ontario Tower Buzzers") for theme-night games, which
@@ -8686,6 +8693,17 @@ async function main() {
         if (event.source && !sourceNames.includes(event.source)) sourceNames.push(event.source);
       }
     }
+  }
+
+  const { dropStaleTicketmasterSJGiants } = await import("./lib/sj-giants-ticketmaster.mjs");
+  const tmGiantsCleanup = dropStaleTicketmasterSJGiants(allEvents);
+  if (tmGiantsCleanup.dropped > 0) {
+    allEvents.length = 0;
+    allEvents.push(...tmGiantsCleanup.events);
+    console.log(
+      `  🧹 Dropped ${tmGiantsCleanup.dropped} stale Ticketmaster SJ Giants listing(s) `
+        + "with no matching MiLB home date",
+    );
   }
 
   // The Town's CivicPlus feed carries generic series titles and currently

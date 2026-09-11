@@ -217,6 +217,34 @@ test("road playoff games and out-of-league promo identities still drop", async (
   assert.deepEqual(events, []);
 });
 
+test("a Final home game is not published on a same-day refresh", async () => {
+  const { events } = await runWith(
+    schedule([
+      {
+        date: "2026-09-10",
+        games: [
+          {
+            gamePk: 850956,
+            gameDate: "2026-09-11T01:30:00Z",
+            gameType: "L",
+            seriesDescription: "CAL Division Series",
+            status: {
+              abstractGameState: "Final",
+              codedGameState: "F",
+              detailedState: "Final",
+              startTimeTBD: false,
+            },
+            venue: { id: 2815, name: "Excite Ballpark" },
+            teams: { away: apiTeam(524, "Stockton Ports"), home: SJ() },
+          },
+        ],
+      },
+    ]),
+  );
+
+  assert.deepEqual(events, []);
+});
+
 test("a regular-season home game is unchanged", async () => {
   const { events } = await runWith(
     schedule([
