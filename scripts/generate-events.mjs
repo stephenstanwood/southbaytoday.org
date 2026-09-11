@@ -3984,13 +3984,126 @@ async function fetchMilpitasEvents() {
   );
 }
 
+const OPERA_SJ_SEASON_URL = "https://www.operasj.org/26-27-season";
+const OPERA_SJ_PRODUCTIONS_SITEMAP = "https://www.operasj.org/productions-sitemap.xml";
+
+/** Production pages linked from the current season lander (stable primary route). */
+function operaSanJoseSeasonProductionUrls(html) {
+  const urls = new Set();
+  for (const match of String(html || "").matchAll(
+    /href="(https:\/\/www\.operasj\.org\/productions\/[^"#?]+)"/gi,
+  )) {
+    urls.add(match[1].replace(/\/$/, ""));
+  }
+  return [...urls];
+}
+
+function parseOperaSanJoseProductionTitle(html) {
+  const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
+  if (h1) return cleanTitle(stripHtml(h1.replace(/\s+/g, " ")).trim());
+  const titleTag = html.match(/<title>([^|<]+)/i)?.[1];
+  return cleanTitle(stripHtml(titleTag || "").trim());
+}
+
+function parseOperaSanJoseClock(text) {
+  const match = String(text || "").match(/\b(\d{1,2}(?::\d{2})?\s*(?:AM|PM))\b/i);
+  return match ? match[1].replace(/\s+/g, " ").toUpperCase() : null;
+}
+
+/** Per-performance rows from a production page's performances-container. */
+function parseOperaSanJosePerformances(html) {
+  const performances = [];
+  for (const match of String(html || "").matchAll(
+    /class="performance-date">([^<]+)<\/div>\s*<div class="performance-time">([^<]+)<\/div>[\s\S]*?href="([^"]+)"/gi,
+  )) {
+    performances.push({
+      dateText: match[1].trim(),
+      timeText: match[2].trim(),
+      ticketUrl: match[3].trim(),
+    });
+  }
+  return performances;
+}
+
 async function fetchOperaSanJoseEvents() {
-  return fetchCivicPlusIcal(
-    "Opera San José",
-    "https://www.operasj.org/events/?ical=1",
-    "san-jose",
-    "paid",
-  );
+  // The CivicPlus-era iCal at /events/?ical=1 answered 404 after operasj.org
+  // moved to Divi production pages (The Events Calendar iCal/REST disabled).
+  // Each production publishes server-rendered performance rows on its own URL;
+  // the 26-27-season page lists the current slugs (dongiovanni, fiddler, …).
+  console.log("  ⏳ Opera San José...");
+  try {
+    const seasonHtml = await fetchText(OPERA_SJ_SEASON_URL, { timeout: 20_000 });
+    let productionUrls = operaSanJoseSeasonProductionUrls(seasonHtml);
+    if (!productionUrls.length) {
+      const sitemap = await fetchText(OPERA_SJ_PRODUCTIONS_SITEMAP, { timeout: 20_000 });
+      productionUrls = [...sitemap.matchAll(/<loc>(https:\/\/www\.operasj\.org\/productions\/[^<]+)<\/loc>/g)]
+        .map((m) => m[1])
+        .filter((url) => url !== "https://www.operasj.org/productions");
+    }
+    if (!productionUrls.length) throw new Error("no production pages discovered");
+
+    const today = todayPT();
+    const horizon = isoDate(new Date(Date.now() + 180 * 24 * 60 * 60 * 1000));
+    const events = [];
+    let failures = 0;
+
+    for (const url of productionUrls) {
+      let html;
+      try {
+        html = await fetchText(url, { timeout: 20_000 });
+      } catch (err) {
+        failures += 1;
+        console.log(`  ↳ Opera San José page failed (${url}): ${err.message}`);
+        continue;
+      } finally {
+        await new Promise((r) => setTimeout(r, 150));
+      }
+
+      const showTitle = parseOperaSanJoseProductionTitle(html);
+      if (!showTitle || isBlockedEvent(showTitle)) continue;
+      const performances = parseOperaSanJosePerformances(html);
+      if (!performances.length) continue;
+
+      for (const perf of performances) {
+        const start = parseDate(perf.dateText);
+        if (!start || isNaN(start.getTime())) continue;
+        const date = isoDate(start);
+        if (date < today || date > horizon) continue;
+        const time = parseOperaSanJoseClock(perf.timeText);
+        if (!time) continue;
+
+        events.push({
+          id: h("operasj", url, date, time),
+          title: showTitle,
+          date,
+          displayDate: displayDate(start),
+          time,
+          endTime: null,
+          venue: "California Theatre",
+          address: "345 S 1st St, San Jose, CA 95113",
+          city: "san-jose",
+          category: "arts",
+          cost: "paid",
+          description: "",
+          url: perf.ticketUrl || url,
+          source: "Opera San José",
+          kidFriendly: false,
+        });
+      }
+    }
+
+    if (failures > productionUrls.length / 5) {
+      throw new Error(`${failures}/${productionUrls.length} production pages failed`);
+    }
+    if (!events.length) throw new Error("no upcoming performances in season window");
+
+    console.log(`  ✅ Opera San José: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Opera San José: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
+  }
 }
 
 async function fetchLosAltosHistoryEvents() {
@@ -9367,6 +9480,9 @@ export {
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
   parseHeritageTheatreEvent,
+  fetchOperaSanJoseEvents,
+  operaSanJoseSeasonProductionUrls,
+  parseOperaSanJosePerformances,
   fetchScccfdEvents,
   parseEventbriteOrganizerEvents,
   fetchJazzOnThePlazzEvents,
