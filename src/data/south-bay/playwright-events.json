@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-10T16:37:31.051Z",
+    "generatedAt": "2026-09-11T02:17:16.653Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 602,
+    "eventCount": 597,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (134)",
-      "Los Gatos Library (151)",
+      "Mountain View Public Library (133)",
+      "Los Gatos Library (148)",
       "San Jose Jazz (18)",
       "Linden Tree Books (13)",
       "History San Jose (9)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (5)",
       "Santana Row (7)",
-      "City of Cupertino (71)",
+      "City of Cupertino (70)",
       "TheatreWorks Silicon Valley (90)",
       "Levi's Stadium (10)",
       "SAP Center (12)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 137,
+        "count": 136,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 151,
+        "count": 148,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 71,
+        "count": 70,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,49 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "dc58489cb538",
-      "title": "Magical Bridge Storytime",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "10:00 AM",
-      "endTime": "10:30 AM",
-      "venue": "Magical Bridge Playground",
-      "address": "201 S Rengstorff Ave, Mountain View, CA 94040",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Stop by the Bookmobile for stories, songs, and rhymes in the heart of Rengstorff Park! Enjoy a fun-filled storytime at the Magical Bridge Playground, and take advantage of full library services available from 10:0011:00 a.m. Events are weather permitting. Find us at 201 S. Rengstorff Ave, Mountain View, CA 94040.",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17290230",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "fd2d8d071ce4",
-      "title": "Let's Create",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "3:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Drop in for an afternoon of art and crafts that is self-directed, choice-driven, and celebrates the experience of discovery. This program is for children ages 5 and up . This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Tweens",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17329105",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "beafbf0a38b7",
       "title": "Community Preservation Lab Scanning Service",
@@ -1695,6 +1652,28 @@
         "Adults"
       ],
       "url": "https://mountainview.libcal.com/event/17249780",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "17d611f9afd3",
+      "title": "The Messenger of Peace: Japanese Crane Textile Sculpture",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
+      "time": "6:30 PM",
+      "endTime": "8:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join sustainable artist and educator Leila Ghasempor for a hands-on art workshop exploring the beauty, history, and symbolism of the Japanese crane. Traditionally associated with hope, longevity, and peace. Participants will learn about the cultural meaning of the crane while exploring textile construction, sculptural form, and geometric folding techniques to create their own three-dimensional fabric crane. No sewing experience is required. All materials will be provided. This class is intended for ages 18 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17528266",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -3223,66 +3202,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17028030",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "54544a96f4d0",
-      "title": "Cafecito Book Club",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "10:00 AM",
-      "endTime": "11:00 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "This bookclub reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en espaol y se rene el segundo jueves de cada mes de 10 a 11 a. m. en la sala de conferencias de la biblioteca (primer piso).",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16035612",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "c51c1b5d7edb",
-      "title": "Park-It Market",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "10:00 AM",
-      "endTime": "11:15 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join the team from West Valley Community Services for their twice monthly Park-It Market. On the second and fourth Thursday of each month, WVCS offers free access to food inlcluding fresh produce, meat, dairy products, dry goods and canned food.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15783337",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "0e0c66f9ec7c",
-      "title": "Cascada de Flores: El Abuelo (Ages 2-13)",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Cascad-ita de Flores: Stories, Song & Dance presents... Original stories told in Spanish & English, using song, a variety of musical instruments, dance, theater and sweet characters of traditional Mexican & Latin American cultures. El Abuelo (aka The Tree and the Donkey who loved to sing) is an original story that celebrates Mexican traditional music and dance. It tells the story of a lonely tree and a donkey who loves to sing. Their music attracts the birds, the animals and one special human: el Abuelito (grandfather). Children and their families are invited to sing, dance and play with traditional songs and dances from various regions of Mexico. The audience will sing like owls, dance like vultures and laugh along with the humorous grandfather, Abuelo, while exploring themes from life and death in nature and instrument building. Join us in the Children's Room for this wonderful music show for the whole family!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17110925",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -8288,23 +8207,6 @@
       "description": "",
       "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
       "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
-      "id": "a267bdd3d373",
-      "title": "Digital Marketing & Branding Business Workshop",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "10:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Cupertino Community Hall",
-      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.cupertino.gov/Meetings/September-10-2026-Digital-Marketing-Branding-Business-Workshop",
-      "source": "City of Cupertino",
       "kidFriendly": false
     },
     {

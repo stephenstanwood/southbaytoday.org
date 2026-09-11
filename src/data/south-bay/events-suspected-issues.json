@@ -1,50 +1,50 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-10T03:17:15.234Z"
+    "auditedAt": "2026-09-11T02:20:46.065Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1928,
+    "total": 1929,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 0
     },
-    "byReason": {
-      "virtual-not-flagged": 1
-    },
+    "byReason": {},
     "hard": [],
-    "soft": [
-      {
-        "id": "sjpl-693866301e64afd01e4e227c",
-        "title": "Santa Teresa Book Club (Hybrid)",
-        "city": "san-jose",
-        "date": "2026-09-10",
-        "location": "290 International Circle San Jose",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      }
-    ]
+    "soft": []
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 315,
+    "total": 338,
     "totals": {
-      "hard": 0,
-      "soft": 3,
+      "hard": 1,
+      "soft": 4,
       "info": 2
     },
     "byReason": {
       "unknown-slug": 2,
+      "meeting-title": 1,
+      "out-of-area": 1,
       "virtual-not-flagged": 1,
       "local-departure-trip": 2
     },
-    "hard": [],
+    "hard": [
+      {
+        "id": "inbound_mtw4v5e2_w7523l",
+        "title": "Adventures to Go: Giants vs. Dodgers Trip for Older Adults",
+        "city": null,
+        "date": "2026-09-27T10:15:00-07:00",
+        "location": "Oracle Park, San Francisco, CA",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"san francisco\" with no in-area city token"
+          }
+        ]
+      }
+    ],
     "soft": [
       {
         "id": "inbound_mtlvjx55_5d0c0l",
@@ -71,6 +71,20 @@
             "severity": "soft",
             "reason": "unknown-slug",
             "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mtw80j34_zh7y6t",
+        "title": "Los Gatos Town Council Candidate Forum",
+        "city": "los-gatos",
+        "date": "2026-10-07T17:30:00-07:00",
+        "location": "CineLux Los Gatos Theatre, Los Gatos, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "meeting-title",
+            "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
           }
         ]
       },
