@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-10T03:09:20.957Z",
+  "generatedAt": "2026-09-11T03:09:22.245Z",
   "meetings": {
     "san-jose": {
       "date": "2026-09-15",
@@ -36,23 +36,115 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-09T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-09-15",
+      "displayDate": "Tue, Sep 15",
+      "startTime": "19:00",
+      "bodyName": "City Council",
+      "location": "Online and Council Chambers, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4523&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4523,
+      "agendaItems": [
+        {
+          "title": "Hispanic Heritage Month",
+          "sequence": 7
+        },
+        {
+          "title": "Bisexual Awareness Week",
+          "sequence": 9
+        },
+        {
+          "title": "Prisoners of War/Missing in Action (POW/MIA) Recognition Day",
+          "sequence": 8
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of August 25, 2026",
+          "sequence": 12
+        },
+        {
+          "title": "Reject All Bids Received for Plaza Del Sol Phase II Project (PW26-02)",
+          "sequence": 17
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-09-15",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "cupertino": {
+      "date": "2026-09-15",
+      "displayDate": "Tue, Sep 15",
+      "startTime": "17:30",
+      "bodyName": "City Council",
+      "location": "Council Chamber",
+      "closedSession": true,
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5299&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5299,
+      "agendaItems": [
+        {
+          "title": "Law Enforcement Services Agreement with the County of Santa Clara.",
+          "sequence": 33
+        },
+        {
+          "title": "Recognition of Cupertino High School students on their achievements in the 2026 Future Business Leaders of America (FBLA) National Leadership Conference.",
+          "sequence": 14
+        },
+        {
+          "title": "Second reading and enactment of an ordinance amending Municipal Code Chapter 2.88 Audit Committee Duties, Powers, and Responsibilities and Related Municipal Code Updates",
+          "sequence": 25
+        },
+        {
+          "title": "Receipt of Grants Management Internal Controls Review Final Report",
+          "sequence": 26
+        },
+        {
+          "title": "Adoption of the Artificial Intelligence (AI) City Council Policy",
+          "sequence": 27
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-09-15",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-09-09",
-      "displayDate": "Wed, Sep 9",
-      "startTime": "17:00",
-      "bodyName": "City Council Special Meeting ",
+      "date": "2026-09-14",
+      "displayDate": "Mon, Sep 14",
+      "startTime": "17:30",
+      "bodyName": "City Council Regular Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?meetingId=2901",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?meetingId=2902",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-09-09",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?meetingId=2901"
+        "observedDate": "2026-09-14",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?meetingId=2902"
+      }
+    },
+    "campbell": {
+      "date": "2026-09-15",
+      "displayDate": "Tue, Sep 15",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Session Meeting",
+      "location": "City Hall Council Chamber",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
+        "observedDate": "2026-09-15",
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
       }
     },
     "milpitas": {
@@ -69,7 +161,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-09T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -86,7 +178,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-09-22",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-09T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -101,11 +193,11 @@
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "santa-clara": {
       "provider": "Legistar",
@@ -121,7 +213,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "milpitas": {
       "provider": "CivicClerk",

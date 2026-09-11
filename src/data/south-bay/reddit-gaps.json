@@ -1,99 +1,152 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-10T03:16:53.682Z",
+    "generatedAt": "2026-09-11T03:17:10.107Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 12
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 12,
+    "threadsMined": 9,
     "placesExtracted": 4,
-    "placesMatched": 1,
-    "placeGaps": 3,
-    "eventsExtracted": 2,
+    "placesMatched": 2,
+    "placeGaps": 2,
+    "eventsExtracted": 6,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 6,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Goku",
+      "name": "MLK Library",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Korean BBQ option, portions considered small",
+      "kind": "venue",
+      "context": "downtown library hosting short story reading group",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
-        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
-        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
-        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
       ]
     },
     {
-      "name": "The Preserve",
-      "city": "San Jose",
+      "name": "Los Gatos High School",
+      "city": "Los Gatos",
       "kind": "venue",
-      "context": "baby shower venue that recently closed",
+      "context": "site of 9/11 military flyover commemoration",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbw8om/new_insurance_delta_dental_looking_for_a_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wbv4y8/para_siempre_fest_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1wc2cv2/vet_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wbwvko/indoor_baby_shower_recs_december/",
-        "https://www.reddit.com/r/SanJose/comments/1wbetph/what_are_the_best_solar_companies_in_california/"
-      ]
-    },
-    {
-      "name": "The Ritz",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "trying to contact box office for tickets",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbcrmc/i_am_looking_for_public_speaking_debate_academy/",
-        "https://www.reddit.com/r/SanJose/comments/1wbccfh/the_ritz/"
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Halloween Upcycle Woodworking Program",
-      "when": "Saturday, 10/10/2026, 12:30-2:30",
+      "name": "All Aboard Transit Day",
+      "when": "Tuesday, Sept. 15, 2026",
       "city": "San Jose",
-      "context": "teen program at library needing adult volunteers",
+      "context": "VTA offering free bus and light rail service",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
-        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
-        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
-        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
       ]
     },
     {
-      "name": "Para Siempre fest",
-      "when": "",
+      "name": "Viva Calle San Jose",
+      "when": "Sunday, Sept 13th",
       "city": "San Jose",
-      "context": "tickets being discussed",
+      "context": "open streets community event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbw8om/new_insurance_delta_dental_looking_for_a_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wbv4y8/para_siempre_fest_tickets/",
-        "https://www.reddit.com/r/SanJose/comments/1wc2cv2/vet_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wbwvko/indoor_baby_shower_recs_december/",
-        "https://www.reddit.com/r/SanJose/comments/1wbetph/what_are_the_best_solar_companies_in_california/"
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
+      ]
+    },
+    {
+      "name": "9/11 Military Flyover",
+      "when": "Sept 11, 6:55pm",
+      "city": "Los Gatos",
+      "context": "F-15 flyover honoring former students on Flight 93",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
+      ]
+    },
+    {
+      "name": "San Jose Short Story Reading Group",
+      "when": "6-8pm every other Thursday",
+      "city": "San Jose",
+      "context": "recurring literary discussion group at MLK library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
+      ]
+    },
+    {
+      "name": "SJSU Football vs Cal Poly (Home Opener)",
+      "when": "9/12",
+      "city": "San Jose",
+      "context": "SJSU football home opener with ticket promotions",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wccqcw/in_celebration_of_all_aboard_transit_day_vta_is/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tom/viva_calle_san_jose_this_sunday_sept_13th/",
+        "https://www.reddit.com/r/SanJose/comments/1wcxto3/military_flyover_at_los_gatos_high_school/",
+        "https://www.reddit.com/r/SanJose/comments/1wcnbh0/san_jose_short_story_reading_group/",
+        "https://www.reddit.com/r/SanJose/comments/1wccnm1/tickets_dealspromotions_for_upcoming_sjsu/"
+      ]
+    },
+    {
+      "name": "Journal club in the Rose Garden",
+      "when": "Saturday 9/12 @ 2pm",
+      "city": "San Jose",
+      "context": "meetup event in the Rose Garden",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wc9qo6/journal_club_in_the_rose_garden_on_saturday_912/",
+        "https://www.reddit.com/r/SanJose/comments/1wd1htq/best_hospital_and_primary_care_health_system_for/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tsi/anyone_visited_the_japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wc84ii/how_much_do_you_realistically_need_to_live/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Educational Park Branch Library",
+      "name": "Rose Garden",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Halloween upcycle woodworking program",
+      "kind": "park",
+      "context": "location for Saturday journal club meetup",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wbwsng/anything_fun_happening_in_sj_or_the_south_bay_on/",
-        "https://www.reddit.com/r/SanJose/comments/1wbfcs0/best_french_fries/",
-        "https://www.reddit.com/r/SanJose/comments/1wbbspu/best_korean_bbq/",
-        "https://www.reddit.com/r/SanJose/comments/1wby3ca/looking_for_adult_volunteers_for_a_halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wbwkb7/hair_stylist_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wc9qo6/journal_club_in_the_rose_garden_on_saturday_912/",
+        "https://www.reddit.com/r/SanJose/comments/1wd1htq/best_hospital_and_primary_care_health_system_for/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tsi/anyone_visited_the_japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wc84ii/how_much_do_you_realistically_need_to_live/"
       ],
-      "matchedName": "Educational Park Branch Library"
+      "matchedName": "Rose Garden Branch Library"
+    },
+    {
+      "name": "Japanese Friendship Garden",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "asking about current condition of the gardens",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wc9qo6/journal_club_in_the_rose_garden_on_saturday_912/",
+        "https://www.reddit.com/r/SanJose/comments/1wd1htq/best_hospital_and_primary_care_health_system_for/",
+        "https://www.reddit.com/r/SanJose/comments/1wc8tsi/anyone_visited_the_japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wc84ii/how_much_do_you_realistically_need_to_live/"
+      ],
+      "matchedName": "Japanese Friendship Garden"
     }
   ],
   "eventMatches": []
