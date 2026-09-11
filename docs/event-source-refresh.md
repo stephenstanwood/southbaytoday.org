@@ -57,6 +57,10 @@ bash scripts/events/install-mini-refresh.sh
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.
+- Opera San José retired the CivicPlus iCal at `/events/?ical=1` when the site
+  moved to Divi production pages (404 on 2026-09-11). Tribe iCal/REST exports
+  are not published; the adapter reads the `26-27-season` lander for current
+  `/productions/*` slugs and each page's server-rendered performance rows.
 - SJDA (Downtown San Jose) was retired 2026-08-24, and unlike SJMA the whole
   site is walled rather than one endpoint: the events API, `/events/feed/`,
   `?ical=1` and the sitemap that sjdowntown.com's own robots.txt advertises all
