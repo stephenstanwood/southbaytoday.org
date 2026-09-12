@@ -24,6 +24,7 @@ import {
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
+import { agendaTextForMeeting } from "./lib/digest-source.mjs";
 import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
@@ -274,7 +275,7 @@ function enforceCityName(cityName, text) {
 async function summarize(config, meeting, bodyLabel) {
   const isYouTubeTranscript = meeting.source === "youtube-transcript";
   // Strip the VTT metadata prefix that appears in YouTube transcript records
-  const rawExcerpt = (meeting.excerpt || "").replace(/^Kind:\s*captions\s+Language:\s*\w+\s*/i, "").trim();
+  const rawExcerpt = agendaTextForMeeting(meeting).replace(/^Kind:\s*captions\s+Language:\s*\w+\s*/i, "").trim();
 
   const contentBlock = isYouTubeTranscript
     ? `Meeting transcript (partial — opening segment only): ${rawExcerpt}`
@@ -392,6 +393,9 @@ async function main() {
   // name never carries agenda content — the notice is the whole record.
   const LOGISTICS_TITLE = /\bconduct(?:s|ing)\b[^.]*\bmeetings?\b[^.]*\b(?:hybrid|in-person|remotely)\b/i;
   function hasRealContent(r) {
+    // Screen the search preview for logistics-only records. Complete agendas
+    // can append participation notices to substantive business; applying this
+    // preview's boilerplate quota to them would reject valid source meetings.
     const ex = (r.excerpt || "").toLowerCase().trim();
     if (ex.length <= 80) return false;
     if (LOGISTICS_TITLE.test(r.title || "")) return false;
@@ -528,7 +532,7 @@ async function main() {
       if (!config.councilBody && (config.legistarApi || config.primegov) && /^city council\b/i.test(bodyLabel)) {
         // Pass the record's own text: when several bodies met that day, the
         // verifier needs it to tell which one this agenda came from.
-        const recordText = `${meeting.title || ""} ${meeting.excerpt || ""}`;
+        const recordText = `${meeting.title || ""} ${agendaTextForMeeting(meeting)}`;
         const actual = config.legistarApi
           ? await verifyLegistarBodyOnDate(config.legistarApi, meeting.date, recordText)
           : await verifyPrimeGovBodyOnDate(config.primegov, meeting.date, recordText);

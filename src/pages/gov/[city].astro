@@ -155,7 +155,7 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
   )}
 
   <section class="gov-block">
-    <h2>Last meeting · {digest.meetingDate}</h2>
+    <h2>{digest.body} · {digest.meetingDate}</h2>
     <p class="gov-summary">{digest.summary}</p>
     {(digest.keyTopics ?? []).length > 0 && (
       <>
