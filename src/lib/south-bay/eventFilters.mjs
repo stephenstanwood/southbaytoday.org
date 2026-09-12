@@ -769,7 +769,7 @@ export const COVERED_LOCATION =
  * day-plan stops).
  */
 export const LOCAL_DEPARTURE_TRIP =
-  /\b(day\s+trip|bus\s+trip|field\s+trip|excursion|trip\s+to|tour\s+to)\b/i;
+  /\b(day\s+trip|bus\s+trip|field\s+trip|excursion|trip\s+to|tour\s+to|trip\s+for\s+(?:older\s+adults?|seniors?))\b/i;
 
 /**
  * Returns true if the event's own address/venue names an out-of-area city and

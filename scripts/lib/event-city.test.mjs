@@ -65,6 +65,14 @@ test("event city leaves day trips under their departure city", () => {
     resolveEventCity("sunnyvale", "Filoli, Woodside, CA", "Senior Center Bus Trip to Filoli"),
     "sunnyvale",
   );
+  assert.equal(
+    resolveEventCity(
+      "santa-clara",
+      "Oracle Park, San Francisco, CA",
+      "Adventures to Go: Giants vs. Dodgers Trip for Older Adults",
+    ),
+    "santa-clara",
+  );
   // A day trip whose destination IS a covered city still stays put.
   assert.equal(
     resolveEventCity("campbell", "Winchester Mystery House, San Jose, CA", "Day Trip to the Winchester Mystery House"),

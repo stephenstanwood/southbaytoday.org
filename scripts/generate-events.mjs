@@ -99,6 +99,7 @@ import {
   parseMidpenListPage,
 } from "./lib/midpen-events.mjs";
 import { normalizeMidpenOccurrenceUrl } from "./lib/official-event-sources.mjs";
+import { inboundPublisherCity } from "./lib/inbound-publisher-city.mjs";
 import {
   parseDate,
   parseDatePT,
@@ -8253,8 +8254,12 @@ function fetchInboundEvents() {
 
       const dateKey = e.startsAt.slice(0, 10);
       if (dateKey < today) { skipPast++; continue; }
-      if (!e.cityKey) { skipCity++; continue; } // Skip events we couldn't geo-place
-      if (!INBOUND_ACCEPTED_CITIES.has(e.cityKey)) { skipCity++; continue; }
+      // The extractor occasionally omits cityKey even for senders it normally
+      // identifies correctly. Recover only from exact official sender addresses;
+      // unknown publishers still fail closed instead of guessing from prose.
+      const publisherCity = inboundPublisherCity(e);
+      if (!publisherCity) { skipCity++; continue; }
+      if (!INBOUND_ACCEPTED_CITIES.has(publisherCity)) { skipCity++; continue; }
       const inboundLocation = e.location ?? "";
       if (
         OUT_OF_AREA_LOCATION.test(inboundLocation) &&
@@ -8266,7 +8271,7 @@ function fetchInboundEvents() {
       // venue. When the address names exactly one covered city, that city
       // wins — see resolveEventCity for the ambiguity rules and the
       // Campbell Chamber golf tournament that motivated it.
-      const inboundCity = resolveEventCity(e.cityKey, inboundLocation, e.title);
+      const inboundCity = resolveEventCity(publisherCity, inboundLocation, e.title);
 
       const startDate = new Date(e.startsAt);
       if (isNaN(startDate.getTime())) continue;

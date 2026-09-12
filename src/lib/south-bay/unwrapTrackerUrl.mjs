@@ -41,6 +41,7 @@ const TRACKER_PATTERNS = [
   /\/rts\/go2\.aspx\b/i,                        // Adestra / Upland (l.e.<brand>.com)
   /\bconnect\.cdm\.org\/site\/R\b/i,            // Convio / Blackbaud
   /\bemail\.live\.stanford\.edu\/c\//i,         // Stanford dotdigital
+  /\bapp\.mail\.gostanford\.com\/e\/er\b/i,     // Stanford Athletics / Oracle Eloqua
   /\bclick\.fanmail\./i,                        // SJ Earthquakes / Marketo
   /\bcmail\d+\.com\/t\//i,                      // Campaign Monitor
   /\be\.wordfly\.com\/click\?/i,                // WordFly

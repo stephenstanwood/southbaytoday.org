@@ -208,10 +208,12 @@ test("day-trip exemption matches the titles ingest relies on", () => {
     "August Day Trip to San Francisco Zoo & Gardens",
     "Senior Bus Trip: Monterey Bay Aquarium",
     "September Day Trip to SFMOMA",
+    "Adventures to Go: Giants vs. Dodgers Trip for Older Adults",
   ]) {
     assert.ok(LOCAL_DEPARTURE_TRIP.test(title), title);
   }
   assert.ok(!LOCAL_DEPARTURE_TRIP.test("Maggie Stiefvater: The Dream Thieves"));
+  assert.ok(!LOCAL_DEPARTURE_TRIP.test("Road Trip for the Memories"));
 });
 
 test("the trip exemption does not leak into the day-plan filter", () => {

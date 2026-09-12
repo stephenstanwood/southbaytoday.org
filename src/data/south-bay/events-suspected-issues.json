@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-12T12:44:55.768Z"
+    "auditedAt": "2026-09-12T19:18:01.479Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
@@ -18,33 +18,17 @@
     "label": "inbound-events.json",
     "total": 343,
     "totals": {
-      "hard": 1,
+      "hard": 0,
       "soft": 6,
-      "info": 2
+      "info": 3
     },
     "byReason": {
       "unknown-slug": 2,
       "meeting-title": 1,
-      "out-of-area": 1,
-      "virtual-not-flagged": 3,
-      "local-departure-trip": 2
+      "local-departure-trip": 3,
+      "virtual-not-flagged": 3
     },
-    "hard": [
-      {
-        "id": "inbound_mtw4v5e2_w7523l",
-        "title": "Adventures to Go: Giants vs. Dodgers Trip for Older Adults",
-        "city": null,
-        "date": "2026-09-27T10:15:00-07:00",
-        "location": "Oracle Park, San Francisco, CA",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"san francisco\" with no in-area city token"
-          }
-        ]
-      }
-    ],
+    "hard": [],
     "soft": [
       {
         "id": "inbound_mtlvjx55_5d0c0l",
@@ -85,6 +69,20 @@
             "severity": "soft",
             "reason": "meeting-title",
             "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mtw4v5e2_w7523l",
+        "title": "Adventures to Go: Giants vs. Dodgers Trip for Older Adults",
+        "city": null,
+        "date": "2026-09-27T10:15:00-07:00",
+        "location": "Oracle Park, San Francisco, CA",
+        "findings": [
+          {
+            "severity": "info",
+            "reason": "local-departure-trip",
+            "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
           }
         ]
       },

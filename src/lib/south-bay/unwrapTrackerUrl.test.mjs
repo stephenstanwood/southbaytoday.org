@@ -31,6 +31,15 @@ test("still flags the previously-known wrappers", () => {
   assert.equal(isTrackerUrl("https://links-2.govdelivery.com/CL0/https%3A%2F%2Fexample.gov/1/010"), true);
 });
 
+test("flags Stanford Athletics Eloqua redirects", () => {
+  assert.equal(
+    isTrackerUrl(
+      "https://app.mail.gostanford.com/e/er?s=1855418&lid=2442&elq=recipient-token",
+    ),
+    true,
+  );
+});
+
 test("leaves real event pages alone", () => {
   assert.equal(isTrackerUrl("https://levisstadium.com/event/chris-brown-usher-the-randb-tour/"), false);
   assert.equal(isTrackerUrl("https://www.mountainwinery.com/events/detail?event_id=1374384"), false);

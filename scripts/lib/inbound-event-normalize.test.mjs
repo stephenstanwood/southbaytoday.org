@@ -85,6 +85,15 @@ test("inbound events prefer an explicit canonical URL", () => {
   }).url, "https://venue.example.com/events/example");
 });
 
+test("Stanford Athletics per-send redirects never reach public cards", () => {
+  assert.equal(normalizeInboundEventPresentation({
+    title: "Stanford Men's Soccer vs. Santa Clara",
+    startsAt: "2026-09-15T19:00:00-07:00",
+    sourceUrl:
+      "https://app.mail.gostanford.com/e/er?s=1855418&lid=2442&elq=recipient-token",
+  }).url, "");
+});
+
 test("a multi-week program's last date is not an end time", () => {
   // The real Monte Sereno record: an eight-week academy that starts Sep 17 and
   // graduates Nov 12. The extractor stamped the November date with July's
