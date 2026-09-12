@@ -13,6 +13,9 @@ import {
 test("inbound end-of-day and midnight sentinels are not visitor times", () => {
   assert.equal(inboundClock("2026-07-20T23:59:59-07:00"), null);
   assert.equal(inboundClock("2026-07-20T00:00:00-07:00"), null);
+  // Nov. 1 is still PDT at midnight. The bad -08 source offset used to convert
+  // this sentinel to 1 AM and publish it as a real event time.
+  assert.equal(inboundClock("2026-11-01T00:00:00-08:00"), null);
   assert.equal(inboundClock("2026-07-20T18:30:00-07:00"), "6:30 PM");
 });
 

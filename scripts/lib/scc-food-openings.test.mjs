@@ -8,6 +8,7 @@ import {
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
 } from "./scc-food-openings.mjs";
+import { shouldSkip } from "../generate-scc-food-openings.mjs";
 
 test("normalizes De Anza street names from SCC permit spelling", () => {
   assert.equal(normalizeSouthBayAddress("1655 S Deanza Blvd"), "1655 S De Anza Blvd");
@@ -147,4 +148,19 @@ test("canonical food data ships business names, not permit jargon", () => {
     /\s(?:equipment|improvements?)\s*$/i.test(name) && name.trim().split(/\s+/).length >= 3
   ));
   assert.deepEqual(purposeSuffix, []);
+});
+
+test("corporate cafeterias stay out while real public venues survive", () => {
+  assert.equal(shouldSkip({
+    business_name: "TESLA HANOVER CAFE",
+    site_location: "3000 HANOVER ST, PALO ALTO",
+    city: "PALO ALTO",
+    record_id: "SR0885335",
+  }), true);
+  assert.equal(shouldSkip({
+    business_name: "ITALIAN CELLAR SPEAKEASY-OUTDOOR PIAZZA SATELLITE BAR",
+    site_location: "323 SHARKS WAY, SAN JOSE",
+    city: "SAN JOSE",
+    record_id: "SR0885404",
+  }), false);
 });

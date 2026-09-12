@@ -86,7 +86,7 @@ const EQUIPMENT_ONLY_PATTERNS = /\bADD(?:ING|ITION\s+OF)\s+[\w\s]*\b(OVEN|GRIDDL
 // run the cafeteria inside someone else's building, so the campus name may be
 // absent or unfamiliar and the operator's name is the reliable tell.
 // "Guckenheimer@Supermicro" shipped as a coming-soon restaurant on 2026-08-25.
-const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS|JOHNSON\s*&\s*JOHNSON|AURIS\s+HEALTH|SUPERMICRO|APPLIED\s+MATERIALS|LOCKHEED|WESTERN\s+DIGITAL|JUNIPER\s+NETWORKS)\b|\b(GUCKENHEIMER|BON\s+APP[EÉ]TIT\s+MANAGEMENT|COMPASS\s+GROUP|SODEXO|ARAMARK|EUREST|FLIK|CAFEBONAPPETIT)\b/i;
+const CORPORATE_PATTERNS = /\b(GOOGLE(PLEX)?|APPLE|TESLA|FACEBOOK|META|INTEL|CISCO|NVIDIA|WAYMO|MICROSOFT|AMAZON|LINKEDIN|TWITTER|SERVICENOW|PALO ALTO NETWORKS|VMW|BROADCOM|ADOBE|WALMART|YAHOO|SAMSUNG|DATABRICKS|JOHNSON\s*&\s*JOHNSON|AURIS\s+HEALTH|SUPERMICRO|APPLIED\s+MATERIALS|LOCKHEED|WESTERN\s+DIGITAL|JUNIPER\s+NETWORKS)\b|\b(GUCKENHEIMER|BON\s+APP[EÉ]TIT\s+MANAGEMENT|COMPASS\s+GROUP|SODEXO|ARAMARK|EUREST|FLIK|CAFEBONAPPETIT)\b/i;
 
 // Databricks Cityline office campus (200/250 W Washington Ave, Sunnyvale) —
 // internal food facilities filed under building-code placeholder names
@@ -523,7 +523,7 @@ const NON_FOOD_PATTERNS =
 // general-merchandise dollar/variety chains.
 const VARIETY_STORE_PATTERNS = /\bDOLLAR\s*TREE\b|\bDOLLAR\s*GENERAL\b|\bFAMILY\s*DOLLAR\b|\b99\s*(CENTS?|¢)\b|\bDOLLARAMA\b|\bFIVE\s*BELOW\b/i;
 
-function shouldSkip(item) {
+export function shouldSkip(item) {
   const name = item.business_name ?? "";
   const rawName = name.replace(/^E-\s*/i, "").trim();
 
@@ -1131,7 +1131,9 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error("ERROR:", err.message);
-  process.exit(1);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((err) => {
+    console.error("ERROR:", err.message);
+    process.exit(1);
+  });
+}

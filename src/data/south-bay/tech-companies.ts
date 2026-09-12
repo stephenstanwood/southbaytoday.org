@@ -67,7 +67,7 @@ export const TECH_COMPANIES: TechCompany[] = [
       "Waymo robotaxi service expanding commercially to multiple US cities",
     ],
     description:
-      "Search, cloud, AI, and advertising. The largest campus presence in the South Bay.",
+      "Search, cloud, AI, and advertising. A major campus presence in the South Bay.",
     color: "#4285F4",
     careersUrl: "https://careers.google.com",
   },
@@ -83,7 +83,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "25K at Apple Park + SCC offices; no local WARN filing since March 2024, when 614 Santa Clara jobs went across eight sites",
     highlights: [
       "Apple Intelligence on-device AI rolling out across iPhone, Mac, and iPad",
-      "M5 chip family now spans iPad Pro (Oct 2025) and MacBook Pro (Mar 2026); M5 MacBook Air and Mac mini next",
+      "M5 now spans iPad Pro, MacBook Air, and MacBook Pro; August 2026 Mac mini models use M6 or M5 Pro",
     ],
     description:
       "Consumer hardware, software, and services. One Apple Park Way, Cupertino.",
@@ -235,7 +235,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "6K at Santa Clara HQ; still growing on 20%+ revenue, though 208 Lawson Lane roles went on its first filings in twelve years",
     highlights: [
       "Now Platform AI Agents automating enterprise IT, HR, and customer workflows at scale",
-      "One of the fastest-growing large enterprise software companies in the world",
+      "AI agents expanding across IT, HR, customer service, and other Now Platform workflows",
     ],
     description:
       "Enterprise workflow automation. The quiet giant of South Bay SaaS.",
@@ -331,7 +331,7 @@ export const TECH_COMPANIES: TechCompany[] = [
       "Precision AI features now embedded across the full security product portfolio",
     ],
     description:
-      "Cybersecurity platform. One of the fastest-growing security companies in the world.",
+      "Cybersecurity platform spanning network, cloud, and security operations.",
     color: "#FA582D",
     careersUrl: "https://jobs.paloaltonetworks.com",
   },
@@ -365,11 +365,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "flat",
     trendNote: "12K at Santa Clara HQ + SCC campus; 363 local jobs cut in October 2025, its first Santa Clara WARN round in twelve years",
     highlights: [
-      "Deposition, etch, and inspection equipment used in every advanced AI chip — from TSMC's A16 to HBM memory stacks",
-      "Record equipment backlog driven by TSMC, Samsung, and Intel expanding AI chip capacity",
+      "Deposition, etch, and inspection equipment used to produce advanced logic and HBM memory",
+      "Equipment backlog driven by TSMC, Samsung, and Intel expanding AI chip capacity",
     ],
     description:
-      "The world's largest semiconductor equipment company. Every chip in your phone, laptop, and AI server was made using Applied's machines.",
+      "Semiconductor manufacturing equipment used across advanced logic and memory production.",
     color: "#1b6ca8",
     careersUrl: "https://careers.appliedmaterials.com",
   },
@@ -384,11 +384,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "up",
     trendNote: "3K at SJ HQ; rapid growth from AI server demand, despite 2024 governance challenges",
     highlights: [
-      "Leading supplier of NVIDIA GPU server systems — the racks that power most AI training and inference clusters",
+      "Supplier of NVIDIA GPU server systems used for AI training and inference",
       "Revenue surged with AI infrastructure boom; resolved SEC filing delays and auditor issues in 2024-25",
     ],
     description:
-      "AI servers and GPU systems. The San Jose company quietly inside more AI data centers than almost anyone else.",
+      "AI servers and GPU systems for training, inference, and data-center workloads.",
     color: "#e07b39",
     careersUrl: "https://www.supermicro.com/en/jobs",
   },

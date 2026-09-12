@@ -40,6 +40,11 @@ function detrack(url) {
 
 export function inboundClock(value) {
   if (!value) return null;
+  // Newsletter extraction uses midnight/end-of-day as "time not supplied".
+  // Reject that sentinel in the source string before timezone conversion: an
+  // incorrect fixed offset can otherwise turn midnight into 1 AM or 11 PM at
+  // a daylight-saving boundary.
+  if (/T(?:00:00:00|23:59:59)(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/i.test(String(value))) return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
   const detailed = date.toLocaleTimeString("en-US", {

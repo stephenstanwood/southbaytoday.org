@@ -61,20 +61,23 @@ function formatAddress(raw) {
     .trim();
 }
 
-function cleanDescription(raw, workType, subtype) {
+export function cleanDescription(raw, workType, subtype) {
   if (!raw) return workType ?? "";
   let s = raw.trim();
   // Strip the below-market-rate flag San José appends to affordable filings.
-  // The feed spells it BEMP; the original pattern only matched a transposed
-  // "BEPM", so "Block A Family Affordable Apts (BEMP 100%)" shipped the flag
-  // through title-case as a fake proper noun ("(Bemp 100%)"). Accept both.
-  s = s.replace(/\((?:BEMP|BEPM)\s*\d+%\)\s*/gi, "");
+  // The feed has used BEMP, BEPM, and the shortened BEM spelling for this
+  // below-market-rate flag. Keep all three out of reader-facing project names.
+  s = s.replace(/\((?:BEMP|BEPM|BEM)\s*\d+%\)\s*/gi, "");
   // Strip "(STAR)" flag
   s = s.replace(/\(STAR\)\s*/gi, "");
   // Strip "(B)" or "(E)" standalone flags
   s = s.replace(/^\([A-Z]\)\s*/, "");
   // Strip "UNOCCUPIED" standalone
   s = s.replace(/^UNOCCUPIED\s*/i, "");
+  // San Jose sometimes truncates the redundant "Finish Interior" work-type
+  // suffix to a bare "FI" at the end of FOLDERNAME. The structured workType
+  // already carries that information, so do not publish the fragment.
+  if (/^Finish Interior$/i.test(workType ?? "")) s = s.replace(/\s+FI$/i, "");
   // Clean up double spaces
   s = s.replace(/\s+/g, " ").trim();
   // If empty after stripping, fall back
@@ -92,7 +95,7 @@ function cleanDescription(raw, workType, subtype) {
     // SFD = single-family dwelling, MF = multi-family, DU = dwelling unit —
     // the same shape as ADU/SFR and just as unreadable title-cased ("Mf ADU
     // Unit 10", "Comm Hill 3.2 New Sfd").
-    .replace(/\b(Adu|Adus|Ti|Sfr|Sfd|Mf|Du|Hvac|Pld)\b/g, (m) => m.toUpperCase())
+    .replace(/\b(Adu|Adus|Jadu|Ti|Sfr|Sfd|Mf|Du|Hvac|Pld)\b/g, (m) => m.toUpperCase())
     .replace(/\bAdu's\b/g, "ADU's")
     // Restore the single-letter block/phase/building designation the small-word
     // rule above downcases. "Block A Family Affordable Apts" is a phase name,
@@ -526,7 +529,9 @@ async function mainAll() {
   }
 }
 
-mainAll().catch((err) => {
-  console.error("Fatal:", err);
-  process.exit(1);
-});
+if (import.meta.url === `file://${process.argv[1]}`) {
+  mainAll().catch((err) => {
+    console.error("Fatal:", err);
+    process.exit(1);
+  });
+}

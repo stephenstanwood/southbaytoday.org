@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
+import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
 // ---------------------------------------------------------------------------
 // Local agency acronyms in event titles
@@ -43,6 +44,14 @@ test("keeps agency acronyms uppercase in body copy too", () => {
   );
 });
 
+test("permit descriptions strip feed flags and keep permit acronyms", () => {
+  assert.equal(cleanPermitDescription("Axis (BEM100%) Ste 500 TI", "Tenant Improvement", "Office"), "Axis Ste 500 TI");
+  assert.equal(cleanPermitDescription("(BEMP 100%) Block A Family Affordable Apts", "New Construction", "Apartments"), "Block A Family Affordable Apts");
+  assert.equal(cleanPermitDescription("(BEPM100%) Example", "New Construction", "Apartments"), "Example");
+  assert.equal(cleanPermitDescription("(BEM100%) Teresa Attorney Office FI", "Finish Interior", "Office"), "Teresa Attorney Office");
+  assert.equal(cleanPermitDescription("JADU", "New Construction", "ADU"), "JADU");
+});
+
 // ---------------------------------------------------------------------------
 // Institution and clinical acronyms (added 2026-09-06)
 // ---------------------------------------------------------------------------
@@ -61,6 +70,10 @@ test("keeps institution acronyms uppercase in titles", () => {
     cleanTitle("Documentary: UNAFF presents Lessons in Fear"),
     "Documentary: UNAFF presents Lessons in Fear",
   );
+  assert.equal(cleanTitle("Queer American Memorials at the ICA"), "Queer American Memorials at the ICA");
+  assert.equal(cleanTitle("Feedback Loop: SCC Artist Census Mini-Fest"), "Feedback Loop: SCC Artist Census Mini-Fest");
+  assert.equal(cleanTitle("BAGI Night Live!"), "BAGI Night Live!");
+  assert.equal(cleanTitle("CHCP Double Happiness Celebration"), "CHCP Double Happiness Celebration");
 });
 
 test("keeps clinical and post-nominal acronyms uppercase in titles", () => {
@@ -76,6 +89,14 @@ test("keeps clinical and post-nominal acronyms uppercase in titles", () => {
     cleanTitle("Fireside Chat with Tara Narula Cangello, MD"),
     "Fireside Chat with Tara Narula Cangello, MD",
   );
+  assert.equal(cleanTitle("Adult ACL Update"), "Adult ACL Update");
+  assert.equal(cleanTitle("Bird ID and Guided Hike"), "Bird ID and Guided Hike");
+});
+
+test("keeps league and artist initialisms uppercase in titles and body copy", () => {
+  assert.equal(cleanTitle("Sharks x PWHL San Jose"), "Sharks x PWHL San Jose");
+  assert.equal(cleanTitle("A Tribute to ABBA"), "A Tribute to ABBA");
+  assert.match(polishDescription("Hear ABBA songs performed live."), /\bABBA\b/);
 });
 
 test("keeps UNAFF uppercase in description body copy", () => {

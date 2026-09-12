@@ -5,6 +5,7 @@ import {
   isAdminNonEvent,
   isOffRegionUniversityEvent,
 } from "../generate-events.mjs";
+import { inferCategory as inferPlaywrightCategory } from "../playwright-scrapers.mjs";
 
 // Both fixtures below are real strings that reached upcoming-events.json on
 // 2026-08-29 and were surfaced on southbaytoday.org city briefings.
@@ -89,6 +90,22 @@ test("parades and guidance are not arts substring matches", () => {
     inferCategory("Leadership Fair", "Free treats, fun games, and leadership opportunities.", "", "SJSU"),
     "community",
   );
+});
+
+test("title-first category rules beat incidental venue and description words", () => {
+  const cases = [
+    ["Public Input Town Hall on Law Enforcement Services", "", "", "Saratoga Civic Theater", "community"],
+    ["College Tour: Chico State", "Breakfast and lunch are included.", "", "The View Teen Center", "education"],
+    ["Stanford Medicine Orthopaedic Academy: Pediatric and Adult ACL Update", "Surgical reconstruction and graft options.", "", "Stanford University", "education"],
+    ["Sharks x PWHL San Jose", "", "", "SAP Center", "sports"],
+    ["Movie Day: Toy Story 5", "", "", "The View Teen Center", "arts"],
+    ["Amplify: Back to Bach", "", "", "Mountain View Public Library", "music"],
+  ];
+
+  for (const [title, desc, type, venue, expected] of cases) {
+    assert.equal(inferCategory(title, desc, type, venue), expected, title);
+    assert.equal(inferPlaywrightCategory(title), expected, `${title} (playwright)`);
+  }
 });
 
 // A facility-hours notice announces that a building's schedule changed; nothing

@@ -209,8 +209,13 @@ function isoTimeToClock(iso) {
 }
 
 /** Category inference from title */
-function inferCategory(title) {
+export function inferCategory(title) {
   const t = title.toLowerCase();
+  if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(t)) return "community";
+  if (/\b(?:college|campus)\s+tour\b|\borthop(?:a)?edic\s+academy\b|\bsurgical\s+reconstruction\b/.test(t)) return "education";
+  if (/\bpwhl\b/.test(t)) return "sports";
+  if (/\b(movie|film)\s+(?:day|night|screening)\b|\bscreening\s+of\b/.test(t)) return "arts";
+  if (/\b(bach|beethoven|mozart|vivaldi|chopin|tchaikovsky|brahms|debussy|rachmaninoff)\b/.test(t)) return "music";
   // Family/kids events first — "Baby Storytime", "Preschool Storytime",
   // "Kids Knitting" should land in family, not community. Matches the
   // canonical rule in generate-events.mjs inferCategory.

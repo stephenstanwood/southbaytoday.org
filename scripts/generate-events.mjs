@@ -1008,6 +1008,9 @@ function cleanTitle(title) {
     // South Bay venues / institutions. SVCF = Silicon Valley Community
     // Foundation — title-cased to "Svcf" by the 2+ pass without coverage.
     "SJMA", "MACLA", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "KCAT",
+    // Local arts/civic organizations and league/artist initialisms currently
+    // present in source titles.
+    "BAGI", "CHCP", "PWHL", "ABBA",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
@@ -1039,6 +1042,7 @@ function cleanTitle(title) {
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).
     "AI", "AR", "VR", "UV", "EV", "PM", "AM", "DJ", "TV", "PC", "IT", "HR", "PR", "ER",
     "SF", "SJ", "LA", "CA", "SC", "US", "UK", "FC", "RB",
+    "ICA", "SCC", "ID", "ACL",
     "GK", "II", "TK", "JR", "SR", "VS",
     "BBQ", "BYOB", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY", "ELL", "ESL", "EVC",
     "HPC",
@@ -1692,6 +1696,7 @@ function polishDescription(text) {
     "AAVE", "ADHD", "PTSD", "ISSS",
     // South Bay / arts venues
     "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "VTAA", "VTAS",
+    "BAGI", "CHCP", "PWHL", "ABBA",
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
     // Los Gatos-Monte Sereno Police Department. The Town of Los Gatos
     // newsletter titles its programs "LGMSPD Community Police Academy";
@@ -1776,7 +1781,7 @@ function polishDescription(text) {
     // Mirrored from cleanTitle KEEP_UPPER — 3-letter institutional designations
     // that can appear inside body copy and would be downcased by the wedge rule
     // if surrounded by mixed-case neighbors ("Catholic JST programs offer…").
-    "HSI", "JST",
+    "HSI", "JST", "ICA", "SCC", "ID", "ACL",
     // Football-club designation: SJSU's CSU-alumni-night mailer for Bay FC
     // wrote "be a part of the Bay FC Legacy" in body copy. The wedge rule
     // matched "Bay " + FC + " Legacy" and downcased FC → "Fc" because the
@@ -2172,6 +2177,21 @@ function inferCategory(title, desc, type, venue = "") {
   // arts). Trivia and live music are unambiguous when present in the title.
   if (/\btrivia\b/.test(titleLower)) return "community";
   if (/\blive\s+music\b/.test(titleLower)) return "music";
+  // Title-first rules must beat incidental venue/body words. A civic town hall
+  // held in a theater is not an arts event, and a campus tour that mentions
+  // lunch is not food programming.
+  if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(titleLower)) return "community";
+  if (/\b(?:college|campus)\s+tour\b/.test(titleLower)) return "education";
+  if (/\bpwhl\b/.test(titleLower)) return "sports";
+  // A screening is an arts event even when a library or teen center frames it
+  // as a family/community night. Trivia remains community via the rule above.
+  if (/\b(movie|film)\s+(?:day|night|screening)\b|\bscreening\s+of\b/.test(titleLower)) return "arts";
+  // Clinical education can name a sport injury without becoming a sports
+  // event. Keep the rule anchored to explicit medical-course language.
+  if (/\borthop(?:a)?edic\s+academy\b|\bsurgical\s+reconstruction\b/.test(titleLower)) return "education";
+  // Library recital titles sometimes name only the composer, with no generic
+  // music word for the broader heuristic to catch.
+  if (/\b(bach|beethoven|mozart|vivaldi|chopin|tchaikovsky|brahms|debussy|rachmaninoff)\b/.test(titleLower)) return "music";
   // Parades are civic/community gatherings even when their descriptions say
   // attendees can dance or mention performers along the route.
   if (/\bparade\b/.test(titleLower)) return "community";
