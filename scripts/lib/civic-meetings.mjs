@@ -479,7 +479,10 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
     if (!Array.isArray(events) || events.length === 0) return null;
 
     const named = events
-      .map((e) => ({ body: String(e.EventBodyName || "").trim(), eventId: e.EventId }))
+      .map((e) => ({
+        body: String(e.EventBodyName || "").trim(), eventId: e.EventId,
+        sourceUrl: legistarMeetingUrl(client, dateIso, e.EventInSiteURL),
+      }))
       .filter((e) => e.body);
     // councilMet:true is NOT the same as a bare null. Null now means "the check
     // could not run" (see the contract note above verifyLegistarBodyOnDate), and
@@ -494,14 +497,14 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
     // commission / council-of-the-whole) over incidental same-day staff hearings.
     const deliberative = named.filter((e) => /\b(committee|commission)\b/i.test(e.body));
     const candidates = (deliberative.length > 0 ? deliberative : named)
-      .map(({ body, eventId }) => ({
+      .map(({ body, eventId, sourceUrl }) => ({
         // Strip meeting-type boilerplate Legistar prepends to some body names
         // ("Joint Meeting for the Rules and Open Government Committee…"). It's not
         // part of the body's name and it makes the card heading unreadable.
         body: body.replace(/^(?:joint|special|regular)\s+meeting\s+(?:for|of)\s+the\s+/i, "").trim(),
-        // Legistar's calendar link is already filtered to the meeting date, so the
-        // existing legistarMeetingUrl fallback stays correct for this body.
-        sourceUrl: null,
+        // Cite the matched event itself, including when other bodies met that
+        // day. The provider-owned URL is validated by legistarMeetingUrl above.
+        sourceUrl,
         eventId,
       }))
       .filter((c) => c.body);

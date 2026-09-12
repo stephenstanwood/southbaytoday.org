@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
+import { agendaTextForMeeting } from "./digest-source.mjs";
 
 import {
   confirmMeeting,
@@ -647,4 +649,44 @@ test("Legistar verifier separates councilMet:true from an unanswerable check", a
     () => verifyLegistarBodyOnDate("sanjose", "2026-09-01", "anything"),
   );
   assert.equal(unreachable, null);
+});
+
+const fixture = JSON.parse(readFileSync(new URL("./fixtures/san-jose-2026-09-09.json", import.meta.url)));
+
+function stubCalendar(t, eventItems = fixture.eventItems) {
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const eventId = String(url).match(/Events\/(\d+)\/EventItems/)?.[1];
+    return { ok: true, json: async () => eventId ? eventItems[eventId] ?? [] : fixture.events };
+  });
+}
+
+test("San José's full source resolves September 9 without weakening the two-item attribution guard", async (t) => {
+  stubCalendar(t);
+  const { record } = fixture;
+  const clipped = await verifyLegistarBodyOnDate("sanjose", record.date, `${record.title} ${record.excerpt}`);
+  assert.deepEqual(clipped, { body: null, sourceUrl: null, councilMet: false });
+
+  const resolved = await verifyLegistarBodyOnDate("sanjose", record.date, `${record.title} ${agendaTextForMeeting(record)}`);
+  assert.equal(resolved.body, "Rules and Open Government Committee and Committee of the Whole");
+  assert.equal(resolved.eventId, 8094);
+  assert.ok(resolved.score >= 2);
+  assert.equal(resolved.sourceUrl, fixture.events.find(e => e.EventId === 8094).EventInSiteURL);
+  assert.match(agendaTextForMeeting(record), /Council Transparency and Private Non-Disclosure Agreements/);
+});
+
+test("complete source text still cannot relabel genuinely ambiguous agendas", async (t) => {
+  stubCalendar(t, { ...fixture.eventItems, 8218: fixture.eventItems[8094] });
+  const result = await verifyLegistarBodyOnDate("sanjose", fixture.record.date, agendaTextForMeeting(fixture.record));
+  assert.deepEqual(result, { body: null, sourceUrl: null, councilMet: false });
+});
+
+test("an unavailable calendar still blocks attribution even with the full source", async (t) => {
+  t.mock.method(globalThis, "fetch", async () => { throw new Error("unavailable"); });
+  assert.equal(await verifyLegistarBodyOnDate("sanjose", fixture.record.date, agendaTextForMeeting(fixture.record)), null);
+});
+
+test("sources without a full agenda retain their original excerpt", () => {
+  assert.equal(agendaTextForMeeting({ excerpt: "Existing source", fullAgendaText: " " }), "Existing source");
+  assert.equal(agendaTextForMeeting({ excerpt: "Existing source" }), "Existing source");
+  assert.equal(agendaTextForMeeting({}), "");
 });
