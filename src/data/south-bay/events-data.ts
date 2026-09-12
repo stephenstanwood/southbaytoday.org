@@ -111,7 +111,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Weekly market on charming Murphy Ave in downtown Sunnyvale. Local produce, artisan foods, fresh flowers.",
+      "Weekly market on charming Murphy Ave in downtown Sunnyvale. Local produce, artisan foods, and fresh flowers.",
     url: "https://uvfm.org/sunnyvale-saturday",
     emoji: "🥦",
   },
@@ -319,7 +319,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Monthly street fair on the second Saturday with local artists, crafters, and makers. Handmade jewelry, ceramics, woodwork, apparel, live music. Sip & stroll event.",
+      "Monthly street fair on the second Saturday with local artists, crafters, and makers. Shop handmade jewelry, ceramics, woodwork, and apparel, with live music and a sip-and-stroll.",
     url: "https://santanarow.com/events/",
     emoji: "🎨",
   },
@@ -364,7 +364,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
   },
   {
     id: "cdm-all-ages-storytime",
-    title: "All Ages Storytime — Children's Discovery Museum",
+    title: "All-Ages Storytime — Children's Discovery Museum",
     city: "san-jose",
     venue: "Children's Discovery Museum",
     address: "180 Woz Way, San Jose",
@@ -395,7 +395,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     time: "10:30am",
     cost: "free",
     kidFriendly: true,
-    description: "All-ages music and movement program at the newly reopened Campbell Library. 30 minutes of songs, instruments, and dancing.",
+    description: "All-ages music and movement program at the newly reopened Campbell Library. The 30-minute program includes songs, instruments, and dancing.",
     url: "https://www.sccl.org/campbell",
     emoji: "🎵",
     startDate: "2026-05-26",
@@ -624,7 +624,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Help maintain the 3.3-acre Historic Orchard with UC Master Gardeners. Tree planting, pruning, mulching. Fruit donated to Second Harvest.",
+      "Help UC Master Gardeners maintain the 3.3-acre Historic Orchard through tree planting, pruning, and mulching. The fruit is donated to Second Harvest.",
     url: "https://grpg.org",
     emoji: "🌳",
   },
@@ -641,7 +641,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Weeding, deadheading, pruning, and planting in the Heritage Rose Garden. Bring water and thick gloves.",
+      "Help weed, deadhead, prune, and plant in the Heritage Rose Garden. Bring water and thick gloves.",
     url: "https://grpg.org",
     emoji: "🌹",
   },
@@ -712,7 +712,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: false,
     description:
-      "Monthly art walk through San Jose's SoFA arts district on the first Friday. Galleries, studios, pop-up art, and street performers.",
+      "Monthly art walk through San Jose's SoFA arts district on the first Friday, with galleries, studios, pop-up art, and street performers.",
     url: "https://www.southfirstfridays.com/",
     emoji: "🎭",
   },
@@ -730,7 +730,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "low",
     costNote: "~$12 admission + skate rental",
     kidFriendly: true,
-    description: "Outdoor holiday ice rink in downtown San Jose's Plaza de César Chávez. Nov–Jan.",
+    description: "Outdoor holiday ice rink in downtown San Jose's Plaza de César Chávez, open from November through January.",
     url: "https://www.downtownicesj.com/",
     emoji: "⛸️",
   },
@@ -762,7 +762,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "San Jose's beloved free holiday event. Hundreds of decorated trees, nightly entertainment, light displays — a longstanding downtown holiday tradition.",
+      "San Jose's beloved free holiday event features hundreds of decorated trees, nightly entertainment, and light displays in a longstanding downtown tradition.",
     url: "https://christmasinthepark.com",
     emoji: "🎄",
     featured: true,
@@ -917,7 +917,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$35",
     kidFriendly: true,
     description:
-      "NHL hockey at SAP Center during the regular season, Oct–Apr.",
+      "NHL hockey at SAP Center during the regular season from October through April.",
     url: "https://www.nhl.com/sharks/schedule",
     emoji: "🦈",
     featured: true,
@@ -935,7 +935,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$25",
     kidFriendly: true,
     description:
-      "MLS soccer at PayPal Park. One of the most family-friendly and affordable pro sports experiences in the Bay.",
+      "MLS soccer at PayPal Park, one of the most family-friendly and affordable pro sports experiences in the Bay.",
     url: "https://www.sjearthquakes.com/schedule",
     emoji: "⚽",
   },
@@ -952,7 +952,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$12",
     kidFriendly: true,
     description:
-      "Minor League Baseball's SF Giants affiliate. Affordable, fun, great way to see tomorrow's MLB stars up close.",
+      "The SF Giants' Minor League Baseball affiliate offers an affordable, fun way to see tomorrow's MLB stars up close.",
     url: "https://www.milb.com/san-jose",
     emoji: "⚾",
     featured: true,
@@ -988,7 +988,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$15",
     kidFriendly: true,
     description:
-      "AHL hockey — the San Jose Sharks' development affiliate. Affordable pro hockey with future NHL stars at Tech CU Arena.",
+      "The San Jose Barracuda are the Sharks' AHL affiliate, offering affordable pro hockey with future NHL stars at Tech CU Arena.",
     url: "https://www.sjbarracuda.com/schedule",
     emoji: "🏒",
   },
