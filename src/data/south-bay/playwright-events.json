@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-11T02:17:16.653Z",
+    "generatedAt": "2026-09-12T02:17:17.726Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 597,
+    "eventCount": 595,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (133)",
-      "Los Gatos Library (148)",
+      "Mountain View Public Library (130)",
+      "Los Gatos Library (150)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (13)",
+      "Linden Tree Books (12)",
       "History San Jose (9)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 136,
+        "count": 133,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 148,
+        "count": 150,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 13,
+        "count": 12,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -350,89 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "beafbf0a38b7",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17319765",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "ddc8a30b253a",
-      "title": "Sci-Fi Trivia Night",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "6:30 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required and seats are limited. This event is intended for adults, ages 18 and up only. Join us to test your knowledge on all things sci-fi and fantasy related! In teams of 5, you will work together to answer 40 questions from 4 sci-fi related categories. Fly solo or come with your friends, the top 3 teams will take home a prize. If you come in sci-fi/fantasy costume, your team will receive 2 bonus points! Light refreshments and snacks will be provided. A Sci-Fi September Event This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17211493",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "ec58b2ef0a30",
-      "title": "Baby Storytime: Rerun",
-      "date": "2026-09-11",
-      "displayDate": "Fri, Sep 11",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170826",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "1c0ab24e9bf6",
-      "title": "Amplify: TOTALS Youth Life Skills: Social Skills",
-      "date": "2026-09-11",
-      "displayDate": "Fri, Sep 11",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "family",
-      "cost": "free",
-      "description": "Learn, connect, and grow with TOTALS! These youth-led, engaging workshops help students build confidence and develop valuable life skills through hands-on activities, discussions, and interactive lessons. This session will be centered around social skill development. This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/16755117",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "422e26d7948d",
       "title": "Mid-Autumn Festival Story Celebration",
@@ -3201,6 +3118,28 @@
         "Tweens"
       ],
       "url": "https://mountainview.libcal.com/event/17028030",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "45b6ce06ac29",
+      "title": "Cuesta Park Storytime",
+      "date": "2026-12-10",
+      "displayDate": "Thu, Dec 10",
+      "time": "10:00 AM",
+      "endTime": "11:00 AM",
+      "venue": "Cuesta Park",
+      "address": "615 Cuesta Dr, Mountain View, CA 94040",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Stop by the Bookmobile for stories, songs, and rhymes in the heart of Cuesta Park! Enjoy a fun-filled storytime at the playground, and take advantage of full library services available from 10:0011:00 a.m. Events are weather permitting. Find us at 615 Cuesta Drive, Mountain View, CA 94040",
+      "sourceAudiences": [
+        "Preschoolers",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17295777",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -6233,6 +6172,46 @@
       "kidFriendly": true
     },
     {
+      "id": "118b7eab852a",
+      "title": "Cafecito Book Club",
+      "date": "2026-12-10",
+      "displayDate": "Thu, Dec 10",
+      "time": "10:00 AM",
+      "endTime": "11:00 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "This bookclub reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en espaol y se rene el segundo jueves de cada mes de 10 a 11 a. m. en la sala de conferencias de la biblioteca (primer piso).",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16035615",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "afd18a454643",
+      "title": "Park-It Market",
+      "date": "2026-12-10",
+      "displayDate": "Thu, Dec 10",
+      "time": "10:00 AM",
+      "endTime": "11:15 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join the team from West Valley Community Services for their twice monthly Park-It Market. On the second and fourth Thursday of each month, WVCS offers free access to food inlcluding fresh produce, meat, dairy products, dry goods and canned food.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/15783340",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -6537,28 +6516,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "eb469f58d447",
-      "title": "Book Launch with James Ponti",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-10"
-      }
     },
     {
       "id": "7393e71c89b4",
@@ -7947,10 +7904,10 @@
       "kidFriendly": false
     },
     {
-      "id": "20d00b99e885",
+      "id": "30b37c083e3c",
       "title": "Toddler Storytime",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
+      "date": "2026-09-11",
+      "displayDate": "Fri, Sep 11",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7964,10 +7921,10 @@
       "kidFriendly": true
     },
     {
-      "id": "560fd69a53f3",
+      "id": "b911413218c1",
       "title": "All Ages Storytime",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
+      "date": "2026-09-11",
+      "displayDate": "Fri, Sep 11",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -11100,23 +11057,6 @@
       "kidFriendly": false
     },
     {
-      "id": "61323f7ee084",
-      "title": "Soda Stereo",
-      "date": "2026-09-10",
-      "displayDate": "Thu, Sep 10",
-      "time": "8:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/soda-stereo",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "377c0f64450d",
       "title": "Palomazo Norteño",
       "date": "2026-09-12",
@@ -11302,6 +11242,23 @@
       "url": "https://www.sapcenter.com/events/detail/sombr",
       "source": "SAP Center",
       "kidFriendly": true
+    },
+    {
+      "id": "1a2aa4ba04ac",
+      "title": "Sharks x PWHL San Jose",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "1:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-13",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
       "id": "ae6e434de9d4",
