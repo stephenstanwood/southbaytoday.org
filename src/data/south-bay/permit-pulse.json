@@ -1,42 +1,54 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-11T03:08:57.942Z",
+      "generatedAt": "2026-09-12T12:36:05.664Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 3 – Sep 10",
+      "dateRange": "Sep 5 – Sep 12",
       "stats": {
-        "total": 235,
-        "notable": 9,
-        "newUnits": 275,
-        "totalValuation": 85093217
+        "total": 278,
+        "notable": 15,
+        "newUnits": 6,
+        "totalValuation": 5934151
       },
       "permits": [
         {
-          "id": "2026-132634-MF",
-          "address": "860 W San Carlos St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
+          "id": "2024-104983-RS",
+          "address": "735 S 10th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Block A Family Affordable Apts",
-          "valuation": 80819610,
-          "units": 272,
-          "issueDate": "2026-09-04",
-          "subtype": "Apartment"
+          "description": "Demo Detached Garage & Build New Detached ADU",
+          "valuation": 175920,
+          "units": 1,
+          "issueDate": "2026-09-10",
+          "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-135915-MF",
-          "address": "1655 Berryessa Rd",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
+          "id": "2025-109358-RS",
+          "address": "1211 Simonson Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "KB Home New Townhouse Building 3",
-          "valuation": 1992832,
+          "description": "Detached ADU",
+          "valuation": 172402,
           "units": 1,
-          "issueDate": "2026-09-04",
-          "subtype": "Townhouse"
+          "issueDate": "2026-09-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-107376-RS",
+          "address": "2261 Orlando Dr",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Conversion to ADU",
+          "valuation": 83914,
+          "units": 1,
+          "issueDate": "2026-09-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
           "id": "2025-133195-RS",
@@ -48,6 +60,18 @@
           "valuation": 66850,
           "units": 1,
           "issueDate": "2026-09-08",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-138005-RS",
+          "address": "3162 Mt Rainier Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Casejadu On Second Floor of Residence",
+          "valuation": 66146,
+          "units": 1,
+          "issueDate": "2026-09-10",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -63,77 +87,65 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-136247-CI",
-          "address": "2077 Gateway Pl",
+          "id": "2026-135735-CI",
+          "address": "925 Blossom Hill Rd",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Axis Ste 500 TI",
-          "valuation": 403626,
+          "description": "The Escape Room #1413",
+          "valuation": 949000,
           "units": 0,
-          "issueDate": "2026-09-04",
-          "subtype": "Office"
+          "issueDate": "2026-09-09",
+          "subtype": "Assembly"
         },
         {
-          "id": "2026-136476-CI",
-          "address": "3598 Payne Av #6",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
+          "id": "2026-136360-CI",
+          "address": "1600 Saratoga Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Chagee TI #201",
+          "valuation": 650000,
+          "units": 0,
+          "issueDate": "2026-09-09",
+          "subtype": "Restaurant"
+        },
+        {
+          "id": "2026-126919-CI",
+          "address": "77 N Almaden Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Palmetto Superfoods Tenant Improvement",
+          "valuation": 415000,
+          "units": 0,
+          "issueDate": "2026-09-09",
+          "subtype": "Restaurant"
+        },
+        {
+          "id": "2026-136935-CI",
+          "address": "2555 Corde Terra Cl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
           "workType": "ReRoof",
-          "description": "Canopy Buildings",
-          "valuation": 110670,
+          "description": "Commercial/Industrial",
+          "valuation": 313782,
           "units": 0,
-          "issueDate": "2026-09-04",
-          "subtype": "Canopy Buildings"
-        },
-        {
-          "id": "2026-136452-CI",
-          "address": "1038 Leigh Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "ReRoof",
-          "description": "Office",
-          "valuation": 67704,
-          "units": 0,
-          "issueDate": "2026-09-04",
-          "subtype": "Office"
-        },
-        {
-          "id": "2020-107955-CI",
-          "address": "919 Story Rd E220",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "Finish Interior",
-          "description": "Teresa Attorney Office",
-          "valuation": 60000,
-          "units": 0,
-          "issueDate": "2026-09-04",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-136482-CI",
-          "address": "6601 Camden Av",
-          "category": "commercial",
-          "categoryLabel": "Commercial",
-          "workType": "ReRoof",
-          "description": "Church",
-          "valuation": 52080,
-          "units": 0,
-          "issueDate": "2026-09-04",
-          "subtype": "Church"
+          "issueDate": "2026-09-10",
+          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-11T03:09:00.273Z",
+      "generatedAt": "2026-09-12T12:36:08.035Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 3 – Sep 10",
+      "dateRange": "Sep 5 – Sep 12",
       "stats": {
-        "total": 68,
-        "notable": 1,
+        "total": 91,
+        "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -148,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-08",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02541",
+          "address": "124 Primrose Wy",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "RES: Temporary power for remodel project, power to disconnect and re-connect to temporary power pole",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-09",
           "subtype": "Permit Issued"
         }
       ]
