@@ -1,7 +1,7 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-12T12:36:05.664Z",
+      "generatedAt": "2026-09-13T04:36:45.220Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
@@ -137,7 +137,7 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-12T12:36:08.035Z",
+      "generatedAt": "2026-09-13T04:36:47.507Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
@@ -151,18 +151,6 @@
       },
       "permits": [
         {
-          "id": "26BLD-02540",
-          "address": "939 Paradise Wy",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-08",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-02541",
           "address": "124 Primrose Wy",
           "category": "residential-remodel",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-09",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02540",
+          "address": "939 Paradise Wy",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-08",
           "subtype": "Permit Issued"
         }
       ]

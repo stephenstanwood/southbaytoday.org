@@ -1,250 +1,126 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-12T12:44:41.199Z",
+    "generatedAt": "2026-09-13T04:44:34.728Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 14
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 14,
-    "placesExtracted": 10,
-    "placesMatched": 6,
-    "placeGaps": 4,
-    "eventsExtracted": 7,
-    "eventsMatched": 1,
-    "eventGaps": 6,
+    "threadsMined": 9,
+    "placesExtracted": 6,
+    "placesMatched": 1,
+    "placeGaps": 5,
+    "eventsExtracted": 2,
+    "eventsMatched": 0,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "IGNITE",
+      "name": "Evergreen Village Square",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "plaza where Evergreen Coffee Co is located",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
+        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
+        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
+        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
+      ]
+    },
+    {
+      "name": "Posh Bagel",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "new restaurant/bar opening in old Sushi Confidential space, 26 N San Pedro St",
+      "context": "corporate chain opening next to local coffee shop",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
+        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
+        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
+        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
+        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
       ]
     },
     {
-      "name": "Pup Plaza",
-      "city": "",
+      "name": "San Jose Rose Garden",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "location for journaling meetup event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
+        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
+        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
+        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
+      ]
+    },
+    {
+      "name": "Jade Cathay",
+      "city": "San Jose",
       "kind": "venue",
-      "context": "hosting dog adoption event",
+      "context": "venue hosting a punk/metal show",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
+        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
+        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
+        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
       ]
     },
     {
-      "name": "Trader Joe's",
-      "city": "",
-      "kind": "retail",
-      "context": "Pico salsa recommended for west SJ",
+      "name": "PARS Equality Center",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "location hosting a job fair",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
-      ]
-    },
-    {
-      "name": "Rooster T. Feathers",
-      "city": "Sunnyvale",
-      "kind": "venue",
-      "context": "comedy club hosting Matt O'Brien from AGT",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
+        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
+        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
+        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Support Ukraine Bake and Craft Sale",
-      "when": "Sunday 9/13, 11am-2pm",
+      "name": "Journal Club South Bay Meetup",
+      "when": "2pm today",
       "city": "San Jose",
-      "context": "bake and craft sale fundraiser",
+      "context": "journaling event at Rose Garden",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
+        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
+        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
+        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
+        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
       ]
     },
     {
-      "name": "¡Viva Calle SJ!",
-      "when": "Sunday",
+      "name": "Job Fair",
+      "when": "Friday 9/18, 11am",
       "city": "San Jose",
-      "context": "open streets community event",
+      "context": "job fair at PARS Equality Center with multiple employers",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
-      ]
-    },
-    {
-      "name": "Sunnyvale Reddit Meetup",
-      "when": "tomorrow",
-      "city": "Sunnyvale",
-      "context": "childfree meetup at Philz",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
-      ]
-    },
-    {
-      "name": "Dog Adoption Event featuring Walter",
-      "when": "Saturday September 12, 10am-12pm",
-      "city": "San Jose",
-      "context": "adoption event with Silicon Valley Pet Project and Every Pet's Dream",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
-      ]
-    },
-    {
-      "name": "Journal Club",
-      "when": "Saturday 9/12, 2pm",
-      "city": "Sunnyvale",
-      "context": "meetup in the Rose Garden",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
-      ]
-    },
-    {
-      "name": "Matt O'Brien Comedy Show",
-      "when": "September 10",
-      "city": "Sunnyvale",
-      "context": "AGT comedian performing at Rooster T. Feathers",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
+        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
+        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
+        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Sushi Confidential",
+      "name": "Evergreen Coffee Co",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "former occupant of the space IGNITE is opening in",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
-      ],
-      "matchedName": "Sushi Confidential Campbell"
-    },
-    {
-      "name": "Philz",
-      "city": "Sunnyvale",
       "kind": "cafe",
-      "context": "location of childfree Reddit meetup",
+      "context": "family coffee shop facing corporate competition",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
+        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
+        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
+        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
+        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
       ],
-      "matchedName": "Philz Coffee"
-    },
-    {
-      "name": "Rose Garden",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "location for Saturday journal club meetup",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdr3m8/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdn9xv/meet_walter_silicon_valleys_egyptian_prince/",
-        "https://www.reddit.com/r/SanJose/comments/1wdmus1/best_storebought_salsa_in_west_sj/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wcl9sz/journal_club_saturday_912_in_the_rose_garden_at/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wc2num/matt_obrien_from_agt_at_roosters_sept_10/"
-      ],
-      "matchedName": "Rose Garden Branch Library"
-    },
-    {
-      "name": "Vasona Lake County Park",
-      "city": "Los Gatos",
-      "kind": "park",
-      "context": "proposed VTA Greenline connection point",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1we4shx/looking_for_a_golf_buddy_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1we2hzd/controversial_opinion_not_only_should_follow_the/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wdxqyz/pasta_market_closed/",
-        "https://www.reddit.com/r/SanJose/comments/1wdstzc/watercolor_painting_of_japanese_american_museum/"
-      ],
-      "matchedName": "Vasona Lake County Park"
-    },
-    {
-      "name": "Sunnyvale Pasta Market",
-      "city": "Sunnyvale",
-      "kind": "restaurant",
-      "context": "appears to be temporarily closed",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1we4shx/looking_for_a_golf_buddy_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1we2hzd/controversial_opinion_not_only_should_follow_the/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wdxqyz/pasta_market_closed/",
-        "https://www.reddit.com/r/SanJose/comments/1wdstzc/watercolor_painting_of_japanese_american_museum/"
-      ],
-      "matchedName": "The Pasta Market"
-    },
-    {
-      "name": "Japanese American Museum of San Jose",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "subject of watercolor painting in Japantown",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1we4shx/looking_for_a_golf_buddy_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1we2hzd/controversial_opinion_not_only_should_follow_the/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wdxqyz/pasta_market_closed/",
-        "https://www.reddit.com/r/SanJose/comments/1wdstzc/watercolor_painting_of_japanese_american_museum/"
-      ],
-      "matchedName": "Japanese American Museum of San Jose"
+      "matchedName": "Evergreen Coffee Co"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Mid-Autumn Festival",
-      "when": "",
-      "city": "San Jose",
-      "context": "user asking about new events for this festival",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wdszyu/were_opening_ignite_in_the_old_sushi_confidential/",
-        "https://www.reddit.com/r/SanJose/comments/1we1s95/sun_913_11am2pm_support_ukraine_bake_and_craft/",
-        "https://www.reddit.com/r/SanJose/comments/1wdqkq0/viva_calle_this_sunday/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1we05o2/sunnyvale_reddit_meetup_tomorrow/",
-        "https://www.reddit.com/r/SanJose/comments/1wdse4p/any_new_events_for_the_midautumn_festival_in_sj/"
-      ],
-      "matchedName": "Mid-Autumn Festival"
-    }
-  ]
+  "eventMatches": []
 }
