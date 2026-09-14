@@ -5,6 +5,7 @@
 // hydration; regenerated on every nightly data build.
 import CalendarShell from "../../layouts/CalendarShell.astro";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
+import archiveData from "../../data/south-bay/events-archive.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { parseClockTime } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
@@ -40,28 +41,37 @@ export function getStaticPaths() {
   const DateCtor = globalThis.Date; // see module-level alias note
   const cityNames = new Map<string, string>(CITIES.map((c) => [c.id, c.name]));
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
+  const archived = (archiveData as { events?: RawEvent[] }).events ?? [];
+  const todayPt = new DateCtor().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const isDated = (e: RawEvent) => Boolean(e?.date && /^\d{4}-\d{2}-\d{2}$/.test(e.date));
+
+  // Same pool as /event/[slug]: upcoming timed events plus passed ones from
+  // the archive (~30 days), so a passed day keeps resolving with a "this day
+  // has passed" banner instead of 404ing the next morning. Search engines,
+  // RSS readers, and IndexNow-fed indexes hold /events/<date> links well past
+  // the date — before this grace window, /404 was the most-viewed page on the
+  // site in Vercel analytics. Upcoming wins when a recurring event appears in
+  // both pools. Exhibits / no-time records stay off date listings.
+  const upcoming = all.filter((e) => isDated(e) && (e.date as string) >= todayPt && e.time);
+  const past = archived.filter((e) => isDated(e) && (e.date as string) < todayPt && e.time);
+  const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
+  const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
 
   // Reverse lookup id → detail slug so listing links match /event/[slug].
   const slugById = new Map<string, string>();
-  for (const [slug, e] of buildEventSlugs(all)) {
+  for (const [slug, e] of buildEventSlugs(pool)) {
     if (e.id) slugById.set(String(e.id), slug);
   }
 
-  // A listing page for EVERY date with an upcoming timed event — no forward
-  // window. /event/[slug] pages exist for all upcoming events and each links
-  // back to /events/<its date> (as do RSS, the breadcrumb JSON-LD, and the
+  // A listing page for EVERY date with a timed event in the pool — no forward
+  // window. /event/[slug] pages exist for all of them and each links back to
+  // /events/<its date> (as do RSS, the breadcrumb JSON-LD, and the
   // StaticLinkStrip), so a date page has to exist wherever an event does or
   // that link 404s. The old 60-day cap left every event further out — 122 of
   // 183 future dates at last count — pointing at a page that was never built.
-  // Past dates still drop out; they live in the archive, not here.
-  const todayPt = new DateCtor().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-
   const byDate = new Map<string, RawEvent[]>();
-  for (const e of all) {
-    const date = e?.date;
-    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
-    if (date < todayPt) continue;
-    if (!e.time) continue; // exhibits / no-time records stay off date listings
+  for (const e of pool) {
+    const date = e.date as string;
     if (!byDate.has(date)) byDate.set(date, []);
     byDate.get(date)!.push(e);
   }
@@ -94,6 +104,7 @@ export function getStaticPaths() {
       props: {
         date,
         events,
+        passed: date < todayPt,
         prevDate: i > 0 ? dates[i - 1] : null,
         nextDate: i < dates.length - 1 ? dates[i + 1] : null,
       },
@@ -104,11 +115,12 @@ export function getStaticPaths() {
 interface Props {
   date: string;
   events: (RawEvent & { cityName: string | null; detailSlug: string | null; startMinutes: number | null })[];
+  passed: boolean;
   prevDate: string | null;
   nextDate: string | null;
 }
 
-const { date, events, prevDate, nextDate } = Astro.props;
+const { date, events, passed, prevDate, nextDate } = Astro.props;
 
 const dayLabel = new DateCtor(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
   timeZone: "UTC",
@@ -122,13 +134,16 @@ const shortLabel = (d: string) =>
 
 const cityCount = new Set(events.map((e) => e.city).filter(Boolean)).size;
 const title = `Events on ${dayLabel} — South Bay Today`;
-const description = `${events.length} things happening across the South Bay on ${dayLabel}: ${events
+const description = `${events.length} things ${passed ? "that happened" : "happening"} across the South Bay on ${dayLabel}: ${events
   .slice(0, 3)
   .map((e) => e.title)
   .filter(Boolean)
   .join(", ")}, and more.`;
 
-const listJsonLd = eventListJsonLd(events.map((event) => ({
+// Passed days stay crawlable for the archive window but must not advertise
+// EventScheduled — GSC flags stale Event objects on pages that already say
+// the day has passed (same rule as /event/[slug]).
+const listJsonLd = passed ? null : eventListJsonLd(events.map((event) => ({
   ...event,
   pageUrl: event.detailSlug ? `https://southbaytoday.org/event/${event.detailSlug}` : null,
 })) as SchemaEventRecord[], {
@@ -158,6 +173,12 @@ const breadcrumbJsonLd = JSON.stringify({
     <span class="cal-kicker">South Bay / Calendar</span>
     {nextDate ? <a href={`/events/${nextDate}`}>{shortLabel(nextDate)} →</a> : <span />}
   </nav>
+
+  {passed && (
+    <p class="cal-passed">
+      This day has passed — these events already happened. <a href="/events">See what's coming up →</a>
+    </p>
+  )}
 
   <h1>{dayLabel}</h1>
   <p class="cal-sub">
@@ -222,6 +243,19 @@ const breadcrumbJsonLd = JSON.stringify({
   </script>
 
   <style>
+    .cal-passed {
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      border: 1px solid #fde68a;
+      background: #fffbeb;
+      color: #92400e;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .cal-passed a {
+      color: inherit;
+      font-weight: 700;
+    }
     .cal-event--started {
       opacity: 0.55;
     }

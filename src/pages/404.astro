@@ -8,6 +8,14 @@ const description = "This page isn't on the calendar. Find today's plan, upcomin
 ---
 
 <CalendarShell title={title} description={description}>
+  <script is:inline>
+    // The Astro analytics component stamps the build-time pathname, so every
+    // missing URL reaches Vercel Web Analytics as one "/404" page row and the
+    // actual broken links are invisible there. Send the real URL instead; the
+    // route stays "/404", so the Routes view still totals them on one line.
+    // BaseLayout's notrack opt-out runs later in the body and still wins.
+    window.webAnalyticsBeforeSend = (event) => ({ ...event, url: location.href });
+  </script>
   <nav class="cal-daynav" aria-label="Breadcrumb">
     <a href="/">← Home</a>
     <span class="cal-kicker">South Bay / 404</span>
