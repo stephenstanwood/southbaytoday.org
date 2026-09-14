@@ -1263,12 +1263,19 @@ export function buildEditorialPacket(data, candidates) {
       year: h.foundedYear,
       note: compactText(h.anniversaryNote || h.tagline, 240),
     })),
+    // Reddit posts arrive over RSS, which carries no votes and no comment
+    // count, so generate-reddit-pulse stores score:0 / numComments:0 for every
+    // post. Handing those zeros to the editor as `score` and `comments` had it
+    // report them as fact: the 2026-09-14 conversation note opened "All four
+    // threads sit at zero replies this morning." Only pass a count the source
+    // actually reported; an unknown is no key at all (same rule as
+    // `registration` on event candidates above).
     redditCandidates: candidates.redditCandidates.map((p, idx) => ({
       idx,
       sub: p.sub || "",
       title: p.displayTitle || p.title || "",
-      score: p.score || 0,
-      comments: p.numComments || 0,
+      ...(p.score > 0 ? { score: p.score } : {}),
+      ...(p.numComments > 0 ? { comments: p.numComments } : {}),
       summary: compactText(p.summary, 180),
     })),
     recentlySent: candidates.recentSelections?.summaries?.length
@@ -1439,6 +1446,7 @@ Selection guidance:
 - Featured events should be balanced: adult/family/free/outdoor/culture when available. Do not let generic library items crowd out stronger citywide events unless the day is genuinely family-heavy.
 - Check recentlySent (when present): do not repeat a tonight pick from the last few days, and avoid re-featuring the same events unless they are genuinely still the best option. Repetition is the fastest way to make the email feel robotic.
 - Reddit items should be South Bay-specific conversation, not generic Bay Area chatter.
+- Reddit candidates carry no vote or reply counts unless a "score" or "comments" key is present. Never describe a thread as unanswered, at zero replies, waiting for an answer, quiet, busy, popular, or upvoted from their absence. The 2026-09-14 conversation note claimed "All four threads sit at zero replies this morning" off placeholder zeros.
 - Openings should be readable and genuinely fresh; skip raw, overly bureaucratic, or week-old entries if they make the email worse.
 - Raw scraped titles are often ugly ("Fugetsu \\- Sunnyvale", clickbait punctuation, ALL CAPS). When you select an event whose title reads like a feed dump, supply a cleaned title in titleOverrides — keep the real event/venue names, drop the junk, max 70 characters. Only rewrite what needs it.
 
