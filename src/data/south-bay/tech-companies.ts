@@ -1283,6 +1283,45 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     AI is Adelaide, DYU and SinapisAI and Huani and ELEHEAR are China,
   //     HeyDiga is Madrid, KVector is Birmingham, Bynario is Milan, Medteria is
   //     Fukuoka, and Wyre AI is the Washington DC area).
+  // Note on the Sep 11-14 2026 sweep: Piston's $15M Series A is the one
+  // in-coverage round, and like Cylake it is a late catch. The company's own
+  // ACCESS Newswire release went out Sep 10 — the day the roundup above was
+  // recorded as carrying no US Bay Area rounds — but it never reached the daily
+  // roundups at all; it surfaced through FinSMEs and the wire mirrors on Sep
+  // 11. HQ is Cupertino on two primary sources, not an aggregator label: the
+  // Sep 10 release's own boilerplate ends "The company is headquartered in
+  // Cupertino, California," and the June 2025 seed release datelines
+  // "CUPERTINO, CA / ACCESS Newswire / June 10, 2025" (with operations hubs in
+  // Lehi, Utah and Kolkata, India — offices, not the HQ). That 2025 seed
+  // ($6.1M led by Spark Capital plus a $1.4M PearX pre-seed) predates this
+  // list's window and is not entered separately; the $22.5M total in the
+  // tagline is the company's own figure and includes it.
+  // Near-misses recorded so the next cycle doesn't re-verify them:
+  //   * The Sep 11 and Sep 14 daily roundups carried no Santa Clara County
+  //     rounds (Sep 11: Kinetix AI, AIDIN Robotics, Provilac, nocall.ai,
+  //     Enigmata, Yuedian, Furo, Blue Farm, 9lione, EdTechX — Nashville and
+  //     international; Sep 14: Qupital, Tandem Health, Fortaegis, Chift, Aeon,
+  //     UniqYou — all international).
+  //   * Crunchbase's Sep 5-11 top-ten list is all out of coverage: Cognition,
+  //     Motive, and Harvey are San Francisco; Encoded Therapeutics is South
+  //     San Francisco; Celero Communications is Laguna Beach; the rest are out
+  //     of state.
+  //   * Intermezzo ($10M, Sep 10 2026; global payroll infrastructure) is Menlo
+  //     Park — San Mateo County, the same line that excludes Fireworks AI,
+  //     Cognichip, and WindBorne.
+  {
+    id: "piston",
+    name: "Piston",
+    city: "Cupertino",
+    category: "fintech",
+    round: "Series A",
+    amount: "$15M",
+    date: "2026-09-10",
+    tagline:
+      "Commercial trucking still buys most of its fuel on plastic fleet cards that get skimmed, shared, and swiped for things that aren't diesel. Piston, a Cupertino startup founded by two former fleet operators, Vikram Sekhon and Shivam Shah, replaces the card with a QR code: the driver scans at the pump, the station's point-of-sale authorizes that specific driver and vehicle, and the fleet owner sees every gallon in real time. The $15M Series A, led by FPV Ventures with existing backers Spark Capital and Pear VC, brings total funding to $22.5M and follows a year in which payment volume grew eightfold, the merchant network grew fortyfold, and retention held at 98%. The network now works at more than 2,000 stations in 48 states, with point-of-sale integrations certified for over 95% of the country's merchant fuel sites. Two new products ship with the round — Piston Guard, which flags or blocks suspicious transactions before they complete, and an analytics agent that reads a fleet's spending patterns for it — and the stated plan is coverage in every U.S. region within 18 months, then payments beyond fuel across the rest of logistics.",
+    color: "#9A1C1F",
+    url: "https://www.accessnewswire.com/newsroom/en/banking-and-financial-services/piston-raises-15-million-to-scale-the-infrastructure-layer-for-logis-1218633",
+  },
   {
     id: "cylake-sep-2026",
     name: "Cylake",
