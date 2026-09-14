@@ -1406,6 +1406,30 @@ test("the editor packet never invents a walk-up for a source that published noth
   assert.equal(packet.eventCandidates[1].registration, "required");
 });
 
+test("the editor packet never hands the editor RSS placeholder reply counts", () => {
+  const rssPost = {
+    id: "1wfjcmn", sub: "SanJose", title: "Viva Calle appreciation", displayTitle: "Viva Calle appreciation",
+    summary: "A resident praises Viva Calle.", score: 0, numComments: 0,
+  };
+  const counted = { ...rssPost, id: "1wfuxzf", title: "Japanese friendship garden", displayTitle: "Japanese friendship garden", score: 12, numComments: 7 };
+  const packet = buildEditorialPacket({
+    longDate: "Monday, September 14, 2026",
+    weather: null, dayPlan: null, todayHistory: [], civicMeetings: [],
+  }, { eventCandidates: [], openingCandidates: [], redditCandidates: [rssPost, counted] });
+
+  // RSS knows nothing about replies: no key, not a zero the editor can quote.
+  assert.equal("comments" in packet.redditCandidates[0], false);
+  assert.equal("score" in packet.redditCandidates[0], false);
+  // A count the source actually reported still reaches the editor.
+  assert.equal(packet.redditCandidates[1].comments, 7);
+  assert.equal(packet.redditCandidates[1].score, 12);
+});
+
+test("newsletter editor prompt forbids inventing reply counts", () => {
+  const prompt = buildEditorialPrompt({ todayEvents: [] });
+  assert.match(prompt, /Never describe a thread as unanswered, at zero replies/);
+});
+
 test("newsletter editor prompt forbids inventing walk-up access", () => {
   const prompt = buildEditorialPrompt({ todayEvents: [] });
   assert.match(prompt, /Never tell readers an event needs no registration/);

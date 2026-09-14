@@ -23,6 +23,7 @@ import {
   normalizeMeetingTime,
   onlyConfirmedMeetings,
   pickCivicClerkMeeting,
+  primeGovAgendaUrl,
   ptDateISO,
   resolvePublicStart,
 } from "./lib/civic-meetings.mjs";
@@ -420,7 +421,12 @@ async function fetchPrimeGovMeeting(domain, committeeId) {
     bodyName: ev.title || "City Council",
     location: null,
     closedSession: isClosedSessionMeeting({ bodyName: ev.title }),
-    url: `https://${domain}/Portal/Meeting?meetingId=${ev.id}`,
+    // `Portal/Meeting?meetingId=N` is not a route PrimeGov serves: it lands on
+    // "Document Not Found" for every meeting, which is what the 2026-09-14
+    // issue's "Civic meetings tonight" link did. The portal addresses a
+    // meeting by its published HTML agenda (compiledMeetingDocumentFileId);
+    // before the agenda posts, send readers to the meeting list instead.
+    url: primeGovAgendaUrl(domain, ev) || `https://${domain}/public/portal`,
     agendaItems: [],
   }, ev);
   return confirmMeeting(meeting, {
