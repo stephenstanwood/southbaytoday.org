@@ -9474,16 +9474,21 @@ async function main() {
     throw new Error(regression);
   }
 
-  // Rolling 30-day archive of events that age out of the upcoming file. The
-  // static /event/<slug> pages build from upcoming ∪ archive so a page keeps
-  // resolving (with a "this event has passed" banner) instead of 404ing the
-  // morning after — preserves earned links and avoids index churn. Never let
-  // archive maintenance break the main pipeline.
+  // Rolling archive of events that age out of the upcoming file. The static
+  // /event/<slug> and /events/<date> pages build from upcoming ∪ archive so a
+  // page keeps resolving (with a "passed" banner) instead of 404ing the
+  // morning after — preserves earned links and avoids index churn. Google
+  // kept crawling and serving expired event URLs for six to nine weeks after
+  // they left the original 30-day window (Search Console 2026-09-14: 1,305
+  // dead URLs, /404 the most-viewed page on the site), so the window is 90
+  // days; it deepens one day at a time from the 30 held before 2026-09-14.
+  // Never let archive maintenance break the main pipeline.
+  const ARCHIVE_DAYS = 90;
   try {
     const ARCHIVE_PATH = join(__dirname, "..", "src", "data", "south-bay", "events-archive.json");
     const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
     const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 30);
+    cutoff.setDate(cutoff.getDate() - ARCHIVE_DAYS);
     const cutoffPt = cutoff.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
     let archive = { events: [] };
@@ -9500,7 +9505,7 @@ async function main() {
     );
     kept.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id ?? "").localeCompare(String(b.id ?? "")));
     writeFileAtomic(ARCHIVE_PATH, JSON.stringify({ updatedAt: new Date().toISOString(), eventCount: kept.length, events: kept }, null, 2) + "\n");
-    console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (30-day window)`);
+    console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
   } catch (err) {
     console.warn(`⚠️  events-archive maintenance failed (non-fatal): ${err.message}`);
   }

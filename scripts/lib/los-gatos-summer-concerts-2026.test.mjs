@@ -134,15 +134,15 @@ test("keeps the committed event database aligned with the verified schedule", ()
   const upcoming = upcomingDocument.events;
   const archive = archiveDocument.events;
 
-  // The event archive intentionally retains only 30 days. Anchor the expected
-  // slice to this committed refresh instead of wall-clock time so the test stays
-  // deterministic as older concerts age out of the database.
+  // The event archive is a rolling window (ARCHIVE_DAYS in generate-events.mjs:
+  // 90 as of 2026-09-14, deepening day by day from the 30 it held before).
+  // Anchor the expected slice to the oldest date the committed archive actually
+  // holds, so the test stays deterministic as concerts age out and needs no
+  // magic number of its own that would drift from the generator.
   const refreshedAt = new Date(archiveDocument.updatedAt || upcomingDocument.generatedAt);
-  const archiveCutoff = new Date(refreshedAt);
-  archiveCutoff.setDate(archiveCutoff.getDate() - 30);
-  const archiveCutoffPt = archiveCutoff.toLocaleDateString("en-CA", {
-    timeZone: "America/Los_Angeles",
-  });
+  const archiveCutoffPt =
+    archive.map((event) => event.date).filter((date) => typeof date === "string").sort()[0] ??
+    refreshedAt.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const allExpected = getLosGatosSummerConcerts().filter(
     (event) => event.date >= archiveCutoffPt,
   );

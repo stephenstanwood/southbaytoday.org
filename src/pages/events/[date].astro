@@ -46,7 +46,7 @@ export function getStaticPaths() {
   const isDated = (e: RawEvent) => Boolean(e?.date && /^\d{4}-\d{2}-\d{2}$/.test(e.date));
 
   // Same pool as /event/[slug]: upcoming timed events plus passed ones from
-  // the archive (~30 days), so a passed day keeps resolving with a "this day
+  // the archive (90 days), so a passed day keeps resolving with a "this day
   // has passed" banner instead of 404ing the next morning. Search engines,
   // RSS readers, and IndexNow-fed indexes hold /events/<date> links well past
   // the date — before this grace window, /404 was the most-viewed page on the

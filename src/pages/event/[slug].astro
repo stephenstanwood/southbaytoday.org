@@ -40,7 +40,7 @@ export function getStaticPaths() {
   const archived = (archiveData as { events?: RawEvent[] }).events ?? [];
   const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const upcoming = all.filter((e) => e.date && e.date >= todayPt && e.time);
-  // Passed events keep resolving for ~30 days (the archive's window) with a
+  // Passed events keep resolving for the archive window (90 days) with a
   // "this event has passed" banner — no next-morning 404s. Upcoming wins when
   // a recurring event appears in both pools.
   const past = archived.filter((e) => e.date && e.date < todayPt && e.time);
