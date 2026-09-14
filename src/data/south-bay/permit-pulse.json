@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-13T04:36:45.220Z",
+      "generatedAt": "2026-09-14T08:05:28.744Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 5 – Sep 12",
+      "dateRange": "Sep 7 – Sep 14",
       "stats": {
-        "total": 278,
+        "total": 260,
         "notable": 15,
         "newUnits": 6,
-        "totalValuation": 5934151
+        "totalValuation": 5884546
       },
       "permits": [
         {
@@ -137,31 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-13T04:36:47.507Z",
+      "generatedAt": "2026-09-14T08:05:30.889Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 5 – Sep 12",
+      "dateRange": "Sep 7 – Sep 14",
       "stats": {
-        "total": 91,
+        "total": 93,
         "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02541",
-          "address": "124 Primrose Wy",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "RES: Temporary power for remodel project, power to disconnect and re-connect to temporary power pole",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-09",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02540",
           "address": "939 Paradise Wy",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-08",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02541",
+          "address": "124 Primrose Wy",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Building Permit",
+          "description": "RES: Temporary power for remodel project, power to disconnect and re-connect to temporary power pole",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-09",
           "subtype": "Permit Issued"
         }
       ]

@@ -1,125 +1,109 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-13T04:44:34.728Z",
+    "generatedAt": "2026-09-14T08:13:49.987Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 9,
-    "placesExtracted": 6,
-    "placesMatched": 1,
-    "placeGaps": 5,
-    "eventsExtracted": 2,
+    "threadsMined": 8,
+    "placesExtracted": 4,
+    "placesMatched": 3,
+    "placeGaps": 1,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Evergreen Village Square",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "plaza where Evergreen Coffee Co is located",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
-        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
-        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
-        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
-      ]
-    },
-    {
-      "name": "Posh Bagel",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "corporate chain opening next to local coffee shop",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
-        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
-        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
-        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
-      ]
-    },
-    {
-      "name": "San Jose Rose Garden",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "location for journaling meetup event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
-        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
-        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
-        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
-      ]
-    },
-    {
-      "name": "Jade Cathay",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "venue hosting a punk/metal show",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
-        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
-        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
-      ]
-    },
-    {
-      "name": "PARS Equality Center",
+      "name": "Southwest YMCA",
       "city": "San Jose",
       "kind": "other",
-      "context": "location hosting a job fair",
+      "context": "YMCA branch being compared for family programs",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
-        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
-        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
+        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
+        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
+        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Journal Club South Bay Meetup",
-      "when": "2pm today",
+      "name": "Goombah's Car Club 18th Annual Car Show",
+      "when": "today 9am-3pm",
       "city": "San Jose",
-      "context": "journaling event at Rose Garden",
+      "context": "annual car show in downtown Willow Glen",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
-        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
-        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
-        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
+        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
+        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
       ]
     },
     {
-      "name": "Job Fair",
-      "when": "Friday 9/18, 11am",
+      "name": "Viva Calle",
+      "when": "",
       "city": "San Jose",
-      "context": "job fair at PARS Equality Center with multiple employers",
+      "context": "open streets event closing roads to cars",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wevsx4/where_can_i_find_the_community_thats_into/",
-        "https://www.reddit.com/r/SanJose/comments/1wesw2n/tattoo_artist_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wek0xl/local_shows/",
-        "https://www.reddit.com/r/SanJose/comments/1wehrdw/job_fair_fri_918_at_11am_pars_equality_center/"
+        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
+        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
+        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+      ]
+    },
+    {
+      "name": "Viva Calle VTA",
+      "when": "",
+      "city": "San Jose",
+      "context": "open streets event happening today",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
+        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
+        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Evergreen Coffee Co",
+      "name": "Japanese Friendship Garden",
       "city": "San Jose",
-      "kind": "cafe",
-      "context": "family coffee shop facing corporate competition",
+      "kind": "park",
+      "context": "asking about koi fish and water features",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wewrxz/hi_new_to_the_area_what_are_local_restaurant/",
-        "https://www.reddit.com/r/SanJose/comments/1wemmf5/come_journal_today_2pm_in_the_san_jose_rose_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1welyhf/please_help_save_a_local_family_coffee_shop_in/",
-        "https://www.reddit.com/r/SanJose/comments/1weeouh/rye_bread_for_home_made_reubens/",
-        "https://www.reddit.com/r/SanJose/comments/1weefmm/looking_for_doggy_daycare_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
+        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
+        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
       ],
-      "matchedName": "Evergreen Coffee Co"
+      "matchedName": "Japanese Friendship Garden"
+    },
+    {
+      "name": "Central YMCA",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "YMCA branch being compared for family programs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
+        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
+        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
+      ],
+      "matchedName": "Central YMCA"
+    },
+    {
+      "name": "South Valley Family YMCA",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "YMCA branch being compared for family programs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
+        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
+        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
+      ],
+      "matchedName": "South Valley Family YMCA"
     }
   ],
   "eventMatches": []
