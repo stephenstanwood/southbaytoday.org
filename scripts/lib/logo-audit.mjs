@@ -233,6 +233,61 @@ function matchField(item, field) {
 
 /** Every logo-bearing entry in tech-companies.ts, carrying the `group` and
  *  `stage` that shouldSkipWikipedia gates on. */
+// A card's `url` is its primary source — a funding card links the release
+// that proves the round — and for a young company that is often hosted by the
+// investor or a wire service rather than the company itself. The resolver
+// derives the logo domain from that url, so without a correction the card
+// wears the host's mark: TabaPay's Sep 2026 card carried FTV Capital's hexagon
+// for a week because its link is ftvcapital.com, and Piston's first fetch
+// returned ACCESS Newswire's "A". Map such ids to the company's own site here.
+// The card link is untouched; only logo resolution reads this.
+export const LOGO_SITE_OVERRIDES = {
+  tabapay: "https://tabapay.com", // card links FTV Capital's release
+  piston: "https://www.piston.com", // card links the ACCESS Newswire release
+};
+
+// Hosts that are never a company's own domain. A card whose url lives on one
+// of these needs a LOGO_SITE_OVERRIDES row, or the resolver will fetch the
+// wire's favicon and the gate can't tell — a unique wrong mark passes the
+// byte-identical check. Investor sites (ftvcapital.com) can't be enumerated,
+// so those stay a judgment call at review time.
+export const WIRE_SERVICE_HOSTS = new Set([
+  "accessnewswire.com",
+  "businesswire.com",
+  "globenewswire.com",
+  "newswire.com",
+  "prnewswire.com",
+  "prweb.com",
+]);
+
+export function urlHost(u) {
+  if (!u) return "";
+  try {
+    return new URL(u).hostname.replace(/^www\./, "").toLowerCase();
+  } catch {
+    return "";
+  }
+}
+
+/** The site the resolver should read a company's mark from: the override when
+ *  one is recorded, otherwise the card's own url. */
+export function logoSiteFor(company) {
+  if (!company) return "";
+  return LOGO_SITE_OVERRIDES[company.id] || company.url || "";
+}
+
+/** Companies whose card url is hosted by a wire service and who have no
+ *  override — the exact setup that puts the wire's mark on the card. */
+export function auditLogoSites(companies) {
+  const flagged = [];
+  for (const c of companies || []) {
+    if (!c || !c.url || LOGO_SITE_OVERRIDES[c.id]) continue;
+    const host = urlHost(c.url);
+    if (WIRE_SERVICE_HOSTS.has(host)) flagged.push({ id: c.id, host });
+  }
+  return flagged;
+}
+
 export async function loadCompanies(dataPath = DATA_PATH) {
   if (!existsSync(dataPath)) return [];
   const src = await readFile(dataPath, "utf8");
@@ -265,6 +320,7 @@ export async function loadCompanies(dataPath = DATA_PATH) {
         group: groupName,
         stage: matchField(item, "stage") || "",
       });
+      out[out.length - 1].logoSite = logoSiteFor(out[out.length - 1]);
     }
   }
   // De-dupe by id (TECH_COMPANIES + TECH_MILESTONES often share IDs).

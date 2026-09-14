@@ -27,6 +27,7 @@ import {
   findDrift,
   auditLogoManifest,
   auditLogoProvenance,
+  auditLogoSites,
 } from "./lib/logo-audit.mjs";
 
 const manifest = await loadManifest(MANIFEST_PATH);
@@ -46,6 +47,9 @@ const { missing, duplicates } = await auditLogoManifest(manifest, ROOT);
 const sources = await loadManifestSources();
 const companies = await loadCompanies();
 const { violations, unlabeled } = auditLogoProvenance(sources, companies);
+// A card linking a wire-service release resolves to the wire's favicon unless
+// LOGO_SITE_OVERRIDES points the resolver at the company's own site.
+const wireHosted = auditLogoSites(companies);
 if (companies.length && unlabeled.length) {
   console.log(
     `check-tech-logos: note — ${unlabeled.length}/${companies.length} compan(ies) have no recorded logo source yet; they'll be labeled as logos are re-fetched.`,
@@ -69,7 +73,7 @@ if (ids) {
   }
 }
 
-if (!missing.length && !duplicates.length && !violations.length) {
+if (!missing.length && !duplicates.length && !violations.length && !wireHosted.length) {
   console.log(
     `check-tech-logos: OK (${total} logos, no missing files, no unexpected shared marks, no misrouted sources)`,
   );
@@ -108,6 +112,17 @@ if (violations.length) {
       "  node scripts/fetch-tech-logos.mjs --refresh --id <id>\n" +
       "If this company genuinely has the best mark on Wikipedia, add it to\n" +
       "FORCE_WIKI_IDS in scripts/lib/logo-audit.mjs and re-fetch.\n",
+  );
+}
+
+if (wireHosted.length) {
+  console.error(`${wireHosted.length} card(s) link a wire-service release with no logo site override:`);
+  for (const w of wireHosted) console.error(`  ${w.id} → ${w.host}`);
+  console.error(
+    "\nThe resolver reads the logo domain off the card url, so these cards\n" +
+      "would wear the wire's favicon. Add the company's own site to\n" +
+      "LOGO_SITE_OVERRIDES in scripts/lib/logo-audit.mjs and re-fetch:\n" +
+      "  node scripts/fetch-tech-logos.mjs --refresh --id <id>\n",
   );
 }
 

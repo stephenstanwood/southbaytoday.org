@@ -619,12 +619,15 @@ async function main() {
   // actually produced the bytes we write, so it always describes the committed
   // file rather than what we'd resolve today.
   async function resolveOne(c) {
-    const domain = urlToDomain(c.url);
+    // c.logoSite is the card url unless LOGO_SITE_OVERRIDES (logo-audit.mjs)
+    // redirects a release-hosted card to the company's own domain.
+    const site = c.logoSite || c.url;
+    const domain = urlToDomain(site);
     const cascade = [
       [PINNED_WIKI_SOURCE, () => tryPinned(c.id)],
       [WIKIPEDIA_SOURCE, () => (shouldSkipWikipedia(c) ? null : tryWikipedia(c.name))],
       ["icon-horse", () => tryIconHorse(domain)],
-      ["website", () => tryWebsiteScrape(c.url)],
+      ["website", () => tryWebsiteScrape(site)],
       ["duckduckgo", () => tryDuckDuckGo(domain)],
       ["google-favicon", () => tryGoogleFavicon(domain)],
     ];

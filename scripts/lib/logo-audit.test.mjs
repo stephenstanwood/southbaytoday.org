@@ -5,6 +5,9 @@ import {
   parseRecordBlock,
   shouldSkipWikipedia,
   auditLogoProvenance,
+  auditLogoSites,
+  logoSiteFor,
+  LOGO_SITE_OVERRIDES,
   FORCE_WIKI_IDS,
   SKIP_WIKI_IDS,
 } from "./logo-audit.mjs";
@@ -159,4 +162,55 @@ test("provenance for an id no longer in the data file is ignored, not flagged", 
   // Manifest drift is handled by findDrift; provenance only judges live rows.
   const { violations } = auditLogoProvenance({ "long-gone": "wikipedia" }, COMPANIES);
   assert.deepEqual(violations, []);
+});
+
+// ---------------------------------------------------------------------------
+// Logo site overrides — a card whose url is the investor's or the wire's
+// release must not wear the host's favicon (TabaPay wore FTV Capital's
+// hexagon; Piston's first fetch returned ACCESS Newswire's "A").
+// ---------------------------------------------------------------------------
+
+test("a card with no override resolves its logo off its own url", () => {
+  assert.equal(
+    logoSiteFor({ id: "nile", url: "https://nile.com/press/round" }),
+    "https://nile.com/press/round",
+  );
+});
+
+test("an overridden id resolves off the company site, leaving the card link alone", () => {
+  const card = { id: "tabapay", url: "https://ftvcapital.com/2026/tabapay-closes/" };
+  assert.equal(logoSiteFor(card), LOGO_SITE_OVERRIDES.tabapay);
+  assert.match(logoSiteFor(card), /tabapay\.com/);
+  assert.equal(card.url, "https://ftvcapital.com/2026/tabapay-closes/");
+});
+
+test("a wire-hosted card without an override is flagged with its host", () => {
+  const flagged = auditLogoSites([
+    { id: "newco", url: "https://www.prnewswire.com/news-releases/newco-raises.html" },
+    { id: "ok-co", url: "https://ok.co/news" },
+  ]);
+  assert.deepEqual(flagged, [{ id: "newco", host: "prnewswire.com" }]);
+});
+
+test("a wire-hosted card with an override is clean", () => {
+  assert.deepEqual(
+    auditLogoSites([
+      {
+        id: "piston",
+        url: "https://www.accessnewswire.com/newsroom/en/piston-raises-15-million",
+      },
+    ]),
+    [],
+  );
+});
+
+test("every override id points at a real https site", () => {
+  for (const [id, site] of Object.entries(LOGO_SITE_OVERRIDES)) {
+    assert.match(site, /^https:\/\//, id);
+  }
+});
+
+test("auditLogoSites tolerates empty and malformed input", () => {
+  assert.deepEqual(auditLogoSites(undefined), []);
+  assert.deepEqual(auditLogoSites([{ id: "x", url: "not a url" }, null]), []);
 });
