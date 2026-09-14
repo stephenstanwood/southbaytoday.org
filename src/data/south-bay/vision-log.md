@@ -2,6 +2,64 @@
 
 ---
 
+## 2026-09-14 — Cycle 223: TabaPay's Card Was Wearing Its Investor's Logo
+
+### Context
+Monday September 14, 2026. Roadmap still closed (6/6). Typecheck clean, the
+post-change tech URL audit clean (173 links, 0 moved, 0 dead, 8 bot-walls).
+The daily funding sweep found one in-coverage round, and adding it exposed a
+logo bug that had been live on a neighboring card since September 10.
+
+### What Was Built
+
+**Piston's $15M Series A is on the Tech tab.** The Cupertino company — two
+former fleet operators replacing plastic fleet fuel cards with a QR code the
+station's point-of-sale authorizes per driver and vehicle — raised $15M from
+FPV Ventures with Spark Capital and Pear VC, $22.5M in total, and is live at
+2,000+ stations in 48 states. HQ is Cupertino on two primary sources: the Sep
+10 release's own boilerplate and the June 2025 seed release's "CUPERTINO, CA"
+dateline. The round was a late catch of the Cylake kind — the company's ACCESS
+Newswire release went out Sep 10, the day the last sweep recorded as carrying
+no Bay Area rounds, but it never reached the daily roundups at all and only
+surfaced through FinSMEs on the 11th. The note records checking the wire
+mirrors against the prior window, not just the roundups.
+
+**The card's first logo was ACCESS Newswire's "A", and that turned out to be a
+pattern, not a one-off.** The logo resolver derives its domain from the card's
+`url`, and a funding card's url is its primary source — which for a young
+company is often the investor's or the wire's release rather than the company
+site. TabaPay's card (Sep 2, linked to FTV Capital's release) has shown FTV
+Capital's blue-and-orange hexagon since its logo was self-hosted on Sep 10.
+The prebuild gate couldn't see it: it catches two ids sharing one image, and a
+unique wrong mark passes.
+
+`LOGO_SITE_OVERRIDES` in `scripts/lib/logo-audit.mjs` now maps such ids to the
+company's own site for resolution only; the card keeps linking its primary
+source. The gate fails any card whose url lives on a wire service
+(prnewswire, globenewswire, businesswire, accessnewswire, newswire, prweb)
+without an override — the unambiguous case; investor hosts can't be
+enumerated and stay a review-time call. TabaPay re-fetched off tabapay.com,
+verified against the site's own apple-touch-icon. Piston's hexagon was
+rendered from the company's `logo.svg`, since piston.com ships only a 32px
+favicon and no touch icon. Six new tests cover the override and the audit.
+
+Near-misses recorded in the data file so the next sweep skips them: the Sep
+11 and Sep 14 roundups (all out of state or international), Crunchbase's Sep
+5–11 top ten (SF, South SF, Laguna Beach, out of state), and Intermezzo
+(Menlo Park — San Mateo County).
+
+### Verification
+
+`astro check` 0 errors; `logo-audit.test.mjs` 23/23 and `fundingAge.test.ts`
+9/9 pass; `check-tech-logos` OK with 216 logos; `audit-tech-urls` 0 moved, 0
+dead. A local dev render of `/tech` shows the Piston card first in Recently
+Funded with `/logos/piston.png` self-hosted.
+
+No protected Home, Events, or Food surface was touched; no component or section
+was added.
+
+---
+
 ## 2026-09-09 — Cycle 221: The Campbell Farmers' Market Card Was Linking to a Domain Squatter
 
 ### Context
