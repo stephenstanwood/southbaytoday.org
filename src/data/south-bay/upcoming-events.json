@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-14T08:07:30.042Z",
-  "eventCount": 1871,
+  "generatedAt": "2026-09-14T10:37:51.765Z",
+  "eventCount": 1877,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -51,15 +51,16 @@
     "City Lights Theater",
     "ICA San José",
     "Mountain Winery",
+    "Children's Discovery Museum",
     "Guadalupe River Park Conservancy",
     "Santana Row",
-    "City of Cupertino",
     "TheatreWorks Silicon Valley",
     "Levi's Stadium",
     "SAP Center",
     "The Tech Interactive",
     "Peninsula Open Space Trust",
     "San Jose Museum of Art",
+    "City of Cupertino",
     "City Newsletter"
   ],
   "sourceHealth": [
@@ -424,20 +425,20 @@
       "status": "ok",
       "count": 14,
       "dateCounts": {
-        "2026-09-18": 1,
-        "2026-09-20": 1,
-        "2026-09-25": 1,
-        "2026-09-27": 1,
-        "2026-11-15": 1,
-        "2026-11-20": 1,
-        "2026-11-22": 1,
+        "2026-09-17": 1,
+        "2026-09-19": 1,
+        "2026-09-24": 1,
+        "2026-09-26": 1,
+        "2026-11-14": 1,
+        "2026-11-19": 1,
+        "2026-11-21": 1,
+        "2026-11-27": 1,
         "2026-11-28": 1,
-        "2026-11-29": 1,
-        "2027-02-14": 1,
-        "2027-02-19": 1,
-        "2027-02-21": 1,
-        "2027-02-26": 1,
-        "2027-02-28": 1
+        "2027-02-13": 1,
+        "2027-02-18": 1,
+        "2027-02-20": 1,
+        "2027-02-25": 1,
+        "2027-02-27": 1
       },
       "error": null
     },
@@ -1906,14 +1907,15 @@
       "label": "fetchHistorySanJoseEvents",
       "critical": false,
       "status": "ok",
-      "count": 6,
+      "count": 7,
       "dateCounts": {
         "2026-10-03": 1,
         "2026-10-04": 1,
         "2026-10-23": 1,
         "2026-11-07": 1,
         "2027-12-08": 1,
-        "2028-01-09": 1
+        "2028-01-09": 1,
+        "2028-02-08": 1
       },
       "error": null
     },
@@ -2290,9 +2292,9 @@
       "label": "Playwright source snapshot",
       "critical": true,
       "status": "ok",
-      "count": 579,
+      "count": 583,
       "dateCounts": {
-        "2026-09-14": 3,
+        "2026-09-14": 5,
         "2026-09-15": 7,
         "2026-09-16": 10,
         "2026-09-17": 8,
@@ -2318,10 +2320,10 @@
         "2026-10-07": 11,
         "2026-10-08": 10,
         "2026-10-09": 7,
-        "2026-10-10": 10,
+        "2026-10-10": 11,
         "2026-10-11": 4,
         "2026-10-12": 1,
-        "2026-10-13": 6,
+        "2026-10-13": 7,
         "2026-10-14": 11,
         "2026-10-15": 5,
         "2026-10-16": 6,
@@ -2552,9 +2554,9 @@
     {
       "name": "playwright-events",
       "status": "ok",
-      "count": 588,
-      "timestamp": "2026-09-14T02:17:01.557Z",
-      "ageHours": 5.81,
+      "count": 584,
+      "timestamp": "2026-09-14T08:37:22.779Z",
+      "ageHours": 1.98,
       "reason": null
     },
     {
@@ -2562,7 +2564,7 @@
       "status": "ok",
       "count": 324,
       "timestamp": "2026-09-14T08:05:50.408Z",
-      "ageHours": 0,
+      "ageHours": 2.5,
       "reason": null
     }
   ],
@@ -8779,7 +8781,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/3273/3274",
         "date": "2026-10-07",
-        "checkedAt": "2026-09-14T08:05:56.549Z"
+        "checkedAt": "2026-09-14T10:36:14.663Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AVoNoXRvaNVNFol0ySxC02qNfbLWmFFFCVXHCflBOJf6XxbBEE3p1T6V9spGGij7XNVZP-kfp7pIh_qhw4T3z1RfkX0W08G_IPL9FljpIXIx8evOxSwq5_nGPaprKsjGFKQjVDyd4wSR90VxOQxqTYQT7oNppnxNIFLZ_-_VMNNrg9_Z3p0o3reB48r04FVX1nNm0OeS60yI7t3N6u8SM7zC2XRzw1z2bQY9GlQj4uqsa7ABPIZTJQZEZdDR6Vn6m8gYG87ayP5o_lGRHTkx8sXNsZKqyZ7JczUStAMXGainD3XZJNDO6KhNco9gcED8klV9u5UYt9my8SxDV5yTJ6GO2Wd5B734dGFnzcMhau2naT77tMK7EIMrWubKBAZHAgIWbqL2bLxU8aJDzVZxiWndetRCunhrhlzdYYwyeVsJ0LRoj8fU3OhhyiwX51yhwi9p",
@@ -8806,7 +8808,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/3102/3144",
         "date": "2026-09-16",
-        "checkedAt": "2026-09-14T08:05:56.563Z"
+        "checkedAt": "2026-09-14T10:36:13.907Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AVoNoXRvaNVNFol0ySxC02qNfbLWmFFFCVXHCflBOJf6XxbBEE3p1T6V9spGGij7XNVZP-kfp7pIh_qhw4T3z1RfkX0W08G_IPL9FljpIXIx8evOxSwq5_nGPaprKsjGFKQjVDyd4wSR90VxOQxqTYQT7oNppnxNIFLZ_-_VMNNrg9_Z3p0o3reB48r04FVX1nNm0OeS60yI7t3N6u8SM7zC2XRzw1z2bQY9GlQj4uqsa7ABPIZTJQZEZdDR6Vn6m8gYG87ayP5o_lGRHTkx8sXNsZKqyZ7JczUStAMXGainD3XZJNDO6KhNco9gcED8klV9u5UYt9my8SxDV5yTJ6GO2Wd5B734dGFnzcMhau2naT77tMK7EIMrWubKBAZHAgIWbqL2bLxU8aJDzVZxiWndetRCunhrhlzdYYwyeVsJ0LRoj8fU3OhhyiwX51yhwi9p",
@@ -8833,7 +8835,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/3243/3244",
         "date": "2026-09-19",
-        "checkedAt": "2026-09-14T08:05:56.829Z"
+        "checkedAt": "2026-09-14T10:36:13.752Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AVoNoXRvaNVNFol0ySxC02qNfbLWmFFFCVXHCflBOJf6XxbBEE3p1T6V9spGGij7XNVZP-kfp7pIh_qhw4T3z1RfkX0W08G_IPL9FljpIXIx8evOxSwq5_nGPaprKsjGFKQjVDyd4wSR90VxOQxqTYQT7oNppnxNIFLZ_-_VMNNrg9_Z3p0o3reB48r04FVX1nNm0OeS60yI7t3N6u8SM7zC2XRzw1z2bQY9GlQj4uqsa7ABPIZTJQZEZdDR6Vn6m8gYG87ayP5o_lGRHTkx8sXNsZKqyZ7JczUStAMXGainD3XZJNDO6KhNco9gcED8klV9u5UYt9my8SxDV5yTJ6GO2Wd5B734dGFnzcMhau2naT77tMK7EIMrWubKBAZHAgIWbqL2bLxU8aJDzVZxiWndetRCunhrhlzdYYwyeVsJ0LRoj8fU3OhhyiwX51yhwi9p",
@@ -8860,12 +8862,33 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/overview/3064",
         "date": "2026-10-15",
-        "checkedAt": "2026-09-14T08:05:56.666Z"
+        "checkedAt": "2026-09-14T10:36:13.489Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AVoNoXRvaNVNFol0ySxC02qNfbLWmFFFCVXHCflBOJf6XxbBEE3p1T6V9spGGij7XNVZP-kfp7pIh_qhw4T3z1RfkX0W08G_IPL9FljpIXIx8evOxSwq5_nGPaprKsjGFKQjVDyd4wSR90VxOQxqTYQT7oNppnxNIFLZ_-_VMNNrg9_Z3p0o3reB48r04FVX1nNm0OeS60yI7t3N6u8SM7zC2XRzw1z2bQY9GlQj4uqsa7ABPIZTJQZEZdDR6Vn6m8gYG87ayP5o_lGRHTkx8sXNsZKqyZ7JczUStAMXGainD3XZJNDO6KhNco9gcED8klV9u5UYt9my8SxDV5yTJ6GO2Wd5B734dGFnzcMhau2naT77tMK7EIMrWubKBAZHAgIWbqL2bLxU8aJDzVZxiWndetRCunhrhlzdYYwyeVsJ0LRoj8fU3OhhyiwX51yhwi9p",
       "blurb": "Hear 123 Andrés perform bilingual songs celebrating cultures across the Americas.",
       "firstSeenAt": "2026-08-29T03:12:21.234Z"
+    },
+    {
+      "id": "4211d0d40fb2",
+      "title": "All Ages Storytime",
+      "date": "2026-09-14",
+      "displayDate": "Mon, Sep 14",
+      "time": "11:30 AM",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "photoRef": "places/ChIJHyD5sa_Mj4ARURwnBwmTwTU/photos/AVoNoXSCeyABBDmQXUksi_UGGGLeZ9vox6aURIjyR4k-sGhFTBG_ueYeqF9Wt5HY92K0_FWWy_5N79_i2-SmDtpNQUJ0zAhuVz3T1ohgHzxIzvw2_5v6yjeu-MgX80WH0s7BDiKIDf72suQC8XPlspRWYMx_KGNpLebViVbPRKGvQ26BxSFo9038nNhfoAcO2CiyAlxX935XXBzSltMBupL_-MLEt_fIm6746_W4__GZpvr3vMH03pE081YlLi8ATfHPYyRhqEJT1hbl9ORRPaGpOoeUCXVP8QqA5DIfFCWmUoJ7WvduifynY1jjV3x5DUHdIHa5krf-SUrE00tGrBLeMaiQNumKRWWZODBEggEmZGH44PQL9d1A95v17N5L8THZEUMPxJSlnMpqS2bF43e2_FCjez-KxTEe_Auth8-UzKoLnwOk",
+      "blurb": "Listen to staff read picture books aloud to kids in the museum's story space.",
+      "firstSeenAt": "2026-09-14T10:37:51.755Z"
     },
     {
       "id": "scu-dd7cff983a0a39c0",
@@ -9377,7 +9400,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/overview/3063",
         "date": "2026-10-06",
-        "checkedAt": "2026-09-14T08:05:56.555Z"
+        "checkedAt": "2026-09-14T10:36:13.410Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AVoNoXRvaNVNFol0ySxC02qNfbLWmFFFCVXHCflBOJf6XxbBEE3p1T6V9spGGij7XNVZP-kfp7pIh_qhw4T3z1RfkX0W08G_IPL9FljpIXIx8evOxSwq5_nGPaprKsjGFKQjVDyd4wSR90VxOQxqTYQT7oNppnxNIFLZ_-_VMNNrg9_Z3p0o3reB48r04FVX1nNm0OeS60yI7t3N6u8SM7zC2XRzw1z2bQY9GlQj4uqsa7ABPIZTJQZEZdDR6Vn6m8gYG87ayP5o_lGRHTkx8sXNsZKqyZ7JczUStAMXGainD3XZJNDO6KhNco9gcED8klV9u5UYt9my8SxDV5yTJ6GO2Wd5B734dGFnzcMhau2naT77tMK7EIMrWubKBAZHAgIWbqL2bLxU8aJDzVZxiWndetRCunhrhlzdYYwyeVsJ0LRoj8fU3OhhyiwX51yhwi9p",
@@ -10103,7 +10126,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/harriet-trying-to-get-the-feeling-again",
         "date": "2026-11-20",
-        "checkedAt": "2026-09-14T08:06:02.808Z"
+        "checkedAt": "2026-09-14T10:37:18.792Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_bac1a1b989094a30a4036cd1e4a50914~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_bac1a1b989094a30a4036cd1e4a50914~mv2.png",
       "kidFriendly": false,
@@ -10130,7 +10153,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/toast-the-best-of-bread",
         "date": "2026-11-17",
-        "checkedAt": "2026-09-14T08:05:59.849Z"
+        "checkedAt": "2026-09-14T10:36:26.539Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_9f1303bf8b8d4b35b5a35f3220f7e038~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_9f1303bf8b8d4b35b5a35f3220f7e038~mv2.png",
       "kidFriendly": false,
@@ -10289,7 +10312,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/fleetwood-mask-a-tribute-to-fleetwood-mac",
         "date": "2027-03-06",
-        "checkedAt": "2026-09-14T08:06:05.513Z"
+        "checkedAt": "2026-09-14T10:37:35.521Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_eb1be8bba90743ae9f5ae0a584d9b339~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_eb1be8bba90743ae9f5ae0a584d9b339~mv2.png",
       "kidFriendly": false,
@@ -10316,7 +10339,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/journey-usa-the-hits-of-journey",
         "date": "2027-02-19",
-        "checkedAt": "2026-09-14T08:06:03.040Z"
+        "checkedAt": "2026-09-14T10:36:44.135Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_fccbe942d32448929ecaa545ec01ab34~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_fccbe942d32448929ecaa545ec01ab34~mv2.png",
       "kidFriendly": false,
@@ -10453,7 +10476,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/peninsula-symphony-orchestra-transformations",
         "date": "2027-01-09",
-        "checkedAt": "2026-09-14T08:06:06.245Z"
+        "checkedAt": "2026-09-14T10:37:06.954Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_5d311896811843d1baf5f0e8dfa7f9d4~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_5d311896811843d1baf5f0e8dfa7f9d4~mv2.png",
       "kidFriendly": false,
@@ -10502,7 +10525,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/world-ballet-company-the-nutcracker",
         "date": "2026-12-16",
-        "checkedAt": "2026-09-14T08:06:07.491Z"
+        "checkedAt": "2026-09-14T10:36:34.300Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_575d8ca7574b4f72b665efa80e1f8ec9~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_575d8ca7574b4f72b665efa80e1f8ec9~mv2.png",
       "kidFriendly": false,
@@ -10551,7 +10574,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/srlkm-school-of-fine-arts-carnatic-vocal-concert",
         "date": "2026-09-19",
-        "checkedAt": "2026-09-14T08:06:07.961Z"
+        "checkedAt": "2026-09-14T10:37:48.325Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_dc93150a9e2a442d839e07e54c6ba988~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_dc93150a9e2a442d839e07e54c6ba988~mv2.png",
       "kidFriendly": false,
@@ -10825,7 +10848,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "The Center for Literary Arts is pleased to present celebrated artist, writer Tessa Hulls in a reading from their Pulitzer Prize winning memoir Feeding Ghosts. This reading is made possible thanks to…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=208539&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=208539&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/208539_event_md_819.png",
       "kidFriendly": false,
@@ -10909,7 +10932,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Celebrate New Ballet's 10th Anniversary Gala with an exclusive theatrical performance at the iconic Hammer Theatre Center. Featuring highlights from New Ballet's acclaimed classical and contemporary…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=195948&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=195948&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/195948_event_md_728.jpg",
       "kidFriendly": false,
@@ -10930,7 +10953,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Hammer Presents Merry-Achi Christmas 2026 10-time Latin Grammy and US Grammy Nominee (Best Regional Mexican Music Album) 2024 Latin Grammy Nominee (Best Ranchero/Mariachi Album) Mariachi Master Jóse…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198571_event_md_295.png",
       "kidFriendly": false,
@@ -10951,7 +10974,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Hammer Presents Merry-Achi Christmas 2026 10-time Latin Grammy and US Grammy Nominee (Best Regional Mexican Music Album) 2024 Latin Grammy Nominee (Best Ranchero/Mariachi Album) Mariachi Master Jóse…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198571&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198571_event_md_295.png",
       "kidFriendly": false,
@@ -10972,7 +10995,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Hammer Presents National Geographic Live: Cosmic Adventures Tracy Drain, Aerospace Engineer Discover the marvels of our cosmic backyard through the eyes of the robotic spacecraft sent out to explore…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198542&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198542&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198542_event_md_909.png",
       "kidFriendly": false,
@@ -10993,7 +11016,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Fifty years after the startling discovery that monarch butterflies spend winters in the forests of Mexico, photographer and National Geographic Explorer Jaime Rojo reveals this winged wonder of the…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198541&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198541&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/198541_event_md_410.png",
       "kidFriendly": false,
@@ -11098,7 +11121,7 @@
       "category": "music",
       "cost": "paid",
       "description": "Northern Light: Mcosj Season Opening Concert Mission Chamber Orchestra of San José (Mcosj) announces \"Northern Light\" on Saturday September 26 th, 7:30pm at the Hammer Theatre Center in San Jose. …",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=190508&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=190508&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/190508_event_md_7.png",
       "kidFriendly": false,
@@ -11309,7 +11332,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "México la Bella is a cultural production featuring live mariachi music, traditional Mexican folklórico dance, and theatrical elements that celebrate life, family, and culture. The show highlights…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=200765&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=200765&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/200765_event_md_697.jpeg",
       "kidFriendly": true,
@@ -11393,7 +11416,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Join the San José Office of Cultural Affairs and the Arts Commission for a special celebration honoring an extraordinary individual, organization, or artist who have made a lasting impact on our…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=208214&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=208214&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/208214_event_md_482.png",
       "kidFriendly": false,
@@ -11414,7 +11437,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Pulitzer Prize winning author Barbara Kingsolver receives the 2026 \"In the Souls of the People\" John Steinbeck Award, which is given annually by SJSU to writers, artists, thinkers, and activists…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=202330&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=202330&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/202330_event_md_85.png",
       "kidFriendly": false,
@@ -11624,7 +11647,7 @@
       "category": "music",
       "cost": "paid",
       "description": "Sunlight and Dance Los Esclavos Felices Overture Juan Crisóstomo Arriaga Rêverie Claude Debussy Concierto de Aranjuez Joaquín Rodrigo Le Boeuf sur le toit,Op. 58 Darius Milhaud Ballet Suite La…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=197777&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=197777&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/197777_event_md_861.jpg",
       "kidFriendly": false,
@@ -11708,7 +11731,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11729,7 +11752,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11771,7 +11794,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11792,7 +11815,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11813,7 +11836,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11834,7 +11857,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "Sweeney Todd The Demon Barber of Fleet Street A Musical Thriller Music and Lyrics by Stephen Sondheim Book by Hugh Wheeler From an Adaptation by Christopher Bond Directed by Luis Orozco Music…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206697&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206697_event_md_300.png",
       "kidFriendly": false,
@@ -11876,7 +11899,7 @@
       "category": "music",
       "cost": "paid",
       "description": "The Nutcracker: Symphony of Lights\" is the landmark event of the upcoming season. Tchaikovsky's famous score opens the door to a completely reimagined world: glowing costumes and world-class…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=184502&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=184502&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/184502_event_md_35.jpg",
       "kidFriendly": false,
@@ -11988,7 +12011,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/world-ballet-company-swan-lake",
         "date": "2026-11-19",
-        "checkedAt": "2026-09-14T08:06:10.187Z"
+        "checkedAt": "2026-09-14T10:36:31.817Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_9c01706280b249eabbb965f1451a0430~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_9c01706280b249eabbb965f1451a0430~mv2.png",
       "kidFriendly": false,
@@ -12015,7 +12038,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/peninsula-symphony-orchestra-the-planets",
         "date": "2027-03-13",
-        "checkedAt": "2026-09-14T08:06:05.232Z"
+        "checkedAt": "2026-09-14T10:36:37.832Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_6630d627320841d68c350339bbeaa1cc~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_6630d627320841d68c350339bbeaa1cc~mv2.png",
       "kidFriendly": false,
@@ -12064,7 +12087,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/peninsula-symphony-orchestra-john-williams-world",
         "date": "2026-10-02",
-        "checkedAt": "2026-09-14T08:06:08.954Z"
+        "checkedAt": "2026-09-14T10:37:29.750Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_fef540a15a714f35bb4e7b02d5ebcc54~mv2.png/v1/fill/w_844,h_844,al_c/c82d5f_fef540a15a714f35bb4e7b02d5ebcc54~mv2.png",
       "kidFriendly": false,
@@ -12085,7 +12108,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "A vivid journey through Silk Road dance traditions, brought to life with original choreography, rich costuming, and immersive design.",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=193168&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=193168&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/193168_event_md_621.png",
       "kidFriendly": false,
@@ -12134,7 +12157,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.heritagetheatre.org/events/aim-for-seva-presents-raman-bhaje-a-musical-celebration-of-lord-rama-featuring-soorya-gayathri-1",
         "date": "2026-10-03",
-        "checkedAt": "2026-09-14T08:05:57.491Z"
+        "checkedAt": "2026-09-14T10:37:36.779Z"
       },
       "image": "https://static.wixstatic.com/media/c82d5f_ee027407abe64d49948a3112bfedb6ea~mv2.jpg/v1/fill/w_645,h_985,al_c,q_85/c82d5f_ee027407abe64d49948a3112bfedb6ea~mv2.jpg",
       "kidFriendly": false,
@@ -13614,6 +13637,26 @@
       "firstSeenAt": "2026-09-14T02:19:37.501Z"
     },
     {
+      "id": "3051ad316e8b",
+      "title": "Sharks vs Bruins",
+      "date": "2026-10-13",
+      "displayDate": "Tue, Oct 13",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-14",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/AVoNoXQUZqNH5MJT5PA20jF-1vZn-e4_UMWehscY6s2cPit0VHQtI4IGJ1iCb2z3mqvYlB4tRoCweYbdnEk1LpqDjPr_vqo5cU6Lkct_miS-_J5CIVGxsrVQJL2hcwL-kCNoKffqcxMvoDp0pcTuKg_Ttt9ep3jPa4jhw_sglp6WYo2FDJzzOjP8trgTRX_D1xLSu7a79782G3oWb5H6akvKyXvlmhdeCSln9F8AG-3pWQdkIYqxD9J1m0SEIYCEQ7VRB8WKylVPwPJ98ht-V-6HkCDiABLY0s1c2AnH6osAJEmKu4wATk7PwLOrVv9KfJc-qDuTsuQigOWgcMBZlv08btwWYfBkE6sScg5qGe16jmqpFYTzNga2SZmNVCHjrP9cZbrxZKFa9NXBLCOPy0frP8k_nn_VJLC-ybHF_rEhD-8I-tax",
+      "firstSeenAt": "2026-09-14T10:37:51.755Z"
+    },
+    {
       "id": "1d29e41d7ed3",
       "title": "The Wallflowers with Ragged Glory",
       "date": "2026-10-16",
@@ -13920,7 +13963,7 @@
       "category": "arts",
       "cost": "paid",
       "description": "",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198572&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=198572&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/167990_event_md_478.png",
       "kidFriendly": false,
@@ -28298,7 +28341,7 @@
       "category": "family",
       "cost": "paid",
       "description": "In post-9/11 Newark, two teenagers brought to America as children find refuge, friendship, and belonging in each other. When an unexpected opportunity offers one of them a chance at the future…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206695_event_md_992.png",
       "kidFriendly": false,
@@ -28319,7 +28362,7 @@
       "category": "family",
       "cost": "paid",
       "description": "In post-9/11 Newark, two teenagers brought to America as children find refuge, friendship, and belonging in each other. When an unexpected opportunity offers one of them a chance at the future…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206695_event_md_992.png",
       "kidFriendly": false,
@@ -28340,7 +28383,7 @@
       "category": "family",
       "cost": "paid",
       "description": "In post-9/11 Newark, two teenagers brought to America as children find refuge, friendship, and belonging in each other. When an unexpected opportunity offers one of them a chance at the future…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206695_event_md_992.png",
       "kidFriendly": false,
@@ -28361,7 +28404,7 @@
       "category": "family",
       "cost": "paid",
       "description": "In post-9/11 Newark, two teenagers brought to America as children find refuge, friendship, and belonging in each other. When an unexpected opportunity offers one of them a chance at the future…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=206695&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/206695_event_md_992.png",
       "kidFriendly": false,
@@ -28626,7 +28669,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.campbellca.gov/Calendar.aspx?EID=4050",
         "date": "2026-09-16",
-        "checkedAt": "2026-09-14T08:05:52.022Z"
+        "checkedAt": "2026-09-14T10:36:08.751Z"
       },
       "audienceAge": "all",
       "image": "https://www.campbellca.gov/ImageRepository/Document?documentID=31265",
@@ -31005,90 +31048,6 @@
       "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
-      "id": "9b9493684658",
-      "title": "Don Giovanni",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-2",
-      "source": "Opera San José",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
-      "blurb": "Catch Opera San Jose's fresh take on Don Giovanni, Mozart's psychological thriller of rebellion and ruin.",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
-    },
-    {
-      "id": "931076cc71fb",
-      "title": "Don Giovanni",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-3",
-      "source": "Opera San José",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
-      "blurb": "Catch Opera San Jose's fresh take on Don Giovanni, Mozart's psychological thriller of rebellion and ruin.",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
-    },
-    {
-      "id": "64fc4df69c15",
-      "title": "Don Giovanni",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-4",
-      "source": "Opera San José",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
-      "blurb": "Catch Opera San Jose's fresh take on Don Giovanni, Mozart's psychological thriller of rebellion and ruin.",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
-    },
-    {
-      "id": "a7a780159312",
-      "title": "Don Giovanni",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-5",
-      "source": "Opera San José",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
-      "blurb": "Catch Opera San Jose's fresh take on Don Giovanni, Mozart's psychological thriller of rebellion and ruin.",
-      "firstSeenAt": "2026-07-20T03:31:13.255Z"
-    },
-    {
       "id": "mexicanheritageplaza-a028090854a9ad8c",
       "title": "Avenida de Altares",
       "date": "2026-10-31",
@@ -31287,27 +31246,6 @@
       "image": "https://paloalto.bibliocommons.com/events/uploads/images/full/6c94cbcb9375efda96d9ef69ade2fe90/pexels-nicollazzi-xiong-668353.jpg",
       "blurb": "Sit in on a guided 30-minute seated meditation with Sara at the Palo Alto Art Center, open to all levels.",
       "firstSeenAt": "2026-09-13T02:19:22.871Z"
-    },
-    {
-      "id": "4bee933d9da1",
-      "title": "Fiddler on the Roof",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Fiddler ON THE Roof Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
-      "url": "https://www.operasj.org/event/fiddler-on-the-roof",
-      "source": "Opera San José",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
-      "blurb": "Watch Opera San Jose perform Fiddler on the Roof at the California Theatre.",
-      "firstSeenAt": "2026-09-14T02:19:37.501Z"
     },
     {
       "id": "inbound-db91b4bf5abf13c8",
@@ -32842,7 +32780,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-09-20",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -32870,7 +32808,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-09-27",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -32898,7 +32836,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-10-04",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -32926,7 +32864,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-11-08",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -32954,7 +32892,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-11-29",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -32982,7 +32920,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-12-13",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -33408,7 +33346,7 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.campbellca.gov/Calendar.aspx?EID=4034",
         "date": "2026-09-26",
-        "checkedAt": "2026-09-14T08:05:52.807Z"
+        "checkedAt": "2026-09-14T10:36:09.437Z"
       },
       "audienceAge": "all",
       "image": "https://www.campbellca.gov/Images/SocialMedia/IconModuleCalendar.png",
@@ -33895,7 +33833,7 @@
       "category": "music",
       "cost": "paid",
       "description": "Machines roar, race, remember, and dream in this program exploring the boundary between human imagination and mechanical power. William Bolcom's Machine launches the concert with relentless momentum,…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207638&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207638&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/207638_event_md_968.png",
       "kidFriendly": false,
@@ -34090,27 +34028,6 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJ_QhGaqXMj4AR5GHCXNt35E0/photos/AVoNoXTkk1MuQHj3aLebh3ymYVHgrac9iHK3Jj4PaP4i_WSRpL-T9pS48BItguLk-T4346TqWI7_3kOCK78CjS3sQ6zW1KwMJvQ8Nl1qLuc3UMAos7GWm23wAfrlvcael_81pPwz9bvxVjKBTeucpuuDdgY9JqKkK1EA287_UycgHTZJ5h2PzgcgXk3i4hMojFpOZKQBhq-wDuSYMYAeq6P9E0vyJZ6tPpGTGWqT5MCJQQMl1XUYldKf1TKtpY9R4BQ3BEC8p-3VGRd1uQE28qldkv-l4Pm2x613izI5n4qXoWRMeiIOvxt7dr6DdW4XHsmjZxIZW1b0ILVto3MI2GHuO4ej-G40KogHT7ZbjBn8IoJ9H6MFfaSe_PF8s_ku02r3XEft9Ikyegkjj3V8kdlL1KGAUAjfZk8mZLD0CwOluNqDPg50XrSo22gXzUGz0lXA",
       "blurb": "Watch the touring production of The Phantom of the Opera at the Center for the Performing Arts.",
-      "firstSeenAt": "2026-08-29T03:12:21.234Z"
-    },
-    {
-      "id": "tm-G5vYZ_CrQRyc2",
-      "title": "San Jose Sharks vs. Boston Bruins",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center at San Jose",
-      "address": "525 W Santa Clara",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "By purchasing, you are sharing your contact info and ticket sales data with the NHL and the San Jose Sharks. The NHL may use this info to better understand fan engagement across the league, including…",
-      "url": "https://www.ticketmaster.com/san-jose-sharks-vs-boston-bruins-san-jose-california-10-13-2026/event/1C0064E79ABF9B4F",
-      "source": "Ticketmaster",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/AVoNoXQUZqNH5MJT5PA20jF-1vZn-e4_UMWehscY6s2cPit0VHQtI4IGJ1iCb2z3mqvYlB4tRoCweYbdnEk1LpqDjPr_vqo5cU6Lkct_miS-_J5CIVGxsrVQJL2hcwL-kCNoKffqcxMvoDp0pcTuKg_Ttt9ep3jPa4jhw_sglp6WYo2FDJzzOjP8trgTRX_D1xLSu7a79782G3oWb5H6akvKyXvlmhdeCSln9F8AG-3pWQdkIYqxD9J1m0SEIYCEQ7VRB8WKylVPwPJ98ht-V-6HkCDiABLY0s1c2AnH6osAJEmKu4wATk7PwLOrVv9KfJc-qDuTsuQigOWgcMBZlv08btwWYfBkE6sScg5qGe16jmqpFYTzNga2SZmNVCHjrP9cZbrxZKFa9NXBLCOPy0frP8k_nn_VJLC-ybHF_rEhD-8I-tax",
-      "blurb": "Watch the Sharks face off against the Boston Bruins at SAP Center on Tuesday night.",
       "firstSeenAt": "2026-08-29T03:12:21.234Z"
     },
     {
@@ -35342,6 +35259,48 @@
       "firstSeenAt": "2026-09-10T02:21:46.877Z"
     },
     {
+      "id": "9b9493684658",
+      "title": "Don Giovanni",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-2",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "blurb": "See Opera San Jose's fresh take on Don Giovanni, mixing seduction, rebellion, and ghostly reckoning on stage.",
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
+    },
+    {
+      "id": "931076cc71fb",
+      "title": "Don Giovanni",
+      "date": "2026-09-20",
+      "displayDate": "Sun, Sep 20",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-3",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "blurb": "See Opera San Jose's fresh take on Don Giovanni, mixing seduction, rebellion, and ghostly reckoning on stage.",
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
+    },
+    {
       "id": "mexicanheritageplaza-2bbdc01c3368f44e",
       "title": "Mercadito",
       "date": "2026-09-23",
@@ -35362,6 +35321,48 @@
       "image": "https://static1.squarespace.com/static/5c70f584797f74142d45f7cf/5c8bde1b419202e381dfb582/6a7f4d9b53a9c331bdb08912/1786727913537/unsplash-image-pCjw_ygKCv0.jpg?format=1500w",
       "blurb": "Pick up free fresh produce and pantry staples at the Pavilion's midday Mercadito distribution.",
       "firstSeenAt": "2026-08-15T16:04:40.566Z"
+    },
+    {
+      "id": "64fc4df69c15",
+      "title": "Don Giovanni",
+      "date": "2026-09-25",
+      "displayDate": "Fri, Sep 25",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-4",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "blurb": "See Opera San Jose's fresh take on Don Giovanni, mixing seduction, rebellion, and ghostly reckoning on stage.",
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
+    },
+    {
+      "id": "a7a780159312",
+      "title": "Don Giovanni",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "DON Giovanni Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "url": "https://www.operasj.org/event/don-giovanni-5",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "blurb": "See Opera San Jose's fresh take on Don Giovanni, mixing seduction, rebellion, and ghostly reckoning on stage.",
+      "firstSeenAt": "2026-07-20T03:31:13.255Z"
     },
     {
       "id": "tm-rZ7HnEZ1AfJ4FS",
@@ -36148,7 +36149,7 @@
       "category": "music",
       "cost": "paid",
       "description": "The SJSU Latin Jazz Ensemble will feature a performance of Afro-Latin jazz and popular music repertoires of the US, the Caribbean, and Latin America. The SJSU Latin Jazz Ensemble is under the…",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207641&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207641&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/207641_event_md_218.jpg",
       "kidFriendly": false,
@@ -36283,7 +36284,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-09-19",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -36311,7 +36312,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-09-19",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36339,7 +36340,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-09-19",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36367,7 +36368,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-09-20",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36395,7 +36396,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-09-20",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -36423,7 +36424,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-09-20",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -36451,7 +36452,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
         "date": "2026-09-23",
-        "checkedAt": "2026-09-14T08:05:58.244Z"
+        "checkedAt": "2026-09-14T10:36:16.745Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AVoNoXRZNQ1tTjdaZpf3MHvYG1k10LHI9SSMpyRhSnTBBvN-Q-H_Adw-IyC1nUNGpjbCHAWqbfKC5XIlQ8RQ5zdm9JLCwnwC8qDFfMFKJx35ptmWZB_AWC1An1EgqKrl7UAmpkKauj4rky-rkkHg26bs8wKE8eJkeXRKH-Xd3vNTqkVGZ__jKYumx_GVhSQ0vCA-fdzesdsNc8UBJNYDZ4v6zMKyt5z2pa02p7O8FGAVKC_DQ5zNsXIn_sHTYlU-9QfhDSKZXVjUal1DQEnhIg8JXMpJHyTFEl5Wmcespka7K501XuSnH7ElOdlxvLpMb5B1hVpCAUmNffKvxoIQxGb_iLV5yJRCJPbCSy1wL944nWzax4NHKCWfgkM6eTKomL-5_GVm-gUwW2ecLgKudIol1nLyg_zvONmPBjwCl5GznM6JIA",
@@ -36500,7 +36501,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-09-26",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -36528,7 +36529,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-09-26",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36556,7 +36557,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-09-26",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36584,7 +36585,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-09-27",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36612,7 +36613,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-09-27",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -36640,7 +36641,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-09-27",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -36668,7 +36669,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://santanarow.com/event/farmers-market/",
         "date": "2026-09-30",
-        "checkedAt": "2026-09-14T08:05:58.244Z"
+        "checkedAt": "2026-09-14T10:36:16.745Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJNUS3dt_Kj4ARPWm4OftVdWo/photos/AVoNoXRZNQ1tTjdaZpf3MHvYG1k10LHI9SSMpyRhSnTBBvN-Q-H_Adw-IyC1nUNGpjbCHAWqbfKC5XIlQ8RQ5zdm9JLCwnwC8qDFfMFKJx35ptmWZB_AWC1An1EgqKrl7UAmpkKauj4rky-rkkHg26bs8wKE8eJkeXRKH-Xd3vNTqkVGZ__jKYumx_GVhSQ0vCA-fdzesdsNc8UBJNYDZ4v6zMKyt5z2pa02p7O8FGAVKC_DQ5zNsXIn_sHTYlU-9QfhDSKZXVjUal1DQEnhIg8JXMpJHyTFEl5Wmcespka7K501XuSnH7ElOdlxvLpMb5B1hVpCAUmNffKvxoIQxGb_iLV5yJRCJPbCSy1wL944nWzax4NHKCWfgkM6eTKomL-5_GVm-gUwW2ecLgKudIol1nLyg_zvONmPBjwCl5GznM6JIA",
@@ -36696,7 +36697,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-10-03",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -36724,7 +36725,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-10-03",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36752,7 +36753,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-10-03",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36780,7 +36781,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-10-04",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36808,7 +36809,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-10-04",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -36836,7 +36837,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-10-04",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -36864,7 +36865,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-10-10",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -36892,7 +36893,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-10-10",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36920,7 +36921,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-10-10",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36948,7 +36949,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-10-11",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -36976,7 +36977,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-10-11",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37004,7 +37005,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-10-11",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -37032,7 +37033,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-10-11",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37060,7 +37061,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-10-17",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -37088,7 +37089,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-10-17",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37116,7 +37117,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-10-17",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37144,7 +37145,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-10-18",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37172,7 +37173,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-10-18",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37200,7 +37201,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-10-18",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37228,7 +37229,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-10-24",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -37256,7 +37257,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-10-24",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37284,7 +37285,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-10-24",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37312,7 +37313,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-10-25",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37340,7 +37341,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-10-25",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37368,7 +37369,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-10-25",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -37396,7 +37397,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-10-25",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37424,7 +37425,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-10-31",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -37452,7 +37453,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-10-31",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37480,7 +37481,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-10-31",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37508,7 +37509,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-11-01",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37536,7 +37537,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-11-01",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37564,7 +37565,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-11-01",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -37592,7 +37593,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-11-01",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37620,7 +37621,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-11-07",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -37648,7 +37649,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-11-07",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37676,7 +37677,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-11-07",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37704,7 +37705,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-11-08",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37732,7 +37733,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-11-08",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -37760,7 +37761,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-11-08",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37788,7 +37789,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-11-14",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -37816,7 +37817,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-11-14",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37844,7 +37845,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-11-14",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37872,7 +37873,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-11-15",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37900,7 +37901,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-11-15",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -37928,7 +37929,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-11-15",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -37956,7 +37957,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-11-15",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -37984,7 +37985,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-11-21",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -38012,7 +38013,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-11-21",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38040,7 +38041,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-11-21",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38068,7 +38069,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-11-22",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38096,7 +38097,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-11-22",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38124,7 +38125,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-11-22",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -38152,7 +38153,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-11-22",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -38201,7 +38202,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-11-28",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -38229,7 +38230,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-11-28",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38257,7 +38258,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-11-28",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38285,7 +38286,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-11-29",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38313,7 +38314,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-11-29",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -38341,7 +38342,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-11-29",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -38369,7 +38370,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-12-05",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -38397,7 +38398,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-12-05",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38425,7 +38426,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-12-05",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38453,7 +38454,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/mountain-view-farmers-market/",
         "date": "2026-12-06",
-        "checkedAt": "2026-09-14T08:05:57.285Z"
+        "checkedAt": "2026-09-14T10:36:16.172Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38481,7 +38482,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-12-06",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38509,7 +38510,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-12-06",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -38537,7 +38538,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-12-06",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -38565,7 +38566,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/saratoga-farmers-market",
         "date": "2026-12-12",
-        "checkedAt": "2026-09-14T08:05:58.180Z"
+        "checkedAt": "2026-09-14T10:36:16.717Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJDViEEb9KjoARegWhRfN299A/photos/AVoNoXRVtpFStCuQUsEdgz6E0FBUbQNTQx0RKQyyixZ3-OAcAKgxjKZJXL54f-VuJTGcuxsCQimKJdCi8AcThYRxCe1V_LdtjFG3z4atRCuRF282GIP6HBuRaQZ-cVpShSMyV7eX3AEhqD_wJVyrp0zpMhrQJQaEBdvUEb7Rkph3ol2TYI53A7a-2ixIvDIewXlfx65SebC3mln6zYmbYrjmkpfqtfO-tQuqlEB5VmQOFOBZ65JNyAEMGMNKx54vetU33pmyHzQx9QbzjWJtOtNWtF_Zra4bw74lMQBFoMy3nxf3Cgz-cyCyhDPkdayrcmcRNAZ4ViE_dmA64wPUmfEAIxoUDgJ9MU33CIwiWwCC1zxowJWw1re0Hfzh4ht7SQ6mcOdinziW91wOjdGa_cbMQmC8ZE3FGbcuSuQFAcAxVE97ww",
@@ -38593,7 +38594,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/sunnyvale-saturday",
         "date": "2026-12-12",
-        "checkedAt": "2026-09-14T08:05:59.120Z"
+        "checkedAt": "2026-09-14T10:36:17.499Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38621,7 +38622,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/santa-clara-saturdays",
         "date": "2026-12-12",
-        "checkedAt": "2026-09-14T08:05:59.182Z"
+        "checkedAt": "2026-09-14T10:36:17.526Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38649,7 +38650,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://www.cafarmersmkts.com/losgatos-farmers-market/",
         "date": "2026-12-13",
-        "checkedAt": "2026-09-14T08:05:57.638Z"
+        "checkedAt": "2026-09-14T10:36:16.420Z"
       },
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
@@ -38677,7 +38678,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/campbell-sundays",
         "date": "2026-12-13",
-        "checkedAt": "2026-09-14T08:05:58.782Z"
+        "checkedAt": "2026-09-14T10:36:17.139Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/AVoNoXSAWSjqpoNXSXYJIGuKipwIpw0d3j8yB8XtitC5PrvwRN2ekFbhBbZKRe0GxQpo4VCye_UOw7bBEbClPVeM1mioKO7oXPwKlzGo213-bLoAmUlf0HY3jHhc1iu7eMb5odWlDgq_jYWfFy04ZyBQ8SIPFtkkh_LFa85nm1E197T8w3kBmL5lcNOqQWEtKbg9ymyAiZAmfm00fCA4QbIACv-_Tg8eEYGExeSLr4zAiN7zg6MBXyNNuXww7atcyFjjQ8ytNMIV-sCPpc4OJe5j0VANwzGRPD8eA5tDL3ycQBAXJ3M-HJ8Xl1g_5Y7DD-eJ-ibs5EvHJfswt3MIoqpiqQsyMEi0ibegdOBUYCDX9myu_zRIyZF4rCsR6TalPO7L22NUcoYK8jo5SNzTMx9J4k8UV-T_O7Fl-mZHUpqOgw9UG4ChUXnRUZTHzuqfStye",
@@ -38705,7 +38706,7 @@
         "kind": "first-party-market-schedule",
         "sourceUrl": "https://uvfm.org/palo-alto-sundays",
         "date": "2026-12-13",
-        "checkedAt": "2026-09-14T08:05:59.265Z"
+        "checkedAt": "2026-09-14T10:36:17.554Z"
       },
       "audienceAge": "all",
       "photoRef": "places/ChIJefba-OW6j4AR9wxmBnwZek4/photos/AVoNoXR-NrjYAsjN_yyEKqalQtCKv9vIL-bsF8zzVvwOGbVCbARL7E1HkVgTD730mKVVS_JvveMDsiBFPon3L6ag_yEdNdSRPiQZXLCDXadohU42h7mwFKAAYU9hfsKvSEwLBm0k7_se2iYJXLqWp2OLEB9zt1o-KLyiGbK30_u5WcImKETeJH6xCz9_rgNBhPUPLdbLvpGZHD8J3CU99Dz6tuQGg8YA091k0WlCZLSzgx-po2-jPjTRd93JDz_gPpm1yFGEvYJ-vXhV0DdbHmd7xlh3ElAvcYuRztjJTndTnr4S-memPzlczXtUL5vCZiP-AmOKJbiwkv0Uw9a-4gTKqtTxV579UBEY-MVDlYOp2NcHubPuSJJ4BYKsrITGA0UG4qj64TBImY1u1CeV1PgpDDuNDId62CH4JYx1IvUeWojUHEYS",
@@ -39434,6 +39435,26 @@
       "photoRef": "places/ChIJvaE_uF7Nj4ARJF49qlouHK8/photos/AVoNoXTbWuiakENyP7v-ACLvXf1XY2quWOM5revxukHbA_EM5COelEQFbVX-JWEJYM-OcpNZp7UbMN4yfU1WWADqhN249w-4944yQpXntSdvmdx6ZxXkEU5ixKetomz2h_v9cPV__KDceWgoh_aeOUXyJFxeL5QDIfHgvhCgwJ45Trkx_pcPKrKniriOXPUWdaN2xUQHAxqv-_h9z3hrCdpCabK35zZC6mccKKF3nXZXOBT3Ieqviv33IaXzHViw68ionamA-2t4BbWQ-_bR6YVeRdUD8EY35fb8QneWTn_-EjAONW9rBJpYEJxGvPKpRLboULGfPRIEzHDLZB8hQMUU9hNM3vxKipv48KV8rjp0Nmd6LokdL-kK7s35VBzz8vrnrJiSxJHzP8kmcxyNGt_m0TbeIKvAx11N669G09FsTcx9cN6a",
       "blurb": "Stuff and customize your own teddy bear and fill out its adoption certificate while supplies last.",
       "firstSeenAt": "2026-09-14T08:07:30.028Z"
+    },
+    {
+      "id": "4bee933d9da1",
+      "title": "Fiddler on the Roof",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Fiddler ON THE Roof Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "url": "https://www.operasj.org/event/fiddler-on-the-roof",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "firstSeenAt": "2026-09-14T02:19:37.501Z"
     },
     {
       "id": "meetup-a4a59998329e1ea1",
@@ -40433,7 +40454,7 @@
       "category": "music",
       "cost": "paid",
       "description": "Big Band Jazz ensemble with vocalists performing classic and contemporary jazz works. The SJSU Jazz Orchestra is under the direction of Dr. Aaron Lington",
-      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207644&s=adfa362d-7b83-439a-9a51-b08a3a93c8cc",
+      "url": "https://plugin.vbotickets.com/v5.0/event.asp?eid=207644&s=2cda23d7-c094-49fe-829c-2da3e1c518fc",
       "source": "Hammer Theatre",
       "image": "https://vboblobprod-cdn-01-cjcngvarcqfja3gw.a03.azurefd.net/awsvboticketscom/_images/events/207644_event_md_766.jpg",
       "kidFriendly": false,
@@ -43313,6 +43334,26 @@
       "firstSeenAt": "2026-07-26T02:18:12.708Z"
     },
     {
+      "id": "operasj-cd9363fa38b6aa44",
+      "title": "Don Giovanni",
+      "date": "2026-09-17",
+      "displayDate": "Thu, Sep 17",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://secure.operasj.org/621/624",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
+    },
+    {
       "id": "tm-rZ7HnEZ1AfFFff",
       "title": "Kam Patterson",
       "date": "2026-09-17",
@@ -43377,6 +43418,26 @@
       "image": "https://i.ticketweb.com/i/00/12/92/67/54_Edp.jpg?v=4",
       "blurb": "Catch comedian Kam Patterson's stand-up set live at San Jose Improv.",
       "firstSeenAt": "2026-07-27T02:19:52.223Z"
+    },
+    {
+      "id": "operasj-765e44f44d229df4",
+      "title": "Don Giovanni",
+      "date": "2026-09-19",
+      "displayDate": "Sat, Sep 19",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://secure.operasj.org/621/625",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
       "id": "tm-Z7r9jZ1A7PKeb",
@@ -43658,6 +43719,26 @@
       "firstSeenAt": "2026-09-02T02:19:46.191Z"
     },
     {
+      "id": "operasj-b469bbd726b9fad3",
+      "title": "Don Giovanni",
+      "date": "2026-09-24",
+      "displayDate": "Thu, Sep 24",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://secure.operasj.org/621/629",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
+    },
+    {
       "id": "tm-Z7r9jZ1A7x78t",
       "title": "Starship starring Mickey Thomas & Asia featuring John Payne",
       "date": "2026-09-24",
@@ -43765,6 +43846,26 @@
       "image": "https://i.ticketweb.com/i/00/12/83/98/44_Edp.jpg?v=4",
       "blurb": "Catch Frankie Quinones' stand-up set at San Jose Improv.",
       "firstSeenAt": "2026-08-10T11:07:59.099Z"
+    },
+    {
+      "id": "operasj-2ac444ea575920c1",
+      "title": "Don Giovanni",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://secure.operasj.org/621/630",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
       "id": "tm-G5vYZ_834jDfG",
@@ -45210,10 +45311,31 @@
       "firstSeenAt": "2026-09-14T08:07:30.028Z"
     },
     {
-      "id": "operasj-db798f6d1c3eabe1",
+      "id": "operasj-669116ca4c9a8aad",
       "title": "Fiddler on the Roof",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://secure.operasj.org/634/635",
+      "source": "Opera San José",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
+      "blurb": "See Fiddler on the Roof staged at the California Theatre.",
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
+    },
+    {
+      "id": "operasj-0e1a6c32ae27d11c",
+      "title": "Fiddler on the Roof",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
       "time": "7:30 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45228,13 +45350,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "See Fiddler on the Roof staged at the California Theatre.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-777d1023d2e3a5ad",
+      "id": "operasj-e7154edf54ec4395",
       "title": "Fiddler on the Roof",
-      "date": "2026-11-22",
-      "displayDate": "Sun, Nov 22",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45249,13 +45371,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "See Fiddler on the Roof staged at the California Theatre.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-1b3a127f349ef586",
+      "id": "operasj-1cdb445f0f2f14fc",
       "title": "Fiddler on the Roof",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45273,10 +45395,10 @@
       "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-d0c8a4977ed25de4",
+      "id": "operasj-1b3a127f349ef586",
       "title": "Fiddler on the Roof",
-      "date": "2026-11-29",
-      "displayDate": "Sun, Nov 29",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45291,13 +45413,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "See Fiddler on the Roof staged at the California Theatre.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-e326f5a9f83ebf07",
+      "id": "operasj-facb7e1e1b1ca11b",
       "title": "Doctor Atomic",
-      "date": "2027-02-14",
-      "displayDate": "Sun, Feb 14",
+      "date": "2027-02-13",
+      "displayDate": "Sat, Feb 13",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45312,13 +45434,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "Watch the California Theatre bring John Adams' Doctor Atomic to the San Jose stage.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-395418ebf23fca88",
+      "id": "operasj-ca585268a1936e36",
       "title": "Doctor Atomic",
-      "date": "2027-02-19",
-      "displayDate": "Fri, Feb 19",
+      "date": "2027-02-18",
+      "displayDate": "Thu, Feb 18",
       "time": "7:30 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45333,13 +45455,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "Watch the California Theatre bring John Adams' Doctor Atomic to the San Jose stage.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-b1bce66cbe377151",
+      "id": "operasj-cca7442ab0f80b86",
       "title": "Doctor Atomic",
-      "date": "2027-02-21",
-      "displayDate": "Sun, Feb 21",
+      "date": "2027-02-20",
+      "displayDate": "Sat, Feb 20",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45354,13 +45476,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "Watch the California Theatre bring John Adams' Doctor Atomic to the San Jose stage.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-b0efcd9f5e201b76",
+      "id": "operasj-952ef7e4b0d25928",
       "title": "Doctor Atomic",
-      "date": "2027-02-26",
-      "displayDate": "Fri, Feb 26",
+      "date": "2027-02-25",
+      "displayDate": "Thu, Feb 25",
       "time": "7:30 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45375,13 +45497,13 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "Watch the California Theatre bring John Adams' Doctor Atomic to the San Jose stage.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
-      "id": "operasj-9a223e8ec78029ac",
+      "id": "operasj-89f5f3e109bddc2f",
       "title": "Doctor Atomic",
-      "date": "2027-02-28",
-      "displayDate": "Sun, Feb 28",
+      "date": "2027-02-27",
+      "displayDate": "Sat, Feb 27",
       "time": "2:00 PM",
       "endTime": null,
       "venue": "California Theatre",
@@ -45396,7 +45518,7 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AVoNoXTDnig01vUzMCNDvooMtCkv7xG7f6RPbnSssZ2ZcdYYWwFX34Ht73Pl10R7-kyqGv5t207Xh-mZSeOEQ9oWHWwOs9KB3c-YdgYwt_2mO2yaSwCQZRpHOF_mpTy_ZhVjDcKj2MhNdZjBu6K2VZuRoS4jSvfi9rlwHd0YkKbM5yLT3kbfp2hcs9vYY3J6jjgXGFHIXWWhC1-jrVgxJdHbgZIQwCB2wqUBSPPgGEdMOoVFHlMeW9FiTK8LO9DlL1VeKU-Ww_dyVCc6b3zuEBt9W0-X4n5VPgJSvrYBJe5SGpFNWF5hLAQQjSsNwbcYPQ086H8ClU2MMTNYH9WReTRT5BMARkTzs1GQfM7u6K1x1tIygBHICNQMVuEpnTG4hLKIx0ghecW8Z8KHbeij7e6z7N9WG9CzAvwTzeWTzFGIGDeaOvsC",
       "blurb": "Watch the California Theatre bring John Adams' Doctor Atomic to the San Jose stage.",
-      "firstSeenAt": "2026-09-11T11:09:20.925Z"
+      "firstSeenAt": "2026-09-11T09:39:37.734Z"
     },
     {
       "id": "stanford-53020733796497",
