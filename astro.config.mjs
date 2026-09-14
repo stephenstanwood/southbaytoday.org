@@ -8,7 +8,7 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
 // Past-dated /event/ and /events/ URLs stay out of the sitemap — the pages
-// themselves keep resolving for ~30 days (grace banner) but crawlers shouldn't
+// themselves keep resolving for the archive window (90 days, grace banner) but crawlers shouldn't
 // be steered at them.
 const buildDayPt = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
 const isPastDatedUrl = (/** @type {string} */ page) => {
