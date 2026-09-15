@@ -1309,6 +1309,9 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //   * Intermezzo ($10M, Sep 10 2026; global payroll infrastructure) is Menlo
   //     Park — San Mateo County, the same line that excludes Fireworks AI,
   //     Cognichip, and WindBorne.
+  // Fact-check 2026-09-14: the tagline originally said Piston "replaces the
+  // card with a QR code" — piston.com says the mobile app is the primary flow
+  // and QR/authorization codes are fallbacks at legacy sites; reworded.
   {
     id: "piston",
     name: "Piston",
@@ -1318,7 +1321,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$15M",
     date: "2026-09-10",
     tagline:
-      "Commercial trucking still buys most of its fuel on plastic fleet cards that get skimmed, shared, and swiped for things that aren't diesel. Piston, a Cupertino startup founded by two former fleet operators, Vikram Sekhon and Shivam Shah, replaces the card with a QR code: the driver scans at the pump, the station's point-of-sale authorizes that specific driver and vehicle, and the fleet owner sees every gallon in real time. The $15M Series A, led by FPV Ventures with existing backers Spark Capital and Pear VC, brings total funding to $22.5M and follows a year in which payment volume grew eightfold, the merchant network grew fortyfold, and retention held at 98%. The network now works at more than 2,000 stations in 48 states, with point-of-sale integrations certified for over 95% of the country's merchant fuel sites. Two new products ship with the round — Piston Guard, which flags or blocks suspicious transactions before they complete, and an analytics agent that reads a fleet's spending patterns for it — and the stated plan is coverage in every U.S. region within 18 months, then payments beyond fuel across the rest of logistics.",
+      "Commercial trucking still buys most of its fuel on plastic fleet cards that get skimmed, shared, and swiped for things that aren't diesel. Piston, a Cupertino startup founded by two former fleet operators, Vikram Sekhon and Shivam Shah, replaces the card with its mobile app: the driver picks the station and pump in the app, Piston checks the driver, vehicle, location, and fleet rules before the pump unlocks, and the fleet owner sees every gallon in real time. The $15M Series A, led by FPV Ventures with existing backers Spark Capital and Pear VC, brings total funding to $22.5M and follows a year in which payment volume grew eightfold, the merchant network grew fortyfold, and retention held at 98%. The network now works at more than 2,000 stations in 48 states, with point-of-sale integrations certified for over 95% of the country's merchant fuel sites. Two new products ship with the round — Piston Guard, which flags or blocks suspicious transactions before they complete, and an analytics agent that reads a fleet's spending patterns for it — and the stated plan is coverage in every U.S. region within 18 months, then payments beyond fuel across the rest of logistics.",
     color: "#9A1C1F",
     url: "https://www.accessnewswire.com/newsroom/en/banking-and-financial-services/piston-raises-15-million-to-scale-the-infrastructure-layer-for-logis-1218633",
   },
