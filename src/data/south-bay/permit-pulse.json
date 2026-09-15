@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-14T08:05:28.744Z",
+      "generatedAt": "2026-09-15T03:08:35.383Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
       "dateRange": "Sep 7 – Sep 14",
       "stats": {
-        "total": 260,
-        "notable": 15,
+        "total": 400,
+        "notable": 19,
         "newUnits": 6,
-        "totalValuation": 5884546
+        "totalValuation": 8503859
       },
       "permits": [
         {
@@ -99,6 +99,18 @@
           "subtype": "Assembly"
         },
         {
+          "id": "2026-135923-CI",
+          "address": "2201 Qume Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Ise Labs Inc (Be 100%) Rooftop Pv Install",
+          "valuation": 930575,
+          "units": 0,
+          "issueDate": "2026-09-11",
+          "subtype": "Office"
+        },
+        {
           "id": "2026-136360-CI",
           "address": "1600 Saratoga Av",
           "category": "commercial-large",
@@ -121,30 +133,18 @@
           "units": 0,
           "issueDate": "2026-09-09",
           "subtype": "Restaurant"
-        },
-        {
-          "id": "2026-136935-CI",
-          "address": "2555 Corde Terra Cl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Commercial/Industrial",
-          "valuation": 313782,
-          "units": 0,
-          "issueDate": "2026-09-10",
-          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-14T08:05:30.889Z",
+      "generatedAt": "2026-09-15T03:08:37.591Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
       "dateRange": "Sep 7 – Sep 14",
       "stats": {
-        "total": 93,
+        "total": 92,
         "notable": 2,
         "newUnits": 0,
         "totalValuation": 0

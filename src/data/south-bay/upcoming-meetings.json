@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-14T11:44:21.225Z",
+  "generatedAt": "2026-09-15T03:08:47.481Z",
   "meetings": {
     "san-jose": {
       "date": "2026-09-15",
@@ -122,13 +122,13 @@
       "bodyName": "City Council Regular Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21469",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21490",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-09-14",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21469"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21490"
       }
     },
     "campbell": {
@@ -167,12 +167,12 @@
     "los-altos": {
       "date": "2026-09-22",
       "displayDate": "Tue, Sep 22",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Meeting",
+      "startTime": "17:00",
+      "bodyName": "City Council Special Meeting - Commission Interviews",
       "location": null,
       "closedSession": false,
-      "url": "https://losaltosca.portal.civicclerk.com/event/208/overview",
-      "civicClerkEventId": 208,
+      "url": "https://losaltosca.portal.civicclerk.com/event/5420/overview",
+      "civicClerkEventId": 5420,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
@@ -226,7 +226,7 @@
     "los-gatos": {
       "provider": "MuniCode",
       "status": "error",
-      "detail": "municodemeetings.com rejected our User-Agent (UND_ERR_SOCKET) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
+      "detail": "municodemeetings.com rejected our User-Agent (ERR_HTTP2_STREAM_ERROR) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
     }
   }
 }

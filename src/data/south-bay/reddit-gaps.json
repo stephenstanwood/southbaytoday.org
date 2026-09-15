@@ -1,109 +1,115 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-14T08:13:49.987Z",
+    "generatedAt": "2026-09-15T03:15:54.120Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 8
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 8,
-    "placesExtracted": 4,
+    "threadsMined": 9,
+    "placesExtracted": 5,
     "placesMatched": 3,
-    "placeGaps": 1,
-    "eventsExtracted": 3,
+    "placeGaps": 2,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Southwest YMCA",
-      "city": "San Jose",
-      "kind": "other",
-      "context": "YMCA branch being compared for family programs",
+      "name": "Ry's Poke Shack",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "Hawaii-born poke chain opening counter at Ava's",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
-        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
-        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
+        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
+        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
+        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
+        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+      ]
+    },
+    {
+      "name": "Buffalo Wild Wings",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "sports bar suggested for watching UFC matches",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wggull/looking_for_a_sports_bar_that_shows_ufc_matches/",
+        "https://www.reddit.com/r/SanJose/comments/1wgglu3/looking_for_musicians_music_projects_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wg9awm/best_way_to_spend_a_week_here_if_i_wasnt_planning/",
+        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Goombah's Car Club 18th Annual Car Show",
-      "when": "today 9am-3pm",
-      "city": "San Jose",
-      "context": "annual car show in downtown Willow Glen",
+      "name": "Good Carma Classic Car and Bonsai Show",
+      "when": "Saturday 9/19, 10am-2pm",
+      "city": "Mountain View",
+      "context": "car and bonsai show event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
+        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
+        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
         "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
-        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
         "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
       ]
     },
     {
-      "name": "Viva Calle",
+      "name": "Sleeping on Gems",
       "when": "",
       "city": "San Jose",
-      "context": "open streets event closing roads to cars",
+      "context": "Kaytranada headlining downtown San Jose event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
+        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
+        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
         "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
-        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
         "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
-      ]
-    },
-    {
-      "name": "Viva Calle VTA",
-      "when": "",
-      "city": "San Jose",
-      "context": "open streets event happening today",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
-        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
-        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "Ava's Downtown Market & Deli",
+      "city": "Mountain View",
+      "kind": "restaurant",
+      "context": "hosting Ry's Poke Shack counter at 340 Castro St",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
+        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
+        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
+        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
+        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+      ],
+      "matchedName": "Ava's Downtown Market & Deli"
+    },
+    {
       "name": "Japanese Friendship Garden",
       "city": "San Jose",
       "kind": "park",
-      "context": "asking about koi fish and water features",
+      "context": "asking if water and koi fish are back",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfd3bu/goombahs_car_club_18th_annual_car_show/",
+        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
+        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
+        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
         "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfjcmn/viva_calle_appreciation/",
-        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/",
         "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
       ],
       "matchedName": "Japanese Friendship Garden"
     },
     {
-      "name": "Central YMCA",
+      "name": "Britannia Arms",
       "city": "San Jose",
-      "kind": "other",
-      "context": "YMCA branch being compared for family programs",
+      "kind": "bar",
+      "context": "downtown San Jose pub, poster had bad experience",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
-        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
-        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
+        "https://www.reddit.com/r/SanJose/comments/1wggull/looking_for_a_sports_bar_that_shows_ufc_matches/",
+        "https://www.reddit.com/r/SanJose/comments/1wgglu3/looking_for_musicians_music_projects_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wg9awm/best_way_to_spend_a_week_here_if_i_wasnt_planning/",
+        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/"
       ],
-      "matchedName": "Central YMCA"
-    },
-    {
-      "name": "South Valley Family YMCA",
-      "city": "San Jose",
-      "kind": "other",
-      "context": "YMCA branch being compared for family programs",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wfi8bd/viva_calle_vta_today/",
-        "https://www.reddit.com/r/SanJose/comments/1wfh5bp/running_groups_on_weekends/",
-        "https://www.reddit.com/r/SanJose/comments/1wfeo36/south_valley_vs_southwest_vs_central_ymca_for/"
-      ],
-      "matchedName": "South Valley Family YMCA"
+      "matchedName": "Britannia Arms Almaden"
     }
   ],
   "eventMatches": []
