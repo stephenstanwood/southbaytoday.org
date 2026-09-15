@@ -240,6 +240,15 @@ Return ONLY a JSON array of 8 objects (4 S-codes ranked best-first, then 4 U-cod
       // with the bracket. Otherwise the leftover "at." or "at brings" reads broken.
       validatedWhy = validatedWhy.replace(/\s+(?:at|in|on|near|to)\s+\[[^\]]*\]/gi, "");
       validatedWhy = validatedWhy.replace(bracketRe, "");
+      // Same header pasted WITHOUT brackets as a bare prefix ("Sun 1:00 PM
+      // Mid-Autumn Festival in Los Altos brings…", 2026-09-14). The card already
+      // shows the time, so a leading "<Day> <time>" is a stranded header, not
+      // prose — drop it. Mid-sentence mentions ("…at the theatre, Sun 2:00 PM")
+      // are left alone.
+      validatedWhy = validatedWhy.replace(
+        /^(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\.?,?\s+(?:\d{1,2}(?::\d{2})?\s*[AP]M|morning|afternoon|evening|night)\s*[:—–-]?\s+(?=[A-Z"'])/i,
+        "",
+      );
       // Legacy belt-and-suspenders: catch any dangling " at—" / " at ." that
       // somehow slipped past the combined strip above (e.g. preposition glued to
       // a comma instead of a space before the bracket).

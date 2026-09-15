@@ -23,6 +23,7 @@ import {
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./lib/civic-meetings.mjs";
+import { todayPT } from "./lib/dates.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "around-town.json");
@@ -224,7 +225,7 @@ DO NOT ASSERT THE BODY UNLESS THE AGENDA SUPPORTS IT: the "Body" label above is 
 
 NEVER REPORT THE BROWN ACT ATTENDANCE NOTICE: agendas for scoping meetings, study sessions, and joint hearings carry a boilerplate legal notice that members of other bodies "may be in attendance" — it exists to avoid an unnoticed serial meeting, and it says nothing about who actually showed up. Never write "with City Council / Planning Commission / Commission members possibly (or may be) in attendance". It is a disclaimer, not an event detail. Omit it.
 
-DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: if a meeting's date matches today's date and the agenda is forward-looking (e.g. "proposed", "to consider", "study session"), do not write that it was approved or adopted. Use forward-looking language ("to hear", "to consider", "scheduled to review") or skip the item.
+DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: today is ${todayPT()} (Pacific). Any meeting dated ${todayPT()} or later has NOT happened yet — its agenda is a plan, not a record. Never write that the body "held", "met", "approved", "adopted", "discussed", or "voted" for such a meeting; write in the future tense ("is set to hold a study session", "will consider", "is scheduled to review") so the headline and summary agree. Same rule when an earlier-dated agenda reads as forward-looking ("proposed", "to consider", "study session"): don't upgrade it to an outcome.
 
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
@@ -356,10 +357,13 @@ async function gatherMeetingItems(meetingType) {
   const sourceTag = meetingType === "City+Council" ? "council" : "planning";
   const records = await fetchStoaMeetings(meetingType);
 
-  const today = new Date().toISOString().split("T")[0];
+  // Pacific calendar date, not UTC: the 8pm PT run is already "tomorrow" in
+  // UTC, which let Sept 15 council agendas through on the Sept 14 evening run
+  // and got them written up in the past tense ("held a study session").
+  const today = todayPT();
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 14);
-  const cutoffIso = cutoff.toISOString().split("T")[0];
+  const cutoffIso = cutoff.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 
   const SKIP_TYPES = new Set(["closed session", "special meeting"]);
   const items = [];
@@ -584,7 +588,7 @@ function gatherDevItems() {
   }
 
   const isFirstRun = Object.keys(prevCache).length === 0;
-  const today = new Date().toISOString().split("T")[0];
+  const today = todayPT();
   const items = [];
 
   // Build new cache and detect changes
