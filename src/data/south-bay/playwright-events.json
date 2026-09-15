@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-15T02:17:11.795Z",
+    "generatedAt": "2026-09-15T15:08:56.380Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 578,
+    "eventCount": 581,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (128)",
-      "Los Gatos Library (148)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (18)",
       "Linden Tree Books (9)",
       "History San Jose (6)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 148,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -6131,6 +6131,66 @@
       "kidFriendly": true
     },
     {
+      "id": "36359cd963b1",
+      "title": "ESL Conversation Club",
+      "date": "2026-12-14",
+      "displayDate": "Mon, Dec 14",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16831254",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "79a59a8cf0cb",
+      "title": "Monday Morning Book Club",
+      "date": "2026-12-14",
+      "displayDate": "Mon, Dec 14",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "Join us for a discussion of Felicia's Journey by William Trevor. A story of lost opportunities, naivety,and misplaced hopes of an Irish girl who leaves Ireland to find her boyfriend in England. By one of Irelands most admired writers. The Monday Morning bookclub meets in the Library Conference Room, and new members are welcome at any time. Sign up for our newsletter.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/15781543",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "f70f53f41ea3",
+      "title": "Social Stitching",
+      "date": "2026-12-14",
+      "displayDate": "Mon, Dec 14",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Come join fellow needlework and textile arts enthusiasts at the library! Crafters of all levels are welcome to bring their projects and chat, teach, learn, and make new friends at this casual weekly get together. This group is entirely self-directed and you are encouraged to bring your own tools and materials. If you are looking for some inspiration or dont know where to start, check out Creativebug - it's free with your library card and offers hundreds of project ideas and instructions.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16025986",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7672,10 +7732,10 @@
       "kidFriendly": false
     },
     {
-      "id": "4211d0d40fb2",
+      "id": "43c11a8abe8c",
       "title": "All Ages Storytime",
-      "date": "2026-09-14",
-      "displayDate": "Mon, Sep 14",
+      "date": "2026-09-15",
+      "displayDate": "Tue, Sep 15",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7689,10 +7749,10 @@
       "kidFriendly": true
     },
     {
-      "id": "9c477745469c",
+      "id": "9993a6047521",
       "title": "Toddler Storytime",
-      "date": "2026-09-14",
-      "displayDate": "Mon, Sep 14",
+      "date": "2026-09-15",
+      "displayDate": "Tue, Sep 15",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
