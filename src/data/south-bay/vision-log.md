@@ -2,6 +2,77 @@
 
 ---
 
+## 2026-09-15 — Cycle 224: Two Late Catches Off the Weekly Roundup, and a Symlink in Git
+
+### Context
+Tuesday September 15, 2026. Roadmap still closed (6/6). Typecheck clean
+(0 errors). The post-change tech URL audit: 175 links, 2 moved (both
+Odyssey — fixed), 0 dead, 9 bot-walls. The daily funding sweep found two
+in-coverage rounds the dailies had skipped, and the cycle started with a
+repo that couldn't run `astro check` at all.
+
+### What Was Built
+
+**Maven Robotics' $100M Series A is on the Tech tab.** The Santa Clara
+company came out of stealth Sep 10 with a general-purpose industrial robot —
+wheeled base, two vacuum-gripper arms, 10 mph, 30 kg — already running
+multi-shift days at a Fortune 250 CPG customer at 99%+ uptime. RoboStrategy
+led, LocalGlobe / Vine / XTX joined, $18M raised before. HQ is Santa Clara on
+the primary source: the company's own GlobeNewswire dateline and boilerplate.
+
+**Buildcheck's $12M Series A is on the Tech tab.** A Stanford-born startup
+selling a spell-checker for construction drawings — computer-vision models
+that run hundreds of checks for errors and coordination conflicts — with 110+
+paying construction organizations and DPR's venture arm in the round. The
+city took resolving: AlleyWatch and CB Insights say Palo Alto, but the
+company's own release datelines San Francisco and its boilerplate names no
+city. The tiebreaker is company-authored — Buildcheck's own LinkedIn page
+lists Headquarters "Palo Alto, CA" as its one primary location. That is the
+company describing itself, not an aggregator tag, so it clears the bar the
+Owner note set. Recorded in the data file so the call isn't re-litigated.
+
+**Both were late catches.** Neither round reached the Sep 9–10 daily
+roundups; both surfaced only in AlleyWatch's 9/14 weekly. Same lesson as
+Cylake and Piston: check the following week's roundup against the prior
+window before calling it closed. Euno ($23M, Sunnyvale dateline but "based in
+San Francisco and Tel Aviv" boilerplate) and Fab2 (moved to Texas) recorded as
+near-misses.
+
+**Odyssey's cards pointed at a domain that now 308s.** odyssey.ml redirects to
+odyssey.systems; both the spotlight and funding card URLs updated, Series B
+page verified live at the new host.
+
+**Logos fetched from the companies' own sites.** The fetcher picked an orange
+partner mark off Buildcheck's homepage instead of its "B with a check"; swapped
+for the site's own apple-touch-icon after eyeballing both. Maven's blue "M"
+verified against its webclip icon.
+
+**A `node_modules` symlink was committed to main.** PR #247 (newsletter QA)
+landed from a worktree and committed `node_modules` as a symlink to the main
+repo's absolute path — `.gitignore` had `node_modules/`, and the trailing
+slash matches directories only, not symlinks. In the main checkout that
+produced a self-referencing loop: `npx astro check`, `tsx`, and the logo
+fetcher all failed with "Too many levels of symbolic links", and a Vercel
+clone would have seen a dangling link. Removed the link, `npm ci`'d a real
+install, untracked the path, and dropped the trailing slash so symlinks are
+ignored too.
+
+### Why This Was the Strongest Move
+Two funding rounds a resident can read today, one of them a $100M stealth
+exit in Santa Clara, plus a repo that builds again. The symlink fix was the
+incidental one: nothing on the site was broken yet, but the next Vercel
+build or worktree would have been.
+
+### Next 3 Strongest Ideas
+1. **Weekly-roundup back-check as a habit** — three straight cycles have
+   found in-coverage rounds only by re-reading the prior week through the
+   weekly roundups. Worth a one-line checklist item in the sweep note.
+2. **Owner ($240M, Aug 28)** — still out on an unresolved HQ. The Buildcheck
+   precedent (company-authored LinkedIn HQ) may resolve it either way.
+3. **Crunchbase Sep 12–18 top ten** — publishes Friday; sweep it next cycle.
+
+---
+
 ## 2026-09-14 — Cycle 223: TabaPay's Card Was Wearing Its Investor's Logo
 
 ### Context
