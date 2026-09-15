@@ -6,6 +6,7 @@ import { agendaTextForMeeting } from "./digest-source.mjs";
 import {
   confirmMeeting,
   escribeAgendaUrl,
+  escribeMeetingUrl,
   escribeRowDateISO,
   extractEscribeAgendaItems,
   extractEscribeAgendaTitles,
@@ -415,6 +416,29 @@ test("escribeAgendaUrl points at the meeting's own agenda page", () => {
   assert.equal(
     escribeAgendaUrl("pub-campbell.escribemeetings.com", "6561dfc6-9aed-4336-b160-074b064d588b"),
     "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=6561dfc6-9aed-4336-b160-074b064d588b&Agenda=Agenda&lang=English",
+  );
+});
+
+test("escribeMeetingUrl ignores the calendar SPA route and links the meeting page by id", () => {
+  // Real row shape from pub-campbell's GetCalendarMeetings for 2026-09-15; its
+  // `Url` 404s when fetched directly (the 2026-09-15 issue's dead Campbell link).
+  const row = {
+    ID: "c7aedd80-9fee-4e2b-ae5e-53956fc71189",
+    MeetingName: "City Council Regular Session Meeting",
+    Url: "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189",
+  };
+  assert.equal(
+    escribeMeetingUrl("pub-campbell.escribemeetings.com", row),
+    "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189&Agenda=Agenda&lang=English",
+  );
+  // No usable id → the portal home, never the SPA route.
+  assert.equal(
+    escribeMeetingUrl("pub-campbell.escribemeetings.com", { Url: row.Url }),
+    "https://pub-campbell.escribemeetings.com/",
+  );
+  assert.equal(
+    escribeMeetingUrl("pub-campbell.escribemeetings.com", { ID: "not-a-guid", Url: row.Url }),
+    "https://pub-campbell.escribemeetings.com/",
   );
 });
 
