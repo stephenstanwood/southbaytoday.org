@@ -587,7 +587,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     stage: "startup",
     tagline: "AI lab building general world models: causal, multimodal systems that simulate physical environments for robotics, science, gaming, healthcare, and defense. Raised a $310M Series B at a $1.45B valuation in June 2026, with Amazon, AMD Ventures, GV, EQT, and IQT joining Natural Capital.",
     color: "#2563eb",
-    url: "https://odyssey.ml",
+    url: "https://odyssey.systems",
     employeesNote: "Founded by self-driving car veterans",
   },
   {
@@ -1325,6 +1325,74 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#9A1C1F",
     url: "https://www.accessnewswire.com/newsroom/en/banking-and-financial-services/piston-raises-15-million-to-scale-the-infrastructure-layer-for-logis-1218633",
   },
+  // Note on the Sep 15 2026 sweep: Maven Robotics and Buildcheck are the two
+  // in-coverage rounds added below, and both are late catches from AlleyWatch's
+  // 9/14 weekly roundup rather than new-day news — the daily roundups for Sep
+  // 9-10 never carried either. Same lesson as the Cylake and Piston notes
+  // above: check the following week's roundup against the prior window.
+  //   * Maven Robotics is Santa Clara on the primary source: its own Sep 10
+  //     GlobeNewswire release datelines "SANTA CLARA, Calif." and the boilerplate
+  //     ends "Maven is headquartered in Santa Clara, California."
+  //   * Buildcheck's city needed resolving. AlleyWatch and CB Insights say Palo
+  //     Alto (94306); the company's own Sep 9 GlobeNewswire release datelines
+  //     "San Francisco" and its boilerplate names no city, only "Founded at
+  //     Stanford University" (a founding story, not an HQ — the WindBorne rule).
+  //     The tiebreaker is company-authored: Buildcheck's own LinkedIn company
+  //     page lists Headquarters "Palo Alto, CA" and Palo Alto as its one
+  //     "Primary" location, and its structured-data address block says the
+  //     same. That is the company describing itself, not an aggregator tag, so
+  //     it is closer to the Owner case's missing "primary source (a contact
+  //     page)" than to Katalyze AI. In coverage as Palo Alto. If a later
+  //     release datelines Palo Alto, this note can be simplified.
+  //   * Euno ($23M Series A, Sep 9 2026) stays OUT despite AlleyWatch's 9/14
+  //     weekly roundup filing it under "Sunnyvale, CA" and the company's own PR
+  //     Newswire release datelining "SUNNYVALE, Calif." The same release's
+  //     boilerplate says "Euno is based in San Francisco and Tel Aviv," and the
+  //     boilerplate is the HQ claim — a dateline is announcement issuance (the
+  //     Groq note above). The Sep 9 sweep note further down already records it
+  //     as San Francisco; this adds the Sunnyvale dateline so it isn't
+  //     re-litigated from the weekly roundup's tag.
+  //   * Fab2 (formerly Atomic Semi; $500M Series A at $3.7B, Sep 9 2026) is
+  //     Texas — the company moved its HQ there with the July rename.
+  //   * The rest of AlleyWatch's 9/14 weekly is out of coverage (Cognition,
+  //     Harvey, Moonwalk, Poseidon Aerospace, Lightfield, VideoGen are San
+  //     Francisco; Graph AI is Pleasanton; Celero is Laguna Beach; Positron is
+  //     Reno), and it files Piston under "San Francisco" — wrong, see the
+  //     Cupertino primary sources in the Sep 11-14 note above.
+  //   * The Sep 15 daily roundups (techstartups: EUCLYD, ENCOS, Nutshell
+  //     Therapeutics, Yincheng, Kangwei Vision, Starroad, DeepKernel, Yoom,
+  //     Circuits Integrated Hellas, Ocean; AlleyWatch 9/14 daily: Highstock,
+  //     UrgentIQ, Pave Finance, Rogo) carried no Santa Clara County rounds —
+  //     all international or New York. VC News Daily's Sep 13-14 items (TAR,
+  //     Thyme Care, Impossible Objects, HiBob, Upwind, Fluidstack, Crusoe) are
+  //     out of coverage; its TabaPay and Lyte items are the rounds already
+  //     entered below.
+  {
+    id: "maven-robotics",
+    name: "Maven Robotics",
+    city: "Santa Clara",
+    category: "robotics",
+    round: "Series A",
+    amount: "$100M",
+    date: "2026-09-10",
+    tagline:
+      "Most warehouse robots do one job on one kind of box. Maven Robotics, which came out of stealth in Santa Clara with a $100M Series A, is betting on a general-purpose machine instead: a wheeled base with two vacuum-gripper arms that moves at up to 10 mph, lifts up to 30 kilograms, and is pointed first at mixed-case palletizing and tote handling — the messy, mixed-size work that has resisted fixed automation. The company was founded in 2024 by CEO Hamza Derbas, who has spent two decades commercializing autonomous systems, and CFO Khalid Derbas, with a team drawn from Apple, Tesla, Rivian, Cruise, Zoox, Ford, and Archer Aviation. As many as eight robots already run multi-shift days at a Fortune 250 consumer-goods company, at 99% or better uptime over 16-hour working days. RoboStrategy led the round, with LocalGlobe, Vine Ventures, and XTX Ventures joining, on top of $18M raised earlier. The money builds 250 third-generation robots and starts design on a fourth; Maven expects its fleets to pass 100,000 hours of autonomous operation by the end of 2026 and a million by the end of 2027, then push from logistics into material handling and assembly.",
+    color: "#1E40AF",
+    url: "https://www.mavenrobotics.ai/",
+  },
+  {
+    id: "buildcheck",
+    name: "Buildcheck",
+    city: "Palo Alto",
+    category: "software",
+    round: "Series A",
+    amount: "$12M",
+    date: "2026-09-09",
+    tagline:
+      "Construction drawings get reviewed by tired humans against hundreds of pages of other drawings, and the mistakes that slip through become change orders, RFIs, and city comments once crews are already on site. Buildcheck, a Palo Alto startup founded out of Stanford by Alexander Michalatos, Andrei Molchynsky, and CTO Alex Gureiev, sells a spell-checker for those drawings: computer-vision models that read the plans and run hundreds of automated checks for errors, omissions, and coordination conflicts between disciplines. It has reviewed more than 150,000 drawings and left more than 115,000 review comments so far, and says customers see a 10-35x return on the subscription. Telescope Partners led the $12M Series A, with WND Ventures — the venture arm of DPR Construction, itself a customer — and existing backers Uncork Capital, Salt VC, and Xfund joining; the round comes nine months after a $5.9M seed and takes total funding to $18M. Customers have grown more than fourfold in a year to over 110 paying construction organizations, including DPR, EllisDon, and Power Construction, on data centers, hospitals, and multifamily projects. The capital funds four new modules — Custom Checks that turn a firm's own QA/QC manual into review agents, Diffs that show what changed between revisions, and Code Reviews and Value Engineering, both in beta in the US and Canada.",
+    color: "#4338CA",
+    url: "https://buildcheck.ai",
+  },
   {
     id: "cylake-sep-2026",
     name: "Cylake",
@@ -1999,7 +2067,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     tagline:
       "General world models for simulating physical environments: Odyssey is training causal, multimodal systems that can predict and interact with the world over long horizons, with applications across robotics, science, gaming, healthcare, and defense. The $310M Series B valued the Palo Alto lab at $1.45B and was led by Natural Capital, with Amazon, AMD Ventures, GV, EQT, IQT, and others joining. AWS becomes Odyssey's preferred cloud provider, with the team optimizing world-model workloads on Trainium chips alongside Amazon's Annapurna Labs.",
     color: "#2563eb",
-    url: "https://odyssey.ml/our-series-b",
+    url: "https://odyssey.systems/our-series-b",
   },
   {
     id: "xcena",
