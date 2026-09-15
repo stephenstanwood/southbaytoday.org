@@ -313,6 +313,33 @@ function distinctiveTokens(bodyName) {
   )].filter((w) => !BODY_NAME_STOPWORDS.has(w));
 }
 
+// A council sitting on the date does NOT prove the record came from it. On
+// 2026-09-09 Palo Alto held a City Council special meeting at 5pm and the
+// Planning & Transportation Commission at 6pm; the record was the PTC agenda
+// (ADU separate-sale ordinance, PTC draft minutes) but shipped as "Palo Alto
+// City Council" with the Council's cadence and agenda link, because both
+// verifiers returned councilMet:true the moment a council event existed. When
+// other bodies also convened, score the record against THEM: a clear
+// non-council winner relabels; anything else keeps the council label, which
+// the calendar does at least support.
+export function relabelIfOtherBodyMatches(others, recordText) {
+  // Not pickBodyForRecord: that returns a lone candidate unscored, and here a
+  // lone other body must still earn the relabel with a hit in the record.
+  const haystack = String(recordText).toLowerCase();
+  const scored = others
+    .map((c) => ({
+      ...c,
+      score: distinctiveTokens(c.body).filter((t) => new RegExp(`\\b${t}\\b`).test(haystack)).length,
+    }))
+    .sort((a, b) => b.score - a.score);
+  const top = scored[0];
+  if (top && top.score > 0 && (scored.length === 1 || top.score > scored[1].score)) {
+    const { score, ...winner } = top;
+    return winner;
+  }
+  return { body: null, sourceUrl: null, councilMet: true };
+}
+
 // Choose which same-day body actually produced the record we summarized.
 //
 // Both verifiers used to take the first plausible board/committee/commission on
@@ -490,7 +517,22 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
     // calendar actually listing a council sitting — licenses publishing the
     // "City Council" label.
     if (named.some((e) => /^city council\b/i.test(e.body))) {
-      return { body: null, sourceUrl: null, councilMet: true };
+      const others = named
+        .filter((e) => !/^city council\b/i.test(e.body))
+        .map(({ body, eventId, sourceUrl }) => ({
+          body: body.replace(/^(?:joint|special|regular)\s+meeting\s+(?:for|of)\s+the\s+/i, "").trim(),
+          sourceUrl,
+          eventId,
+        }))
+        .filter((c) => c.body);
+      if (others.length === 0) return { body: null, sourceUrl: null, councilMet: true };
+      // Name tokens first, then the agenda-item match for records that never
+      // name their body; both must beat every rival outright or the council
+      // label stands.
+      const byName = relabelIfOtherBodyMatches(others, recordText);
+      if (byName.body) return byName;
+      const byItems = await pickBodyByLegistarItems(client, others, recordText);
+      return byItems ?? byName;
     }
 
     // Prefer bodies whose names read like deliberative ones (committee /
@@ -559,18 +601,23 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
     // Keep the meeting record, not just its title — the agenda link we cite as
     // the digest's source hangs off the same record.
     const named = live.filter((m) => String(m.title || "").trim());
-    if (named.some((m) => /^city council\b/i.test(String(m.title).trim()))) {
-      return { body: null, sourceUrl: null, councilMet: true }; // label is correct
+    const toCandidate = (m) => ({
+      // Drop the "Regular Meeting" / "Special Meeting" suffix PrimeGov appends —
+      // it is meeting type, not the body's name. Titles arrive HTML-escaped
+      // ("Planning &amp; Transportation Commission"), so decode before display.
+      body: decodeAgendaText(m.title).replace(/\s+(?:regular|special|joint)\s+meeting\b.*$/i, "").trim(),
+      sourceUrl: primeGovAgendaUrl(domain, m),
+    });
+    const isCouncil = (m) => /^city council\b/i.test(String(m.title).trim());
+    if (named.some(isCouncil)) {
+      const others = named.filter((m) => !isCouncil(m)).map(toCandidate).filter((c) => c.body);
+      if (others.length === 0) return { body: null, sourceUrl: null, councilMet: true }; // label is correct
+      return relabelIfOtherBodyMatches(others, recordText);
     }
 
     const deliberative = named.filter((m) => /\b(board|committee|commission)\b/i.test(String(m.title)));
     const candidates = (deliberative.length > 0 ? deliberative : named)
-      .map((m) => ({
-        // Drop the "Regular Meeting" / "Special Meeting" suffix PrimeGov appends —
-        // it is meeting type, not the body's name.
-        body: String(m.title).replace(/\s+(?:regular|special|joint)\s+meeting\b.*$/i, "").trim(),
-        sourceUrl: primeGovAgendaUrl(domain, m),
-      }))
+      .map(toCandidate)
       .filter((c) => c.body);
     // Same contract as the Legistar verifier above: an ambiguous body still
     // disproves the "City Council" label, and the caller has to be able to see

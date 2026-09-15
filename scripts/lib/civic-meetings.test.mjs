@@ -16,6 +16,7 @@ import {
   isClosedSessionMeeting,
   legistarMeetingUrl,
   primeGovAgendaUrl,
+  relabelIfOtherBodyMatches,
   normalizeMeetingTime,
   onlyConfirmedMeetings,
   parseSessionSchedule,
@@ -689,4 +690,28 @@ test("sources without a full agenda retain their original excerpt", () => {
   assert.equal(agendaTextForMeeting({ excerpt: "Existing source", fullAgendaText: " " }), "Existing source");
   assert.equal(agendaTextForMeeting({ excerpt: "Existing source" }), "Existing source");
   assert.equal(agendaTextForMeeting({}), "");
+});
+
+// Palo Alto 2026-09-09: City Council special meeting and the Planning &
+// Transportation Commission sat the same evening; the record was the PTC
+// agenda but shipped under the Council's name because a council sitting on
+// the date was read as proof the record came from it.
+test("relabelIfOtherBodyMatches: same-day non-council body wins only with a hit in the record", () => {
+  const ptc = { body: "Planning & Transportation Commission", sourceUrl: "https://x.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=1" };
+  const hit = relabelIfOtherBodyMatches([ptc], "Approval of Planning & Transportation Commission draft minutes from August 12, 2026");
+  assert.deepEqual(hit, ptc);
+
+  // A lone other body earns nothing without a token hit — the council label stands.
+  assert.deepEqual(
+    relabelIfOtherBodyMatches([ptc], "Approval of minutes; oral communications; consent calendar"),
+    { body: null, sourceUrl: null, councilMet: true },
+  );
+
+  // Two rivals tying leaves the council label in place rather than guessing.
+  const rail = { body: "Rail Committee", sourceUrl: "https://x.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=2" };
+  assert.deepEqual(
+    relabelIfOtherBodyMatches([ptc, rail], "Rail grade separation and transportation impact"),
+    { body: null, sourceUrl: null, councilMet: true },
+  );
+  assert.deepEqual(relabelIfOtherBodyMatches([], "anything"), { body: null, sourceUrl: null, councilMet: true });
 });
