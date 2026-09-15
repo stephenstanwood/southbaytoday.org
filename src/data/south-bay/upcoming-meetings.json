@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T03:08:47.481Z",
+  "generatedAt": "2026-09-15T13:52:44.225Z",
   "meetings": {
     "san-jose": {
       "date": "2026-09-15",
@@ -36,7 +36,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-14T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -74,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-14T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -112,23 +112,23 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-14T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-09-14",
-      "displayDate": "Mon, Sep 14",
-      "startTime": "17:30",
-      "bodyName": "City Council Regular Meeting ",
+      "date": "2026-09-22",
+      "displayDate": "Tue, Sep 22",
+      "startTime": "18:00",
+      "bodyName": "City Council Special Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21490",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21451",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-09-14",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21490"
+        "observedDate": "2026-09-22",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21451"
       }
     },
     "campbell": {
@@ -138,7 +138,7 @@
       "bodyName": "City Council Regular Session Meeting",
       "location": "City Hall Council Chamber",
       "closedSession": false,
-      "url": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/Meeting?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189",
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189&Agenda=Agenda&lang=English",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
@@ -161,7 +161,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-09-15",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-14T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-15T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -178,7 +178,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-09-22",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-14T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-15T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -226,7 +226,7 @@
     "los-gatos": {
       "provider": "MuniCode",
       "status": "error",
-      "detail": "municodemeetings.com rejected our User-Agent (ERR_HTTP2_STREAM_ERROR) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
+      "detail": "municodemeetings.com rejected our User-Agent (UND_ERR_SOCKET) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
     }
   }
 }

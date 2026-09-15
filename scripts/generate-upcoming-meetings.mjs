@@ -17,6 +17,7 @@ import { fileURLToPath } from "url";
 import { writeFileAtomic } from "./lib/io.mjs";
 import {
   confirmMeeting,
+  escribeMeetingUrl,
   escribePost,
   isClosedSessionMeeting,
   legistarMeetingUrl,
@@ -597,9 +598,15 @@ async function fetchEscribeMeeting(host) {
         bodyName: row.MeetingName,
         description: row.Description,
       }),
-      url: typeof row.Url === "string" && row.Url.startsWith(`https://${host}/`)
-        ? row.Url
-        : `https://${host}/`,
+      // The calendar payload's `Url` is the SPA route
+      // `MeetingsCalendarView.aspx/Meeting?Id=<guid>`, which eScribe only
+      // resolves inside its calendar page — opened directly it is an ASP.NET
+      // 404, which is where the 2026-09-15 issue's Campbell "Civic meetings
+      // today" link sent readers. The server-rendered meeting page is
+      // `Meeting.aspx?Id=<guid>`, the same form the digests already link
+      // through escribeAgendaUrl; fall back to the portal home when the row
+      // carries no id.
+      url: escribeMeetingUrl(host, row),
       agendaItems: [],
     };
     return confirmMeeting(meeting, { provider: "escribe", sourceUrl: url, observedDate: date });

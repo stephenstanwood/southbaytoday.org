@@ -53,3 +53,19 @@ test("same-day tickets stay distinct from advance registration and ordinary drop
   assert.equal(requiresAttendanceConfirmation(details), false);
   assert.equal(libraryEventDetails({ description: "<p>Drop in for board games.</p>" }).attendanceNote, undefined);
 });
+
+test("attendanceNote dedupes a ticket sentence repeated across paragraphs", () => {
+  // SJPL After-School STEaM at Almaden (sjpl 6a73854af213992f00c9cfdd): the
+  // series note and the week's own paragraph both open with the same two
+  // sentences; the 2026-09-15 issue printed them twice in the listing meta.
+  const description = [
+    "<p>Drop in on Tuesday afternoons at 4:30 p.m. for a new STEaM adventure every week.</p>",
+    "<p>Free, with limited capacity. Tickets will be distributed starting 60 minutes before the program.</p>",
+    "<p>Sep 15 - Build a bridge. Free, with limited capacity. Tickets will be distributed starting 60 minutes before the program. Children younger than age 9 must be accompanied by an adult caregiver during this program.</p>",
+  ].join("");
+  const { attendanceNote } = libraryEventDetails({ definition: { description } });
+  assert.equal(
+    attendanceNote,
+    "Free, with limited capacity. Tickets will be distributed starting 60 minutes before the program. Sep 15 - Build a bridge. Children younger than age 9 must be accompanied by an adult caregiver during this program.",
+  );
+});

@@ -1453,21 +1453,23 @@ Selection guidance:
 Return JSON with exactly these keys:
 {
   "briefing": "2-3 sentences opening the morning. Mention the strongest patterns or useful clusters in today's material.",
-  "dayPlanHeadline": "short headline for the field guide",
+  "dayPlanHeadline": "short headline for the field guide (120 characters max)",
   "dayPlanBlurb": "2-3 sentences making the plan feel intentional and useful",
   "tonightPickIdx": 0,
   "tonightPickBlurb": "1-2 sentences why this is the evening pick, using only packet facts",
   "featuredEventIdxs": [0, 1, 2, 3, 4, 5],
   "titleOverrides": {"3": "Cleaned-up title for candidate 3"},
-  "eventsHeading": "Also on the calendar",
-  "eventsNote": "1 sentence explaining the shape of the selected events",
+  "eventsHeading": "Also on the calendar (80 characters max)",
+  "eventsNote": "1 complete sentence explaining the shape of the selected events (240 characters max)",
   "openingIdxs": [0, 1],
-  "openingsHeading": "Newly opened",
-  "openingsNote": "1 sentence, or empty string if not useful",
+  "openingsHeading": "Newly opened (80 characters max)",
+  "openingsNote": "1 complete sentence (220 characters max), or empty string if not useful",
   "redditIdxs": [0, 1, 2, 3],
-  "conversationHeading": "short section heading",
-  "conversationNote": "1 sentence framing the local chatter"
+  "conversationHeading": "short section heading (80 characters max)",
+  "conversationNote": "1 complete sentence framing the local chatter (320 characters max)"
 }
+
+The character limits are hard caps applied after you answer: a note longer than its cap is cut at a word boundary and shipped with a trailing ellipsis, which is how the 2026-09-15 "Also on the calendar" note ended mid-sentence ("…both say no registration…"). Write each note to fit whole; never rely on the cut.
 
 Use null for tonightPickIdx if none is strong enough, and empty arrays for weak optional sections — these are honored as deliberate cuts, not errors. Use {} for titleOverrides when nothing needs fixing.
 

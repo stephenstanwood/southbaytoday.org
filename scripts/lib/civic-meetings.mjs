@@ -705,6 +705,27 @@ export function escribeAgendaUrl(host, meetingId) {
   return `https://${host}/Meeting.aspx?Id=${encodeURIComponent(meetingId)}&Agenda=Agenda&lang=English`;
 }
 
+// eScribe meeting ids are GUIDs; anything else is not a meeting we can address.
+const ESCRIBE_MEETING_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Reader-facing link for a row from `MeetingsCalendarView.aspx/GetCalendarMeetings`.
+ *
+ * The row's own `Url` is the calendar SPA's route,
+ * `MeetingsCalendarView.aspx/Meeting?Id=<guid>`, which eScribe resolves only
+ * inside the calendar page: fetched directly it is an ASP.NET "404 - File or
+ * directory not found", which is where the 2026-09-15 issue's Campbell
+ * "Civic meetings today" link sent readers. The server-rendered meeting page
+ * is `Meeting.aspx?Id=<guid>` — the same form the digests already use — so
+ * address the meeting by its `ID` and only fall back to the portal home when
+ * the row carries no usable id.
+ */
+export function escribeMeetingUrl(host, row) {
+  const id = String(row?.ID || "").trim();
+  if (ESCRIBE_MEETING_ID.test(id)) return escribeAgendaUrl(host, id);
+  return `https://${host}/`;
+}
+
 /**
  * eScribe serializes archive rows' `Start` as ASP.NET `/Date(<epoch ms>)/`.
  * The epoch is real UTC (unlike the naive local `StartDate` on calendar rows),
