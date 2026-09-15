@@ -1038,6 +1038,12 @@ function cleanTitle(title) {
     //   ASL  = American Sign Language ("The Sound of Music - ASL Performance")
     //   UX / UXR = design/research terms ("UX Wizards UX, Product + UXR … Mixer")
     "NUMU", "CMT", "ACGA", "SBDC", "BMR", "CRC", "ASL", "UX", "UXR",
+    // Stanford Localist initialisms that shipped title-cased on 2026-09-14:
+    // NSO/NGSO = New (Graduate) Student Orientation ("Nso-Transfer Tour…",
+    // "Ngso Green Library Tour…"), SSIR = Stanford Social Innovation Review
+    // ("An Ssir Author Conversation"), CME = continuing medical education
+    // ("Pediatric Grand Rounds (Cme)").
+    "NSO", "NGSO", "SSIR", "CME",
     // 2–3 letter acronyms that legitimately appear in event titles. Anything
     // NOT in this list gets title-cased when the surrounding title is mostly
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).
@@ -2507,6 +2513,15 @@ function inferCategory(title, desc, type, venue = "") {
   return "community";
 }
 
+// Cost from a Localist (events.stanford.edu-style) event record. See the
+// Stanford ingest for why "not flagged free" must not mean "paid".
+function localistCost(ev) {
+  const price = String(ev?.ticket_cost ?? "").trim();
+  if (ev?.free || /\bfree\b/i.test(price) || /\balcoholics anonymous\b/i.test(ev?.title ?? "")) return "free";
+  if (/\d/.test(price)) return "paid";
+  return null;
+}
+
 function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
@@ -2819,7 +2834,13 @@ async function fetchStanfordEvents() {
         city: "palo-alto",
         ...(isVirtual ? { virtual: true } : {}),
         category: inferUniversityCategory(ev.title, description, "", venue),
-        cost: (ev.free || /\balcoholics anonymous\b/i.test(ev.title)) ? "free" : "paid",
+        // Localist's `free` flag is opt-in and most Stanford posters never set
+        // it, so "not free" used to publish as "paid": a PhD dissertation
+        // defense and an NSO library tour both carried a paid badge on
+        // 2026-09-14, and three-quarters of the feed has neither the flag nor
+        // a ticket price. Only a stated price is evidence of a charge; a bare
+        // ticket URL is often free registration, so it stays unknown (null).
+        cost: localistCost(ev),
         description: truncate(description),
         url: ev.localist_url || `https://events.stanford.edu/event/${ev.id}`,
         source: "Stanford Events",
@@ -3161,7 +3182,16 @@ async function fetchScuEvents() {
       // room-only string with the university; leave named venues alone
       // ("Stevens Stadium", "Mission Church") since they already locate
       // themselves.
-      const scuLocation = cleanVenue(item.location || item.georssFeatureName || "");
+      // georss:featurename is sometimes a geocoder echo rather than a venue —
+      // "Benson Memorial Center Alviso Santa Clara Ca" (building + cross
+      // street + city + state, no punctuation) shipped as-is on 2026-09-14.
+      // Peel the "<street> Santa Clara Ca" tail off; the street list is the
+      // handful bordering the SCU campus that LiveWhale has been seen to echo.
+      const scuLocation = cleanVenue(
+        String(item.location || item.georssFeatureName || "")
+          .replace(/\s+(?:Alviso|Franklin|Palm|Lafayette|Bellomy|Market|Benton|Sherman|El Camino Real|The Alameda)\s+Santa Clara,?\s+Ca\.?$/i, "")
+          .replace(/,?\s+Santa Clara,?\s+Ca\.?$/i, ""),
+      );
       const namesCampus = /\b(santa clara university|scu)\b/i.test(scuLocation);
       const isRoomOnly = /\b(?:lab|room|rm|suite|ste)\.?\s*\d+/i.test(scuLocation);
       const venue = !scuLocation
