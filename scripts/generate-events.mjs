@@ -1089,6 +1089,15 @@ function cleanTitle(title) {
     // reads as a misspelling of the school. SMU/TCU/BYU/LSU/UNC/UCF/VCU are the
     // same shape and travel with the same feeds.
     "NC", "UNC", "SMU", "TCU", "BYU", "LSU", "UCF", "VCU", "USC", "UCLA",
+    // Loyola Marymount — SCU's WCC schedule feed bills them as "vs LMU" and the
+    // 2+ rule shipped "vs Lmu" on 2026-09-15. WVC = West Valley College (its
+    // Democracy Institute events arrive "WVC Democracy Institute: …" from the
+    // City of Saratoga calendar and shipped as "Wvc"). SFMOMA is the museum's
+    // own styling — the Sunnyvale senior-trip listing "Day Trip to SFMOMA"
+    // shipped as "Sfmoma". ASME-SCVS = American Society of Mechanical
+    // Engineers, Santa Clara Valley Section; its Meetup happy-hour titles
+    // hyphenate the two runs so each needs its own entry.
+    "LMU", "WVC", "SFMOMA", "ASME", "SCVS",
     // Medical / academic acronyms that legitimately appear in titles. Without
     // these the 2+ rule lowercases "AIDS" → "Aids" and "MFA" → "Mfa".
     "AIDS", "HIV", "PTSD", "ADHD", "MFA", "BFA", "MBA",
@@ -1755,8 +1764,26 @@ function polishDescription(text) {
     // The shorter siblings added alongside it (JMZ/MRI/PD/MD) are never
     // matched by this 4+ rule and need no entry.
     "UNAFF",
+    // Greater Los Altos Chinese Association — the History Museum's Mid-Autumn
+    // Festival copy spells it out then parenthesizes "(GLACA)", which the 4+
+    // body rule shipped as "(Glaca)" on 2026-09-15. SFMOMA is mirrored from
+    // cleanTitle's KEEP_UPPER for the Sunnyvale senior-trip body copy.
+    "GLACA", "SFMOMA",
+    // Mission Chamber Orchestra of San José — the Hammer Theatre copy uses the
+    // bare initialism mid-sentence ("MCOSJ Season Opening Concert") as well as
+    // in the parenthetical, so the shape guard below doesn't reach it.
+    "MCOSJ",
   ]);
-  t = t.replace(/\b[A-Z]{4,}\b/g, (w) => KEEP_UPPER.has(w) ? w : w[0] + w.slice(1).toLowerCase());
+  // A parenthesized ALL-CAPS run is an acronym being introduced after its
+  // spelled-out name — "Bay Area Quiz Club (BAQC)", "Mission Chamber Orchestra
+  // of San José (MCOSJ)", "International Association of Privacy Professionals
+  // (IAPP)" — never shouting. Six of those shipped as "(Baqc)"/"(Mcosj)"/
+  // "(Iapp)" on 2026-09-15; the shape is the guard, so no list entry is needed.
+  t = t.replace(/\b[A-Z]{4,}\b/g, (w, offset, src) => (
+    KEEP_UPPER.has(w) || (src[offset - 1] === "(" && src[offset + w.length] === ")")
+      ? w
+      : w[0] + w.slice(1).toLowerCase()
+  ));
   // Contraction recovery: mirror of the cleanTitle apostrophe-S fix. When the
   // 4+ rule downcases an ALL-CAPS run (PHOEBE BERMAN → Phoebe Berman) but the
   // trailing 'S sits past the apostrophe word boundary, it stays uppercase
