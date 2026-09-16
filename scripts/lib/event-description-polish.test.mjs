@@ -155,3 +155,62 @@ test("promotes a billing line mis-joined as a support act", () => {
     "Pat Benatar & Neil Giraldo with Lee DeWyze",
   );
 });
+
+test("strips fused ADA accommodation link labels wherever they sit", () => {
+  assert.equal(
+    polishDescription("Free. No registration required ADA Accommodation Requests"),
+    "Free. No registration required",
+  );
+  assert.equal(
+    polishDescription(
+      "Registration is required. ADA Accommodation Requests --- ¡Comienza tu camino! Solicitudes de Acomodación ADA",
+    ),
+    "Registration is required. ¡Comienza tu camino!",
+  );
+  assert.equal(
+    polishDescription("Gratis. No es necesario registrarse. Accommodation Requests"),
+    "Gratis. No es necesario registrarse.",
+  );
+});
+
+test("keeps email local-part dots intact through sentence splitting", () => {
+  assert.equal(
+    polishDescription("Email Caitlin Bosworth at caitlin.bosworth@sjlibrary.org. Priority given."),
+    "Email Caitlin Bosworth at caitlin.bosworth@sjlibrary.org. Priority given.",
+  );
+  assert.equal(
+    polishDescription("Contact jocelyn.bringas(@)sjlibrary.org for review."),
+    "Contact jocelyn.bringas(@)sjlibrary.org for review.",
+  );
+});
+
+test("normalizes doubled periods, fused age tags, doubled prepositions, and padded quotes", () => {
+  assert.equal(
+    polishDescription("Sessions at 3:30 and 5:30 p.m.. Free, with limited capacity."),
+    "Sessions at 3:30 and 5:30 p.m. Free, with limited capacity.",
+  );
+  assert.equal(polishDescription("Please note that this is for ages12+"), "Please note that this is for ages 12+");
+  assert.equal(
+    polishDescription("Fill out the form 7+days prior to the event."),
+    "Fill out the form 7+ days prior to the event.",
+  );
+  assert.equal(
+    polishDescription("Members vote on on them. Located at at 50 N. Fourth St."),
+    "Members vote on them. Located at 50 N. Fourth St.",
+  );
+  assert.equal(
+    polishDescription('Te invitan a leer " Mi nombre es Emilia ", de Isabel Allende.'),
+    'Te invitan a leer "Mi nombre es Emilia", de Isabel Allende.',
+  );
+  assert.equal(
+    polishDescription('A relaxed "book club" for fans. June 25th- "The Shroud" by Banu Mushtaq.'),
+    'A relaxed "book club" for fans. June 25th- "The Shroud" by Banu Mushtaq.',
+  );
+});
+
+test("lowercases a URL scheme that sentence capitalization upcased", () => {
+  assert.equal(
+    polishDescription("No portion is tax deductible. https://www.plus1.org/"),
+    "No portion is tax deductible. https://www.plus1.org/",
+  );
+});

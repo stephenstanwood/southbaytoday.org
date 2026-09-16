@@ -1596,6 +1596,13 @@ function maskDomainAndDecimalDots(text) {
       `$1${DOT_PLACEHOLDER}$2`,
     );
   } while (t !== prev);
+  // Email local parts ("caitlin.bosworth@sjlibrary.org", "ab.sjpl@…"). The
+  // hostname pass masks the domain, but the dot before "@" isn't adjacent to
+  // that placeholder run, so the splitter still chopped "caitlin. Bosworth@"
+  // and the capitalizer then upcased the surname — the recurring
+  // "fix mangled emails" copy-edit. Also tolerates the "(@)" obfuscation
+  // some SJPL listings use.
+  t = t.replace(/([\w-]+)\.(?=[\w.-]*\(?@)/g, `$1${DOT_PLACEHOLDER}`);
   return t;
 }
 
@@ -1619,6 +1626,20 @@ function polishDescription(text) {
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
+
+  // BiblioCommons (SJPL) descriptions fuse the "ADA Accommodation Requests"
+  // link label into body copy — mid-string before a translated repeat of the
+  // listing, or as a dangling tail with no terminator on the sentence before
+  // it. The trailing-fragment guard further down only fires when the label
+  // stands alone after a terminated sentence, so nightly copy-edit passes kept
+  // re-stripping the rest by hand. Drop the label (and its Spanish/Vietnamese
+  // counterparts, plus the "-----" rule separating English from translation)
+  // wherever it sits.
+  t = t
+    .replace(/\s*\b(?:ADA\s+)?Accommodations?\s+Requests?\b(?:\s*\(ADA\))?/gi, " ")
+    .replace(/\s*\bSolicitud(?:es)?\s+de\s+(?:adaptaciones|acomodaci[oó]n|accesibilidad)\s+ADA\b/gi, " ")
+    .replace(/\s*ADA\s+Yêu cầu Phương tiện để tham gia chương trình/g, " ")
+    .replace(/\s-{3,}\s/g, " ");
 
   // Strip trademark/copyright/service-mark glyphs from body copy — parity with
   // cleanTitle (which strips them from titles) and the venue-name cleaner.
@@ -1928,6 +1949,27 @@ function polishDescription(text) {
 
   // Restore domain/decimal placeholder dots.
   t = restoreDomainAndDecimalDots(t);
+
+  // Sentence-initial capitalization above upcases a URL that follows a period
+  // ("...deductible. Https://www.plus1.org/"); schemes are lowercase.
+  t = t.replace(/\bHttps?:\/\//g, (m) => m.toLowerCase());
+  // Doubled terminators left when an abbreviation's own period meets the
+  // sentence period ("5:30 p.m.. Free", "just for adults.. Supplies"). Exactly
+  // two dots — a three-dot ellipsis is left alone.
+  t = t.replace(/([^.\s])\.\.(?!\.)/g, "$1.");
+  // Fused age/lead-time tags from SCCLD and SJPL copy: "ages12+" → "ages 12+",
+  // "7+days prior" → "7+ days prior".
+  t = t.replace(/\b(ages?)(\d)/gi, "$1 $2").replace(/(\d\+)(?=[A-Za-z])/g, "$1 ");
+  // Doubled function words from hand-edited listings ("vote on on them",
+  // "located at at 50 N. Fourth St."). Limited to prepositions/articles that
+  // are never legitimately repeated.
+  t = t.replace(/\b(at|on|of|to|the|and|for|with|from)\s+\1\b/gi, "$1");
+  // Quote padding from BiblioCommons markup: `" Mi nombre es Emilia "` →
+  // `"Mi nombre es Emilia"`. Anchored so the opening quote must follow a space
+  // (or start) and the closing one must precede space/punctuation — otherwise
+  // the pattern would pair a closing quote with the next opening quote
+  // (`"book club" for fans and "The Shroud"`) and eat the words between.
+  t = t.replace(/(^|\s)"\s+([^"]+?)\s+"(?=[\s,.;:!?)]|$)/g, '$1"$2"');
 
   return cleanDisplayCopy(t);
 }
