@@ -2,6 +2,72 @@
 
 ---
 
+## 2026-09-16 — Cycle 225: Three Rounds, One Address Nobody Had Checked, and a Stale Pancake
+
+### Context
+Wednesday September 16, 2026. Roadmap still closed (6/6). Typecheck clean
+(0 errors). Pre-change tech URL audit: 175 links, 0 moved, 0 dead, 9
+bot-walls. The main checkout carried an unpushed 3:21 AM cron commit (today's
+home plans) that conflicted with Stephen's #250 the moment it was rebased.
+
+### What Was Built
+
+**Delos Data's $100M+ round is on the Tech tab.** A Palo Alto interconnect
+startup founded by Ed Doe and Dan Daly — Nonstop AI, a network chip and
+reference architecture built for inference rather than borrowed from HPC,
+with a claimed 10x latency cut to a ~100 ns floor and thousand-GPU scale-up
+domains. Matrix, Playground, Socratic, Capricorn, Matter, IAG; Pat Gelsinger
+quoted as a Playground GP. HQ needed the usual work: the release datelines
+Palo Alto but the boilerplate names no city, so the tiebreaker is the
+company's own California Secretary of State filing at 640 Santa Rita Ave —
+company-filed, the same bar Buildcheck cleared on LinkedIn.
+
+**VerifAIX's $5M seed is on the Tech tab.** This is the tier the tab is
+meant to catch: a 2024 Cupertino chip-verification startup (Madhulima Tewari,
+Kenneth Roe, Avner Landver) with a "Formal Brain" that checks AI-generated
+verification against a mathematically grounded model of the design. Endiya
+and Bluehill co-led. HQ is 10080 N. Wolfe Road on verifaix.com's own footer;
+the round was covered almost entirely by Indian outlets because Endiya is a
+Hyderabad fund, and none of them named a city. Several summarized the
+founders as Intel/SiFive/Synopsys/Apple/Cadence/IBM alumni but no source I
+read said it per person, so the card doesn't either. The fetched logo was a
+wide lockup with a white wordmark; cropped to the purple mark.
+
+**Owner's $240M Series D is finally in.** It sat out since Aug 28 on an
+unresolved HQ — the release datelines San Francisco, aggregators say Palo
+Alto, careers page names no city. The Sep 1–6 note set the bar: "a release
+dateline, an SEC filing, a contact page." Nobody had read owner.com's own
+Platform Terms, last updated Aug 11: principal address and every legal-notice
+address are 530 Lytton Ave, 2nd Floor, Palo Alto. That is the company
+describing itself in a document it is bound by. Entered as Palo Alto; the old
+note is annotated rather than rewritten so the reasoning stays on record.
+
+**Today's home plans had a pancake Stephen already killed.** The 3:21 AM cron
+regenerated `default-plans.json` before #249 corrected the place-blurb cache,
+so the Sep 16 breakfast card for Blvd Coffee of Almaden baked the exact
+"eggs, pancakes, and brunch plates" line #248/#249 removed — and my rebase of
+that cron commit over #250 would have shipped it. Diffed all 14 baked place
+blurbs against the current cache; that was the only drift. Re-baked it.
+
+### Why This Was the Strongest Move
+Three funding cards residents can read today, two of them the small local
+rounds the tab exists for, and a $240M round that had been stuck for nearly
+three weeks on a question a two-minute read of the company's own terms page
+answered. The pancake catch was incidental but it was Stephen's own fix from
+this morning that would have regressed on the home tab.
+
+### Next 3 Strongest Ideas
+1. **Crunchbase Sep 12–18 top ten** — publishes Friday; sweep it next cycle.
+2. **Weekly-roundup back-check** — AlleyWatch's 9/21 weekly against the Sep
+   14–18 window, the habit from the Cylake / Piston / Maven catches.
+3. **Cron-vs-cache ordering** — a baked plan generated before a cache fix
+   lands is a recurring shape (#250 was the same fix for Sep 15). A
+   post-generation "re-bake from cache" step in the plan generator, or a
+   prebuild drift check, would close it. Not built this cycle: it touches the
+   Home pipeline and deserves Stephen's call.
+
+---
+
 ## 2026-09-15 — Cycle 224: Two Late Catches Off the Weekly Roundup, and a Symlink in Git
 
 ### Context
