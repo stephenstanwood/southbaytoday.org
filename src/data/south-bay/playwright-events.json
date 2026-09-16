@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-15T15:08:56.380Z",
+    "generatedAt": "2026-09-16T02:17:14.588Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 581,
+    "eventCount": 586,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (128)",
-      "Los Gatos Library (151)",
+      "Mountain View Public Library (127)",
+      "Los Gatos Library (148)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (9)",
+      "Linden Tree Books (15)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
@@ -19,13 +19,13 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (5)",
       "Santana Row (6)",
-      "City of Cupertino (69)",
+      "City of Cupertino (71)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (10)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
-      "Peninsula Open Space Trust (3)",
+      "Peninsula Open Space Trust (4)",
       "San Jose Museum of Art (9)"
     ],
     "sourceHealth": [
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 131,
+        "count": 130,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 151,
+        "count": 148,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 9,
+        "count": 15,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 69,
+        "count": 71,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -339,7 +339,7 @@
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
         "status": "ok",
-        "count": 3,
+        "count": 4,
         "error": null,
         "sources": [
           "Peninsula Open Space Trust"
@@ -348,47 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "8c0d54b49683",
-      "title": "Outdoor Storytime",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Pioneer Park",
-      "address": "1146 Church St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
-      "sourceAudiences": [
-        "Babies",
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17142483",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "b7c1ea7f055a",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "1:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 1:00pm to 2:30pm Click Here to Register for 3:00pm to 4:30pm",
-      "url": "https://mountainview.libcal.com/event/17319771",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "046bf8f1db96",
       "title": "Sewing with FabMo: Robot Aprons",
@@ -3102,86 +3061,20 @@
       "kidFriendly": true
     },
     {
-      "id": "7d4dc58a49e7",
-      "title": "Golden Acorn Music (Ages 0-5)",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
+      "id": "60ae1b34998c",
+      "title": "Amplify: Back to Bach",
+      "date": "2026-12-11",
+      "displayDate": "Fri, Dec 11",
+      "time": "4:30 PM",
+      "endTime": "5:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "music",
       "cost": "free",
-      "description": "Join Golden Acorn Music as they lead us in a time of Spanish and English bilingual musical fun! Sing, clap, and dance along in this highly interactive musical performance designed for toddlers and their grown-ups. This event is in substitution of our regular Storytime program.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16920828",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "c4e39c782e6f",
-      "title": "Online Author Talk : Priya Parker",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "1:00 PM",
-      "endTime": "2:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. Join us for a paradigm-shifting, essential event as we sit down with world-renowned master facilitator Priya Parker to discuss her groundbreaking new book, The Art of Fighting: The Transformative Power of Conflict . In The Art of Fighting , Priya Parker explains that we cant form and grow effective relationships without a fight. She rejects the idea that conflict is abnormal or that good groups dont fight. All groups change and evolve; indeed, its because people disagree that good groups flourish. As she did in the now-classic The Art of Gathering , Parker draws on her far-reaching experience as a conflict facilitator, her own detailed research, and real-world examples to lay out the ways that people can identify disputes, determine how to address them, and what to do if they are insurmountable. Whether people disagree in the boardroom or the locker room, on a playground or in church, online or in person, conflict is a part of life, and understanding healthy conflict and how to harness its power is more important than ever. The Art of Fighting is a vital primer to help all of us understand how to do that. Register today to learn how to turn everyday arguments into profound moments of connection and trust! About the Author: Priya Parker is an internationally recognized expert on creating purposeful gatherings and reimagining how we come together in our communities and our workplaces. She is a conflict facilitator, strategic advisor, speaker, and author of the acclaimed book The Art of Gathering: How We Meet and Why it Matters and the host of The Art of Gathering Digital Course . Whether addressing CEOs, non-profit leaders, students or community organizers, Parker captivates audiences with her unique blend of storytelling, research-backed insights, and practical strategies.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17297366",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "efc80b7cdd6f",
-      "title": "Drop-In Tech Help",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "3:00 PM",
-      "endTime": "4:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "education",
-      "cost": "free",
-      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "url": "https://losgatosca.libcal.com/event/16035528",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "e07fdbf07ffc",
-      "title": "Tuesday PM Bookclub",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "5:00 PM",
-      "endTime": "5:55 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join Librarian Rachael for a lively discussion ofanother exciting book. Drop in to the Conference Room at 5 PM to join the discussion in person, or join in on Zoom here: Join from PC, Mac, Linux, iOS or Android: https://losgatosca-gov.zoom.us/j/92703658806 To sign up for the Tuesday Evening Book Club newsletter, click here: http://libraryaware.com/36/Subscribers/Subscribe?showonlynewsletterlists=true",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15855707",
-      "source": "Los Gatos Library",
+      "description": "",
+      "url": "https://mountainview.libcal.com/event/17651179",
+      "source": "Mountain View Public Library",
       "kidFriendly": false
     },
     {
@@ -3287,11 +3180,11 @@
       "kidFriendly": true
     },
     {
-      "id": "a9d74586b673",
+      "id": "0955da8305cc",
       "title": "Planning a Simple Native Garden for Beginners",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
-      "time": "10:00 AM",
+      "time": "11:00 AM",
       "endTime": "12:00 PM",
       "venue": "Los Gatos Library",
       "address": "110 E Main St, Los Gatos, CA 95030",
@@ -3610,7 +3503,7 @@
       "registration": "required",
       "category": "arts",
       "cost": "free",
-      "description": "Always wanted to learn how to play Mahjong? Well now you can! Come on down to the library and learn with us! This class is for BEGINNERS.",
+      "description": "Always wanted to learn how to play Mahjong? Well now you can! Come on down to the library and learn with us! We will be teaching American Mahjong. This class is for BEGINNERS.",
       "sourceAudiences": [
         "Adults"
       ],
@@ -4806,6 +4699,27 @@
       "url": "https://losgatosca.libcal.com/event/17444955",
       "source": "Los Gatos Library",
       "kidFriendly": true
+    },
+    {
+      "id": "74c647b627b6",
+      "title": "Free Repairs with Repair Café",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "11:00 AM",
+      "endTime": "3:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Do you need help repairing something? Repair Caf Silicon Valley will be at the library offering free repairs on household items such as toasters, lamps, radios, clothing, bikes, and more. Limit two items per household, last repairs accepted at 2:30 PM. Visit repaircafesv.org for more information about their mission and to see when other events are scheduled.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17161321",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
     },
     {
       "id": "431feb4af6ac",
@@ -6695,6 +6609,138 @@
       }
     },
     {
+      "id": "2b91ab8b48a0",
+      "title": "Storytime with Dr. Jenny Wang",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-11"
+      }
+    },
+    {
+      "id": "c73b08b27829",
+      "title": "Book Launch with Maggie Tokuda-Hall and Yas Imamura",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
+      "time": "5pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-16"
+      }
+    },
+    {
+      "id": "92bb027ebb8d",
+      "title": "Book Launch with Kyla Zhao",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-17"
+      }
+    },
+    {
+      "id": "b99336387813",
+      "title": "Storytime with Alan Barillaro",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-18"
+      }
+    },
+    {
+      "id": "05a250eec959",
+      "title": "Conversation with Trish Lundy & Charlotte Lillie Balogh",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-24"
+      }
+    },
+    {
+      "id": "f73fb2badb83",
+      "title": "Book Launch with Kate O’Shaughnessy",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "4pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-25"
+      }
+    },
+    {
       "id": "cd4fa6ff3776",
       "title": "NAMI Walks Silicon Valley 2026",
       "date": "2026-10-03",
@@ -7732,8 +7778,8 @@
       "kidFriendly": false
     },
     {
-      "id": "43c11a8abe8c",
-      "title": "All Ages Storytime",
+      "id": "9993a6047521",
+      "title": "Toddler Storytime",
       "date": "2026-09-15",
       "displayDate": "Tue, Sep 15",
       "time": "11:30 am",
@@ -7749,8 +7795,8 @@
       "kidFriendly": true
     },
     {
-      "id": "9993a6047521",
-      "title": "Toddler Storytime",
+      "id": "43c11a8abe8c",
+      "title": "All Ages Storytime",
       "date": "2026-09-15",
       "displayDate": "Tue, Sep 15",
       "time": "11:30 am",
@@ -8447,7 +8493,7 @@
       "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
       "city": "cupertino",
       "category": "family",
-      "cost": "free",
+      "cost": null,
       "description": "Anyone can become a victim of cybercrime. Join the City’s panel discussion to hear cybersecurity experts share practical tips and guidance to help you recognize threats and protect yourself. A Q&A session will follow the presentation, giving attendees an opportunity to ask questions. Cybersecurity Panel Don Hester - CISA Cybersecurity Advisor, Dept. of Homeland Security Dr. May Wang - CTO, IoT Security, Palo Alto Networks Ilaiy Elangovan - Head of Cybersecurity Engineering, VISA Ramesh Gupta - CEO, Identra.AI Sandip Patel - Deputy District Attorney, High-Tech Prosecutions, Santa Clara County Balaram Donthi - Panel Moderator, TICC Commissioner Sudeep Kumar - Co-Host, TICC Vice Chair View Past Events Cybersecurity Public Education 2025 Cybersecurity Public Education 2023 Protect Yourself from Being Hacked on the Wild, Wild Internet",
       "url": "https://www.cupertino.gov/Events-directory/Cupertino-Cybersecurity-Public-Awareness-Events",
       "source": "City of Cupertino",
@@ -8469,6 +8515,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Na-Leo-Mokupuni-ma-Cupertino/Na-Leo-Mokupuni-in-Cupertino",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "fe61cc9d92b1",
+      "title": "Candidate Forum - Cupertino City Council",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "Cupertino Senior Center",
+      "address": "Cupertino Senior Center, 21251 Stevens Creek Blvd., 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The League of Women Voters of Cupertino-Sunnyvale and San José Spotlight are co-hosting a candidate forum for the upcoming Cupertino City Council elections. This event will be held from 6 to 7:30 p.m. on Wednesday, October 7, at the Cupertino Senior Center. Join is to learn more about the individuals seeking to represent your neighborhood. This event is not sponsored or endorsed by the City of Cupertino. RSVP Required Event Registration",
+      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-07",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "10117d8c0877",
@@ -8501,6 +8564,23 @@
       "cost": null,
       "description": "Let your pup take the plunge during a dog-only swim in the Blackberry Farm pools. It’s a paws-itively fun way for your pooch to enjoy the pools before they open for summer swimming—tail wags are highly encouraged. Swim Sessions (45 minutes of tail-wagging fun) Block 1 - 9 to 9:45 a.m. Block 2 - 10 to 10:45 a.m. Block 3 - 11 to 11:45 a.m. Block 4 - Noon to 12:45 p.m. Register Registration opens in February for the spring event and in June for the fall event. For additional information, visit the Pooch Plunge webpage.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "2b476ab9f286",
+      "title": "Candidate Forum - Cupertino City Council",
+      "date": "2026-10-14",
+      "displayDate": "Wed, Oct 14",
+      "time": "12:00 PM",
+      "endTime": "01:30 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 N. Stelling Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The Rotary Club of Cupertino and the Cupertino Chamber of Commerce are sponsoring a candidate forum for the Cupertino City Council. This is an in-person forum, moderated by the League of Women Voters Cupertino - Sunnyvale, and will be held Wednesday, October 14 at 12 p.m. at the Quinlan Community Center, 10185 N. Stelling Rd, Cupertino CA 95014. This event is open to the public. Registration is not required. This event is not sponsored or endorsed by the City of Cupertino. Approximate Schedule: 11:45 p.m. Greetings and Set-Up 12 p.m. The Rotary meeting will come to order, Pledge of Allegiance 12:05 p.m. Candidate Forum 1:30 p.m. Rotary meeting closes Learn More Event Information",
+      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-14",
       "source": "City of Cupertino",
       "kidFriendly": false
     },
@@ -11238,6 +11318,23 @@
       "cost": "free",
       "description": "",
       "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
       "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     },

@@ -1,20 +1,35 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-15T03:16:16.498Z"
+    "auditedAt": "2026-09-16T02:20:04.317Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1871,
+    "total": 1894,
     "totals": {
       "hard": 0,
-      "soft": 0,
+      "soft": 1,
       "info": 1
     },
     "byReason": {
+      "virtual-not-flagged": 1,
       "local-departure-trip": 1
     },
     "hard": [],
     "soft": [
+      {
+        "id": "stanford-53632743885261-2026-09-16",
+        "title": "Democratizing innovation in American healthcare: Lessons from Univfy and ElixirTrials",
+        "city": "palo-alto",
+        "date": "2026-09-16",
+        "location": "318 Campus Dr, Palo Alto, CA 94305",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
       {
         "id": "inbound-cd7c4b13b6c3f675",
         "title": "September Day Trip to Sfmoma",
@@ -33,7 +48,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 330,
+    "total": 336,
     "totals": {
       "hard": 0,
       "soft": 6,
