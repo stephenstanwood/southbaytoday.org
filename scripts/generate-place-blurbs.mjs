@@ -10,6 +10,11 @@
 //
 // No LLM calls. Deterministic. Templates vary by category cluster + hash
 // the place id so 50 Italian restaurants don't all read the same.
+//
+// Rows in the existing cache marked source: "verified" are hand-checked
+// against the venue's own menu and survive regeneration untouched (the
+// Sep 16, 2026 issue shipped "pancakes" for a coffee shop off a template
+// row; the correction must not be regenerated away).
 
 import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -264,13 +269,27 @@ export function foodProfileFromName(name, typeText) {
     [/steak|chop house|morton's|fleming|galp[aã]o gaucho/, "steakhouse", "steaks, grilled meats, and sides"],
     [/barbecue|bbq|smoke/, "barbecue restaurant", "barbecue plates and smoked meats"],
     [/crepe/, "crepe cafe", "crepes, salads, and cafe plates"],
-    [/pancake|breakfast|brunch|mimosas|breaking dawn|uncle john|holder|country inn|orange bowl|creamery/, "breakfast and brunch spot", "eggs, pancakes, and brunch plates"],
+    // Generic tokens (pancake/breakfast/brunch) sit ahead of the cafe, bakery
+    // and dessert rules on purpose so "Brunch Cafe" reads as brunch. Google
+    // hangs a secondary breakfast_restaurant tag on coffee shops, bakeries
+    // and donut shops liberally, so inferFoodProfile lets the name + PRIMARY
+    // type answer before any secondary tag gets into the haystack.
+    // "creamery" is an ice-cream token and lives in the ice cream rule below.
+    // The food string is deliberately generic: "pancakes" was a menu claim
+    // that the Sep 16, 2026 issue shipped for a coffee shop with no pancakes.
+    [/pancake|breakfast|brunch|mimosas|breaking dawn|uncle john|holder|country inn|orange bowl/, "breakfast and brunch spot", "eggs, breakfast plates, and brunch dishes"],
     [/sandwich|panino|bun me up|oakmont/, "sandwich shop", "sandwiches, coffee, and quick lunch plates"],
     [/coffee|cafe|caffe|roasting|philz|lookout|arwa|bijan|nahita|olympus/, "cafe", "coffee, pastries, and cafe bites"],
     [/bakery|donut|doughnut|cake|bundt|patisserie|pastry/, "bakery", "pastries, cakes, and baked goods"],
-    [/ice cream|gelato|creamery|tong sui|dessert|sweets|boba|tea|teaspoon/, "dessert and drinks shop", "desserts, tea drinks, and sweet snacks"],
+    // Ice cream before the tea/dessert rule so a scoop shop isn't promised
+    // "tea drinks" (creamery = ice cream, not breakfast; see the breakfast rule).
+    [/ice cream|gelato|creamery|frozen yogurt|froyo/, "ice cream shop", "ice cream and frozen treats"],
+    [/tong sui|dessert|sweets|boba|tea|teaspoon/, "dessert and drinks shop", "desserts, tea drinks, and sweet snacks"],
     [/\b(?:wine|vino)\b|tasting house|tessora/, "wine bar", "wine pours and small plates"],
     [/\b(?:brew(?:pub|ery|ing)?|beer|tap(?:s|room)?|barrel)\b/, "beer bar", "beer, taps, and pub bites"],
+    // Ahead of the generic bar rule: "cocktail bar" would otherwise hit
+    // \bbar\b and promise burgers a cocktail lounge doesn't serve.
+    [/cocktail|mixolog|speakeasy/, "cocktail bar", "cocktails and bar snacks"],
     [/\b(?:pub|grill|bar)\b|district|local union|double d|topgolf|dave buster/, "bar and grill", "burgers, drinks, and shareable plates"],
     [/coconuts|caribbean/, "Caribbean restaurant", "Caribbean plates"],
     [/cascal|suspiro|macarena|bodeguita/, "Spanish and Latin restaurant", "tapas, Latin plates, and cocktails"],
@@ -328,7 +347,7 @@ function foodProfileFromType(typeText) {
     [/persian/, "Persian restaurant", "kebabs, rice plates, and Persian stews"],
     [/spanish|tapas/, "Spanish restaurant", "tapas and Spanish plates"],
     [/american|californian/, "American restaurant", "burgers, sandwiches, and American plates"],
-    [/breakfast|brunch|diner/, "breakfast and brunch spot", "eggs, pancakes, and brunch plates"],
+    [/breakfast|brunch|diner/, "breakfast and brunch spot", "eggs, breakfast plates, and brunch dishes"],
     [/sandwich|deli/, "sandwich shop", "sandwiches and quick lunch plates"],
     [/coffee|cafe/, "cafe", "coffee, pastries, and cafe bites"],
     [/tea/, "tea house", "tea drinks and sweet snacks"],
@@ -349,8 +368,31 @@ function foodProfileFromType(typeText) {
 }
 
 export function inferFoodProfile(p, displayType) {
+  const name = p.name || "";
   const typeText = [displayType, ...(p.types || [])].filter(Boolean).join(" ");
-  return foodProfileFromName(p.name || "", typeText)
+  // Precedence: the name plus Google's PRIMARY type outrank the secondary
+  // `types` list. Before this split every type rode in one haystack, so an
+  // earlier rule matched off a secondary tag beat a later rule matched off
+  // the primary — coffee shops, bakeries, donut and ice cream shops that
+  // Google also tags breakfast_restaurant all came out "breakfast and brunch
+  // spot", and bakeries with a secondary sandwich_shop tag read as delis.
+  // p.displayType is Google's primaryTypeDisplayName, so name + displayType
+  // + primaryType is exactly "what the venue is called and what it is".
+  //
+  // The primary pass only runs when the name tier can vouch for the primary
+  // type (coffee shop, bakery, dessert shop, brunch restaurant, beer garden…)
+  // or the primary type is generic (restaurant/food) and the name is all we
+  // have. A cuisine only the type tier knows (chinese_restaurant,
+  // greek_restaurant…) keeps the legacy single-haystack path: otherwise a
+  // generic name word ("Asian Street Cafe") would beat the cuisine.
+  const primaryText = [p.displayType, p.primaryType].filter(Boolean).join(" ");
+  const primaryKnown = foodProfileFromName("", primaryText) !== null;
+  const primaryGeneric = !p.primaryType || GENERIC_FOOD_TYPES.has(p.primaryType);
+  if (primaryKnown || primaryGeneric) {
+    const primary = foodProfileFromName(name, primaryText);
+    if (primary) return primary;
+  }
+  return foodProfileFromName(name, typeText)
     || foodProfileFromType(typeText)
     || { label: "restaurant", food: "dinner plates, drinks, and casual bites" };
 }
@@ -610,10 +652,19 @@ function blurbForWellness(p, ctx) {
 }
 
 // MAIN --------------------------------------------------------------------
+const previous = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")).blurbs || {} : {};
 const cache = {};
-let researchHits = 0, templateHits = 0;
+let researchHits = 0, templateHits = 0, verifiedHits = 0;
 
 for (const p of places) {
+  // Hand-verified rows outrank both tiers: keep them byte-for-byte.
+  const prior = previous[p.id];
+  if (prior?.source === "verified" && prior.blurb) {
+    cache[p.id] = prior;
+    verifiedHits++;
+    continue;
+  }
+
   const cityName = CITY_NAMES[p.city] || p.city;
   const street = extractStreet(p.address, cityName, p.name);
   const category = isFoodPlace(p) ? "food" : p.category;
@@ -671,15 +722,17 @@ const out = {
     generatedAt: new Date().toISOString(),
     placeCount: places.length,
     blurbCount: Object.keys(cache).length,
-    sources: { editorial: researchHits, template: templateHits },
+    sources: { editorial: researchHits, template: templateHits, verified: verifiedHits },
   },
   blurbs: cache,
 };
 
 if (process.argv[1] === __filename) {
-  writeFileAtomic(OUT, JSON.stringify(out, null, 2));
+  // Trailing newline: the committed file carries one, so hand edits and
+  // regenerations don't churn the last line.
+  writeFileAtomic(OUT, JSON.stringify(out, null, 2) + "\n");
   console.log(`Wrote ${OUT}`);
-  console.log(`  ${out._meta.blurbCount} blurbs (${researchHits} from Google editorialSummary, ${templateHits} from templates)`);
+  console.log(`  ${out._meta.blurbCount} blurbs (${researchHits} from Google editorialSummary, ${templateHits} from templates, ${verifiedHits} hand-verified carried forward)`);
   console.log(`\nSample editorial (5):`);
   const editorialSamples = Object.entries(cache).filter(([, v]) => v.source === "editorial").slice(0, 5);
   for (const [id, v] of editorialSamples) {
