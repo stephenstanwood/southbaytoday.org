@@ -1367,6 +1367,74 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Thyme Care, Impossible Objects, HiBob, Upwind, Fluidstack, Crusoe) are
   //     out of coverage; its TabaPay and Lyte items are the rounds already
   //     entered below.
+  // Note on the Sep 15-16 2026 sweep: Delos Data and VerifAIX are the two
+  // in-coverage rounds added below.
+  //   * Delos Data is Palo Alto on two primary sources. Its own Sep 15 PR
+  //     Newswire release datelines "PALO ALTO, Calif." (the boilerplate names
+  //     no city, so the dateline alone would not settle it — the Groq rule),
+  //     and the tiebreaker is company-filed: the California Secretary of State
+  //     record for Delos Data Inc. lists its principal address at 640 Santa
+  //     Rita Ave, Palo Alto 94301. That is the company describing itself, the
+  //     same bar Buildcheck's LinkedIn HQ cleared above. EE Times (May 27 2026)
+  //     and FinSMEs also say Palo Alto. The techstartups headline calls the
+  //     founders "Intel veterans"; the release itself says only that the team
+  //     has "shipped data center silicon and systems at scale for two decades,"
+  //     so the card leans on the release's wording and names Pat Gelsinger as
+  //     an investor via Playground, which the release quotes directly.
+  //   * VerifAIX's city comes straight from the company: verifaix.com's footer
+  //     and About page give "10080 N. Wolfe Road, Suite 200, Cupertino,
+  //     California 95014" as headquarters, and FinSMEs files it under
+  //     Cupertino. The round was covered mostly by Indian outlets (Entrackr,
+  //     Inc42, Indian Startup News — Endiya Partners is a Hyderabad fund), and
+  //     the "engineering teams across the US, India and Israel" line is where
+  //     the teams sit, not the HQ. A $5M seed for a 2024 chip-verification
+  //     startup is exactly the small-round tier the Tech tab is meant to catch.
+  //     Several outlets summarize the founders' backgrounds as Intel / SiFive /
+  //     Synopsys / Apple / Cadence / IBM Research, but no source I read states
+  //     it per person and verifaix.com/about lists no prior employers, so the
+  //     tagline stays at the company's own "AI researchers and silicon design
+  //     and verification architects."
+  // Near-misses recorded so the next cycle doesn't re-verify them:
+  //   * Noetive ($41M seed led by Eclipse, Sep 16 2026; industrial world
+  //     models) — techstartups lists no HQ and Eclipse is a Palo Alto fund,
+  //     but the company's own release on noetive.ai datelines "SAN FRANCISCO,
+  //     Calif." Out of coverage.
+  //   * TypeSafe AI ($40M seed led by DCVC, Sep 16) is San Francisco per
+  //     techstartups. Factory ($200M at $5B, Sep 15) is San Francisco. Exein
+  //     ($270M) is Rome; Euclyd ($231M) is Dutch.
+  //   * FinSMEs' Sep 16 US list is otherwise out of coverage (Expanse, Ferry
+  //     Health, Thatch — San Francisco; Sling Therapeutics — Ann Arbor; Ayble,
+  //     Nix Biosensors — Boston; Kairon Health, Profound — New York; Climb —
+  //     Dallas; Payment Nerds — Nashville). AlleyWatch's 9/15 daily is all New
+  //     York (Profound, Fin.com, Liquid Compute, BoomerangHR, Kickback Soccer
+  //     Media, ScoringFactory). techstartups' Sep 16 roundup is six Chinese
+  //     companies plus CADDi (Tokyo), iGii (Scotland), TypeSafe, and Noetive.
+  {
+    id: "verifaix",
+    name: "VerifAIX",
+    city: "Cupertino",
+    category: "eda",
+    round: "Seed",
+    amount: "$5M",
+    date: "2026-09-16",
+    tagline:
+      "AI can now draft a chip design in an afternoon, but proving that design actually works is still the slowest, most expensive part of getting to silicon — and a bug that slips through means a re-spin. VerifAIX, a Cupertino startup founded in 2024 by CEO Madhulima Tewari, chief architect Kenneth Roe, and Avner Landver, is building a verification platform around what it calls a Formal Brain: a mathematically grounded model of the design that reads the specification, the RTL, and the existing test assets together, flags where they disagree, and then drives the verification plan, testbenches, assertions, formal analysis, simulation, and coverage closure from there. The pitch is that AI-generated verification needs an independent check that isn't itself a language model guessing. The $5M seed was co-led by Endiya Partners and Bluehill VC, and the company says the platform is already deployed at semiconductor companies on complex control logic and protocol work. The money goes to product development, customer deployments, and engineering hiring across the U.S., India, and Israel, with fabless chipmakers, IP vendors, AI-accelerator startups, and hyperscalers designing their own silicon as the target customers.",
+    color: "#2563EB",
+    url: "https://www.verifaix.com/",
+  },
+  {
+    id: "delos-data",
+    name: "Delos Data",
+    city: "Palo Alto",
+    category: "chip",
+    round: "Venture Round",
+    amount: "$100M+",
+    date: "2026-09-15",
+    tagline:
+      "Delos Data's argument is that the next bottleneck in AI data centers isn't chips or power but the network between them: the most expensive idle asset in a data center, CEO Ed Doe says, is a GPU or accelerator waiting on the network. The Palo Alto company, founded by Doe and CTO Dan Daly with a team that has built data-center silicon and systems together for two decades, closed more than $100M from Matrix Partners, Playground Global, Socratic Partners, Capricorn's Technology Impact Fund, Matter Venture Partners, and IAG — with former Intel CEO Pat Gelsinger, now a Playground general partner, among the backers on record. The product is Nonstop AI: an interconnect chip and reference architecture built for inference rather than borrowed from HPC or training, with a Data Interface the company says cuts latency tenfold — down to a floor of roughly 100 nanoseconds, against the microseconds of a typical network card — and lets mixed GPUs, CPUs, accelerators, memory, and storage share one scale-up domain — a thousand-plus GPUs in practice, far more with topology changes. A Morpheus PCIe card is already out for customers to validate against real workloads, a Taiwanese OEM is building the servers, and broader availability is slated for the fourth quarter of 2026. The money grows the software and hardware engineering teams and funds the push to market.",
+    color: "#0F766E",
+    url: "https://www.delosdata.com/",
+  },
   {
     id: "maven-robotics",
     name: "Maven Robotics",
