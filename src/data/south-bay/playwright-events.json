@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-16T02:17:14.588Z",
+    "generatedAt": "2026-09-16T15:08:39.836Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 586,
+    "eventCount": 588,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (127)",
-      "Los Gatos Library (148)",
+      "Los Gatos Library (150)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 148,
+        "count": 150,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -348,27 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "046bf8f1db96",
-      "title": "Sewing with FabMo: Robot Aprons",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "time": "6:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating robot aprons using upcycled fabric. Alternative apron designs, such as flowers, will also be possible. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up . A Sci-Fi September event. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/14866776",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "0545e676f8ff",
       "title": "Baby Storytime",
@@ -3076,6 +3055,29 @@
       "url": "https://mountainview.libcal.com/event/17651179",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "743ad27c44ed",
+      "title": "Outdoor Storytime",
+      "date": "2026-12-15",
+      "displayDate": "Tue, Dec 15",
+      "time": "10:30 AM",
+      "endTime": "11:00 AM",
+      "venue": "Pioneer Park",
+      "address": "1146 Church St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
+      "sourceAudiences": [
+        "Babies",
+        "Preschoolers",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17142496",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "0571dd6c9426",
@@ -6105,6 +6107,47 @@
       "kidFriendly": false
     },
     {
+      "id": "acadc167df6d",
+      "title": "Storytime (Ages 0-5)",
+      "date": "2026-12-15",
+      "displayDate": "Tue, Dec 15",
+      "time": "11:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17341971",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "a6e63620b316",
+      "title": "Drop-In Tech Help",
+      "date": "2026-12-15",
+      "displayDate": "Tue, Dec 15",
+      "time": "3:00 PM",
+      "endTime": "4:30 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "education",
+      "cost": "free",
+      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "url": "https://losgatosca.libcal.com/event/16035541",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7778,10 +7821,10 @@
       "kidFriendly": false
     },
     {
-      "id": "9993a6047521",
+      "id": "6cfe2be00493",
       "title": "Toddler Storytime",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
+      "date": "2026-09-16",
+      "displayDate": "Wed, Sep 16",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7795,10 +7838,10 @@
       "kidFriendly": true
     },
     {
-      "id": "43c11a8abe8c",
+      "id": "e02f7ff76777",
       "title": "All Ages Storytime",
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
+      "date": "2026-09-16",
+      "displayDate": "Wed, Sep 16",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -9242,7 +9285,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9259,7 +9302,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9276,7 +9319,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9293,7 +9336,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
