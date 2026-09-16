@@ -1201,7 +1201,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // rounds added below. The near-miss recorded so the next cycle doesn't
   // re-verify it:
   //   • Owner ($240M Series D at $2.3B, announced Aug 28 2026; AI-native
-  //     software for independent restaurants) is left out on an unresolved HQ.
+  //     software for independent restaurants) was left out on an unresolved HQ
+  //     when this note was written. RESOLVED 2026-09-16 — entered below as
+  //     Palo Alto on the company's own Platform Terms address; see the note on
+  //     the entry. The reasoning that follows is kept for the record.
   //     AlleyWatch's weekly roundup, Wikipedia, and the usual aggregators
   //     (CBInsights, PitchBook, ZoomInfo) all say Palo Alto, at 530 Lytton Ave.
   //     But the only primary source is the company's own PR Newswire release,
@@ -1537,6 +1540,28 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
       "Companies now spend about as much on AI as they do on cloud infrastructure, but cloud arrived with a decade of tooling for tracking who spent what and why, and AI did not. Guickly launched out of San Jose to sell that missing layer: a measurement system that maps every AI tool, user, and department automatically rather than by survey, surfaces the shadow AI nobody expensed, sets per-employee and per-tool budgets, and flags the waste — unused licenses, overpriced models, three tools doing one job. The pitch leans on a McKinsey finding the company cites, that only 39% of organizations can connect AI spending to a measurable business outcome. For security-conscious buyers, the differentiator is that prompts and source code stay on premises instead of being shipped to a vendor for analysis. Founder Prashant Jalan spent more than eight years as an applied AI lead at Google, where he helped build the Maps speed-limit feature and wrote a profiler for squeezing performance out of TPUs — the same instinct, turned on a company's AI bill instead of a chip. Engineering Capital led the $4.2M seed, with Converge VC, Neon Fund, and angel investors joining.",
     color: "#2563eb",
     url: "https://guickly.com",
+  },
+  // Owner's HQ was resolved 2026-09-16, on the exact terms the Sep 1-6 sweep
+  // note above set: "a primary source (a release dateline, an SEC filing, a
+  // contact page)." The company's own Platform Terms at owner.com/platform-terms
+  // (last updated Aug 11 2026, seventeen days before the round) give Owner.com,
+  // Inc.'s principal address and every legal-notice address as "530 Lytton
+  // Avenue, 2nd Floor, Palo Alto, CA 94301." That is the company describing
+  // itself in a document it is bound by, which outranks the release's "SAN
+  // FRANCISCO" dateline (announcement issuance, per the Groq rule) and the
+  // remote-friendly careers page. In coverage as Palo Alto.
+  {
+    id: "owner",
+    name: "Owner",
+    city: "Palo Alto",
+    category: "saas",
+    round: "Series D",
+    amount: "$240M",
+    date: "2026-08-28",
+    tagline:
+      "Independent restaurants pay third-party delivery apps a cut of every order and still don't own the customer. Owner, the Palo Alto company co-founded in 2020 by CEO Adam Guild and CTO Dean Bloembergen, sells them the other path: it builds and runs a restaurant's website, online ordering, branded mobile app, CRM, customer support, point of sale, and AI phone ordering, with AI agents that tune each piece on their own — what the company calls being a restaurant's AI CMO and CTO. Growth Equity at Goldman Sachs Alternatives led the $240M Series D at a $2.3B valuation, with Meritech, Redpoint, Headline, and Jack Altman returning. Owner says it has passed $100M in annual recurring revenue, that restaurants on the platform have driven more than $1B in direct sales this year, that more than 100 million Americans have ordered through it, and that it now powers more U.S. locations than Domino's or Taco Bell. Its own numbers for customers: online traffic up 40% on average in the first 30 days, direct online revenue up more than 40% in year one, and app users reordering at twice the rate. The team includes more than 35 former founders drawn from Shopify, DoorDash, Compass, Salesforce, and HubSpot, and the stated plan is to take the same AI-native stack beyond restaurants to other local businesses.",
+    color: "#111827",
+    url: "https://www.owner.com",
   },
   {
     id: "sifly-series-a",
