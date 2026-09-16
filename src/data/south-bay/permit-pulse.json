@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-15T03:08:35.383Z",
+      "generatedAt": "2026-09-16T03:09:18.407Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 7 – Sep 14",
+      "dateRange": "Sep 8 – Sep 15",
       "stats": {
-        "total": 400,
-        "notable": 19,
-        "newUnits": 6,
-        "totalValuation": 8503859
+        "total": 293,
+        "notable": 17,
+        "newUnits": 4,
+        "totalValuation": 7979208
       },
       "permits": [
         {
@@ -51,18 +51,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-133195-RS",
-          "address": "914 Mccreery Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Rear ADU",
-          "valuation": 66850,
-          "units": 1,
-          "issueDate": "2026-09-08",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2025-138005-RS",
           "address": "3162 Mt Rainier Dr #2",
           "category": "residential-new",
@@ -72,18 +60,6 @@
           "valuation": 66146,
           "units": 1,
           "issueDate": "2026-09-10",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-140331-RS",
-          "address": "914 Mccreery Av #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "JADU",
-          "valuation": 62100,
-          "units": 1,
-          "issueDate": "2026-09-08",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -133,35 +109,47 @@
           "units": 0,
           "issueDate": "2026-09-09",
           "subtype": "Restaurant"
+        },
+        {
+          "id": "2026-136935-CI",
+          "address": "2555 Corde Terra Cl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Commercial/Industrial",
+          "valuation": 313782,
+          "units": 0,
+          "issueDate": "2026-09-10",
+          "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2026-136899-CI",
+          "address": "1754 Junction Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "Retail",
+          "valuation": 283836,
+          "units": 0,
+          "issueDate": "2026-09-09",
+          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-15T03:08:37.591Z",
+      "generatedAt": "2026-09-16T03:09:20.567Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 7 – Sep 14",
+      "dateRange": "Sep 8 – Sep 15",
       "stats": {
-        "total": 92,
+        "total": 100,
         "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02540",
-          "address": "939 Paradise Wy",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-08",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02541",
           "address": "124 Primrose Wy",
@@ -172,7 +160,19 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-09",
-          "subtype": "Permit Issued"
+          "subtype": "Finaled"
+        },
+        {
+          "id": "26PLN-00258",
+          "address": "855 California Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Over the Counter Tree Removal of one African Fern Pine (Podocarpus) to be replaced with four 24-inch box Cork Oak (Quercus suber).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-14",
+          "subtype": "Over the Counter Approved"
         }
       ]
     }

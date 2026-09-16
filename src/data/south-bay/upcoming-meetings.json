@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-15T13:52:44.225Z",
+  "generatedAt": "2026-09-16T03:09:53.934Z",
   "meetings": {
     "san-jose": {
       "date": "2026-09-15",
@@ -226,7 +226,7 @@
     "los-gatos": {
       "provider": "MuniCode",
       "status": "error",
-      "detail": "municodemeetings.com rejected our User-Agent (UND_ERR_SOCKET) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
+      "detail": "municodemeetings.com rejected our User-Agent (ERR_HTTP2_STREAM_ERROR) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
     }
   }
 }

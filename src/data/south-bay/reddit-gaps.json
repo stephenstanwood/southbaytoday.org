@@ -1,115 +1,88 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-15T03:15:54.120Z",
+    "generatedAt": "2026-09-16T03:18:09.641Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 9,
-    "placesExtracted": 5,
-    "placesMatched": 3,
+    "threadsMined": 8,
+    "placesExtracted": 4,
+    "placesMatched": 2,
     "placeGaps": 2,
-    "eventsExtracted": 2,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Ry's Poke Shack",
-      "city": "Mountain View",
+      "name": "Ignite",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "Hawaii-born poke chain opening counter at Ava's",
+      "context": "new fire-grilled skewer restaurant at San Pedro Square",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
-        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
-        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
+        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
+        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
+        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
+        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
       ]
     },
     {
-      "name": "Buffalo Wild Wings",
+      "name": "Toastique",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "sports bar suggested for watching UFC matches",
+      "context": "San Pedro Square location closed, windows covered up",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wggull/looking_for_a_sports_bar_that_shows_ufc_matches/",
-        "https://www.reddit.com/r/SanJose/comments/1wgglu3/looking_for_musicians_music_projects_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wg9awm/best_way_to_spend_a_week_here_if_i_wasnt_planning/",
-        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/"
+        "https://www.reddit.com/r/SanJose/comments/1whfpot/moving_from_the_netherlands_to_san_jose/",
+        "https://www.reddit.com/r/Sunnyvale/comments/1wgsldh/new_to_sunnyvale_anyone_down_to_hang_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wgqviu/anyone_know_what_happened_to_toastique_in_san/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Good Carma Classic Car and Bonsai Show",
-      "when": "Saturday 9/19, 10am-2pm",
-      "city": "Mountain View",
-      "context": "car and bonsai show event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
-        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
-        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
-      ]
-    },
-    {
-      "name": "Sleeping on Gems",
-      "when": "",
+      "name": "Luna Park Chalk Art Festival",
+      "when": "Saturday, September 19th, 2026",
       "city": "San Jose",
-      "context": "Kaytranada headlining downtown San Jose event",
+      "context": "19th annual chalk art festival with vendors and music",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
-        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
-        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
+        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
+        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
+        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
+        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Ava's Downtown Market & Deli",
-      "city": "Mountain View",
+      "name": "Sushi Confidential",
+      "city": "San Jose",
       "kind": "restaurant",
-      "context": "hosting Ry's Poke Shack counter at 340 Castro St",
+      "context": "shuttered San Pedro Square restaurant, now replaced by Ignite",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
-        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
-        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
+        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
+        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
+        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
+        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
       ],
-      "matchedName": "Ava's Downtown Market & Deli"
+      "matchedName": "Sushi Confidential Campbell"
     },
     {
-      "name": "Japanese Friendship Garden",
+      "name": "Memorial Park",
       "city": "San Jose",
       "kind": "park",
-      "context": "asking if water and koi fish are back",
+      "context": "pickleball courts discussion",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wftyol/rys_poke_shack_opens_in_mountain_view/",
-        "https://www.reddit.com/r/mountainview/comments/1wgapd7/saturday_919_at_10am2pm_good_carma_classic_car/",
-        "https://www.reddit.com/r/SanJose/comments/1wg84kl/kaytranada_at_sleeping_on_gems_in_downtown_san/",
-        "https://www.reddit.com/r/SanJose/comments/1wfuxzf/japanese_friendship_garden/",
-        "https://www.reddit.com/r/SanJose/comments/1wfrzmk/best_nightclubs/"
+        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
+        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
+        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
+        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
+        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
       ],
-      "matchedName": "Japanese Friendship Garden"
-    },
-    {
-      "name": "Britannia Arms",
-      "city": "San Jose",
-      "kind": "bar",
-      "context": "downtown San Jose pub, poster had bad experience",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wggull/looking_for_a_sports_bar_that_shows_ufc_matches/",
-        "https://www.reddit.com/r/SanJose/comments/1wgglu3/looking_for_musicians_music_projects_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wg9awm/best_way_to_spend_a_week_here_if_i_wasnt_planning/",
-        "https://www.reddit.com/r/SanJose/comments/1wfty6e/anyone_registered_for_the_ayso_area_2j_adult/"
-      ],
-      "matchedName": "Britannia Arms Almaden"
+      "matchedName": "Cupertino Memorial Park"
     }
   ],
   "eventMatches": []
