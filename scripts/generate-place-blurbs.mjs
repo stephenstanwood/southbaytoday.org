@@ -358,7 +358,12 @@ function foodProfileFromType(typeText) {
     [/\b(?:brew(?:pub|ery|ing)?|beer)\b/, "beer bar", "beer, taps, and pub bites"],
     [/\b(?:pub|bar and grill|gastropub|bar)\b/, "bar and grill", "burgers, drinks, and shareable plates"],
     [/food court/, "food hall", "multiple food vendors under one roof"],
-    [/vegan|vegetarian/, "plant-based spot", "plant-based bowls and cafe plates"],
+    // Label and food must not share a lead word: the "<city> <label> for
+    // <food>" template printed "Milpitas plant-based spot for plant-based
+    // bowls and cafe plates" for Sri Radha's on 2026-09-17 — and that row was
+    // a sattvic Indian buffet, not bowls, so the shipped row is verified copy.
+    [/vegan/, "vegan spot", "plant-based bowls and cafe plates"],
+    [/vegetarian/, "vegetarian restaurant", "meat-free plates, bowls, and cafe dishes"],
     [/asian fusion|fusion/, "Asian fusion restaurant", "Asian-fusion plates"],
   ];
   for (const [rx, label, food] of checks) {

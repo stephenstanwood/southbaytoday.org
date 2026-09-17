@@ -1825,6 +1825,15 @@ function polishDescription(text) {
   // requires the leading run to have lowercase so "JFK'S" / "FBI'S" stay intact.
   t = t.replace(/([A-Z][a-z]+)'([A-Z]+)\b/g, (_, w, suffix) => w + "'" + suffix.toLowerCase());
 
+  // Mc-prefixed surnames are the one closed-up shape the lowercase+uppercase
+  // splitter below hits every single time — the 2026-09-17 issue printed the
+  // Third Thursdays host as "Mighty Mike Mc Gee", and the same day's events
+  // file carried 22 more (Kelly Mc Gonigal, Ian Mc Ewan, Mc Clellan Ranch
+  // Preserve, Mr. Mc Feely…). The McFly line further down was this defect
+  // patched one name at a time. Mark the c→Cap boundary before the splitters
+  // run and close it back up right after, so only a "Mc" the SOURCE already
+  // wrote closed-up is protected — "MC Hammer" never reaches this branch.
+  t = t.replace(/\bMc(?=[A-Z][a-z])/g, "Mc");
   // Insert space between concatenated words ("NIGHTSat" → "NIGHTS at", "USAMex" → "USA Mex")
   // — split all-caps run before a Cap+lowercase WORD prefix. Requires 2+
   // trailing lowercase letters so pluralized acronyms ("DVDs", "CDs", "URLs")
@@ -1832,6 +1841,7 @@ function polishDescription(text) {
   t = t.replace(/([A-Z]{2,})([A-Z][a-z]{2,})/g, "$1 $2");
   // — split lowercase + uppercase boundary ("nightSat" → "night Sat").
   t = t.replace(/([a-z])([A-Z])/g, "$1 $2");
+  t = t.replace(/Mc/g, "Mc");
   // Normalize 1-2 letter all-caps fragments left over from prior step ("EN" preserved if before all-caps)
   // Only rewrites words wedged between mixed-case neighbors — keeps "EN" in "Rock EN Espanol" lowercased.
   // KEEP_UPPER_SHORT protects 3-letter acronyms ("The ESL Conversation Club")
@@ -1902,6 +1912,11 @@ function polishDescription(text) {
   // splitter hits the c→F boundary. McFly is a single-word surname brand mark
   // (the character + the UK band of the same spelling).
   t = t.replace(/\bMc Fly\b/g, "McFly");
+  // SJPL writes the Vietnamese American youth dance group "VietSteps" as one
+  // word (Moon Festival at Cambrian, K-Pop class at Santa Teresa); the splitter
+  // turned it into "Viet Steps" and the 2026-09-17 events file carried both
+  // spellings. Same family as PayPal/NetApp/CrossFit/NorCal.
+  t = t.replace(/\bViet Steps\b/g, "VietSteps");
   // "NorCal" (Northern California, as in NorCal Academy of Performing Arts) is a
   // closed-up single token; the lowercase+uppercase splitter pulls it into
   // "Nor Cal". Capital-N "Nor Cal" only ever comes from that split — a genuine
