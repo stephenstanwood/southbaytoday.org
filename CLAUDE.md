@@ -30,6 +30,11 @@ contract and consumer map are in `docs/day-plan-selection.md`. Chains may
 qualify, but only when the specific branch is new, distinctive, exceptionally
 well-regarded, or editorially notable; a generic branch is filler.
 
+Baked blurbs drift: the 3:21 AM cron bakes `place-blurb-cache.json` wording into
+`default-plans.json`, so a cache fix that lands later the same morning leaves the
+day's card stale (Sep 16 and Sep 17 both hit this). After editing the cache, run
+`npm run check-plan-blurbs -- --fix` and commit the re-baked plans.
+
 ## File Organization
 - Generated JSON artifacts (committed): `src/data/south-bay/*.json`
 - Runtime social state (gitignored): `social-*.json` files in same dir
