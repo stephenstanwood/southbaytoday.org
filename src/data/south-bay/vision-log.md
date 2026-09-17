@@ -2,6 +2,69 @@
 
 ---
 
+## 2026-09-17 — Cycle 226: A Solar-Powered GPU Rack, a Parking-Lot Robot, and the Same Stale Blurb Twice
+
+### Context
+Thursday September 17, 2026. Roadmap still closed (6/6). Typecheck clean
+(0 errors). Pre-change tech URL audit: 178 links, 0 moved, 0 dead, 8
+bot-walls. The main checkout again carried an unpushed 3:21 AM cron commit
+(today's home plans), and again it was generated before the morning's
+blurb-cache fix (#251) landed.
+
+### What Was Built
+
+**Rune's $40M Series A is on the Tech tab.** A Mountain View company
+(William Layden ex-Cube Hydro, Varun Palivela ex-NUVIA/Qualcomm/Arm/Marvell)
+whose RELIC unit bolts a GPU cluster onto an existing solar plant's DC bus to
+eat the power the plant would otherwise curtail or clip — no interconnect,
+no construction, no water, 100 kW blocks up to 1,024 GPUs, live in six weeks.
+Spark led; USV, Lowercarbon, Activate, Committed, Timeless, Logos joined;
+$53.5M total, 80+ MW contracted, 1+ GW pipeline, ~1 MW running in Texas and
+California. HQ took the Owner route: the Business Wire release datelines San
+Francisco and the boilerplate names no city, but rune.energy's own footer
+gives 480 Ellis St, Mountain View — company-authored, verified in the raw
+HTML rather than trusted from a summary.
+
+**Viabot's $24M Series A is on the Tech tab.** Santa Clara on both primary
+sources (PR Newswire dateline and "Headquartered in Santa Clara, Calif."
+boilerplate). A 2021 launch building an outdoor sweeping robot that also
+watches the lot — "soft security" — now covering 25M sq ft for Fortune 500
+retailers and universities; Walden International led, CDIB and Stalwart
+joined, seed backers Baseline / Era / Morado / SOSV returned, $43M total.
+The fetcher grabbed the site's OG hero (a product render with a wordmark)
+as the logo; swapped for the site's own favicon, the blue "V" mark, resized
+to 128px. Card links viabot.com so the resolver never reads the wire.
+
+**Today's home plans carried Sri Radha's old blurb.** Same shape as
+yesterday's pancake: #251 rewrote the cache entry to the sattvic-buffet
+wording at 4:53 AM, the cron had baked the "plant-based bowls" line at 3:21.
+Diffed all 15 baked place blurbs; one drift; re-baked and pushed before the
+funding work so the fix shipped first.
+
+**Then built the check so nobody diffs by hand a third time.**
+`npm run check-plan-blurbs` compares every baked place blurb in
+`default-plans.json` against `cleanDisplayCopy(cache blurb)` — the exact
+transform the generator applies — and `--fix` re-bakes the drifted cards in
+the generator's own output format. Three tests. Deliberately NOT a prebuild
+gate: the cron runs before copy-edit PRs land, so a hard failure would break
+the next Vercel build on Stephen's own fix. It's a one-liner for the
+copy-edit and builder tasks, noted in CLAUDE.md. No Home component touched.
+
+### Why This Was the Strongest Move
+Two in-coverage rounds the day they broke — one of them the sub-$25M
+robotics tier the tab exists for — plus the recurring stale-blurb shape
+turned from a hand diff into a command. Cycle 225 called the pipeline fix
+"Stephen's call"; a report-only script with an opt-in `--fix` doesn't touch
+the pipeline, so it didn't need to wait.
+
+### Next 3 Strongest Ideas
+1. **Crunchbase Sep 12–18 top ten** — publishes Friday Sep 18; sweep it.
+2. **AlleyWatch 9/21 weekly vs the Sep 14–18 window** — the late-catch habit.
+3. **Wire the drift check into the copy-edit task's closeout** so a cache
+   edit re-bakes plans in the same commit (task-file change, not repo code).
+
+---
+
 ## 2026-09-16 — Cycle 225: Three Rounds, One Address Nobody Had Checked, and a Stale Pancake
 
 ### Context
