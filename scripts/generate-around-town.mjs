@@ -321,7 +321,8 @@ function stripFillerTail(summary) {
 }
 
 // Permit exports abbreviate the street type ("1803 Bradford Wy", "151
-// University Av", "3055 Orchard Dr"). Claude usually expands it in the
+// University Av", "3055 Orchard Dr"; San José also uses "Bl" and "Cl" for
+// Boulevard and Circle — "2855 Stevens Creek Bl", "2555 Corde Terra Cl"). Claude usually expands it in the
 // headline and then pastes the raw form into the summary, so one item shipped
 // as "Bradford Way" up top and "1803 Bradford Wy" in the body. Expand
 // deterministically instead of adding another prompt rule.
@@ -330,18 +331,24 @@ function stripFillerTail(summary) {
 // type: "Dr" after "3055 Orchard" is Drive, "Dr" before a surname is a title
 // and never follows a house number.
 const STREET_TYPES = {
-  av: "Avenue", ave: "Avenue", blvd: "Boulevard", cir: "Circle", ct: "Court",
-  dr: "Drive", ln: "Lane", pkwy: "Parkway", pl: "Place", rd: "Road",
-  st: "Street", ter: "Terrace", wy: "Way", way: "Way",
+  av: "Avenue", ave: "Avenue", bl: "Boulevard", blvd: "Boulevard",
+  cir: "Circle", cl: "Circle", ct: "Court", dr: "Drive", ln: "Lane",
+  pkwy: "Parkway", pl: "Place", rd: "Road", st: "Street", ter: "Terrace",
+  wy: "Way", way: "Way",
 };
-// Capture the trailing token generically and look it up, rather than baking the
-// keys into the pattern — an inline alternation would need the /i flag, which
-// would also loosen the [A-Z] street-name guard into matching lowercase prose.
-// The street-name run is LAZY. Greedy, it swallowed the abbreviation itself and
-// tested the word after it: "1803 Bradford Wy has received" matched "Bradford
-// Wy " as the name and "has" as the street type, found no entry, and left the
-// address untouched. Shortest-first tries "Bradford" + "Wy" and hits.
-const STREET_ADDRESS = /\b(\d+\s+(?:[A-Z][A-Za-z'’.-]*\s+){1,3}?)([A-Za-z]{2,5})\b\.?/g;
+// The street-type token is an explicit alternation built from the keys above,
+// in Capitalized and UPPER forms so the [A-Z] street-name guard stays strict
+// (an /i flag would loosen it into matching lowercase prose). A generic
+// ([A-Za-z]{2,5}) capture looked simpler but only ever expanded single-word
+// street names: the lazy name run matched "2855 Stevens" + "Creek", the lookup
+// missed, replace() consumed the match, and "Stevens Creek Bl" shipped raw.
+const STREET_TYPE_ALT = Object.keys(STREET_TYPES)
+  .flatMap((k) => [k[0].toUpperCase() + k.slice(1), k.toUpperCase()])
+  .join("|");
+const STREET_ADDRESS = new RegExp(
+  `\\b(\\d+\\s+(?:[A-Z][A-Za-z'’.-]*\\s+){1,3}?)(${STREET_TYPE_ALT})\\b\\.?`,
+  "g",
+);
 
 function expandStreetAbbreviations(text) {
   return String(text || "").replace(STREET_ADDRESS, (match, head, abbrev) => {

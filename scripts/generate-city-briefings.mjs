@@ -108,6 +108,10 @@ const AGENDA_BOILERPLATE = [
   /^(adjourn|recess|closed session)/i,
   /^approve .*minutes/i,
   /^(consent calendar|oral communications|public comment)/i,
+  // Sunnyvale's how-to-participate headings ("In person public comment:",
+  // "Online participation:") — a short colon-terminated label is never news.
+  /^[^.?!]{0,60}:$/,
+  /^(in[- ]person|online|written|virtual|remote|hybrid) (public )?(comment|participation)\b/i,
   /^(presentations?|proclamations?|ceremonial)/i,
   // These leading `^` anchors miss closed-session procedure that doesn't start
   // with the words: "Convene to Closed Session" led Sunnyvale's week, and

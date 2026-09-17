@@ -96,6 +96,21 @@ const SKIP_REGEX = [
   /^convene to closed session\b/i,
   /^closed session held pursuant to\b/i,
   /^adjourn(?:ment)? (?:from|to) closed session\b/i,
+  // Any "Adjourn ..." line ("Adjourn Special Meeting", "Adjourn in memory of").
+  // SKIP_EXACT only catches the bare word "adjournment".
+  /^adjourn\b/i,
+  // Sunnyvale's how-to-participate block is posted as one unnumbered item per
+  // heading — "In person public comment:", "Online participation:", "Written
+  // public comment:", "Public review of items:", "Planning a presentation for
+  // a City Council meeting?" — none of which start with "public comment", so
+  // the prefix lists missed them and "In person public comment:" shipped as
+  // the city's lead civic highlight for Sep 19, 2026. A short label that ends
+  // in a colon is a heading, never a business item.
+  /^[^.?!]{0,60}:$/,
+  /^(?:in[- ]person|online|written|virtual|remote|hybrid) (?:public )?(?:comment|participation)\b/i,
+  /^planning (?:a presentation|to provide materials)\b/i,
+  /^translation link\b/i,
+  /americans with disabilities act\b|\(ada\) notice\b/i,
   // Personnel matters heard in closed session. Mountain View posts the bare
   // Brown Act title with no "Conference with" prefix, so the rule above misses
   // it: "Public Employee Performance Evaluation (California Government Code
@@ -129,7 +144,7 @@ const SKIP_REGEX = [
   // Instructions / Instrucciones de interpretación / Hướng dẫn diễn giải"
   // (the trilingual live-interpretation explainer). Both are agenda
   // boilerplate, not business items.
-  /^language access (?:information|instructions)\b/i,
+  /^language access (?:information|instructions|and translation)\b/i,
   // The Spanish/Vietnamese halves of the trilingual block sometimes lead
   // when the English heading is split off — match those defensively.
   /^instrucciones de interpretaci[óo]n\b/i,

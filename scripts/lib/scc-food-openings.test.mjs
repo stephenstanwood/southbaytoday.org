@@ -150,6 +150,21 @@ test("canonical food data ships business names, not permit jargon", () => {
   assert.deepEqual(purposeSuffix, []);
 });
 
+test("minor remodels and single-fixture adds are not openings", () => {
+  assert.equal(shouldSkip({
+    business_name: "PANDA EXPREESS-MINOR REMODEL",
+    site_location: "1720 STORY RD., #40, SAN JOSE",
+    city: "SAN JOSE",
+    record_id: "SR0881779",
+  }), true);
+  assert.equal(shouldSkip({
+    business_name: "SUPREME DONUTS - ADD SINK",
+    site_location: "1093 FOXWORTHY AVE, SAN JOSE",
+    city: "SAN JOSE",
+    record_id: "SR0882223",
+  }), true);
+});
+
 test("corporate cafeterias stay out while real public venues survive", () => {
   assert.equal(shouldSkip({
     business_name: "TESLA HANOVER CAFE",

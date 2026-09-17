@@ -239,6 +239,10 @@ const TITLE_BLOCKLIST = [
   // (e.g. "…Family Literacy Festival author participation" linked only to a Google Form.)
   /\b(?:author|artist|vendor|exhibitor|sponsor|performer|speaker)\s+(?:participation|applications?|sign[-\s]?ups?)\b/i,
   /\bcall\s+for\s+(?:authors|artists|vendors|entries|submissions|proposals|speakers|performers)\b/i,
+  // Calendar-admin placeholders. SCU's Localist shipped an event titled
+  // "Test" (…/event/511657-test, no description) on 2026-09-16 and it reached
+  // the Santa Clara list as "Attend the Test event at Santa Clara University."
+  /^\s*(?:test|testing|test\s+event|sample\s+event|placeholder|tbd|tba)\s*\d*\s*$/i,
 ];
 
 function isBlockedEvent(title) {
@@ -1137,6 +1141,13 @@ function cleanTitle(title) {
     // only reach the 2+ pass on an already mixed-case title, which is exactly
     // the shape these arrive in.
     "MRI", "PD", "MD",
+    // Shipped title-cased on 2026-09-16: SASCC = Saratoga Area Senior
+    // Coordinating Council ("SASCC Senior Fraud Prevention Seminar", City of
+    // Saratoga calendar); Stanford Localist units WCC = Women's Community
+    // Center ("WCC x NSO Welcome and Open House"), OMAC = Office for Military-
+    // Affiliated Communities ("OMAC Kickback Social"), SDRC ("SDRC Friday
+    // Seminar").
+    "SASCC", "WCC", "OMAC", "SDRC",
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -6387,6 +6398,15 @@ function isBareStreetVenue(value) {
   return /^[A-Z][A-Za-z'’.-]*(?:\s+[A-Za-z'’.-]+){0,2}\s+(?:St|Street|Ave|Avenue|Rd|Road|Blvd|Boulevard|Dr|Drive|Ct|Court|Ln|Lane|Way|Pkwy|Parkway|Cir|Circle|Pl|Place|Ter|Terrace|Hwy|Highway|Expy|Expressway)\.?$/.test(v);
 }
 
+// Organizer wayfinding typed into the venue-name field — "Rustic Lands Parking
+// Free lot and bathrooms" shipped as the venue of an Alum Rock hike on
+// 2026-09-16. A parking lot, trailhead or restroom note is a meeting spot, not
+// a venue a reader can look up.
+function isMeetingSpotNote(value) {
+  return /\b(?:parking|bathrooms?|restrooms?|trailhead|meet(?:ing)?\s+(?:point|spot)|free\s+lot)\b/i
+    .test(String(value || ""));
+}
+
 // Does this Meetup group name describe an organization rather than a place?
 // Only ever asked about the group-name fallback, never about a venue the
 // organizer actually filled in, so a real venue name is never routed here —
@@ -6394,7 +6414,7 @@ function isBareStreetVenue(value) {
 // are untouched. "Club" is deliberately absent from the pattern anyway, since
 // it names as many rooms as it does groups.
 function isOrganizationName(value) {
-  return /\b(?:meetup|group|professionals?|networking|enthusiasts?|society|organization|collective|toastmasters|conversation\s+and\s+culture)\b/i
+  return /\b(?:meetup|group|professionals?|networking|enthusiasts?|society|organization|collective|toastmasters|conversation\s+and\s+culture|event\s+series)\b/i
     .test(String(value || ""));
 }
 
@@ -6592,7 +6612,7 @@ async function fetchMeetupEvents() {
     // name rather than rendering a bare address as the venue.
     const address = normalizeMeetupAddress(node.venue?.address, city);
     let venue = cleanVenue(node.venue?.name?.trim() || "");
-    if (isIntersectionVenue(venue) || isBareStreetVenue(venue)) {
+    if (isIntersectionVenue(venue) || isBareStreetVenue(venue) || isMeetingSpotNote(venue)) {
       venue = meetupVenueFromTitle(title) || "";
     }
     // Last resort is the Meetup group's own name, but a group name that

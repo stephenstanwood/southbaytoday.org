@@ -755,7 +755,7 @@ export function seriesStartedBeforeEvent(event) {
  * don't cover, regardless of what its city slug says.
  */
 export const OUT_OF_AREA_LOCATION =
-  /\b(san francisco|oakland|berkeley|alameda|fremont|hayward|walnut creek|san mateo|redwood city|daly city|san leandro|richmond|concord|vallejo|sacramento|los angeles|san rafael|novato|petaluma|napa|emeryville|burlingame|san bruno|pacifica|half moon bay|morgan hill|gilroy|marin)\b/i;
+  /\b(san francisco|oakland|berkeley|alameda|fremont|hayward|walnut creek|san mateo|redwood city|daly city|san leandro|richmond|concord|vallejo|sacramento|los angeles|san rafael|novato|petaluma|napa|emeryville|burlingame|san bruno|pacifica|half moon bay|morgan hill|gilroy|marin|pleasanton|livermore|danville|san ramon|diablo|tri-valley)\b/i;
 
 /** Cities inside the coverage area, plus the two campus tokens that carry no city name. */
 export const COVERED_LOCATION =
