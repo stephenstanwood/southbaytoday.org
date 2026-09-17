@@ -1,38 +1,23 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-16T03:18:27.789Z"
+    "auditedAt": "2026-09-17T02:21:21.884Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1894,
+    "total": 1904,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 1
     },
     "byReason": {
-      "virtual-not-flagged": 1,
       "local-departure-trip": 1
     },
     "hard": [],
     "soft": [
       {
-        "id": "stanford-53632743885261-2026-09-16",
-        "title": "Democratizing innovation in American healthcare: Lessons from Univfy and ElixirTrials",
-        "city": "palo-alto",
-        "date": "2026-09-16",
-        "location": "318 Campus Dr, Palo Alto, CA 94305",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
-      {
         "id": "inbound-cd7c4b13b6c3f675",
-        "title": "September Day Trip to Sfmoma",
+        "title": "September Day Trip to SFMOMA",
         "city": "sunnyvale",
         "date": "2026-09-17",
         "location": "San Francisco Museum of Modern Art, San Francisco, CA",
@@ -48,17 +33,17 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 336,
+    "total": 337,
     "totals": {
       "hard": 0,
-      "soft": 6,
+      "soft": 5,
       "info": 3
     },
     "byReason": {
       "unknown-slug": 2,
       "meeting-title": 1,
       "local-departure-trip": 3,
-      "virtual-not-flagged": 3
+      "virtual-not-flagged": 2
     },
     "hard": [],
     "soft": [
@@ -115,20 +100,6 @@
             "severity": "info",
             "reason": "local-departure-trip",
             "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mtx7hd45_q5evq0",
-        "title": "The Art of Fighting: Priya Parker Author Talk",
-        "city": "sunnyvale",
-        "date": "2026-09-15T13:00:00-07:00",
-        "location": "",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
           }
         ]
       },

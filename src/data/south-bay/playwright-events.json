@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-16T15:08:39.836Z",
+    "generatedAt": "2026-09-17T02:17:17.898Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 588,
+    "eventCount": 586,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (127)",
-      "Los Gatos Library (150)",
+      "Los Gatos Library (147)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (5)",
       "Santana Row (6)",
-      "City of Cupertino (71)",
+      "City of Cupertino (72)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (10)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 150,
+        "count": 147,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 71,
+        "count": 72,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -348,71 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "0545e676f8ff",
-      "title": "Baby Storytime",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170811",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "c17ada865974",
-      "title": "ESL Conversation Club - IN PERSON",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/15895390",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "ad1d32b6a3bd",
-      "title": "ESL Conversation Club - ONLINE",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17249777",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "5fa2b3eaffe3",
       "title": "Friends of the Library Board Meeting",
@@ -1642,6 +1577,28 @@
       "kidFriendly": true
     },
     {
+      "id": "86fe482e3430",
+      "title": "Cricut Basics - Paper Flowers",
+      "date": "2026-10-13",
+      "displayDate": "Tue, Oct 13",
+      "time": "6:00 PM",
+      "endTime": "7:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending Learn how to make paper flowers using a Cricut cutting machine. No prior experience required but basic computer skills are expected. Ages 13 and up.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17331823",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "2f6e191f8de9",
       "title": "Baby Storytime",
       "date": "2026-10-14",
@@ -1902,6 +1859,27 @@
       "url": "https://mountainview.libcal.com/event/17142488",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "3eead433ca13",
+      "title": "Sewing with FabMo: Reversible Storage Totes",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating reversible storage totes using upcycled fabric. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up . This event is generously sponsored by the Friends of the Mountain View Library. Fabrics and notions for this event are provided by FabMo .",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/14866782",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "f0959f316110",
@@ -2330,6 +2308,28 @@
         "Adults"
       ],
       "url": "https://mountainview.libcal.com/event/17249784",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "8cdf4072f8cc",
+      "title": "Intro to 3D Printing",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": "6:00 PM",
+      "endTime": "7:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Learn how 3D printing works and go through the full process of preparing and printing a small object. Choose a 3D model, use slicing software to set it up, and help start the print on the librarys 3D printers. No prior 3D printing experience is needed but basic computer skills are expected. Ages 13 and up.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17331824",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -3077,66 +3077,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17142496",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "0571dd6c9426",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249566",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "ed4ca9e831d9",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16887020",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "e8a11fc8641e",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261932",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -7965,23 +7905,6 @@
       }
     },
     {
-      "id": "d592c1410637",
-      "title": "Farmers' Market",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "4:00pm",
-      "endTime": null,
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "",
-      "url": "https://santanarow.com/event/farmers-market/",
-      "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
       "id": "dccfa731ca74",
       "title": "Yoga & Pilates on The Row",
       "date": "2026-09-20",
@@ -7995,6 +7918,23 @@
       "cost": null,
       "description": "",
       "url": "https://santanarow.com/event/yoga-pilates-on-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false
+    },
+    {
+      "id": "172ba43f663c",
+      "title": "Farmers' Market",
+      "date": "2026-09-23",
+      "displayDate": "Wed, Sep 23",
+      "time": "4:00pm",
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://santanarow.com/event/farmers-market/",
       "source": "Santana Row",
       "kidFriendly": false
     },
@@ -8320,6 +8260,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "a4e53e518f3a",
+      "title": "Candidate Forum - Cupertino City Council",
+      "date": "2026-09-19",
+      "displayDate": "Sat, Sep 19",
+      "time": "03:00 PM",
+      "endTime": "04:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, Cupertino Room, 10185 N. Stelling Rd, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Diya TV is hosting a candidate forum for the Cupertino City Council. This is an in-person debate, moderated by Ravi Kapur, and will be held Saturday, September 19 at 3 p.m. at the Quinlan Community Center, Cupertino Room, 10185 N. Stelling Rd, Cupertino CA 95014. This event will be airing on KAAP Channel 24.1 on Sunday, September 20 at 7 p.m. This event is not sponsored or endorsed by the City of Cupertino.",
+      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-19",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "6cd293334bbe",
@@ -9336,7 +9293,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
