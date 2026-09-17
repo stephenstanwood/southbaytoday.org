@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-17T02:17:17.898Z",
+    "generatedAt": "2026-09-17T15:08:24.430Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 586,
+    "eventCount": 588,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (127)",
-      "Los Gatos Library (147)",
+      "Mountain View Public Library (128)",
+      "Los Gatos Library (149)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -26,7 +26,7 @@
       "SAP Center (12)",
       "The Tech Interactive (6)",
       "Peninsula Open Space Trust (4)",
-      "San Jose Museum of Art (9)"
+      "San Jose Museum of Art (8)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 130,
+        "count": 131,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 147,
+        "count": 149,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 9,
+        "count": 8,
         "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
         "sources": [
           "San Jose Museum of Art"
@@ -348,23 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "5fa2b3eaffe3",
-      "title": "Friends of the Library Board Meeting",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "7:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "The Friends of the Library Board Meeting is open to the public. More information for the Friends of the Mountain View Library can be found here: http://www.mvlibraryfriends.org/",
-      "url": "https://mountainview.libcal.com/event/15668063",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "bd1a471e41a9",
       "title": "The Comeback Conversation: Shifting from Surviving to Thriving with Yasmine Cheyenne",
@@ -3078,6 +3061,49 @@
       "url": "https://mountainview.libcal.com/event/17142496",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "8f4ef79eaf30",
+      "title": "ESL Conversation Club - IN PERSON",
+      "date": "2026-12-16",
+      "displayDate": "Wed, Dec 16",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/15895401",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "b75fec15f71e",
+      "title": "ESL Conversation Club - ONLINE",
+      "date": "2026-12-16",
+      "displayDate": "Wed, Dec 16",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "mountain-view",
+      "virtual": true,
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/17249790",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "cc5a2bf46889",
@@ -6088,6 +6114,46 @@
       "kidFriendly": false
     },
     {
+      "id": "16806f8197c1",
+      "title": "Storytime (Ages 0-5)",
+      "date": "2026-12-16",
+      "displayDate": "Wed, Dec 16",
+      "time": "11:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17341976",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "40c87a233711",
+      "title": "Kids Knitting (Ages 7+)",
+      "date": "2026-12-16",
+      "displayDate": "Wed, Dec 16",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16887033",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -6826,23 +6892,6 @@
       "kidFriendly": false
     },
     {
-      "id": "17e24a04ed9e",
-      "title": "50th Annual SF Stand-up Comedy Competition Semi-finals",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/50th-sf-comedy/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "0ebd120f2b95",
       "title": "NoorAva “Boundless”",
       "date": "2026-09-19",
@@ -6907,6 +6956,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://my.montalvoarts.org/overview/3064",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "d5bb5d8971ad",
+      "title": "St. Paul & The Minneapolis Funk All Stars",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/st-paul/",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -7761,10 +7827,10 @@
       "kidFriendly": false
     },
     {
-      "id": "6cfe2be00493",
+      "id": "dbbf85544619",
       "title": "Toddler Storytime",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
+      "date": "2026-09-17",
+      "displayDate": "Thu, Sep 17",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7778,10 +7844,10 @@
       "kidFriendly": true
     },
     {
-      "id": "e02f7ff76777",
+      "id": "f68299b3a3ea",
       "title": "All Ages Storytime",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
+      "date": "2026-09-17",
+      "displayDate": "Thu, Sep 17",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -9242,7 +9308,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9259,7 +9325,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9276,7 +9342,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -11336,23 +11402,6 @@
       "description": "",
       "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
       "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "c4f4a96c774c",
-      "title": "Walk with a Naturalist: September 2026",
-      "date": "2026-09-16",
-      "displayDate": "Wed, Sep 16",
-      "time": "Wednesday, September 16, 2026",
-      "endTime": null,
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://sjmusart.org/walk-naturalist-september-2026",
-      "source": "San Jose Museum of Art",
       "kidFriendly": false
     },
     {
