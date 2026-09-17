@@ -1412,6 +1412,73 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     York (Profound, Fin.com, Liquid Compute, BoomerangHR, Kickback Soccer
   //     Media, ScoringFactory). techstartups' Sep 16 roundup is six Chinese
   //     companies plus CADDi (Tokyo), iGii (Scotland), TypeSafe, and Noetive.
+  // Note on the Sep 16-17 2026 sweep: Rune and Viabot are the two in-coverage
+  // rounds added below.
+  //   * Rune's city needed resolving the Owner way. Its own Sep 16 Business
+  //     Wire release datelines "SAN FRANCISCO" and the "About Rune" boilerplate
+  //     names no city, so neither settles it (dateline = issuance, the Groq
+  //     rule). The tiebreaker is company-authored: rune.energy's own site
+  //     footer gives "480 Ellis St, Mountain View, CA 94043" as its address —
+  //     the company describing itself, the same bar Owner's Platform Terms and
+  //     VerifAIX's footer cleared. techstartups' Sep 16 roundup also files it
+  //     under Mountain View. In coverage as Mountain View. SiliconANGLE notes
+  //     the legal entity is Liitto Technology Inc. The "three continents" fleet
+  //     figure on the homepage is marketing copy; the card uses the release's
+  //     and Fast Company's numbers (80+ MW contracted, 1+ GW pipeline, ~1 MW
+  //     operating across Texas and California) instead.
+  //   * Viabot is Santa Clara on both primary sources: its own Sep 17 PR
+  //     Newswire release datelines "SANTA CLARA, Calif." and the boilerplate
+  //     opens "Headquartered in Santa Clara, Calif." FinSMEs agrees. The 2021
+  //     $6.1M seed the boilerplate mentions predates this list's window and is
+  //     not entered separately; the $43M total is the company's own figure and
+  //     includes it. Card links viabot.com rather than the wire release so the
+  //     logo resolver reads the company's own domain (the TabaPay lesson).
+  // Near-misses recorded so the next cycle doesn't re-verify them:
+  //   * Hang Ten Systems ($53M second seed led by Xora, Sep 16 2026; Vishal
+  //     Sikka's enterprise-AI services company) is Menlo Park per TechCrunch
+  //     and SiliconANGLE — San Mateo County, the line that excludes Fireworks
+  //     AI, Cognichip, WindBorne, and Intermezzo. Jerry Yang on the board and
+  //     Lip-Bu Tan / Sanjay Mehrotra on the cap table read South Bay, but
+  //     investors are not an HQ (the Actualyze AI rule).
+  //   * Arcee AI ($150M+ Series B at $1B+, Sep 16) is San Francisco per
+  //     SiliconANGLE and Fortune. Footprint ($25M Series B), Stuut ($67.6M),
+  //     Evvy ($40M), and Tare ($13.25M) on AlleyWatch's 9/16 daily are all New
+  //     York. Impulse Space ($308M) is Redondo Beach; Sling ($123M) is Ann Arbor.
+  //   * techstartups' Sep 17 roundup carried no US rounds at all (D-Robotics,
+  //     Facilo, Treble, Tusk IC, MicroLub, ARK, syte, Creem, DheyaTech, Health
+  //     Force — all international). FinSMEs' Sep 17 US list is otherwise out
+  //     of coverage (Kastle, Mainstay — San Francisco; Mind, Ravel — Seattle;
+  //     Vantora — Santa Monica; Overfuel, Hello Haven, Adaptive, Rapta, R3
+  //     Lithium — out of state).
+  //   * Crunchbase's Sep 12-18 top ten publishes Friday Sep 18 — not yet
+  //     swept; check it next cycle along with AlleyWatch's 9/21 weekly against
+  //     the Sep 14-18 window (the Cylake / Piston / Maven late-catch habit).
+  {
+    id: "viabot",
+    name: "Viabot",
+    city: "Santa Clara",
+    category: "robotics",
+    round: "Series A",
+    amount: "$24M",
+    date: "2026-09-17",
+    tagline:
+      "The robot that sweeps the parking lot is also keeping an eye on it. Viabot, a Santa Clara company founded by CEO Gregg Ratanaphanyarat and CTO Dawei Ding that launched publicly in 2021, builds the Viabot One: a self-charging, self-emptying three-wheeled outdoor robot that sweeps and clears debris up to 10 inches across big-box retail lots, utility yards, and campuses, swaps its own tools, runs 12 to 24 hours on hot-swappable batteries, and uses its cameras, lidar, depth sensors, and DGPS to flag loitering and watch the property's assets while it works — what the company calls soft security. It is sold as robotics-as-a-service and now covers 25 million square feet of commercial property for Fortune 500 retailers, universities, developers, and property managers, trained on what Viabot says is 5 billion square feet of multimodal data. Walden International led the $24M Series A, with CDIB Capital Group and Stalwart Ventures joining and the original seed backers — Baseline Ventures, Era Ventures, Morado Ventures, and SOSV — returning, for $43M raised in total. The money goes to sales and engineering hiring and to the next product releases.",
+    color: "#2563EB",
+    url: "https://www.viabot.com/",
+  },
+  {
+    id: "rune",
+    name: "Rune",
+    city: "Mountain View",
+    category: "cloud",
+    round: "Series A",
+    amount: "$40M",
+    date: "2026-09-16",
+    tagline:
+      "Solar plants routinely throw away power — curtailed when the grid can't take it, clipped when panels make more than the inverters can pass — and Rune's bet is that a GPU rack parked behind the inverter is the cheapest customer for it. The Mountain View company, founded by CEO William Layden, who previously ran a Cube Hydro division that used surplus hydro power for computing, and CTO Varun Palivela, a chip architect out of NUVIA, Qualcomm, Arm, and Marvell, came out with RELIC (Renewable Energy Linked Intelligent Compute): a modular data-center unit that bolts onto an existing solar site, runs natively on the plant's DC bus with no grid interconnect, no construction, and no water, and scales in 100-kilowatt blocks from an 8-GPU cluster to 1,024 GPUs and beyond. The company says a unit installs in about an hour and is live within six weeks of contract, cutting non-compute infrastructure cost by 85% against a conventional data center. Spark Capital led the $40M Series A, with Union Square Ventures, Lowercarbon Capital, Activate Capital, Committed Capital, Timeless Partners, and Logos Fund joining, for $53.5M raised in total. Rune reports more than 80 megawatts of contracted power and a pipeline past a gigawatt, with roughly a megawatt operating today across Texas and California — including a unit on a 200-megawatt Texas solar farm — and the money goes to more renewable-site deployments, inference customers, and a push into wind.",
+    color: "#0369A1",
+    url: "https://rune.energy/",
+  },
   {
     id: "verifaix",
     name: "VerifAIX",
