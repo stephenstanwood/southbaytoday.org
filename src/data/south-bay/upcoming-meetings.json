@@ -1,118 +1,80 @@
 {
-  "generatedAt": "2026-09-16T03:09:53.934Z",
+  "generatedAt": "2026-09-17T03:09:12.077Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
+      "date": "2026-09-22",
+      "displayDate": "Tue, Sep 22",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8104&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8104,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8105&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8105,
       "agendaItems": [
-        {
-          "title": "Temporary Moratorium Related to Detention and Custodial Facility on Private Property.",
-          "sequence": 61
-        },
-        {
-          "title": "Evening Session, Council Chambers, City Hall – Cancelled",
-          "sequence": 24
-        },
-        {
-          "title": "Fourth Quarter Financial Reports for Fiscal Year 2025-2026.",
-          "sequence": 55
-        },
         {
           "title": "Labor Negotiations Update.",
-          "sequence": 60
+          "sequence": 50
         },
         {
-          "title": "Land Use on Consent Calendar - TO BE HEARD IMMEDIATELY AFTER CONSENT",
-          "sequence": 74
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "startTime": "19:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4523&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4523,
-      "agendaItems": [
-        {
-          "title": "Hispanic Heritage Month",
-          "sequence": 7
+          "title": "Land Use on Consent Calendar",
+          "sequence": 65
         },
         {
-          "title": "Bisexual Awareness Week",
-          "sequence": 9
+          "title": "Presentation of a commendation recognizing Rhonda Berry, Executive Director of Our City Forest for her 30 years of dedication to urban forestry, community engagement, and a lasting legacy of environmental stewardship throughout the City of San José. (Cohen)",
+          "sequence": 31
         },
         {
-          "title": "Prisoners of War/Missing in Action (POW/MIA) Recognition Day",
-          "sequence": 8
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of August 25, 2026",
-          "sequence": 12
-        },
-        {
-          "title": "Reject All Bids Received for Plaza Del Sol Phase II Project (PW26-02)",
-          "sequence": 17
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "cupertino": {
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "startTime": "17:30",
-      "bodyName": "City Council",
-      "location": "Council Chamber",
-      "closedSession": true,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5299&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5299,
-      "agendaItems": [
-        {
-          "title": "Law Enforcement Services Agreement with the County of Santa Clara.",
+          "title": "Presentation of a commendation recognizing the Billy DeFrank LGBTQ+ Community Center in celebration of 45 years of advocacy, community, and support for LGBTQ+ people and their allies in the City of San José. (Foley and Mulcahy)",
           "sequence": 33
         },
         {
-          "title": "Recognition of Cupertino High School students on their achievements in the 2026 Future Business Leaders of America (FBLA) National Leadership Conference.",
-          "sequence": 14
-        },
-        {
-          "title": "Second reading and enactment of an ordinance amending Municipal Code Chapter 2.88 Audit Committee Duties, Powers, and Responsibilities and Related Municipal Code Updates",
-          "sequence": 25
-        },
-        {
-          "title": "Receipt of Grants Management Internal Controls Review Final Report",
-          "sequence": 26
-        },
-        {
-          "title": "Adoption of the Artificial Intelligence (AI) City Council Policy",
-          "sequence": 27
+          "title": "Actions Related to the Reimbursement of Approved 2025-2026 Capital Repairs at the SAP Center.",
+          "sequence": 43
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-09-15",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-15T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-09-22",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-09-19",
+      "displayDate": "Sat, Sep 19",
+      "startTime": "08:30",
+      "bodyName": "City Council",
+      "location": "Online and Council Chambers, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4605&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4605,
+      "agendaItems": [
+        {
+          "title": "8:30 A.M. SPECIAL COUNCIL MEETING (State of the City)",
+          "sequence": 2
+        },
+        {
+          "title": "Adjourn Special Meeting",
+          "sequence": 7
+        },
+        {
+          "title": "In person public comment:",
+          "sequence": 9
+        },
+        {
+          "title": "Online participation:",
+          "sequence": 10
+        },
+        {
+          "title": "Online public comment:",
+          "sequence": 11
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-09-19",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -131,37 +93,21 @@
         "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21451"
       }
     },
-    "campbell": {
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Session Meeting",
-      "location": "City Hall Council Chamber",
-      "closedSession": false,
-      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=c7aedd80-9fee-4e2b-ae5e-53956fc71189&Agenda=Agenda&lang=English",
-      "agendaItems": [],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "escribe",
-        "observedDate": "2026-09-15",
-        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
-      }
-    },
     "milpitas": {
-      "date": "2026-09-15",
-      "displayDate": "Tue, Sep 15",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
       "startTime": "19:00",
       "bodyName": "City Council Meeting",
       "location": "Milpitas City Hall",
       "closedSession": false,
       "url": "https://www.milpitas.gov/129/Agendas-Minutes",
-      "civicClerkEventId": 2943,
+      "civicClerkEventId": 2955,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-09-15",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-15T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-10-06",
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-16T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -178,7 +124,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-09-22",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-15T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-16T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -197,7 +143,7 @@
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "santa-clara": {
       "provider": "Legistar",
@@ -213,7 +159,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "milpitas": {
       "provider": "CivicClerk",

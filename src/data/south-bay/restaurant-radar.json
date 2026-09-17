@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T03:15:44.578Z",
+  "generatedAt": "2026-09-17T03:13:21.998Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -98,6 +98,19 @@
       "date": "2026-08-25"
     },
     {
+      "id": "2026-136653-CI",
+      "city": "san-jose",
+      "address": "685 Coleman Av",
+      "name": "Slice House",
+      "description": "Slice House (E 100%) Illuminated Signs",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "New Signage",
+      "valuation": 0,
+      "date": "2026-09-14"
+    },
+    {
       "id": "2026-135467-CI",
       "city": "san-jose",
       "address": "2067 Camden Av",
@@ -160,6 +173,18 @@
       "label": "Permit Activity",
       "valuation": 0,
       "date": "2026-09-08"
+    },
+    {
+      "id": "pa-975 Page Mill Rd-2026-09-03",
+      "city": "palo-alto",
+      "address": "975 Page Mill Rd",
+      "name": "The Landing",
+      "description": "THE LANDING TI ~25,000 SF & UO. This project consists of a tenant improvement…",
+      "workType": "Building Permit",
+      "signal": "activity",
+      "label": "Renovation",
+      "valuation": 0,
+      "date": "2026-09-03"
     }
   ]
 }

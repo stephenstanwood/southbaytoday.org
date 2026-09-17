@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-16T03:09:18.407Z",
+      "generatedAt": "2026-09-17T03:09:00.017Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 8 – Sep 15",
+      "dateRange": "Sep 9 – Sep 16",
       "stats": {
-        "total": 293,
-        "notable": 17,
-        "newUnits": 4,
-        "totalValuation": 7979208
+        "total": 344,
+        "notable": 12,
+        "newUnits": 3,
+        "totalValuation": 6892940
       },
       "permits": [
         {
@@ -27,27 +27,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-109358-RS",
-          "address": "1211 Simonson Wy #2",
+          "id": "2026-103211-RS",
+          "address": "1499 S King Rd #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 172402,
+          "description": "Attached Garage Converion to JADU",
+          "valuation": 72303,
           "units": 1,
-          "issueDate": "2026-09-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-107376-RS",
-          "address": "2261 Orlando Dr",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Garage Conversion to ADU",
-          "valuation": 83914,
-          "units": 1,
-          "issueDate": "2026-09-09",
+          "issueDate": "2026-09-14",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -63,16 +51,16 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-135735-CI",
-          "address": "925 Blossom Hill Rd",
+          "id": "2026-137471-CI",
+          "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "The Escape Room #1413",
-          "valuation": 949000,
+          "description": "Gap TI #2625",
+          "valuation": 1714917,
           "units": 0,
-          "issueDate": "2026-09-09",
-          "subtype": "Assembly"
+          "issueDate": "2026-09-14",
+          "subtype": "Retail"
         },
         {
           "id": "2026-135923-CI",
@@ -87,28 +75,16 @@
           "subtype": "Office"
         },
         {
-          "id": "2026-136360-CI",
-          "address": "1600 Saratoga Av",
+          "id": "2026-136486-CI",
+          "address": "377 Santana Row",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Chagee TI #201",
-          "valuation": 650000,
+          "description": "Landlord Work TI Suite 1030/1032",
+          "valuation": 350000,
           "units": 0,
-          "issueDate": "2026-09-09",
-          "subtype": "Restaurant"
-        },
-        {
-          "id": "2026-126919-CI",
-          "address": "77 N Almaden Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Palmetto Superfoods Tenant Improvement",
-          "valuation": 415000,
-          "units": 0,
-          "issueDate": "2026-09-09",
-          "subtype": "Restaurant"
+          "issueDate": "2026-09-14",
+          "subtype": "Retail"
         },
         {
           "id": "2026-136935-CI",
@@ -123,44 +99,68 @@
           "subtype": "Commercial/Industrial"
         },
         {
-          "id": "2026-136899-CI",
-          "address": "1754 Junction Av",
+          "id": "2026-137025-CI",
+          "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Retail",
-          "valuation": 283836,
+          "workType": "Tenant Improvement",
+          "description": "Royce TI #2666",
+          "valuation": 275000,
           "units": 0,
-          "issueDate": "2026-09-09",
+          "issueDate": "2026-09-14",
           "subtype": "Retail"
+        },
+        {
+          "id": "2026-124414-CI",
+          "address": "55 W Trimble Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Market Ready TI",
+          "valuation": 202907,
+          "units": 0,
+          "issueDate": "2026-09-11",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-135655-CI",
+          "address": "140 S Montgomery St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Additions/Alterations",
+          "description": "Spark Social (Be 100%) TI",
+          "valuation": 200000,
+          "units": 0,
+          "issueDate": "2026-09-11",
+          "subtype": "Recreation Building"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-16T03:09:20.567Z",
+      "generatedAt": "2026-09-17T03:09:02.574Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 8 – Sep 15",
+      "dateRange": "Sep 9 – Sep 16",
       "stats": {
-        "total": 100,
+        "total": 104,
         "notable": 2,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02541",
-          "address": "124 Primrose Wy",
+          "id": "26BLD-02606",
+          "address": "319 Everett Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
-          "workType": "Building Permit",
-          "description": "RES: Temporary power for remodel project, power to disconnect and re-connect to temporary power pole",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-09",
-          "subtype": "Finaled"
+          "issueDate": "2026-09-15",
+          "subtype": "Permit Issued"
         },
         {
           "id": "26PLN-00258",

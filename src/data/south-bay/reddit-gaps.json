@@ -1,88 +1,168 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-16T03:18:09.641Z",
+    "generatedAt": "2026-09-17T03:16:42.203Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 8
+    "sourceCount": 10
   },
   "summary": {
-    "threadsMined": 8,
-    "placesExtracted": 4,
+    "threadsMined": 10,
+    "placesExtracted": 8,
     "placesMatched": 2,
-    "placeGaps": 2,
-    "eventsExtracted": 1,
+    "placeGaps": 6,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 1,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Ignite",
+      "name": "Mommy's Bánh Mi",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "new fire-grilled skewer restaurant at San Pedro Square",
+      "context": "known for green sauce on banh mi",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
-        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
-        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
-        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
-        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
+        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
+        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
+        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
       ]
     },
     {
-      "name": "Toastique",
+      "name": "Home Eats",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "San Pedro Square location closed, windows covered up",
+      "context": "known for Shrimp Chow Fung",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1whfpot/moving_from_the_netherlands_to_san_jose/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wgsldh/new_to_sunnyvale_anyone_down_to_hang_out/",
-        "https://www.reddit.com/r/SanJose/comments/1wgqviu/anyone_know_what_happened_to_toastique_in_san/"
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+      ]
+    },
+    {
+      "name": "Jade China",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "highly rated, comparison suggested",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+      ]
+    },
+    {
+      "name": "Autumn Smile Dental",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "dentist on Tully, crown work",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+      ]
+    },
+    {
+      "name": "Intel Museum",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "tourist attraction to visit",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+      ]
+    },
+    {
+      "name": "Kaiser Vaccine Clinic - Skyport",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "flu and COVID vaccinations available",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Luna Park Chalk Art Festival",
-      "when": "Saturday, September 19th, 2026",
+      "name": "El Grito",
+      "when": "",
       "city": "San Jose",
-      "context": "19th annual chalk art festival with vendors and music",
+      "context": "Mexican Independence Day celebration downtown",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
-        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
-        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
-        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
-        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
+        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
+        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
+        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
+      ]
+    },
+    {
+      "name": "Reimagining Our Waterways Symposium",
+      "when": "Oct 16 and 17",
+      "city": "San Jose",
+      "context": "art and climate symposium by SJMA, includes Coyote Creek visit",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
+        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
+        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
+      ]
+    },
+    {
+      "name": "SJ Broadway",
+      "when": "",
+      "city": "San Jose",
+      "context": "theater performance, seating comfort concerns",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Sushi Confidential",
+      "name": "SAP Center",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "shuttered San Pedro Square restaurant, now replaced by Ignite",
+      "kind": "venue",
+      "context": "staying nearby, Sharks games",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
-        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
-        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
-        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
-        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
       ],
-      "matchedName": "Sushi Confidential Campbell"
+      "matchedName": "SAP Center"
     },
     {
-      "name": "Memorial Park",
+      "name": "Winchester Mystery House",
       "city": "San Jose",
-      "kind": "park",
-      "context": "pickleball courts discussion",
+      "kind": "venue",
+      "context": "tourist attraction to visit",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1whjehe/firegrilled_skewer_restaurant_takes_over_sushi/",
-        "https://www.reddit.com/r/SanJose/comments/1whilcn/chalk_art_festival_this_saturday_september_19th/",
-        "https://www.reddit.com/r/SanJose/comments/1wh1e22/free_rides_on_vta_today_dont_scan_your_clipper/",
-        "https://www.reddit.com/r/SanJose/comments/1whf2u5/memorial_park_pickleball/",
-        "https://www.reddit.com/r/SanJose/comments/1wh6ns6/help_with_marriage_proposal_spots/"
+        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
+        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
+        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
+        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
       ],
-      "matchedName": "Cupertino Memorial Park"
+      "matchedName": "Winchester Mystery House"
     }
   ],
   "eventMatches": []
