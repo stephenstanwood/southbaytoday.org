@@ -214,3 +214,26 @@ test("lowercases a URL scheme that sentence capitalization upcased", () => {
     "No portion is tax deductible. https://www.plus1.org/",
   );
 });
+
+test("keeps Mc-prefixed surnames closed up through the camel-case splitter", () => {
+  assert.equal(
+    polishDescription("Third Thursdays is hosted by local poet Mighty Mike McGee! Open mic to follow."),
+    "Third Thursdays is hosted by local poet Mighty Mike McGee! Open mic to follow.",
+  );
+  assert.equal(
+    polishDescription("Drop by the Environmental Education Center at McClellan Ranch Preserve every Saturday."),
+    "Drop by the Environmental Education Center at McClellan Ranch Preserve every Saturday.",
+  );
+  // The guard protects only a source-closed "Mc"; genuine run-together words still split.
+  assert.equal(
+    polishDescription("Bestselling author Kelly McGonigal shows us how to find joy at Music in the ParkSaturday."),
+    "Bestselling author Kelly McGonigal shows us how to find joy at Music in the Park Saturday.",
+  );
+});
+
+test("reunites SJPL's VietSteps dance group after the splitter", () => {
+  assert.equal(
+    polishDescription("Mooncakes will also be served during the event. Stay for VietSteps! Happy Moon Festival!"),
+    "Mooncakes will also be served during the event. Stay for VietSteps! Happy Moon Festival!",
+  );
+});

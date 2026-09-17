@@ -158,3 +158,22 @@ test("a cocktail bar is cocktails and bar snacks, not a burger bar", () => {
     { label: "cocktail bar", food: "cocktails and bar snacks" },
   );
 });
+
+test("vegetarian and vegan profiles never repeat their lead word across label and food", () => {
+  const veg = inferFoodProfile({
+    name: "Sri Radha's Veg Cuisine",
+    primaryType: "vegetarian_restaurant",
+    displayType: "Vegetarian restaurant",
+    types: ["vegetarian_restaurant", "restaurant", "food"],
+  }, "Vegetarian restaurant");
+  assert.equal(veg.label, "vegetarian restaurant");
+  assert.notEqual(veg.label.split(" ")[0], veg.food.split(" ")[0]);
+  const vegan = inferFoodProfile({
+    name: "Loving Hut",
+    primaryType: "vegan_restaurant",
+    displayType: "Vegan restaurant",
+    types: ["vegan_restaurant", "restaurant", "food"],
+  }, "Vegan restaurant");
+  assert.equal(vegan.label, "vegan spot");
+  assert.notEqual(vegan.label.split(" ")[0], vegan.food.split(" ")[0]);
+});
