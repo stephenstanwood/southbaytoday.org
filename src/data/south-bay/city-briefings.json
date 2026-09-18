@@ -1,38 +1,38 @@
 {
-  "generatedAt": "2026-09-17T03:12:46.938Z",
-  "weekLabel": "Sep 16 – Sep 23",
-  "weekStart": "2026-09-16",
-  "weekEnd": "2026-09-23",
+  "generatedAt": "2026-09-18T03:12:48.398Z",
+  "weekLabel": "Sep 17 – Sep 24",
+  "weekStart": "2026-09-17",
+  "weekEnd": "2026-09-24",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's State of the City kicks off Wednesday evening at Orchard City Banquet Hall, followed by the Fall Wine Walk through Downtown Campbell on Thursday and a Mending & Hemming Workshop at the library Friday.",
+      "summary": "Campbell's week runs from the Fall Wine Walk through Downtown Campbell Thursday evening to Sunday's Farmers Market, with a Carnatic Vocal Concert at Heritage Theatre and a Mending & Hemming Workshop at Campbell Library filling the days between.",
       "highlights": [
         {
           "type": "event",
-          "title": "State of the City",
-          "when": "Wed, Sep 16 · 6:30 PM",
-          "venue": "Orchard City Banquet Hall",
-          "category": "community",
-          "url": null
+          "title": "Fall Wine Walk",
+          "when": "Thu, Sep 17 · 6:00 PM",
+          "venue": "Downtown Campbell",
+          "category": "food",
+          "url": "https://www.downtowncampbell.com/winewalk"
         },
         {
           "type": "event",
-          "title": "Baby Lapsit for Ages 0 - 18 Months",
-          "when": "Thu, Sep 17 · 10:30 AM",
+          "title": "Mending & Hemming Workshop",
+          "when": "Fri, Sep 18 · 2:00 PM",
           "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a8f57416383850d1b2440c8"
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/6a5566ac71ef136200521ace"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:26.022Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:10.609Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Cupertino Library packs Thursday with programming — Baby Storytime and Stay and Play, Qigong, Origami for school-age kids, and Homework Help for Grades K-6 — while Picchetti Ranch Preserve hosts Spectacular Seeds outdoors.",
+      "summary": "Cupertino's week runs outdoorsy to bookish: a Spectacular Seeds walk at Picchetti Ranch Preserve Thursday, a Friday Night Hike at Rancho San Antonio with optional dinner, plus knit-alongs and bilingual and family storytimes at the library.",
       "highlights": [
         {
           "type": "event",
@@ -44,29 +44,21 @@
         },
         {
           "type": "event",
-          "title": "Baby Storytime (0-12 months) + Stay and Play",
-          "when": "Thu, Sep 17 · 10:30 AM",
+          "title": "Knit-Alongs",
+          "when": "Fri, Sep 18 · 2:30 PM",
           "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a8627110c0e3a002aeaded9"
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/69309193caa2e62f001e8bbd"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:28.137Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:13.341Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos residents can meet officers at Coffee with a Cop Wednesday morning, then Thursday brings a NUMU talk on violinist Yehudi Menuhin, a library puzzle swap, a police academy session, and trail maintenance at Bear Creek Redwoods Preserve.",
+      "summary": "Los Gatos packs it in this week: NUMU explores violinist Yehudi Menuhin Thursday, the LGMSPD Community Police Academy kicks off Thursday evening, and Taste of Los Gatos takes over Downtown Los Gatos Saturday afternoon.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Coffee with a Cop",
-          "when": "Wed, Sep 16 · 7:00 AM",
-          "venue": "Los Gatos Coffee Roasting Company",
-          "category": "community",
-          "url": "https://www.montesereno.org/civicalerts.aspx?AID=686"
-        },
         {
           "type": "event",
           "title": "Talk of the Town: Violinist Yehudi Menuhin",
@@ -74,74 +66,82 @@
           "venue": "New Museum Los Gatos (NUMU)",
           "category": "arts",
           "url": "https://www.numulosgatos.org/events/yehudi"
+        },
+        {
+          "type": "event",
+          "title": "LGMSPD Community Police Academy",
+          "when": "Thu, Sep 17 · 6:00 PM",
+          "venue": null,
+          "category": "education",
+          "url": "https://www.losgatosca.gov/2575/Community-Police-Academy"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:30.151Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:15.462Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's Thursday lineup spans generations: Sci-Fi Bingo and a preservation scanning service at the library, plus a drone-focused Physical AI meetup at Circuit Launch and Kneipenabend at Ludwig's.",
+      "summary": "Mountain View's week runs from a library preservation scanning service Thursday through Friday's lineup of Baby Storytime, a Hacker Dojo Community BBQ, the Makers Market, and Space Buddies alien-themed maker lab, with council set to weigh Addendum No. 14 to the Regional Water Quality Control Plant Basic Agreement Tuesday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Magical Bridge Performance Series: Live Music & Puppet Show",
-          "when": "Wed, Sep 16 · 4:00 PM",
-          "venue": "Magical Bridge Playground",
-          "category": "music",
-          "url": "https://www.mountainview.gov/our-city/departments/community-services/special-events/magical-bridge-performance-series"
+          "title": "Community Preservation Lab Scanning Service",
+          "when": "Thu, Sep 17 · 4:00 PM",
+          "venue": "Mountain View Public Library",
+          "category": "community",
+          "url": "https://mountainview.libcal.com/event/17319772"
         },
         {
           "type": "event",
-          "title": "Sci-Fi Bingo",
-          "when": "Thu, Sep 17 · 3:30 PM",
+          "title": "Baby Storytime: Rerun",
+          "when": "Fri, Sep 18 · 10:30 AM",
           "venue": "Mountain View Public Library",
-          "category": "community",
-          "url": "https://mountainview.libcal.com/event/17329284"
+          "category": "family",
+          "url": "https://mountainview.libcal.com/event/17170827"
+        },
+        {
+          "type": "council",
+          "title": "National Arts and Humanities Month Proclamation",
+          "when": "Tue, Sep 22",
+          "venue": null,
+          "category": "government",
+          "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3365&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:32.035Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:18.046Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga's calendar runs from practical to playful this week: catch the Fall 2026 Fix-It Event at Cilker Lounge Wednesday morning, then hear stand-up at Montalvo's SF Comedy Competition Semi-finals that night, plus tech help and job-search tips at the library and church Thursday.",
+      "summary": "Saratoga's calendar runs from music to civics this week: The Temptations & Four Tops play The Mountain Winery Thursday, then residents get Coffee with the Mayor at Peet's Saratoga and a Public Input Town Hall on Law Enforcement Services at Prospect Center's Friendship Hall Saturday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Fall 2026 Fix-It Event",
-          "when": "Wed, Sep 16 · 10:00 AM",
-          "venue": "Cilker Lounge",
-          "category": "community",
-          "url": "https://docs.google.com/forms/d/e/1FAIpQLScdvBwH7kgit4B5Rfya7ovI2PIdPdK_MAZy0EliOBgwGAX0Aw/viewform"
+          "title": "The Temptations & Four Tops",
+          "when": "Thu, Sep 17 · 7:30 PM",
+          "venue": "The Mountain Winery",
+          "category": "music",
+          "url": "https://www.mountainwinery.com/events/detail?event_id=1259541"
         },
         {
           "type": "event",
-          "title": "50th Annual SF Stand-up Comedy Competition Semi-finals",
-          "when": "Wed, Sep 16 · 7:30 PM",
-          "venue": "Montalvo Arts Center",
-          "category": "arts",
-          "url": "https://montalvoarts.org/experience/carriage-house-concerts/50th-sf-comedy/"
+          "title": "Plein Air at Villa Montavlo Gardens & Park",
+          "when": "Fri, Sep 18 · 10:30 AM",
+          "venue": "Villa Montalvo",
+          "category": "community",
+          "url": "https://www.meetup.com/south-bay-plein-air/events/315779064/"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:34.383Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:20.580Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale's week mixes culture and community: a book group on The Wager Wednesday, an SFMOMA day trip and ASME-SCVS happy hour Thursday, then a senior book discussion of Joan Is Okay Friday at the Senior Center.",
+      "summary": "Sunnyvale's weekend mixes culture and community: a senior book group tackles \"Joan Is Okay\" Friday morning, followed by Spanish-language book club, board games at Maker Nexus, and karaoke at Shubham Banquet Hall that evening.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Monthly Book Group: The Wager",
-          "when": "Wed, Sep 16 · 7:00 PM",
-          "venue": null,
-          "category": "arts",
-          "url": null
-        },
         {
           "type": "event",
           "title": "September Day Trip to SFMOMA",
@@ -149,31 +149,39 @@
           "venue": "San Francisco Museum of Modern Art",
           "category": "arts",
           "url": null
+        },
+        {
+          "type": "event",
+          "title": "Senior Book Group: Joan Is Okay",
+          "when": "Fri, Sep 18 · 11:00 AM",
+          "venue": "Sunnyvale Senior Center",
+          "category": "arts",
+          "url": null
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:36.427Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:22.715Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San José",
-      "summary": "San José's week mixes retail buildout (Gap and Royce permits at 2855 Stevens Creek Boulevard) and green energy (a rooftop solar install at Ise Labs' Qume Drive office), while council eyes SAP Center capital repair reimbursements on Sep 22.",
+      "summary": "San José's building boom continues: a 5-unit townhouse on Seely Avenue got its permit and ByteDance/TikTok cleared a $4,000,000 buildout for office space on Coleman Avenue, while council eyes SAP Center capital repair reimbursements Tuesday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Chat with a Writing Tutor",
-          "when": "Wed, Sep 16 · 1:00 PM",
+          "title": "Rasberry Pi Setup workshop",
+          "when": "Thu, Sep 17 · 1:00 PM",
           "venue": null,
           "category": "education",
-          "url": "https://events.sjsu.edu/event/chat-with-a-writing-tutor"
+          "url": "https://events.sjsu.edu/event/rasberry-pi-setup-workshop"
         },
         {
           "type": "event",
-          "title": "Surface as Voice - Threads to 3D | Workshop 1",
-          "when": "Wed, Sep 16 · 10:00 AM",
-          "venue": "Industrial studies Building",
-          "category": "education",
-          "url": "https://events.sjsu.edu/event/surface-as-voice-threads-to-3d"
+          "title": "2026 Employee Benefits and Services Fair",
+          "when": "Thu, Sep 17 · 10:00 AM",
+          "venue": "San Jose State University",
+          "category": "community",
+          "url": "https://events.sjsu.edu/event/2026-employee-benefits-and-services-fair"
         },
         {
           "type": "council",
@@ -184,108 +192,116 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8105&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:38.511Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:25.601Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Santa Clara's Central Park Library keeps busy this week with Outdoor Family Storytime and Spanish-language Cantos y Cuentos Wednesday, then hosts Citizenship Day naturalization application guidance in the Redwood Room Thursday morning.",
+      "summary": "Santa Clara's Central Park Library offers Naturalization Application Guidance for Citizenship Day Thursday, while Friday brings Mandarin Movement & Music for Grandparents and Police Officer Storytime at Northside Branch Library.",
       "highlights": [
         {
           "type": "event",
-          "title": "Outdoor Family Storytime",
-          "when": "Wed, Sep 16 · 10:30 AM",
-          "venue": "Central Park Library",
-          "category": "family",
+          "title": "Citizenship Day: Naturalization Application Guidance",
+          "when": "Thu, Sep 17 · 10:30 AM",
+          "venue": "Central Park Library - Redwood Room",
+          "category": "community",
           "url": null
         },
         {
           "type": "event",
-          "title": "Cantos y Cuentos: Spanish Storytime",
-          "when": "Wed, Sep 16 · 10:30 AM",
-          "venue": "Central Park Library - Edinger Room",
-          "category": "family",
-          "url": null
+          "title": "Open Enrollment Add Period",
+          "when": "Thu, Sep 17 · 12:01 AM",
+          "venue": "Santa Clara University",
+          "category": "community",
+          "url": "https://events.scu.edu/office-of-the-registrar/event/452430-open-enrollment-add-period"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:40.640Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:28.172Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library packs Thursday with programming — ESL conversation club and class session, toddler and preschool storytimes, plus a teen Dungeons and Dragons social club rounding out the afternoon.",
+      "summary": "Los Altos Library packs the week with a Mending & Hemming Workshop (Friday), Bay Area Games Day (Saturday), plus a curator-led tour of Spirit of '76 and a Mid-Autumn Festival closing out the weekend.",
       "highlights": [
         {
           "type": "event",
-          "title": "ESL Conversation Club",
-          "when": "Thu, Sep 17 · 1:30 PM",
+          "title": "Mending & Hemming Workshop",
+          "when": "Fri, Sep 18 · 10:30 AM",
           "venue": "Los Altos Library",
           "category": "education",
-          "url": "https://sccl.bibliocommons.com/events/692f74b6d8681b2900420798"
+          "url": "https://sccl.bibliocommons.com/events/6a56b3abf4e5db3d00c1c867"
         },
         {
           "type": "event",
-          "title": "Toddler Storytime",
-          "when": "Thu, Sep 17 · 10:30 AM",
-          "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a68e7740d65ac360042cabd"
+          "title": "Curator-led Tour of the Spirit of '76",
+          "when": "Fri, Sep 18 · 11:00 AM",
+          "venue": "Los Altos History Museum",
+          "category": "arts",
+          "url": "https://www.losaltoshistory.org/events/curator-led-tour-of-the-spirit-of-76-4/"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:42.510Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:43.338Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto's calendar leans creative this week: \"A Gentleman's Guide to Love and Murder\" runs at Lucie Stern Theatre Wednesday, while Thursday brings a Cubberley library tour, a Stanford farm bouquet workshop, the Bowes Art & Architecture Library open house, and a Japanese bookbinding workshop at Gamble Garden.",
+      "summary": "Palo Alto's arts calendar features \"A Gentleman's Guide to Love and Murder\" at Lucie Stern Theatre Thursday, while Gamble Garden hosts a Japanese Bookbinding Workshop and libraries offer Family Storytime and an English learning session Friday.",
       "highlights": [
         {
           "type": "event",
-          "title": "A Gentleman's Guide to Love and Murder",
-          "when": "Wed, Sep 16 · 7:30 PM",
-          "venue": "Lucie Stern Theatre",
-          "category": "arts",
-          "url": "https://paplayers.org/show/a-gentlemans-guide-to-love-and-murder/"
+          "title": "Japanese Bookbinding Workshop",
+          "when": "Thu, Sep 17 · 10:30 AM",
+          "venue": "Gamble Garden",
+          "category": "education",
+          "url": "https://www.gamblegarden.org/event/japanese-bookbinding-workshop/"
         },
         {
           "type": "event",
-          "title": "Tour Cubberley Education Library",
-          "when": "Thu, Sep 17 · 1:00 PM",
-          "venue": "Education (Cubberley Bldg)",
-          "category": "education",
-          "url": "https://events.stanford.edu/event/tour-cubberley-education-library"
+          "title": "A Gentleman's Guide to Love and Murder",
+          "when": "Thu, Sep 17 · 7:30 PM",
+          "venue": "Lucie Stern Theatre",
+          "category": "arts",
+          "url": "https://paplayers.org/show/a-gentlemans-guide-to-love-and-murder/"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:44.607Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:45.975Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas Library packs Thursday with Toddler Storytime, K-6 Homework Help, and Preschool Storytime, while Friday brings a Qi Gong Meditation & Exercise Class for anyone wanting a calmer start to the weekend.",
+      "summary": "Milpitas Library hosts a busy Friday lineup — Qi Gong, Knit & Crochet Circle, and Music & Movement for kids — while the City Council reviewed the red light camera safety program and heard about the Community Center's condition Tuesday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Toddler Storytime: Stories and Songs for 12-36 Month Olds",
-          "when": "Thu, Sep 17 · 10:30 AM",
+          "title": "Qi Gong Meditation & Exercise Class",
+          "when": "Fri, Sep 18 · 1:00 PM",
           "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a53dbd2f213992f00c3bb0f"
+          "category": "community",
+          "url": "https://sccl.bibliocommons.com/events/65baeaeff664ce330023eaef"
         },
         {
           "type": "event",
-          "title": "Homework Help for Grades K-6",
-          "when": "Thu, Sep 17 · 4:00 PM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56c8a"
+          "title": "Open House at Laser Sharp Speakers",
+          "when": "Fri, Sep 18 · 11:00 AM",
+          "venue": null,
+          "category": "community",
+          "url": "https://www.meetup.com/d101tm/events/316413275/"
+        },
+        {
+          "type": "cityhall",
+          "title": "Council reviews red light camera safety program",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": "https://www.milpitas.gov/129/Agendas-Minutes"
         }
       ],
-      "weekLabel": "Sep 16 – Sep 23",
-      "generatedAt": "2026-09-17T03:12:46.635Z"
+      "weekLabel": "Sep 17 – Sep 24",
+      "generatedAt": "2026-09-18T03:12:48.095Z"
     }
   }
 }

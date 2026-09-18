@@ -1,30 +1,30 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-17T03:09:00.017Z",
+      "generatedAt": "2026-09-18T03:08:43.295Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 9 – Sep 16",
+      "dateRange": "Sep 10 – Sep 17",
       "stats": {
-        "total": 344,
-        "notable": 12,
-        "newUnits": 3,
-        "totalValuation": 6892940
+        "total": 427,
+        "notable": 16,
+        "newUnits": 6,
+        "totalValuation": 14541885
       },
       "permits": [
         {
-          "id": "2024-104983-RS",
-          "address": "735 S 10th St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
+          "id": "2026-137243-MF",
+          "address": "0 Seely Av",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
           "workType": "New Construction",
-          "description": "Demo Detached Garage & Build New Detached ADU",
-          "valuation": 175920,
-          "units": 1,
-          "issueDate": "2026-09-10",
-          "subtype": "ADU   Accessory Dwelling Unit"
+          "description": "Trimble Summerhill 5-Plex New Construction (Lot 21)",
+          "valuation": 1841161,
+          "units": 5,
+          "issueDate": "2026-09-15",
+          "subtype": "Townhouse"
         },
         {
           "id": "2026-103211-RS",
@@ -39,16 +39,16 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-138005-RS",
-          "address": "3162 Mt Rainier Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Casejadu On Second Floor of Residence",
-          "valuation": 66146,
-          "units": 1,
-          "issueDate": "2026-09-10",
-          "subtype": "ADU   Accessory Dwelling Unit"
+          "id": "2026-137036-CI",
+          "address": "1143 Coleman Av #1",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Bytedance / Tiktok Floors 1 and 3 TI",
+          "valuation": 4000000,
+          "units": 0,
+          "issueDate": "2026-09-15",
+          "subtype": "Office"
         },
         {
           "id": "2026-137471-CI",
@@ -63,6 +63,18 @@
           "subtype": "Retail"
         },
         {
+          "id": "2026-135694-CI",
+          "address": "3655 N 1st St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Samsung Racks Install",
+          "valuation": 1000000,
+          "units": 0,
+          "issueDate": "2026-09-15",
+          "subtype": "Office"
+        },
+        {
           "id": "2026-135923-CI",
           "address": "2201 Qume Dr",
           "category": "commercial-large",
@@ -72,6 +84,30 @@
           "valuation": 930575,
           "units": 0,
           "issueDate": "2026-09-11",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-137708-CI",
+          "address": "5397 Camden Av",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Self Service Laundry Tenant Improvement",
+          "valuation": 380000,
+          "units": 0,
+          "issueDate": "2026-09-15",
+          "subtype": "Retail"
+        },
+        {
+          "id": "2026-134473-CI",
+          "address": "141 Innovation Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Altera Bldg 4 Floor 1 TI",
+          "valuation": 360000,
+          "units": 0,
+          "issueDate": "2026-09-15",
           "subtype": "Office"
         },
         {
@@ -87,18 +123,6 @@
           "subtype": "Retail"
         },
         {
-          "id": "2026-136935-CI",
-          "address": "2555 Corde Terra Cl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "Commercial/Industrial",
-          "valuation": 313782,
-          "units": 0,
-          "issueDate": "2026-09-10",
-          "subtype": "Commercial/Industrial"
-        },
-        {
           "id": "2026-137025-CI",
           "address": "2855 Stevens Creek Bl",
           "category": "commercial-large",
@@ -109,47 +133,47 @@
           "units": 0,
           "issueDate": "2026-09-14",
           "subtype": "Retail"
-        },
-        {
-          "id": "2026-124414-CI",
-          "address": "55 W Trimble Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Market Ready TI",
-          "valuation": 202907,
-          "units": 0,
-          "issueDate": "2026-09-11",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-135655-CI",
-          "address": "140 S Montgomery St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Additions/Alterations",
-          "description": "Spark Social (Be 100%) TI",
-          "valuation": 200000,
-          "units": 0,
-          "issueDate": "2026-09-11",
-          "subtype": "Recreation Building"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-17T03:09:02.574Z",
+      "generatedAt": "2026-09-18T03:08:45.843Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 9 – Sep 16",
+      "dateRange": "Sep 10 – Sep 17",
       "stats": {
-        "total": 104,
-        "notable": 2,
+        "total": 115,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-02643",
+          "address": "1525 Waverley St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02645",
+          "address": "766 Bryant St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-02606",
           "address": "319 Everett Av",
@@ -160,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02632",
+          "address": "834 Ames Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-16",
           "subtype": "Permit Issued"
         },
         {

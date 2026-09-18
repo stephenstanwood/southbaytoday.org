@@ -1,169 +1,130 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-17T03:16:42.203Z",
+    "generatedAt": "2026-09-18T03:16:50.526Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 12
   },
   "summary": {
-    "threadsMined": 10,
-    "placesExtracted": 8,
-    "placesMatched": 2,
-    "placeGaps": 6,
-    "eventsExtracted": 3,
-    "eventsMatched": 0,
+    "threadsMined": 12,
+    "placesExtracted": 4,
+    "placesMatched": 3,
+    "placeGaps": 1,
+    "eventsExtracted": 4,
+    "eventsMatched": 1,
     "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Mommy's Bánh Mi",
+      "name": "Stephen's Meat",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "known for green sauce on banh mi",
+      "kind": "other",
+      "context": "discounted parking lot near SAP Center",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
-        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
-        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
-      ]
-    },
-    {
-      "name": "Home Eats",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "known for Shrimp Chow Fung",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
-      ]
-    },
-    {
-      "name": "Jade China",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "highly rated, comparison suggested",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
-      ]
-    },
-    {
-      "name": "Autumn Smile Dental",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "dentist on Tully, crown work",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
-      ]
-    },
-    {
-      "name": "Intel Museum",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "tourist attraction to visit",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
-      ]
-    },
-    {
-      "name": "Kaiser Vaccine Clinic - Skyport",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "flu and COVID vaccinations available",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
+        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
+        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
+        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "El Grito",
-      "when": "",
+      "name": "Falloween",
+      "when": "September 27",
       "city": "San Jose",
-      "context": "Mexican Independence Day celebration downtown",
+      "context": "free evening market with makers, art, and costumes at 866 Park Ave",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
-        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
-        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
+        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
+        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
+        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
+        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
       ]
     },
     {
-      "name": "Reimagining Our Waterways Symposium",
-      "when": "Oct 16 and 17",
+      "name": "Free Movie Night: Zoolander",
+      "when": "tonight",
       "city": "San Jose",
-      "context": "art and climate symposium by SJMA, includes Coyote Creek visit",
+      "context": "hosted by San Jose Geek Historians at Guildhouse",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wid1j3/best_chineseeast_asian_buffets_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wi82cq/mommys_bánh_mi/",
-        "https://www.reddit.com/r/SanJose/comments/1whmnc7/el_grito_downtown_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wiak3i/reimaging_our_waterways_symposium_oct_16_and_17/",
-        "https://www.reddit.com/r/SanJose/comments/1wi79s4/construction_to_start_next_year_on_affordable/"
+        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
+        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
+        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
+        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
       ]
     },
     {
-      "name": "SJ Broadway",
-      "when": "",
+      "name": "Mexican Independence Day celebration at City Hall",
+      "when": "September 16",
       "city": "San Jose",
-      "context": "theater performance, seating comfort concerns",
+      "context": "216th anniversary celebration with photo gallery",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+        "https://www.reddit.com/r/SanJose/comments/1wiiuwv/shrimp_fried_rice/",
+        "https://www.reddit.com/r/SanJose/comments/1wiid8t/culture_and_tradition_on_display_at_216th/"
       ]
     }
   ],
   "placeMatches": [
     {
+      "name": "East San Jose Carnegie Library",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosts karaoke and dance event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
+        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
+        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
+        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
+      ],
+      "matchedName": "East San Jose Carnegie Library"
+    },
+    {
       "name": "SAP Center",
       "city": "San Jose",
       "kind": "venue",
-      "context": "staying nearby, Sharks games",
+      "context": "parking tips for hockey season and events",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
+        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
+        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
+        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
       ],
       "matchedName": "SAP Center"
     },
     {
-      "name": "Winchester Mystery House",
+      "name": "Guildhouse",
       "city": "San Jose",
       "kind": "venue",
-      "context": "tourist attraction to visit",
+      "context": "hosting free movie night screening of Zoolander",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wi1pyy/home_eats_or_jade_china/",
-        "https://www.reddit.com/r/SanJose/comments/1wii5rj/dentist_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wihhz2/visiting_san_jose_from_canada/",
-        "https://www.reddit.com/r/SanJose/comments/1wi3kal/kaiser_vaccine_clinic_is_open/",
-        "https://www.reddit.com/r/SanJose/comments/1whpt4f/sj_broadway_seating_plus_size/"
+        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
+        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
+        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
+        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
       ],
-      "matchedName": "Winchester Mystery House"
+      "matchedName": "Guildhouse"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Music and Movement for Adults",
+      "when": "Sunday, September 20, 3-4:30pm",
+      "city": "San Jose",
+      "context": "karaoke and dance event at East San Jose Carnegie Library",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
+        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
+        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
+        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
+      ],
+      "matchedName": "Music and Movement for Adults"
+    }
+  ]
 }
