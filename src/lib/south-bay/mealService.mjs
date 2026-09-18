@@ -65,6 +65,22 @@ export function dayKeyForIsoDate(date) {
   return ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][index] || null;
 }
 
+/**
+ * Closed / open / unknown for a Google-style hours object on an ISO date.
+ * Missing days are closed when the record has hours for any other day
+ * (Places omits closed days). No hours at all is unknown — fail open.
+ */
+export function hoursStatusOnDate(hours, date) {
+  const dayKey = dayKeyForIsoDate(date);
+  if (!hours || typeof hours !== "object" || !dayKey) return "unknown";
+  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  const hasAny = days.some((key) => String(hours[key] || "").trim());
+  if (!hasAny) return "unknown";
+  const raw = String(hours[dayKey] ?? "").trim();
+  if (!raw || /^closed$/i.test(raw)) return "closed";
+  return openRangesOn(hours, dayKey).length ? "open" : "closed";
+}
+
 export function mealVenueMatchesService(candidate, bucket) {
   if (!MEAL_BUCKETS.has(bucket)) return false;
   const types = Array.isArray(candidate?.types) ? candidate.types : [];

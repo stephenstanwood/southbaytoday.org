@@ -177,6 +177,10 @@ test("launchd routes the scheduled job through the guarded wrapper", () => {
     /<string>\/Users\/stephenstanwood\/Projects\/southbaytoday\.org\/scripts\/newsletter\/send\.mjs<\/string>/.test(plist),
     false,
   );
+  assert.match(
+    plist,
+    /<key>Hour<\/key>\s*<integer>3<\/integer>\s*<key>Minute<\/key>\s*<integer>40<\/integer>/,
+  );
 });
 
 test("launchd refreshes default plans through the guarded wrapper before newsletter build", () => {
