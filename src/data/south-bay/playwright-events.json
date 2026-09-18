@@ -1,23 +1,23 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-18T02:17:11.995Z",
+    "generatedAt": "2026-09-18T15:08:57.987Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 588,
+    "eventCount": 585,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (126)",
-      "Los Gatos Library (151)",
+      "Mountain View Public Library (125)",
+      "Los Gatos Library (152)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (21)",
+      "Mountain Winery (20)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (5)",
+      "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
       "City of Cupertino (72)",
       "Opera San José (5)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 129,
+        "count": 128,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 151,
+        "count": 152,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 21,
+        "count": 20,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -219,7 +219,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 5,
+        "count": 3,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -348,24 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "22a65f59e0b7",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17319772",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "3baed51a527d",
       "title": "Baby Storytime: Rerun",
@@ -6155,6 +6137,26 @@
       "kidFriendly": true
     },
     {
+      "id": "eeafee796d9b",
+      "title": "Creative Break",
+      "date": "2026-12-17",
+      "displayDate": "Thu, Dec 17",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Have you been wanting to start journaling or using a planner but can't find the time or space to do it at home? Take some time for creativity at the Library and journal, work on your planner, or draw in your sketchbook. We'll provide some inspiration and fun stationery like washi tape, stickers, stamps, and pens, you bring your journal/planner/sketchbook/etc. This is a drop in program, so join us for 10 minutes if that's all you have, or stay for the whole time!",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17591745",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7131,23 +7133,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c3a978e4ec29",
-      "title": "The Temptations & Four Tops",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1259541",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "f4639d853b7b",
       "title": "Jeff Dunham: Artificial Intelligence",
       "date": "2026-09-19",
@@ -7488,23 +7473,6 @@
       "kidFriendly": false
     },
     {
-      "id": "4a0ccf5d7bba",
-      "title": "Matt Mathews",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "6809d472e6ca",
       "title": "Kany Garcia",
       "date": "2026-09-18",
@@ -7828,10 +7796,27 @@
       "kidFriendly": false
     },
     {
-      "id": "dbbf85544619",
+      "id": "4ba9c309b191",
+      "title": "Movements: Happier Now USA Tour",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "7:30pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "6321d0577d72",
       "title": "Toddler Storytime",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7845,10 +7830,10 @@
       "kidFriendly": true
     },
     {
-      "id": "f68299b3a3ea",
+      "id": "bf0f0feca3d5",
       "title": "All Ages Storytime",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7860,50 +7845,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "6b02b76a65fa",
-      "title": "Bootcamp in the River Park with GymParty",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "5:30 pm",
-      "endTime": null,
-      "venue": "Guadalupe River Park",
-      "address": "438 Coleman Ave, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.instagram.com/gymparty_/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-09-17"
-      }
-    },
-    {
-      "id": "7229a4bae7e0",
-      "title": "Yoga in the River Park: Sunset Sessions with GymParty",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "6:30 pm",
-      "endTime": null,
-      "venue": "Guadalupe River Park",
-      "address": "438 Coleman Ave, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.instagram.com/gymparty_/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-09-17"
-      }
     },
     {
       "id": "9be764cf79ae",
@@ -9309,7 +9250,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9326,7 +9267,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9343,7 +9284,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9360,7 +9301,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9377,7 +9318,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
