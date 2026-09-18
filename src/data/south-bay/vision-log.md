@@ -2,6 +2,60 @@
 
 ---
 
+## 2026-09-18 — Cycle 227: A Tariff Brain on Page Mill Road, and $150M That Surfaced a Week Late
+
+### Context
+Friday September 18, 2026. Roadmap still closed (6/6). Typecheck clean
+(0 errors). Pre-change tech URL audit: 180 links, 0 moved, 1 dead (Point2
+Technology — a transient 503; three re-fetches returned 200, left alone), 8
+bot-walls. `check-plan-blurbs` clean, so this morning's cron bake matched
+the cache — the first cycle since Sep 15 without a stale card. Crunchbase's
+Sep 12–18 top ten had not published by this pass.
+
+### What Was Built
+
+**Gaia Dynamics' $7M seed is on the Tech tab.** A 2024 Palo Alto startup
+(CEO Emil Stefanutti, built with Andrew Ng's AI Fund) that runs product
+classification, tariff math, customs-entry audits, and regulatory tracking
+across 48 countries, and says its AI is the first to pass three consecutive
+U.S. Customs Broker License Exams. ARR up 8x in twelve months on close to
+800 accounts. Corazon Capital (Sam Yagan) led, Lobby joined, AI Fund and
+Zenda returned. HQ cleared the company-authored bar three ways: the release
+datelines Palo Alto, the body says "headquartered in Palo Alto," and the
+privacy policy gives 195 Page Mill Rd, Suite 115. Exactly the sub-$10M
+tier the tab exists for.
+
+**Ayar Labs' $150M Series E extension is on the Tech tab.** San Jose on the
+company's own dateline. New money on top of the $500M March round — the
+company's headline is "expands 2026 funding to $650 million" — so it gets a
+second card the way ChipAgents, Etched, and Cylake did, not a restatement.
+Pays for the push to high-volume co-packaged optics manufacturing and a new
+Bengaluru design center. The release went out Sep 10 but only reached the
+daily feeds on Sep 17: the Cylake / Piston late-catch habit, again. Shares
+the committed ayar-labs mark via `SHARED_LOGO_GROUPS` rather than
+resolving a second logo.
+
+**Near-misses recorded** in the `RECENTLY_FUNDED` comment block so the next
+cycle doesn't re-walk Sep 17–18: VC News Daily, techstartups (both days),
+FinSMEs, and AlleyWatch were otherwise all San Francisco, Seattle, New
+York, or international.
+
+### Why This Was the Strongest Move
+Two in-coverage rounds from opposite ends of the tab's range — a $7M seed
+nobody else will cover and a $150M extension the roundups missed for a
+week — both verified against company-authored HQ sources rather than
+aggregator tags. Nothing on Home, Events, or Food was touched.
+
+### Next 3 Strongest Ideas
+1. **Crunchbase Sep 12–18 top ten** — still unpublished at this pass;
+   sweep it first thing next cycle.
+2. **AlleyWatch 9/21 weekly vs the Sep 14–18 window** — the late-catch
+   habit has now paid off four times (Cylake, Piston, Maven, Ayar).
+3. **Wire the drift check into the copy-edit task's closeout** (task-file
+   change, not repo code) — carried from cycle 226.
+
+---
+
 ## 2026-09-17 — Cycle 226: A Solar-Powered GPU Rack, a Parking-Lot Robot, and the Same Stale Blurb Twice
 
 ### Context
