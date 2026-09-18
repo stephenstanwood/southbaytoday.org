@@ -1453,6 +1453,80 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //   * Crunchbase's Sep 12-18 top ten publishes Friday Sep 18 — not yet
   //     swept; check it next cycle along with AlleyWatch's 9/21 weekly against
   //     the Sep 14-18 window (the Cylake / Piston / Maven late-catch habit).
+  // Note on the Sep 17-18 2026 sweep: Gaia Dynamics and Ayar Labs' Series E
+  // extension are the two in-coverage rounds added below. Crunchbase's Sep
+  // 12-18 top ten had not published by this pass (its venture section still
+  // topped out at the Sep 11 list); its Sep 17 "5 Interesting Startup Deals"
+  // carried Viabot, already entered, and nothing else in coverage.
+  //   * Gaia Dynamics is Palo Alto on the company's own words, not a tag: its
+  //     Sep 16 PR Newswire release datelines "PALO ALTO, Calif." AND says in
+  //     the body "is headquartered in Palo Alto, California," and the privacy
+  //     policy on gaiadynamics.ai gives "Gaia Dynamics Corp. 195 Page Mill Rd.
+  //     Suite 115, Palo Alto, CA 94306" — the same company-authored bar Owner,
+  //     VerifAIX, and Rune cleared. (Its terms page names San Francisco only
+  //     as the arbitration venue, which is a forum clause, not an HQ.) VC News
+  //     Daily's Sep 17 list also files it under Palo Alto. This is NOT the
+  //     "Gaia" in the Sep 8 techstartups roundup recorded as out of coverage
+  //     above — different announcement, different week. A $7M seed for a
+  //     2024 startup is the small-round tier the tab exists for.
+  //   * Ayar Labs' $150M is a late catch: its own release datelines "SAN
+  //     JOSE, Calif. — Sept. 10, 2026," but the round surfaced through the
+  //     daily feeds only on Sep 17 (VC News Daily) — the Cylake / Piston
+  //     habit again. It is an EXTENSION of the March Series E, not a new
+  //     letter, and it is NEW money: the company's own headline is "expands
+  //     2026 funding to $650 million" against the $500M closed in March, and
+  //     SiliconANGLE calls it "$150M in additional Series E funding." Same
+  //     call as ChipAgents A1/A2, Etched, and Cylake — two raises, two
+  //     entries — and the opposite of the Upscale AI restatement. The March
+  //     entry further down stays. Recorded as "Series E extension" because
+  //     that is what the primary source says; no valuation was disclosed for
+  //     the extension, so the card doesn't carry one. Shares the committed
+  //     ayar-labs logo via SHARED_LOGO_GROUPS rather than resolving twice.
+  // Near-misses recorded so the next cycle doesn't re-verify them:
+  //   * VC News Daily's Sep 17 list is otherwise out of coverage (Kastle,
+  //     Noetive, BackOps, Ferry Health, Factory — San Francisco; MIND, Ravel,
+  //     Buywander — Seattle; Impulse Space — Redondo Beach; Ayble — Boston;
+  //     Hello Haven — Park City; Adaptive — New York; Rapta — Lake Oswego).
+  //   * techstartups' Sep 18 roundup carried no Bay Area rounds at all
+  //     (Crusoe — Denver; AVAVA — Boston; Ryft — Manchester; dtcpay —
+  //     Singapore; Arcos — Munich; EVAS Intelligence, Zhongke Guosheng,
+  //     Arclight Quantum, Xili Optoelectronics, Shutu — China). Its Sep 17
+  //     VC roundup is the same names as VC News Daily plus Nex (San
+  //     Francisco), Mazama Energy (Dallas), and Qubot (China).
+  //   * FinSMEs' Sep 18 US list is out of coverage (Embra AI, Nex, Raindrop —
+  //     San Francisco; Tempo Therapeutics — San Diego; TigerByte — DC;
+  //     Antfly — Portland; Robigo — Cambridge; Fize Medical, Magentic — New
+  //     York; TowerNorth — Canonsburg; Phigenics — Warrenville). Comp AI
+  //     ($34M Series A, Sep 17) is Miami.
+  //   * AlleyWatch's 9/17 daily is New York only (Adaptive, Polyphron,
+  //     Notes.fm). Its 9/21 weekly and Crunchbase's Sep 12-18 top ten are
+  //     still the two lists to check next cycle against the Sep 14-18 window.
+  {
+    id: "gaia-dynamics",
+    name: "Gaia Dynamics",
+    city: "Palo Alto",
+    category: "ai",
+    round: "Seed",
+    amount: "$7M",
+    date: "2026-09-16",
+    tagline:
+      "Tariff schedules changed faster this year than most importers' spreadsheets could follow, and Gaia Dynamics sells the software that keeps up instead. The Palo Alto startup, founded in 2024 by CEO Emil Stefanutti in collaboration with Andrew Ng's AI Fund, runs product classification, tariff calculation, customs-entry audits, product-description enrichment, and regulatory tracking across 48 countries for importers, exporters, logistics providers, customs brokerages, consultants, and law firms — and says its AI is the first to pass three consecutive U.S. Customs Broker License Examinations. Annual recurring revenue grew eightfold over the past twelve months as the company added close to 800 accounts, including Fortune 500 importers and exporters and some of the largest logistics companies. Corazon Capital, the fund co-founded by OkCupid's Sam Yagan, led the oversubscribed $7M seed, with Lobby Capital joining and AI Fund and Zenda Capital returning; the money goes to hiring and to strategic trade-planning features due before the end of the year.",
+    color: "#1D4ED8",
+    url: "https://www.gaiadynamics.ai/",
+  },
+  {
+    id: "ayar-labs-series-e-extension",
+    name: "Ayar Labs",
+    city: "San Jose",
+    category: "chip",
+    round: "Series E extension",
+    amount: "$150M",
+    date: "2026-09-10",
+    tagline:
+      "Six months after closing a $500M Series E at a $3.75B valuation, Ayar Labs has added $150M more to the same round — $650M of primary capital raised in 2026, and just over $1B since the San Jose company was founded in 2015. Ayar builds the TeraPHY optical engine and the SuperNova light source: co-packaged optics that move data between AI accelerators over light instead of copper, pitched at more than 100 Tbps of optical connectivity per accelerator and designed to scale to 1,024 accelerators and beyond. CEO Mark Wade's line is that copper interconnect is becoming the limiting factor for AI scale-up. Wiwynn, the Taiwanese server maker, came in as a strategic investor earlier in 2026 alongside Alchip, AMD, Intel, MediaTek, and NVIDIA. The extension pays for the move to high-volume manufacturing — product development, validation, and the surrounding manufacturing ecosystem — and for a new end-to-end silicon design center in Bengaluru led by VP of silicon engineering Sankara Venkateswaran, with Arun Balachandar as site lead. Wade has said volume-production qualification is the goal by the end of 2027, with the mass market in early 2028.",
+    color: "#06B6D4",
+    url: "https://ayarlabs.com/news/ayar-labs-expands-2026-funding-to-650-million/",
+  },
   {
     id: "viabot",
     name: "Viabot",
