@@ -60,4 +60,24 @@ for f in $STAGED; do
 done
 
 [ -n "$FIXED" ] && echo "  pre-commit: normalized eventCount:$FIXED"
+
+# Retire /event/<slug> URLs this commit stops publishing. generate-events does
+# this itself against the previous file, but the editing routines re-title
+# events directly (a fixed typo changes the slug) and never run the generator,
+# so the URL Google indexed yesterday 404s until something else notices. Diff
+# the staged file against HEAD at the moment it persists — same reasoning as
+# eventCount above — and stage the ledger alongside it. Never block the commit.
+EVENTS_FILE="src/data/south-bay/upcoming-events.json"
+if echo "$STAGED" | grep -qx "$EVENTS_FILE" && git diff --quiet -- "$EVENTS_FILE" \
+   && [ -f scripts/sync-event-slug-ledger.mjs ]; then
+  prev=$(mktemp -t sbt-prev-events.XXXXXX) || prev=""
+  if [ -n "$prev" ] && git show "HEAD:$EVENTS_FILE" > "$prev" 2>/dev/null; then
+    out=$("$NODE_BIN" scripts/sync-event-slug-ledger.mjs --quiet --previous "$prev" 2>/dev/null) || out=""
+    if [ -n "$out" ] && [ -f src/data/south-bay/events-retired.json ]; then
+      git add src/data/south-bay/events-retired.json
+      echo "  pre-commit: $out"
+    fi
+  fi
+  [ -n "$prev" ] && rm -f "$prev"
+fi
 exit 0

@@ -162,6 +162,8 @@ export function displayTime(d) {
     hour: "numeric", minute: "2-digit",
     timeZone: PT,
   });
-  if (formatted === "12:00 AM") return null; // midnight = probably no time set
+  // Midnight = probably no time set. LiveWhale (SCU) stamps all-day calendar
+  // items at 00:01 PT, which rendered "12:01 AM" at the top of a day page.
+  if (formatted === "12:00 AM" || formatted === "12:01 AM") return null;
   return formatted;
 }

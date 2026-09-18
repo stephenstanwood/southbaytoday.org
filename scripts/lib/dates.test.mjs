@@ -16,6 +16,8 @@ test("date-only BiblioCommons occurrences stay all-day on the source date", () =
     const occurrence = parseDatePT(sourceDate);
     assert.equal(isoDate(occurrence), sourceDate);
     assert.equal(displayTime(occurrence), null);
+    // LiveWhale all-day marker (SCU academic calendar): 00:01 PT.
+    assert.equal(displayTime(new Date("2026-09-19T07:01:00Z")), null);
   }
 });
 

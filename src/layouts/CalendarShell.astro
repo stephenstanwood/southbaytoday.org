@@ -13,9 +13,11 @@ interface Props {
   ogImage?: string;
   /** highlight a nav tab when the page corresponds to one; omit/null for sub-routes */
   activeTab?: MastheadProps["activeTab"];
+  /** keep the page out of search indexes (retired event leaves) */
+  noindex?: boolean;
 }
 
-const { title, description, ogImage, activeTab = null } = Astro.props;
+const { title, description, ogImage, activeTab = null, noindex = false } = Astro.props;
 ---
 
 <BaseLayout
@@ -23,6 +25,7 @@ const { title, description, ogImage, activeTab = null } = Astro.props;
   description={description}
   ogImage={ogImage}
   themeColor="#F7F8FA"
+  noindex={noindex}
 >
   <Fragment slot="head">
     <slot name="head" />

@@ -5,9 +5,11 @@
 import CalendarShell from "../../layouts/CalendarShell.astro";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import archiveData from "../../data/south-bay/events-archive.json";
+import retiredData from "../../data/south-bay/events-retired.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { buildGoogleCalendarUrl } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
+import { resolveRetired } from "../../lib/south-bay/eventSlugLedger.mjs";
 import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl } from "../../lib/south-bay/httpUrl.mjs";
@@ -46,25 +48,43 @@ export function getStaticPaths() {
   const past = archived.filter((e) => e.date && e.date < todayPt && e.time);
   const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
   const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
-  return [...buildEventSlugs(pool)].map(([slug, event]) => ({
+  const livePages = [...buildEventSlugs(pool)].map(([slug, event]) => ({
     params: { slug },
     props: {
       event,
       passed: Boolean(event.date && event.date < todayPt),
+      retired: false,
       updatedAt: event.date && event.date < todayPt
         ? (archiveData as { updatedAt?: string }).updatedAt ?? null
         : (upcomingData as { generatedAt?: string }).generatedAt ?? null,
     },
   }));
+  // Slugs that left the feed before their date (events-retired.json) keep
+  // resolving as noindex "no longer listed" leaves so links Google and readers
+  // already hold don't 404. Retired slugs with a live successor become 301s in
+  // astro.config.mjs instead and are not built here.
+  const { orphans } = resolveRetired(retiredData, all, archived, todayPt);
+  const retiredPages = orphans.map(({ slug, event, retiredAt }) => ({
+    params: { slug },
+    props: {
+      event: event as RawEvent,
+      passed: Boolean(event.date && event.date < todayPt),
+      retired: true,
+      updatedAt: retiredAt ?? null,
+    },
+  }));
+  return [...livePages, ...retiredPages];
 }
 
 interface Props {
   event: RawEvent;
   passed: boolean;
+  /** left the source feed before its date — rendered noindex with a notice */
+  retired: boolean;
   updatedAt: string | null;
 }
 
-const { event, passed, updatedAt } = Astro.props;
+const { event, passed, retired, updatedAt } = Astro.props;
 const cityName = event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null;
 const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 
@@ -206,8 +226,9 @@ const calendarUrl = buildGoogleCalendarUrl({
 
 // Passed archive leaves stay crawlable for the ~30-day window but must not
 // advertise EventScheduled — GSC flags stale Event objects on pages that
-// already say the event happened.
-const eventSchema = passed
+// already say the event happened. A retired leaf can't vouch for its facts
+// either, so it ships no Event object.
+const eventSchema = passed || retired
   ? null
   : eventToSchema({ ...event, virtual: isVirtual, cityName, pageUrl } as SchemaEventRecord);
 const webPageSchema = {
@@ -282,7 +303,7 @@ const longDesc = (event.description ?? "").trim();
 const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.slice(0, 40));
 ---
 
-<CalendarShell title={title} description={description} ogImage={absoluteOgImage} activeTab="events">
+<CalendarShell title={title} description={description} ogImage={absoluteOgImage} activeTab="events" noindex={retired}>
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
@@ -296,6 +317,13 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   {passed && (
     <p class="cal-passed">
       This event has passed — it happened {dayLabel}. <a href="/events">See what's coming up →</a>
+    </p>
+  )}
+  {retired && !passed && (
+    <p class="cal-passed">
+      This listing is no longer on {event.source ? `the ${event.source} calendar` : "the organizer's calendar"} — it may
+      have been cancelled, moved, or renamed. {event.url ? <>Check <a href={event.url} rel="noopener noreferrer">the source</a> before you go, or </>: <>Check with the organizer before you go, or </>}
+      <a href={`/events/${event.date}`}>see what else is on {dayLabelNoYear} →</a>
     </p>
   )}
 
@@ -349,7 +377,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     )}
     {event.source && <div><dt>Listed by</dt><dd>{event.source}</dd></div>}
     {updatedAt && updatedLabel && (
-      <div><dt>Refreshed</dt><dd><time datetime={updatedAt}>{updatedLabel}</time></dd></div>
+      <div><dt>{retired ? "Last seen" : "Refreshed"}</dt><dd><time datetime={updatedAt}>{updatedLabel}</time></dd></div>
     )}
   </dl>
 
@@ -359,7 +387,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         Event details ↗
       </a>
     )}
-    {!passed && calendarUrl && (
+    {!passed && !retired && calendarUrl && (
       <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer" data-analytics-event="Calendar add">
         Add to Google Calendar
       </a>

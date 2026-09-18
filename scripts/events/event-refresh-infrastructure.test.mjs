@@ -85,6 +85,11 @@ test("the eventCount pre-commit hook is tracked and self-installs", () => {
   assert.match(hook, /eventCount = d\.events\.length/);
   assert.match(hook, /src\/data\/south-bay/);
   assert.match(hook, /exit 0/);
+  // Re-titling an event changes its /event/<slug> URL. The hook retires the
+  // slugs a commit stops publishing so the build can 301 or keep them
+  // resolving (2026-09-18: /404 was the third most-viewed page on the site).
+  assert.match(hook, /sync-event-slug-ledger\.mjs --quiet --previous/);
+  assert.match(hook, /git add src\/data\/south-bay\/events-retired\.json/);
   assert.match(installer, /install_hooks/);
   assert.match(installer, /scripts\/hooks\/pre-commit/);
   // --watchdog-only runs on every scheduled pass, so the link self-heals.

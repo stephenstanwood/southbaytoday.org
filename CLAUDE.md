@@ -15,6 +15,13 @@ Run these scripts to refresh pre-generated data:
 - Event refresh reliability and recovery: `docs/event-source-refresh.md`
 - See `package.json` for full list of `generate-*` scripts
 
+`/event/<slug>` URLs derive from date + title, so re-titling an event (typo
+fix, dedupe swap, source rename) changes its URL. `events-retired.json` records
+every future slug that leaves the feed; the build 301s each one to its
+successor or keeps it resolving as a noindex "no longer listed" leaf.
+`generate-events` and the tracked pre-commit hook maintain the ledger — if you
+edit titles some other way, run `npm run sync-event-slugs` before committing.
+
 ## Day plans: quality-first pillar pairs
 
 The canonical plan model is `pillar-pairs-v1`: select the best morning,

@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import { resolveRetired } from './src/lib/south-bay/eventSlugLedger.mjs';
 
 // Past-dated /event/ and /events/ URLs stay out of the sitemap — the pages
 // themselves keep resolving for the archive window (90 days, grace banner) but crawlers shouldn't
@@ -33,12 +34,35 @@ try {
 }
 const buildDate = new Date().toISOString();
 
+// /event/<slug> URLs that left the feed before their date: 301 the ones with
+// a live successor (re-titled, deduped against a better source), and keep the
+// rest out of the sitemap — /event/[slug].astro builds them as noindex
+// "no longer listed" leaves. See src/lib/south-bay/eventSlugLedger.mjs.
+/** @type {Record<string, string>} */
+let retiredRedirects = {};
+const retiredLeafPaths = new Set();
+try {
+  const readData = (/** @type {string} */ name) =>
+    JSON.parse(readFileSync(fileURLToPath(new URL(`./src/data/south-bay/${name}`, import.meta.url)), 'utf-8'));
+  const { redirects, orphans } = resolveRetired(
+    readData('events-retired.json'),
+    readData('upcoming-events.json').events,
+    readData('events-archive.json').events,
+    buildDayPt,
+  );
+  retiredRedirects = Object.fromEntries([...redirects].map(([from, to]) => [`/event/${from}`, `/event/${to}`]));
+  for (const { slug } of orphans) retiredLeafPaths.add(`/event/${slug}`);
+} catch {
+  // No ledger yet (or unreadable) — the build just ships no redirects.
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://southbaytoday.org',
   trailingSlash: 'never',
   output: 'static',
   adapter: vercel(),
+  redirects: retiredRedirects,
   integrations: [react(), sitemap({
     // Newsletter issues live in Blob and are listed at request time by their
     // own sitemap. Keep that sitemap out of the page URL set while including
@@ -47,7 +71,8 @@ export default defineConfig({
     filter: (page) => !page.includes('/logo-preview')
       && !page.includes('/admin')
       && !page.endsWith('/sitemap-newsletters.xml')
-      && !isPastDatedUrl(page),
+      && !isPastDatedUrl(page)
+      && !retiredLeafPaths.has(new URL(page).pathname),
     serialize(item) {
       const govMatch = item.url.match(/\/gov\/([a-z-]+)\/?$/);
       const cityLastmod = govMatch ? govLastmodByCity[govMatch[1]] : undefined;

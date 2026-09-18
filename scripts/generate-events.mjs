@@ -58,6 +58,7 @@
 
 import { readFileSync, existsSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { advanceLedger } from "./lib/event-slug-ledger-io.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-suffix.mjs";
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
@@ -9658,6 +9659,22 @@ async function main() {
     console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
   } catch (err) {
     console.warn(`⚠️  events-archive maintenance failed (non-fatal): ${err.message}`);
+  }
+
+  // Retired-slug ledger: any /event/<slug> the previous file published for a
+  // future date that this run no longer does (deduped away, re-titled, dropped
+  // by a windowed scraper, pulled by the organizer) is recorded so the build
+  // can 301 it to its successor or keep it resolving as a "no longer listed"
+  // leaf. The archive above only covers events that age out on schedule; this
+  // covers the ones that leave early. See src/lib/south-bay/eventSlugLedger.mjs.
+  try {
+    const { added, removed, ledger } = advanceLedger({
+      previousEvents: prevRun?.events ?? [],
+      currentEvents: output.events,
+    });
+    console.log(`🔗 Retired slugs: +${added} retired, -${removed} back or expired, ${ledger.count} held`);
+  } catch (err) {
+    console.warn(`⚠️  retired-slug ledger failed (non-fatal): ${err.message}`);
   }
 
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
