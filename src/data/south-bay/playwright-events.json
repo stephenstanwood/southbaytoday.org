@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-17T15:08:24.430Z",
+    "generatedAt": "2026-09-18T02:17:11.995Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
     "eventCount": 588,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (128)",
-      "Los Gatos Library (149)",
+      "Mountain View Public Library (126)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 131,
+        "count": 129,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 149,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -348,49 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "bd1a471e41a9",
-      "title": "The Comeback Conversation: Shifting from Surviving to Thriving with Yasmine Cheyenne",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Click this link to attend the virtual event . Join us for an empowering, eye-opening virtual conversation with renowned wellness expert Yasmine Cheyenne as we discuss her transformative new book, The Comeback Era: From Limiting Beliefs to Living Without Limits . Through reconnecting with Little Youthe person you were before the world told you who to beyoull stop performing for everyone else and start living for yourself. This isnt about burning your life to the ground; its about remembering who you were before you learned to dim your light to satisfy the expectations of others. In the book, youll meet five people who also answered the call: The executive who realized her corner office was a cage. The mother who discovered having it all together meant losing herself completely. The achiever who checked every box except the one that mattered. Their storiesand Yasmines Seven Cs of Purpose frameworkwill show you how to: Stop watching your life go by and start living it Transform past mistakes into pocket wisdomnot baggage Convert someday dreams into todays reality Turn midlife confusion into crystal clarity Consider this your official permission slip to stop pretending everything is fine and start building a life you genuinely love. Register now to learn how to turn restless energy into rocket fuel for authentic change. Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author : Yasmine Cheyenne is a TODAY Show wellness expert, self-healing educator, and author of three books with HarperOne who helps people reconnect with who they were before the world had a say. Through her transformative workshops and teachings, shes guided hundreds of thousands in building lives that feel as good as they look. Shes been featured on the TODAY Show, InStyle, Forbes, and more. An Air Force Veteran and native New Yorker, she now lives in Washington, DC with her family. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17187290",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "baf0fe6ca08a",
-      "title": "Sci-Fi Bingo",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "3:30 PM",
-      "endTime": "4:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Blast off for an out-of-this-world game of Sci-Fi Bingo! Enjoy space-themed bingo, fun facts about the universe, and chances to win prizes as you explore galaxies far, far away. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Tweens",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17329284",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "22a65f59e0b7",
       "title": "Community Preservation Lab Scanning Service",
@@ -1856,7 +1813,7 @@
       "registration": "required",
       "category": "community",
       "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating reversible storage totes using upcycled fabric. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up . This event is generously sponsored by the Friends of the Mountain View Library. Fabrics and notions for this event are provided by FabMo .",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating reversible storage totes using upcycled fabric. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up . This event is generously sponsored by the Friends of the Mountain View Library. Fabrics and notions for this event are provided by the Bay Area creative reuse non-profit FabMo .",
       "sourceAudiences": [
         "Adults"
       ],
@@ -3106,27 +3063,6 @@
       "kidFriendly": false
     },
     {
-      "id": "cc5a2bf46889",
-      "title": "Puzzle Swap!",
-      "date": "2026-09-17",
-      "displayDate": "Thu, Sep 17",
-      "time": "5:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Have lots of already completed puzzles at home? Would you like to get some other puzzles, for FREE? Come on down to the library and bring your puzzles. You'll be able to swap yours for someone else's jigsaw treasures.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16877015",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "e20d24348ab4",
       "title": "Girls Who Code",
       "date": "2026-09-19",
@@ -3910,26 +3846,6 @@
       "kidFriendly": true
     },
     {
-      "id": "035c498e715e",
-      "title": "Cafecito Book Club",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "10:00 AM",
-      "endTime": "11:00 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "This bookclub reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en espaol y se rene el segundo jueves de cada mes de 10 a 11 a. m. en la sala de conferencias de la biblioteca (primer piso).",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16035613",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "0dff6d490696",
       "title": "Park-It Market",
       "date": "2026-10-08",
@@ -4173,6 +4089,26 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/15240737",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "2743563357b5",
+      "title": "Cafecito Book Club",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
+      "time": "10:00 AM",
+      "endTime": "11:00 AM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "This bookclub reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en espaol y se rene el segundo jueves de cada mes de 10 a 11 a. m. en la sala de conferencias de la biblioteca (primer piso).",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16035613",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -4628,6 +4564,26 @@
       "kidFriendly": true
     },
     {
+      "id": "e227835a1904",
+      "title": "Halloween Storytime & Trick-or-Treat Parade (Ages 0-5)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "11:00 AM",
+      "endTime": "11:45 AM",
+      "venue": "Front Lawn",
+      "address": "",
+      "city": "los-gatos",
+      "category": "family",
+      "cost": "free",
+      "description": "Join us for a not-so-spooky Halloween celebration at the Library! Costumes are not required but encouraged at this Halloween-themed Storytime, which will take place outdoors on Civic Center Lawn. The fun continues afterwards in our Trick-or-Treat Parade, where we will circle around the Civic Center fountain. Library staff, Town staff, our friends from the New Museum of Los Gatos, LGS Recreation and the Friends Bookstore will have some goodies to pass out. Bring a bag or bucket for collecting goodies as you practice saying trick or treat (in words or in smiles!). See you there at the cutest event of the year!",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17670092",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "00f0a1cc0d09",
       "title": "Fratello Marionettes: Spooktacular (All Ages)",
       "date": "2026-10-29",
@@ -4750,6 +4706,28 @@
       "kidFriendly": true
     },
     {
+      "id": "6308c889e902",
+      "title": "Online Author Talk : Asha Frost",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "In a fast-paced world that often leaves us feeling overwhelmed and disconnected, true healing does not come from looking outwardit begins within. Join us for a transformative virtual conversation with Indigenous Medicine Woman Asha Frost as she explores her groundbreaking book, You Are the Medicine: 13 Moons of Indigenous Wisdom, Ancestral Connection, and Animal Spirit Guidance. The Medicine you have been searching for lives within you. Follow the path of the 13 Ojibwe Moons with Animal Spirits and Ancestors as your guides as you unlock your connection to your own unique, inherent healing power. Through storytelling, ceremonies, and Shamanic journeys, learn to apply ancient wisdom to your life in ways that are respectful and conscious of the stolen lands, lives, and traditions of Indigenous peoples. Discover how to : - Ground and root into your own lineage and meet your Ancestral guides. - Practice self-care and rest on your journey. - Return to Ancestral ways of cleansing and purifying. - Trust and surrender so you can manifest and thrive. - Release self-doubt, fear, disconnection, and insecurity. Register now and take the first step toward recognizing and reclaiming your innate wisdom. About the Author: Asha Frost (she/her) is an Indigenous Medicine Woman and a member of the Chippewas of Nawash First Nation. She is from the Crane Clan, the totem of leadership, and believes in holding space from vision and heart. As an energy healer, homeopath, and mentor, Asha has guided thousands of people through profound and lasting transformation. Impacted by generational trauma and colonization, Asha has been on a lifelong journey of reclamation. A lupus diagnosis sent her on a path of studying and practicing a multitude of energy Medicine modalities with many guides. She has blended this life experience with her innate gifts and the wisdom of her Ancestors. She loves sharing her Medicine in powerful ways through Ceremonies, teachings, and speaking events. Through this work, she loves seeing people reclaim their roots, find their healing wisdom, and rise into their power. Asha lives on Anishinaabe, Huron-Wendat, and Haudenosaunee Territory, with her husband and two beautiful children, with whom she co-creates a better world for the seven generations to come.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17670111",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "d6a014cad8b6",
       "title": "Drop-In Tech Help",
       "date": "2026-11-03",
@@ -4868,6 +4846,29 @@
         "Teens"
       ],
       "url": "https://losgatosca.libcal.com/event/17261939",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "e2cbc4fd1877",
+      "title": "Online Author Talk : E. Lockhart",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Register here and submit your questions for the author before the event begins. Join us for an exciting author talk with #1 New York Times bestselling author E. Lockhart as we reflect on her impressive body of work, including the literary sensation We Were Liars , and even gain an exclusive sneak peek into her shimmering new thriller, The Pools . Once, in a small New England town known for its hot springs, something terrible happened. Something that should have been a warning to stay away from the pools, if the stories were to be believed. But no one is afraid of the water anymore, even if they should be. When new girl Lexie meets golden boy Chester, their chemistry is undeniable. Shes running from a glittering life she wont speak about. Hes hiding secrets of his own. Their connection feels bigger than both of them, despite their damage. One frigid winter morning in that small New England town, five people go for a swim in the pools. Five people, including Chester. What happens there sends shock waves through the town, changing life as Lexie knows it forever. Register now to step into the gripping, suspenseful worlds of E. Lockhart and ask questions live! About the Author: Lockhart is the #1 New York Times bestselling author of the LIARS novels: We Were Liars , Family of Liars , and We Fell Apart . We Were Liars is also an original series on Prime Video. Her other books include Again Again , Genuine Fraud , and The Disreputable History of Frankie Landau-Banks . She has been a finalist for the Los Angeles Times Book Prize and the National Book Award and an honoree for the Printz Award. She lives in Brooklyn, New York.",
+      "sourceAudiences": [
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17670119",
       "source": "Los Gatos Library",
       "kidFriendly": true
     },
@@ -11144,14 +11145,14 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "",
+      "description": "Concert Tee Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-panthers-4",
       "source": "SAP Center",
       "kidFriendly": false
     },
     {
-      "id": "a855caf8e419",
-      "title": "Sharks vs Kings",
+      "id": "67aed8788ec8",
+      "title": "Opening Weekend",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
       "time": "7:00 pm",
@@ -11159,9 +11160,9 @@
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "sports",
+      "category": "community",
       "cost": "paid",
-      "description": "",
+      "description": "Samisa Poster Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-12",
       "source": "SAP Center",
       "kidFriendly": false
@@ -11195,7 +11196,7 @@
       "city": "san-jose",
       "category": "sports",
       "cost": "paid",
-      "description": "",
+      "description": "Sharks x PWHL San Jose Tee Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-13",
       "source": "SAP Center",
       "kidFriendly": false
