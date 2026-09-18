@@ -173,7 +173,8 @@ Write ONE sentence (20-30 words) summarizing what's most interesting or notewort
 
 Important rules:
 - Only reference facts that are explicitly present in the data below. Never invent or infer specifics like company names, dollar amounts, project types, ridership counts, square footage, or unit counts that aren't literally written in the data. If a number or proper noun isn't in the data, leave it out.
-- Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another.
+- Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another. When two events share a clause, give each its own day ("Coffee with the Mayor Friday and a town hall Saturday") — a single trailing day word ("Coffee with the Mayor and a town hall Saturday") wrongly puts both on that day.
+- Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
 - No group-count nouns like "trifecta," "trio," "duo," or "quartet" — they imply specific counts and routinely don't match the actual data. Just say "three events" or list the items.
 - No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.

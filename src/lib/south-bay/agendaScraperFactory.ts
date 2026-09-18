@@ -71,7 +71,9 @@ export const AGENDA_CITIES: AgendaCityConfig[] = [
     agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",
     baseUrl: "https://sanjose.legistar.com",
     body: "City Council",
-    schedule: "1st and 3rd Tuesday",
+    // San José and Sunnyvale meet most Tuesdays (Legistar shows 1st–5th), not a
+    // fixed 1st/3rd or 2nd/4th pattern — verified against 2026 calendars.
+    schedule: "Tuesdays",
     legistarClientId: "sanjose",
   },
   {
@@ -91,7 +93,7 @@ export const AGENDA_CITIES: AgendaCityConfig[] = [
     agendaUrl: "https://sunnyvaleca.legistar.com/Calendar.aspx",
     baseUrl: "https://sunnyvaleca.legistar.com",
     body: "City Council",
-    schedule: "2nd and 4th Tuesday",
+    schedule: "Tuesdays",
     legistarClientId: "sunnyvaleca",
   },
   {

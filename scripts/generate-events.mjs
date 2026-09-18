@@ -288,6 +288,13 @@ const INTERNAL_EVENT_PATTERNS = [
   /\b(accounting|finance|marketing|management)\s+awards?\s+banquet\b/i,
   // Events explicitly limited to a university's staff / faculty / employees
   /\bfor\s+(scu|sjsu|stanford)\s+(staff|faculty|employees)\b/i,
+  // HR open-enrollment events ("2026 Employee Benefits and Services Fair",
+  // SJSU, 2026-09-17) — for the university's own employees, not the public.
+  /\bemployee\s+benefits?\b/i,
+  // Registrar calendar entries ("Open Enrollment Add Period"), which the
+  // SCU feed files under /office-of-the-registrar/ rather than /registrar/.
+  /\bopen\s+enrollment\b/i,
+  /\badd\s+period\b/i,
   // Instructor-facing course-design training ("...home pages for your online
   // courses", "...easy for your students to navigate") — SJSU Localist keeps
   // re-emitting a 2021 "Creative Canvas Home Pages" workshop with current dates
@@ -865,6 +872,13 @@ const PROPER_NOUN_FIXES = {
   // four "Fullbright Program" dates shipped, one into the San Jose briefing,
   // on 2026-08-28.
   Fullbright: "Fulbright",
+  // SJSU's Localist listing is literally "Rasberry Pi Setup workshop" (its own
+  // body copy spells Raspberry correctly); shipped into the San José briefing
+  // on 2026-09-17.
+  "Rasberry Pi": "Raspberry Pi",
+  // A Meetup plein-air group titles its Saratoga outing "Villa Montavlo"
+  // (venue field on the same listing: Villa Montalvo). Same day.
+  Montavlo: "Montalvo",
 };
 
 function fixProperNouns(text) {
@@ -1516,6 +1530,8 @@ const DESC_TYPO_FIXES = [
   [/\boccured\b/gi, "occurred"],
   [/\brecieve\b/gi, "receive"],
   [/\bsepearate\b/gi, "separate"],
+  [/\bacitivites\b/gi, "activities"],
+  [/\bacitivity\b/gi, "activity"],
   // Shakespeare's play is "Antony and Cleopatra". The Cupertino Parks & Rec
   // listing for SF Shakes' Free Shakespeare in the Park spells it "Anthony",
   // which then propagated into the AI blurb and the weekend picks.
@@ -2972,7 +2988,7 @@ async function fetchStanfordEvents() {
 // events. `osher` covers SCU's Osher Lifelong Learning Institute, a
 // paid-membership program for adults 50+ whose listings ("Tech SIG",
 // "Volunteer Luncheon Reception") are members-only.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
 // `scuaa` = SCU Accounting Association (student club); `bva café` /
 // `bronco ventures accelerator` = SCU's internal startup accelerator program
 // (cohort-only events). Both leaked through cycle 146's broader SCU filter

@@ -467,6 +467,17 @@ async function gatherPermitItems() {
     return [];
   }
 
+  // San José's open-data feed uses a house number of 0 for lots that have no
+  // address assigned yet. On 2026-09-15 that shipped verbatim as "at 0 Seely
+  // Avenue" — a street number nobody can look up. Hand the model the street
+  // with an explicit note instead of the placeholder.
+  const permitAddressForPrompt = (address) => {
+    const raw = (address || "").trim();
+    if (!raw) return "unknown address";
+    const m = raw.match(/^0\s+(.+)$/);
+    return m ? `${m[1]} (no street number assigned yet)` : raw;
+  };
+
   // Batch all notable permits into one Claude call per city
   const items = [];
   for (const { config, permits } of allNotable) {
@@ -478,7 +489,7 @@ async function gatherPermitItems() {
       // guessed at the use from the unit count ("No unit count is listed,
       // suggesting a non-residential build") — a guess the source could have
       // answered outright. Pass it through.
-      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${p.address || "unknown address"} ($${(p.valuation || 0).toLocaleString()}, ${p.units || 0} units, issued ${p.issueDate})`
+      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} ($${(p.valuation || 0).toLocaleString()}, ${p.units || 0} units, issued ${p.issueDate})`
     ).join("\n");
 
     // Counting is the one thing the model reliably gets wrong, so do it here
@@ -507,6 +518,8 @@ Permits:
 ${permitText}${countsText}
 
 IMPORTANT — a permit being issued means construction is *cleared to begin*, NOT that it has started. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches" — those imply a milestone the data does not support. Use language like "permitted", "receives building permit", "cleared to build", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
+
+ADDRESSES: an address given as "<street> (no street number assigned yet)" is a new lot without a house number. Write it as "on <street>" — never print a leading "0" as if it were a street number.
 
 USE TYPE OVER INFERENCE: when a permit line carries "[use type: …]", say what the building is for using that use type. Never infer the use from the unit count — "0 units" is what the field says for every non-residential permit, so do not write "no unit count is listed" or reason that a missing unit count "suggests" anything. If there is no use type, describe only what the description states.
 
