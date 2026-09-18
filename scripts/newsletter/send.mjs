@@ -5,8 +5,9 @@
 // Default (through scheduled-send.mjs): creates a Resend Broadcast for the
 // configured audience and sends it. Direct real-broadcast invocation is blocked
 // because it would bypass the checkout preflight.
-// --test <email>: skips broadcasts, sends a one-shot to that address (for QA).
+// --test <email>: skips broadcasts, sends a one-shot to that address.
 // --dry-run: builds the HTML but doesn't call Resend.
+// --no-qa: skip the pre-send first-party check (also SBT_NEWSLETTER_PRE_SEND_QA=0).
 //
 // Usage:
 //   node scripts/newsletter/send.mjs --test stephen@stanwood.dev
@@ -21,6 +22,7 @@ import {
   loadNewsletterDataDefects, formatDataDefectEscalation,
 } from "./lib.mjs";
 import { generateNewsletterHero } from "./generate-hero.mjs";
+import { runPreSendQa } from "./pre-send-qa.mjs";
 import { assertVerifiedCheckoutToken } from "./scheduled-preflight.mjs";
 
 const args = process.argv.slice(2);
@@ -34,6 +36,7 @@ const date = flag("date") || todayPT();
 const testTo = flag("test");
 const dryRun = bool("dry-run");
 const editorial = !bool("no-editorial");
+const skipQa = bool("no-qa");
 
 async function main() {
   if (!testTo && !dryRun) {
@@ -71,7 +74,22 @@ async function main() {
     }
   }
 
-  const data = await assembleNewsletterData(date, { editorial });
+  let data = await assembleNewsletterData(date, { editorial });
+  await finalizeNewsletterImages(data);
+
+  // First-party accuracy used to wait for the inbox copy. Run it here so a
+  // cancelled listing, closed venue, or contradicted lede can still be cut
+  // before Resend. Fail-open: a QA miss never blocks the send.
+  const qaResult = await runPreSendQa(data, {
+    enabled: !skipQa,
+    persistDefects: !skipQa && !dryRun,
+    log: console.warn,
+  });
+  data = qaResult.data;
+  if (data.qaMeta?.status && data.qaMeta.status !== "disabled") {
+    const n = data.qaMeta.findings?.length || 0;
+    console.log(`pre-send QA: ${data.qaMeta.status}${data.qaMeta.via ? ` via ${data.qaMeta.via}` : ""}${n ? `, ${n} finding(s)` : ""}`);
+  }
   await finalizeNewsletterImages(data);
   const { subject, html } = renderEmail(data);
 

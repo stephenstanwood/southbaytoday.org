@@ -2502,6 +2502,7 @@ export async function recordNewsletterSend({ data, subject, broadcastId = null, 
     broadcastId,
     archiveUrl,
     editorialMeta: data.editorialMeta,
+    qaMeta: data.qaMeta || null,
     selections: newsletterSelectionSnapshot(data),
   }) + "\n");
 
@@ -2794,6 +2795,22 @@ export function mergeDataDefects(existing, incoming, date) {
 export function loadNewsletterDataDefects() {
   const memory = loadNewsletterEditorialMemory();
   return Array.isArray(memory?.dataDefects) ? memory.dataDefects : [];
+}
+
+/**
+ * Persist pre-send QA findings into the same data-defect ledger the editorial
+ * reflection uses, so the 2pm digest still sees source problems the morning
+ * job cut from today's letter. Does not touch guidance or reflections.
+ */
+export function recordNewsletterQaDefects(incoming, date) {
+  const current = loadNewsletterEditorialMemory() || { guidance: [], reflections: [], dataDefects: [] };
+  const dataDefects = mergeDataDefects(current.dataDefects, incoming, date);
+  writeFileAtomic(NEWSLETTER_MEMORY_FILE, `${JSON.stringify({
+    ...current,
+    _meta: { ...(current._meta || {}), updatedAt: new Date().toISOString(), lastQaDate: date },
+    dataDefects,
+  }, null, 2)}\n`);
+  return dataDefects;
 }
 
 /**

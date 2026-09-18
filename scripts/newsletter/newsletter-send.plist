@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  Daily newsletter send — job starts 3:50 AM PT so the email lands ~4:00.
-  (The Fable editorial pass takes ~7-8 minutes; a timeout degrades to the
-  deterministic build, never a missed send.)
+  Daily newsletter send — job starts 3:40 AM PT so the email still lands ~4:00
+  after the Fable editorial pass (~7-8 min) plus pre-send first-party QA.
+  A timeout degrades to the assembled build, never a missed send.
 
   scheduled-send.mjs holds the shared Mini repo lock, fetches origin/main,
   safely fast-forwards a clean behind checkout, and fails closed on dirty,
@@ -35,7 +35,7 @@
         <key>Hour</key>
         <integer>3</integer>
         <key>Minute</key>
-        <integer>50</integer>
+        <integer>40</integer>
     </dict>
 
     <key>StandardOutPath</key>

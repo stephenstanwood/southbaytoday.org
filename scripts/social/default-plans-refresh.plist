@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
   Refresh homepage/newsletter plans after the nightly GitHub event feed and
-  before the 3:50 AM newsletter build. The wrapper holds the shared repo lock,
+  before the 3:40 AM newsletter build. The wrapper holds the shared repo lock,
   merges canonical source/data safely, and keeps the generated plan local.
 -->
 <plist version="1.0">
