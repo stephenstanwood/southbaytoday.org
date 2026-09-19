@@ -237,3 +237,16 @@ test("reunites SJPL's VietSteps dance group after the splitter", () => {
     "Mooncakes will also be served during the event. Stay for VietSteps! Happy Moon Festival!",
   );
 });
+
+test("strips LibCal newsletter query debris and repairs its fused book-club copy", () => {
+  const raw = "Join Librarian Rachael for a lively discussion ofanother exciting book. "
+    + "Drop in to the Conference Room at 5 PM to join the discussion in person, or join in on Zoom here: "
+    + "Join from PC, Mac, Linux, iOS or Android: https://losgatosca-gov.zoom.us/j/92703658806 "
+    + "To sign up for the Tuesday Evening Book Club newsletter, click here: "
+    + "http://libraryaware.com/36/Subscribers/Subscribe?showonlynewsletterlists=true";
+
+  assert.equal(
+    polishDescription(raw),
+    "Join Librarian Rachael for a lively discussion of another exciting book.",
+  );
+});

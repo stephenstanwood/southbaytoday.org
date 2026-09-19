@@ -2,6 +2,49 @@
 
 ---
 
+## 2026-09-19 — Cycle 228: The Book Club Copy That Came Back Overnight
+
+### Context
+Saturday, September 19, 2026. Roadmap still closed (6/6). Typecheck clean
+(0 errors), all tests passing, and the production build cleared both locked
+prebuild gates. The tech URL audit checked 182 links: 173 OK, 0 moved, 1
+timeout (Tessera Labs), and 8 bot-walls. Three direct retries confirmed the
+Tessera apex host was hanging after its healthy www redirect; no rendered card
+currently uses that older May round, so the data was left alone. Crunchbase's
+new Sep 12–18 top ten contained no Santa Clara County company.
+
+### What Was Built
+
+**Two future Los Gatos book-club listings read like event copy again.** The
+October 20 and November 17 Tuesday PM Bookclub descriptions had regenerated as
+"discussion ofanother exciting book. Showonlynewsletterlists=true" after the
+Sep 17 copy-edit removed the same debris by hand. The fused word is fixed and
+the LibraryAware form parameter is gone from both live records.
+
+**The next refresh cannot put either defect back.** `polishDescription()` now
+repairs LibCal's `ofanother` typo and removes the newsletter-only query token
+before sentence splitting. A full-source regression test uses the actual Los
+Gatos description — physical drop-in, Zoom link, newsletter CTA and all — and
+proves the public result is only the useful opening sentence.
+
+### Why This Was the Strongest Move
+The fresh funding sweep was a valid no-op, while this was current reader-facing
+copy that had already survived one manual repair and returned on the next data
+refresh. Fixing the ingest boundary turns a recurring cleanup into a permanent
+two-listing correction without changing Home, Events structure, or Food.
+
+### Next 3 Strongest Ideas
+1. **AlleyWatch's Sep 21 weekly funding list** — compare it against Sep 14–18
+   for the late rounds the daily feeds keep missing.
+2. **Monte Sereno inbound city mapping** — the audit still sees one raw
+   `monte-sereno` slug outside the 11-city UI map; verify whether generation
+   should fold future records into Los Gatos before changing the contract.
+3. **Tessera Labs URL** — recheck the apex host on the next tech audit; switch
+   the archived round to the durable a16z announcement only if the outage is
+   persistent rather than a one-cycle timeout.
+
+---
+
 ## 2026-09-18 — Cycle 227: A Tariff Brain on Page Mill Road, and $150M That Surfaced a Week Late
 
 ### Context

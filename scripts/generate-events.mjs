@@ -1526,6 +1526,10 @@ const POSSESSIVE_FIXES = [
 // Common scraper-introduced typos. Replacement preserves the original case of
 // the matched word (lowercase → lowercase, Capitalized → Capitalized).
 const DESC_TYPO_FIXES = [
+  // Los Gatos LibCal's Tuesday book-club copy has shipped this closed-up word
+  // across multiple future occurrences. Fix it at ingest so nightly refreshes
+  // do not restore the typo after a manual copy-edit.
+  [/\bofanother\b/gi, "of another"],
   [/\bpreformance(s?)\b/gi, "performance"],
   [/\battendence\b/gi, "attendance"],
   [/\boccured\b/gi, "occurred"],
@@ -1677,6 +1681,13 @@ function polishDescription(text) {
   // words don't fuse — otherwise just drop it. A later \s{2,} collapse tidies
   // any double space left behind ("LEGO® " → "LEGO  " → "LEGO ").
   t = t.replace(/([A-Za-z0-9])[®©™℠℗](?=[A-Za-z0-9])/g, "$1 ").replace(/[®©™℠℗]/g, "");
+
+  // LibCal can flatten a LibraryAware subscription URL into prose. The CTA
+  // sentence itself is removed below, but its query string is split at `?`
+  // first and survives as a reader-visible sentence: "Showonlynewsletterlists=true".
+  // This token is form plumbing, never event copy, so remove it before the
+  // sentence splitter gets a chance to detach it from the URL.
+  t = t.replace(/\bshowonlynewsletterlists\s*=\s*(?:true|false)\b/gi, " ");
 
   // Ticketmaster `info` fields sometimes open with asterisk-wrapped show
   // annotations: `*21+..... Doors/show start time 8:00pm*`. The block contains
