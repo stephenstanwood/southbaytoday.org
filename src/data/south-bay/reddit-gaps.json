@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-18T03:16:50.526Z",
+    "generatedAt": "2026-09-19T20:15:47.510Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 12
+    "sourceCount": 7
   },
   "summary": {
-    "threadsMined": 12,
-    "placesExtracted": 4,
-    "placesMatched": 3,
-    "placeGaps": 1,
+    "threadsMined": 7,
+    "placesExtracted": 7,
+    "placesMatched": 0,
+    "placeGaps": 7,
     "eventsExtracted": 4,
     "eventsMatched": 1,
     "eventGaps": 3,
@@ -16,115 +16,147 @@
   },
   "placeGaps": [
     {
-      "name": "Stephen's Meat",
+      "name": "CEFCU Stadium",
       "city": "San Jose",
-      "kind": "other",
-      "context": "discounted parking lot near SAP Center",
+      "kind": "venue",
+      "context": "SJSU football stadium hosting Fresno State game",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
-        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
-        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
-        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "The Dancing Cat Lounge",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "cat lounge hosting kitten adoption fair, 702 E Julian St",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "The Julian",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "apartment complex being considered for a move",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "The Esplanade",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "apartment complex being considered for a move",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "808 West",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "apartment complex being considered for a move",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "Ilara",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "apartment complex being considered for a move",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
+      ]
+    },
+    {
+      "name": "AMC",
+      "city": "Sunnyvale",
+      "kind": "venue",
+      "context": "downtown Sunnyvale movie theater for meetup",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wk71hl/12_mile_loops_for_jogging/",
+        "https://www.reddit.com/r/SanJose/comments/1wk58al/movie_meetup_to_watch_resident_evil_on_sunday/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Falloween",
-      "when": "September 27",
+      "name": "SJSU vs Fresno State (Valley Trophy)",
+      "when": "9/19, 8pm",
       "city": "San Jose",
-      "context": "free evening market with makers, art, and costumes at 866 Park Ave",
+      "context": "SJSU football rivalry game at CEFCU Stadium, aired on FS1",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
-        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
-        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
       ]
     },
     {
-      "name": "Free Movie Night: Zoolander",
-      "when": "tonight",
+      "name": "Kitten Adoption Fair at The Dancing Cat",
+      "when": "September 19th, 12pm-2pm",
       "city": "San Jose",
-      "context": "hosted by San Jose Geek Historians at Guildhouse",
+      "context": "kitten adoption event at Dancing Cat Lounge",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
-        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
-        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
-        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
       ]
     },
     {
-      "name": "Mexican Independence Day celebration at City Hall",
-      "when": "September 16",
-      "city": "San Jose",
-      "context": "216th anniversary celebration with photo gallery",
+      "name": "Movie Meetup: Resident Evil",
+      "when": "Sunday",
+      "city": "Sunnyvale",
+      "context": "group meetup to watch new Resident Evil movie",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wiiuwv/shrimp_fried_rice/",
-        "https://www.reddit.com/r/SanJose/comments/1wiid8t/culture_and_tradition_on_display_at_216th/"
+        "https://www.reddit.com/r/SanJose/comments/1wk71hl/12_mile_loops_for_jogging/",
+        "https://www.reddit.com/r/SanJose/comments/1wk58al/movie_meetup_to_watch_resident_evil_on_sunday/"
       ]
     }
   ],
-  "placeMatches": [
-    {
-      "name": "East San Jose Carnegie Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosts karaoke and dance event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
-        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
-        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
-      ],
-      "matchedName": "East San Jose Carnegie Library"
-    },
-    {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "parking tips for hockey season and events",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
-        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
-        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
-        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
-      ],
-      "matchedName": "SAP Center"
-    },
-    {
-      "name": "Guildhouse",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting free movie night screening of Zoolander",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wiljel/beginner_volleyball/",
-        "https://www.reddit.com/r/SanJose/comments/1wik9s4/womens_salon_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wjbp8q/psa_sap_center_parking/",
-        "https://www.reddit.com/r/SanJose/comments/1wj8btn/free_movie_night_at_guildhouse_tonight_zoolander/",
-        "https://www.reddit.com/r/SanJose/comments/1wj0l3z/some_please_teach_me_how_to_skate/"
-      ],
-      "matchedName": "Guildhouse"
-    }
-  ],
+  "placeMatches": [],
   "eventMatches": [
     {
-      "name": "Music and Movement for Adults",
-      "when": "Sunday, September 20, 3-4:30pm",
+      "name": "California Coastal Cleanup Day",
+      "when": "9/19",
       "city": "San Jose",
-      "context": "karaoke and dance event at East San Jose Carnegie Library",
+      "context": "annual coastal cleanup with multiple San Jose locations",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wjbtbk/falloween_927/",
-        "https://www.reddit.com/r/SanJose/comments/1wj9qyn/most_favorite_san_jose_neighborhood/",
-        "https://www.reddit.com/r/SanJose/comments/1wjd2wd/day_trips_or_things_to_do_this_weekend/",
-        "https://www.reddit.com/r/SanJose/comments/1wj4q9k/music_and_movement_for_adults_karaokedance_at/",
-        "https://www.reddit.com/r/SanJose/comments/1wiu5bk/what_are_the_best_downtown_apartment_complexes/"
+        "https://www.reddit.com/r/SanJose/comments/1wkg3fu/sjsu_hosts_rival_fresno_state_tomorrow_919_8pm_at/",
+        "https://www.reddit.com/r/SanJose/comments/1wk3152/come_meet_kittens_at_the_dancing_cat_lounge_in/",
+        "https://www.reddit.com/r/SanJose/comments/1wkqcx6/apartment_recs_downtown_vs_a_little_out/",
+        "https://www.reddit.com/r/SanJose/comments/1wk7lrz/california_coastal_commission/",
+        "https://www.reddit.com/r/SanJose/comments/1wk5vdx/six_adoptable_pups_are_waiting_to_meet_you_this/"
       ],
-      "matchedName": "Music and Movement for Adults"
+      "matchedName": "California Coastal Cleanup Day"
     }
   ]
 }

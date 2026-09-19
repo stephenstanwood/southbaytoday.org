@@ -1,9 +1,45 @@
 {
-  "generatedAt": "2026-09-18T03:13:19.105Z",
+  "generatedAt": "2026-09-19T20:12:03.532Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0884832",
+      "name": "American Cafe",
+      "address": "2401 Agnew Rd",
+      "cityId": "santa-clara",
+      "cityName": "SANTA CLARA",
+      "inspectionDate": "2026-09-17",
+      "sourceId": "SR0884832",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJS1P3IMfJj4ARyYfto6rO7tk/photos/Ab43m-uaRcEyDJuoEqdqRGr6bgnowbGejvgomibWiI-o1g7DzjQEnzJJzz3i9wFHNqKUVI5p7lI2sJFkDdIqaoLblVcgvr03x01iPSMmUFXXlt0y4BGKxT6uakvK-Qd9zeU3I6fd-O71vAkA2xz459A5-W6R5kB2zhNZnltpdmYtJRi5o0kpwf_sWJD5d2EOeV04mJgThgXzEGvs9jVZhzh_vyALSDJYgDUNxtF2N4s-pa7gLELnPB0500BD1Mvd--50uYJgURdyU1keDq3HcDWEPZbjiyvh7S1U0yeZC4yuZULiLPOR81WFIRLMWl_K6-T5qyhBVbQ_T1PAqTgqlw5pLqEGLRiD4DGhabxoEOms-AaKY0SnFS65-Fl4_LfCmK2OB3Ngi0pCtg556SM9hAURBqamRO1nFHz1QsZKp77bQlRGAeMR"
+    },
+    {
+      "id": "inspection-SR0883600",
+      "name": "Pure Water Ice Cream Shop",
+      "address": "1435 Foxworthy Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-09-16",
+      "sourceId": "SR0883600",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJbYeM6WwzjoARq67e_bSA3hY/photos/AVoNoXTAoq0CrlaciyR1UbquVVJKVTZmQoQRXe-Uk6V7li9s80tuQWgRk6mJFPRP31ff7cpupjOYYwR_wHyoZyBOGjdwemrft1uQcOi8CWJLNUhFzRGanC9KGtpOwJjTnRSIglUFdbzWB52s9xrSTIxm0p4r8OXvDrLx4-NFnVfNo1WpkkqtFTx896aCY9rL7wCWd9EO7JLLVUMDlJNnZyoWY6g1e1Pp2sibt8zwDVYKYoqGiaHQJZ4XotWG7cFpoe_3yNQEo60Ux9xk9bUr2NO5tq_-vx5ibXjp8S0eVzlASGRcP34GZdHG9dB9RBrEqTelho7kIW1lljTEWcCmbM1Fbk9f_X3ChpCM5ndGYyFpV62vz-aA2HV5bybxqZwgyLRB4O8ngBfRbw-1jT8fAnmJmk7G7aTydG-KonjZuDMmr5ASek7r0txttdgfyUwU5A"
+    },
+    {
+      "id": "inspection-SR0878199",
+      "name": "Jin Jin Gourmet",
+      "address": "927 E Arques Ave # 141",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "inspectionDate": "2026-09-16",
+      "sourceId": "SR0878199",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
+    },
     {
       "id": "inspection-SR0882113",
       "name": "Trader Joe's",
@@ -101,31 +137,43 @@
       "photoRef": "places/ChIJdX96niC1j4ARAPhEL95pgDc/photos/AVoNoXTvu2QMe1f8jD5Kg8p97iwnEsXoU7ON5ZjD5_wUWKdNl-fNZgdMLzt7uPRTQ7dPB63dWX4itqlHD7gy1q3KtnZBvH3D80tqTPl5OIGPMSNXGdXHwUGcaNBoQ5HNKKBwUjvUs2C1-C5B0GiP30eNDxDowgNoehVZ3i-CcN5vtSY3-cY1x6tL7Ilk9hsgWtk4HJhLiCWp3TCee0Q7w1LiR0izTq8W7ULu0X3VJN9XWIVCpffqfwVDdxyMPpFhwdd6iL1xVvxvW7BQcEdvx_RnJ4JSEUw1T30zDMwB-PkA_sg50KRF8MD9vBb5GdEIBK49qcxsJWX-UbQlZgfUwD0kmxIQrN_Eb6tkUlMth4VKFAkiiHPbqF6qNVkxuoebDsnyFir2PrNRO3dJMgbSvq6drPtOCKjkznt0J7SYq0YNzus7ruo"
     },
     {
-      "id": "inspection-SR0881863",
-      "name": "Togo's",
-      "address": "380 N Capitol Ave",
+      "id": "inspection-SR0884234",
+      "name": "Happy Lemon Coleman Adding An",
+      "address": "567 Coleman Ave, Suite 10",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
-      "inspectionDate": "2026-09-08",
-      "sourceId": "SR0881863",
+      "inspectionDate": "2026-09-09",
+      "sourceId": "SR0884234",
       "status": "inspection-complete",
       "blurb": null,
-      "photoRef": "places/ChIJCa9B7afNj4ARrPsj5VSSuxE/photos/AVoNoXSKecLxGbmoqVilZLzcGowaMKkPE1yFGy4OEcrHZ-hXgbcVYZJ8_eW6cQtt5-NDcft_AJhw_O-pLVBtT1xtvdUnzp3fZGKDRBzp81YN_MK39OG_1vTaxdje4pu1DpvsO5SMzj6xw-liOTZCDXcNUiLtt8u3WdcupFHhLlS3URQuAQPS8_K49dJtbuSrEg6hmrS1iTcdfWxE4Xkn3WRvTdXrlZ_uO_3T-XMZPFzSwsetY03T0OGPBsMKysPvIoh0FCqo-LaaAelDUD0eI3pmR4GpOA8a6ydNw0cumKPysu7cJfmGvKuLb8OhYrKIottXjeT19UUQDYxtLzePVRl5MEzFoBI9DIPZykA58OTn0ghdI_32cUGxEhGe9W4aRV5ly2ZAagxIAx_SiH7QcqHeLax6T2LklebntUGqRTKva2Mcog"
-    },
-    {
-      "id": "inspection-SR0881112",
-      "name": "Holy Sushi",
-      "address": "3441 Alma St., Unit 100",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "inspectionDate": "2026-09-03",
-      "sourceId": "SR0881112",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJcymZ93y7j4ARGg6qXQT9Adc/photos/AVoNoXRFdgMdjnp_wdZ5SwNSmaqNWKzQVtU_Pcp8RNIWl2pyeOM68CIRhiWO-OWCjmL3YX7-Nud9-WRemzR6X-gBpsfnIh2vlE8-8pLB3V1gZgE3LGp2ymnBq3MRDdaUDd750bbYktQmUxGwGhnApRqGQBtKPybcXKjjj-Hj_QjAVizjSAAUcvcLhQwEu4lyeEUmaivplsM67NWQZDwidgnTX4raZifNCmuR45C0uG2fT2k6GoVKUzG5JDlIJBJpi11ESTd6kZQ2yLfgE8QWz6IGLf342QvVkGbDaVJtJZA9zJui-H7APVu5VD-lkjQTh9rKJjgSytkATlkvZGOYmgmhz-P-Vfgz2zgsI9oJyyWkW-xfu3Y2YTwKJrLqo1Oq2KgTEwuEbaud8daKxVrNOwgRwMf92PgnzqxuwNYkIn7MT1Cd_w"
+      "photoRef": "places/ChIJOyOUlrHLj4ARB3_5PJWZozk/photos/Ab43m-ttVFZmiPmbIuHg8QuHXsxoFwCDZRPRR0wArww3wqdko_dqBDTVsjIzkZ0LfF6N5nyHhZFMIoci9rYwpJa_jQXc9i73Gioc84hpCk3MWIfUD8KBr2vOVSRfVC7bQ1yNoVpKaUfOLWoAKjMFTt0rCk65Srn6AR2eXfTF47ADE1t8KWZUONpX-gWsDkmpyLtAeAP9ECFwXNBFUi8lfsiysdcTtoEFNcx1jgjnhMXg7--GSY3zCyEw2mgVSm1cbRPPasjhzpRBVrCU4QMUsbhz0QY2lSZUkKPfciSIT5ydbkB3gg"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0883952",
+      "name": "Chama Nativa Brazilian Steakhouse",
+      "address": "852 Blossom Hill Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-09-17",
+      "status": "coming-soon",
+      "sourceId": "SR0883952",
+      "blurb": "Chama Nativa Brazilian Steakhouse — rodizio churrasco with tableside carving service — opening on Blossom Hill Rd in San Jose.",
+      "photoRef": "places/ChIJuaO0_zDjkYARczk6t5eB3GE/photos/AU_ZVEEzNvg1kr2OefX7uI3V-970gBT7UcxbE7XuJRU-rMsnao1Vol21eGLIkwmlfzoFbGMWfV9rtTVx378lyaYQtCGfzcN0t96ZMJTvKBzK7ymBseThyrrOSZLvNO8ukWOg-Dz6yEDbL6-CEGoeFkZXuhrH0HFbRnyuxMUh7DBhqtOATR1kc5ht4cOyTTgbrkHuoOxUPXM2fGk22bTaG9Q7QFy8FJsVI4yoI5hBnse43GMXjXX71XfHverKQvF24geqkSTxCyVX7MYCqPJ3_pzuHLqUt_VeM6nEURNn5HWT02Fyuw"
+    },
+    {
+      "id": "soon-SR0886183",
+      "name": "Pizza Bhavan",
+      "address": "956 W El Camino Real",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "date": "2026-09-17",
+      "status": "coming-soon",
+      "sourceId": "SR0886183",
+      "blurb": null,
+      "photoRef": "places/ChIJJUDd44q3j4AR6cNbw47chKc/photos/AVoNoXSv99vll1SgcBm3XznKuv0YmOaL5cHIIy6YPHJlre8ouQ6h9VKtshDkgk47CmRB2PRzFeFxAjKtgVu9jF8HRG8d2RHbMPvdp214NEy61pFORAB4tluyCZJfz4wgq8FSH7GuEsd7ML_yg-usbJTZlMXLQ4XeNBMCcFXtQ_2w9Yl3f6FKHk6QDI4kCgrEcBJoTosAqMuBxH_Kbbkfqyyy4fp_OdRIdpSRKgiiLScEzFzd9j4grPGsNwfl20_PNf0w1Sfqe5xLFxAQMMEtZGgp7M6Sf3TzsbYUDsFFfKBWVb3g2N7VeBKnSSE-n-7F9SkgRjH3xqJT1BhErfhdhtz5aZ4eRBe-b7xi9LkUEQSn1hIW9yFdAZoPU3TtzrELzi2lrLUkX62J2b8U9U-TbWCdHWCiYqRAlibUU5f7EicPI4SyMg"
+    },
     {
       "id": "soon-SR0886080",
       "name": "Yoshi Sushi",
@@ -211,18 +259,6 @@
       "photoRef": "places/ChIJcZEId27Nj4ARgjgcWEbJ9lQ/photos/AVoNoXQMfu1YGeVkR4qSyRr5px74HbsrKjgNJnOA46jIqVD3fkv28acpKxQo6MEgSlkPcquADLPypig-Vz9jmQ5Tbf1bJmYYEjCa4D_zVfgieQPjyinLJCV_bx0wTEbwz_SfkbB43hr4BeB5bpSxhGvC-SLIBp7gsQ-Qj4psqMw_YkqdKNlCB2xL58OqU6b9_e5n9tV2XPNYjDbEw8L9_nU3FxpIVukp1DLckf0bOMl9RjppsWYw97qqyWsP10C3s8KWmlMUVQEu_EbXCjAhO7WyRBnaF1BSvZwZ4gCV3ooOts6LquBk8uZfmokqITreQT00Cfd8Iz35KzH1sYdcbG11D8C02-nbdpkdgtVqjFj7PuxlF2tfc1bcYalugmPOeHE_29FTeAw6wNqhNp9Dn3vWZFqDiHpuLbgEbFrQ9mBzk4R6uI7H"
     },
     {
-      "id": "soon-SR0883364",
-      "name": "Spartan Brew",
-      "address": "414 E William St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-09-14",
-      "status": "coming-soon",
-      "sourceId": "SR0883364",
-      "blurb": null,
-      "photoRef": "places/ChIJmVAajcjMj4AR83DeEjwZt2w/photos/AVoNoXS8DNBs33PmePV2pP9-IN9mK-3GPL9JGh3epykXxYI-hKlP70F3fkrRIiReOPu_HAylj7pHgFzQ5CSS_Cuf6y9i58Xy22L1XLPvMelfNArJizUF2iz_iJ2EHWXuln-OOB-13oh9mXXGI7jm2fxIvoKIgjRFz2W4lL6pJuu5vkdhzSrk1pR0pNu8OFHmUMQNZ2lFgXIP64B0Wrtafr3a_4KQEDJOsHqFjiwYFeEvGkXmeWmBohkPqbAcnQjtWq1MkgZtMAO2-yDw_8uBsQ7CY5au7-5tWR-M4f7X0bdM2BXAjsLkpcoYu4VxrgxOHT6h08j971yTWsJAViZR2UmDv7owi-dF2eR0xFvxSGTTfaF0VYSLGdRw1y-lCsjeyTpEFiVK_NCK7bQAHBMhdAgarskRayF8czPlRDm2G6yoHpEofWz4B8oMhD_k-_Wnzp_r"
-    },
-    {
       "id": "soon-SR0885191",
       "name": "Nexus Bar & Grill",
       "address": "32 S 3rd St",
@@ -235,6 +271,18 @@
       "photoRef": "places/ChIJwRFeWjbNj4AR0HldWVjY4Cc/photos/AVoNoXTDh1BeV7lX8bEwapRscxtAGcanqUZhT5fYT-b0nY4xmKGWbtU9IWECpsTAO2gY8SONDDpgxsN7HrE_-a0p-S2wPyqmS6k5JtzKylxhXzzv0t0JCvOxkX7EF1wSt0Hkg0vmFuo-SPziIiErR_YzoqHW0Jmu1sM5ZxdJsgLccjWiAWqh_G5WkIlwqve8DIWeHeym9VNowoPCCPWq5sHG63IA0IO0-Bp1O-6jNIwElJviYVVrNFtN3wIdCJxQfN4ZfhcQ9G67JPCt3a5gKP3fq8N7c7mrKDFGVWbDj5rwtx4replYhD3hB7zlAW4GIVugP4BNtCIisZTT1mtq_-YUS8seioVt0natSDSnaSDKlfXjqldEbdaUG8eISAQt9hgWQWll4sK5XavQXiEXyBL8jhdZOcZX178HPOsHY7v1hrK0Kw"
     },
     {
+      "id": "soon-SR0883364",
+      "name": "Spartan Brew",
+      "address": "414 E William St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-09-14",
+      "status": "coming-soon",
+      "sourceId": "SR0883364",
+      "blurb": null,
+      "photoRef": "places/ChIJmVAajcjMj4AR83DeEjwZt2w/photos/AVoNoXS8DNBs33PmePV2pP9-IN9mK-3GPL9JGh3epykXxYI-hKlP70F3fkrRIiReOPu_HAylj7pHgFzQ5CSS_Cuf6y9i58Xy22L1XLPvMelfNArJizUF2iz_iJ2EHWXuln-OOB-13oh9mXXGI7jm2fxIvoKIgjRFz2W4lL6pJuu5vkdhzSrk1pR0pNu8OFHmUMQNZ2lFgXIP64B0Wrtafr3a_4KQEDJOsHqFjiwYFeEvGkXmeWmBohkPqbAcnQjtWq1MkgZtMAO2-yDw_8uBsQ7CY5au7-5tWR-M4f7X0bdM2BXAjsLkpcoYu4VxrgxOHT6h08j971yTWsJAViZR2UmDv7owi-dF2eR0xFvxSGTTfaF0VYSLGdRw1y-lCsjeyTpEFiVK_NCK7bQAHBMhdAgarskRayF8czPlRDm2G6yoHpEofWz4B8oMhD_k-_Wnzp_r"
+    },
+    {
       "id": "soon-SR0885308",
       "name": "Chubby Cattle",
       "address": "19349 Stevens Creek Blvd",
@@ -245,30 +293,6 @@
       "sourceId": "SR0885308",
       "blurb": null,
       "photoRef": "places/ChIJSwy9Bhfpj4ARTMslMaudU5A/photos/AVoNoXSuMgublHXcwX6TPlKRRoGUrgFRQLejIwwRrdpxgu80ngfZSHzBRh1tByBwhLCX5Z2r8W5OVDJS7Va8JiAZJiDChKB2jz02u5QPB3KYqxOccwVsMasJw8hmBhVsp_01nk8ydkfAUVWwAUFSVUKohZKIL4N1XxKcOHCO-FL2Z3SxtTAfuuAhfm-XUUSBt2ATzQbcH5QfeA-Impoxep8Q1samgY2zaNmG8CW-_hxxQlxkI2PZbJ7JqnOwZDINfV4Ptzv2tjVdd8J_LTtnD0H-VjPp3Nl2HZZ4VzPjhVcbbTx3iJsXxg3yj858Hw-EhnoBs8hDhNBv8mx9OIJbJrzvvg6OONX5xVL-pruwkB4QLzHzbSwprRi7HB7oiY6y_gJJh1sB8CoFeM2hh-kfNDtd85mJAnDl25lSPmJvd64TmQKkXXEUsoQWQijUyoDhCbeH"
-    },
-    {
-      "id": "soon-SR0885051",
-      "name": "Cane Corner",
-      "address": "979 Story Rd., Unit 7087",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-09-09",
-      "status": "coming-soon",
-      "sourceId": "SR0885051",
-      "blurb": null,
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0885051-450.webp"
-    },
-    {
-      "id": "soon-SR0885475",
-      "name": "Baobae Express",
-      "address": "2200 Eastridge Lp, Upper Level, Ste. 2020",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-09-09",
-      "status": "coming-soon",
-      "sourceId": "SR0885475",
-      "blurb": null,
-      "photoRef": "places/ChIJF9dwEKEyjoARFIhrcrSBIcU/photos/AVoNoXRwqWtwVarrN-mq2ruDey7uivilnQRyBh2FclKWbvvGmOVXz75IAYc5EUHqI5WHijEScbPyso7zUHVVLU40Oq-453jShQOlc9YyYkbgi4fGavAyVggWAzBMcAmwQslyDvF_WcP_vFEIN7yx9Fch0zx_WmyvYO2IpphDehxHpTp48SMC5WvZ8epWLgkUZ04pwhjsmgobSzozEvuPJO-CPI1AnWE_VZHK_ZZyiT--pSlt9MU7dkovxQgw4czzJ0jDMi-08RQIcOFb4dayAbO7-0exTNiDcDzE45vBEDYJYhJLQ95sgrEEJMAfeoENY7E69nSpMmxyxzcLpeSdJDhrh9VpFy9Dcx3GB6D4hXwXfEa2kZRbnCE_-UFMccThYU4_IqjLovPIlsYl10rVeg_-9nkPLRqaLrhzzSLpEAwW6jd72Q"
     }
   ]
 }

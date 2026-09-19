@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-18T03:08:43.295Z",
+      "generatedAt": "2026-09-19T20:06:29.018Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 10 – Sep 17",
+      "dateRange": "Sep 12 – Sep 19",
       "stats": {
-        "total": 427,
-        "notable": 16,
-        "newUnits": 6,
-        "totalValuation": 14541885
+        "total": 529,
+        "notable": 35,
+        "newUnits": 13,
+        "totalValuation": 52538285
       },
       "permits": [
         {
@@ -27,6 +27,66 @@
           "subtype": "Townhouse"
         },
         {
+          "id": "2025-121761-RS",
+          "address": "6538 Canterbury Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached ADU On the 2nd Floor of New SFR",
+          "valuation": 174689,
+          "units": 1,
+          "issueDate": "2026-09-16",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-097305-RS",
+          "address": "493 Lochridge Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 132090,
+          "units": 1,
+          "issueDate": "2026-09-16",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-124202-RS",
+          "address": "1267 Cristina Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Pdox New 2-Story 745 Sqft Detach ADU",
+          "valuation": 131060,
+          "units": 1,
+          "issueDate": "2026-09-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-079677-RS",
+          "address": "685 S 10th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2-Story Detached ADU With Garage",
+          "valuation": 115447,
+          "units": 1,
+          "issueDate": "2026-09-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-082279-RS",
+          "address": "687 S 10th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2-Story Detached ADU With Garage",
+          "valuation": 115447,
+          "units": 1,
+          "issueDate": "2026-09-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-103211-RS",
           "address": "1499 S King Rd #2",
           "category": "residential-new",
@@ -39,127 +99,67 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-137036-CI",
-          "address": "1143 Coleman Av #1",
+          "id": "2025-144312-RS",
+          "address": "1833 Andrews Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Modular Detached ADU",
+          "valuation": 71248,
+          "units": 1,
+          "issueDate": "2026-09-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-108399-RS",
+          "address": "1709 Orlando Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Casegarage Conversion to JADU",
+          "valuation": 48378,
+          "units": 1,
+          "issueDate": "2026-09-16",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-138040-CI",
+          "address": "3098 Olsen Dr",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Bytedance / Tiktok Floors 1 and 3 TI",
-          "valuation": 4000000,
+          "description": "Cisco 2nd Floor Office TI",
+          "valuation": 15000000,
           "units": 0,
-          "issueDate": "2026-09-15",
+          "issueDate": "2026-09-16",
           "subtype": "Office"
-        },
-        {
-          "id": "2026-137471-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Gap TI #2625",
-          "valuation": 1714917,
-          "units": 0,
-          "issueDate": "2026-09-14",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-135694-CI",
-          "address": "3655 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Samsung Racks Install",
-          "valuation": 1000000,
-          "units": 0,
-          "issueDate": "2026-09-15",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-135923-CI",
-          "address": "2201 Qume Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Ise Labs Inc (Be 100%) Rooftop Pv Install",
-          "valuation": 930575,
-          "units": 0,
-          "issueDate": "2026-09-11",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-137708-CI",
-          "address": "5397 Camden Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Self Service Laundry Tenant Improvement",
-          "valuation": 380000,
-          "units": 0,
-          "issueDate": "2026-09-15",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-134473-CI",
-          "address": "141 Innovation Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Altera Bldg 4 Floor 1 TI",
-          "valuation": 360000,
-          "units": 0,
-          "issueDate": "2026-09-15",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-136486-CI",
-          "address": "377 Santana Row",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Landlord Work TI Suite 1030/1032",
-          "valuation": 350000,
-          "units": 0,
-          "issueDate": "2026-09-14",
-          "subtype": "Retail"
-        },
-        {
-          "id": "2026-137025-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Royce TI #2666",
-          "valuation": 275000,
-          "units": 0,
-          "issueDate": "2026-09-14",
-          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-18T03:08:45.843Z",
+      "generatedAt": "2026-09-19T20:06:31.460Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 10 – Sep 17",
+      "dateRange": "Sep 12 – Sep 19",
       "stats": {
-        "total": 115,
-        "notable": 5,
+        "total": 122,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02643",
-          "address": "1525 Waverley St",
+          "id": "26BLD-02606",
+          "address": "319 Everett Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-17",
+          "issueDate": "2026-09-15",
           "subtype": "Permit Issued"
         },
         {
@@ -175,18 +175,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02606",
-          "address": "319 Everett Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-15",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-02632",
           "address": "834 Ames Av",
           "category": "residential-remodel",
@@ -199,6 +187,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-02643",
+          "address": "1525 Waverley St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26PLN-00258",
           "address": "855 California Av",
           "category": "entitlement",
@@ -208,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-14",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00264",
+          "address": "116 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Sign application to install one wall sign that is 24 inches wide by 102 inches tall and one projecting sign that is 12 inches wide by 36 inches tall. Both signs will be constructed from stainless steel with acrylic letters with the wall sign lettering painted green and projecting sign lettering painted black. CEQA Status: Not a Project. Zone District: Downtown Commercial (CD-C(GF)(P)(TOD)). For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
           "subtype": "Over the Counter Approved"
         }
       ]
