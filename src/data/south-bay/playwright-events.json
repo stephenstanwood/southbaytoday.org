@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-18T15:08:57.987Z",
+    "generatedAt": "2026-09-19T02:17:16.296Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 585,
+    "eventCount": 584,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (125)",
-      "Los Gatos Library (152)",
+      "Mountain View Public Library (123)",
+      "Los Gatos Library (153)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (10)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
-      "Peninsula Open Space Trust (4)",
-      "San Jose Museum of Art (8)"
+      "San Jose Museum of Art (8)",
+      "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 128,
+        "count": 126,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 152,
+        "count": 153,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -338,59 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 4,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 4 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "3baed51a527d",
-      "title": "Baby Storytime: Rerun",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170827",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "ed0b5d0c2b46",
-      "title": "Space Buddies: Alien Maker Lab",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
-      "time": "4:30 PM",
-      "endTime": "5:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Ready to make a friend from another planet? Get creative and design your very own alien using air-dry clay! Learn some simple clay-sculpting techniques and give your E.T. creation whatever wild features your imagination can dream up. Snacks provided. A Sci-Fi September Event",
-      "sourceAudiences": [
-        "Teens",
-        "Tweens"
-      ],
-      "url": "https://mountainview.libcal.com/event/17350829",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "0b27c19e08be",
       "title": "Drop-in Bike Clinic",
@@ -3828,6 +3787,28 @@
       "kidFriendly": true
     },
     {
+      "id": "16c9fbdac321",
+      "title": "Library Closed",
+      "date": "2026-10-08",
+      "displayDate": "Thu, Oct 8",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17674956",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "0dff6d490696",
       "title": "Park-It Market",
       "date": "2026-10-08",
@@ -7082,6 +7063,23 @@
       "kidFriendly": false
     },
     {
+      "id": "e9beb2c9b1dd",
+      "title": "Greg Ito: To Give and Take",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
+      "time": null,
+      "endTime": null,
+      "venue": "ICA San José",
+      "address": "560 S First St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.icasanjose.org/current-exhibitions/gregito-togiveandtake/",
+      "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
       "id": "9d0e2d8ae93c",
       "title": "Oscar Lopez: Without Them is Not Us",
       "date": "2024-09-14",
@@ -7095,23 +7093,6 @@
       "cost": "free",
       "description": "",
       "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
-      "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "e9beb2c9b1dd",
-      "title": "Greg Ito: To Give and Take",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
-      "time": null,
-      "endTime": null,
-      "venue": "ICA San José",
-      "address": "560 S First St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.icasanjose.org/upcoming-exhibitions/gregito-togiveandtake/",
       "source": "ICA San José",
       "kidFriendly": false
     },
@@ -9250,7 +9231,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9267,7 +9248,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9284,7 +9265,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9301,7 +9282,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9318,7 +9299,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -11279,74 +11260,6 @@
       "kidFriendly": true
     },
     {
-      "id": "22942963d2d2",
-      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "6 PM",
-      "endTime": "9 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "c5bfc22b7015",
       "title": "CityDance San José: Afrobeats",
       "date": "2026-09-24",
@@ -11480,6 +11393,74 @@
       "description": "",
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
+      "kidFriendly": false
+    },
+    {
+      "id": "22942963d2d2",
+      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
+      "time": "6 PM",
+      "endTime": "9 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
   ]
