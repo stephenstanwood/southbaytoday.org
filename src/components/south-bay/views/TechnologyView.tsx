@@ -877,6 +877,7 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
           <span>{dateLabel}</span>
         </div>
         <p
+          className="tech-funded-summary"
           style={{
             margin: 0,
             fontSize: 12,
@@ -1756,6 +1757,12 @@ function TechnologyViewStyles() {
         .tech-hiring-grid,
         .tech-spotlight-grid--compact {
           grid-template-columns: 1fr;
+        }
+        .tech-funded-summary {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 7;
+          overflow: hidden;
         }
       }
     `}</style>
