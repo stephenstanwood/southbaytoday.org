@@ -21,6 +21,16 @@ test("date-only BiblioCommons occurrences stay all-day on the source date", () =
   }
 });
 
+test("naive Pacific timestamps honor the actual daylight-saving transition", () => {
+  const fallbackDay = parseDatePT("2026-11-01T14:00:00");
+  const standardTime = parseDatePT("2026-11-02T18:00:00");
+  assert.equal(fallbackDay.toISOString(), "2026-11-01T22:00:00.000Z");
+  assert.equal(displayTime(fallbackDay), "2:00 PM");
+  assert.equal(standardTime.toISOString(), "2026-11-03T02:00:00.000Z");
+  assert.equal(displayTime(standardTime), "6:00 PM");
+  assert.equal(parseDatePT("2026-03-08T02:30:00"), null);
+});
+
 test("Saturday recurrence cannot emit the preceding Friday in a UTC runner", () => {
   assert.equal(isoDateParts("2026-08-14").weekday, 5);
   assert.equal(isoDateParts("2026-08-15").weekday, 6);

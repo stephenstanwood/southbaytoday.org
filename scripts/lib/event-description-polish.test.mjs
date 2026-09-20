@@ -17,6 +17,10 @@ test("preserves the official BentPeter performer spelling", () => {
   );
 });
 
+test("restores Montalvo's Mariachi Viajero ensemble spelling", () => {
+  assert.equal(polishDescription("Mariachi Viejero"), "Mariachi Viajero");
+});
+
 test("classifies one-on-one technology help as education", () => {
   assert.equal(
     inferCategory(

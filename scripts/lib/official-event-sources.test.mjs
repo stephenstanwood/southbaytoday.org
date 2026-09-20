@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { mapTicketmasterEvent } from "../generate-events.mjs";
+import {
+  isStudentOnlyEvent,
+  isStudentOnlyLocalistAudience,
+  mapTicketmasterEvent,
+} from "../generate-events.mjs";
 
 import {
   extractAddressLocality,
@@ -291,4 +295,50 @@ test("does not call paid TicketWeb Improv shows free", () => {
 
   assert.equal(mapped.cost, "paid");
   assert.equal(mapped.costNote, undefined);
+});
+
+test("maps Ticketmaster local times with the Pacific offset in effect that day", () => {
+  const mapped = mapTicketmasterEvent(ticketmasterEvent({
+    dates: {
+      start: { localDate: "2026-11-02", localTime: "18:00:00" },
+      status: { code: "onsale" },
+    },
+  }));
+  assert.equal(mapped.displayDate, "Mon, Nov 2");
+  assert.equal(mapped.time, "6:00 PM");
+});
+
+test("restores Bay FC's full San Diego Wave FC opponent name", () => {
+  const mapped = mapTicketmasterEvent(ticketmasterEvent({
+    name: "Bay FC vs. San Diego FC",
+    dates: {
+      start: { localDate: "2026-11-01", localTime: "14:00:00" },
+      status: { code: "onsale" },
+    },
+  }));
+  assert.equal(mapped.title, "Bay FC vs. San Diego Wave FC");
+  assert.equal(mapped.time, "2:00 PM");
+});
+
+test("drops Stanford events whose only Localist audience is students", () => {
+  assert.equal(isStudentOnlyLocalistAudience({
+    event_audience: [{ name: "Students" }],
+  }), true);
+  assert.equal(isStudentOnlyLocalistAudience({
+    event_audience: [{ name: "Students" }, { name: "General Public" }],
+  }), false);
+  assert.equal(isStudentOnlyLocalistAudience({}), false);
+});
+
+test("drops SCU technology training and Handshake registration listings", () => {
+  assert.equal(isStudentOnlyEvent({
+    link: "https://events.scu.edu/technology-training/event/453288-excel-essentials-training",
+    title: "Excel: Essentials Training",
+    description: "Hands-on training.",
+  }), true);
+  assert.equal(isStudentOnlyEvent({
+    link: "https://events.scu.edu/live/events/506201-fall-bash-career-fair",
+    title: "Fall Bash Career Fair",
+    description: "Register for the Bash Career Fair on Handshake!",
+  }), true);
 });

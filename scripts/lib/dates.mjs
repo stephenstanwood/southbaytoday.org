@@ -18,6 +18,57 @@ function pacificOffsetForCalendarDate(value) {
   return match[1];
 }
 
+function pacificInstantForWallClock(dateValue, timeValue) {
+  try {
+    isoDateParts(dateValue);
+  } catch {
+    return null;
+  }
+
+  const time = /^(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(timeValue);
+  if (!time) return null;
+  const hour = Number(time[1]);
+  const minute = Number(time[2]);
+  const second = Number(time[3] || 0);
+  if (hour > 23 || minute > 59 || second > 59) return null;
+
+  const [year, month, day] = dateValue.split("-").map(Number);
+  const wallClockUtc = Date.UTC(year, month - 1, day, hour, minute, second);
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: PT,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  });
+
+  // Pacific wall clocks are UTC-7 or UTC-8. Validate each candidate through
+  // Intl rather than guessing from the month: November 1 can contain both
+  // offsets, while the spring-forward hour does not exist at all.
+  for (const offsetHours of [7, 8]) {
+    const candidate = new Date(wallClockUtc + offsetHours * 60 * 60 * 1000);
+    const parts = Object.fromEntries(
+      formatter.formatToParts(candidate)
+        .filter(({ type }) => type !== "literal")
+        .map(({ type, value }) => [type, value]),
+    );
+    if (
+      Number(parts.year) === year
+      && Number(parts.month) === month
+      && Number(parts.day) === day
+      && Number(parts.hour) === hour
+      && Number(parts.minute) === minute
+      && Number(parts.second) === second
+    ) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 export function parseDate(str) {
   if (!str) return null;
   const d = new Date(str);
@@ -50,10 +101,7 @@ export function parseDatePT(str) {
   // Accept both "T" and " " between date and time.
   const naive = /^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}(?::\d{2})?)\s*$/.exec(str);
   if (naive) {
-    const month = parseInt(naive[1].slice(5, 7), 10);
-    // PDT (UTC-7): Mar–Nov; PST (UTC-8): Dec–Feb
-    const offset = (month >= 3 && month <= 11) ? "-07:00" : "-08:00";
-    str = `${naive[1]}T${naive[2]}${offset}`;
+    return pacificInstantForWallClock(naive[1], naive[2]);
   }
   const d = new Date(str);
   if (isNaN(d.getTime())) return null;

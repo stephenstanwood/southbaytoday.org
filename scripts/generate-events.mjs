@@ -1537,6 +1537,9 @@ const DESC_TYPO_FIXES = [
   [/\bsepearate\b/gi, "separate"],
   [/\bacitivites\b/gi, "activities"],
   [/\bacitivity\b/gi, "activity"],
+  // Montalvo's student matinee JSON-LD misspells the ensemble name even
+  // though its title and official detail page use "Mariachi Viajero".
+  [/(?<=\bMariachi\s)viejero\b/gi, "viajero"],
   // Shakespeare's play is "Antony and Cleopatra". The Cupertino Parks & Rec
   // listing for SF Shakes' Free Shakespeare in the Park spells it "Anthony",
   // which then propagated into the AI blurb and the weekend picks.
@@ -2887,6 +2890,14 @@ function liveWhaleEventId(url) {
 
 // ── Sources ──
 
+function isStudentOnlyLocalistAudience(filters) {
+  const audiences = (filters?.event_audience || [])
+    .map((audience) => String(audience?.name || audience || "").trim())
+    .filter(Boolean);
+  return audiences.length > 0
+    && audiences.every((audience) => /\bstudents?\b/i.test(audience));
+}
+
 async function fetchStanfordEvents() {
   console.log("  ⏳ Stanford Events...");
   try {
@@ -2895,6 +2906,10 @@ async function fetchStanfordEvents() {
     const todayIso = todayPT();
     const events = (data.events || []).map((e) => {
       const ev = e.event;
+      // Localist exposes explicit audience tags. Events whose only published
+      // audience is students (NSO, auditions, club recruiting) are campus
+      // programming, not public South Bay events.
+      if (isStudentOnlyLocalistAudience(ev.filters)) return null;
       // Stanford Localist returns ONE ROW PER OCCURRENCE. `first_date` and
       // `last_date` bound the whole series; `event_instances[0].event_instance`
       // is the occurrence this row stands for, and it is the only field
@@ -3000,7 +3015,7 @@ async function fetchStanfordEvents() {
 // events. `osher` covers SCU's Osher Lifelong Learning Institute, a
 // paid-membership program for adults 50+ whose listings ("Tech SIG",
 // "Volunteer Luncheon Reception") are members-only.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|technology-training|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
 // `scuaa` = SCU Accounting Association (student club); `bva café` /
 // `bronco ventures accelerator` = SCU's internal startup accelerator program
 // (cohort-only events). Both leaked through cycle 146's broader SCU filter
@@ -3008,7 +3023,7 @@ const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement
 // `alumni panel` is consistently a student career-prep event ("hear from
 // alumni at Firm X") — surfaced via SCU Accounting Association feed.
 const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
-const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b/i;
+const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b|\bregister\b.{0,80}\bon\s+handshake\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
 // — join…) reliably signals a campus-internal event even when the title looks
@@ -4784,7 +4799,11 @@ function mapTicketmasterEvent(e) {
   const tmStatus = (e.dates?.status?.code || "").toLowerCase();
   if (tmStatus === "cancelled" || tmStatus === "postponed") return null;
 
-  const start = new Date(`${dateStr}T${timeStr || "00:00:00"}-07:00`);
+  // Discovery returns a Pacific local wall clock, not an offset-bearing ISO
+  // instant. Let the shared parser resolve the actual PST/PDT offset so events
+  // after the November fallback do not publish one hour early.
+  const start = parseDatePT(`${dateStr}T${timeStr || "00:00:00"}`);
+  if (!start) return null;
   const venue = e._embedded?.venues?.[0];
   const venueName = venue?.name || "";
   const city = inferCity(venueName, `${venue?.city?.name || ""} ${venue?.address?.line1 || ""}`);
@@ -4863,6 +4882,13 @@ function mapTicketmasterEvent(e) {
 function normalizeTicketmasterTitle(name) {
   if (!name) return name;
   let working = name;
+  // Ticketmaster drops "Wave" from this opponent, turning the NWSL club into
+  // the unrelated MLS team San Diego FC. Bay FC's first-party schedule uses
+  // the full club name.
+  working = working.replace(
+    /^Bay FC vs\. San Diego FC$/i,
+    "Bay FC vs. San Diego Wave FC",
+  );
   // Strip trailing parenthetical ticket-policy boilerplate. Conservative:
   // only matches parens containing "ticket" with an age/children/adult cue,
   // so informative tags like "(Ages 5–10)" or "(Spanish)" are left alone.
@@ -9728,6 +9754,8 @@ export {
   isOffRegionUniversityEvent,
   isBiblioEventCancelled,
   isOrganizationName,
+  isStudentOnlyEvent,
+  isStudentOnlyLocalistAudience,
   looksCancelled,
   looksLikeEmbedCode,
   mapTicketmasterEvent,
