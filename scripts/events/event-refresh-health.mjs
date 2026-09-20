@@ -8,7 +8,7 @@ export const DEFAULT_OUTPUT_SNAPSHOT_MAX_AGE_HOURS = 30;
 export const REQUIRED_SOURCE_IDS = Object.freeze([
   "fetchMusicInParkEvents",
   "fetchJazzOnThePlazzEvents",
-  "fetchLosAltosEvents",
+  "fetchLosAltosVillageEvents",
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
   "fetchPearTheatreEvents",

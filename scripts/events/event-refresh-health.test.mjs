@@ -11,7 +11,7 @@ const NOW = new Date("2026-07-20T05:00:00.000Z");
 const REQUIRED = [
   "fetchMusicInParkEvents",
   "fetchJazzOnThePlazzEvents",
-  "fetchLosAltosEvents",
+  "fetchLosAltosVillageEvents",
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
   "fetchPearTheatreEvents",
