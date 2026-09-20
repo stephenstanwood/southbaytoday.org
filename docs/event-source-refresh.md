@@ -27,6 +27,28 @@ with:
 bash scripts/events/install-mini-refresh.sh
 ```
 
+## GitHub runtime and regression checks
+
+`.node-version` selects Node 24 LTS for both the independent refresh and
+`event-refresh-checks.yml`, which runs on every pull request and main push.
+The package requires Node >=22.18.0: Astro 6 needs >=22.12.0, and the generator's
+retired-slug ledger imports `eventSlug.ts`, which needs default native type
+stripping (available starting with 22.18.0). Both workflows install with
+`npm ci --engine-strict` so an unsupported runtime fails at installation.
+
+Run `npm run test:event-refresh` with the declared Node runtime before changing
+the workflow or generator. The suite executes the real generator in disposable
+offline fixtures without a TypeScript loader, checks publication protection,
+and prevents the refresh and PR workflows from choosing different runtimes.
+The refresh runs the same checks before contacting sources. Node 20 previously
+passed dependency installation with warnings and then failed before generation
+with `ERR_UNKNOWN_FILE_EXTENSION` for the transitive `.ts` import.
+
+After a runtime repair ships, dispatch `refresh-events.yml` on `main` and verify
+generation, output health, and the data commit/push all succeed before clearing
+failure alerts. Keep the eight-hour input snapshot ceiling; stale inputs are a
+separate recovery problem, not a reason to relax the workflow.
+
 ## Fail-closed contract
 
 - Critical-source, per-source future-coverage, and aggregate-regression guards

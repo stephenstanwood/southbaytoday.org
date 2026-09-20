@@ -2,6 +2,9 @@
   "name": "southbaytoday",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -14,6 +17,7 @@
     "astro": "astro",
     "generate-digests": "node scripts/generate-digests.mjs",
     "generate-events": "node scripts/generate-events.mjs",
+    "test:event-refresh": "node --test scripts/events/*.test.mjs src/lib/south-bay/eventSlugLedger.test.mjs",
     "generate-upcoming-meetings": "node scripts/generate-upcoming-meetings.mjs",
     "generate-around-town": "node scripts/generate-around-town.mjs",
     "generate-weekend-picks": "node scripts/generate-weekend-picks.mjs",
