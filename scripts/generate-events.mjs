@@ -8947,7 +8947,9 @@ async function main() {
     }
   }
 
-  if (STRICT_EVENT_REFRESH && blocking.length > 0) {
+  // Every invocation publishes to the same database. The general data-refresh
+  // job omits strict mode, so output safety must not depend on that input flag.
+  if (blocking.length > 0) {
     const detail = blocking.join("; ");
     await catSignal({
       key: "events-refresh-critical-source",
@@ -8964,7 +8966,7 @@ async function main() {
     nextSourceHealth: sourceHealth,
     today: todayPT(),
   });
-  if (STRICT_EVENT_REFRESH && sourceRegressions.length > 0) {
+  if (sourceRegressions.length > 0) {
     const detail = sourceRegressions.join("; ");
     await catSignal({
       key: "events-single-source-regression",
@@ -9730,7 +9732,7 @@ async function main() {
     nextSourceCount: sourceNames.length,
     nextEventCount: collapsedEvents.length,
   });
-  if (STRICT_EVENT_REFRESH && regression) {
+  if (regression) {
     await catSignal({
       key: "events-source-regression",
       title: "Event refresh blocked before overwrite",
@@ -9793,18 +9795,6 @@ async function main() {
 
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
   console.log(`\n✅ Done — ${collapsedEvents.length} events (${ongoingCount} ongoing) from ${sourceNames.length} sources → ${OUT_PATH}`);
-
-  // Regression guard. Scrapers fail quietly — each logs "⚠️ <Source>" and the run
-  // continues with fewer events — so a whole batch breaking goes unnoticed. If the
-  // contributing-source count or total events craters vs the previous run, DM.
-  if (regression) {
-    console.warn(`⚠️  ${regression}`);
-    await catSignal({
-      key: "events-source-regression",
-      title: "Event pipeline regression",
-      body: `${regression}. A batch of scrapers likely broke — check the run log for warnings.`,
-    });
-  }
 
   // Summary by city
   const byCity = {};

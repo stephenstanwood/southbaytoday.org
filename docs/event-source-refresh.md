@@ -29,6 +29,12 @@ bash scripts/events/install-mini-refresh.sh
 
 ## Fail-closed contract
 
+- Critical-source, per-source future-coverage, and aggregate-regression guards
+  apply to **every** `generate-events.mjs` invocation, including the general
+  data-refresh job and manual runs without `SBT_STRICT_EVENT_REFRESH=1`. Strict
+  mode adds credential and input-snapshot preflight; it is not permission to
+  publish incomplete output when omitted. A rejected refresh leaves the event
+  database, archive, and retired-slug ledger unchanged.
 - Every adapter exception blocks a strict refresh, including errors that legacy
   adapters used to swallow and return as an empty array.
 - Shared HTTP fetches (including Ticketmaster Discovery) retry temporary
@@ -57,6 +63,14 @@ bash scripts/events/install-mini-refresh.sh
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.
+- City of Los Altos remains critical. On 2026-09-20, both its calendar HTML and
+  the Main Calendar iCal linked from `/iCalendar.aspx` returned a managed
+  Cloudflare 403 to the Mini's existing aggregator client. Do not bypass the
+  challenge or silently retire the source. Recovery needs an authorized feed
+  accessible from the Mini; the city's [web policy](https://www.losaltosca.gov/449/Web-Policies)
+  also requires written permission for redistribution. The separate general
+  refresh had published an empty Los Altos source on 2026-09-19 because the
+  output guards were conditional on strict mode; those guards now run always.
 - Opera San José retired the CivicPlus iCal at `/events/?ical=1` when the site
   moved to Divi production pages (404 on 2026-09-11). Tribe iCal/REST exports
   are not published; the adapter reads the `26-27-season` lander for current
