@@ -12,7 +12,7 @@
  *   - Campbell Community Calendar (CivicPlus RSS)
  *   - Los Gatos Town Calendar (CivicPlus iCal)
  *   - Saratoga Community Events (CivicPlus iCal)
- *   - Los Altos Parks & Rec (CivicPlus iCal)
+ *   - Los Altos Village Association (public event feed)
  *   - City of Mountain View (CivicPlus iCal) — 403 blocked as of 2026-03
  *   - City of Sunnyvale (CivicPlus iCal) — 403 blocked as of 2026-03
  *   - City of Cupertino (CivicPlus iCal) — 404 as of 2026-03
@@ -129,7 +129,6 @@ import {
   extractAddressLocality,
   extractSanJoseJazzDayUrls,
   extractVboSession,
-  parseCivicPlusCalendarPage,
   parseCivicPlusEventDetail,
   parseCivicPlusEventTimes,
   parseHappyHollowSchedules,
@@ -4118,59 +4117,65 @@ async function fetchSaratogaEvents() {
   );
 }
 
-async function fetchLosAltosEvents() {
-  console.log("  ⏳ City of Los Altos...");
-  try {
-    // catID=37 is a real but empty calendar, and the all-calendar RSS omits
-    // recurring rows visible on the official page. CivicPlus publishes full
-    // schema.org Event blocks in its HTML, so read this month plus two ahead.
-    const [year, month] = todayPT().split("-").map(Number);
-    const pages = await Promise.all([0, 1, 2].map((offset) => {
-      const target = new Date(Date.UTC(year, month - 1 + offset, 1));
-      const url = new URL("https://www.losaltosca.gov/Calendar.aspx");
-      url.searchParams.set("month", String(target.getUTCMonth() + 1));
-      url.searchParams.set("year", String(target.getUTCFullYear()));
-      return fetchText(url.toString());
-    }));
-
-    const today = todayPT();
-    const seen = new Set();
-    const events = pages
-      .flatMap(parseCivicPlusCalendarPage)
-      .filter((entry) => {
-        const date = entry.startsAt.slice(0, 10);
-        const key = `${entry.id}|${date}`;
-        if (seen.has(key) || date < today || isBlockedEvent(entry.title)) return false;
-        seen.add(key);
-        return true;
-      })
-      .map((entry) => {
-        const start = parseDatePT(entry.startsAt);
-        return {
-          id: h("los-altos", entry.id, entry.startsAt),
-          title: entry.title,
-          date: entry.startsAt.slice(0, 10),
-          displayDate: displayDate(start),
-          time: entry.time,
-          endTime: entry.endTime,
-          venue: cleanVenue(entry.venue) || null,
-          address: entry.address,
-          city: "los-altos",
-          category: inferCategory(entry.title, entry.description, entry.venue),
-          cost: "free",
-          description: truncate(entry.description),
-          url: new URL(entry.href, "https://www.losaltosca.gov").toString(),
-          source: "City of Los Altos",
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|ages?\s*\d|grades?\s+[K0-9])/i.test(`${entry.title} ${entry.description}`),
-        };
+async function fetchLosAltosVillageEvents() {
+  console.log("  ⏳ Los Altos Village Association...");
+  // This public REST feed is advertised by the association's calendar HTML.
+  // The city's blocked calendar was retired at Stephen's request, 2026-09-20;
+  // this is a separate publisher, not a route around the city's access policy.
+  const today = todayPT();
+  const events = [];
+  const seen = new Set();
+  for (let page = 1; page <= 5; page++) {
+    const url = new URL("https://downtownlosaltos.org/wp-json/tribe/events/v1/events");
+    url.searchParams.set("start_date", today);
+    url.searchParams.set("per_page", "50");
+    url.searchParams.set("page", String(page));
+    const data = await fetchJson(url.toString());
+    if (!Array.isArray(data.events) || !Number.isInteger(data.total_pages)
+      || data.total_pages < 0 || data.total_pages > 5) {
+      throw new Error("Los Altos Village Association returned an invalid or oversized calendar");
+    }
+    for (const entry of data.events) {
+      const title = cleanTitle(stripHtml(entry.title || ""));
+      const start = parseDatePT(entry.start_date);
+      if (!title || !start || !entry.url) {
+        throw new Error("Los Altos Village Association event is missing its title, date, or link");
+      }
+      const date = isoDate(start);
+      const key = `${entry.id || entry.url}|${entry.start_date}`;
+      if (date < today || seen.has(key) || isBlockedEvent(title)) continue;
+      seen.add(key);
+      const end = parseDatePT(entry.end_date);
+      const venue = cleanVenue(stripHtml(entry.venue?.venue || "")) || null;
+      const description = truncate(stripBareUrls(stripHtml(entry.description || entry.excerpt || "")));
+      const price = stripHtml(entry.cost || "").trim();
+      events.push({
+        id: h("los-altos-village", key),
+        title,
+        date,
+        displayDate: displayDate(start),
+        time: entry.all_day ? null : displayTime(start),
+        endTime: entry.all_day || !end || end.getTime() === start.getTime() ? null : displayTime(end),
+        venue,
+        address: [entry.venue?.address, entry.venue?.city,
+          entry.venue?.stateprovince || entry.venue?.state, entry.venue?.zip].filter(Boolean).join(", "),
+        city: "los-altos",
+        category: inferCategory(title, description, venue || ""),
+        // Blank pricing means unknown, including the ticketed wine stroll.
+        cost: /^free$|^\$?0(?:\.00)?$/i.test(price) ? "free" : (price ? "paid" : null),
+        ...(price ? { costNote: price } : {}),
+        description,
+        url: entry.url,
+        source: "Los Altos Village Association",
+        ...(entry.image?.url ? { image: entry.image.url } : {}),
+        kidFriendly: /\b(kid|child|family|youth|teen|toddler|preschool)/i.test(`${title} ${description}`),
       });
-    console.log(`  ✅ City of Los Altos: ${events.length} events`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  City of Los Altos: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    }
+    if (page >= data.total_pages) break;
+    await new Promise((resolve) => setTimeout(resolve, 250));
   }
+  console.log(`  ✅ Los Altos Village Association: ${events.length} events`);
+  return events;
 }
 
 async function fetchMountainViewEvents() {
@@ -8798,7 +8803,7 @@ async function main() {
     source(fetchMusicInParkEvents, { label: "Los Gatos Music in the Park" }),
     source(fetchJazzOnThePlazzEvents, { label: "Jazz on the Plazz" }),
     source(fetchSaratogaEvents),
-    source(fetchLosAltosEvents, { label: "City of Los Altos", critical: true }),
+    source(fetchLosAltosVillageEvents, { label: "Los Altos Village Association" }),
     source(fetchLosAltosHistoryEvents),
     source(fetchOperaSanJoseEvents),
     // fetchMountainViewEvents,  — 403 blocked since 2026-03
@@ -9841,7 +9846,7 @@ export {
   fetchScccfdEvents,
   parseEventbriteOrganizerEvents,
   fetchJazzOnThePlazzEvents,
-  fetchLosAltosEvents,
+  fetchLosAltosVillageEvents,
   fetchLosAltosHistoryEvents,
   fetchMaclaEvents,
   fetchStanfordEvents,

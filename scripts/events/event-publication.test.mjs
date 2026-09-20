@@ -25,12 +25,12 @@ for (const strict of [undefined, "0", "1"]) {
     const event = {
       id: "known-good-city-event", title: "Source-verified community event",
       date, time: "10:30 AM", city: "los-altos", category: "community",
-      source: "City of Los Altos", url: "https://www.losaltosca.gov/Calendar.aspx?EID=1",
+      source: "Ticketmaster", url: "https://www.ticketmaster.com/event/fixture",
     };
     const files = {
       "upcoming-events.json": {
         generatedAt: now, eventCount: 1, sources: [event.source], events: [event],
-        sourceHealth: [{ id: "fetchLosAltosEvents", label: event.source, critical: true,
+        sourceHealth: [{ id: "fetchTicketmasterEvents", label: event.source, critical: true,
           status: "ok", count: 1, dateCounts: { [date]: 1 }, error: null }],
       },
       "events-archive.json": { events: [], eventCount: 0 },
@@ -40,7 +40,7 @@ for (const strict of [undefined, "0", "1"]) {
       writeFileSync(join(dataDir, name), JSON.stringify(value) + "\n");
     }
     // Fresh inputs let strict mode reach the source gate instead of stopping
-    // for credentials or snapshot age before Los Altos is attempted.
+    // for credentials or snapshot age before Ticketmaster is attempted.
     writeFileSync(join(dataDir, "playwright-events.json"), JSON.stringify({
       _meta: { generatedAt: now }, events: [{ ...event, source: "Fixture venue" }],
     }));
@@ -50,7 +50,8 @@ for (const strict of [undefined, "0", "1"]) {
     const before = Object.fromEntries(Object.keys(files).map((name) => [name, readFileSync(join(dataDir, name))]));
     const preload = join(sandbox, "offline.mjs");
     writeFileSync(preload, `globalThis.fetch = async (url) => {
-      if (String(url).startsWith("https://www.losaltosca.gov/Calendar.aspx")) console.log("fixture: Los Altos 403");
+      if (String(url).includes("losaltosca.gov")) console.error("fixture: retired city source requested");
+      if (String(url).includes("app.ticketmaster.com")) console.log("fixture: Ticketmaster 403");
       return new Response("Access denied", { status: 403 });
     };\n`);
 
@@ -66,9 +67,10 @@ for (const strict of [undefined, "0", "1"]) {
     });
     const output = result.stdout + result.stderr;
     assert.ifError(result.error);
-    assert.match(output, /fixture: Los Altos 403/, output);
+    assert.match(output, /fixture: Ticketmaster 403/, output);
+    assert.doesNotMatch(output, /fixture: retired city source requested/);
     assert.equal(result.status, 1, output);
-    assert.match(output, /critical event sources failed:.*City of Los Altos is (?:empty|error: 403)/, output);
+    assert.match(output, /critical event sources failed:.*Ticketmaster is (?:empty|error: 403)/, output);
     for (const name of Object.keys(files)) {
       assert.deepEqual(readFileSync(join(dataDir, name)), before[name], `${name} must stay byte-identical`);
     }
