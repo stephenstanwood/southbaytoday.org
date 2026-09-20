@@ -1537,6 +1537,30 @@ const DESC_TYPO_FIXES = [
   [/\bsepearate\b/gi, "separate"],
   [/\bacitivites\b/gi, "activities"],
   [/\bacitivity\b/gi, "activity"],
+  [/\bBlueys\b/g, "Bluey's"],
+  [/\bFace Time\b/g, "FaceTime"],
+  [/\bVeune\b/g, "Venue"],
+  [/\bCisa\b/g, "CISA"],
+  [/\bTicc\b/g, "TICC"],
+  [/\bIo T\b/g, "IoT"],
+  [/\bbookclub\b/gi, "book club"],
+  [/\bbe be\b/gi, "be"],
+  [/\b(?:singing|signing)-up\b/gi, "signing up"],
+  [/\bc aitlin(?=\.bosworth@)/gi, "caitlin"],
+  [/\bFree homework\b/g, "free homework"],
+  [/\bSccld\b/g, "SCCLD"],
+  [/\be Resources\b/g, "e-resources"],
+  [/\be Books\b/g, "e-books"],
+  [/\bUnderstanding you e-reader\b/g, "Understanding your e-reader"],
+  [/\bquestionsall\b/gi, "questions—all"],
+  [/\bbabies \(02\)/gi, "babies (0–2)"],
+  [/\byour babys\b/gi, "your baby's"],
+  [/\bthe Erhu is traditional\b/gi, "the Erhu is a traditional"],
+  [/\bJava Script\b/g, "JavaScript"],
+  [/\bWhat will I Learn\?/g, "What will I learn?"],
+  [/\bhigh school Clubs\b/g, "high school clubs"],
+  [/\bWednesday Student Mass 8\s*PM Mass at Mission Santa Clara\b/g, "Wednesday Student Mass at 8 PM at Mission Santa Clara."],
+  [/\bW\. A\. S\. P\. Is\b/g, "W.A.S.P. is"],
   // Montalvo's student matinee JSON-LD misspells the ensemble name even
   // though its title and official detail page use "Mariachi Viajero".
   [/(?<=\bMariachi\s)viejero\b/gi, "viajero"],
@@ -1645,6 +1669,20 @@ function restoreDomainAndDecimalDots(text) {
   return text.replace(new RegExp(DOT_PLACEHOLDER, "g"), ".");
 }
 
+function repairSpacedDomainDots(text) {
+  let t = text;
+  const spacedDomainRe = new RegExp(
+    `\\b([A-Za-z0-9][\\w-]*)\\.\\s+((?:[A-Za-z0-9-]+\\.)*(?:${KNOWN_TLDS})\\b)`,
+    "gi",
+  );
+  let previous;
+  do {
+    previous = t;
+    t = t.replace(spacedDomainRe, "$1.$2");
+  } while (t !== previous);
+  return t;
+}
+
 function polishDescription(text) {
   if (!text) return "";
   let t = text;
@@ -1656,6 +1694,17 @@ function polishDescription(text) {
     /^(?:About this Event|Text from presenter|Event Description|Event Details?|Description)\s*:\s*/i,
     "",
   );
+
+  // Localist appends this empty section label directly to otherwise usable
+  // prose. Strip it and restore terminal punctuation when the source supplied
+  // none before the label.
+  const hadTrailingEventDetails = /\s+Event Details:\s*$/i.test(t);
+  t = t.replace(/\s+Event Details:\s*$/i, "").trim();
+  if (hadTrailingEventDetails && t && !/[.!?]$/.test(t)) t += ".";
+
+  // Cupertino Parks detail pages flatten a standalone registration button
+  // into a final Register token after the substantive price/copy.
+  t = t.replace(/\s+Register(?: Now)?\.?\s*$/, "").trim();
 
   // Straighten curly quotes. Source HTML and BiblioCommons feeds serve smart
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
@@ -1731,6 +1780,20 @@ function polishDescription(text) {
   // titles and bodies normalize the same way.
   t = t.replace(/!{2,}/g, "!").replace(/\?{2,}/g, "?");
 
+  // Restore basic separators that source flatteners drop. The comma rule is
+  // letter-only so numbers remain untouched; clock normalization only inserts
+  // the missing space and does not alter the represented time.
+  t = t.replace(/([A-Za-z\u00C0-\u024F]),(?=[A-Za-z\u00C0-\u024F])/g, "$1, ");
+  t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
+  t = t.replace(/\bfirst come,?\s+first served\b/gi, (phrase) =>
+    phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served",
+  );
+  t = t.replace(/\b([Ff])or Ages\b/g, (_, initial) => `${initial}or ages`);
+
+  // San Jose Theaters occasionally flattens its page-navigation links into the
+  // end of an otherwise complete description.
+  t = t.replace(/\s+>\s+(?:San Jose Civic Events Calendar|Visitor FAQs|San Jose(?:\s+.*)?(?:…|\.\.\.)?)$/i, "").trim();
+
   // Fix common typos before sentence-level processing.
   for (const [pat, fix] of DESC_TYPO_FIXES) {
     t = t.replace(pat, (m, ...rest) => {
@@ -1753,6 +1816,10 @@ function polishDescription(text) {
   t = t.replace(/(\d)\s*([pa])\. M,/g, "$1 $2.m.,");
   t = t.replace(/(\s)([pa])\. M\./g, "$1$2.m.");
   t = t.replace(/(\s)([pa])\. M,/g, "$1$2.m.,");
+
+  // Repair domains/emails previously split by a source flattener before the
+  // period-masking sentence splitter sees them (sccld. org -> sccld.org).
+  t = repairSpacedDomainDots(t);
 
   // Source-side title-cased acronyms in body text (BiblioCommons title-cases
   // some acronyms in descriptions, not just titles).
@@ -1836,6 +1903,9 @@ function polishDescription(text) {
     // bare initialism mid-sentence ("MCOSJ Season Opening Concert") as well as
     // in the parenthetical, so the shape guard below doesn't reach it.
     "MCOSJ",
+    // Current civic/library copy: California's public-affairs committee and
+    // the Bay Area Linux user group.
+    "SPAC", "LISA", "ATER", "CISA", "TICC", "SCCLD",
   ]);
   // A parenthesized ALL-CAPS run is an acronym being introduced after its
   // spelled-out name — "Bay Area Quiz Club (BAQC)", "Mission Chamber Orchestra
@@ -1929,6 +1999,8 @@ function polishDescription(text) {
   // after the [a-z][A-Z] splitter. Reunite them so brand copy reads correctly.
   t = t.replace(/\bPower Point\b/g, "PowerPoint");
   t = t.replace(/\bYou Tube\b/g, "YouTube");
+  t = t.replace(/\bFace Time\b/g, "FaceTime");
+  t = t.replace(/\bJava Script\b/g, "JavaScript");
   // iPhone is tricky — lowercase "i" is rare as a word, but "I Phone" at a
   // sentence start would be a real two-word phrase. Only reunite the lowercase
   // form ("i Phone") since that's the only camel-split shape that produces it.
@@ -1985,13 +2057,14 @@ function polishDescription(text) {
       const openQuotes = (last.match(/"/g) || []).length;
       const hasUnclosedQuote = openQuotes % 2 === 1;
       const isMetadataLabel = /^(ADA Accommodation Requests|Wheelchair Accessible|Reading Levels|Hearing Loop|Audio Description|Closed Captioning|Sign Language Interpretation|Sensory[\s-]?Friendly|Accessibility Features?|Special Accommodations?)\b/i.test(last);
+      const isBracketTruncation = /\[(?:…|\.\.\.)\]\s*$/.test(last);
       // Bare call-to-action verb left dangling when the scraper truncated the
       // CTA sentence mid-phrase (e.g. "...accompanied by an adult. Register"
       // from a cut "Register at the door"). The complete CTA forms are dropped
       // upstream by BOILERPLATE_SENTENCE_PATTERNS, but a lone trailing verb with
       // no object slips through. It's never substantive prose — drop it.
       const isCtaFragment = /^(Register|RSVP|Sign\s?up|Tickets?|Buy\s+tickets?|Get\s+tickets?|Learn\s+more|More\s+info|Read\s+more|Details)(\s+(now|here|online|today))?[.!]?$/i.test(last);
-      if (hasUnclosedQuote || isMetadataLabel || isCtaFragment) kept.pop();
+      if (hasUnclosedQuote || isMetadataLabel || isCtaFragment || isBracketTruncation) kept.pop();
     }
   }
 
@@ -2027,6 +2100,10 @@ function polishDescription(text) {
   // the pattern would pair a closing quote with the next opening quote
   // (`"book club" for fans and "The Shroud"`) and eat the words between.
   t = t.replace(/(^|\s)"\s+([^"]+?)\s+"(?=[\s,.;:!?)]|$)/g, '$1"$2"');
+
+  // Sentence splitting treats each dotted initial as its own sentence. Restore
+  // this established band name after the split/rejoin pass.
+  t = t.replace(/\bW\. A\. S\. P\. Is\b/g, "W.A.S.P. is");
 
   return cleanDisplayCopy(t);
 }

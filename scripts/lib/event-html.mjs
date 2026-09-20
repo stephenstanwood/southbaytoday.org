@@ -1,10 +1,37 @@
+const NAMED_TEXT_ENTITIES = Object.freeze({
+  nbsp: " ", amp: "&", lt: "<", gt: ">", quot: '"', apos: "'",
+  rsquo: "\u2019", lsquo: "\u2018", ldquo: "\u201C", rdquo: "\u201D",
+  ndash: "\u2013", mdash: "\u2014", hellip: "\u2026",
+  iexcl: "\u00A1", iquest: "\u00BF",
+  aacute: "\u00E1", eacute: "\u00E9", iacute: "\u00ED", oacute: "\u00F3", uacute: "\u00FA",
+  aacute_upper: "\u00C1", eacute_upper: "\u00C9", iacute_upper: "\u00CD", oacute_upper: "\u00D3", uacute_upper: "\u00DA",
+  ntilde: "\u00F1", ntilde_upper: "\u00D1", uuml: "\u00FC", uuml_upper: "\u00DC",
+});
+
+function decodeNamedTextEntities(value) {
+  let text = value;
+  // Two passes also handle source text that double-encodes a named entity as
+  // `&amp;ntilde;`. Unknown names stay intact until the catch-all below drops
+  // them, preserving the established no-markup behavior.
+  for (let pass = 0; pass < 2; pass += 1) {
+    const next = text.replace(/&([a-z][a-z0-9]+);/gi, (match, name) => {
+      const lower = name.toLowerCase();
+      const key = name[0] === name[0].toUpperCase() && name[0] !== name[0].toLowerCase()
+        ? `${lower}_upper`
+        : lower;
+      return NAMED_TEXT_ENTITIES[key] ?? NAMED_TEXT_ENTITIES[lower] ?? match;
+    });
+    if (next === text) break;
+    text = next;
+  }
+  return text;
+}
+
 // Shared source HTML cleanup; preserve the established ingest behavior.
 export function stripHtml(html) {
   if (!html) return "";
-  return html
-    // Decode entities first so entity-encoded tags like &lt;strong&gt; become <strong> before stripping
-    .replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+  return decodeNamedTextEntities(html)
+    // Decode numeric entities before stripping tags.
     .replace(/&#x2019;/gi, "\u2019").replace(/&#x2018;/gi, "\u2018")
     .replace(/&#x201C;/gi, "\u201C").replace(/&#x201D;/gi, "\u201D")
     .replace(/&#x2013;/gi, "\u2013").replace(/&#x2014;/gi, "\u2014")
@@ -12,9 +39,9 @@ export function stripHtml(html) {
     // which loses the `[\u2026]` marker that CHM's stripChmRssBoilerplate uses to
     // anchor the WordPress footer strip. Without this, the footer survives
     // until truncate() chops it mid-sentence ("The post\u2026").
-    .replace(/&hellip;|&#8230;|&#x2026;/gi, "\u2026")
+    .replace(/&#8230;|&#x2026;/gi, "\u2026")
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code, 10)))
-    .replace(/&[a-z]+;/g, "")
+    .replace(/&[a-z][a-z0-9]+;/gi, "")
     // BiblioCommons (and other rich-text editors) occasionally save a word
     // wrapped across two adjacent same-tag inline-formatting runs — e.g.
     // `<strong>g</strong><strong>rades 4-5</strong>` from an SCCL Page

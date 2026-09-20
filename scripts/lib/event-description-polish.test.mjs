@@ -254,3 +254,62 @@ test("strips LibCal newsletter query debris and repairs its fused book-club copy
     "Join Librarian Rachael for a lively discussion of another exciting book.",
   );
 });
+
+test("cleans recurring scrape-tail punctuation and spacing artifacts", () => {
+  assert.equal(
+    polishDescription("Jungle themed social event at Sigma Nu Event Details:"),
+    "Jungle themed social event at Sigma Nu.",
+  );
+  assert.equal(
+    polishDescription("Tickets are $10 Resident | $13 Non-resident Register"),
+    "Tickets are $10 Resident | $13 Non-resident",
+  );
+  assert.equal(
+    polishDescription("Art,crafts at 4:30PM. Visit sccld. org/accessibility."),
+    "Art, crafts at 4:30 PM. Visit sccld.org/accessibility.",
+  );
+  assert.equal(
+    polishDescription("This is Blueys show with Face Time and Early Veune Entry."),
+    "This is Bluey's show with FaceTime and Early Venue Entry.",
+  );
+  assert.equal(
+    polishDescription("Child must be be present; email c aitlin.bosworth@sjlibrary.org after signing-up."),
+    "Child must be present; email caitlin.bosworth@sjlibrary.org after signing up.",
+  );
+});
+
+test("drops bracketed truncation and flattened San Jose Theaters navigation", () => {
+  assert.equal(
+    polishDescription("A complete sentence. This fragment stops in a […]"),
+    "A complete sentence.",
+  );
+  assert.equal(
+    polishDescription("Tickets are on sale. > San Jose Civic Events Calendar > Visitor FAQs"),
+    "Tickets are on sale.",
+  );
+});
+
+test("drops a truncated San Jose Theaters navigation tail", () => {
+  assert.equal(
+    polishDescription('Tickets are on sale Friday at 10 AM. > San Jose…'),
+    "Tickets are on sale Friday at 10 AM.",
+  );
+});
+
+test("normalizes recurring age and first-come copy", () => {
+  assert.equal(
+    polishDescription("For Ages 3-5. Seats are first come first served."),
+    "For ages 3-5. Seats are first-come, first-served.",
+  );
+  assert.equal(
+    polishDescription("For babies (02) and your babys earliest learning."),
+    "For babies (0–2) and your baby's earliest learning.",
+  );
+});
+
+test("preserves JavaScript and W.A.S.P. capitalization through word splitting", () => {
+  assert.equal(
+    polishDescription("Learn Java Script. W. A. S. P. Is performing."),
+    "Learn JavaScript. W.A.S.P. is performing.",
+  );
+});

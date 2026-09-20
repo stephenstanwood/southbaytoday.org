@@ -69,3 +69,10 @@ test("attendanceNote dedupes a ticket sentence repeated across paragraphs", () =
     "Free, with limited capacity. Tickets will be distributed starting 60 minutes before the program. Sep 15 - Build a bridge. Children younger than age 9 must be accompanied by an adult caregiver during this program.",
   );
 });
+
+test("library descriptions decode Latin named entities without dropping accents", () => {
+  const { description } = libraryEventDetails({
+    description: "<p>&iexcl;Prep&aacute;rate! &Uacute;nete a Jos&eacute; &amp; Pe&ntilde;a.</p>",
+  });
+  assert.equal(description, "\u00A1Prep\u00E1rate! \u00DAnete a Jos\u00E9 & Pe\u00F1a.");
+});
