@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-20T05:48:16.087Z"
+    "auditedAt": "2026-09-20T14:19:41.340Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1858,
+    "total": 1861,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,34 +16,19 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 336,
+    "total": 266,
     "totals": {
       "hard": 0,
-      "soft": 3,
+      "soft": 2,
       "info": 2
     },
     "byReason": {
-      "unknown-slug": 1,
       "meeting-title": 1,
       "local-departure-trip": 2,
       "virtual-not-flagged": 1
     },
     "hard": [],
     "soft": [
-      {
-        "id": "inbound_mtlvjx55_5d0c0l",
-        "title": "California Coastal Cleanup Day",
-        "city": "monte-sereno",
-        "date": "2026-09-19T09:00:00-07:00",
-        "location": "",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
-          }
-        ]
-      },
       {
         "id": "inbound_mtw80j34_zh7y6t",
         "title": "Los Gatos Town Council Candidate Forum",
