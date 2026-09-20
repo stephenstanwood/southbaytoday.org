@@ -1,0 +1,29 @@
+name: Event Refresh Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --engine-strict
+
+      # Executes the real generator in offline fixtures, including native .ts
+      # imports and the guards that must preserve published files on failure.
+      - name: Check event runtime and publication safeguards
+        run: npm run test:event-refresh

@@ -74,6 +74,19 @@ test("GitHub is a same-night independent check with explicit failure alerting", 
   assert.match(workflow, /notify-workflow-failure\.mjs/);
 });
 
+test("the refresh and its PR checks use the same native Node runtime", () => {
+  // A Node 20 workflow silently diverged from newer local runtimes until the
+  // slug ledger imported eventSlug.ts. Keep CI on the publisher's runtime and
+  // execute the real CLI publication tests without a TypeScript loader.
+  for (const name of ["refresh-events.yml", "event-refresh-checks.yml"]) {
+    const workflow = read(`../../.github/workflows/${name}`);
+    assert.match(workflow, /node-version-file: \.node-version/);
+    assert.doesNotMatch(workflow, /\bnode-version:/);
+    assert.match(workflow, /npm ci --engine-strict/);
+    assert.match(workflow, /npm run test:event-refresh/);
+  }
+});
+
 test("the eventCount pre-commit hook is tracked and self-installs", () => {
   // The first version of this hook existed only in the Mini's untracked
   // .git/hooks, so the repo had no idea it was load-bearing. Assert both
