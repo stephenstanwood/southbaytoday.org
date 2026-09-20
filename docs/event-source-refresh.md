@@ -63,14 +63,22 @@ bash scripts/events/install-mini-refresh.sh
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.
-- City of Los Altos remains critical. On 2026-09-20, both its calendar HTML and
-  the Main Calendar iCal linked from `/iCalendar.aspx` returned a managed
-  Cloudflare 403 to the Mini's existing aggregator client. Do not bypass the
-  challenge or silently retire the source. Recovery needs an authorized feed
-  accessible from the Mini; the city's [web policy](https://www.losaltosca.gov/449/Web-Policies)
-  also requires written permission for redistribution. The separate general
-  refresh had published an empty Los Altos source on 2026-09-19 because the
-  output guards were conditional on strict mode; those guards now run always.
+- City of Los Altos was retired on 2026-09-20 at Stephen's explicit request
+  after its calendar HTML and published Main Calendar iCal both returned a
+  managed Cloudflare 403. Do not retry or bypass the city endpoints. The prior
+  general refresh had published an empty city source because output guards
+  depended on strict mode; those guards now apply to every invocation.
+- Los Altos Village Association supplies replacement downtown coverage through
+  the public Tribe REST feed advertised by its calendar at
+  `https://downtownlosaltos.org/events/list/`. Its robots rules allow that feed,
+  and the Mini verified HTTP 200 with nine upcoming listings on 2026-09-20.
+  Attribute these events to the association, never to the city government.
+  Preserve Pacific dates/times, all-day status, venue, event links, and unknown
+  pricing (a blank cost is not free). It is a seasonal organizer source under
+  the normal optional-source policy, with a required health row and the same
+  per-source future-coverage checks as other adapters. It does not replace city
+  meeting or recreation-program coverage. Libraries, the History Museum, Stage
+  Company, and Linden Tree continue supplying their own Los Altos events.
 - Opera San José retired the CivicPlus iCal at `/events/?ical=1` when the site
   moved to Divi production pages (404 on 2026-09-11). Tribe iCal/REST exports
   are not published; the adapter reads the `26-27-season` lander for current
