@@ -935,7 +935,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Tickets from ~$25",
     kidFriendly: true,
     description:
-      "MLS soccer at PayPal Park, one of the most family-friendly and affordable pro sports experiences in the Bay.",
+      "MLS soccer at PayPal Park during the league's regular season.",
     url: "https://www.sjearthquakes.com/schedule",
     emoji: "⚽",
   },

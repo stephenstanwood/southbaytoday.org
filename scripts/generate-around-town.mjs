@@ -23,6 +23,7 @@ import {
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./lib/civic-meetings.mjs";
+import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -441,16 +442,7 @@ async function gatherPermitItems() {
     const config = CITIES.find((c) => c.cityId === cityId);
     if (!config) continue;
 
-    const PERMIT_BLOCKLIST = /\b(reroof|re-roof|roofing|roof replacement)\b/i;
-    const permits = (cityData.permits || []).filter((p) => {
-      // Skip boring permits
-      if (PERMIT_BLOCKLIST.test(p.description || "")) return false;
-      // Notable: high value, new construction, entitlements, or adds housing units
-      if (p.valuation > 500_000) return true;
-      if (["residential-new", "commercial-large", "entitlement"].includes(p.category)) return true;
-      if (p.units > 0) return true;
-      return false;
-    });
+    const permits = (cityData.permits || []).filter(isAroundTownPermitCandidate);
 
     if (permits.length) {
       // No second truncation here. generate-permits.mjs already caps each city
