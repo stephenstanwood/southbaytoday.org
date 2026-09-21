@@ -1,20 +1,20 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-21T02:17:21.439Z",
+    "generatedAt": "2026-09-21T15:08:55.696Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 571,
+    "eventCount": 567,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (119)",
       "Los Gatos Library (156)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (14)",
+      "Linden Tree Books (12)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (19)",
+      "Mountain Winery (18)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
@@ -22,7 +22,7 @@
       "City of Cupertino (65)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
-      "Levi's Stadium (9)",
+      "Levi's Stadium (8)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
       "San Jose Museum of Art (8)",
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 14,
+        "count": 12,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 19,
+        "count": 18,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -285,7 +285,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 9,
+        "count": 8,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -6422,50 +6422,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5faf85dbe8c7",
-      "title": "Storytime with Melissa Koch",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-20"
-      }
-    },
-    {
-      "id": "4751725f6179",
-      "title": "Fall Art Workshops",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/workshops-fall2026",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-20"
-      }
-    },
-    {
       "id": "9c805a767b71",
       "title": "Educators’ Evening Out",
       "date": "2026-09-22",
@@ -7067,23 +7023,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "9fd0770a4ffd",
-      "title": "America with Alex & Justina Lucero",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1344815",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -7733,10 +7672,10 @@
       "kidFriendly": false
     },
     {
-      "id": "eccdc5c76e2c",
+      "id": "63c8bfea26a1",
       "title": "All Ages Storytime",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
+      "date": "2026-09-21",
+      "displayDate": "Mon, Sep 21",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7750,10 +7689,10 @@
       "kidFriendly": true
     },
     {
-      "id": "fa92bd3af1c8",
+      "id": "09bf4ec62b1a",
       "title": "Toddler Storytime",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
+      "date": "2026-09-21",
+      "displayDate": "Mon, Sep 21",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -9007,7 +8946,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9024,7 +8963,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9041,7 +8980,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9058,7 +8997,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9075,7 +9014,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10557,23 +10496,6 @@
       "description": "Feel the earth move under your feet! Soulful and irresistible, this feel-good musical tells the true story of the woman behind the soundtrack of our lives. From teenage songwriter to chart-topping legend, Carole King finds her voice in a world that wasn’t always ready to hear it. Set against the vibrant music scene of the 1950s and 1960s, the journey follows love, resilience, the sort of friendships that shape a life—and a career that changed music forever. Featuring a thrilling lineup of iconic hits including “You’ve Got a Friend,” “It’s Too Late,” and “You Make Me Feel Like a Natural Woman,” Beautiful makes you laugh, tear up, and leave the theatre humming all the way home.",
       "url": "https://my.theatreworks.org/7464/7619",
       "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "16a1d6744182",
-      "title": "MIAMI DOLPHINS VS. SAN FRANCISCO 49ERS",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
       "kidFriendly": false
     },
     {
