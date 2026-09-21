@@ -16,6 +16,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { polishDescription } from "./generate-events.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_PATH = resolve(__dirname, "../src/data/south-bay/upcoming-events.json");
@@ -62,7 +63,7 @@ function main() {
   const samples = [];
   for (const evt of data.events ?? []) {
     if (!evt.description) continue;
-    const after = repairDescription(evt.description);
+    const after = polishDescription(repairDescription(evt.description));
     if (after !== evt.description) {
       if (samples.length < 6) {
         samples.push({ id: evt.id, before: evt.description, after });
@@ -78,7 +79,7 @@ function main() {
   }
 
   writeFileAtomic(DATA_PATH, JSON.stringify(data, null, 2) + "\n");
-  console.log(`Repaired ${touched} event descriptions.\n`);
+  console.log(`Repolished ${touched} event descriptions.\n`);
   for (const s of samples) {
     console.log(`  • ${s.id}`);
     console.log(`      before: ${s.before.slice(0, 140)}`);

@@ -49,6 +49,12 @@ const URL_RE = /\bhttps?:\/\/[^\s<>"')\]}]+/gi;
 
 function tidyDisplayText(value) {
   return String(value || "")
+    .replace(/[‘’‚‛]/g, "'")
+    .replace(/[“”„‟]/g, '"')
+    // A source can lose its translated CJK words before this shared cleanup
+    // runs while leaving full-width brackets and punctuation behind. Those
+    // orphaned glyphs are not meaningful English-display copy.
+    .replace(/[「」『』，。！？、]+/gu, " ")
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/\(\s*\)|（\s*）|\[\s*\]|\{\s*\}/g, "")
     .replace(/\s*\|\s*/g, " | ")

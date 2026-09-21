@@ -916,6 +916,10 @@ function cleanTitle(title) {
     // share normalization. Smart-quote forms render fine in some fonts but
     // break copy-paste, search, and our typography defaults.
     .replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"')
+    // Library feeds occasionally expose an internal ordinal prefix with an
+    // underscore ("2nd_Mandarin Stories and Songs"). Underscores are never
+    // intentional display punctuation in event titles; treat them as spaces.
+    .replace(/_/g, " ")
     // Strip stray space before terminal punctuation ("Bookmarks ,", "Title !").
     // Includes colon ("Friday Fun : DIY" → "Friday Fun:") — appears in SJPL and
     // Palo Alto Library titles ("Online Author Talk : Nir Eyal").
@@ -1530,6 +1534,7 @@ const DESC_TYPO_FIXES = [
   // do not restore the typo after a manual copy-edit.
   [/\bofanother\b/gi, "of another"],
   [/\bpreformance(s?)\b/gi, "performance"],
+  [/\bpefromance(s?)\b/gi, "performance"],
   [/\battendence\b/gi, "attendance"],
   [/\boccured\b/gi, "occurred"],
   [/\brecieve\b/gi, "receive"],
@@ -1543,6 +1548,9 @@ const DESC_TYPO_FIXES = [
   [/\bTicc\b/g, "TICC"],
   [/\bIo T\b/g, "IoT"],
   [/\bbookclub\b/gi, "book club"],
+  [/\bacapella\b/gi, "a cappella"],
+  [/\bcoming of age story\b/gi, "coming-of-age story"],
+  [/\bfairytale\b/gi, "fairy tale"],
   [/\bbe be\b/gi, "be"],
   [/\b(?:singing|signing)-up\b/gi, "signing up"],
   [/\bc aitlin(?=\.bosworth@)/gi, "caitlin"],
@@ -1550,6 +1558,12 @@ const DESC_TYPO_FIXES = [
   [/\bSccld\b/g, "SCCLD"],
   [/\be Resources\b/g, "e-resources"],
   [/\be Books\b/g, "e-books"],
+  [/\be Newsletter\b/g, "e-newsletter"],
+  [/\bE Newsletter Signup\b/g, "E-newsletter signup"],
+  [/\bSign-up today\b/g, "Sign up today"],
+  [/\bvital tools to helping you stand out\b/gi, "vital tools for helping you stand out"],
+  [/\bCome join a SJPL Works Business & Career Librarian\b/g, "Join an SJPL Works Business & Career Librarian"],
+  [/\bPreschool age children\b/g, "Preschool-age children"],
   [/\bUnderstanding you e-reader\b/g, "Understanding your e-reader"],
   [/\bquestionsall\b/gi, "questions—all"],
   [/\bbabies \(02\)/gi, "babies (0–2)"],
@@ -1710,6 +1724,38 @@ function polishDescription(text) {
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
 
+  // Two SJPL/SCCLD failure modes leave reader-visible translation debris:
+  // 1. a complete English description followed by orphaned full-width CJK
+  //    punctuation and a flattened translated repeat; and
+  // 2. a metadata-only remnant such as "30 。:,, (Overdrive) ... Hoopla".
+  // Preserve a complete English lead, discard the translated tail, and blank
+  // the metadata-only form so the event's clean one-sentence blurb can render.
+  if (
+    /[「」『』，。！？、]/u.test(t)
+    && (t.match(/\b[A-Za-z]{2,}\b/g) || []).length <= 6
+    && /\b(?:Overdrive|Overdirve|Hoopla|ADA)\b/i.test(t)
+  ) {
+    return "";
+  }
+  t = t.replace(/\s*Offered in-person, in English or\.\s*/gi, " ");
+  t = t.replace(
+    /\s+Các lớp thiền\b[\s\S]*?(?=For accessibility accommodations\b)/u,
+    " ",
+  );
+  const orphanCjkPunctuation = t.search(/[「」『』，。！？、]/u);
+  if (orphanCjkPunctuation >= 80) {
+    const englishLead = t.slice(0, orphanCjkPunctuation).trim();
+    if (/[.!?]["')\]]*$/.test(englishLead)) t = englishLead;
+  }
+
+  // SCCLD's recurring Falun Dafa listing flattens three benefit phrases and
+  // the schedule into one run-on. Keep every supplied fact while restoring a
+  // readable sentence boundary and parallel structure.
+  t = t.replace(
+    /Relieve Stress and anxiety Increase energy and vitality Improve physical health Friday afternoons, 1-3 PM In the Auditorium/gi,
+    "Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium.",
+  );
+
   // BiblioCommons (SJPL) descriptions fuse the "ADA Accommodation Requests"
   // link label into body copy — mid-string before a translated repeat of the
   // listing, or as a dangling tail with no terminator on the sentence before
@@ -1806,6 +1852,24 @@ function polishDescription(text) {
       return replacement;
     });
   }
+  t = t.replace(/\bAn evening of Choral Music\b/g, "An evening of choral music");
+  t = t.replace(
+    /At the Almaden Branch you can make a 30-minute appointment to assist you with:/g,
+    "At the Almaden Branch, you can make a 30-minute appointment for assistance with:",
+  );
+  t = t.replace(/\bBY Appointment Only One appointment\b/g, "By appointment only. One appointment");
+  t = t.replace(
+    /We have tutors for you to receive Free homework help with a trained tutor every/g,
+    "Trained tutors offer free homework help every",
+  );
+  t = t.replace(
+    /Presenter: Amy Yang Certified Qigong Instructor International Neijin Qigong Academy Instruction will be in English and Mandarin Thursdays, August 6 through October 8, 2026 11 AM--12:30 PM\./g,
+    "Presenter: Amy Yang, certified Qigong instructor, International Neijin Qigong Academy. Instruction will be in English and Mandarin on Thursdays, August 6 through October 8, 2026, from 11 AM to 12:30 PM.",
+  );
+  t = t.replace(
+    /Discover the restorative power of Qigong in this 90-minute group practice combines/g,
+    "Discover the restorative power of Qigong in this 90-minute group practice, which combines",
+  );
 
   // Recover from prior-regen artifacts where p.m./a.m. was already split into
   // "p. M." (capital M, space after period). The mask below only matches the
@@ -2103,6 +2167,9 @@ function polishDescription(text) {
   // Sentence splitting treats each dotted initial as its own sentence. Restore
   // this established band name after the split/rejoin pass.
   t = t.replace(/\bW\. A\. S\. P\. Is\b/g, "W.A.S.P. is");
+  // Official jazz quartet styling. The generic camel-case/all-caps passes can
+  // split PUBLIQuartet into "Publi Quartet" when re-polishing stored copy.
+  t = t.replace(/\bPUBLI Quartet\b/gi, "PUBLIQuartet");
 
   return cleanDisplayCopy(t);
 }
@@ -9081,6 +9148,7 @@ async function main() {
   // Polish descriptions: drop boilerplate sentences, downcase ALL CAPS, capitalize sentence starts
   allEvents.forEach((e) => {
     if (e.description) e.description = polishDescription(e.description);
+    if (e.attendanceNote) e.attendanceNote = cleanDisplayCopy(e.attendanceNote);
   });
 
   // Drop descriptions that are actually a ticketing widget's embed snippet

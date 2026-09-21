@@ -268,6 +268,10 @@ test("display cleanup: capitalizes proper adjectives in blurbs", () => {
     cleanDisplayCopy("More at https://example.com/taiwanese-food before taiwanese lunch."),
     "More at https://example.com/taiwanese-food before Taiwanese lunch.",
   );
+  assert.equal(
+    cleanDisplayCopy("Tutor.com , the City’s service. ， 。"),
+    "Tutor.com, the City's service.",
+  );
 });
 
 test("meal pairing: quality wins inside the radius, distance enforces the ceiling", () => {

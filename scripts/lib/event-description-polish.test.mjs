@@ -21,6 +21,62 @@ test("restores Montalvo's Mariachi Viajero ensemble spelling", () => {
   assert.equal(polishDescription("Mariachi Viejero"), "Mariachi Viajero");
 });
 
+test("repairs recurring performance-copy typos and compounds", () => {
+  assert.equal(
+    polishDescription(
+      "An evening of Choral Music featuring pefromances from two acapella groups!",
+    ),
+    "An evening of choral music featuring performances from two a cappella groups!",
+  );
+  assert.equal(
+    polishDescription("A coming of age story behind the fairytale."),
+    "A coming-of-age story behind the fairy tale.",
+  );
+  assert.equal(
+    polishDescription("Stanley Clarke performs with the PUBLIQuartet."),
+    "Stanley Clarke performs with the PUBLIQuartet.",
+  );
+});
+
+test("repairs recurring library-description grammar", () => {
+  assert.equal(
+    polishDescription(
+      "At the Almaden Branch you can make a 30-minute appointment to assist you with: e Books. BY Appointment Only One appointment per week.",
+    ),
+    "At the Almaden Branch, you can make a 30-minute appointment for assistance with: e-books. By appointment only. One appointment per week.",
+  );
+  assert.equal(
+    polishDescription("Preschool age children can join. Sign-up today for our e Newsletter."),
+    "Preschool-age children can join. Sign up today for our e-newsletter.",
+  );
+});
+
+test("removes orphaned bilingual scrape debris while preserving English copy", () => {
+  assert.equal(
+    polishDescription(
+      'This is an open rehearsal featuring the Chinese erhu. Ask questions during the Q&A. 「 」 ， 。 Harmony Orchestra 。12/15, (Overdrive). Overdirve:,, Hoopla:',
+    ),
+    "This is an open rehearsal featuring the Chinese erhu. Ask questions during the Q&A.",
+  );
+  assert.equal(
+    polishDescription("30 。:,, (Overdrive). Overdirve:,,. Hoopla: (ADA) 6/24/2027"),
+    "",
+  );
+  assert.equal(
+    polishDescription(
+      "Free. Offered in-person, in English or. Would you like help with computers? Learn at your own pace! ？ ！ No registration required.",
+    ),
+    "Free. Would you like help with computers? Learn at your own pace! No registration required.",
+  );
+});
+
+test("normalizes internal underscore separators in titles", () => {
+  assert.equal(
+    cleanTitle("2nd_Mandarin Stories and Songs"),
+    "2nd Mandarin Stories and Songs",
+  );
+});
+
 test("classifies one-on-one technology help as education", () => {
   assert.equal(
     inferCategory(
