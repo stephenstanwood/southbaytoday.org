@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-20T16:38:12.030Z",
+    "generatedAt": "2026-09-21T02:17:21.439Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 570,
+    "eventCount": 571,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (120)",
-      "Los Gatos Library (153)",
+      "Mountain View Public Library (119)",
+      "Los Gatos Library (156)",
       "San Jose Jazz (18)",
       "Linden Tree Books (14)",
       "History San Jose (6)",
@@ -19,14 +19,14 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
       "Santana Row (6)",
-      "City of Cupertino (66)",
+      "City of Cupertino (65)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (9)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
-      "Peninsula Open Space Trust (4)",
-      "San Jose Museum of Art (8)"
+      "San Jose Museum of Art (8)",
+      "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 123,
+        "count": 122,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 153,
+        "count": 156,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -96,7 +96,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 8,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 66,
+        "count": 65,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -338,37 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 4,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 4 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "8666a689f1aa",
-      "title": "Mid-Autumn Festival Chinese Calligraphy Workshop",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "2:00 PM",
-      "endTime": "3:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Celebrate the Mid-Autumn Festival with a hands-on Chinese calligraphy workshop! Whether you're a beginner or have experience, you will learn how to hold the brush, master basic strokes, and create calligraphic artwork while embracing the festive spirit. Ages 12 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17209864",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "1aa0fa7485f8",
       "title": "Sci-Fi Pajama Storytime",
@@ -2933,26 +2914,6 @@
       "kidFriendly": false
     },
     {
-      "id": "0955da8305cc",
-      "title": "Planning a Simple Native Garden for Beginners",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "California's native plants can be easy to grow, bloom year-round, and bring birds and butterflies to your yard; plus, they need 1/10 the water & maintenance of a traditional landscape. But where to start? Join us to learn each step of a plan for a successful, thriving native garden. Come away from this presentation with an easy checklist and all the resources you need to get started on your own yard.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17537043",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "1207c13a95be",
       "title": "ESL Conversation Club",
       "date": "2026-09-21",
@@ -4865,6 +4826,28 @@
       "kidFriendly": true
     },
     {
+      "id": "b11fe7a9265d",
+      "title": "Online Author Talk : Kelly and Zach Weinersmith",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Join us for an out-of-this-world virtual conversation with New York Times bestselling authors Kelly and Zach Weinersmith as they dive into their book, A City on Mars: Can We Settle Space, Should We Settle Space, and Have We Really Thought This Through? Earth is not well. The promise of starting life anew somewhere far, far away—no climate change, no war, no doomscrolling—beckons, and settling the stars ﬁnally seems within our grasp. Or is it? Critically acclaimed, bestselling authors Kelly and Zach Weinersmith set out to write the essential guide to a glorious future of space settlements, but after years of research, they aren’t so sure it’s a good idea. In a world hurtling toward human expansion into space, A City on Mars investigates whether the dream of new worlds won’t create nightmares, both for settlers and the people they leave behind. In the process, the Weinersmiths answer every question about space you’ve ever wondered about, and many you’ve never considered: Can you make babies in space? Should corporations govern space settlements? What about space war? Are we headed for a housing crisis on the Moon’s Peaks of Eternal Light—and what happens if you’re left in the Craters of Eternal Darkness? Why do astronauts love taco sauce? Speaking of meals, what’s the legal status of space cannibalism? With deep expertise, a winning sense of humor, and art from the beloved creator of Saturday Morning Breakfast Cereal, the Weinersmiths investigate perhaps the biggest questions humanity will ever ask itself—whether and how to become multiplanetary. Register today to be a part of the discussion! About the Authors: Zach Weinersmith is best known as the cartoonist of the comic Saturday Morning Breakfast Cereal . He also co-wrote the bestselling science books Soonish and A City on Mars with his wife, and worked with the artist Boulet to create a children's retelling of the story of Beowulf called Bea Wolf . Dr. Kelly Weinersmith is an adjunct faculty member at Rice University, and is currently President of the Helminthological Society of Washington and the American Society of Parasitologists. Her research on animal behavior and parasites has been featured in The Atlantic , National Geographic , BBC World , Science , Nature, and more . Kelly co-wrote the New York Times bestsellers Soonish: Ten Emerging Technologies That'll Improve And/Or Ruin Everything and A City on Mars: Can We Settle Space, Should We Settle Space, and Have We Really Thought This Through?. In 2024, she and her co-author/husband Zach received a Hugo Award and the Royal Society Trivedi Book Prize for A City on Mars . Kelly is also co-host of the podcast Daniel and Kelly’s Extraordinary Universe .",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17677193",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "ed2d33d8ecf2",
       "title": "Drop-In Tech Help",
       "date": "2026-11-10",
@@ -4928,6 +4911,28 @@
       "kidFriendly": true
     },
     {
+      "id": "71c4aa86dd57",
+      "title": "Online Author Talk : Paul Vigna",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Register here and submit your questions for the author before the event begins. Join us for an eye-opening conversation with veteran journalist Paul Vigna as we examine his provocative book, The Almightier: How Money Became God, Greed Became Virtue, and Debt Became Sin , in which he explores the question: how did money go from a tool of commerce into the dominant faith of modern society? In The Almightier , Vigna takes readers on a sweeping historical journey from Renaissance Florence to today’s global financial markets, revealing how wealth accumulation evolved from a moral failing into an unspoken civic virtue. He uncovers the forgotten history of money, tracing the uneasy and often accidental alliance between wealth and religion as it developed from ancient city-states to today’s secular world, where religious devotion has receded and greed has stepped in to fill the void. Through engaging anecdotes, original research, and fresh perspectives on the causes of the many challenges we face today, Vigna makes a compelling argument that money has no power apart from the power we give it. Whether you are interested in economic history, personal finance, or the hidden cultural forces shaping modern life, this talk is sure to pique your interest. Register today to learn more about how devotion to money has replaced religion as the foundation of our society. About the Author: Paul Vigna is an author, journalist, editor and speaker, with a particular focus on capital markets and cryptocurrencies. He is the author of Guts: The Anatomy of The Walking Dead and coauthor of The Age of Cryptocurrency and The Truth Machine . For 25 years, he was a reporter and editor for Dow Jones Newswires and the Wall Street Journal , pioneering coverage of the cryptocurrency sector. He has appeared on CNN, CNBC, MSNBC, Fox , and PBS .",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17677194",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "4d8948e2fc82",
       "title": "Mystery Lover's Book Club",
       "date": "2026-11-11",
@@ -4984,6 +4989,28 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/15783339",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "e0cc863a7fdb",
+      "title": "Online Author Talk : Pyet Despain",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Register here and submit your questions for the author before the event begins. Prepare your palate for a vibrant culinary journey with star chef Pyet DeSpain, the inaugural winner of Gordon Ramsay’s hit television competition Next Level Chef , as she presents her debut cookbook, Rooted in Fire: A Celebration of Native American and Mexican Cooking . Pyet DeSpain rose to prominence as the first winner of Gordon Ramsey’s Fox television show Next Level Chef. Now, in her debut cookbook, she shares the joy of cooking fueled by her burning passion for Native American and Mexican American cuisine. Pyet shows you how to incorporate a delicious range of key ingredients—from venison, dandelion greens, to sunchokes, bison, and native berries—into more than sixty fusion dishes. Family and friends will be excited to gather around the table to enjoy sweet and savory food such as: Three Sisters Salad Bison and Sweet Corn Soup Fry Bread Mexican Chocolate & Mezcal Cake Corn Silk and Honey Tea Wojapi BBQ Sauce Rooted in Fire is far more than just a collection of recipes; it is a movement giving voice to Indigenous culture, histories, and foodways through the universal language of food. Register for this event today and learn how to work with nature in your own kitchen. About the Author: Pyet—short for her inherited Native American name, Pyetwetmokwe—is a member of the Prairie Band Potawatomi Nation and an award-winning global private chef. She made history as the first winner of Gordon Ramsay’s Next Level Chef and was named one of Entrepreneur Magazine’s Top 25 Private Chefs in Los Angeles. Her work is centered on uplifting Indigenous foodways within the culinary industry while advocating for a more sustainable and sovereign food system for Indigenous peoples.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17677411",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -5210,6 +5237,28 @@
       "url": "https://losgatosca.libcal.com/event/17088146",
       "source": "Los Gatos Library",
       "kidFriendly": true
+    },
+    {
+      "id": "a19e44d890cf",
+      "title": "Online Author Talk : Rebecca Roanhorse",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "los-gatos",
+      "virtual": true,
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Register here and submit your questions for the author before the event begins. Step into a sprawling world of celestial magic, political intrigue, and ancient prophecies with New York Times bestselling author Rebecca Roanhorse as we dive deep into her acclaimed Between Earth and Sky trilogy. Black Sun , Fevered Star , and Mirrored Heavens are inspired by the rich and diverse cultures of the pre-Columbian Americas, reshaping modern speculative fiction with unmissable worldbuilding. Black Sun, the first book in the trilogy, introduces us to the holy city of Tova. The winter solstice is usually a time for celebration and renewal, but this year it coincides with a solar eclipse, a rare celestial event proscribed by the Sun Priest as an unbalancing of the world. Meanwhile, a ship launches from a distant city bound for Tova and set to arrive on the solstice. The captain of the ship, Xiala, is a disgraced Teek whose song can calm the waters around her as easily as it can warp a man’s mind. Her ship carries one passenger. Described as harmless, the passenger, Serapio, is a young man, blind, scarred, and cloaked in destiny. As Xiala well knows, when a man is described as harmless, he usually ends up being a villain. Whether you are a longtime fan of the trilogy or searching for your next immersive fantasy read, this is an event you won’t want to miss out on. Register today to go behind the scenes with one of speculative fiction's most exciting voices! About the Author: Rebecca Roanhorse is a New York Times bestselling and Nebula, Hugo, and Locus Award-winning speculative fiction writer. She has published multiple award-winning short stories and novels, including two novels in The Sixth World series, Star Wars: Resistance Reborn , Race to the Sun for the Rick Riordan imprint, and the Hugo Award-winning epic fantasy trilogy Between Earth and Sky . She was the guest editor of America’s Best Science Fiction and Fantasy (2023) and a contributor to the New York Times “100 Best Books of the 21st Century.” She has also written for Marvel comics and games, and her TV writing includes FX’s A Murder at the End of the World , and the Marvel series Echo for Disney+. She has had her own work optioned by Paramount, Amazon Studios, Netflix, and AMC Studios.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17677415",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
     },
     {
       "id": "cf552402b0e5",
@@ -7684,8 +7733,8 @@
       "kidFriendly": false
     },
     {
-      "id": "fa92bd3af1c8",
-      "title": "Toddler Storytime",
+      "id": "eccdc5c76e2c",
+      "title": "All Ages Storytime",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
       "time": "11:30 am",
@@ -7701,8 +7750,8 @@
       "kidFriendly": true
     },
     {
-      "id": "eccdc5c76e2c",
-      "title": "All Ages Storytime",
+      "id": "fa92bd3af1c8",
+      "title": "Toddler Storytime",
       "date": "2026-09-20",
       "displayDate": "Sun, Sep 20",
       "time": "11:30 am",
@@ -7740,23 +7789,6 @@
       }
     },
     {
-      "id": "dccfa731ca74",
-      "title": "Yoga & Pilates on The Row",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "8:30am",
-      "endTime": null,
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "",
-      "url": "https://santanarow.com/event/yoga-pilates-on-the-row/",
-      "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
       "id": "172ba43f663c",
       "title": "Farmers' Market",
       "date": "2026-09-23",
@@ -7770,6 +7802,23 @@
       "cost": null,
       "description": "",
       "url": "https://santanarow.com/event/farmers-market/",
+      "source": "Santana Row",
+      "kidFriendly": false
+    },
+    {
+      "id": "449a703daf94",
+      "title": "Yoga & Pilates on The Row",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
+      "time": "8:30am",
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://santanarow.com/event/yoga-pilates-on-the-row/",
       "source": "Santana Row",
       "kidFriendly": false
     },
@@ -7839,23 +7888,6 @@
       "description": "",
       "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
       "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
-      "id": "97a09a2f1400",
-      "title": "Citywide Garage Sale",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "09:00 AM",
-      "endTime": "04:00 PM",
-      "venue": "Citywide - Homes across Cupertino",
-      "address": "Citywide - Homes across Cupertino",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "Cupertino's Citywide Garage Sale will take place on September 19 and 20, 2026. Sellers - Registration will open in August to host a garage sale on your property. Buyers - Participate with our digital and physical maps, available a week before. Garage sale registration, a map and list of participating homes, and additional information can be found on cupertino.gov/garagesale.",
-      "url": "https://www.cupertino.gov/Events-directory/Citywide-Garage-Sale",
-      "source": "City of Cupertino",
       "kidFriendly": false
     },
     {
@@ -8964,23 +8996,6 @@
       "kidFriendly": true
     },
     {
-      "id": "931076cc71fb",
-      "title": "Don Giovanni",
-      "date": "2026-09-20",
-      "displayDate": "Sun, Sep 20",
-      "time": "2:00 pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
-      "url": "https://www.operasj.org/event/don-giovanni-3",
-      "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
       "id": "64fc4df69c15",
       "title": "Don Giovanni",
       "date": "2026-09-25",
@@ -9045,6 +9060,23 @@
       "cost": "paid",
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
+      "source": "Opera San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "ce5671f9ad3c",
+      "title": "Fiddler on the Roof",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
+      "time": "2:00 pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
     },
@@ -10987,74 +11019,6 @@
       "kidFriendly": true
     },
     {
-      "id": "22942963d2d2",
-      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "6 PM",
-      "endTime": "9 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "c5bfc22b7015",
       "title": "CityDance San José: Afrobeats",
       "date": "2026-09-24",
@@ -11188,6 +11152,74 @@
       "description": "",
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
+      "kidFriendly": false
+    },
+    {
+      "id": "22942963d2d2",
+      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
+      "time": "6 PM",
+      "endTime": "9 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
   ]
