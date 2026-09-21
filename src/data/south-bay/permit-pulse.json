@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-20T04:36:20.309Z",
+      "generatedAt": "2026-09-21T03:36:28.358Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 12 – Sep 19",
+      "dateRange": "Sep 13 – Sep 20",
       "stats": {
-        "total": 529,
+        "total": 521,
         "notable": 35,
         "newUnits": 13,
-        "totalValuation": 52538285
+        "totalValuation": 52523935
       },
       "permits": [
         {
@@ -137,14 +137,14 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-20T04:36:22.919Z",
+      "generatedAt": "2026-09-21T03:36:30.709Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 12 – Sep 19",
+      "dateRange": "Sep 13 – Sep 20",
       "stats": {
-        "total": 118,
+        "total": 120,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
@@ -160,18 +160,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-17",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-02632",
-          "address": "834 Ames Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-16",
           "subtype": "Permit Issued"
         },
         {
@@ -196,6 +184,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-17",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02632",
+          "address": "834 Ames Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-16",
           "subtype": "Permit Issued"
         },
         {

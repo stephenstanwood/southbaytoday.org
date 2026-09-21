@@ -1,49 +1,50 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-20T04:44:25.351Z",
+    "generatedAt": "2026-09-21T03:44:55.061Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 5
+    "sourceCount": 7
   },
   "summary": {
-    "threadsMined": 5,
+    "threadsMined": 7,
     "placesExtracted": 1,
-    "placesMatched": 0,
-    "placeGaps": 1,
+    "placesMatched": 1,
+    "placeGaps": 0,
     "eventsExtracted": 1,
     "eventsMatched": 0,
     "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
-  "placeGaps": [
-    {
-      "name": "Slice of NY",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "celebrating 20 year anniversary with $2 slices",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wl1b2l/20_year_anniversary_of_slice_of_ny_today_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wl5y5a/sri_lankan_tamil_community/",
-        "https://www.reddit.com/r/SanJose/comments/1wl2gwh/does_anyone_want_tix_to_godsmack_and_stone_temple/",
-        "https://www.reddit.com/r/SanJose/comments/1wl1gwo/should_san_jose_have_a_designated_little_assyria/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wj57tz/apple_cider_donuts/"
-      ]
-    }
-  ],
+  "placeGaps": [],
   "eventGaps": [
     {
-      "name": "Godsmack and Stone Temple Pilots",
-      "when": "9/19, 7pm",
-      "city": "Mountain View",
-      "context": "concert at Shoreline Amphitheatre, extra tickets available",
+      "name": "Music in the Park",
+      "when": "",
+      "city": "San Jose",
+      "context": "featured E-40 and Ice-T performances",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wl1b2l/20_year_anniversary_of_slice_of_ny_today_with/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wl5y5a/sri_lankan_tamil_community/",
-        "https://www.reddit.com/r/SanJose/comments/1wl2gwh/does_anyone_want_tix_to_godsmack_and_stone_temple/",
-        "https://www.reddit.com/r/SanJose/comments/1wl1gwo/should_san_jose_have_a_designated_little_assyria/",
-        "https://www.reddit.com/r/Sunnyvale/comments/1wj57tz/apple_cider_donuts/"
+        "https://www.reddit.com/r/losgatos/comments/1wlikpl/new_design_proposed_for_notorious_highway_17/",
+        "https://www.reddit.com/r/SanJose/comments/1wlqa54/music_in_the_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wm08e4/san_jose_delivers_another_spectacular_sunset/",
+        "https://www.reddit.com/r/SanJose/comments/1wlxnh1/creative_spaces/",
+        "https://www.reddit.com/r/SanJose/comments/1wlx95f/meal_prep_service/"
       ]
     }
   ],
-  "placeMatches": [],
+  "placeMatches": [
+    {
+      "name": "San Pedro Square",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "lively spot to work on creative projects",
+      "sourceUrls": [
+        "https://www.reddit.com/r/losgatos/comments/1wlikpl/new_design_proposed_for_notorious_highway_17/",
+        "https://www.reddit.com/r/SanJose/comments/1wlqa54/music_in_the_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wm08e4/san_jose_delivers_another_spectacular_sunset/",
+        "https://www.reddit.com/r/SanJose/comments/1wlxnh1/creative_spaces/",
+        "https://www.reddit.com/r/SanJose/comments/1wlx95f/meal_prep_service/"
+      ],
+      "matchedName": "San Pedro Square Market"
+    }
+  ],
   "eventMatches": []
 }
