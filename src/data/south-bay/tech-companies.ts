@@ -1501,6 +1501,102 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //   * AlleyWatch's 9/17 daily is New York only (Adaptive, Polyphron,
   //     Notes.fm). Its 9/21 weekly and Crunchbase's Sep 12-18 top ten are
   //     still the two lists to check next cycle against the Sep 14-18 window.
+  // Note on the Sep 18-21 2026 sweep: Nex and Terragrit are the two in-coverage
+  // rounds added below, and both are late catches against the Sep 14-18
+  // window rather than new-day news — the two lists the prior pass deferred
+  // (AlleyWatch's 9/21 weekly, Crunchbase's Sep 12-18 top ten) surfaced them.
+  //   * Nex's city labels conflict three ways and the primary source settles
+  //     it. FinSMEs and Crunchbase file the $150M round under San Francisco;
+  //     AlleyWatch's 9/21 weekly files it under San Jose; the company's own
+  //     Sep 17 announcement on nexplayground.com carries no dateline city and
+  //     its boilerplate names none. The tiebreaker is company-authored: the
+  //     privacy policy on nexplayground.com names the data controller as
+  //     "NEX Team Inc., 333 W San Carlos St, Suite 600, San Jose, CA 95110" —
+  //     the same bar Owner's Platform Terms, Rune's footer, and Gaia Dynamics'
+  //     privacy policy cleared — and CB Insights independently lists the same
+  //     address. In coverage as San Jose. The amount is recorded as the
+  //     company's own headline figure ("more than $150 million in new equity
+  //     and debt financing"): the Series E equity led by Baillie Gifford and
+  //     BAI Capital and a new JPMorgan credit facility are announced as one
+  //     number, no split is disclosed by the company (GamesBeat reports
+  //     roughly half and half), and every source reports the blended total.
+  //     This is NOT the Lambda case above — that was a standalone debt
+  //     facility with no equity round attached; this is a lettered equity
+  //     round with a facility alongside it. The tagline says so, and the
+  //     card links the company's own domain so the logo resolver reads it.
+  //   * Terragrit is a strategic investment with no amount disclosed —
+  //     recorded as "Undisclosed" on the SiMa.ai / Micron precedent further
+  //     down. Its city needed the LinkedIn-and-exhibitor-profile route: the
+  //     Sep 17 PR Newswire release datelines NEW YORK (issuance, the Groq
+  //     rule) and its boilerplate names no city; terragrit.com has no
+  //     contact, terms, or privacy page and no address anywhere in its
+  //     markup; EDGAR has no Form D; Crunchbase says San Francisco; a
+  //     Nevada/Florida registered-agent address belongs to the agent, not the
+  //     HQ. Two company-authored sources agree on Santa Clara: the company's
+  //     own LinkedIn page gives 5201 Great America Pkwy, Suite 320, Santa
+  //     Clara, and its SME Advanced Manufacturing Showcase exhibitor profile
+  //     for CES 2026 reads "Headquartered: Santa Clara, Calif." FinSMEs
+  //     agrees. In coverage as Santa Clara. (A City of Santa Clara new-business
+  //     listing PDF for Jun-Jul 2026 appears to carry a Terragrit row, but the
+  //     city's site returns 403 to automated fetches and the file is a forced
+  //     download — a deliberate block, left alone rather than worked around.)
+  //   * Hang Ten Systems' June $32M seed entry was REMOVED this pass. The Sep
+  //     16-17 note above already ruled the company out of coverage as Menlo
+  //     Park for its $53M second seed, but the June entry (added when the
+  //     first release datelined "PALO ALTO, Calif., June 24, 2026") was still
+  //     in the list — the same company in and out at once. The newer primary
+  //     sources win on a moved HQ (the Array Labs and Clipto calls above):
+  //     the Sep 16 Business Wire release datelines "MENLO PARK, Calif." and
+  //     hangten.ai/careers lists every open role in Menlo Park. AlleyWatch's
+  //     9/21 weekly still files the $53M under Palo Alto; that is the
+  //     aggregator tag alone. San Mateo County, out of coverage; neither
+  //     round is entered. The logo file and manifest row went with it.
+  // Near-misses recorded so the next cycle doesn't re-verify them:
+  //   * AlleyWatch's 9/21 weekly is otherwise out of coverage (Arcee AI,
+  //     Aron, AI Underwriting Company, BackOps AI, Eve Security, Expanse,
+  //     Factory, Flam, Thatch, TypeSafe AI — San Francisco; Decimal AI — San
+  //     Mateo; the rest out of state). Crunchbase's Sep 12-18 top ten is the
+  //     same names (Temporal, Impulse Space, Ridgeline, Cornelis, Factory,
+  //     Profound, Arcee, Nex, Mazama, Sling) and files Nex under San
+  //     Francisco — resolved above.
+  //   * FinSMEs' Sep 21 US list is otherwise out of coverage (Angle Health,
+  //     Eubrics, Arcee AI — San Francisco; Rainmaker — El Segundo; Fluxnium —
+  //     Los Angeles; Footprint — New York; Split Pay — Miami; Marel Power —
+  //     Plymouth, Mich.; ImpriMed — Seoul). Its Sep 18 list is TigerByte (DC)
+  //     and Embra AI (San Francisco). No Sep 19-20 posts.
+  //   * VC News Daily's Sep 18 list has no Santa Clara County rounds (RegCell
+  //     — Emeryville; Motive, Cognition AI — San Francisco; Fab2 — Austin;
+  //     Suniva — Norcross; Luzern Risk — New York; Robigo — Cambridge; The
+  //     Boring Company — Pflugerville). No Sep 19-21 posts.
+  //   * techstartups' Sep 21 roundup is all international (Amber Electric,
+  //     Paymob, Unit1 Studio, Spiro, BharatPe, Novadip, Sprive, Metris,
+  //     Anacalypsis, Bekia). No Sep 19-20 roundups.
+  {
+    id: "nex",
+    name: "Nex",
+    city: "San Jose",
+    category: "hardware",
+    round: "Series E",
+    amount: "$150M+",
+    date: "2026-09-17",
+    tagline:
+      "The console maker that got kids off the couch has sold a million of them. Nex, the San Jose company behind Nex Playground — a $300 controller-free box that tracks the player's body with a camera so families jump, dodge, and dance through more than 60 games, Bluey, Barbie, Kung Fu Panda, and Peppa Pig among them, with NFL Flag and PAC-MAN on the way — announced more than $150M in new equity and debt financing: a Series E co-led by Baillie Gifford and BAI Capital, with NBA Investments, Logitech, Medici Capital Partners, and the Raine Group joining, alongside a new JPMorgan credit facility, with the split between the two undisclosed. Motion data stays on the device, and every unit ships with a camera cover. The console sits in more than 7,000 U.S. stores — Costco, Sam's Club, Target, Walmart, Best Buy — and the subscriber base has grown sevenfold in 18 months to nearly a million. CEO and co-founder David Lee, who has said he is building a hundred-year company, has hired Niantic's former CFO Jeff Shouger into the same role and added him and former EA executive Bing Gordon to the board. The money goes to Germany later this year, Japan and Korea in 2027, and cross-household multiplayer.",
+    color: "#7C3AED",
+    url: "https://www.nexplayground.com/",
+  },
+  {
+    id: "terragrit",
+    name: "Terragrit",
+    city: "Santa Clara",
+    category: "software",
+    round: "Strategic Investment",
+    amount: "Undisclosed",
+    date: "2026-09-17",
+    tagline:
+      "Before a utility reroutes a feeder, a factory moves a line, or a hospital reshuffles a wing, Terragrit wants the change run in software first. The Santa Clara company, founded by CEO Sam Nagar — whose previous startup, the San Jose edge-computing company Pixeom, sold its edge platform to Siemens in 2019 — builds what it calls a virtualization engine for physical operations: cross-functional teams assemble a working model of a facility or a grid network, propose a change, and watch the platform map the downstream effects on capacity, constraints, resilience, cost, and sequencing before anyone touches the real thing — spreadsheet-simple to use, the company says, without the specialized engineering tools that usually gate that work. National Grid Partners, the venture arm of the utility that serves more than 80 million people across the U.K. and the U.S., made a strategic investment of undisclosed size and brought Terragrit into its NextGrid Alliance, a network of innovation executives from more than 170 utilities. The money goes to AI research and software engineering hiring, the collaborative modules, and customers across energy, manufacturing, transportation, supply chain, and healthcare.",
+    color: "#1E3A8A",
+    url: "https://terragrit.com/",
+  },
   {
     id: "gaia-dynamics",
     name: "Gaia Dynamics",
@@ -2237,19 +2333,6 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
       "Vertical AI lab building APT-1 (Agentic Pretrained Transformer), a frontier model designed from the ground up for enterprise customer experience: it aims to eliminate hallucinations and enforce company policies architecturally so support agents give deterministic, verifiable answers in production CX workflows. Founded by CEO Dan Roth (former Microsoft VP of Conversational AI), CTO Dan Klein (UC Berkeley AI/NLP professor), and CFO Damon Pender — the trio behind Semantic Machines, the conversational-AI pioneer Microsoft acquired in 2018. The Series A was led by Khosla Ventures, with participation from Genesys.",
     color: "#4338ca",
     url: "https://www.scaledcognition.com",
-  },
-  {
-    id: "hang-ten-systems",
-    name: "Hang Ten Systems",
-    city: "Palo Alto",
-    category: "ai",
-    round: "Seed",
-    amount: "$32M",
-    date: "2026-06-24",
-    tagline:
-      "Enterprise AI services built around agentic code generation: it helps large companies continuously build, change, and run the software that runs the business — at a fraction of the usual cost and time — using AI agents plus reusable \"AI skills\" and domain expertise. Founded by CEO Vishal Sikka (former Infosys CEO and SAP board member) with CTO Navin Budhiraja, Chief Design Officer Sanjay Rajagopalan, and forward-deployed-engineering lead Tao Liu; Yahoo co-founder Jerry Yang sits on the board. The seed was led by Mayfield with a strategic investment from Aramco Ventures, and early customers include Siemens Gamesa and Fresenius.",
-    color: "#312e81",
-    url: "https://hangten.ai",
   },
   {
     id: "upscale-ai",
