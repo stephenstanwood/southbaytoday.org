@@ -491,6 +491,15 @@ async function pickBodyByLegistarItems(client, candidates, recordText) {
 // Economic Development Committee meeting shipped as a City Council meeting on
 // 2026-09-01 — the same PrimeGov call resolved the committee correctly minutes
 // later. A verifier that cannot answer must not be read as agreement.
+// Legistar has no dedicated cancelled flag; the status name, time, location,
+// and comment fields each carry the word in different instances.
+export function isCancelledLegistarEvent(event) {
+  const fields = [
+    event?.EventAgendaStatusName, event?.EventTime, event?.EventLocation, event?.EventComment,
+  ];
+  return fields.some((f) => /cancel(?:led|ed)|postponed/i.test(String(f ?? "")));
+}
+
 export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "") {
   try {
     const url =
@@ -505,7 +514,14 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
     const events = await res.json();
     if (!Array.isArray(events) || events.length === 0) return null;
 
+    // Legistar keeps cancelled sittings on the calendar with the agenda status
+    // (and often the time/location) set to CANCELLED. A cancelled body never
+    // heard anything, so it can neither confirm a council label nor win a
+    // relabel. Santa Clara's 2026-09-17 digest shipped as "Civil Service
+    // Commission" (cancelled) while the summary described the Station Area
+    // Task Force, the only body that actually convened that evening.
     const named = events
+      .filter((e) => !isCancelledLegistarEvent(e))
       .map((e) => ({
         body: String(e.EventBodyName || "").trim(), eventId: e.EventId,
         sourceUrl: legistarMeetingUrl(client, dateIso, e.EventInSiteURL),
@@ -537,7 +553,7 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
 
     // Prefer bodies whose names read like deliberative ones (committee /
     // commission / council-of-the-whole) over incidental same-day staff hearings.
-    const deliberative = named.filter((e) => /\b(committee|commission)\b/i.test(e.body));
+    const deliberative = named.filter((e) => /\b(committee|commission|task force)\b/i.test(e.body));
     const candidates = (deliberative.length > 0 ? deliberative : named)
       .map(({ body, eventId, sourceUrl }) => ({
         // Strip meeting-type boilerplate Legistar prepends to some body names

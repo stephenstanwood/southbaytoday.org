@@ -739,3 +739,39 @@ test("relabelIfOtherBodyMatches: same-day non-council body wins only with a hit 
   );
   assert.deepEqual(relabelIfOtherBodyMatches([], "anything"), { body: null, sourceUrl: null, councilMet: true });
 });
+
+// Santa Clara 2026-09-17: Legistar listed the Civil Service Commission
+// (CANCELLED) alongside the Station Area Task Force (Final). The commission
+// matched the committee/commission preference, the task force did not, and a
+// lone candidate is returned unscored — so the digest shipped headed "Civil
+// Service Commission" over a summary of the task force's agenda.
+test("Legistar verifier ignores cancelled sittings and treats task forces as deliberative", async () => {
+  const events = [
+    {
+      EventId: 4828, EventBodyName: "Station Area Task Force", EventAgendaStatusName: "Final",
+      EventTime: "6:00 PM", EventLocation: "City Hall",
+      EventInSiteURL: "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4828&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+    },
+    {
+      EventId: 5080, EventBodyName: "Civil Service Commission", EventAgendaStatusName: "CANCELLED",
+      EventTime: "6:00 PM", EventLocation: "CANCELLED",
+      EventInSiteURL: "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5080&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+    },
+  ];
+  const resolved = await withStubbedFetch(
+    async () => jsonResponse(events),
+    () => verifyLegistarBodyOnDate(
+      "santaclara", "2026-09-17",
+      "Station Area Task Force Review of Chapter 2 - Vision and Goals and Chapter 3 - Land Use",
+    ),
+  );
+  assert.equal(resolved.body, "Station Area Task Force");
+  assert.equal(resolved.eventId, 4828);
+
+  // A cancelled council sitting does not license the "City Council" label.
+  const cancelledCouncil = await withStubbedFetch(
+    async () => jsonResponse([{ EventBodyName: "City Council", EventId: 1, EventAgendaStatusName: "CANCELLED" }]),
+    () => verifyLegistarBodyOnDate("santaclara", "2026-09-17", "anything"),
+  );
+  assert.deepEqual(cancelledCouncil, { body: null, sourceUrl: null, councilMet: false });
+});

@@ -29,6 +29,7 @@ import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
   fetchEscribePastMeeting,
+  isCancelledLegistarEvent,
   legistarMeetingUrl,
   ptDateISO,
   substantiveAgendaTitles,
@@ -172,6 +173,9 @@ async function fetchLegistarPastMeeting(client) {
   if (!events?.length) return null;
 
   for (const ev of events) {
+    // A cancelled sitting still carries its posted agenda items; skip it so the
+    // digest never summarizes a meeting that never happened.
+    if (isCancelledLegistarEvent(ev)) continue;
     const itemsRes = await fetch(
       `https://webapi.legistar.com/v1/${client}/Events/${ev.EventId}/EventItems`,
       { headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" }, signal: AbortSignal.timeout(15_000) },
