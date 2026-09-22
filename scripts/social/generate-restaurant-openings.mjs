@@ -248,7 +248,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook" — ea
   }
 
   const data = await res.json();
-  const text = data.content?.[0]?.text ?? "";
+  const text = data.content?.find((b) => b?.type === "text")?.text ?? "";
 
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {

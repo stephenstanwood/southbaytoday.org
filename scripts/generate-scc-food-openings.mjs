@@ -674,7 +674,7 @@ async function generateBlurbMap(items, prompt, label) {
       max_tokens: 1024,
       messages: [{ role: "user", content: prompt }],
     });
-    let text = msg.content[0]?.text ?? "[]";
+    let text = msg.content.find((b) => b?.type === "text")?.text ?? "[]";
     text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
     const parsed = JSON.parse(text);
     const map = {};
@@ -861,7 +861,7 @@ Respond with JSON: array of objects with "sourceId" and "prompt" fields only. No
       max_tokens: 1500,
       messages: [{ role: "user", content: prompt }],
     });
-    let text = msg.content[0]?.text ?? "[]";
+    let text = msg.content.find((b) => b?.type === "text")?.text ?? "[]";
     text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
     const parsed = JSON.parse(text);
     const map = {};

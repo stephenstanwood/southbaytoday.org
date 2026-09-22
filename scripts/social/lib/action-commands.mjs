@@ -141,7 +141,7 @@ async function classifyComment(comment, context) {
       return [{ type: "no_action", reason: `API error ${res.status}` }];
     }
     const data = await res.json();
-    const text = data.content?.[0]?.text?.trim() || "[]";
+    const text = data.content?.find((b) => b?.type === "text")?.text?.trim() || "[]";
     return JSON.parse(text);
   } catch (err) {
     console.error("  ⚠ Action classification failed:", err.message);
