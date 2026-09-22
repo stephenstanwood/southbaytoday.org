@@ -1571,6 +1571,46 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //   * techstartups' Sep 21 roundup is all international (Amber Electric,
   //     Paymob, Unit1 Studio, Spiro, BharatPe, Novadip, Sprive, Metris,
   //     Anacalypsis, Bekia). No Sep 19-20 roundups.
+  // Note on the Sep 21-22 2026 sweep: no in-coverage round surfaced. Two
+  // near-misses, both recorded so the next cycle doesn't re-verify them:
+  //   * Euka AI ($5M seed led by Susa Ventures with Creator Ventures,
+  //     announced Sep 17 2026 and picked up by FinSMEs on Sep 21; creator-
+  //     commerce affiliate platform, the largest on TikTok Shop) is NOT here
+  //     despite FinSMEs filing it under "San Jose, CA" and the company's own
+  //     WebWire release datelining "San Jose, CA - Thursday, September 17,
+  //     2026." The dateline is announcement issuance, not an HQ claim (the
+  //     Groq rule), and the release's "About Euka AI" boilerplate names no
+  //     city — so the tiebreaker has to be company-authored, and twice over it
+  //     says San Francisco: euka.ai's own contact block gives "660 California
+  //     St, San Francisco 94108," and Euka's LinkedIn company page lists
+  //     Headquarters "San Francisco" and San Francisco as its one Primary
+  //     location. Exactly the Euno case in reverse — there a Sunnyvale
+  //     dateline lost to an SF boilerplate; here a San Jose dateline loses to
+  //     an SF contact page. Out of coverage; do not add on the FinSMEs city
+  //     tag or the dateline alone.
+  //   * Corridor ($25M seed led by Bain Capital Ventures with BoxGroup and
+  //     Definition Capital, Sep 21 2026; AI-native health-benefits brokerage
+  //     for 1-100-employee businesses) is New York. techstartups' Sep 21
+  //     roundup lists no city for it and TechCrunch's write-up names none
+  //     either — the only geography in the piece is a founder's UC Berkeley
+  //     degree, which is a school, not an HQ (the WindBorne founding-story
+  //     rule). Crunchbase and fintech.global both place it in New York.
+  //   * The rest of the window is out of coverage. FinSMEs' Sep 22 US list:
+  //     Confido, Chamelio, millionways (New York); Teal Health, Atum (San
+  //     Francisco); Primrose Bio (San Diego); Monetary Metals (Scottsdale);
+  //     The Xtreme Group (Miami); Go.AI (Chicago); Vaulted Deep (Houston).
+  //     Its Sep 21 list adds only AGV America (San Antonio). VC News Daily's
+  //     Sep 21 list is Raindrop and Harvey (San Francisco), CorePower
+  //     Magnetics (Pittsburgh), Rainmaker and Mach Industries (Los Angeles
+  //     area), Fluxnium (Los Angeles); no Sep 22 posts. techstartups' Sep 22
+  //     roundup is all out of coverage (HighLife - Paris; CellPoint - London;
+  //     BCI-Sonics, ZhiYin Bio - China; Spott - Leuven; AI Hospitality Group -
+  //     Dallas; Benford - Oslo; Definedge - Pune; OpenDebt - Sydney;
+  //     TacnIQ.ai - Singapore). AlleyWatch's 9/21 daily is NYC-only and its
+  //     9/22 post is Evvy (New York), already recorded above.
+  //   * Crunchbase's Sep 19-25 top ten does not publish until Friday Sep 25 —
+  //     check it next cycle against this window, the late-catch habit that
+  //     surfaced Nex and Terragrit a week late.
   {
     id: "nex",
     name: "Nex",
