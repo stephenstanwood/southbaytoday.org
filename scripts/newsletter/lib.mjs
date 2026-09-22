@@ -1936,7 +1936,7 @@ Return ONLY the rewritten blurb, no quotes, no preamble.`;
   });
   if (!res.ok) throw new Error(`anthropic ${res.status}: ${await res.text()}`);
   const data = await res.json();
-  return (data.content?.[0]?.text || "").trim().replace(/^["']|["']$/g, "");
+  return (data.content?.find((b) => b?.type === "text")?.text || "").trim().replace(/^["']|["']$/g, "");
 }
 
 function parseTimeMinutes(timeStr) {

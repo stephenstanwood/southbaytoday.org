@@ -533,7 +533,7 @@ Return ONLY the prompt text, nothing else.`
 
     if (res.ok) {
       const data = await res.json();
-      const prompt = data.content?.[0]?.text?.trim();
+      const prompt = data.content?.find((b) => b?.type === "text")?.text?.trim();
       if (prompt && prompt.length > 20) return prompt;
     }
   } catch {}
