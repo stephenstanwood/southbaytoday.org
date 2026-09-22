@@ -1509,6 +1509,22 @@ const BOILERPLATE_SENTENCE_PATTERNS = [
   // catches the short trailing remnant so descriptions clear to "" and the
   // blurb (from event-blurb-cache) takes over on the card.
   /^\s*do\s+not\b.*…\s*$/i,
+  // Dangling-reference sentences: on the source page each of these wrapped a
+  // link or sat next to a form, and the scrape keeps the words while the thing
+  // they point at stays behind. On an event card they read as instructions the
+  // reader cannot follow ("sign up ... here", "read this document", "register
+  // below"), so the whole sentence goes. All five are anchored at the sentence
+  // start, which is the difference between dropping a CTA and dropping real
+  // copy: SCCLD's Palo Alto book-club body mashes "Sign up for the library
+  // newsletter and never miss another program!" onto the end of a twelve-title
+  // reading list with no terminator between them, and an unanchored newsletter
+  // pattern would take the reading list out with it. The pre-split normalizer
+  // in polishDescription breaks that mash apart first so this still fires.
+  /^(?:(?:and\s+)?don'?t forget to\s+|please\s+|you can(?:\s+also)?\s+|also,?\s+)?sign up for (?:our|the|any of our)\b[^.!?]*\bnewsletters?\b/i,
+  /^(?:please\s+)?read (?:this|the) (?:document|flyer|form|attachment)\b/i,
+  /^(?:please\s+)?(?:register|sign\s?up|rsvp|apply) below\b/i,
+  /^(?:please\s+)?see below\b/i,
+  /^(?:read|learn) more about\b[^.!?]*\bweb\s?site\b/i,
 ];
 
 /**
@@ -2094,6 +2110,19 @@ function polishDescription(text) {
   // "neither … nor Cal" conjunction would be lowercase "nor" — so reuniting is
   // safe. Same family as PayPal/NetApp/CrossFit/NeXT/McFly.
   t = t.replace(/\bNor Cal\b/g, "NorCal");
+
+  // BiblioCommons bodies concatenate a newsletter CTA onto the end of the
+  // preceding sentence with no terminator between them ("...by Michael Chabon
+  // - December Sign up for the library newsletter and never miss another
+  // program!"). Insert the missing break so the anchored newsletter pattern in
+  // BOILERPLATE_SENTENCE_PATTERNS drops the CTA and leaves the real copy — the
+  // reading list, in that case — standing. Requires a capital "Sign": a
+  // lowercase mid-sentence "sign up for our newsletter" is prose inside a
+  // sentence the anchored pattern already handles from its own start.
+  t = t.replace(
+    /(\w)\s+(Sign up for (?:our|the|any of our)\b[^.!?]*\bnewsletters?\b)/g,
+    "$1. $2",
+  );
 
   // Split into sentences and drop boilerplate. Capture trailing closers
   // (`"`, `'`, `)`, `]`) as part of the terminator group so a quoted clause

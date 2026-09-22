@@ -369,3 +369,62 @@ test("preserves JavaScript and W.A.S.P. capitalization through word splitting", 
     "Learn JavaScript. W.A.S.P. is performing.",
   );
 });
+
+test("drops dangling-reference CTA sentences the reader cannot follow", () => {
+  // Palo Alto / SCCLD library bodies keep the words of a link that stayed
+  // behind on the source page. Each of these is the whole sentence.
+  assert.equal(
+    polishDescription(
+      "The Monday Morning book club meets in the Library Conference Room. Sign up for our newsletter.",
+    ),
+    "The Monday Morning book club meets in the Library Conference Room.",
+  );
+  assert.equal(
+    polishDescription(
+      "Come ready to talk about what you made. Don't forget to sign up for our Cookbook Club newsletter to get the latest updates! You can sign up for any of our newsletters here.",
+    ),
+    "Come ready to talk about what you made.",
+  );
+  assert.equal(
+    polishDescription(
+      "Registration is required to use this service. Please read this document to learn more about the scanning service. Register below for a 90-minute session.",
+    ),
+    "Registration is required to use this service.",
+  );
+  assert.equal(
+    polishDescription(
+      "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Presented by the Asian Art Museum.",
+    ),
+    "Registration is required. Presented by the Asian Art Museum.",
+  );
+  assert.equal(
+    polishDescription(
+      "Each machine has limitations. Please see below for more information. Pre-registration is recommended.",
+    ),
+    "Each machine has limitations. Pre-registration is recommended.",
+  );
+  assert.equal(
+    polishDescription(
+      "Join local yoga teacher Patricia Becker in the Embarcadero Room. Read more about Patricia and her classes on her website. Registration is not required.",
+    ),
+    "Join local yoga teacher Patricia Becker in the Embarcadero Room. Registration is not required.",
+  );
+});
+
+test("keeps real copy a newsletter CTA is mashed onto", () => {
+  // BiblioCommons concatenates the CTA onto the previous sentence with no
+  // terminator; the reading list must survive the drop.
+  assert.equal(
+    polishDescription(
+      "Our reading list follows: The Frozen River by Ariel Lawhon - September What We Can Know by Ian McEwan - November Sign up for the library newsletter and never miss another program! You don't have to register.",
+    ),
+    "Our reading list follows: The Frozen River by Ariel Lawhon - September What We Can Know by Ian McEwan - November. You don't have to register.",
+  );
+  // A lowercase mid-sentence mention is prose, not a mashed CTA.
+  assert.equal(
+    polishDescription(
+      "Attendees who sign up for our newsletter receive the reading list early.",
+    ),
+    "Attendees who sign up for our newsletter receive the reading list early.",
+  );
+});
