@@ -879,6 +879,11 @@ const PROPER_NOUN_FIXES = {
   // A Meetup plein-air group titles its Saratoga outing "Villa Montavlo"
   // (venue field on the same listing: Villa Montalvo). Same day.
   Montavlo: "Montalvo",
+  // SJSU's Localist listing for the Chochenyo Ohlone talk misspells both its
+  // heading ("Langauge") and the hosting program ("Native Ameican") — the URL
+  // slug carries the same typo, so every refresh re-imports it (2026-09-21).
+  "Ohlone Langauge": "Ohlone Language",
+  "Native Ameican": "Native American",
 };
 
 function fixProperNouns(text) {
@@ -2628,7 +2633,15 @@ function inferCategory(title, desc, type, venue = "") {
   // ukulele, voice" — is exactly the case).
   const hasInstrumentTitle = /\b(open\s+mic|guitar|ukulele|drum\s+circle|sing[-\s]?along|karaoke)\b/.test(titleLower);
   const musicHaystack = /\b(library|libraries)\b/.test(venueLower) && !hasInstrumentTitle ? titleLower : t;
-  const hasBandWord = /\b(?:band|banda)\b/.test(musicHaystack) || (/\bbands\b/.test(musicHaystack) && /\b(play|playing|perform|stage|tour|album|concert)\b/.test(musicHaystack));
+  // "Band" is also what tribal nations call themselves — "the federally
+  // recognized Verona Band" in an SJSU talk on reviving the Chochenyo Ohlone
+  // language filed a lecture under music (with a concert stock photo) on
+  // 2026-09-21. In that context the bare word needs the same performance cue
+  // as the plural before it counts.
+  const hasTribalContext = /\b(ohlone|muwekma|rancheria|tribal|tribes?|indigenous|native\s+american)\b/.test(t);
+  const hasPerformanceCue = /\b(play|playing|perform|stage|tour|album|concert|live)\b/.test(musicHaystack);
+  const hasBandWord = (/\b(?:band|banda)\b/.test(musicHaystack) && (!hasTribalContext || hasPerformanceCue))
+    || (/\bbands\b/.test(musicHaystack) && hasPerformanceCue);
   if (/\bconcerts?\b|\bmusic(?:al|ians?)?\b|\bm[úu]sic[ao]s?\b|\bconciertos?\b|\bjazz\b|\bsymphon(?:y|ies)\b|\borchestras?\b|\bchoirs?\b/.test(musicHaystack) || hasBandWord) return "music";
   if (t.includes("comedy") || t.includes("stand-up") || t.includes("standup") || t.includes("improv show") || t.includes("comedian")) return "arts";
   // Comedy-club venues (San Jose Improv, Rooster T. Feathers, etc.) host
@@ -9107,6 +9120,10 @@ async function main() {
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events
   allEvents.forEach((e) => { e.title = cleanTitle(e.title); });
+  // PROPER_NOUN_FIXES promises to correct blurbs too, so a card's heading and
+  // description agree. That used to be wired per-adapter (SCCL only) and was
+  // lost in a refactor; run it once here over every source's description.
+  allEvents.forEach((e) => { if (e.description) e.description = fixProperNouns(e.description); });
 
   // Strip redundant venue suffix: SJSU's RSS feed appends " at <Venue>" to
   // many event titles, where <Venue> is also in the venue field. The card
