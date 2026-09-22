@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-22T02:17:25.249Z",
+    "generatedAt": "2026-09-22T15:04:34.212Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 575,
+    "eventCount": 576,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (127)",
-      "Los Gatos Library (156)",
+      "Los Gatos Library (158)",
       "San Jose Jazz (18)",
       "Linden Tree Books (12)",
       "History San Jose (6)",
@@ -18,7 +18,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
       "Santana Row (6)",
-      "City of Cupertino (65)",
+      "City of Cupertino (64)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (8)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 156,
+        "count": 158,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -249,7 +249,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 65,
+        "count": 64,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -352,48 +352,6 @@
     ]
   },
   "events": [
-    {
-      "id": "1aa0fa7485f8",
-      "title": "Sci-Fi Pajama Storytime",
-      "date": "2026-09-21",
-      "displayDate": "Mon, Sep 21",
-      "time": "6:30 PM",
-      "endTime": "7:15 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Wear your favorite PJs or astronaut suit for an out of this world storytime. Enjoy songs, books, and rhymes as we explore the wonders of space and all things alien. A Sci-Fi September Event",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17231477",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "adef34bbfbd8",
-      "title": "Board of Library Trustees Meeting",
-      "date": "2026-09-21",
-      "displayDate": "Mon, Sep 21",
-      "time": "7:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Regular meeting of the Board of Library Trustees View the meeting agenda and supporting documents at mountainview.legistar.com For more information on the Board of Library Trustees, please visit their webpage.",
-      "sourceAudiences": [
-        "All Ages"
-      ],
-      "url": "https://mountainview.libcal.com/event/15945822",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "626297521f92",
       "title": "Outdoor Storytime",
@@ -3058,6 +3016,49 @@
       "url": "https://mountainview.libcal.com/event/17249790",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "481f7ff8192e",
+      "title": "Choose Your Own Adventure Book Club",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": "free",
+      "description": "Calling all young adventurers! Join us for an exciting book club where you help decide what happens next in the story. We will read the story together, vote on which direction to take, then see where our choice takes us! Each participant will receive a free book and an Adventure Passport to track the books they’ve read. Open to ages 5-8.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17463941",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "33dcdf1412da",
+      "title": "Smart Start Babytime",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "6:00 PM",
+      "endTime": "7:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Smart Start Babytime is a special program for babies (0–2) and their caregivers that blends stories, songs, and early play with different information each week with a pediatric resident from Stanford Medical School. Caregivers will gain practical tips, build confidence, and have the opportunity to ask questions—all in a warm, supportive environment designed for your baby’s earliest learning.",
+      "sourceAudiences": [
+        "Preschoolers",
+        "Parents",
+        "Families",
+        "Toddlers"
+      ],
+      "url": "https://mountainview.libcal.com/event/16916951",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "0c7e69e60106",
@@ -6265,6 +6266,46 @@
       "kidFriendly": true
     },
     {
+      "id": "287ccf74e103",
+      "title": "ESL Conversation Club",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16831255",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "81745e63a7f3",
+      "title": "Social Stitching",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Come join fellow needlework and textile arts enthusiasts at the library! Crafters of all levels are welcome to bring their projects and chat, teach, learn, and make new friends at this casual weekly get together. This group is entirely self-directed and you are encouraged to bring your own tools and materials. If you are looking for some inspiration or don’t know where to start, check out Creativebug - it's free with your library card and offers hundreds of project ideas and instructions.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16025987",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7736,10 +7777,10 @@
       "kidFriendly": false
     },
     {
-      "id": "63c8bfea26a1",
+      "id": "9dea31e7db50",
       "title": "All Ages Storytime",
-      "date": "2026-09-21",
-      "displayDate": "Mon, Sep 21",
+      "date": "2026-09-22",
+      "displayDate": "Tue, Sep 22",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7753,10 +7794,10 @@
       "kidFriendly": true
     },
     {
-      "id": "09bf4ec62b1a",
+      "id": "166b47401e0d",
       "title": "Toddler Storytime",
-      "date": "2026-09-21",
-      "displayDate": "Mon, Sep 21",
+      "date": "2026-09-22",
+      "displayDate": "Tue, Sep 22",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -8816,23 +8857,6 @@
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-14",
       "displayDate": "Sat, Nov 14",
-      "time": "08:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "De Anza College Parking Lot A",
-      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
-      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "cd206e4c8dff",
-      "title": "Paper Shredding and Environmental Recycling",
-      "date": "2026-09-21",
-      "displayDate": "Mon, Sep 21",
       "time": "08:00 AM",
       "endTime": "12:00 PM",
       "venue": "De Anza College Parking Lot A",
