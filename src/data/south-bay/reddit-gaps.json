@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-21T03:44:55.061Z",
+    "generatedAt": "2026-09-22T03:19:29.958Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 7
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 7,
+    "threadsMined": 9,
     "placesExtracted": 1,
     "placesMatched": 1,
     "placeGaps": 0,
@@ -17,33 +17,32 @@
   "placeGaps": [],
   "eventGaps": [
     {
-      "name": "Music in the Park",
-      "when": "",
+      "name": "SOFA Street Fair",
+      "when": "Sunday 9/27 2pm - 8pm",
       "city": "San Jose",
-      "context": "featured E-40 and Ice-T performances",
+      "context": "free all-ages street fair, band/stage announcements on Instagram",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1wlikpl/new_design_proposed_for_notorious_highway_17/",
-        "https://www.reddit.com/r/SanJose/comments/1wlqa54/music_in_the_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wm08e4/san_jose_delivers_another_spectacular_sunset/",
-        "https://www.reddit.com/r/SanJose/comments/1wlxnh1/creative_spaces/",
-        "https://www.reddit.com/r/SanJose/comments/1wlx95f/meal_prep_service/"
+        "https://www.reddit.com/r/SanJose/comments/1wmolqs/sofa_street_fair_sunday_927_2pm_8pm_free/",
+        "https://www.reddit.com/r/SanJose/comments/1wmqjtp/wheres_the_best_tiramisu_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wm2z51/lesbian_queer_events/",
+        "https://www.reddit.com/r/SanJose/comments/1wmmbhj/veterinarian_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wmtv53/preschool_95123/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "San Pedro Square",
+      "name": "Almaden Quicksilver",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "lively spot to work on creative projects",
+      "kind": "park",
+      "context": "county park mentioned for trail encounter",
       "sourceUrls": [
-        "https://www.reddit.com/r/losgatos/comments/1wlikpl/new_design_proposed_for_notorious_highway_17/",
-        "https://www.reddit.com/r/SanJose/comments/1wlqa54/music_in_the_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wm08e4/san_jose_delivers_another_spectacular_sunset/",
-        "https://www.reddit.com/r/SanJose/comments/1wlxnh1/creative_spaces/",
-        "https://www.reddit.com/r/SanJose/comments/1wlx95f/meal_prep_service/"
+        "https://www.reddit.com/r/SanJose/comments/1wmjrpg/paw_patrol_birthday_entertainers/",
+        "https://www.reddit.com/r/SanJose/comments/1wm9157/looking_for_venue_for_birthday/",
+        "https://www.reddit.com/r/SanJose/comments/1wm4yfy/fuzzy_trail_friend_almaden_quicksilver/",
+        "https://www.reddit.com/r/SanJose/comments/1wm1tr2/general_contractor_recommendations/"
       ],
-      "matchedName": "San Pedro Square Market"
+      "matchedName": "Almaden Quicksilver County Park"
     }
   ],
   "eventMatches": []

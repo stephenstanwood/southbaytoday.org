@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-21T03:36:28.358Z",
+      "generatedAt": "2026-09-22T03:11:12.241Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 13 – Sep 20",
+      "dateRange": "Sep 14 – Sep 21",
       "stats": {
-        "total": 521,
-        "notable": 35,
-        "newUnits": 13,
-        "totalValuation": 52523935
+        "total": 490,
+        "notable": 37,
+        "newUnits": 14,
+        "totalValuation": 53064313
       },
       "permits": [
         {
@@ -51,6 +51,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-105531-RS",
+          "address": "125 N 13th St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 131764,
+          "units": 1,
+          "issueDate": "2026-09-18",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2025-124202-RS",
           "address": "1267 Cristina Av #2",
           "category": "residential-new",
@@ -60,6 +72,18 @@
           "valuation": 131060,
           "units": 1,
           "issueDate": "2026-09-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-106404-RS",
+          "address": "3344 Ariel Joshua Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 121561,
+          "units": 1,
+          "issueDate": "2026-09-18",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -87,18 +111,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-103211-RS",
-          "address": "1499 S King Rd #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached Garage Converion to JADU",
-          "valuation": 72303,
-          "units": 1,
-          "issueDate": "2026-09-14",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2025-144312-RS",
           "address": "1833 Andrews Av #2",
           "category": "residential-new",
@@ -121,31 +133,19 @@
           "units": 1,
           "issueDate": "2026-09-16",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-138040-CI",
-          "address": "3098 Olsen Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Cisco 2nd Floor Office TI",
-          "valuation": 15000000,
-          "units": 0,
-          "issueDate": "2026-09-16",
-          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-21T03:36:30.709Z",
+      "generatedAt": "2026-09-22T03:11:14.695Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 13 – Sep 20",
+      "dateRange": "Sep 14 – Sep 21",
       "stats": {
-        "total": 120,
-        "notable": 6,
+        "total": 98,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -153,6 +153,18 @@
         {
           "id": "26BLD-02643",
           "address": "1525 Waverley St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02645",
+          "address": "766 Bryant St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -172,18 +184,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-15",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-02645",
-          "address": "766 Bryant St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-17",
           "subtype": "Permit Issued"
         },
         {
@@ -208,18 +208,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-17",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00258",
-          "address": "855 California Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over the Counter Tree Removal of one African Fern Pine (Podocarpus) to be replaced with four 24-inch box Cork Oak (Quercus suber).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-14",
           "subtype": "Over the Counter Approved"
         }
       ]
