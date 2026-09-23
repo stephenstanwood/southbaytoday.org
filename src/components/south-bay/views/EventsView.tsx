@@ -126,17 +126,11 @@ function formatTimeRange(timeIn: string | null, endTimeIn: string | null, isSpor
   return `${time}–${endTime}`;
 }
 
-const NOW_MINUTES = (() => {
-  const n = new Date();
-  const nPT = new Date(n.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
-  return nPT.getHours() * 60 + nPT.getMinutes();
-})();
-
-function hasNotStarted(time: string | null): boolean {
+function hasNotStarted(time: string | null, nowMins: number): boolean {
   if (!time) return true;
   const mins = parseTimeToMinutes(time);
   if (mins === null) return true;
-  return mins > NOW_MINUTES;
+  return mins > nowMins;
 }
 
 // Newly-scraped events get a "JUST ADDED" badge for this many hours after
@@ -154,14 +148,14 @@ function isJustAdded(firstSeenAt: string | null | undefined): boolean {
 // "Happening now": started, not yet ended. For events with no endTime, fall
 // back to a 2-hour fuzzy window (a typical performance/talk window).
 const FUZZY_DURATION_MIN = 120;
-function isInProgressNow(time: string | null, endTime: string | null): boolean {
+function isInProgressNow(time: string | null, endTime: string | null, nowMins: number): boolean {
   if (!time) return false;
   const start = parseTimeToMinutes(time);
   if (start === null) return false;
-  if (start > NOW_MINUTES) return false;
+  if (start > nowMins) return false;
   const end = endTime ? parseTimeToMinutes(endTime) : null;
-  if (end !== null) return NOW_MINUTES < end;
-  return NOW_MINUTES - start <= FUZZY_DURATION_MIN;
+  if (end !== null) return nowMins < end;
+  return nowMins - start <= FUZZY_DURATION_MIN;
 }
 
 const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
@@ -950,6 +944,19 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // when a tab is left open. Updates every 60s.
   const nowMins = useNowMinutes();
 
+  // The minute the lists and counts check today's events against: started
+  // ones drop out, and Live now keeps the ones still running. Unlike the
+  // ticker it holds still, so cards don't vanish while someone reads. It's
+  // read when the feed lands, so the first render reads no clock, and read
+  // again whenever today changes: a tab opened at 8 PM and back in use at
+  // 9 the next morning checks that day against 9 AM, not the 8 PM page load.
+  const [filterNow, setFilterNow] = useState<{ day: string; mins: number } | null>(null);
+  if (feed !== null && filterNow?.day !== todayIso) {
+    setFilterNow({ day: todayIso, mins: ptMinutesNow() });
+  }
+  // Every list is empty until the feed lands, so the fallback never counts.
+  const filterNowMins = filterNow?.mins ?? 0;
+
   const allCities = selectedCities.size === CITIES.length;
 
   // Search overrides single-day view
@@ -995,7 +1002,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     if (showLiveNowOnly) {
       if (e.date !== todayIso) return false;
-      if (!isInProgressNow(e.time, e.endTime)) return false;
+      if (!isInProgressNow(e.time, e.endTime, filterNowMins)) return false;
     }
     if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) return false;
     if (!matchesActiveThemedHoliday(e)) return false;
@@ -1010,7 +1017,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   }, [
     allCities, selectedCities, category, showKidsOnly, showFreeOnly,
     showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly,
-    todayIso, weekendSat, weekendSun, matchesActiveThemedHoliday,
+    todayIso, filterNowMins, weekendSat, weekendSun, matchesActiveThemedHoliday,
     isSearching, searchQ,
   ]);
 
@@ -1022,9 +1029,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter(matchesFilters)
       // Hide today's events that have started — UNLESS the user has explicitly
       // asked to see what's happening right now via the Live Now pill.
-      .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
+      .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time, filterNowMins)))
       .sort(byStartTimeWithinDate);
-  }, [upcomingEvents, selectedDate, matchesFilters, showLiveNowOnly, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, matchesFilters, showLiveNowOnly, todayIso, filterNowMins, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -1055,26 +1062,26 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     const matches = upcomingEvents
       .filter((e) => e.date === weekendSat || e.date === weekendSun)
       .filter(matchesFilters)
-      .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time)))
+      .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time, filterNowMins)))
       .sort(byStartTimeWithinDate);
     const groups: Record<string, UpcomingEvent[]> = {};
     for (const e of matches) (groups[e.date] ||= []).push(e);
     return [weekendSat, weekendSun]
       .filter((d) => (groups[d]?.length ?? 0) > 0)
       .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
-  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, matchesFilters, todayIso]);
+  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, matchesFilters, todayIso, filterNowMins]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
     const set = new Set<string>();
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time, filterNowMins)) continue;
       if (!matchesFilters(e)) continue;
       set.add(e.date);
     }
     return [...set].sort();
-  }, [upcomingEvents, todayIso, showLiveNowOnly, matchesFilters]);
+  }, [upcomingEvents, todayIso, filterNowMins, showLiveNowOnly, matchesFilters]);
 
   // While only the near slice is loaded, a snap target past its window can't
   // be known yet — hold the current date (showing skeleton rows) until the
@@ -1121,7 +1128,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time, filterNowMins)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1136,7 +1143,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       }
       if (showLiveNowOnly) {
         if (e.date !== todayIso) continue;
-        if (!isInProgressNow(e.time, e.endTime)) continue;
+        if (!isInProgressNow(e.time, e.endTime, filterNowMins)) continue;
       }
       if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) continue;
       if (isSearching) {
@@ -1150,7 +1157,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
-  }, [upcomingEvents, allCities, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Per-city counts (for badges on the Area chips) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -1161,7 +1168,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     let total = 0;
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time, filterNowMins)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1176,7 +1183,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       }
       if (showLiveNowOnly) {
         if (e.date !== todayIso) continue;
-        if (!isInProgressNow(e.time, e.endTime)) continue;
+        if (!isInProgressNow(e.time, e.endTime, filterNowMins)) continue;
       }
       if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) continue;
       if (isSearching) {
@@ -1190,7 +1197,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       total++;
     }
     return { perCity: counts, total };
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(
@@ -1208,7 +1215,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (e.date < todayIso) continue;
       // Live count needs started-but-ongoing events, so don't apply the
       // standard "hide started events" gate here. We bucket live separately.
-      const startedToday = e.date === todayIso && !hasNotStarted(e.time);
+      const startedToday = e.date === todayIso && !hasNotStarted(e.time, filterNowMins);
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (isSearching) {
@@ -1218,7 +1225,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             !(e.city || "").toLowerCase().includes(searchQ) &&
             !(e.venue || "").toLowerCase().includes(searchQ)) continue;
       }
-      if (e.date === todayIso && isInProgressNow(e.time, e.endTime)) live++;
+      if (e.date === todayIso && isInProgressNow(e.time, e.endTime, filterNowMins)) live++;
       // Other pills only count not-yet-started events, like the day list.
       // Search results keep today's started events, so a search counts them.
       if (startedToday && !isSearching) continue;
@@ -1232,7 +1239,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (isJustAdded(e.firstSeenAt)) justAdded++;
     }
     return { kids, free, tonight, weekend, live, justAdded };
-  }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
   // but tallied per day so each pill in the strip can show how busy that day is.
