@@ -1,7 +1,7 @@
 ---
 // Static per-date event listings — the crawlable layer for the events data.
-// The interactive Events tab is a client:only React app, so these pages are
-// what search engines (and no-JS readers) actually see. Pure Astro, no
+// The interactive Events tab fetches its list after it loads, so these pages
+// are what search engines (and no-JS readers) actually see. Pure Astro, no
 // hydration; regenerated on every nightly data build.
 import CalendarShell from "../../layouts/CalendarShell.astro";
 import upcomingData from "../../data/south-bay/upcoming-events.json";

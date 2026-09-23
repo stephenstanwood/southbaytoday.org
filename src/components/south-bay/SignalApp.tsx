@@ -61,9 +61,12 @@ export interface EagerViews {
 interface SignalAppProps {
   initialTab?: Tab;
   eager?: EagerViews;
+  /** Pacific date the page was built on, for views that render "today" into
+   *  the static HTML (see useTodayPT). */
+  buildDayPt?: string;
 }
 
-export default function SignalApp({ initialTab, eager }: SignalAppProps = {}) {
+export default function SignalApp({ initialTab, eager, buildDayPt }: SignalAppProps = {}) {
   // Deterministic first render: the page's own tab, never the URL hash. A
   // legacy #events-style bookmark would make the hydrating client disagree
   // with the server HTML; the mount effect below resolves the hash instead.
@@ -94,17 +97,18 @@ export default function SignalApp({ initialTab, eager }: SignalAppProps = {}) {
   }, []);
 
   // Default = all cities selected. Honors a `?city=<id>` deep-link param so a
-  // city-page link (e.g. the holiday banner on /city/cupertino) can drop the
-  // resident on /events?city=cupertino with just that city pre-filtered.
-  const [selectedCities, setSelectedCities] = useState<Set<City>>(() => {
-    const allCities = new Set(CITIES.map((c) => c.id));
-    if (typeof window === "undefined") return allCities;
+  // city page's "all events" link can drop the resident on
+  // /events?city=cupertino with just that city pre-filtered. The param is
+  // applied after mount so the first render matches the build's HTML.
+  const [selectedCities, setSelectedCities] = useState<Set<City>>(
+    () => new Set(CITIES.map((c) => c.id)),
+  );
+  useEffect(() => {
     const param = new URLSearchParams(window.location.search).get("city");
     if (param && CITIES.some((c) => c.id === param)) {
-      return new Set([param as City]);
+      setSelectedCities(new Set([param as City]));
     }
-    return allCities;
-  });
+  }, []);
   // Purge any lingering home-city preference from a previous build. The
   // product is now "explore the whole area" — no anchor city. Keep this
   // as a one-time cleanup so users aren't staring at a stale label.
@@ -157,6 +161,7 @@ export default function SignalApp({ initialTab, eager }: SignalAppProps = {}) {
                 selectedCities={selectedCities}
                 onToggleCity={toggleCity}
                 onToggleAllCities={toggleAll}
+                buildDayPt={buildDayPt}
               />
             )}
             {activeTab === "government" && (
