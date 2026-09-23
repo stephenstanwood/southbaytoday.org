@@ -105,6 +105,27 @@ separate recovery problem, not a reason to relax the workflow.
   moved to Divi production pages (404 on 2026-09-11). Tribe iCal/REST exports
   are not published; the adapter reads the `26-27-season` lander for current
   `/productions/*` slugs and each page's server-rendered performance rows.
+- San Jose Theaters (California Theatre, San Jose Civic, Center for the
+  Performing Arts, Montgomery Theater) moved from sanjosetheaters.org to Visit
+  San Jose in September 2026. The old All-in-One Event Calendar iCal export
+  began answering HTTP 200 with the `https://www.sanjose.org/theaters` HTML
+  landing page; the adapter parsed zero VEVENTs as an empty success and the
+  per-source regression guard blocked the 2026-09-22 refresh ("lost 59
+  still-upcoming source records") — the guard was right and stays as is. The
+  adapter now reads the public `/event-listings` JSON that the theaters page
+  itself loads, keeps the rows that page keeps (`field_team_san_jose_theater`
+  or one of the four houses), and takes show times from each listing's own
+  detail page: the structured When time for single nights, the presenter's
+  per-performance list for runs. Multi-night Opera San José and Broadway San
+  Jose runs are skipped because fetchOperaSanJoseEvents and Ticketmaster
+  already carry them under titles the dedup cannot match. Presenter listings
+  that name a P.O. box resolve to the house named in their copy, and addresses
+  come from a canonical map, never the listing. Every failure throws (HTML in
+  place of JSON, no theater rows, more than a fifth of detail pages failing,
+  nothing parsed), so a future move reads as one degraded source rather than a
+  blocked refresh. robots.txt is stock Drupal and allows both paths. iCal
+  adapters now call `assertIcalCalendar`, so an HTML page served from an old
+  export URL is a source error there too.
 - SJDA (Downtown San Jose) was retired 2026-08-24, and unlike SJMA the whole
   site is walled rather than one endpoint: the events API, `/events/feed/`,
   `?ical=1` and the sitemap that sjdowntown.com's own robots.txt advertises all
