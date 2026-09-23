@@ -1102,10 +1102,11 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
   }, [themedHoliday, selectedDate, isSearching]);
 
-  // Per-category counts (for badges on category pills) — count across ALL
+  // Per-category counts (for the category dropdown) — count across ALL
   // upcoming events so users can see which categories have anything at all,
-  // regardless of which day is currently selected. Honors city/kids/search
-  // filters since those reflect the user's intent across the whole feed.
+  // regardless of which day is currently selected. Honors city, quick-filter,
+  // and search filters since those reflect the user's intent across the whole
+  // feed.
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
@@ -1127,6 +1128,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
+      if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1138,12 +1140,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
-  // Per-city counts (for badges on city pills) — same approach as
+  // Per-city counts (for badges on the Area chips) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
-  // available in each city given the current category/kids/search filters.
+  // available in each city given the current category, quick-filter, and
+  // search filters.
   const cityCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     let total = 0;
@@ -1166,6 +1168,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
+      if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1177,7 +1180,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       total++;
     }
     return { perCity: counts, total };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
@@ -1225,8 +1227,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // but tallied per day so each pill in the strip can show how busy that day is.
   // Tonight/Weekend toggles are intentionally NOT applied here: the strip is
   // hidden in those modes anyway, and we want pure city/category/kids/free/
-  // search filtering so the numbers stay consistent with what the user sees
-  // when they tap a date pill.
+  // new/search filtering so the numbers stay consistent with what the user
+  // sees when they tap a date pill. Live now isn't applied either: tapping any
+  // other day turns it off, so each pill still counts what that tap shows.
   //
   // Unlike dayEvents (which hides today's already-started events so the list
   // reads as "what's still ahead"), this count intentionally does NOT apply
@@ -1243,6 +1246,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
+      if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -1253,7 +1257,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       counts[e.date] = (counts[e.date] || 0) + 1;
     }
     return counts;
-  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, showJustAddedOnly, todayIso, isSearching, searchQ]);
 
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
