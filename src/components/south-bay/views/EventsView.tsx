@@ -4,16 +4,11 @@ import {
   EVENT_CATEGORIES,
   type EventCategory,
 } from "../../../data/south-bay/events-data";
-import schoolCalendarJson from "../../../data/south-bay/school-calendar.json";
 import {
   holidayOn,
-  holidaySpanIsos,
-  holidayClosureSummary,
   matchesHolidayTheme,
-  nextHolidayWithin,
   NAMED_HOLIDAYS,
 } from "../../../lib/south-bay/holidays";
-import { currentHeritageMonths, matchesHeritage, type HeritageMonth } from "../../../lib/south-bay/heritageMonths";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../../lib/south-bay/eventFilters.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
@@ -764,900 +759,6 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
   );
 }
 
-// ── School-year heads-up banner ─────────────────────────────────────────────
-// Surfaces the soonest school-year milestone (AP exams, finals, graduation,
-// last day, holidays, breaks) within the next 14 days for districts that
-// overlap with the user's selected cities. One compact line, hidden when
-// nothing's near. Data lives in src/data/south-bay/school-calendar.json.
-
-interface SchoolDistrict {
-  id: string;
-  name: string;
-  fullName: string;
-  color: string;
-  bg: string;
-  cities: string[];
-}
-
-interface SchoolEvent {
-  id: string;
-  districtId: string;
-  label: string;
-  type: string;
-  startDate: string;
-  endDate: string;
-}
-
-const SCHOOL_TYPE_EMOJI: Record<string, string> = {
-  testing: "📝",
-  finals: "📝",
-  graduation: "🎓",
-  lastday: "🎉",
-  break: "🏖️",
-  holiday: "🏖️",
-};
-
-function schoolEventEmoji(type: string): string {
-  return SCHOOL_TYPE_EMOJI[type] ?? "📚";
-}
-
-function schoolDateLabel(iso: string, todayIso: string, tomorrowIso: string): string {
-  if (iso === todayIso) return "today";
-  if (iso === tomorrowIso) return "tomorrow";
-  const d = new Date(iso + "T12:00:00");
-  return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-}
-
-/** "Sat, May 23 – Mon, May 25" — used on the holiday heads-up banner for
- *  3-day-weekend holidays so residents see the whole observance window, not
- *  just the calendar Monday. Falls back to today/tomorrow labels when the
- *  span starts inside the immediate horizon. */
-function formatWeekendRange(
-  startIso: string,
-  endIso: string,
-  todayIso: string,
-  tomorrowIso: string,
-): string {
-  if (startIso === endIso) return schoolDateLabel(startIso, todayIso, tomorrowIso);
-  const startLabel = startIso === todayIso
-    ? "today"
-    : startIso === tomorrowIso
-      ? "tomorrow"
-      : new Date(startIso + "T12:00:00").toLocaleDateString("en-US", {
-          weekday: "short", month: "short", day: "numeric",
-        });
-  const endDate = new Date(endIso + "T12:00:00");
-  // Drop the repeated "May" on the end side when both ends share a month.
-  const sameMonth = startIso.slice(0, 7) === endIso.slice(0, 7);
-  const endLabel = sameMonth
-    ? endDate.toLocaleDateString("en-US", { weekday: "short", day: "numeric" })
-    : endDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-  return `${startLabel} – ${endLabel}`;
-}
-
-function SchoolHeadsUpBanner({ selectedCities }: { selectedCities: Set<City> }) {
-  const todayIso = todayPT();
-  const tomorrowIso = addDays(todayIso, 1);
-  const horizonIso = addDays(todayIso, 14);
-
-  const districts = (schoolCalendarJson as { districts: SchoolDistrict[] }).districts;
-  const events = (schoolCalendarJson as { events: SchoolEvent[] }).events;
-
-  const matchedDistrictIds = useMemo(() => {
-    const set = new Set<string>();
-    for (const d of districts) {
-      if (d.cities.some((c) => selectedCities.has(c as City))) set.add(d.id);
-    }
-    return set;
-  }, [districts, selectedCities]);
-
-  const districtById = useMemo(() => {
-    const m: Record<string, SchoolDistrict> = {};
-    for (const d of districts) m[d.id] = d;
-    return m;
-  }, [districts]);
-
-  // Find the soonest event date with at least one matched district. Group all
-  // events that share that date AND label so e.g. Memorial Day collapses to a
-  // single line with multiple district badges.
-  const headline = useMemo(() => {
-    const upcoming = events
-      .filter((e) => e.startDate >= todayIso && e.startDate <= horizonIso)
-      .filter((e) => matchedDistrictIds.has(e.districtId))
-      .sort((a, b) => a.startDate.localeCompare(b.startDate));
-    if (upcoming.length === 0) return null;
-    const soonestDate = upcoming[0].startDate;
-    const sameDate = upcoming.filter((e) => e.startDate === soonestDate);
-    const sameLabel = sameDate.filter((e) => e.label === sameDate[0].label);
-    return {
-      label: sameLabel[0].label,
-      type: sameLabel[0].type,
-      startDate: sameLabel[0].startDate,
-      endDate: sameLabel[0].endDate,
-      districts: sameLabel
-        .map((e) => districtById[e.districtId])
-        .filter(Boolean)
-        .sort((a, b) => a.name.localeCompare(b.name)),
-    };
-  }, [events, matchedDistrictIds, districtById, todayIso, horizonIso]);
-
-  if (!headline) return null;
-
-  const dateLabel = schoolDateLabel(headline.startDate, todayIso, tomorrowIso);
-  const isMultiDay = headline.endDate && headline.endDate !== headline.startDate;
-  const verb = headline.type === "graduation" || headline.type === "lastday"
-    ? "" // label already reads as a noun
-    : isMultiDay ? "begin " : "";
-
-  // When the same event hits every matched district (e.g. Memorial Day across
-  // all 9 districts) the badge row becomes noisy. Collapse to a single
-  // "all districts" pill in that case.
-  const allMatched = headline.districts.length === matchedDistrictIds.size && headline.districts.length >= 4;
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: 8,
-        padding: "8px 12px",
-        marginBottom: 10,
-        background: "#F5F3FF",
-        border: "1px solid #DDD6FE",
-        borderRadius: 8,
-        fontSize: 12.5,
-        color: "#4C1D95",
-        lineHeight: 1.45,
-      }}
-    >
-      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>
-        {schoolEventEmoji(headline.type)}
-      </span>
-      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#6D28D9" }}>
-        School year
-      </span>
-      <span style={{ fontWeight: 600 }}>
-        {headline.label}
-      </span>
-      <span style={{ color: "#6D28D9" }}>
-        {verb}
-        {dateLabel}
-      </span>
-      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-        {allMatched ? (
-          <span
-            title={headline.districts.map((d) => d.fullName).join(", ")}
-            style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: "0.04em",
-              padding: "1px 6px",
-              borderRadius: 4,
-              background: "#EDE9FE",
-              color: "#5B21B6",
-              border: "1px solid #C4B5FD",
-            }}
-          >
-            All districts
-          </span>
-        ) : (
-          headline.districts.map((d) => (
-            <span
-              key={d.id}
-              title={d.fullName}
-              style={{
-                fontFamily: "'Space Mono', monospace",
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: "0.04em",
-                padding: "1px 6px",
-                borderRadius: 4,
-                background: d.bg,
-                color: d.color,
-                border: `1px solid ${d.color}33`,
-              }}
-            >
-              {d.name}
-            </span>
-          ))
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ── School-year endgame panel ──────────────────────────────────────────────
-// Late spring, the question parents have isn't "what's the next holiday" —
-// it's "when does my district's school year end?" Last-day dates differ by
-// up to two weeks across South Bay districts. We render a compact list of
-// finals → graduation → last-day dates in chronological order whenever any
-// matched district has its last day within the next 60 days. Outside that
-// window the panel hides — keeps the events tab uncluttered the rest of
-// the year.
-
-interface SchoolMilestone {
-  date: string;
-  type: "finals" | "lastday" | "graduation";
-  districts: SchoolDistrict[];
-}
-
-function SchoolYearEndgamePanel({ selectedCities }: { selectedCities: Set<City> }) {
-  const todayIso = todayPT();
-  const horizonIso = addDays(todayIso, 60);
-
-  const districts = (schoolCalendarJson as { districts: SchoolDistrict[] }).districts;
-  const events = (schoolCalendarJson as { events: SchoolEvent[] }).events;
-
-  const matchedDistrictIds = useMemo(() => {
-    const set = new Set<string>();
-    for (const d of districts) {
-      if (d.cities.some((c) => selectedCities.has(c as City))) set.add(d.id);
-    }
-    return set;
-  }, [districts, selectedCities]);
-
-  const districtById = useMemo(() => {
-    const m: Record<string, SchoolDistrict> = {};
-    for (const d of districts) m[d.id] = d;
-    return m;
-  }, [districts]);
-
-  // Group finals + last-day + graduation events by (date, type), then by
-  // chrono date. Finals come weeks before grad/lastday, so they anchor the
-  // top of the endgame list and give high-school parents a real heads-up.
-  // Same district often has both lastday and graduation on the same date
-  // (lastday IS the graduation for high schoolers). Keep them on separate
-  // rows so parents can spot graduations distinctly.
-  const milestones = useMemo<SchoolMilestone[]>(() => {
-    const matching = events.filter(
-      (e) =>
-        (e.type === "finals" || e.type === "lastday" || e.type === "graduation") &&
-        e.startDate >= todayIso &&
-        e.startDate <= horizonIso &&
-        matchedDistrictIds.has(e.districtId),
-    );
-    const byKey = new Map<string, SchoolMilestone>();
-    for (const e of matching) {
-      const key = `${e.startDate}|${e.type}`;
-      const existing = byKey.get(key);
-      const district = districtById[e.districtId];
-      if (!district) continue;
-      if (existing) {
-        if (!existing.districts.some((d) => d.id === district.id)) {
-          existing.districts.push(district);
-        }
-      } else {
-        byKey.set(key, {
-          date: e.startDate,
-          type: e.type as "finals" | "lastday" | "graduation",
-          districts: [district],
-        });
-      }
-    }
-    const list = Array.from(byKey.values());
-    const typeOrder: Record<SchoolMilestone["type"], number> = {
-      finals: 0,
-      graduation: 1,
-      lastday: 2,
-    };
-    list.sort((a, b) => {
-      if (a.date !== b.date) return a.date.localeCompare(b.date);
-      // On the same date: finals → graduation → lastday. Diplomas before the
-      // generic "last day" entry since grad is the bigger moment.
-      return typeOrder[a.type] - typeOrder[b.type];
-    });
-    for (const m of list) {
-      m.districts.sort((a, b) => a.name.localeCompare(b.name));
-    }
-    // Hide a panel that contains only a finals row in a single district —
-    // not enough to justify the panel until lastday/grad joins it.
-    const hasEndOfYear = list.some((m) => m.type === "lastday" || m.type === "graduation");
-    if (!hasEndOfYear) return [];
-    return list;
-  }, [events, matchedDistrictIds, districtById, todayIso, horizonIso]);
-
-  if (milestones.length === 0) return null;
-
-  // Header summarises the spread: "May 29 – Jun 11" lets a parent see at a
-  // glance how staggered the local end-of-year is.
-  const firstDate = milestones[0].date;
-  const lastDate = milestones[milestones.length - 1].date;
-  const spread = firstDate === lastDate
-    ? new Date(firstDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })
-    : `${new Date(firstDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${new Date(lastDate + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
-
-  return (
-    <div
-      style={{
-        padding: "10px 12px 12px",
-        marginBottom: 10,
-        background: "#FEFCE8",
-        border: "1px solid #FDE68A",
-        borderRadius: 8,
-        fontSize: 12.5,
-        color: "#713F12",
-        lineHeight: 1.45,
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, flexWrap: "wrap" }}>
-        <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>🎒</span>
-        <span style={{
-          fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
-          letterSpacing: "0.08em", textTransform: "uppercase", color: "#A16207",
-        }}>
-          End of school year
-        </span>
-        <span style={{ fontWeight: 700, color: "#713F12" }}>{spread}</span>
-        <span style={{ color: "#A16207", fontSize: 11.5 }}>
-          across {matchedDistrictIds.size} district{matchedDistrictIds.size === 1 ? "" : "s"}
-        </span>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        {milestones.map((m) => {
-          const d = new Date(m.date + "T12:00:00");
-          const dateLabel = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-          const typeLabel = m.type === "graduation"
-            ? "Graduation"
-            : m.type === "finals"
-              ? "Finals start"
-              : "Last day";
-          return (
-            <div
-              key={`${m.date}-${m.type}`}
-              style={{
-                display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap",
-                padding: "4px 0",
-              }}
-            >
-              <span style={{
-                fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700,
-                color: "#713F12", minWidth: 88,
-              }}>
-                {dateLabel}
-              </span>
-              <span style={{
-                fontSize: 11, fontWeight: 600, color: "#A16207",
-                minWidth: 78,
-              }}>
-                {typeLabel}
-              </span>
-              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                {m.districts.map((d) => (
-                  <span
-                    key={d.id}
-                    title={d.fullName}
-                    style={{
-                      fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
-                      letterSpacing: "0.04em", padding: "1px 6px", borderRadius: 4,
-                      background: d.bg, color: d.color, border: `1px solid ${d.color}33`,
-                    }}
-                  >
-                    {d.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ── Holiday heads-up banner ────────────────────────────────────────────────
-// Surfaces the soonest civic/cultural holiday within the next 14 days
-// (Mother's Day, Memorial Day, Cinco de Mayo, etc.). Hidden when nothing
-// matches. Mirrors SchoolHeadsUpBanner's visual rhythm. When events exist
-// on the holiday's date, renders as a button that jumps the date selector
-// so residents can tap "Mother's Day → 12 events" and immediately see them.
-
-interface HolidayHeadsUpBannerProps {
-  eventCountByDate: Record<string, number>;
-  themedCountByHolidayId: Record<string, number>;
-  onJumpToDate: (iso: string, themedHolidayId?: string) => void;
-}
-
-function HolidayHeadsUpBanner({
-  eventCountByDate,
-  themedCountByHolidayId,
-  onJumpToDate,
-}: HolidayHeadsUpBannerProps) {
-  const todayIso = todayPT();
-  const tomorrowIso = addDays(todayIso, 1);
-  const horizonIso = addDays(todayIso, 14);
-
-  const next = useMemo(
-    () => nextHolidayWithin(todayIso, horizonIso),
-    [todayIso, horizonIso],
-  );
-  if (!next) return null;
-
-  const { holiday } = next;
-  // For 3-day-weekend holidays (Memorial, Labor, MLK, Presidents', Indigenous
-  // Peoples'), residents treat the surrounding Sat–Sun as part of the holiday
-  // even though only Monday is the official date. Surface that span on the
-  // banner so a Tue–Sat read "Memorial Day Weekend · Sat May 23 – Mon May 25"
-  // rather than burying the Saturday–Sunday cohort behind a Mon-only label.
-  const spanDays = holiday.weekendSpan && holiday.weekendSpan.length > 1
-    ? holidaySpanIsos(next.iso, holiday.weekendSpan)
-    : [next.iso];
-  const isSpan = spanDays.length > 1;
-  // Earliest span day that hasn't already passed — the natural landing date
-  // for someone clicking the banner mid-weekend.
-  const landingIso = spanDays.find((d) => d >= todayIso) ?? spanDays[spanDays.length - 1];
-  const firstDay = spanDays[0];
-  const lastDay = spanDays[spanDays.length - 1];
-
-  const dateLabel = isSpan
-    ? formatWeekendRange(firstDay, lastDay, todayIso, tomorrowIso)
-    : schoolDateLabel(next.iso, todayIso, tomorrowIso);
-  const displayLabel = isSpan ? `${holiday.label} Weekend` : holiday.label;
-
-  // Sum event/themed counts across every day in the span so the pill reflects
-  // the full weekend, not just the official Monday.
-  const totalCount = spanDays.reduce(
-    (sum, d) => sum + (eventCountByDate[d] ?? 0),
-    0,
-  );
-  const themedCount = themedCountByHolidayId[holiday.id] ?? 0;
-  // Prefer the themed count when the holiday has theme keywords AND there
-  // are themed picks available — that's what residents actually want when
-  // they tap a "Mother's Day" banner. Fall back to total event count
-  // otherwise so the banner still works for holidays without keywords or
-  // with no themed events in feed yet.
-  const showThemed = themedCount > 0 && !!holiday.themeKeywords?.length;
-  const count = showThemed ? themedCount : totalCount;
-  const isClickable = count > 0;
-  const pillLabel = showThemed
-    ? `${themedCount} pick${themedCount === 1 ? "" : "s"}`
-    : `${totalCount} event${totalCount === 1 ? "" : "s"}`;
-
-  // Federal-holiday closure note ("Closed Mon: libraries, post offices,
-  // city offices, banks · Trash pickup runs 1 day late this week"). Renders
-  // inline under the banner header so a resident who sees "Memorial Day
-  // Weekend → 5 picks" also sees what's closed without leaving the page.
-  const closures = holidayClosureSummary(holiday, next.iso);
-  const closureWeekdayLabel = closures
-    ? new Date(`${next.iso}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" })
-    : null;
-
-  const innerStyle: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    flexWrap: "wrap",
-    gap: 8,
-    padding: "8px 12px",
-    background: holiday.bg,
-    border: `1px solid ${holiday.color}33`,
-    borderRadius: closures ? "8px 8px 0 0" : 8,
-    borderBottom: closures ? "none" : `1px solid ${holiday.color}33`,
-    fontSize: 12.5,
-    color: holiday.color,
-    lineHeight: 1.45,
-    width: "100%",
-    boxSizing: "border-box",
-    fontFamily: "inherit",
-    textAlign: "left",
-    cursor: isClickable ? "pointer" : "default",
-    transition: "background 0.12s, border-color 0.12s",
-  };
-
-  const inner = (
-    <>
-      <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>{holiday.emoji}</span>
-      <span style={{
-        fontFamily: "'Space Mono', monospace",
-        fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
-        textTransform: "uppercase", opacity: 0.85,
-      }}>
-        Holiday
-      </span>
-      <span style={{ fontWeight: 600 }}>{displayLabel}</span>
-      <span style={{ opacity: 0.85 }}>{dateLabel}</span>
-      {isClickable && (
-        <span
-          style={{
-            marginLeft: "auto",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 4,
-            fontFamily: "'Space Mono', monospace",
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.04em",
-            textTransform: "uppercase",
-            padding: "2px 8px",
-            borderRadius: 100,
-            background: "#ffffff",
-            color: holiday.color,
-            border: `1px solid ${holiday.color}55`,
-          }}
-        >
-          {pillLabel} <span aria-hidden>→</span>
-        </span>
-      )}
-    </>
-  );
-
-  const closureStrip = closures && (
-    <div
-      style={{
-        padding: "6px 12px 8px",
-        marginBottom: 10,
-        background: holiday.bg,
-        border: `1px solid ${holiday.color}33`,
-        borderTop: `1px dashed ${holiday.color}55`,
-        borderRadius: "0 0 8px 8px",
-        fontSize: 11.5,
-        color: holiday.color,
-        lineHeight: 1.45,
-        boxSizing: "border-box",
-        display: "flex",
-        gap: 8,
-        flexWrap: "wrap",
-        alignItems: "baseline",
-      }}
-    >
-      <span
-        style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 9,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          opacity: 0.7,
-        }}
-      >
-        Closures
-      </span>
-      <span style={{ opacity: 0.95 }}>
-        <strong style={{ fontWeight: 700 }}>Closed{closureWeekdayLabel ? ` ${closureWeekdayLabel}` : ""}:</strong>{" "}
-        {closures.closed}
-      </span>
-      {closures.trashDelayed && (
-        <span style={{ opacity: 0.95 }}>
-          · <strong style={{ fontWeight: 700 }}>Trash:</strong> 1 day late through Friday
-        </span>
-      )}
-      {closures.transit && (
-        <span style={{ opacity: 0.95 }}>
-          · <strong style={{ fontWeight: 700 }}>Transit:</strong> {closures.transit}
-        </span>
-      )}
-    </div>
-  );
-
-  const button = isClickable ? (
-    <button
-      type="button"
-      onClick={() => onJumpToDate(landingIso, showThemed ? holiday.id : undefined)}
-      aria-label={`Jump to ${displayLabel} (${dateLabel}) — ${pillLabel}`}
-      style={innerStyle}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${holiday.color}80`; }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = `${holiday.color}33`; }}
-    >
-      {inner}
-    </button>
-  ) : (
-    <div style={innerStyle}>{inner}</div>
-  );
-
-  if (!closureStrip) {
-    return <div style={{ marginBottom: 10 }}>{button}</div>;
-  }
-  return (
-    <div>
-      {button}
-      {closureStrip}
-    </div>
-  );
-}
-
-// ── Holiday picks preview ──────────────────────────────────────────────────
-// When a themed holiday is within 3 days, surface 2–3 actual themed events
-// directly under the heads-up banner instead of making residents tap "→" to
-// see them. Mother's Day weekend / Cinco de Mayo / Halloween are exactly the
-// moments where the banner alone undersells what's bookable RIGHT NOW. Tap a
-// row → same jump as the banner pill. Hidden when fewer than 2 themed events
-// match (the banner already conveys "1 pick" fine on its own).
-//
-// Time-window: only fires when the holiday is today, tomorrow, or the day
-// after — past that, residents have time to discover events organically and
-// the prominence isn't earned.
-interface HolidayPicksPreviewProps {
-  events: UpcomingEvent[];
-  selectedCities: Set<City>;
-  allCities: boolean;
-  onJumpToDate: (iso: string, themedHolidayId?: string) => void;
-}
-
-function HolidayPicksPreview({
-  events,
-  selectedCities,
-  allCities,
-  onJumpToDate,
-}: HolidayPicksPreviewProps) {
-  const todayIso = todayPT();
-  // For 3-day-weekend holidays, give the preview a wider window so the picks
-  // surface before the Saturday — residents plan a long weekend a few days
-  // out, not the night before.
-  const horizonIso = addDays(todayIso, 7);
-  const next = useMemo(
-    () => nextHolidayWithin(todayIso, horizonIso),
-    [todayIso, horizonIso],
-  );
-  if (!next) return null;
-  const { holiday, iso } = next;
-  if (!holiday.themeKeywords?.length) return null;
-
-  const spanIsos = holiday.weekendSpan && holiday.weekendSpan.length > 1
-    ? holidaySpanIsos(iso, holiday.weekendSpan).filter((d) => d >= todayIso)
-    : [iso];
-  // Non-span holidays keep the original 3-day horizon — surfacing
-  // single-day picks a week out is too early and clutters the events tab.
-  if (spanIsos.length === 1 && iso > addDays(todayIso, 3)) return null;
-  const spanSet = new Set(spanIsos);
-
-  const themed = useMemo(() => {
-    const out: UpcomingEvent[] = [];
-    for (const e of events) {
-      if (!spanSet.has(e.date)) continue;
-      if (!allCities && !selectedCities.has(e.city as City)) continue;
-      const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
-      if (!matchesHolidayTheme(holiday, lower)) continue;
-      out.push(e);
-    }
-    // Span days first (residents plan chronologically), then images, then
-    // time, then title for stability.
-    out.sort((a, b) => {
-      if (a.date !== b.date) return a.date.localeCompare(b.date);
-      const aHas = (a.image || a.photoRef) ? 1 : 0;
-      const bHas = (b.image || b.photoRef) ? 1 : 0;
-      if (aHas !== bHas) return bHas - aHas;
-      const aTime = a.time ? 1 : 0;
-      const bTime = b.time ? 1 : 0;
-      if (aTime !== bTime) return bTime - aTime;
-      return a.title.localeCompare(b.title);
-    });
-    return out.slice(0, 3);
-  }, [events, spanSet, holiday, allCities, selectedCities]);
-
-  if (themed.length < 2) return null;
-
-  const isSpan = spanIsos.length > 1;
-  const dayWord = isSpan
-    ? `${holiday.label} Weekend`
-    : iso === todayIso
-      ? "Today"
-      : iso === addDays(todayIso, 1)
-        ? "Tomorrow"
-        : new Date(iso + "T12:00:00").toLocaleDateString("en-US", { weekday: "long" });
-  const previewHeading = isSpan ? dayWord : `${holiday.label} · ${dayWord} picks`;
-
-  return (
-    <div
-      style={{
-        marginTop: -4,
-        marginBottom: 12,
-        padding: "10px 12px",
-        background: holiday.bg,
-        border: `1px solid ${holiday.color}33`,
-        borderRadius: 8,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          gap: 8,
-          marginBottom: 8,
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: holiday.color,
-        }}
-      >
-        <span aria-hidden style={{ fontSize: 12 }}>{holiday.emoji}</span>
-        <span>{previewHeading}</span>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        {themed.map((e) => {
-          const cityName = CITY_LABELS[e.city] ?? e.city;
-          const time = formatTimeRange(e.time, e.endTime);
-          const dayBadge = isSpan
-            ? new Date(e.date + "T12:00:00").toLocaleDateString("en-US", {
-                weekday: "short", month: "short", day: "numeric",
-              })
-            : null;
-          return (
-            <button
-              key={e.id}
-              type="button"
-              onClick={() => onJumpToDate(e.date, holiday.id)}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: 10,
-                padding: "8px 10px",
-                background: "#ffffff",
-                border: `1px solid ${holiday.color}22`,
-                borderRadius: 6,
-                cursor: "pointer",
-                textAlign: "left",
-                fontFamily: "inherit",
-                color: "var(--sb-ink)",
-                transition: "border-color 0.12s, transform 0.12s",
-              }}
-              onMouseEnter={(ev) => {
-                ev.currentTarget.style.borderColor = `${holiday.color}66`;
-              }}
-              onMouseLeave={(ev) => {
-                ev.currentTarget.style.borderColor = `${holiday.color}22`;
-              }}
-            >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div
-                  style={{
-                    fontFamily: "var(--sb-serif)",
-                    fontWeight: 700,
-                    fontSize: 13.5,
-                    lineHeight: 1.3,
-                    color: "var(--sb-ink)",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {e.title}
-                </div>
-                <div
-                  style={{
-                    marginTop: 2,
-                    fontSize: 11,
-                    color: "var(--sb-muted)",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 6,
-                    fontFamily: "'Space Mono', monospace",
-                  }}
-                >
-                  {dayBadge && <span style={{ color: holiday.color, fontWeight: 700 }}>{dayBadge}</span>}
-                  {dayBadge && <span aria-hidden>·</span>}
-                  {time && <span style={{ color: holiday.color, fontWeight: 700 }}>{time}</span>}
-                  {time && <span aria-hidden>·</span>}
-                  <span style={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                    maxWidth: 220,
-                  }}>{e.venue}</span>
-                  <span aria-hidden>·</span>
-                  <span>{cityName}</span>
-                  {e.cost === "free" && (
-                    <>
-                      <span aria-hidden>·</span>
-                      <span style={{ fontWeight: 700, color: "#15803D" }}>FREE</span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <span
-                aria-hidden
-                style={{
-                  flexShrink: 0,
-                  fontSize: 14,
-                  color: holiday.color,
-                  marginTop: 1,
-                }}
-              >
-                →
-              </span>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ── Heritage / observance month banner ─────────────────────────────────────
-// Subtle one-liner acknowledging federally recognized heritage months that
-// matter to large South Bay communities (AANHPI, Hispanic, Jewish, LGBTQ+,
-// Filipino American, Black, Native American, etc.). Renders nothing outside
-// active windows. Multiple observances can co-occur (May = AANHPI + Jewish
-// American Heritage; October has 4 overlapping months) — they stack inline.
-
-interface HeritageBannerProps {
-  activeId: string | null;
-  onToggle: (id: string | null) => void;
-  countsById: Record<string, number>;
-}
-function HeritageMonthBanner({ activeId, onToggle, countsById }: HeritageBannerProps) {
-  const todayIso = todayPT();
-  const months = useMemo(() => currentHeritageMonths(todayIso), [todayIso]);
-  if (months.length === 0) return null;
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: 6,
-        rowGap: 6,
-        padding: "4px 12px",
-        marginBottom: 10,
-        fontSize: 11.5,
-        color: "var(--sb-muted)",
-        lineHeight: 1.45,
-      }}
-    >
-      <span
-        style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          marginRight: 4,
-        }}
-      >
-        Observing
-      </span>
-      {months.map((m) => {
-        const isActive = activeId === m.id;
-        const count = countsById[m.id] ?? 0;
-        const hasEvents = count > 0;
-        return (
-            <button
-              key={m.id}
-              type="button"
-              title={hasEvents ? `${m.blurb} — tap to filter ${count} matching event${count === 1 ? "" : "s"}` : m.blurb}
-              onClick={() => onToggle(isActive ? null : m.id)}
-              disabled={!hasEvents && !isActive}
-              style={{
-                display: "inline-flex",
-                gap: 5,
-                alignItems: "center",
-                padding: "3px 9px",
-                borderRadius: 100,
-                fontSize: 11.5,
-                lineHeight: 1.3,
-                fontFamily: "inherit",
-                color: isActive ? "#fff" : (hasEvents ? m.color : "var(--sb-muted)"),
-                background: isActive ? m.color : (hasEvents ? m.bg : "transparent"),
-                border: `1.5px solid ${isActive ? m.color : (hasEvents ? m.bg : "var(--sb-border)")}`,
-                cursor: hasEvents || isActive ? "pointer" : "default",
-                opacity: hasEvents || isActive ? 1 : 0.55,
-                transition: "all 0.12s",
-              }}
-            >
-              <span aria-hidden style={{ fontSize: 13, lineHeight: 1 }}>{m.emoji}</span>
-              <span style={{ fontWeight: 600 }}>{m.label}</span>
-              {hasEvents && (
-                <span style={{
-                  fontSize: 10, fontWeight: 700,
-                  background: isActive ? "rgba(255,255,255,0.22)" : "#fff",
-                  color: isActive ? "#fff" : m.color,
-                  borderRadius: 100, padding: "0 6px", lineHeight: "16px",
-                  minWidth: 18, textAlign: "center",
-                }}>
-                  {count}
-                </span>
-              )}
-            </button>
-        );
-      })}
-    </div>
-  );
-}
-
-const ACTIVE_HERITAGE_MONTHS_NOW = (iso: string): HeritageMonth[] => currentHeritageMonths(iso);
-
 // ── Main view ──────────────────────────────────────────────────────────────
 
 export default function EventsView({ selectedCities, onToggleCity, onToggleAllCities }: Props) {
@@ -1681,17 +782,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // Gives repeat visitors a way to scan only what's new since their last
   // visit instead of re-reading the same list.
   const [showJustAddedOnly, setShowJustAddedOnly] = useState(false);
-  // Active heritage-month filter (e.g. AANHPI, Pride). Populated by clicking
-  // a chip in the HeritageMonthBanner; null = no filter. Composes with the
-  // other filters via matchesFilters.
-  const [activeHeritageId, setActiveHeritageId] = useState<string | null>(null);
-  // Active themed-holiday filter — populated when the user taps the holiday
-  // heads-up banner on a holiday that has theme keywords (e.g. Mother's
-  // Day → narrows that day's view to mom-themed picks instead of every
-  // event on Sunday). Auto-cleared when the user navigates to a different
-  // date so it doesn't sneakily filter unrelated days.
-  // Set from the `?holiday=` deep-link param after mount (e.g. when a city
-  // page's holiday banner sends a resident to /events?city=X&date=Y&holiday=Z).
+  // Active themed-holiday filter for a holiday that has theme keywords (e.g.
+  // Mother's Day → narrows that day's view to mom-themed picks instead of
+  // every event on Sunday). Auto-cleared when the user navigates to a
+  // different date so it doesn't sneakily filter unrelated days.
+  // Set from the `?holiday=` deep-link param after mount
+  // (/events?city=X&date=Y&holiday=Z).
   const [activeThemedHolidayId, setActiveThemedHolidayId] = useState<string | null>(null);
 
   const todayIso = todayPT();
@@ -1838,22 +934,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
 
   const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
 
-  // Active heritage month object (for keyword matching). Null when no filter
-  // is selected or when the active id no longer corresponds to a current
-  // observance window (defensive — chips only render in-window).
-  const activeHeritage = useMemo(() => {
-    if (!activeHeritageId) return null;
-    return ACTIVE_HERITAGE_MONTHS_NOW(todayIso).find((m) => m.id === activeHeritageId) ?? null;
-  }, [activeHeritageId, todayIso]);
-
-  const heritageHaystack = (e: UpcomingEvent): string =>
-    `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`;
-
-  const matchesActiveHeritage = (e: UpcomingEvent): boolean => {
-    if (!activeHeritage) return true;
-    return matchesHeritage(activeHeritage, heritageHaystack(e));
-  };
-
   // The holiday object backing the active themed filter, plus its ISO date
   // for the current year. Recomputed when the active id changes; null when
   // no filter is set or the id no longer resolves.
@@ -1894,7 +974,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (!isInProgressNow(e.time, e.endTime)) return false;
     }
     if (showJustAddedOnly && !isJustAdded(e.firstSeenAt)) return false;
-    if (!matchesActiveHeritage(e)) return false;
     if (!matchesActiveThemedHoliday(e)) return false;
     if (isSearching) {
       if (!e.title.toLowerCase().includes(searchQ) &&
@@ -1930,7 +1009,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
       .sort(byStartTimeWithinDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -1944,7 +1023,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         return byStartTimeWithinDate(a, b);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -1970,7 +1049,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       .filter((d) => (groups[d]?.length ?? 0) > 0)
       .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, activeHeritage, todayIso]);
+  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
@@ -1983,7 +1062,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return [...set].sort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, search]);
+  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, search]);
 
   // While only the near slice is loaded, a snap target past its window can't
   // be known yet — hold the current date (showing skeleton rows) until the
@@ -2045,7 +1124,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
-      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -2058,7 +1136,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-city counts (for badges on city pills) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -2085,7 +1163,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (e.date !== todayIso) continue;
         if (!isInProgressNow(e.time, e.endTime)) continue;
       }
-      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -2098,7 +1175,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return { perCity: counts, total };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, activeHeritage, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(() => {
@@ -2142,47 +1219,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
-  // Per-heritage event counts — answers "if I tapped this chip, how many
-  // events would I see?" given the current city/category/kids/search/etc.
-  // filters. Independent of the active heritage so the chip the user already
-  // toggled stays clickable to un-toggle.
-  const heritageCounts = useMemo(() => {
-    const todayPTIso = todayIso;
-    const months = ACTIVE_HERITAGE_MONTHS_NOW(todayPTIso);
-    const counts: Record<string, number> = {};
-    if (months.length === 0) return counts;
-    for (const e of upcomingEvents) {
-      if (e.date < todayPTIso) continue;
-      if (e.date === todayPTIso && !hasNotStarted(e.time)) continue;
-      if (!allCities && !selectedCities.has(e.city as City)) continue;
-      if (category !== "all" && e.category !== category) continue;
-      if (showKidsOnly && !e.kidFriendly) continue;
-      if (showFreeOnly && e.cost !== "free") continue;
-      if (showTonightOnly) {
-        if (e.date !== todayPTIso) continue;
-        if (!e.time) continue;
-        const m = parseTimeToMinutes(e.time);
-        if (m === null || m < TONIGHT_FROM_MIN) continue;
-      }
-      if (showWeekendOnly) {
-        if (e.date !== weekendSat && e.date !== weekendSun) continue;
-      }
-      if (isSearching) {
-        if (!e.title.toLowerCase().includes(searchQ) &&
-            !(e.blurb || "").toLowerCase().includes(searchQ) &&
-            !(e.description || "").toLowerCase().includes(searchQ) &&
-            !(e.city || "").toLowerCase().includes(searchQ) &&
-            !(e.venue || "").toLowerCase().includes(searchQ)) continue;
-      }
-      const text = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`;
-      for (const m of months) {
-        if (matchesHeritage(m, text)) counts[m.id] = (counts[m.id] || 0) + 1;
-      }
-    }
-    return counts;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
-
   // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
   // but tallied per day so each pill in the strip can show how busy that day is.
   // Tonight/Weekend toggles are intentionally NOT applied here: the strip is
@@ -2205,7 +1241,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
-      if (!matchesActiveHeritage(e)) continue;
       if (isSearching) {
         if (!e.title.toLowerCase().includes(searchQ) &&
             !(e.blurb || "").toLowerCase().includes(searchQ) &&
@@ -2217,46 +1252,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     return counts;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, activeHeritage, todayIso, isSearching, searchQ]);
-
-  // Themed-event counts per upcoming holiday in the next 14 days. Drives the
-  // pill on the holiday heads-up banner ("5 picks →" instead of "28 events
-  // →") so residents know that tapping will jump them to genuinely themed
-  // events, not every random Sunday booking. Honors city/category/kids/free
-  // filters so the count matches what the user will actually see post-jump.
-  const themedCountByHolidayId = useMemo(() => {
-    const horizonIso = addDays(todayIso, 14);
-    const counts: Record<string, number> = {};
-    for (let y = Number(todayIso.slice(0, 4)); y <= Number(horizonIso.slice(0, 4)); y++) {
-      for (const h of NAMED_HOLIDAYS) {
-        if (!h.themeKeywords?.length) continue;
-        const iso = h.computeIso(y);
-        if (iso < todayIso || iso > horizonIso) continue;
-        // For 3-day-weekend holidays, count themed events across the whole
-        // span so the heads-up pill reads "12 picks" for the Sat–Sun–Mon
-        // bracket — not just the four Memorial Day Monday observances.
-        const dayWindow = new Set(
-          (h.weekendSpan && h.weekendSpan.length > 1
-            ? holidaySpanIsos(iso, h.weekendSpan)
-            : [iso]
-          ).filter((d) => d >= todayIso),
-        );
-        let n = 0;
-        for (const e of upcomingEvents) {
-          if (!dayWindow.has(e.date)) continue;
-          if (!allCities && !selectedCities.has(e.city as City)) continue;
-          if (category !== "all" && e.category !== category) continue;
-          if (showKidsOnly && !e.kidFriendly) continue;
-          if (showFreeOnly && e.cost !== "free") continue;
-          const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
-          if (!matchesHolidayTheme(h, lower)) continue;
-          n++;
-        }
-        counts[h.id] = n;
-      }
-    }
-    return counts;
-  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso]);
+  }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
 
   // Prev/next date buttons
   const prevDate = !isSearching && datesWithEvents.length > 0
@@ -2283,7 +1279,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     showWeekendOnly,
     showLiveNowOnly,
     showJustAddedOnly,
-    !!activeHeritage,
     !!activeThemedHolidayId,
     !allCities,
   ].filter(Boolean).length;
@@ -2369,7 +1364,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     setShowWeekendOnly(false);
     setShowLiveNowOnly(false);
     setShowJustAddedOnly(false);
-    setActiveHeritageId(null);
     setActiveThemedHolidayId(null);
     if (!allCities) onToggleAllCities();
   };
