@@ -5,13 +5,18 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
+import { loadEnvLocal } from "../lib/env.mjs";
+import { catSignal } from "../lib/notify.mjs";
 import {
   DEFAULT_REPO_ROOT,
   preflightNewsletterCheckout,
+  pushGeneratedDataCheckout,
 } from "../newsletter/scheduled-preflight.mjs";
+import { nowHHMM_PT, todayPT } from "./lib/slot-scheduler.mjs";
 
 const PREFIX = "[default-plans-scheduled]";
 const LOCK_TASK = "default-plans-refresh";
+const PLANS_PATH = "src/data/south-bay/default-plans.json";
 const DEFAULT_LOCK_SCRIPT = join(
   homedir(),
   ".claude",
@@ -19,15 +24,25 @@ const DEFAULT_LOCK_SCRIPT = join(
   "lib",
   "repo-lock.sh",
 );
+// launchd starts this job at 3:20 and again at 3:30 (see
+// default-plans-refresh.plist). A failure in the first slot is retried by the
+// second, so only failures outside it mean the homepage stays stale today.
+const FIRST_SLOT = { start: "03:20", end: "03:30" };
 
 function log(message) {
   console.log(`${PREFIX} ${new Date().toISOString()} ${message}`);
 }
 
 function runRepoLock(script, action) {
-  const result = spawnSync(script, [action, LOCK_TASK], { stdio: "inherit" });
+  const result = spawnSync(script, [action, LOCK_TASK], { encoding: "utf8" });
+  const output = `${result.stdout || ""}${result.stderr || ""}`;
+  if (output) process.stdout.write(output);
   if (result.error) {
     throw new Error(`repo lock ${action} failed: ${result.error.message}`);
+  }
+  if (action === "acquire" && result.status === 1) {
+    const holder = output.match(/held by '([^']+)'/)?.[1] || "unknown";
+    throw new Error(`repo lock is busy (held by '${holder}'); plans were not refreshed`);
   }
   if (result.status !== 0) {
     throw new Error(`repo lock ${action} failed with exit ${result.status}`);
@@ -52,10 +67,51 @@ function runPlanRefresh(repoRoot) {
   }
 }
 
+/** planDate of the committed adults plan, or null when HEAD has none. */
+function committedPlanDate(repoRoot) {
+  const result = spawnSync("git", ["-C", repoRoot, "show", `HEAD:${PLANS_PATH}`], {
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (result.status !== 0) return null;
+  try {
+    return JSON.parse(result.stdout)?.plans?.adults?.planDate || null;
+  } catch {
+    return null;
+  }
+}
+
+function restoreUncommittedPlans(repoRoot) {
+  const status = spawnSync(
+    "git",
+    ["-C", repoRoot, "status", "--porcelain", "--", PLANS_PATH],
+    { encoding: "utf8" },
+  );
+  if (status.status === 0 && !String(status.stdout || "").trim()) return;
+  const result = spawnSync(
+    "git",
+    ["-C", repoRoot, "restore", "--staged", "--worktree", "--", PLANS_PATH],
+    { encoding: "utf8" },
+  );
+  if (result.status === 0) {
+    log(`restored uncommitted ${PLANS_PATH} so later Mini jobs are not blocked`);
+  } else {
+    console.error(`${PREFIX} ${new Date().toISOString()} rollback failed: ${String(result.stderr || "").trim()}`);
+  }
+}
+
+function inFirstSlot() {
+  const now = nowHHMM_PT();
+  return now >= FIRST_SLOT.start && now < FIRST_SLOT.end;
+}
+
 const repoRoot = process.env.SBT_NEWSLETTER_REPO_ROOT || DEFAULT_REPO_ROOT;
 const lockScript = process.env.SBT_REPO_LOCK_SCRIPT || DEFAULT_LOCK_SCRIPT;
-const preflightOnly = process.argv.includes("--preflight-only");
+const args = new Set(process.argv.slice(2));
+const preflightOnly = args.has("--preflight-only");
+const force = args.has("--force");
 let lockHeld = false;
+let generationStarted = false;
 let primaryError = null;
 
 try {
@@ -70,15 +126,43 @@ try {
   if (preflightOnly) {
     log(`preflight-only complete; no plans generated (HEAD=${before.head.slice(0, 12)})`);
   } else {
-    runPlanRefresh(repoRoot);
-    const after = preflightNewsletterCheckout({ repoRoot, log: console.log });
+    const today = todayPT();
+    if (!force && committedPlanDate(repoRoot) === today) {
+      log(`plans for ${today} are already committed at HEAD=${before.head.slice(0, 12)}; skipping regeneration`);
+    } else {
+      generationStarted = true;
+      runPlanRefresh(repoRoot);
+      const planDate = committedPlanDate(repoRoot);
+      if (planDate !== today) {
+        throw new Error(
+          `generator finished without committing plans for ${today} (committed adults planDate=${planDate || "none"})`,
+        );
+      }
+    }
+
+    // The homepage bakes default-plans.json at build time, so plans only
+    // reach readers once they are on origin/main. Pushing here, under the
+    // lock, replaces waiting for some later Mini job to carry the commit.
+    const published = pushGeneratedDataCheckout({ repoRoot, log: console.log });
     log(
-      `default plans refreshed from verified source ${before.originHead.slice(0, 12)}; clean HEAD=${after.head.slice(0, 12)}`,
+      `plans for ${today} are on origin/main at HEAD=${published.head.slice(0, 12)}`
+      + (published.pushed ? "" : " (already published)"),
     );
   }
 } catch (error) {
   primaryError = error;
   console.error(`${PREFIX} ${new Date().toISOString()} BLOCKED: ${error.message}`);
+  if (generationStarted) restoreUncommittedPlans(repoRoot);
+  if (inFirstSlot()) {
+    log("the 3:30 retry slot will try again");
+  } else {
+    loadEnvLocal(join(repoRoot, ".env.local"));
+    await catSignal({
+      key: "default-plans-refresh",
+      title: "Homepage day plans did not publish",
+      body: `${error.message}\n\nThe homepage keeps the last published plans until this is fixed. Log: ~/Library/Logs/default-plans-refresh.log on the Mini.`,
+    });
+  }
   process.exitCode = 1;
 } finally {
   if (lockHeld) {
