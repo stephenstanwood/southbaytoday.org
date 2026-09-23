@@ -1,31 +1,31 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-22T15:04:34.212Z",
+    "generatedAt": "2026-09-23T03:47:22.280Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 576,
+    "eventCount": 578,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (127)",
-      "Los Gatos Library (158)",
+      "Mountain View Public Library (126)",
+      "Los Gatos Library (156)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (12)",
+      "Linden Tree Books (13)",
       "History San Jose (6)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
       "Mountain Winery (18)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
-      "Santana Row (6)",
-      "City of Cupertino (64)",
+      "Santana Row (8)",
+      "City of Cupertino (66)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (8)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
       "San Jose Museum of Art (8)",
-      "Montalvo Arts Center (5)",
       "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 130,
+        "count": 129,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 158,
+        "count": 156,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 12,
+        "count": 13,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -134,14 +134,12 @@
       {
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
-        "status": "error",
-        "count": 5,
-        "error": "unexpected empty result after retry; previous snapshot still has 5 future event(s) from Montalvo Arts Center",
+        "status": "ok",
+        "count": 6,
+        "error": null,
         "sources": [
           "Montalvo Arts Center"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       },
       {
         "id": "city-lights-theater",
@@ -231,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 6,
+        "count": 8,
         "error": null,
         "sources": [
           "Santana Row"
@@ -249,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 64,
+        "count": 66,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -352,91 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "626297521f92",
-      "title": "Outdoor Storytime",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Pioneer Park",
-      "address": "1146 Church St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
-      "sourceAudiences": [
-        "Babies",
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17142484",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "a0b6ae3454e6",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "1:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 1:00pm to 2:30pm Click Here to Register for 3:00pm to 4:30pm",
-      "url": "https://mountainview.libcal.com/event/17319773",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "e8720d32c2bf",
-      "title": "Cricut Basics - Paper Flowers",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "6:00 PM",
-      "endTime": "7:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending Learn how to make paper flowers using a Cricut cutting machine. No prior experience required but basic computer skills are expected. Ages 13 and up.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17300952",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "cff66d445b93",
-      "title": "Author Talk with Charlie Jane Anders",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "6:30 PM",
-      "endTime": "7:30 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Join us for a virtual conversation with award-winning author Charlie Jane Anders. She will discuss her literary career, writing process, and the power of science fiction and fantasy. Attendees will have the opportunity to submit questions to Charlie during the livestreamed event. Please note this event will not be recorded. About the Author: Charlie Jane Anders is the award-winning, nationally bestselling author of Lessons in Magic and Disaster . Her other books include All the Birds in the Sky , The City in the Middle of the Night , and the young adult Unstoppable trilogy. She also published a book about how to use creative writing to get through tough times called Never Say You Can't Survive . Her writing has appeared in Tin House , Conjunctions , ZYZZYVA , the Paris Review , McSweeney's , Esquire and the Catamaran Literary Reader . She’s currently writing the comic book Star Trek: Zero Point for IDW. A Sci-Fi September Event This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17233884",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "89d04410cb12",
       "title": "Baby Storytime",
@@ -1023,6 +936,29 @@
       "kidFriendly": false
     },
     {
+      "id": "5f966a989bf6",
+      "title": "Banned Book Week Trivia",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
+      "time": "2:00 PM",
+      "endTime": "3:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Registration is required and seats are limited. This event is intended for ages 15 and up only. What do you know about banned books or Banned Book Week in general? Join us to test your knowledge on all things banned book related! In teams of 5, you will work together to answer 40 questions from 4 related categories. Fly solo or come with your friends, the top 3 teams will take home a prize. If you follow @mvpubliclibrary, your team will receive 2 bonus points! Light refreshments and snacks will be provided. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Teens",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17536954",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "98497728d7af",
       "title": "Outdoor Storytime",
       "date": "2026-10-06",
@@ -1337,6 +1273,28 @@
         "Adults"
       ],
       "url": "https://mountainview.libcal.com/event/14959850",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "4ace70f68e96",
+      "title": "Create a DIY Award Ribbon",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
+      "time": "1:30 PM",
+      "endTime": "3:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us to create a DIY award ribbon with a personalized button in the center! You will be able to create your button from images from recycled books, magazines, and newspapers or bring in a photo of a loved one or thing. We will have a wide variety of ribbons to choose from to decorate and elevate your creation. This class is intended for adults, ages 18 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17603995",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -2075,6 +2033,30 @@
         "Adults"
       ],
       "url": "https://mountainview.libcal.com/event/17249783",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "282605ab6e20",
+      "title": "Demons, Creatures and Monsters - Oh My!",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": "6:30 PM",
+      "endTime": "7:30 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "mountain-view",
+      "virtual": true,
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Meet the mythical creatures, legendary beasts, and terrifying monsters that have populated Asian art for centuries. Appearing throughout folklore, stories, songs, and works of art, these supernatural, mystical, and often godlike (or demonic) beings have fascinated audiences since ancient times. Presented by the Asian Art Museum . This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors",
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/15921911",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -3061,67 +3043,6 @@
       "kidFriendly": true
     },
     {
-      "id": "0c7e69e60106",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249567",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "9e6144a08c5c",
-      "title": "Drop-In Tech Help",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "3:00 PM",
-      "endTime": "4:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "education",
-      "cost": "free",
-      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "url": "https://losgatosca.libcal.com/event/16035529",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "53dd2628eef5",
-      "title": "Crafty Corner (Ages 3-10)",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Take some time out of your afternoon to imagine and create! Join us for a crafty activity in the Children's Room. (Previously known as Tinker Tuesday.) This program is geared towards children ages 3 through ~10. This program takes place on the 2nd and 4th Tuesday of the month at 4 pm in the Children's Room.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16842135",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
       "id": "720cf7b07656",
       "title": "Storytime (Ages 0-5)",
       "date": "2026-09-23",
@@ -3892,6 +3813,26 @@
       "kidFriendly": false
     },
     {
+      "id": "4b8bcbf05ee6",
+      "title": "Monday Morning Book Club",
+      "date": "2026-10-12",
+      "displayDate": "Mon, Oct 12",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "Join us for a discussion of Milkman, by Anna Burns Winner of the Man Booker Prize. A young woman navigates romance, politics, and social judgment in Ireland during the “Troubles.” “Everything about this novel rings true…original, funny, disarmingly oblique and unique: different.” - The Guardian. The Monday Morning bookclub meets in the Library Conference Room, and new members are welcome at any time. Sign up for our newsletter here.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17691461",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "032576e09eba",
       "title": "Storytime (Ages 0-5)",
       "date": "2026-10-13",
@@ -4046,7 +3987,7 @@
       "city": "los-gatos",
       "category": "arts",
       "cost": "free",
-      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
+      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 We're reading \"Bruno, Chief of Police\" by Martin Walker. If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
       "sourceAudiences": [
         "Adults"
       ],
@@ -4210,7 +4151,7 @@
       "city": "los-gatos",
       "category": "community",
       "cost": "free",
-      "description": "Join Librarian Rachael for a lively discussion ofanother exciting book. Drop in to the Conference Room at 5 PM to join the discussion in person, or join in on Zoom here: Join from PC, Mac, Linux, iOS or Android: https://losgatosca-gov.zoom.us/j/92703658806 To sign up for the Tuesday Evening Book Club newsletter, click here: http://libraryaware.com/36/Subscribers/Subscribe?showonlynewsletterlists=true",
+      "description": "Join Librarian Rachael for a lively discussion of Invasive Species by Ellery Adams. Drop in to the Conference Room at 5 PM to join the discussion in person, or join in on Zoom here: Join from PC, Mac, Linux, iOS or Android: https://losgatosca-gov.zoom.us/j/92703658806 To sign up for the Tuesday Evening Book Club newsletter, click here: http://libraryaware.com/36/Subscribers/Subscribe?showonlynewsletterlists=true",
       "sourceAudiences": [
         "Adults"
       ],
@@ -6646,7 +6587,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6668,7 +6609,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6690,7 +6631,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6700,10 +6641,10 @@
       }
     },
     {
-      "id": "fa2c870d8061",
+      "id": "5e2f41e7fc94",
       "title": "Book Launch with Marley Rose-Teter — In conversation with Samantha Chong",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
       "time": "6pm",
       "endTime": null,
       "venue": "Linden Tree Books",
@@ -6712,13 +6653,13 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-03"
+        "date": "2026-10-09"
       }
     },
     {
@@ -6734,7 +6675,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6756,7 +6697,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6778,7 +6719,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6800,7 +6741,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6822,7 +6763,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6844,7 +6785,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6866,13 +6807,35 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "url": "https://www.lindentreebooks.com/ednite2026",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-10-25"
+      }
+    },
+    {
+      "id": "c969bb78abcf",
+      "title": "Fall Art Workshop with Isabella Kung",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
+      "time": "4pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/workshops-fall2026",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-11-08"
       }
     },
     {
@@ -6976,6 +6939,91 @@
       "url": "https://historysanjose.org/event/san-jose-roots/",
       "source": "History San Jose",
       "kidFriendly": false
+    },
+    {
+      "id": "710e83571a08",
+      "title": "Alphabet Rockers (Grade K-8)",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3063",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "5f53ba65f823",
+      "title": "FALL Creekside Ceramics Series – Adult Arts Education",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3273/3274",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "b402a0e00c51",
+      "title": "Around the Americas with 123 Andrés? (Grades pre K-3)",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3064",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "d5bb5d8971ad",
+      "title": "St. Paul & The Minneapolis Funk All Stars",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/st-paul/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "a34ae09c5db3",
+      "title": "Mariachi Viajero y Angeles Danzantes (Grades K-8)",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3065",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": true
     },
     {
       "id": "b780636bb7e8",
@@ -7449,7 +7497,7 @@
       "category": "music",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7466,7 +7514,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7483,7 +7531,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7500,7 +7548,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7517,7 +7565,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7534,7 +7582,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7551,7 +7599,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7568,7 +7616,7 @@
       "category": "music",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7585,7 +7633,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7602,7 +7650,7 @@
       "category": "music",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7619,7 +7667,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7636,7 +7684,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7653,7 +7701,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7670,7 +7718,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7687,7 +7735,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7704,7 +7752,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7721,7 +7769,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7738,7 +7786,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7755,7 +7803,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
@@ -7772,13 +7820,13 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://sanjosetheaters.org/calendar-condensed/",
+      "url": "https://www.sanjose.org/theaters",
       "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
-      "id": "9dea31e7db50",
-      "title": "All Ages Storytime",
+      "id": "166b47401e0d",
+      "title": "Toddler Storytime",
       "date": "2026-09-22",
       "displayDate": "Tue, Sep 22",
       "time": "11:30 am",
@@ -7794,8 +7842,8 @@
       "kidFriendly": true
     },
     {
-      "id": "166b47401e0d",
-      "title": "Toddler Storytime",
+      "id": "9dea31e7db50",
+      "title": "All Ages Storytime",
       "date": "2026-09-22",
       "displayDate": "Tue, Sep 22",
       "time": "11:30 am",
@@ -7880,6 +7928,40 @@
       "cost": null,
       "description": "",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
+      "source": "Santana Row",
+      "kidFriendly": false
+    },
+    {
+      "id": "790590370c3d",
+      "title": "Makers Market's Local Artist Street Fair",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "11am",
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://santanarow.com/event/makers-market-in-the-park/",
+      "source": "Santana Row",
+      "kidFriendly": true
+    },
+    {
+      "id": "c10db572650e",
+      "title": "San Jose International Short Film Festival at Ciné Arts",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": null,
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://santanarow.com/event/san-jose-international-short-film-festival-at-cine-arts/",
       "source": "Santana Row",
       "kidFriendly": false
     },
@@ -8256,6 +8338,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Family-Friendly-Introduction-to-Nature-Journaling",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "84b93b05be3f",
+      "title": "Heritage India Faire",
+      "date": "2026-09-27",
+      "displayDate": "Sun, Sep 27",
+      "time": "11:00 AM",
+      "endTime": "06:00 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Boulevard, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Join a celebration of Culture, Cuisine, Crafts, Community & Cause, brought to you by the Cupertino-Bhubaneswar Sister Cities, in partnership with the City of Cupertino and the Consulate General of India, San Francisco. Culture – Vibrant performances & folk traditions Cuisine – Authentic flavors from the East Crafts & Vendors – Handmade treasures, handloom, traditional arts & much more. Community – Connecting cultures, building friendships Cause – Supporting local & humanitarian efforts Sunday, Sep 27, 2026 11 a.m. – 6 p.m. Memorial Park, Cupertino, CA 95014 FREE ENTRY — Everyone is welcome!",
+      "url": "https://www.cupertino.gov/Events-directory/Heritage-India-Faire",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "5e3cd55d7e1e",
@@ -8851,6 +8950,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "6c530208231f",
+      "title": "Veterans Day Ceremony",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "11:00 AM",
+      "endTime": "01:00 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Boulevard, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Cupertino’s Veterans Day Ceremony is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Veterans-Day-Ceremony",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "86e44567cb97",
@@ -10723,11 +10839,11 @@
       "kidFriendly": false
     },
     {
-      "id": "5aeb6b612800",
+      "id": "a0dc41ddbaf5",
       "title": "Sharks vs Golden Knights",
       "date": "2026-09-22",
       "displayDate": "Tue, Sep 22",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -11163,91 +11279,6 @@
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
       "kidFriendly": false
-    },
-    {
-      "id": "710e83571a08",
-      "title": "Alphabet Rockers (Grade K-8)",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3063",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
-    },
-    {
-      "id": "5f53ba65f823",
-      "title": "FALL Creekside Ceramics Series – Adult Arts Education",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3273/3274",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "b402a0e00c51",
-      "title": "Around the Americas with 123 Andrés? (Grades pre K-3)",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3064",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "d5bb5d8971ad",
-      "title": "St. Paul & The Minneapolis Funk All Stars",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/st-paul/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "a34ae09c5db3",
-      "title": "Mariachi Viajero y Angeles Danzantes (Grades K-8)",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3065",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
     },
     {
       "id": "22942963d2d2",
