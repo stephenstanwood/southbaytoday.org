@@ -61,8 +61,8 @@ const THEATER_BY_STREET = [
 // No trailing \b: JavaScript's \b is ASCII-only, so it never matches after
 // the "é" in "José".
 const PRESENTER_OWNED_RUN = [
-  /\bOpera\s+San\s+Jos[eé](?![a-zÀ-ɏ])/i,
-  /\bBroadway\s+San\s+Jos[eé](?![a-zÀ-ɏ])/i,
+  /\bOpera\s+San\s+Jos[eé](?![a-z\u00C0-\u024F])/i,
+  /\bBroadway\s+San\s+Jos[eé](?![a-z\u00C0-\u024F])/i,
 ];
 
 const MONTHS = Object.freeze({
@@ -74,6 +74,9 @@ const MONTH_DAY_RE =
   /\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|June?|July?|Aug(?:ust)?|Sept?(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2})(?:st|nd|rd|th)?\b(?:,?\s*(\d{4})\b)?/gi;
 
 const CLOCK_RE = /\b(\d{1,2})(?::(\d{2}))?\s*([ap])\.?\s*m\b\.?|\bnoon\b/gi;
+
+// "(doors 6:30pm)" / "Doors open at 7 PM" is not a curtain time.
+const DOORS_RE = /\(?\bdoors?\b(?:\s+open)?\s*(?:at|@|:)?\s*[\d:]+\s*[ap]\.?\s*m\.?\)?/gi;
 
 function pad(n) {
   return String(n).padStart(2, "0");
@@ -120,7 +123,7 @@ export function parseClockTimes(value) {
  * old iCal export failed.
  */
 export function parseTheaterListings(body) {
-  const raw = String(body ?? "").replace(/^﻿/, "").trimStart();
+  const raw = String(body ?? "").replace(/^\uFEFF/, "").trimStart();
   if (!raw.startsWith("[")) {
     const title = raw.match(/<title[^>]*>([^<]*)/i)?.[1]?.trim();
     const shape = raw.startsWith("<")
@@ -212,7 +215,7 @@ export function parseTheaterEventPage(html) {
   const when = sectionBetween(page, /<h3>\s*When\s*<\/h3>/i, /<h3>\s*Where\s*<\/h3>/i);
   const whenFocus = text(when.match(/section--focus">([\s\S]*?)<\/div>/i)?.[1]);
   const whenTimes = [...when.matchAll(/ticket-info">([\s\S]*?)<\/div>/gi)]
-    .flatMap((m) => parseClockTimes(text(m[1])));
+    .flatMap((m) => parseClockTimes(text(m[1]).replace(DOORS_RE, " ")));
 
   const where = sectionBetween(page, /<h3>\s*Where\s*<\/h3>/i, /<h3>/i);
   const whereVenue = text(where.match(/section--focus">([\s\S]*?)<\/div>/i)?.[1]);
@@ -274,8 +277,7 @@ export function parsePerformanceLines(descriptionHtml, { start, end }) {
   const seen = new Set();
   for (const rawLine of lines) {
     if (/\b(?:on[\s-]?sale|pre-?sale)\b/i.test(rawLine)) continue;
-    // "(doors 6:30pm)" is not a curtain time.
-    const line = rawLine.replace(/\(?\bdoors?\b(?:\s+open)?\s*(?:at|@|:)?\s*[\d:]+\s*[ap]\.?\s*m\.?\)?/gi, " ");
+    const line = rawLine.replace(DOORS_RE, " ");
     const dates = [...line.matchAll(MONTH_DAY_RE)];
     dates.forEach((m, i) => {
       const month = MONTHS[m[1].slice(0, 3).toLowerCase()];
