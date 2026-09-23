@@ -97,3 +97,14 @@ test("cleanVenue keeps a venue whose own name contains a street word", () => {
   assert.equal(cleanVenue("Main Street Cafe"), "Main Street Cafe");
   assert.equal(cleanVenue("Castro Street Plaza"), "Castro Street Plaza");
 });
+
+// CivicPlus rich-text LOCATION: "<p>West Valley College</p><p>Fox Building - Fox 120</p>"
+// shipped as "West Valley CollegeFox Building - Fox 120" (Saratoga, 2026-09-22).
+test("cleanVenue separates HTML paragraph / line-break lines instead of gluing them", () => {
+  assert.equal(
+    cleanVenue('<p data-pasted="true">West Valley College</p><p>Fox Building - Fox 120</p> -   Saratoga CA 95070'),
+    "West Valley College, Fox Building - Fox 120",
+  );
+  assert.equal(cleanVenue("Saratoga Library<br/>Community Room"), "Saratoga Library, Community Room");
+  assert.equal(cleanVenue("<b>Saratoga Library</b>"), "Saratoga Library");
+});

@@ -202,8 +202,14 @@ async function main() {
   console.log("🏗️  Fetching San Jose building permits...");
 
   const now = new Date();
-  const cutoff = new Date(now);
-  cutoff.setDate(cutoff.getDate() - WINDOW_DAYS);
+  const cutoffRaw = new Date(now);
+  cutoffRaw.setDate(cutoffRaw.getDate() - WINDOW_DAYS);
+  // Floor to the start of that Pacific day, in the same -08:00 frame parseDate
+  // uses for ISSUEDATE. A raw now-minus-7d cutoff (e.g. Sep 15 8pm) dropped
+  // every permit issued on Sep 15 while the label still read "Sep 15 – Sep 22"
+  // (Trimble Summerhill 5-plex vanished from the 2026-09-22 run).
+  const cutoffDay = cutoffRaw.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const cutoff = new Date(`${cutoffDay}T00:00:00-08:00`);
 
   let records;
   try {

@@ -2245,7 +2245,12 @@ function cleanVenue(raw) {
     .replace(/&ldquo;|&rdquo;|&#8220;|&#8221;|&#x201C;|&#x201D;/gi, '"')
     .replace(/&ndash;|&mdash;|&#8211;|&#8212;|&#x2013;|&#x2014;/gi, "-")
     .replace(/&amp;|&#38;/gi, "&");
-  v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").trim();
+  // CivicPlus rich-text LOCATION fields wrap each line in <p> / <br>: Saratoga's
+  // "<p>West Valley College</p><p>Fox Building - Fox 120</p>" shipped as
+  // "West Valley CollegeFox Building - Fox 120" on 2026-09-22 because the tag
+  // strip below glued the lines together. Turn line breaks into ", " first.
+  v = v.replace(/<\/(?:p|div|li|h\d)>\s*(?=<(?:p|div|li|h\d)\b)|<br\s*\/?>/gi, ", ");
+  v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").replace(/\s*,\s*(?:,\s*)+/g, ", ").trim();
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
   // Bibliocommons puts the street address in a parenthetical after the place
