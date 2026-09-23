@@ -1,10 +1,11 @@
-import { useState, useCallback, useRef, useEffect, lazy, Suspense } from "react";
+import { useState, useCallback, useEffect, lazy, Suspense } from "react";
 import type { Tab, City } from "../../lib/south-bay/types";
 import { TABS } from "../../lib/south-bay/types";
 import { CITIES } from "../../lib/south-bay/cities";
-import { useLiveTodayLabel } from "../../lib/south-bay/useLiveTodayLabel";
 import SouthBayTodayView from "./homepage/SouthBayTodayView";
 import NewsletterSignup from "./NewsletterSignup";
+import Masthead, { TAB_HREF } from "./Masthead";
+import SiteFooter from "./SiteFooter";
 
 // Non-default tabs are lazy-loaded so a user who only looks at the Today tab
 // doesn't pay for Events/Tech/etc. code + their deps (recharts, etc.)
@@ -20,14 +21,7 @@ const TAB_IDS = new Set<string>(TABS.map((t) => t.id));
 // Short-slug URLs (e.g. /gov, /tech) so the address bar reads cleanly instead
 // of the older /#government-style hash routing. Hash routing is preserved as a
 // fallback so existing bookmarks keep working.
-const TAB_TO_SLUG: Partial<Record<Tab, string>> = {
-  overview:   "/",
-  events:     "/events",
-  camps:      "/camps",
-  government: "/gov",
-  technology: "/tech",
-  food:       "/food",
-};
+const TAB_TO_SLUG = TAB_HREF;
 const SLUG_TO_TAB: Record<string, Tab> = Object.fromEntries(
   Object.entries(TAB_TO_SLUG).map(([tab, slug]) => [slug, tab as Tab]),
 );
@@ -53,7 +47,6 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
   // legacy #events-style bookmark would make the hydrating client disagree
   // with the server HTML; the mount effect below resolves the hash instead.
   const [activeTab, setActiveTab] = useState<Tab>(() => initialTab ?? "overview");
-  const todayLabel = useLiveTodayLabel();
 
   const navigateTo = useCallback((tab: Tab) => {
     setActiveTab(tab);
@@ -112,23 +105,6 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
     });
   }, []);
 
-  const navInnerRef = useRef<HTMLDivElement>(null);
-  const [showNavArrow, setShowNavArrow] = useState(false);
-
-  useEffect(() => {
-    const el = navInnerRef.current;
-    if (!el) return;
-    const check = () => setShowNavArrow(el.scrollWidth > el.clientWidth + 4 && el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
-    check();
-    el.addEventListener("scroll", check, { passive: true });
-    window.addEventListener("resize", check, { passive: true });
-    return () => { el.removeEventListener("scroll", check); window.removeEventListener("resize", check); };
-  }, []);
-
-  const scrollNavRight = () => {
-    navInnerRef.current?.scrollBy({ left: 120, behavior: "smooth" });
-  };
-
   const toggleAll = useCallback(() => {
     setSelectedCities((prev) => {
       if (prev.size === CITIES.length) return new Set();
@@ -140,66 +116,10 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
 
   return (
     <>
-      {/* Masthead */}
-      <header className="sb-header">
-        <div className="sb-header-inner">
-          <a href="/" className="sb-brand">
-            <img
-              src="/images/sbt-avatar-172.png"
-              alt=""
-              width={86}
-              height={86}
-              className="sb-brand-mark"
-              aria-hidden="true"
-            />
-            <span className="sb-logo">
-              <span className="sb-logo-main-row">
-                <span className="sb-logo-the">the</span>
-                <span className="sb-logo-south-bay">South Bay</span>
-              </span>
-              <span className="sb-logo-signal-row">
-                <span className="sb-logo-signal-rule" />
-                <span className="sb-logo-signal-word">Today</span>
-                <span className="sb-logo-signal-rule" />
-              </span>
-            </span>
-          </a>
-          <div className="sb-date">
-            <div suppressHydrationWarning>{todayLabel}</div>
-          </div>
-          <div className="sb-slogan">All local. Good vibes. No ads.</div>
-        </div>
-      </header>
-
-      <hr className="sb-masthead-rule" />
-
-      {/* Navigation */}
-      <nav className="sb-nav" style={{ position: "relative" }}>
-        <div className="sb-nav-inner" ref={navInnerRef}>
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              className={`sb-tab${activeTab === tab.id ? " sb-tab--active" : ""}`}
-              onClick={() => navigateTo(tab.id)}
-              aria-current={activeTab === tab.id ? "page" : undefined}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        {showNavArrow && (
-          <button
-            onClick={scrollNavRight}
-            aria-label="Scroll tabs right"
-            className="sb-nav-scroll-arrow"
-          >
-            ›
-          </button>
-        )}
-      </nav>
+      <Masthead activeTab={activeTab} onNavigate={navigateTo} />
 
       {/* Content */}
-      <main className="sb-main">
+      <main className="sb-main" id="main-content">
         {activeTab === "overview" && (
           <SouthBayTodayView onNavigate={navigateTo} />
         )}
@@ -222,20 +142,9 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
         )}
       </main>
 
-      {/* Footer — minimal newsletter signup baked in above the credit line. */}
-      <footer className="sb-footer">
-        <div style={{ marginBottom: 12 }}>
-          <NewsletterSignup variant="minimal" />
-        </div>
-        a project of <a href="https://stanwood.dev" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Permanent Marker', cursive", textDecoration: "none", color: "inherit" }}>stanwood.dev</a>
-        <span aria-hidden="true" style={{ margin: "0 6px", opacity: 0.4 }}>·</span>
-        <a href="/about" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>about</a>
-        <span aria-hidden="true" style={{ margin: "0 6px", opacity: 0.4 }}>·</span>
-        <a href="/rss.xml" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>RSS</a>
-        <span aria-hidden="true" style={{ margin: "0 6px", opacity: 0.4 }}>·</span>
-        <a href="/privacy" style={{ color: "inherit", textDecoration: "none", opacity: 0.7 }}>privacy</a>
-        <div style={{ marginTop: 6, opacity: 0.55, fontSize: 12 }}>© Stoa Works LLC</div>
-      </footer>
+      <SiteFooter>
+        <NewsletterSignup variant="minimal" />
+      </SiteFooter>
     </>
   );
 }

@@ -1,5 +1,14 @@
 ---
 import "../styles/global.css";
+// One site stylesheet for every page type (app tabs, static calendar pages,
+// city pages): tokens → chrome → per-area rules. Order matters.
+import "../styles/sbt/tokens.css";
+import "../styles/sbt/chrome.css";
+import "../styles/sbt/home.css";
+import "../styles/sbt/events.css";
+import "../styles/sbt/gov.css";
+import "../styles/sbt/tech.css";
+import "../styles/sbt/camps.css";
 import Analytics from "@vercel/analytics/astro";
 import ReaderWidget from "../components/south-bay/ReaderWidget";
 
@@ -109,9 +118,19 @@ const websiteSchema = JSON.stringify({
   </head>
   <body>
     <a href="#main-content" class="skip-nav">Skip to content</a>
-    <main id="main-content">
-      <slot />
-    </main>
+    <slot />
+    <script is:inline>
+      // Static pages never freeze a build date into the masthead (they ship
+      // the neutral "Today"); fill the Pacific date now. Hydrated mastheads
+      // (SignalApp, CityPage) keep it current via useLiveTodayLabel.
+      (function () {
+        var label = new Date().toLocaleDateString("en-US", {
+          weekday: "long", month: "long", day: "numeric", year: "numeric",
+          timeZone: "America/Los_Angeles",
+        });
+        document.querySelectorAll("[data-sbt-today]").forEach(function (el) { el.textContent = label; });
+      })();
+    </script>
     <ReaderWidget client:idle />
     <script is:inline>
       if (location.search.includes('notrack')) localStorage.setItem('notrack', '1');

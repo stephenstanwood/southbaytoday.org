@@ -1,0 +1,70 @@
+/* Design tokens — the one palette/type/space set every page reads.
+   Loaded site-wide from BaseLayout. Components should reach for these
+   instead of hard-coding colors, radii, or shadows. */
+
+:root {
+  /* ── Brand palette ── */
+  --sb-ink: #13072F;
+  --sb-ink-2: #2a1f47;
+  --sb-muted: #5f5870;
+  --sb-light: #6b6178;
+  --sb-accent: #8738F5;
+  --sb-accent-ink: #6d28d9;
+  --sb-accent-light: #F3E8FF;
+  --sb-sunset: #FF7B2B;
+  --sb-coral: #F43F7C;
+  --sb-teal: #22C6D3;
+  --sb-gold: #FFD338;
+  --sb-live: #F43F7C;
+  --sb-primary: #13072F;
+  --sb-primary-light: #F4ECFF;
+
+  /* House "day arc": sunset → coral → accent → teal. Chrome accents reuse
+     this exact sequence rather than inventing new gradients. */
+  --sb-arc: linear-gradient(90deg, var(--sb-sunset), var(--sb-coral), var(--sb-accent), var(--sb-teal));
+  --sb-arc-soft: linear-gradient(135deg, #fff1e6 0%, #fdeaf3 45%, #efe7ff 75%, #e4f8fa 100%);
+
+  /* ── Surfaces & lines ── */
+  --sb-bg: #FFF8F2;
+  --sb-card: #FFFFFF;
+  --sb-surface-tint: #fbf8ff;
+  --sb-surface-warm: #fffaf5;
+  /* Neutral ink hairlines read cleaner than tinted ones on the warm page;
+     color is reserved for accents that mean something. */
+  --sb-border: rgba(46, 16, 101, 0.16);
+  --sb-border-light: rgba(19, 7, 47, 0.09);
+  --sb-line: rgba(19, 7, 47, 0.09);
+  --sb-line-strong: rgba(19, 7, 47, 0.16);
+
+  /* ── Shape ── */
+  --sb-radius: 2px; /* legacy flat edge — a handful of inline styles still use it */
+  --sb-radius-xs: 6px;
+  --sb-radius-sm: 10px;
+  --sb-radius-md: 14px;
+  --sb-radius-lg: 20px;
+  --sb-radius-pill: 999px;
+
+  /* ── Depth ── */
+  --sb-shadow: none;
+  --sb-shadow-xs: 0 1px 2px rgba(19, 7, 47, 0.05);
+  --sb-shadow-sm: 0 1px 2px rgba(19, 7, 47, 0.04), 0 6px 18px rgba(19, 7, 47, 0.05);
+  --sb-shadow-md: 0 2px 6px rgba(19, 7, 47, 0.05), 0 14px 34px rgba(19, 7, 47, 0.08);
+  --sb-shadow-hover: 0 4px 10px rgba(19, 7, 47, 0.06), 0 18px 40px rgba(19, 7, 47, 0.11);
+
+  /* ── Type ── */
+  --sb-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sb-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sb-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── Layout & motion ── */
+  --sb-max-width: 960px;
+  --sb-gutter: 24px;
+  --sb-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sb-focus: 0 0 0 3px rgba(135, 56, 245, 0.35);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --sb-gutter: 16px;
+  }
+}

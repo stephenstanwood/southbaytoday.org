@@ -1,0 +1,642 @@
+/* Tech tab. */
+
+/* ── Technology section ── */
+.tech-view {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Section wrapper */
+.tech-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tech-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px solid var(--sb-border);
+  padding-bottom: 8px;
+}
+
+.tech-section-title {
+  font-family: var(--sb-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  margin: 0;
+}
+
+.tech-section-note {
+  font-size: 12px;
+  color: var(--sb-light);
+}
+
+/* ── Funding ticker ──────────────────────────────────────────────── */
+.tech-ticker {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(180deg, #faf5ff 0%, #f5f3ff 100%);
+  border: 1px solid #ddd6fe;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.tech-ticker-label {
+  padding: 12px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b21a8;
+  background: rgba(255,255,255,0.5);
+  border-right: 1px solid #ddd6fe;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tech-ticker-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  min-width: 0;
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+
+.tech-ticker-track {
+  display: inline-flex;
+  gap: 0;
+  animation: tech-ticker-scroll 60s linear infinite;
+  will-change: transform;
+}
+
+.tech-ticker-viewport:hover .tech-ticker-track,
+.tech-ticker-track:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-ticker-track {
+    animation: none;
+  }
+  .tech-ticker-viewport {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+
+.tech-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-right: 1px solid #ede9fe;
+  text-decoration: none;
+  color: inherit;
+  white-space: nowrap;
+  transition: background 0.12s;
+}
+
+.tech-ticker-item:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+.tech-ticker-text {
+  display: flex; flex-direction: column; gap: 1px;
+}
+
+.tech-ticker-name {
+  font-family: var(--sb-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  line-height: 1.1;
+}
+
+.tech-ticker-meta {
+  display: flex;
+  gap: 6px;
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  line-height: 1.2;
+}
+
+.tech-ticker-amount {
+  color: #15803d; font-weight: 700;
+}
+
+.tech-ticker-round {
+  color: #6b21a8;
+}
+
+/* ── Top Employers Leaderboard ──────────────────────────────────── */
+.tech-leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-border-light);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.tech-leaderboard-row {
+  display: grid;
+  grid-template-columns: 28px 36px minmax(140px, 1fr) minmax(80px, 2.2fr) 70px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+  transition: background 0.12s;
+}
+
+.tech-leaderboard-row:hover {
+  background: var(--sb-primary-light, #f5f3ff);
+}
+
+.tech-leaderboard-rank {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sb-light);
+  text-align: center;
+}
+
+.tech-leaderboard-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tech-leaderboard-name {
+  font-family: var(--sb-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tech-leaderboard-arrow-out {
+  font-size: 10px;
+  color: var(--sb-light);
+  margin-left: 4px;
+}
+
+.tech-leaderboard-meta {
+  font-size: 11px;
+  color: var(--sb-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tech-leaderboard-bar-wrap {
+  position: relative;
+  height: 10px;
+  background: var(--sb-border-light);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.tech-leaderboard-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.4s ease;
+}
+
+.tech-leaderboard-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  text-align: right;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.tech-leaderboard-num-value {
+  font-size: 13px;
+}
+
+.tech-leaderboard-arrow {
+  font-size: 11px;
+}
+
+.tech-leaderboard-footnote {
+  padding: 8px 10px 4px;
+  font-size: 10px;
+  color: var(--sb-light);
+  font-style: italic;
+  border-top: 1px solid var(--sb-border-light);
+  margin-top: 6px;
+}
+
+/* ── SV History milestones ───────────────────────────────────────── */
+.tech-milestone {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #fdf8f0;
+  border: 1px solid var(--sb-border-light);
+  border-left: 4px solid #b45309;
+  border-radius: 6px;
+  align-items: flex-start;
+}
+
+.tech-milestone--upcoming {
+  background: #f9fafb;
+  border-left-color: #9ca3af;
+}
+
+.tech-milestone-top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.tech-milestone-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  font-family: var(--sb-sans);
+}
+
+.tech-milestone-pill {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+.tech-milestone-pill--amber {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.tech-milestone-pill--gray {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.tech-milestone-loc {
+  font-size: 11px;
+  color: var(--sb-muted);
+  font-family: var(--sb-sans);
+}
+
+.tech-milestone-note {
+  margin: 0 0 6px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--sb-ink);
+}
+
+.tech-milestone-chm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  padding: 3px 8px;
+  margin-top: 2px;
+}
+
+/* ── Recently funded row ─────────────────────────────────────────── */
+.tech-funded-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--sb-border-light);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s;
+}
+
+.tech-funded-row:hover {
+  background: var(--sb-primary-light, #f5f3ff);
+}
+
+/* Company grid */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* Company card */
+.tech-card {
+  background: var(--sb-card);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid var(--sb-border-light);
+  border-radius: 8px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.tech-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.tech-card-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.tech-card-id {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tech-card-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tech-card-name {
+  font-family: var(--sb-serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  line-height: 1.2;
+}
+
+.tech-card-ticker {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sb-light);
+  letter-spacing: 0.04em;
+  font-family: 'Space Mono', monospace;
+}
+
+.tech-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--sb-muted);
+}
+
+.tech-card-city {
+  font-weight: 500;
+}
+
+.tech-card-dot {
+  color: var(--sb-border);
+}
+
+.tech-card-category {
+  background: var(--sb-primary-light);
+  border: 1px solid var(--sb-border-light);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--sb-muted);
+}
+
+.tech-card-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--sb-primary-light, #f5f3ff);
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.tech-card-stat-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sb-ink);
+}
+
+.tech-card-stat-label {
+  font-size: 10px;
+  color: var(--sb-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Space Mono', monospace;
+}
+
+.tech-card-desc {
+  font-size: 13px;
+  color: var(--sb-ink);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.tech-card-trend-note {
+  font-size: 12px;
+  color: var(--sb-muted);
+  font-style: italic;
+}
+
+.tech-card-highlights {
+  margin: 4px 0 0 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: var(--sb-muted);
+  line-height: 1.6;
+}
+
+.tech-card-highlights li {
+  margin-bottom: 2px;
+}
+
+/* Trend badges */
+.tech-trend {
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 2px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.tech-trend--up {
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.tech-trend--down {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+.tech-trend--flat {
+  color: var(--sb-muted);
+  background: var(--sb-primary-light);
+  border: 1px solid var(--sb-border-light);
+}
+
+/* Spotlight grid */
+.tech-spotlight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.tech-spotlight-card {
+  background: var(--sb-card);
+  border: 1px solid var(--sb-border);
+  border-radius: 6px;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.tech-spotlight-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(-1px);
+}
+
+.tech-spotlight-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.tech-spotlight-id {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tech-spotlight-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sb-ink);
+  font-family: var(--sb-sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tech-spotlight-arrow {
+  font-size: 10px;
+  color: var(--sb-light);
+  margin-left: 2px;
+}
+
+.tech-spotlight-meta {
+  font-size: 11px;
+  color: var(--sb-muted);
+  font-family: var(--sb-sans);
+}
+
+.tech-spotlight-stage {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-family: var(--sb-sans);
+}
+
+.tech-spotlight-tagline {
+  font-size: 12px;
+  color: var(--sb-muted);
+  line-height: 1.5;
+  margin: 0;
+  font-family: var(--sb-sans);
+}
+
+.tech-spotlight-employees {
+  font-size: 10px;
+  color: var(--sb-light);
+  font-family: 'Space Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 4px;
+  border-top: 1px solid var(--sb-border-light);
+  margin-top: 4px;
+}
+
+/* Footer note */
+.tech-footer-note {
+  font-size: 11px;
+  color: var(--sb-light);
+  line-height: 1.6;
+  padding-top: 16px;
+  border-top: 1px solid var(--sb-border-light);
+}
+
+@media (max-width: 640px) {
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+  .tech-section-head {
+    flex-direction: column; gap: 2px;
+  }
+  .tech-leaderboard-row {
+    grid-template-columns: 22px 32px 1fr 60px;
+    gap: 8px;
+  }
+  .tech-leaderboard-bar-wrap {
+    display: none;
+  }
+  .tech-card-header {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+  }
+  .tech-card-header > :last-child {
+    grid-column: 1 / -1;
+  }
+  .tech-ticker-label {
+    padding: 8px 10px; font-size: 9px;
+  }
+}
+
+@keyframes tech-ticker-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}

@@ -26,6 +26,8 @@ import { isPlaceTemporarilyUnavailable } from "../../../lib/south-bay/placeAvail
 import { openCampCountForCity } from "../../../lib/south-bay/cityCamps";
 
 import Masthead from "../Masthead";
+import SiteFooter from "../SiteFooter";
+import NewsletterSignup from "../NewsletterSignup";
 import ForecastCard from "../cards/ForecastCard";
 import PhotoStrip from "../homepage/PhotoStrip";
 
@@ -159,7 +161,7 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* City content — mirrors the homepage container width (800px) so the
           bucket grid + forecast strip land at homepage proportions. */}
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 80px" }}>
+      <main id="main-content" style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 56px" }}>
         {/* Sub-header strip: city name + "this is a city page" breadcrumb. */}
         <div style={{ padding: "16px 0 4px", textAlign: "center" }}>
           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--sb-light)", marginBottom: 4 }}>
@@ -232,7 +234,11 @@ export default function CityPage({ cityId, cityName }: Props) {
             </a>
           )}
         </div>
-      </div>
+      </main>
+
+      <SiteFooter>
+        <NewsletterSignup variant="minimal" />
+      </SiteFooter>
     </>
   );
 }

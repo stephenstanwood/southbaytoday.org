@@ -1,49 +1,67 @@
 // ---------------------------------------------------------------------------
-// Masthead — site branding header for pages outside the SignalApp shell.
-// ---------------------------------------------------------------------------
-// SignalApp renders its own inline masthead because it owns tab state. For
-// pages mounted directly under BaseLayout (notably /city/[slug]), this is the
-// reusable equivalent: same JSX shape, same CSS class names, but the nav tabs
-// are plain anchor links instead of SignalApp state-toggles. Self-contained
-// <style> block so it works in any layout without depending on global CSS.
+// Masthead — the one site header + tab nav, used by every page type:
+// the SignalApp tabs (hydrated), CityPage (hydrated), and the static
+// CalendarShell pages (server-rendered only). Styles live in
+// src/styles/sbt/chrome.css.
+//
+// Tabs are real links so crawlers, cmd-click, and no-JS readers all work.
+// SignalApp passes `onNavigate` to switch tabs in place instead of loading
+// a new page.
+//
+// The date: SSR/static HTML carries the neutral "Today" label (a static
+// build must never freeze a calendar date — see useLiveTodayLabel). Hydrated
+// pages fill the Pacific date from the hook; static pages get it from the
+// tiny inline script in BaseLayout that fills every [data-sbt-today].
 // ---------------------------------------------------------------------------
 
+import type { MouseEvent } from "react";
+import type { Tab } from "../../lib/south-bay/types";
+import { TABS } from "../../lib/south-bay/types";
 import { useLiveTodayLabel } from "../../lib/south-bay/useLiveTodayLabel";
 
-type TabId = "overview" | "events" | "camps" | "government" | "technology" | "food";
-
-const TABS: Array<{ id: TabId; label: string; href: string }> = [
-  { id: "overview",   label: "Today",  href: "/" },
-  { id: "events",     label: "Events", href: "/events" },
-  { id: "camps",      label: "Camps",  href: "/camps" },
-  { id: "government", label: "Gov",    href: "/gov" },
-  { id: "technology", label: "Tech",   href: "/tech" },
-  { id: "food",       label: "Food",   href: "/food" },
-];
+export const TAB_HREF: Partial<Record<Tab, string>> = {
+  overview: "/",
+  events: "/events",
+  camps: "/camps",
+  government: "/gov",
+  technology: "/tech",
+  food: "/food",
+};
 
 export interface MastheadProps {
-  /** Optional tab id to highlight (only useful when the page corresponds to a
-   *  tab). City pages pass null since they're sub-routes, not tabs. */
-  activeTab?: TabId | null;
+  /** Tab to highlight. Sub-routes (city pages, event pages) pass the closest
+   *  parent tab or null. */
+  activeTab?: Tab | null;
+  /** In-app tab switching (SignalApp). Plain modified clicks still open the
+   *  link normally. */
+  onNavigate?: (tab: Tab) => void;
 }
 
-export default function Masthead({ activeTab = null }: MastheadProps) {
+export default function Masthead({ activeTab = null, onNavigate }: MastheadProps) {
   const todayLabel = useLiveTodayLabel();
+
+  const handleClick = (tab: Tab) => (e: MouseEvent<HTMLAnchorElement>) => {
+    if (!onNavigate) return;
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    onNavigate(tab);
+  };
 
   return (
     <>
       <header className="sb-header">
         <div className="sb-header-inner">
-          <a href="/" className="sb-brand">
+          <a href="/" className="sb-brand" aria-label="The South Bay Today — home">
             <img
               src="/images/sbt-avatar-172.png"
               alt=""
-              width={86}
-              height={86}
+              width={76}
+              height={76}
               className="sb-brand-mark"
               aria-hidden="true"
+              decoding="async"
             />
-            <span className="sb-logo">
+            <span className="sb-logo" aria-hidden="true">
               <span className="sb-logo-main-row">
                 <span className="sb-logo-the">the</span>
                 <span className="sb-logo-south-bay">South Bay</span>
@@ -55,142 +73,32 @@ export default function Masthead({ activeTab = null }: MastheadProps) {
               </span>
             </span>
           </a>
-          <div className="sb-date">
-            <div suppressHydrationWarning>{todayLabel}</div>
-          </div>
-          <div className="sb-slogan">All local. Good vibes. No ads.</div>
+          <p className="sb-dateline">
+            <span className="sb-date" data-sbt-today="" suppressHydrationWarning>{todayLabel}</span>
+            <span className="sb-dateline-sep" aria-hidden="true">·</span>
+            <span className="sb-slogan">All local. Good vibes. No ads.</span>
+          </p>
         </div>
       </header>
 
-      <nav className="sb-nav">
+      <nav className="sb-nav" aria-label="Sections">
         <div className="sb-nav-inner">
-          {TABS.map((tab) => (
-            <a
-              key={tab.id}
-              href={tab.href}
-              className={`sb-tab${activeTab === tab.id ? " sb-tab--active" : ""}`}
-              aria-current={activeTab === tab.id ? "page" : undefined}
-            >
-              {tab.label}
-            </a>
-          ))}
+          {TABS.map((tab) => {
+            const active = activeTab === tab.id;
+            return (
+              <a
+                key={tab.id}
+                href={TAB_HREF[tab.id] ?? "/"}
+                className={`sb-tab${active ? " sb-tab--active" : ""}`}
+                aria-current={active ? "page" : undefined}
+                onClick={handleClick(tab.id)}
+              >
+                {tab.label}
+              </a>
+            );
+          })}
         </div>
       </nav>
-
-      <style>{`
-        :root {
-          --sb-max-width: 960px;
-        }
-        .sb-header {
-          background:
-            radial-gradient(circle at 50% -18%, rgba(255, 123, 43, 0.24), transparent 34%),
-            linear-gradient(180deg, #fffaf5 0%, var(--sb-bg) 100%);
-          padding: 26px 24px 14px;
-          text-align: center;
-          border-bottom: none;
-        }
-        .sb-header-inner {
-          max-width: var(--sb-max-width);
-          margin: 0 auto;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          position: relative;
-        }
-        .sb-brand {
-          text-decoration: none;
-          color: var(--sb-ink);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 9px;
-        }
-        .sb-brand-mark {
-          width: 86px;
-          height: 86px;
-          border-radius: 999px;
-          display: block;
-          background: #fff;
-          border: 4px solid #fff;
-          box-shadow: 0 14px 34px rgba(31, 12, 73, 0.16), 0 0 0 1px rgba(123, 47, 190, 0.12);
-        }
-        .sb-logo { display: inline-block; user-select: none; }
-        .sb-logo-main-row { display: flex; align-items: baseline; gap: 6px; }
-        .sb-logo-the { font-family: var(--sb-serif); font-weight: 400; font-style: italic; font-size: 18px; color: var(--sb-ink); }
-        .sb-logo-south-bay { font-family: var(--sb-serif); font-weight: 900; font-size: 40px; line-height: 1; color: var(--sb-ink); letter-spacing: -0.01em; }
-        .sb-logo-signal-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-        .sb-logo-signal-rule { flex: 1; height: 2px; background: linear-gradient(90deg, #ff7b2b, #f43f7c, #8738f5, #22c6d3); opacity: 0.8; }
-        .sb-logo-signal-word { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #8738f5; }
-        .sb-date {
-          font-size: 12px;
-          color: var(--sb-muted);
-          font-weight: 400;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          margin-top: 4px;
-        }
-        .sb-slogan {
-          font-family: var(--sb-sans);
-          font-size: 11px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: var(--sb-light);
-          margin-top: 6px;
-        }
-        .sb-nav {
-          background: rgba(255, 250, 245, 0.92);
-          backdrop-filter: blur(14px);
-          border-top: 1px solid rgba(123, 47, 190, 0.18);
-          border-bottom: 1px solid rgba(34, 198, 211, 0.18);
-          padding: 0 24px;
-          position: sticky;
-          top: 0;
-          z-index: 99;
-        }
-        .sb-nav-inner {
-          max-width: var(--sb-max-width);
-          margin: 0 auto;
-          display: flex;
-          justify-content: flex-start;
-          gap: 0;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-        }
-        @media (min-width: 860px) {
-          .sb-nav-inner { justify-content: center; }
-        }
-        .sb-nav-inner::-webkit-scrollbar { display: none; }
-        .sb-tab {
-          padding: 10px 14px;
-          font-family: var(--sb-sans);
-          font-size: 12px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.08em;
-          color: var(--sb-muted);
-          border: none;
-          background: none;
-          cursor: pointer;
-          white-space: nowrap;
-          border-bottom: 2px solid transparent;
-          transition: color 0.15s, border-color 0.15s;
-          text-decoration: none;
-          display: inline-block;
-        }
-        .sb-tab:hover { color: var(--sb-ink); }
-        .sb-tab--active {
-          color: #12062f;
-          border-bottom-color: #8738f5;
-        }
-        @media (max-width: 640px) {
-          .sb-header { padding: 20px 16px 12px; }
-          .sb-brand-mark { width: 72px; height: 72px; }
-          .sb-nav { padding: 0 16px; }
-          .sb-tab { padding: 10px 16px; font-size: 11px; }
-        }
-      `}</style>
     </>
   );
 }
