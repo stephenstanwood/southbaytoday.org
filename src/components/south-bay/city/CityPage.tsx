@@ -21,10 +21,11 @@ import type { City } from "../../../lib/south-bay/types";
 import { CITY_MAP } from "../../../lib/south-bay/cities";
 import { isVirtualEvent } from "../../../lib/south-bay/eventFilters.mjs";
 import {
-  TODAY_ISO, NOW_PT,
   startMinutes, formatTimeRange, hasNotStarted,
+  ptMinutesNow, addDaysIso, weekendIsosFrom,
   formatAge,
 } from "../../../lib/south-bay/timeHelpers";
+import { calendarDaysAgo, todayPT, useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import {
   type Bucket, BUCKET_ORDER, BUCKET_LABELS,
   isBucket, inferBucketFromTimeBlock,
@@ -129,9 +130,29 @@ type Props = {
   cityId: string;
   cityName: string;
   data: CityPageData;
+  /** Pacific date the page was built on. The first render uses it so
+   *  hydration matches the static HTML. See useTodayPT. */
+  buildDayPt: string;
 };
 
-export default function CityPage({ cityId, cityName, data }: Props) {
+export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) {
+  // Today in Pacific time: the build's day while hydrating, the reader's
+  // right after, and the next day once midnight passes in an open tab
+  // (useTodayPT checks every minute). The events, Open Right Now, and the
+  // camps pointer count days from it.
+  const todayIso = useTodayPT(buildDayPt);
+
+  // The reader's own day, read after mount and again whenever the day turns.
+  // The meeting kicker, the digest, and the day plan go by it. Their first
+  // render stays neutral, since the build can't know the reader's day, and
+  // they skip the build's day that todayIso holds while hydrating (the plan
+  // would otherwise fetch twice on a page opened after its build day). So
+  // this reads the clock itself; todayIso only prompts the re-read.
+  const [readerDay, setReaderDay] = useState<string | null>(null);
+  useEffect(() => {
+    setReaderDay(todayPT());
+  }, [todayIso]);
+
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[]; generatedAt?: string } | null>(null);
 
   useEffect(() => {
@@ -150,28 +171,21 @@ export default function CityPage({ cityId, cityName, data }: Props) {
   // ── Meeting + digest ──
   const { nextMeeting, digest } = data;
 
-  // "Tonight" highlight and digest staleness both depend on the visitor's
-  // clock, which the build-time render can't know. First render uses neutral
-  // values derived only from the JSON (not tonight; digest fresh if it has a
-  // date, hidden if not) so server and client HTML match; the mount effect
-  // applies the real clock. Worst case is a one-frame style/visibility tweak
-  // in the bottom-of-page civic panel.
-  const [meetingIsToday, setMeetingIsToday] = useState(false);
+  // "Tonight" highlight and digest staleness both depend on the reader's day
+  // (readerDay). Until it's read, they use neutral values derived only from
+  // the JSON (not tonight; digest fresh if it has a date, hidden if not) so
+  // server and client HTML match. Worst case is a one-frame style/visibility
+  // tweak in the bottom-of-page civic panel.
+  const meetingIsToday = readerDay !== null && nextMeeting?.date === readerDay;
   // The meetings JSON is baked in at build time, so by the next morning its
   // "next" meeting can already be over. Drop it once the date has passed
   // rather than calling yesterday's meeting "Next meeting".
-  const [meetingIsPast, setMeetingIsPast] = useState(false);
-  const [digestAge, setDigestAge] = useState<number>(() => (digest?.meetingDateIso ? 0 : 999));
-  useEffect(() => {
-    setMeetingIsToday(nextMeeting?.date === TODAY_ISO);
-    setMeetingIsPast(!!nextMeeting?.date && nextMeeting.date < TODAY_ISO);
-    setDigestAge(
-      digest?.meetingDateIso
-        ? (Date.now() - new Date(digest.meetingDateIso).getTime()) / 86400000
-        : 999,
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityId]);
+  const meetingIsPast = readerDay !== null && !!nextMeeting?.date && nextMeeting.date < readerDay;
+  // Counted in Pacific calendar days, like Gov's digest ages, so it turns
+  // over at midnight with the rest of the page. The panel hides it at 30.
+  const digestAge = !digest?.meetingDateIso ? 999
+    : readerDay === null ? 0
+    : calendarDaysAgo(digest.meetingDateIso, readerDay);
 
   // ── City config ──
   const city = CITY_MAP[cityId as City];
@@ -198,7 +212,7 @@ export default function CityPage({ cityId, cityName, data }: Props) {
 
         {/* Camps pointer — one-line nudge to /camps, only when this city has
             a program still running this summer. Renders nothing otherwise. */}
-        <CityCampsPointer lastDates={data.campLastDates} cityName={cityName} />
+        <CityCampsPointer lastDates={data.campLastDates} cityName={cityName} todayIso={todayIso} />
 
         {/* 5-day forecast strip — same component the homepage uses. */}
         <div className="city-forecast">
@@ -213,7 +227,7 @@ export default function CityPage({ cityId, cityName, data }: Props) {
         </div>
 
         {/* ═══ YOUR DAY ═══ */}
-        <CityDayPlan cityId={cityId as City} cityName={cityName} />
+        <CityDayPlan cityId={cityId as City} cityName={cityName} readerDay={readerDay} />
 
         {/* ═══ EVENTS (Today / Tomorrow / This Weekend) ═══ */}
         <CityEventsBlock
@@ -222,13 +236,14 @@ export default function CityPage({ cityId, cityName, data }: Props) {
           generatedAt={eventsGenAt}
           cityId={cityId}
           cityName={cityName}
+          todayIso={todayIso}
         />
 
         {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
         <CityRedditTiles reddit={data.reddit} />
 
         {/* ═══ OPEN RIGHT NOW — randomized "oh yeah, THAT place" panel ═══ */}
-        <CityOpenNow cityId={cityId} cityName={cityName} />
+        <CityOpenNow cityId={cityId} cityName={cityName} todayIso={todayIso} />
 
         {/* ═══ AT CITY HALL — pinned to the bottom; next meeting + last digest
             side-by-side. */}
@@ -268,15 +283,17 @@ export default function CityPage({ cityId, cityName, data }: Props) {
 // from the same page it's pointing to, not a bolted-on ad.
 // ---------------------------------------------------------------------------
 
-function CityCampsPointer({ lastDates, cityName }: { lastDates: Array<string | null>; cityName: string }) {
-  // lastDates holds one entry per camp still open when the page was built, so
-  // its length is the build-day count and the server and hydration renders
-  // agree. After mount, re-count against the reader's own day so a camp
-  // that has wrapped up since the build drops out.
-  const [count, setCount] = useState(lastDates.length);
-  useEffect(() => {
-    setCount(lastDates.filter((d) => d === null || d >= TODAY_ISO).length);
-  }, [lastDates]);
+function CityCampsPointer({ lastDates, cityName, todayIso }: {
+  lastDates: Array<string | null>;
+  cityName: string;
+  todayIso: string;
+}) {
+  // lastDates holds one entry per camp still open when the page was built.
+  // While hydrating, todayIso is the build's day, so the count matches the
+  // server render. Then it's the reader's day, so a camp that has wrapped up
+  // since the build drops out, and one that ends today drops out at midnight
+  // in an open tab.
+  const count = lastDates.filter((d) => d === null || d >= todayIso).length;
   if (count === 0) return null;
 
   return (
@@ -606,21 +623,29 @@ function PlanSkeleton() {
   );
 }
 
-function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
-  const [cards, setCards] = useState<DayCard[]>([]);
-  const [loading, setLoading] = useState(true);
+function CityDayPlan({ cityId, cityName, readerDay }: { cityId: City; cityName: string; readerDay: string | null }) {
+  // A plan is for one day, so it's fetched once the reader's day is known
+  // and again when that day turns in an open tab. Until that day's plan
+  // lands, the section shows its loader.
+  const [plan, setPlan] = useState<{ day: string; cards: DayCard[] } | null>(null);
 
   useEffect(() => {
+    if (readerDay === null) return;
+    let cancelled = false;
+    const land = (cards: DayCard[]) => { if (!cancelled) setPlan({ day: readerDay, cards }); };
     fetch("/api/plan-day", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ city: cityId, scope: "city", kids: false, currentHour: new Date().getHours() }),
     })
       .then((r) => r.ok ? r.json() : null)
-      .then((d) => { if (d?.cards) setCards(d.cards); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, [cityId]);
+      .then((d) => land(d?.cards ?? []))
+      .catch(() => land([]));
+    return () => { cancelled = true; };
+  }, [cityId, readerDay]);
+
+  const loading = plan?.day !== readerDay;
+  const cards = plan && !loading ? plan.cards : [];
 
   // Group cards by bucket. Same logic as the homepage: prefer card.bucket,
   // fall back to inferring from clock-range timeBlock for legacy plans.
@@ -681,6 +706,13 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
 
 const OPEN_DAY_KEYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
 
+/** When "right now" is for the open check: the day, its weekday, and the minute. */
+type OpenAt = { day: string; dayIdx: number; mins: number };
+
+function readOpenAt(todayIso: string): OpenAt {
+  return { day: todayIso, dayIdx: new Date(`${todayIso}T12:00:00`).getDay(), mins: ptMinutesNow() };
+}
+
 const OPEN_CATEGORY_EMOJI: Record<string, string> = {
   food: "🍴",
   entertainment: "🎭",
@@ -717,10 +749,7 @@ function shuffleInPlace<T>(arr: T[]): T[] {
   return arr;
 }
 
-function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string }) {
-  // Random selection happens once per mount — pin it in state so React's strict
-  // mode double-render in dev doesn't show two different sets.
-  const [tick, setTick] = useState(0);
+function CityOpenNow({ cityId, cityName, todayIso }: { cityId: string; cityName: string; todayIso: string }) {
   // "Open right now" is inherently clock-and-random, so the server render
   // (and the matching first client render) shows nothing; the panel pops in
   // post-mount, once the city's candidates load. It lives near the bottom of
@@ -735,14 +764,22 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
     return () => { cancelled = true; };
   }, [cityId]);
 
+  // The moment the open check runs against. It's read when the candidates
+  // land, read again when the day turns and on each Shuffle, and holds still
+  // in between, so cards don't change while someone reads. Each reading draws
+  // a new random pick; the memo keeps React's strict-mode double render in
+  // dev from showing two different sets.
+  const [openAt, setOpenAt] = useState<OpenAt | null>(null);
+  if (candidates.length > 0 && openAt?.day !== todayIso) {
+    setOpenAt(readOpenAt(todayIso));
+  }
+
   const picks = useMemo(() => {
-    if (candidates.length === 0) return [];
-    const dayKey = OPEN_DAY_KEYS[NOW_PT.getDay()];
-    const mins = NOW_PT.getHours() * 60 + NOW_PT.getMinutes();
-    const open = candidates.filter((p) => isOpenAt(p.hours, dayKey, mins));
+    if (!openAt) return [];
+    const dayKey = OPEN_DAY_KEYS[openAt.dayIdx];
+    const open = candidates.filter((p) => isOpenAt(p.hours, dayKey, openAt.mins));
     return shuffleInPlace([...open]).slice(0, 6);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [candidates, tick]);
+  }, [candidates, openAt]);
 
   // Venue photo per pick: real Places photo when the candidate carries a
   // photoRef, Unsplash category lookup only for the refless minority. A lone
@@ -785,7 +822,7 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
         <h2 id="city-open-heading" className="sb-section-title">Open Right Now</h2>
         <button
           type="button"
-          onClick={() => setTick((t) => t + 1)}
+          onClick={() => setOpenAt(readOpenAt(todayIso))}
           aria-label="Shuffle the open spots"
           className="sb-btn sb-btn--quiet city-action"
         >
@@ -924,28 +961,10 @@ function CityHallPanel({
 // Three buckets, not seven days. "This Weekend" = the next upcoming Sat+Sun
 // combined into one view (or "today/tomorrow" if those happen to be Sat or
 // Sun — we still show the dedicated weekend bucket so you can see both days
-// side by side).
+// side by side). On a Sunday it's just the rest of today.
 // ---------------------------------------------------------------------------
 
 type EventsBucket = "today" | "tomorrow" | "weekend";
-
-function getTomorrowIso(): string {
-  const d = new Date(NOW_PT.getFullYear(), NOW_PT.getMonth(), NOW_PT.getDate() + 1);
-  return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-}
-
-function getWeekendIsos(): string[] {
-  // Walk forward up to 7 days; collect the next Saturday + Sunday we can find.
-  const out: string[] = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(NOW_PT.getFullYear(), NOW_PT.getMonth(), NOW_PT.getDate() + i);
-    const day = d.getDay(); // 0 = sun, 6 = sat
-    if (day === 6 || day === 0) {
-      out.push(d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }));
-    }
-  }
-  return out;
-}
 
 /** Placeholder rows shown while the events feed is in flight. */
 function EventRowsSkeleton() {
@@ -972,15 +991,30 @@ function CityEventsBlock({
   generatedAt,
   cityId,
   cityName,
+  todayIso,
 }: {
   events: UpcomingEvent[];
   loading: boolean;
   generatedAt?: string;
   cityId: string;
   cityName: string;
+  todayIso: string;
 }) {
-  const TOMORROW_ISO = useMemo(() => getTomorrowIso(), []);
-  const WEEKEND_ISOS = useMemo(() => getWeekendIsos(), []);
+  const tomorrowIso = addDaysIso(todayIso, 1);
+  const weekendIsos = useMemo(() => weekendIsosFrom(todayIso), [todayIso]);
+
+  // The minute today's events are checked against: ones that have started
+  // drop out of Today and This Weekend. It holds still, so rows don't vanish
+  // while someone reads. It's read when the feed lands, so the first render
+  // reads no clock, and read again whenever today changes: a tab opened at
+  // 8 PM and back in use at 9 the next morning checks that day against 9 AM,
+  // not the 8 PM page load.
+  const [startedNow, setStartedNow] = useState<{ day: string; mins: number } | null>(null);
+  if (!loading && startedNow?.day !== todayIso) {
+    setStartedNow({ day: todayIso, mins: ptMinutesNow() });
+  }
+  // The lists are empty until the feed lands, so the fallback never counts.
+  const nowMins = startedNow?.mins ?? 0;
 
   const [bucket, setBucket] = useState<EventsBucket>("today");
   const [freeOnly, setFreeOnly] = useState(false);
@@ -1002,17 +1036,17 @@ function CityEventsBlock({
     let today = 0, tomorrow = 0, weekend = 0;
     for (const e of cityEvents) {
       if (!passesFilters(e)) continue;
-      if (e.date === TODAY_ISO && hasNotStarted(e.time)) today++;
-      if (e.date === TOMORROW_ISO) tomorrow++;
-      if (WEEKEND_ISOS.includes(e.date)) {
+      if (e.date === todayIso && hasNotStarted(e.time, nowMins)) today++;
+      if (e.date === tomorrowIso) tomorrow++;
+      if (weekendIsos.includes(e.date)) {
         // Don't double-count: if today/tomorrow IS the weekend, the user
         // selects the weekend bucket explicitly to see both days together.
-        if (e.date === TODAY_ISO && !hasNotStarted(e.time)) continue;
+        if (e.date === todayIso && !hasNotStarted(e.time, nowMins)) continue;
         weekend++;
       }
     }
     return { today, tomorrow, weekend };
-  }, [cityEvents, freeOnly, kidsOnly, TOMORROW_ISO, WEEKEND_ISOS]);
+  }, [cityEvents, freeOnly, kidsOnly, todayIso, tomorrowIso, weekendIsos, nowMins]);
 
   const bucketEvents = useMemo(() => {
     const passesFilters = (e: UpcomingEvent) => {
@@ -1022,13 +1056,13 @@ function CityEventsBlock({
     };
     let list: UpcomingEvent[] = [];
     if (bucket === "today") {
-      list = cityEvents.filter((e) => e.date === TODAY_ISO && hasNotStarted(e.time) && passesFilters(e));
+      list = cityEvents.filter((e) => e.date === todayIso && hasNotStarted(e.time, nowMins) && passesFilters(e));
     } else if (bucket === "tomorrow") {
-      list = cityEvents.filter((e) => e.date === TOMORROW_ISO && passesFilters(e));
+      list = cityEvents.filter((e) => e.date === tomorrowIso && passesFilters(e));
     } else {
       list = cityEvents.filter((e) => {
-        if (!WEEKEND_ISOS.includes(e.date)) return false;
-        if (e.date === TODAY_ISO && !hasNotStarted(e.time)) return false;
+        if (!weekendIsos.includes(e.date)) return false;
+        if (e.date === todayIso && !hasNotStarted(e.time, nowMins)) return false;
         return passesFilters(e);
       });
     }
@@ -1037,12 +1071,12 @@ function CityEventsBlock({
       if (a.date !== b.date) return a.date.localeCompare(b.date);
       return startMinutes(a.time) - startMinutes(b.time);
     });
-  }, [cityEvents, bucket, TOMORROW_ISO, WEEKEND_ISOS, freeOnly, kidsOnly]);
+  }, [cityEvents, bucket, todayIso, tomorrowIso, weekendIsos, nowMins, freeOnly, kidsOnly]);
 
   const allEventsHref = `/events?city=${encodeURIComponent(cityId)}`;
   // "More events →" link picks a sensible date to deep-link to.
   const moreHref = bucket === "today" || bucket === "tomorrow"
-    ? `${allEventsHref}&date=${encodeURIComponent(bucket === "today" ? TODAY_ISO : TOMORROW_ISO)}`
+    ? `${allEventsHref}&date=${encodeURIComponent(bucket === "today" ? todayIso : tomorrowIso)}`
     : allEventsHref;
 
   const emptyLabel = bucket === "today" ? "today"

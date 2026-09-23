@@ -32,6 +32,8 @@ const absoluteOgImage =
 // Build-time JSON-LD block (next 7 days of the city's events). CityPage
 // server-renders its chrome now, but its events list still arrives via a
 // client fetch — this structured data is what crawlers index for events.
+// todayPt is also the island's build day: CityPage hydrates against it, then
+// switches to the reader's day (see useTodayPT).
 const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const weekOut = new Date();
 weekOut.setDate(weekOut.getDate() + 7);
@@ -68,6 +70,6 @@ const jsonLd = eventListJsonLd(cityEvents, {
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
-  <CityPage cityId={cityId} cityName={cityName} data={cityData} client:load />
+  <CityPage cityId={cityId} cityName={cityName} data={cityData} buildDayPt={todayPt} client:load />
   <StaticLinkStrip days govCities />
 </BaseLayout>
