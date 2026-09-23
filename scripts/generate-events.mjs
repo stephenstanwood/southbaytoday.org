@@ -2956,7 +2956,7 @@ function parseRssItems(xml) {
 // with no events in it — so anything else is a source error, not a season.
 function assertIcalCalendar(body, label) {
   const raw = String(body ?? "");
-  if (/^\s*BEGIN:VCALENDAR\b/i.test(raw.replace(/^﻿/, ""))) return raw;
+  if (/^\s*BEGIN:VCALENDAR\b/i.test(raw.replace(/^\uFEFF/, ""))) return raw;
   const trimmed = raw.trimStart();
   const title = trimmed.match(/<title[^>]*>([^<]*)/i)?.[1]?.replace(/\s+/g, " ").trim();
   const shape = trimmed.startsWith("<")
@@ -8058,7 +8058,11 @@ async function fetchSanJoseTheatersEvents() {
             venue,
             address: SAN_JOSE_THEATER_ADDRESSES[venue],
             city: "san-jose",
-            category: inferCategory(title, description, categories, venue),
+            // Not Visit San Jose's category list: nearly every row carries
+            // "Stage & Theater", which files Juanes and Bronco under arts —
+            // the misfiling inferCategory's own title/venue rules exist to
+            // prevent. Those tags only feed kidFriendly below.
+            category: inferCategory(title, description, "", venue),
             cost: "paid",
             description,
             url,

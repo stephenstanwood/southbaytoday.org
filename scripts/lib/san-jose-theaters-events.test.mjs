@@ -309,6 +309,13 @@ test("single nights take the structured show time; runs take the presenter's lis
     skip: null,
   });
 
+  // A doors time in the structured block is not the curtain time.
+  const withDoors = parseTheaterEventPage(detailPage({
+    focus: longDate(night), time: "Doors 6:30 PM / Show 7:30 PM", venue: "San Jose Civic",
+    street: "135 West San Carlos Street", copy: "<p>Bronco.</p>",
+  }));
+  assert.deepEqual(withDoors.whenTimes, ["7:30 PM"]);
+
   const noTime = parseTheaterEventPage(detailPage({
     focus: longDate(night), venue: "Center for the Performing Arts",
     street: "255 South Almaden Boulevard", copy: "<p>Regresa el fenómeno de la comedia.</p>",
@@ -405,6 +412,9 @@ test("upcoming shows publish in the event shape the refresh expects", async () =
   assert.equal(bronco.occurrenceEvidence.sourceUrl, bronco.url);
   assert.equal(bronco.occurrenceEvidence.date, night);
   assert.equal(bronco.kidFriendly, false);
+  // Visit San Jose tags nearly every booking "Stage & Theater"; a concert is
+  // still music, the way the old sanjosetheaters.org rows were filed.
+  assert.equal(bronco.category, "music");
   assert.equal(matilda.venue, "Montgomery Theater");
   assert.equal(matilda.address, "271 South Market Street, San Jose, CA 95113");
   assert.equal(matilda.kidFriendly, true);
@@ -434,5 +444,5 @@ test("iCal adapters reject a non-calendar body instead of parsing it as empty", 
   assert.throws(() => assertIcalCalendar("", "Town of Los Gatos"), /0 bytes that do not open a VCALENDAR/);
   const empty = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nEND:VCALENDAR\r\n";
   assert.equal(assertIcalCalendar(empty, "Town of Los Gatos"), empty);
-  assert.equal(assertIcalCalendar(`﻿${empty}`, "Town of Los Gatos"), `﻿${empty}`);
+  assert.equal(assertIcalCalendar(`\uFEFF${empty}`, "Town of Los Gatos"), `\uFEFF${empty}`);
 });
