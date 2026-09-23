@@ -10,6 +10,7 @@ import {
   NAMED_HOLIDAYS,
 } from "../../../lib/south-bay/holidays";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
+import { todayPT, useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../../lib/south-bay/eventFilters.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 import PageHero from "../PageHero";
@@ -56,6 +57,9 @@ interface Props {
   selectedCities: Set<City>;
   onToggleCity: (city: City) => void;
   onToggleAllCities: () => void;
+  /** Pacific date /events was built on. The first render uses it so hydration
+   *  matches the static HTML. See useTodayPT. */
+  buildDayPt?: string;
 }
 
 interface UpcomingEvent {
@@ -300,10 +304,6 @@ function normalizeEventForDisplay(event: UpcomingEvent): UpcomingEvent {
 }
 
 // ── Date helpers ───────────────────────────────────────────────────────────
-
-function todayPT(): string {
-  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-}
 
 function addDays(iso: string, n: number): string {
   const d = new Date(iso + "T12:00:00");
@@ -776,7 +776,7 @@ function MakeItADayButton({ eventId, city, date }: { eventId: string; city: stri
 
 // ── Main view ──────────────────────────────────────────────────────────────
 
-export default function EventsView({ selectedCities, onToggleCity, onToggleAllCities }: Props) {
+export default function EventsView({ selectedCities, onToggleCity, onToggleAllCities, buildDayPt }: Props) {
   const [category, setCategory] = useState<EventCategory | "all">("all");
   const [search, setSearch] = useState("");
   const [showKidsOnly, setShowKidsOnly] = useState(false);
@@ -805,13 +805,22 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // (/events?city=X&date=Y&holiday=Z).
   const [activeThemedHolidayId, setActiveThemedHolidayId] = useState<string | null>(null);
 
-  const todayIso = todayPT();
+  // The build's day while hydrating, then the reader's (useTodayPT).
+  const todayIso = useTodayPT(buildDayPt);
   const tomorrowIso = addDays(todayIso, 1);
   const [weekendSat, weekendSun] = useMemo(() => thisWeekendDates(todayIso), [todayIso]);
 
   // Day selection — defaults to today; a `?date=YYYY-MM-DD` deep link is
   // applied after mount (below) so the first render matches the server HTML.
   const [selectedDate, setSelectedDate] = useState<string>(todayIso);
+  // When today moves on (hydrating an older build, or midnight in an open
+  // tab), a reader who was looking at today stays on today. The updater form
+  // lets a deep-linked date that lands in the same pass win.
+  const [prevTodayIso, setPrevTodayIso] = useState(todayIso);
+  if (prevTodayIso !== todayIso) {
+    setPrevTodayIso(todayIso);
+    setSelectedDate((cur) => (cur === prevTodayIso ? todayIso : cur));
+  }
 
   // ── Feed loading ──
   // Two-stage load. The 14-day near feed (~40% of the payload) paints the
@@ -833,7 +842,8 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const d = params.get("date");
-    if (d && /^\d{4}-\d{2}-\d{2}$/.test(d) && d > todayIso) {
+    // Compare with the reader's day: todayIso is still the build's here.
+    if (d && /^\d{4}-\d{2}-\d{2}$/.test(d) && d > todayPT()) {
       setSelectedDate(d);
       // We can't know yet whether that date falls inside the near window.
       setWantFullFeed(true);
@@ -841,7 +851,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     const h = params.get("holiday");
     if (h && NAMED_HOLIDAYS.some((x) => x.id === h)) setActiveThemedHolidayId(h);
     // Mount-only: deep links are read once, like the old state initializers.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import { CITIES } from "../lib/south-bay/cities";
 import { eventListJsonLd, type SchemaEventRecord } from "../lib/south-bay/eventSchema";
 import { buildEventSlugs } from "../lib/south-bay/eventSlug";
 
-// The Events tab itself is a client:only React app, so crawlers never see the
+// The Events tab fetches its list after it loads, so crawlers never see the
 // rendered list — this build-time JSON-LD block is how today's events reach
 // search engines. The static /events/<date> pages carry the full window.
 const cityNames = new Map<string, string>(CITIES.map((c) => [c.id as string, c.name]));

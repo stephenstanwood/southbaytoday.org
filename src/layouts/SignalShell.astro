@@ -28,6 +28,10 @@ const {
   initialTab,
   ogImage,
 } = Astro.props;
+
+// The Events view renders "today" (day title, date rail) into this HTML. It
+// hydrates against the build's day, then switches to the reader's.
+const buildDayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 ---
 
 <BaseLayout
@@ -42,7 +46,7 @@ const {
 
   {/* Each tab page hydrates an island that bundles its own view eagerly
       (Astro can't put client:* on a dynamic tag, hence the explicit list). */}
-  {initialTab === "events" ? <EventsApp client:load />
+  {initialTab === "events" ? <EventsApp client:load buildDayPt={buildDayPt} />
     : initialTab === "government" ? <GovApp client:load />
     : initialTab === "technology" ? <TechApp client:load />
     : initialTab === "food" ? <FoodApp client:load />
