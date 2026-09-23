@@ -31,6 +31,32 @@ export const NEXT_DAYS: Array<{ iso: string; label: string }> = Array.from({ len
 export const TOMORROW_ISO = NEXT_DAYS[0]?.iso ?? "";
 export const TOMORROW_LABEL = NEXT_DAYS[0]?.label ?? "Tomorrow";
 
+// Everything above is read once, when this module loads, so it goes stale in
+// a tab left open overnight. A view that stays open reads the clock with the
+// helpers below and does its date math from its own today (see CityPage).
+
+/** Minutes past midnight on the Pacific clock. */
+export function ptMinutesNow(now: Date = new Date()): number {
+  const pt = new Date(now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }));
+  return pt.getHours() * 60 + pt.getMinutes();
+}
+
+/** The YYYY-MM-DD date `n` days after `iso`. Calendar math only, no clock. */
+export function addDaysIso(iso: string, n: number): string {
+  const d = new Date(`${iso}T12:00:00`);
+  d.setDate(d.getDate() + n);
+  return d.toLocaleDateString("en-CA");
+}
+
+/** This weekend's days from `todayIso` on: Saturday and Sunday on a weekday
+ *  or a Saturday, and just the day itself on a Sunday. */
+export function weekendIsosFrom(todayIso: string): string[] {
+  const dow = new Date(`${todayIso}T12:00:00`).getDay(); // 0 = Sun, 6 = Sat
+  if (dow === 0) return [todayIso];
+  const sat = addDaysIso(todayIso, 6 - dow);
+  return [sat, addDaysIso(sat, 1)];
+}
+
 // ── Time parsing ──
 
 // Normalize varied scraper outputs to canonical "8:00 PM" form. Handles
@@ -83,11 +109,14 @@ export function isNotEnded(timeStr: string | undefined | null): boolean {
   return endMin > NOW_MINUTES;
 }
 
-export function hasNotStarted(timeStr: string | undefined | null): boolean {
+/** True until the start time is past `nowMins` (minutes past midnight PT).
+ *  The default is the minute this module loaded; a view that stays open
+ *  passes the minute it holds instead. */
+export function hasNotStarted(timeStr: string | undefined | null, nowMins: number = NOW_MINUTES): boolean {
   if (!timeStr) return true;
   const startMin = parseMinutes(timeStr, false);
   if (startMin === null) return true;
-  return startMin > NOW_MINUTES;
+  return startMin > nowMins;
 }
 
 export type TimeBucket = "now" | "morning" | "afternoon" | "evening" | "none";
