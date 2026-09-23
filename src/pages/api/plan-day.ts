@@ -30,6 +30,7 @@ import { canonicalCategory } from "../../lib/south-bay/categories.mjs";
 import { holidayOn, matchesHolidayTheme } from "../../lib/south-bay/holidays";
 import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
 import { fetchForecast, isRainyDay } from "../../lib/south-bay/weatherProvider.mjs";
+import { weatherApiKey } from "../../lib/south-bay/weatherKey";
 import { chainBrandKey, chainInterestReasons, isNationalChain } from "../../lib/south-bay/chains.mjs";
 import { isPlaceTemporarilyUnavailable } from "../../lib/south-bay/placeAvailability.mjs";
 import { isEventPublishable } from "../../lib/south-bay/eventOccurrence.mjs";
@@ -613,14 +614,14 @@ async function fetchWeather(city: City, planDate?: string): Promise<{ weather: s
     const cityConfig = CITY_MAP[city];
     if (!cityConfig) return { weather: null, forecast: null };
 
-    // Canonical provider (NWS primary) — Open-Meteo ran 5-8°F hot here, which
-    // skewed the isHot flag and had plans dodging "101°" days that were 93°.
-    // See the decision record in src/lib/south-bay/weatherProvider.mjs.
-    // Match the forecast day to the PLAN date: NWS drops "today" from the
-    // paired list after ~6pm (night-only period), so forecast[0] can be
-    // tomorrow. An evening shuffle for today must not inherit tomorrow's
-    // heat/rain flags — no matching day means no weather signal.
-    const { forecast } = await fetchForecast(cityConfig.lat, cityConfig.lon, { days: 3 });
+    // Canonical provider (Google → NWS → Open-Meteo) — a private feed here once
+    // ran 5-8°F hot, skewed the isHot flag, and had plans dodging "101°" days
+    // that were 93°. See the decision record in weatherProvider.mjs.
+    // Match the forecast day to the PLAN date: every provider drops "today"
+    // after 6pm PT, so forecast[0] can be tomorrow. An evening shuffle for
+    // today must not inherit tomorrow's heat/rain flags — no matching day
+    // means no weather signal.
+    const { forecast } = await fetchForecast(cityConfig.lat, cityConfig.lon, { days: 3, googleKey: weatherApiKey() });
     const wanted = planDate || todayStr();
     const today = forecast.find((d: any) => d.date === wanted);
     if (!today) return { weather: null, forecast: null };

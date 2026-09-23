@@ -164,17 +164,20 @@ export function selectDefaultPlan(plans, date, { kids = false } = {}) {
 }
 
 // ── Weather ────────────────────────────────────────────────────────────────
-// Canonical provider: NWS primary, Open-Meteo fallback (see the decision
-// record in src/lib/south-bay/weatherProvider.mjs). The newsletter previously
-// fetched Open-Meteo directly and ran 6-8°F hot on heat days ("99°" emails
-// while NWS/Google said 92-93°). No current temp on purpose: at the 6:00am
-// build there is no trustworthy live reading, only the day's forecast.
+// Canonical provider: Google → NWS → Open-Meteo (see the decision record in
+// src/lib/south-bay/weatherProvider.mjs). The newsletter previously fetched
+// Open-Meteo directly and ran 6-8°F hot on heat days ("99°" emails while
+// Google said 92°). No current temp on purpose: at the 6:00am build there is
+// no trustworthy live reading, only the day's forecast.
 
 export async function fetchWeather() {
   try {
     const { forecast, provider } = await fetchForecast(DEFAULT_WEATHER_LAT, DEFAULT_WEATHER_LON, { days: 2 });
     const today = forecast[0];
     if (!today) return null;
+    if (provider !== "google") {
+      console.warn(`⚠️  newsletter: weather came from ${provider}, not Google — highs may not match google.com`);
+    }
     return {
       emoji: today.emoji,
       high: today.high,
