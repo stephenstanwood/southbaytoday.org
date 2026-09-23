@@ -11,6 +11,7 @@ import {
 } from "../../../lib/south-bay/holidays";
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 import { todayPT, useTodayPT } from "../../../lib/south-bay/useTodayPT";
+import { weekendIsosFrom } from "../../../lib/south-bay/timeHelpers";
 import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../../lib/south-bay/eventFilters.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 import PageHero from "../PageHero";
@@ -318,17 +319,6 @@ function dayLabel(iso: string, todayIso: string, tomorrowIso: string): { primary
 function shortDateLabel(iso: string): string {
   const d = new Date(iso + "T12:00:00");
   return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
-}
-
-// Returns [saturdayIso, sundayIso] for "this weekend" relative to today.
-// Sat: today + tomorrow. Sun: yesterday + today (today only, since past events
-// hide via hasNotStarted). Mon–Fri: upcoming Sat + Sun.
-function thisWeekendDates(todayIso: string): [string, string] {
-  const dow = new Date(todayIso + "T12:00:00").getDay(); // 0=Sun … 6=Sat
-  if (dow === 6) return [todayIso, addDays(todayIso, 1)];
-  if (dow === 0) return [addDays(todayIso, -1), todayIso];
-  const sat = addDays(todayIso, 6 - dow);
-  return [sat, addDays(sat, 1)];
 }
 
 // ── Recurring detection ────────────────────────────────────────────────────
@@ -802,7 +792,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // The build's day while hydrating, then the reader's (useTodayPT).
   const todayIso = useTodayPT(buildDayPt);
   const tomorrowIso = addDays(todayIso, 1);
-  const [weekendSat, weekendSun] = useMemo(() => thisWeekendDates(todayIso), [todayIso]);
+  // This weekend from today on: Sat + Sun, or just today on a Sunday. The
+  // feed keeps yesterday for paging back, and the lists only drop today's
+  // started events, so yesterday has to stay out of this set.
+  const weekendIsos = useMemo(() => weekendIsosFrom(todayIso), [todayIso]);
 
   // Day selection — defaults to today; a `?date=YYYY-MM-DD` deep link is
   // applied after mount (below) so the first render matches the server HTML.
@@ -998,7 +991,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (m === null || m < TONIGHT_FROM_MIN) return false;
     }
     if (showWeekendOnly) {
-      if (e.date !== weekendSat && e.date !== weekendSun) return false;
+      if (!weekendIsos.includes(e.date)) return false;
     }
     if (showLiveNowOnly) {
       if (e.date !== todayIso) return false;
@@ -1017,7 +1010,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   }, [
     allCities, selectedCities, category, showKidsOnly, showFreeOnly,
     showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly,
-    todayIso, filterNowMins, weekendSat, weekendSun, matchesActiveThemedHoliday,
+    todayIso, filterNowMins, weekendIsos, matchesActiveThemedHoliday,
     isSearching, searchQ,
   ]);
 
@@ -1055,21 +1048,22 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return Object.entries(groups).sort((a, b) => a[0].localeCompare(b[0]));
   }, [searchResults]);
 
-  // Weekend-mode events — both weekend days, grouped by date for rendering.
-  // Past events for today (if today is Sat/Sun) hide via hasNotStarted.
+  // Weekend-mode events — the weekend's days from today on, grouped by date
+  // for rendering. Today's started events (on a Sat or Sun) hide via
+  // hasNotStarted.
   const weekendGroups = useMemo<[string, UpcomingEvent[]][]>(() => {
     if (!showWeekendOnly || isSearching) return [];
     const matches = upcomingEvents
-      .filter((e) => e.date === weekendSat || e.date === weekendSun)
+      .filter((e) => weekendIsos.includes(e.date))
       .filter(matchesFilters)
       .filter((e) => !(e.date === todayIso && !hasNotStarted(e.time, filterNowMins)))
       .sort(byStartTimeWithinDate);
     const groups: Record<string, UpcomingEvent[]> = {};
     for (const e of matches) (groups[e.date] ||= []).push(e);
-    return [weekendSat, weekendSun]
+    return weekendIsos
       .filter((d) => (groups[d]?.length ?? 0) > 0)
       .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
-  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, matchesFilters, todayIso, filterNowMins]);
+  }, [upcomingEvents, showWeekendOnly, weekendIsos, isSearching, matchesFilters, todayIso, filterNowMins]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
@@ -1139,7 +1133,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (m === null || m < TONIGHT_FROM_MIN) continue;
       }
       if (showWeekendOnly) {
-        if (e.date !== weekendSat && e.date !== weekendSun) continue;
+        if (!weekendIsos.includes(e.date)) continue;
       }
       if (showLiveNowOnly) {
         if (e.date !== todayIso) continue;
@@ -1157,7 +1151,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     }
     counts["all"] = Object.values(counts).reduce((a, b) => a + b, 0);
     return counts;
-  }, [upcomingEvents, allCities, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendIsos, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Per-city counts (for badges on the Area chips) — same approach as
   // categoryCounts but excludes the city filter so users can see what's
@@ -1179,7 +1173,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (m === null || m < TONIGHT_FROM_MIN) continue;
       }
       if (showWeekendOnly) {
-        if (e.date !== weekendSat && e.date !== weekendSun) continue;
+        if (!weekendIsos.includes(e.date)) continue;
       }
       if (showLiveNowOnly) {
         if (e.date !== todayIso) continue;
@@ -1197,7 +1191,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       total++;
     }
     return { perCity: counts, total };
-  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
+  }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendIsos, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
   const filteredOngoing = useMemo(
@@ -1235,11 +1229,11 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         const m = parseTimeToMinutes(e.time);
         if (m !== null && m >= TONIGHT_FROM_MIN) tonight++;
       }
-      if (e.date === weekendSat || e.date === weekendSun) weekend++;
+      if (weekendIsos.includes(e.date)) weekend++;
       if (isJustAdded(e.firstSeenAt)) justAdded++;
     }
     return { kids, free, tonight, weekend, live, justAdded };
-  }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, filterNowMins, isSearching, searchQ]);
+  }, [upcomingEvents, allCities, selectedCities, category, weekendIsos, todayIso, filterNowMins, isSearching, searchQ]);
 
   // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
   // but tallied per day so each pill in the strip can show how busy that day is.
@@ -1340,7 +1334,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         </>
       )
     : showWeekendOnly
-      ? `${shortDateLabel(weekendSat)} to ${shortDateLabel(weekendSun)}`
+      ? weekendIsos.map((d) => shortDateLabel(d)).join(" to ")
       : (
         <>
           {dayLbl.secondary}
