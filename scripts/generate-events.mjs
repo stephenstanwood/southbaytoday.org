@@ -29,7 +29,8 @@
  *   - Montalvo Arts Center (RSS)
  *   - San Jose Jazz (RSS)
  *   - The Pear Theatre (VBO Tickets HTML)
- *   - San Jose Theaters (iCal)
+ *   - San Jose Theaters (sanjose.org event listing + detail pages; see
+ *     scripts/lib/san-jose-theaters-events.mjs)
  *   - South Bay Musical Theatre (show pages)
  *   - Los Altos Stage Company (WordPress events)
  *   - Palo Alto Players (Venture Event Manager AJAX, per-performance)
@@ -151,6 +152,17 @@ import {
   hicklebeesMonthPaths,
   parseHicklebeesListPage,
 } from "./lib/hicklebees-events.mjs";
+import {
+  SAN_JOSE_THEATERS_LISTINGS_URL,
+  SAN_JOSE_THEATER_ADDRESSES,
+  listingOverlapsWindow,
+  listingSkipReason,
+  listingUrl,
+  parseTheaterEventPage,
+  parseTheaterListings,
+  resolveTheaterVenue,
+  theaterPerformances,
+} from "./lib/san-jose-theaters-events.mjs";
 
 /** Ticketmaster Discovery is bursty; honor Retry-After longer than the default. */
 const TICKETMASTER_FETCH = Object.freeze({
@@ -2935,6 +2947,24 @@ function parseRssItems(xml) {
 
 // ── iCal Parser ──
 
+// A calendar host that moves or retires its export tends to keep answering the
+// old URL with HTTP 200 and an HTML page: sanjosetheaters.org's iCal export
+// began returning Visit San Jose's theaters landing page on 2026-09-22.
+// parseIcalEvents finds no VEVENT blocks in that and the adapter reports an
+// empty season, which the per-source regression guard can only read as every
+// upcoming show vanishing. Every real iCal body opens a VCALENDAR — even one
+// with no events in it — so anything else is a source error, not a season.
+function assertIcalCalendar(body, label) {
+  const raw = String(body ?? "");
+  if (/^\s*BEGIN:VCALENDAR\b/i.test(raw.replace(/^﻿/, ""))) return raw;
+  const trimmed = raw.trimStart();
+  const title = trimmed.match(/<title[^>]*>([^<]*)/i)?.[1]?.replace(/\s+/g, " ").trim();
+  const shape = trimmed.startsWith("<")
+    ? `an HTML page${title ? ` titled "${title}"` : ""}`
+    : `${raw.length} bytes that do not open a VCALENDAR`;
+  throw new Error(`${label} iCal feed returned ${shape}, not a calendar`);
+}
+
 function parseIcalEvents(ical) {
   const events = [];
   // RFC 5545 §3.1: long lines are folded with CRLF + whitespace. Unfold before parsing.
@@ -4037,7 +4067,7 @@ async function fetchCivicPlusIcal(
   console.log(`  ⏳ ${name}...`);
   try {
     const feedOrigin = new URL(url).origin;
-    const ical = await fetchText(url);
+    const ical = assertIcalCalendar(await fetchText(url), name);
     const rawEvents = parseIcalEvents(ical);
     const now = new Date();
     const thirtyDaysOut = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
@@ -7947,61 +7977,122 @@ function parseNaturalDateTime(monthName, day, year, time, ampm) {
   return { date, time: clock };
 }
 
+// sanjosetheaters.org folded into sanjose.org (Visit San Jose) in September
+// 2026 and its old iCal export began answering 200 with an HTML page — read
+// the header of scripts/lib/san-jose-theaters-events.mjs before touching this.
+// Every failure below throws, strict mode or not: an empty array here is what
+// the per-source regression guard reads as "59 shows vanished" and blocks the
+// whole refresh on, while a thrown error is skipped by that guard, absorbed by
+// the source-failure tolerance, and reported as one degraded source.
 async function fetchSanJoseTheatersEvents() {
   console.log("  ⏳ San Jose Theaters...");
+  const today = todayPT();
+  const horizon = isoDate(new Date(Date.now() + 180 * 24 * 60 * 60 * 1000));
   try {
-    const ical = await fetchText(
-      "https://sanjosetheaters.org/?plugin=all-in-one-event-calendar&controller=ai1ec_exporter_controller&action=export_events",
-      { timeout: 30_000 },
-    );
-    const rawEvents = parseIcalEvents(ical);
-    const today = todayPT();
+    const listings = parseTheaterListings(
+      await fetchText(SAN_JOSE_THEATERS_LISTINGS_URL, {
+        timeout: 30_000,
+        headers: { Accept: "application/json" },
+      }),
+    ).filter((item) => listingOverlapsWindow(item, { today, horizon }));
+    if (!listings.length) throw new Error("no theater listings inside the 180-day window");
+
+    const checkedAt = new Date().toISOString();
     const events = [];
+    const skipped = {};
+    let attempted = 0;
+    let failures = 0;
+    let next = 0;
+    // ~90 detail pages of ~150 KB each; four at a time keeps this adapter from
+    // crowding the shared adapter pool.
+    await Promise.all(Array.from({ length: Math.min(4, listings.length) }, async () => {
+      while (next < listings.length) {
+        const item = listings[next++];
+        const early = listingSkipReason(item);
+        if (early) {
+          skipped[early] = (skipped[early] || 0) + 1;
+          continue;
+        }
+        const url = listingUrl(item);
+        let detail;
+        attempted += 1;
+        try {
+          if (!url) throw new Error("listing has no link");
+          detail = parseTheaterEventPage(await fetchText(url, { timeout: 20_000 }));
+        } catch (err) {
+          failures += 1;
+          console.log(`  ↳ San Jose Theaters page failed (${url || item.title}): ${err.message}`);
+          continue;
+        }
 
-    for (const ev of rawEvents) {
-      const title = cleanEscapedCalendarText(ev.summary);
-      if (!title || isBlockedEvent(title)) continue;
-      const start = parseIcalDate(ev.dtstart);
-      if (!start) continue;
-      const date = isoDate(start);
-      if (date < today) continue;
-      const time = displayTime(start);
-      if (!time) continue;
-      const end = parseIcalDate(ev.dtend);
-      const venueParts = cleanEscapedCalendarText(ev.location).split("|").map((part) => part.trim()).filter(Boolean);
-      const venue = cleanEscapedCalendarText(ev.categories) || venueParts[0] || "San Jose Theaters";
-      const address = venueParts[1] || "";
-      const url = ev.url || "https://sanjosetheaters.org/calendar/";
-      const rawDesc = String(ev.description || "").replace(/\\n/g, "\n").replace(/\\,/g, ",");
-      const description = truncate(stripBareUrls(stripHtml(rawDesc)));
-      const image = extractFirstImageUrl(rawDesc, url);
+        const title = stripHtml(item.title).replace(/\s+/g, " ").trim();
+        if (!title || isBlockedEvent(title)) continue;
+        const copy = stripHtml(detail.descriptionHtml).replace(/\s+/g, " ").trim();
+        const venue = resolveTheaterVenue({
+          whereVenue: detail.whereVenue,
+          whereAddress: detail.whereAddress,
+          listingVenue: item.venue,
+          description: copy,
+        });
+        const { performances, skip } = venue
+          ? theaterPerformances(item, detail)
+          : { performances: [], skip: "venue is not one of the four theaters" };
+        if (skip) {
+          skipped[skip] = (skipped[skip] || 0) + 1;
+          continue;
+        }
 
-      events.push({
-        id: h("sanjosetheaters", url, date, time),
-        title,
-        date,
-        displayDate: displayDate(start),
-        time,
-        endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
-        venue,
-        address,
-        city: "san-jose",
-        category: inferCategory(title, description, ev.categories || "", venue),
-        cost: "paid",
-        description,
-        url,
-        source: "San Jose Theaters",
-        ...(image ? { image } : {}),
-        kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|cmt|bluey|disney)\b/i.test(title + " " + description),
-      });
+        const description = truncate(stripBareUrls(copy));
+        const categories = stripHtml(item.categories || "");
+        const kidFriendly = /\bKids\s*&\s*Family\b/i.test(categories)
+          || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|cmt|bluey|disney)\b/i.test(title);
+        for (const { date, time } of performances) {
+          if (date < today || date > horizon) continue;
+          events.push({
+            id: h("sanjosetheaters", url, date, time),
+            title,
+            date,
+            displayDate: displayDate(parseDatePT(date)),
+            time,
+            endTime: null,
+            venue,
+            address: SAN_JOSE_THEATER_ADDRESSES[venue],
+            city: "san-jose",
+            category: inferCategory(title, description, categories, venue),
+            cost: "paid",
+            description,
+            url,
+            source: "San Jose Theaters",
+            ...(detail.image ? { image: detail.image } : {}),
+            occurrenceEvidence: {
+              kind: "first-party-occurrence-page",
+              sourceUrl: url,
+              date,
+              checkedAt,
+            },
+            kidFriendly,
+          });
+        }
+      }
+    }));
+
+    // One flaky page shouldn't fail a refresh, but a site change that breaks
+    // most of them must not read as a quiet season.
+    if (failures > attempted / 5) {
+      throw new Error(`${failures}/${attempted} sanjose.org theater pages failed`);
     }
+    if (!events.length) throw new Error("no upcoming performances parsed from sanjose.org");
 
-    console.log(`  ✅ San Jose Theaters: ${events.length} events`);
+    events.sort((a, b) => a.date.localeCompare(b.date) || a.title.localeCompare(b.title));
+    const skipNote = Object.entries(skipped).map(([why, n]) => `${n} ${why}`).join(", ");
+    console.log(
+      `  ✅ San Jose Theaters: ${events.length} events from ${listings.length} listings`
+        + (skipNote ? ` (skipped: ${skipNote})` : ""),
+    );
     return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Theaters: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    throw err;
   }
 }
 
@@ -9932,6 +10023,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export {
+  assertIcalCalendar,
   cleanTitle,
   cleanVenue,
   extractTimeFromHtml,
@@ -9968,6 +10060,7 @@ export {
   fetchMusicInParkEvents,
   fetchPaloAltoPlayersEvents,
   fetchPearTheatreEvents,
+  fetchSanJoseTheatersEvents,
   fetchSjJazzEvents,
   fetchSJGiantsSchedule,
   polishDescription,

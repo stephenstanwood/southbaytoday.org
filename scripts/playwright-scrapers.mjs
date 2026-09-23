@@ -1861,22 +1861,13 @@ async function scrapeMountainWinery(page) {
   }).filter(Boolean);
 }
 
-const SAN_JOSE_THEATERS = [
-  {
-    name: "San Jose Theaters",
-    url: "https://sanjosetheaters.org/calendar-condensed/",
-    source: "San Jose Theaters",
-    venue: "San Jose Theaters",
-    address: "Downtown San Jose",
-  },
-  {
-    name: "Hammer Theatre",
-    url: "https://hammertheatre.com/events/",
-    source: "Hammer Theatre",
-    venue: "Hammer Theatre Center",
-    address: "101 Paseo de San Antonio, San Jose, CA 95113",
-  },
-];
+const HAMMER_THEATRE_LIST = {
+  name: "Hammer Theatre",
+  url: "https://hammertheatre.com/events/",
+  source: "Hammer Theatre",
+  venue: "Hammer Theatre Center",
+  address: "101 Paseo de San Antonio, San Jose, CA 95113",
+};
 
 async function scrapeEventListPage(page, config) {
   await page.goto(config.url, { waitUntil: "domcontentloaded", timeout: 30_000 });
@@ -2005,7 +1996,10 @@ async function scrapeSanJoseTheaters(page) {
       venue: r.venue,
       address: addressByVenue[r.venue] || "Downtown San Jose",
       city: "san-jose",
-      url: "https://sanjosetheaters.org/calendar-condensed/",
+      // sanjosetheaters.org now 301s to www.sanjosetheaters.org, whose TLS
+      // certificate doesn't cover that host — link the theaters' live listing
+      // on sanjose.org instead of a page readers can't open.
+      url: "https://www.sanjose.org/theaters",
       source: "San Jose Theaters",
       category: inferCategory(r.title),
       cost: "paid",
@@ -2015,7 +2009,7 @@ async function scrapeSanJoseTheaters(page) {
 }
 
 async function scrapeHammerTheatre(page) {
-  const events = await scrapeEventListPage(page, SAN_JOSE_THEATERS[1]);
+  const events = await scrapeEventListPage(page, HAMMER_THEATRE_LIST);
   return events.filter((e) => !/\bthere are no upcoming events\b|events search/i.test(e.title));
 }
 
