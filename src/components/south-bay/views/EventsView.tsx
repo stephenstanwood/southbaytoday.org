@@ -1106,12 +1106,13 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   // upcoming events so users can see which categories have anything at all,
   // regardless of which day is currently selected. Honors city, quick-filter,
   // and search filters since those reflect the user's intent across the whole
-  // feed.
+  // feed. Today's already-started events drop out as they do from the day
+  // list, except under Live now or a search, whose lists keep them.
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (!allCities && !selectedCities.has(e.city as City)) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1151,7 +1152,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     let total = 0;
     for (const e of upcomingEvents) {
       if (e.date < todayIso) continue;
-      if (!showLiveNowOnly && e.date === todayIso && !hasNotStarted(e.time)) continue;
+      if (!showLiveNowOnly && !isSearching && e.date === todayIso && !hasNotStarted(e.time)) continue;
       if (category !== "all" && e.category !== category) continue;
       if (showKidsOnly && !e.kidFriendly) continue;
       if (showFreeOnly && e.cost !== "free") continue;
@@ -1209,8 +1210,9 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
             !(e.venue || "").toLowerCase().includes(searchQ)) continue;
       }
       if (e.date === todayIso && isInProgressNow(e.time, e.endTime)) live++;
-      // Other pills only count not-yet-started events
-      if (startedToday) continue;
+      // Other pills only count not-yet-started events, like the day list.
+      // Search results keep today's started events, so a search counts them.
+      if (startedToday && !isSearching) continue;
       if (e.kidFriendly) kids++;
       if (e.cost === "free") free++;
       if (e.date === todayIso && e.time) {
