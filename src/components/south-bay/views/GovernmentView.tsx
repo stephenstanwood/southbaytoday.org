@@ -14,8 +14,6 @@ interface Props {
   /** Pacific date /gov was built on. The first render uses it so hydration
    *  matches the static HTML. See useTodayPT. */
   buildDayPt?: string;
-  /** The moment /gov was built, for the digest ages. See useClockValue. */
-  buildTimeMs?: number;
 }
 
 interface AgendaItem {
@@ -213,7 +211,7 @@ const AGENDA_URLS: Record<string, string> = {
   "palo-alto": "https://www.paloalto.gov/City-Hall/City-Council/Council-Agendas-Minutes",
 };
 
-export default function GovernmentView({ selectedCities, buildDayPt, buildTimeMs }: Props) {
+export default function GovernmentView({ selectedCities, buildDayPt }: Props) {
   // The build's day while hydrating, then the reader's (useTodayPT).
   const todayIso = useTodayPT(buildDayPt);
   const [digests, setDigests] = useState<Map<string, DigestData>>(() => {
@@ -308,7 +306,7 @@ export default function GovernmentView({ selectedCities, buildDayPt, buildTimeMs
           onRefresh={refreshDigest}
           loading={loading}
           errors={errors}
-          buildTimeMs={buildTimeMs}
+          todayIso={todayIso}
         />
       </section>
     </div>

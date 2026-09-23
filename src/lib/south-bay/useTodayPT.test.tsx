@@ -3,14 +3,10 @@ import test from "node:test";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { todayPT, useClockValue, useTodayPT } from "./useTodayPT";
+import { calendarDaysAgo, todayPT, useTodayPT } from "./useTodayPT";
 
 function Probe({ buildDayPt }: { buildDayPt: string }) {
   return <span>{useTodayPT(buildDayPt)}</span>;
-}
-
-function ClockProbe({ buildTimeMs }: { buildTimeMs: number }) {
-  return <span>{useClockValue((now) => new Date(now).toISOString(), buildTimeMs)}</span>;
 }
 
 test("static markup carries the build's day, not the clock", () => {
@@ -18,11 +14,12 @@ test("static markup carries the build's day, not the clock", () => {
   assert.equal(renderToStaticMarkup(<Probe buildDayPt="2001-02-03" />), "<span>2001-02-03</span>");
 });
 
-test("static markup reads the build's moment, not the clock", () => {
-  assert.equal(
-    renderToStaticMarkup(<ClockProbe buildTimeMs={Date.UTC(2001, 1, 3, 4, 5)} />),
-    "<span>2001-02-03T04:05:00.000Z</span>",
-  );
+test("calendarDaysAgo counts whole days between two calendar dates", () => {
+  assert.equal(calendarDaysAgo("2026-08-26", "2026-08-28"), 2);
+  assert.equal(calendarDaysAgo("2026-08-28", "2026-08-28"), 0);
+  assert.equal(calendarDaysAgo("2026-08-29", "2026-08-28"), -1);
+  // Across a DST change (Nov 1) and a month end.
+  assert.equal(calendarDaysAgo("2026-10-31", "2026-11-02"), 2);
 });
 
 test("today follows Pacific time across a UTC date boundary", () => {

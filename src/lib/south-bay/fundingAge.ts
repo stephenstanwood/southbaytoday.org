@@ -19,6 +19,8 @@
 // hydrates against the build's day, then ages against the reader's.
 // ---------------------------------------------------------------------------
 
+import { calendarDaysAgo } from "./useTodayPT";
+
 /** Pacific calendar date ("YYYY-MM-DD") for a moment in time. */
 export function pacificDate(nowMs: number): string {
   return new Date(nowMs).toLocaleDateString("en-CA", {
@@ -27,17 +29,9 @@ export function pacificDate(nowMs: number): string {
 }
 
 /**
- * Whole calendar days from `isoDate` to `todayIso` (both YYYY-MM-DD).
+ * Whole Pacific calendar days between `isoDate` (YYYY-MM-DD) and `nowMs`.
  * Positive for past dates, 0 for today, negative for a future-dated round.
  */
-export function calendarDaysAgo(isoDate: string, todayIso: string): number {
-  return Math.round(
-    (Date.parse(`${todayIso}T00:00:00Z`) - Date.parse(`${isoDate}T00:00:00Z`)) /
-      86_400_000,
-  );
-}
-
-/** Whole Pacific calendar days between `isoDate` (YYYY-MM-DD) and `nowMs`. */
 export function pacificDaysAgo(isoDate: string, nowMs: number): number {
   return calendarDaysAgo(isoDate, pacificDate(nowMs));
 }
