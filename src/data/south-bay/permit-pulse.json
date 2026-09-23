@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-22T03:11:12.241Z",
+      "generatedAt": "2026-09-23T03:10:24.173Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 14 – Sep 21",
+      "dateRange": "Sep 15 – Sep 22",
       "stats": {
-        "total": 490,
-        "notable": 37,
-        "newUnits": 14,
-        "totalValuation": 53064313
+        "total": 345,
+        "notable": 29,
+        "newUnits": 9,
+        "totalValuation": 44368209
       },
       "permits": [
-        {
-          "id": "2026-137243-MF",
-          "address": "0 Seely Av",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "Trimble Summerhill 5-Plex New Construction (Lot 21)",
-          "valuation": 1841161,
-          "units": 5,
-          "issueDate": "2026-09-15",
-          "subtype": "Townhouse"
-        },
         {
           "id": "2025-121761-RS",
           "address": "6538 Canterbury Ct #2",
@@ -133,19 +121,31 @@
           "units": 1,
           "issueDate": "2026-09-16",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-138040-CI",
+          "address": "3098 Olsen Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Cisco 2nd Floor Office TI",
+          "valuation": 15000000,
+          "units": 0,
+          "issueDate": "2026-09-16",
+          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-22T03:11:14.695Z",
+      "generatedAt": "2026-09-23T03:10:26.729Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 14 – Sep 21",
+      "dateRange": "Sep 15 – Sep 22",
       "stats": {
-        "total": 98,
-        "notable": 5,
+        "total": 97,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
@@ -175,18 +175,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02606",
-          "address": "319 Everett Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-15",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-02632",
           "address": "834 Ames Av",
           "category": "residential-remodel",
@@ -197,6 +185,30 @@
           "units": 0,
           "issueDate": "2026-09-16",
           "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00266",
+          "address": "2515 El Camino Real",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for Architectural Review for two NEW LED Channel Letter wall signs FOR MASSAGE ENVY.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-21",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00267",
+          "address": "1189 Welch Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Over-the-counter Architectural Review for the removal of one dead 15-inch  DBH coast live oak ro be replaced with  36-inch box replacements one Island Oak (Quercus tomentalla)and one Ginko (Ginko biloba).",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-21",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00264",

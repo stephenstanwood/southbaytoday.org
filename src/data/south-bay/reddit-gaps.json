@@ -1,48 +1,115 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-22T03:19:29.958Z",
+    "generatedAt": "2026-09-23T03:18:05.621Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 5
   },
   "summary": {
-    "threadsMined": 9,
-    "placesExtracted": 1,
+    "threadsMined": 5,
+    "placesExtracted": 5,
     "placesMatched": 1,
-    "placeGaps": 0,
-    "eventsExtracted": 1,
+    "placeGaps": 4,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 1,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
-  "placeGaps": [],
+  "placeGaps": [
+    {
+      "name": "Valley Health Center San Jose-Campbell",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "new health center opening at 1410 S. Bascom Avenue",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+      ]
+    },
+    {
+      "name": "Zorba the Greek",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "former restaurant on site of new health center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+      ]
+    },
+    {
+      "name": "Lazy Dog Almaden",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "hosting dine for a cause event October 1",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+      ]
+    },
+    {
+      "name": "Levi's Stadium",
+      "city": "Santa Clara",
+      "kind": "venue",
+      "context": "compared parking experience from previous concert",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+      ]
+    }
+  ],
   "eventGaps": [
     {
-      "name": "SOFA Street Fair",
-      "when": "Sunday 9/27 2pm - 8pm",
+      "name": "FALLoween",
+      "when": "September 27",
       "city": "San Jose",
-      "context": "free all-ages street fair, band/stage announcements on Instagram",
+      "context": "Halloween-themed market with artists, makers, and costumes at 866 Park Ave",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wmolqs/sofa_street_fair_sunday_927_2pm_8pm_free/",
-        "https://www.reddit.com/r/SanJose/comments/1wmqjtp/wheres_the_best_tiramisu_in_the_south_bay/",
-        "https://www.reddit.com/r/SanJose/comments/1wm2z51/lesbian_queer_events/",
-        "https://www.reddit.com/r/SanJose/comments/1wmmbhj/veterinarian_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wmtv53/preschool_95123/"
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+      ]
+    },
+    {
+      "name": "Lazy Dog Almaden Dine for a Cause",
+      "when": "October 1",
+      "city": "San Jose",
+      "context": "charity dining event at Lazy Dog Almaden",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Almaden Quicksilver",
+      "name": "SAP Center",
       "city": "San Jose",
-      "kind": "park",
-      "context": "county park mentioned for trail encounter",
+      "kind": "venue",
+      "context": "concert venue, parking advice requested",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wmjrpg/paw_patrol_birthday_entertainers/",
-        "https://www.reddit.com/r/SanJose/comments/1wm9157/looking_for_venue_for_birthday/",
-        "https://www.reddit.com/r/SanJose/comments/1wm4yfy/fuzzy_trail_friend_almaden_quicksilver/",
-        "https://www.reddit.com/r/SanJose/comments/1wm1tr2/general_contractor_recommendations/"
+        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
+        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
+        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
       ],
-      "matchedName": "Almaden Quicksilver County Park"
+      "matchedName": "SAP Center"
     }
   ],
   "eventMatches": []
