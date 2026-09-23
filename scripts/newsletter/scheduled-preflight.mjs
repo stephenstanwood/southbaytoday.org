@@ -216,6 +216,52 @@ export function preflightNewsletterCheckout({
 }
 
 /**
+ * Publish the checkout's generated-data commits to origin/main.
+ *
+ * The caller must hold the shared repo lock. Every attempt re-runs the
+ * preflight, so a push only ever leaves a clean checkout that contains
+ * origin/main and differs from it in generated data alone. A rejected push
+ * (origin moved after the fetch) re-fetches and absorbs the new remote head
+ * before trying again.
+ */
+export function pushGeneratedDataCheckout({
+  repoRoot = DEFAULT_REPO_ROOT,
+  remote = DEFAULT_REMOTE,
+  branch = DEFAULT_BRANCH,
+  log = console.log,
+  attempts = 3,
+} = {}) {
+  let failure = "no push attempted";
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    const verified = preflightNewsletterCheckout({ repoRoot, remote, branch, log });
+    if (verified.head === verified.originHead) {
+      emit(log, `${remote}/${branch} already has HEAD=${shortSha(verified.head)}; nothing to push`);
+      return { pushed: false, head: verified.head };
+    }
+
+    try {
+      const push = runGit(
+        repoRoot,
+        ["push", "--quiet", remote, `HEAD:refs/heads/${branch}`],
+        { allowStatuses: [0, 1, 128], timeout: 120_000 },
+      );
+      if (push.status === 0) {
+        emit(
+          log,
+          `pushed ${verified.aheadPaths.join(", ") || "generated data"} to ${remote}/${branch} at HEAD=${shortSha(verified.head)}`,
+        );
+        return { pushed: true, head: verified.head };
+      }
+      failure = push.stderr || push.stdout || `exit ${push.status}`;
+    } catch (error) {
+      failure = error.message;
+    }
+    emit(log, `push attempt ${attempt}/${attempts} failed: ${failure}`);
+  }
+  throw new Error(`could not push generated data to ${remote}/${branch} after ${attempts} attempts: ${failure}`);
+}
+
+/**
  * Bind the child sender to the exact revision that the parent preflight checked.
  * This also makes a direct, unguarded real-broadcast invocation fail closed.
  */

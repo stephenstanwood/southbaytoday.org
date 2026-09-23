@@ -4,6 +4,10 @@
   Deterministic primary-source refresh on the Mac Mini. The first slot is the
   normal run; the second retries a repo-lock deferral. A local success stamp
   makes the second slot a no-op after a healthy first run.
+
+  Node runs as a child of /bin/zsh, never as the launchd program itself: after
+  `brew upgrade node`, macOS SIGKILLs the next direct launch with "Launch
+  Constraint Violation" (2026-09-20). See scripts/social/default-plans-refresh.plist.
 -->
 <plist version="1.0">
 <dict>
@@ -11,8 +15,10 @@
     <string>org.southbaytoday.events-refresh</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/node</string>
-        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/events/scheduled-refresh.mjs</string>
+        <string>/bin/zsh</string>
+        <string>-f</string>
+        <string>-c</string>
+        <string>/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/events/scheduled-refresh.mjs; exit $?</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>

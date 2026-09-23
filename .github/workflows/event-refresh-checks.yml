@@ -27,3 +27,9 @@ jobs:
       # imports and the guards that must preserve published files on failure.
       - name: Check event runtime and publication safeguards
         run: npm run test:event-refresh
+
+      # Mini LaunchAgents must run node as a child of /bin/zsh (a direct
+      # Homebrew node launch is SIGKILLed after every node upgrade), and the
+      # scheduled plan/newsletter wrappers may only push verified data commits.
+      - name: Check Mini launch agents and scheduled checkout guards
+        run: node --test scripts/lib/launchd-plists.test.mjs scripts/newsletter/scheduled-preflight.test.mjs

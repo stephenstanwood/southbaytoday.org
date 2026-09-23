@@ -56,6 +56,20 @@ Baked blurbs drift: the 3:21 AM cron bakes `place-blurb-cache.json` wording into
 day's card stale (Sep 16 and Sep 17 both hit this). After editing the cache, run
 `npm run check-plan-blurbs -- --fix` and commit the re-baked plans.
 
+The homepage bakes `default-plans.json` at build time, so plans reach readers
+only once they are on origin/main. The Mini's `org.southbaytoday.default-plans-refresh`
+(`scripts/social/scheduled-default-plans.mjs`, 3:20 AM with a 3:30 retry)
+generates, commits, and pushes them under the repo lock. A rerun is a no-op once
+today's plans are published; `--force` regenerates.
+
+## Mini launchd agents: node runs under /bin/zsh
+Tracked plists launch `/bin/zsh -f -c '/opt/homebrew/bin/node <script>; exit $?'`,
+never Homebrew's node as the program. After `brew upgrade node` (the Sunday
+3:20 AM tool-updater), macOS SIGKILLs the next direct launch of each agent with
+"Launch Constraint Violation" before it logs anything. That silently cost the
+2026-09-20 newsletter and the 2026-09-21 plans. `scripts/lib/launchd-plists.test.mjs`
+enforces this in CI.
+
 ## File Organization
 - Generated JSON artifacts (committed): `src/data/south-bay/*.json`
 - Runtime social state (gitignored): `social-*.json` files in same dir
