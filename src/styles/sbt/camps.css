@@ -1,6 +1,1116 @@
-/* Camps tab. */
+/* Camps tab: featured picks, the directory filter bar and cards, and the
+   in-season week planner. Loaded site-wide from BaseLayout, so every class
+   here is camps- prefixed. */
 
-/* ── Camps ── */
 .camps-view {
+  /* Same amber the PageHero kicker wears on this tab. #B45309 on cream is
+     ~4.9:1, so it's safe for the small mono kickers. */
+  --camps-accent: #b45309;
+  --camps-good: #166534;
+  --camps-good-tint: #ecfdf3;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   padding: 0;
+}
+
+/* ── Section heads ── */
+.camps-directory {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+.camps-featured,
+.camps-browse {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+.camps-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 380px);
+  align-items: end;
+  gap: 10px 32px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.camps-kicker {
+  color: var(--camps-accent);
+}
+
+.camps-section-head h2 {
+  margin: 7px 0 0;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.camps-section-head p {
+  margin: 0;
+  color: var(--sb-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* ── Card grids ── */
+.camps-feature-grid,
+.camps-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.camps-feature-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.camps-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* ── Camp card ── */
+.camps-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px 20px 18px;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+/* The three "first picks" wear the house day-arc along the top edge. */
+.camps-card--featured {
+  padding-top: 24px;
+}
+
+.camps-card--featured::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--sb-arc);
+}
+
+.camps-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.camps-card-kicker {
+  min-width: 0;
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.camps-card-sep {
+  color: var(--sb-light);
+}
+
+/* Focus type chip: the dot is the one bit of color on the card, and it
+   means something (the camp's focus). */
+.camps-type {
+  --camps-type: var(--sb-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-surface-warm);
+  color: var(--sb-ink-2);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.camps-type::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--camps-type);
+}
+
+.camps-type[data-type="sports"] { --camps-type: #0e7490; }
+.camps-type[data-type="arts"] { --camps-type: var(--sb-accent); }
+.camps-type[data-type="stem"] { --camps-type: #1d4ed8; }
+.camps-type[data-type="nature"] { --camps-type: #15803d; }
+.camps-type[data-type="specialty"] { --camps-type: #c2410c; }
+.camps-type[data-type="academic"] { --camps-type: #b45309; }
+
+.camps-card-title {
+  margin: -2px 0 0;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.006em;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+
+.camps-card-copy {
+  margin: -4px 0 0;
+  color: var(--sb-muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.camps-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-warm);
+  overflow: hidden;
+}
+
+.camps-facts > div {
+  min-width: 0;
+  padding: 10px 12px 11px;
+}
+
+.camps-facts > div:nth-child(even) {
+  border-left: 1px solid var(--sb-line);
+}
+
+.camps-facts > div:nth-child(n + 3) {
+  border-top: 1px solid var(--sb-line);
+}
+
+.camps-facts dt {
+  color: var(--sb-light);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.camps-facts dd {
+  margin: 4px 0 0;
+  color: var(--sb-ink);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+/* "$257–$290/wk" reads as one token; never split it at the dash. */
+.camps-facts dd.camps-fact-price {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
+.camps-card-where {
+  margin: 0;
+  color: var(--sb-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.camps-card-label {
+  margin-right: 8px;
+  color: var(--sb-light);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.camps-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.camps-card-tags li {
+  padding: 3px 10px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-card);
+  color: var(--sb-ink-2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* Operator pricing fine print. */
+.camps-card-note {
+  margin: 0;
+  padding-left: 11px;
+  border-left: 2px solid var(--sb-line-strong);
+  color: var(--sb-muted);
+  font-size: 12.5px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.camps-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--sb-line);
+}
+
+.camps-card-sessions {
+  color: var(--sb-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.camps-card-cta {
+  flex: none;
+  min-height: 40px;
+  margin-left: auto;
+}
+
+.camps-card-cta span[aria-hidden] {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.2s var(--sb-ease);
+}
+
+.camps-card-cta:hover span[aria-hidden] {
+  transform: translate(1px, -1px);
+}
+
+/* Narrow cards (the 3-up featured row on desktop): the focus chip drops
+   under the kicker and the CTA goes full width, so every card in the row
+   lines up the same way instead of wrapping differently. */
+@container (max-width: 300px) {
+  .camps-card-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .camps-facts > div {
+    padding-inline: 10px;
+  }
+
+  .camps-facts dd {
+    font-size: 13.5px;
+  }
+
+  .camps-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .camps-card-cta {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* ── Directory filter bar ── */
+.camps-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) repeat(auto-fit, minmax(118px, 1fr));
+  gap: 12px;
+  align-items: end;
+  padding: 14px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--sb-shadow-xs);
+}
+
+.camps-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.camps-field > span {
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.camps-field input,
+.camps-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-sm);
+  background-color: var(--sb-card);
+  color: var(--sb-ink);
+  font-family: var(--sb-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Hand-rolled chevron from two gradient triangles (no icon art). */
+.camps-field select {
+  padding-right: 32px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--sb-muted) 50%),
+    linear-gradient(135deg, var(--sb-muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+
+.camps-field input::placeholder {
+  color: var(--sb-light);
+  opacity: 1;
+}
+
+.camps-field input:hover,
+.camps-field select:hover {
+  border-color: rgba(19, 7, 47, 0.3);
+}
+
+.camps-field input:focus-visible,
+.camps-field select:focus-visible {
+  outline: none;
+  border-color: var(--sb-ink);
+  box-shadow: var(--sb-focus);
+}
+
+.camps-toolbar-note {
+  margin: -6px 0 0;
+  color: var(--sb-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.camps-results-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-height: 36px;
+  color: var(--sb-muted);
+  font-size: 13.5px;
+}
+
+.camps-results-head strong {
+  color: var(--sb-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-show-more {
+  align-self: center;
+  min-height: 44px;
+  margin-top: 6px;
+  padding-inline: 22px;
+}
+
+.camps-empty {
+  padding: 40px 24px;
+  border: 1px dashed var(--sb-line-strong);
+  border-radius: var(--sb-radius-md);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* ── Mode switch (in season only) ── */
+.camps-mode-switch {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-xs);
+}
+
+.camps-mode-switch button {
+  min-height: 38px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--sb-radius-pill);
+  background: transparent;
+  color: var(--sb-muted);
+  cursor: pointer;
+  font-family: var(--sb-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+
+.camps-mode-switch button:hover {
+  color: var(--sb-ink);
+}
+
+.camps-mode-switch button.is-active {
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.camps-mode-switch button:focus-visible {
+  border-radius: var(--sb-radius-pill);
+}
+
+/* ── Week planner (in season only) ── */
+.camps-builder-wrap {
+  padding: 28px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-lg);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.camps-builder-start {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 12px 0 8px;
+  text-align: center;
+}
+
+.camps-builder-emoji {
+  margin-bottom: 10px;
+  font-size: 32px;
+  line-height: 1;
+}
+
+.camps-builder-title {
+  margin: 0 0 8px;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.camps-builder-title--inline {
+  margin: 0;
+  font-size: 24px;
+}
+
+.camps-builder-lede {
+  margin: 0 0 22px;
+  color: var(--sb-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.camps-builder-ages {
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+  text-align: left;
+}
+
+.camps-builder-label {
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.camps-builder-age-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.camps-builder-age-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.camps-builder-age-input {
+  width: 140px;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-card);
+  color: var(--sb-ink);
+  font-family: var(--sb-sans);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.camps-builder-age-input::placeholder {
+  color: var(--sb-light);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.camps-builder-age-input:focus-visible {
+  outline: none;
+  border-color: var(--sb-ink);
+  box-shadow: var(--sb-focus);
+}
+
+.camps-builder-remove {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--sb-radius-pill);
+  background: transparent;
+  color: var(--sb-muted);
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.camps-builder-remove:hover {
+  background: var(--sb-surface-tint);
+  color: var(--sb-ink);
+}
+
+.camps-builder-add {
+  min-height: 40px;
+  margin-top: 2px;
+  padding: 0 16px;
+  border: 1px dashed var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: transparent;
+  color: var(--sb-ink-2);
+  cursor: pointer;
+  font-family: var(--sb-sans);
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.camps-builder-add:hover {
+  border-color: var(--sb-ink);
+  background: var(--sb-surface-warm);
+}
+
+.camps-builder-hint {
+  margin: 10px 0 0;
+  color: var(--sb-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.camps-builder-cta {
+  min-height: 44px;
+  padding-inline: 24px;
+}
+
+.camps-builder-cta:disabled,
+.camps-builder-cta:disabled:hover {
+  border-color: transparent;
+  background: var(--sb-line-strong);
+  color: var(--sb-muted);
+  box-shadow: none;
+  cursor: default;
+}
+
+.camps-builder-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-bottom: 14px;
+}
+
+.camps-builder-back {
+  min-height: 36px;
+  padding: 0 12px 0 0;
+  border: 0;
+  background: none;
+  color: var(--sb-muted);
+  cursor: pointer;
+  font-family: var(--sb-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.camps-builder-back:hover {
+  color: var(--sb-ink);
+}
+
+.camps-builder-agetag {
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.camps-builder-agetag--end {
+  margin-left: auto;
+}
+
+.camps-builder-selectall {
+  min-height: 36px;
+  margin: 0 0 16px;
+  padding: 0 16px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: transparent;
+  color: var(--sb-ink-2);
+  cursor: pointer;
+  font-family: var(--sb-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.camps-builder-selectall:hover {
+  border-color: var(--sb-ink);
+}
+
+.camps-builder-selectall.is-active {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.camps-week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.camps-week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 64px;
+  padding: 12px 10px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-card);
+  color: var(--sb-ink);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s, color 0.15s, transform 0.15s var(--sb-ease);
+}
+
+.camps-week:hover {
+  border-color: var(--sb-ink);
+  transform: translateY(-1px);
+}
+
+.camps-week.is-selected {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.camps-week-num {
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.camps-week-dates {
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Results */
+.camps-plan {
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-surface-warm);
+}
+
+.camps-plan-label {
+  margin-bottom: 8px;
+  color: var(--camps-good);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.camps-plan-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.camps-plan-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--sb-line);
+  font-size: 14px;
+}
+
+.camps-plan-wk {
+  flex: none;
+  width: 44px;
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.camps-plan-name {
+  flex: 1;
+  min-width: 0;
+  color: var(--sb-ink);
+  font-weight: 600;
+}
+
+.camps-plan-price {
+  flex: none;
+  color: var(--sb-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-plan-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  color: var(--camps-good);
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-plan-note {
+  margin: 6px 0 0;
+  color: var(--sb-light);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.camps-plan-tip,
+.camps-plan-warn {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid #fcd9a4;
+  border-radius: var(--sb-radius-sm);
+  background: #fffbeb;
+  color: #8a3b0c;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.camps-plan-week {
+  margin-bottom: 22px;
+}
+
+.camps-plan-week-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.camps-plan-week-badge {
+  padding: 4px 10px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-ink);
+  color: #fff;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.camps-plan-week-dates {
+  color: var(--sb-ink);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.camps-plan-week-none {
+  color: #b45309;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.camps-plan-week-empty {
+  margin: 0;
+  padding: 4px 0;
+  color: var(--sb-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.camps-plan-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.camps-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 14px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--sb-line-strong);
+}
+
+.camps-option.is-top {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: 14px 16px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-xs);
+}
+
+.camps-option-badge {
+  justify-self: start;
+  grid-column: 1 / -1;
+  padding: 3px 9px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--camps-good-tint);
+  color: var(--camps-good);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.camps-option-body {
+  min-width: 0;
+}
+
+.camps-option-name {
+  overflow: hidden;
+  color: var(--sb-ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.camps-option.is-top .camps-option-name {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.camps-option-meta {
+  margin-top: 2px;
+  color: var(--sb-muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.camps-option-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.camps-option-price strong {
+  color: var(--sb-ink-2);
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.camps-option.is-top .camps-option-price strong {
+  color: var(--sb-ink);
+  font-size: 15px;
+}
+
+.camps-option-price span {
+  color: var(--sb-light);
+  font-size: 12px;
+}
+
+.camps-option-cta {
+  min-height: 40px;
+}
+
+.camps-builder-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .camps-section-head {
+    grid-template-columns: 1fr;
+  }
+
+  .camps-section-head p {
+    max-width: 640px;
+  }
+
+  .camps-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* An odd last pick spans the row instead of leaving a hole. */
+  .camps-feature-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+
+  .camps-toolbar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .camps-field--search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .camps-view {
+    gap: 24px;
+  }
+
+  .camps-directory {
+    gap: 40px;
+  }
+
+  .camps-section-head h2 {
+    font-size: 25px;
+  }
+
+  .camps-feature-grid,
+  .camps-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .camps-feature-grid > :last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .camps-card {
+    padding: 18px 16px 16px;
+  }
+
+  .camps-card--featured {
+    padding-top: 22px;
+  }
+
+  .camps-card-title {
+    font-size: 20px;
+  }
+
+  .camps-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+
+  /* 16px keeps iOS Safari from zooming the page when a field takes focus. */
+  .camps-field input,
+  .camps-field select {
+    font-size: 16px;
+  }
+
+  .camps-mode-switch {
+    width: 100%;
+  }
+
+  .camps-mode-switch button {
+    flex: 1;
+    padding-inline: 10px;
+  }
+
+  .camps-builder-wrap {
+    padding: 20px 16px;
+    border-radius: var(--sb-radius-md);
+  }
+
+  .camps-week-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .camps-option.is-top {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .camps-option.is-top .camps-option-cta {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camps-week:hover,
+  .camps-card-cta:hover span[aria-hidden] {
+    transform: none;
+  }
 }

@@ -6,6 +6,11 @@ import SouthBayTodayView from "./homepage/SouthBayTodayView";
 import NewsletterSignup from "./NewsletterSignup";
 import Masthead, { TAB_HREF } from "./Masthead";
 import SiteFooter from "./SiteFooter";
+import type EventsViewComponent from "./views/EventsView";
+import type GovernmentViewComponent from "./views/GovernmentView";
+import type TechnologyViewComponent from "./views/TechnologyView";
+import type FoodViewComponent from "./views/FoodView";
+import type CampsViewComponent from "./views/CampsView";
 
 // Non-default tabs are lazy-loaded so a user who only looks at the Today tab
 // doesn't pay for Events/Tech/etc. code + their deps (recharts, etc.)
@@ -38,11 +43,27 @@ function tabFromLocation(): Tab {
   return SLUG_TO_TAB[path] ?? "overview";
 }
 
-interface SignalAppProps {
-  initialTab?: Tab;
+/**
+ * Views a tab page bundles eagerly (see ./apps/). A lazy view can't hydrate
+ * until its chunk arrives, and React was discarding the server-rendered tab
+ * while it waited, so /events, /camps, etc. painted the Loading spinner
+ * before popping back in. Each tab page's island passes its own view here;
+ * the other tabs stay lazy for client-side switches.
+ */
+export interface EagerViews {
+  events?: typeof EventsViewComponent;
+  government?: typeof GovernmentViewComponent;
+  technology?: typeof TechnologyViewComponent;
+  food?: typeof FoodViewComponent;
+  camps?: typeof CampsViewComponent;
 }
 
-export default function SignalApp({ initialTab }: SignalAppProps = {}) {
+interface SignalAppProps {
+  initialTab?: Tab;
+  eager?: EagerViews;
+}
+
+export default function SignalApp({ initialTab, eager }: SignalAppProps = {}) {
   // Deterministic first render: the page's own tab, never the URL hash. A
   // legacy #events-style bookmark would make the hydrating client disagree
   // with the server HTML; the mount effect below resolves the hash instead.
@@ -114,6 +135,12 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
 
   // City filter is rendered inline inside EventsView's filter bar, not at app level.
 
+  const Events = eager?.events ?? EventsView;
+  const Government = eager?.government ?? GovernmentView;
+  const Technology = eager?.technology ?? TechnologyView;
+  const Food = eager?.food ?? FoodView;
+  const Camps = eager?.camps ?? CampsView;
+
   return (
     <>
       <Masthead activeTab={activeTab} onNavigate={navigateTo} />
@@ -126,18 +153,18 @@ export default function SignalApp({ initialTab }: SignalAppProps = {}) {
         {activeTab !== "overview" && (
           <Suspense fallback={<div className="sb-loading"><div className="sb-spinner" /><div className="sb-loading-text">Loading…</div></div>}>
             {activeTab === "events" && (
-              <EventsView
+              <Events
                 selectedCities={selectedCities}
                 onToggleCity={toggleCity}
                 onToggleAllCities={toggleAll}
               />
             )}
             {activeTab === "government" && (
-              <GovernmentView selectedCities={selectedCities} />
+              <Government selectedCities={selectedCities} />
             )}
-            {activeTab === "technology" && <TechnologyView />}
-            {activeTab === "food" && <FoodView />}
-            {activeTab === "camps" && <CampsView />}
+            {activeTab === "technology" && <Technology />}
+            {activeTab === "food" && <Food />}
+            {activeTab === "camps" && <Camps />}
           </Suspense>
         )}
       </main>

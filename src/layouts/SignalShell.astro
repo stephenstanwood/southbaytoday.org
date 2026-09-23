@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import SignalApp from "../components/south-bay/SignalApp.tsx";
+import EventsApp from "../components/south-bay/apps/EventsApp.tsx";
+import GovApp from "../components/south-bay/apps/GovApp.tsx";
+import TechApp from "../components/south-bay/apps/TechApp.tsx";
+import FoodApp from "../components/south-bay/apps/FoodApp.tsx";
+import CampsApp from "../components/south-bay/apps/CampsApp.tsx";
 import type { Tab } from "../lib/south-bay/types";
 
 interface Props {
@@ -35,6 +40,13 @@ const {
     <slot name="head" />
   </Fragment>
 
-  <SignalApp client:load initialTab={initialTab} />
+  {/* Each tab page hydrates an island that bundles its own view eagerly
+      (Astro can't put client:* on a dynamic tag, hence the explicit list). */}
+  {initialTab === "events" ? <EventsApp client:load />
+    : initialTab === "government" ? <GovApp client:load />
+    : initialTab === "technology" ? <TechApp client:load />
+    : initialTab === "food" ? <FoodApp client:load />
+    : initialTab === "camps" ? <CampsApp client:load />
+    : <SignalApp client:load initialTab={initialTab} />}
   <slot />
 </BaseLayout>

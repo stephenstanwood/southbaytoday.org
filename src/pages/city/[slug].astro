@@ -59,13 +59,6 @@ const jsonLd = eventListJsonLd(cityEvents, {
   ogImage={absoluteOgImage}
 >
   <Fragment slot="head">
-    <style is:global>
-      /* CityPage manages its own internal width — the Masthead spans full
-         width and the content has an 800px max-width matching the homepage. */
-      @media (max-width: 640px) {
-        .city-events-grid { grid-template-columns: 1fr !important; }
-      }
-    </style>
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 

@@ -39,23 +39,65 @@ const description = "How The South Bay Today handles analytics, newsletter signu
 </CalendarShell>
 
 <style>
+  /* Same article typography as /about. */
   .privacy-body {
-    max-width: 64ch;
+    max-width: 65ch;
+    font-size: 16.5px;
+    line-height: 1.72;
+    color: var(--sb-ink-2);
   }
   .privacy-body p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin: 0 0 14px;
+    margin: 0 0 1.05em;
+    text-wrap: pretty;
+  }
+  .privacy-body > p:first-child {
+    margin-bottom: 1.2em;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--sb-ink);
   }
   .privacy-body h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 21px;
+    margin: 42px 0 10px;
+    font-family: var(--sb-serif);
+    font-size: 23px;
     font-weight: 800;
-    margin: 26px 0 8px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--sb-ink);
+    text-wrap: balance;
+  }
+  .privacy-body h2::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 3px;
+    margin-bottom: 14px;
+    border-radius: 3px;
+    background: var(--sb-arc);
   }
   .privacy-body a {
-    color: inherit;
+    color: var(--sb-ink);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(135, 56, 245, 0.4);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: color 0.15s, text-decoration-color 0.15s;
+  }
+  .privacy-body a:hover {
+    color: var(--sb-accent-ink);
+    text-decoration-color: currentColor;
+  }
+  @media (max-width: 540px) {
+    .privacy-body {
+      font-size: 16px;
+    }
+    .privacy-body > p:first-child {
+      font-size: 17.5px;
+    }
+    .privacy-body h2 {
+      margin-top: 36px;
+      font-size: 21px;
+    }
   }
 </style>

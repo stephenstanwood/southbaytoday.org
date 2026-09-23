@@ -325,7 +325,7 @@ body {
   font-variant-numeric: lining-nums tabular-nums;
 }
 
-.sb-page-stat span {
+.sb-page-stat > span {
   display: block;
   margin-top: 7px;
   color: var(--sb-muted);
@@ -437,7 +437,7 @@ body {
   border: 1px solid var(--sb-line);
   background: #fff;
   color: var(--sb-muted);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.4;
   white-space: nowrap;
@@ -468,11 +468,6 @@ body {
   background: linear-gradient(90deg, rgba(19, 7, 47, 0.05) 0%, rgba(19, 7, 47, 0.09) 40%, rgba(19, 7, 47, 0.05) 80%);
   background-size: 220% 100%;
   animation: sb-skeleton 1.4s ease-in-out infinite;
-}
-
-/* ── Live urgency pill (Happening Now / Starts in N min) ── */
-.sb-urgency-pulse {
-  animation: sbUrgencyPulse 1.8s ease-in-out infinite;
 }
 
 /* ── Empty / loading states ── */
@@ -600,6 +595,170 @@ body {
   font-size: 11.5px;
 }
 
+/* ── Tips & Feedback widget (ReaderWidget.tsx) ── */
+.rw-fab,
+.rw-panel {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 9999;
+}
+
+.rw-fab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-ink);
+  color: #fff;
+  font-family: var(--sb-sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(19, 7, 47, 0.22);
+  opacity: 0.82;
+  transition: opacity 0.15s, box-shadow 0.2s var(--sb-ease);
+}
+
+.rw-fab:hover,
+.rw-fab:focus-visible {
+  opacity: 1;
+  box-shadow: 0 8px 24px rgba(19, 7, 47, 0.28);
+}
+
+.rw-panel {
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-md);
+  font-family: var(--sb-sans);
+  color: var(--sb-ink);
+}
+
+.rw-panel--note {
+  padding: 22px 20px;
+  text-align: center;
+}
+
+.rw-note-icon { font-size: 28px; margin-bottom: 6px; }
+.rw-note-title { margin: 0; font-size: 15px; font-weight: 700; }
+.rw-note-sub { margin: 4px 0 0; font-size: 13px; color: var(--sb-muted); }
+.rw-note-error { margin: 0; font-size: 14px; font-weight: 600; color: #9a3412; }
+
+.rw-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px 10px 16px;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.rw-title {
+  font-family: var(--sb-serif);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.rw-close {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--sb-radius-pill);
+  background: none;
+  color: var(--sb-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rw-close:hover { background: var(--sb-surface-tint); color: var(--sb-ink); }
+
+.rw-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.rw-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.rw-type {
+  min-height: 40px;
+  padding: 7px 10px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
+  color: var(--sb-ink-2);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.rw-type:hover { border-color: var(--sb-ink); }
+
+.rw-type[aria-pressed="true"] {
+  background: var(--sb-ink);
+  border-color: var(--sb-ink);
+  color: #fff;
+}
+
+.rw-field {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-warm);
+  color: var(--sb-ink);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.45;
+  resize: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.rw-field::placeholder { color: var(--sb-light); }
+
+.rw-field:focus {
+  outline: none;
+  border-color: var(--sb-accent);
+  box-shadow: var(--sb-focus);
+}
+
+.rw-send { width: 100%; min-height: 42px; }
+
+.rw-send:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.rw-foot {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sb-light);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .rw-fab { width: 44px; height: 44px; min-height: 0; padding: 0; justify-content: center; gap: 0; }
+  .rw-fab-label { display: none; }
+  /* 16px keeps iOS from zooming the page when a field takes focus. */
+  .rw-field { font-size: 16px; }
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .sb-header { padding: 18px var(--sb-gutter) 14px; }
@@ -618,6 +777,13 @@ body {
 
   .sb-main { padding: 20px var(--sb-gutter) 32px; }
   .sb-section-title { font-size: 22px; }
+
+  .sb-footer { padding-top: 28px; }
+  .sb-footer-nav { gap: 4px 14px; }
+  .sb-footer-meta { gap: 2px 14px; }
+  /* Maker credit on its own line; the four links share the next one. */
+  .sb-footer-meta > span:first-child { flex-basis: 100%; }
+  .sb-footer-dot { display: none; }
 }
 
 /* Clears the fixed Tips & Feedback button (ReaderWidget.tsx) so it never
@@ -646,17 +812,30 @@ body {
   .sb-page-stat strong {
     font-size: 23px;
   }
+  .sb-page-stat:last-child:nth-child(odd):not(:first-child) {
+    grid-column: 1 / -1;
+  }
+  .sb-page-stats:has(> .sb-page-stat:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .sb-page-stats:has(> .sb-page-stat:nth-child(3):last-child) > .sb-page-stat {
+    grid-column: auto;
+    border-top: none;
+    border-left: 1px solid var(--sb-line);
+  }
+  .sb-page-stats:has(> .sb-page-stat:nth-child(3):last-child) > .sb-page-stat:first-child {
+    border-left: none;
+  }
+}
+
+/* Touch: the house button clears the 40px tap-target floor. */
+@media (max-width: 640px), (pointer: coarse) {
+  .sb-btn { min-height: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .sb-urgency-pulse,
   .sb-skeleton { animation: none; }
   .sb-brand:hover .sb-brand-mark { transform: none; }
-}
-
-@keyframes sbUrgencyPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.45); }
-  50%      { box-shadow: 0 0 0 4px rgba(220, 38, 38, 0); }
 }
 
 @keyframes sb-spin {
@@ -666,10 +845,4 @@ body {
 @keyframes sb-skeleton {
   0%   { background-position: 100% 0; }
   100% { background-position: -100% 0; }
-}
-
-/* "Happening Now" dot */
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
 }

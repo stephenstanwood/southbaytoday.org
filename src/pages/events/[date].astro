@@ -133,6 +133,15 @@ const shortLabel = (d: string) =>
   new DateCtor(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
 
 const cityCount = new Set(events.map((e) => e.city).filter(Boolean)).size;
+
+// Time column: "8:00 AM" → "8:00" + a quieter "AM". Anything that isn't a
+// plain clock time (ranges, "Noon") renders as-is.
+function splitClock(time: string | null | undefined): { clock: string; period: string | null } {
+  const raw = (time ?? "").trim();
+  const m = raw.match(/^(\d{1,2})(?::(\d{2}))?\s*([ap])\.?m\.?$/i);
+  if (!m) return { clock: raw, period: null };
+  return { clock: `${Number(m[1])}:${m[2] ?? "00"}`, period: `${m[3].toUpperCase()}M` };
+}
 const title = `Events on ${dayLabel} — South Bay Today`;
 const description = `${events.length} things ${passed ? "that happened" : "happening"} across the South Bay on ${dayLabel}: ${events
   .slice(0, 3)
@@ -168,10 +177,18 @@ const breadcrumbJsonLd = JSON.stringify({
     <script type="application/ld+json" set:html={breadcrumbJsonLd} />
   </Fragment>
 
-  <nav class="cal-daynav" aria-label="Browse days">
-    {prevDate ? <a href={`/events/${prevDate}`}>← {shortLabel(prevDate)}</a> : <span />}
-    <span class="cal-kicker">South Bay / Calendar</span>
-    {nextDate ? <a href={`/events/${nextDate}`}>{shortLabel(nextDate)} →</a> : <span />}
+  <nav class="cal-daynav evd-daynav" aria-label="Browse days">
+    {prevDate ? (
+      <a class="evd-daylink" href={`/events/${prevDate}`} rel="prev">
+        <span aria-hidden="true">←</span> {shortLabel(prevDate)}
+      </a>
+    ) : <span />}
+    <span class="cal-kicker evd-kicker">South Bay / Calendar</span>
+    {nextDate ? (
+      <a class="evd-daylink evd-daylink--next" href={`/events/${nextDate}`} rel="next">
+        {shortLabel(nextDate)} <span aria-hidden="true">→</span>
+      </a>
+    ) : <span />}
   </nav>
 
   {passed && (
@@ -180,39 +197,47 @@ const breadcrumbJsonLd = JSON.stringify({
     </p>
   )}
 
-  <h1>{dayLabel}</h1>
-  <p class="cal-sub">
-    {events.length} {events.length === 1 ? "event" : "events"} across {cityCount}{" "}
-    {cityCount === 1 ? "city" : "South Bay cities"} ·{" "}
-    <a href="/events">search &amp; filter on the Events tab →</a>
+  <h1 class="evd-title">{dayLabel}</h1>
+  <p class="cal-sub evd-sub">
+    <strong>{events.length} {events.length === 1 ? "event" : "events"}</strong> across {cityCount}{" "}
+    {cityCount === 1 ? "city" : "South Bay cities"}
+    <span class="evd-sub-sep" aria-hidden="true">·</span>
+    <a class="evd-sub-link" href="/events">search &amp; filter on the Events tab →</a>
   </p>
 
-  <ol class="cal-list">
-    {events.map((e) => (
-      <li class="cal-event" data-start-min={e.startMinutes ?? ""}>
-        <div class="cal-time">{e.time}</div>
-        <div class="cal-body">
-          <h2>
-            {e.detailSlug ? (
-              <a href={`/event/${e.detailSlug}`}>{e.title}</a>
-            ) : e.url ? (
-              <a href={e.url} rel="noopener noreferrer">{e.title}</a>
-            ) : (
-              e.title
-            )}
-          </h2>
-          <p class="cal-meta">
-            {isVirtualEvent(e)
-              ? ["Online", e.venue].filter(Boolean).join(" · ")
-              : [e.venue, e.cityName].filter(Boolean).join(" · ")}
-            {isVirtualEvent(e) && <span class="cal-chip cal-chip--virtual">Virtual</span>}
-            {e.cost === "free" && <span class="cal-chip">Free</span>}
-            {e.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
-          </p>
-          {(e.blurb || e.description) && <p class="cal-copy">{e.blurb || e.description}</p>}
-        </div>
-      </li>
-    ))}
+  <ol class="cal-list evd-list">
+    {events.map((e) => {
+      const { clock, period } = splitClock(e.time);
+      return (
+        <li class="cal-event evd-row" data-start-min={e.startMinutes ?? ""}>
+          <div class="cal-time evd-time">
+            {clock}{period && <span class="evd-time-period"> {period}</span>}
+          </div>
+          <div class="cal-body evd-body">
+            <h2>
+              {e.detailSlug ? (
+                <a href={`/event/${e.detailSlug}`}>{e.title}</a>
+              ) : e.url ? (
+                <a href={e.url} rel="noopener noreferrer">{e.title}</a>
+              ) : (
+                e.title
+              )}
+            </h2>
+            <p class="cal-meta evd-meta">
+              <span class="evd-where">
+                {isVirtualEvent(e)
+                  ? ["Online", e.venue].filter(Boolean).join(" · ")
+                  : [e.venue, e.cityName].filter(Boolean).join(" · ")}
+              </span>
+              {isVirtualEvent(e) && <span class="cal-chip cal-chip--virtual evd-chip">Virtual</span>}
+              {e.cost === "free" && <span class="cal-chip evd-chip">Free</span>}
+              {e.kidFriendly && <span class="cal-chip cal-chip--kids evd-chip">Kids</span>}
+            </p>
+            {(e.blurb || e.description) && <p class="cal-copy evd-copy">{e.blurb || e.description}</p>}
+          </div>
+        </li>
+      );
+    })}
   </ol>
 
   <script define:vars={{ pageDate: date }}>
@@ -234,7 +259,7 @@ const breadcrumbJsonLd = JSON.stringify({
         const meta = el.querySelector(".cal-meta");
         if (meta && !meta.querySelector(".cal-chip--started")) {
           const badge = document.createElement("span");
-          badge.className = "cal-chip cal-chip--started";
+          badge.className = "cal-chip evd-chip cal-chip--started";
           badge.textContent = "Already started";
           meta.appendChild(badge);
         }
@@ -243,26 +268,201 @@ const breadcrumbJsonLd = JSON.stringify({
   </script>
 
   <style>
+    /* Page-only polish for the static day listing; the shared .cal-* base
+       lives in CalendarShell. evd-* = events-day. */
+
+    /* Day nav: prev/next as quiet pills around the kicker. */
+    /* Three columns so the kicker sits dead center whatever the link widths. */
+    .evd-daynav {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      margin-bottom: 22px;
+    }
+    .evd-daynav > :first-child {
+      justify-self: start;
+    }
+    .evd-daynav > :last-child {
+      justify-self: end;
+    }
+    .evd-daynav .evd-daylink {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 14px;
+      border: 1px solid var(--sb-line-strong);
+      border-radius: var(--sb-radius-pill);
+      background: rgba(255, 255, 255, 0.8);
+      color: var(--sb-ink-2);
+      font-family: var(--sb-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .evd-daynav .evd-daylink:hover {
+      border-color: var(--sb-ink);
+      background: var(--sb-ink);
+      color: #fff;
+      text-decoration: none;
+    }
+    .evd-kicker {
+      text-align: center;
+    }
+
+    .evd-title {
+      margin-bottom: 12px;
+    }
+    .evd-sub {
+      margin-bottom: 8px;
+      padding-bottom: 22px;
+      text-wrap: pretty;
+    }
+    .evd-sub strong {
+      color: var(--sb-ink);
+      font-weight: 700;
+    }
+    .evd-sub-sep {
+      margin: 0 3px;
+      color: var(--sb-light);
+    }
+    .evd-sub .evd-sub-link {
+      color: var(--sb-accent-ink);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: rgba(109, 40, 217, 0.35);
+      text-underline-offset: 3px;
+    }
+    .evd-sub .evd-sub-link:hover {
+      text-decoration-color: currentColor;
+    }
+
+    /* The list: time column + body, hairline rhythm. */
+    .evd-row {
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 20px;
+      padding: 20px 0 21px;
+    }
+    .evd-row:first-child {
+      padding-top: 12px;
+    }
+    .evd-time {
+      padding-top: 5px;
+      color: var(--sb-ink);
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.01em;
+    }
+    .evd-time-period {
+      color: var(--sb-muted);
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+    }
+    .evd-body h2 {
+      font-size: 20.5px;
+      line-height: 1.22;
+      margin-bottom: 6px;
+      text-wrap: balance;
+      overflow-wrap: anywhere;
+    }
+    .evd-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .evd-where {
+      margin-right: 2px;
+    }
+    .evd-meta .evd-chip {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      padding: 2px 8px;
+      font-size: 10.5px;
+      letter-spacing: 0.08em;
+      line-height: 14px;
+      vertical-align: baseline;
+    }
+    .evd-copy {
+      margin-top: 8px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      max-width: 64ch;
+      text-wrap: pretty;
+    }
+
     .cal-passed {
-      margin: 0 0 14px;
-      padding: 10px 14px;
+      margin: 0 0 18px;
+      padding: 12px 16px;
       border: 1px solid #fde68a;
       background: #fffbeb;
       color: #92400e;
-      border-radius: 8px;
-      font-size: 13px;
+      border-radius: var(--sb-radius-sm);
+      font-size: 14px;
+      line-height: 1.5;
     }
     .cal-passed a {
       color: inherit;
       font-weight: 700;
+      text-underline-offset: 3px;
     }
     .cal-event--started {
       opacity: 0.55;
     }
-    .cal-chip--started {
-      border-color: var(--border, #e2e2e2);
+    /* Added by the inline script, so it carries no scoped attribute. */
+    :global(.cal-chip.cal-chip--started) {
+      border-color: var(--sb-line-strong);
       background: transparent;
-      color: var(--muted, #6b6b6b);
+      color: var(--sb-muted);
+    }
+
+    @media (max-width: 540px) {
+      .evd-daynav {
+        grid-template-columns: auto auto;
+        grid-template-areas: "kicker kicker" "prev next";
+        row-gap: 12px;
+        margin-bottom: 18px;
+      }
+      .evd-daynav > :first-child {
+        grid-area: prev;
+      }
+      .evd-daynav > :last-child {
+        grid-area: next;
+      }
+      .evd-daynav .evd-kicker {
+        grid-area: kicker;
+        text-align: left;
+      }
+      .evd-daynav .evd-daylink {
+        min-height: 40px;
+      }
+      .evd-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 18px 0 19px;
+      }
+      .evd-time {
+        padding-top: 0;
+        color: var(--sb-accent-ink);
+        font-size: 12.5px;
+      }
+      .evd-time-period {
+        color: var(--sb-accent-ink);
+        opacity: 0.75;
+      }
+      .evd-body h2 {
+        font-size: 19px;
+      }
+      .evd-copy {
+        font-size: 14px;
+      }
     }
   </style>
 </CalendarShell>

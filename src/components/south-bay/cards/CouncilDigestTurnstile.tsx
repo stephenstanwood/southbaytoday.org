@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import type { DigestData } from "./DigestCard";
 import type { City } from "../../../lib/south-bay/types";
+import { getCityName } from "../../../lib/south-bay/cities";
 
 interface AgendaItem {
   title: string;
@@ -26,25 +27,8 @@ interface Props {
   errors: Map<string, string>;
 }
 
-const CITY_ACCENT: Record<string, string> = {
-  campbell:        "#1d4ed8",
-  "los-gatos":     "#b45309",
-  saratoga:        "#065F46",
-  cupertino:       "#6d28d9",
-  sunnyvale:       "#0891b2",
-  "mountain-view": "#0369a1",
-  "san-jose":      "#be123c",
-  "santa-clara":   "#b45309",
-  "palo-alto":     "#1d4ed8",
-  milpitas:        "#4d7c0f",
-  "los-altos":     "#7c3aed",
-};
-
 function cityLabel(city: string) {
-  return city
-    .split("-")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
+  return getCityName(city as City);
 }
 
 function relativeAge(iso: string | undefined): string | null {
@@ -80,6 +64,14 @@ export default function CouncilDigestTurnstile({
   const [index, setIndex] = useState(0);
   const chipsRef = useRef<HTMLDivElement>(null);
   const activeChipRef = useRef<HTMLButtonElement>(null);
+  // A meeting that already happened isn't "next". The feed refreshes nightly,
+  // but a page built the day before (or a tab left open) can still carry it.
+  // Checked after mount so the prerendered HTML doesn't depend on the clock.
+  const [todayIso, setTodayIso] = useState<string | null>(null);
+
+  useEffect(() => {
+    setTodayIso(new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }));
+  }, []);
 
   useEffect(() => {
     if (index >= ordered.length) setIndex(0);
@@ -116,28 +108,34 @@ export default function CouncilDigestTurnstile({
   }
 
   const city = ordered[index];
-  const accent = CITY_ACCENT[city] ?? "#1A1A1A";
   const digest = digests.get(city);
-  const nextMeeting = upcomingMeetings[city];
+  const upcoming = upcomingMeetings[city];
+  const nextMeeting = upcoming && (todayIso === null || upcoming.date >= todayIso) ? upcoming : undefined;
   const isLoading = loading.has(city);
   const error = errors.get(city);
+  const multi = ordered.length > 1;
 
   return (
-    <div className="cdt-wrap" onKeyDown={onKeyDown} tabIndex={0} aria-roledescription="carousel">
+    <div
+      className="cdt-wrap"
+      onKeyDown={onKeyDown}
+      tabIndex={0}
+      aria-roledescription="carousel"
+      aria-label="Council digests by city"
+    >
       <div className="cdt-chips" role="tablist" aria-label="City" ref={chipsRef}>
         {ordered.map((c, i) => {
           const isActive = i === index;
-          const cAccent = CITY_ACCENT[c] ?? "#1A1A1A";
           const hasDigest = digests.has(c);
           return (
             <button
               key={c}
               ref={isActive ? activeChipRef : undefined}
+              type="button"
               role="tab"
               aria-selected={isActive}
               onClick={() => setIndex(i)}
-              className={`cdt-chip${isActive ? " cdt-chip--active" : ""}`}
-              style={isActive ? { borderColor: cAccent, color: cAccent, background: cAccent + "0F" } : undefined}
+              className="gov-pill cdt-chip"
             >
               <span>{cityLabel(c)}</span>
               {!hasDigest && <span className="cdt-chip-dot" aria-hidden>·</span>}
@@ -147,36 +145,37 @@ export default function CouncilDigestTurnstile({
       </div>
 
       <div className="cdt-stage">
-        <button
-          className="cdt-arrow cdt-arrow--prev"
-          onClick={goPrev}
-          aria-label="Previous city"
-          disabled={ordered.length < 2}
-        >
-          ‹
-        </button>
+        <div className="cdt-rail cdt-rail--prev">
+          <button
+            type="button"
+            className="cdt-arrow"
+            onClick={goPrev}
+            aria-label="Previous city"
+            disabled={!multi}
+          >
+            ‹
+          </button>
+        </div>
 
         <div className="cdt-card-wrap">
           <article
             key={city}
             className="cdt-card"
-            style={{ borderTop: `3px solid ${accent}` }}
             aria-live="polite"
+            aria-busy={isLoading || undefined}
           >
             {isLoading ? (
-              <div className="cdt-loading">
-                <div className="sb-spinner" style={{ width: 18, height: 18, borderWidth: 2 }} />
-                <span>Refreshing {cityLabel(city)} digest…</span>
-              </div>
+              <DigestSkeleton city={city} />
             ) : error ? (
               <div className="cdt-error">
-                <strong>{cityLabel(city)}:</strong> {error}
-                <button onClick={() => onRefresh(city)} className="cdt-retry">Retry</button>
+                <p><strong>{cityLabel(city)}:</strong> {error}</p>
+                <button type="button" onClick={() => onRefresh(city)} className="sb-btn sb-btn--quiet">
+                  Try again
+                </button>
               </div>
             ) : digest ? (
               <DigestBody
                 digest={digest}
-                accent={accent}
                 nextMeeting={nextMeeting}
                 onRefresh={() => onRefresh(city)}
                 stale={isStale(digest.meetingDateIso ?? undefined)}
@@ -184,7 +183,6 @@ export default function CouncilDigestTurnstile({
             ) : (
               <NoDigestBody
                 city={city}
-                accent={accent}
                 nextMeeting={nextMeeting}
                 agendaUrl={agendaUrls[city]}
                 onGenerate={() => onRefresh(city)}
@@ -193,40 +191,89 @@ export default function CouncilDigestTurnstile({
           </article>
         </div>
 
-        <button
-          className="cdt-arrow cdt-arrow--next"
-          onClick={goNext}
-          aria-label="Next city"
-          disabled={ordered.length < 2}
-        >
-          ›
-        </button>
-      </div>
+        <div className="cdt-rail cdt-rail--next">
+          <button
+            type="button"
+            className="cdt-arrow"
+            onClick={goNext}
+            aria-label="Next city"
+            disabled={!multi}
+          >
+            ›
+          </button>
+        </div>
 
-      <div className="cdt-counter">
-        <span style={{ color: accent, fontWeight: 700 }}>{cityLabel(city)}</span>
-        <span className="cdt-counter-sep">·</span>
-        <span>{index + 1} of {ordered.length}</span>
-        {digest && (
-          <>
-            <span className="cdt-counter-sep">·</span>
-            <span>last meeting {relativeAge(digest.meetingDateIso ?? undefined)}</span>
-          </>
-        )}
+        <div className="cdt-counter">
+          <span className="cdt-counter-main">
+            <span className="cdt-counter-city">{cityLabel(city)}</span>
+            <span className="cdt-counter-sep" aria-hidden="true">·</span>
+            <span>{index + 1} of {ordered.length}</span>
+          </span>
+          {digest && (
+            <span className="cdt-counter-age">
+              last meeting {relativeAge(digest.meetingDateIso ?? undefined)}
+            </span>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+function DigestSkeleton({ city }: { city: City }) {
+  return (
+    <div className="cdt-loading">
+      <span className="cdt-loading-label">
+        <span className="sb-spinner gov-ask-spinner" aria-hidden="true" />
+        Refreshing {cityLabel(city)} digest…
+      </span>
+      <span className="sb-skeleton cdt-sk-title" aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "96%" }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "92%" }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "88%" }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "54%", marginBottom: 10 }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "70%" }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "62%" }} aria-hidden="true" />
+      <span className="sb-skeleton" style={{ width: "66%" }} aria-hidden="true" />
+    </div>
+  );
+}
+
+function NextMeetingBox({ nextMeeting, linkWhenEmpty }: {
+  nextMeeting: UpcomingMeeting;
+  linkWhenEmpty: boolean;
+}) {
+  const items = nextMeeting.agendaItems ?? [];
+  return (
+    <div className="cdt-next">
+      <div className="cdt-next-label">Next meeting · {nextMeeting.displayDate}</div>
+      {items.length > 0 ? (
+        <ul className="cdt-next-items">
+          {items.slice(0, 4).map((it, i) => (
+            <li key={i}>{it.title}</li>
+          ))}
+        </ul>
+      ) : linkWhenEmpty ? (
+        <a
+          href={nextMeeting.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cdt-next-link"
+        >
+          View agenda ↗
+        </a>
+      ) : null}
     </div>
   );
 }
 
 function DigestBody({
   digest,
-  accent,
   nextMeeting,
   onRefresh,
   stale,
 }: {
   digest: DigestData & { meetingDateIso?: string };
-  accent: string;
   nextMeeting: UpcomingMeeting | undefined;
   onRefresh: () => void;
   stale: boolean;
@@ -234,12 +281,10 @@ function DigestBody({
   return (
     <>
       <header className="cdt-header">
-        <div className="cdt-eyebrow" style={{ color: accent }}>
-          {digest.body || "City Council"}
-        </div>
+        <div className="cdt-eyebrow">{digest.body || "City Council"}</div>
         <h3 className="cdt-title">{digest.cityName}</h3>
         <div className="cdt-date">
-          {digest.meetingDate}
+          <span>{digest.meetingDate}</span>
           {stale && (
             <span className="cdt-stale-tag" title="Most recent agenda we have on file. A newer meeting may have happened since.">
               latest on file
@@ -253,48 +298,34 @@ function DigestBody({
       )}
 
       {digest.keyTopics?.length > 0 && (
-        <ul className="cdt-topics">
-          {digest.keyTopics.map((t, i) => (
-            <li key={i}>{t}</li>
-          ))}
-        </ul>
+        <>
+          <h4 className="cdt-subhead">What came up</h4>
+          <ul className="cdt-topics">
+            {digest.keyTopics.map((t, i) => (
+              <li key={i}>{t}</li>
+            ))}
+          </ul>
+        </>
       )}
 
-      {nextMeeting && (
-        <div className="cdt-next">
-          <div className="cdt-next-label">Next meeting · {nextMeeting.displayDate}</div>
-          {nextMeeting.agendaItems && nextMeeting.agendaItems.length > 0 ? (
-            <ul className="cdt-next-items">
-              {nextMeeting.agendaItems.slice(0, 4).map((it, i) => (
-                <li key={i}>{it.title}</li>
-              ))}
-            </ul>
-          ) : (
-            <a
-              href={nextMeeting.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cdt-next-link"
-              style={{ color: accent }}
-            >
-              View agenda →
-            </a>
-          )}
-        </div>
-      )}
+      {nextMeeting && <NextMeetingBox nextMeeting={nextMeeting} linkWhenEmpty />}
 
       <footer className="cdt-footer">
         <a
           href={digest.sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="cdt-source"
-          style={{ color: accent }}
+          className="sb-btn"
         >
-          View this agenda →
+          View this agenda ↗
         </a>
-        <button onClick={onRefresh} className="cdt-refresh" title="Pull the latest agenda and re-summarize">
-          ↻ refresh
+        <button
+          type="button"
+          onClick={onRefresh}
+          className="sb-btn sb-btn--quiet"
+          title="Pull the latest agenda and re-summarize"
+        >
+          ↻ Refresh
         </button>
       </footer>
     </>
@@ -303,13 +334,11 @@ function DigestBody({
 
 function NoDigestBody({
   city,
-  accent,
   nextMeeting,
   agendaUrl,
   onGenerate,
 }: {
   city: City;
-  accent: string;
   nextMeeting: UpcomingMeeting | undefined;
   agendaUrl: string | undefined;
   onGenerate: () => void;
@@ -317,11 +346,9 @@ function NoDigestBody({
   return (
     <>
       <header className="cdt-header">
-        <div className="cdt-eyebrow" style={{ color: accent }}>City Council</div>
+        <div className="cdt-eyebrow">City Council</div>
         <h3 className="cdt-title">{cityLabel(city)}</h3>
-        <div className="cdt-date" style={{ color: "var(--sb-muted)" }}>
-          No digest on file yet
-        </div>
+        <div className="cdt-date">No digest on file yet</div>
       </header>
 
       <p className="cdt-summary cdt-summary--muted">
@@ -329,18 +356,7 @@ function NoDigestBody({
         agenda and generate one on demand.
       </p>
 
-      {nextMeeting && (
-        <div className="cdt-next">
-          <div className="cdt-next-label">Next meeting · {nextMeeting.displayDate}</div>
-          {nextMeeting.agendaItems && nextMeeting.agendaItems.length > 0 && (
-            <ul className="cdt-next-items">
-              {nextMeeting.agendaItems.slice(0, 4).map((it, i) => (
-                <li key={i}>{it.title}</li>
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      {nextMeeting && <NextMeetingBox nextMeeting={nextMeeting} linkWhenEmpty={false} />}
 
       <footer className="cdt-footer">
         {agendaUrl && (
@@ -348,13 +364,12 @@ function NoDigestBody({
             href={nextMeeting?.url ?? agendaUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="cdt-source"
-            style={{ color: accent }}
+            className="sb-btn"
           >
-            View agendas →
+            View agendas ↗
           </a>
         )}
-        <button onClick={onGenerate} className="cdt-refresh cdt-refresh--primary">
+        <button type="button" onClick={onGenerate} className="sb-btn sb-btn--primary">
           Generate digest
         </button>
       </footer>

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
@@ -5,6 +6,12 @@ import PageHero from "../PageHero";
 
 const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
 const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+const PT_ZONE = "America/Los_Angeles";
+
+// Inline meta separator. The NBSP glues the dot to the word before it, so a
+// wrapped line never begins with "·".
+const SEP = "\u00a0· ";
 
 const CITY_DISPLAY: Record<string, string> = {
   "san-jose": "San José",
@@ -33,6 +40,35 @@ function formatShortDate(iso: string | null): string {
   return new Date(iso + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
+// Data snapshots carry a UTC timestamp, and the nightly run lands after 5 PM
+// Pacific, so slicing the ISO date said "Updated Sep 23" on the evening of
+// Sep 22. Show the Pacific date instead. A fixed instant in a fixed zone, so
+// the prerendered HTML and the hydrating client always agree.
+function formatUpdated(iso: string | null | undefined): string {
+  const t = iso ? Date.parse(iso) : NaN;
+  if (!Number.isFinite(t)) return "";
+  return new Date(t).toLocaleDateString("en-US", { timeZone: PT_ZONE, month: "short", day: "numeric" });
+}
+
+// When each data file was generated. Until mount, the tab measures "today"
+// and the permit window from these instead of the clock (see useMountedNow).
+const OPENINGS_SNAPSHOT_MS = Date.parse((sccFoodOpeningsJson as { generatedAt: string }).generatedAt) || 0;
+const RADAR_SNAPSHOT_MS = Date.parse((restaurantRadarJson as { generatedAt: string }).generatedAt);
+
+/**
+ * The viewer's clock, read only after mount. The Food tab is prerendered at
+ * build time and hydrated later, so reading the clock during render would bake
+ * the build's day into the HTML and mismatch on hydration. Null until mounted;
+ * callers fall back to their data snapshot's own timestamp.
+ */
+function useMountedNow(): number | null {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    setNow(Date.now());
+  }, []);
+  return now;
+}
+
 // ── Openings, inspections, and coming soon ─────────────────────────────────
 
 type FoodItem = {
@@ -49,17 +85,64 @@ type FoodItem = {
   image?: string | null;
 };
 
+type Tone = "open" | "inspection" | "soon";
+
+const STATUS_LABEL: Record<Tone, string> = {
+  open: "Opened",
+  inspection: "Inspected",
+  soon: "Coming soon",
+};
+
+// idle: server render / pre-hydration (the <img> paints as it normally would).
+// loading: mounted, photo still on its way (placeholder shimmers, img hidden).
+// ready: photo painted (fades in). failed: no usable photo (monogram tile).
+type PhotoState = "idle" | "loading" | "ready" | "failed";
+
+function monogramFor(name: string): string {
+  const letter = name.match(/[A-Za-z0-9]/);
+  return letter ? letter[0].toUpperCase() : "";
+}
+
 function FoodTile({ item }: { item: FoodItem }) {
   const isOpen = item.status === "opened";
   const isInspection = item.status === "inspection-complete";
-  const tone = isOpen ? "open" : isInspection ? "inspection" : "soon";
+  const tone: Tone = isOpen ? "open" : isInspection ? "inspection" : "soon";
   // Tier 1: real Google Places photo. Tier 2: Recraft food illustration.
-  // Tier 3: status-themed gradient.
-  const photo = item.photoRef
+  // Tier 3: status-toned placeholder with the name's initial.
+  const primary = item.photoRef
     ? `/api/place-photo?ref=${encodeURIComponent(item.photoRef)}&w=480&h=480`
     : item.image
       ? item.image
       : null;
+  const fallback = item.photoRef && item.image ? item.image : null;
+  const [src, setSrc] = useState<string | null>(primary);
+  const [photo, setPhoto] = useState<PhotoState>(primary ? "idle" : "failed");
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  const fail = () => {
+    if (fallback && src !== fallback) {
+      setSrc(fallback);
+      setPhoto("loading");
+      return;
+    }
+    setPhoto("failed");
+  };
+
+  // A photo can settle (load or 404) before hydration attaches onLoad/onError,
+  // so check once on mount rather than waiting for events that already fired.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
+    if (img.complete) {
+      if (img.naturalWidth > 0) setPhoto("ready");
+      else fail();
+    } else {
+      setPhoto((state) => (state === "idle" ? "loading" : state));
+    }
+    // Mount-only: `fail` reads the initial src, which is what the check needs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const city = cityFor(item.cityId, item.cityName);
   const mapsQuery = encodeURIComponent(
     [item.name, item.address, city].filter(Boolean).join(" "),
@@ -72,45 +155,37 @@ function FoodTile({ item }: { item: FoodItem }) {
       href={mapsHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={`food-tile food-tile-${tone}${photo ? "" : " food-tile--no-photo"}`}
+      className={`food-tile food-tone--${tone}`}
+      data-photo={photo}
     >
-      {photo && (
+      <span className="food-tile-ph" aria-hidden="true">
+        <span className="food-tile-mono">{monogramFor(item.name)}</span>
+      </span>
+      {src && photo !== "failed" && (
         <img
-          src={photo}
+          ref={imgRef}
+          className="food-tile-img"
+          src={src}
           alt=""
           loading="lazy"
           decoding="async"
-          onError={(e) => {
-            const img = e.currentTarget;
-            if (item.image && img.dataset.fallbackApplied !== "true") {
-              img.dataset.fallbackApplied = "true";
-              img.src = item.image;
-              return;
-            }
-            img.hidden = true;
-            img.closest(".food-tile")?.classList.add("food-tile--no-photo");
-          }}
+          onLoad={() => setPhoto("ready")}
+          onError={fail}
         />
       )}
-      <div className="food-tile-shade" />
-      <div className="food-tile-top">
-        <span className="food-pill food-pill-light">{city}</span>
-        <span className={`food-pill food-pill-${tone}`}>
-          {isOpen ? "OPENED" : isInspection ? "INSPECTED" : "COMING SOON"}
-        </span>
-      </div>
-      <div className="food-tile-bottom">
-        <div className="food-tile-name">{item.name}</div>
-        {item.blurb && <div className="food-tile-blurb">{item.blurb}</div>}
-        <div className="food-tile-meta">
-          {item.address && <span className="food-tile-addr">{item.address}</span>}
-          {dateLabel && (
-            <span>
-              {isOpen ? `Opened ${dateLabel}` : isInspection ? `Final inspection ${dateLabel}` : `Permit ${dateLabel}`}
-            </span>
-          )}
-        </div>
-      </div>
+      <span className="food-tile-scrim" aria-hidden="true" />
+      <span className="food-tile-badge">{STATUS_LABEL[tone]}</span>
+      <span className="food-tile-body">
+        {city && <span className="food-tile-city">{city}</span>}
+        <span className="food-tile-name">{item.name}</span>
+        {item.blurb && <span className="food-tile-blurb">{item.blurb}</span>}
+        {item.address && <span className="food-tile-addr">{item.address}</span>}
+        {dateLabel && (
+          <span className="food-tile-date">
+            {isOpen ? `Opened ${dateLabel}` : isInspection ? `Final inspection ${dateLabel}` : `Permit ${dateLabel}`}
+          </span>
+        )}
+      </span>
     </a>
   );
 }
@@ -130,51 +205,47 @@ function NewAndComingSoon() {
   const comingSoon = comingSoonAll.slice(0, 8);
   if (opened.length === 0 && inspections.length === 0 && comingSoon.length === 0) return null;
 
-  const updated = formatShortDate(data.generatedAt.slice(0, 10));
+  const updated = formatUpdated(data.generatedAt);
 
   return (
-    <section className="food-section">
+    <section className="food-section" aria-labelledby="food-openings-title">
       <header className="food-section-head">
-        <h2 className="food-h2">Food Openings &amp; Permits</h2>
+        <h2 className="food-h2" id="food-openings-title">Food Openings &amp; Permits</h2>
         <p className="food-sub">
           Verified openings, final inspections + permits
-          {updated && <> · Updated {updated}</>}
+          {updated && <>{SEP}Updated {updated}</>}
         </p>
       </header>
 
       {opened.length > 0 && (
-        <>
-          <div className="food-eyebrow food-eyebrow-open">Verified Openings</div>
+        <div className="food-group food-tone--open">
+          <h3 className="food-group-label">Verified Openings</h3>
           <div className="food-tile-grid">
             {opened.map((item) => <FoodTile key={item.id} item={item} />)}
           </div>
-        </>
+        </div>
       )}
 
       {inspections.length > 0 && (
-        <>
-          <div className="food-eyebrow food-eyebrow-inspection" style={{ marginTop: opened.length > 0 ? 28 : 0 }}>
-            Recent Final Inspections
-          </div>
+        <div className="food-group food-tone--inspection">
+          <h3 className="food-group-label">Recent Final Inspections</h3>
           <div className="food-tile-grid">
             {inspections.map((item) => <FoodTile key={item.id} item={item} />)}
           </div>
-        </>
+        </div>
       )}
 
       {comingSoon.length > 0 && (
-        <>
-          <div className="food-eyebrow food-eyebrow-soon" style={{ marginTop: opened.length > 0 || inspections.length > 0 ? 28 : 0 }}>
-            Coming Soon
-          </div>
+        <div className="food-group food-tone--soon">
+          <h3 className="food-group-label">Coming Soon</h3>
           <div className="food-tile-grid">
             {comingSoon.map((item) => <FoodTile key={item.id} item={item} />)}
           </div>
-        </>
+        </div>
       )}
 
-      <p className="food-tile-note">
-        Sourced from Santa Clara County health-permit records · Tap a tile to find it on Google Maps
+      <p className="food-note">
+        Sourced from Santa Clara County health-permit records{SEP}Tap a tile to find it on Google Maps
       </p>
     </section>
   );
@@ -220,28 +291,30 @@ function PermitPulseRow({ item }: { item: RadarItem }) {
       href={mapsHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={`pulse-row pulse-row-${item.signal}`}
+      className={`food-pulse-row food-pulse-row--${item.signal}`}
     >
-      <div className="pulse-icon" aria-hidden="true">{icon}</div>
-      <div className="pulse-body">
-        <div className="pulse-head">
-          <span className="pulse-name">{item.name ?? "Unnamed permit"}</span>
-          <span className={`pulse-pill pulse-pill-${item.signal}`}>{item.label}</span>
-        </div>
-        {item.blurb && <div className="pulse-blurb">{item.blurb}</div>}
-        <div className="pulse-meta">
-          <span className="pulse-addr">{item.address} · {city}</span>
-          {valLabel && <span className="pulse-dot">·</span>}
-          {valLabel && <span>{valLabel}</span>}
-          {dateLabel && <span className="pulse-dot">·</span>}
-          {dateLabel && <span>Permit {dateLabel}</span>}
-        </div>
-      </div>
+      <span className="food-pulse-icon" aria-hidden="true">{icon}</span>
+      <span className="food-pulse-body">
+        <span className="food-pulse-head">
+          <span className="food-pulse-name">{item.name ?? "Unnamed permit"}</span>
+          <span className="food-pulse-tag">{item.label}</span>
+        </span>
+        {item.blurb && <span className="food-pulse-blurb">{item.blurb}</span>}
+        {/* Each " ·" is bound to the word before it (NBSP), so a wrapped
+            line never starts with a separator. */}
+        <span className="food-pulse-meta">
+          {item.address}{SEP}{city}
+          {valLabel && <>{SEP}<span className="food-pulse-val">{valLabel}</span></>}
+          {dateLabel && <>{SEP}<span className="food-pulse-date">Permit {dateLabel}</span></>}
+        </span>
+      </span>
+      <span className="food-pulse-go" aria-hidden="true">↗</span>
     </a>
   );
 }
 
 function PermitPulse() {
+  const nowMs = useMountedNow();
   const data = restaurantRadarJson as {
     generatedAt: string;
     windowDays?: number;
@@ -261,8 +334,11 @@ function PermitPulse() {
 
   // Render-time staleness guard: if the regen falls behind, drop items older
   // than the source's stated window so a Feb permit doesn't linger into May.
+  // Measured from the viewer's clock once mounted; the prerendered first pass
+  // measures from the snapshot itself so server and client HTML agree.
   const windowDays = data.windowDays ?? 60;
-  const cutoffMs = Date.now() - windowDays * 86400_000;
+  const refMs = nowMs ?? RADAR_SNAPSHOT_MS;
+  const cutoffMs = Number.isFinite(refMs) ? refMs - windowDays * 86400_000 : -Infinity;
 
   const items = (data.items ?? [])
     .filter((it) => it.name)
@@ -285,22 +361,22 @@ function PermitPulse() {
   });
   const visibleItems = items.slice(0, 8);
 
-  const updated = formatShortDate(data.generatedAt.slice(0, 10));
+  const updated = formatUpdated(data.generatedAt);
 
   return (
-    <section className="food-section">
+    <section className="food-section" aria-labelledby="food-signals-title">
       <header className="food-section-head">
-        <h2 className="food-h2">Opening Signals</h2>
+        <h2 className="food-h2" id="food-signals-title">Opening Signals</h2>
         <p className="food-sub">
           Building-permit hints before they turn into public opening records
-          {updated && <> · Updated {updated}</>}
+          {updated && <>{SEP}Updated {updated}</>}
         </p>
       </header>
-      <div className="pulse-list">
+      <div className="food-pulse-list">
         {visibleItems.map((item) => <PermitPulseRow key={item.id} item={item} />)}
       </div>
-      <p className="food-tile-note">
-        Sourced from San José &amp; Palo Alto building permits · Tap a row to find it on Google Maps
+      <p className="food-note">
+        Sourced from San José &amp; Palo Alto building permits{SEP}Tap a row to find it on Google Maps
       </p>
     </section>
   );
@@ -309,11 +385,14 @@ function PermitPulse() {
 // ── Farmers Markets ─────────────────────────────────────────────────────────
 
 function FarmersMarkets() {
+  const nowMs = useMountedNow();
   // Pin to Pacific — the markets are here, and an unpinned viewer clock rolls
   // both the "today" ordering and the in-season month over a day early for
-  // anyone browsing from east of PT.
-  const [ptYear, ptMonth, ptDay] = new Date()
-    .toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" })
+  // anyone browsing from east of PT. Until mount, "today" is the day the food
+  // data was generated, so the prerendered HTML and the hydrating client agree;
+  // the viewer's real day takes over right after.
+  const [ptYear, ptMonth, ptDay] = new Date(nowMs ?? OPENINGS_SNAPSHOT_MS)
+    .toLocaleDateString("en-CA", { timeZone: PT_ZONE })
     .split("-")
     .map(Number);
   const todayIdx = new Date(ptYear!, ptMonth! - 1, ptDay!).getDay();
@@ -339,15 +418,15 @@ function FarmersMarkets() {
   if (visibleDays.length === 0) return null;
 
   return (
-    <section className="food-section food-section-markets">
+    <section className="food-section" aria-labelledby="food-markets-title">
       <header className="food-section-head">
-        <h2 className="food-h2">Farmers Markets</h2>
+        <h2 className="food-h2" id="food-markets-title">Farmers Markets</h2>
         <p className="food-sub">
           Weekly schedule across the South Bay, ordered from today onward
         </p>
       </header>
 
-      <div className="market-week">
+      <div className="food-market-week">
         {visibleDays.map((dayIdx) => {
           // Match on the actual weekday, not list position: market-free days
           // are dropped from visibleDays, so the first card is only "Today"
@@ -356,20 +435,20 @@ function FarmersMarkets() {
           const isToday = dayIdx === todayIdx;
           const label = isToday ? "Today" : DAY_LABEL[dayIdx];
           return (
-            <div key={dayIdx} className={`market-day ${isToday ? "market-day-active" : ""}`}>
-              <div className="market-day-head">{label}</div>
-              <div className="market-day-items">
+            <div key={dayIdx} className={`food-market-day${isToday ? " is-today" : ""}`}>
+              <div className="food-market-day-head"><span>{label}</span></div>
+              <div className="food-market-items">
                 {byDay[dayIdx].map((m) => {
                   const inner = (
                     <>
-                      <span className="market-emoji">{m.emoji ?? "🥕"}</span>
-                      <div className="market-row-body">
-                        <div className="market-name">{m.title}</div>
-                        <div className="market-meta">
-                          {m.venue} · {cityFor(m.city)}
-                          {m.time ? ` · ${m.time}` : ""}
-                        </div>
-                      </div>
+                      <span className="food-market-emoji" aria-hidden="true">{m.emoji ?? "🥕"}</span>
+                      <span className="food-market-body">
+                        <span className="food-market-name">{m.title}</span>
+                        <span className="food-market-meta">
+                          {m.venue}{SEP}{cityFor(m.city)}
+                          {m.time && <>{SEP}<span className="food-market-time">{m.time}</span></>}
+                        </span>
+                      </span>
                     </>
                   );
                   return m.url ? (
@@ -378,12 +457,12 @@ function FarmersMarkets() {
                       href={m.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="market-row"
+                      className="food-market-row"
                     >
                       {inner}
                     </a>
                   ) : (
-                    <div key={m.id} className="market-row">{inner}</div>
+                    <div key={m.id} className="food-market-row">{inner}</div>
                   );
                 })}
               </div>
@@ -400,11 +479,14 @@ function FarmersMarkets() {
 function FoodHero() {
   const openings = sccFoodOpeningsJson as {
     generatedAt: string;
+    lookbackDays?: number;
     opened: FoodItem[];
     inspections: FoodItem[];
     comingSoon: FoodItem[];
   };
-  const updated = formatShortDate(openings.generatedAt.slice(0, 10));
+  const updated = formatUpdated(openings.generatedAt);
+  const openedCount = openings.opened?.length ?? 0;
+  const lookback = openings.lookbackDays;
 
   return (
     <PageHero
@@ -412,11 +494,22 @@ function FoodHero() {
       title="Food"
       description="Verified openings, recent final inspections, promising buildouts, and farmers markets across the South Bay."
       note={`Health-permit refresh ${updated || "recently"}`}
-      // --sb-coral (#F43F7C) is only ~3.6:1 on the hero background as text —
-      // darkened within the same coral/rose family to #BE123C (~6.3:1) for the kicker.
-      accent="#BE123C"
+      // --sb-coral (#F43F7C) is only ~3.4:1 on the hero background as text,
+      // so the kicker uses a deeper shade of the same coral (#B8235E, ~5.8:1)
+      // rather than a true red.
+      accent="#B8235E"
       stats={[
-        { value: openings.opened?.length ?? 0, label: "Verified openings" },
+        {
+          // A zero here is normal (an opening needs a second, cited source),
+          // so it reads as "none yet" rather than as a broken counter.
+          value: openedCount > 0 ? openedCount : <span className="food-stat-zero">0</span>,
+          label: "Verified openings",
+          note: openedCount > 0
+            ? undefined
+            : lookback
+              ? `None confirmed in the last ${lookback} days`
+              : "None confirmed yet",
+        },
         { value: openings.inspections?.length ?? 0, label: "Final inspections" },
         { value: openings.comingSoon?.length ?? 0, label: "Coming soon" },
       ]}
@@ -429,381 +522,8 @@ export default function FoodView() {
     <div className="food-view">
       <FoodHero />
       <NewAndComingSoon />
-      <div className="food-lower-grid">
-        <PermitPulse />
-        <FarmersMarkets />
-      </div>
-      <FoodViewStyles />
+      <PermitPulse />
+      <FarmersMarkets />
     </div>
-  );
-}
-
-function FoodViewStyles() {
-  return (
-    <style>{`
-      .food-view {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        font-family: 'Inter', sans-serif;
-      }
-      .food-kicker {
-        color: var(--sb-muted);
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-      .food-hero {
-        padding-bottom: 24px;
-        border-bottom: 3px double var(--sb-border);
-      }
-      .food-hero h1 {
-        margin: 6px 0 10px;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 42px;
-        line-height: 1;
-      }
-      .food-hero p {
-        max-width: 680px;
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 15px;
-        line-height: 1.65;
-      }
-      .food-hero-note {
-        margin-top: 10px;
-        color: var(--sb-light);
-        font-size: 11px;
-        letter-spacing: 0.03em;
-      }
-      .food-stat-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-top: 22px;
-        border: 1px solid var(--sb-border-light);
-        background: var(--sb-card);
-      }
-      .food-stat-row > div {
-        padding: 15px 16px;
-        border-left: 1px solid var(--sb-border-light);
-      }
-      .food-stat-row > div:first-child { border-left: none; }
-      .food-stat-row strong {
-        display: block;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 28px;
-        line-height: 1;
-      }
-      .food-stat-row span {
-        display: block;
-        margin-top: 5px;
-        color: var(--sb-muted);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .food-section { min-width: 0; }
-      .food-section-head {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 16px;
-        border-bottom: 1px solid var(--sb-border);
-        padding-bottom: 8px;
-      }
-      .food-h2 {
-        margin: 0;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 24px;
-        font-weight: 800;
-        line-height: 1.05;
-      }
-      .food-sub {
-        max-width: 420px;
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 1.45;
-      }
-
-      .food-eyebrow {
-        font-size: 10px; font-weight: 800; font-family: 'Space Mono', monospace;
-        letter-spacing: 0.12em; text-transform: uppercase;
-        margin-bottom: 10px;
-      }
-      .food-eyebrow-open { color: #16a34a; }
-      .food-eyebrow-inspection { color: #7c3aed; }
-      .food-eyebrow-soon { color: #2563eb; }
-
-      .food-tile-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 12px;
-      }
-      .food-tile {
-        position: relative;
-        display: block;
-        aspect-ratio: 4 / 3;
-        border-radius: 8px;
-        overflow: hidden;
-        text-decoration: none;
-        color: #fff;
-        background: #0f172a;
-        border: 1px solid rgba(0,0,0,0.06);
-        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
-        cursor: pointer;
-      }
-      .food-tile-open.food-tile--no-photo {
-        background: linear-gradient(135deg, #0f766e 0%, #1d4ed8 100%);
-      }
-      .food-tile-inspection.food-tile--no-photo {
-        background: linear-gradient(145deg, #581c87, #7c3aed 55%, #a855f7);
-      }
-      .food-tile-soon.food-tile--no-photo {
-        background: linear-gradient(135deg, #4338ca 0%, #0f766e 100%);
-      }
-      .food-tile img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.9) saturate(0.96);
-      }
-      .food-tile:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 22px rgba(0,0,0,0.14);
-      }
-      .food-tile-shade {
-        position: absolute; inset: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(0,0,0,0.18) 0%,
-          rgba(0,0,0,0.18) 30%,
-          rgba(0,0,0,0.58) 58%,
-          rgba(0,0,0,0.86) 82%,
-          rgba(0,0,0,0.96) 100%
-        );
-        pointer-events: none;
-      }
-      .food-tile-top {
-        position: absolute; top: 8px; left: 8px; right: 8px;
-        display: flex; justify-content: space-between; gap: 6px;
-        z-index: 2;
-      }
-      .food-pill {
-        font-size: 9px; font-weight: 800;
-        letter-spacing: 0.04em; line-height: 1;
-        padding: 4px 7px; border-radius: 999px;
-        text-transform: uppercase; white-space: nowrap;
-        max-width: 60%; overflow: hidden; text-overflow: ellipsis;
-      }
-      .food-pill-light { background: rgba(255,255,255,0.95); color: #111; }
-      .food-pill-open  { background: #15803d; color: #fff; }
-      .food-pill-inspection { background: #7c3aed; color: #fff; }
-      .food-pill-soon  { background: #2563eb; color: #fff; }
-      .food-tile-bottom {
-        position: absolute; left: 12px; right: 12px; bottom: 10px;
-        z-index: 2;
-      }
-      .food-tile-name {
-        font-size: 14px; font-weight: 800;
-        line-height: 1.2; color: #fff;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.85);
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 3px;
-      }
-      .food-tile-blurb {
-        font-size: 11px; font-weight: 650;
-        color: rgba(255,255,255,0.98);
-        line-height: 1.3;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 4px;
-      }
-      .food-tile-meta {
-        display: flex; flex-wrap: wrap; gap: 6px;
-        font-size: 10px; font-weight: 750;
-        color: rgba(255,255,255,0.9);
-        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-      }
-      .food-tile-addr {
-        max-width: 100%;
-        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      }
-      .food-tile-note {
-        margin-top: 14px; font-size: 11px; color: #aaa;
-        text-align: right;
-      }
-
-      .food-lower-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 34px;
-      }
-
-      .pulse-list {
-        display: flex; flex-direction: column;
-        border: 1px solid var(--sb-border-light, #eee);
-        border-radius: 8px;
-        overflow: hidden;
-        background: #fff;
-      }
-      .pulse-row {
-        display: grid;
-        grid-template-columns: 36px 1fr;
-        gap: 12px;
-        padding: 12px 14px;
-        text-decoration: none;
-        color: inherit;
-        border-bottom: 1px solid var(--sb-border-light, #f1f1f1);
-        transition: background 0.15s;
-      }
-      .pulse-row:last-child { border-bottom: none; }
-      .pulse-row:hover { background: #fafafa; }
-      .pulse-row:hover .pulse-name { color: var(--sb-accent, #2563eb); }
-      .pulse-icon {
-        display: flex; align-items: center; justify-content: center;
-        width: 36px; height: 36px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 800;
-        flex-shrink: 0;
-        margin-top: 1px;
-      }
-      .pulse-row-closing .pulse-icon {
-        background: #fef2f2; color: #b91c1c;
-      }
-      .pulse-row-opening .pulse-icon {
-        background: #f0fdf4; color: #15803d;
-      }
-      .pulse-row-activity .pulse-icon {
-        background: #eff6ff; color: #1d4ed8;
-      }
-      .pulse-body { min-width: 0; flex: 1; }
-      .pulse-head {
-        display: flex; align-items: center; gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 3px;
-      }
-      .pulse-name {
-        font-size: 14px; font-weight: 700;
-        color: var(--sb-ink, #111);
-        line-height: 1.25;
-        transition: color 0.15s;
-      }
-      .pulse-pill {
-        font-size: 9px; font-weight: 800;
-        font-family: 'Space Mono', monospace;
-        letter-spacing: 0.06em;
-        padding: 3px 7px; border-radius: 4px;
-        text-transform: uppercase; line-height: 1;
-        white-space: nowrap;
-      }
-      .pulse-pill-closing { background: #b91c1c; color: #fff; }
-      .pulse-pill-opening { background: #15803d; color: #fff; }
-      .pulse-pill-activity { background: #1d4ed8; color: #fff; }
-      .pulse-blurb {
-        font-size: 12.5px; font-weight: 500;
-        color: var(--sb-ink-soft, #444);
-        line-height: 1.4;
-        margin-bottom: 4px;
-      }
-      .pulse-meta {
-        display: flex; flex-wrap: wrap; gap: 4px;
-        font-size: 11px; font-weight: 500;
-        color: var(--sb-muted, #777);
-      }
-      .pulse-addr {
-        max-width: 100%;
-      }
-      .pulse-dot { color: #ccc; }
-
-      .market-week {
-        display: flex; flex-direction: column; gap: 14px;
-        border: 1px solid var(--sb-border-light);
-        border-radius: 8px;
-        padding: 12px;
-        background: var(--sb-card);
-      }
-      .market-day {
-        display: grid;
-        grid-template-columns: 64px 1fr;
-        gap: 14px;
-        padding: 10px 0 10px 0;
-        border-top: 1px solid var(--sb-border-light, #eee);
-      }
-      .market-day:first-child { border-top: none; padding-top: 0; }
-      .market-day-active .market-day-head {
-        color: var(--sb-accent, #2563eb);
-      }
-      .market-day-head {
-        font-size: 11px; font-weight: 800;
-        font-family: 'Space Mono', monospace;
-        letter-spacing: 0.08em; text-transform: uppercase;
-        color: var(--sb-muted, #666);
-        padding-top: 4px;
-      }
-      .market-day-items {
-        display: flex; flex-direction: column; gap: 1px;
-      }
-      .market-row {
-        display: flex; align-items: baseline; gap: 10px;
-        padding: 6px 0;
-        text-decoration: none;
-        color: inherit;
-        border-bottom: 1px solid var(--sb-border-light, #f1f1f1);
-      }
-      .market-row:last-child { border-bottom: none; }
-      .market-row:hover .market-name {
-        color: var(--sb-accent, #2563eb);
-      }
-      .market-emoji { font-size: 18px; line-height: 1; flex-shrink: 0; }
-      .market-row-body { flex: 1; min-width: 0; }
-      .market-name {
-        font-size: 13px; font-weight: 600;
-        color: var(--sb-ink, #111);
-        transition: color 0.15s;
-      }
-      .market-meta {
-        font-size: 11px; color: var(--sb-muted, #666);
-        margin-top: 1px;
-      }
-
-      @media (max-width: 760px) {
-        .food-hero h1 { font-size: 34px; }
-        .food-stat-row { grid-template-columns: 1fr; }
-        .food-stat-row > div {
-          border-left: none;
-          border-top: 1px solid var(--sb-border-light);
-        }
-        .food-stat-row > div:first-child { border-top: none; }
-        .food-section-head { display: block; }
-        .food-sub { margin-top: 4px; }
-        .food-tile-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .food-tile { aspect-ratio: 1 / 1; }
-        .food-tile-name { font-size: 13px; }
-        .food-tile-blurb { -webkit-line-clamp: 2; }
-        .market-day { grid-template-columns: 56px 1fr; gap: 10px; }
-        .pulse-row { grid-template-columns: 30px 1fr; gap: 10px; padding: 10px 12px; }
-        .pulse-icon { width: 30px; height: 30px; font-size: 14px; border-radius: 8px; }
-        .pulse-name { font-size: 13px; }
-      }
-    `}</style>
   );
 }

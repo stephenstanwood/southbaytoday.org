@@ -5,7 +5,8 @@
 // plans (kids + adults) regenerated nightly, with a Reshuffle live-fetch.
 // ---------------------------------------------------------------------------
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useLayoutEffect, useRef } from "react";
+import type { CSSProperties } from "react";
 import type { City, Tab } from "../../../lib/south-bay/types";
 import { CITIES } from "../../../lib/south-bay/cities";
 import {
@@ -434,12 +435,17 @@ export default function SouthBayTodayView(_props: Props) {
   };
   const visibleBuckets = BUCKET_ORDER;
 
+  const isTomorrowPlan = planDateISO > getTodayISOInPT();
+  const shareVisible = visibleCards.length > 1;
+  // Keyed by the cards on screen: a kids-toggle or stale-event drop swaps
+  // the plan without a loading pass, and a cached share link from the old
+  // plan must not survive that.
+  const shareKey = visibleCards.map((c) => c.id).join("|");
+
   return (
     <div className="sbt-home-shell">
-      {/* Weekly forecast banner */}
-      <div style={{ marginBottom: 0, paddingTop: 12 }}>
-        <ForecastCard homeCity={displayCity} />
-      </div>
+      {/* 5-day forecast strip */}
+      <ForecastCard homeCity={displayCity} />
 
       {/* Headline + actions
        *  Headline is the focal point — it's the actual reason the user is
@@ -448,25 +454,41 @@ export default function SouthBayTodayView(_props: Props) {
        *  display lived here previously but wasn't earning its space (the
        *  masthead already carries the date, and the user's device shows
        *  the time). */}
-      <div className="sbt-headline-row">
-        <h1 className="sbt-question">{headline}</h1>
-        <div className="sbt-actions">
-          {/* Kids toggle */}
-          <div role="group" aria-label="Audience" style={{ display: "flex", borderRadius: 14, border: "2px solid #000", overflow: "hidden" }}>
-            <button aria-pressed={!state.kids} onClick={() => { if (state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 900, padding: "4px 10px", border: "none", background: !state.kids ? "#000" : "#fff", color: !state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s", textTransform: "uppercase", letterSpacing: 1 }}>No Kids</button>
-            <button aria-pressed={state.kids} onClick={() => { if (!state.kids) handleKidsToggle(); }} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, fontWeight: 900, padding: "4px 10px", border: "none", borderLeft: "2px solid #000", background: state.kids ? "#000" : "#fff", color: state.kids ? "#fff" : "#888", cursor: "pointer", transition: "all 0.15s", textTransform: "uppercase", letterSpacing: 1 }}>Kids</button>
+      <div className="sbt-hero">
+        <h1 className="sbt-hero-title">{headline}</h1>
+        <div className="sbt-hero-actions">
+          {/* Kids toggle — segmented control */}
+          <div role="group" aria-label="Audience" className="sbt-seg" data-kids={state.kids ? "true" : "false"}>
+            <button type="button" className="sbt-seg-btn" aria-pressed={!state.kids} onClick={() => { if (state.kids) handleKidsToggle(); }}>No kids</button>
+            <button type="button" className="sbt-seg-btn" aria-pressed={state.kids} onClick={() => { if (!state.kids) handleKidsToggle(); }}>Kids</button>
           </div>
-          {/* New Plan */}
-          <button onClick={handleNewPlan} disabled={loading} className={loading ? "sbt-shuffle sbt-shuffle--loading" : "sbt-shuffle"}>Reshuffle ↻</button>
-          {/* Share — only when there's a plan worth sharing */}
-          {visibleCards.length > 1 && !loading && (
-            <ShareButton cards={visibleCards} city={planCity} kids={state.kids} weather={weather} compact />
-          )}
+          <div className="sbt-hero-btns">
+            {/* New Plan */}
+            <button
+              type="button"
+              onClick={handleNewPlan}
+              disabled={loading}
+              aria-busy={loading || undefined}
+              className={`sb-btn sb-btn--primary sbt-hero-shuffle${loading ? " is-loading" : ""}`}
+            >
+              Reshuffle <span className="sbt-hero-shuffle-icon" aria-hidden="true">↻</span>
+            </button>
+            {/* Share — only when there's a plan worth sharing. While a
+                reshuffle is in flight it unmounts (its cached link belongs to
+                the old plan); a same-size ghost holds its spot so the row
+                doesn't reflow. */}
+            {shareVisible && !loading && (
+              <ShareButton key={shareKey} cards={visibleCards} city={planCity} kids={state.kids} weather={weather} compact />
+            )}
+            {shareVisible && loading && (
+              <span className="sb-btn sbt-hero-share" aria-hidden="true" style={{ visibility: "hidden" }}>Share ↗</span>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Photo scroll */}
-      <div className="sbt-photo-strip-frame">
+      <div className="sbt-strip-frame">
         <PhotoStrip />
       </div>
 
@@ -475,49 +497,47 @@ export default function SouthBayTodayView(_props: Props) {
           of always-good options + the Events tab so they have somewhere to
           land. */}
       {(error || (!loading && visibleCards.length === 0)) && (
-        <div style={{ padding: "24px 0", fontFamily: "'Inter', sans-serif" }}>
-          <p style={{ fontSize: 16, fontWeight: 700, margin: 0, marginBottom: 4 }}>
+        <div className="sbt-plan-empty">
+          <p className="sbt-plan-empty-title">
             {error
-              ? "Plan didn't load — try these classics"
+              ? "The plan didn't load. Try one of these classics."
               : cards.length > 0
-                ? "That's a wrap on today's plan — shuffle for tomorrow or try these classics"
-                : "Nothing in the pool right now — try these classics"}
+                ? "That's a wrap on today's plan. Shuffle for tomorrow, or try a classic."
+                : "Nothing in the pool right now. Try one of these classics."}
           </p>
-          {error && <p style={{ fontSize: 12, color: "#6b6178", margin: 0, marginBottom: 10 }}>{error}</p>}
-          {weather && <p style={{ fontSize: 13, color: "#555", margin: 0, marginBottom: 14 }}>{weather}</p>}
-          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 14px", display: "flex", flexDirection: "column", gap: 8 }}>
-            <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
+          {error && <p className="sbt-plan-empty-note">{error}</p>}
+          {weather && <p className="sbt-plan-empty-weather">{weather}</p>}
+          <ul className="sbt-plan-empty-list">
+            <li>
               <strong>Walk downtown Los Gatos.</strong> Start at a local coffee counter, browse N Santa Cruz Ave, then follow the busiest lunch patio.
             </li>
-            <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
+            <li>
               <strong>Computer History Museum + Shoreline.</strong> Hit the permanent exhibits, then walk the lake trail for an hour.
             </li>
-            <li style={{ padding: "10px 12px", background: "#fff", border: "1px solid #eee", borderRadius: 8, fontSize: 14 }}>
+            <li>
               <strong>Santana Row stroll + dinner.</strong> Window-shop the open-air blocks, pick any of the patios for dinner.
             </li>
           </ul>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button onClick={handleNewPlan} style={{ padding: "8px 20px", borderRadius: 20, border: "2px solid #000", background: "#fff", cursor: "pointer", fontWeight: 700 }}>Try Again</button>
-            <button onClick={() => _props.onNavigate("events")} style={{ padding: "8px 20px", borderRadius: 20, border: "2px solid #000", background: "#000", color: "#fff", cursor: "pointer", fontWeight: 700 }}>Browse Events →</button>
+          <div className="sbt-plan-empty-actions">
+            <button type="button" onClick={handleNewPlan} className="sb-btn">Try again</button>
+            <button type="button" onClick={() => _props.onNavigate("events")} className="sb-btn sb-btn--primary">Browse events →</button>
           </div>
         </div>
       )}
 
-      {/* Loading — single card with verb inside */}
+      {/* Loading — skeleton cards in the grid's own shape, typing verb on top */}
       {loading && visibleCards.length === 0 && (
-        <div style={{ padding: "8px 0 20px", margin: "0 -16px" }}>
-          <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cardAppear 0.4s ease-out 0.1s forwards" }}>
-            <div style={{ width: 20, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", backgroundSize: "100% 200%", animation: "rainbow 3s ease infinite", flexShrink: 0 }} />
-            <div style={{ flex: 1, padding: "28px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <LoadingVerb />
-            </div>
+        <div className="sbt-plan-loading">
+          <LoadingVerb />
+          <div className="sbt-plan-grid" aria-hidden="true">
+            {BUCKET_ORDER.map((b) => <PlanSkeleton key={b} />)}
           </div>
         </div>
       )}
 
       {/* ═══ BUCKET GRID ═══ */}
       {visibleCards.length > 0 && (
-        <div className={loading ? "sbt-buckets sbt-buckets--loading" : "sbt-buckets"}>
+        <div className={`sbt-plan-grid${loading ? " is-loading" : ""}`} aria-busy={loading || undefined}>
           {visibleBuckets.map((bucket, i) => {
             const card = cardsByBucket.get(bucket);
             if (!card) return null;
@@ -530,26 +550,20 @@ export default function SouthBayTodayView(_props: Props) {
                 card={card}
                 accent={accent}
                 animationDelay={i * 0.05}
+                isTomorrow={isTomorrowPlan}
               />
             );
           })}
           {orphanCards.length > 0 && (
-            <div className="sbt-orphan-list">
+            <div className="sbt-plan-orphans">
               {orphanCards.map((card, i) => {
                 const accent = ACCENT_COLORS[i % ACCENT_COLORS.length];
                 const emoji = CATEGORY_EMOJI[card.category] || "📍";
                 const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
-                const inner = (
-                  <CardInner card={card} emoji={emoji} accent={accent} showTimeLabel />
-                );
                 return (
-                  <div key={card.id} className="sbt-orphan-card" style={{ borderColor: accent }}>
-                    <div className="sbt-orphan-accent" style={{ background: accent }} />
-                    {cardUrl ? (
-                      <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-orphan-link">{inner}</a>
-                    ) : (
-                      <div className="sbt-orphan-link">{inner}</div>
-                    )}
+                  <div key={card.id} className="sbt-plan-card" style={{ "--sbt-pair": accent } as CSSProperties}>
+                    <span className="sbt-plan-orphan-bar" aria-hidden="true" />
+                    <CardInner card={card} emoji={emoji} cardUrl={cardUrl} showTimeLabel showEventTag />
                   </div>
                 );
               })}
@@ -563,8 +577,8 @@ export default function SouthBayTodayView(_props: Props) {
           a two-column inner layout (serif headline left, form right) so
           the extra width carries type, not a giant email field. */}
       {visibleCards.length > 0 && (
-        <div className="sbt-newsletter-row">
-          <div className="sbt-newsletter-card">
+        <div className="sbt-home-news">
+          <div className="sbt-news-card">
             <NewsletterSignup variant="inline" />
           </div>
         </div>
@@ -583,439 +597,21 @@ export default function SouthBayTodayView(_props: Props) {
           to per-city pages (/city/[slug]) for residents who want their own
           town's day plan, events, and chatter. Inline JSX, no new local
           import, so the home-locked guardrail stays satisfied. */}
-      <nav aria-label="Browse by city" className="sbt-city-directory">
-        <span className="sbt-city-directory-label">Or browse by city</span>
-        <div className="sbt-city-directory-pills">
+      <nav aria-label="Browse by city" className="sbt-home-section sbt-home-cities">
+        <div className="sb-section-header sbt-home-head">
+          <h2 className="sb-section-title">Or browse by city</h2>
+        </div>
+        <div className="sbt-city-pills">
           {CITIES.filter((c) => c.id !== "santa-cruz").map((c) => (
             <a key={c.id} href={`/city/${c.id}`} className="sbt-city-pill">
-              <span className="sbt-city-pill-monogram" aria-hidden="true">
+              <span className="sbt-city-pill-mono" aria-hidden="true">
                 {cityMonogram(c.name)}
               </span>
-              <span className="sbt-city-pill-name">{c.name}</span>
+              <span>{c.name}</span>
             </a>
           ))}
         </div>
       </nav>
-
-      <style>{`
-        .sbt-home-shell {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 0 16px 80px;
-        }
-        /* ── Headline row ── */
-        .sbt-headline-row {
-          padding: 26px 0 18px;
-          position: relative;
-        }
-        .sbt-headline-row::before {
-          content: '';
-          position: absolute;
-          inset: 5px -18px 0;
-          z-index: -1;
-          border-radius: 28px;
-          background:
-            linear-gradient(135deg, rgba(255,123,43,0.14), rgba(244,63,124,0.10) 35%, rgba(135,56,245,0.12) 68%, rgba(34,198,211,0.14));
-        }
-        .sbt-question {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 36px;
-          font-weight: 900;
-          color: #13072f;
-          letter-spacing: 0;
-          line-height: 1.15;
-          margin: 0 0 14px;
-        }
-        .sbt-actions {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-        .sbt-photo-strip-frame {
-          margin: 12px -16px;
-        }
-        @media (max-width: 480px) {
-          .sbt-headline-row { padding: 18px 0 12px; }
-          .sbt-headline-row::before { inset: 3px -10px 0; border-radius: 20px; }
-          .sbt-question { font-size: 28px; margin-bottom: 12px; }
-        }
-        .sbt-shuffle {
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          font-weight: 900;
-          padding: 4px 14px;
-          border-radius: 14px;
-          border: 2px solid #13072f;
-          background: linear-gradient(135deg, #8738f5 0%, #f43f7c 54%, #ff7b2b 100%);
-          color: #fff;
-          cursor: pointer;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          white-space: nowrap;
-          position: relative;
-          overflow: hidden;
-          z-index: 0;
-        }
-        .sbt-shuffle:hover {
-          filter: brightness(1.1);
-        }
-        .sbt-shuffle--loading {
-          /* Base stays the idle gradient so the sweep reads as a highlight
-             moving across the brand color, not a foreign loader. */
-          cursor: wait;
-        }
-        .sbt-shuffle--loading::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            100deg,
-            rgba(255,255,255,0) 20%,
-            rgba(255,255,255,0.45) 50%,
-            rgba(255,255,255,0) 80%
-          );
-          background-size: 250% 100%;
-          animation: sweep 1.1s linear infinite;
-          z-index: 0;
-          pointer-events: none;
-        }
-        @keyframes sweep {
-          0%   { background-position: 150% 0; }
-          100% { background-position: -150% 0; }
-        }
-        .sbt-share-pill {
-          font-family: 'Inter', sans-serif;
-          font-size: 11px;
-          font-weight: 900;
-          padding: 4px 14px;
-          border-radius: 14px;
-          border: 2px solid #13072f;
-          background: #fff;
-          color: #13072f;
-          cursor: pointer;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-          transition: all 0.15s;
-          line-height: 1.2;
-          white-space: nowrap;
-        }
-        .sbt-share-pill:hover {
-          background: #13072f;
-          color: #fff;
-        }
-        .sbt-share-pill:disabled {
-          opacity: 0.6;
-        }
-
-        /* Cards dim + desaturate during loading so the eye sees "this is
-           about to change" the instant SHUFFLE is clicked. */
-        .sbt-cards, .sbt-buckets {
-          transition: opacity 180ms ease, filter 180ms ease;
-        }
-        .sbt-cards--loading, .sbt-buckets--loading {
-          opacity: 0.45;
-          filter: grayscale(0.5) blur(1.5px);
-          pointer-events: none;
-        }
-        /* ── Bucket grid ── */
-        .sbt-buckets {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin: 0 -16px;
-        }
-        /* Late in the day the grid shrinks to 5/3/1 tiles — let the orphan
-           last tile span both columns instead of sitting half-width alone. */
-        .sbt-buckets > .sbt-bucket:nth-child(odd):last-child {
-          grid-column: 1 / -1;
-        }
-        @media (max-width: 640px) {
-          .sbt-buckets {
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin: 0 -8px;
-          }
-          .sbt-photo-strip-frame {
-            margin-inline: -8px;
-          }
-        }
-        /* ── Newsletter row (matches bucket-grid edges) ── */
-        .sbt-newsletter-row {
-          margin: 16px -16px 8px;
-        }
-        .sbt-newsletter-card {
-          width: 100%;
-          padding: 18px 22px;
-          border: 1px solid rgba(135, 56, 245, 0.22);
-          border-radius: 10px;
-          background:
-            linear-gradient(#fff, #fff) padding-box,
-            linear-gradient(135deg, #ff7b2b, #f43f7c, #8738f5, #22c6d3) border-box;
-          box-sizing: border-box;
-          box-shadow: 0 14px 32px rgba(31, 12, 73, 0.08);
-        }
-        @media (max-width: 640px) {
-          .sbt-newsletter-row { margin: 12px -8px 8px; }
-          .sbt-newsletter-card { padding: 14px 16px; }
-        }
-        .sbt-bucket {
-          background: #fff;
-          border-radius: 12px;
-          border: 1px solid rgba(135, 56, 245, 0.16);
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          min-height: 140px;
-          box-shadow: 0 12px 26px rgba(31, 12, 73, 0.07);
-          transition: transform 0.16s ease-out, box-shadow 0.16s ease-out, border-color 0.16s ease-out;
-        }
-        .sbt-bucket--pillar {
-          border-color: rgba(135, 56, 245, 0.30);
-          box-shadow: 0 14px 30px rgba(31, 12, 73, 0.11);
-        }
-        .sbt-bucket--paired-meal {
-          background: rgba(255, 255, 255, 0.92);
-        }
-        .sbt-bucket:hover {
-          transform: translateY(-2px);
-          border-color: rgba(135, 56, 245, 0.34);
-          box-shadow: 0 18px 36px rgba(31, 12, 73, 0.11);
-        }
-        .sbt-bucket-header {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 14px 6px;
-          background: linear-gradient(90deg, rgba(255,123,43,0.10), rgba(34,198,211,0.08));
-        }
-        .sbt-bucket-accent {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          flex-shrink: 0;
-          box-shadow: 0 0 0 3px rgba(255,255,255,0.9), 0 0 0 4px rgba(19,7,47,0.08);
-        }
-        .sbt-bucket-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          font-weight: 900;
-          color: #13072f;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-        .sbt-bucket-role {
-          margin-left: auto;
-          border-radius: 999px;
-          padding: 2px 7px;
-          font-family: 'Inter', sans-serif;
-          font-size: 8px;
-          font-weight: 900;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-        .sbt-bucket-role--pillar {
-          background: #13072f;
-          color: #fff;
-        }
-        .sbt-bucket-role--paired-meal {
-          border: 1px solid rgba(19, 7, 47, 0.18);
-          background: #fff;
-          color: #6f5d85;
-        }
-        .sbt-bucket-link {
-          display: flex;
-          flex: 1;
-          min-width: 0;
-          text-decoration: none;
-          color: inherit;
-          cursor: pointer;
-        }
-        .sbt-bucket-body--swap {
-          padding: 24px 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex: 1;
-        }
-        /* ── Orphan list (legacy timeBlock cards) ── */
-        .sbt-orphan-list {
-          grid-column: 1 / -1;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          margin-top: 8px;
-        }
-        .sbt-orphan-card {
-          display: flex;
-          gap: 0;
-          background: #fff;
-          border-radius: 10px;
-          border: 1px solid rgba(135, 56, 245, 0.16);
-          overflow: hidden;
-          position: relative;
-        }
-        .sbt-orphan-accent {
-          width: 6px;
-          flex-shrink: 0;
-        }
-        .sbt-orphan-link {
-          display: flex;
-          flex: 1;
-          min-width: 0;
-          text-decoration: none;
-          color: inherit;
-          cursor: pointer;
-        }
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        @keyframes rainbow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes cardAppear {
-          from { opacity: 0; transform: translateY(16px) scale(0.97); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes softGlow {
-          0%, 100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
-          50% { box-shadow: 0 0 16px rgba(100,100,255,0.1); }
-        }
-        @keyframes blink {
-          50% { opacity: 0; }
-        }
-        @keyframes fadeSlideIn {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeSlideOut {
-          from { opacity: 1; transform: translateY(0) scale(1); max-height: 120px; }
-          to { opacity: 0; transform: translateY(-8px) scale(0.97); max-height: 0; padding: 0; margin: 0; }
-        }
-        @media (max-width: 640px) {
-          .loading-verb {
-            font-size: 20px !important;
-          }
-          .sbt-header {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 10px !important;
-          }
-          .sbt-time-row {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 4px !important;
-          }
-          .sbt-time-display {
-            font-size: 40px !important;
-            letter-spacing: -1px !important;
-          }
-          .sbt-card-thumb {
-            width: 64px !important;
-            height: 64px !important;
-          }
-          .sbt-forecast-cell {
-            padding: 8px 2px 6px !important;
-          }
-          .sbt-forecast-temp {
-            font-size: 22px !important;
-          }
-          .sbt-forecast-emoji {
-            font-size: 16px !important;
-            margin-bottom: 4px !important;
-          }
-          .sbt-forecast-low {
-            font-size: 9px !important;
-          }
-        }
-
-        /* ── City directory (browse-by-city nav row) ──
-           Stamp / passport-chip aesthetic: monogram badge on the left,
-           Playfair city name on the right, bold 2px black border with
-           offset shadow. Hover lifts the chip and fills it with the
-           brand blue→purple gradient (same gradient as .sbt-shuffle). */
-        .sbt-city-directory {
-          margin-top: 36px;
-          padding-top: 28px;
-          border-top: 1px solid rgba(135, 56, 245, 0.14);
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-          font-family: 'Inter', sans-serif;
-        }
-        .sbt-city-directory-label {
-          font-family: 'Space Mono', monospace;
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: #6f5d85;
-        }
-        .sbt-city-directory-pills {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
-        .sbt-city-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px 6px 6px;
-          border-radius: 999px;
-          border: 2px solid #13072f;
-          background: #fff;
-          color: #13072f;
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 15px;
-          font-weight: 700;
-          letter-spacing: -0.2px;
-          text-decoration: none;
-          line-height: 1;
-          box-shadow: 2px 2px 0 #13072f;
-          transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, background 0.15s ease-out, color 0.15s ease-out;
-        }
-        .sbt-city-pill-monogram {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 24px;
-          height: 24px;
-          border-radius: 999px;
-          background: linear-gradient(135deg, #8738f5, #22c6d3);
-          color: #fff;
-          font-family: 'Space Mono', monospace;
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.5px;
-          flex-shrink: 0;
-        }
-        .sbt-city-pill:hover {
-          transform: translate(-2px, -2px);
-          box-shadow: 4px 4px 0 #13072f;
-          background: linear-gradient(135deg, #8738f5, #f43f7c, #ff7b2b);
-          color: #fff;
-        }
-        .sbt-city-pill:hover .sbt-city-pill-monogram {
-          background: #fff;
-          color: #8738f5;
-        }
-        @media (max-width: 480px) {
-          .sbt-city-pill {
-            font-size: 14px;
-            padding: 5px 12px 5px 5px;
-            box-shadow: 1.5px 1.5px 0 #000;
-          }
-          .sbt-city-pill-monogram {
-            width: 20px;
-            height: 20px;
-            font-size: 9px;
-          }
-        }
-      `}</style>
     </div>
   );
 }
@@ -1044,7 +640,22 @@ interface UnsplashPhoto {
   unsplashUrl: string;
 }
 
-function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoji: string; accent: string; showTimeLabel?: boolean }) {
+function CardInner({
+  card,
+  emoji,
+  cardUrl,
+  showTimeLabel = false,
+  showEventTag = false,
+}: {
+  card: DayCard;
+  emoji: string;
+  /** The card's link. The Unsplash credit renders after it, since links can't nest. */
+  cardUrl?: string | null;
+  showTimeLabel?: boolean;
+  /** Bucket cards carry the EVENT tag in their header; header-less legacy
+   *  cards show it in the meta row instead. */
+  showEventTag?: boolean;
+}) {
   const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
   const cardName = cleanDisplayName(card.name) || "";
   const cardBlurb = cleanDisplayCopy(card.blurb) || "";
@@ -1059,14 +670,15 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
       .catch(() => {});
   }, [card.id, card.category, card.photoRef, card.image]);
 
-  const hasPhoto = card.photoRef || card.image || unsplash;
-  const thumbBg = card.image
-    ? `url(${card.image}) center/cover no-repeat, #f0f0f0`
-    : card.photoRef
-      ? `url(/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200) center/cover no-repeat, #f0f0f0`
-      : unsplash
-        ? "transparent"
-        : "#f5f5f5";
+  // Photo preference is unchanged (ingest image → Places photo → Unsplash);
+  // a source that 404s now falls through to the next one, then to the
+  // category emoji, instead of leaving an empty box.
+  const usingUnsplash = !card.photoRef && !card.image && !!unsplash;
+  const photoSources = [
+    card.image || null,
+    card.photoRef ? `/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200` : null,
+    usingUnsplash && unsplash ? unsplash.url : null,
+  ].filter((s): s is string => !!s);
 
   // Time hint shown beside the category label. Events ALWAYS show a time
   // — it's a defining property of the card. Fall back to timeBlock when
@@ -1080,56 +692,115 @@ function CardInner({ card, emoji, showTimeLabel = false }: { card: DayCard; emoj
     ? (card.eventTime || card.timeBlock || "")
     : (showTimeLabel ? card.timeBlock : "");
   const timeHint = /\d/.test(rawTimeHint) ? rawTimeHint : "";
+  const isEvent = card.source === "event";
+  const showCategory = !(isEvent && card.category === "events");
+  const eventTagInMeta = showEventTag && isEvent;
+
+  const content = (
+    <>
+      {/* Thumbnail column */}
+      <div className="sbt-plan-thumbcol">
+        <PlanThumb key={photoSources.join("|")} sources={photoSources} emoji={emoji} />
+      </div>
+      {/* Content */}
+      <div className="sbt-plan-body">
+        {(timeHint || showCategory || card.city || eventTagInMeta) && (
+          <div className="sbt-plan-meta">
+            {timeHint && <span className="sbt-plan-time">{timeHint}</span>}
+            {showCategory && <span className="sbt-plan-cat">{card.category}</span>}
+            {card.city && <span>{cityLabel(card.city)}</span>}
+            {eventTagInMeta && <span className="sbt-plan-badge sbt-plan-badge--event">Event</span>}
+          </div>
+        )}
+        <h3 className="sbt-plan-title">{cardName}</h3>
+        {isEvent && cardVenue && (
+          <div className="sbt-plan-venue">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>{cardVenue}</span>
+          </div>
+        )}
+        <p className="sbt-plan-blurb">{cardBlurb}</p>
+      </div>
+    </>
+  );
 
   return (
     <>
-      {/* Thumbnail column */}
-      <div style={{ flexShrink: 0, margin: "10px 0 10px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-        <div style={{
-          width: 80, height: 80, borderRadius: 8, overflow: "hidden",
-          background: thumbBg,
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
-        }}>
-          {unsplash && !card.photoRef && !card.image
-            ? <img src={unsplash.url} alt={cardName} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-            : !hasPhoto ? emoji : null}
+      {cardUrl ? (
+        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-plan-link">{content}</a>
+      ) : (
+        <div className="sbt-plan-link">{content}</div>
+      )}
+      {/* Unsplash attribution, only when the photo came from Unsplash. */}
+      {usingUnsplash && unsplash && (
+        <div className="sbt-plan-credit">
+          <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer">{unsplash.photographer}</a>
+          {" · "}
+          <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer">Unsplash</a>
         </div>
-        {/* Unsplash attribution — only when using Unsplash photo */}
-        {unsplash && !card.photoRef && !card.image && (
-          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#6b6178", textAlign: "center" }}>
-            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>{unsplash.photographer}</a>
-            {" · "}
-            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>Unsplash</a>
-          </div>
-        )}
-      </div>
-      {/* Content */}
-      <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-          {timeHint && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
-          )}
-          {!(card.source === "event" && card.category === "events") && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
-          )}
-          {card.city && (
-            <>
-              <span style={{ fontSize: 9, color: "#6b6178", fontWeight: 700 }}>·</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
-            </>
-          )}
-          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#8738F5", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
-        </div>
-        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{cardName}</h3>
-        {card.source === "event" && cardVenue && (
-          <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6b6178" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#6b6178" }}>{cardVenue}</span>
-          </div>
-        )}
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{cardBlurb}</p>
-      </div>
+      )}
     </>
+  );
+}
+
+/** Card thumbnail: warm placeholder while loading, fade-in on load, next
+ *  source (then the category emoji) on error.
+ *
+ *  The <img> only mounts client-side, after the view's post-hydration
+ *  refine. The server-rendered plan is the build day's "today" plan; in
+ *  the evening (tomorrow flip) or in kids mode the refine swaps it for a
+ *  different plan immediately, and server-rendered thumbnails for the old
+ *  plan (one was an 895 KB PNG) would download for nothing and hold up
+ *  the page's `load` event. This effect runs in the same flush as the
+ *  parent's refine effect, so the swap and the reveal land in one render
+ *  and only the plan actually on screen is fetched. */
+function PlanThumb({ sources, emoji }: { sources: string[]; emoji: string }) {
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [failed, setFailed] = useState<string[]>([]);
+  const [phase, setPhase] = useState<"loading" | "ready">("loading");
+  const src = sources.find((s) => !failed.includes(s));
+
+  useEffect(() => { setMounted(true); }, []);
+
+  const markFailed = useCallback((bad: string) => {
+    setFailed((f) => (f.includes(bad) ? f : [...f, bad]));
+  }, []);
+
+  // A cached image can be complete (or already broken) the moment it's
+  // created; catch that before paint instead of waiting on the event.
+  useLayoutEffect(() => {
+    const img = imgRef.current;
+    if (!img || !src) return;
+    if (img.complete) {
+      if (img.naturalWidth > 0) setPhase("ready");
+      else markFailed(src);
+    } else {
+      setPhase("loading");
+    }
+  }, [src, mounted, markFailed]);
+
+  if (!src) {
+    return <span className="sbt-plan-thumb sbt-ph sbt-plan-thumb--fallback" aria-hidden="true">{emoji}</span>;
+  }
+  if (!mounted) {
+    return <span className="sbt-plan-thumb sbt-ph" />;
+  }
+  return (
+    <span className={`sbt-plan-thumb sbt-ph${phase === "loading" ? " is-loading" : ""}`}>
+      <img
+        ref={imgRef}
+        src={src}
+        alt=""
+        width={84}
+        height={84}
+        loading="lazy"
+        decoding="async"
+        className={`sbt-img ${phase === "ready" ? "is-ready" : "is-pending"}`}
+        onLoad={() => setPhase("ready")}
+        onError={() => markFailed(src)}
+      />
+    </span>
   );
 }
 
@@ -1140,34 +811,55 @@ interface BucketSlotProps {
   card: DayCard;
   accent: string;
   animationDelay: number;
+  isTomorrow: boolean;
 }
 
-function BucketSlot({ bucket, card, accent, animationDelay }: BucketSlotProps) {
+function BucketSlot({ bucket, card, accent, animationDelay, isTomorrow }: BucketSlotProps) {
   const emoji = CATEGORY_EMOJI[card.category] || "📍";
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
+  const isEvent = card.source === "event";
   return (
-    <div
-      className={`sbt-bucket${card.role ? ` sbt-bucket--${card.role}` : ""}`}
-      style={{ animation: `fadeSlideIn 0.3s ease-out ${animationDelay}s both` }}
+    <article
+      className={`sbt-plan-card${card.role ? ` sbt-plan-card--${card.role}` : ""}`}
+      style={{ "--sbt-pair": accent, animationDelay: `${animationDelay}s` } as CSSProperties}
     >
-      <div className="sbt-bucket-header">
-        <span className="sbt-bucket-accent" style={{ background: accent }} />
-        <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
-        {card.role && (
-          <span className={`sbt-bucket-role sbt-bucket-role--${card.role}`}>
-            {card.role === "pillar" ? "Today’s pick" : "Nearby"}
+      <div className="sbt-plan-head">
+        <span className="sbt-plan-dot" aria-hidden="true" />
+        <span className="sbt-plan-slot">{BUCKET_LABELS[bucket]}</span>
+        {(isEvent || card.role) && (
+          <span className="sbt-plan-badges">
+            {isEvent && <span className="sbt-plan-badge sbt-plan-badge--event">Event</span>}
+            {card.role && (
+              <span className={`sbt-plan-badge sbt-plan-badge--${card.role}`}>
+                {card.role === "pillar" ? (isTomorrow ? "Tomorrow’s pick" : "Today’s pick") : "Nearby"}
+              </span>
+            )}
           </span>
         )}
       </div>
-      {cardUrl ? (
-        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
-          <CardInner card={card} emoji={emoji} accent={accent} />
-        </a>
-      ) : (
-        <div className="sbt-bucket-link">
-          <CardInner card={card} emoji={emoji} accent={accent} />
+      <CardInner card={card} emoji={emoji} cardUrl={cardUrl} />
+    </article>
+  );
+}
+
+/** Loading placeholder in the exact shape of a plan card. */
+function PlanSkeleton() {
+  return (
+    <div className="sbt-plan-card sbt-plan-card--skeleton">
+      <div className="sbt-plan-head">
+        <span className="sb-skeleton" style={{ width: 104, marginBottom: 0 }} />
+      </div>
+      <div className="sbt-plan-link">
+        <div className="sbt-plan-thumbcol">
+          <span className="sbt-plan-thumb sbt-ph is-loading" />
         </div>
-      )}
+        <div className="sbt-plan-body">
+          <span className="sb-skeleton" style={{ width: "42%" }} />
+          <span className="sb-skeleton" style={{ width: "78%", height: 18 }} />
+          <span className="sb-skeleton" style={{ width: "96%" }} />
+          <span className="sb-skeleton" style={{ width: "64%" }} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -1286,10 +978,14 @@ function LoadingVerb() {
   const full = `${verb} your day...`;
   const display = full.slice(0, charIdx);
 
+  // The typing text is decorative; screen readers get one steady status.
   return (
-    <p className="loading-verb" style={{ fontSize: 28, fontWeight: 900, textAlign: "center", margin: 0, minHeight: 36, background: "linear-gradient(90deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC, #FF6B35)", backgroundSize: "200% 100%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", animation: "rainbow 3s ease infinite", fontFamily: "'Inter', sans-serif", letterSpacing: -0.5, whiteSpace: "nowrap" }}>
-      {display}<span aria-hidden="true" style={{ WebkitTextFillColor: "#6b6178", animation: "blink 0.8s step-end infinite" }}>|</span>
-    </p>
+    <div role="status">
+      <span className="sbt-sr">Planning your day…</span>
+      <p className="sbt-loading-verb" aria-hidden="true">
+        {display}<span className="sbt-loading-caret">|</span>
+      </p>
+    </div>
   );
 }
 
@@ -1340,38 +1036,24 @@ function ShareButton({ cards, city, kids, weather, compact }: { cards: DayCard[]
   if (compact) {
     return (
       <button
+        type="button"
         onClick={handleShare}
         disabled={sharing}
         title="Share this plan"
-        aria-label="Share this plan"
-        className="sbt-share-pill"
-        style={{
-          color: copied ? "#16a34a" : undefined,
-          borderColor: copied ? "#16a34a" : undefined,
-          cursor: sharing ? "wait" : "pointer",
-        }}
+        aria-label={copied ? "Link copied" : "Share this plan"}
+        className={`sb-btn sbt-hero-share${copied ? " is-copied" : ""}`}
       >
-        {copied ? "COPIED ✓" : sharing ? "…" : "SHARE ↗"}
+        {copied ? "Copied ✓" : sharing ? "…" : "Share ↗"}
       </button>
     );
   }
 
   return (
     <button
+      type="button"
       onClick={handleShare}
       disabled={sharing}
-      style={{
-        fontFamily: "'Inter', sans-serif",
-        fontSize: 12,
-        fontWeight: 700,
-        padding: "8px 20px",
-        borderRadius: 20,
-        border: "1.5px solid #ddd",
-        background: "#fff",
-        color: copied ? "#16a34a" : "#888",
-        cursor: sharing ? "wait" : "pointer",
-        transition: "all 0.2s",
-      }}
+      className={`sb-btn sb-btn--quiet sbt-hero-share${copied ? " is-copied" : ""}`}
     >
       {copied ? "Link copied!" : sharing ? "Creating link..." : "Share this plan ↗"}
     </button>

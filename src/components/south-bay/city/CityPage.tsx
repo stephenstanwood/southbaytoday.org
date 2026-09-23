@@ -3,8 +3,14 @@
 // ---------------------------------------------------------------------------
 // Mini-homepage for a single city: today's events, next meeting, briefing,
 // recent civic actions, and links back to the main site.
+//
+// Styles: src/styles/sbt/city.css (loaded site-wide by BaseLayout). Classes
+// here are `city-` prefixed, except the shared pieces: section heads use
+// `.sb-section-header` / `.sb-section-title` (chrome.css) and the day plan
+// uses the homepage's `.sbt-plan-*` / `.sbt-hero` markup (home.css).
 
-import { useState, useEffect, useMemo } from "react";
+import { Fragment, useState, useEffect, useMemo } from "react";
+import type { CSSProperties } from "react";
 import type { City } from "../../../lib/south-bay/types";
 import { CITY_MAP } from "../../../lib/south-bay/cities";
 import { isVirtualEvent } from "../../../lib/south-bay/eventFilters.mjs";
@@ -24,6 +30,7 @@ import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
 import { isPlaceTemporarilyUnavailable } from "../../../lib/south-bay/placeAvailability.mjs";
 import { openCampCountForCity } from "../../../lib/south-bay/cityCamps";
+import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 
 import Masthead from "../Masthead";
 import SiteFooter from "../SiteFooter";
@@ -93,6 +100,29 @@ function filterAgendaItems(items: AgendaItem[] | undefined): AgendaItem[] {
   });
 }
 
+// ── Images ──
+//
+// <img> that fades in once decoded. The ref check covers images that finish
+// loading before React attaches onLoad (cached files), so nothing can get
+// stuck invisible. Callers pass key={src} so state resets per source.
+function FadeImg({ src, onError }: { src: string; onError: () => void }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <img
+      src={src}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      className={loaded ? "is-loaded" : undefined}
+      ref={(el) => {
+        if (el && !loaded && el.complete && el.naturalWidth > 0) setLoaded(true);
+      }}
+      onLoad={() => setLoaded(true)}
+      onError={onError}
+    />
+  );
+}
+
 // ── Props ──
 
 type Props = {
@@ -101,15 +131,7 @@ type Props = {
 };
 
 export default function CityPage({ cityId, cityName }: Props) {
-  const [weather, setWeather] = useState<string | null>(null);
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[]; generatedAt?: string } | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/weather?city=${cityId}`)
-      .then((r) => r.json())
-      .then((d) => { setWeather(d.weather ?? null); })
-      .catch(() => {});
-  }, [cityId]);
 
   useEffect(() => {
     // City pages only render today/tomorrow/this-weekend, so the 14-day near
@@ -138,9 +160,14 @@ export default function CityPage({ cityId, cityName }: Props) {
   // applies the real clock. Worst case is a one-frame style/visibility tweak
   // in the bottom-of-page civic panel.
   const [meetingIsToday, setMeetingIsToday] = useState(false);
+  // The meetings JSON is baked in at build time, so by the next morning its
+  // "next" meeting can already be over. Drop it once the date has passed
+  // rather than calling yesterday's meeting "Next meeting".
+  const [meetingIsPast, setMeetingIsPast] = useState(false);
   const [digestAge, setDigestAge] = useState<number>(() => (digest?.meetingDateIso ? 0 : 999));
   useEffect(() => {
     setMeetingIsToday(nextMeeting?.date === TODAY_ISO);
+    setMeetingIsPast(!!nextMeeting?.date && nextMeeting.date < TODAY_ISO);
     setDigestAge(
       digest?.meetingDateIso
         ? (Date.now() - new Date(digest.meetingDateIso).getTime()) / 86400000
@@ -161,44 +188,30 @@ export default function CityPage({ cityId, cityName }: Props) {
 
       {/* City content — mirrors the homepage container width (800px) so the
           bucket grid + forecast strip land at homepage proportions. */}
-      <main id="main-content" style={{ maxWidth: 800, margin: "0 auto", padding: "0 16px 56px" }}>
-        {/* Sub-header strip: city name + "this is a city page" breadcrumb. */}
-        <div style={{ padding: "16px 0 4px", textAlign: "center" }}>
-          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: "var(--sb-light)", marginBottom: 4 }}>
-            Your city
-          </div>
-          <h1 style={{
-            fontFamily: "var(--sb-serif)", fontWeight: 900, fontSize: 42,
-            color: "var(--sb-ink)", margin: "0 0 4px", lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-          }}>
-            {cityName}
-          </h1>
-          {weather && (
-            <div style={{ fontSize: 13, color: "var(--sb-muted)" }}>
-              {weather}
-              {eventsGenAt && (
-                <span style={{ marginLeft: 8, fontSize: 11, color: "var(--sb-light)" }}>
-                  · Updated {formatAge(eventsGenAt)}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
+      <main id="main-content" className="city-main">
+        {/* City name. The old "☀️ Tomorrow: sunny, high 88°" line under it was
+            weatherProvider's summaryLine — built from forecast[0], the exact
+            day the forecast strip below opens with — so it was dropped. The
+            events freshness stamp it carried now sits with the events. */}
+        <header className="city-hero">
+          <p className="sb-eyebrow city-hero-kicker">Your city</p>
+          <h1 className="city-hero-title">{cityName}</h1>
+          <span className="city-hero-rule" aria-hidden="true" />
+        </header>
 
         {/* Camps pointer — one-line nudge to /camps, only when this city has
             a program still running this summer. Renders nothing otherwise. */}
         <CityCampsPointer cityId={cityId} cityName={cityName} />
 
         {/* 5-day forecast strip — same component the homepage uses. */}
-        <div style={{ marginTop: 12, marginBottom: 0 }}>
+        <div className="city-forecast">
           <ForecastCard homeCity={cityId as City} />
         </div>
 
         {/* Photo scroll — same curated Flickr marquee as the homepage, scoped
             to this city (falls back to the full South Bay pool when the
             city's tagged photo count is too thin for a seamless loop). */}
-        <div style={{ margin: "14px -16px" }}>
+        <div className="city-photos">
           <PhotoStrip cityFilter={cityId} />
         </div>
 
@@ -206,7 +219,13 @@ export default function CityPage({ cityId, cityName }: Props) {
         <CityDayPlan cityId={cityId as City} cityName={cityName} />
 
         {/* ═══ EVENTS (Today / Tomorrow / This Weekend) ═══ */}
-        <CityEventsBlock events={allEvents} cityId={cityId} cityName={cityName} />
+        <CityEventsBlock
+          events={allEvents}
+          loading={upcomingData === null}
+          generatedAt={eventsGenAt}
+          cityId={cityId}
+          cityName={cityName}
+        />
 
         {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
         <CityRedditTiles cityId={cityId} cityName={cityName} />
@@ -217,23 +236,24 @@ export default function CityPage({ cityId, cityName }: Props) {
         {/* ═══ AT CITY HALL — pinned to the bottom; next meeting + last digest
             side-by-side. */}
         <CityHallPanel
-          nextMeeting={nextMeeting}
+          cityId={cityId}
+          nextMeeting={meetingIsPast ? null : nextMeeting}
           meetingIsToday={meetingIsToday}
           digest={digest}
           digestAge={digestAge}
         />
 
-        {/* ═══ FOOTER ═══ */}
-        <div style={{ borderTop: "2px solid var(--sb-ink)", paddingTop: 16, marginTop: 28, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-          <a href="/" style={{ fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 14, color: "var(--sb-ink)", textDecoration: "none" }}>
+        {/* ═══ BACK ROW ═══ */}
+        <nav className="city-backrow" aria-label="Leave this city page">
+          <a href="/" className="sb-btn sb-btn--quiet">
             ← South Bay Today
           </a>
           {city?.website && (
-            <a href={city.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: "var(--sb-muted)", textDecoration: "none" }}>
-              {cityName} official site →
+            <a href={city.website} target="_blank" rel="noopener noreferrer" className="sb-btn sb-btn--quiet">
+              {cityName} official site ↗
             </a>
           )}
-        </div>
+        </nav>
       </main>
 
       <SiteFooter>
@@ -256,19 +276,10 @@ function CityCampsPointer({ cityId, cityName }: { cityId: string; cityName: stri
   if (count === 0) return null;
 
   return (
-    <a
-      href="/camps"
-      style={{
-        display: "flex", alignItems: "center", gap: 8,
-        marginTop: 10, padding: "10px 14px", borderRadius: 8,
-        border: "1px solid #fde68a", background: "#fffbeb",
-        color: "#92400e", textDecoration: "none",
-        fontSize: 13, fontWeight: 600,
-      }}
-    >
-      <span aria-hidden style={{ fontSize: 16, flexShrink: 0 }}>🏕️</span>
+    <a href="/camps" className="city-camps">
+      <span aria-hidden="true">🏕️</span>
       <span>{count} camp{count === 1 ? "" : "s"} still open in {cityName} this summer</span>
-      <span aria-hidden style={{ marginLeft: "auto", fontWeight: 700, flexShrink: 0 }}>→</span>
+      <span aria-hidden="true" className="city-camps-arrow">→</span>
     </a>
   );
 }
@@ -278,49 +289,62 @@ function CityCampsPointer({ cityId, cityName }: { cityId: string; cityName: stri
 function EventRow({ event }: { event: UpcomingEvent }) {
   const time = formatTimeRange(event.time, event.endTime);
   const emoji = CAT_EMOJI[event.category] ?? "📅";
+  // A bare venue on a city page reads as "here, in this city" — say Online
+  // first when the event has no physical location.
+  const online = isVirtualEvent(event);
+
+  const inner = (
+    <>
+      <span className="city-event-icon" aria-hidden="true">{emoji}</span>
+      <span className="city-event-body">
+        <span className="city-event-title">{event.title}</span>
+        {/* Plain text flow, not flex: a long venue wraps inside itself and
+            the no-break space keeps each "·" glued to what precedes it. */}
+        <span className="city-event-meta">
+          {time && <span className="city-event-time">{time}</span>}
+          {online && (
+            <>
+              {time && <span className="city-event-dot" aria-hidden="true">{"\u00a0· "}</span>}
+              <span className="city-event-online">Online</span>
+            </>
+          )}
+          {event.venue && (
+            <>
+              {(time || online) && <span className="city-event-dot" aria-hidden="true">{"\u00a0· "}</span>}
+              {event.venue}
+            </>
+          )}
+        </span>
+      </span>
+      {event.cost === "free" && <span className="city-event-tag city-event-tag--free">Free</span>}
+    </>
+  );
 
   return (
-    <div style={{
-      display: "flex", alignItems: "center", gap: 10, padding: "8px 0",
-      borderBottom: "1px solid var(--sb-border-light)",
-    }}>
-      <span style={{ fontSize: 18, width: 26, textAlign: "center", flexShrink: 0 }}>{emoji}</span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-          <span style={{
-            fontFamily: "var(--sb-serif)", fontWeight: 600, fontSize: 14,
-            color: "var(--sb-ink)", lineHeight: 1.3,
-            overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-          }}>
-            {event.url ? (
-              <a href={event.url} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>
-                {event.title}
-              </a>
-            ) : event.title}
-          </span>
-          {event.cost === "free" && (
-            <span style={{ fontSize: 9, fontWeight: 700, padding: "1px 5px", borderRadius: 3, background: "#D1FAE5", color: "#065F46" }}>FREE</span>
-          )}
-        </div>
-        <div style={{ fontSize: 11, color: "var(--sb-muted)", display: "flex", gap: 6, marginTop: 2 }}>
-          {time && <span style={{ fontWeight: 600 }}>{time}</span>}
-          {/* A bare venue on a city page reads as "here, in this city" — say
-              Online first when the event has no physical location. */}
-          {isVirtualEvent(event) && <span style={{ fontWeight: 600, color: "#1D4ED8" }}>· Online</span>}
-          {event.venue && <span>· {event.venue}</span>}
-        </div>
-      </div>
-    </div>
+    <li className="city-event">
+      {event.url ? (
+        <a href={event.url} target="_blank" rel="noopener noreferrer" className="city-event-link">{inner}</a>
+      ) : (
+        <div className="city-event-link">{inner}</div>
+      )}
+    </li>
   );
 }
 
 // ---------------------------------------------------------------------------
-// City Day Plan — compact plan-day integration for city pages
+// City Day Plan — the homepage's six-card plan, scoped to one city
 // ---------------------------------------------------------------------------
+//
+// Markup and classes are the homepage's own (SouthBayTodayView: BucketSlot,
+// CardInner, PlanThumb, PlanSkeleton, LoadingVerb), styled by the shared
+// `.sbt-plan-*` rules in home.css, so the plan reads the same on `/` and on
+// `/city/<slug>`. Two city-only differences: the Unsplash credit sits after
+// the card link instead of inside it (links can't nest), and a photo that
+// fails falls through to an Unsplash category photo, as this page always has.
 
-// Accent colors + category emoji — mirror the homepage SouthBayTodayView so a
-// resident's day plan looks the same across surfaces.
-const ACCENT_COLORS = ["#FF6B35", "#E63946", "#06D6A0", "#7B2FBE", "#1A5AFF", "#FF3CAC"];
+// One color per pillar + meal pair across the day, same as the homepage:
+// morning → sunset, afternoon → coral, evening → purple.
+const PAIR_COLORS = ["var(--sb-sunset)", "var(--sb-coral)", "var(--sb-accent)"];
 const CATEGORY_EMOJI: Record<string, string> = {
   food: "🍽️", outdoor: "🌿", museum: "🏛️", entertainment: "🎭",
   wellness: "💆", shopping: "🛍️", arts: "🎨", events: "📅",
@@ -344,7 +368,7 @@ type DayCard = {
   pairDistanceMiles?: number | null;
 };
 
-// Rotating verbs for the rainbow loader — same set the homepage uses so the
+// Rotating verbs for the loader — same set the homepage uses so the
 // "Planning your day…" line carries the same personality across surfaces.
 const PLAN_LOADING_VERBS = [
   "Planning", "Mapping out", "Dreaming up", "Cooking up",
@@ -353,12 +377,20 @@ const PLAN_LOADING_VERBS = [
   "Brainstorming", "Crafting", "Shuffling", "Dialing in", "Sorting out",
 ];
 
+/** The homepage's typing loader. Screen readers get one steady status line;
+ *  reduced-motion readers get the same line on screen instead of typing
+ *  (read after mount so the server and first client render match). */
 function PlanLoadingVerb() {
   const [verbIdx, setVerbIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  const [still, setStill] = useState(false);
+  useEffect(() => {
+    setStill(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false);
+  }, []);
 
   useEffect(() => {
+    if (still) return;
     const verb = PLAN_LOADING_VERBS[verbIdx % PLAN_LOADING_VERBS.length];
     const full = `${verb} your day...`;
     if (!deleting && charIdx < full.length) {
@@ -377,52 +409,30 @@ function PlanLoadingVerb() {
       setDeleting(false);
       setVerbIdx((v) => v + 1);
     }
-  }, [charIdx, deleting, verbIdx]);
+  }, [charIdx, deleting, verbIdx, still]);
 
   const verb = PLAN_LOADING_VERBS[verbIdx % PLAN_LOADING_VERBS.length];
   const display = `${verb} your day...`.slice(0, charIdx);
 
   return (
-    <p style={{
-      fontSize: 26, fontWeight: 900, textAlign: "center", margin: "30px 0",
-      minHeight: 36,
-      background: "linear-gradient(90deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC, #FF6B35)",
-      backgroundSize: "200% 100%",
-      WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
-      animation: "cityPlanRainbow 3s ease infinite",
-      fontFamily: "'Inter', sans-serif",
-      letterSpacing: -0.5, whiteSpace: "nowrap",
-    }}>
-      {display}<span aria-hidden="true" style={{ WebkitTextFillColor: "#6b6178", animation: "cityPlanBlink 0.8s step-end infinite" }}>|</span>
-      <style>{`
-        @keyframes cityPlanRainbow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        @keyframes cityPlanBlink {
-          50% { opacity: 0; }
-        }
-      `}</style>
-    </p>
+    <div role="status">
+      <span className="sbt-sr">Planning your day…</span>
+      <p className="sbt-loading-verb" aria-hidden="true">
+        {still ? "Planning your day…" : (
+          <>{display}<span className="sbt-loading-caret">|</span></>
+        )}
+      </p>
+    </div>
   );
 }
 
-// Friendly city slug → display label. Used by the bucket card inner content
-// so an "EVENT" pill renders the city as "Los Gatos" not "los-gatos".
+// Friendly city slug → display label ("los-gatos" → "Los Gatos").
 function cityLabel(slug: string | null | undefined): string {
   if (!slug) return "";
   const city = CITY_MAP[slug as City];
   if (city) return city.name;
   return slug.split("-").map((s) => s[0]?.toUpperCase() + s.slice(1)).join(" ");
 }
-
-// ---------------------------------------------------------------------------
-// Bucket-grid plan card UI — mirrors the homepage SouthBayTodayView. CardInner
-// is the thumbnail + content block; BucketSlot is the 2-col grid cell that
-// wraps it with a label header. Visual format intentionally identical so a
-// resident moving from the homepage to a city page sees the same plan shape.
-// ---------------------------------------------------------------------------
 
 interface UnsplashPhoto {
   url: string;
@@ -431,8 +441,10 @@ interface UnsplashPhoto {
   unsplashUrl: string;
 }
 
-function CardInner({ card }: { card: DayCard }) {
-  const emoji = CATEGORY_EMOJI[card.category] || "📍";
+/** Photo tiers for a plan card: ingest image → Places photo → Unsplash
+ *  category photo → emoji tile. <img onError> advances a tier, so expired
+ *  Places photoRefs (common) fall through instead of rendering broken. */
+function useCardPhoto(card: DayCard) {
   const [unsplash, setUnsplash] = useState<UnsplashPhoto | null>(null);
   const [tier, setTier] = useState(0);
 
@@ -445,97 +457,147 @@ function CardInner({ card }: { card: DayCard }) {
     return () => { cancelled = true; };
   }, [card.category]);
 
-  // Sources tried in order. <img onError> advances to the next tier so we can
-  // detect 404s (expired Places photoRefs are common) — a CSS background-image
-  // would silently render the fallback color. Final tier is the emoji.
   const sources: Array<{ url: string; isUnsplash: boolean }> = [];
   if (card.image) sources.push({ url: card.image, isUnsplash: false });
   if (card.photoRef) sources.push({ url: `/api/place-photo?ref=${encodeURIComponent(card.photoRef)}&w=200&h=200`, isUnsplash: false });
   if (unsplash) sources.push({ url: unsplash.url, isUnsplash: true });
   const current = tier < sources.length ? sources[tier] : null;
-  const showEmoji = !current;
 
-  const rawTimeHint = card.source === "event" ? (card.eventTime || card.timeBlock || "") : "";
-  const timeHint = /\d/.test(rawTimeHint) ? rawTimeHint : "";
+  return {
+    current,
+    credit: current?.isUnsplash ? unsplash : null,
+    advance: () => setTier((t) => t + 1),
+  };
+}
 
+/** The homepage PlanThumb's markup: warm placeholder that shimmers while the
+ *  photo loads, fade-in when it lands, category emoji when nothing is left.
+ *  Callers key it by source so each tier starts fresh. */
+function CityPlanThumb({ src, emoji, onError }: { src: string | null; emoji: string; onError: () => void }) {
+  const [ready, setReady] = useState(false);
+  if (!src) {
+    return <span className="sbt-plan-thumb sbt-ph sbt-plan-thumb--fallback" aria-hidden="true">{emoji}</span>;
+  }
   return (
-    <>
-      <div style={{ flexShrink: 0, margin: "10px 0 10px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-        <div style={{
-          width: 80, height: 80, borderRadius: 8, overflow: "hidden",
-          background: "#f5f5f5",
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 28,
-        }}>
-          {current && (
-            <img
-              key={current.url}
-              src={current.url}
-              alt={card.name}
-              onError={() => setTier((t) => t + 1)}
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-            />
-          )}
-          {showEmoji && <span aria-hidden>{emoji}</span>}
-        </div>
-        {current?.isUnsplash && unsplash && (
-          <div style={{ width: 80, fontSize: 7, lineHeight: 1.3, color: "#6b6178", textAlign: "center" }}>
-            <a href={unsplash.photographerUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>{unsplash.photographer}</a>
-            {" · "}
-            <a href={unsplash.unsplashUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ color: "#6b6178", textDecoration: "none" }}>Unsplash</a>
-          </div>
-        )}
-      </div>
-      <div style={{ flex: 1, minWidth: 0, padding: "10px 12px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-          {timeHint && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, fontWeight: 800, color: "#000", letterSpacing: -0.2 }}>{timeHint}</span>
-          )}
-          {!(card.source === "event" && card.category === "events") && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{card.category}</span>
-          )}
-          {card.city && (
-            <>
-              <span style={{ fontSize: 9, color: "#6b6178", fontWeight: 700 }}>·</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, fontWeight: 700, color: "#6b6178", textTransform: "uppercase" as const, letterSpacing: 1 }}>{cityLabel(card.city)}</span>
-            </>
-          )}
-          {card.source === "event" && <span style={{ fontSize: 8, fontWeight: 800, color: "#fff", background: "#8738F5", padding: "1px 5px", borderRadius: 3, fontFamily: "'Inter', sans-serif", letterSpacing: 0.5 }}>EVENT</span>}
-        </div>
-        <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 900, color: "#111", margin: "0 0 4px", lineHeight: 1.25 }}>{card.name}</h3>
-        {card.source === "event" && card.venue && (
-          <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#6b6178" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: "#6b6178" }}>{card.venue}</span>
-          </div>
-        )}
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: "#555", margin: "0 0 4px", lineHeight: 1.45 }}>{card.blurb}</p>
-      </div>
-    </>
+    <span className={`sbt-plan-thumb sbt-ph${ready ? "" : " is-loading"}`}>
+      <img
+        src={src}
+        alt=""
+        width={84}
+        height={84}
+        loading="lazy"
+        decoding="async"
+        className={`sbt-img ${ready ? "is-ready" : "is-pending"}`}
+        ref={(el) => {
+          // A cached photo can finish before React attaches onLoad.
+          if (el && !ready && el.complete && el.naturalWidth > 0) setReady(true);
+        }}
+        onLoad={() => setReady(true)}
+        onError={onError}
+      />
+    </span>
   );
 }
 
-function BucketSlot({ bucket, card, accent, animationDelay }: { bucket: Bucket; card: DayCard; accent: string; animationDelay: number }) {
+/** One slot of the 2×3 grid: the homepage BucketSlot + CardInner markup. */
+function BucketSlot({ bucket, card, accent, animationDelay }: {
+  bucket: Bucket;
+  card: DayCard;
+  accent: string;
+  animationDelay: number;
+}) {
   const cardUrl = card.source === "event" ? (card.url || card.mapsUrl) : (card.mapsUrl || card.url);
+  const isEvent = card.source === "event";
+  const emoji = CATEGORY_EMOJI[card.category] || "📍";
+  const { current, credit, advance } = useCardPhoto(card);
+  const cardName = cleanDisplayName(card.name) || "";
+  const cardBlurb = cleanDisplayCopy(card.blurb) || "";
+  const cardVenue = cleanDisplayName(card.venue) || "";
+
+  // Events always show their time; place cards leave it to the slot label.
+  // Only a hint with a digit counts, so a stray "Lunch" never echoes the slot.
+  const rawTimeHint = isEvent ? (card.eventTime || card.timeBlock || "") : "";
+  const timeHint = /\d/.test(rawTimeHint) ? rawTimeHint : "";
+  const showCategory = !(isEvent && card.category === "events");
+
+  const inner = (
+    <>
+      <div className="sbt-plan-thumbcol">
+        <CityPlanThumb key={current?.url ?? "none"} src={current?.url ?? null} emoji={emoji} onError={advance} />
+      </div>
+      <div className="sbt-plan-body">
+        {(timeHint || showCategory || card.city) && (
+          <div className="sbt-plan-meta">
+            {timeHint && <span className="sbt-plan-time">{timeHint}</span>}
+            {showCategory && <span className="sbt-plan-cat">{card.category}</span>}
+            {card.city && <span>{cityLabel(card.city)}</span>}
+          </div>
+        )}
+        <h3 className="sbt-plan-title">{cardName}</h3>
+        {isEvent && cardVenue && (
+          <div className="sbt-plan-venue">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>{cardVenue}</span>
+          </div>
+        )}
+        <p className="sbt-plan-blurb">{cardBlurb}</p>
+      </div>
+    </>
+  );
+
   return (
-    <div className={`sbt-bucket${card.role ? ` sbt-bucket--${card.role}` : ""}`} style={{ animation: `cityFadeSlideIn 0.3s ease-out ${animationDelay}s both` }}>
-      <div className="sbt-bucket-header">
-        <span className="sbt-bucket-accent" style={{ background: accent }} />
-        <span className="sbt-bucket-label">{BUCKET_LABELS[bucket]}</span>
-        {card.role && (
-          <span className={`sbt-bucket-role sbt-bucket-role--${card.role}`}>
-            {card.role === "pillar" ? "Today’s pick" : "Nearby"}
+    <article
+      className={`sbt-plan-card${card.role ? ` sbt-plan-card--${card.role}` : ""}`}
+      style={{ "--sbt-pair": accent, animationDelay: `${animationDelay}s` } as CSSProperties}
+    >
+      <div className="sbt-plan-head">
+        <span className="sbt-plan-dot" aria-hidden="true" />
+        <span className="sbt-plan-slot">{BUCKET_LABELS[bucket]}</span>
+        {(isEvent || card.role) && (
+          <span className="sbt-plan-badges">
+            {isEvent && <span className="sbt-plan-badge sbt-plan-badge--event">Event</span>}
+            {card.role && (
+              <span className={`sbt-plan-badge sbt-plan-badge--${card.role}`}>
+                {card.role === "pillar" ? "Today’s pick" : "Nearby"}
+              </span>
+            )}
           </span>
         )}
       </div>
       {cardUrl ? (
-        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-bucket-link">
-          <CardInner card={card} />
-        </a>
+        <a href={cardUrl} target="_blank" rel="noopener noreferrer" className="sbt-plan-link">{inner}</a>
       ) : (
-        <div className="sbt-bucket-link">
-          <CardInner card={card} />
+        <div className="sbt-plan-link">{inner}</div>
+      )}
+      {credit && (
+        <div className="sbt-plan-credit">
+          <a href={credit.photographerUrl} target="_blank" rel="noopener noreferrer">{credit.photographer}</a>
+          {" · "}
+          <a href={credit.unsplashUrl} target="_blank" rel="noopener noreferrer">Unsplash</a>
         </div>
       )}
+    </article>
+  );
+}
+
+/** Loading placeholder in the exact shape of a plan card (homepage markup). */
+function PlanSkeleton() {
+  return (
+    <div className="sbt-plan-card sbt-plan-card--skeleton">
+      <div className="sbt-plan-head">
+        <span className="sb-skeleton" style={{ width: 104, marginBottom: 0 }} />
+      </div>
+      <div className="sbt-plan-link">
+        <div className="sbt-plan-thumbcol">
+          <span className="sbt-plan-thumb sbt-ph is-loading" />
+        </div>
+        <div className="sbt-plan-body">
+          <span className="sb-skeleton" style={{ width: "42%" }} />
+          <span className="sb-skeleton" style={{ width: "78%", height: 18 }} />
+          <span className="sb-skeleton" style={{ width: "96%" }} />
+          <span className="sb-skeleton" style={{ width: "64%" }} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -559,152 +621,47 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
   // Group cards by bucket. Same logic as the homepage: prefer card.bucket,
   // fall back to inferring from clock-range timeBlock for legacy plans.
   const cardsByBucket = new Map<Bucket, DayCard>();
-  const orphanCards: DayCard[] = [];
   for (const c of cards) {
     const bucket: Bucket | null = isBucket(c.bucket)
       ? (c.bucket as Bucket)
       : inferBucketFromTimeBlock(c.timeBlock, c.category);
-    if (bucket) {
-      if (!cardsByBucket.has(bucket)) cardsByBucket.set(bucket, c);
-      else orphanCards.push(c);
-    } else {
-      orphanCards.push(c);
-    }
+    if (bucket && !cardsByBucket.has(bucket)) cardsByBucket.set(bucket, c);
   }
 
-  if (loading) {
-    return (
-      <div style={{ marginBottom: 28 }}>
-        <h2 className="city-plan-headline">What should we do in {cityName} today?</h2>
-        <div style={{ padding: "8px 0 20px", margin: "0 -16px" }}>
-          <div style={{ display: "flex", background: "#fff", borderRadius: 10, border: "1px solid #f0f0f0", overflow: "hidden", opacity: 0, animation: "cityCardAppear 0.4s ease-out 0.1s forwards" }}>
-            <div style={{ width: 20, backgroundImage: "linear-gradient(180deg, #FF6B35, #E63946, #7B2FBE, #1A5AFF, #06D6A0, #FF3CAC)", backgroundSize: "100% 200%", animation: "cityPlanRainbow 3s ease infinite", flexShrink: 0 }} />
-            <div style={{ flex: 1, padding: "28px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <PlanLoadingVerb />
-            </div>
-          </div>
-        </div>
-        <style>{`
-          @keyframes cityCardAppear {
-            from { opacity: 0; transform: translateY(16px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (!cards.length) return null;
+  if (!loading && !cards.length) return null;
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      <h2 className="city-plan-headline">What should we do in {cityName} today?</h2>
-      <div className="sbt-buckets">
-        {BUCKET_ORDER.map((bucket, i) => {
-          const card = cardsByBucket.get(bucket);
-          if (!card) return null;
-          const accent = ACCENT_COLORS[Math.floor(i / 2) % ACCENT_COLORS.length];
-          return (
-            <BucketSlot
-              key={bucket}
-              bucket={bucket}
-              card={card}
-              accent={accent}
-              animationDelay={i * 0.05}
-            />
-          );
-        })}
+    <section className="city-plan" aria-labelledby="city-plan-heading">
+      {/* The homepage's question panel, without its toolbar. */}
+      <div className="sbt-hero city-plan-hero">
+        <h2 id="city-plan-heading" className="sbt-hero-title">What should we do in {cityName} today?</h2>
       </div>
 
-      <style>{`
-        .city-plan-headline {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 32px;
-          font-weight: 800;
-          color: #1a1a2e;
-          letter-spacing: -0.5px;
-          line-height: 1.15;
-          margin: 0 0 14px;
-        }
-        @media (max-width: 480px) {
-          .city-plan-headline { font-size: 26px; }
-        }
-        .sbt-buckets {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-          margin: 0 -16px;
-        }
-        .sbt-buckets > .sbt-bucket:nth-child(odd):last-child {
-          grid-column: 1 / -1;
-        }
-        @media (max-width: 640px) {
-          .sbt-buckets {
-            grid-template-columns: 1fr;
-            gap: 8px;
-            margin: 0 -8px;
-          }
-        }
-        .sbt-bucket {
-          background: #fff;
-          border-radius: 12px;
-          border: 1px solid #e8e8e8;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          position: relative;
-          min-height: 140px;
-        }
-        .sbt-bucket--pillar {
-          border-color: rgba(123, 47, 190, 0.30);
-          box-shadow: 0 12px 26px rgba(31, 12, 73, 0.09);
-        }
-        .sbt-bucket-header {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 14px 6px;
-        }
-        .sbt-bucket-accent {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-        .sbt-bucket-label {
-          font-family: 'Inter', sans-serif;
-          font-size: 12px;
-          font-weight: 900;
-          color: #111;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-        }
-        .sbt-bucket-role {
-          margin-left: auto;
-          border-radius: 999px;
-          padding: 2px 7px;
-          font-family: 'Inter', sans-serif;
-          font-size: 8px;
-          font-weight: 900;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-        .sbt-bucket-role--pillar { background: #13072f; color: #fff; }
-        .sbt-bucket-role--paired-meal { border: 1px solid #ddd; color: #6b6178; }
-        .sbt-bucket-link {
-          display: flex;
-          flex: 1;
-          min-width: 0;
-          text-decoration: none;
-          color: inherit;
-          cursor: pointer;
-        }
-        @keyframes cityFadeSlideIn {
-          from { opacity: 0; transform: translateY(12px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-    </div>
+      {loading ? (
+        <div className="sbt-plan-loading">
+          <PlanLoadingVerb />
+          <div className="sbt-plan-grid" aria-hidden="true">
+            {BUCKET_ORDER.map((b) => <PlanSkeleton key={b} />)}
+          </div>
+        </div>
+      ) : (
+        <div className="sbt-plan-grid">
+          {BUCKET_ORDER.map((bucket, i) => {
+            const card = cardsByBucket.get(bucket);
+            if (!card) return null;
+            return (
+              <BucketSlot
+                key={bucket}
+                bucket={bucket}
+                card={card}
+                accent={PAIR_COLORS[Math.floor(i / 2) % PAIR_COLORS.length]}
+                animationDelay={i * 0.05}
+              />
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -790,19 +747,23 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   }, [cityId, tick, ready]);
 
   // Venue photo per pick: real Places photo when the candidate carries a
-  // photoRef, Unsplash category lookup only for the refless minority.
+  // photoRef, Unsplash category lookup only for the refless minority. A lone
+  // pick renders as a wide spotlight card, so it asks for a larger photo.
   const [thumbs, setThumbs] = useState<Record<string, string>>({});
+  const [failed, setFailed] = useState<Record<string, true>>({});
   useEffect(() => {
     let cancelled = false;
+    const size = picks.length === 1 ? "w=640&h=400" : "w=320&h=200";
     const base: Record<string, string> = {};
     const needsLookup = picks.filter((p) => {
       if (p.photoRef) {
-        base[p.id] = `/api/place-photo?ref=${encodeURIComponent(p.photoRef)}&w=320&h=200`;
+        base[p.id] = `/api/place-photo?ref=${encodeURIComponent(p.photoRef)}&${size}`;
         return false;
       }
       return true;
     });
     setThumbs(base);
+    setFailed({});
     Promise.all(needsLookup.map((p) => {
       const q = p.displayType || p.category || p.name;
       return fetch(`/api/unsplash-photo?query=${encodeURIComponent(q)}`)
@@ -821,32 +782,23 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   if (picks.length === 0) return null;
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
-        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 800, fontSize: 20, margin: 0, color: "var(--sb-ink)" }}>
-          Open Right Now
-        </h2>
+    <section className="city-section" aria-labelledby="city-open-heading">
+      <div className="sb-section-header city-section-head">
+        <h2 id="city-open-heading" className="sb-section-title">Open Right Now</h2>
         <button
+          type="button"
           onClick={() => setTick((t) => t + 1)}
-          aria-label="Shuffle"
-          style={{
-            fontSize: 11, fontWeight: 700, color: "var(--sb-ink)",
-            background: "#fff", border: "1px solid var(--sb-border)",
-            borderRadius: 100, padding: "4px 12px", cursor: "pointer",
-          }}
+          aria-label="Shuffle the open spots"
+          className="sb-btn sb-btn--quiet city-action"
         >
           Shuffle ↻
         </button>
       </div>
 
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-        gap: 10,
-      }}>
+      <div className="city-open-grid" data-count={picks.length}>
         {picks.map((p) => {
           const emoji = (p.category && OPEN_CATEGORY_EMOJI[p.category]) || "📍";
-          const thumb = thumbs[p.id];
-          const ratingLabel = `★ ${p.rating.toFixed(1)}`;
+          const thumb = failed[p.id] ? undefined : thumbs[p.id];
           const ratingCount = p.ratingCount >= 1000 ? `${Math.round(p.ratingCount / 100) / 10}k` : `${p.ratingCount}`;
           return (
             <a
@@ -854,62 +806,38 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
               href={p.mapsUrl || p.url || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: "block",
-                borderRadius: 10,
-                overflow: "hidden",
-                textDecoration: "none",
-                color: "inherit",
-                border: "1px solid var(--sb-border-light)",
-                background: "#fff",
-                transition: "transform 0.15s ease-out, box-shadow 0.15s ease-out",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 6px 16px rgba(0,0,0,0.1)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = ""; (e.currentTarget as HTMLAnchorElement).style.boxShadow = ""; }}
+              className="city-open-card"
             >
-              <div style={{
-                aspectRatio: "16 / 10",
-                background: thumb
-                  ? `url(${thumb}) center/cover no-repeat, linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%)`
-                  : "linear-gradient(135deg, #1e3a8a 0%, #4c1d95 100%)",
-                display: "flex", alignItems: "center", justifyContent: "center", fontSize: 32,
-              }}>
+              <span className="city-open-media" aria-hidden="true">
                 {!thumb && emoji}
-              </div>
-              <div style={{ padding: "8px 10px" }}>
-                <div style={{
-                  fontFamily: "var(--sb-serif)", fontWeight: 700, fontSize: 13,
-                  color: "var(--sb-ink)", lineHeight: 1.25,
-                  display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as const,
-                  overflow: "hidden",
-                }}>
-                  {p.name}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 4 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: "#92400e" }}>{ratingLabel}</span>
-                  <span style={{ fontSize: 10, color: "var(--sb-light)" }}>({ratingCount})</span>
-                  {p.displayType && (
-                    <>
-                      <span style={{ fontSize: 9, color: "var(--sb-light)" }}>·</span>
-                      <span style={{
-                        fontSize: 10, color: "var(--sb-muted)",
-                        whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                      }}>
-                        {p.displayType}
-                      </span>
-                    </>
-                  )}
-                </div>
+                {thumb && (
+                  <FadeImg
+                    key={thumb}
+                    src={thumb}
+                    onError={() => setFailed((f) => ({ ...f, [p.id]: true }))}
+                  />
+                )}
+              </span>
+              <div className="city-open-body">
+                {p.displayType && <span className="city-open-kicker">{p.displayType}</span>}
+                <h3 className="city-open-name">{p.name}</h3>
+                <span className="city-open-rating">
+                  <span className="city-open-stars">★ {p.rating.toFixed(1)}</span>
+                  <span>({ratingCount} reviews)</span>
+                </span>
+                {(p.mapsUrl || p.url) && (
+                  <span className="city-open-cta">{p.mapsUrl ? "Open in Maps ↗" : "Visit website ↗"}</span>
+                )}
               </div>
             </a>
           );
         })}
       </div>
 
-      <div style={{ marginTop: 8, fontSize: 10, color: "var(--sb-light)" }}>
-        Top-rated spots open right now in {cityName} · shuffled for variety
-      </div>
-    </div>
+      <p className="city-note">
+        Top-rated spots open right now in {cityName}, shuffled for variety.
+      </p>
+    </section>
   );
 }
 
@@ -917,14 +845,17 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
 // City Hall Panel — civic card pinned at the bottom of the page.
 // Two side-by-side cards on desktop (stacked on mobile): next meeting (with
 // agenda preview) and last meeting (summary excerpt + link to full digest).
+// A lone card spans the full width instead of leaving half the row empty.
 // ---------------------------------------------------------------------------
 
 function CityHallPanel({
+  cityId,
   nextMeeting,
   meetingIsToday,
   digest,
   digestAge,
 }: {
+  cityId: string;
   nextMeeting: any;
   meetingIsToday: boolean;
   digest: any;
@@ -936,56 +867,37 @@ function CityHallPanel({
   if (!nextMeeting && !showDigest) return null;
 
   const isTonight = meetingIsToday && nextMeeting;
+  const cardCount = (nextMeeting ? 1 : 0) + (showDigest ? 1 : 0);
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 800, fontSize: 20, margin: "0 0 12px", color: "var(--sb-ink)" }}>
-        At City Hall
-      </h2>
+    <section className="city-section" aria-labelledby="city-hall-heading">
+      <div className="sb-section-header city-section-head">
+        <h2 id="city-hall-heading" className="sb-section-title">At City Hall</h2>
+      </div>
 
-      <div className="sb-city-hall-grid">
+      <div className="city-hall-grid" data-count={cardCount}>
         {/* Next meeting card */}
         {nextMeeting && (
-          <div style={{
-            background: isTonight ? "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)" : "var(--sb-card)",
-            border: isTonight ? "none" : "1px solid var(--sb-border-light)",
-            borderRadius: 8,
-            padding: "14px 16px",
-            color: isTonight ? "#e0e7ff" : "var(--sb-ink)",
-          }}>
-            <div style={{
-              fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
-              letterSpacing: "0.1em", textTransform: "uppercase" as const,
-              color: isTonight ? "#818cf8" : "var(--sb-muted)",
-              marginBottom: 4,
-            }}>
-              {isTonight ? "Tonight" : "Next meeting"}
-            </div>
-            <div style={{ fontWeight: 700, fontSize: 15, color: isTonight ? "#fff" : "var(--sb-ink)" }}>
-              {nextMeeting.bodyName} · {nextMeeting.displayDate}
-            </div>
+          <div className={isTonight ? "city-hall-card city-hall-card--tonight" : "city-hall-card"}>
+            <p className="city-hall-kicker">
+              {isTonight ? "Tonight" : "Next meeting"}{nextMeeting.displayDate ? ` · ${nextMeeting.displayDate}` : ""}
+            </p>
+            <h3 className="city-hall-title">{nextMeeting.bodyName}</h3>
             {meetingItems.length > 0 && (
-              <ul style={{ margin: "8px 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 4 }}>
+              <ul className="city-hall-agenda">
                 {meetingItems.slice(0, 3).map((it, i) => (
-                  <li key={i} style={{
-                    fontSize: 12, color: isTonight ? "#e0e7ff" : "var(--sb-ink)",
-                    lineHeight: 1.4, paddingLeft: 10,
-                    borderLeft: `2px solid ${isTonight ? "#6366f1" : "var(--sb-border-light)"}`,
-                  }}>
-                    {trimAgendaTitle(it.title)}
-                  </li>
+                  <li key={i}>{trimAgendaTitle(it.title)}</li>
                 ))}
                 {meetingItems.length > 3 && (
-                  <li style={{ fontSize: 11, color: isTonight ? "#a5b4fc" : "var(--sb-light)", paddingLeft: 10, fontStyle: "italic" }}>
+                  <li className="city-hall-more">
                     +{meetingItems.length - 3} more on the agenda
                   </li>
                 )}
               </ul>
             )}
             {nextMeeting.url && (
-              <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-block", marginTop: 10, fontSize: 12, color: isTonight ? "#818cf8" : "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
-                View agenda →
+              <a href={nextMeeting.url} target="_blank" rel="noopener noreferrer" className="city-hall-link">
+                View agenda ↗
               </a>
             )}
           </div>
@@ -993,43 +905,18 @@ function CityHallPanel({
 
         {/* Last meeting summary card */}
         {showDigest && (
-          <div style={{
-            background: "var(--sb-card)",
-            border: "1px solid var(--sb-border-light)",
-            borderRadius: 8,
-            padding: "14px 16px",
-          }}>
-            <div style={{
-              fontFamily: "'Space Mono', monospace", fontSize: 9, fontWeight: 700,
-              letterSpacing: "0.1em", textTransform: "uppercase" as const,
-              color: "var(--sb-muted)", marginBottom: 4,
-            }}>
-              Last meeting · {digest.meetingDate}
-            </div>
-            <p style={{ fontSize: 12, lineHeight: 1.55, color: "var(--sb-muted)", margin: "0 0 8px" }}>
+          <div className="city-hall-card">
+            <p className="city-hall-kicker">Last meeting · {digest.meetingDate}</p>
+            <p className="city-hall-summary">
               {digest.summary.slice(0, 240)}{digest.summary.length > 240 ? "…" : ""}
             </p>
-            <a href="/gov" style={{ fontSize: 12, color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
+            <a href={`/gov/${cityId}`} className="city-hall-link">
               Full summary →
             </a>
           </div>
         )}
       </div>
-
-      <style>{`
-        .sb-city-hall-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-          align-items: stretch;
-        }
-        @media (max-width: 720px) {
-          .sb-city-hall-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 }
 
@@ -1062,12 +949,35 @@ function getWeekendIsos(): string[] {
   return out;
 }
 
+/** Placeholder rows shown while the events feed is in flight. */
+function EventRowsSkeleton() {
+  return (
+    <ul className="city-events-list" aria-hidden="true">
+      {[74, 58, 66, 49].map((w, i) => (
+        <li key={i} className="city-event city-event--skeleton">
+          <div className="city-event-link">
+            <span className="city-event-icon city-skel-box"><span className="sb-skeleton" /></span>
+            <span className="city-event-body">
+              <span className="sb-skeleton" style={{ width: `${w}%`, height: 13 }} />
+              <span className="sb-skeleton" style={{ width: `${w - 22}%`, height: 10, marginTop: 5 }} />
+            </span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function CityEventsBlock({
   events,
+  loading,
+  generatedAt,
   cityId,
   cityName,
 }: {
   events: UpcomingEvent[];
+  loading: boolean;
+  generatedAt?: string;
   cityId: string;
   cityName: string;
 }) {
@@ -1140,6 +1050,7 @@ function CityEventsBlock({
   const emptyLabel = bucket === "today" ? "today"
     : bucket === "tomorrow" ? "tomorrow"
     : "this weekend";
+  const filtersOn = freeOnly || kidsOnly;
 
   const pillSpec: Array<{ key: EventsBucket; label: string; count: number }> = [
     { key: "today",    label: "Today",         count: counts.today },
@@ -1148,113 +1059,104 @@ function CityEventsBlock({
   ];
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10, gap: 12 }}>
-        <h2 style={{ fontFamily: "var(--sb-serif)", fontWeight: 800, fontSize: 20, margin: 0, color: "var(--sb-ink)" }}>
-          Events in {cityName}
-        </h2>
-        <a href={allEventsHref} style={{ fontSize: 11, fontWeight: 600, color: "var(--sb-ink)", textDecoration: "none", border: "1px solid var(--sb-border)", borderRadius: 100, padding: "4px 12px" }}>
+    <section className="city-section" aria-labelledby="city-events-heading">
+      <div className="sb-section-header city-section-head">
+        <h2 id="city-events-heading" className="sb-section-title">Events in {cityName}</h2>
+        <a href={allEventsHref} className="sb-btn sb-btn--quiet city-action">
           All events →
         </a>
       </div>
 
-      <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
+      <div className="city-seg" role="group" aria-label="When">
         {pillSpec.map(({ key, label, count }) => {
-          const isSelected = bucket === key;
+          const countText = count > 0 ? `${count} event${count === 1 ? "" : "s"}` : "—";
           return (
             <button
               key={key}
+              type="button"
               onClick={() => setBucket(key)}
-              aria-pressed={isSelected}
-              style={{
-                flex: "1 1 auto",
-                padding: "10px 16px",
-                borderRadius: 12,
-                border: isSelected ? "1.5px solid var(--sb-ink)" : "1.5px solid var(--sb-border-light)",
-                background: isSelected ? "var(--sb-ink)" : "#fff",
-                color: isSelected ? "#fff" : "var(--sb-ink)",
-                cursor: "pointer",
-                display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
-                lineHeight: 1.1,
-                minWidth: 88,
-              }}
+              aria-pressed={bucket === key}
+              aria-label={loading ? label : `${label}, ${count > 0 ? countText : "no events"}`}
+              className="city-seg-btn"
             >
-              <span style={{ fontFamily: "var(--sb-serif)", fontWeight: 800, fontSize: 14 }}>{label}</span>
-              <span style={{
-                fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
-                letterSpacing: "0.06em", textTransform: "uppercase" as const,
-                color: isSelected ? "rgba(255,255,255,0.85)" : "var(--sb-light)",
-              }}>
-                {count > 0 ? `${count} event${count === 1 ? "" : "s"}` : "—"}
+              <span className="city-seg-label">{label}</span>
+              <span className="city-seg-count" aria-hidden="true">
+                {loading ? <span className="sb-skeleton" /> : countText}
               </span>
             </button>
           );
         })}
       </div>
 
-      <div style={{ display: "flex", gap: 6, marginBottom: 10, flexWrap: "wrap" }}>
+      <div className="city-events-tools">
         <button
+          type="button"
           onClick={() => setFreeOnly((v) => !v)}
           aria-pressed={freeOnly}
-          style={{
-            fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100,
-            border: freeOnly ? "1.5px solid #065F46" : "1.5px solid var(--sb-border-light)",
-            background: freeOnly ? "#D1FAE5" : "#fff",
-            color: freeOnly ? "#065F46" : "var(--sb-muted)",
-            cursor: "pointer",
-          }}
+          className="city-chip city-chip--free"
         >
+          {freeOnly && <span aria-hidden="true">✓</span>}
           Free only
         </button>
         <button
+          type="button"
           onClick={() => setKidsOnly((v) => !v)}
           aria-pressed={kidsOnly}
-          style={{
-            fontSize: 11, fontWeight: 700, padding: "3px 10px", borderRadius: 100,
-            border: kidsOnly ? "1.5px solid #92400E" : "1.5px solid var(--sb-border-light)",
-            background: kidsOnly ? "#FEF3C7" : "#fff",
-            color: kidsOnly ? "#92400E" : "var(--sb-muted)",
-            cursor: "pointer",
-          }}
+          className="city-chip city-chip--kids"
         >
+          {kidsOnly && <span aria-hidden="true">✓</span>}
           Kid-friendly
         </button>
+        {!loading && generatedAt && (
+          <span className="city-events-updated">Updated {formatAge(generatedAt)}</span>
+        )}
       </div>
 
-      {bucketEvents.length === 0 ? (
-        <div style={{ padding: "14px 0", color: "var(--sb-muted)", fontSize: 13, fontStyle: "italic" }}>
-          Nothing on the calendar for {emptyLabel}{(freeOnly || kidsOnly) ? " matching those filters." : "."}
-        </div>
-      ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {bucketEvents.slice(0, 12).map((e, i) => {
-            // In the weekend bucket, prepend a small day label when the date
-            // changes so the user can tell Sat events from Sun events.
-            const prev = i > 0 ? bucketEvents[i - 1] : null;
-            const showDayHeader = bucket === "weekend" && (!prev || prev.date !== e.date);
-            return (
-              <div key={e.id}>
-                {showDayHeader && (
-                  <div style={{
-                    fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700,
-                    letterSpacing: "0.08em", textTransform: "uppercase" as const,
-                    color: "var(--sb-muted)", marginTop: i === 0 ? 0 : 12, marginBottom: 4,
-                  }}>
-                    {new Date(e.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" })}
-                  </div>
-                )}
-                <EventRow event={e} />
-              </div>
-            );
-          })}
-          {bucketEvents.length > 12 && (
-            <a href={moreHref} style={{ fontSize: 12, fontWeight: 600, color: "var(--sb-accent)", padding: "8px 0", textDecoration: "none" }}>
-              +{bucketEvents.length - 12} more events →
-            </a>
-          )}
-        </div>
-      )}
-    </div>
+      <div className="city-events-card" aria-busy={loading}>
+        {loading ? (
+          <EventRowsSkeleton />
+        ) : bucketEvents.length === 0 ? (
+          <div className="city-events-empty">
+            <p className="city-events-empty-title">
+              Nothing on the calendar {emptyLabel}{filtersOn ? " with those filters" : ""}.
+            </p>
+            <p className="city-events-empty-sub">
+              {filtersOn
+                ? "Try clearing a filter."
+                : bucket === "today"
+                  ? "Tomorrow and this weekend are a tap away."
+                  : <a href={allEventsHref}>See everything coming up in {cityName} →</a>}
+            </p>
+          </div>
+        ) : (
+          <>
+            <ul className="city-events-list">
+              {bucketEvents.slice(0, 12).map((e, i) => {
+                // In the weekend bucket, a day label marks where Saturday
+                // ends and Sunday begins.
+                const prev = i > 0 ? bucketEvents[i - 1] : null;
+                const showDayHeader = bucket === "weekend" && (!prev || prev.date !== e.date);
+                return (
+                  <Fragment key={e.id}>
+                    {showDayHeader && (
+                      <li className="city-events-day">
+                        {new Date(e.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" })}
+                      </li>
+                    )}
+                    <EventRow event={e} />
+                  </Fragment>
+                );
+              })}
+            </ul>
+            {bucketEvents.length > 12 && (
+              <a href={moreHref} className="city-events-more">
+                +{bucketEvents.length - 12} more events →
+              </a>
+            )}
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -1346,20 +1248,13 @@ function CityRedditTiles({ cityId, cityName }: { cityId: string; cityName: strin
     : `Regional chatter from the Bay Area`;
 
   return (
-    <section
-      aria-label={`Reddit chatter for ${cityName}`}
-      style={{ marginTop: 8, marginBottom: 28, fontFamily: "'Inter', sans-serif" }}
-    >
-      <header style={{ marginBottom: 12 }}>
-        <h2 style={{ fontFamily: "var(--sb-serif)", fontSize: 20, fontWeight: 800, margin: 0, letterSpacing: -0.5, color: "var(--sb-ink)", lineHeight: 1.1 }}>
-          The Conversation
-        </h2>
-        <p style={{ fontSize: 12, color: "var(--sb-muted)", margin: "3px 0 0", fontWeight: 500 }}>
-          {subtitle}
-        </p>
-      </header>
+    <section className="city-section" aria-labelledby="city-reddit-heading">
+      <div className="sb-section-header city-section-head">
+        <h2 id="city-reddit-heading" className="sb-section-title">The Conversation</h2>
+        <p className="city-section-sub">{subtitle}</p>
+      </div>
 
-      <div className="cr-grid">
+      <div className="city-reddit-grid">
         {trimmed.map(({ post: p }) => {
           const image = (p as any).image as string | undefined;
           return (
@@ -1368,113 +1263,27 @@ function CityRedditTiles({ cityId, cityName }: { cityId: string; cityName: strin
               href={p.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="cr-tile"
-              style={{ background: image ? `#000 url(${image}) center/cover no-repeat` : "linear-gradient(135deg, #1e3a8a, #4c1d95)" }}
+              className="city-reddit-tile"
+              style={image ? { backgroundImage: `url(${image})` } : undefined}
             >
-              <div className="cr-tile-shade" />
-              <div className="cr-tile-top">
-                <span className="cr-badge">r/{p.sub}</span>
-              </div>
-              <div className="cr-tile-bottom">
-                <div className="cr-title">{p.displayTitle || p.title}</div>
-                <div className="cr-meta">
-                  {p.score > 0 && <><span>↑ {p.score}</span><span>·</span></>}
-                  {p.numComments > 0 && <><span>💬 {p.numComments}</span><span>·</span></>}
+              <span className="city-reddit-shade" aria-hidden="true" />
+              <span className="city-reddit-badge">r/{p.sub}</span>
+              <span className="city-reddit-bottom">
+                <span className="city-reddit-title">{p.displayTitle || p.title}</span>
+                <span className="city-reddit-meta">
+                  {p.score > 0 && <><span>↑ {p.score}</span><span aria-hidden="true">·</span></>}
+                  {p.numComments > 0 && <><span>💬 {p.numComments}</span><span aria-hidden="true">·</span></>}
                   <span>{chatterAge(p.ageHours)}</span>
-                </div>
-              </div>
+                </span>
+              </span>
             </a>
           );
         })}
       </div>
 
-      <p style={{ marginTop: 10, fontSize: 10, color: "var(--sb-light)", textAlign: "right" }}>
+      <p className="city-note" style={{ textAlign: "right" }}>
         Tap any post to jump into the thread on Reddit
       </p>
-
-      <style>{`
-        .cr-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 8px;
-        }
-        .cr-tile {
-          position: relative;
-          display: block;
-          aspect-ratio: 1 / 1;
-          border-radius: 12px;
-          overflow: hidden;
-          text-decoration: none;
-          color: #fff;
-          transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
-          box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-          cursor: pointer;
-        }
-        .cr-tile:hover {
-          transform: translateY(-2px) scale(1.02);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-        }
-        .cr-tile-shade {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.85) 100%);
-          pointer-events: none;
-        }
-        .cr-tile-top {
-          position: absolute;
-          top: 6px; left: 6px; right: 6px;
-          display: flex; align-items: center;
-          gap: 6px;
-          font-size: 9px; font-weight: 800;
-          letter-spacing: 0.4px; text-transform: uppercase;
-          z-index: 2;
-        }
-        .cr-badge {
-          background: rgba(255,255,255,0.95);
-          color: #111;
-          padding: 3px 7px;
-          border-radius: 999px;
-          line-height: 1;
-          white-space: nowrap;
-          max-width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        .cr-tile-bottom {
-          position: absolute;
-          left: 10px; right: 10px; bottom: 8px;
-          z-index: 2;
-        }
-        .cr-title {
-          font-size: 13px;
-          font-weight: 800;
-          line-height: 1.2;
-          color: #fff;
-          text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-          display: -webkit-box;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          margin-bottom: 3px;
-        }
-        .cr-meta {
-          display: flex;
-          gap: 5px;
-          font-size: 9px;
-          font-weight: 600;
-          color: rgba(255,255,255,0.85);
-          text-shadow: 0 1px 1px rgba(0,0,0,0.4);
-        }
-        @media (max-width: 760px) {
-          .cr-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-          }
-          .cr-title {
-            font-size: 13px;
-          }
-        }
-      `}</style>
     </section>
   );
 }

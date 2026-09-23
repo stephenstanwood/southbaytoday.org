@@ -47,8 +47,9 @@ const aboutSchema = JSON.stringify({
       city, and university calendars across 20+ feeds. Restaurant openings come from Santa Clara
       County environmental-health permit records. Council coverage is built from each city's
       official agenda and minutes systems, summarized into plain English with links back to the
-      original record on every page. Weather comes from the National Weather Service. Photos
-      come from the venues themselves and Creative Commons contributors, credited where shown.
+      original record on every page. Forecasts come from Google Weather, with the National
+      Weather Service as a backup. Photos come from the venues themselves and Creative Commons
+      contributors, credited where shown.
     </p>
     <p>
       Pipelines that gather and summarize this run on a mix of scripts and AI tooling, with
@@ -81,28 +82,83 @@ const aboutSchema = JSON.stringify({
 </CalendarShell>
 
 <style>
+  /* Article typography: ~65ch measure, generous leading, serif section
+     heads marked with a short day-arc rule. */
   .about-body {
-    max-width: 64ch;
+    max-width: 65ch;
+    font-size: 16.5px;
+    line-height: 1.72;
+    color: var(--sb-ink-2);
   }
   .about-body p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink);
-    margin: 0 0 14px;
+    margin: 0 0 1.05em;
+    text-wrap: pretty;
+  }
+  .about-body > p:first-child {
+    margin-bottom: 1.2em;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--sb-ink);
+  }
+  .about-body em {
+    font-family: var(--sb-serif);
+    font-size: 1.08em;
+    font-style: italic;
+    color: var(--sb-ink);
   }
   .about-body h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 21px;
+    margin: 46px 0 12px;
+    font-family: var(--sb-serif);
+    font-size: 25px;
     font-weight: 800;
-    margin: 26px 0 8px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--sb-ink);
+    text-wrap: balance;
+  }
+  .about-body h2::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 3px;
+    margin-bottom: 14px;
+    border-radius: 3px;
+    background: var(--sb-arc);
   }
   .about-body a {
-    color: inherit;
+    color: var(--sb-ink);
     font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(135, 56, 245, 0.4);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    transition: color 0.15s, text-decoration-color 0.15s;
   }
-  .about-fineprint {
-    margin-top: 26px;
-    font-size: 12.5px !important;
-    color: var(--light) !important;
+  .about-body a:hover {
+    color: var(--sb-accent-ink);
+    text-decoration-color: currentColor;
+  }
+  .about-body .about-fineprint {
+    margin: 40px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--sb-line);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--sb-light);
+  }
+  .about-body .about-fineprint a {
+    color: var(--sb-muted);
+  }
+  @media (max-width: 540px) {
+    .about-body {
+      font-size: 16px;
+    }
+    .about-body > p:first-child {
+      font-size: 17.5px;
+    }
+    .about-body h2 {
+      margin-top: 38px;
+      font-size: 22px;
+    }
   }
 </style>

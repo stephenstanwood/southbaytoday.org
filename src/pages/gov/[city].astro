@@ -123,28 +123,36 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
   </p>
 
   {meeting && meetingDayLabel ? (
-    <section class="gov-block gov-block--next">
-      <h2>Next meeting · {meetingDayLabel}</h2>
+    <section class="gcity-next" aria-labelledby="gcity-next-heading">
+      <h2 id="gcity-next-heading" class="gcity-next-head">
+        <span class="gcity-kicker">Next meeting</span>
+        <span class="gcity-next-date">{meetingDayLabel}</span>
+      </h2>
       {agendaPreview.length > 0 ? (
-        <ul>
-          {agendaPreview.map((item) => (
-            <li>{item.title}</li>
-          ))}
-        </ul>
+        <>
+          <h3 class="gcity-subhead">On the agenda</h3>
+          <ul class="gcity-list">
+            {agendaPreview.map((item) => (
+              <li>{item.title}</li>
+            ))}
+          </ul>
+        </>
       ) : (
-        <p class="gov-muted">Agenda not yet posted — check the city's calendar closer to the date.</p>
+        <p class="gcity-muted">Agenda not posted yet. Check the city's calendar closer to the date.</p>
       )}
       {meeting.url && (
-        <a class="cal-btn cal-btn--primary" href={meeting.url} rel="noopener noreferrer">
+        <a class="sb-btn sb-btn--primary gcity-next-cta" href={meeting.url} rel="noopener noreferrer">
           Full agenda ↗
         </a>
       )}
     </section>
   ) : (
-    <section class="gov-block gov-block--next">
-      <h2>Next meeting</h2>
-      <p class="gov-muted">
-        No upcoming meeting confirmed yet — check the{" "}
+    <section class="gcity-next gcity-next--empty" aria-labelledby="gcity-next-heading">
+      <h2 id="gcity-next-heading" class="gcity-next-head">
+        <span class="gcity-kicker">Next meeting</span>
+      </h2>
+      <p class="gcity-muted">
+        No upcoming meeting confirmed yet. Check the{" "}
         {cityWebsite ? (
           <a href={cityWebsite} rel="noopener noreferrer">city's calendar ↗</a>
         ) : (
@@ -154,20 +162,21 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
     </section>
   )}
 
-  <section class="gov-block">
-    <h2>{digest.body} · {digest.meetingDate}</h2>
-    <p class="gov-summary">{digest.summary}</p>
+  <article class="gcity-digest" aria-labelledby="gcity-digest-heading">
+    <p class="gcity-kicker">Latest meeting</p>
+    <h2 id="gcity-digest-heading" class="gcity-digest-title">{digest.body} · {digest.meetingDate}</h2>
+    <p class="gcity-summary">{digest.summary}</p>
     {(digest.keyTopics ?? []).length > 0 && (
       <>
-        <h3>What came up</h3>
-        <ul>
+        <h3 class="gcity-subhead">What came up</h3>
+        <ul class="gcity-list gcity-list--topics">
           {(digest.keyTopics ?? []).map((t) => (
             <li>{t}</li>
           ))}
         </ul>
       </>
     )}
-    <p class="gov-muted">
+    <p class="gcity-source">
       Summarized from the official record.
       {digest.sourceUrl && (
         <>
@@ -176,98 +185,197 @@ const agendaPreview = (meeting?.agendaItems ?? []).slice(0, 8);
         </>
       )}
     </p>
-  </section>
+  </article>
 
-  <div class="cal-detail-actions">
-    <a class="cal-btn" href="/gov">All South Bay councils</a>
-    <a class="cal-btn" href={`/city/${cityId}`}>{cityName} today</a>
+  <div class="gcity-actions">
+    <a class="sb-btn" href="/gov">← All South Bay councils</a>
+    <a class="sb-btn sb-btn--quiet" href={`/city/${cityId}`}>{cityName} today →</a>
   </div>
 </CalendarShell>
 
 <style>
-  .gov-block {
-    padding: 18px 0;
-    border-bottom: 1px solid var(--border-light);
-  }
-  .gov-block h2 {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 21px;
-    font-weight: 800;
-    margin: 0 0 10px;
-  }
-  .gov-block h3 {
-    font-family: "Space Mono", monospace;
-    font-size: 11px;
+  /* /gov/<city> — page-specific pieces. The masthead, breadcrumb, h1, and
+     .cal-sub intro come from CalendarShell; buttons are the house .sb-btn. */
+  .gcity-kicker {
+    display: block;
+    margin: 0;
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--muted);
-    margin: 16px 0 6px;
+    color: var(--sb-accent-ink);
   }
-  .gov-block ul {
-    margin: 0 0 12px;
+
+  .gcity-next {
+    margin: 0 0 30px;
+    padding: 22px 24px 24px;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    background: var(--sb-card);
+    box-shadow: var(--sb-shadow-sm);
+  }
+
+  .gcity-next-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+  }
+
+  .gcity-next-date {
+    font-family: var(--sb-serif);
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--sb-ink);
+    text-wrap: balance;
+  }
+
+  .gcity-next--empty .gcity-muted {
+    margin-top: 8px;
+  }
+
+  .gcity-next-cta {
+    margin-top: 18px;
+  }
+
+  .gcity-subhead {
+    margin: 20px 0 10px;
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sb-muted);
+  }
+
+  .gcity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gcity-list li {
+    position: relative;
     padding-left: 20px;
-    font-size: 14px;
-    line-height: 1.65;
-    color: var(--ink);
-  }
-  .gov-block li {
-    margin-bottom: 4px;
-  }
-  .gov-summary {
     font-size: 15px;
-    line-height: 1.65;
-    color: var(--ink);
+    line-height: 1.55;
+    color: var(--sb-ink);
+    text-wrap: pretty;
+  }
+
+  .gcity-list li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0.62em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sb-accent);
+    opacity: 0.6;
+  }
+
+  .gcity-muted {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--sb-muted);
+  }
+
+  .gcity-muted a,
+  .gcity-source a {
+    white-space: nowrap;
+    color: var(--sb-ink-2);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--sb-line-strong);
+    text-underline-offset: 3px;
+  }
+
+  .gcity-muted a:hover,
+  .gcity-source a:hover {
+    color: var(--sb-accent-ink);
+    text-decoration-color: currentColor;
+  }
+
+  .gcity-digest {
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--sb-line);
+  }
+
+  .gcity-digest-title {
+    margin: 8px 0 14px;
+    font-family: var(--sb-serif);
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--sb-ink);
+    text-wrap: balance;
+  }
+
+  .gcity-summary {
     max-width: 64ch;
-    margin: 0 0 8px;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--sb-ink-2);
+    text-wrap: pretty;
   }
-  .gov-muted {
-    font-size: 12.5px;
-    color: var(--light);
-    margin: 8px 0 0;
+
+  .gcity-list--topics {
+    max-width: 64ch;
   }
-  .gov-muted a {
-    color: inherit;
+
+  .gcity-list--topics li {
+    font-size: 15.5px;
+    color: var(--sb-ink-2);
   }
-  .gov-block--next {
-    background: #fff;
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    padding: 18px 20px;
-    margin-bottom: 8px;
+
+  .gcity-source {
+    margin: 22px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--sb-light);
   }
-  .cal-detail-actions {
+
+  .gcity-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 26px;
   }
-  .cal-btn {
-    display: inline-flex;
-    align-items: center;
-    min-height: 38px;
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: #fff;
-    color: var(--ink);
-    font-family: "Space Mono", monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    text-decoration: none;
-  }
-  .cal-btn:hover {
-    border-color: var(--ink);
-  }
-  .cal-btn--primary {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: #fff;
-    margin-top: 6px;
-  }
-  .cal-btn--primary:hover {
-    opacity: 0.88;
+
+  @media (max-width: 540px) {
+    .gcity-next {
+      padding: 18px 18px 20px;
+    }
+
+    .gcity-next-date {
+      font-size: 21px;
+    }
+
+    .gcity-digest-title {
+      font-size: 22px;
+    }
+
+    .gcity-summary {
+      font-size: 16px;
+    }
+
+    .gcity-list--topics li {
+      font-size: 15px;
+    }
+
+    .gcity-actions .sb-btn {
+      flex: 1 1 auto;
+      min-height: 44px;
+    }
   }
 </style>

@@ -1,8 +1,20 @@
 // ---------------------------------------------------------------------------
 // Photo strip — auto-scrolling marquee of curated South Bay photos
 // ---------------------------------------------------------------------------
+// Styles live in src/styles/sbt/home.css (loaded site-wide from BaseLayout,
+// so /city/<slug> pages get them too).
+//
+// Loading: the loop is 20 photos (~40-170 KB each) rendered twice. Fetching
+// all of them eagerly made the page's `load` event wait on ~1.3 MB of
+// third-party images (Flickr / Wikimedia / iNaturalist); on a slow or
+// contended connection `load` never fired inside 30 s. Now only the tiles
+// on screen at mount, plus whatever the marquee will reveal in the next
+// few seconds, load right away (3-4 tiles); the rest are released just
+// ahead of the marquee as it moves, and all at once after `load` fires.
+// The duplicate copy reuses the same URLs (browser cache).
+// ---------------------------------------------------------------------------
 
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useMemo, useRef } from "react";
 import curatedPhotosJson from "../../../data/south-bay/curated-photos.json";
 
 type CuratedPhoto = {
@@ -17,6 +29,14 @@ const ALL_PHOTOS = (curatedPhotosJson as unknown as { photos: CuratedPhoto[] }).
 // reads thin even duplicated) — fall back to the full South Bay pool instead
 // of a same-6-photos-on-repeat marquee.
 const MIN_CITY_POOL = 6;
+const STRIP_SIZE = 20;
+// Must match the animation duration of .sbt-strip-track in home.css.
+const LOOP_SECONDS = 90;
+// Tile width + margin-right (desktop). Only a fallback — the real pitch is
+// measured from the first tile after mount.
+const TILE_PITCH_FALLBACK = 286;
+// Server render / pre-mount placeholder tiles (enough to fill 800px).
+const PLACEHOLDER_TILES = 4;
 
 function seededShuffle<T>(arr: T[], seed: number): T[] {
   const out = [...arr];
@@ -37,6 +57,11 @@ type Props = {
   cityFilter?: string;
 };
 
+type IdleWindow = Window & {
+  requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+  cancelIdleCallback?: (id: number) => void;
+};
+
 export default memo(function PhotoStrip({ cityFilter }: Props) {
   // Server render and first client render show a fixed-height placeholder;
   // the strip itself mounts once, post-hydration, with its per-visit random
@@ -45,131 +70,168 @@ export default memo(function PhotoStrip({ cityFilter }: Props) {
   // every thumb fetched twice and the marquee stutters through hydration.
   const [seed, setSeed] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
+  // How many tiles (by loop index) have their <img> released so far.
+  const [revealed, setRevealed] = useState(0);
+  const frameRef = useRef<HTMLDivElement>(null);
   useEffect(() => { setSeed(Math.floor(Math.random() * 1_000_000)); }, []);
 
   // A tagged-but-thin city pool can't fill a seamless loop, so fall back to
   // the full pool rather than repeat the same handful of tiles.
-  const cityPool = cityFilter ? ALL_PHOTOS.filter((p) => p.city === cityFilter) : ALL_PHOTOS;
-  const pool = cityPool.length >= MIN_CITY_POOL ? cityPool : ALL_PHOTOS;
+  const pool = useMemo(() => {
+    const cityPool = cityFilter ? ALL_PHOTOS.filter((p) => p.city === cityFilter) : ALL_PHOTOS;
+    return cityPool.length >= MIN_CITY_POOL ? cityPool : ALL_PHOTOS;
+  }, [cityFilter]);
+  const strip = useMemo(
+    () => (seed === null ? [] : seededShuffle(pool, seed).slice(0, Math.min(STRIP_SIZE, pool.length))),
+    [pool, seed],
+  );
+  const count = strip.length;
+
+  // Release tile images just ahead of the marquee, then everything once the
+  // page has finished loading. The track moves one tile pitch every
+  // LOOP_SECONDS / count seconds, so at time t the last tile that is on
+  // screen (or will be within LOOKAHEAD seconds) is
+  // floor((t + LOOKAHEAD) / secondsPerTile + frameWidth / pitch).
+  useEffect(() => {
+    if (count === 0) return;
+    const LOOKAHEAD_S = 3;
+    const win = window as IdleWindow;
+    const frame = frameRef.current;
+    const firstTile = frame?.querySelector<HTMLElement>(".sbt-strip-tile");
+    const pitch = firstTile
+      ? firstTile.offsetWidth + (parseFloat(getComputedStyle(firstTile).marginRight) || 0)
+      : TILE_PITCH_FALLBACK;
+    const tilesAcross = (frame?.clientWidth || 800) / Math.max(pitch, 1);
+    const secondsPerTile = LOOP_SECONDS / count;
+    const started = performance.now();
+
+    let interval = 0;
+    const tick = () => {
+      const elapsed = (performance.now() - started) / 1000;
+      const lastIndex = Math.floor((elapsed + LOOKAHEAD_S) / secondsPerTile + tilesAcross);
+      const need = Math.min(count, lastIndex + 1);
+      setRevealed((r) => (need > r ? need : r));
+      if (need >= count) window.clearInterval(interval);
+    };
+    tick();
+    interval = window.setInterval(tick, 1000);
+
+    let idleId: number | null = null;
+    let timeoutId: number | null = null;
+    const revealAll = () => {
+      window.clearInterval(interval);
+      setRevealed(count);
+    };
+    const onLoad = () => {
+      if (win.requestIdleCallback) idleId = win.requestIdleCallback(revealAll, { timeout: 2000 });
+      else timeoutId = window.setTimeout(revealAll, 300);
+    };
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
+
+    return () => {
+      window.clearInterval(interval);
+      window.removeEventListener("load", onLoad);
+      if (idleId !== null) win.cancelIdleCallback?.(idleId);
+      if (timeoutId !== null) window.clearTimeout(timeoutId);
+    };
+  }, [count]);
 
   if (pool.length < 4) return null;
+
   if (seed === null) {
     return (
-      <div style={{ overflow: "hidden", borderRadius: 12 }}>
-        <div style={{ height: 200 }} />
+      <div className="sbt-strip" ref={frameRef}>
+        <div className="sbt-strip-viewport">
+          <div className="sbt-strip-track sbt-strip-track--static" aria-hidden="true">
+            {Array.from({ length: PLACEHOLDER_TILES }, (_, i) => (
+              <span key={i} className="sbt-strip-tile sbt-ph is-loading" />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }
-  const strip = seededShuffle(pool, seed).slice(0, Math.min(20, pool.length));
 
-  // `duplicate` marks the second, translateX(-50%)-only copy of the loop: it
-  // exists purely so the marquee wraps seamlessly and must be invisible to
-  // keyboard/AT users, who would otherwise hit every photo twice per lap.
-  const tile = (p: CuratedPhoto, keySuffix: string, duplicate: boolean) => (
+  return (
+    <div className="sbt-strip" ref={frameRef}>
+      <div className="sbt-strip-viewport">
+        <div className={`sbt-strip-track${paused ? " is-paused" : ""}`}>
+          {strip.map((p, i) => (
+            <StripTile key={p.id + "-a"} photo={p} load={i < revealed} duplicate={false} />
+          ))}
+          {/* Second copy exists only so translateX(-50%) wraps seamlessly;
+              hidden from keyboard/AT users so they meet each photo once. */}
+          {strip.map((p, i) => (
+            <StripTile key={p.id + "-b"} photo={p} load={i < revealed} duplicate />
+          ))}
+        </div>
+      </div>
+      <button
+        type="button"
+        className="sbt-strip-pause"
+        onClick={() => setPaused((v) => !v)}
+        aria-pressed={paused}
+        aria-label={paused ? "Play photo scroll" : "Pause photo scroll"}
+      >
+        {paused ? "▶" : "❚❚"}
+      </button>
+    </div>
+  );
+});
+
+const StripTile = memo(function StripTile({
+  photo: p,
+  load,
+  duplicate,
+}: {
+  photo: CuratedPhoto;
+  load: boolean;
+  duplicate: boolean;
+}) {
+  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  const credit = `${p.photographer ? `${p.photographer} · ` : ""}${p.license}`;
+  // Shimmer only while a fetch is actually in flight; tiles still waiting
+  // for their turn sit on the static warm wash.
+  const shimmer = load && state === "loading";
+  return (
     <a
-      key={p.id + keySuffix}
       href={p.photoPage}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={duplicate ? undefined : `${p.title} — ${p.photographer} — ${p.license}`}
       aria-hidden={duplicate ? "true" : undefined}
       tabIndex={duplicate ? -1 : undefined}
-      style={{
-        flexShrink: 0, display: "block", position: "relative",
-        height: 200, width: 280, overflow: "hidden", background: "#ccc",
-        borderRadius: 6,
-        // Spacing via margin, not flex gap: every tile is exactly 283px of
-        // pitch, so one copy is 20×283 and translateX(-50%) lands precisely
-        // on the second copy — flex gap left the loop 1.5px (gap/2) short,
-        // a visible snap every 90s cycle.
-        marginRight: 3,
-      }}
+      className={`sbt-strip-tile sbt-ph${shimmer ? " is-loading" : ""}`}
+      draggable={false}
     >
-      <img
-        src={p.thumb}
-        alt={p.title}
-        decoding="async"
-        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        // Keep the 280px box on a dead thumb (gray placeholder) — collapsing
-        // the tile changes track width mid-animation and shifts the strip.
-        onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
-      />
-      <div className="ps-caption">
-        <span style={{ fontSize: 9, color: "#fff", fontFamily: "'Space Mono', monospace", lineHeight: 1.5 }}>
-          {p.photographer ? `${p.photographer} · ` : ""}{p.license}
+      {load && state !== "error" && (
+        <img
+          src={p.thumb}
+          alt=""
+          width={280}
+          height={200}
+          decoding="async"
+          draggable={false}
+          className={`sbt-img ${state === "ready" ? "is-ready" : "is-pending"}`}
+          onLoad={() => setState("ready")}
+          // Keep the tile's box on a dead thumb — collapsing it would change
+          // the track width mid-animation and shift the whole strip.
+          onError={() => setState("error")}
+        />
+      )}
+      {state === "error" && (
+        <span className="sbt-strip-fallback" aria-hidden="true">
+          <span className="sbt-strip-fallback-title">{p.title}</span>
+          <span className="sbt-strip-fallback-credit">{credit}</span>
         </span>
-      </div>
+      )}
+      {state !== "error" && (
+        <span className="sbt-strip-cap" aria-hidden="true">
+          <span className="sbt-strip-cap-title">{p.title}</span>
+          <span className="sbt-strip-cap-credit">{credit}</span>
+        </span>
+      )}
     </a>
-  );
-
-  return (
-    <div style={{ overflow: "hidden", borderRadius: 12, position: "relative" }}>
-      <div className={`photo-strip-track${paused ? " is-paused" : ""}`}>
-        {strip.map(p => tile(p, "-a", false))}
-        {strip.map(p => tile(p, "-b", true))}
-      </div>
-      <button
-        type="button"
-        className="ps-pause-toggle"
-        onClick={() => setPaused((p) => !p)}
-        aria-pressed={paused}
-        aria-label={paused ? "Play photo scroll" : "Pause photo scroll"}
-      >
-        {paused ? "▶" : "❚❚"}
-      </button>
-      {/*
-        NOTE: @keyframes photo-scroll / .photo-strip-track / .ps-caption below
-        are byte-identical to SignalShell.astro's copy. That looks like drift
-        but isn't: PhotoStrip also mounts on /city/[slug] pages, which use
-        BaseLayout (not SignalShell) and never load SignalShell's CSS — so
-        this copy is load-bearing there. Do not delete without giving city
-        pages their own way to load the marquee styles first.
-      */}
-      <style>{`
-        @keyframes photo-scroll {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .photo-strip-track {
-          display: flex;
-          width: max-content;
-          animation: photo-scroll 90s linear infinite;
-          will-change: transform;
-        }
-        .photo-strip-track:hover { animation-play-state: paused; }
-        .photo-strip-track.is-paused { animation-play-state: paused; }
-        .ps-caption {
-          position: absolute; bottom: 0; left: 0; right: 0;
-          background: linear-gradient(transparent, rgba(0,0,0,0.7));
-          padding: 20px 8px 6px;
-          opacity: 0;
-          transition: opacity 0.15s;
-        }
-        .photo-strip-track a:hover .ps-caption { opacity: 1; }
-        .photo-strip-track a:focus-within .ps-caption { opacity: 1; }
-        .ps-pause-toggle {
-          position: absolute;
-          bottom: 8px;
-          right: 8px;
-          z-index: 2;
-          width: 28px;
-          height: 28px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: none;
-          border-radius: 50%;
-          background: rgba(18, 6, 47, 0.62);
-          color: #fff;
-          font-size: 11px;
-          line-height: 1;
-          cursor: pointer;
-        }
-        .ps-pause-toggle:hover,
-        .ps-pause-toggle:focus-visible {
-          background: rgba(18, 6, 47, 0.85);
-        }
-      `}</style>
-    </div>
   );
 });

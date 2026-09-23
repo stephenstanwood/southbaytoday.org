@@ -36,15 +36,29 @@ const notice = subscription ? SUBSCRIPTION_NOTICE[subscription] : undefined;
 
 interface Issue {
   date: string;
-  label: string;
+  weekday: string;
+  day: string;
+  weekend: boolean;
 }
+
+interface MonthGroup {
+  key: string;
+  label: string;
+  issues: Issue[];
+}
+
+const fmt = (date: string, opts: Intl.DateTimeFormatOptions) =>
+  new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", ...opts });
 
 let issues: Issue[] = [];
 
 const token = import.meta.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN;
 if (token) {
   try {
-    const { blobs } = await list({ prefix: "newsletters/", token, limit: 100 });
+    // list() pages in ascending pathname order, so a page smaller than the
+    // archive would return the OLDEST issues and silently drop new ones.
+    // 1000 (the API max per call) keeps this one request for years.
+    const { blobs } = await list({ prefix: "newsletters/", token, limit: 1000 });
     const dates = blobs
       .map((b) => {
         const m = b.pathname.match(/^newsletters\/(\d{4}-\d{2}-\d{2})\.html$/);
@@ -54,23 +68,35 @@ if (token) {
       .sort((a, b) => (a < b ? 1 : -1))
       .slice(0, 30);
 
-    issues = dates.map((date) => ({
-      date,
-      label: new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
-        timeZone: "UTC",
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }),
-    }));
+    issues = dates.map((date) => {
+      const dow = new Date(`${date}T12:00:00Z`).getUTCDay();
+      return {
+        date,
+        weekday: fmt(date, { weekday: "short" }),
+        day: String(Number(date.slice(8, 10))),
+        weekend: dow === 0 || dow === 6,
+      };
+    });
   } catch {
     // Blob listing failed — fall through to the signup-only view below.
   }
 }
+
+// Newest month first; issues inside a month stay newest-first.
+const months: MonthGroup[] = [];
+for (const issue of issues) {
+  const key = issue.date.slice(0, 7);
+  let group = months.find((m) => m.key === key);
+  if (!group) {
+    group = { key, label: fmt(`${key}-01`, { month: "long", year: "numeric" }), issues: [] };
+    months.push(group);
+  }
+  group.issues.push(issue);
+}
+const latestDate = issues[0]?.date;
 ---
 
-<CalendarShell title={title} description={description}>
+<CalendarShell title={title} description={description} footerSignup={false}>
   <nav class="cal-daynav" aria-label="Breadcrumb">
     <a href="/">← Home</a>
     <span class="cal-kicker">South Bay / Newsletter</span>
@@ -83,24 +109,40 @@ if (token) {
   </p>
 
   {notice && (
-    <div class:list={["nl-confirm-notice", `nl-confirm-${notice.tone}`]} role="status">
+    <div class:list={["nl-notice", `nl-notice--${notice.tone}`]} role="status">
       <strong>{notice.headline}</strong>
       <span>{notice.body}</span>
     </div>
   )}
 
-  <div class="nl-index-signup">
+  <div class="nl-signup" id="subscribe">
     <NewsletterSignup client:load variant="card" />
   </div>
 
   {issues.length > 0 ? (
-    <ul class="nl-index-list">
-      {issues.map((issue) => (
-        <li>
-          <a href={`/newsletters/${issue.date}`}>{issue.label}</a>
-        </li>
+    <section class="nl-archive" aria-labelledby="nl-archive-heading">
+      <h2 id="nl-archive-heading" class="nl-archive-title">Past issues</h2>
+      {months.map((month) => (
+        <div class="nl-month">
+          <h3 class="nl-month-head">{month.label}</h3>
+          <ol class="nl-issues">
+            {month.issues.map((issue) => (
+              <li>
+                <a
+                  href={`/newsletters/${issue.date}`}
+                  class:list={["nl-issue", { "is-weekend": issue.weekend, "is-latest": issue.date === latestDate }]}
+                >
+                  {issue.date === latestDate && <span class="nl-issue-flag">Latest</span>}
+                  <span class="nl-issue-dow">{issue.weekday}</span>
+                  <span class="nl-issue-day">{issue.day}</span>
+                  <span class="nl-sr-only">{month.label}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
       ))}
-    </ul>
+    </section>
   ) : (
     <p class="cal-copy">
       Past issues aren't listable right now — subscribe above and the day's issue lands in your inbox at 6:00&nbsp;AM.
@@ -109,55 +151,168 @@ if (token) {
 </CalendarShell>
 
 <style>
-  .nl-confirm-notice {
+  /* ── Confirm notice (?subscription=…) ── */
+  .nl-notice {
     display: flex;
     flex-direction: column;
     gap: 3px;
     margin: 0 0 20px;
     padding: 14px 18px;
-    border-radius: 4px;
-    border-left: 3px solid;
+    border: 1px solid;
+    border-radius: var(--sb-radius-md);
     font-size: 14px;
     line-height: 1.5;
+    color: var(--sb-ink-2);
   }
-  .nl-confirm-notice strong {
-    font-size: 15px;
+  .nl-notice strong {
+    font-family: var(--sb-serif);
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--sb-ink);
   }
-  .nl-confirm-ok {
-    background: #eef3ec;
-    border-left-color: #4c7a3f;
+  .nl-notice--ok {
+    border-color: #a7f3d0;
+    background: #ecfdf5;
   }
-  .nl-confirm-warn {
-    background: #fbf2e6;
-    border-left-color: #b3762a;
+  .nl-notice--warn {
+    border-color: #fde68a;
+    background: #fffbeb;
   }
-  .nl-index-signup {
-    margin: 0 0 28px;
+
+  /* ── Subscribe box ──
+     NewsletterSignup's card variant (sbt-nl-card in home.css) is the box;
+     the page only places it and gives the #subscribe anchor headroom under
+     the sticky nav. */
+  .nl-signup {
+    margin: 0 0 44px;
+    scroll-margin-top: 72px;
   }
-  .nl-index-list {
-    list-style: none;
+
+  /* ── Archive ── */
+  .nl-archive-title {
+    margin: 0 0 6px;
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sb-muted);
+  }
+  .nl-month + .nl-month {
+    margin-top: 34px;
+  }
+  .nl-month-head {
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sb-line);
+    font-family: var(--sb-serif);
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--sb-ink);
+  }
+  .nl-issues {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 10px;
     margin: 0;
     padding: 0;
+    list-style: none;
+  }
+  /* Each issue is a tear-off calendar page: weekday over a big date. */
+  .nl-issue {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-  .nl-index-list li {
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-light);
-    font-size: 14px;
-  }
-  .nl-index-list li:last-child {
-    border-bottom: none;
-  }
-  .nl-index-list a {
-    font-family: "Space Mono", monospace;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 84px;
+    padding: 12px 6px 11px;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    background: var(--sb-card);
+    box-shadow: var(--sb-shadow-xs);
+    color: var(--sb-ink);
     text-decoration: none;
+    transition: transform 0.25s var(--sb-ease), box-shadow 0.25s var(--sb-ease), border-color 0.2s;
   }
-  .nl-index-list a:hover {
-    text-decoration: underline;
+  .nl-issue:hover {
+    transform: translateY(-2px);
+    border-color: var(--sb-line-strong);
+    box-shadow: var(--sb-shadow-hover);
+  }
+  .nl-issue.is-weekend {
+    background: var(--sb-surface-warm);
+  }
+  .nl-issue-dow {
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sb-muted);
+  }
+  .nl-issue-day {
+    font-family: var(--sb-serif);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+    font-variant-numeric: lining-nums;
+  }
+  .nl-issue.is-latest {
+    border-color: var(--sb-ink);
+    background: var(--sb-ink);
+    color: #fff;
+    box-shadow: var(--sb-shadow-sm);
+  }
+  .nl-issue.is-latest .nl-issue-dow {
+    color: var(--sb-gold);
+  }
+  .nl-issue.is-latest:hover {
+    box-shadow: var(--sb-shadow-hover);
+  }
+  .nl-issue-flag {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 8px;
+    border-radius: var(--sb-radius-pill);
+    background: var(--sb-arc);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-shadow: 0 1px 1px rgba(19, 7, 47, 0.25);
+  }
+  .nl-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 540px) {
+    .nl-month-head {
+      font-size: 22px;
+    }
+    .nl-issues {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .nl-issue {
+      min-height: 76px;
+    }
+    .nl-issue-day {
+      font-size: 27px;
+    }
   }
 </style>

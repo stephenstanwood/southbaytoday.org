@@ -18,9 +18,11 @@ interface Props {
   activeTab?: MastheadProps["activeTab"];
   /** keep the page out of search indexes (retired event leaves) */
   noindex?: boolean;
+  /** false when the page already carries its own signup (e.g. /newsletters) */
+  footerSignup?: boolean;
 }
 
-const { title, description, ogImage, activeTab = null, noindex = false } = Astro.props;
+const { title, description, ogImage, activeTab = null, noindex = false, footerSignup = true } = Astro.props;
 ---
 
 <BaseLayout
@@ -42,7 +44,7 @@ const { title, description, ogImage, activeTab = null, noindex = false } = Astro
     </main>
 
     <SiteFooter>
-      <NewsletterSignup variant="minimal" client:visible />
+      {footerSignup && <NewsletterSignup variant="minimal" client:visible />}
     </SiteFooter>
   </div>
 </BaseLayout>

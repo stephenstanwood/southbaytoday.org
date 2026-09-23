@@ -1,0 +1,679 @@
+/* Food tab: openings & permits photo tiles, Opening Signals, and the weekly
+   farmers-market schedule. Every class is food- prefixed so the sheet can be
+   loaded site-wide from BaseLayout next to the other area files. */
+
+.food-view {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Status tones. Each one is a solid (dots, text on white) plus an RGB glow
+   for the dark photo-tile placeholder. Green = opened, house purple = final
+   inspection, teal = permit filed / coming soon. */
+.food-tone--open {
+  --food-tone: #15803d;
+  --food-glow: 34, 197, 94;
+}
+
+.food-tone--inspection {
+  --food-tone: var(--sb-accent);
+  --food-glow: 135, 56, 245;
+}
+
+.food-tone--soon {
+  --food-tone: #0e7490;
+  --food-glow: 34, 198, 211;
+}
+
+/* ── Hero stat: zero reads as "nothing yet", not as a broken number ──
+   (The chrome styles every span in a stat as its label, so undo that here.) */
+.sb-page-stat .food-stat-zero {
+  display: inline;
+  margin: 0;
+  color: var(--sb-light);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+}
+
+/* ── Section heads ── */
+.food-section {
+  min-width: 0;
+}
+
+.food-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.food-h2 {
+  margin: 0;
+  color: var(--sb-ink);
+  font-family: var(--sb-serif);
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.food-sub {
+  max-width: 440px;
+  margin: 0;
+  color: var(--sb-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: right;
+  text-wrap: balance;
+}
+
+.food-note {
+  margin: 14px 0 0;
+  color: var(--sb-light);
+  font-size: 12.5px;
+  line-height: 1.5;
+  text-align: right;
+  text-wrap: pretty;
+}
+
+/* ── Openings & permits ── */
+.food-group + .food-group {
+  margin-top: 30px;
+}
+
+.food-group-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: var(--sb-ink-2);
+  font-family: var(--sb-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.food-group-label::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--food-tone);
+}
+
+.food-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.food-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3.3;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(19, 7, 47, 0.1);
+  border-radius: var(--sb-radius-md);
+  /* The placeholder: deep ink with a status-toned glow and a warm sunset
+     corner. It shows while a photo loads, and stays (with a monogram) when
+     there is no photo, so a tile is never a flat black box. */
+  background:
+    radial-gradient(120% 85% at 0% 0%, rgba(var(--food-glow), 0.5), transparent 62%),
+    radial-gradient(90% 70% at 100% 100%, rgba(255, 123, 43, 0.26), transparent 66%),
+    linear-gradient(160deg, #2a1f47 0%, #13072f 100%);
+  box-shadow: var(--sb-shadow-sm);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s var(--sb-ease), box-shadow 0.25s var(--sb-ease);
+}
+
+.food-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sb-shadow-hover);
+}
+
+.food-tile:focus-visible {
+  border-radius: var(--sb-radius-md);
+  outline: 3px solid rgba(135, 56, 245, 0.7);
+  outline-offset: 3px;
+}
+
+.food-tile-ph {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Oversized, cropped initial: a typographic stand-in for a missing photo. */
+.food-tile-mono {
+  position: absolute;
+  top: -0.2em;
+  right: -0.06em;
+  color: rgba(255, 255, 255, 0.13);
+  font-family: var(--sb-serif);
+  font-size: 128px;
+  font-weight: 900;
+  line-height: 1;
+  user-select: none;
+}
+
+.food-tile[data-photo="loading"] .food-tile-ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.09) 50%, transparent 70%);
+  background-size: 220% 100%;
+  animation: sb-skeleton 1.4s ease-in-out infinite;
+}
+
+.food-tile-img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  filter: saturate(1.04);
+  transition: opacity 0.35s var(--sb-ease), transform 0.5s var(--sb-ease);
+}
+
+.food-tile[data-photo="loading"] .food-tile-img {
+  opacity: 0;
+}
+
+.food-tile:hover .food-tile-img {
+  transform: scale(1.04);
+}
+
+/* Legibility: an ink-tinted scrim that stays clear over the top of the photo
+   and firms up under the text block. */
+.food-tile-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(19, 7, 47, 0.16) 0%,
+    rgba(19, 7, 47, 0) 20%,
+    rgba(19, 7, 47, 0.08) 32%,
+    rgba(19, 7, 47, 0.56) 50%,
+    rgba(19, 7, 47, 0.86) 70%,
+    rgba(19, 7, 47, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+.food-tile-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 20px);
+  padding: 5px 9px 5px 8px;
+  border-radius: var(--sb-radius-pill);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px rgba(19, 7, 47, 0.18);
+  color: var(--sb-ink);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.food-tile-badge::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--food-tone);
+}
+
+.food-tile-body {
+  position: absolute;
+  right: 12px;
+  bottom: 11px;
+  left: 12px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  text-shadow: 0 1px 2px rgba(19, 7, 47, 0.55);
+}
+
+.food-tile-city {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.food-tile-name {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #fff;
+  font-size: 15.5px;
+  font-weight: 750;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.food-tile-blurb {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 12.5px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.food-tile-addr,
+.food-tile-date {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 12px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.food-tile-date {
+  color: #fff;
+  font-weight: 650;
+}
+
+/* ── Opening Signals ── */
+.food-pulse-list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.food-pulse-row {
+  /* Tones for the icon tile and label; closures stay on rust, never red. */
+  --food-pulse-ink: #166534;
+  --food-pulse-tint: #ecfdf3;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--sb-line);
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.food-pulse-row:first-child {
+  border-top: 0;
+}
+
+.food-pulse-row--activity {
+  --food-pulse-ink: #0e6874;
+  --food-pulse-tint: #e6f6f8;
+}
+
+.food-pulse-row--closing {
+  --food-pulse-ink: #9a3412;
+  --food-pulse-tint: #fff1e6;
+}
+
+.food-pulse-row:hover {
+  background: var(--sb-surface-warm);
+}
+
+.food-pulse-row:focus-visible {
+  border-radius: 0;
+  outline-offset: -3px;
+}
+
+.food-pulse-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--sb-radius-sm);
+  background: var(--food-pulse-tint);
+  color: var(--food-pulse-ink);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.food-pulse-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.food-pulse-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
+.food-pulse-name {
+  color: var(--sb-ink);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  transition: color 0.15s;
+}
+
+.food-pulse-row:hover .food-pulse-name {
+  color: var(--sb-accent-ink);
+}
+
+.food-pulse-tag {
+  padding: 4px 8px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--food-pulse-tint);
+  color: var(--food-pulse-ink);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.food-pulse-blurb {
+  color: var(--sb-ink-2);
+  font-size: 14px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.food-pulse-meta {
+  color: var(--sb-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.food-pulse-val,
+.food-pulse-date {
+  white-space: nowrap;
+}
+
+.food-pulse-val {
+  color: var(--sb-ink-2);
+  font-weight: 600;
+}
+
+.food-pulse-go {
+  color: var(--sb-light);
+  font-size: 15px;
+  line-height: 1;
+  transition: color 0.15s, transform 0.2s var(--sb-ease);
+}
+
+.food-pulse-row:hover .food-pulse-go {
+  color: var(--sb-ink);
+  transform: translate(2px, -2px);
+}
+
+/* ── Farmers markets ── */
+.food-market-week {
+  padding: 4px 20px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.food-market-day {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--sb-line);
+}
+
+.food-market-day:first-child {
+  border-top: 0;
+}
+
+.food-market-day-head {
+  padding-top: 13px;
+  color: var(--sb-muted);
+  font-family: var(--sb-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.food-market-day.is-today .food-market-day-head {
+  padding-top: 9px;
+}
+
+.food-market-day.is-today .food-market-day-head > span {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.food-market-items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 14px;
+}
+
+.food-market-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 7px 8px;
+  border-radius: var(--sb-radius-sm);
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+a.food-market-row:hover {
+  background: var(--sb-surface-warm);
+}
+
+a.food-market-row:hover .food-market-name {
+  color: var(--sb-accent-ink);
+}
+
+.food-market-emoji {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-warm);
+  font-size: 19px;
+  line-height: 1;
+}
+
+.food-market-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.food-market-name {
+  color: var(--sb-ink);
+  font-size: 14.5px;
+  font-weight: 650;
+  line-height: 1.3;
+  text-wrap: pretty;
+  transition: color 0.15s;
+}
+
+.food-market-meta {
+  color: var(--sb-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.food-market-time {
+  color: var(--sb-ink-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .food-tile-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .food-market-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .food-view {
+    gap: 34px;
+  }
+
+  .food-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .food-h2 {
+    font-size: 25px;
+  }
+
+  .food-sub {
+    max-width: none;
+    font-size: 13.5px;
+    text-align: left;
+  }
+
+  .food-note {
+    text-align: left;
+  }
+
+  .food-tile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .food-tile {
+    aspect-ratio: 4 / 5;
+  }
+
+  .food-tile-badge {
+    top: 8px;
+    left: 8px;
+    max-width: calc(100% - 16px);
+    padding: 5px 8px 5px 7px;
+    letter-spacing: 0.08em;
+  }
+
+  .food-tile-body {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+
+  .food-tile-name {
+    font-size: 14.5px;
+  }
+
+  .food-tile-mono {
+    font-size: 104px;
+  }
+
+  .food-pulse-row {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 13px 14px;
+  }
+
+  .food-pulse-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .food-pulse-name {
+    font-size: 14.5px;
+  }
+
+  .food-market-week {
+    padding: 2px 14px;
+  }
+
+  .food-market-day {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 0;
+  }
+
+  .food-market-day-head,
+  .food-market-day.is-today .food-market-day-head {
+    padding: 2px 0 0;
+  }
+
+  .food-market-row {
+    padding: 7px 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .food-tile:hover,
+  .food-tile:hover .food-tile-img,
+  .food-pulse-row:hover .food-pulse-go {
+    transform: none;
+  }
+
+  .food-tile[data-photo="loading"] .food-tile-ph::after {
+    animation: none;
+  }
+}

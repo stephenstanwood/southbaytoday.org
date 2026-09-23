@@ -1,0 +1,953 @@
+/* City pages (/city/<slug>) — CityPage.tsx.
+   BaseLayout loads this sheet site-wide with the other area sheets, so every
+   selector is scoped by a `city-` class. Section heads reuse the shared
+   `.sb-section-header` / `.sb-section-title` from chrome.css; the day plan
+   reuses the homepage's `.sbt-plan-*` cards from home.css. */
+
+/* ── Page frame ── */
+/* Same 800px content column as the homepage shell, inside the house gutter. */
+.city-main {
+  max-width: calc(800px + 2 * var(--sb-gutter));
+  margin: 0 auto;
+  padding: 0 var(--sb-gutter) 40px;
+}
+
+.city-section {
+  margin-top: 48px;
+}
+
+/* Section head: shared chrome head, with an optional action on the right. */
+.sb-section-header.city-section-head {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 16px;
+}
+
+.city-section-head h2 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.city-section-sub {
+  flex-basis: 100%;
+  margin: -2px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--sb-muted);
+}
+
+/* Small quiet pill used for section actions (All events, Shuffle). */
+.sb-btn.city-action {
+  min-height: 34px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+}
+
+.city-note {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--sb-light);
+  text-wrap: pretty;
+}
+
+/* ── Hero ── */
+.city-hero {
+  padding: 30px 0 22px;
+  text-align: center;
+}
+
+.sb-eyebrow.city-hero-kicker {
+  margin: 0;
+  color: var(--sb-accent-ink);
+}
+
+.city-hero-title {
+  margin: 10px 0 0;
+  font-family: var(--sb-serif);
+  font-size: clamp(44px, 7vw, 60px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--sb-ink);
+  text-wrap: balance;
+}
+
+.city-hero-rule {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin: 18px auto 0;
+  border-radius: 3px;
+  background: var(--sb-arc);
+}
+
+/* Summer-only nudge to /camps (amber matches CampsView's own tip banner). */
+.city-camps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 42px;
+  margin: 0 auto 18px;
+  padding: 8px 18px 8px 14px;
+  border: 1px solid #fde68a;
+  border-radius: var(--sb-radius-pill);
+  background: #fffbeb;
+  color: #92400e;
+  font-size: 13.5px;
+  font-weight: 650;
+  line-height: 1.35;
+  text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s var(--sb-ease);
+}
+
+.city-camps:hover {
+  border-color: #f59e0b;
+  box-shadow: var(--sb-shadow-sm);
+  transform: translateY(-1px);
+}
+
+.city-camps-arrow {
+  margin-left: auto;
+  font-weight: 800;
+}
+
+.city-forecast {
+  margin-top: 4px;
+}
+
+.city-photos {
+  margin-top: 16px;
+}
+
+/* ── Day plan ──
+   Cards, skeletons, and the loader are the homepage's own `.sbt-plan-*`
+   markup, styled by home.css (loaded site-wide). Only city-specific
+   placement lives here. */
+.city-plan {
+  margin-top: 30px;
+}
+
+/* The homepage's question panel (.sbt-hero), minus its toolbar row. */
+.city-plan-hero .sbt-hero-title {
+  margin: 0;
+}
+
+/* Unsplash credit: on the homepage it sits under the thumbnail inside the
+   card link; here it follows the link (links can't nest), tucked under the
+   thumbnail column. */
+/* Photo fade shared by the Open Right Now cards. */
+.city-open-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s var(--sb-ease);
+}
+
+.city-open-media img.is-loaded {
+  opacity: 1;
+}
+
+/* Events skeleton: keeps the icon tile's box but lets the shimmer fill it. */
+.city-skel-box {
+  background: none;
+}
+
+.city-skel-box > .sb-skeleton {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.city-event-icon.city-skel-box {
+  position: relative;
+}
+
+/* ── Events ── */
+.city-seg {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-pill);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--sb-shadow-xs);
+}
+
+.city-seg-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: var(--sb-radius-pill);
+  background: transparent;
+  color: var(--sb-ink);
+  font: inherit;
+  line-height: 1.1;
+  cursor: pointer;
+  transition: background 0.2s var(--sb-ease), color 0.2s;
+}
+
+.city-seg-btn:hover {
+  background: var(--sb-surface-tint);
+}
+
+.city-seg-btn[aria-pressed="true"] {
+  background: var(--sb-ink);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(19, 7, 47, 0.18);
+}
+
+.city-seg-label {
+  font-family: var(--sb-serif);
+  font-size: 15.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.city-seg-count {
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sb-light);
+  white-space: nowrap;
+}
+
+.city-seg-btn[aria-pressed="true"] .city-seg-count {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.city-seg-count .sb-skeleton {
+  width: 52px;
+  height: 9px;
+  margin: 2px 0;
+}
+
+.city-seg-btn[aria-pressed="true"] .sb-skeleton {
+  background: rgba(255, 255, 255, 0.22);
+  animation: none;
+}
+
+.city-events-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.city-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  padding: 5px 14px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
+  color: var(--sb-muted);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.city-chip:hover {
+  border-color: var(--sb-ink);
+  color: var(--sb-ink);
+}
+
+.city-chip--free[aria-pressed="true"] {
+  border-color: #047857;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.city-chip--kids[aria-pressed="true"] {
+  border-color: #b45309;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.city-events-updated {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--sb-light);
+  white-space: nowrap;
+}
+
+.city-events-card {
+  overflow: hidden;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.city-events-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.city-event + .city-event {
+  border-top: 1px solid var(--sb-line);
+}
+
+.city-events-day {
+  padding: 10px 16px 8px;
+  border-top: 1px solid var(--sb-line);
+  border-bottom: 1px solid var(--sb-line);
+  background: var(--sb-surface-warm);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.city-events-day:first-child {
+  border-top: 0;
+}
+
+.city-event-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 16px;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+a.city-event-link:hover {
+  background: var(--sb-surface-tint);
+}
+
+a.city-event-link:hover .city-event-title {
+  color: var(--sb-accent-ink);
+}
+
+a.city-event-link:focus-visible {
+  outline-offset: -3px;
+}
+
+.city-event-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-tint);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.city-event-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.city-event-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.35;
+  color: var(--sb-ink);
+  text-wrap: pretty;
+  transition: color 0.15s;
+}
+
+.city-event-meta {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--sb-muted);
+  text-wrap: pretty;
+}
+
+.city-event-time {
+  font-weight: 700;
+  color: var(--sb-ink-2);
+  white-space: nowrap;
+}
+
+.city-event-dot {
+  color: var(--sb-light);
+}
+
+.city-event-tag {
+  flex-shrink: 0;
+  align-self: center;
+  padding: 3px 9px;
+  border-radius: var(--sb-radius-pill);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.city-event-tag--free {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.city-event-online {
+  font-weight: 700;
+  color: #1d4ed8;
+  white-space: nowrap;
+}
+
+.city-events-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border-top: 1px solid var(--sb-line);
+  background: var(--sb-surface-warm);
+  color: var(--sb-accent-ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.city-events-more:hover {
+  background: var(--sb-surface-tint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.city-events-empty {
+  padding: 26px 20px;
+  text-align: center;
+}
+
+.city-events-empty-title {
+  margin: 0;
+  font-family: var(--sb-serif);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--sb-ink);
+  text-wrap: balance;
+}
+
+.city-events-empty-sub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--sb-muted);
+}
+
+.city-event--skeleton .city-event-link {
+  align-items: center;
+}
+
+/* ── Reddit tiles ── */
+.city-reddit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.city-reddit-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--sb-radius-md);
+  background-color: var(--sb-ink);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: var(--sb-shadow-sm);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s var(--sb-ease), box-shadow 0.25s var(--sb-ease);
+}
+
+.city-reddit-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sb-shadow-hover);
+}
+
+.city-reddit-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(19, 7, 47, 0) 25%, rgba(19, 7, 47, 0.55) 65%, rgba(19, 7, 47, 0.9) 100%);
+  pointer-events: none;
+}
+
+.city-reddit-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  max-width: calc(100% - 16px);
+  overflow: hidden;
+  padding: 4px 8px;
+  border-radius: var(--sb-radius-pill);
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--sb-ink);
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.city-reddit-bottom {
+  position: absolute;
+  right: 11px;
+  bottom: 10px;
+  left: 11px;
+  z-index: 2;
+}
+
+.city-reddit-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 4px;
+  font-size: 13.5px;
+  font-weight: 750;
+  line-height: 1.25;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.city-reddit-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Open Right Now ── */
+.city-open-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.city-open-grid[data-count="2"],
+.city-open-grid[data-count="4"] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.city-open-grid[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.city-open-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.25s var(--sb-ease), box-shadow 0.25s var(--sb-ease), border-color 0.2s;
+}
+
+.city-open-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sb-shadow-hover);
+  border-color: var(--sb-line-strong);
+}
+
+.city-open-card:hover .city-open-name {
+  color: var(--sb-accent-ink);
+}
+
+.city-open-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--sb-surface-tint);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.city-open-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px 14px 14px;
+}
+
+.city-open-kicker {
+  overflow: hidden;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sb-light);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.city-open-name {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0;
+  font-family: var(--sb-serif);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.22;
+  color: var(--sb-ink);
+  transition: color 0.15s;
+}
+
+.city-open-rating {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 12.5px;
+  color: var(--sb-light);
+  white-space: nowrap;
+}
+
+.city-open-stars {
+  font-weight: 800;
+  color: #b45309;
+}
+
+.city-open-cta {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sb-accent-ink);
+}
+
+/* One open spot: a deliberate wide spotlight card instead of a lone tile. */
+.city-open-grid[data-count="1"] .city-open-card {
+  flex-direction: row;
+}
+
+.city-open-grid[data-count="1"] .city-open-media {
+  width: 44%;
+  max-width: 340px;
+  flex-shrink: 0;
+  aspect-ratio: auto;
+  min-height: 190px;
+  font-size: 40px;
+}
+
+.city-open-grid[data-count="1"] .city-open-body {
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 26px;
+}
+
+.city-open-grid[data-count="1"] .city-open-name {
+  font-size: 26px;
+  line-height: 1.12;
+}
+
+.city-open-grid[data-count="1"] .city-open-rating {
+  font-size: 14px;
+}
+
+.city-open-grid[data-count="1"] .city-open-cta {
+  margin-top: 6px;
+}
+
+/* ── At City Hall ── */
+.city-hall-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+
+.city-hall-grid[data-count="1"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.city-hall-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  padding: 18px 20px 18px;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.city-hall-kicker {
+  margin: 0;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.city-hall-title {
+  margin: 6px 0 0;
+  font-family: var(--sb-serif);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--sb-ink);
+  text-wrap: balance;
+}
+
+.city-hall-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.city-hall-agenda li {
+  padding-left: 12px;
+  border-left: 2px solid var(--sb-line-strong);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--sb-ink-2);
+  text-wrap: pretty;
+}
+
+.city-hall-agenda .city-hall-more {
+  border-left-color: transparent;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--sb-light);
+}
+
+.city-hall-summary {
+  max-width: 65ch;
+  margin: 10px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--sb-muted);
+  text-wrap: pretty;
+}
+
+.city-hall-link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--sb-accent-ink);
+  text-decoration: none;
+}
+
+.city-hall-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Meeting happening today: brand ink card with the day-arc edge. */
+.city-hall-card--tonight {
+  background: var(--sb-ink);
+  border-color: var(--sb-ink);
+  color: #fff;
+}
+
+.city-hall-card--tonight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: var(--sb-arc);
+}
+
+.city-hall-card--tonight .city-hall-kicker {
+  color: var(--sb-gold);
+}
+
+.city-hall-card--tonight .city-hall-title {
+  color: #fff;
+}
+
+.city-hall-card--tonight .city-hall-agenda li {
+  border-left-color: rgba(255, 255, 255, 0.24);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.city-hall-card--tonight .city-hall-agenda .city-hall-more {
+  border-left-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.city-hall-card--tonight .city-hall-link {
+  color: #d9c7ff;
+}
+
+/* ── Back row ── */
+.city-backrow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 48px;
+  padding-top: 20px;
+  border-top: 1px solid var(--sb-line);
+}
+
+.city-backrow .sb-btn {
+  min-height: 42px;
+  padding: 9px 18px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .city-hall-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .city-reddit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  /* The link strip under the footer carries the room the fixed feedback
+     button needs, so the page itself only needs normal breathing space. */
+  .city-main {
+    padding-bottom: 32px;
+  }
+
+  .city-section {
+    margin-top: 40px;
+  }
+
+  /* Phones: the photo strip runs edge to edge, as on the homepage. */
+  .city-photos {
+    margin-inline: calc(-1 * var(--sb-gutter));
+  }
+
+  .city-hero {
+    padding: 24px 0 18px;
+  }
+
+  .city-hero-rule {
+    margin-top: 14px;
+  }
+
+  .sb-btn.city-action {
+    min-height: 40px;
+  }
+
+  .city-seg-btn {
+    min-height: 54px;
+    padding: 6px 4px;
+  }
+
+  .city-seg-label {
+    font-size: 14.5px;
+  }
+
+  .city-chip {
+    min-height: 40px;
+  }
+
+  .city-event-link {
+    padding: 12px 14px;
+  }
+
+  /* Phones: a tidy stack of horizontal cards reads better than tiny tiles. */
+  .city-open-grid,
+  .city-open-grid[data-count] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .city-open-card,
+  .city-open-grid[data-count="1"] .city-open-card {
+    flex-direction: row;
+  }
+
+  .city-open-media,
+  .city-open-grid[data-count="1"] .city-open-media {
+    width: 112px;
+    max-width: none;
+    min-height: 100px;
+    aspect-ratio: auto;
+    font-size: 28px;
+  }
+
+  .city-open-body,
+  .city-open-grid[data-count="1"] .city-open-body {
+    justify-content: center;
+    gap: 4px;
+    padding: 12px 14px;
+  }
+
+  .city-open-name,
+  .city-open-grid[data-count="1"] .city-open-name {
+    font-size: 17px;
+  }
+
+  .city-open-grid[data-count="1"] .city-open-rating {
+    font-size: 12.5px;
+  }
+
+  .city-open-cta {
+    display: none;
+  }
+
+  .city-hall-card {
+    padding: 16px 16px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city-camps:hover,
+  .city-reddit-tile:hover,
+  .city-open-card:hover {
+    transform: none;
+  }
+}
