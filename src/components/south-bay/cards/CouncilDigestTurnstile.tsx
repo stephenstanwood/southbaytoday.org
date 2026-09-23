@@ -26,8 +26,9 @@ interface Props {
   onRefresh: (city: City) => Promise<void> | void;
   loading: Set<string>;
   errors: Map<string, string>;
-  /** Pacific date the digest ages count to: the build's day while hydrating,
-   *  then the reader's (GovernmentView's useTodayPT). */
+  /** Pacific date for the digest ages and the next-meeting check: the
+   *  build's day while hydrating, then the reader's (GovernmentView's
+   *  useTodayPT). */
   todayIso: string;
 }
 
@@ -70,14 +71,6 @@ export default function CouncilDigestTurnstile({
   const [index, setIndex] = useState(0);
   const chipsRef = useRef<HTMLDivElement>(null);
   const activeChipRef = useRef<HTMLButtonElement>(null);
-  // A meeting that already happened isn't "next". The feed refreshes nightly,
-  // but a page built the day before (or a tab left open) can still carry it.
-  // Checked after mount so the prerendered HTML doesn't depend on the clock.
-  const [clientTodayIso, setClientTodayIso] = useState<string | null>(null);
-
-  useEffect(() => {
-    setClientTodayIso(new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }));
-  }, []);
 
   useEffect(() => {
     if (index >= ordered.length) setIndex(0);
@@ -116,7 +109,11 @@ export default function CouncilDigestTurnstile({
   const city = ordered[index];
   const digest = digests.get(city);
   const upcoming = upcomingMeetings[city];
-  const nextMeeting = upcoming && (clientTodayIso === null || upcoming.date >= clientTodayIso) ? upcoming : undefined;
+  // A meeting that already happened isn't "next". The feed refreshes nightly,
+  // but a page built the day before (or a tab left open) can still carry it.
+  // todayIso is the build's day while hydrating, so the prerendered HTML
+  // leaves it out too and the card doesn't shift when the page hydrates.
+  const nextMeeting = upcoming && upcoming.date >= todayIso ? upcoming : undefined;
   const isLoading = loading.has(city);
   const error = errors.get(city);
   const multi = ordered.length > 1;
