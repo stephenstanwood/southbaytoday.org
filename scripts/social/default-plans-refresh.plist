@@ -3,7 +3,16 @@
 <!--
   Refresh homepage/newsletter plans after the nightly GitHub event feed and
   before the 3:40 AM newsletter build. The wrapper holds the shared repo lock,
-  merges canonical source/data safely, and keeps the generated plan local.
+  merges canonical source/data safely, commits the plans, and pushes them to
+  origin/main so the homepage deploy picks them up. The 3:30 slot is a retry:
+  it is a no-op once today's plans are on origin/main.
+
+  Node runs as a child of /bin/zsh, never as the launchd program itself. macOS
+  pins a LaunchAgent to the binary it approved, so after `brew upgrade node`
+  (the Sunday 3:20 AM tool-updater) the next direct launch is SIGKILLed with
+  "Launch Constraint Violation". That cost the 2026-09-21 plans and the
+  2026-09-20 newsletter. `-f` skips zsh startup files; `; exit $?` keeps zsh
+  from exec'ing node in place.
 -->
 <plist version="1.0">
 <dict>
@@ -11,18 +20,28 @@
     <string>org.southbaytoday.default-plans-refresh</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/node</string>
-        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/social/scheduled-default-plans.mjs</string>
+        <string>/bin/zsh</string>
+        <string>-f</string>
+        <string>-c</string>
+        <string>/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/social/scheduled-default-plans.mjs; exit $?</string>
     </array>
     <key>WorkingDirectory</key>
     <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
     <key>StartCalendarInterval</key>
-    <dict>
-        <key>Hour</key>
-        <integer>3</integer>
-        <key>Minute</key>
-        <integer>20</integer>
-    </dict>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>3</integer>
+            <key>Minute</key>
+            <integer>20</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>3</integer>
+            <key>Minute</key>
+            <integer>30</integer>
+        </dict>
+    </array>
     <key>StandardOutPath</key>
     <string>/Users/stephenstanwood/Library/Logs/default-plans-refresh.log</string>
     <key>StandardErrorPath</key>

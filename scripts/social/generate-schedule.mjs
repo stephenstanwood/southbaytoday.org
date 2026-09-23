@@ -84,9 +84,9 @@ const daysAhead = parseInt(args.find((_, i) => args[i - 1] === "--days") || Stri
 // generator: it calls /api/plan-day directly for adults + kids instead of
 // depending on social-schedule.json.
 const heroOnly = args.includes("--hero-only");
-// --local-only: commit the refreshed homepage/newsletter plans on the Mini but
-// leave origin/main untouched. The guarded newsletter preflight will merge
-// canonical remote changes before the next run.
+// --local-only: commit the refreshed homepage/newsletter plans without pushing.
+// scheduled-default-plans.mjs passes it because it pushes the commit itself,
+// after its guarded preflight, while it still holds the Mini repo lock.
 const localOnly = args.includes("--local-only");
 
 // Generic URL hosts that mean "no real event link" — copy generated against

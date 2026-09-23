@@ -9,6 +9,11 @@
   safely fast-forwards a clean behind checkout, and fails closed on dirty,
   diverged, or locally modified source before it invokes send.mjs.
 
+  Node runs as a child of /bin/zsh, never as the launchd program itself: after
+  `brew upgrade node`, macOS SIGKILLs the next direct launch with "Launch
+  Constraint Violation", which is how the 2026-09-20 issue never sent. See
+  scripts/social/default-plans-refresh.plist.
+
   Install on the Mini:
     cp scripts/newsletter/newsletter-send.plist ~/Library/LaunchAgents/org.southbaytoday.newsletter-send.plist
     launchctl bootout gui/$(id -u)/org.southbaytoday.newsletter-send 2>/dev/null || true
@@ -23,8 +28,10 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/node</string>
-        <string>/Users/stephenstanwood/Projects/southbaytoday.org/scripts/newsletter/scheduled-send.mjs</string>
+        <string>/bin/zsh</string>
+        <string>-f</string>
+        <string>-c</string>
+        <string>/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/newsletter/scheduled-send.mjs; exit $?</string>
     </array>
 
     <key>WorkingDirectory</key>
