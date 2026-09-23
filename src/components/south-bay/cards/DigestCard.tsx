@@ -55,24 +55,13 @@ export default function DigestCard({ digest, onRefresh, upcomingMeeting }: Props
         </ul>
       )}
       {upcomingMeeting?.agendaItems && upcomingMeeting.agendaItems.length > 0 && (
-        <div style={{ marginTop: 12, marginBottom: 4 }}>
-          <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--sb-muted)", marginBottom: 6 }}>
+        <div className="sb-digest-agenda">
+          <div className="sb-digest-agenda-label">
             On the agenda · {upcomingMeeting.displayDate}
           </div>
-          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 4 }}>
+          <ul>
             {upcomingMeeting.agendaItems.map((item, i) => (
-              <li
-                key={i}
-                style={{
-                  fontSize: 12,
-                  color: "var(--sb-text)",
-                  lineHeight: 1.4,
-                  paddingLeft: 10,
-                  borderLeft: "2px solid var(--sb-border-light)",
-                }}
-              >
-                {item.title}
-              </li>
+              <li key={i}>{item.title}</li>
             ))}
           </ul>
         </div>
@@ -83,13 +72,13 @@ export default function DigestCard({ digest, onRefresh, upcomingMeeting }: Props
           <span className="sb-digest-next">
             Next meeting:{" "}
             {nextUrl ? (
-              <a href={nextUrl} target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline" }}>
+              <a href={nextUrl} target="_blank" rel="noopener noreferrer">
                 {nextLabel}
               </a>
             ) : nextLabel}
           </span>
         )}
-        <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <span className="sb-digest-actions">
           <a
             href={digest.sourceUrl}
             target="_blank"
@@ -100,20 +89,12 @@ export default function DigestCard({ digest, onRefresh, upcomingMeeting }: Props
           </a>
           {onRefresh && (
             <button
+              type="button"
               onClick={onRefresh}
-              style={{
-                padding: "2px 8px",
-                fontSize: 10,
-                border: "1px solid var(--sb-border)",
-                borderRadius: 3,
-                background: "#fff",
-                cursor: "pointer",
-                fontFamily: "'Space Mono', monospace",
-                color: "var(--sb-muted)",
-              }}
+              className="sb-btn sb-btn--quiet"
               title="Refresh this digest from the latest agenda"
             >
-              ↻ refresh
+              ↻ Refresh
             </button>
           )}
         </span>

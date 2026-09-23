@@ -108,6 +108,8 @@ const timeLabel = event.endTime && event.time ? `${event.time}–${event.endTime
 const metaBits = isVirtual
   ? [timeLabel, "Online", event.venue].filter(Boolean)
   : [timeLabel, event.venue, cityName].filter(Boolean);
+// Same facts as metaBits, with the time pulled out so it can lead in bold.
+const metaPlace = (isVirtual ? ["Online", event.venue] : [event.venue, cityName]).filter(Boolean);
 
 // <title> uncapped ran long on most events — drop the year (redundant with the
 // visible dayLabel elsewhere on the page) and, if it's still long, drop the
@@ -308,10 +310,14 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
-  <nav class="cal-daynav" aria-label="Breadcrumb">
-    {passed ? <a href="/events">← Upcoming events</a> : <a href={`/events/${event.date}`}>← {dayLabel}</a>}
-    <span class="cal-kicker">South Bay / Event</span>
-    <span />
+  <nav class="cal-daynav evx-daynav" aria-label="Breadcrumb">
+    {passed ? (
+      <a class="evx-backlink" href="/events"><span aria-hidden="true">←</span> Upcoming events</a>
+    ) : (
+      <a class="evx-backlink" href={`/events/${event.date}`}><span aria-hidden="true">←</span> {dayLabel}</a>
+    )}
+    <span class="cal-kicker evx-kicker">South Bay / Event</span>
+    <span class="evx-daynav-spacer" />
   </nav>
 
   {passed && (
@@ -327,25 +333,38 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     </p>
   )}
 
-  <h1>{event.title}</h1>
-  <p class="cal-sub">
-    {metaBits.join(" · ")}
-    {isVirtual && <span class="cal-chip cal-chip--virtual">Virtual</span>}
-    {event.cost === "free" && <span class="cal-chip">Free</span>}
-    {event.cost === "paid" && <span class="cal-chip cal-chip--paid">Paid</span>}
-    {event.cost === "low" && <span class="cal-chip cal-chip--low">Low cost</span>}
-    {event.kidFriendly && <span class="cal-chip cal-chip--kids">Kids</span>}
+  <h1 class="evx-title">{event.title}</h1>
+  <p class="cal-sub evx-meta">
+    <span class="evx-meta-text">
+      {timeLabel && <strong class="evx-meta-time">{timeLabel}</strong>}
+      {timeLabel && metaPlace.length > 0 && <span class="evx-meta-sep" aria-hidden="true">·</span>}
+      {metaPlace.join(" · ")}
+    </span>
+    {(isVirtual || event.cost === "free" || event.cost === "paid" || event.cost === "low" || event.kidFriendly) && (
+      <span class="evx-chips">
+        {isVirtual && <span class="cal-chip cal-chip--virtual evx-chip">Virtual</span>}
+        {event.cost === "free" && <span class="cal-chip evx-chip">Free</span>}
+        {event.cost === "paid" && <span class="cal-chip cal-chip--paid evx-chip">Paid</span>}
+        {event.cost === "low" && <span class="cal-chip cal-chip--low evx-chip">Low cost</span>}
+        {event.kidFriendly && <span class="cal-chip cal-chip--kids evx-chip">Kids</span>}
+      </span>
+    )}
   </p>
 
   {imageUrl && (
-    <img
-      class="cal-detail-photo"
-      src={imageUrl}
-      width="760"
-      height="420"
-      alt={`${event.title}${event.venue ? (isVirtual ? ` — online, hosted by ${event.venue}` : ` at ${event.venue}`) : ""}`}
-      loading="lazy"
-    />
+    <figure class="evx-photo">
+      <img
+        class="cal-detail-photo"
+        src={imageUrl}
+        width="760"
+        height="420"
+        alt={`${event.title}${event.venue ? (isVirtual ? ` — online, hosted by ${event.venue}` : ` at ${event.venue}`) : ""}`}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        onerror="this.closest('figure').hidden = true"
+      />
+    </figure>
   )}
 
   {blurb && <p class="cal-detail-copy">{blurb}</p>}
@@ -355,7 +374,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   )}
 
   <dl class="cal-detail-facts">
-    <div><dt>When</dt><dd>{dayLabel}{timeLabel ? ` · ${timeLabel}` : ""}</dd></div>
+    <div><dt>When</dt><dd>{dayLabel}{timeLabel && <> · <span class="evx-nowrap">{timeLabel}</span></>}</dd></div>
     {isVirtual ? (
       <div>
         <dt>Where</dt>
@@ -370,7 +389,10 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         <dd>
           {whereLine}
           {mapsUrl && (
-            <>· <a href={mapsUrl} rel="noopener noreferrer">map</a></>
+            <>
+              {" "}
+              <a class="evx-map-link" href={mapsUrl} rel="noopener noreferrer">Map <span aria-hidden="true">↗</span></a>
+            </>
           )}
         </dd>
       </div>
@@ -383,37 +405,43 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
 
   <div class="cal-detail-actions">
     {event.url && (
-      <a class="cal-btn cal-btn--primary" href={event.url} rel="noopener noreferrer" data-analytics-event="Event source click">
-        Event details ↗
+      <a class="sb-btn sb-btn--primary" href={event.url} rel="noopener noreferrer" data-analytics-event="Event source click">
+        Event details <span aria-hidden="true">↗</span>
       </a>
     )}
     {!passed && !retired && calendarUrl && (
-      <a class="cal-btn" href={calendarUrl} rel="noopener noreferrer" data-analytics-event="Calendar add">
+      <a class="sb-btn" href={calendarUrl} rel="noopener noreferrer" data-analytics-event="Calendar add">
         Add to Google Calendar
       </a>
     )}
     {passed ? (
-      <a class="cal-btn" href="/events" data-analytics-event="Related events click">Upcoming events</a>
+      <a class="sb-btn" href="/events" data-analytics-event="Related events click">Upcoming events</a>
     ) : (
-      <a class="cal-btn" href={`/events/${event.date}`} data-analytics-event="Related events click">More events this day</a>
+      <a class="sb-btn" href={`/events/${event.date}`} data-analytics-event="Related events click">More events this day</a>
     )}
   </div>
 
   {moreAtVenue.length > 0 && (
-    <div class="cal-more-venue">
-      <h2 class="cal-more-venue-heading">More at {event.venue}</h2>
-      <div class="cal-detail-actions">
+    <section class="cal-more-venue" aria-labelledby="more-at-venue">
+      <h2 class="cal-more-venue-heading" id="more-at-venue">More at {event.venue}</h2>
+      <ul class="evx-more-list">
         {moreAtVenue.map(({ event: e, slug }) => (
-          <a class="cal-btn" href={`/event/${slug}`} data-analytics-event="More at venue click">
-            {new Date(`${e.date}T12:00:00Z`).toLocaleDateString("en-US", {
-              timeZone: "UTC",
-              month: "short",
-              day: "numeric",
-            })} · {e.title}
-          </a>
+          <li>
+            <a class="evx-more-row" href={`/event/${slug}`} data-analytics-event="More at venue click">
+              <span class="evx-more-date">
+                {new Date(`${e.date}T12:00:00Z`).toLocaleDateString("en-US", {
+                  timeZone: "UTC",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+              <span class="evx-more-title">{e.title}</span>
+              <span class="evx-more-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   )}
 </CalendarShell>
 
@@ -429,126 +457,351 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
 </script>
 
 <style>
+  /* Page-only polish for the event detail leaf; the shared .cal-* base lives
+     in CalendarShell. evx-* = event detail. */
+
+  /* Breadcrumb row */
+  /* Three columns so the kicker sits dead center whatever the link width. */
+  .evx-daynav {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    margin-bottom: 22px;
+  }
+  .evx-daynav > :first-child {
+    justify-self: start;
+  }
+  .evx-daynav .evx-backlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    max-width: 100%;
+    padding: 6px 14px;
+    border: 1px solid var(--sb-line-strong);
+    border-radius: var(--sb-radius-pill);
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--sb-ink-2);
+    font-family: var(--sb-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .evx-daynav .evx-backlink:hover {
+    border-color: var(--sb-ink);
+    background: var(--sb-ink);
+    color: #fff;
+    text-decoration: none;
+  }
+  .evx-daynav-spacer {
+    min-width: 1px;
+  }
+
+  /* Title block */
+  .evx-title {
+    margin-bottom: 12px;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  .evx-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 26px;
+    padding-bottom: 22px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .evx-meta-time {
+    color: var(--sb-ink);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .evx-meta-sep {
+    color: var(--sb-light);
+  }
+  .evx-chips {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .evx-chips .evx-chip {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 3px 9px;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    line-height: 14px;
+    vertical-align: baseline;
+  }
   .cal-chip--paid {
     border-color: #ddd6fe;
     background: #f5f3ff;
     color: #5b21b6;
   }
   .cal-chip--low {
-    border-color: #fde68a;
+    border-color: #fed7aa;
     background: #fff7ed;
-    color: #92400e;
+    color: #9a3412;
   }
-  .cal-more-venue {
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid var(--border-light);
+
+  /* Photo: warm placeholder while it loads; hidden entirely if it 404s. */
+  .evx-photo {
+    margin: 0 0 24px;
+    overflow: hidden;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    background: var(--sb-arc-soft);
+    box-shadow: var(--sb-shadow-sm);
   }
-  .cal-more-venue-heading {
-    margin: 0 0 10px;
-    font-family: "Space Mono", monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--light);
+  .evx-photo[hidden] {
+    display: none;
   }
-  .cal-more-venue .cal-detail-actions {
-    margin-top: 0;
-  }
-  .cal-passed {
-    margin: 0 0 14px;
-    padding: 10px 14px;
-    border: 1px solid #fde68a;
-    background: #fffbeb;
-    color: #92400e;
-    border-radius: 8px;
-    font-size: 13px;
-  }
-  .cal-passed a {
-    color: inherit;
-    font-weight: 700;
-  }
-  .cal-detail-photo {
+  .evx-photo .cal-detail-photo {
+    display: block;
     width: 100%;
+    height: auto;
     aspect-ratio: 760 / 420;
-    max-height: 420px;
+    max-height: 440px;
     object-fit: cover;
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
-    margin: 0 0 18px;
   }
+
+  /* Copy */
   .cal-detail-copy {
-    font-size: 15px;
-    line-height: 1.65;
-    color: var(--ink);
     max-width: 64ch;
-    margin: 0 0 12px;
+    margin: 0 0 14px;
+    color: var(--sb-ink);
+    font-size: 17px;
+    line-height: 1.65;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
   }
   .cal-detail-copy--secondary {
-    font-size: 13.5px;
-    color: var(--muted);
+    color: var(--sb-muted);
+    font-size: 15px;
+    line-height: 1.6;
   }
+
+  /* Facts card: When / Where / Listed by / Refreshed */
   .cal-detail-facts {
-    margin: 22px 0;
-    border-top: 1px solid var(--border-light);
+    margin: 28px 0 0;
+    padding: 4px 20px;
+    background: var(--sb-card);
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    box-shadow: var(--sb-shadow-sm);
   }
   .cal-detail-facts > div {
     display: grid;
-    grid-template-columns: 92px minmax(0, 1fr);
-    gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border-light);
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--sb-line);
+  }
+  .cal-detail-facts > div:last-child {
+    border-bottom: 0;
   }
   .cal-detail-facts dt {
-    font-family: "Space Mono", monospace;
-    font-size: 10px;
+    padding-top: 4px;
+    color: var(--sb-muted);
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--light);
-    padding-top: 3px;
   }
   .cal-detail-facts dd {
     margin: 0;
-    font-size: 14px;
-    color: var(--ink);
-    line-height: 1.5;
+    color: var(--sb-ink);
+    font-size: 15px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
   }
-  .cal-detail-facts dd a {
-    color: inherit;
+  .evx-nowrap {
+    white-space: nowrap;
   }
+  .evx-map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 4px;
+    padding: 1px 9px;
+    border: 1px solid var(--sb-line-strong);
+    border-radius: var(--sb-radius-pill);
+    color: var(--sb-ink-2);
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+    vertical-align: 1px;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .evx-map-link:hover {
+    border-color: var(--sb-ink);
+    background: var(--sb-ink);
+    color: #fff;
+  }
+
+  /* Actions: the house .sb-btn family */
   .cal-detail-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 22px;
   }
-  .cal-btn {
-    display: inline-flex;
-    align-items: center;
-    min-height: 38px;
-    padding: 6px 16px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: #fff;
-    color: var(--ink);
-    font-family: "Space Mono", monospace;
+
+  /* More at <venue> */
+  .cal-more-venue {
+    margin-top: 34px;
+  }
+  .cal-more-venue-heading {
+    margin: 0 0 12px;
+    color: var(--sb-muted);
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .evx-more-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--sb-card);
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    box-shadow: var(--sb-shadow-sm);
+    overflow: hidden;
+  }
+  .evx-more-list li + li {
+    border-top: 1px solid var(--sb-line);
+  }
+  .evx-more-row {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 12px;
+    min-height: 48px;
+    box-sizing: border-box;
+    padding: 13px 18px;
+    color: var(--sb-ink);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .evx-more-row:hover {
+    background: var(--sb-surface-tint);
+  }
+  .evx-more-row:hover .evx-more-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .evx-more-date {
+    color: var(--sb-accent-ink);
+    font-family: var(--sb-mono);
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    text-decoration: none;
+    white-space: nowrap;
   }
-  .cal-btn:hover {
-    border-color: var(--ink);
+  .evx-more-title {
+    font-family: var(--sb-serif);
+    font-size: 16.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
   }
-  .cal-btn--primary {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: #fff;
+  .evx-more-arrow {
+    color: var(--sb-light);
+    transition: transform 0.2s var(--sb-ease), color 0.15s;
   }
-  .cal-btn--primary:hover {
-    opacity: 0.88;
+  .evx-more-row:hover .evx-more-arrow {
+    color: var(--sb-ink);
+    transform: translateX(2px);
+  }
+
+  .cal-passed {
+    margin: 0 0 18px;
+    padding: 12px 16px;
+    border: 1px solid #fde68a;
+    background: #fffbeb;
+    color: #92400e;
+    border-radius: var(--sb-radius-sm);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .cal-passed a {
+    color: inherit;
+    font-weight: 700;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 540px) {
+    .evx-daynav {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 12px;
+      margin-bottom: 18px;
+    }
+    .evx-daynav .evx-kicker {
+      order: -1;
+    }
+    .evx-daynav .evx-backlink {
+      min-height: 40px;
+    }
+    .evx-daynav-spacer {
+      display: none;
+    }
+    .evx-meta {
+      font-size: 15px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+    }
+    .evx-photo {
+      margin-bottom: 20px;
+      border-radius: var(--sb-radius-sm);
+    }
+    .cal-detail-copy {
+      font-size: 16px;
+    }
+    .cal-detail-copy--secondary {
+      font-size: 14.5px;
+    }
+    .cal-detail-facts {
+      padding: 2px 16px;
+    }
+    .cal-detail-facts > div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 12px 0;
+    }
+    .cal-detail-facts dt {
+      padding-top: 0;
+    }
+    .cal-detail-actions .sb-btn {
+      min-height: 42px;
+    }
+    .evx-more-row {
+      grid-template-columns: 54px minmax(0, 1fr) auto;
+      gap: 10px;
+      padding: 12px 14px;
+    }
+    .evx-more-title {
+      font-size: 15.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .evx-more-row:hover .evx-more-arrow {
+      transform: none;
+    }
   }
 </style>

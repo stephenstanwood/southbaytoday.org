@@ -27,40 +27,108 @@ const description = "This page isn't on the calendar. Find today's plan, upcomin
     The link's broken or the page moved. Here's where things actually are.
   </p>
 
-  <ul class="cal-404-links">
-    <li><a href="/">Today's plan</a> — what's happening across the South Bay right now.</li>
-    <li><a href="/events">Events</a> — everything coming up, filterable by city.</li>
-    <li><a href="/city/san-jose">San José</a> — one city's events, council, and news in one place.</li>
+  <ul class="nf-links">
+    <li>
+      <a href="/" class="nf-link">
+        <span class="nf-link-title">Today's plan</span>
+        <span class="nf-link-desc">What's happening across the South Bay right now.</span>
+        <span class="nf-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="/events" class="nf-link">
+        <span class="nf-link-title">Events</span>
+        <span class="nf-link-desc">Everything coming up, filterable by city.</span>
+        <span class="nf-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="/city/san-jose" class="nf-link">
+        <span class="nf-link-title">San José</span>
+        <span class="nf-link-desc">One city's events, council, and news in one place.</span>
+        <span class="nf-link-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
   </ul>
 </CalendarShell>
 
 <style>
-  .cal-404-links {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* Where-to-go-instead list: each destination is one tappable card. */
+  .nf-links {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    max-width: 620px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
-  .cal-404-links li {
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border-light);
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--muted);
-  }
-  .cal-404-links li:last-child {
-    border-bottom: none;
-  }
-  .cal-404-links a {
-    font-family: "Playfair Display", Georgia, serif;
-    font-weight: 800;
-    font-size: 17px;
-    color: var(--ink);
+  .nf-link {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title arrow"
+      "desc arrow";
+    align-items: center;
+    gap: 4px 16px;
+    padding: 18px 22px;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    background: var(--sb-card);
+    box-shadow: var(--sb-shadow-sm);
+    color: var(--sb-ink);
     text-decoration: none;
+    transition: transform 0.25s var(--sb-ease), box-shadow 0.25s var(--sb-ease), border-color 0.2s;
   }
-  .cal-404-links a:hover {
-    text-decoration: underline;
+  .nf-link:hover {
+    transform: translateY(-2px);
+    border-color: var(--sb-line-strong);
+    box-shadow: var(--sb-shadow-hover);
+  }
+  .nf-link-title {
+    grid-area: title;
+    font-family: var(--sb-serif);
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+  .nf-link-desc {
+    grid-area: desc;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--sb-muted);
+    text-wrap: pretty;
+  }
+  .nf-link-arrow {
+    grid-area: arrow;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--sb-line-strong);
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--sb-ink);
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.25s var(--sb-ease);
+  }
+  .nf-link:hover .nf-link-arrow {
+    border-color: var(--sb-ink);
+    background: var(--sb-ink);
+    color: #fff;
+    transform: translateX(2px);
+  }
+  @media (max-width: 540px) {
+    .nf-link {
+      padding: 16px 16px 16px 18px;
+    }
+    .nf-link-title {
+      font-size: 19px;
+    }
+    .nf-link-arrow {
+      width: 36px;
+      height: 36px;
+    }
   }
 </style>

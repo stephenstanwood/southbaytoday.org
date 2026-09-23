@@ -41,6 +41,11 @@ const jsonLd = eventListJsonLd(todaysEvents, {
 >
   <Fragment slot="head">
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+    {/* Start the 14-day feed during HTML parse instead of after the app
+        hydrates — EventsView's first fetch() then reuses this response.
+        crossorigin="anonymous" matches fetch()'s default credentials mode;
+        without it the preload is ignored and the feed downloads twice. */}
+    <link rel="preload" href="/api/south-bay/upcoming-events-near" as="fetch" crossorigin="anonymous" />
   </Fragment>
   <StaticLinkStrip days />
 </SignalShell>

@@ -3,7 +3,9 @@
 // point is crawl-graph: the high-authority app URLs pass internal links into
 // the static layer (day listings, council pages, food openings). Pure HTML —
 // renders pre-hydration and for crawlers; visually it reads as a sitemap-ish
-// footer extension, deliberately understated.
+// footer extension, deliberately understated. RSS / About / Privacy used to
+// trail the day links; SiteFooter (server-rendered on every page that uses
+// this strip) already carries all three, so they aren't repeated here.
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import digestsJson from "../../data/south-bay/digests.json";
 
@@ -39,67 +41,89 @@ const govCityList = govCities
 {(eventDates.length > 0 || govCityList.length > 0 || foodNew) && (
   <nav class="sls" aria-label="Browse the site">
     {eventDates.length > 0 && (
-      <p>
-        <span class="sls-label">Events by day</span>
-        {eventDates.map((d) => <a href={`/events/${d}`}>{dayLabel(d)}</a>)}
-        <a href="/rss.xml">RSS</a>
-        <a href="/about">About</a>
-        <a href="/privacy">Privacy</a>
-      </p>
+      <div class="sls-row">
+        <p class="sls-label">Events by day</p>
+        <p class="sls-links">
+          {eventDates.map((d) => <a href={`/events/${d}`}>{dayLabel(d)}</a>)}
+        </p>
+      </div>
     )}
     {govCityList.length > 0 && (
-      <p>
-        <span class="sls-label">Council summaries</span>
-        {govCityList.map((c) => <a href={`/gov/${c.id}`}>{c.name}</a>)}
-      </p>
+      <div class="sls-row">
+        <p class="sls-label">Council summaries</p>
+        <p class="sls-links">
+          {govCityList.map((c) => <a href={`/gov/${c.id}`}>{c.name}</a>)}
+        </p>
+      </div>
     )}
     {foodNew && (
-      <p>
-        <span class="sls-label">Food</span>
-        <a href="/food/new">New &amp; coming-soon restaurants</a>
-      </p>
+      <div class="sls-row">
+        <p class="sls-label">Food</p>
+        <p class="sls-links">
+          <a href="/food/new">New &amp; coming-soon restaurants</a>
+        </p>
+      </div>
     )}
   </nav>
 )}
 
 <style>
+  /* A quiet, centered sitemap under the footer: small mono label over a
+     wrapped row of links, same muted voice as the footer meta line. */
   .sls {
-    max-width: 960px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 6px 24px 34px;
+    padding: 6px var(--sb-gutter) 40px;
     text-align: center;
   }
-  .sls p {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 14px;
-    row-gap: 6px;
-    align-items: baseline;
-    justify-content: center;
-    margin: 6px 0;
-    font-size: 11px;
-    line-height: 1.4;
-    color: #6b6178;
+  .sls-row + .sls-row {
+    margin-top: 16px;
   }
   .sls-label {
-    font-family: "Space Mono", monospace;
-    font-size: 9px;
+    margin: 0 0 4px;
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--sb-muted);
+  }
+  .sls-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 14px;
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.4;
   }
   .sls a {
-    color: #6b6178;
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 0 3px;
+    color: var(--sb-light);
     text-decoration: none;
     white-space: nowrap;
-    /* 11px links need a ≥24px touch target (WCAG 2.5.8) — pad the hit area
-       and let the row gaps carry the visual spacing. */
-    display: inline-block;
-    padding: 5px 4px;
-    margin: -3px -2px;
+    transition: color 0.15s;
   }
   .sls a:hover {
-    color: #1a1a1a;
+    color: var(--sb-ink);
     text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  /* Phones: 40px tap rows, and room at the bottom so the fixed Tips &
+     Feedback button never sits on the last links. */
+  @media (max-width: 640px) {
+    .sls {
+      padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
+    .sls-links {
+      gap: 0 6px;
+    }
+    .sls a {
+      min-height: 40px;
+      padding: 0 6px;
+    }
   }
 </style>

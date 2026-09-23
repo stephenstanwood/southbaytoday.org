@@ -30,20 +30,6 @@ const CITY_NAME_MAP: Record<string, string> = {
   "los-altos": "Los Altos",
 };
 
-const CITY_ACCENT: Record<string, string> = {
-  campbell:        "#1d4ed8",
-  "los-gatos":     "#b45309",
-  saratoga:        "#065F46",
-  cupertino:       "#6d28d9",
-  sunnyvale:       "#0891b2",
-  "mountain-view": "#0369a1",
-  "san-jose":      "#be123c",
-  "santa-clara":   "#b45309",
-  "palo-alto":     "#1d4ed8",
-  milpitas:        "#4d7c0f",
-  "los-altos":     "#7c3aed",
-};
-
 // Display in a friendly geographic-ish order so the dropdown reads naturally.
 const CITY_ORDER = [
   "san-jose", "santa-clara", "sunnyvale", "mountain-view", "palo-alto",
@@ -105,7 +91,6 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const cityName = city ? CITY_NAME_MAP[city] : "";
-  const cityAccent = city ? CITY_ACCENT[city] : "var(--sb-ink)";
   const canSubmit = !!city && query.trim().length >= 2 && !loading;
 
   const ask = async (display: string, searchQuery: string) => {
@@ -188,126 +173,60 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
   const hasHistory = history.length > 0;
 
   return (
-    <div style={{ marginBottom: 28 }}>
-      {/* Header */}
-      <div className="sb-section-header" style={{ marginBottom: 14 }}>
-        <span className="sb-section-title">Ask the Records</span>
-        <div className="sb-section-line" />
+    <section className="gov-section gov-ask" aria-labelledby="gov-ask-title">
+      <div className="sb-section-header gov-section-head gov-section-head--flush">
+        <h2 id="gov-ask-title" className="sb-section-title">Ask the Records</h2>
       </div>
 
-      <div style={{
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: 10,
-        overflow: "hidden",
-        background: "#fafaf8",
-      }}>
-
+      <div className="gov-ask-card">
         {/* City picker — always visible at the top of the card */}
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "10px 14px",
-          background: "#fff",
-          borderBottom: "1px solid var(--sb-border-light)",
-          flexWrap: "wrap",
-        }}>
-          <span style={{
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            color: "var(--sb-muted)",
-            fontFamily: "'Space Mono', monospace",
-          }}>
-            City
-          </span>
-          <div style={{
-            position: "relative",
-            display: "inline-flex",
-            alignItems: "center",
-            border: `1.5px solid ${city ? cityAccent : "var(--sb-accent)"}`,
-            borderRadius: 6,
-            background: city ? cityAccent + "10" : "#fff",
-            padding: "0 28px 0 10px",
-          }}>
+        <div className="gov-ask-bar">
+          <label className="gov-ask-label" htmlFor="gov-ask-city">City</label>
+          <div className={`gov-ask-select${city ? " is-set" : ""}`}>
             <select
+              id="gov-ask-city"
               value={city}
               onChange={(e) => onCityChange(e.target.value)}
-              aria-label="City"
-              style={{
-                appearance: "none",
-                background: "transparent",
-                border: "none",
-                fontFamily: "inherit",
-                fontSize: 13,
-                fontWeight: 700,
-                color: city ? cityAccent : "var(--sb-accent)",
-                padding: "6px 0",
-                cursor: "pointer",
-                outline: "none",
-              }}
             >
-              <option value="">Pick one…</option>
+              <option value="">Pick a city…</option>
               {CITY_ORDER.map((id) => (
                 <option key={id} value={id}>{CITY_NAME_MAP[id]}</option>
               ))}
             </select>
-            <span style={{
-              position: "absolute",
-              right: 8,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontSize: 10,
-              color: city ? cityAccent : "var(--sb-accent)",
-              pointerEvents: "none",
-            }}>▾</span>
+            <span className="gov-ask-caret" aria-hidden="true" />
           </div>
           {!city && (
-            <span style={{ fontSize: 11, color: "var(--sb-accent)", fontWeight: 600 }}>
-              ← pick one to start
-            </span>
+            <span className="gov-ask-hint">← pick one to start</span>
           )}
           {city && hasHistory && (
             <button
+              type="button"
+              className="sb-btn sb-btn--quiet gov-ask-clear"
               onClick={() => { setHistory([]); inputRef.current?.focus(); }}
-              style={{
-                marginLeft: "auto",
-                fontSize: 11,
-                fontWeight: 600,
-                color: "var(--sb-muted)",
-                background: "transparent",
-                border: "1px solid var(--sb-border)",
-                borderRadius: 100,
-                padding: "3px 10px",
-                cursor: "pointer",
-              }}
             >
-              clear
+              Clear chat
             </button>
           )}
         </div>
 
         {/* Messages area */}
-        <div style={{ padding: "16px 16px 0" }}>
-
+        <div className="gov-ask-log">
           {/* Greeting — shown until the first question lands */}
           {!hasHistory && !loading && (
             <BotBubble>
               {city ? (
                 <>
-                  Hi! I read every recent <strong>{cityName}</strong> council meeting,
-                  agenda, and transcript so you don't have to. Ask me anything —
-                  budget moves, housing votes, what's getting built, who showed up
-                  to public comment. I'll answer in plain English and show the source
-                  rows I'm pulling from.
+                  Hi! I&apos;ve read every recent <strong>{cityName}</strong> council meeting,
+                  agenda, and transcript so you don&apos;t have to. Ask about budget moves,
+                  housing votes, what&apos;s getting built, or who showed up for public comment.
+                  I&apos;ll answer in plain English and show the records I&apos;m pulling from.
                 </>
               ) : (
                 <>
-                  Hi! 👋 I dig through council meetings, agendas, and transcripts
-                  for the South Bay's 11 cities and answer in plain English. Pick a
-                  city up top and ask me anything — budgets, housing, parks, who
-                  voted what, what's being built.
+                  Hi! 👋 I dig through council meetings, agendas, and transcripts for the
+                  South Bay&apos;s 11 cities and answer in plain English. Pick a city up top,
+                  then ask me anything: budgets, housing, parks, who voted how, what&apos;s
+                  being built.
                 </>
               )}
             </BotBubble>
@@ -315,34 +234,14 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
           {/* Starter chips (always under greeting before first ask) */}
           {!hasHistory && !loading && (
-            <div style={{ paddingLeft: 38, display: "flex", flexDirection: "column", gap: 6, marginBottom: 14 }}>
+            <div className="gov-ask-starters">
               {STARTERS.map((s) => (
                 <button
                   key={s.label}
+                  type="button"
+                  className="gov-pill"
                   onClick={() => handleStarter(s)}
                   disabled={!city}
-                  style={{
-                    textAlign: "left",
-                    background: city ? "#fff" : "#f5f5f2",
-                    border: "1px solid var(--sb-border)",
-                    borderRadius: 20,
-                    padding: "7px 14px",
-                    fontSize: 12,
-                    color: city ? "var(--sb-ink)" : "var(--sb-light)",
-                    cursor: city ? "pointer" : "not-allowed",
-                    transition: "border-color 0.1s, background 0.1s",
-                    alignSelf: "flex-start",
-                    lineHeight: 1.3,
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!city) return;
-                    e.currentTarget.style.borderColor = "var(--sb-ink)";
-                    e.currentTarget.style.background = "#f5f5f2";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--sb-border)";
-                    e.currentTarget.style.background = city ? "#fff" : "#f5f5f2";
-                  }}
                 >
                   {s.label}
                 </button>
@@ -352,100 +251,55 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
           {/* Chat history */}
           {history.map((turn, i) => (
-            <div key={i} style={{ marginBottom: 16 }}>
+            <div key={i} className="gov-ask-turn">
               {/* User bubble */}
-              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10 }}>
-                <div style={{
-                  background: "var(--sb-ink)",
-                  color: "#fff",
-                  borderRadius: "12px 4px 12px 12px",
-                  padding: "9px 14px",
-                  fontSize: 13,
-                  lineHeight: 1.45,
-                  maxWidth: "80%",
-                }}>
-                  {turn.question}
-                </div>
+              <div className="gov-ask-user">
+                <p>{turn.question}</p>
               </div>
 
               {/* Bot response */}
               <BotBubble>
                 {turn.error ? (
-                  <span style={{ color: "var(--sb-accent)" }}>{turn.error}</span>
+                  <span className="gov-ask-error">{turn.error}</span>
                 ) : turn.answer === null ? (
-                  <span style={{ color: "var(--sb-muted)", fontStyle: "italic" }}>
+                  <span className="gov-ask-status">
+                    <span className="sb-spinner gov-ask-spinner" aria-hidden="true" />
                     Reading {CITY_NAME_MAP[turn.city]} meetings…
                   </span>
                 ) : (
                   <>
-                    <div style={{ whiteSpace: "pre-wrap" }}>{turn.answer}</div>
+                    <div className="gov-ask-answer">{turn.answer}</div>
 
                     {turn.citations.length > 0 && (
-                      <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <div className="gov-ask-sources-bar">
                         <button
+                          type="button"
+                          className="gov-pill gov-pill--sm"
+                          aria-expanded={turn.showSources}
                           onClick={() => toggleSources(i)}
-                          style={{
-                            fontSize: 11,
-                            fontWeight: 600,
-                            color: "var(--sb-muted)",
-                            background: "transparent",
-                            border: "1px solid var(--sb-border)",
-                            borderRadius: 100,
-                            padding: "3px 10px",
-                            cursor: "pointer",
-                            fontFamily: "'Space Mono', monospace",
-                          }}
                         >
-                          {turn.showSources ? "▴ hide sources" : `▾ ${turn.totalRecords > turn.citations.length ? `top ${turn.citations.length} of ${turn.totalRecords}` : `${turn.citations.length}`} source${turn.citations.length === 1 ? "" : "s"}`}
+                          {turn.showSources ? "▴ Hide sources" : `▾ ${turn.totalRecords > turn.citations.length ? `Top ${turn.citations.length} of ${turn.totalRecords}` : `${turn.citations.length}`} source${turn.citations.length === 1 ? "" : "s"}`}
                         </button>
                       </div>
                     )}
 
                     {turn.showSources && turn.citations.length > 0 && (
-                      <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 0 }}>
+                      <div className="gov-ask-sources">
                         {turn.citations.map((c, j) => (
-                          <SourceRow key={j} citation={c} isLast={j === turn.citations.length - 1} />
+                          <SourceRow key={j} citation={c} />
                         ))}
                       </div>
                     )}
 
                     {turn.followups.length > 0 && i === history.length - 1 && !loading && (
-                      <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 5 }}>
-                        <div style={{
-                          fontSize: 9,
-                          fontWeight: 700,
-                          letterSpacing: "0.12em",
-                          textTransform: "uppercase",
-                          color: "var(--sb-muted)",
-                          fontFamily: "'Space Mono', monospace",
-                          marginBottom: 2,
-                        }}>
-                          Try next
-                        </div>
+                      <div className="gov-ask-next">
+                        <div className="sb-eyebrow">Try next</div>
                         {turn.followups.map((f) => (
                           <button
                             key={f}
+                            type="button"
+                            className="gov-pill"
                             onClick={() => ask(f, f)}
-                            style={{
-                              textAlign: "left",
-                              background: "transparent",
-                              border: "1px solid var(--sb-border)",
-                              borderRadius: 20,
-                              padding: "5px 12px",
-                              fontSize: 12,
-                              color: "var(--sb-ink)",
-                              cursor: "pointer",
-                              alignSelf: "flex-start",
-                              lineHeight: 1.3,
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.borderColor = "var(--sb-ink)";
-                              e.currentTarget.style.background = "#f5f5f2";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.borderColor = "var(--sb-border)";
-                              e.currentTarget.style.background = "transparent";
-                            }}
                           >
                             {f}
                           </button>
@@ -461,8 +315,8 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
           {/* Loading shimmer (only if no in-flight turn already shows it) */}
           {loading && history[history.length - 1]?.answer !== null && (
             <BotBubble>
-              <span style={{ color: "var(--sb-muted)", display: "inline-flex", alignItems: "center", gap: 8 }}>
-                <span className="sb-spinner" style={{ width: 12, height: 12, borderWidth: 2 }} />
+              <span className="gov-ask-status">
+                <span className="sb-spinner gov-ask-spinner" aria-hidden="true" />
                 Reading {cityName} meetings…
               </span>
             </BotBubble>
@@ -472,55 +326,21 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
         </div>
 
         {/* Input bar */}
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "10px 12px",
-            borderTop: "1px solid var(--sb-border-light)",
-            background: "#fff",
-          }}
-        >
+        <form onSubmit={handleSubmit} className="gov-ask-form">
           <input
             ref={inputRef}
             type="text"
+            className="gov-ask-input"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={city ? `Ask about ${cityName}…` : "Pick a city first ↑"}
+            aria-label={city ? `Ask about ${cityName} council records` : "Ask the records (pick a city first)"}
             disabled={!city || loading}
-            style={{
-              flex: 1,
-              fontSize: 13,
-              padding: "8px 10px",
-              border: `1.5px solid var(--sb-border-light)`,
-              borderRadius: 20,
-              outline: "none",
-              fontFamily: "inherit",
-              color: "var(--sb-ink)",
-              background: city ? "#fafaf8" : "#f0efec",
-              transition: "border-color 0.15s",
-            }}
           />
           <button
             type="submit"
+            className="gov-ask-send"
             disabled={!canSubmit}
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              background: canSubmit ? "var(--sb-ink)" : "var(--sb-border-light)",
-              border: "none",
-              cursor: canSubmit ? "pointer" : "default",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 15,
-              color: canSubmit ? "#fff" : "var(--sb-muted)",
-              transition: "all 0.15s",
-              flexShrink: 0,
-            }}
             aria-label="Send"
           >
             ↑
@@ -528,14 +348,12 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
         </form>
       </div>
 
-      <p style={{ fontSize: 10, color: "var(--sb-muted)", marginTop: 8, marginBottom: 0, lineHeight: 1.5 }}>
-        Answers generated from real council records via{" "}
-        <a href="https://stoa.works" target="_blank" rel="noopener noreferrer"
-          style={{ color: "var(--sb-accent)", textDecoration: "none", fontWeight: 600 }}>
-          Stoa
-        </a>. Always double-check before quoting.
+      <p className="gov-ask-note">
+        Answers come from real council records via{" "}
+        <a href="https://stoa.works" target="_blank" rel="noopener noreferrer">Stoa</a>.
+        Always double-check before quoting.
       </p>
-    </div>
+    </section>
   );
 }
 
@@ -543,81 +361,35 @@ export default function MinutesSearchCard({ selectedCities }: Props) {
 
 function BotBubble({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 14 }}>
-      <div style={{
-        width: 28,
-        height: 28,
-        borderRadius: "50%",
-        background: "var(--sb-ink)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        fontSize: 13,
-        flexShrink: 0,
-        marginTop: 1,
-      }}>
-        🏛️
-      </div>
-      <div style={{
-        background: "#fff",
-        border: "1px solid var(--sb-border-light)",
-        borderRadius: "4px 12px 12px 12px",
-        padding: "10px 14px",
-        fontSize: 13,
-        lineHeight: 1.55,
-        color: "var(--sb-ink)",
-        flex: 1,
-        minWidth: 0,
-      }}>
-        {children}
-      </div>
+    <div className="gov-ask-msg">
+      <div className="gov-ask-avatar" aria-hidden="true">🏛️</div>
+      <div className="gov-ask-bubble">{children}</div>
     </div>
   );
 }
 
-function SourceRow({ citation, isLast }: { citation: Citation; isLast: boolean }) {
-  // Resolve city name back to id for the accent color.
-  const cityEntry = Object.entries(CITY_NAME_MAP).find(
-    ([, n]) => n.toLowerCase() === citation.city.toLowerCase(),
-  );
-  const accent = cityEntry ? CITY_ACCENT[cityEntry[0]] ?? "var(--sb-primary)" : "var(--sb-primary)";
-
+function SourceRow({ citation }: { citation: Citation }) {
   return (
-    <div style={{
-      padding: "10px 0",
-      borderBottom: isLast ? "none" : "1px dashed var(--sb-border-light)",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4, flexWrap: "wrap" }}>
-        <span style={{
-          fontSize: 9, fontWeight: 700, padding: "1px 6px", borderRadius: 3,
-          background: accent + "18", color: accent,
-          letterSpacing: "0.04em",
-        }}>
-          {citation.city.toUpperCase()}
-        </span>
-        <span style={{ fontSize: 9, color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace" }}>
-          {formatDate(citation.date)}
-        </span>
-        <span style={{ fontSize: 9, color: "var(--sb-border)" }}>·</span>
-        <span style={{ fontSize: 9, color: "var(--sb-muted)" }}>
-          {abbrevType(citation.meetingType)}
-        </span>
+    <div className="gov-ask-source">
+      <div className="gov-ask-source-meta">
+        <span className="gov-ask-source-city">{citation.city}</span>
+        <span className="gov-ask-source-date">{formatDate(citation.date)}</span>
+        <span className="gov-ask-source-sep" aria-hidden="true">·</span>
+        <span>{abbrevType(citation.meetingType)}</span>
         {citation.topic && citation.topic !== "General" && (
           <>
-            <span style={{ fontSize: 9, color: "var(--sb-border)" }}>·</span>
-            <span style={{ fontSize: 9, fontWeight: 600, color: accent }}>{citation.topic}</span>
+            <span className="gov-ask-source-sep" aria-hidden="true">·</span>
+            <span className="gov-ask-source-topic">{citation.topic}</span>
           </>
         )}
       </div>
       {citation.excerpt && (
-        <div style={{ fontSize: 11, color: "var(--sb-muted)", lineHeight: 1.5 }}>
+        <>
           {citation.title && (
-            <div style={{ color: "var(--sb-ink)", fontWeight: 650, marginBottom: 2 }}>
-              {citation.title}
-            </div>
+            <div className="gov-ask-source-title">{citation.title}</div>
           )}
-          <div>{citation.excerpt}</div>
-        </div>
+          <div className="gov-ask-source-excerpt">{citation.excerpt}</div>
+        </>
       )}
     </div>
   );

@@ -1,0 +1,1243 @@
+/* Gov tab — the civic desk.
+   "This Week in Council", "Ask the Records", and the council digest
+   turnstile share one vocabulary: token radii, hairline cards, the house
+   violet as the single civic accent (no per-city colors), and readable
+   type. The static /gov/<city> pages keep their own scoped styles. */
+
+/* ── Frame ── */
+.gov-view {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.gov-section {
+  min-width: 0;
+}
+
+.gov-section:empty {
+  display: none;
+}
+
+.gov-view .gov-section-head {
+  margin-bottom: 12px;
+}
+
+.gov-view .gov-section-head--flush {
+  margin-bottom: 16px;
+}
+
+.gov-section-blurb {
+  max-width: 640px;
+  margin: 0 0 18px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--sb-muted);
+  text-wrap: pretty;
+}
+
+/* Three short stats read better 3-up than as a 2-up grid with an orphan. */
+@media (max-width: 680px) {
+  .gov-view .sb-page-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .gov-view .sb-page-stats .sb-page-stat {
+    padding: 12px 12px 11px;
+    border-top: none;
+    border-left: 1px solid var(--sb-line);
+  }
+  .gov-view .sb-page-stats .sb-page-stat:first-child {
+    border-left: none;
+  }
+}
+
+/* ── Shared pill (city tabs, suggestion chips, small toggles) ── */
+.gov-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 7px 15px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  background: #fff;
+  color: var(--sb-ink-2);
+  font-family: var(--sb-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.2s var(--sb-ease);
+}
+
+.gov-pill:hover:not(:disabled) {
+  border-color: var(--sb-ink);
+  background: var(--sb-surface-tint);
+  color: var(--sb-ink);
+}
+
+.gov-pill:disabled {
+  cursor: not-allowed;
+  border-color: var(--sb-line);
+  background: rgba(19, 7, 47, 0.025);
+  color: var(--sb-light);
+}
+
+.gov-pill.is-active,
+.gov-pill[aria-selected="true"] {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.gov-pill.is-active:hover,
+.gov-pill[aria-selected="true"]:hover {
+  background: var(--sb-ink-2);
+  color: #fff;
+}
+
+.gov-pill--sm {
+  min-height: 32px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+}
+
+@media (max-width: 640px), (pointer: coarse) {
+  .gov-pill { min-height: 40px; }
+  .gov-pill--sm { min-height: 36px; }
+}
+
+/* ── This Week in Council ── */
+.gov-week-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+  overflow: hidden;
+}
+
+.gov-week-list > li + li {
+  border-top: 1px solid var(--sb-line);
+}
+
+.gov-week-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) auto;
+  grid-template-areas: "when body go";
+  gap: 6px 18px;
+  padding: 18px 20px;
+  color: var(--sb-ink);
+  text-decoration: none;
+  transition: background 0.15s var(--sb-ease);
+}
+
+.gov-week-row:hover {
+  background: var(--sb-surface-tint);
+}
+
+.gov-week-row:focus-visible {
+  outline-offset: -3px;
+}
+
+.gov-week-when {
+  grid-area: when;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding-top: 2px;
+}
+
+.gov-week-day {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-pill);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--sb-ink-2);
+  white-space: nowrap;
+}
+
+.gov-week-day.is-soon {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+}
+
+.gov-week-date {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sb-ink-2);
+  white-space: nowrap;
+}
+
+.gov-week-time {
+  margin-top: -3px;
+  font-size: 12.5px;
+  color: var(--sb-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.gov-week-body {
+  grid-area: body;
+  min-width: 0;
+}
+
+.gov-week-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 10px;
+}
+
+.gov-week-city {
+  font-family: var(--sb-serif);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--sb-ink);
+}
+
+.gov-week-bodyname {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sb-muted);
+  text-wrap: pretty;
+}
+
+.gov-week-items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gov-week-items li {
+  position: relative;
+  padding-left: 15px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sb-ink-2);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.gov-week-items li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sb-accent);
+  opacity: 0.55;
+}
+
+.gov-week-empty {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sb-light);
+}
+
+.gov-week-go {
+  grid-area: go;
+  align-self: start;
+  padding-top: 2px;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--sb-light);
+  transition: color 0.15s, transform 0.2s var(--sb-ease);
+}
+
+.gov-week-row:hover .gov-week-go {
+  color: var(--sb-accent-ink);
+  transform: translate(2px, -2px);
+}
+
+/* ── Ask the Records ── */
+.gov-ask-card {
+  background: var(--sb-card);
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  box-shadow: var(--sb-shadow-sm);
+  overflow: hidden;
+}
+
+.gov-ask-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.gov-ask-label {
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.gov-ask-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--sb-accent-ink);
+}
+
+.gov-ask-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 40px;
+  padding: 7px 36px 7px 14px;
+  border: 1.5px solid var(--sb-accent);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-tint);
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.2s, background 0.15s;
+}
+
+.gov-ask-select.is-set {
+  color: var(--sb-ink);
+}
+
+.gov-ask-select.is-set select {
+  border-color: var(--sb-line-strong);
+  background: #fff;
+}
+
+.gov-ask-select select:hover {
+  border-color: var(--sb-ink);
+}
+
+.gov-ask-select select:focus-visible {
+  outline: none;
+  border-color: var(--sb-accent);
+  box-shadow: var(--sb-focus);
+}
+
+/* CSS chevron: the ▾ glyph falls back to a dot in some fonts. */
+.gov-ask-caret {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  width: 7px;
+  height: 7px;
+  margin-top: -5px;
+  border-right: 1.75px solid currentColor;
+  border-bottom: 1.75px solid currentColor;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.gov-ask-hint {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sb-accent-ink);
+}
+
+.gov-ask-clear {
+  margin-left: auto;
+}
+
+.gov-ask-log {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 20px 18px;
+  background: var(--sb-surface-warm);
+}
+
+.gov-ask-turn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gov-ask-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.gov-ask-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(135, 56, 245, 0.2);
+  border-radius: 50%;
+  background: var(--sb-accent-light);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.gov-ask-bubble {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-xs) var(--sb-radius-md) var(--sb-radius-md) var(--sb-radius-md);
+  background: #fff;
+  box-shadow: var(--sb-shadow-xs);
+  color: var(--sb-ink);
+  font-size: 15px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.gov-ask-answer {
+  white-space: pre-wrap;
+}
+
+.gov-ask-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.gov-ask-user p {
+  max-width: 80%;
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: var(--sb-radius-md) var(--sb-radius-xs) var(--sb-radius-md) var(--sb-radius-md);
+  background: var(--sb-ink);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.gov-ask-starters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding-left: 44px;
+}
+
+.gov-ask-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sb-muted);
+}
+
+.gov-ask-spinner.sb-spinner {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border-width: 2px;
+}
+
+.gov-ask-error {
+  color: #9a3412;
+}
+
+.gov-ask-sources-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.gov-ask-sources {
+  margin-top: 10px;
+  border-top: 1px solid var(--sb-line);
+}
+
+.gov-ask-source {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--sb-line);
+}
+
+.gov-ask-source:last-child {
+  padding-bottom: 2px;
+  border-bottom: none;
+}
+
+.gov-ask-source-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--sb-muted);
+}
+
+.gov-ask-source-city {
+  padding: 2px 8px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-pill);
+  background: var(--sb-surface-tint);
+  color: var(--sb-ink-2);
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gov-ask-source-date {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.gov-ask-source-sep {
+  color: var(--sb-light);
+}
+
+.gov-ask-source-topic {
+  font-weight: 600;
+  color: var(--sb-accent-ink);
+}
+
+.gov-ask-source-title {
+  margin-bottom: 3px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.4;
+  color: var(--sb-ink);
+}
+
+.gov-ask-source-excerpt {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--sb-muted);
+}
+
+.gov-ask-next {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.gov-ask-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--sb-line);
+  background: #fff;
+}
+
+.gov-ask-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: var(--sb-radius-sm);
+  background: var(--sb-surface-warm);
+  color: var(--sb-ink);
+  font: inherit;
+  /* 16px keeps iOS Safari from zooming the page on focus. */
+  font-size: 16px;
+  transition: border-color 0.15s, box-shadow 0.2s, background 0.15s;
+}
+
+.gov-ask-input::placeholder {
+  color: var(--sb-light);
+}
+
+.gov-ask-input:focus,
+.gov-ask-input:focus-visible {
+  outline: none;
+  border-color: var(--sb-accent);
+  background: #fff;
+  box-shadow: var(--sb-focus);
+}
+
+.gov-ask-input:disabled {
+  cursor: not-allowed;
+  background: rgba(19, 7, 47, 0.035);
+}
+
+.gov-ask-send {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--sb-ink);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.gov-ask-send:hover:not(:disabled) {
+  background: var(--sb-accent-ink);
+}
+
+.gov-ask-send:disabled {
+  cursor: default;
+  background: rgba(19, 7, 47, 0.08);
+  color: var(--sb-light);
+}
+
+.gov-ask-note {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--sb-light);
+}
+
+.gov-ask-note a {
+  color: var(--sb-accent-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.gov-ask-note a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Council Digest turnstile ── */
+.cdt-wrap {
+  outline: none;
+  border-radius: var(--sb-radius-md);
+}
+
+.cdt-wrap:focus-visible {
+  outline: 2px solid rgba(135, 56, 245, 0.75);
+  outline-offset: 6px;
+}
+
+.cdt-chips {
+  display: flex;
+  gap: 8px;
+  margin: 0 -4px 10px;
+  padding: 2px 4px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
+
+.cdt-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.cdt-chip {
+  flex: none;
+  white-space: nowrap;
+}
+
+.cdt-chip-dot {
+  margin-left: 2px;
+  font-weight: 700;
+  line-height: 0.8;
+  opacity: 0.55;
+}
+
+.cdt-stage {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  grid-template-areas:
+    "prev card next"
+    ".    counter .";
+  gap: 12px 12px;
+  align-items: stretch;
+}
+
+.cdt-rail--prev { grid-area: prev; }
+.cdt-rail--next { grid-area: next; }
+
+.cdt-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 28px;
+}
+
+/* The card runs long; the arrows ride along at mid-screen while it's in view. */
+.cdt-arrow {
+  position: sticky;
+  top: calc(50vh - 22px);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 3px;
+  border: 1px solid var(--sb-line-strong);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: var(--sb-shadow-xs);
+  color: var(--sb-ink-2);
+  font-family: var(--sb-serif);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.2s var(--sb-ease);
+}
+
+.cdt-arrow:hover:not(:disabled) {
+  border-color: var(--sb-ink);
+  background: var(--sb-ink);
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(19, 7, 47, 0.16);
+}
+
+.cdt-arrow:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.cdt-card-wrap {
+  grid-area: card;
+  display: flex;
+  min-width: 0;
+  min-height: 260px;
+}
+
+.cdt-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px 28px 22px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-sm);
+  animation: cdt-fade 0.24s var(--sb-ease);
+}
+
+.cdt-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cdt-eyebrow {
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sb-accent-ink);
+}
+
+.cdt-title {
+  margin: 0;
+  font-family: var(--sb-serif);
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+  color: var(--sb-ink);
+  text-wrap: balance;
+}
+
+.cdt-date {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 14px;
+  color: var(--sb-muted);
+}
+
+.cdt-stale-tag {
+  padding: 2px 9px;
+  border: 1px solid #fde68a;
+  border-radius: var(--sb-radius-pill);
+  background: #fef3c7;
+  color: #92400e;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cdt-summary {
+  max-width: 68ch;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--sb-ink-2);
+  text-wrap: pretty;
+}
+
+.cdt-summary--muted {
+  color: var(--sb-muted);
+}
+
+.cdt-subhead {
+  margin: 4px 0 -6px;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.cdt-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cdt-topics li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--sb-ink-2);
+  text-wrap: pretty;
+}
+
+.cdt-topics li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.64em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sb-accent);
+  opacity: 0.6;
+}
+
+.cdt-next {
+  padding: 16px 18px;
+  border: 1px solid rgba(135, 56, 245, 0.16);
+  border-radius: var(--sb-radius-sm);
+  background: #f7f2ff;
+}
+
+.cdt-next-label {
+  margin-bottom: 10px;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sb-accent-ink);
+}
+
+.cdt-next-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cdt-next-items li {
+  padding-left: 12px;
+  border-left: 2px solid rgba(135, 56, 245, 0.3);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--sb-ink);
+  text-wrap: pretty;
+}
+
+.cdt-next-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--sb-accent-ink);
+  text-decoration: none;
+}
+
+.cdt-next-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cdt-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--sb-line);
+}
+
+.cdt-counter {
+  grid-area: counter;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 8px;
+  min-height: 24px;
+  font-size: 13px;
+  color: var(--sb-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.cdt-counter-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.cdt-counter-city {
+  font-weight: 700;
+  color: var(--sb-ink);
+}
+
+.cdt-counter-age::before {
+  content: "·";
+  margin-right: 8px;
+  color: var(--sb-light);
+}
+
+.cdt-counter-sep {
+  color: var(--sb-light);
+}
+
+/* Refresh-in-flight: a skeleton the shape of the digest, so the card
+   doesn't collapse while the new summary loads. */
+.cdt-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cdt-loading-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--sb-muted);
+}
+
+.cdt-loading .sb-skeleton {
+  height: 12px;
+}
+
+.cdt-loading .cdt-sk-title {
+  height: 28px;
+  width: 46%;
+  margin: 4px 0 6px;
+}
+
+.cdt-error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.cdt-error p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #9a3412;
+}
+
+@media (max-width: 640px) {
+  .gov-view {
+    gap: 36px;
+  }
+
+  .gov-week-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "when go"
+      "body body";
+    gap: 10px 12px;
+    padding: 16px;
+  }
+
+  .gov-week-when {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    padding-top: 0;
+  }
+
+  .gov-week-time {
+    margin-top: 0;
+  }
+
+  .gov-week-time::before {
+    content: "·";
+    margin-right: 8px;
+    color: var(--sb-light);
+  }
+
+  .gov-week-city {
+    font-size: 18px;
+  }
+
+  .gov-ask-log {
+    padding: 16px 14px 14px;
+  }
+
+  .gov-ask-bar,
+  .gov-ask-form {
+    padding: 12px 14px;
+  }
+
+  /* The select's own "Pick a city…" says it; keep the label for readers
+     of assistive tech and give the hint room on one line. */
+  .gov-ask-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .gov-ask-select select {
+    font-size: 16px; /* no iOS focus-zoom */
+  }
+
+  .gov-ask-starters {
+    padding-left: 0;
+  }
+
+  .gov-ask-user p {
+    max-width: 88%;
+  }
+
+  .gov-ask-msg {
+    gap: 10px;
+  }
+
+  .gov-ask-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .gov-ask-bubble {
+    padding: 11px 14px;
+  }
+
+  .cdt-stage {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "card card card"
+      "prev counter next";
+    gap: 12px 10px;
+    align-items: center;
+  }
+
+  .cdt-rail {
+    padding-top: 0;
+  }
+
+  .cdt-counter {
+    flex-direction: column;
+    gap: 1px;
+    line-height: 1.35;
+  }
+
+  .cdt-counter-age::before {
+    content: none;
+  }
+
+  .cdt-arrow {
+    position: static;
+  }
+
+  .cdt-card {
+    padding: 20px 18px 18px;
+    gap: 14px;
+  }
+
+  .cdt-title {
+    font-size: 26px;
+  }
+
+  .cdt-summary {
+    font-size: 15.5px;
+  }
+
+  .cdt-topics li {
+    font-size: 14.5px;
+  }
+
+  .cdt-next {
+    padding: 14px 14px 14px 16px;
+  }
+
+  .cdt-footer .sb-btn {
+    flex: 1 1 auto;
+  }
+}
+
+@keyframes cdt-fade {
+  from { opacity: 0; transform: translateY(3px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Legacy DigestCard (not currently rendered; kept tokenized) ── */
+.sb-digest-card {
+  margin-bottom: 16px;
+  padding: 24px;
+  border: 1px solid var(--sb-line);
+  border-radius: var(--sb-radius-md);
+  background: var(--sb-card);
+  box-shadow: var(--sb-shadow-sm);
+}
+
+.sb-digest-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin-bottom: 4px;
+}
+
+.sb-digest-city {
+  font-family: var(--sb-serif);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--sb-ink);
+}
+
+.sb-digest-body {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sb-muted);
+}
+
+.sb-digest-date {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--sb-muted);
+}
+
+.sb-digest-topics {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  list-style: disc;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--sb-ink-2);
+}
+
+.sb-digest-topics li {
+  margin-bottom: 2px;
+}
+
+.sb-digest-agenda {
+  margin: 12px 0 4px;
+}
+
+.sb-digest-agenda-label {
+  margin-bottom: 8px;
+  font-family: var(--sb-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+
+.sb-digest-agenda ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sb-digest-agenda li {
+  padding-left: 12px;
+  border-left: 2px solid var(--sb-line-strong);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--sb-ink);
+}
+
+.sb-digest-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--sb-line);
+  font-size: 13px;
+}
+
+.sb-digest-next {
+  color: var(--sb-muted);
+}
+
+.sb-digest-next a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sb-digest-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sb-digest-source {
+  color: var(--sb-ink-2);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sb-digest-source:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

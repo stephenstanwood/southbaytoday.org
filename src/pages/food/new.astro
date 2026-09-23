@@ -41,10 +41,25 @@ const tidyCity = (s?: string | null, cityId?: string | null) =>
     .toLowerCase()
     .replace(/\b[a-z]/g, (c) => c.toUpperCase());
 
-const fmtDate = (d?: string | null) =>
-  d && /^\d{4}-\d{2}-\d{2}$/.test(d)
-    ? new Date(`${d}T12:00:00Z`).toLocaleDateString("en-US", { timeZone: "UTC", month: "short", day: "numeric" })
-    : null;
+// "2026-09-18" → { mo: "Sep", day: "18" } for the date stamp.
+const dateParts = (d?: string | null) => {
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return null;
+  const at = new Date(`${d}T12:00:00Z`);
+  return {
+    mo: at.toLocaleDateString("en-US", { timeZone: "UTC", month: "short" }),
+    day: at.toLocaleDateString("en-US", { timeZone: "UTC", day: "numeric" }),
+  };
+};
+
+// NBSP before each "·" so a wrapped meta line never starts with a separator.
+const meta = (r: Opening) =>
+  [r.address, tidyCity(r.cityName, r.cityId)].filter(Boolean).join("\u00a0· ");
+
+const groups = [
+  { id: "opened", tone: "open", heading: "Verified openings", rows: opened, dateOf: (r: Opening) => r.date },
+  { id: "inspections", tone: "inspection", heading: "Recent final inspections", rows: inspections, dateOf: (r: Opening) => r.inspectionDate },
+  { id: "coming-soon", tone: "soon", heading: "Coming soon", rows: comingSoon, dateOf: (r: Opening) => r.date },
+].filter((g) => g.rows.length > 0);
 
 const breadcrumbJsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -69,58 +84,48 @@ const breadcrumbJsonLd = JSON.stringify({
   </nav>
 
   <h1>South Bay food openings and permits</h1>
-  <p class="cal-sub">
-    {opened.length} verified openings · {inspections.length} final inspections · {comingSoon.length} coming soon — refreshed daily ·{" "}
-    <a href="/food">browse the Food desk →</a>
+  <p class="cal-sub fn-sub">
+    <strong>{opened.length}</strong>&nbsp;verified openings · <strong>{inspections.length}</strong>&nbsp;final inspections · <strong>{comingSoon.length}</strong>&nbsp;coming soon · refreshed daily ·{" "}
+    <a href="/food">browse the Food desk&nbsp;→</a>
   </p>
 
-  {opened.length > 0 && <section>
-    <h2 class="fn-section">Verified openings</h2>
-    <ol class="cal-list">
-      {opened.map((r) => (
-        <li class="cal-event">
-          <div class="cal-time">{fmtDate(r.date) ?? "—"}</div>
-          <div class="cal-body">
-            <h3 class="fn-name">{r.name}</h3>
-            <p class="cal-meta">{[r.address, tidyCity(r.cityName, r.cityId)].filter(Boolean).join(" · ")}</p>
-            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>}
+  {groups.map((g) => (
+    <section class={`fn-group fn-tone--${g.tone}`} aria-labelledby={`fn-${g.id}`}>
+      <h2 class="fn-section" id={`fn-${g.id}`}>
+        <span class="fn-dot" aria-hidden="true"></span>
+        {g.heading}
+        <span class="fn-count">{g.rows.length}</span>
+      </h2>
+      <ol class="cal-list">
+        {g.rows.map((r) => {
+          const when = dateParts(g.dateOf(r));
+          return (
+            <li class="cal-event fn-item">
+              <div class="cal-time fn-when">
+                {when ? (
+                  <span class="fn-stamp">
+                    <span class="fn-stamp-mo">{when.mo}</span>
+                    <span class="fn-stamp-day">{when.day}</span>
+                  </span>
+                ) : (
+                  <span class="fn-stamp fn-stamp--none">—</span>
+                )}
+              </div>
+              <div class="cal-body">
+                <h3 class="fn-name">{r.name}</h3>
+                <p class="cal-meta">{meta(r)}</p>
+                {r.blurb && <p class="cal-copy">{r.blurb}</p>}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  ))}
 
-  {inspections.length > 0 && <section>
-    <h2 class="fn-section">Recent final inspections</h2>
-    <ol class="cal-list">
-      {inspections.map((r) => (
-        <li class="cal-event">
-          <div class="cal-time">{fmtDate(r.inspectionDate) ?? "—"}</div>
-          <div class="cal-body">
-            <h3 class="fn-name">{r.name}</h3>
-            <p class="cal-meta">{[r.address, tidyCity(r.cityName, r.cityId)].filter(Boolean).join(" · ")}</p>
-            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>}
-
-  {comingSoon.length > 0 && <section>
-    <h2 class="fn-section">Coming soon</h2>
-    <ol class="cal-list">
-      {comingSoon.map((r) => (
-        <li class="cal-event">
-          <div class="cal-time">{fmtDate(r.date) ?? "—"}</div>
-          <div class="cal-body">
-            <h3 class="fn-name">{r.name}</h3>
-            <p class="cal-meta">{[r.address, tidyCity(r.cityName, r.cityId)].filter(Boolean).join(" · ")}</p>
-            {r.blurb && <p class="cal-copy">{r.blurb}</p>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  </section>}
+  {groups.length === 0 && (
+    <p class="fn-empty">No new food permits on file right now. The county list refreshes nightly, so check back soon.</p>
+  )}
 
   <p class="fn-note">
     Final-inspection dates come from the county's environmental-health records and are not
@@ -131,25 +136,196 @@ const breadcrumbJsonLd = JSON.stringify({
 </CalendarShell>
 
 <style>
-  .fn-section {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 22px;
-    font-weight: 800;
-    margin: 26px 0 4px;
+  .fn-sub strong {
+    color: var(--sb-ink);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
   }
+
+  .fn-sub a {
+    white-space: nowrap;
+  }
+
+  .fn-group {
+    --fn-tone: var(--sb-muted);
+  }
+  .fn-tone--open { --fn-tone: #15803d; }
+  .fn-tone--inspection { --fn-tone: var(--sb-accent); }
+  .fn-tone--soon { --fn-tone: #0e7490; }
+
+  .fn-group + .fn-group {
+    margin-top: 40px;
+  }
+
+  .fn-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--sb-line-strong);
+    color: var(--sb-ink);
+    font-family: var(--sb-serif);
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .fn-dot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--fn-tone);
+  }
+
+  .fn-count {
+    margin-left: auto;
+    padding: 4px 9px;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-pill);
+    background: var(--sb-card);
+    color: var(--sb-muted);
+    font-family: var(--sb-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+
+  .fn-item {
+    grid-template-columns: 76px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .fn-when {
+    padding-top: 0;
+  }
+
+  /* Tear-off calendar stamp: mono month over a serif day. */
+  .fn-stamp {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 54px;
+    padding: 6px 8px 7px;
+    border: 1px solid var(--sb-line);
+    border-top: 3px solid var(--fn-tone);
+    border-radius: var(--sb-radius-sm);
+    background: var(--sb-card);
+    box-shadow: var(--sb-shadow-xs);
+  }
+
+  .fn-stamp-mo {
+    color: var(--sb-muted);
+    font-family: var(--sb-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .fn-stamp-day {
+    color: var(--sb-ink);
+    font-family: var(--sb-serif);
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.05;
+    font-variant-numeric: lining-nums;
+  }
+
+  .fn-stamp--none {
+    justify-content: center;
+    min-height: 52px;
+    color: var(--sb-light);
+    font-family: var(--sb-sans);
+  }
+
   .fn-name {
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: 17px;
+    margin: 2px 0 5px;
+    color: var(--sb-ink);
+    font-family: var(--sb-serif);
+    font-size: 19px;
     font-weight: 800;
     line-height: 1.25;
-    margin: 0 0 4px;
+    text-wrap: balance;
   }
+
+  .fn-item :global(.cal-meta) {
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .fn-empty {
+    margin: 8px 0 0;
+    padding: 28px 20px;
+    border: 1px dashed var(--sb-line-strong);
+    border-radius: var(--sb-radius-md);
+    color: var(--sb-muted);
+    font-size: 15px;
+    text-align: center;
+  }
+
   .fn-note {
-    margin-top: 24px;
-    font-size: 12px;
-    color: var(--light);
+    margin: 36px 0 0;
+    padding: 14px 16px;
+    border: 1px solid var(--sb-line);
+    border-radius: var(--sb-radius-md);
+    background: rgba(255, 255, 255, 0.6);
+    color: var(--sb-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    text-wrap: pretty;
   }
+
   .fn-note a {
-    color: inherit;
+    color: var(--sb-ink-2);
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  .fn-note a:hover {
+    color: var(--sb-accent-ink);
+  }
+
+  @media (max-width: 540px) {
+    .fn-section {
+      font-size: 22px;
+    }
+
+    .fn-item {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    /* On phones the stamp flattens into one inline "SEP 18" chip. */
+    .fn-stamp {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 6px;
+      min-width: 0;
+      padding: 4px 10px 4px 9px;
+      border-top-width: 1px;
+      border-left: 3px solid var(--fn-tone);
+      border-radius: var(--sb-radius-xs);
+    }
+
+    .fn-stamp-day {
+      font-family: var(--sb-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .fn-stamp--none {
+      min-height: 0;
+    }
+
+    .fn-name {
+      font-size: 18px;
+    }
   }
 </style>

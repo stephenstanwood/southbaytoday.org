@@ -32,21 +32,6 @@ const ACTIVE_WEEKS = UPCOMING_WEEKS.length > 0 ? UPCOMING_WEEKS : SUMMER_WEEKS;
 // off-season (mirrors the ACTIVE_WEEKS fallback above).
 const SEASON_ACTIVE = UPCOMING_WEEKS.length > 0;
 
-const CITY_ACCENT: Record<string, string> = {
-  "san-jose":      "#be123c",
-  "mountain-view": "#0369a1",
-  "sunnyvale":     "#0891b2",
-  "santa-clara":   "#b45309",
-  "cupertino":     "#6d28d9",
-  "campbell":      "#1d4ed8",
-  "milpitas":      "#4d7c0f",
-  "los-gatos":     "#b45309",
-  "palo-alto":     "#1d4ed8",
-  "saratoga":      "#065F46",
-  "los-altos":     "#7c3aed",
-  "multi":         "#1a1a1a",
-};
-
 const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
   { id: "all",       label: "All"       },
   { id: "general",   label: "General"   },
@@ -58,16 +43,6 @@ const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
   { id: "academic",  label: "Academic"  },
 ];
 
-const TYPE_COLORS: Record<CampType, string> = {
-  general:   "#565f6e",
-  sports:    "#1d4ed8",
-  arts:      "#9333ea",
-  stem:      "#0369a1",
-  nature:    "#0f6b33",
-  specialty: "#92400e",
-  academic:  "#92400e",
-};
-
 const ALL_ORG_TYPES: { id: string; label: string }[] = [
   { id: "all",        label: "All"              },
   { id: "city",       label: "City Programs"    },
@@ -75,6 +50,14 @@ const ALL_ORG_TYPES: { id: string; label: string }[] = [
   { id: "private",    label: "Private"          },
   { id: "university", label: "College Programs" },
 ];
+
+// Singular operator label for a card's kicker line ("SAN JOSE · CITY-RUN").
+const ORG_CARD_LABEL: Record<Camp["orgType"], string> = {
+  city:       "City-run",
+  nonprofit:  "Nonprofit",
+  private:    "Private",
+  university: "College",
+};
 
 const PRICE_TIERS: { id: string; label: string }[] = [
   { id: "all",     label: "All"             },
@@ -149,26 +132,26 @@ function priceTier(camp: Camp): "budget" | "mid" | "premium" {
 // Camp card (Browse mode)
 // ---------------------------------------------------------------------------
 
-function CampCard({ camp }: { camp: Camp }) {
-  const accent = CITY_ACCENT[camp.cityId] ?? "#555";
-  const typeColor = TYPE_COLORS[camp.type];
+function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }) {
   const usefulLocations = camp.locations.filter(
     (loc) => !loc.toLowerCase().startsWith("various")
   );
-  const orgLabel = ALL_ORG_TYPES.find((o) => o.id === camp.orgType)?.label.replace(" Programs", "") ?? camp.orgType;
+  const typeLabel = TYPE_FILTERS.find((t) => t.id === camp.type)?.label ?? camp.type;
   const price = priceRange(camp);
-  const locationLabel = usefulLocations.slice(0, 2).join(" · ");
+  // NBSP before each "·" keeps a wrapped line from starting with a separator.
+  const locationLabel = usefulLocations.slice(0, 2).join("\u00a0· ");
+  const sessions = sessionCount(camp);
 
   return (
-    <article className="camps-card" style={{ borderTopColor: accent }}>
-      <div className="camps-card-top">
-        <span className="camps-card-city" style={{ color: accent, background: accent + "14" }}>
+    <article className={`camps-card${featured ? " camps-card--featured" : ""}`}>
+      <header className="camps-card-head">
+        <div className="camps-card-kicker">
           {camp.cityName}
-        </span>
-        <span className="camps-card-type" style={{ color: typeColor, background: typeColor + "14" }}>
-          {TYPE_FILTERS.find((t) => t.id === camp.type)?.label ?? camp.type}
-        </span>
-      </div>
+          <span className="camps-card-sep">{"\u00a0· "}</span>
+          {ORG_CARD_LABEL[camp.orgType] ?? camp.orgType}
+        </div>
+        <span className="camps-type" data-type={camp.type}>{typeLabel}</span>
+      </header>
 
       <h3 className="camps-card-title">{camp.name}</h3>
       <p className="camps-card-copy">{camp.description}</p>
@@ -184,7 +167,7 @@ function CampCard({ camp }: { camp: Camp }) {
         </div>
         <div>
           <dt>{SEASON_ACTIVE ? "Price" : "2026 price"}</dt>
-          <dd>{price}</dd>
+          <dd className={price.startsWith("$") ? "camps-fact-price" : undefined}>{price}</dd>
         </div>
         <div>
           <dt>Hours</dt>
@@ -192,41 +175,44 @@ function CampCard({ camp }: { camp: Camp }) {
         </div>
       </dl>
 
-      <div className="camps-card-meta">
-        <span>{orgLabel}</span>
-        {locationLabel && <span>{locationLabel}</span>}
-      </div>
-
-      {camp.tags.length > 0 && (
-        <div className="camps-card-tags">
-          {camp.tags.slice(0, 4).map((tag) => (
-            <span key={tag}>{tag}</span>
-          ))}
-        </div>
+      {locationLabel && (
+        <p className="camps-card-where">
+          <span className="camps-card-label">Where</span>
+          {locationLabel}
+        </p>
       )}
 
-      <div className="camps-card-footer">
-        {camp.priceNote ? (
-          <span>{camp.priceNote}</span>
-        ) : (
-          <span>
-            {sessionCount(camp)} session{sessionCount(camp) !== 1 ? "s" : ""}{" "}
+      {camp.tags.length > 0 && (
+        <ul className="camps-card-tags" aria-label="Highlights">
+          {camp.tags.slice(0, 4).map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </ul>
+      )}
+
+      {camp.priceNote && <p className="camps-card-note">{camp.priceNote}</p>}
+
+      <footer className="camps-card-footer">
+        {!camp.priceNote && (
+          <span className="camps-card-sessions">
+            {sessions} session{sessions !== 1 ? "s" : ""}{" "}
             {SEASON_ACTIVE ? "listed" : "in 2026"}
           </span>
         )}
         <a
+          className="sb-btn camps-card-cta"
           href={camp.registerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ background: accent }}
         >
           {/* Off-season the last session is already past, so "Register" points at
               a page with nothing to register for. The operator's page is still
               the right destination — it's where next year's dates go up first —
               but the label has to say so. */}
           {SEASON_ACTIVE ? "Register" : "Program page"}
+          <span aria-hidden="true">↗</span>
         </a>
-      </div>
+      </footer>
     </article>
   );
 }
@@ -320,37 +306,37 @@ function BrowseMode() {
   return (
     <div className="camps-directory">
       {featured.length > 0 && (
-        <section className="camps-featured" aria-label="Featured camps">
+        <section className="camps-featured" aria-labelledby="camps-featured-title">
           <div className="camps-section-head">
             <div>
-              <div className="camps-kicker">Start Here</div>
-              <h2>Strong first picks</h2>
+              <div className="sb-eyebrow camps-kicker">Start here</div>
+              <h2 id="camps-featured-title">Strong first picks</h2>
             </div>
             <p>
               {SEASON_ACTIVE
                 ? "Broad programs with clear dates, reliable registration links, and enough weeks to anchor a summer plan."
-                : "Broad programs with clear dates and reliable registration links — the names to shortlist first when next summer's schedules go up."}
+                : "Broad programs with clear dates and reliable registration links. Shortlist these first when next summer's schedules go up."}
             </p>
           </div>
           <div className="camps-feature-grid">
             {featured.map((camp) => (
-              <CampCard key={camp.id} camp={camp} />
+              <CampCard key={camp.id} camp={camp} featured />
             ))}
           </div>
         </section>
       )}
 
-      <section className="camps-browse">
+      <section className="camps-browse" aria-labelledby="camps-browse-title">
         <div className="camps-section-head">
           <div>
-            <div className="camps-kicker">Directory</div>
-            <h2>Browse the full camp list</h2>
+            <div className="sb-eyebrow camps-kicker">Directory</div>
+            <h2 id="camps-browse-title">Browse the full camp list</h2>
           </div>
           <p>Use one or two filters when you need them. Otherwise the directory stays out of your way.</p>
         </div>
 
         <div className="camps-toolbar">
-          <label className="camps-search">
+          <label className="camps-field camps-field--search">
             <span>Search</span>
             <input
               type="search"
@@ -360,7 +346,7 @@ function BrowseMode() {
             />
           </label>
 
-          <label>
+          <label className="camps-field">
             <span>City</span>
             <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)}>
               <option value="all">All cities</option>
@@ -371,7 +357,7 @@ function BrowseMode() {
           </label>
 
           {SEASON_ACTIVE && (
-            <label>
+            <label className="camps-field">
               <span>Week</span>
               <select
                 value={weekFilter === "all" ? "all" : String(weekFilter)}
@@ -387,10 +373,11 @@ function BrowseMode() {
             </label>
           )}
 
-          <label>
+          <label className="camps-field">
             <span>Age</span>
             <input
               type="number"
+              inputMode="numeric"
               min={4}
               max={17}
               placeholder="Any"
@@ -399,7 +386,7 @@ function BrowseMode() {
             />
           </label>
 
-          <label>
+          <label className="camps-field">
             <span>Focus</span>
             <select
               value={typeFilter}
@@ -411,7 +398,7 @@ function BrowseMode() {
             </select>
           </label>
 
-          <label>
+          <label className="camps-field">
             <span>Operator</span>
             <select value={orgTypeFilter} onChange={(e) => setOrgTypeFilter(e.target.value)}>
               {ALL_ORG_TYPES.map((f) => (
@@ -420,7 +407,7 @@ function BrowseMode() {
             </select>
           </label>
 
-          <label>
+          <label className="camps-field">
             <span>Price</span>
             <select value={priceTierFilter} onChange={(e) => setPriceTierFilter(e.target.value)}>
               {PRICE_TIERS.map((f) => (
@@ -431,22 +418,26 @@ function BrowseMode() {
         </div>
 
         {SEASON_ACTIVE && ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) && (
-          <p style={{ fontSize: 12, color: "var(--sb-muted)", margin: "10px 0 0" }}>
-            * Week {SHORT_WEEK_NUM} is a short week — no camp Fri Jul 3 (July 4th observed).
+          <p className="camps-toolbar-note">
+            * Week {SHORT_WEEK_NUM} is a short week: no camp Fri Jul 3 (July 4th observed).
           </p>
         )}
 
         <div className="camps-results-head">
-          <span>
-            Showing {visible.length} of {shownTotal} program{shownTotal !== 1 ? "s" : ""}
+          <span aria-live="polite">
+            Showing <strong>{visible.length}</strong> of <strong>{shownTotal}</strong> program{shownTotal !== 1 ? "s" : ""}
           </span>
-          {hasFilters && <button onClick={clearFilters}>Clear filters</button>}
+          {hasFilters && (
+            <button type="button" className="sb-btn sb-btn--quiet" onClick={clearFilters}>
+              Clear filters
+            </button>
+          )}
         </div>
 
         {filtered.length === 0 ? (
-          <div className="camps-empty">
-            <h3>No camps match those filters</h3>
-            <p>Try clearing one field or searching by city instead.</p>
+          <div className="sb-empty camps-empty">
+            <h3 className="sb-empty-title">No camps match those filters</h3>
+            <p className="sb-empty-sub">Try clearing one field or searching by city instead.</p>
           </div>
         ) : (
           <div className="camps-grid">
@@ -456,7 +447,7 @@ function BrowseMode() {
           </div>
         )}
         {!hasFilters && hiddenCount > 0 && (
-          <button className="camps-show-more" onClick={() => setShowAll(true)}>
+          <button type="button" className="sb-btn camps-show-more" onClick={() => setShowAll(true)}>
             Show all {currentCampsCount} programs
           </button>
         )}
@@ -560,116 +551,60 @@ function SummerBuilderMode() {
   // Step 1: Age(s)
   if (step === 1) {
     return (
-      <div>
-        <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center", padding: "32px 0 24px" }}>
-          <div style={{ fontSize: 32, marginBottom: 12 }}>🏕️</div>
-          <h2 style={{
-            fontFamily: "var(--sb-serif)",
-            fontSize: 22,
-            fontWeight: 700,
-            color: "var(--sb-ink)",
-            marginBottom: 8,
-          }}>
-            Build your child's summer
-          </h2>
-          <p style={{ fontSize: 14, color: "var(--sb-muted)", marginBottom: 28, lineHeight: 1.6 }}>
-            Tell us your children's ages and which weeks you need coverage, and we'll put together a suggested camp plan with estimated costs.
-          </p>
+      <div className="camps-builder-start">
+        <div className="camps-builder-emoji" aria-hidden="true">🏕️</div>
+        <h2 className="camps-builder-title">Build your child's summer</h2>
+        <p className="camps-builder-lede">
+          Tell us your children's ages and which weeks you need coverage, and we'll put together a suggested camp plan with estimated costs.
+        </p>
 
-          <div style={{ marginBottom: 24, textAlign: "left" }}>
-            <label style={{
-              display: "block",
-              fontSize: 12,
-              fontWeight: 700,
-              color: "var(--sb-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.06em",
-              marginBottom: 10,
-            }}>
-              Children's Ages
-            </label>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
-              {childAges.map((age, idx) => (
-                <div key={idx} style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                  <input
-                    type="number"
-                    min={4}
-                    max={17}
-                    placeholder="Age (4–17)"
-                    value={age}
-                    onChange={(e) => updateChild(idx, e.target.value)}
-                    style={{
-                      width: 130,
-                      fontSize: 18,
-                      fontWeight: 700,
-                      textAlign: "center",
-                      padding: "10px 12px",
-                      border: "2px solid var(--sb-border)",
-                      borderRadius: "var(--sb-radius)",
-                      background: "var(--sb-card)",
-                      color: "var(--sb-ink)",
-                      fontFamily: "var(--sb-sans)",
-                    }}
-                  />
-                  {childAges.length > 1 && (
-                    <button
-                      onClick={() => removeChild(idx)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "var(--sb-muted)",
-                        fontSize: 16,
-                        padding: "4px 6px",
-                      }}
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                onClick={addChild}
-                style={{
-                  background: "none",
-                  border: "1px dashed var(--sb-border)",
-                  borderRadius: "var(--sb-radius)",
-                  cursor: "pointer",
-                  color: "var(--sb-muted)",
-                  fontSize: 12,
-                  padding: "6px 14px",
-                  marginTop: 4,
-                }}
-              >
-                + Add another child
-              </button>
-            </div>
-            {parsedAges.length > 1 && (
-              <div style={{ fontSize: 12, color: "var(--sb-muted)", marginTop: 8 }}>
-                Will show camps that work for all {parsedAges.length} ages simultaneously.
+        <fieldset className="camps-builder-ages">
+          <legend className="camps-builder-label">Children's ages</legend>
+          <div className="camps-builder-age-list">
+            {childAges.map((age, idx) => (
+              <div key={idx} className="camps-builder-age-row">
+                <input
+                  className="camps-builder-age-input"
+                  type="number"
+                  inputMode="numeric"
+                  min={4}
+                  max={17}
+                  placeholder="Age (4–17)"
+                  aria-label={`Child ${idx + 1} age`}
+                  value={age}
+                  onChange={(e) => updateChild(idx, e.target.value)}
+                />
+                {childAges.length > 1 && (
+                  <button
+                    type="button"
+                    className="camps-builder-remove"
+                    onClick={() => removeChild(idx)}
+                    aria-label={`Remove child ${idx + 1}`}
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
-            )}
+            ))}
+            <button type="button" className="camps-builder-add" onClick={addChild}>
+              + Add another child
+            </button>
           </div>
+          {parsedAges.length > 1 && (
+            <p className="camps-builder-hint">
+              Will show camps that work for all {parsedAges.length} ages simultaneously.
+            </p>
+          )}
+        </fieldset>
 
-          <button
-            onClick={() => allAgesValid && setStep(2)}
-            disabled={!allAgesValid}
-            style={{
-              padding: "10px 28px",
-              background: allAgesValid ? "var(--sb-ink)" : "var(--sb-border)",
-              color: allAgesValid ? "#fff" : "var(--sb-muted)",
-              border: "none",
-              borderRadius: "var(--sb-radius)",
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: allAgesValid ? "pointer" : "default",
-              letterSpacing: "0.04em",
-              transition: "all 0.15s",
-            }}
-          >
-            Next: Pick your weeks →
-          </button>
-        </div>
+        <button
+          type="button"
+          className="sb-btn sb-btn--primary camps-builder-cta"
+          onClick={() => allAgesValid && setStep(2)}
+          disabled={!allAgesValid}
+        >
+          Next: Pick your weeks →
+        </button>
       </div>
     );
   }
@@ -679,106 +614,60 @@ function SummerBuilderMode() {
     const ageLabel = parsedAges.length === 1
       ? `Age ${parsedAges[0]}`
       : `Ages ${parsedAges.join(", ")}`;
+    const allWeeksSelected = ACTIVE_WEEKS.every((sw) => selectedWeeks.has(sw.weekNum));
 
     return (
       <div>
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-            <button
-              onClick={() => setStep(1)}
-              style={{
-                background: "none", border: "none", cursor: "pointer",
-                color: "var(--sb-muted)", fontSize: 13, padding: 0,
-              }}
-            >
-              ← Back
-            </button>
-            <span style={{ fontSize: 12, color: "var(--sb-muted)" }}>{ageLabel}</span>
-          </div>
-          <h2 style={{
-            fontFamily: "var(--sb-serif)",
-            fontSize: 20,
-            fontWeight: 700,
-            color: "var(--sb-ink)",
-            marginBottom: 6,
-          }}>
-            Which weeks need coverage?
-          </h2>
-          <p style={{ fontSize: 13, color: "var(--sb-muted)", marginBottom: 16 }}>
-            Select the weeks you need a camp for.
-            {SEASON_ACTIVE && ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
-              ` Week ${SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).`}
-          </p>
-          <button
-            onClick={() => {
-              const allNums = ACTIVE_WEEKS.map(sw => sw.weekNum);
-              const allSelected = allNums.every(n => selectedWeeks.has(n));
-              setSelectedWeeks(allSelected ? new Set() : new Set(allNums));
-            }}
-            style={{
-              padding: "5px 14px",
-              borderRadius: 100,
-              border: "1px solid var(--sb-border)",
-              background: ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "var(--sb-ink)" : "transparent",
-              color: ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "#fff" : "var(--sb-muted)",
-              fontSize: 11, fontWeight: 700, cursor: "pointer", marginBottom: 16,
-            }}
-          >
-            {ACTIVE_WEEKS.every(sw => selectedWeeks.has(sw.weekNum)) ? "Clear all" : `Select all ${ACTIVE_WEEKS.length} weeks`}
+        <div className="camps-builder-bar">
+          <button type="button" className="camps-builder-back" onClick={() => setStep(1)}>
+            ← Back
           </button>
+          <span className="camps-builder-agetag">{ageLabel}</span>
         </div>
+        <h2 className="camps-builder-title">Which weeks need coverage?</h2>
+        <p className="camps-builder-lede">
+          Select the weeks you need a camp for.
+          {SEASON_ACTIVE && ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
+            ` Week ${SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).`}
+        </p>
+        <button
+          type="button"
+          className={`camps-builder-selectall${allWeeksSelected ? " is-active" : ""}`}
+          onClick={() => {
+            const allNums = ACTIVE_WEEKS.map(sw => sw.weekNum);
+            const allSelected = allNums.every(n => selectedWeeks.has(n));
+            setSelectedWeeks(allSelected ? new Set() : new Set(allNums));
+          }}
+        >
+          {allWeeksSelected ? "Clear all" : `Select all ${ACTIVE_WEEKS.length} weeks`}
+        </button>
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-          gap: 8,
-          marginBottom: 28,
-        }}>
+        <div className="camps-week-grid">
           {ACTIVE_WEEKS.map((sw) => {
             const selected = selectedWeeks.has(sw.weekNum);
             return (
               <button
+                type="button"
                 key={sw.weekNum}
+                className={`camps-week${selected ? " is-selected" : ""}`}
+                aria-pressed={selected}
                 onClick={() => toggleWeek(sw.weekNum)}
-                style={{
-                  padding: "12px 10px",
-                  border: selected ? "2px solid var(--sb-ink)" : "2px solid var(--sb-border-light)",
-                  borderRadius: "var(--sb-radius)",
-                  background: selected ? "var(--sb-ink)" : "var(--sb-card)",
-                  color: selected ? "#fff" : "var(--sb-ink)",
-                  cursor: "pointer",
-                  textAlign: "center",
-                  transition: "all 0.12s",
-                }}
               >
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, marginBottom: 3 }}>
-                  WEEK {sw.weekNum}
-                </div>
-                <div style={{ fontSize: 12, fontWeight: selected ? 700 : 400 }}>{sw.label}</div>
+                <span className="camps-week-num">Week {sw.weekNum}</span>
+                <span className="camps-week-dates">{sw.label}</span>
               </button>
             );
           })}
         </div>
 
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <button
-            onClick={() => selectedWeeks.size > 0 && setStep(3)}
-            disabled={selectedWeeks.size === 0}
-            style={{
-              padding: "10px 24px",
-              background: selectedWeeks.size > 0 ? "var(--sb-ink)" : "var(--sb-border)",
-              color: selectedWeeks.size > 0 ? "#fff" : "var(--sb-muted)",
-              border: "none",
-              borderRadius: "var(--sb-radius)",
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: selectedWeeks.size > 0 ? "pointer" : "default",
-              letterSpacing: "0.04em",
-            }}
-          >
-            See my plan ({selectedWeeks.size} week{selectedWeeks.size !== 1 ? "s" : ""}) →
-          </button>
-        </div>
+        <button
+          type="button"
+          className="sb-btn sb-btn--primary camps-builder-cta"
+          onClick={() => selectedWeeks.size > 0 && setStep(3)}
+          disabled={selectedWeeks.size === 0}
+        >
+          See my plan ({selectedWeeks.size} week{selectedWeeks.size !== 1 ? "s" : ""}) →
+        </button>
       </div>
     );
   }
@@ -791,181 +680,88 @@ function SummerBuilderMode() {
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-        <button
-          onClick={() => setStep(2)}
-          style={{
-            background: "none", border: "none", cursor: "pointer",
-            color: "var(--sb-muted)", fontSize: 13, padding: 0,
-          }}
-        >
+      <div className="camps-builder-bar">
+        <button type="button" className="camps-builder-back" onClick={() => setStep(2)}>
           ← Back
         </button>
-        <h2 style={{
-          fontFamily: "var(--sb-serif)",
-          fontSize: 20,
-          fontWeight: 700,
-          color: "var(--sb-ink)",
-          margin: 0,
-        }}>
-          Your Summer Plan
-        </h2>
-        <span style={{ fontSize: 12, color: "var(--sb-muted)", marginLeft: "auto" }}>{ageLabel}</span>
+        <h2 className="camps-builder-title camps-builder-title--inline">Your Summer Plan</h2>
+        <span className="camps-builder-agetag camps-builder-agetag--end">{ageLabel}</span>
       </div>
 
       {/* Suggested plan summary */}
       {suggestedPlan.length > 0 && (
-        <div style={{
-          background: "#f0fdf4",
-          border: "1px solid #86efac",
-          borderLeft: "3px solid #15803d",
-          borderRadius: "var(--sb-radius)",
-          padding: "14px 16px",
-          marginBottom: 16,
-        }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#15803d", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 8 }}>
-            Suggested Plan — Lowest Cost
+        <div className="camps-plan">
+          <div className="camps-plan-label">Suggested plan · Lowest cost</div>
+          <ul className="camps-plan-list">
+            {suggestedPlan.map((item) => (
+              <li key={item.weekNum} className="camps-plan-row">
+                <span className="camps-plan-wk">Wk {item.weekNum}</span>
+                <span className="camps-plan-name">{item.camp.name}</span>
+                <span className="camps-plan-price">
+                  {item.week.residentPrice !== null ? `$${item.week.residentPrice}` : "—"}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="camps-plan-total">
+            <span>Estimated total</span>
+            <span>${totalCost}</span>
           </div>
-          {suggestedPlan.map((item) => (
-            <div key={item.weekNum} style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              fontSize: 13,
-              padding: "4px 0",
-              borderBottom: "1px solid #bbf7d0",
-            }}>
-              <span style={{ color: "var(--sb-muted)", fontFamily: "'Space Mono', monospace", fontSize: 11 }}>
-                Wk {item.weekNum}
-              </span>
-              <span style={{ color: "var(--sb-ink)", fontWeight: 600, flex: 1, marginLeft: 10 }}>
-                {item.camp.name}
-              </span>
-              <span style={{ color: "#15803d", fontWeight: 700, fontSize: 12 }}>
-                {item.week.residentPrice !== null ? `$${item.week.residentPrice}` : "—"}
-              </span>
-            </div>
-          ))}
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: 8,
-            paddingTop: 6,
-            borderTop: "2px solid #86efac",
-            fontSize: 14,
-            fontWeight: 700,
-          }}>
-            <span style={{ color: "#15803d" }}>Estimated total</span>
-            <span style={{ color: "#15803d" }}>${totalCost}</span>
-          </div>
-          <div style={{ fontSize: 11, color: "#4ade80", marginTop: 6, fontStyle: "italic" }}>
+          <p className="camps-plan-note">
             Resident prices shown. Verify all prices at each program's website.
-          </div>
+          </p>
         </div>
       )}
 
       {/* Mix it up suggestion */}
       {mixItUpSuggestion && (
-        <div style={{
-          background: "#fffbeb",
-          border: "1px solid #fde68a",
-          borderLeft: "3px solid #d97706",
-          borderRadius: "var(--sb-radius)",
-          padding: "10px 14px",
-          marginBottom: 16,
-          fontSize: 13,
-          color: "#92400e",
-        }}>
-          💡 Your plan is all <strong>{mixItUpSuggestion.dominantType}</strong> camps — consider mixing in a <strong>{mixItUpSuggestion.suggestedType}</strong> week for variety.
+        <div className="camps-plan-tip">
+          💡 Your plan is all <strong>{mixItUpSuggestion.dominantType}</strong> camps. Consider mixing in a <strong>{mixItUpSuggestion.suggestedType}</strong> week for variety.
         </div>
       )}
 
       {/* Week-by-week options */}
       {suggestions.map((suggestion) => (
-        <div key={suggestion.weekNum} style={{ marginBottom: 20 }}>
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            marginBottom: 10,
-            paddingBottom: 6,
-            borderBottom: "1px solid var(--sb-border-light)",
-          }}>
-            <span style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: 11,
-              fontWeight: 700,
-              background: "var(--sb-ink)",
-              color: "#fff",
-              padding: "2px 8px",
-              borderRadius: 3,
-            }}>
-              WEEK {suggestion.weekNum}
-            </span>
-            <span style={{ fontSize: 13, color: "var(--sb-ink)", fontWeight: 600 }}>{suggestion.weekLabel}</span>
+        <div key={suggestion.weekNum} className="camps-plan-week">
+          <div className="camps-plan-week-head">
+            <span className="camps-plan-week-badge">Week {suggestion.weekNum}</span>
+            <span className="camps-plan-week-dates">{suggestion.weekLabel}</span>
             {suggestion.options.length === 0 && (
-              <span style={{ fontSize: 11, color: "#b45309", fontWeight: 600 }}>No matches found</span>
+              <span className="camps-plan-week-none">No matches found</span>
             )}
           </div>
 
           {suggestion.options.length === 0 ? (
-            <div style={{ fontSize: 13, color: "var(--sb-muted)", padding: "8px 0" }}>
+            <p className="camps-plan-week-empty">
               No camps found for {ageLabel} in week {suggestion.weekNum}. Try checking individual city websites.
-            </div>
+            </p>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="camps-plan-options">
               {suggestion.options.map((opt, idx) => {
-                const accent = CITY_ACCENT[opt.camp.cityId] ?? "#555";
                 const isTop = idx === 0;
                 return (
-                  <div key={opt.camp.id} style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: isTop ? "12px 14px" : "8px 14px",
-                    background: isTop ? "var(--sb-card)" : "transparent",
-                    border: isTop ? "1px solid var(--sb-border-light)" : "none",
-                    borderLeft: isTop ? `3px solid ${accent}` : `2px solid var(--sb-border-light)`,
-                    borderRadius: isTop ? "var(--sb-radius)" : 0,
-                    marginLeft: isTop ? 0 : 4,
-                  }}>
-                    {isTop && (
-                      <span style={{ fontSize: 10, fontWeight: 700, color: "#15803d", background: "#f0fdf4", padding: "2px 5px", borderRadius: 3, whiteSpace: "nowrap" }}>
-                        Best pick
-                      </span>
-                    )}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: isTop ? 700 : 500, fontSize: isTop ? 14 : 13, color: "var(--sb-ink)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {opt.camp.name}
-                      </div>
-                      <div style={{ fontSize: 11, color: "var(--sb-muted)" }}>
-                        {opt.camp.cityName} · Ages {opt.camp.ageMin}–{opt.camp.ageMax} · {opt.camp.hours}
+                  <div key={opt.camp.id} className={`camps-option${isTop ? " is-top" : ""}`}>
+                    {isTop && <span className="camps-option-badge">Best pick</span>}
+                    <div className="camps-option-body">
+                      <div className="camps-option-name">{opt.camp.name}</div>
+                      <div className="camps-option-meta">
+                        {opt.camp.cityName}{"\u00a0· "}Ages {opt.camp.ageMin}–{opt.camp.ageMax}{"\u00a0· "}{opt.camp.hours}
                       </div>
                     </div>
-                    <div style={{ textAlign: "right", flexShrink: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: isTop ? 14 : 12, color: isTop ? "var(--sb-ink)" : "var(--sb-muted)" }}>
+                    <div className="camps-option-price">
+                      <strong>
                         {opt.week.residentPrice !== null ? `$${opt.week.residentPrice}` : "Contact"}
-                      </div>
-                      <div style={{ fontSize: 10, color: "var(--sb-muted)" }}>resident</div>
+                      </strong>
+                      <span>resident</span>
                     </div>
                     {isTop && (
                       <a
+                        className="sb-btn camps-option-cta"
                         href={opt.camp.registerUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{
-                          padding: "6px 12px",
-                          background: accent,
-                          color: "#fff",
-                          fontSize: 11,
-                          fontWeight: 700,
-                          textDecoration: "none",
-                          borderRadius: "var(--sb-radius)",
-                          whiteSpace: "nowrap",
-                          flexShrink: 0,
-                        }}
                       >
-                        Register
+                        Register <span aria-hidden="true">↗</span>
                       </a>
                     )}
                   </div>
@@ -977,33 +773,13 @@ function SummerBuilderMode() {
       ))}
 
       {weeksWithNoCamps.length > 0 && (
-        <div style={{
-          padding: "12px 14px",
-          background: "#fffbeb",
-          border: "1px solid #fcd34d",
-          borderRadius: "var(--sb-radius)",
-          fontSize: 13,
-          color: "#92400e",
-          marginBottom: 16,
-        }}>
+        <div className="camps-plan-warn">
           Some weeks have no matching camps in our database. Check individual city recreation sites for the latest listings.
         </div>
       )}
 
-      <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-        <button
-          onClick={handleReset}
-          style={{
-            padding: "8px 16px",
-            background: "none",
-            border: "1px solid var(--sb-border)",
-            borderRadius: "var(--sb-radius)",
-            fontSize: 12,
-            fontWeight: 600,
-            color: "var(--sb-muted)",
-            cursor: "pointer",
-          }}
-        >
+      <div className="camps-builder-actions">
+        <button type="button" className="sb-btn sb-btn--quiet" onClick={handleReset}>
           Start over
         </button>
       </div>
@@ -1052,6 +828,7 @@ export default function CampsView() {
       {SEASON_ACTIVE && (
         <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
           <button
+            type="button"
             id="camps-tab-browse"
             role="tab"
             onClick={() => setMode("browse")}
@@ -1062,6 +839,7 @@ export default function CampsView() {
             Directory
           </button>
           <button
+            type="button"
             id="camps-tab-builder"
             role="tab"
             onClick={() => setMode("builder")}
@@ -1090,370 +868,6 @@ export default function CampsView() {
           <SummerBuilderMode />
         </section>
       )}
-      <CampsViewStyles />
     </div>
-  );
-}
-
-function CampsViewStyles() {
-  return (
-    <style>{`
-      .camps-view {
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-      }
-
-      .camps-kicker {
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--sb-muted);
-      }
-
-      .camps-hero {
-        padding-bottom: 24px;
-        border-bottom: 3px double var(--sb-border);
-      }
-      .camps-hero h1 {
-        margin: 6px 0 10px;
-        font-family: var(--sb-serif);
-        font-size: 42px;
-        line-height: 1;
-        color: var(--sb-ink);
-      }
-      .camps-hero p {
-        max-width: 720px;
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 15px;
-        line-height: 1.65;
-      }
-      .camps-hero-note {
-        margin-top: 10px;
-        color: var(--sb-light);
-        font-size: 11px;
-        letter-spacing: 0.03em;
-      }
-      .camps-stat-row {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        border: 1px solid var(--sb-border-light);
-        margin-top: 22px;
-        background: var(--sb-card);
-      }
-      .camps-stat-row > div {
-        padding: 15px 16px;
-        border-left: 1px solid var(--sb-border-light);
-      }
-      .camps-stat-row > div:first-child { border-left: none; }
-      .camps-stat-row strong {
-        display: block;
-        font-family: var(--sb-serif);
-        font-size: 28px;
-        line-height: 1;
-        color: var(--sb-ink);
-      }
-      .camps-stat-row span {
-        display: block;
-        margin-top: 5px;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--sb-muted);
-      }
-
-      .camps-mode-switch {
-        display: inline-flex;
-        width: max-content;
-        max-width: 100%;
-        gap: 3px;
-        padding: 3px;
-        border: 1px solid var(--sb-border-light);
-        background: var(--sb-card);
-        border-radius: 999px;
-      }
-      .camps-mode-switch button {
-        border: 0;
-        border-radius: 999px;
-        background: transparent;
-        color: var(--sb-muted);
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.05em;
-        padding: 8px 18px;
-        text-transform: uppercase;
-      }
-      .camps-mode-switch button.is-active {
-        background: var(--sb-ink);
-        color: #fff;
-      }
-
-      .camps-directory,
-      .camps-featured,
-      .camps-browse {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-      }
-      .camps-featured {
-        padding-bottom: 28px;
-        border-bottom: 1px solid var(--sb-border-light);
-      }
-      .camps-section-head {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
-        gap: 24px;
-        align-items: end;
-      }
-      .camps-section-head h2 {
-        margin: 3px 0 0;
-        font-family: var(--sb-serif);
-        font-size: 26px;
-        line-height: 1.1;
-        color: var(--sb-ink);
-      }
-      .camps-section-head p {
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 13px;
-        line-height: 1.55;
-      }
-
-      .camps-feature-grid,
-      .camps-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-      }
-      .camps-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .camps-toolbar {
-        display: grid;
-        grid-template-columns: minmax(220px, 1.5fr) repeat(6, minmax(110px, 1fr));
-        gap: 8px;
-        align-items: end;
-        padding: 12px;
-        border: 1px solid var(--sb-border-light);
-        background: rgba(255,255,255,0.55);
-      }
-      .camps-toolbar label {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        min-width: 0;
-      }
-      .camps-toolbar label > span {
-        font-family: 'Space Mono', monospace;
-        color: var(--sb-muted);
-        font-size: 9px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .camps-toolbar input,
-      .camps-toolbar select {
-        width: 100%;
-        min-width: 0;
-        border: 1px solid var(--sb-border);
-        border-radius: 6px;
-        background: var(--sb-card);
-        color: var(--sb-ink);
-        font-family: var(--sb-sans);
-        font-size: 12px;
-        padding: 9px 10px;
-      }
-
-      .camps-results-head {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: center;
-        color: var(--sb-muted);
-        font-family: 'Space Mono', monospace;
-        font-size: 11px;
-      }
-      .camps-results-head button {
-        border: 1px solid var(--sb-border);
-        border-radius: 999px;
-        background: transparent;
-        color: var(--sb-ink);
-        cursor: pointer;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 5px 12px;
-      }
-      .camps-show-more {
-        width: max-content;
-        max-width: 100%;
-        justify-self: center;
-        align-self: center;
-        border: 1px solid var(--sb-ink);
-        border-radius: 999px;
-        background: transparent;
-        color: var(--sb-ink);
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.05em;
-        padding: 9px 18px;
-        text-transform: uppercase;
-      }
-
-      .camps-card {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        min-width: 0;
-        background: var(--sb-card);
-        border: 1px solid var(--sb-border-light);
-        border-top: 3px solid var(--sb-ink);
-        border-radius: 8px;
-        padding: 17px;
-      }
-      .camps-card-top,
-      .camps-card-meta,
-      .camps-card-tags,
-      .camps-card-footer {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-        align-items: center;
-      }
-      .camps-card-city,
-      .camps-card-type,
-      .camps-card-tags span {
-        border-radius: 999px;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.05em;
-        padding: 4px 8px;
-        text-transform: uppercase;
-      }
-      .camps-card-tags span {
-        border: 1px solid var(--sb-border-light);
-        color: var(--sb-muted);
-        font-weight: 600;
-        text-transform: none;
-        letter-spacing: 0;
-      }
-      .camps-card-title {
-        margin: 0;
-        font-family: var(--sb-serif);
-        font-size: 20px;
-        line-height: 1.15;
-        color: var(--sb-ink);
-      }
-      .camps-card-copy {
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 13px;
-        line-height: 1.55;
-      }
-      .camps-facts {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1px;
-        margin: 0;
-        background: var(--sb-border-light);
-        border: 1px solid var(--sb-border-light);
-      }
-      .camps-facts div {
-        min-width: 0;
-        background: var(--sb-bg);
-        padding: 9px 10px;
-      }
-      .camps-facts dt {
-        color: var(--sb-light);
-        font-family: 'Space Mono', monospace;
-        font-size: 9px;
-        font-weight: 800;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-      }
-      .camps-facts dd {
-        margin: 3px 0 0;
-        color: var(--sb-ink);
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1.35;
-      }
-      .camps-card-meta {
-        color: var(--sb-muted);
-        font-size: 11px;
-        line-height: 1.4;
-      }
-      .camps-card-meta span + span::before {
-        content: "";
-        display: inline-block;
-        width: 3px;
-        height: 3px;
-        margin: 0 6px 2px 0;
-        border-radius: 999px;
-        background: var(--sb-border);
-      }
-      .camps-card-footer {
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: auto;
-        padding-top: 3px;
-        color: var(--sb-light);
-        font-size: 11px;
-      }
-      .camps-card-footer a {
-        border-radius: 6px;
-        color: #fff;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.04em;
-        padding: 7px 12px;
-        text-decoration: none;
-        text-transform: uppercase;
-      }
-
-      .camps-empty,
-      .camps-builder-wrap {
-        border: 1px solid var(--sb-border-light);
-        border-radius: 8px;
-        background: var(--sb-card);
-        padding: 24px;
-      }
-      .camps-empty h3 {
-        margin: 0 0 4px;
-        font-family: var(--sb-serif);
-        font-size: 20px;
-      }
-      .camps-empty p {
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 13px;
-      }
-
-      @media (max-width: 980px) {
-        .camps-stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .camps-stat-row > div:nth-child(3) { border-left: none; border-top: 1px solid var(--sb-border-light); }
-        .camps-stat-row > div:nth-child(4) { border-top: 1px solid var(--sb-border-light); }
-        .camps-section-head { grid-template-columns: 1fr; gap: 8px; }
-        .camps-feature-grid,
-        .camps-grid { grid-template-columns: 1fr; }
-        .camps-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .camps-search { grid-column: 1 / -1; }
-      }
-
-      @media (max-width: 560px) {
-        .camps-hero h1 { font-size: 34px; }
-        .camps-stat-row strong { font-size: 24px; }
-        .camps-toolbar { grid-template-columns: 1fr; }
-        .camps-mode-switch { width: 100%; }
-        .camps-mode-switch button { flex: 1; padding-inline: 10px; }
-        .camps-card { padding: 15px; }
-      }
-    `}</style>
   );
 }

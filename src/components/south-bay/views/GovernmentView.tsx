@@ -61,6 +61,16 @@ function meetingDateLabel(iso: string): string {
   return d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
 }
 
+/** "13:30" → "1:30 PM". Null for a missing or malformed portal time. */
+function formatClock(hhmm: string | null | undefined): string | null {
+  const m = hhmm ? /^(\d{1,2}):(\d{2})$/.exec(hhmm) : null;
+  if (!m) return null;
+  const h = Number(m[1]);
+  if (h > 23) return null;
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${m[2]} ${h >= 12 ? "PM" : "AM"}`;
+}
+
 function countMeetingsInWindow(selectedCities: Set<City>): number {
   const start = todayPT();
   const end = addDays(start, 7);
@@ -104,116 +114,57 @@ function CouncilWeekAhead({ selectedCities }: { selectedCities: Set<City> }) {
   if (rows.length === 0) return null;
 
   return (
-    <section style={{ marginBottom: 32 }}>
-      <div className="sb-section-header" style={{ marginBottom: 4 }}>
-        <span className="sb-section-title">This Week in Council</span>
+    <section className="gov-section gov-week" aria-labelledby="gov-week-title">
+      <div className="sb-section-header gov-section-head">
+        <h2 id="gov-week-title" className="sb-section-title">This Week in Council</h2>
       </div>
       <p className="gov-section-blurb">
-        Council meetings happening in the next 7 days across {selectedCities.size === 1 ? "your city" : "your selected cities"} — tap a row to open the agenda.
+        Council meetings in the next 7 days across {selectedCities.size === 1 ? "your city" : "your selected cities"}. Tap a row to open the agenda.
       </p>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          background: "var(--sb-card)",
-          border: "1px solid var(--sb-border-light)",
-        }}
-      >
-        {rows.map(({ city, meeting }, i) => {
+      <ul className="gov-week-list" role="list">
+        {rows.map(({ city, meeting }) => {
           const pill = dayPill(meeting.date, todayIso, tomorrowIso);
-          const isUrgent = meeting.date === todayIso || meeting.date === tomorrowIso;
+          const isSoon = meeting.date === todayIso || meeting.date === tomorrowIso;
           const items = (meeting.agendaItems ?? []).slice(0, 2);
+          const time = meeting.closedSession ? "Closed session" : formatClock(meeting.startTime);
           return (
-            <a
-              key={`${city}-${meeting.date}-${meeting.url}`}
-              href={meeting.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "72px 1fr",
-                gap: 14,
-                padding: "14px 16px",
-                borderTop: i === 0 ? "none" : "1px solid var(--sb-border-light)",
-                color: "var(--sb-ink)",
-                textDecoration: "none",
-                transition: "background 0.12s",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = "var(--sb-accent-light, #fafafa)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
-            >
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 2 }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "2px 8px",
-                    background: isUrgent ? "var(--sb-ink)" : "transparent",
-                    color: isUrgent ? "var(--sb-card)" : "var(--sb-ink)",
-                    border: `1px solid ${isUrgent ? "var(--sb-ink)" : "var(--sb-border)"}`,
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: 10,
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    borderRadius: 100,
-                  }}
-                >
-                  {pill}
-                </span>
-                <span style={{ fontSize: 11, color: "var(--sb-muted)", marginTop: 4 }}>
-                  {meetingDateLabel(meeting.date).split(",")[1]?.trim() ?? meeting.date}
-                </span>
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
-                  <span style={{ fontFamily: "var(--sb-serif)", fontSize: 16, fontWeight: 700 }}>
-                    {getCityName(city)}
+            <li key={`${city}-${meeting.date}-${meeting.url}`}>
+              <a
+                href={meeting.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gov-week-row"
+              >
+                <div className="gov-week-when">
+                  <span className={`gov-week-day${isSoon ? " is-soon" : ""}`}>{pill}</span>
+                  <span className="gov-week-date">
+                    {meetingDateLabel(meeting.date).split(",")[1]?.trim() ?? meeting.date}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: "var(--sb-light)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.06em",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {meeting.bodyName}
-                  </span>
+                  {time && <span className="gov-week-time">{time}</span>}
                 </div>
-                {items.length > 0 ? (
-                  <ul
-                    style={{
-                      margin: "6px 0 0",
-                      padding: 0,
-                      listStyle: "none",
-                      fontSize: 13,
-                      lineHeight: 1.45,
-                      color: "var(--sb-muted)",
-                    }}
-                  >
-                    {items.map((item) => (
-                      <li
-                        key={item.sequence}
-                        style={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        · {item.title}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <div style={{ fontSize: 13, color: "var(--sb-light)", marginTop: 6 }}>
-                    Agenda not yet posted — tap to check the city's calendar.
+                <div className="gov-week-body">
+                  <div className="gov-week-head">
+                    <span className="gov-week-city">{getCityName(city)}</span>
+                    <span className="gov-week-bodyname">{meeting.bodyName}</span>
                   </div>
-                )}
-              </div>
-            </a>
+                  {items.length > 0 ? (
+                    <ul className="gov-week-items">
+                      {items.map((item) => (
+                        <li key={item.sequence}>{item.title}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="gov-week-empty">
+                      Agenda not posted yet. Tap to check the city&apos;s calendar.
+                    </p>
+                  )}
+                </div>
+                <span className="gov-week-go" aria-hidden="true">↗</span>
+              </a>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </section>
   );
 }
@@ -335,17 +286,13 @@ export default function GovernmentView({ selectedCities }: Props) {
         ]}
       />
 
-      <section className="gov-section">
-        <CouncilWeekAhead selectedCities={selectedCities} />
-      </section>
+      <CouncilWeekAhead selectedCities={selectedCities} />
 
-      <section className="gov-section gov-records-section">
-        <MinutesSearchCard selectedCities={selectedCities} />
-      </section>
+      <MinutesSearchCard selectedCities={selectedCities} />
 
-      <section className="gov-section">
-        <div className="sb-section-header" style={{ marginBottom: 4 }}>
-          <span className="sb-section-title">Council Digests</span>
+      <section className="gov-section gov-digests" aria-labelledby="gov-digests-title">
+        <div className="sb-section-header gov-section-head">
+          <h2 id="gov-digests-title" className="sb-section-title">Council Digests</h2>
         </div>
         <p className="gov-section-blurb">
           Recent council meetings in plain English: what was discussed, what was decided,
@@ -361,95 +308,6 @@ export default function GovernmentView({ selectedCities }: Props) {
           errors={errors}
         />
       </section>
-
-      <GovernmentViewStyles />
     </div>
-  );
-}
-
-function GovernmentViewStyles() {
-  return (
-    <style>{`
-      .gov-view {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-      }
-      .gov-kicker {
-        color: var(--sb-muted);
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-      .gov-hero {
-        padding-bottom: 24px;
-        border-bottom: 3px double var(--sb-border);
-      }
-      .gov-hero h1 {
-        margin: 6px 0 10px;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 42px;
-        line-height: 1;
-      }
-      .gov-hero p {
-        max-width: 700px;
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 15px;
-        line-height: 1.65;
-      }
-      .gov-stat-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        margin-top: 22px;
-        border: 1px solid var(--sb-border-light);
-        background: var(--sb-card);
-      }
-      .gov-stat-row > div {
-        padding: 15px 16px;
-        border-left: 1px solid var(--sb-border-light);
-      }
-      .gov-stat-row > div:first-child { border-left: none; }
-      .gov-stat-row strong {
-        display: block;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 28px;
-        line-height: 1;
-      }
-      .gov-stat-row span {
-        display: block;
-        margin-top: 5px;
-        color: var(--sb-muted);
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .gov-section {
-        min-width: 0;
-      }
-      .gov-section > section {
-        margin-bottom: 0 !important;
-      }
-      .gov-records-section > div {
-        margin-bottom: 0 !important;
-      }
-      .gov-view .sb-section-title {
-        font-size: 20px;
-      }
-      @media (max-width: 680px) {
-        .gov-hero h1 { font-size: 34px; }
-        .gov-stat-row { grid-template-columns: 1fr; }
-        .gov-stat-row > div {
-          border-left: none;
-          border-top: 1px solid var(--sb-border-light);
-        }
-        .gov-stat-row > div:first-child { border-top: none; }
-      }
-    `}</style>
   );
 }

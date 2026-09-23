@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CompanyLogo } from "../CompanyLogo";
 import PageHero from "../PageHero";
 import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
@@ -83,10 +83,15 @@ function logoForConference(c: TechConference): LogoInfo {
 
 // ── Trend badge ────────────────────────────────────────────────────────────
 
+const TREND_WORD: Record<TechTrend, string> = { up: "Growing", flat: "Stable", down: "Shrinking" };
+const TREND_GLYPH: Record<TechTrend, string> = { up: "▲", flat: "—", down: "▼" };
+
 function TrendBadge({ trend }: { trend: TechTrend }) {
-  if (trend === "up") return <span className="tech-trend tech-trend--up">▲ Growing</span>;
-  if (trend === "down") return <span className="tech-trend tech-trend--down">▼ Shrinking</span>;
-  return <span className="tech-trend tech-trend--flat">— Stable</span>;
+  return (
+    <span className={`tech-chip tech-chip--${trend}`}>
+      <span aria-hidden="true">{TREND_GLYPH[trend]}</span> {TREND_WORD[trend]}
+    </span>
+  );
 }
 
 // ── Top Employers Leaderboard (replaces recharts bar chart) ────────────────
@@ -99,67 +104,70 @@ function TopEmployersLeaderboard() {
 
   return (
     <div className="tech-leaderboard">
-      {top.map((c, i) => {
-        const widthPct = (c.sccEmployeesK / max) * 100;
-        const trendArrow = c.trend === "up" ? "▲" : c.trend === "down" ? "▼" : "—";
-        const trendColor = c.trend === "up" ? "#15803d" : c.trend === "down" ? "#b91c1c" : "#9ca3af";
-        const isLink = !!c.careersUrl;
-        const innerContent = (
-          <>
-            <span className="tech-leaderboard-rank">{String(i + 1).padStart(2, "0")}</span>
-            <CompanyLogo
-              {...logoForCompany(c)}
-              name={c.name}
-              size={36}
-              fallbackColor={c.color}
-              borderRadius={6}
-            />
-            <div className="tech-leaderboard-info">
-              <div className="tech-leaderboard-name">
-                {c.name}
-                {isLink && <span className="tech-leaderboard-arrow-out">↗</span>}
-              </div>
-              <div className="tech-leaderboard-meta">
-                {c.city} · {CATEGORY_LABELS[c.category]}
-              </div>
-            </div>
-            <div className="tech-leaderboard-bar-wrap" aria-hidden="true">
-              <div
-                className="tech-leaderboard-bar"
-                style={{
-                  width: `${widthPct}%`,
-                  background: c.color,
-                  opacity: c.trend === "down" ? 0.5 : 0.85,
-                }}
+      <ol className="tech-leaderboard-list" role="list">
+        {top.map((c, i) => {
+          const widthPct = (c.sccEmployeesK / max) * 100;
+          const isLink = !!c.careersUrl;
+          const innerContent = (
+            <>
+              <span className="tech-leaderboard-rank">{String(i + 1).padStart(2, "0")}</span>
+              <CompanyLogo
+                {...logoForCompany(c)}
+                name={c.name}
+                size={36}
+                fallbackColor={c.color}
+                borderRadius={10}
+                className="tech-leaderboard-logo"
               />
-            </div>
-            <div className="tech-leaderboard-num">
-              <span className="tech-leaderboard-num-value">{c.sccEmployeesK.toLocaleString()}K</span>
-              <span className="tech-leaderboard-arrow" style={{ color: trendColor }}>
-                {trendArrow}
+              <span className="tech-leaderboard-info">
+                <span className="tech-leaderboard-name">
+                  {c.name}
+                  {isLink && <span className="tech-leaderboard-arrow-out" aria-hidden="true">↗</span>}
+                </span>
+                <span className="tech-leaderboard-meta">
+                  {c.city} · {CATEGORY_LABELS[c.category]}
+                </span>
               </span>
-            </div>
-          </>
-        );
-        return isLink ? (
-          <a
-            key={c.id}
-            href={c.careersUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="tech-leaderboard-row"
-          >
-            {innerContent}
-          </a>
-        ) : (
-          <div key={c.id} className="tech-leaderboard-row">
-            {innerContent}
-          </div>
-        );
-      })}
-      <div className="tech-leaderboard-footnote">
-        SCC local jobs only — global headcount is much larger. Bar widths scaled to top employer.
-      </div>
+              <span className="tech-leaderboard-bar-wrap" aria-hidden="true">
+                <span
+                  className={`tech-leaderboard-bar${c.trend === "down" ? " is-down" : ""}`}
+                  style={{ width: `${widthPct}%` }}
+                />
+              </span>
+              <span className="tech-leaderboard-num">
+                <span className="tech-leaderboard-num-value">{c.sccEmployeesK.toLocaleString()}K</span>
+                <span
+                  className={`tech-leaderboard-arrow is-${c.trend}`}
+                  role="img"
+                  aria-label={TREND_WORD[c.trend]}
+                  title={TREND_WORD[c.trend]}
+                >
+                  {TREND_GLYPH[c.trend]}
+                </span>
+              </span>
+            </>
+          );
+          return (
+            <li key={c.id}>
+              {isLink ? (
+                <a
+                  href={c.careersUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tech-leaderboard-row"
+                >
+                  {innerContent}
+                </a>
+              ) : (
+                <div className="tech-leaderboard-row">{innerContent}</div>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+      <p className="tech-leaderboard-footnote">
+        SCC local jobs only; global headcount is much larger. Bars are scaled to the top employer.
+      </p>
     </div>
   );
 }
@@ -168,8 +176,8 @@ function TopEmployersLeaderboard() {
 
 function CompanyCard({ company }: { company: TechCompany }) {
   return (
-    <div className="tech-card" style={{ borderTop: `3px solid ${company.color}` }}>
-      <div className="tech-card-header">
+    <article className="tech-card">
+      <header className="tech-card-header">
         <CompanyLogo
           {...logoForCompany(company)}
           name={company.name}
@@ -178,34 +186,37 @@ function CompanyCard({ company }: { company: TechCompany }) {
           borderRadius={10}
         />
         <div className="tech-card-id">
-          <div className="tech-card-name-row">
-            <span className="tech-card-name">{company.name}</span>
+          <h3 className="tech-card-name">
+            <span>{company.name}</span>
             {company.ticker && (
               <span className="tech-card-ticker">{company.ticker}</span>
             )}
-          </div>
+          </h3>
           <div className="tech-card-meta">
             <span className="tech-card-city">{company.city}</span>
-            <span className="tech-card-dot">·</span>
+            <span className="tech-card-dot" aria-hidden="true">·</span>
             <span className="tech-card-category">{CATEGORY_LABELS[company.category]}</span>
           </div>
         </div>
         <TrendBadge trend={company.trend} />
-      </div>
-
-      <div className="tech-card-stat">
-        <span className="tech-card-stat-value">{company.sccEmployeesK.toLocaleString()}K</span>
-        <span className="tech-card-stat-label">SCC jobs (est.)</span>
-      </div>
+      </header>
 
       <p className="tech-card-desc">{company.description}</p>
-      <div className="tech-card-trend-note">{company.trendNote}</div>
+
+      <div className="tech-card-jobs">
+        <div className="tech-card-stat">
+          <span className="tech-card-stat-value">{company.sccEmployeesK.toLocaleString()}K</span>
+          <span className="tech-card-stat-label">SCC jobs (est.)</span>
+        </div>
+        <p className="tech-card-trend-note">{company.trendNote}</p>
+      </div>
+
       <ul className="tech-card-highlights">
         {company.highlights.map((h, i) => (
           <li key={i}>{h}</li>
         ))}
       </ul>
-    </div>
+    </article>
   );
 }
 
@@ -217,26 +228,20 @@ const STAGE_LABELS: Record<SccTechSpotlight["stage"], string> = {
   startup: "Startup",
 };
 
+// Stage chips share the funding-round tones: early = gold, later = teal.
+const STAGE_TONE: Record<SccTechSpotlight["stage"], string> = {
+  startup: "gold",
+  growth: "teal",
+  public: "neutral",
+};
+
 function SpotlightCard({ company }: { company: SccTechSpotlight }) {
-  const stageColor =
-    company.stage === "startup"
-      ? "#92400e"
-      : company.stage === "growth"
-        ? "#1e40af"
-        : "#374151";
-  const stageBg =
-    company.stage === "startup"
-      ? "#fef3c7"
-      : company.stage === "growth"
-        ? "#dbeafe"
-        : "#f3f4f6";
   return (
     <a
       href={company.url}
       target="_blank"
       rel="noopener noreferrer"
       className="tech-spotlight-card"
-      style={{ borderTop: `3px solid ${company.color}` }}
     >
       <div className="tech-spotlight-header">
         <CompanyLogo
@@ -244,17 +249,15 @@ function SpotlightCard({ company }: { company: SccTechSpotlight }) {
           name={company.name}
           size={44}
           fallbackColor={company.color}
+          borderRadius={10}
         />
         <div className="tech-spotlight-id">
-          <div className="tech-spotlight-name">
-            {company.name} <span className="tech-spotlight-arrow">↗</span>
-          </div>
+          <h3 className="tech-spotlight-name">
+            {company.name} <span className="tech-spotlight-arrow" aria-hidden="true">↗</span>
+          </h3>
           <div className="tech-spotlight-meta">{company.city}</div>
         </div>
-        <span
-          className="tech-spotlight-stage"
-          style={{ background: stageBg, color: stageColor }}
-        >
+        <span className={`tech-chip tech-chip--${STAGE_TONE[company.stage]}`}>
           {STAGE_LABELS[company.stage]}
         </span>
       </div>
@@ -266,13 +269,10 @@ function SpotlightCard({ company }: { company: SccTechSpotlight }) {
 
 // ── Hiring Pulse row ──────────────────────────────────────────────────────
 
-function HiringRow({ company }: { company: TechCompany }) {
-  const isUp = company.trend === "up";
-  const isDown = company.trend === "down";
-  const statusColor = isUp ? "#15803d" : isDown ? "#92400e" : "#565f6e";
-  const statusBg = isUp ? "#f0fdf4" : isDown ? "#fffbeb" : "#f9fafb";
-  const statusLabel = isUp ? "▲ Hiring" : isDown ? "▼ Reduced" : "→ Selective";
+// Status lives on each column's heading; rows don't repeat it.
+const HIRING_GLYPH: Record<TechTrend, string> = { up: "▲", flat: "→", down: "▼" };
 
+function HiringRow({ company }: { company: TechCompany }) {
   const content = (
     <>
       <CompanyLogo
@@ -281,73 +281,30 @@ function HiringRow({ company }: { company: TechCompany }) {
         size={32}
         fallbackColor={company.color}
         borderRadius={6}
+        className="tech-hiring-logo"
       />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap" }}>
-          <span
-            style={{
-              fontWeight: 600,
-              fontSize: 13,
-              color: "var(--sb-ink)",
-              fontFamily: "var(--sb-sans)",
-            }}
-          >
-            {company.name}
-            {company.careersUrl ? " ↗" : ""}
-          </span>
-          <span style={{ fontSize: 11, color: "var(--sb-muted)" }}>{company.city}</span>
-        </div>
-        <div
-          style={{
-            fontSize: 11,
-            color: "var(--sb-muted)",
-            marginTop: 1,
-            lineHeight: 1.4,
-          }}
-        >
-          {company.trendNote}
-        </div>
-      </div>
-      <span
-        style={{
-          fontSize: 10,
-          fontWeight: 700,
-          fontFamily: "'Space Mono', monospace",
-          color: statusColor,
-          background: statusBg,
-          border: `1px solid ${statusColor}30`,
-          borderRadius: 4,
-          padding: "3px 7px",
-          whiteSpace: "nowrap",
-          flexShrink: 0,
-        }}
-      >
-        {statusLabel}
+      <span className="tech-hiring-title">
+        <span className="tech-hiring-name">
+          {company.name}
+          {company.careersUrl ? <span className="tech-hiring-out" aria-hidden="true">↗</span> : null}
+        </span>
+        <span className="tech-hiring-city">{company.city}</span>
       </span>
+      <span className="tech-hiring-note">{company.trendNote}</span>
     </>
   );
-
-  const baseStyle: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "9px 0",
-    borderBottom: "1px solid var(--sb-border-light)",
-    textDecoration: "none",
-    color: "inherit",
-  };
 
   return company.careersUrl ? (
     <a
       href={company.careersUrl}
       target="_blank"
       rel="noopener noreferrer"
-      style={baseStyle}
+      className="tech-hiring-row"
     >
       {content}
     </a>
   ) : (
-    <div style={baseStyle}>{content}</div>
+    <div className="tech-hiring-row">{content}</div>
   );
 }
 
@@ -761,27 +718,20 @@ function roundColorKey(round: string): string {
   return r; // unknown → default gray
 }
 
+// ROUND_COLORS now doubles as the registry of known round labels; the badge
+// itself collapses the stage families into three calm tiers (early = gold,
+// Series A–C = violet, D and later = teal) plus a neutral chip for
+// strategic / venture / convertible rounds.
+function roundTone(round: string): "gold" | "violet" | "teal" | "neutral" {
+  const key = roundColorKey(round);
+  if (key === "Seed" || key === "Pre-Seed") return "gold";
+  if (/^Series [ABC]/.test(key)) return "violet";
+  if (/^Series [D-F]/.test(key) || key === "Growth") return "teal";
+  return "neutral";
+}
+
 function RoundBadge({ round }: { round: string }) {
-  const style = ROUND_COLORS[roundColorKey(round)] ?? { bg: "#f3f4f6", color: "#374151", border: "#d1d5db" };
-  return (
-    <span
-      style={{
-        fontSize: 10,
-        fontWeight: 700,
-        fontFamily: "'Space Mono', monospace",
-        letterSpacing: "0.04em",
-        background: style.bg,
-        color: style.color,
-        border: `1px solid ${style.border}`,
-        borderRadius: 3,
-        padding: "2px 6px",
-        whiteSpace: "nowrap",
-        flexShrink: 0,
-      }}
-    >
-      {round}
-    </span>
-  );
+  return <span className={`tech-chip tech-chip--${roundTone(round)}`}>{round}</span>;
 }
 
 function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
@@ -792,104 +742,85 @@ function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
   const daysAgo = pacificDaysAgo(company.date, now);
   const isFresh = isFreshRound(daysAgo);
   const dateLabel = fundingDateLabel(company.date, now);
+  const undisclosed = parseFundingAmount(company.amount) === null;
+
+  // Long blurbs open clamped with a Read more toggle. The first render guesses
+  // from length (same on server and client); after mount the real overflow
+  // decides whether the toggle is needed at this width.
+  const [expanded, setExpanded] = useState(false);
+  const [clamped, setClamped] = useState(company.tagline.length > 220);
+  const blurbRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    const el = blurbRef.current;
+    if (!el || expanded) return;
+    const check = () => setClamped(el.scrollHeight > el.clientHeight + 1);
+    check();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [expanded]);
+  const blurbId = `tech-funded-${company.id}-${company.date}`;
 
   return (
-    <a
-      href={company.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="tech-funded-row"
-    >
+    <article className={`tech-funded-row${expanded ? " is-expanded" : ""}`}>
       <CompanyLogo
         {...logoForFunded(company)}
         name={company.name}
         size={44}
         fallbackColor={company.color}
-        borderRadius={8}
+        borderRadius={10}
+        className="tech-funded-logo"
       />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            flexWrap: "wrap",
-            marginBottom: 4,
-          }}
-        >
-          <span
-            style={{
-              fontWeight: 700,
-              fontSize: 14,
-              color: "var(--sb-ink)",
-              fontFamily: "var(--sb-sans)",
-            }}
+      <div className="tech-funded-facts">
+        <h3 className="tech-funded-name">
+          <a
+            href={company.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tech-funded-link"
           >
-            {company.name} ↗
-          </span>
+            {company.name}
+            <span className="tech-funded-out" aria-hidden="true">↗</span>
+          </a>
           {isFresh && (
             <span
-              style={{
-                fontSize: 9,
-                fontWeight: 800,
-                fontFamily: "'Space Mono', monospace",
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#fff",
-                background: "#dc2626",
-                padding: "2px 6px",
-                borderRadius: 3,
-                lineHeight: 1.1,
-              }}
+              className="tech-chip tech-chip--new"
               title={`Closed ${daysAgo === 0 ? "today" : daysAgo === 1 ? "yesterday" : `${daysAgo} days ago`}`}
             >
-              NEW
+              New
             </span>
           )}
+        </h3>
+        <div className={`tech-funded-amount${undisclosed ? " is-undisclosed" : ""}`}>
+          {company.amount}
+        </div>
+        <div className="tech-funded-meta">
           <RoundBadge round={company.round} />
-          <span
-            style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: "#16a34a",
-              fontFamily: "var(--sb-sans)",
-            }}
-          >
-            {company.amount}
+          <span className="tech-funded-where">
+            <span>{company.city}</span>{"\u00a0· "}
+            <span>{labelForCategory(company.category)}</span>{"\u00a0· "}
+            <span>{dateLabel}</span>
           </span>
         </div>
-        <div
-          style={{
-            fontSize: 11,
-            color: "var(--sb-muted)",
-            marginBottom: 5,
-            display: "flex",
-            gap: 8,
-            flexWrap: "wrap",
-          }}
-        >
-          <span>{company.city}</span>
-          <span style={{ color: "var(--sb-border)" }}>·</span>
-          <span>
-            {labelForCategory(company.category)}
-          </span>
-          <span style={{ color: "var(--sb-border)" }}>·</span>
-          <span>{dateLabel}</span>
-        </div>
-        <p
-          className="tech-funded-summary"
-          style={{
-            margin: 0,
-            fontSize: 12,
-            color: "#374151",
-            lineHeight: 1.5,
-            fontFamily: "var(--sb-sans)",
-          }}
-        >
+      </div>
+      <div className="tech-funded-blurb">
+        <p className="tech-funded-summary" id={blurbId} ref={blurbRef}>
           {company.tagline}
         </p>
+        {(clamped || expanded) && (
+          <button
+            type="button"
+            className="tech-funded-more"
+            aria-expanded={expanded}
+            aria-controls={blurbId}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            {expanded ? "Show less" : "Read more"}
+          </button>
+        )}
       </div>
-    </a>
+    </article>
   );
 }
 
@@ -1516,54 +1447,70 @@ function FundingHighlightsSection() {
     .slice(0, 8);
 
   return (
-    <div className="tech-section">
+    <section className="tech-section" aria-labelledby="tech-funded-title">
       <div className="tech-section-head">
-        <h3 className="tech-section-title">Recently Funded</h3>
+        <h2 id="tech-funded-title" className="tech-section-title">Recently Funded</h2>
         <span className="tech-section-note">
           Latest public rounds · South Bay startups
         </span>
       </div>
-      <div className="tech-funding-summary">
-        <div>
-          <strong>{RAISED_2026_LABEL}</strong>
-          <span>Raised in {FUNDING_PERIOD_LABEL}</span>
+      <div className="tech-funding">
+        <div className="tech-funding-summary">
+          <div className="tech-funding-total">
+            <strong>{RAISED_2026_LABEL}</strong>
+            <span>Raised in {FUNDING_PERIOD_LABEL}</span>
+          </div>
+          <p>
+            {ROUNDS_2026} tracked rounds this year, led by {Q1Q2_TOP_CATEGORIES_NOTE}.
+            The list below keeps the latest notable announcements close without turning
+            the page into a funding archive.
+          </p>
         </div>
-        <p>
-          {ROUNDS_2026} tracked rounds this year, led by {Q1Q2_TOP_CATEGORIES_NOTE}.
-          The list below keeps the latest notable announcements close without turning
-          the page into a funding archive.
-        </p>
+        <ul className="tech-funded-list" role="list">
+          {latest.map((company) => (
+            <li key={company.id + company.date}>
+              <RecentlyFundedCard company={company} />
+            </li>
+          ))}
+        </ul>
       </div>
-      <div>
-        {latest.map((company) => (
-          <RecentlyFundedCard key={company.id + company.date} company={company} />
-        ))}
-      </div>
-    </div>
+    </section>
   );
 }
 
-function HiringSnapshot({ groups }: {
-  groups: Array<{ label: string; note: string; companies: TechCompany[] }>;
-}) {
+interface HiringGroup {
+  label: string;
+  note: string;
+  trend: TechTrend;
+  companies: TechCompany[];
+}
+
+function HiringSnapshot({ groups }: { groups: HiringGroup[] }) {
   return (
-    <div className="tech-section">
+    <section className="tech-section" aria-labelledby="tech-hiring-title">
       <div className="tech-section-head">
-        <h3 className="tech-section-title">Hiring Pulse</h3>
+        <h2 id="tech-hiring-title" className="tech-section-title">Hiring Pulse</h2>
         <span className="tech-section-note">A quick read, not every open role</span>
       </div>
       <div className="tech-hiring-grid">
         {groups.map((group) => (
-          <div key={group.label} className="tech-hiring-column">
-            <div className="tech-hiring-label">{group.label}</div>
-            <p>{group.note}</p>
-            {group.companies.slice(0, 4).map((company) => (
-              <HiringRow key={company.id} company={company} />
-            ))}
+          <div key={group.label} className={`tech-hiring-column is-${group.trend}`}>
+            <h3 className="tech-hiring-label">
+              <span className="tech-hiring-glyph" aria-hidden="true">{HIRING_GLYPH[group.trend]}</span>
+              {group.label}
+            </h3>
+            <p className="tech-hiring-lead">{group.note}</p>
+            <ul className="tech-hiring-list" role="list">
+              {group.companies.slice(0, 4).map((company) => (
+                <li key={company.id}>
+                  <HiringRow company={company} />
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -1584,19 +1531,19 @@ function SpotlightHighlightsSection() {
     .sort((a, b) => SPOTLIGHT_STAGE_ORDER[a.stage] - SPOTLIGHT_STAGE_ORDER[b.stage])
     .slice(0, 12);
   return (
-    <div className="tech-section">
+    <section className="tech-section" aria-labelledby="tech-spotlight-title">
       <div className="tech-section-head">
-        <h3 className="tech-section-title">Smaller, But Notable</h3>
+        <h2 id="tech-spotlight-title" className="tech-section-title">Smaller, But Notable</h2>
         <span className="tech-section-note">
           A curated sample of growth companies and startups
         </span>
       </div>
-      <div className="tech-spotlight-grid tech-spotlight-grid--compact">
+      <div className="tech-spotlight-grid">
         {spotlight.map((company) => (
           <SpotlightCard key={company.id} company={company} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -1605,10 +1552,11 @@ export default function TechnologyView() {
     .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
     .slice(0, 8);
 
-  const hiringGroups = [
+  const hiringGroups: HiringGroup[] = [
     {
       label: "Actively Hiring",
       note: "Growing headcount — AI hardware demand lifting chipmakers and server builders, with security and SaaS also expanding",
+      trend: "up",
       companies: TECH_COMPANIES.filter((c) => c.trend === "up").sort(
         (a, b) => b.sccEmployeesK - a.sccEmployeesK
       ),
@@ -1616,6 +1564,7 @@ export default function TechnologyView() {
     {
       label: "Selective Hiring",
       note: "Stable or post-restructuring — open roles but no broad expansion",
+      trend: "flat",
       companies: TECH_COMPANIES.filter((c) => c.trend === "flat").sort(
         (a, b) => b.sccEmployeesK - a.sccEmployeesK
       ),
@@ -1623,6 +1572,7 @@ export default function TechnologyView() {
     {
       label: "Reduced Hiring",
       note: "Shrinking or restructuring locally — limited openings, cautious on headcount",
+      trend: "down",
       companies: TECH_COMPANIES.filter((c) => c.trend === "down").sort(
         (a, b) => b.sccEmployeesK - a.sccEmployeesK
       ),
@@ -1650,21 +1600,21 @@ export default function TechnologyView() {
         }))}
       />
 
-      <div className="tech-section">
+      <section className="tech-section" aria-labelledby="tech-anchor-title">
         <div className="tech-section-head">
-          <h3 className="tech-section-title">Anchor Employers</h3>
+          <h2 id="tech-anchor-title" className="tech-section-title">Anchor Employers</h2>
           <span className="tech-section-note">
             Ranked by Santa Clara County local jobs · Q1–Q2 2026
           </span>
         </div>
         <TopEmployersLeaderboard />
-      </div>
+      </section>
 
       <FundingHighlightsSection />
 
-      <div className="tech-section">
+      <section className="tech-section" aria-labelledby="tech-profiles-title">
         <div className="tech-section-head">
-          <h3 className="tech-section-title">Major Company Profiles</h3>
+          <h2 id="tech-profiles-title" className="tech-section-title">Major Company Profiles</h2>
           <span className="tech-section-note">The largest local employers, trimmed to the essentials</span>
         </div>
         <div className="tech-grid">
@@ -1672,99 +1622,17 @@ export default function TechnologyView() {
             <CompanyCard key={company.id} company={company} />
           ))}
         </div>
-      </div>
+      </section>
 
       <HiringSnapshot groups={hiringGroups} />
       <SpotlightHighlightsSection />
 
-      <div className="tech-footer-note">
+      <p className="tech-footer-note">
         Employment figures are Santa Clara County estimates as of Q1–Q2 2026, derived from campus
         headcount reports, company filings, EDD data, and news coverage. Global headcounts are
         much larger. South Bay Today is not affiliated with any company listed and this is not
         investment advice.
-      </div>
-      <TechnologyViewStyles />
+      </p>
     </div>
-  );
-}
-
-function TechnologyViewStyles() {
-  return (
-    <style>{`
-      .tech-funding-summary {
-        display: grid;
-        grid-template-columns: minmax(140px, 220px) 1fr;
-        gap: 18px;
-        align-items: center;
-        border: 1px solid var(--sb-border-light);
-        background: var(--sb-card);
-        padding: 16px;
-      }
-      .tech-funding-summary strong {
-        display: block;
-        color: var(--sb-ink);
-        font-family: var(--sb-serif);
-        font-size: 30px;
-        line-height: 1;
-      }
-      .tech-funding-summary span {
-        display: block;
-        margin-top: 5px;
-        color: var(--sb-muted);
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-      .tech-funding-summary p {
-        margin: 0;
-        color: var(--sb-muted);
-        font-size: 13px;
-        line-height: 1.6;
-      }
-      .tech-hiring-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 22px;
-      }
-      .tech-hiring-column {
-        min-width: 0;
-      }
-      .tech-hiring-label {
-        border-bottom: 2px solid var(--sb-border-light);
-        color: var(--sb-ink);
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        margin-bottom: 7px;
-        padding-bottom: 7px;
-        text-transform: uppercase;
-      }
-      .tech-hiring-column p {
-        margin: 0 0 8px;
-        color: var(--sb-muted);
-        font-size: 11px;
-        font-style: italic;
-        line-height: 1.45;
-      }
-      .tech-spotlight-grid--compact {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      @media (max-width: 760px) {
-        .tech-funding-summary,
-        .tech-hiring-grid,
-        .tech-spotlight-grid--compact {
-          grid-template-columns: 1fr;
-        }
-        .tech-funded-summary {
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 7;
-          overflow: hidden;
-        }
-      }
-    `}</style>
   );
 }
