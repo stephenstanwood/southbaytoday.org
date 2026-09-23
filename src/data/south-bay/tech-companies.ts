@@ -1611,6 +1611,24 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //   * Crunchbase's Sep 19-25 top ten does not publish until Friday Sep 25 —
   //     check it next cycle against this window, the late-catch habit that
   //     surfaced Nex and Terragrit a week late.
+  // Note on the Sep 22-23 2026 sweep: no in-coverage round surfaced. The two
+  // closest calls, both out of coverage:
+  //   * Snorkel AI ($350M Series C at a $3.5B valuation, Sep 22-23 2026) is
+  //     Redwood City — San Mateo County, the Fireworks AI / Cognichip line.
+  //   * Aqua Medical (undisclosed Series B, FinSMEs Sep 23) is Pleasanton —
+  //     Alameda County, east of the footprint.
+  //   * The rest of the window is out of coverage. FinSMEs' Sep 23 US list:
+  //     Numeral (San Francisco); Soteris (FinSMEs says San Francisco, VC News
+  //     Daily says Richmond, VA — out either way); Tempo Therapeutics (San
+  //     Diego); Ekai (Cambridge, MA); Falcon Gases, Topdog (New York);
+  //     EnergyCAP (State College, PA); Rising Tide (Chicago); Brahma AI (Los
+  //     Angeles); Basecamp Research (London). No FinSMEs Sep 22 posts beyond
+  //     those already recorded above. VC News Daily adds Ridgeline (Incline
+  //     Village, NV), Arcee AI (San Francisco), Temporal (Bellevue), Ande
+  //     (New York). techstartups' headline rounds are Tekever (Portugal),
+  //     Cyera (New York), and Circle's Binance investment (New York).
+  //   * Crunchbase's Sep 19-25 top ten still publishes Friday Sep 25 — check
+  //     it against both the Sep 21-22 and Sep 22-23 windows.
   {
     id: "nex",
     name: "Nex",
