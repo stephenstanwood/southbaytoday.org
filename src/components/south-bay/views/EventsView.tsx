@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import type { City } from "../../../lib/south-bay/types";
 import {
   EVENT_CATEGORIES,
@@ -160,6 +160,8 @@ function isInProgressNow(time: string | null, endTime: string | null): boolean {
   return NOW_MINUTES - start <= FUZZY_DURATION_MIN;
 }
 
+const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
+
 // Live PT minutes — re-renders the page each minute so "starts in N min"
 // pills stay accurate when a tab is left open.
 function ptMinutesNow(): number {
@@ -222,6 +224,19 @@ function parseTimeToMinutes(t: string): number | null {
   if (ampm === "pm" && h !== 12) h += 12;
   if (ampm === "am" && h === 12) h = 0;
   return h * 60 + min;
+}
+
+// Sort: pure start time ascending; events with no time come last
+function byStartTimeWithinDate(a: UpcomingEvent, b: UpcomingEvent): number {
+  const aHasTime = a.time !== null && a.time !== undefined && a.time !== "";
+  const bHasTime = b.time !== null && b.time !== undefined && b.time !== "";
+  if (aHasTime !== bHasTime) return aHasTime ? -1 : 1;
+  if (aHasTime && bHasTime) {
+    const aMin = parseTimeToMinutes(a.time!) ?? 9999;
+    const bMin = parseTimeToMinutes(b.time!) ?? 9999;
+    if (aMin !== bMin) return aMin - bMin;
+  }
+  return a.title.localeCompare(b.title);
 }
 
 // ── Cost badge ─────────────────────────────────────────────────────────────
@@ -932,8 +947,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   const isSearching = search.trim().length > 0;
   const searchQ = search.trim().toLowerCase();
 
-  const TONIGHT_FROM_MIN = 17 * 60; // 5 PM
-
   // The holiday object backing the active themed filter, plus its ISO date
   // for the current year. Recomputed when the active id changes; null when
   // no filter is set or the id no longer resolves.
@@ -945,17 +958,19 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return { holiday: h, iso };
   }, [activeThemedHolidayId, todayIso]);
 
-  const matchesActiveThemedHoliday = (e: UpcomingEvent): boolean => {
+  const matchesActiveThemedHoliday = useCallback((e: UpcomingEvent): boolean => {
     if (!themedHoliday) return true;
     // Only narrow the view on the holiday date itself — events on other
     // dates pass through unaffected.
     if (e.date !== themedHoliday.iso) return true;
     const lower = `${e.title} ${e.blurb ?? ""} ${e.description ?? ""} ${e.venue ?? ""}`.toLowerCase();
     return matchesHolidayTheme(themedHoliday.holiday, lower);
-  };
+  }, [themedHoliday]);
 
-  // Apply common filters (city, category, kids, search) to a list of events
-  const matchesFilters = (e: UpcomingEvent): boolean => {
+  // Apply every active filter to an event. The lists below depend on this
+  // callback instead of naming filter state themselves, so a new filter only
+  // has to be added here and to this dep list.
+  const matchesFilters = useCallback((e: UpcomingEvent): boolean => {
     if (!allCities && !selectedCities.has(e.city as City)) return false;
     if (category !== "all" && e.category !== category) return false;
     if (showKidsOnly && !e.kidFriendly) return false;
@@ -983,20 +998,12 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
           !(e.venue || "").toLowerCase().includes(searchQ)) return false;
     }
     return true;
-  };
-
-  // Sort: pure start time ascending; events with no time come last
-  const byStartTimeWithinDate = (a: UpcomingEvent, b: UpcomingEvent): number => {
-    const aHasTime = a.time !== null && a.time !== undefined && a.time !== "";
-    const bHasTime = b.time !== null && b.time !== undefined && b.time !== "";
-    if (aHasTime !== bHasTime) return aHasTime ? -1 : 1;
-    if (aHasTime && bHasTime) {
-      const aMin = parseTimeToMinutes(a.time!) ?? 9999;
-      const bMin = parseTimeToMinutes(b.time!) ?? 9999;
-      if (aMin !== bMin) return aMin - bMin;
-    }
-    return a.title.localeCompare(b.title);
-  };
+  }, [
+    allCities, selectedCities, category, showKidsOnly, showFreeOnly,
+    showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly,
+    todayIso, weekendSat, weekendSun, matchesActiveThemedHoliday,
+    isSearching, searchQ,
+  ]);
 
   // Events visible for the currently selected day
   const dayEvents = useMemo(() => {
@@ -1008,8 +1015,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       // asked to see what's happening right now via the Live Now pill.
       .filter((e) => showLiveNowOnly || !(e.date === todayIso && !hasNotStarted(e.time)))
       .sort(byStartTimeWithinDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedDate, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, selectedDate, matchesFilters, showLiveNowOnly, todayIso, isSearching]);
 
   // Search-mode results (across all dates)
   const searchResults = useMemo(() => {
@@ -1022,8 +1028,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         if (dateCmp !== 0) return dateCmp;
         return byStartTimeWithinDate(a, b);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, search, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching]);
+  }, [upcomingEvents, matchesFilters, todayIso, isSearching]);
 
   // Group search results by date for compact rendering
   const searchGroups = useMemo(() => {
@@ -1048,8 +1053,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
     return [weekendSat, weekendSun]
       .filter((d) => (groups[d]?.length ?? 0) > 0)
       .map((d) => [d, groups[d]] as [string, UpcomingEvent[]]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, todayIso]);
+  }, [upcomingEvents, showWeekendOnly, weekendSat, weekendSun, isSearching, matchesFilters, todayIso]);
 
   // Determine which dates have any events visible (after city/category/kids/search filters)
   const datesWithEvents = useMemo(() => {
@@ -1061,8 +1065,7 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       set.add(e.date);
     }
     return [...set].sort();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingEvents, selectedCities, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, search]);
+  }, [upcomingEvents, todayIso, showLiveNowOnly, matchesFilters]);
 
   // While only the near slice is loaded, a snap target past its window can't
   // be known yet — hold the current date (showing skeleton rows) until the
@@ -1178,10 +1181,10 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
   }, [upcomingEvents, category, showKidsOnly, showFreeOnly, showTonightOnly, showWeekendOnly, showLiveNowOnly, showJustAddedOnly, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Ongoing/exhibits filter (separate from day view)
-  const filteredOngoing = useMemo(() => {
-    return ongoingEvents.filter(matchesFilters);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ongoingEvents, selectedCities, category, showKidsOnly, search]);
+  const filteredOngoing = useMemo(
+    () => ongoingEvents.filter(matchesFilters),
+    [ongoingEvents, matchesFilters],
+  );
 
   // Per-pill counts for Kids/Free/Tonight/Weekend badges. Each count answers
   // "how many events would I see if I checked this box?" given the current
@@ -1216,7 +1219,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       if (isJustAdded(e.firstSeenAt)) justAdded++;
     }
     return { kids, free, tonight, weekend, live, justAdded };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, weekendSat, weekendSun, todayIso, isSearching, searchQ]);
 
   // Per-date counts for the 7-day strip — same filter logic as datesWithEvents
@@ -1251,7 +1253,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
       counts[e.date] = (counts[e.date] || 0) + 1;
     }
     return counts;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [upcomingEvents, allCities, selectedCities, category, showKidsOnly, showFreeOnly, todayIso, isSearching, searchQ]);
 
   // Prev/next date buttons
