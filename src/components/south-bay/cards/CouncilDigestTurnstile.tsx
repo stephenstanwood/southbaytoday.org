@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import type { DigestData } from "./DigestCard";
 import type { City } from "../../../lib/south-bay/types";
 import { getCityName } from "../../../lib/south-bay/cities";
+import { useClockValue } from "../../../lib/south-bay/useTodayPT";
 
 interface AgendaItem {
   title: string;
@@ -25,17 +26,20 @@ interface Props {
   onRefresh: (city: City) => Promise<void> | void;
   loading: Set<string>;
   errors: Map<string, string>;
+  /** The moment the page was built, so the digest's age hydrates as built.
+   *  See useClockValue. */
+  buildTimeMs?: number;
 }
 
 function cityLabel(city: string) {
   return getCityName(city as City);
 }
 
-function relativeAge(iso: string | undefined): string | null {
+function relativeAge(iso: string | undefined, nowMs: number): string | null {
   if (!iso) return null;
   const then = new Date(iso).getTime();
   if (Number.isNaN(then)) return null;
-  const days = Math.round((Date.now() - then) / 86_400_000);
+  const days = Math.round((nowMs - then) / 86_400_000);
   if (days <= 0) return "today";
   if (days === 1) return "yesterday";
   if (days < 14) return `${days} days ago`;
@@ -45,9 +49,9 @@ function relativeAge(iso: string | undefined): string | null {
   return `${months} months ago`;
 }
 
-function isStale(meetingIso: string | undefined): boolean {
+function isStale(meetingIso: string | undefined, nowMs: number): boolean {
   if (!meetingIso) return false;
-  const ms = Date.now() - new Date(meetingIso).getTime();
+  const ms = nowMs - new Date(meetingIso).getTime();
   return ms > 21 * 86_400_000;
 }
 
@@ -59,6 +63,7 @@ export default function CouncilDigestTurnstile({
   onRefresh,
   loading,
   errors,
+  buildTimeMs,
 }: Props) {
   const ordered = useMemo(() => cities, [cities]);
   const [index, setIndex] = useState(0);
@@ -97,6 +102,14 @@ export default function CouncilDigestTurnstile({
     if (e.key === "ArrowLeft") { goPrev(); e.preventDefault(); }
     if (e.key === "ArrowRight") { goNext(); e.preventDefault(); }
   }, [goPrev, goNext]);
+
+  // The shown digest's age and stale tag count hours from the meeting's UTC
+  // midnight, so they don't turn over at Pacific midnight and the build's day
+  // can't reproduce them. They hydrate against the moment the page was built,
+  // then follow the reader's clock.
+  const shownIso = digests.get(ordered[index])?.meetingDateIso;
+  const age = useClockValue((now) => relativeAge(shownIso, now), buildTimeMs);
+  const stale = useClockValue((now) => isStale(shownIso, now), buildTimeMs);
 
   if (ordered.length === 0) {
     return (
@@ -178,7 +191,7 @@ export default function CouncilDigestTurnstile({
                 digest={digest}
                 nextMeeting={nextMeeting}
                 onRefresh={() => onRefresh(city)}
-                stale={isStale(digest.meetingDateIso ?? undefined)}
+                stale={stale}
               />
             ) : (
               <NoDigestBody
@@ -211,7 +224,7 @@ export default function CouncilDigestTurnstile({
           </span>
           {digest && (
             <span className="cdt-counter-age">
-              last meeting {relativeAge(digest.meetingDateIso ?? undefined)}
+              last meeting {age}
             </span>
           )}
         </div>

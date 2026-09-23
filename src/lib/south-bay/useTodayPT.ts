@@ -23,3 +23,21 @@ function subscribeMinutely(onChange: () => void): () => void {
 export function useTodayPT(buildDayPt: string | undefined): string {
   return useSyncExternalStore(subscribeMinutely, todayPT, () => buildDayPt ?? todayPT());
 }
+
+/**
+ * useTodayPT for a value that turns over at some other moment than Pacific
+ * midnight. `read` gets `buildTimeMs`, the moment the page was built, while
+ * the build renders and the client hydrates, then the reader's clock, re-read
+ * once a minute. It must return a coarse primitive (a label, a flag) so
+ * back-to-back reads agree.
+ */
+export function useClockValue<T extends string | number | boolean | null>(
+  read: (nowMs: number) => T,
+  buildTimeMs: number | undefined,
+): T {
+  return useSyncExternalStore(
+    subscribeMinutely,
+    () => read(Date.now()),
+    () => read(buildTimeMs ?? Date.now()),
+  );
+}

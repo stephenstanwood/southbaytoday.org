@@ -15,7 +15,8 @@
 // each visitor's own clock and zone, so one card aged differently by reader.
 //
 // Diffing the two Pacific calendar dates as UTC midnights is stable on the
-// server and in every browser.
+// server and in every browser. The card gets "today" from useTodayPT, so it
+// hydrates against the build's day, then ages against the reader's.
 // ---------------------------------------------------------------------------
 
 /** Pacific calendar date ("YYYY-MM-DD") for a moment in time. */
@@ -26,15 +27,19 @@ export function pacificDate(nowMs: number): string {
 }
 
 /**
- * Whole Pacific calendar days between `isoDate` (YYYY-MM-DD) and `nowMs`.
+ * Whole calendar days from `isoDate` to `todayIso` (both YYYY-MM-DD).
  * Positive for past dates, 0 for today, negative for a future-dated round.
  */
-export function pacificDaysAgo(isoDate: string, nowMs: number): number {
+export function calendarDaysAgo(isoDate: string, todayIso: string): number {
   return Math.round(
-    (Date.parse(`${pacificDate(nowMs)}T00:00:00Z`) -
-      Date.parse(`${isoDate}T00:00:00Z`)) /
+    (Date.parse(`${todayIso}T00:00:00Z`) - Date.parse(`${isoDate}T00:00:00Z`)) /
       86_400_000,
   );
+}
+
+/** Whole Pacific calendar days between `isoDate` (YYYY-MM-DD) and `nowMs`. */
+export function pacificDaysAgo(isoDate: string, nowMs: number): number {
+  return calendarDaysAgo(isoDate, pacificDate(nowMs));
 }
 
 /** A round closed within the last two weeks earns the NEW badge. */
@@ -44,11 +49,12 @@ export function isFreshRound(daysAgo: number): boolean {
 
 /**
  * "today" / "yesterday" / "3d ago" / "2w ago" inside a 30-day window, and an
- * absolute Pacific date beyond it. Future-dated rounds fall through to the
- * absolute date rather than claiming a negative age.
+ * absolute Pacific date beyond it, as seen on the Pacific date `todayIso`.
+ * Future-dated rounds fall through to the absolute date rather than claiming
+ * a negative age.
  */
-export function fundingDateLabel(isoDate: string, nowMs: number): string {
-  const daysAgo = pacificDaysAgo(isoDate, nowMs);
+export function fundingDateLabel(isoDate: string, todayIso: string): string {
+  const daysAgo = calendarDaysAgo(isoDate, todayIso);
   if (daysAgo >= 0 && daysAgo <= 30) {
     if (daysAgo === 0) return "today";
     if (daysAgo === 1) return "yesterday";
