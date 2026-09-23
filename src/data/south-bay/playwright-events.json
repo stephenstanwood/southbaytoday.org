@@ -1,20 +1,20 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-23T04:05:50.106Z",
+    "generatedAt": "2026-09-23T15:04:11.544Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 578,
+    "eventCount": 577,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (126)",
-      "Los Gatos Library (156)",
+      "Los Gatos Library (157)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (13)",
+      "Linden Tree Books (12)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (18)",
+      "Mountain Winery (17)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 156,
+        "count": 157,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 13,
+        "count": 12,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 18,
+        "count": 17,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -6247,6 +6247,27 @@
       "kidFriendly": false
     },
     {
+      "id": "418bcfdaf6a6",
+      "title": "Drop-In Tech Help",
+      "date": "2026-12-22",
+      "displayDate": "Tue, Dec 22",
+      "time": "3:00 PM",
+      "endTime": "4:30 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "education",
+      "cost": "free",
+      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "url": "https://losgatosca.libcal.com/event/16035542",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -6551,28 +6572,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "9c805a767b71",
-      "title": "Educators’ Evening Out",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "5pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-22"
-      }
     },
     {
       "id": "e1fa747f6a1c",
@@ -7176,23 +7175,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "b59878003491",
-      "title": "Peter Hook & The Light with Performing ‘Get Ready’ live and in full plus a selection of Joy Division and New Order’s Greatest Hits",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1106343",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -7825,10 +7807,10 @@
       "kidFriendly": false
     },
     {
-      "id": "166b47401e0d",
+      "id": "ca2c9807913f",
       "title": "Toddler Storytime",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
+      "date": "2026-09-23",
+      "displayDate": "Wed, Sep 23",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7842,10 +7824,10 @@
       "kidFriendly": true
     },
     {
-      "id": "9dea31e7db50",
+      "id": "7af17db94552",
       "title": "All Ages Storytime",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
+      "date": "2026-09-23",
+      "displayDate": "Wed, Sep 23",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -9184,7 +9166,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9218,7 +9200,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10839,23 +10821,6 @@
       "kidFriendly": false
     },
     {
-      "id": "a0dc41ddbaf5",
-      "title": "Sharks vs Golden Knights",
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-panthers-5",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "c1edee55344c",
       "title": "2026 LE SSERAFIM TOUR ‘PUREFLOW’ IN SAN JOSE",
       "date": "2026-09-23",
@@ -11039,6 +11004,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/rush-1",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "fa216b014a36",
+      "title": "Rush",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
+      "time": "7:30 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/rush-2",
       "source": "SAP Center",
       "kidFriendly": false
     },
