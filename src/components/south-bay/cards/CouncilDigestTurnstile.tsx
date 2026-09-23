@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import type { DigestData } from "./DigestCard";
 import type { City } from "../../../lib/south-bay/types";
 import { getCityName } from "../../../lib/south-bay/cities";
-import { useClockValue } from "../../../lib/south-bay/useTodayPT";
+import { calendarDaysAgo } from "../../../lib/south-bay/useTodayPT";
 
 interface AgendaItem {
   title: string;
@@ -26,20 +26,22 @@ interface Props {
   onRefresh: (city: City) => Promise<void> | void;
   loading: Set<string>;
   errors: Map<string, string>;
-  /** The moment the page was built, so the digest's age hydrates as built.
-   *  See useClockValue. */
-  buildTimeMs?: number;
+  /** Pacific date the digest ages count to: the build's day while hydrating,
+   *  then the reader's (GovernmentView's useTodayPT). */
+  todayIso: string;
 }
 
 function cityLabel(city: string) {
   return getCityName(city as City);
 }
 
-function relativeAge(iso: string | undefined, nowMs: number): string | null {
+// Ages count Pacific calendar days to the meeting's date. (Rounding hours
+// since the date's UTC midnight read yesterday's meeting as "2 days ago" from
+// 5 AM PT on.)
+function relativeAge(iso: string | undefined, todayIso: string): string | null {
   if (!iso) return null;
-  const then = new Date(iso).getTime();
-  if (Number.isNaN(then)) return null;
-  const days = Math.round((nowMs - then) / 86_400_000);
+  const days = calendarDaysAgo(iso, todayIso);
+  if (Number.isNaN(days)) return null;
   if (days <= 0) return "today";
   if (days === 1) return "yesterday";
   if (days < 14) return `${days} days ago`;
@@ -49,10 +51,9 @@ function relativeAge(iso: string | undefined, nowMs: number): string | null {
   return `${months} months ago`;
 }
 
-function isStale(meetingIso: string | undefined, nowMs: number): boolean {
+function isStale(meetingIso: string | undefined, todayIso: string): boolean {
   if (!meetingIso) return false;
-  const ms = nowMs - new Date(meetingIso).getTime();
-  return ms > 21 * 86_400_000;
+  return calendarDaysAgo(meetingIso, todayIso) > 21;
 }
 
 export default function CouncilDigestTurnstile({
@@ -63,7 +64,7 @@ export default function CouncilDigestTurnstile({
   onRefresh,
   loading,
   errors,
-  buildTimeMs,
+  todayIso,
 }: Props) {
   const ordered = useMemo(() => cities, [cities]);
   const [index, setIndex] = useState(0);
@@ -72,10 +73,10 @@ export default function CouncilDigestTurnstile({
   // A meeting that already happened isn't "next". The feed refreshes nightly,
   // but a page built the day before (or a tab left open) can still carry it.
   // Checked after mount so the prerendered HTML doesn't depend on the clock.
-  const [todayIso, setTodayIso] = useState<string | null>(null);
+  const [clientTodayIso, setClientTodayIso] = useState<string | null>(null);
 
   useEffect(() => {
-    setTodayIso(new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }));
+    setClientTodayIso(new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }));
   }, []);
 
   useEffect(() => {
@@ -103,14 +104,6 @@ export default function CouncilDigestTurnstile({
     if (e.key === "ArrowRight") { goNext(); e.preventDefault(); }
   }, [goPrev, goNext]);
 
-  // The shown digest's age and stale tag count hours from the meeting's UTC
-  // midnight, so they don't turn over at Pacific midnight and the build's day
-  // can't reproduce them. They hydrate against the moment the page was built,
-  // then follow the reader's clock.
-  const shownIso = digests.get(ordered[index])?.meetingDateIso;
-  const age = useClockValue((now) => relativeAge(shownIso, now), buildTimeMs);
-  const stale = useClockValue((now) => isStale(shownIso, now), buildTimeMs);
-
   if (ordered.length === 0) {
     return (
       <div className="sb-empty" style={{ padding: "32px 16px" }}>
@@ -123,7 +116,7 @@ export default function CouncilDigestTurnstile({
   const city = ordered[index];
   const digest = digests.get(city);
   const upcoming = upcomingMeetings[city];
-  const nextMeeting = upcoming && (todayIso === null || upcoming.date >= todayIso) ? upcoming : undefined;
+  const nextMeeting = upcoming && (clientTodayIso === null || upcoming.date >= clientTodayIso) ? upcoming : undefined;
   const isLoading = loading.has(city);
   const error = errors.get(city);
   const multi = ordered.length > 1;
@@ -191,7 +184,7 @@ export default function CouncilDigestTurnstile({
                 digest={digest}
                 nextMeeting={nextMeeting}
                 onRefresh={() => onRefresh(city)}
-                stale={stale}
+                stale={isStale(digest.meetingDateIso, todayIso)}
               />
             ) : (
               <NoDigestBody
@@ -224,7 +217,7 @@ export default function CouncilDigestTurnstile({
           </span>
           {digest && (
             <span className="cdt-counter-age">
-              last meeting {age}
+              last meeting {relativeAge(digest.meetingDateIso, todayIso)}
             </span>
           )}
         </div>

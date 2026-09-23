@@ -5,6 +5,19 @@ export function todayPT(now: Date = new Date()): string {
   return now.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
 
+/**
+ * Whole calendar days from `isoDate` to `todayIso` (both YYYY-MM-DD). Positive
+ * for past dates, 0 for today, negative for a future date. Diffing the two
+ * dates as UTC midnights gives the same answer on the server and in every
+ * browser.
+ */
+export function calendarDaysAgo(isoDate: string, todayIso: string): number {
+  return Math.round(
+    (Date.parse(`${todayIso}T00:00:00Z`) - Date.parse(`${isoDate}T00:00:00Z`)) /
+      86_400_000,
+  );
+}
+
 // Re-check once a minute so a tab left open rolls over at midnight.
 function subscribeMinutely(onChange: () => void): () => void {
   const id = window.setInterval(onChange, 60_000);
@@ -22,22 +35,4 @@ function subscribeMinutely(onChange: () => void): () => void {
  */
 export function useTodayPT(buildDayPt: string | undefined): string {
   return useSyncExternalStore(subscribeMinutely, todayPT, () => buildDayPt ?? todayPT());
-}
-
-/**
- * useTodayPT for a value that turns over at some other moment than Pacific
- * midnight. `read` gets `buildTimeMs`, the moment the page was built, while
- * the build renders and the client hydrates, then the reader's clock, re-read
- * once a minute. It must return a coarse primitive (a label, a flag) so
- * back-to-back reads agree.
- */
-export function useClockValue<T extends string | number | boolean | null>(
-  read: (nowMs: number) => T,
-  buildTimeMs: number | undefined,
-): T {
-  return useSyncExternalStore(
-    subscribeMinutely,
-    () => read(Date.now()),
-    () => read(buildTimeMs ?? Date.now()),
-  );
 }

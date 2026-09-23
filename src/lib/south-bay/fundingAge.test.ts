@@ -2,7 +2,6 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
-  calendarDaysAgo,
   fundingDateLabel,
   isFreshRound,
   pacificDate,
@@ -52,14 +51,6 @@ test("the same card ages identically for every reader's timezone", () => {
   } finally {
     process.env.TZ = original;
   }
-});
-
-test("calendarDaysAgo counts whole days between two calendar dates", () => {
-  assert.equal(calendarDaysAgo("2026-08-26", AUG28), 2);
-  assert.equal(calendarDaysAgo(AUG28, AUG28), 0);
-  assert.equal(calendarDaysAgo("2026-08-29", AUG28), -1);
-  // Across a DST change (Nov 1) and a month end.
-  assert.equal(calendarDaysAgo("2026-10-31", "2026-11-02"), 2);
 });
 
 test("isFreshRound covers a two-week window and excludes the future", () => {

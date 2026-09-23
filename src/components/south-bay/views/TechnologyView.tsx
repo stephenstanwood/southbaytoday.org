@@ -2,12 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { CompanyLogo } from "../CompanyLogo";
 import PageHero from "../PageHero";
 import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
-import {
-  calendarDaysAgo,
-  fundingDateLabel,
-  isFreshRound,
-} from "../../../lib/south-bay/fundingAge";
-import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
+import { fundingDateLabel, isFreshRound } from "../../../lib/south-bay/fundingAge";
+import { calendarDaysAgo, useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import { hasNotStarted, startMinutes } from "../../../lib/south-bay/timeHelpers";
 import { isTechEvent } from "../../../lib/south-bay/techEventFilter";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";

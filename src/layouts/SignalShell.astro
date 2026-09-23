@@ -30,12 +30,10 @@ const {
 } = Astro.props;
 
 // Events, Gov, Tech, and Camps render "today" into this HTML (Events' day
-// rail, Gov's week ahead, funding ages, the summer weeks still open). They
-// hydrate against the moment the page was built, then switch to the reader's
-// clock (see useTodayPT).
-const builtAt = new Date();
-const buildDayPt = builtAt.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-const buildTimeMs = builtAt.getTime();
+// rail, Gov's week ahead and digest ages, funding ages, the summer weeks still
+// open). They hydrate against the build's day, then switch to the reader's
+// (see useTodayPT).
+const buildDayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 ---
 
 <BaseLayout
@@ -51,7 +49,7 @@ const buildTimeMs = builtAt.getTime();
   {/* Each tab page hydrates an island that bundles its own view eagerly
       (Astro can't put client:* on a dynamic tag, hence the explicit list). */}
   {initialTab === "events" ? <EventsApp client:load buildDayPt={buildDayPt} />
-    : initialTab === "government" ? <GovApp client:load buildDayPt={buildDayPt} buildTimeMs={buildTimeMs} />
+    : initialTab === "government" ? <GovApp client:load buildDayPt={buildDayPt} />
     : initialTab === "technology" ? <TechApp client:load buildDayPt={buildDayPt} />
     : initialTab === "food" ? <FoodApp client:load />
     : initialTab === "camps" ? <CampsApp client:load buildDayPt={buildDayPt} />
