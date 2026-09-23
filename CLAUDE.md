@@ -19,6 +19,7 @@
   - Cards use `--sb-radius-md` with a hairline `--sb-line` border.
   - Tap targets ≥40px on phones.
   - Views keep their first render free of clock, random, and localStorage reads (refine in `useEffect`) so hydration matches.
+  - Islands ship every import to every page that uses them. Don't import all-city JSON into a per-city island. Slice it in the page's frontmatter and pass props, or serve a per-city JSON file for data the island only uses after mount. `CityPage` shows the pattern (`lib/south-bay/cityPageData.ts`, `/city/<slug>/open-now.json`). Importing `open-now-candidates.json` directly once made its chunk 150 KB gzipped.
   - Move repeated inline `style={{}}` objects into the area sheet.
 
 ## Data Generation

@@ -8,6 +8,12 @@
 // here are `city-` prefixed, except the shared pieces: section heads use
 // `.sb-section-header` / `.sb-section-title` (chrome.css) and the day plan
 // uses the homepage's `.sbt-plan-*` / `.sbt-hero` markup (home.css).
+//
+// Data: this is a client:load island, so every import here ships to the
+// browser on every city page. Don't import the all-city JSON files. The
+// meeting, digest, Reddit, and camp data arrive as the `data` prop, and the
+// Open Right Now pool is fetched after mount from /city/<slug>/open-now.json.
+// Both are sliced to this city at build time by lib/south-bay/cityPageData.ts.
 
 import { Fragment, useState, useEffect, useMemo } from "react";
 import type { CSSProperties } from "react";
@@ -23,13 +29,9 @@ import {
   type Bucket, BUCKET_ORDER, BUCKET_LABELS,
   isBucket, inferBucketFromTimeBlock,
 } from "../../../lib/south-bay/buckets";
-
-import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
-import digestsJson from "../../../data/south-bay/digests.json";
-import redditPulseJson from "../../../data/south-bay/reddit-pulse.json";
-import openNowCandidatesJson from "../../../data/south-bay/open-now-candidates.json";
-import { isPlaceTemporarilyUnavailable } from "../../../lib/south-bay/placeAvailability.mjs";
-import { openCampCountForCity } from "../../../lib/south-bay/cityCamps";
+import type {
+  AgendaItem, CityDigest, CityMeeting, CityPageData, CityReddit, OpenNowCandidate,
+} from "../../../lib/south-bay/cityPageData";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 
 import Masthead from "../Masthead";
@@ -72,8 +74,6 @@ const CAT_EMOJI: Record<string, string> = {
 // at scrape time, but we run a second pass on the client so the panel never
 // shows obvious closed-session boilerplate even if a city's filter coverage
 // drifts. Be conservative — only drop items we're certain are non-substantive.
-type AgendaItem = { title: string; sequence: number };
-
 const CLIENT_AGENDA_DROP_RE = [
   /^conference with (?:legal counsel|real property|labor)/i,
   /^closed session/i,
@@ -128,9 +128,10 @@ function FadeImg({ src, onError }: { src: string; onError: () => void }) {
 type Props = {
   cityId: string;
   cityName: string;
+  data: CityPageData;
 };
 
-export default function CityPage({ cityId, cityName }: Props) {
+export default function CityPage({ cityId, cityName, data }: Props) {
   const [upcomingData, setUpcomingData] = useState<{ events: UpcomingEvent[]; generatedAt?: string } | null>(null);
 
   useEffect(() => {
@@ -146,12 +147,8 @@ export default function CityPage({ cityId, cityName }: Props) {
   const allEvents = upcomingData?.events ?? [];
   const eventsGenAt = upcomingData?.generatedAt;
 
-  // ── Meeting ──
-  const meetings = (upcomingMeetingsJson as unknown as { meetings: Record<string, any> }).meetings ?? {};
-  const nextMeeting = meetings[cityId];
-
-  // ── Digest ──
-  const digest = (digestsJson as Record<string, any>)[cityId];
+  // ── Meeting + digest ──
+  const { nextMeeting, digest } = data;
 
   // "Tonight" highlight and digest staleness both depend on the visitor's
   // clock, which the build-time render can't know. First render uses neutral
@@ -201,7 +198,7 @@ export default function CityPage({ cityId, cityName }: Props) {
 
         {/* Camps pointer — one-line nudge to /camps, only when this city has
             a program still running this summer. Renders nothing otherwise. */}
-        <CityCampsPointer cityId={cityId} cityName={cityName} />
+        <CityCampsPointer lastDates={data.campLastDates} cityName={cityName} />
 
         {/* 5-day forecast strip — same component the homepage uses. */}
         <div className="city-forecast">
@@ -228,7 +225,7 @@ export default function CityPage({ cityId, cityName }: Props) {
         />
 
         {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
-        <CityRedditTiles cityId={cityId} cityName={cityName} />
+        <CityRedditTiles reddit={data.reddit} />
 
         {/* ═══ OPEN RIGHT NOW — randomized "oh yeah, THAT place" panel ═══ */}
         <CityOpenNow cityId={cityId} cityName={cityName} />
@@ -271,8 +268,15 @@ export default function CityPage({ cityId, cityName }: Props) {
 // from the same page it's pointing to, not a bolted-on ad.
 // ---------------------------------------------------------------------------
 
-function CityCampsPointer({ cityId, cityName }: { cityId: string; cityName: string }) {
-  const count = openCampCountForCity(cityId);
+function CityCampsPointer({ lastDates, cityName }: { lastDates: Array<string | null>; cityName: string }) {
+  // lastDates holds one entry per camp still open when the page was built, so
+  // its length is the build-day count and the server and hydration renders
+  // agree. After mount, re-count against the reader's own day so a camp
+  // that has wrapped up since the build drops out.
+  const [count, setCount] = useState(lastDates.length);
+  useEffect(() => {
+    setCount(lastDates.filter((d) => d === null || d >= TODAY_ISO).length);
+  }, [lastDates]);
   if (count === 0) return null;
 
   return (
@@ -668,24 +672,12 @@ function CityDayPlan({ cityId, cityName }: { cityId: City; cityName: string }) {
 // ---------------------------------------------------------------------------
 // City Open Now — randomized "oh yeah, THAT place" panel.
 // open-now-candidates.json holds ~30 top-rated places per city (rating ≥4.5,
-// ratingCount ≥100). We filter to "open right now" per the user's PT clock,
-// then shuffle the open set and pick 6. Each page mount yields a new random
-// pick — purpose is variety, not consistency.
+// ratingCount ≥100). This city's, minus any place flagged temporarily
+// unavailable, load after mount from /city/<slug>/open-now.json. We filter
+// to "open right now" per the user's PT clock, then shuffle the open set and
+// pick 6. Each page mount yields a new random pick — purpose is variety, not
+// consistency.
 // ---------------------------------------------------------------------------
-
-interface OpenNowCandidate {
-  id: string;
-  name: string;
-  displayType: string | null;
-  category: string | null;
-  rating: number;
-  ratingCount: number;
-  priceLevel: number | null;
-  hours: Record<string, string | undefined>;
-  mapsUrl: string | null;
-  url: string | null;
-  photoRef?: string | null;
-}
 
 const OPEN_DAY_KEYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
 
@@ -731,20 +723,26 @@ function CityOpenNow({ cityId, cityName }: { cityId: string; cityName: string })
   const [tick, setTick] = useState(0);
   // "Open right now" is inherently clock-and-random, so the server render
   // (and the matching first client render) shows nothing; the panel pops in
-  // post-mount. It lives near the bottom of the page, so no visible jank.
-  const [ready, setReady] = useState(false);
-  useEffect(() => { setReady(true); }, []);
-  const allByCity = (openNowCandidatesJson as { cities?: Record<string, OpenNowCandidate[]> }).cities ?? {};
-  const pool = (allByCity[cityId] ?? []).filter((place) => !isPlaceTemporarilyUnavailable(place));
+  // post-mount, once the city's candidates load. It lives near the bottom of
+  // the page, so no visible jank.
+  const [candidates, setCandidates] = useState<OpenNowCandidate[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/city/${encodeURIComponent(cityId)}/open-now.json`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((d) => { if (!cancelled && Array.isArray(d)) setCandidates(d); })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [cityId]);
 
   const picks = useMemo(() => {
-    if (!ready || pool.length === 0) return [];
+    if (candidates.length === 0) return [];
     const dayKey = OPEN_DAY_KEYS[NOW_PT.getDay()];
     const mins = NOW_PT.getHours() * 60 + NOW_PT.getMinutes();
-    const open = pool.filter((p) => isOpenAt(p.hours, dayKey, mins));
+    const open = candidates.filter((p) => isOpenAt(p.hours, dayKey, mins));
     return shuffleInPlace([...open]).slice(0, 6);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cityId, tick, ready]);
+  }, [candidates, tick]);
 
   // Venue photo per pick: real Places photo when the candidate carries a
   // photoRef, Unsplash category lookup only for the refless minority. A lone
@@ -856,9 +854,9 @@ function CityHallPanel({
   digestAge,
 }: {
   cityId: string;
-  nextMeeting: any;
+  nextMeeting: CityMeeting | null;
   meetingIsToday: boolean;
-  digest: any;
+  digest: CityDigest | null;
   digestAge: number;
 }) {
   const meetingItems = nextMeeting ? filterAgendaItems(nextMeeting.agendaItems) : [];
@@ -1162,41 +1160,10 @@ function CityEventsBlock({
 
 // ---------------------------------------------------------------------------
 // City Reddit Tiles — tile-grid Reddit block scoped to this city.
-// Visual cousin of homepage RedditPulseTeaser. Filter rule: local subs first,
-// then regional subs that mention the city by name, then bare regional posts
-// to keep the grid full when local subs are sparse.
+// Visual cousin of homepage RedditPulseTeaser. Which posts make the grid
+// (local subs first, then regional subs that mention the city by name, then
+// bare regional posts) is decided at build time in cityPageData.ts.
 // ---------------------------------------------------------------------------
-
-interface ChatterPost {
-  id: string;
-  sub: string;
-  title: string;
-  displayTitle?: string;
-  summary?: string;
-  category?: string;
-  score: number;
-  numComments: number;
-  ageHours: number;
-  permalink: string;
-  externalUrl?: string | null;
-}
-
-// City id → subreddit names that count as "the local sub" for this city.
-// Case-insensitive match; canonical spellings the data uses.
-const CITY_SUBREDDITS: Record<string, string[]> = {
-  "san-jose":      ["SanJose"],
-  "palo-alto":     ["PaloAlto"],
-  "mountain-view": ["mountainview", "MountainView"],
-  "sunnyvale":     ["Sunnyvale"],
-  "santa-clara":   ["SantaClara"],
-  "cupertino":     ["Cupertino"],
-  "saratoga":      ["Saratoga_CA"],
-  "los-gatos":     ["losgatos"],
-  "milpitas":      ["Milpitas"],
-  "campbell":      ["campbell", "Campbell"],
-};
-
-const REGIONAL_SUBS = new Set(["bayarea", "AskSF", "siliconvalley"]);
 
 function chatterAge(hours: number): string {
   if (hours < 1) return "now";
@@ -1205,46 +1172,13 @@ function chatterAge(hours: number): string {
   return days === 1 ? "1d ago" : `${days}d ago`;
 }
 
-function CityRedditTiles({ cityId, cityName }: { cityId: string; cityName: string }) {
-  const allPosts = ((redditPulseJson as { posts?: ChatterPost[] }).posts ?? []);
-  const localSubs = (CITY_SUBREDDITS[cityId] ?? []).map((s) => s.toLowerCase());
-  const cityNeedle = cityName.toLowerCase();
-
-  const withImage = allPosts.filter((p) => !!(p as any).image);
-
-  const scored = withImage.map((p) => {
-    const subLower = (p.sub || "").toLowerCase();
-    const isLocal = localSubs.includes(subLower);
-    const isRegional = REGIONAL_SUBS.has(p.sub);
-    const hay = `${p.title || ""} ${p.summary || ""}`.toLowerCase();
-    const cityMention = hay.includes(cityNeedle);
-    let rank = 99;
-    if (isLocal) rank = 0;
-    else if (isRegional && cityMention) rank = 1;
-    else if (isRegional) rank = 2;
-    return { post: p, rank };
-  })
-  .filter((x) => x.rank <= 2)
-  .sort((a, b) => {
-    if (a.rank !== b.rank) return a.rank - b.rank;
-    return a.post.ageHours - b.post.ageHours;
-  });
-
-  // Take up to 8 tiles. Smaller datasets (Los Gatos, Saratoga) ship whatever
-  // they have so long as there are at least 2 candidates — a single tile reads
-  // as broken, but 2-3 is fine in a 2-col mobile layout, and the desktop
-  // 4-col grid just auto-flows with empty trailing cells.
-  const TILE_TARGET = 8;
-  const trimmed = scored.slice(0, TILE_TARGET);
-
-  if (trimmed.length < 2) return null;
+function CityRedditTiles({ reddit }: { reddit: CityReddit | null }) {
+  if (!reddit) return null;
 
   // Subtitle reflects what's actually showing — if every visible tile is from a
   // regional sub, don't promise "r/<localsub>" content the user won't see.
-  const hasLocalTile = trimmed.some((x) => x.rank === 0);
-  const localLabel = (CITY_SUBREDDITS[cityId] ?? [])[0];
-  const subtitle = hasLocalTile
-    ? `From r/${localLabel} and regional subs`
+  const subtitle = reddit.localSub
+    ? `From r/${reddit.localSub} and regional subs`
     : `Regional chatter from the Bay Area`;
 
   return (
@@ -1255,30 +1189,27 @@ function CityRedditTiles({ cityId, cityName }: { cityId: string; cityName: strin
       </div>
 
       <div className="city-reddit-grid">
-        {trimmed.map(({ post: p }) => {
-          const image = (p as any).image as string | undefined;
-          return (
-            <a
-              key={p.id}
-              href={p.permalink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="city-reddit-tile"
-              style={image ? { backgroundImage: `url(${image})` } : undefined}
-            >
-              <span className="city-reddit-shade" aria-hidden="true" />
-              <span className="city-reddit-badge">r/{p.sub}</span>
-              <span className="city-reddit-bottom">
-                <span className="city-reddit-title">{p.displayTitle || p.title}</span>
-                <span className="city-reddit-meta">
-                  {p.score > 0 && <><span>↑ {p.score}</span><span aria-hidden="true">·</span></>}
-                  {p.numComments > 0 && <><span>💬 {p.numComments}</span><span aria-hidden="true">·</span></>}
-                  <span>{chatterAge(p.ageHours)}</span>
-                </span>
+        {reddit.tiles.map((p) => (
+          <a
+            key={p.id}
+            href={p.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="city-reddit-tile"
+            style={{ backgroundImage: `url(${p.image})` }}
+          >
+            <span className="city-reddit-shade" aria-hidden="true" />
+            <span className="city-reddit-badge">r/{p.sub}</span>
+            <span className="city-reddit-bottom">
+              <span className="city-reddit-title">{p.title}</span>
+              <span className="city-reddit-meta">
+                {p.score > 0 && <><span>↑ {p.score}</span><span aria-hidden="true">·</span></>}
+                {p.numComments > 0 && <><span>💬 {p.numComments}</span><span aria-hidden="true">·</span></>}
+                <span>{chatterAge(p.ageHours)}</span>
               </span>
-            </a>
-          );
-        })}
+            </span>
+          </a>
+        ))}
       </div>
 
       <p className="city-note" style={{ textAlign: "right" }}>

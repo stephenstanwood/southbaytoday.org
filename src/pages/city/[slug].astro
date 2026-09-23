@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import CityPage from "../../components/south-bay/city/CityPage.tsx";
 import StaticLinkStrip from "../../components/south-bay/StaticLinkStrip.astro";
 import { CITIES } from "../../lib/south-bay/cities";
+import { getCityPageData } from "../../lib/south-bay/cityPageData";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
@@ -17,6 +18,11 @@ export function getStaticPaths() {
 const { cityId, cityName } = Astro.props;
 const title = `${cityName} — South Bay Today`;
 const description = `What's happening in ${cityName} today: events, city council meetings, development updates, and local news.`;
+// This city's slice of the meetings, digests, Reddit, and camps data.
+// CityPage is a client:load island, so importing the all-city files there
+// would ship every city's data to every city page. (Its Open Right Now pool
+// comes from ./[slug]/open-now.json.ts instead.)
+const cityData = getCityPageData(cityId, cityName);
 // santa-cruz has no dedicated OG card — cities.ts marks it a case-by-case
 // pick, not full coverage (scripts/generate-og-images.mjs skips it too), so
 // it falls back to BaseLayout's shared default image.
@@ -62,6 +68,6 @@ const jsonLd = eventListJsonLd(cityEvents, {
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </Fragment>
 
-  <CityPage cityId={cityId} cityName={cityName} client:load />
+  <CityPage cityId={cityId} cityName={cityName} data={cityData} client:load />
   <StaticLinkStrip days govCities />
 </BaseLayout>
