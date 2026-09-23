@@ -3,10 +3,11 @@ import { CompanyLogo } from "../CompanyLogo";
 import PageHero from "../PageHero";
 import { urlToDomain, LOGO_DOMAIN_BY_ID, LOGO_URL_BY_ID } from "../../../lib/south-bay/tech-logos";
 import {
+  calendarDaysAgo,
   fundingDateLabel,
   isFreshRound,
-  pacificDaysAgo,
 } from "../../../lib/south-bay/fundingAge";
+import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import { hasNotStarted, startMinutes } from "../../../lib/south-bay/timeHelpers";
 import { isTechEvent } from "../../../lib/south-bay/techEventFilter";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
@@ -734,14 +735,13 @@ function RoundBadge({ round }: { round: string }) {
   return <span className={`tech-chip tech-chip--${roundTone(round)}`}>{round}</span>;
 }
 
-function RecentlyFundedCard({ company }: { company: RecentlyFunded }) {
+function RecentlyFundedCard({ company, todayIso }: { company: RecentlyFunded; todayIso: string }) {
   // Pacific calendar-day arithmetic lives in fundingAge.ts so it is testable
   // without a DOM (same split as postAge.ts). See that file for the noon-anchor
   // bug this replaced: every card read a day younger all morning.
-  const now = Date.now();
-  const daysAgo = pacificDaysAgo(company.date, now);
+  const daysAgo = calendarDaysAgo(company.date, todayIso);
   const isFresh = isFreshRound(daysAgo);
-  const dateLabel = fundingDateLabel(company.date, now);
+  const dateLabel = fundingDateLabel(company.date, todayIso);
   const undisclosed = parseFundingAmount(company.amount) === null;
 
   // Long blurbs open clamped with a Read more toggle. The first render guesses
@@ -1441,7 +1441,7 @@ function AnnualConferencesSection() {
 
 // ── Main view ─────────────────────────────────────────────────────────────
 
-function FundingHighlightsSection() {
+function FundingHighlightsSection({ todayIso }: { todayIso: string }) {
   const latest = [...RECENTLY_FUNDED]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
@@ -1469,7 +1469,7 @@ function FundingHighlightsSection() {
         <ul className="tech-funded-list" role="list">
           {latest.map((company) => (
             <li key={company.id + company.date}>
-              <RecentlyFundedCard company={company} />
+              <RecentlyFundedCard company={company} todayIso={todayIso} />
             </li>
           ))}
         </ul>
@@ -1547,7 +1547,10 @@ function SpotlightHighlightsSection() {
   );
 }
 
-export default function TechnologyView() {
+export default function TechnologyView({ buildDayPt }: { buildDayPt?: string }) {
+  // Funding ages count from the build's day while hydrating, then from the
+  // reader's (useTodayPT).
+  const todayIso = useTodayPT(buildDayPt);
   const topCompanies = [...TECH_COMPANIES]
     .sort((a, b) => b.sccEmployeesK - a.sccEmployeesK)
     .slice(0, 8);
@@ -1610,7 +1613,7 @@ export default function TechnologyView() {
         <TopEmployersLeaderboard />
       </section>
 
-      <FundingHighlightsSection />
+      <FundingHighlightsSection todayIso={todayIso} />
 
       <section className="tech-section" aria-labelledby="tech-profiles-title">
         <div className="tech-section-head">

@@ -9,28 +9,34 @@ import {
   type CampWeek,
 } from "../../../data/south-bay/camps-data";
 import PageHero from "../PageHero";
+import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-// Drop summer weeks that have already ended so the week picker and planner
-// never offer a week you can't attend. SignalApp is client:only, so this
-// `new Date()` is the viewer's real clock — no SSR/hydration mismatch. Pin the
-// date to Pacific anyway: the camps run here, and cityCamps.ts reads the same
-// boundary off a PT-pinned TODAY_ISO, so an unpinned viewer clock could put
-// the two out of step by a day.
-// Once every week is past (summer's over) we fall back to the full set so the
-// planner never renders an empty week list.
-const TODAY_ISO = new Date().toLocaleDateString("en-CA", {
-  timeZone: "America/Los_Angeles",
-});
-const UPCOMING_WEEKS = SUMMER_WEEKS.filter((w) => w.endDate >= TODAY_ISO);
-const ACTIVE_WEEKS = UPCOMING_WEEKS.length > 0 ? UPCOMING_WEEKS : SUMMER_WEEKS;
-// True while at least one summer week is still ahead. Once summer's fully over
-// we stop hiding finished camps so the tab keeps showing the full lineup
-// off-season (mirrors the ACTIVE_WEEKS fallback above).
-const SEASON_ACTIVE = UPCOMING_WEEKS.length > 0;
+// Where the summer stands on a Pacific date (the camps run here, and
+// cityCamps.ts reads the same boundary in Pacific time).
+interface Season {
+  todayIso: string;
+  /** Weeks that haven't ended, so the week picker and planner never offer a
+   *  week you can't attend. Once every week is past (summer's over) this falls
+   *  back to the full set so the planner never renders an empty week list. */
+  weeks: ReadonlyArray<(typeof SUMMER_WEEKS)[number]>;
+  /** At least one summer week is still ahead. Once summer's fully over we stop
+   *  hiding finished camps so the tab keeps showing the full lineup off-season
+   *  (mirrors the `weeks` fallback). */
+  active: boolean;
+}
+
+function seasonOn(todayIso: string): Season {
+  const upcoming = SUMMER_WEEKS.filter((w) => w.endDate >= todayIso);
+  return {
+    todayIso,
+    weeks: upcoming.length > 0 ? upcoming : SUMMER_WEEKS,
+    active: upcoming.length > 0,
+  };
+}
 
 const TYPE_FILTERS: { id: CampType | "all"; label: string }[] = [
   { id: "all",       label: "All"       },
@@ -80,17 +86,17 @@ function campHasWeek(camp: Camp, weekNum: number): boolean {
 
 // Camp still has at least one session a kid could attend. Camps with no dated
 // weeks (year-round / undated programs) are always considered current.
-function campHasUpcomingWeek(camp: Camp): boolean {
+function campHasUpcomingWeek(camp: Camp, todayIso: string): boolean {
   if (camp.weeks.length === 0) return true;
-  return camp.weeks.some((w) => w.endDate >= TODAY_ISO);
+  return camp.weeks.some((w) => w.endDate >= todayIso);
 }
 
 // Sessions a parent can still register for. During an active season the week
 // picker and planner already hide finished weeks, so the card footer should
 // match — count only upcoming weeks, not the all-time total. Once the season is
 // over (no upcoming weeks) fall back to the full count so the card isn't blank.
-function sessionCount(camp: Camp): number {
-  const upcoming = camp.weeks.filter((w) => w.endDate >= TODAY_ISO).length;
+function sessionCount(camp: Camp, todayIso: string): number {
+  const upcoming = camp.weeks.filter((w) => w.endDate >= todayIso).length;
   return upcoming > 0 ? upcoming : camp.weeks.length;
 }
 
@@ -132,7 +138,7 @@ function priceTier(camp: Camp): "budget" | "mid" | "premium" {
 // Camp card (Browse mode)
 // ---------------------------------------------------------------------------
 
-function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }) {
+function CampCard({ camp, season, featured = false }: { camp: Camp; season: Season; featured?: boolean }) {
   const usefulLocations = camp.locations.filter(
     (loc) => !loc.toLowerCase().startsWith("various")
   );
@@ -140,7 +146,7 @@ function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }
   const price = priceRange(camp);
   // NBSP before each "·" keeps a wrapped line from starting with a separator.
   const locationLabel = usefulLocations.slice(0, 2).join("\u00a0· ");
-  const sessions = sessionCount(camp);
+  const sessions = sessionCount(camp, season.todayIso);
 
   return (
     <article className={`camps-card${featured ? " camps-card--featured" : ""}`}>
@@ -166,7 +172,7 @@ function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }
           <dd>{weeksLabel(camp)}</dd>
         </div>
         <div>
-          <dt>{SEASON_ACTIVE ? "Price" : "2026 price"}</dt>
+          <dt>{season.active ? "Price" : "2026 price"}</dt>
           <dd className={price.startsWith("$") ? "camps-fact-price" : undefined}>{price}</dd>
         </div>
         <div>
@@ -196,7 +202,7 @@ function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }
         {!camp.priceNote && (
           <span className="camps-card-sessions">
             {sessions} session{sessions !== 1 ? "s" : ""}{" "}
-            {SEASON_ACTIVE ? "listed" : "in 2026"}
+            {season.active ? "listed" : "in 2026"}
           </span>
         )}
         <a
@@ -209,7 +215,7 @@ function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }
               a page with nothing to register for. The operator's page is still
               the right destination — it's where next year's dates go up first —
               but the label has to say so. */}
-          {SEASON_ACTIVE ? "Register" : "Program page"}
+          {season.active ? "Register" : "Program page"}
           <span aria-hidden="true">↗</span>
         </a>
       </footer>
@@ -221,7 +227,7 @@ function CampCard({ camp, featured = false }: { camp: Camp; featured?: boolean }
 // Browse mode
 // ---------------------------------------------------------------------------
 
-function BrowseMode() {
+function BrowseMode({ season }: { season: Season }) {
   const [cityFilter, setCityFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<CampType | "all">("all");
   const [orgTypeFilter, setOrgTypeFilter] = useState<string>("all");
@@ -234,9 +240,9 @@ function BrowseMode() {
   const featured = useMemo(
     () =>
       CAMPS.filter(
-        (camp) => camp.featured && (!SEASON_ACTIVE || campHasUpcomingWeek(camp)),
+        (camp) => camp.featured && (!season.active || campHasUpcomingWeek(camp, season.todayIso)),
       ).slice(0, 3),
-    [],
+    [season],
   );
   const featuredIds = useMemo(() => new Set(featured.map((camp) => camp.id)), [featured]);
 
@@ -267,7 +273,7 @@ function BrowseMode() {
       if (!hasFilters && featuredIds.has(camp.id)) return false;
       // Hide camps whose every session has already ended (until summer's over,
       // when we fall back to showing the full lineup).
-      if (SEASON_ACTIVE && !campHasUpcomingWeek(camp)) return false;
+      if (season.active && !campHasUpcomingWeek(camp, season.todayIso)) return false;
       if (cityFilter !== "all" && camp.cityId !== cityFilter) return false;
       if (typeFilter !== "all" && camp.type !== typeFilter) return false;
       if (orgTypeFilter !== "all" && camp.orgType !== orgTypeFilter) return false;
@@ -293,13 +299,13 @@ function BrowseMode() {
       if (!a.featured && b.featured) return 1;
       return a.cityName.localeCompare(b.cityName) || a.name.localeCompare(b.name);
     });
-  }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds]);
+  }, [cityFilter, typeFilter, orgTypeFilter, priceTierFilter, ageFilter, weekFilter, query, hasFilters, featuredIds, season]);
   const visible = hasFilters || showAll ? filtered : filtered.slice(0, 10);
   const hiddenCount = filtered.length - visible.length;
   // Total of camps still browsable (excludes ones whose every session ended).
   const currentCampsCount = useMemo(
-    () => CAMPS.filter((camp) => !SEASON_ACTIVE || campHasUpcomingWeek(camp)).length,
-    [],
+    () => CAMPS.filter((camp) => !season.active || campHasUpcomingWeek(camp, season.todayIso)).length,
+    [season],
   );
   const shownTotal = hasFilters ? filtered.length : currentCampsCount;
 
@@ -313,14 +319,14 @@ function BrowseMode() {
               <h2 id="camps-featured-title">Strong first picks</h2>
             </div>
             <p>
-              {SEASON_ACTIVE
+              {season.active
                 ? "Broad programs with clear dates, reliable registration links, and enough weeks to anchor a summer plan."
                 : "Broad programs with clear dates and reliable registration links. Shortlist these first when next summer's schedules go up."}
             </p>
           </div>
           <div className="camps-feature-grid">
             {featured.map((camp) => (
-              <CampCard key={camp.id} camp={camp} featured />
+              <CampCard key={camp.id} camp={camp} season={season} featured />
             ))}
           </div>
         </section>
@@ -356,7 +362,7 @@ function BrowseMode() {
             </select>
           </label>
 
-          {SEASON_ACTIVE && (
+          {season.active && (
             <label className="camps-field">
               <span>Week</span>
               <select
@@ -364,7 +370,7 @@ function BrowseMode() {
                 onChange={(e) => setWeekFilter(e.target.value === "all" ? "all" : parseInt(e.target.value))}
               >
                 <option value="all">All weeks</option>
-                {ACTIVE_WEEKS.map((sw) => (
+                {season.weeks.map((sw) => (
                   <option key={sw.weekNum} value={sw.weekNum}>
                     Week {sw.weekNum} · {sw.label}
                   </option>
@@ -417,7 +423,7 @@ function BrowseMode() {
           </label>
         </div>
 
-        {SEASON_ACTIVE && ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) && (
+        {season.active && season.weeks.some((w) => w.weekNum === SHORT_WEEK_NUM) && (
           <p className="camps-toolbar-note">
             * Week {SHORT_WEEK_NUM} is a short week: no camp Fri Jul 3 (July 4th observed).
           </p>
@@ -442,7 +448,7 @@ function BrowseMode() {
         ) : (
           <div className="camps-grid">
             {visible.map((camp) => (
-              <CampCard key={camp.id} camp={camp} />
+              <CampCard key={camp.id} camp={camp} season={season} />
             ))}
           </div>
         )}
@@ -466,7 +472,7 @@ interface BuilderSuggestion {
   options: Array<{ camp: Camp; week: CampWeek }>;
 }
 
-function SummerBuilderMode() {
+function SummerBuilderMode({ season }: { season: Season }) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [childAges, setChildAges] = useState<string[]>([""]);
   const [selectedWeeks, setSelectedWeeks] = useState<Set<number>>(new Set());
@@ -614,7 +620,7 @@ function SummerBuilderMode() {
     const ageLabel = parsedAges.length === 1
       ? `Age ${parsedAges[0]}`
       : `Ages ${parsedAges.join(", ")}`;
-    const allWeeksSelected = ACTIVE_WEEKS.every((sw) => selectedWeeks.has(sw.weekNum));
+    const allWeeksSelected = season.weeks.every((sw) => selectedWeeks.has(sw.weekNum));
 
     return (
       <div>
@@ -627,23 +633,23 @@ function SummerBuilderMode() {
         <h2 className="camps-builder-title">Which weeks need coverage?</h2>
         <p className="camps-builder-lede">
           Select the weeks you need a camp for.
-          {SEASON_ACTIVE && ACTIVE_WEEKS.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
+          {season.active && season.weeks.some((w) => w.weekNum === SHORT_WEEK_NUM) &&
             ` Week ${SHORT_WEEK_NUM} is a short week (Fri Jul 3 is the observed July 4th holiday).`}
         </p>
         <button
           type="button"
           className={`camps-builder-selectall${allWeeksSelected ? " is-active" : ""}`}
           onClick={() => {
-            const allNums = ACTIVE_WEEKS.map(sw => sw.weekNum);
+            const allNums = season.weeks.map(sw => sw.weekNum);
             const allSelected = allNums.every(n => selectedWeeks.has(n));
             setSelectedWeeks(allSelected ? new Set() : new Set(allNums));
           }}
         >
-          {allWeeksSelected ? "Clear all" : `Select all ${ACTIVE_WEEKS.length} weeks`}
+          {allWeeksSelected ? "Clear all" : `Select all ${season.weeks.length} weeks`}
         </button>
 
         <div className="camps-week-grid">
-          {ACTIVE_WEEKS.map((sw) => {
+          {season.weeks.map((sw) => {
             const selected = selectedWeeks.has(sw.weekNum);
             return (
               <button
@@ -791,7 +797,10 @@ function SummerBuilderMode() {
 // Main view
 // ---------------------------------------------------------------------------
 
-export default function CampsView() {
+export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
+  // The build's day while hydrating, then the reader's (useTodayPT).
+  const todayIso = useTodayPT(buildDayPt);
+  const season = useMemo(() => seasonOn(todayIso), [todayIso]);
   // The week-by-week planner only means anything while there are weeks left to
   // cover. Once the last 2026 session ends it would walk a parent through
   // picking expired weeks, so off-season the tab is the directory alone.
@@ -808,10 +817,10 @@ export default function CampsView() {
   return (
     <div className="camps-view">
       <PageHero
-        eyebrow={SEASON_ACTIVE ? "South Bay / Summer 2026" : "South Bay / Planning Ahead"}
+        eyebrow={season.active ? "South Bay / Summer 2026" : "South Bay / Planning Ahead"}
         title="Summer Camps"
         description={
-          SEASON_ACTIVE
+          season.active
             ? "A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
             : "The 2026 season has wrapped, so this is the shortlist for next year: city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing still links to the operator's own page, which is where new dates and registration go up first."
         }
@@ -819,13 +828,13 @@ export default function CampsView() {
         accent="#B45309"
         stats={[
           { value: CAMPS.length, label: "Programs" },
-          { value: SUMMER_WEEKS.length, label: SEASON_ACTIVE ? "Summer weeks" : "Weeks in 2026" },
+          { value: SUMMER_WEEKS.length, label: season.active ? "Summer weeks" : "Weeks in 2026" },
           { value: cityProgramCount, label: "City-run options" },
           { value: nonprofitCount, label: "Nonprofit options" },
         ]}
       />
 
-      {SEASON_ACTIVE && (
+      {season.active && (
         <div className="camps-mode-switch" role="tablist" aria-label="Camp view">
           <button
             type="button"
@@ -852,20 +861,20 @@ export default function CampsView() {
         </div>
       )}
 
-      {!SEASON_ACTIVE || mode === "browse" ? (
+      {!season.active || mode === "browse" ? (
         // Off-season there is no tablist above, so the panel is a plain region —
         // pointing aria-labelledby at a button that isn't rendered would leave
         // the directory unlabeled for screen readers.
         <div
           id="camps-panel-browse"
-          role={SEASON_ACTIVE ? "tabpanel" : undefined}
-          aria-labelledby={SEASON_ACTIVE ? "camps-tab-browse" : undefined}
+          role={season.active ? "tabpanel" : undefined}
+          aria-labelledby={season.active ? "camps-tab-browse" : undefined}
         >
-          <BrowseMode />
+          <BrowseMode season={season} />
         </div>
       ) : (
         <section id="camps-panel-builder" role="tabpanel" aria-labelledby="camps-tab-builder" className="camps-builder-wrap">
-          <SummerBuilderMode />
+          <SummerBuilderMode season={season} />
         </section>
       )}
     </div>

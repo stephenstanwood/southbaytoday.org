@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  calendarDaysAgo,
   fundingDateLabel,
   isFreshRound,
   pacificDate,
@@ -10,6 +11,7 @@ import {
 
 const AUG28_MORNING = Date.parse("2026-08-28T07:17:00-07:00");
 const AUG28_LATE = Date.parse("2026-08-28T23:50:00-07:00");
+const AUG28 = "2026-08-28";
 
 test("pacificDate reads the Pacific calendar day, not the runtime's", () => {
   assert.equal(pacificDate(AUG28_MORNING), "2026-08-28");
@@ -52,6 +54,14 @@ test("the same card ages identically for every reader's timezone", () => {
   }
 });
 
+test("calendarDaysAgo counts whole days between two calendar dates", () => {
+  assert.equal(calendarDaysAgo("2026-08-26", AUG28), 2);
+  assert.equal(calendarDaysAgo(AUG28, AUG28), 0);
+  assert.equal(calendarDaysAgo("2026-08-29", AUG28), -1);
+  // Across a DST change (Nov 1) and a month end.
+  assert.equal(calendarDaysAgo("2026-10-31", "2026-11-02"), 2);
+});
+
 test("isFreshRound covers a two-week window and excludes the future", () => {
   assert.ok(isFreshRound(0));
   assert.ok(isFreshRound(14));
@@ -60,18 +70,18 @@ test("isFreshRound covers a two-week window and excludes the future", () => {
 });
 
 test("fundingDateLabel humanizes inside 30 days", () => {
-  assert.equal(fundingDateLabel("2026-08-28", AUG28_MORNING), "today");
-  assert.equal(fundingDateLabel("2026-08-27", AUG28_MORNING), "yesterday");
-  assert.equal(fundingDateLabel("2026-08-26", AUG28_MORNING), "2d ago");
-  assert.equal(fundingDateLabel("2026-08-23", AUG28_MORNING), "5d ago");
-  assert.equal(fundingDateLabel("2026-08-21", AUG28_MORNING), "1w ago");
-  assert.equal(fundingDateLabel("2026-08-07", AUG28_MORNING), "3w ago");
+  assert.equal(fundingDateLabel("2026-08-28", AUG28), "today");
+  assert.equal(fundingDateLabel("2026-08-27", AUG28), "yesterday");
+  assert.equal(fundingDateLabel("2026-08-26", AUG28), "2d ago");
+  assert.equal(fundingDateLabel("2026-08-23", AUG28), "5d ago");
+  assert.equal(fundingDateLabel("2026-08-21", AUG28), "1w ago");
+  assert.equal(fundingDateLabel("2026-08-07", AUG28), "3w ago");
 });
 
 test("fundingDateLabel falls back to an absolute Pacific date past 30 days", () => {
-  assert.equal(fundingDateLabel("2026-05-04", AUG28_MORNING), "May 4, 2026");
+  assert.equal(fundingDateLabel("2026-05-04", AUG28), "May 4, 2026");
 });
 
 test("a future-dated round shows its date instead of a negative age", () => {
-  assert.equal(fundingDateLabel("2026-09-10", AUG28_MORNING), "Sep 10, 2026");
+  assert.equal(fundingDateLabel("2026-09-10", AUG28), "Sep 10, 2026");
 });

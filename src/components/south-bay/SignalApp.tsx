@@ -64,9 +64,12 @@ interface SignalAppProps {
   /** Pacific date the page was built on, for views that render "today" into
    *  the static HTML (see useTodayPT). */
   buildDayPt?: string;
+  /** The moment the page was built (epoch ms), for a view whose clock reads
+   *  turn over at some other time than midnight (see useClockValue). */
+  buildTimeMs?: number;
 }
 
-export default function SignalApp({ initialTab, eager, buildDayPt }: SignalAppProps = {}) {
+export default function SignalApp({ initialTab, eager, buildDayPt, buildTimeMs }: SignalAppProps = {}) {
   // Deterministic first render: the page's own tab, never the URL hash. A
   // legacy #events-style bookmark would make the hydrating client disagree
   // with the server HTML; the mount effect below resolves the hash instead.
@@ -165,11 +168,15 @@ export default function SignalApp({ initialTab, eager, buildDayPt }: SignalAppPr
               />
             )}
             {activeTab === "government" && (
-              <Government selectedCities={selectedCities} />
+              <Government
+                selectedCities={selectedCities}
+                buildDayPt={buildDayPt}
+                buildTimeMs={buildTimeMs}
+              />
             )}
-            {activeTab === "technology" && <Technology />}
+            {activeTab === "technology" && <Technology buildDayPt={buildDayPt} />}
             {activeTab === "food" && <Food />}
-            {activeTab === "camps" && <Camps />}
+            {activeTab === "camps" && <Camps buildDayPt={buildDayPt} />}
           </Suspense>
         )}
       </main>

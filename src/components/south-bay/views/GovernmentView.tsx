@@ -4,12 +4,18 @@ import CouncilDigestTurnstile from "../cards/CouncilDigestTurnstile";
 import MinutesSearchCard from "../cards/MinutesSearchCard";
 import type { City } from "../../../lib/south-bay/types";
 import { getCityName } from "../../../lib/south-bay/cities";
+import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import digestsJson from "../../../data/south-bay/digests.json";
 import upcomingMeetingsJson from "../../../data/south-bay/upcoming-meetings.json";
 import PageHero from "../PageHero";
 
 interface Props {
   selectedCities: Set<City>;
+  /** Pacific date /gov was built on. The first render uses it so hydration
+   *  matches the static HTML. See useTodayPT. */
+  buildDayPt?: string;
+  /** The moment /gov was built, for the digest ages. See useClockValue. */
+  buildTimeMs?: number;
 }
 
 interface AgendaItem {
@@ -39,10 +45,6 @@ const upcomingMeetings = (upcomingMeetingsJson as { meetings: Record<string, Upc
 
 // ── Date helpers (Pacific Time) ─────────────────────────────────────────────
 
-function todayPT(): string {
-  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-}
-
 function addDays(iso: string, n: number): string {
   const d = new Date(iso + "T12:00:00");
   d.setDate(d.getDate() + n);
@@ -71,13 +73,12 @@ function formatClock(hhmm: string | null | undefined): string | null {
   return `${h12}:${m[2]} ${h >= 12 ? "PM" : "AM"}`;
 }
 
-function countMeetingsInWindow(selectedCities: Set<City>): number {
-  const start = todayPT();
-  const end = addDays(start, 7);
+function countMeetingsInWindow(selectedCities: Set<City>, todayIso: string): number {
+  const end = addDays(todayIso, 7);
   return Object.entries(upcomingMeetings).filter(([cityId, meeting]) => {
     if (!meeting?.date) return false;
     if (!selectedCities.has(cityId as City)) return false;
-    return meeting.date >= start && meeting.date <= end;
+    return meeting.date >= todayIso && meeting.date <= end;
   }).length;
 }
 
@@ -91,8 +92,7 @@ interface WeekAheadRow {
   meeting: UpcomingMeeting;
 }
 
-function CouncilWeekAhead({ selectedCities }: { selectedCities: Set<City> }) {
-  const todayIso = todayPT();
+function CouncilWeekAhead({ selectedCities, todayIso }: { selectedCities: Set<City>; todayIso: string }) {
   const tomorrowIso = addDays(todayIso, 1);
   const horizonIso = addDays(todayIso, 7);
 
@@ -213,7 +213,9 @@ const AGENDA_URLS: Record<string, string> = {
   "palo-alto": "https://www.paloalto.gov/City-Hall/City-Council/Council-Agendas-Minutes",
 };
 
-export default function GovernmentView({ selectedCities }: Props) {
+export default function GovernmentView({ selectedCities, buildDayPt, buildTimeMs }: Props) {
+  // The build's day while hydrating, then the reader's (useTodayPT).
+  const todayIso = useTodayPT(buildDayPt);
   const [digests, setDigests] = useState<Map<string, DigestData>>(() => {
     const map = new Map<string, DigestData>();
     for (const [city, digest] of Object.entries(staticDigests)) {
@@ -263,8 +265,8 @@ export default function GovernmentView({ selectedCities }: Props) {
     [selectedCities, digests],
   );
   const meetingCount = useMemo(
-    () => countMeetingsInWindow(selectedCities),
-    [selectedCities],
+    () => countMeetingsInWindow(selectedCities, todayIso),
+    [selectedCities, todayIso],
   );
   const selectedGovCityCount = useMemo(
     () => CITY_ORDER.filter((c) => selectedCities.has(c)).length,
@@ -286,7 +288,7 @@ export default function GovernmentView({ selectedCities }: Props) {
         ]}
       />
 
-      <CouncilWeekAhead selectedCities={selectedCities} />
+      <CouncilWeekAhead selectedCities={selectedCities} todayIso={todayIso} />
 
       <MinutesSearchCard selectedCities={selectedCities} />
 
@@ -306,6 +308,7 @@ export default function GovernmentView({ selectedCities }: Props) {
           onRefresh={refreshDigest}
           loading={loading}
           errors={errors}
+          buildTimeMs={buildTimeMs}
         />
       </section>
     </div>
