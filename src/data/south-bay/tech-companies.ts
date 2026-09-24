@@ -1629,6 +1629,63 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Cyera (New York), and Circle's Binance investment (New York).
   //   * Crunchbase's Sep 19-25 top ten still publishes Friday Sep 25 — check
   //     it against both the Sep 21-22 and Sep 22-23 windows.
+  // Note on the Sep 23-24 2026 sweep: Ema and Mojave are the two in-coverage
+  // rounds, added below. Both HQs are company-authored plus independent, not
+  // dateline-only (the Groq rule): TechCrunch puts Ema's headquarters in
+  // Mountain View (offices in Bengaluru, London, Vancouver), and Mojave's own
+  // site lists its corporate office and lab at 623 N. Pastoria Ave, Sunnyvale.
+  // Near-misses, recorded so the next cycle doesn't re-verify them:
+  //   * Flatkey ($10M Series A, PR Newswire Sep 23-24 2026; one-API-key
+  //     reseller of 100+ AI models and 1,000+ tools, launched July 2026) IS
+  //     San Jose — its boilerplate says "Headquartered in San Jose" — but is
+  //     held, not added. The $10M is one combined round co-announced with
+  //     Realset AI (also San Jose), neither release names a lead or any
+  //     investor, and the relationship between the two is unstated (Hunter Guo
+  //     is named as founder in both releases). Missing > wrong: add only if a named investor or a
+  //     per-company split surfaces.
+  //   * Rejuvenation Technologies (FinSMEs Sep 24, undisclosed "investment")
+  //     is Mountain View, but no primary release or amount surfaced — the
+  //     most recent verifiable round is the $10.6M Khosla-led seed. Re-check
+  //     if a release appears.
+  //   * Pilgrim ($25M seed, FinSMEs Sep 24) is Redwood City — San Mateo
+  //     County, the Fireworks AI / Cognichip / Snorkel line.
+  //   * The rest of the window is out of coverage. FinSMEs Sep 23-24: Hubble
+  //     Network (Seattle), UltraSight (Boston), Rightway (New York), Island
+  //     (Dallas), American Supercritical (Denver), Silk (Needham, MA),
+  //     Bird.com (New York / Amsterdam), Sol (San Francisco). VC News Daily
+  //     adds Mazama Energy (Dallas), Numeral (San Francisco), Topdog (New
+  //     York), Ridgeline (Incline Village) — and files Nex under San
+  //     Francisco again, resolved above as San Jose. techstartups' Sep 23-24
+  //     roundups are Tekever, Chamelio, DeepSeek, 50Skills, ByteAsk, Kasvu,
+  //     Puxi, F13, Brahma AI, Noxtua, StandardX — none South Bay.
+  //   * Crunchbase's Sep 19-25 top ten publishes Friday Sep 25 — check it
+  //     against the Sep 21-24 windows.
+  {
+    id: "ema",
+    name: "Ema",
+    city: "Mountain View",
+    category: "ai",
+    round: "Series B",
+    amount: "$77M",
+    date: "2026-09-23",
+    tagline:
+      "Ema's pitch to big companies is that the next hire in HR, IT, or finance doesn't have to be a person — or a new SaaS seat. The Mountain View startup, founded in 2023 by CEO Surojit Chatterjee (formerly of Google and Coinbase) and Souvik Sen (formerly of Okta), sells what it calls AI Employees: systems that coordinate multiple AI agents across more than 250 business applications to run multi-step work end to end, like answering employee questions or working IT service tickets, priced by task completed rather than by seat. Wipro, Hitachi, ADP, and PwC are customers; Ema reports 50-fold revenue growth over two years, more than $150M in bookings, and roughly 180% net dollar retention. Creaegis led the $77M Series B, with Accel, S32, and Prosus all adding to their stakes, bringing total funding to $140M at more than four times the 2024 valuation. The money goes to scaling sales and to the platform; the company is nearing 200 people, with offices in Bengaluru, London, and Vancouver.",
+    color: "#4F46E5",
+    url: "https://www.ema.ai/",
+  },
+  {
+    id: "mojave-energy-systems",
+    name: "Mojave Energy Systems",
+    city: "Sunnyvale",
+    category: "hardware",
+    round: "Series B",
+    amount: "$19M",
+    date: "2026-09-23",
+    tagline:
+      "Most air conditioners dry the air by overcooling it, then reheat it. Mojave Energy Systems, working out of a corporate office and lab on North Pastoria Avenue in Sunnyvale, flips that: its ArctiDry platform uses patented liquid desiccants to pull humidity out separately from cooling, so commercial buildings — grocery stores, hospitals, hotels, schools, industrial sites — control moisture and temperature independently. The company says customers see 30% to 60% lower energy use than standard HVAC, typically paying the system back in under 18 months; its ArctiDry Hydro unit plugs into a building's existing chilled-water plant and reaches supply-air dew points as low as 25°F. Fairtree Elevant Ventures led the $19M Series B, with new investors River Bay Investments, Cleo Capital, and MetaTrail and returning backers At One Ventures, Fifth Wall, Myriad Venture Partners, and Starshot Capital. CEO Phil Farese says the money goes to growing sales, expanding manufacturing, and new ArctiDry products.",
+    color: "#0EA5E9",
+    url: "https://mojavehvac.com/",
+  },
   {
     id: "nex",
     name: "Nex",
