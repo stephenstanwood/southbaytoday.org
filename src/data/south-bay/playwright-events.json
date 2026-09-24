@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-24T02:17:18.811Z",
+    "generatedAt": "2026-09-24T15:05:00.624Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 571,
+    "eventCount": 572,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (124)",
+      "Mountain View Public Library (122)",
       "Los Gatos Library (153)",
       "San Jose Jazz (18)",
       "Linden Tree Books (12)",
@@ -14,7 +14,7 @@
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (17)",
+      "Mountain Winery (16)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
@@ -23,7 +23,7 @@
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (8)",
-      "SAP Center (12)",
+      "SAP Center (16)",
       "The Tech Interactive (6)",
       "San Jose Museum of Art (8)",
       "Peninsula Open Space Trust (4)"
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 127,
+        "count": 125,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 17,
+        "count": 16,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -295,7 +295,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 12,
+        "count": 16,
         "error": null,
         "sources": [
           "SAP Center"
@@ -350,51 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "4bc3ada32c5a",
-      "title": "When the Tiger Smoked a Pipe: The Art of Korea",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "6:30 PM",
-      "endTime": "7:30 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Often heard at the beginning of Korean legends and folktales, “When the tiger smoked a pipe” is a familiar phrase akin to “Once upon a time.” This program draws from the Asian Art Museum’s collection of Korean art to explore a layered and transformative history of artmaking. Renowned for its ceramics and textiles, Korea has also created, adapted, and refined a variety of art forms. Today, Korea is among the leaders of contemporary art production. Presented by the Asian Art Museum . This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/15921906",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "f2e4eca828bc",
-      "title": "Words at Play Game Night",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "6:30 PM",
-      "endTime": "7:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "Join us for an evening of family-friendly fun featuring games where words take center stage! Games for all ages and reading levels will be provided. Play competively or cooperatively.",
-      "sourceAudiences": [
-        "Children",
-        "Parents",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17281039",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "07a6e01ef814",
       "title": "Let's Create",
@@ -7048,23 +7003,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f87f7f387740",
-      "title": "José González with Phosphorescent (Solo)",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1384687",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "aa73a8ff40cb",
       "title": "Cannons with Jesse Jo Stark",
       "date": "2026-09-25",
@@ -7334,23 +7272,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "db4fef41d4c3",
-      "title": "My Hero Academia In Concert",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -7677,10 +7598,27 @@
       "kidFriendly": false
     },
     {
-      "id": "ca2c9807913f",
+      "id": "86868fd7eb3c",
+      "title": "Small Town Murder",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "112331a87725",
       "title": "Toddler Storytime",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
+      "date": "2026-09-24",
+      "displayDate": "Thu, Sep 24",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7694,10 +7632,10 @@
       "kidFriendly": true
     },
     {
-      "id": "7af17db94552",
+      "id": "ac658d407d77",
       "title": "All Ages Storytime",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
+      "date": "2026-09-24",
+      "displayDate": "Thu, Sep 24",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -10691,23 +10629,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c1edee55344c",
-      "title": "2026 LE SSERAFIM TOUR ‘PUREFLOW’ IN SAN JOSE",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "8:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/le-sserafim",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "99c952b03e05",
       "title": "Sharks vs Ducks",
       "date": "2026-09-24",
@@ -10893,6 +10814,91 @@
       "url": "https://www.sapcenter.com/events/detail/rush-2",
       "source": "SAP Center",
       "kidFriendly": false
+    },
+    {
+      "id": "f72698716119",
+      "title": "Disney On Ice",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "7:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "2d78e1eda264",
+      "title": "Disney On Ice",
+      "date": "2026-10-23",
+      "displayDate": "Fri, Oct 23",
+      "time": "7:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "1164b892d861",
+      "title": "Disney On Ice",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "11:00 am",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "82353fdd0db5",
+      "title": "Disney On Ice",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "3:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "810b88595385",
+      "title": "Disney On Ice",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "7:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
     },
     {
       "id": "ae6e434de9d4",
