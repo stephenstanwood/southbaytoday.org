@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-23T15:04:11.544Z",
+    "generatedAt": "2026-09-24T02:17:18.811Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 577,
+    "eventCount": 571,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (126)",
-      "Los Gatos Library (157)",
+      "Mountain View Public Library (124)",
+      "Los Gatos Library (153)",
       "San Jose Jazz (18)",
       "Linden Tree Books (12)",
       "History San Jose (6)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 129,
+        "count": 127,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 157,
+        "count": 153,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -350,71 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "89d04410cb12",
-      "title": "Baby Storytime",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170812",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "a9d99927149b",
-      "title": "ESL Conversation Club - IN PERSON",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/15895391",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "b60a46149792",
-      "title": "ESL Conversation Club - ONLINE",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17249778",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "4bc3ada32c5a",
       "title": "When the Tiger Smoked a Pipe: The Art of Korea",
@@ -1255,6 +1190,23 @@
       "url": "https://mountainview.libcal.com/event/17170830",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "e262c7a67d63",
+      "title": "Back to Bach",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "4:30 PM",
+      "endTime": "5:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "music",
+      "cost": "free",
+      "description": "The Back to Bach Project brings the joy of music to communities through performances and educational outreach. Young musicians will perform for children and families while leading interactive activities that introduce musical concepts, instruments, and creative listening skills. This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
+      "url": "https://mountainview.libcal.com/event/17409868",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "39f7ed701987",
@@ -3040,88 +2992,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/16916951",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "720cf7b07656",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249568",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "ddbf1d36c7f4",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16887021",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "d154c66bc47b",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261933",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "cc6825d0badf",
-      "title": "Cookbook Club",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "5:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "September's theme is \"in a bun\"! Each month we have a theme that you are free to interpret however you'd like. Choose a recipe to make from one of the many cookbooks or other resources in our collection- don't worry, we'll have plenty of suggestions for you! Then we'll meet to talk about books and cooking and enjoy each other's company. Photos of your finished dish are encouraged but not required. This month we're exploring all formats of buns! Whether you have them with a hot dog or burger, rolled up with cinnamon and brown sugar, sandwiching any number of fillings, or stuffed with meat or veggies and steamed, there are tons of ways to have your food in a bun. Browse our incredible cookbook collection in the Library or our ebooks on CloudLibrary or The Palace Project , find something that looks interesting to you, and cook! Come to our meeting ready to talk all about what you made and the book you used. Don't forget to sign up for our Cookbook Club newsletter to get all the latest updates and cookbook suggestions! You can sign up for any of our newsletters here .",
-      "sourceAudiences": [
-        "Teens",
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17376577",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -6586,7 +6456,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6608,7 +6478,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6630,35 +6500,13 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-09-27"
-      }
-    },
-    {
-      "id": "5e2f41e7fc94",
-      "title": "Book Launch with Marley Rose-Teter — In conversation with Samantha Chong",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-09"
       }
     },
     {
@@ -6674,13 +6522,35 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-10-04"
+      }
+    },
+    {
+      "id": "5e2f41e7fc94",
+      "title": "Book Launch with Marley Rose-Teter — In conversation with Samantha Chong",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-09"
       }
     },
     {
@@ -6696,7 +6566,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6718,7 +6588,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6740,7 +6610,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6762,7 +6632,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": true,
       "occurrenceEvidence": {
@@ -6784,7 +6654,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -6806,7 +6676,7 @@
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.lindentreebooks.com/ednite2026",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
       "occurrenceEvidence": {
@@ -7863,23 +7733,6 @@
       }
     },
     {
-      "id": "172ba43f663c",
-      "title": "Farmers' Market",
-      "date": "2026-09-23",
-      "displayDate": "Wed, Sep 23",
-      "time": "4:00pm",
-      "endTime": null,
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "",
-      "url": "https://santanarow.com/event/farmers-market/",
-      "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
       "id": "449a703daf94",
       "title": "Yoga & Pilates on The Row",
       "date": "2026-09-27",
@@ -7893,6 +7746,23 @@
       "cost": null,
       "description": "",
       "url": "https://santanarow.com/event/yoga-pilates-on-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false
+    },
+    {
+      "id": "f58cdb46e5b4",
+      "title": "Farmers' Market",
+      "date": "2026-09-30",
+      "displayDate": "Wed, Sep 30",
+      "time": "4:00pm",
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://santanarow.com/event/farmers-market/",
       "source": "Santana Row",
       "kidFriendly": false
     },
@@ -9166,7 +9036,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -9183,7 +9053,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
