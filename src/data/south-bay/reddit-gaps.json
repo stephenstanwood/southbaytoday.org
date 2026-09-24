@@ -1,115 +1,85 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-23T03:18:05.621Z",
+    "generatedAt": "2026-09-24T03:19:14.967Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 5
+    "sourceCount": 11
   },
   "summary": {
-    "threadsMined": 5,
-    "placesExtracted": 5,
+    "threadsMined": 11,
+    "placesExtracted": 4,
     "placesMatched": 1,
-    "placeGaps": 4,
-    "eventsExtracted": 2,
+    "placeGaps": 3,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Valley Health Center San Jose-Campbell",
+      "name": "East Lake Chinese",
       "city": "San Jose",
+      "kind": "restaurant",
+      "context": "on Quimby, closing end of September, known for Peking duck",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
+        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
+        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
+        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
+      ]
+    },
+    {
+      "name": "Garlic City Kitty Rescue",
+      "city": "",
       "kind": "service",
-      "context": "new health center opening at 1410 S. Bascom Avenue",
+      "context": "rescue organization that paired the two kittens",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
+        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
+        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
+        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
       ]
     },
     {
-      "name": "Zorba the Greek",
+      "name": "McCollam Elementary",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "former restaurant on site of new health center",
+      "kind": "other",
+      "context": "landmark near where the cat is found",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
-      ]
-    },
-    {
-      "name": "Lazy Dog Almaden",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "hosting dine for a cause event October 1",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
-      ]
-    },
-    {
-      "name": "Levi's Stadium",
-      "city": "Santa Clara",
-      "kind": "venue",
-      "context": "compared parking experience from previous concert",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+        "https://www.reddit.com/r/SanJose/comments/1wom4ra/is_this_your_cat/",
+        "https://www.reddit.com/r/bayarea/comments/1wock16/south_bay_boardgame_groups/",
+        "https://www.reddit.com/r/SanJose/comments/1wohnfh/san_jose_considers_new_rules_for_license_plate/",
+        "https://www.reddit.com/r/SanJose/comments/1wofapt/san_jose_pushes_for_tighter_controls_on_flock/",
+        "https://www.reddit.com/r/bayarea/comments/1wo97zg/place_to_see_trucks/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "FALLoween",
-      "when": "September 27",
+      "name": "Viva Callecita",
+      "when": "November 8, 10AM-3PM",
       "city": "San Jose",
-      "context": "Halloween-themed market with artists, makers, and costumes at 866 Park Ave",
+      "context": "street event with announced route, second occurrence",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
-      ]
-    },
-    {
-      "name": "Lazy Dog Almaden Dine for a Cause",
-      "when": "October 1",
-      "city": "San Jose",
-      "context": "charity dining event at Lazy Dog Almaden",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
+        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
+        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
+        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
+        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "SAP Center",
+      "name": "Lucky Strike",
       "city": "San Jose",
       "kind": "venue",
-      "context": "concert venue, parking advice requested",
+      "context": "bowling alley at Westfield mall",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wncui7/san_jose_falloween_is_happening_september_27th/",
-        "https://www.reddit.com/r/SanJose/comments/1wnpqpu/new_valley_health_center_to_open_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wmyteg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/SanJose/comments/1wnh07m/advice_for_parking_sap_arena/",
-        "https://www.reddit.com/r/SanJose/comments/1wn1jrh/most_costeffective_strength_training/"
+        "https://www.reddit.com/r/SanJose/comments/1wnv9ar/bowling_solo_on_my_birthday/"
       ],
-      "matchedName": "SAP Center"
+      "matchedName": "Lucky Strike Milpitas"
     }
   ],
   "eventMatches": []

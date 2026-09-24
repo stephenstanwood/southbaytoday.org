@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-23T03:10:24.173Z",
+      "generatedAt": "2026-09-24T03:10:30.153Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 15 – Sep 22",
+      "dateRange": "Sep 16 – Sep 23",
       "stats": {
-        "total": 345,
-        "notable": 29,
-        "newUnits": 9,
-        "totalValuation": 44368209
+        "total": 458,
+        "notable": 32,
+        "newUnits": 11,
+        "totalValuation": 46508221
       },
       "permits": [
         {
@@ -36,6 +36,18 @@
           "valuation": 132090,
           "units": 1,
           "issueDate": "2026-09-16",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-099032-RS",
+          "address": "3555 Chamberlain Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Lot 6 New Detached ADU",
+          "valuation": 131940,
+          "units": 1,
+          "issueDate": "2026-09-21",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -99,6 +111,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-106992-RS",
+          "address": "1671 Silvertree Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached Garage Conversion to ADU",
+          "valuation": 81979,
+          "units": 1,
+          "issueDate": "2026-09-21",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2025-144312-RS",
           "address": "1833 Andrews Av #2",
           "category": "residential-new",
@@ -109,59 +133,23 @@
           "units": 1,
           "issueDate": "2026-09-17",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-108399-RS",
-          "address": "1709 Orlando Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Casegarage Conversion to JADU",
-          "valuation": 48378,
-          "units": 1,
-          "issueDate": "2026-09-16",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-138040-CI",
-          "address": "3098 Olsen Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Cisco 2nd Floor Office TI",
-          "valuation": 15000000,
-          "units": 0,
-          "issueDate": "2026-09-16",
-          "subtype": "Office"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-23T03:10:26.729Z",
+      "generatedAt": "2026-09-24T03:10:32.527Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 15 – Sep 22",
+      "dateRange": "Sep 16 – Sep 23",
       "stats": {
-        "total": 97,
+        "total": 110,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02643",
-          "address": "1525 Waverley St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-17",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02645",
           "address": "766 Bryant St",
@@ -175,16 +163,28 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02632",
-          "address": "834 Ames Av",
+          "id": "26BLD-02643",
+          "address": "1525 Waverley St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-16",
+          "issueDate": "2026-09-17",
           "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00264",
+          "address": "116 University Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over-the-Counter Sign application to install one wall sign that is 24 inches wide by 102 inches tall and one projecting sign that is 12 inches wide by 36 inches tall. Both signs will be constructed from stainless steel with acrylic letters with the wall sign lettering painted green and projecting sign lettering painted black. CEQA Status: Not a Project. Zone District: Downtown Commercial (CD-C(GF)(P)(TOD)). For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-17",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00266",
@@ -199,6 +199,18 @@
           "subtype": "Over the Counter Approved"
         },
         {
+          "id": "26PLN-00269",
+          "address": "2875 El Camino Real",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for Architectural Review for the installation of (3) illuminated wall signs for \"TIAA\".",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-22",
+          "subtype": "Over the Counter Approved"
+        },
+        {
           "id": "26PLN-00267",
           "address": "1189 Welch Rd",
           "category": "entitlement",
@@ -208,18 +220,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-21",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00264",
-          "address": "116 University Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Sign application to install one wall sign that is 24 inches wide by 102 inches tall and one projecting sign that is 12 inches wide by 36 inches tall. Both signs will be constructed from stainless steel with acrylic letters with the wall sign lettering painted green and projecting sign lettering painted black. CEQA Status: Not a Project. Zone District: Downtown Commercial (CD-C(GF)(P)(TOD)). For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-17",
           "subtype": "Over the Counter Approved"
         }
       ]

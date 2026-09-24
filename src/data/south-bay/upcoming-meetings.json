@@ -1,96 +1,58 @@
 {
-  "generatedAt": "2026-09-23T03:10:37.194Z",
+  "generatedAt": "2026-09-24T03:10:42.103Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
+      "date": "2026-09-29",
+      "displayDate": "Tue, Sep 29",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8105&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8105,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8110&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8110,
       "agendaItems": [
         {
-          "title": "Labor Negotiations Update.",
-          "sequence": 50
-        },
-        {
-          "title": "Land Use on Consent Calendar",
-          "sequence": 65
-        },
-        {
-          "title": "Presentation of a commendation recognizing Rhonda Berry, Executive Director of Our City Forest for her 30 years of dedication to urban forestry, community engagement, and a lasting legacy of environmental stewardship throughout the City of San José. (Cohen)",
-          "sequence": 31
-        },
-        {
-          "title": "Presentation of a commendation recognizing the Billy DeFrank LGBTQ+ Community Center in celebration of 45 years of advocacy, community, and support for LGBTQ+ people and their allies in the City of San José. (Foley and Mulcahy)",
-          "sequence": 33
-        },
-        {
-          "title": "Actions Related to the Reimbursement of Approved 2025-2026 Capital Repairs at the SAP Center.",
+          "title": "Amendment to the Lease of Airport Premises Agreement with Jett Pro Line Maintenance.",
           "sequence": 43
+        },
+        {
+          "title": "Amendment to the On-Airport Lease Agreement for General Services Administration Public Building Service.",
+          "sequence": 44
+        },
+        {
+          "title": "Amendment to the Lease of Airport Premises Agreement with PrimeFlight Aviation Services, Inc.",
+          "sequence": 45
+        },
+        {
+          "title": "First Amendment to the Master Consultant Agreement with HF&H Consultants, LLC, for Commercial Solid Waste Collections and Processing Program Services.",
+          "sequence": 46
+        },
+        {
+          "title": "Amendment to the Grant Agreement Between the City of San José and San José Public Library Foundation.",
+          "sequence": 48
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-09-22",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-22T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "mountain-view": {
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "startTime": "17:00",
-      "bodyName": "City Council",
-      "location": "Council Chambers and Video Conference",
-      "closedSession": false,
-      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3365&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
-      "legistarEventId": 3365,
-      "agendaItems": [
-        {
-          "title": "National Arts and Humanities Month Proclamation",
-          "sequence": 11
-        },
-        {
-          "title": "Childhood Cancer Awareness Month Proclamation",
-          "sequence": 12
-        },
-        {
-          "title": "Addendum No. 14 to Regional Water Quality Control Plant Basic Agreement",
-          "sequence": 17
-        },
-        {
-          "title": "Resolution Updating the List of Designated Positions Required to File Statements of Economic Interest",
-          "sequence": 14
-        },
-        {
-          "title": "Field Renovations - Shoreline Athletic Fields, Project 27-28-Professional Services Agreement",
-          "sequence": 15
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-09-22",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-22T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-09-29",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-23T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "startTime": "17:45",
-      "bodyName": "City Council Special Meeting",
+      "date": "2026-09-28",
+      "displayDate": "Mon, Sep 28",
+      "startTime": "17:30",
+      "bodyName": "City Council Special Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21568",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21547",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-09-22",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21568"
+        "observedDate": "2026-09-28",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21547"
       }
     },
     "milpitas": {
@@ -107,24 +69,24 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-22T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
-      "date": "2026-09-22",
-      "displayDate": "Tue, Sep 22",
-      "startTime": "17:30",
-      "bodyName": "City Council Special Meeting - Commission Interviews",
+      "date": "2026-10-13",
+      "displayDate": "Tue, Oct 13",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://losaltosca.portal.civicclerk.com/event/5420/overview",
-      "civicClerkEventId": 5420,
+      "url": "https://losaltosca.portal.civicclerk.com/event/2181/overview",
+      "civicClerkEventId": 2181,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-09-22",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-22T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-10-13",
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -135,7 +97,7 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "sunnyvale": {
       "provider": "Legistar",
