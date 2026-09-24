@@ -6720,6 +6720,17 @@ function meetupVenueFromTitle(title) {
   return match ? cleanVenue(match[1]) : "";
 }
 
+// Meetup caps event names at 80 characters (79 once trimmed), so an organizer
+// who types a sentence-long name gets it cut mid-word ("…fly for fun! All
+// levels welcome. Bayland"). When a title sits at the cap and ends without
+// terminal punctuation, drop the dangling fragment back to the last complete
+// sentence.
+function trimMeetupCapTruncation(title) {
+  if (!title || title.length < 78 || /[.!?)"'”]$/.test(title)) return title;
+  const m = title.match(/^(.{20,}[.!?])\s+\S[^.!?]*$/);
+  return m ? m[1] : title;
+}
+
 // Registration state for one raw Meetup node, plus its published RSVP
 // deadline. Same shape and same discipline as deriveBiblioRegistration above:
 // a deadline already behind us flips `required` to `closed` at ingest, so the
@@ -6886,7 +6897,7 @@ async function fetchMeetupEvents() {
     const rsvpCount = node.rsvps?.yesCount ?? node.rsvps?.totalCount ?? 0;
     if (rsvpCount < MIN_RSVP) continue;
 
-    const title = node.title?.trim();
+    const title = trimMeetupCapTruncation(node.title?.trim());
     if (!title) continue;
     const qualityText = [
       title,

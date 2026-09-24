@@ -312,8 +312,9 @@ function cleanName(raw) {
     s.slice(0, offset).trim().split(/\s+/).length >= 2 ? "" : match
   )).trim();
 
-  // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank")
-  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Kitchen\s+Hood|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade|New\s+Equipment|Gas\s+Stove|Lgt|Light\s+Equipment|New\s+Build|New\s+Food\s+Facility)\s*$/i, "").trim();
+  // Strip trailing equipment-only descriptors without dash separator (e.g. "Chick Fil A Oil Tank",
+  // "El Pulgarcito Mini Market Limited Food Prep Area")
+  s = s.replace(/\s+(Oil\s+Tank|Grease\s+Tank|Underground\s+Tank|Tank\s+Install|Tank\s+Removal|Grease\s+Trap\s+Install|Kitchen\s+Hood|Hood\s+Install|Ansul\s+System|Fire\s+Suppression\s+System|Minor\s+Equipment\s+Change|Machine\s+Replacement|Equipment\s+Change|Equipment\s+Replacement|Equipment\s+Install|Equipment\s+Upgrade|New\s+Equipment|Gas\s+Stove|Lgt|Light\s+Equipment|New\s+Build|New\s+Food\s+Facility|(?:Limited\s+)?Food\s+Prep(?:aration)?\s+Area)\s*$/i, "").trim();
 
   // The county also files the permit's *purpose* as a bare trailing word with no
   // dash and no qualifier: "Relish Cafe Equipment" (350 Ellis St, Mountain View)
