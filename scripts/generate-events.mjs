@@ -1708,6 +1708,10 @@ function maskDomainAndDecimalDots(text) {
   // "fix mangled emails" copy-edit. Also tolerates the "(@)" obfuscation
   // some SJPL listings use.
   t = t.replace(/([\w-]+)\.(?=[\w.-]*\(?@)/g, `$1${DOT_PLACEHOLDER}`);
+  // Dotted initialisms ("U.S.", "D.C.", "B.F.A.", "M.C. Escher"). Unmasked, the
+  // splitter treats each initial as a sentence and the capitalizer upcases the
+  // next word: "U. S. And Canada Tour", "B. F. A. And M. A. In theater".
+  t = t.replace(/\b(?:[A-Z]\.){2,}/g, (m) => m.replace(/\./g, DOT_PLACEHOLDER));
   return t;
 }
 
@@ -1756,6 +1760,10 @@ function polishDescription(text) {
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
+  // Comma runs from flattened SCCLD/SJPL link lists ("Chinese.,,, For",
+  // "Thursdays,, 1:30 PM"). Runs before sentence splitting, which otherwise
+  // leaves a stray "Chinese., For".
+  t = t.replace(/\.,{2,}/g, ".").replace(/,{2,}/g, ",");
 
   // Two SJPL/SCCLD failure modes leave reader-visible translation debris:
   // 1. a complete English description followed by orphaned full-width CJK

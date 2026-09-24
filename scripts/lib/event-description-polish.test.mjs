@@ -428,3 +428,14 @@ test("keeps real copy a newsletter CTA is mashed onto", () => {
     "Attendees who sign up for our newsletter receive the reading list early.",
   );
 });
+
+test("keeps dotted initialisms intact and collapses comma runs", () => {
+  assert.equal(
+    polishDescription("Their 2026 U.S. and Canada Tour hits San Jose. She holds a B.F.A. and M.A. in theater."),
+    "Their 2026 U.S. and Canada Tour hits San Jose. She holds a B.F.A. and M.A. in theater.",
+  );
+  assert.equal(
+    polishDescription("Stories in English and Mandarin Chinese.,,, For accommodations, ask staff."),
+    "Stories in English and Mandarin Chinese. For accommodations, ask staff.",
+  );
+});
