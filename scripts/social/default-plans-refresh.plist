@@ -4,8 +4,9 @@
   Refresh homepage/newsletter plans after the nightly GitHub event feed and
   before the 3:40 AM newsletter build. The wrapper holds the shared repo lock,
   merges canonical source/data safely, commits the plans, and pushes them to
-  origin/main so the homepage deploy picks them up. The 3:30 slot is a retry:
-  it is a no-op once today's plans are on origin/main.
+  origin/main so the homepage deploy picks them up. The 3:30 and 4:00 slots
+  retry after lock contention (Friday growth sweep); each is a no-op once
+  today's plans are on origin/main.
 
   Node runs as a child of /bin/zsh, never as the launchd program itself. macOS
   pins a LaunchAgent to the binary it approved, so after `brew upgrade node`
@@ -40,6 +41,12 @@
             <integer>3</integer>
             <key>Minute</key>
             <integer>30</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>4</integer>
+            <key>Minute</key>
+            <integer>0</integer>
         </dict>
     </array>
     <key>StandardOutPath</key>

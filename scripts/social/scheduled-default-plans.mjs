@@ -24,10 +24,10 @@ const DEFAULT_LOCK_SCRIPT = join(
   "lib",
   "repo-lock.sh",
 );
-// launchd starts this job at 3:20 and again at 3:30 (see
-// default-plans-refresh.plist). A failure in the first slot is retried by the
-// second, so only failures outside it mean the homepage stays stale today.
-const FIRST_SLOT = { start: "03:20", end: "03:30" };
+// launchd slots in default-plans-refresh.plist (Pacific). Failures defer the
+// #tasks alert until the last slot; Friday's growth sweep can hold the lock
+// past 3:30, so 4:00 is the final automatic retry.
+const SCHEDULED_SLOTS_PT = ["03:20", "03:30", "04:00"];
 
 function log(message) {
   console.log(`${PREFIX} ${new Date().toISOString()} ${message}`);
@@ -100,9 +100,9 @@ function restoreUncommittedPlans(repoRoot) {
   }
 }
 
-function inFirstSlot() {
-  const now = nowHHMM_PT();
-  return now >= FIRST_SLOT.start && now < FIRST_SLOT.end;
+/** Next launchd slot after now (HH:MM PT), or null after the final slot. */
+function nextScheduledSlotPT(now = nowHHMM_PT()) {
+  return SCHEDULED_SLOTS_PT.find((slot) => now < slot) || null;
 }
 
 const repoRoot = process.env.SBT_NEWSLETTER_REPO_ROOT || DEFAULT_REPO_ROOT;
@@ -153,8 +153,9 @@ try {
   primaryError = error;
   console.error(`${PREFIX} ${new Date().toISOString()} BLOCKED: ${error.message}`);
   if (generationStarted) restoreUncommittedPlans(repoRoot);
-  if (inFirstSlot()) {
-    log("the 3:30 retry slot will try again");
+  const nextSlot = nextScheduledSlotPT();
+  if (nextSlot) {
+    log(`the ${nextSlot} retry slot will try again`);
   } else {
     loadEnvLocal(join(repoRoot, ".env.local"));
     await catSignal({
