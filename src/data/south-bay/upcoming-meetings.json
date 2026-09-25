@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T03:10:42.103Z",
+  "generatedAt": "2026-09-25T03:10:34.317Z",
   "meetings": {
     "san-jose": {
       "date": "2026-09-29",
@@ -36,7 +36,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-09-29",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-23T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-09-29",
+      "displayDate": "Tue, Sep 29",
+      "startTime": "19:00",
+      "bodyName": "City Council",
+      "location": "Online and Council Chambers, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4524&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4524,
+      "agendaItems": [
+        {
+          "title": "Filipino American History Month",
+          "sequence": 8
+        },
+        {
+          "title": "Hindu American Heritage Month",
+          "sequence": 9
+        },
+        {
+          "title": "Domestic Violence Awareness Month",
+          "sequence": 10
+        },
+        {
+          "title": "Adopt the City’s Investment Policy for Fiscal Year 2026/27 and Receive the Annual Performance Report for Fiscal Year 2025/26",
+          "sequence": 14
+        },
+        {
+          "title": "Adopt Positions on State and Local Ballot Measures for the November 3, 2026 Election",
+          "sequence": 21
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-09-29",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-24T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -46,13 +84,13 @@
       "bodyName": "City Council Special Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21547",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21603",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-09-28",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21547"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21603"
       }
     },
     "milpitas": {
@@ -69,7 +107,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -86,7 +124,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-23T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-24T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -101,7 +139,7 @@
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "cupertino": {
       "provider": "Legistar",

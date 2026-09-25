@@ -1,41 +1,29 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-24T03:10:30.153Z",
+      "generatedAt": "2026-09-25T03:10:21.300Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 16 – Sep 23",
+      "dateRange": "Sep 17 – Sep 24",
       "stats": {
-        "total": 458,
-        "notable": 32,
-        "newUnits": 11,
-        "totalValuation": 46508221
+        "total": 470,
+        "notable": 29,
+        "newUnits": 10,
+        "totalValuation": 92086574
       },
       "permits": [
         {
-          "id": "2025-121761-RS",
-          "address": "6538 Canterbury Ct #2",
+          "id": "2025-131700-RS",
+          "address": "449 N 12th St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Attached ADU On the 2nd Floor of New SFR",
-          "valuation": 174689,
+          "description": "Detached ADU",
+          "valuation": 175920,
           "units": 1,
-          "issueDate": "2026-09-16",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2024-097305-RS",
-          "address": "493 Lochridge Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 132090,
-          "units": 1,
-          "issueDate": "2026-09-16",
+          "issueDate": "2026-09-22",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -111,6 +99,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-125344-RS",
+          "address": "3550 Chamberlain Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Lot 3new Attached JADU",
+          "valuation": 86130,
+          "units": 1,
+          "issueDate": "2026-09-22",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-106992-RS",
           "address": "1671 Silvertree Dr #2",
           "category": "residential-new",
@@ -137,53 +137,29 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-24T03:10:32.527Z",
+      "generatedAt": "2026-09-25T03:10:23.258Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 16 – Sep 23",
+      "dateRange": "Sep 17 – Sep 24",
       "stats": {
-        "total": 110,
-        "notable": 6,
+        "total": 111,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02645",
-          "address": "766 Bryant St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-17",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-02643",
-          "address": "1525 Waverley St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-17",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00264",
-          "address": "116 University Av",
+          "id": "26PLN-00267",
+          "address": "1189 Welch Rd",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over-the-Counter Sign application to install one wall sign that is 24 inches wide by 102 inches tall and one projecting sign that is 12 inches wide by 36 inches tall. Both signs will be constructed from stainless steel with acrylic letters with the wall sign lettering painted green and projecting sign lettering painted black. CEQA Status: Not a Project. Zone District: Downtown Commercial (CD-C(GF)(P)(TOD)). For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
+          "description": "Over-the-counter Architectural Review for the removal of one dead 15-inch  DBH coast live oak ro be replaced with  36-inch box replacements one Island Oak (Quercus tomentalla)and one Ginko (Ginko biloba).",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-17",
+          "issueDate": "2026-09-21",
           "subtype": "Over the Counter Approved"
         },
         {
@@ -208,18 +184,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-22",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00267",
-          "address": "1189 Welch Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Over-the-counter Architectural Review for the removal of one dead 15-inch  DBH coast live oak ro be replaced with  36-inch box replacements one Island Oak (Quercus tomentalla)and one Ginko (Ginko biloba).",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-21",
           "subtype": "Over the Counter Approved"
         }
       ]

@@ -1,86 +1,199 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-24T03:19:14.967Z",
+    "generatedAt": "2026-09-25T03:18:39.862Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 11
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 11,
-    "placesExtracted": 4,
-    "placesMatched": 1,
-    "placeGaps": 3,
-    "eventsExtracted": 1,
-    "eventsMatched": 0,
-    "eventGaps": 1,
+    "threadsMined": 9,
+    "placesExtracted": 8,
+    "placesMatched": 4,
+    "placeGaps": 4,
+    "eventsExtracted": 5,
+    "eventsMatched": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "East Lake Chinese",
+      "name": "Reid-Hillview Airport",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "on Quimby, closing end of September, known for Peking duck",
+      "kind": "venue",
+      "context": "Community Day event location with airshow",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
-        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
-        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
-        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
       ]
     },
     {
-      "name": "Garlic City Kitty Rescue",
-      "city": "",
+      "name": "Eastridge Mall",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "free shuttle pickup point for airport event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ]
+    },
+    {
+      "name": "Westgate Center",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "shopping center next to new Chick-fil-A site",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ]
+    },
+    {
+      "name": "San Jose Animal Care Center",
+      "city": "San Jose",
       "kind": "service",
-      "context": "rescue organization that paired the two kittens",
+      "context": "location of senior cat Big Bird needing rescue",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
-        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
-        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
-        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
-      ]
-    },
-    {
-      "name": "McCollam Elementary",
-      "city": "San Jose",
-      "kind": "other",
-      "context": "landmark near where the cat is found",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wom4ra/is_this_your_cat/",
-        "https://www.reddit.com/r/bayarea/comments/1wock16/south_bay_boardgame_groups/",
-        "https://www.reddit.com/r/SanJose/comments/1wohnfh/san_jose_considers_new_rules_for_license_plate/",
-        "https://www.reddit.com/r/SanJose/comments/1wofapt/san_jose_pushes_for_tighter_controls_on_flock/",
-        "https://www.reddit.com/r/bayarea/comments/1wo97zg/place_to_see_trucks/"
+        "https://www.reddit.com/r/SanJose/comments/1wpk982/a_closeup_of_a_bull_tule_elk_using_a_remote/",
+        "https://www.reddit.com/r/SanJose/comments/1wpjcf9/clothing_repairalterations/",
+        "https://www.reddit.com/r/SanJose/comments/1wov3x4/looking_for_tailor_bridesmaid_dress/",
+        "https://www.reddit.com/r/SanJose/comments/1wot9bv/senior_ginger_cat_needing_rescue/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Viva Callecita",
-      "when": "November 8, 10AM-3PM",
+      "name": "Reid-Hillview Airport Community Day",
+      "when": "Saturday",
       "city": "San Jose",
-      "context": "street event with announced route, second occurrence",
+      "context": "aircraft, RC airshow, flyover, live music, free admission",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wootsg/a_rooster_in_downtown/",
-        "https://www.reddit.com/r/SanJose/comments/1wocbgo/viva_callecita_route_announcment_november_8/",
-        "https://www.reddit.com/r/SanJose/comments/1wob3n4/east_lake_chinese_on_quimby_is_closing_end_of/",
-        "https://www.reddit.com/r/SanJose/comments/1wonk0r/is_anyone_in_san_jose_willing_to_take_home_a_pair/",
-        "https://www.reddit.com/r/SanJose/comments/1wonhnf/is_anyone_in_san_jose_willing_to_take_home_a_pair/"
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ]
+    },
+    {
+      "name": "Family Science Day",
+      "when": "Saturday, 1-5pm and 7:30pm program",
+      "city": "",
+      "context": "science workshops and stargazing at College of San Mateo (not South Bay)",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ]
+    },
+    {
+      "name": "Game Market West",
+      "when": "Sunday 10am-3pm",
+      "city": "San Jose",
+      "context": "indie tabletop game market with 35+ designers",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Lucky Strike",
+      "name": "Berryessa Branch Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "bowling alley at Westfield mall",
+      "context": "Mid-Autumn Festival with performances and lanterns",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wnv9ar/bowling_solo_on_my_birthday/"
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
       ],
-      "matchedName": "Lucky Strike Milpitas"
+      "matchedName": "Berryessa Branch Library"
+    },
+    {
+      "name": "Joyce Ellington Branch Library",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "Wee Love Art fall sensory painting event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ],
+      "matchedName": "Joyce Ellington Branch Library"
+    },
+    {
+      "name": "Chick-fil-A",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "new location planned at 4785 Hamilton Ave near Westgate Center",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ],
+      "matchedName": "Chick-fil-A"
+    },
+    {
+      "name": "Guildhouse",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosting Game Market West tabletop event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ],
+      "matchedName": "Guildhouse"
     }
   ],
-  "eventMatches": []
+  "eventMatches": [
+    {
+      "name": "Mid-Autumn Festival",
+      "when": "Saturday 2-4:30pm",
+      "city": "San Jose",
+      "context": "cultural performances, storytime, crafts, lanterns",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ],
+      "matchedName": "Mid-Autumn Festival"
+    },
+    {
+      "name": "Wee Love Art: Fall Leaf Sensory Painting in Baggies",
+      "when": "weekend",
+      "city": "San Jose",
+      "context": "sensory art project for young kids",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
+        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
+        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+      ],
+      "matchedName": "Wee Love Art: Fall Leaf Sensory Painting in Baggies"
+    }
+  ]
 }
