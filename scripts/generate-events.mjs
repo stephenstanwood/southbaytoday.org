@@ -2372,7 +2372,9 @@ function cleanVenue(raw) {
   // Strip " - <address>" suffix where address starts with a number, e.g.
   // "Council Chambers - 110 E. Main St" or just a partial street number
   // "Saratoga Senior Center - 19655" (CivicPlus often appends only the number).
-  v = v.replace(/\s+-\s+\d+(\s+.*)?$/, "");
+  // The house number may carry a unit letter: Saratoga's "Odd Fellows Lodge -
+  // 144414A Oak Street" shipped as the display venue on 2026-09-24.
+  v = v.replace(/\s+-\s+\d+[A-Za-z]?(\s+.*)?$/, "");
   // Strip a bare trailing state ", CA" (no zip) so the city-suffix strip below
   // can then remove the city. Handles Meetup's "Sanborn-Skyline County Park,
   // Saratoga, CA" → drop ", CA", then ", Saratoga" → "Sanborn-Skyline County
