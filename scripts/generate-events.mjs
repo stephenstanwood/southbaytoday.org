@@ -60,6 +60,7 @@
 import { readFileSync, existsSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { advanceLedger } from "./lib/event-slug-ledger-io.mjs";
+import { ARCHIVE_DAYS, mergeArchive } from "./lib/event-archive.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-suffix.mjs";
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
@@ -9988,9 +9989,10 @@ async function main() {
   // kept crawling and serving expired event URLs for six to nine weeks after
   // they left the original 30-day window (Search Console 2026-09-14: 1,305
   // dead URLs, /404 the most-viewed page on the site), so the window is 90
-  // days; it deepens one day at a time from the 30 held before 2026-09-14.
+  // days, backfilled from git history on 2026-09-25
+  // (scripts/backfill-event-archive.mjs).
   // Never let archive maintenance break the main pipeline.
-  const ARCHIVE_DAYS = 90;
+  let archivedEvents = null;
   try {
     const ARCHIVE_PATH = join(__dirname, "..", "src", "data", "south-bay", "events-archive.json");
     const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
@@ -10000,19 +10002,10 @@ async function main() {
 
     let archive = { events: [] };
     try { archive = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8")); } catch { /* first run */ }
-    const byId = new Map((archive.events ?? []).map((e) => [e.id ?? `${e.date}|${e.title}`, e]));
-
-    const aging = (prevRun?.events ?? []).filter(
-      (e) => typeof e?.date === "string" && e.date < todayPt,
-    );
-    for (const e of aging) byId.set(e.id ?? `${e.date}|${e.title}`, e);
-
-    const kept = [...byId.values()].filter(
-      (e) => typeof e?.date === "string" && e.date >= cutoffPt && e.date < todayPt,
-    );
-    kept.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id ?? "").localeCompare(String(b.id ?? "")));
+    const { kept, aged } = mergeArchive(archive.events, prevRun?.events, todayPt, cutoffPt, { currentEvents: output.events });
+    archivedEvents = kept;
     writeFileAtomic(ARCHIVE_PATH, JSON.stringify({ updatedAt: new Date().toISOString(), eventCount: kept.length, events: kept }, null, 2) + "\n");
-    console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
+    console.log(`🗄️  Archive: +${aged} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
   } catch (err) {
     console.warn(`⚠️  events-archive maintenance failed (non-fatal): ${err.message}`);
   }
@@ -10027,6 +10020,7 @@ async function main() {
     const { added, removed, ledger } = advanceLedger({
       previousEvents: prevRun?.events ?? [],
       currentEvents: output.events,
+      archiveEvents: archivedEvents,
     });
     console.log(`🔗 Retired slugs: +${added} retired, -${removed} back or expired, ${ledger.count} held`);
   } catch (err) {

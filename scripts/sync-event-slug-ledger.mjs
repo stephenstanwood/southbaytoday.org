@@ -12,7 +12,8 @@
 //   node scripts/sync-event-slug-ledger.mjs --replay-git 30
 //       Seed/backfill from git: walk one upcoming-events.json snapshot per day
 //       for the last N days, oldest first, retiring across each step. Used
-//       once on 2026-09-18 so URLs Google had already indexed got covered.
+//       on 2026-09-18 (35 days) and 2026-09-25 (the full 90-day window) so
+//       URLs Google had already indexed got covered.
 //
 //   --quiet   Print nothing when the ledger did not change.
 //   --report  Print how the ledger resolves against the live pool (redirects
@@ -38,10 +39,10 @@ const flag = (name) => {
 
 const readJson = (path) => JSON.parse(readFileSync(path, "utf8"));
 const current = readJson(EVENTS_PATH);
+const archive = readJson(ARCHIVE_PATH);
 const todayPt = pacificToday();
 
 if (flag("--report")) {
-  const archive = readJson(ARCHIVE_PATH);
   const { redirects, orphans } = resolveRetired(readLedger(), current.events, archive.events, todayPt);
   console.log(`retired slugs: ${redirects.size} redirect, ${orphans.length} stand-alone`);
   for (const [from, to] of redirects) console.log(`  301 /event/${from} → /event/${to}`);
@@ -68,18 +69,21 @@ if (Number.isFinite(replayDays) && replayDays > 0) {
   for (const [day, sha] of steps) {
     const snapshot = JSON.parse(execFileSync("git", ["show", `${sha}:${REL_EVENTS}`], { cwd: REPO_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }));
     if (previous) {
-      const { added } = advanceLedger({ previousEvents: previous.events, currentEvents: snapshot.events, todayPt, now: `${day}T12:00:00.000Z` });
+      // Judge each step as of its own day: a slug that was still in the future
+      // that day and gone the next was dropped early, even if its date has
+      // since passed (Google keeps those URLs for weeks).
+      const { added } = advanceLedger({ previousEvents: previous.events, currentEvents: snapshot.events, todayPt: day, now: `${day}T12:00:00.000Z` });
       totalAdded += added;
     }
     previous = snapshot;
   }
-  const { added, ledger } = advanceLedger({ previousEvents: previous?.events ?? [], currentEvents: current.events, todayPt });
+  const { added, ledger } = advanceLedger({ previousEvents: previous?.events ?? [], currentEvents: current.events, archiveEvents: archive.events, todayPt });
   console.log(`replayed ${steps.length} daily snapshots: ${totalAdded + added} retired, ${ledger.count} held after pruning`);
   process.exit(0);
 }
 
 const previousPath = flag("--previous");
 const previous = typeof previousPath === "string" ? readJson(previousPath) : { events: [] };
-const { added, removed, ledger, changed } = advanceLedger({ previousEvents: previous.events, currentEvents: current.events, todayPt });
+const { added, removed, ledger, changed } = advanceLedger({ previousEvents: previous.events, currentEvents: current.events, archiveEvents: archive.events, todayPt });
 // --quiet: print only when the ledger moved (the pre-commit hook echoes stdout).
 if (changed || !flag("--quiet")) console.log(`retired slugs: +${added} retired, -${removed} back or expired, ${ledger.count} held`);

@@ -7,7 +7,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { retireSlugs } from "../../src/lib/south-bay/eventSlugLedger.mjs";
+import { liveSlugs, retireSlugs } from "../../src/lib/south-bay/eventSlugLedger.mjs";
 import { writeFileAtomic } from "./io.mjs";
 import { DATA_DIR } from "./paths.mjs";
 
@@ -29,11 +29,20 @@ export function pacificToday(date = new Date()) {
  * Retire every future slug in `previousEvents` that `currentEvents` no longer
  * publishes, then write the ledger. Returns the new ledger plus how many
  * entries were added this pass so callers can log it.
+ *
+ * With `archiveEvents`, entries whose slug the archive now serves as a
+ * regular passed page are dropped: the build skips them anyway, and both
+ * files hold a slug for the same 90 days past its date.
  */
-export function advanceLedger({ previousEvents, currentEvents, todayPt = pacificToday(), path = LEDGER_PATH, now }) {
+export function advanceLedger({ previousEvents, currentEvents, archiveEvents = null, todayPt = pacificToday(), path = LEDGER_PATH, now }) {
   const before = readLedger(path);
   const beforeSlugs = new Set((before.entries ?? []).map((e) => e.slug));
   const next = retireSlugs(before, previousEvents ?? [], currentEvents ?? [], todayPt, now);
+  if (archiveEvents) {
+    const live = liveSlugs(currentEvents ?? [], archiveEvents, todayPt);
+    next.entries = next.entries.filter((e) => !live.has(e.slug));
+    next.count = next.entries.length;
+  }
   const added = next.entries.filter((e) => !beforeSlugs.has(e.slug)).length;
   const removed = beforeSlugs.size + added - next.entries.length;
   // Only touch the file when the set of retired slugs actually moved, so a
