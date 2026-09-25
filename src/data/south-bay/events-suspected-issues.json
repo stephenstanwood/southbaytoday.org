@@ -1,65 +1,33 @@
 {
   "_meta": {
-    "auditedAt": "2026-09-24T03:19:41.619Z"
+    "auditedAt": "2026-09-25T02:21:49.081Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1942,
+    "total": 1953,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 0
     },
-    "byReason": {
-      "virtual-not-flagged": 1
-    },
+    "byReason": {},
     "hard": [],
-    "soft": [
-      {
-        "id": "sjpl-6920dd8fb864f029002592ff",
-        "title": "Full Bloom Book Club (Hybrid)",
-        "city": "san-jose",
-        "date": "2026-09-24",
-        "location": "1580 Naglee Ave. San Jose",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      }
-    ]
+    "soft": []
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 266,
+    "total": 272,
     "totals": {
       "hard": 0,
-      "soft": 3,
+      "soft": 1,
       "info": 2
     },
     "byReason": {
-      "virtual-not-flagged": 2,
       "meeting-title": 1,
       "local-departure-trip": 2
     },
     "hard": [],
     "soft": [
-      {
-        "id": "inbound_mubwwfmh_tr6ixt",
-        "title": "The Chismosas Only Book Club Author Event",
-        "city": "sunnyvale",
-        "date": "2026-09-23T00:00:00-07:00",
-        "location": "Sunnyvale Main Library, Library Program Room",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
       {
         "id": "inbound_mtw80j34_zh7y6t",
         "title": "Los Gatos Town Council Candidate Forum",
@@ -85,20 +53,6 @@
             "severity": "info",
             "reason": "local-departure-trip",
             "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mttcxhyr_7n0jqs",
-        "title": "Author Talk: The Chismosas Only Book Club",
-        "city": "sunnyvale",
-        "date": "2026-09-23T16:00:00-07:00",
-        "location": "Program Room, Sunnyvale Main Library",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
           }
         ]
       },
