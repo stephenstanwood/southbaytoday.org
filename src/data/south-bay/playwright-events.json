@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-26T18:44:35.519Z",
+    "generatedAt": "2026-09-26T20:51:48.724Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 568,
+    "eventCount": 564,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (119)",
+      "Mountain View Public Library (120)",
       "Los Gatos Library (152)",
       "San Jose Jazz (19)",
       "Linden Tree Books (12)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (1)",
       "Santana Row (8)",
-      "City of Cupertino (64)",
+      "City of Cupertino (59)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (8)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 124,
+        "count": 125,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -96,7 +96,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 64,
+        "count": 59,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,26 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "aa42fe44259c",
-      "title": "Amplify: Coco: Intro to Coding",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "11:00 AM",
-      "endTime": "12:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Ever wanted to build your own video game or animation, WITH your friends, at the same time? Join us for a coding workshop to try Coco.build, where you snap blocks together like puzzle pieces to create games, art, and more in real time! No experience needed, just bring your imagination. Let's build something awesome together! Grades 3-6. Library computers will be provided- you do not need to bring a laptop or other device to participate. This program is part of Amplify: Teen Voices, where teens who are passionate about a topic are mentored through the process of leading a library program.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17235060",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "66b2526ebce2",
       "title": "Choose Your Own Adventure Book Club",
@@ -1898,6 +1878,29 @@
       "kidFriendly": true
     },
     {
+      "id": "341f21a5c370",
+      "title": "Reclaiming Your Inner Wisdom: Sacred Indigenous Teachings with Asha Frost",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "mountain-view",
+      "virtual": true,
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Click this link to attend the virtual event . In a fast-paced world that often leaves us feeling overwhelmed and disconnected, true healing does not come from looking outward—it begins within. Join us for a transformative virtual conversation with Indigenous Medicine Woman Asha Frost as she explores her groundbreaking book, You Are the Medicine: 13 Moons of Indigenous Wisdom, Ancestral Connection, and Animal Spirit Guidance. The Medicine you have been searching for lives within you. Follow the path of the 13 Ojibwe Moons with Animal Spirits and Ancestors as your guides as you unlock your connection to your own unique, inherent healing power. Through storytelling, ceremonies, and Shamanic journeys, learn to apply ancient wisdom to your life in ways that are respectful and conscious of the stolen lands, lives, and traditions of Indigenous peoples. Discover how to : - Ground and root into your own lineage and meet your Ancestral guides. - Practice self-care and rest on your journey. - Return to Ancestral ways of cleansing and purifying. - Trust and surrender so you can manifest and thrive. - Release self-doubt, fear, disconnection, and insecurity. Register now and take the first step toward recognizing and reclaiming your innate wisdom. Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author: Asha Frost (she/her) is an Indigenous Medicine Woman and a member of the Chippewas of Nawash First Nation. She is from the Crane Clan, the totem of leadership, and believes in holding space from vision and heart. As an energy healer, homeopath, and mentor, Asha has guided thousands of people through profound and lasting transformation. Impacted by generational trauma and colonization, Asha has been on a lifelong journey of reclamation. A lupus diagnosis sent her on a path of studying and practicing a multitude of energy Medicine modalities with many guides. She has blended this life experience with her innate gifts and the wisdom of her Ancestors. She loves sharing her Medicine in powerful ways through Ceremonies, teachings, and speaking events. Through this work, she loves seeing people reclaim their roots, find their healing wisdom, and rise into their power. Asha lives on Anishinaabe, Huron-Wendat, and Haudenosaunee Territory, with her husband and two beautiful children, with whom she co-creates a better world for the seven generations to come. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17716848",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "033b52f44e3c",
       "title": "ESL Conversation Club - IN PERSON",
       "date": "2026-11-04",
@@ -2127,6 +2130,28 @@
         "All Ages"
       ],
       "url": "https://mountainview.libcal.com/event/15668880",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "0081aa21f760",
+      "title": "How Money Became God: Rethinking Wealth and Greed in Modern Society with Paul Vigna",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Online",
+      "address": "",
+      "city": "mountain-view",
+      "virtual": true,
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Click this link to attend the virtual event . Join us for an eye-opening conversation with veteran journalist Paul Vigna as we examine his provocative book, The Almightier: How Money Became God, Greed Became Virtue, and Debt Became Sin , in which he explores the question: how did money go from a tool of commerce into the dominant faith of modern society? In The Almightier , Vigna takes readers on a sweeping historical journey from Renaissance Florence to today’s global financial markets, revealing how wealth accumulation evolved from a moral failing into an unspoken civic virtue. He uncovers the forgotten history of money, tracing the uneasy and often accidental alliance between wealth and religion as it developed from ancient city-states to today’s secular world, where religious devotion has receded and greed has stepped in to fill the void. Through engaging anecdotes, original research, and fresh perspectives on the causes of the many challenges we face today, Vigna makes a compelling argument that money has no power apart from the power we give it. Whether you are interested in economic history, personal finance, or the hidden cultural forces shaping modern life, this talk is sure to pique your interest. Register today to learn more about how devotion to money has replaced religion as the foundation of our society. Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author: Paul Vigna is an author, journalist, editor and speaker, with a particular focus on capital markets and cryptocurrencies. He is the author of Guts: The Anatomy of The Walking Dead and coauthor of The Age of Cryptocurrency and The Truth Machine . For 25 years, he was a reporter and editor for Dow Jones Newswires and the Wall Street Journal , pioneering coverage of the cryptocurrency sector. He has appeared on CNN, CNBC, MSNBC, Fox , and PBS . This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/17716852",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -7710,91 +7735,6 @@
       "description": "",
       "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
       "source": "Santana Row",
-      "kidFriendly": false
-    },
-    {
-      "id": "00cf21b73867",
-      "title": "Cupertino Fall Bike Fest",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "09:00 AM",
-      "endTime": "01:00 PM",
-      "venue": "Cupertino Civic Plaza",
-      "address": "Cupertino Civic Plaza, 10300 Torre Ave, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Strap on a helmet and bike to Civic Center Plaza to start the fall with some bike-themed fun! The event will feature bike rides, on-bike and off-bike games, arts and crafts, food and beverages for sale, and much more! Check out the Bike Fest website for the schedule, list of events, and registration form: www.cupertino.gov/bikefest",
-      "url": "https://www.cupertino.gov/Events-directory/Bike-Fest-2026",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "e802bac08730",
-      "title": "Free Home Composting Education Workshop",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "10:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Cupertino Library",
-      "address": "Cupertino Library, 10800 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
-      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "40267c7b9420",
-      "title": "Free Home Composting Education Workshop",
-      "date": "2027-03-19",
-      "displayDate": "Fri, Mar 19",
-      "time": "06:00 PM",
-      "endTime": "08:00 PM",
-      "venue": "Cupertino Library",
-      "address": "Cupertino Library, 10800 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
-      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "f542da2956f1",
-      "title": "Free Home Composting Education Workshop",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "10:30 AM",
-      "endTime": "12:30 PM",
-      "venue": "Cupertino Library",
-      "address": "Cupertino Library, 10800 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
-      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "476291d1c6a1",
-      "title": "Free Home Composting Education Workshop",
-      "date": "2027-02-28",
-      "displayDate": "Sun, Feb 28",
-      "time": "10:30 AM",
-      "endTime": "12:30 PM",
-      "venue": "Cupertino Library",
-      "address": "Cupertino Library, 10800 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
-      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
-      "source": "City of Cupertino",
       "kidFriendly": false
     },
     {
