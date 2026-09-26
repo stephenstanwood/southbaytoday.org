@@ -12,6 +12,7 @@ import {
   strictRefreshInputHealth,
 } from "./event-source-health.mjs";
 import { applyVerifiedSjsuEventOverride } from "./sjsu-event-overrides.mjs";
+import { applyVerifiedMeetupEventOverride } from "./meetup-event-overrides.mjs";
 import {
   hasProspectiveCityHallUpgrade,
   meetingWithinBriefingWindow,
@@ -27,6 +28,49 @@ test("corrects SJSU's false multi-day September 10 reading occurrence", () => {
   assert.equal(event.time, "4:00 PM");
   assert.equal(event.venue, "Sweeney Hall 413 and Uchida Hall 124");
   assert.match(event.description, /5:30 PM screening of M3GAN/);
+});
+
+test("normalizes verified MacinTalkers facts without replacing occurrence evidence", () => {
+  const event = {
+    title: "Macintalkers weekly meeting",
+    date: "2026-09-30",
+    time: "5:30 PM",
+    endTime: "7:30 PM",
+    venue: "Apple Inc",
+    address: "1 Infinite Loop, Cupertino",
+    url: "https://www.meetup.com/d101tm/events/123456789/",
+  };
+
+  const corrected = applyVerifiedMeetupEventOverride(event, { groupUrlname: "d101tm" });
+  assert.equal(corrected.title, "MacinTalkers Toastmasters");
+  assert.equal(corrected.time, "5:40 PM");
+  assert.equal(corrected.endTime, "7:00 PM");
+  assert.equal(corrected.venue, "Apple, Inc.");
+  assert.equal(corrected.address, "1 Infinite Loop, Cupertino, CA 95014");
+  assert.equal(corrected.url, event.url);
+  assert.equal(corrected.date, event.date);
+  assert.equal(
+    corrected.organizerUrl,
+    "https://www.toastmasters.org/Find-a-Club/00007430-macintalkers-club",
+  );
+
+  const other = { title: "Sunnyvale Speakeasies weekly meeting", time: "7:00 PM" };
+  assert.equal(
+    applyVerifiedMeetupEventOverride(other, { groupUrlname: "d101tm" }),
+    other,
+  );
+});
+
+test("preserves a date-specific MacinTalkers venue when a future meeting moves", () => {
+  const event = {
+    title: "Macintalkers weekly meeting",
+    venue: "Apple Park Visitor Center",
+    address: "10600 N Tantau Ave, Cupertino",
+  };
+  const corrected = applyVerifiedMeetupEventOverride(event, { groupUrlname: "d101tm" });
+
+  assert.equal(corrected.venue, event.venue);
+  assert.equal(corrected.address, event.address);
 });
 
 test("keeps meetings inside the briefing week and rejects agenda-only tense upgrades", () => {
