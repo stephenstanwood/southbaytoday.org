@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-25T02:17:17.453Z",
+    "generatedAt": "2026-09-26T02:17:15.583Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
     "eventCount": 570,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (119)",
-      "Los Gatos Library (150)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (20)",
       "Linden Tree Books (12)",
       "History San Jose (6)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (8)",
       "SAP Center (16)",
       "The Tech Interactive (8)",
-      "Peninsula Open Space Trust (5)",
-      "San Jose Museum of Art (8)"
+      "San Jose Museum of Art (7)",
+      "Peninsula Open Space Trust (5)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 122,
+        "count": 123,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 150,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 8,
+        "count": 7,
         "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
         "sources": [
           "San Jose Museum of Art"
@@ -338,99 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 5,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 5 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "dbf05ae12f85",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17319774",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "3a7de3b71035",
-      "title": "Author Talk with Ryka Aoki",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
-      "time": "6:30 PM",
-      "endTime": "7:30 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Join award-winning author Ryka Aoki for a virtual conversation about her work, creative process, and the ways science fiction and fantasy can explore identity, possibility, and the world around us. Attendees will have the opportunity to submit questions for Aoki during the livestreamed event. Please note this event will not be recorded. About the Author: RYKA AOKI (she/her) is a poet, composer, teacher, and novelist. Her latest novel, Light From Uncommon Stars, was an Alex, SCKA, and Otherwise Award winner, a USA Today Bestseller, and a finalist for the Hugo, Locus, and Ignyte Awards. Ryka is a two-time Lambda Literary Award finalist for her collections Seasonal Velocities, and Why Dust Shall Never Settle Upon This Soul, and her first novel, He Mele a Hilo, was called one of the \"10 Best Books Set in Hawaii\" by Bookriot. She has been recognized by the California State Senate for “extraordinary commitment to the visibility and well-being of Transgender people,” and her been recognized in publications such as Vogue, Elle, The Mary Sue, Britannica, and Buzzfeed, as well as the Smithsonian Asian Pacific American Center. She was also honored to work with the American Association of Hiroshima Nagasaki A-Bomb Survivors, where two of her compositions were adopted as the organization’s “songs of peace.” She has an MFA in creative writing from Cornell University, and is currently a professor of English at Santa Monica College. A Sci-Fi September Event This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17274404",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "7859cd94d009",
-      "title": "Baby Storytime: Rerun",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170828",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "73c1f71728db",
-      "title": "Amplify: TOTALS Youth Life Skills: Public Speaking",
-      "date": "2026-09-25",
-      "displayDate": "Fri, Sep 25",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "family",
-      "cost": "free",
-      "description": "Learn, connect, and grow with TOTALS! These youth-led, engaging workshops help students build confidence and develop valuable life skills through hands-on activities, discussions, and interactive lessons. This session will be centered around developing public speaking skills. This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/16755118",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "2156622479bd",
       "title": "Needle Crafts Circle",
@@ -1074,8 +993,8 @@
       "kidFriendly": true
     },
     {
-      "id": "e262c7a67d63",
-      "title": "Back to Bach",
+      "id": "2edad4e1fc06",
+      "title": "Amplify: Back to Bach",
       "date": "2026-10-09",
       "displayDate": "Fri, Oct 9",
       "time": "4:30 PM",
@@ -1086,9 +1005,13 @@
       "category": "music",
       "cost": "free",
       "description": "The Back to Bach Project brings the joy of music to communities through performances and educational outreach. Young musicians will perform for children and families while leading interactive activities that introduce musical concepts, instruments, and creative listening skills. This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
+      "sourceAudiences": [
+        "Children",
+        "Families"
+      ],
       "url": "https://mountainview.libcal.com/event/17409868",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "39f7ed701987",
@@ -1636,6 +1559,24 @@
       "kidFriendly": false
     },
     {
+      "id": "bd9d2bd2fdea",
+      "title": "Murder Mystery Theater",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "6:30 PM",
+      "endTime": "8:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Step into the world of a mysterious mansion where one fateful evening takes a deadly turn. You’ll be given a character to play, complete with secrets, suspicions, and motives of your own. As the story unfolds, clues will be revealed and everyone becomes a suspect. Work with your fellow guests to uncover hidden secrets, piece together the evidence, and determine who committed the murder before the mystery is solved. Will you crack the case, or will the murderer get away with it? No acting experience is necessary—just bring your imagination and your detective skills! Whether you’re a seasoned sleuth or simply looking for a fun and theatrical evening, everyone has a role to play in this interactive murder mystery. Registration required and TBD",
+      "url": "https://mountainview.libcal.com/event/17713814",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "7cf978b75c20",
       "title": "Baby Storytime: Rerun",
       "date": "2026-10-23",
@@ -2173,6 +2114,26 @@
       "kidFriendly": true
     },
     {
+      "id": "d2db57bf5323",
+      "title": "Seed Packets Demystified",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "6:30 PM",
+      "endTime": "8:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Seating is limited. Registration is recommended. Walk-ins are also welcome. Do you love to look at seed catalogs and seed packets but wonder if you'd really be able to grow plants from seeds? Do you stare at the seed rack in your local nursery puzzling through what variety to plant and when you should plant it? Most seed packets contain a wealth of information to help you plant seeds of the right plant in the right place at the right time. But many of us don't bother reading the fine print, and jump straight to the planting. Join us for a lively discussion and analysis of how reading the fine print on your seed packets can help you be more successful in your garden. Infrared assistive listening systems are available for use during this event. Please see Library staff for assistance.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/14959851",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "ca429e800697",
       "title": "Veterans Day Holiday",
       "date": "2026-11-11",
@@ -2509,6 +2470,29 @@
       "url": "https://mountainview.libcal.com/event/17142494",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "e2f276d65d62",
+      "title": "Wild Fungi of California",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "6:30 PM",
+      "endTime": "7:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Join Carrie Staller from Fork in the Path for an interactive hour of hands-on fun exploring the fascinating world of mushrooms! Learn how to identify mushrooms, discover chanterelles, morels, and porcini, and understand the difference between edible and poisonous varieties. We will have some specimens to touch and smell. This program is perfect for curious minds of all ages eager to learn about the natural world. About Fork in the Path: Fork in the Path offers forest-to-ocean-to-table learning programs for the adventurous of all ages across Northern California. We believe learning to forage and eating seasonal wild food is transformational. It helps us become more connected, whole, healthy, and happy. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors",
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/17390122",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "51751787fd80",
@@ -2875,6 +2859,26 @@
       "url": "https://mountainview.libcal.com/event/16916951",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "e3a6171ed9cb",
+      "title": "Christmas Holiday",
+      "date": "2026-12-24",
+      "displayDate": "Thu, Dec 24",
+      "time": null,
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "The Library will be closed today in observance of Christmas.",
+      "sourceAudiences": [
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/15668892",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "2831d5285122",
@@ -5954,6 +5958,28 @@
       "kidFriendly": false
     },
     {
+      "id": "3b21a5853efb",
+      "title": "Library Closed",
+      "date": "2026-12-24",
+      "displayDate": "Thu, Dec 24",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16374649",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "fc5dfddd2a53",
       "title": "Bokani Dyer Trio",
       "date": "2026-09-25",
@@ -7510,10 +7536,10 @@
       "kidFriendly": false
     },
     {
-      "id": "112331a87725",
+      "id": "f0ec4562b693",
       "title": "Toddler Storytime",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
+      "date": "2026-09-25",
+      "displayDate": "Fri, Sep 25",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7527,10 +7553,10 @@
       "kidFriendly": true
     },
     {
-      "id": "ac658d407d77",
+      "id": "a54ef6482473",
       "title": "All Ages Storytime",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
+      "date": "2026-09-25",
+      "displayDate": "Fri, Sep 25",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -8818,7 +8844,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8835,7 +8861,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a notorious libertine's downfall. The production follows a charismatic anti-hero who pursues pleasure without remorse, leaving a trail of broken hearts and vengeful spirits in a […]",
+      "description": "DON GIOVANNI Back after 12 years, Opera San Jose builds a new production of Mozart's dark psychological thriller. Seduction, rebellion, and supernatural justice collide in a thrilling look at a […]",
       "url": "https://www.operasj.org/event/don-giovanni-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8852,7 +8878,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8869,7 +8895,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8886,7 +8912,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10507,23 +10533,6 @@
       "kidFriendly": false
     },
     {
-      "id": "4d72186da6ca",
-      "title": "Sharks vs Ducks",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-panthers-6",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "ebb92fddd522",
       "title": "Marco Antonio Solís",
       "date": "2026-09-26",
@@ -10779,6 +10788,23 @@
       "kidFriendly": true
     },
     {
+      "id": "b364783afedf",
+      "title": "Sharks vs Sabres",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "time": "7:30 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
       "id": "882cb6cb1591",
       "title": "LASERS: Stranger Things",
       "date": "2026-10-23",
@@ -10915,108 +10941,6 @@
       "kidFriendly": true
     },
     {
-      "id": "22942963d2d2",
-      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
-      "date": "2026-09-26",
-      "displayDate": "Sat, Sep 26",
-      "time": "6 PM",
-      "endTime": "9 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "c5bfc22b7015",
-      "title": "CityDance San José: Afrobeats",
-      "date": "2026-09-24",
-      "displayDate": "Thu, Sep 24",
-      "time": "Thursday, September 24, 2026",
-      "endTime": null,
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://sjmusart.org/citydance-san-jose-afrobeats",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false
-    },
-    {
       "id": "0fd141a7f257",
       "title": "First Friday: New Ballet Season Preview",
       "date": "2026-10-02",
@@ -11133,6 +11057,91 @@
       "description": "",
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
+      "kidFriendly": false
+    },
+    {
+      "id": "22942963d2d2",
+      "title": "Representation Matters Film Festival (In-Person & Virtual Viewing)",
+      "date": "2026-09-26",
+      "displayDate": "Sat, Sep 26",
+      "time": "6 PM",
+      "endTime": "9 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
   ]
