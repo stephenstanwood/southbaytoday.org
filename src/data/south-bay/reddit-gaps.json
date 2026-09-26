@@ -1,199 +1,62 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-25T03:18:39.862Z",
+    "generatedAt": "2026-09-26T20:45:07.464Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 10
   },
   "summary": {
-    "threadsMined": 9,
-    "placesExtracted": 8,
-    "placesMatched": 4,
-    "placeGaps": 4,
-    "eventsExtracted": 5,
-    "eventsMatched": 2,
-    "eventGaps": 3,
+    "threadsMined": 10,
+    "placesExtracted": 1,
+    "placesMatched": 0,
+    "placeGaps": 1,
+    "eventsExtracted": 2,
+    "eventsMatched": 0,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Reid-Hillview Airport",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Community Day event location with airshow",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ]
-    },
-    {
-      "name": "Eastridge Mall",
+      "name": "PetSmart Adoption Center",
       "city": "San Jose",
       "kind": "retail",
-      "context": "free shuttle pickup point for airport event",
+      "context": "185 Curtner Ave, hosting kitty adoption event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ]
-    },
-    {
-      "name": "Westgate Center",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "shopping center next to new Chick-fil-A site",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ]
-    },
-    {
-      "name": "San Jose Animal Care Center",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "location of senior cat Big Bird needing rescue",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wpk982/a_closeup_of_a_bull_tule_elk_using_a_remote/",
-        "https://www.reddit.com/r/SanJose/comments/1wpjcf9/clothing_repairalterations/",
-        "https://www.reddit.com/r/SanJose/comments/1wov3x4/looking_for_tailor_bridesmaid_dress/",
-        "https://www.reddit.com/r/SanJose/comments/1wot9bv/senior_ginger_cat_needing_rescue/"
+        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
+        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Reid-Hillview Airport Community Day",
-      "when": "Saturday",
+      "name": "Adopt Joy Event",
+      "when": "Saturday September 26th 2-5pm",
       "city": "San Jose",
-      "context": "aircraft, RC airshow, flyover, live music, free admission",
+      "context": "kitty adoption event with Heading Home Animal Rescue",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
+        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
       ]
     },
     {
-      "name": "Family Science Day",
-      "when": "Saturday, 1-5pm and 7:30pm program",
-      "city": "",
-      "context": "science workshops and stargazing at College of San Mateo (not South Bay)",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ]
-    },
-    {
-      "name": "Game Market West",
-      "when": "Sunday 10am-3pm",
+      "name": "Harvest Moon Festival",
+      "when": "unspecified, around post date",
       "city": "San Jose",
-      "context": "indie tabletop game market with 35+ designers",
+      "context": "asking about local celebrations",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
+        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
+        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
       ]
     }
   ],
-  "placeMatches": [
-    {
-      "name": "Berryessa Branch Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Mid-Autumn Festival with performances and lanterns",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Berryessa Branch Library"
-    },
-    {
-      "name": "Joyce Ellington Branch Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "Wee Love Art fall sensory painting event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Joyce Ellington Branch Library"
-    },
-    {
-      "name": "Chick-fil-A",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "new location planned at 4785 Hamilton Ave near Westgate Center",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Chick-fil-A"
-    },
-    {
-      "name": "Guildhouse",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Game Market West tabletop event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Guildhouse"
-    }
-  ],
-  "eventMatches": [
-    {
-      "name": "Mid-Autumn Festival",
-      "when": "Saturday 2-4:30pm",
-      "city": "San Jose",
-      "context": "cultural performances, storytime, crafts, lanterns",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Mid-Autumn Festival"
-    },
-    {
-      "name": "Wee Love Art: Fall Leaf Sensory Painting in Baggies",
-      "when": "weekend",
-      "city": "San Jose",
-      "context": "sensory art project for young kids",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wp50le/some_fun_family_things_happening_around_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wpihw3/san_jose_new_chick_fil_a_location/",
-        "https://www.reddit.com/r/SanJose/comments/1wp5aae/tabletop_game_market_showcasing_indie_designers/",
-        "https://www.reddit.com/r/SanJose/comments/1wpaet7/do_we_have_assyrian_food_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wp8s7q/where_do_people_go_to_play_ttrpg_or_dnd/"
-      ],
-      "matchedName": "Wee Love Art: Fall Leaf Sensory Painting in Baggies"
-    }
-  ]
+  "placeMatches": [],
+  "eventMatches": []
 }

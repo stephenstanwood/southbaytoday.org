@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-25T03:10:21.300Z",
+      "generatedAt": "2026-09-26T20:36:34.728Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 17 – Sep 24",
+      "dateRange": "Sep 19 – Sep 26",
       "stats": {
-        "total": 470,
-        "notable": 29,
-        "newUnits": 10,
-        "totalValuation": 92086574
+        "total": 487,
+        "notable": 28,
+        "newUnits": 11,
+        "totalValuation": 88152133
       },
       "permits": [
+        {
+          "id": "2025-096477-RS",
+          "address": "823 Willow Glen Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 185772,
+          "units": 1,
+          "issueDate": "2026-09-23",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
         {
           "id": "2025-131700-RS",
           "address": "449 N 12th St #2",
@@ -24,6 +36,18 @@
           "valuation": 175920,
           "units": 1,
           "issueDate": "2026-09-22",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-107003-RS",
+          "address": "5520 Leigh Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached ADU @ 1st Floor",
+          "valuation": 136287,
+          "units": 1,
+          "issueDate": "2026-09-24",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -39,63 +63,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-105531-RS",
-          "address": "125 N 13th St #2",
+          "id": "2025-138066-RS",
+          "address": "1601 Orchard View Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 131764,
+          "description": "Garage Conversion to ADU",
+          "valuation": 121033,
           "units": 1,
-          "issueDate": "2026-09-18",
+          "issueDate": "2026-09-23",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-124202-RS",
-          "address": "1267 Cristina Av #2",
+          "id": "2026-107383-RS",
+          "address": "1146 Happy Valley Av",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Pdox New 2-Story 745 Sqft Detach ADU",
-          "valuation": 131060,
+          "description": "Hcd Detached ADU",
+          "valuation": 94997,
           "units": 1,
-          "issueDate": "2026-09-17",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-106404-RS",
-          "address": "3344 Ariel Joshua Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 121561,
-          "units": 1,
-          "issueDate": "2026-09-18",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2024-079677-RS",
-          "address": "685 S 10th St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New 2-Story Detached ADU With Garage",
-          "valuation": 115447,
-          "units": 1,
-          "issueDate": "2026-09-17",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2024-082279-RS",
-          "address": "687 S 10th St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New 2-Story Detached ADU With Garage",
-          "valuation": 115447,
-          "units": 1,
-          "issueDate": "2026-09-17",
+          "issueDate": "2026-09-24",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -111,6 +99,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-097731-RS",
+          "address": "1137 Pascoe Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached Garage Conversion to ADU",
+          "valuation": 85321,
+          "units": 1,
+          "issueDate": "2026-09-24",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-106992-RS",
           "address": "1671 Silvertree Dr #2",
           "category": "residential-new",
@@ -123,33 +123,57 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-144312-RS",
-          "address": "1833 Andrews Av #2",
+          "id": "2026-125729-RS",
+          "address": "682 S Genevieve Ln #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Modular Detached ADU",
-          "valuation": 71248,
+          "description": "Epr ADU Ab 2533 Legalize Detach Garage Conversion to ADU",
+          "valuation": 77405,
           "units": 1,
-          "issueDate": "2026-09-17",
+          "issueDate": "2026-09-23",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-25T03:10:23.258Z",
+      "generatedAt": "2026-09-26T20:36:37.197Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 17 – Sep 24",
+      "dateRange": "Sep 19 – Sep 26",
       "stats": {
-        "total": 111,
-        "notable": 3,
+        "total": 138,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-02737",
+          "address": "606 Chimalus Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-24",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00274",
+          "address": "385 Curtner Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review for a new seven foot tall fence. The fence will be located on the southeast side of the property nearby the existing carport and located on the property line between 385 and 391 Curtner Avenue. Zone District: Multifamily (RM-30). CEQA Status: Not a project. For more information contact the project planner, Garrett Sauls, at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-24",
+          "subtype": "Over the Counter Approved"
+        },
         {
           "id": "26PLN-00267",
           "address": "1189 Welch Rd",
