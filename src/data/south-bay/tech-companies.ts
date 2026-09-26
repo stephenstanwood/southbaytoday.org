@@ -1660,6 +1660,25 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Puxi, F13, Brahma AI, Noxtua, StandardX — none South Bay.
   //   * Crunchbase's Sep 19-25 top ten publishes Friday Sep 25 — check it
   //     against the Sep 21-24 windows.
+  // Note on Prime Minute's city: the company's Sep 24 release carries a Palo
+  // Alto dateline, and the round is company-authored rather than an aggregator
+  // tag. Its own site independently names the same founders, investors, and
+  // wildfire-suppression product. The release says the money will fund local
+  // manufacturing, team growth, and field tests with the State of Colorado.
+  // That clears the primary-source and in-county bars for this list.
+  {
+    id: "prime-minute",
+    name: "Prime Minute",
+    city: "Palo Alto",
+    category: "hardware",
+    round: "Pre-Seed",
+    amount: "$15M",
+    date: "2026-09-24",
+    tagline:
+      "Wildfires do not wait for daylight, clear skies, or easy terrain. Palo Alto startup Prime Minute is building an end-to-end response system for those denied conditions: real-time intelligence and mission software coordinate precision-guided aerial suppression units that can reach a new fire while it is still small. The company says its first 1,000-pound unit carries about 105 gallons of suppressant and is designed for fixed-wing or rotary-wing deployment. Eclipse led the $15M pre-seed round, with 8VC participating; the founding team includes veterans of Palantir, Forterra, Datorios, Bright Machines, and public-service operations. The money goes to local manufacturing, hiring, testing, and technology development, with prototype field evaluations planned with the State of Colorado later this year.",
+    color: "#2563EB",
+    url: "https://prime-minute.com/",
+  },
   {
     id: "ema",
     name: "Ema",
