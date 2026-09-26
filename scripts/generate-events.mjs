@@ -123,6 +123,7 @@ import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurr
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 import { mergePaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
 import { normalizeInboundEventPresentation } from "./lib/inbound-event-normalize.mjs";
+import { applyVerifiedMeetupEventOverride } from "./lib/meetup-event-overrides.mjs";
 import { rehomeScrapedEvent, resolveEventCity } from "./lib/event-city.mjs";
 import { applyVerifiedSjsuEventOverride } from "./lib/sjsu-event-overrides.mjs";
 import { BOARDWALK_2026_EVENTS } from "./lib/santa-cruz-picks-2026.mjs";
@@ -6946,7 +6947,7 @@ async function fetchMeetupEvents() {
     const locationText = [venue, address].filter(Boolean).join(" ");
     if (/\b(?:somewhere|secret(?:\s+\w+){0,3}\s+location|released\s+on\s+day|private\s+home|home\s+near)\b/i.test(locationText)) continue;
 
-    events.push({
+    events.push(applyVerifiedMeetupEventOverride({
       id: h("meetup", node.id),
       title,
       date: isoDate(start),
@@ -6966,7 +6967,7 @@ async function fetchMeetupEvents() {
       source: "Meetup",
       kidFriendly: false,
       ...deriveMeetupRegistration(node, new Date()),
-    });
+    }, { groupUrlname }));
   }
 
   console.log(`  ✅ Meetup: ${events.length} events (from ${rawEvents.length} raw across ${QUERIES.length} queries)`);
