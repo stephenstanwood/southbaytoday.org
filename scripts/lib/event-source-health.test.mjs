@@ -73,6 +73,23 @@ test("preserves a date-specific MacinTalkers venue when a future meeting moves",
   assert.equal(corrected.address, event.address);
 });
 
+test("labels the Los Gatos festival meetup as a walk from its meeting point", () => {
+  const event = {
+    title: "Los Gatos Art & Wine Festival",
+    venue: "Safeway - Los Gatos",
+    date: "2026-09-27",
+    time: "10:00 AM",
+    url: "https://www.meetup.com/30-chill-women-trying-to-figure-shit-out-make-friends/events/316047950/",
+  };
+  const corrected = applyVerifiedMeetupEventOverride(event);
+  assert.equal(corrected.title, "Group walk to Los Gatos Art & Wine Festival");
+  assert.equal(corrected.venue, "Safeway meetup point");
+  assert.match(corrected.description, /Civic Center Lawn/);
+  assert.equal(corrected.date, event.date);
+  assert.equal(corrected.time, event.time);
+  assert.equal(corrected.url, event.url);
+});
+
 test("keeps meetings inside the briefing week and rejects agenda-only tense upgrades", () => {
   assert.equal(meetingWithinBriefingWindow({ date: "2026-09-14" }, "2026-09-07", "2026-09-14"), true);
   assert.equal(meetingWithinBriefingWindow({ date: "2026-09-15" }, "2026-09-07", "2026-09-14"), false);
