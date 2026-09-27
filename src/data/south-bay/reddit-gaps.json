@@ -1,11 +1,11 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-26T20:45:07.464Z",
+    "generatedAt": "2026-09-27T04:44:58.151Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 6
   },
   "summary": {
-    "threadsMined": 10,
+    "threadsMined": 6,
     "placesExtracted": 1,
     "placesMatched": 0,
     "placeGaps": 1,
@@ -16,44 +16,44 @@
   },
   "placeGaps": [
     {
-      "name": "PetSmart Adoption Center",
+      "name": "SJ Improv",
       "city": "San Jose",
-      "kind": "retail",
-      "context": "185 Curtner Ave, hosting kitty adoption event",
+      "kind": "venue",
+      "context": "hosting Frankie Quinones show",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
-        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
+        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Adopt Joy Event",
-      "when": "Saturday September 26th 2-5pm",
+      "name": "Frankie Quinones at SJ Improv",
+      "when": "tonight at 9:30",
       "city": "San Jose",
-      "context": "kitty adoption event with Heading Home Animal Rescue",
+      "context": "comedy show, free VIP tickets offered",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
-        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
+        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
       ]
     },
     {
       "name": "Harvest Moon Festival",
-      "when": "unspecified, around post date",
+      "when": "",
       "city": "San Jose",
-      "context": "asking about local celebrations",
+      "context": "Mid-Autumn Festival, asking about local events",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wqcvq5/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1wqat86/places_for_the_best_vietnamese_eggrolls/",
-        "https://www.reddit.com/r/SanJose/comments/1wq9b3j/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wq8ugv/adopt_joy_event_kitty_adoptions_saturday/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/"
+        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
+        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
+        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
       ]
     }
   ],
