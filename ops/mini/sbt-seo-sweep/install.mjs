@@ -27,7 +27,7 @@ const config = {
   weekday: 2,
   hour: 1,
   minute: 15,
-  model: "gpt-5.6-sol",
+  model: null,
   reasoningEffort: "max",
   executionEnvironment: "local",
   retiredLaunchAgent: "org.southbaytoday.seo-sweep",
@@ -127,6 +127,13 @@ function retirePath(path, label) {
   renameSync(path, destination);
   return destination;
 }
+
+// Family selection is maintained once across the Macs by Stoa skill sync.
+// Native automation fields still require the resolved exact model ID.
+const solProfile = join(process.env.CODEX_HOME || join(home, ".codex"), "sol.config.toml");
+if (!existsSync(solProfile)) fail("missing Sol profile; run Stoa scripts/sync-codex-model-families.mjs --apply first");
+config.model = readFileSync(solProfile, "utf8").match(/^model\s*=\s*["'](gpt-\d+(?:\.\d+)*-sol)["']/m)?.[1];
+if (!config.model) fail(`no resolved Sol model in ${solProfile}`);
 
 const smoke = process.argv.includes("--smoke");
 const checkOnly = process.argv.includes("--check");
