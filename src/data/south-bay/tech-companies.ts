@@ -1664,6 +1664,22 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // supplies only a Palo Alto dateline, not a headquarters or local address.
   // Hold it out of this Santa Clara County list until the company confirms one.
   // https://www.prnewswire.com/news-releases/prime-minute-emerges-from-stealth-with-15-million-pre-seed-round-to-strengthen-infrastructure-resilience-against-natural-disasters-302888421.html
+  // Overlord's Sep 25 release says "Headquartered in San Jose" in its own
+  // boilerplate. The new round is a $4.35M seed extension; $10M is cumulative
+  // funding and includes non-dilutive development money, not this round's size.
+  {
+    id: "overlord-labs",
+    name: "Overlord Labs",
+    city: "San Jose",
+    category: "chip",
+    round: "Seed extension",
+    amount: "$4.35M",
+    date: "2026-09-25",
+    tagline:
+      "The San Jose chip startup is building battery-management hardware for power-hungry wearables and smart glasses. Overlord says its first GENESIS chip is working and is moving into validation before customer sampling. Band of Angels led a $4.35M seed extension, joined by Foothill Ventures, Unlock Pacific Ventures, NuFund Venture Group, Sand Hill Angels, and Castle Fund. Overlord has raised $7.25M in seed equity plus non-dilutive development funding, $10M altogether. The new money will support chip validation, firmware and battery-algorithm work, and preparations for production.",
+    color: "#2563EB",
+    url: "https://www.prnewswire.com/news-releases/overlord-labs-closes-oversubscribed-seed-financing-bringing-total-funding-to-10-million-to-advance-battery-intelligence-for-edge-ai-devices-302890280.html",
+  },
   {
     id: "ema",
     name: "Ema",

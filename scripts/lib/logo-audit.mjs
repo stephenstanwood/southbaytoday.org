@@ -245,6 +245,7 @@ function matchField(item, field) {
 export const LOGO_SITE_OVERRIDES = {
   tabapay: "https://tabapay.com", // card links FTV Capital's release
   piston: "https://www.piston.com", // card links the ACCESS Newswire release
+  "overlord-labs": "https://overlord-labs.com", // card links the PR Newswire release
 };
 
 // Hosts that are never a company's own domain. A card whose url lives on one
