@@ -142,7 +142,7 @@ function formatEventDate(iso) {
 
 async function generateBriefing(city, events, aroundItems, meetingData) {
   const eventLines = events.slice(0, 5).map((e) =>
-    `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${e.date ? ` (${formatEventDate(e.date)})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}`
+    `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${e.date ? ` (${formatEventDate(e.date)})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}${e.source ? `; source: ${e.source}` : ""}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 180)}` : ""}`
   ).join("\n");
 
   const aroundLines = aroundItems.slice(0, 3).map((a) => {
@@ -183,6 +183,7 @@ Important rules:
 - A past agenda date does not prove a meeting occurred or an item was heard. If the source says "scheduled to," "set to," "expected to," or "council to hear/consider," preserve that uncertainty even after the date; never convert it to "heard," "considered," or another completed action.
 - Match tense to the date. City hall items show their date in parentheses; today is ${new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}. Items dated in the past must use past tense. Reserve present or future tense for items whose date is today or later.
 - The text after "at" in an event line is a VENUE, never an organizer, host, sponsor, or performer. Meetup venue names routinely carry a landmark or trailhead label ("PG&E @ Rancho San Antonio Park", "Our Hub - A Bay Area Art & Wellness Community"). Never write that a venue "leads," "hosts," "sponsors," "presents," or "runs" the event unless the data says so in words — describe the event itself ("a 4.3-mile group hike at Rancho San Antonio") and leave the organizer out when you don't have one.
+- For Meetup listings, distinguish the group's meeting point from the destination named in the title. A meetup at a store for a walk to a festival does not mean the festival is held at that store.
 - Never write "today", "tonight", "tomorrow", or "this evening". This briefing is cached and read for days after it is written, so a relative day silently points at the wrong date. Name the day ("Friday", "Saturday") using the day labels in the data.
 - Never describe the week, the weekend, or a day as quiet, slow, thin, light, sparse, sleepy, soft, or weak. There is always something useful to do — lead with the strongest options instead of apologizing for the calendar.
 - Do not attribute a city hall item to a specific body ("the council," "the planning commission") unless the data names that body. Advisory boards and commissions are frequently the actual body. When the body isn't stated, write it body-neutrally ("Palo Alto is weighing…", "city staff recommended…").

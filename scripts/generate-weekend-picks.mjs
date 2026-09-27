@@ -69,7 +69,7 @@ function dowOfIso(iso) {
 
 function formatGroup(events, prefix) {
   return events.map((e, i) =>
-    `${prefix}${i + 1}. [${e.displayDate || e.date} ${e.time || "all day"}] ${e.title} — ${cityLabel(e.city)}${e.venue ? `, ${e.venue}` : ""} (${e.cost}) — ${(e.description || "").slice(0, 240)}`
+    `${prefix}${i + 1}. [${e.displayDate || e.date} ${e.time || "all day"}] ${e.title} — ${cityLabel(e.city)}${e.venue ? `, ${e.venue}` : ""} (${e.cost})${e.source ? ` [${e.source}]` : ""} — ${(e.description || "").slice(0, 240)}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 140)}` : ""}`
   ).join("\n");
 }
 
@@ -123,6 +123,8 @@ Rank your top 4 Saturday picks (S-codes) AND top 4 Sunday picks (U-codes), best-
 - Avoid stacking multiple library-program picks at the same library
 
 Avoid: university admin events, clinical studies, internal community meetings, things open every week (farmers markets are fine if especially notable)
+
+A Meetup listing for a trip to another event is the group's outing, not the event itself. Describe the meetup and its meeting point accurately; do not present that point as the festival or concert venue.
 
 When writing the "why", do NOT invent or guess the day-of-week or time-of-day. If you mention either, copy from the event's bracketed [DayAbbr, Mon D TIME] header verbatim (e.g. "Sat morning", "Sun 7:30 PM"). Never call something a "matinee" unless the time is before 5 PM.
 
@@ -218,6 +220,9 @@ Return ONLY a JSON array of 8 objects (4 S-codes ranked best-first, then 4 U-cod
     weekendEnd: end,
     generatedAt: new Date().toISOString(),
     picks: selected.map(({ why, event: e }) => {
+      const isFestivalMeetup = e.source === "Meetup"
+        && /\bfestival\b/i.test(e.title)
+        && /\bmeet\s*up\b/i.test(e.blurb || "");
       // Validate any bracketed [Day, Mon D TIME] in the why matches this event,
       // then strip ALL brackets — the UI shows displayDate/time separately, so
       // leaving the bracket in produces a duplicate prefix in the rendered card.
@@ -257,13 +262,13 @@ Return ONLY a JSON array of 8 objects (4 S-codes ranked best-first, then 4 U-cod
       validatedWhy = validatedWhy.replace(/\b(\w+)\s+\1\b/gi, "$1");
       return {
         id: e.id,
-        title: e.title,
+        title: isFestivalMeetup ? `Group meetup for ${e.title}` : e.title,
         date: e.date,
         displayDate: e.displayDate,
         time: e.time,
         endTime: e.endTime,
         city: e.city,
-        venue: e.venue,
+        venue: isFestivalMeetup && e.venue ? `${e.venue} (meeting point)` : e.venue,
         cost: e.cost,
         url: e.url,
         category: e.category,

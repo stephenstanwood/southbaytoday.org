@@ -141,18 +141,17 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "downtown-campbell-market",
-    name: "Campbell Pruneyard Expansion",
+    name: "The Pruneyard Master Use Permit",
     city: "Campbell",
     cityId: "campbell",
     category: "retail",
-    status: "under-construction",
+    status: "approved",
     description:
-      "The historic Pruneyard Shopping Center in Campbell is undergoing an expansion and renovation, bringing new retail tenants, restaurants, and improvements to the outdoor gathering spaces. The Pruneyard is a beloved local landmark and this investment reinforces Campbell's position as a destination for South Bay dining and shopping.",
-    scale: "Retail and restaurant expansion",
-    developer: "Thompson Thrift / Pruneyard Companies",
-    timeline: "Ongoing",
+      "Campbell approved a long-term master plan for The Pruneyard's office, retail, parking, and public-space improvements in 2016 and amended it in 2021. The plan allows phased development; the approval alone does not establish that construction is currently underway.",
+    scale: "27-acre shopping and office center",
+    timeline: "Approved 2016; amended 2021",
     featured: false,
-    sourceNote: "Developer attribution unverified — confirm current ownership at campbellca.gov or local records.",
+    sourceNote: "City of Campbell, Pruneyard Master Use Permit: https://campbellca.gov/771/Pruneyard-MUP. Current construction phase and developer attribution are unverified.",
   },
 
   {

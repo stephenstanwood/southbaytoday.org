@@ -224,6 +224,9 @@ const SOURCE_ID_SKIP = new Set([
   // Add to this list when triaging false positives surfaced by the script.
   "SR0876482", // E-FOGO DE CHAO SJ — existing Santana Row location since ~2014 (8800+ Yelp reviews), re-inspection
   "SR0878576", // E-THE MELT (Stanford Shopping Center) — existing chain location, façade/signage update (Palo Alto ARB)
+  "SR0885861", // The Province, 1788 N First St — existing restaurant taking reservations at theprovincesj.com
+  "SR0883855", // Naisnow Tea & Bakery, 19600 Vallco Pkwy — county inspection history predates this plan approval
+  "SR0885542", // The Vesper, 394 E Campbell Ave — existing bar with reservations and years of service
   // (SR0881648 Sweetgreen El Paseo de Saratoga IS a real new opening — see BLURB_OVERRIDES)
 ]);
 
