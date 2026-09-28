@@ -1,27 +1,27 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-28T02:17:16.896Z",
+    "generatedAt": "2026-09-28T16:08:12.020Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 560,
+    "eventCount": 557,
     "sourceCount": 20,
     "sources": [
       "Mountain View Public Library (127)",
-      "Los Gatos Library (150)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (19)",
-      "Linden Tree Books (11)",
+      "Linden Tree Books (9)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (14)",
+      "Mountain Winery (13)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (2)",
       "Santana Row (7)",
       "City of Cupertino (55)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
-      "Levi's Stadium (8)",
+      "Levi's Stadium (7)",
       "SAP Center (16)",
       "The Tech Interactive (8)",
       "Peninsula Open Space Trust (4)",
@@ -74,7 +74,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 150,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -106,7 +106,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 11,
+        "count": 9,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -117,7 +117,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -172,7 +172,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 14,
+        "count": 13,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -282,7 +282,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 8,
+        "count": 7,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -6131,6 +6131,28 @@
       "kidFriendly": true
     },
     {
+      "id": "1419d33256bb",
+      "title": "Library Closed",
+      "date": "2026-12-27",
+      "displayDate": "Sun, Dec 27",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16374652",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "d7c2f1437d9a",
       "title": "SJZ Break Room Jazz Jam",
       "date": "2026-10-02",
@@ -6452,50 +6474,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "db2a7bae5101",
-      "title": "Storytime with Isabella Kung",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-27"
-      }
-    },
-    {
-      "id": "061518d5ea9a",
-      "title": "Middle Grade Book Club: Bunns Rabbit",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-09-27"
-      }
     },
     {
       "id": "f5db3f49aa48",
@@ -7033,23 +7011,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "03188f23036c",
-      "title": "A.J. Croce Presents CROCE PLAYS CROCE with Leo Kottke",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1345380",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -7614,10 +7575,10 @@
       "kidFriendly": false
     },
     {
-      "id": "ea74204fd531",
+      "id": "db52feeeead3",
       "title": "All Ages Storytime",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
+      "date": "2026-09-28",
+      "displayDate": "Mon, Sep 28",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7631,10 +7592,10 @@
       "kidFriendly": true
     },
     {
-      "id": "7880f44abee2",
+      "id": "985ae00bd5b8",
       "title": "Toddler Storytime",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
+      "date": "2026-09-28",
+      "displayDate": "Mon, Sep 28",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -10266,23 +10227,6 @@
       "kidFriendly": false
     },
     {
-      "id": "85e90e835739",
-      "title": "ARIZONA CARDINALS VS. SAN FRANCISCO 49ERS",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
       "id": "d5665b3032c3",
       "title": "DENVER BRONCOS VS. SAN FRANCISCO 49ERS",
       "date": "2026-10-04",
@@ -10399,23 +10343,6 @@
       "description": "",
       "url": "https://levisstadium.com/events/",
       "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
-      "id": "c15f92d84213",
-      "title": "Yandel",
-      "date": "2026-09-27",
-      "displayDate": "Sun, Sep 27",
-      "time": "8:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/yandel",
-      "source": "SAP Center",
       "kidFriendly": false
     },
     {
@@ -10670,6 +10597,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "171edda8cb5f",
+      "title": "Los Tiburones",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "1:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Mini Sharks Sugar Skull Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
       "source": "SAP Center",
       "kidFriendly": false
     },
