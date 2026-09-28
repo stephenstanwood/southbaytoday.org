@@ -48,6 +48,7 @@ export const SHARED_LOGO_GROUPS = [
   ["cylake", "cylake-sep-2026"],
   ["ayar-labs", "ayar-labs-series-e-extension"],
   ["lyte", "lyte-series-c"],
+  ["sima-ai", "sima-ai-series-c"],
   // Same company on two surfaces: the "Smaller, But Notable" spotlight card and
   // its Recently Funded round card. Converged once the spotlight entry started
   // resolving off sambanova.ai instead of Wikipedia — same brand, so this is the
@@ -246,6 +247,7 @@ export const LOGO_SITE_OVERRIDES = {
   tabapay: "https://tabapay.com", // card links FTV Capital's release
   piston: "https://www.piston.com", // card links the ACCESS Newswire release
   "overlord-labs": "https://overlord-labs.com", // card links the PR Newswire release
+  "sima-ai-series-c": "https://sima.ai", // card links the SiliconANGLE write-up
 };
 
 // Hosts that are never a company's own domain. A card whose url lives on one

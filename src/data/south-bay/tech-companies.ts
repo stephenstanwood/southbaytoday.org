@@ -1664,6 +1664,40 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // supplies only a Palo Alto dateline, not a headquarters or local address.
   // Hold it out of this Santa Clara County list until the company confirms one.
   // https://www.prnewswire.com/news-releases/prime-minute-emerges-from-stealth-with-15-million-pre-seed-round-to-strengthen-infrastructure-resilience-against-natural-disasters-302888421.html
+  // Note on the Sep 25-28 2026 sweep: SiMa.ai's $150M Series C is the one new
+  // in-coverage round, added below (Overlord Labs, already carded, was
+  // re-posted by FinSMEs on Sep 28). The Business Wire release's boilerplate
+  // names no city, so the HQ comes from the company's own privacy policy,
+  // which gives a San Jose, CA 95110 address — the same San Jose the April
+  // Micron card already carries. It sits on its own id beside the April card,
+  // the Ayar Labs / Lyte two-card precedent.
+  //   * Crunchbase's Sep 19-25 top ten, flagged in the three notes above, is
+  //     all out of coverage: Island (Dallas), Cyera, Precision Neuroscience,
+  //     Rightway (New York), Snorkel AI (Crunchbase says San Francisco;
+  //     Redwood City per the Sep 22-23 note — out either way), Enveda
+  //     (Boulder), Hubble Network (Seattle), Rainmaker (El Segundo), Numeral
+  //     and Micro1 (San Francisco).
+  //   * Kairos Power ($100M strategic investment, FinSMEs Sep 28) is Alameda
+  //     — Alameda County, out of the footprint.
+  //   * The rest of the window is out of coverage. FinSMEs' US list for Sep
+  //     25-28: Instinct, Mona, HiringCafe (San Francisco); AI Hospitality
+  //     Group (Dallas); MeantToBe/Rivet, Snag (New York); Dash Dog Food,
+  //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
+  //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
+  //     and Rising Tide (Chicago), plus rounds already recorded above.
+  {
+    id: "sima-ai-series-c",
+    name: "SiMa.ai",
+    city: "San Jose",
+    category: "chip",
+    round: "Series C",
+    amount: "$150M",
+    date: "2026-09-28",
+    tagline:
+      "SiMa.ai makes the chips and software that let robots, drones, and cars run AI on the device itself, not in a data center. The San Jose company raised a $150M Series C at a $1.45B valuation, bringing its total funding to $500M. Fidelity and Amplify co-led the round. Alter Venture Partners, Dell Technologies Capital, Maverick Capital, +ND Capital, Point72, and StepStone Group also invested, and AllianceBernstein, Baron Capital, J.P. Morgan, and the State of Michigan joined as new investors. SiMa.ai's current chip is the Modalix MLSoC, and its customers and partners include Bosch, Emerson, Micron, Synopsys, and TRUMPF. The money will scale Palette Neat, its agentic software for building physical-AI applications, and fund next-generation silicon rated at 1,000 dense TOPS. That hardware is slated for the first half of 2028 and is aimed at drones, humanoid robots, and driver-assistance systems.",
+    color: "#0d9488",
+    url: "https://siliconangle.com/2026/09/28/physical-ai-custom-chip-producer-sima-ai-raises-150m-at-1-45b-valuation/",
+  },
   // Overlord's Sep 25 release says "Headquartered in San Jose" in its own
   // boilerplate. The new round is a $4.35M seed extension; $10M is cumulative
   // funding and includes non-dilutive development money, not this round's size.

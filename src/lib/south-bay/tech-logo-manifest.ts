@@ -190,6 +190,7 @@ export const TECH_LOGO_MANIFEST: Record<string, string> = {
   "sifive": "/logos/sifive.ico",
   "sifly-series-a": "/logos/sifly-series-a.png",
   "sima-ai": "/logos/sima-ai.png",
+  "sima-ai-series-c": "/logos/sima-ai.png",
   "simile": "/logos/simile.png",
   "simile-series-b": "/logos/simile-series-b.png",
   "sonire-therapeutics": "/logos/sonire-therapeutics.png",
