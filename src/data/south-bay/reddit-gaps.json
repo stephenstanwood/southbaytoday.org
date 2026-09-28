@@ -1,62 +1,178 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-27T04:44:58.151Z",
+    "generatedAt": "2026-09-28T04:44:13.319Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 6
+    "sourceCount": 14
   },
   "summary": {
-    "threadsMined": 6,
-    "placesExtracted": 1,
-    "placesMatched": 0,
-    "placeGaps": 1,
-    "eventsExtracted": 2,
-    "eventsMatched": 0,
+    "threadsMined": 14,
+    "placesExtracted": 9,
+    "placesMatched": 2,
+    "placeGaps": 7,
+    "eventsExtracted": 3,
+    "eventsMatched": 1,
     "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "SJ Improv",
+      "name": "Buffalo Exchange",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "mentioned as favorite thrift/consignment store",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wrpca9/best_mexican_restaurants_between_los_gatos_and/",
+        "https://www.reddit.com/r/SanJose/comments/1wroa4r/sushi_place_thats_not_crazy_expensive/",
+        "https://www.reddit.com/r/SanJose/comments/1wrclfd/where_do_you_actually_find_good_cheap_clothes_in/",
+        "https://www.reddit.com/r/santaclara/comments/1wpp9qk/anime_video_game_jazz_show_this_saturday_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wrrjzg/casual_pickup_soccer_innear_downtown_san_jose/"
+      ]
+    },
+    {
+      "name": "Crossroads",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "mentioned as favorite thrift/consignment store",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wrpca9/best_mexican_restaurants_between_los_gatos_and/",
+        "https://www.reddit.com/r/SanJose/comments/1wroa4r/sushi_place_thats_not_crazy_expensive/",
+        "https://www.reddit.com/r/SanJose/comments/1wrclfd/where_do_you_actually_find_good_cheap_clothes_in/",
+        "https://www.reddit.com/r/santaclara/comments/1wpp9qk/anime_video_game_jazz_show_this_saturday_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wrrjzg/casual_pickup_soccer_innear_downtown_san_jose/"
+      ]
+    },
+    {
+      "name": "Taco Bell",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Camden location with oddly gigantic parking lot",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wrouwm/seafood/",
+        "https://www.reddit.com/r/SanJose/comments/1wrm73c/san_jose_once_had_a_237foot_electric_light_tower/",
+        "https://www.reddit.com/r/santaclara/comments/1wp4f7u/santa_clara_bulldozed_its_entire_downtown_in_the/",
+        "https://www.reddit.com/r/SanJose/comments/1ws33xg/whats_with_the_absolutely_gigantic_taco_bell/",
+        "https://www.reddit.com/r/SanJose/comments/1ws2djp/calm_spot/"
+      ]
+    },
+    {
+      "name": "Moe's",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "gas station on Camden between Leigh and Union, $5.60",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
+      ]
+    },
+    {
+      "name": "Coast",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "gas station on Bascom and Camden, cheap gas",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
+      ]
+    },
+    {
+      "name": "Chevron",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "gas station on Bascom, $6.75",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
+      ]
+    },
+    {
+      "name": "Oakridge Mall",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Frankie Quinones show",
+      "context": "location hosting Circus Vargas",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Frankie Quinones at SJ Improv",
-      "when": "tonight at 9:30",
-      "city": "San Jose",
-      "context": "comedy show, free VIP tickets offered",
+      "name": "Anime & Video Game Jazz show",
+      "when": "this Saturday",
+      "city": "Santa Clara",
+      "context": "jazz show near Santa Clara",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
+        "https://www.reddit.com/r/SanJose/comments/1wrpca9/best_mexican_restaurants_between_los_gatos_and/",
+        "https://www.reddit.com/r/SanJose/comments/1wroa4r/sushi_place_thats_not_crazy_expensive/",
+        "https://www.reddit.com/r/SanJose/comments/1wrclfd/where_do_you_actually_find_good_cheap_clothes_in/",
+        "https://www.reddit.com/r/santaclara/comments/1wpp9qk/anime_video_game_jazz_show_this_saturday_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wrrjzg/casual_pickup_soccer_innear_downtown_san_jose/"
       ]
     },
     {
-      "name": "Harvest Moon Festival",
+      "name": "Circus Vargas",
       "when": "",
       "city": "San Jose",
-      "context": "Mid-Autumn Festival, asking about local events",
+      "context": "circus at Oakridge Mall, asking if worth it for kids",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wr8u84/any_cool_sjbay_area_halloween_attractionsevents/",
-        "https://www.reddit.com/r/SanJose/comments/1wqsx9n/harvest_moon_festival/",
-        "https://www.reddit.com/r/SanJose/comments/1wr6uso/two_free_vip_tickets_to_frankie_quinones_tonight/",
-        "https://www.reddit.com/r/SanJose/comments/1wr1e2g/white_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wqxkb0/ping_pong_intermediate_players/"
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
       ]
     }
   ],
-  "placeMatches": [],
-  "eventMatches": []
+  "placeMatches": [
+    {
+      "name": "History Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "site of replica electric light tower",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wrouwm/seafood/",
+        "https://www.reddit.com/r/SanJose/comments/1wrm73c/san_jose_once_had_a_237foot_electric_light_tower/",
+        "https://www.reddit.com/r/santaclara/comments/1wp4f7u/santa_clara_bulldozed_its_entire_downtown_in_the/",
+        "https://www.reddit.com/r/SanJose/comments/1ws33xg/whats_with_the_absolutely_gigantic_taco_bell/",
+        "https://www.reddit.com/r/SanJose/comments/1ws2djp/calm_spot/"
+      ],
+      "matchedName": "History Park (operated by History San Jose)"
+    },
+    {
+      "name": "Franklin Square Mall",
+      "city": "Santa Clara",
+      "kind": "retail",
+      "context": "built after downtown was bulldozed in 1960s",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wrouwm/seafood/",
+        "https://www.reddit.com/r/SanJose/comments/1wrm73c/san_jose_once_had_a_237foot_electric_light_tower/",
+        "https://www.reddit.com/r/santaclara/comments/1wp4f7u/santa_clara_bulldozed_its_entire_downtown_in_the/",
+        "https://www.reddit.com/r/SanJose/comments/1ws33xg/whats_with_the_absolutely_gigantic_taco_bell/",
+        "https://www.reddit.com/r/SanJose/comments/1ws2djp/calm_spot/"
+      ],
+      "matchedName": "Franklin Square"
+    }
+  ],
+  "eventMatches": [
+    {
+      "name": "Halloween",
+      "when": "Saturday October 31",
+      "city": "San Jose",
+      "context": "downtown SJ costume plans for Halloween weekend",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wru4i9/keratin_treatments_in_the_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1wrtv1c/sub6_gas_locations/",
+        "https://www.reddit.com/r/SanJose/comments/1wrqwuo/halloween_plans/",
+        "https://www.reddit.com/r/SanJose/comments/1wrokjy/circus_vargas_worth_it/"
+      ],
+      "matchedName": "A Boo-tiful Downtown Halloween"
+    }
+  ]
 }

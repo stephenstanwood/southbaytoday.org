@@ -1,79 +1,87 @@
 {
-  "generatedAt": "2026-09-27T04:41:36.685Z",
-  "weekLabel": "Sep 26 – Oct 3",
-  "weekStart": "2026-09-26",
-  "weekEnd": "2026-10-03",
+  "generatedAt": "2026-09-28T04:40:09.015Z",
+  "weekLabel": "Sep 27 – Oct 4",
+  "weekStart": "2026-09-27",
+  "weekEnd": "2026-10-04",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's weekend runs from a 70's-themed fundraiser at The Ainsley House Carriage House Saturday to a creek walk on Los Gatos Creek Trail, a Selena screening at Campbell Library, and the Farmers Market, all Sunday.",
+      "summary": "Campbell's Farmers Market kicks off Sunday morning downtown, while the city approved The Pruneyard's Master Use Permit for the 27-acre shopping and office center the same day.",
       "highlights": [
         {
           "type": "event",
-          "title": "Groovin in the Garden: A 70's Flashback Fundraiser",
-          "when": "Sat, Sep 26 · 6:00 PM",
-          "venue": "The Ainsley House Carriage House",
-          "category": "arts",
-          "url": null
+          "title": "Campbell Farmers Market",
+          "when": "Sun, Sep 27 · 9:00 AM",
+          "venue": "Downtown Campbell",
+          "category": "food",
+          "url": "https://uvfm.org/campbell-sundays"
         },
         {
           "type": "event",
-          "title": "Los Gatos Creek: Camden Ponds to Vasona Reservoir + lunch",
-          "when": "Sun, Sep 27 · 10:30 AM",
-          "venue": "Los Gatos Creek Trail",
+          "title": "Well, that does it for Lughnasadh—next up Samhain! … Let's make music!",
+          "when": "Mon, Sep 28 · 6:15 PM",
+          "venue": "Learning Success Meeting Room",
           "category": "community",
-          "url": "https://www.meetup.com/meetup-group-qpxfeqdy/events/316643163/"
+          "url": "https://www.meetup.com/san-jose-guitar-players-meetup-group/events/316547262/"
+        },
+        {
+          "type": "cityhall",
+          "title": "The Pruneyard Master Use Permit moves to approved",
+          "when": null,
+          "venue": null,
+          "category": "government",
+          "url": null
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:17.136Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:46.270Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "McClellan Ranch Preserve packs Saturday and Sunday with a Bird ID guided hike, an Environmental Education Center Open House, and a family nature journaling session, while the library hosts a Baby Wearing Dance and Pumpkin Pool-ooza splashes down Sunday.",
+      "summary": "Cupertino Library keeps the week full of family and learning programs, from Little Learners Club Monday to ESL Conversation Club and Homework Help Tuesday, Level Up Readers and Bedtime Story Time Wednesday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Environmental Education Center Open House",
-          "when": "Sat, Sep 26 · 11:00 AM",
-          "venue": "McClellan Ranch Preserve",
+          "title": "Little Learners Club",
+          "when": "Mon, Sep 28 · 11:00 AM",
+          "venue": "Cupertino Library",
           "category": "family",
-          "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House"
+          "url": "https://sccl.bibliocommons.com/events/6a8a3bc3feae9600380752e8"
         },
         {
           "type": "event",
-          "title": "Join-A-Ranger: Bird ID and Guided Hike",
-          "when": "Sat, Sep 26 · 8:00 AM",
-          "venue": "McClellan Ranch Preserve",
-          "category": "family",
-          "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike"
+          "title": "ESL Conversation Club",
+          "when": "Tue, Sep 29 · 10:30 AM",
+          "venue": "Cupertino Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/6930df21caa2e62f001e9ba2"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:18.824Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:48.296Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "A Sunday meetup walks from Safeway to the Art & Wine Festival at Civic Center Lawn; the library hosts Mahjong, and council reviewed Highway 17 congestion relief.",
+      "summary": "Los Gatos Library hosts an in-person interview with past and present Town Poets Laureate Monday, while last week's council study session dug into congestion relief options for the Highway 17 corridor to Santa Cruz.",
       "highlights": [
         {
           "type": "event",
-          "title": "Informed Community Book Club: All-American Nativism discussion",
-          "when": "Sat, Sep 26 · 2:00 PM",
-          "venue": "Los Gatos Library",
-          "category": "arts",
-          "url": null
+          "title": "Los Gatos Farmers Market",
+          "when": "Sun, Sep 27 · 9:00 AM",
+          "venue": "Town Park Plaza",
+          "category": "food",
+          "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/"
         },
         {
           "type": "event",
-          "title": "Learn to Play Mahjong",
-          "when": "Sun, Sep 27 · 10:00 AM",
+          "title": "ESL Conversation Club",
+          "when": "Mon, Sep 28 · 11:00 AM",
           "venue": "Los Gatos Library",
-          "category": "arts",
-          "url": "https://losgatosca.libcal.com/event/16820876"
+          "category": "community",
+          "url": "https://losgatosca.libcal.com/event/16831243"
         },
         {
           "type": "cityhall",
@@ -84,86 +92,86 @@
           "url": "https://losgatos-ca.municodemeetings.com/"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:20.512Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:50.283Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Mountain View's weekend mixes Flamenco de Jerez and Private Lives at the Center for the Performing Arts and The Pear Theatre with the Harvest History Festival at Heritage Park Saturday, plus a Repair Café at Hacker Dojo Sunday, while the council met in closed session Tuesday on both a potential case against major fire truck makers and the City Attorney appointment.",
+      "summary": "Mountain View's City Council met in closed session Tuesday to weigh possible legal action against fire truck makers including Golden State Fire Apparatus, Pierce, Oshkosh, REV Group and Rosenbauer, while the library hosts Choose Your Own Adventure Book Club Monday afternoon and Smart Start Babytime that evening.",
       "highlights": [
         {
           "type": "event",
-          "title": "Flamenco de Jerez",
-          "when": "Sat, Sep 26 · 7:00 PM",
-          "venue": "Mountain View Center for the Performing Arts",
-          "category": "arts",
-          "url": null
-        },
-        {
-          "type": "event",
           "title": "Private Lives",
-          "when": "Sat, Sep 26 · 8:00 PM",
+          "when": "Sun, Sep 27 · 2:00 PM",
           "venue": "The Pear Theatre",
           "category": "arts",
           "url": "https://thepear.vbotickets.com/events?eid=193669"
         },
         {
+          "type": "event",
+          "title": "Mountain View Farmers Market",
+          "when": "Sun, Sep 27 · 9:00 AM",
+          "venue": "Hope St. Lots (Lots 4 & 8)",
+          "category": "food",
+          "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/"
+        },
+        {
           "type": "cityhall",
-          "title": "City weighs legal action against major fire truck makers",
+          "title": "City weighs possible legal action against fire truck makers",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://mountainview.legistar.com/Calendar.aspx?From=9%2F22%2F2026&To=9%2F22%2F2026"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:22.621Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:52.714Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saturday brings an ABBA tribute at The Mountain Winery, \"Once Upon a Mattress\" at Saratoga Civic Theater, and the Farmers Market at West Valley College, while the library hosts Mariachi Estelar and a tissue paper flower craft Sunday.",
+      "summary": "Saratoga's week spans genres — \"Once Upon a Mattress\" closes at the Civic Theater Sunday and A.J. Croce Presents Croce Plays Croce with Leo Kottke plays the Mountain Winery that same evening, while a Senior Fraud Prevention Seminar hits West Valley College Monday.",
       "highlights": [
         {
           "type": "event",
-          "title": "The Concert: A Tribute to ABBA",
-          "when": "Sat, Sep 26 · 7:30 PM",
-          "venue": "The Mountain Winery",
-          "category": "music",
-          "url": "https://www.mountainwinery.com/events/detail?event_id=1261101"
-        },
-        {
-          "type": "event",
           "title": "Once Upon a Mattress",
-          "when": "Sat, Sep 26 · 8:00 PM",
+          "when": "Sun, Sep 27 · 2:30 PM",
           "venue": "Saratoga Civic Theater",
           "category": "arts",
           "url": "https://southbaymt.com/shows/ticket-sales/ouam/"
+        },
+        {
+          "type": "event",
+          "title": "A.J. Croce Presents Croce Plays Croce with Leo Kottke",
+          "when": "Sun, Sep 27 · 7:30 PM",
+          "venue": "The Mountain Winery",
+          "category": "music",
+          "url": "https://www.mountainwinery.com/events/detail?event_id=1345380"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:24.475Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:55.196Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "Sunnyvale packs Saturday with emergency preparedness classes at the library, the East Channel Trail Study community meeting, and the Murphy Avenue Farmers Market, while council proclaims Filipino American History Month, Hindu American Heritage Month, and Domestic Violence Awareness Month Tuesday.",
+      "summary": "Sunnyvale Public Library hosts a costume design talk with Bianca Hernandez-Knight Monday and screens \"Ordinary People\" with a film professor discussion Wednesday, while council on Tuesday recognizes Filipino American History Month, Hindu American Heritage Month, and Domestic Violence Awareness Month.",
       "highlights": [
         {
           "type": "event",
-          "title": "Personal Emergency Preparedness Class",
-          "when": "Sat, Sep 26 · 2:00 PM",
-          "venue": "Sunnyvale Public Library Program Room",
+          "title": "Costume Design Talk with Bianca Hernandez-Knight",
+          "when": "Mon, Sep 28 · 6:00 PM",
+          "venue": "Sunnyvale Public Library",
           "category": "education",
           "url": null
         },
         {
           "type": "event",
-          "title": "Personal Emergency Preparedness Workshop",
-          "when": "Sat, Sep 26 · 2:00 PM",
-          "venue": "Sunnyvale Library Programs Room",
-          "category": "education",
+          "title": "Ordinary People (1980) Screening with Film Professor Discussion",
+          "when": "Wed, Sep 30 · 6:00 PM",
+          "venue": "Sunnyvale Public Library",
+          "category": "arts",
           "url": null
         },
         {
@@ -175,29 +183,29 @@
           "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4524&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:26.286Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:57.351Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San José",
-      "summary": "San José marked the Mid-Autumn Moon Festival at Children's Discovery Museum Saturday as the city logged ten ADU permits issued this week, while council takes up three airport lease amendments Tuesday.",
+      "summary": "Japantown's Undokai sports festival fills Akiyama Wellness Center Field Sunday while City Hall's Tuesday agenda weighs airport lease amendments with Jett Pro Line Maintenance, GSA Public Building Service, and PrimeFlight Aviation Services.",
       "highlights": [
         {
           "type": "event",
           "title": "September Events with Sky Campus Happiness",
-          "when": "Sat, Sep 26 · 1:00 PM",
+          "when": "Sun, Sep 27 · 1:00 PM",
           "venue": null,
           "category": "community",
           "url": "https://events.sjsu.edu/event/september-events-with-sky-campus-happiness"
         },
         {
           "type": "event",
-          "title": "Mid-Autumn Moon Festival",
-          "when": "Sat, Sep 26 · 10:00 AM",
-          "venue": "Children's Discovery Museum of San Jose",
+          "title": "Japantown Community Picnic (Undokai Japanese Sports Festival)",
+          "when": "Sun, Sep 27 · 10:00 AM",
+          "venue": "Akiyama Wellness Center Field",
           "category": "family",
-          "url": null
+          "url": "https://events.humanitix.com/2026-jtownpicnic"
         },
         {
           "type": "council",
@@ -208,47 +216,39 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8110&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:28.146Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:39:59.720Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Saturday brings a packed slate in Santa Clara: an astronomy talk at Northside Branch Library, a pollinator bioblitz at Everett N. \"Eddie\" Souza Park, a math workshop at Mission Branch Library, a book launch at Central Park Library, and the Farmers Market on Jackson Street.",
+      "summary": "Santa Clara's week opens with Triton Tea Time with Preston Metcalf at the Triton Museum of Art and a Genealogy Society Sunday Social at Central Park Library, then shifts to campus with Santa Clara University's student mentorship cafe, dance auditions, and a Women in Business info night, all Monday.",
       "highlights": [
         {
           "type": "event",
-          "title": "Know Your Cosmic Neighborhood - Astronomy Presentation",
-          "when": "Sat, Sep 26 · 1:00 PM",
-          "venue": "Northside Branch Library",
-          "category": "education",
+          "title": "Triton Tea Time with Preston Metcalf",
+          "when": "Sun, Sep 27 · 12:00 PM",
+          "venue": "Triton Museum of Art",
+          "category": "arts",
           "url": null
         },
         {
           "type": "event",
-          "title": "Bioblitz 2026: Parks for Pollinators",
-          "when": "Sat, Sep 26 · 10:00 AM",
-          "venue": "Everett N. \"Eddie\" Souza Park & Community Garden",
-          "category": "family",
+          "title": "Genealogy Society Sunday Social",
+          "when": "Sun, Sep 27 · 2:00 PM",
+          "venue": "Central Park Library - Heritage Pavilion",
+          "category": "community",
           "url": null
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:29.999Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:40:02.073Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Linden Tree Books hosts a launch with Lisa Moore Ramée in conversation with Misa Sugiura Saturday, plus storytime Sunday, while Downtown Los Altos holds the Head West Marketplace Sunday and Los Altos Library offers Monday Morning Meditation & Mindfulness.",
+      "summary": "Head West Marketplace fills Downtown Los Altos Sunday, while Linden Tree Books hosts a storytime and a Middle Grade Book Club the same day before Los Altos Library's meditation session and Now Read This Book Club Monday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Book Launch with Lisa Moore Ramée — In conversation with Misa Sugiura",
-          "when": "Sat, Sep 26 · 1:00 PM",
-          "venue": "Linden Tree Books",
-          "category": "arts",
-          "url": "https://www.lindentreebooks.com/events-calendar/"
-        },
         {
           "type": "event",
           "title": "Storytime with Isabella Kung",
@@ -256,57 +256,57 @@
           "venue": "Linden Tree Books",
           "category": "arts",
           "url": "https://www.lindentreebooks.com/events-calendar/"
+        },
+        {
+          "type": "event",
+          "title": "Head West Marketplace",
+          "when": "Sun, Sep 27 · 11:00 AM",
+          "venue": "Downtown Los Altos",
+          "category": "arts",
+          "url": "https://downtownlosaltos.org/event/head-west-marketplace/"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:31.781Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:40:04.154Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Palo Alto's weekend mixes arts and commerce: the Great Glass Pumpkin Patch and \"A Gentleman's Guide to Love and Murder\" hit Saturday, plus the Downtown Farmers' Market, while City Hall quietly approved new signage for TIAA and Massage Envy on El Camino Real.",
+      "summary": "Palo Alto Players stages \"A Gentleman's Guide to Love and Murder\" at Lucie Stern Theatre Sunday, while City Hall approved illuminated TIAA wall signage on El Camino Real and cleared new LED signs for Massage Envy's move into 2515 El Camino Real.",
       "highlights": [
         {
           "type": "event",
-          "title": "Great Glass Pumpkin Patch",
-          "when": "Sat, Sep 26 · 10:00 AM",
-          "venue": "Palo Alto Art Center",
-          "category": "arts",
-          "url": null
-        },
-        {
-          "type": "event",
           "title": "A Gentleman's Guide to Love and Murder",
-          "when": "Sat, Sep 26 · 7:30 PM",
+          "when": "Sun, Sep 27 · 7:30 PM",
           "venue": "Lucie Stern Theatre",
           "category": "arts",
           "url": "https://paplayers.org/show/a-gentlemans-guide-to-love-and-murder/"
         },
         {
+          "type": "event",
+          "title": "California Ave Farmers Market",
+          "when": "Sun, Sep 27 · 9:00 AM",
+          "venue": "California Avenue",
+          "category": "food",
+          "url": "https://uvfm.org/palo-alto-sundays"
+        },
+        {
           "type": "cityhall",
-          "title": "TIAA approved for three illuminated wall signs",
+          "title": "TIAA approved for three wall signs on El Camino Real",
           "when": null,
           "venue": null,
           "category": "government",
           "url": "https://gis.cityofpaloalto.org/PermitView/"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:34.406Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:40:06.559Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas Library keeps busy this week — a discussion of The Nerd Reich Sunday, a Books & Bricks book club for grades 4-6 and Homework Help for K-6 Monday, plus a free adult ESL class Monday and a Baby Bouncers lapsit for prewalkers Tuesday.",
+      "summary": "Milpitas Library keeps the week practical: Books & Bricks and Homework Help for Grades K-6 land Monday, then Baby Bouncers Lapsit and another Homework Help session follow Tuesday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "The Nerd Reich",
-          "when": "Sun, Sep 27 · 11:00 AM",
-          "venue": "Milpitas Library",
-          "category": "community",
-          "url": "https://www.meetup.com/humanistcommunity/events/316701026/"
-        },
         {
           "type": "event",
           "title": "Books & Bricks Book Club for Grades 4-6",
@@ -314,10 +314,18 @@
           "venue": "Milpitas Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/694338476724c63d00e77928"
+        },
+        {
+          "type": "event",
+          "title": "Homework Help for Grades K-6",
+          "when": "Mon, Sep 28 · 4:00 PM",
+          "venue": "Milpitas Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56c8f"
         }
       ],
-      "weekLabel": "Sep 26 – Oct 3",
-      "generatedAt": "2026-09-27T04:41:36.384Z"
+      "weekLabel": "Sep 27 – Oct 4",
+      "generatedAt": "2026-09-28T04:40:08.712Z"
     }
   }
 }
