@@ -11,6 +11,20 @@ test("rejects a sign-only entitlement", () => {
     }),
     false,
   );
+  assert.equal(
+    isAroundTownPermitCandidate({
+      category: "entitlement",
+      description: 'Request for Architectural Review for the installation of (3) illuminated wall signs for "TIAA".',
+    }),
+    false,
+  );
+  assert.equal(
+    isAroundTownPermitCandidate({
+      category: "entitlement",
+      description: "Request for Architectural Review for two NEW LED Channel Letter wall signs FOR MASSAGE ENVY.",
+    }),
+    false,
+  );
 });
 
 test("keeps substantial commercial and housing permits", () => {

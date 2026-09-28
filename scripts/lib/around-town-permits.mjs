@@ -1,5 +1,5 @@
 const ROUTINE_PERMIT = /\b(reroof|re-roof|roofing|roof replacement)\b/i;
-const SIGN_PERMIT = /\b(?:sign|signage)\b/i;
+const SIGN_PERMIT = /\b(?:signs?|signage)\b/i;
 const SUBSTANTIVE_PROJECT =
   /\b(?:addition|commercial|demolition|housing|mixed-use|new construction|office|residential|tenant improvement|units?)\b/i;
 

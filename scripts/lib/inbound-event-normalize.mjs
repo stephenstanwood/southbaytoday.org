@@ -32,6 +32,15 @@ const TRACKER_FALLBACKS = [
   { match: /\bls\.49ers\.com\b/i, url: LEVIS_STADIUM_EVENTS_URL },
 ];
 
+// The newsletter extractor did not retain links for these dated events.
+// Each replacement points to the organizer's official event or calendar page.
+const VERIFIED_INBOUND_URLS = new Map([
+  ["2026-09-27|Triton Tea Time with Preston Metcalf", "https://www.tritonmuseum.org/events"],
+  ["2026-09-27|Genealogy Society Sunday Social", "https://www.sclibrary.org/Home/Components/Calendar/Event/113847/67?curm=9&cury=2026&recordid=17517"],
+  ["2026-09-28|Costume Design Talk with Bianca Hernandez-Knight", "https://www.library.sunnyvale.ca.gov/events/calendar-month-view"],
+  ["2026-09-30|Ordinary People (1980) Screening with Film Professor Discussion", "https://www.library.sunnyvale.ca.gov/Home/Components/Calendar/Event/12969/74?curm=9&cury=2026"],
+]);
+
 function detrack(url) {
   if (!url || !isTrackerUrl(url)) return url;
   const fallback = TRACKER_FALLBACKS.find((f) => f.match.test(url));
@@ -66,6 +75,8 @@ export function inboundClock(value) {
 function officialOverride(event) {
   const date = String(event?.startsAt || "").slice(0, 10);
   const identity = `${event?.title || ""} ${event?.location || ""}`;
+  const verifiedUrl = VERIFIED_INBOUND_URLS.get(`${date}|${event?.title || ""}`);
+  if (verifiedUrl) return { url: verifiedUrl };
   if (date === "2026-07-20" && /jeremy\s+frey\s*:\s*woven/i.test(identity) && /cantor arts center/i.test(identity)) {
     return {
       url: JEREMY_FREY_EXHIBITION_URL,

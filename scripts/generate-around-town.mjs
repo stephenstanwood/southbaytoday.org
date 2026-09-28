@@ -6,7 +6,6 @@
  *   1. City Council meetings (via Stoa API)
  *   2. Planning Commission meetings (via Stoa API)
  *   3. Notable building permits (from permit-pulse.json)
- *   4. Development tracker status changes (from development-data.ts)
  *
  * Usage:
  *   node --env-file=.env.local scripts/generate-around-town.mjs
@@ -28,9 +27,7 @@ import { todayPT } from "./lib/dates.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "around-town.json");
-const DEV_CACHE_PATH = join(__dirname, "..", "src", "data", "south-bay", ".dev-status-cache.json");
 const PERMIT_PATH = join(__dirname, "..", "src", "data", "south-bay", "permit-pulse.json");
-const DEV_DATA_PATH = join(__dirname, "..", "src", "data", "south-bay", "development-data.ts");
 
 loadEnvLocal();
 
@@ -555,97 +552,6 @@ Return [] if nothing is genuinely noteworthy.`, 512);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// SOURCE 4: Development tracker status changes
-// ══════════════════════════════════════════════════════════════════════════════
-
-const STATUS_LABELS = {
-  proposed: "Proposed",
-  approved: "Approved",
-  "under-construction": "Under Construction",
-  "opening-soon": "Opening Soon",
-  completed: "Completed",
-  "on-hold": "On Hold",
-};
-
-function gatherDevItems() {
-  console.log("\n🏢 Checking development tracker...");
-  if (!existsSync(DEV_DATA_PATH)) {
-    console.log("  ⏭️  development-data.ts not found, skipping");
-    return [];
-  }
-
-  // Parse projects from the TS file using vm to eval the JS array literal
-  const tsContent = readFileSync(DEV_DATA_PATH, "utf8");
-  const arrayMatch = tsContent.match(/DevProject\[\]\s*=\s*(\[[\s\S]*?\n\])\s*;/);
-  if (!arrayMatch) {
-    console.log("  ⚠️  Could not find projects array in development-data.ts");
-    return [];
-  }
-
-  let projects;
-  try {
-    // The array literal is valid JS — eval it directly (trusted local file)
-    projects = eval(`(${arrayMatch[1]})`);
-  } catch (err) {
-    console.log(`  ⚠️  Could not parse projects: ${err.message}`);
-    return [];
-  }
-
-  // Load previous status cache
-  let prevCache = {};
-  if (existsSync(DEV_CACHE_PATH)) {
-    try {
-      prevCache = JSON.parse(readFileSync(DEV_CACHE_PATH, "utf8"));
-    } catch {}
-  }
-
-  const isFirstRun = Object.keys(prevCache).length === 0;
-  const today = todayPT();
-  const items = [];
-
-  // Build new cache and detect changes
-  const newCache = {};
-  for (const p of projects) {
-    newCache[p.id] = p.status;
-
-    if (isFirstRun) continue; // Seed run — don't generate items
-    if (prevCache[p.id] === p.status) continue; // No change
-
-    const oldLabel = STATUS_LABELS[prevCache[p.id]] || prevCache[p.id] || "New";
-    const newLabel = STATUS_LABELS[p.status] || p.status;
-    const headline = prevCache[p.id]
-      ? `${p.name} moves to ${newLabel.toLowerCase()}`
-      : `${p.name} added to development tracker`;
-    const summary = prevCache[p.id]
-      ? `${p.name} in ${p.city} has moved from ${oldLabel} to ${newLabel}.${p.scale ? ` The ${p.category} project is ${p.scale}.` : ""}`
-      : `${p.name} in ${p.city} (${newLabel}) has been added to the development tracker.${p.scale ? ` Scale: ${p.scale}.` : ""}`;
-
-    items.push({
-      id: makeId(p.cityId, today, headline),
-      cityId: p.cityId,
-      cityName: p.city,
-      date: today,
-      headline,
-      summary,
-      sourceUrl: "", // no external source
-      source: "development",
-    });
-    console.log(`  ✅ ${p.city}: ${headline}`);
-  }
-
-  // Save updated cache
-  writeFileAtomic(DEV_CACHE_PATH, JSON.stringify(newCache, null, 2) + "\n");
-
-  if (isFirstRun) {
-    console.log(`  📦 First run — seeded cache with ${Object.keys(newCache).length} projects (no items generated)`);
-  } else if (!items.length) {
-    console.log("  — No status changes detected");
-  }
-
-  return items;
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
 // MAIN: gather, merge, deduplicate, output
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -656,10 +562,10 @@ async function main() {
     gatherMeetingItems("Planning+Commission"),
     gatherPermitItems(),
   ]);
-  const devItems = gatherDevItems(); // sync, no API calls
-
-  const allItems = [...councilItems, ...planningItems, ...permitItems, ...devItems];
-  console.log(`\n📊 Totals: ${councilItems.length} council, ${planningItems.length} planning, ${permitItems.length} permit, ${devItems.length} development`);
+  // Tracker edits are editorial changes, not dated civic actions. A corrected
+  // status cannot be reported as if a city approved a project today.
+  const allItems = [...councilItems, ...planningItems, ...permitItems];
+  console.log(`\n📊 Totals: ${councilItems.length} council, ${planningItems.length} planning, ${permitItems.length} permit`);
 
   // Hedge-summary filter: drop items where Claude wrote vague "specifics weren't
   // provided / details unclear / could affect..." filler. These slip past even
