@@ -1714,6 +1714,23 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#2563EB",
     url: "https://www.prnewswire.com/news-releases/overlord-labs-closes-oversubscribed-seed-financing-bringing-total-funding-to-10-million-to-advance-battery-intelligence-for-edge-ai-devices-302890280.html",
   },
+  // PicoJool's Sep 24 release says "headquartered in Palo Alto" in its own
+  // boilerplate, beyond the Palo Alto dateline. The $27.5M is new Series A
+  // money; $39.5M includes its earlier $12M seed.
+  // https://www.businesswire.com/news/home/20260922057600/en/PicoJool-Raises-$27.5-Million-Series-A-to-Scale-Optical-Connectivity-for-AI-Infrastructure
+  {
+    id: "picojool",
+    name: "PicoJool",
+    city: "Palo Alto",
+    category: "chip",
+    round: "Series A",
+    amount: "$27.5M",
+    date: "2026-09-24",
+    tagline:
+      "Palo Alto's PicoJool makes laser chips and optical links for AI data centers. Its $27.5M Series A, led by Socratic Partners with Hudson River Trading participating, brings total funding to $39.5M. The company has started sampling its 200G laser chips and will expand its U.S. and Taiwan teams to bring them to market.",
+    color: "#2563EB",
+    url: "https://www.picojool.com/news/picojool-raises-27-5-million-series-a-to-scale-optical-connectivity-for-ai-infrastructure",
+  },
   {
     id: "ema",
     name: "Ema",
