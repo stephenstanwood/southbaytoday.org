@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-28T16:08:12.020Z",
+    "generatedAt": "2026-09-29T02:17:20.185Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 557,
+    "eventCount": 553,
     "sourceCount": 20,
     "sources": [
-      "Mountain View Public Library (127)",
-      "Los Gatos Library (151)",
+      "Mountain View Public Library (126)",
+      "Los Gatos Library (149)",
       "San Jose Jazz (19)",
       "Linden Tree Books (9)",
       "History San Jose (6)",
@@ -22,10 +22,10 @@
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
-      "SAP Center (16)",
+      "SAP Center (15)",
       "The Tech Interactive (8)",
-      "Peninsula Open Space Trust (4)",
-      "San Jose Museum of Art (7)"
+      "San Jose Museum of Art (7)",
+      "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
       {
@@ -64,7 +64,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 132,
+        "count": 131,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -74,7 +74,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 151,
+        "count": 149,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -117,7 +117,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
@@ -292,7 +292,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 16,
+        "count": 15,
         "error": null,
         "sources": [
           "SAP Center"
@@ -335,59 +335,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 4,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 4 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "66b2526ebce2",
-      "title": "Choose Your Own Adventure Book Club",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "Calling all young adventurers! Join us for an exciting book club where you help decide what happens next in the story. We will read the story together, vote on which direction to take, then see where our choice takes us! Each participant will receive a free book and an Adventure Passport to track the books they’ve read. Open to ages 5-8.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17449113",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "5644610105df",
-      "title": "Smart Start Babytime",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
-      "time": "6:00 PM",
-      "endTime": "7:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Smart Start Babytime is a special program for babies (0–2) and their caregivers that blends stories, songs, and early play with different information each week with a pediatric resident from Stanford Medical School. Caregivers will gain practical tips, build confidence, and have the opportunity to ask questions—all in a warm, supportive environment designed for your baby’s earliest learning.",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Parents",
-        "Families",
-        "Toddlers"
-      ],
-      "url": "https://mountainview.libcal.com/event/16916948",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "8b3c22c3695c",
       "title": "Outdoor Storytime",
@@ -1601,6 +1560,7 @@
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
       "city": "mountain-view",
+      "registration": "required",
       "category": "arts",
       "cost": "free",
       "description": "Calling all young adventurers! Join us for an exciting book club where you help decide what happens next in the story. We will read the story together, vote on which direction to take, then see where our choice takes us! Each participant will receive a free book and an Adventure Passport to track the books they’ve read. Open to ages 5-8.",
@@ -1845,6 +1805,29 @@
         "Families"
       ],
       "url": "https://mountainview.libcal.com/event/17170833",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "25d1fb1305c9",
+      "title": "Halloween Trick-or-Treat",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "10:00 AM",
+      "endTime": "6:00 PM",
+      "venue": "Library-wide",
+      "address": "",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Stop by the Library for some Halloween fun. Trick-or-treating for children will be available during Library open hours on Saturday, October 31, from 10:00 a.m.–6:00 p.m. Non-food treats available in the Children's Room, Teen Zone, Second Floor Reference Desk, and Customer Service areas. Also in the Friends of the Mountain View Library Gift Shop when open. Costumes optional. For ages 0-18. This program is made possible by the generous support of the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Babies",
+        "Preschoolers",
+        "Tweens",
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17722185",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -3048,67 +3031,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17058573",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "e74da5c9e2a2",
-      "title": "ESL Conversation Club",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831243",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "291ba30f2bff",
-      "title": "Social Stitching",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
-      "time": "4:30 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Come join fellow needlework and textile arts enthusiasts at the library! Crafters of all levels are welcome to bring their projects and chat, teach, learn, and make new friends at this casual weekly get together. This group is entirely self-directed and you are encouraged to bring your own tools and materials. If you are looking for some inspiration or don’t know where to start, check out Creativebug - it's free with your library card and offers hundreds of project ideas and instructions.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16025975",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "4443986f1402",
-      "title": "Author Talk IN PERSON - Interview with Past and Present Town Poets Laureate",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
-      "time": "5:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "Come join us for a fun time as the Town's current Poet Laureate William Butler interviews our past Poet Laureate, Jen Siraganian, in celebration of her book Everything Has Been Moved, Even the Dead which won the 2026 Perugia Press Prize. Jen will read poems from the book and William will pose questions and facilitate discussion.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16696011",
-      "source": "Los Gatos Library",
       "kidFriendly": false
     },
     {
@@ -4899,6 +4821,26 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/17677411",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "fe0b60c8cf91",
+      "title": "Learn to Play Mahjong",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "Always wanted to learn how to play Mahjong? Well now you can! Come on down to the library and learn with us! This class is for BEGINNERS.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17705026",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -10414,23 +10356,6 @@
       "kidFriendly": false
     },
     {
-      "id": "80f699f4863b",
-      "title": "TAEMIN",
-      "date": "2026-10-12",
-      "displayDate": "Mon, Oct 12",
-      "time": "8:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/taemin",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "3051ad316e8b",
       "title": "Sharks vs Bruins",
       "date": "2026-10-13",
@@ -10754,74 +10679,6 @@
       "kidFriendly": true
     },
     {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "0fd141a7f257",
       "title": "First Friday: New Ballet Season Preview",
       "date": "2026-10-02",
@@ -10938,6 +10795,74 @@
       "description": "",
       "url": "https://sjmusart.org/event/first-fridays-december-2026",
       "source": "San Jose Museum of Art",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     }
   ]
