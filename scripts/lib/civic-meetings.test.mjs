@@ -26,6 +26,7 @@ import {
   resolvePublicStart,
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
+  extractPrimeGovAgendaItems,
 } from "./civic-meetings.mjs";
 
 test("Legistar links use the provider-owned public URL instead of rebuilding API ids", () => {
@@ -774,4 +775,56 @@ test("Legistar verifier ignores cancelled sittings and treats task forces as del
     () => verifyLegistarBodyOnDate("santaclara", "2026-09-17", "anything"),
   );
   assert.deepEqual(cancelledCouncil, { body: null, sourceUrl: null, councilMet: false });
+});
+
+// withStubbedFetch restores fetch as soon as run() returns its promise, which
+// only covers the verifier's first request. The item matcher fetches agendas
+// after an await, so keep the stub in place until the whole call settles.
+async function withStubbedFetchAsync(impl, run) {
+  const original = globalThis.fetch;
+  globalThis.fetch = impl;
+  try {
+    return await run();
+  } finally {
+    globalThis.fetch = original;
+  }
+}
+
+const primeGovItem = (n, title) =>
+  `<td class='number-cell'><div><span>${n}.</span></div>\n</td><td class='item-cell'><div class='agenda-item' id='AgendaItem_${n}'><div style="x"><span>${title}</span></div>\n</div>`;
+
+test("extractPrimeGovAgendaItems reads numbered items from a PrimeGov HTML agenda", () => {
+  const html = primeGovItem(5, "Review the Proposed Playground Synthetic Turf Use Guidelines &ndash;&nbsp;45 minutes");
+  assert.deepEqual(extractPrimeGovAgendaItems(html), [
+    { agendaNumber: "5", title: "Review the Proposed Playground Synthetic Turf Use Guidelines – 45 minutes" },
+  ]);
+});
+
+// 2026-09-22: Council special meeting + Parks and Recreation Commission. The
+// PRC record never names its body, and the Council record names the PRC (it
+// interviews PRC applicants) — agenda items must decide both ways.
+test("PrimeGov verifier uses agenda items, not body names, on a council day", async () => {
+  const meetings = [
+    { dateTime: "2026-09-22T17:45:00", title: "City Council Special Meeting", documentList: [{ id: 1, compileOutputType: 3, publishStatus: 1 }] },
+    { dateTime: "2026-09-22T19:00:00", title: " Parks and Recreation Commission Regular Meeting", documentList: [{ id: 2, compileOutputType: 3, publishStatus: 1 }] },
+  ];
+  const agendas = {
+    1: primeGovItem(1, "Interview Candidates for Vacancies on the Parks Recreation Commission (PRC) and Public Art Commission (PAC)")
+      + primeGovItem(2, "Conference with Real Property Negotiators for 4000 Middlefield Road Cubberley Site"),
+    2: primeGovItem(5, "Review the Proposed Playground Synthetic Turf Use Guidelines – 45 minutes – Staff Presentation")
+      + primeGovItem(6, "Park Improvements Ordinance Recommendation for Foothills Natures Preserve Improvement Project"),
+  };
+  const fetchStub = async (url) => {
+    if (url.includes("ListArchivedMeetings")) return jsonResponse(meetings);
+    const id = url.match(/FileId=(\d+)/)[1];
+    return { ok: true, text: async () => agendas[id] };
+  };
+  const prc = await withStubbedFetchAsync(fetchStub, () =>
+    verifyPrimeGovBodyOnDate("cityofpaloalto.primegov.com", "2026-09-22",
+      "Review the Proposed Playground Synthetic Turf Use Guidelines – 45 minutes – Staff Presentation. Park Improvements Ordinance Recommendation for Foothills Natures Preserve Improvement Project"));
+  assert.equal(prc.body, "Parks and Recreation Commission");
+  const council = await withStubbedFetchAsync(fetchStub, () =>
+    verifyPrimeGovBodyOnDate("cityofpaloalto.primegov.com", "2026-09-22",
+      "Conference with Real Property Negotiators for 4000 Middlefield Road Cubberley Site. Interview Candidates for Vacancies on the Parks Recreation Commission (PRC) and Public Art Commission (PAC)"));
+  assert.deepEqual(council, { body: null, sourceUrl: null, councilMet: true });
 });

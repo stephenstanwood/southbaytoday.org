@@ -585,6 +585,39 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
   }
 }
 
+// Numbered agenda items from a rendered PrimeGov HTML agenda. Each item is a
+// `number-cell` ("6.") followed by an `agenda-item` div holding its title.
+export function extractPrimeGovAgendaItems(html) {
+  const items = [];
+  const re = /<td class='number-cell'>([\s\S]*?)<\/td>\s*<td class='item-cell'>\s*<div class='agenda-item'[^>]*>([\s\S]*?)<\/div>\s*<\/div>/g;
+  for (const m of String(html ?? "").matchAll(re)) {
+    const agendaNumber = decodeAgendaText(m[1]).replace(/\.$/, "");
+    const title = decodeAgendaText(m[2]);
+    if (title) items.push({ agendaNumber, title });
+  }
+  return items;
+}
+
+async function pickBodyByPrimeGovItems(domain, meetings, recordText, toCandidate) {
+  const withItems = [];
+  for (const m of meetings.slice(0, 4)) {
+    const candidate = toCandidate(m);
+    if (!candidate.body) continue;
+    let items = [];
+    if (candidate.sourceUrl) {
+      try {
+        const res = await fetch(candidate.sourceUrl, {
+          headers: { "User-Agent": LEGISTAR_UA, Accept: "text/html" },
+          signal: AbortSignal.timeout(15_000),
+        });
+        if (res.ok) items = extractPrimeGovAgendaItems(await res.text());
+      } catch {}
+    }
+    withItems.push({ ...candidate, items });
+  }
+  return pickBodyByItemTitles(withItems, recordText);
+}
+
 // Same honesty check as above, for cities on PrimeGov instead of Legistar.
 // Palo Alto's Legistar instance is decommissioned (paloalto.legistar.com answers
 // every request with "Invalid parameters!"), so the Legistar verifier could
@@ -628,6 +661,21 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
     if (named.some(isCouncil)) {
       const others = named.filter((m) => !isCouncil(m)).map(toCandidate).filter((c) => c.body);
       if (others.length === 0) return { body: null, sourceUrl: null, councilMet: true }; // label is correct
+      // Content first: match the record against each same-day agenda's own
+      // numbered items, the council's included. Name tokens alone fail both
+      // ways. On 2026-09-22 Palo Alto's Council held a 5:45pm special meeting
+      // and the Parks and Recreation Commission met at 7pm; Stoa tagged the PRC
+      // agenda (playground synthetic turf, Foothills Nature Preserve ordinance)
+      // as "City Council" and it shipped under the Council's name because
+      // nothing in it reads "Parks" or "Recreation" — while the Council's own
+      // record ("Interview Candidates for Vacancies on the Parks Recreation
+      // Commission") scored as the PRC on names alone.
+      const byItems = await pickBodyByPrimeGovItems(domain, named, recordText, toCandidate);
+      if (byItems) {
+        if (/^city council\b/i.test(byItems.body)) return { body: null, sourceUrl: null, councilMet: true };
+        const { score, ...winner } = byItems;
+        return winner;
+      }
       return relabelIfOtherBodyMatches(others, recordText);
     }
 
