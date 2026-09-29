@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-29T02:17:20.185Z",
+    "generatedAt": "2026-09-29T16:08:10.988Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 553,
+    "eventCount": 555,
     "sourceCount": 20,
     "sources": [
       "Mountain View Public Library (126)",
-      "Los Gatos Library (149)",
+      "Los Gatos Library (151)",
       "San Jose Jazz (19)",
       "Linden Tree Books (9)",
       "History San Jose (6)",
@@ -74,7 +74,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 149,
+        "count": 151,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -117,7 +117,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -6095,6 +6095,46 @@
       "kidFriendly": true
     },
     {
+      "id": "c89b3b78a3ac",
+      "title": "ESL Conversation Club",
+      "date": "2026-12-28",
+      "displayDate": "Mon, Dec 28",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16831256",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "8aa38f3765c8",
+      "title": "Social Stitching",
+      "date": "2026-12-28",
+      "displayDate": "Mon, Dec 28",
+      "time": "4:30 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Come join fellow needlework and textile arts enthusiasts at the library! Crafters of all levels are welcome to bring their projects and chat, teach, learn, and make new friends at this casual weekly get together. This group is entirely self-directed and you are encouraged to bring your own tools and materials. If you are looking for some inspiration or don’t know where to start, check out Creativebug - it's free with your library card and offers hundreds of project ideas and instructions.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16025988",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "d7c2f1437d9a",
       "title": "SJZ Break Room Jazz Jam",
       "date": "2026-10-02",
@@ -7517,10 +7557,10 @@
       "kidFriendly": false
     },
     {
-      "id": "db52feeeead3",
+      "id": "2eeba6e29ee3",
       "title": "All Ages Storytime",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
+      "date": "2026-09-29",
+      "displayDate": "Tue, Sep 29",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7534,10 +7574,10 @@
       "kidFriendly": true
     },
     {
-      "id": "985ae00bd5b8",
+      "id": "d8b584a39f54",
       "title": "Toddler Storytime",
-      "date": "2026-09-28",
-      "displayDate": "Mon, Sep 28",
+      "date": "2026-09-29",
+      "displayDate": "Tue, Sep 29",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -8616,7 +8656,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8633,7 +8673,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8650,7 +8690,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8667,7 +8707,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8684,7 +8724,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
