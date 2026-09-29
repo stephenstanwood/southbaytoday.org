@@ -26,6 +26,7 @@ import { BUCKET_ORDER, BUCKET_LABELS } from "../../lib/south-bay/buckets";
 import { CITIES } from "../../lib/south-bay/cities";
 import { TABS } from "../../lib/south-bay/types";
 import { cleanDisplayCopy, cleanDisplayName } from "../../lib/south-bay/displayText.mjs";
+import { sharedPlanMetadata } from "../../lib/south-bay/sharedPlanMetadata";
 import tokensCss from "../../styles/sbt/tokens.css?raw";
 import chromeCss from "../../styles/sbt/chrome.css?raw";
 import homeCss from "../../styles/sbt/home.css?raw";
@@ -214,20 +215,13 @@ export const GET: APIRoute = async ({ params, url }) => {
   const isBucketPlan = plan.cards.some((c: any) => typeof c.bucket === "string" && c.bucket);
 
   const todayPT = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const planTargetDate = plan.planDate || plan.createdAt?.slice(0, 10) || todayPT;
-  const planDateObj = new Date(planTargetDate + "T12:00:00");
-  const dateStr = planDateObj.toLocaleDateString("en-US", {
-    timeZone: "America/Los_Angeles",
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-  });
-  const title = `${dateStr} — South Bay Today`;
-  const cardNames = plan.cards.map((c: any) => c.name).slice(0, 4).join(", ");
-  const description = plan.cards.length > 4 ? `${cardNames}, and more` : cardNames;
+  const { title, description, headline, dateLabel, planDate } = sharedPlanMetadata(
+    plans[id], Object.entries(plans).filter(([planId]) => planId !== id).map(([, savedPlan]) => savedPlan),
+  );
+  const planTargetDate = planDate || todayPT;
 
   // Masthead dateline shows today's date like every other page (the plan's
-  // own date is the page title). Server-rendered at request time; the inline
+  // own date is in the plan heading). Server-rendered at request time; the inline
   // script below refreshes it in case this response was served from cache.
   const todayLabel = new Date().toLocaleDateString("en-US", {
     weekday: "long", month: "long", day: "numeric", year: "numeric",
@@ -470,8 +464,8 @@ function planImgFail(img){var next=img.getAttribute('data-next');if(next){img.re
 </nav>
 <main id="main-content" class="plan-main" data-plan-date="${esc(planTargetDate)}">
   <header class="plan-hero">
-    <p class="sb-eyebrow plan-kicker">A shared day plan</p>
-    <h1 class="plan-title">${esc(dateStr)}</h1>
+    <p class="sb-eyebrow plan-kicker">A shared day plan${dateLabel ? ` · ${esc(dateLabel)}` : ""}</p>
+    <h1 class="plan-title">${esc(headline)}</h1>
     ${metaRowHtml}
   </header>
   ${bodyHtml}
