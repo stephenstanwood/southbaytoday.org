@@ -67,10 +67,11 @@ export default defineConfig({
     // Newsletter issues live in Blob and are listed at request time by their
     // own sitemap. Keep that sitemap out of the page URL set while including
     // it as a child of the canonical sitemap index.
-    customSitemaps: ['https://southbaytoday.org/sitemap-newsletters.xml'],
+    customSitemaps: ['https://southbaytoday.org/sitemap-newsletters.xml', 'https://southbaytoday.org/sitemap-plans.xml'],
     filter: (page) => !page.includes('/logo-preview')
       && !page.includes('/admin')
       && !page.endsWith('/sitemap-newsletters.xml')
+      && !page.endsWith('/sitemap-plans.xml')
       && !isPastDatedUrl(page)
       && !retiredLeafPaths.has(new URL(page).pathname),
     serialize(item) {

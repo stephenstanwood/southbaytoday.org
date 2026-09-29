@@ -1,0 +1,2670 @@
+{
+  "site": "https://southbaytoday.org",
+  "generatedAt": "2026-09-29T08:17:35.599Z",
+  "crawl": {
+    "sitemapUrlCount": 2187,
+    "crawled": 250,
+    "surfaces": {
+      "/robots.txt": {
+        "status": 200,
+        "bytes": 353,
+        "body": "User-agent: *\nAllow: /\n\n# Search and user-requested retrieval. These explicit groups document the\n# site's intent; the wildcard above already permits them.\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\nSitemap: https://southbaytoday.org/sitemap-index.xml\n"
+      },
+      "/llms.txt": {
+        "status": 200,
+        "bytes": 2451
+      },
+      "/rss.xml": {
+        "status": 200,
+        "bytes": 10551
+      }
+    },
+    "findings": [
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-25"
+      },
+      {
+        "severity": "info",
+        "code": "og-image-missing",
+        "message": "page has no og:image",
+        "url": "https://southbaytoday.org/newsletters/2026-05-25"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-25"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-26"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-26"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-26"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-27"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-27"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-27"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-28"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-28"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-28"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-29"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-29"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-29"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-30"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-30"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-30"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-05-31"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-05-31"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-05-31"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 232 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-01"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-01"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-01"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-02"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-02"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-02"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 232 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-03"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-03"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-03"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-04"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-04"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-04"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-05"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-05"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-05"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-06"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-06"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-06"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-07"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-07"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-07"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-08"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-08"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-08"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-09"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-09"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-09"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-10"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-10"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-10"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-11"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-11"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-11"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-12"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-12"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-12"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-13"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-13"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-13"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-14"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-14"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-14"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-15"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-15"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-15"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-16"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-16"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-16"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-17"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-17"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-17"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-06-18"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-06-18"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-06-18"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-01"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-01"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-01"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-02"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-02"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-02"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-03"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-03"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-03"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-04"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-04"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-04"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-05"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-05"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-05"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-06"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-06"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-06"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-07"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-07"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-07"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-08"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-08"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-08"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-09"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-09"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-09"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-10"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-10"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-10"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-11"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-11"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-11"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-13"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-13"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-13"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-14"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-14"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-14"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-15"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-15"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-15"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-16"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-16"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-16"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-17"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-17"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-17"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 227 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-18"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-18"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-18"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-19"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-19"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-19"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-20"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-20"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-20"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-21"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-21"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-21"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-22"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-22"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-22"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-23"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-23"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-23"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-24"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-24"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-24"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-25"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-25"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-25"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-26"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-26"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-26"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-27"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-27"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-27"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-28"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-28"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-28"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-07-29"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-07-29"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-07-29"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-04"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-04"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-04"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-05"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-05"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-06"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-06"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-06"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-07"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-07"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-08"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-08"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-08"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-10"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-10"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-10"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-11"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-11"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-11"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-12"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-12"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-12"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 224 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-13"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-13"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-13"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-14"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-14"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-14"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-17"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-17"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-17"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-18"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-18"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-18"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-19"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-19"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-19"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-20"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-20"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-20"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 228 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-21"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-21"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-21"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-22"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-22"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-22"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-23"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-23"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-23"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-25"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-25"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-25"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-26"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-26"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-26"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-27"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-27"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-27"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-28"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-28"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-28"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-29"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-29"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-29"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 170 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-08-31"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-08-31"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-08-31"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-01"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-01"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-01"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 186 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-02"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-02"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-02"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 221 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-03"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-03"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-03"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 188 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-04"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-04"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-04"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 194 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-05"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-05"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-05"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 216 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-06"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-06"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-06"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 217 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-07"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-07"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-07"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 215 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-08"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-08"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-08"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 220 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-09"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-09"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-09"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 223 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-10"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-10"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-10"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-11"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-11"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-11"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 219 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-13"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-13"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-13"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 222 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-14"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-14"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-14"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 216 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-15"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-15"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-15"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 216 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-16"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-16"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-16"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 221 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-17"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-17"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-17"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 214 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-18"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-18"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-18"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 221 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-19"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-19"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-19"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 218 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-21"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-21"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-21"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 175 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-22"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-22"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-22"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-23"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-23"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-24"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-24"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-26"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-26"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 213 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-27"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-27"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-27"
+      },
+      {
+        "severity": "info",
+        "code": "description-length",
+        "message": "meta description is 216 chars",
+        "url": "https://southbaytoday.org/newsletters/2026-09-28"
+      },
+      {
+        "severity": "warn",
+        "code": "h1-missing",
+        "message": "page has no <h1>",
+        "url": "https://southbaytoday.org/newsletters/2026-09-28"
+      },
+      {
+        "severity": "info",
+        "code": "jsonld-missing",
+        "message": "page has no structured data",
+        "url": "https://southbaytoday.org/newsletters/2026-09-28"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-academic-writing-and-imposter-syndrome",
+        "title": "Academic Writing &amp; Imposter Syndrome \u2014 Monday, September 28 \u2014 South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~143 words",
+        "url": "https://southbaytoday.org/event/2026-09-28-all-ages-storytime"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-an-intimate-evening-with-molly-tuttle",
+        "title": "An Intimate Evening with Molly Tuttle \u2014 Monday, September 28 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-campus-reading-program-october-events",
+        "title": "Campus Reading Program October Events! \u2014 Monday, September 28 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-costume-design-talk-with-bianca-hernandez-knight",
+        "title": "Costume Design Talk with Bianca Hernandez-Knight \u2014 Monday, September 28"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~125 words",
+        "url": "https://southbaytoday.org/event/2026-09-28-fsl-igc-meeting-1"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-open-lab-hours-at-ai-center-for-civic-and-social-good",
+        "title": "Open Lab Hours at AI Center for Civic and Social Good \u2014 Monday, September 28"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-senior-fraud-prevention-seminar",
+        "title": "Senior Fraud Prevention Seminar \u2014 Monday, September 28 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-09-28-september-events-with-sky-campus-happiness",
+        "title": "September Events with Sky Campus Happiness \u2014 Monday, September 28 \u2014 South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~135 words",
+        "url": "https://southbaytoday.org/event/2026-09-28-september-events-with-sky-campus-happiness"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-1-on-1-tech-help-asistencia-tecnologica",
+        "title": "1-on-1 Tech Help/ Asistencia Tecnol\u00f3gica \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-1-on-1-tech-help-tro-giup-ky-nang-may-tinh-bang-tieng-viet",
+        "title": "1-on-1 Tech Help | Tr\u1ee3 Gi\u00fap K\u1ef9 N\u0103ng M\u00e1y T\u00ednh B\u1eb1ng Ti\u1ebfng Vi\u1ec7t \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 88 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-adikoro-women-and-music-in-ghana-featuring-pamela-owusu-brenyah",
+        "title": "Adikoro: Women and Music in Ghana featuring Pamela Owusu-Brenyah \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 121 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-applied-physics-physics-colloquium-benjamin-safdi-the-search-for-axion-dark-matt",
+        "title": "Applied Physics/Physics Colloquium: Benjamin Safdi - &quot;The Search for Axion Dark Matter&quot; \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-asistencia-de-busqueda-de-trabajo-y-crear-resumen-curriculum",
+        "title": "Asistencia de b\u00fasqueda de trabajo y crear resumen (curr\u00edculum) \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-asistencia-tecnologica-y-ayuda-personalizada",
+        "title": "Asistencia tecnologica y ayuda personalizada \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-baby-bouncers-lapsit-for-prewalkers",
+        "title": "Baby Bouncers Lapsit for Prewalkers \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 92 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-bilingual-hindi-english-storytime",
+        "title": "Bilingual Hindi-English Storytime \u0926\u094d\u0935\u093f\u092d\u093e\u0937\u0940 \u0939\u093f\u0902\u0926\u0940-\u0905\u0902\u0917\u094d\u0930\u0947\u091c\u093c\u0940 \u0915\u0939\u093e\u0928\u0940 \u0938\u092e\u092f \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-bilingual-mandarin-family-storytime",
+        "title": "Bilingual Mandarin Family Storytime \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 91 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-bilingual-toddler-storytime-tiempo-de-cuentos-and-stay-and-play",
+        "title": "Bilingual Toddler Storytime / Tiempo de Cuentos &amp; Stay and Play \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-campus-reading-program-october-events",
+        "title": "Campus Reading Program October Events! \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-center-for-just-environmental-futures-community-gathering",
+        "title": "Center for Just Environmental Futures Community Gathering \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-community-preservation-lab-scanning-service",
+        "title": "Community Preservation Lab Scanning Service \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-cooking-for-hormonal-wellness-during-perimenopause",
+        "title": "Cooking for Hormonal Wellness During Perimenopause \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-cotton-and-state-power-in-china-the-first-hundred-years",
+        "title": "Cotton and State Power in China: The First Hundred Years \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-crafting-resumes-that-get-noticed-workshop",
+        "title": "Crafting Resumes that Get Noticed Workshop \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-digital-skills-one-on-one-tech-help-for-seniors",
+        "title": "Digital Skills: One-On-One Tech Help for Seniors \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 108 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-digital-storytelling-in-action-a-hands-on-workshop-with-the-burleigh-family-proj",
+        "title": "Digital Storytelling in Action: A Hands-On Workshop with the Burleigh Family Project \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 187 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-earth-and-planetary-sciences-seminar-josh-goodwin-pg-ceg-geologist-in-training-g",
+        "title": "Earth &amp; Planetary Sciences Seminar - Josh Goodwin, Pg, Ceg - &quot;Geologist-in-Training (Git): Pathway to the California Professional Geologist License.&quot; \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-english-language-learner-ell-conversation-club",
+        "title": "English Language Learner (ELL) Conversation Club \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 103 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-english-language-learners-ell-conversation-club-via-pearl-and-cambrian",
+        "title": "English Language Learners&#39; (ELL) Conversation Club (via Pearl and Cambrian) \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 101 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-esl-classes-with-evergreen-valley-college-evc-502-listening-and-speaking",
+        "title": "ESL Classes with Evergreen Valley College (EVC) 502: Listening &amp; Speaking \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 106 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-esl-classes-with-evergreen-valley-college-evc-esl-501-reading-and-writing-1",
+        "title": "ESL Classes with Evergreen Valley College (EVC) - ESL 501: Reading &amp; Writing 1 \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-esl-conversation-club",
+        "title": "ESL Conversation Club \u2014 10:30 AM \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-esl-conversation-club-2",
+        "title": "ESL Conversation Club \u2014 1:30 PM \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 133 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-evolving-approaches-to-open-science-and-research-transparency-education-bay-area",
+        "title": "Evolving Approaches to Open Science and Research Transparency Education (Bay Area Open Science Group Meeting) \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-explore-energy-seminar-stanford-s-top-flight-energy-complex",
+        "title": "Explore Energy Seminar | Stanford&#39;s Top-Flight Energy Complex \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-fall-one-act-festival-auditions",
+        "title": "Fall One Act Festival auditions \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~143 words",
+        "url": "https://southbaytoday.org/event/2026-09-29-fall-one-act-festival-auditions"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 87 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-fostering-learner-engagement-through-interactive-media-workshop",
+        "title": "Fostering Learner Engagement through Interactive Media Workshop \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-fsl-community-keynote-educational-session",
+        "title": "FSL Community Keynote Educational Session \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~144 words",
+        "url": "https://southbaytoday.org/event/2026-09-29-fsl-community-keynote-educational-session"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~131 words",
+        "url": "https://southbaytoday.org/event/2026-09-29-fsl-pnme-1"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-georgian-cinema-now-blackbird-blackbird-blackberry-2023",
+        "title": "Georgian Cinema Now: Blackbird Blackbird Blackberry (2023) \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-georgian-cinema-now-temo-re-2025",
+        "title": "Georgian Cinema Now: Temo Re (2025) \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-homework-coaching-with-delaney",
+        "title": "Homework Coaching with Delaney \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-homework-help-for-grades-k-6",
+        "title": "Homework Help for Grades K-6 \u2014 4:00 PM \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-homework-help-for-grades-k-6-2",
+        "title": "Homework Help for Grades K-6 \u2014 4:30 PM \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-hummus-pita-night-with-mantra-meditation-connection-and-dinner",
+        "title": "Hummus pita night with Mantra meditation, connection &amp; Dinner \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-indoor-family-storytime-with-stay-and-play",
+        "title": "Indoor Family Storytime with Stay and Play \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-infant-and-toddler-storytime",
+        "title": "Infant &amp; Toddler Storytime \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 134 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-learning-the-right-lessons-from-covid-to-do-better-next-time-how-to-evaluate-non",
+        "title": "Learning the right lessons from COVID to do better next time: How to evaluate non-pharmaceutical interventions \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-lecture-how-the-internet-benefits-humanity",
+        "title": "Lecture: How the Internet Benefits Humanity \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 109 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-lecturers-and-academic-teaching-staff-academic-year-kick-off-and-community-gathe",
+        "title": "Lecturers and Academic Teaching Staff: Academic Year Kick-off and Community Gathering \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-line-dancing-for-beginners-improvers",
+        "title": "Line Dancing for Beginners/Improvers \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 98 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-lldsa-speaker-series-a-brief-history-of-estonian-language-standardization",
+        "title": "Lldsa Speaker Series: A Brief History of Estonian Language Standardization \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-make-and-decorate-sugar-skulls",
+        "title": "Make &amp; Decorate Sugar Skulls \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-matthew-west-jesus-is-king-tour-san-jose-ca",
+        "title": "Matthew West: Jesus Is King Tour - San Jose, CA \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 99 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-music-and-movement-in-vietnamese-and-english-and-craft-mua-hat-song-ngu-anh",
+        "title": "Music and Movement in Vietnamese and English and Craft/M\u00faa H\u00e1t Song Ng\u1eef Anh \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-music-and-movement-storytime",
+        "title": "Music &amp; Movement Storytime \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-open-lab-hours-at-ai-center-for-civic-and-social-good",
+        "title": "Open Lab Hours at AI Center for Civic and Social Good \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-pediatric-grand-rounds-cme-marijuana-smoke-and-children",
+        "title": "Pediatric Grand Rounds (CME): Marijuana Smoke and Children \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 99 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-practical-lessons-from-building-ai-infrastructure-for-billion-user-products",
+        "title": "Practical Lessons from Building AI Infrastructure for Billion User Products \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-reading-partners-one-on-one-reading-tutoring",
+        "title": "Reading Partners One-on-One Reading Tutoring \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-reading-the-signs-of-the-times-synodality-a-i-and-pope-leo",
+        "title": "Reading the Signs of the Times: Synodality, A.I. and Pope Leo \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-reading-to-children-with-ms-lee",
+        "title": "Reading to Children with Ms. Lee \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-self-help-for-the-elderly-information-table",
+        "title": "Self-Help for the Elderly Information Table \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-september-events-with-sky-campus-happiness",
+        "title": "September Events with Sky Campus Happiness \u2014 Tuesday, September 29 \u2014 South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~135 words",
+        "url": "https://southbaytoday.org/event/2026-09-29-september-events-with-sky-campus-happiness"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 97 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-shared-resources-at-wu-tsai-neuro-and-sarafan-chem-h-lunch-and-learn",
+        "title": "Shared Resources at Wu Tsai Neuro &amp; Sarafan ChEM-H: Lunch &amp; Learn \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-simple-steps-for-starting-your-business-funding-sources",
+        "title": "Simple Steps for Starting Your Business: Funding Sources \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 136 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-sjsu-art-galleries-tuesday-night-lecture-demetri-broxton-the-weight-of-memory-ma",
+        "title": "SJSU Art Galleries Tuesday Night Lecture: Demetri Broxton: The Weight of Memory: Material, Archive, and Ancestry \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-tangling-the-digital-weaving-printmaking-computing",
+        "title": "Tangling the Digital: Weaving, Printmaking, Computing \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-tiny-talkers-public-speaking-speech-and-debate-workshop",
+        "title": "Tiny Talkers: Public Speaking, Speech &amp; Debate Workshop \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~123 words",
+        "url": "https://southbaytoday.org/event/2026-09-29-weekly-club-meeting"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2026-09-29-writing-workshop-selecting-and-integrating-source-materials",
+        "title": "Writing Workshop: Selecting &amp; Integrating Source Materials \u2014 Tuesday, September 29"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-1-on-1-tech-help-by-appointment",
+        "title": "1-on-1 Tech Help by Appointment \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-2026-state-of-the-city-address",
+        "title": "2026 State of the City Address \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 95 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-a-generation-of-seekers-trends-in-young-adult-faith-and-spirituality",
+        "title": "A Generation of Seekers: Trends in Young Adult Faith and Spirituality \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 96 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-adaptive-activities-programming-at-mount-pleasant-neighborhood-library",
+        "title": "Adaptive Activities Programming at Mount Pleasant Neighborhood Library \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 172 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-adobe-firefly-create-images-graphics-and-assets-to-use-in-your-presentations-t-s",
+        "title": "Adobe Firefly - Create images, graphics, and assets to use in your presentations, t-shirt designs, and more - using Adobe&#39;s AI image generator \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-baby-storytime-12-months-and-younger",
+        "title": "Baby Storytime (12 months &amp; younger) \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-baby-storytime-and-stay-and-play",
+        "title": "Baby Storytime &amp; Stay and Play \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-bay-area-comics-and-comix-exhibition",
+        "title": "Bay Area Comics and Comix Exhibition \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-brown-bag-speaker-series-featuring-justin-clardy",
+        "title": "Brown Bag Speaker Series featuring Justin Clardy \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-brujeria-ethnocide-mortal-sodomy",
+        "title": "Brujeria, Ethnocide, Mortal, Sodomy \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-byob-bring-your-own-book-book-club",
+        "title": "BYOB (Bring Your Own Book) Book Club \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-campus-reading-program-october-events",
+        "title": "Campus Reading Program October Events! \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-careers-in-sustainability-panel",
+        "title": "Careers in Sustainability Panel \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-celebrating-hispanic-heritage-month-storytime",
+        "title": "Celebrating Hispanic Heritage Month Storytime \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-digital-skills-one-on-one-tech-help-for-seniors",
+        "title": "Digital Skills: One-On-One Tech Help for Seniors \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-don-mcmillan-2-0-now-powered-by-ai",
+        "title": "Don McMillan 2.0 *Now Powered by AI \u2014 Wednesday, September 30 \u2014 South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-09-30-english-language-learner-ell-conversation-club",
+        "title": "English Language Learner (ELL) Conversation Club \u2014 Wednesday, September 30"
+      },
+      {
+        "severity": "info",
+        "code": "description-duplicate",
+        "message": "2 pages share a meta description",
+        "urls": [
+          "https://southbaytoday.org/newsletters/2026-09-23",
+          "https://southbaytoday.org/newsletters/2026-09-26"
+        ]
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/plan/60a65ddd"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/plan/ee7c55ad"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/plan/509eb547"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/plan/f503c9ce"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=campbell"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=cupertino"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=los-altos"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=los-gatos"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=milpitas"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=mountain-view"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=palo-alto"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=san-jose"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=santa-clara"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=santa-cruz"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=saratoga"
+      },
+      {
+        "severity": "warn",
+        "code": "page-missing-from-sitemap",
+        "message": "indexable page is linked but absent from the sitemap",
+        "url": "https://southbaytoday.org/events?city=sunnyvale"
+      }
+    ]
+  },
+  "searchConsole": {
+    "available": false,
+    "reason": "no Search Console credentials \u2014 set GSC_SERVICE_ACCOUNT_JSON (raw or base64) or GSC_SERVICE_ACCOUNT_FILE",
+    "findings": []
+  },
+  "searchConsoleBrowser": {
+    "account": "stanwoodventures@gmail.com",
+    "property": "https://southbaytoday.org/",
+    "currentWindow": {
+      "start": "2026-08-30",
+      "end": "2026-09-26",
+      "clicks": 917,
+      "impressions": 35490,
+      "ctr": 2.6,
+      "position": 7.4
+    },
+    "previousWindow": {
+      "start": "2026-08-02",
+      "end": "2026-08-29",
+      "clicks": 779,
+      "impressions": 41120,
+      "ctr": 1.9,
+      "position": 6.8
+    },
+    "indexing": {
+      "asOf": "2026-09-20",
+      "indexed": 6465,
+      "notIndexed": 2218,
+      "reasons": {
+        "404": 1454,
+        "redirect": 18,
+        "alternateCanonical": 16,
+        "noindex": 14,
+        "robots": 1,
+        "discoveredNotIndexed": 385,
+        "crawledNotIndexed": 329,
+        "googleDifferentCanonical": 1
+      }
+    },
+    "sitemap": {
+      "path": "/sitemap-index.xml",
+      "status": "Success",
+      "lastRead": "2026-09-28",
+      "discovered": 2189
+    },
+    "health": {
+      "httpsValid": 791,
+      "httpsInvalid": 0,
+      "breadcrumbsValid": 359,
+      "breadcrumbsInvalid": 0,
+      "eventsValid": 578,
+      "eventsInvalid": 0,
+      "coreWebVitals": "insufficient data on mobile and desktop",
+      "manualActions": "No issues detected",
+      "securityIssues": "No issues detected"
+    },
+    "inspections": [
+      {
+        "url": "https://southbaytoday.org/event/2026-10-17-diwali-festival",
+        "result": "indexed; valid HTTPS, Breadcrumb and Event"
+      },
+      {
+        "url": "https://southbaytoday.org/event/2026-10-31-family-storytime-celebrate-halloween",
+        "result": "indexed; valid HTTPS, Breadcrumb and Event despite older exclusion report"
+      }
+    ],
+    "opportunities": [
+      {
+        "query": "cupertino diwali mela 2026",
+        "clicks": 7,
+        "previousClicks": 3,
+        "impressions": 100,
+        "previousImpressions": 25,
+        "position": 4.8,
+        "decision": "Existing October 17 page is indexed; retain accurate coverage."
+      },
+      {
+        "query": "santa clara art and wine festival 2026",
+        "clicks": 4,
+        "impressions": 3515,
+        "ctr": 0.1,
+        "position": 7.9,
+        "decision": "Seasonal demand; verify next edition from official sources before adding future coverage. No speculative event or title rewrite."
+      },
+      {
+        "page": "/",
+        "clicks": 72,
+        "previousClicks": 43,
+        "impressions": 1474,
+        "ctr": 4.9,
+        "position": 8.5,
+        "previousPosition": 12.2,
+        "decision": "Homepage improving; preserve curated content."
+      }
+    ],
+    "comparisonBaseline": "Last detailed automation record available was 2026-09-08; indexed increased 950 and not-indexed increased 298 since that record. No September 22 report was present."
+  },
+  "fixes": [
+    "Add a main heading to newsletter web archives when the stored email has none; preserve sent email HTML.",
+    "Expose 108 valid public saved plans through a request-rendered child sitemap, matching their route data source."
+  ],
+  "verification": {
+    "build": "passed",
+    "testGroups": 98,
+    "failedTestGroups": 0,
+    "discoveryAudit": "passed",
+    "crawlerChecks": "All 24 combinations returned HTTP 200 with no challenge",
+    "deployment": "pending"
+  }
+}

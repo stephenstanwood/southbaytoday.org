@@ -187,6 +187,9 @@ function archiveMetaHtml(date: string, body: string): string {
   const title = `South Bay Today — ${pretty}`;
   const description = `The South Bay Today newsletter for ${pretty}: the day's plan, what's new, and what city hall did.`;
   const canonical = `${SITE_URL}/newsletters/${date}`;
+  // Email layouts often use styled table cells instead of headings. Give the
+  // web archive a main heading without modifying the stored, sent issue.
+  const archiveHeading = /<h1\b/i.test(body) ? "" : `<h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0">${esc(title)}</h1>`;
 
   // Newer issues already carry a full, issue-specific head (lede as the
   // description, poster as og:image). Only fill what's missing so we never
@@ -213,7 +216,7 @@ function archiveMetaHtml(date: string, body: string): string {
 
   if (/<\/head>/i.test(body) && /<body[^>]*>/i.test(body)) {
     let html = body.replace(/<\/head>/i, `${headAdditions}</head>`);
-    html = html.replace(/<body[^>]*>/i, (open) => `${open}${ARCHIVE_BAR}`);
+    html = html.replace(/<body[^>]*>/i, (open) => `${open}${ARCHIVE_BAR}${archiveHeading}`);
     html = /<\/body>/i.test(html)
       ? html.replace(/<\/body>(?![\s\S]*<\/body>)/i, `${ARCHIVE_FOOT}\n</body>`)
       : `${html}${ARCHIVE_FOOT}`;
@@ -228,7 +231,7 @@ function archiveMetaHtml(date: string, body: string): string {
 <title>${esc(title)}</title>
 ${headAdditions}
 </head>
-<body style="margin:0;background:#f7f6fb;">${ARCHIVE_BAR}${body}${ARCHIVE_FOOT}</body>
+<body style="margin:0;background:#f7f6fb;">${ARCHIVE_BAR}${archiveHeading}${body}${ARCHIVE_FOOT}</body>
 </html>`;
 }
 
