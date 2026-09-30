@@ -1,19 +1,19 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-30T02:18:26.931Z",
+    "generatedAt": "2026-09-30T16:11:39.148Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 552,
+    "eventCount": 554,
     "sourceCount": 20,
     "sources": [
-      "Mountain View Public Library (124)",
-      "Los Gatos Library (151)",
+      "Mountain View Public Library (123)",
+      "Los Gatos Library (152)",
       "San Jose Jazz (19)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
       "Montalvo Arts Center (6)",
       "City Lights Theater (6)",
-      "ICA San José (1)",
+      "ICA San José (3)",
       "Mountain Winery (13)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (1)",
@@ -64,7 +64,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 129,
+        "count": 128,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -74,7 +74,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 151,
+        "count": 152,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -95,7 +95,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -117,7 +117,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -154,7 +154,7 @@
         "id": "ica-san-jose",
         "label": "ICA San Jose",
         "status": "ok",
-        "count": 1,
+        "count": 3,
         "error": null,
         "sources": [
           "ICA San José"
@@ -315,7 +315,7 @@
         "label": "Books Inc",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.booksinc.com/pages/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.booksinc.com/pages/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -349,28 +349,6 @@
     ]
   },
   "events": [
-    {
-      "id": "4c4ebac0654c",
-      "title": "Intro to 3D Printing: Science Fiction Edition",
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
-      "time": "6:00 PM",
-      "endTime": "7:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Learn how 3D printing works and go through the full process of preparing and printing a small object associated with science fiction. Choose a 3D model, use slicing software to set it up, and help start the print on the library’s 3D printers. No prior 3D printing experience is needed but basic computer skills are expected. Ages 13 and up. A Sci-Fi September Event",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17238451",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "73b1f070a045",
       "title": "Baby Storytime",
@@ -6101,6 +6079,27 @@
       "kidFriendly": false
     },
     {
+      "id": "8f830c2570de",
+      "title": "Drop-In Tech Help",
+      "date": "2026-12-29",
+      "displayDate": "Tue, Dec 29",
+      "time": "3:00 PM",
+      "endTime": "4:30 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "education",
+      "cost": "free",
+      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "url": "https://losgatosca.libcal.com/event/16035543",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "d7c2f1437d9a",
       "title": "SJZ Break Room Jazz Jam",
       "date": "2026-10-02",
@@ -6950,6 +6949,40 @@
       "kidFriendly": false
     },
     {
+      "id": "e9beb2c9b1dd",
+      "title": "Greg Ito: To Give and Take",
+      "date": "2026-09-18",
+      "displayDate": "Fri, Sep 18",
+      "time": null,
+      "endTime": null,
+      "venue": "ICA San José",
+      "address": "560 S First St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.icasanjose.org/current-exhibitions/gregito-togiveandtake/",
+      "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "9d0e2d8ae93c",
+      "title": "Oscar Lopez: Without Them is Not Us",
+      "date": "2024-09-14",
+      "displayDate": "Sat, Sep 14",
+      "time": null,
+      "endTime": null,
+      "venue": "ICA San José",
+      "address": "560 S First St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
+      "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
       "id": "00e6ae932a88",
       "title": "Queer American Memorials at the ICA",
       "date": "2026-10-02",
@@ -7528,10 +7561,10 @@
       "kidFriendly": false
     },
     {
-      "id": "d8b584a39f54",
+      "id": "e256816d66ce",
       "title": "Toddler Storytime",
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
+      "date": "2026-09-30",
+      "displayDate": "Wed, Sep 30",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
