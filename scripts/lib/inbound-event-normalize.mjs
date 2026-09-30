@@ -39,6 +39,8 @@ const VERIFIED_INBOUND_URLS = new Map([
   ["2026-09-27|Genealogy Society Sunday Social", "https://www.sclibrary.org/Home/Components/Calendar/Event/113847/67?curm=9&cury=2026&recordid=17517"],
   ["2026-09-28|Costume Design Talk with Bianca Hernandez-Knight", "https://www.library.sunnyvale.ca.gov/events/calendar-month-view"],
   ["2026-09-30|Ordinary People (1980) Screening with Film Professor Discussion", "https://www.library.sunnyvale.ca.gov/Home/Components/Calendar/Event/12969/74?curm=9&cury=2026"],
+  ["2026-09-29|Lecture: How the Internet Benefits Humanity", "https://www.sclibrary.org/Home/Components/Calendar/Event/113212/7956?curm=9&cury=2026"],
+  ["2026-10-03|Palo Alto Art Walk + Art & Dine", "https://www.pacificartleague.org/community-events/f"],
 ]);
 
 function detrack(url) {

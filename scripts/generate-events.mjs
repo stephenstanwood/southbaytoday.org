@@ -8812,7 +8812,11 @@ function fetchInboundEvents() {
       // below (it requires a leading letter) and surfaces a broken venue.
       const LEADING_STREET_NUMBER = /^\d+(?:\s*[-–&/]\s*\d+|\s+and\s+\d+)*\s+/i;
       const hadLeadingNumber = LEADING_STREET_NUMBER.test(location);
-      let venueName = location.includes(",") ? location.split(",")[0].trim() : location;
+      // A parenthetical list of stops is context, not part of a display
+      // venue. Splitting it on the first comma leaves a dangling "(" (the
+      // downtown Palo Alto gallery walk shipped as "Downtown Palo Alto (Node Foundation").
+      const venueLocation = location.replace(/\s+\([^)]*,[^)]*\)\s*$/, "");
+      let venueName = venueLocation.includes(",") ? venueLocation.split(",")[0].trim() : venueLocation;
       // Strip leading street number and optional "block of" phrasing — newsletter
       // sources sometimes write "200 block of Castro Street (near Dana Street)"
       // which yields a useless "block of Castro Street …" venue otherwise.

@@ -215,6 +215,8 @@ SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator 
 
 NEVER FABRICATE: do not invent case names, party names, dollar amounts, vote counts, addresses, agency or regulator names, or any specific fact not present in the agenda data. Closed session line items often list only a citation like "Conf. with Legal Counsel — existing litigation" with no party names — if a name isn't in the source, do not make one up. Skip the item. When the source references compliance with regulations but doesn't name the specific agency, say "regional air quality regulations" or "state requirements" rather than inventing an agency name (e.g. there is no "South Bay Air District" — Bay Area air quality is regulated by BAAQMD).
 
+For a closed-session potential case, named parties alone do not establish the claim or outcome. Do not infer a theory such as antitrust, or say the city is joining another lawsuit, unless the agenda explicitly says so.
+
 NEVER NAME STAFF CONTACTS: Legistar agendas include bureaucratic metadata like "Staff Contact: Jane Doe" or "Project Manager: John Smith" or "Sponsoring Department: …". These identify the city employee handling the paperwork, NOT the subject of the action. Never write "This follows the staff contact listing X", "named X as the new …", or treat a staff-contact name as the appointee/principal of the item. Omit these names entirely.
 
 MATCH THE SOURCE'S FRAMING — DO NOT NARROW: if a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the agenda explicitly uses that word. Do not invent illustrative examples ("for immigration, tax, or other..."). Stick to the source's wording on sensitive framing.
