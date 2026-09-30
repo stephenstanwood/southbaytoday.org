@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-29T03:10:36.759Z",
+      "generatedAt": "2026-09-30T04:36:34.243Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 21 – Sep 28",
+      "dateRange": "Sep 22 – Sep 29",
       "stats": {
-        "total": 601,
-        "notable": 32,
-        "newUnits": 13,
-        "totalValuation": 90973020
+        "total": 500,
+        "notable": 29,
+        "newUnits": 11,
+        "totalValuation": 88883814
       },
       "permits": [
         {
@@ -75,18 +75,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-099032-RS",
-          "address": "3555 Chamberlain Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Lot 6 New Detached ADU",
-          "valuation": 131940,
-          "units": 1,
-          "issueDate": "2026-09-21",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2025-138066-RS",
           "address": "1601 Orchard View Dr #2",
           "category": "residential-new",
@@ -133,23 +121,47 @@
           "units": 1,
           "issueDate": "2026-09-24",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-125729-RS",
+          "address": "682 S Genevieve Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr ADU Ab 2533 Legalize Detach Garage Conversion to ADU",
+          "valuation": 77405,
+          "units": 1,
+          "issueDate": "2026-09-23",
+          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-29T03:10:39.211Z",
+      "generatedAt": "2026-09-30T04:36:39.596Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 21 – Sep 28",
+      "dateRange": "Sep 22 – Sep 29",
       "stats": {
         "total": 98,
-        "notable": 3,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-02765",
+          "address": "3142 Flowers Ln",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-28",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-02737",
           "address": "606 Chimalus Dr",
@@ -163,6 +175,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-02758",
+          "address": "2370 Waverley St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-28",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26PLN-00274",
           "address": "385 Curtner Av",
           "category": "entitlement",
@@ -172,18 +196,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-24",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00269",
-          "address": "2875 El Camino Real",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for Architectural Review for the installation of (3) illuminated wall signs for \"TIAA\".",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-22",
           "subtype": "Over the Counter Approved"
         }
       ]

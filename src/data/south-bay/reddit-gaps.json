@@ -1,90 +1,122 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-29T03:18:47.370Z",
+    "generatedAt": "2026-09-30T04:49:52.926Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 9
   },
   "summary": {
-    "threadsMined": 10,
+    "threadsMined": 9,
     "placesExtracted": 4,
-    "placesMatched": 2,
-    "placeGaps": 2,
-    "eventsExtracted": 1,
+    "placesMatched": 3,
+    "placeGaps": 1,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 1,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Saint Lucy's Catholic Church",
+      "name": "Florra Scent Bar",
       "city": "Campbell",
-      "kind": "venue",
-      "context": "hosts the annual Funfest at 2350 Winchester Blvd",
+      "kind": "retail",
+      "context": "scent bar in downtown Campbell, considering for birthday",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ws8owy/campbells_saint_lucys_annual_funfest/",
-        "https://www.reddit.com/r/SanJose/comments/1wsymds/coffee_shopscafe_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wstd1b/top_5_burritos_in_south_bay_peninsula_silicon/",
-        "https://www.reddit.com/r/SanJose/comments/1wsesz6/best_pakistani_curry/",
-        "https://www.reddit.com/r/SanJose/comments/1ws6722/planning_a_team_outing_for_about_ten_people_in/"
-      ]
-    },
-    {
-      "name": "KidsPark",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "hourly drop-in childcare option",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wsxklr/the_most_impossible_rise_of_a_city_ever_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wsuyv4/henry_cowell_vs_muir_woods/",
-        "https://www.reddit.com/r/SanJose/comments/1wsswzm/apartment_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1wsotsz/looking_for_affordable_builder_gel_nail_techs_in/",
-        "https://www.reddit.com/r/SanJose/comments/1ws4ma0/best_hourly_dropin_childcare/"
+        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
+        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
+        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
+        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Saint Lucy's Annual Funfest",
-      "when": "Oct 9-11",
-      "city": "Campbell",
-      "context": "carnival rides, food, games, live music",
+      "name": "Dine for a Cause",
+      "when": "October 1",
+      "city": "San Jose",
+      "context": "fundraiser event at Lazy Dog Almaden",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1ws8owy/campbells_saint_lucys_annual_funfest/",
-        "https://www.reddit.com/r/SanJose/comments/1wsymds/coffee_shopscafe_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wstd1b/top_5_burritos_in_south_bay_peninsula_silicon/",
-        "https://www.reddit.com/r/SanJose/comments/1wsesz6/best_pakistani_curry/",
-        "https://www.reddit.com/r/SanJose/comments/1ws6722/planning_a_team_outing_for_about_ten_people_in/"
+        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
+        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
+        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/"
+      ]
+    },
+    {
+      "name": "Hayley Williams concert",
+      "when": "October 2, 7pm",
+      "city": "Mountain View",
+      "context": "show at Shoreline Amphitheatre",
+      "sourceUrls": [
+        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
+        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
+        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/",
+        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
+        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
+        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
+        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
+      ]
+    },
+    {
+      "name": "Peet's $0.25 Drip Coffee Promo",
+      "when": "September 29",
+      "city": "Mountain View",
+      "context": "one-day anniversary pricing promo",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
+        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
+        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
+        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Henry Cowell Redwoods State Park",
-      "city": "",
-      "kind": "park",
-      "context": "big trees, closer alternative to Muir Woods",
+      "name": "Lazy Dog",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "Almaden location hosting dine for a cause event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wsxklr/the_most_impossible_rise_of_a_city_ever_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wsuyv4/henry_cowell_vs_muir_woods/",
-        "https://www.reddit.com/r/SanJose/comments/1wsswzm/apartment_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1wsotsz/looking_for_affordable_builder_gel_nail_techs_in/",
-        "https://www.reddit.com/r/SanJose/comments/1ws4ma0/best_hourly_dropin_childcare/"
+        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
+        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
+        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/"
       ],
-      "matchedName": "Henry Cowell Redwoods State Park"
+      "matchedName": "Lazy Dog Restaurant & Bar"
     },
     {
-      "name": "Valley Fair",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "mall with arts and crafts drop-in childcare place",
+      "name": "Shoreline Amphitheatre",
+      "city": "Mountain View",
+      "kind": "venue",
+      "context": "hosting Hayley Williams concert",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wsxklr/the_most_impossible_rise_of_a_city_ever_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wsuyv4/henry_cowell_vs_muir_woods/",
-        "https://www.reddit.com/r/SanJose/comments/1wsswzm/apartment_recommendation/",
-        "https://www.reddit.com/r/SanJose/comments/1wsotsz/looking_for_affordable_builder_gel_nail_techs_in/",
-        "https://www.reddit.com/r/SanJose/comments/1ws4ma0/best_hourly_dropin_childcare/"
+        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
+        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
+        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
+        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
+        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/",
+        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
+        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
+        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
+        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
       ],
-      "matchedName": "Bowlero Valley Fair"
+      "matchedName": "Shoreline Amphitheatre"
+    },
+    {
+      "name": "Peet's Coffee",
+      "city": "Mountain View",
+      "kind": "cafe",
+      "context": "$0.25 drip coffee promo on 9/29",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
+        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
+        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
+        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
+      ],
+      "matchedName": "Peet's Coffee"
     }
   ],
   "eventMatches": []
