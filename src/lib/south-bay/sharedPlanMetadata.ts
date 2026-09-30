@@ -21,8 +21,8 @@ function summarize(raw: Record<string, any>) {
   if (!plan) return null;
   // Match the page: one card per bucket, in display order. Historical files
   // sometimes contain extra cards in a bucket that the page never displays.
-  const bucketCards = BUCKET_ORDER.map((bucket) => plan.cards.find((card) => card.bucket === bucket)).filter(Boolean);
-  const cards = bucketCards.length ? bucketCards : plan.cards;
+  const bucketCards = BUCKET_ORDER.map((bucket) => plan.cards.find((card: Record<string, any>) => card.bucket === bucket)).filter(Boolean);
+  const cards: Record<string, any>[] = bucketCards.length ? bucketCards : plan.cards;
   const isActivity = (card: Record<string, any>) => card.bucket
     ? !MEAL_BUCKETS.has(card.bucket)
     : card.category !== "food";

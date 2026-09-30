@@ -2,6 +2,32 @@
 
 ---
 
+## 2026-09-30 — Cycle 229: A San Jose AI Startup Joins the Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Menos AI's $5.1M pre-A round now appears in the rendered Tech funding list.**
+Copper Sky Capital led the round, with Alpha Square Group participating. The
+company's [About page](https://www.menosai.com/about) confirms San Jose HQ.
+Its [company-issued announcement](https://finance.yahoo.com/technology/ai/articles/menos-ai-surpasses-10-million-224100172.html)
+is dated September 28; September 29 aggregator dates are republications.
+More than $10M is cumulative funding. Business Wire returned an access block;
+the public syndicated release supplies the funding evidence.
+
+**Two existing saved-plan type errors are fixed.** Card annotations in
+`sharedPlanMetadata.ts` restore the type check without changing runtime logic.
+
+Verification: production build and both prebuild gates passed; Astro check
+reported 0 errors and 0 warnings; all 18 existing funding-date and saved-plan
+metadata tests passed. Before/after company-link audits checked 188/189 links
+with no dead or relocated links and the same eight bot walls. Chromium checks
+of the built Tech page at 1280px and 390px confirmed eight funding rows, one
+Menos AI row, correct labels/link, working mobile expansion, no horizontal
+overflow, and no browser runtime errors. External assets were blocked in the
+local browser checks. Home, Events, and Food structure stayed untouched.
+
+---
+
 ## 2026-09-19 — Cycle 228: The Book Club Copy That Came Back Overnight
 
 ### Context

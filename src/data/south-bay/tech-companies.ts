@@ -1685,6 +1685,26 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Menos AI's own About page confirms San Jose HQ, beyond the release dateline:
+  // https://www.menosai.com/about
+  // Its company-issued release is dated Sep 28, not the Sep 29 aggregator posts.
+  // $5.1M is the new Pre-A round; more than $10M is cumulative funding.
+  // https://www.businesswire.com/news/home/20260925561283/en/
+  // Accessible wire copy (Business Wire blocks automated access):
+  // https://finance.yahoo.com/technology/ai/articles/menos-ai-surpasses-10-million-224100172.html
+  {
+    id: "menos-ai",
+    name: "Menos AI",
+    city: "San Jose",
+    category: "fintech",
+    round: "Pre-A",
+    amount: "$5.1M",
+    date: "2026-09-28",
+    tagline:
+      "San Jose's Menos AI helps asset managers and hedge funds organize their research, portfolio data, and investment reasoning for use by staff and AI agents. Copper Sky Capital led a $5.1M pre-A round, joined by Alpha Square Group, bringing total funding above $10M. The company has expanded beyond its Sonαr research agent into software for research, reporting, and operations.",
+    color: "#2563EB",
+    url: "https://www.menosai.com/",
+  },
   {
     id: "sima-ai-series-c",
     name: "SiMa.ai",
