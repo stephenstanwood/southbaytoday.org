@@ -2,6 +2,28 @@
 
 ---
 
+## 2026-10-01 — Cycle 230: Mountain View's GMI Cloud Joins the Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**GMI Cloud's $223M Series B leads the existing Tech funding list.** The
+[company-issued release](https://www.businesswire.com/news/home/20260930886227/en/)
+confirms Mountain View HQ in its boilerplate. ARCHIV led the equity round,
+with NVIDIA participating. The blurb separately explains CTBC's $445M credit
+facility and the $668M financing package. September 30 is the first wire
+announcement date; the October 1 APAC release repeats the same financing.
+
+Verification: production build and both prebuild gates passed; Astro check
+reported 0 errors and 0 warnings; all nine existing funding-date tests passed.
+Before/after company-link audits checked 189/190 links with no dead or
+relocated links and the same nine bot walls. Chromium checks of the built
+Tech page at 1280px and 390px confirmed eight funding rows, one GMI Cloud row,
+correct labels/link, working expansion and collapse, no horizontal overflow,
+and no browser runtime errors. External assets were blocked during these
+local browser checks.
+
+---
+
 ## 2026-09-30 — Cycle 229: A San Jose AI Startup Joins the Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).

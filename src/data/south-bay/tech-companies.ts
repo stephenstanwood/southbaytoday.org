@@ -1685,6 +1685,26 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // GMI Cloud's own release confirms Mountain View HQ in its boilerplate,
+  // beyond the dateline. Count the $223M Series B equity here; the separate
+  // $445M credit facility makes the full financing package $668M.
+  // The first Business Wire announcement was Sep 30; the Oct 1 APAC
+  // PR Newswire release repeats the same financing, not a second round.
+  // https://www.businesswire.com/news/home/20260930886227/en/
+  // https://www.prnewswire.com/apac/news-releases/gmi-cloud-raises-over-660-million-to-accelerate-global-ai-infrastructure-expansion-302894628.html
+  {
+    id: "gmi-cloud",
+    name: "GMI Cloud",
+    city: "Mountain View",
+    category: "cloud",
+    round: "Series B",
+    amount: "$223M",
+    date: "2026-09-30",
+    tagline:
+      "Mountain View's GMI Cloud rents out GPU computing power and runs AI models for businesses and developers. ARCHIV led its $223M Series B, with NVIDIA participating. A separate $445M credit facility led by CTBC brings the financing package to $668M. The company plans to use the money to expand capacity in the U.S., Taiwan, and the rest of Asia-Pacific, grow its AI services, and support hiring.",
+    color: "#2563EB",
+    url: "https://www.gmicloud.ai/",
+  },
   // Menos AI's own About page confirms San Jose HQ, beyond the release dateline:
   // https://www.menosai.com/about
   // Its company-issued release is dated Sep 28, not the Sep 29 aggregator posts.
