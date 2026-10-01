@@ -6346,35 +6346,45 @@ const FARMERS_MARKETS = [
   },
 ];
 
-async function fetchFarmersMarketEvents() {
+async function fetchFarmersMarketEvents({
+  today = todayPT(),
+  markets = FARMERS_MARKETS,
+  fetchImpl = globalThis.fetch,
+  notify = catSignal,
+} = {}) {
   console.log("  ⏳ Farmers markets...");
-  const markets = FARMERS_MARKETS;
 
   const verifiedMarkets = [];
   const suppressed = [];
   for (const market of markets) {
-    const verification = await verifyMarketScheduleSource(market, { userAgent: UA });
+    // Only verify schedules that can produce an occurrence in the publication
+    // window. An expired season's broken page cannot suppress an event, and
+    // must not page as though an upcoming market were missing. Keep the same
+    // eligible dates for publication so the two gates cannot drift apart.
+    const dates = recurringWeekdayDates(today, market.day, 90).filter((date) => {
+      const { month } = isoDateParts(date);
+      return month >= market.season[0] && month <= market.season[1]
+        && (!market.startDate || date >= market.startDate)
+        && (!market.endDate || date <= market.endDate)
+        && !market.excludedDates?.includes(date);
+    });
+    if (dates.length === 0) continue;
+
+    const verification = await verifyMarketScheduleSource(market, { userAgent: UA, fetchImpl });
     if (!verification.confirmed) {
       console.log(`  ⚠️  Farmers markets: suppressed ${market.title} (${verification.reason})`);
       suppressed.push(`${market.title} (${verification.reason})`);
       continue;
     }
-    verifiedMarkets.push({ market, verification });
+    verifiedMarkets.push({ market, verification, dates });
   }
 
   const events = [];
-  const today = todayPT();
   // Generate instances for the next 90 Pacific calendar days. Deriving the
   // weekday from the host-local Date while formatting in PT made the UTC
   // GitHub watchdog publish Saturday markets on Fridays after 5 PM Pacific.
-  for (const { market: m, verification } of verifiedMarkets) {
-    for (const dateStr of recurringWeekdayDates(today, m.day, 90)) {
-      const { month } = isoDateParts(dateStr);
-      if (month < m.season[0] || month > m.season[1]) continue;
-      if (m.startDate && dateStr < m.startDate) continue;
-      if (m.endDate && dateStr > m.endDate) continue;
-      if (m.excludedDates?.includes(dateStr)) continue;
-
+  for (const { market: m, verification, dates } of verifiedMarkets) {
+    for (const dateStr of dates) {
       const dateObj = new Date(`${dateStr}T12:00:00-07:00`);
       // A market that publishes an alternate location for a specific date is
       // not at its usual address that day. Sending a reader to the regular lot
@@ -6410,7 +6420,7 @@ async function fetchFarmersMarketEvents() {
   // drifted off the wording, and the only signal was a console line in a cron
   // log. Raise it where a stale pattern gets noticed.
   if (suppressed.length > 0) {
-    await catSignal({
+    await notify({
       key: "farmers-market-suppressed",
       title: `Farmers market schedule unverified (${suppressed.length})`,
       body: `${suppressed.join("; ")}. The market is not being published. Check whether the organizer page changed its wording or the market actually stopped.`,
