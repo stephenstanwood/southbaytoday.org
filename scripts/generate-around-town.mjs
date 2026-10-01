@@ -17,11 +17,8 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import {
-  legistarMeetingUrl,
-  verifyLegistarBodyOnDate,
-  verifyPrimeGovBodyOnDate,
-} from "./lib/civic-meetings.mjs";
+import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem } from "./lib/around-town-meetings.mjs";
 import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
@@ -153,51 +150,13 @@ async function fetchStoaMeetings(meetingType) {
   return allRecords;
 }
 
-// Ask the city's own portal what actually convened on a date, so an advisory
-// board's meeting is never narrated as a Council action. Stoa labels everything
-// "City Council"; on 2026-08-06 that shipped Palo Alto's Architectural Review
-// Board as "Council to weigh rules for cell equipment on streets". Returns the
-// records keyed by date, and leaves the Stoa label alone on any error.
-async function resolveMeetingBodies(config, meetings) {
-  const resolved = new Map();
-  if (!config.legistarApi && !config.primegov) return resolved;
-  // Resolve per record, not per date: several bodies can sit on the same day,
-  // and the verifier needs each record's own agenda text to tell them apart.
-  // Items are matched back to source records only by date, so a date whose
-  // records resolve to different bodies gets no entry at all — the generic
-  // label and the council calendar link are honest, a coin-flip body is not.
-  const byDate = new Map();
-  for (const m of meetings) {
-    try {
-      const recordText = `${m.title || ""} ${m.excerpt || ""}`;
-      const actual = config.legistarApi
-        ? await verifyLegistarBodyOnDate(config.legistarApi, m.date, recordText)
-        : await verifyPrimeGovBodyOnDate(config.primegov, m.date, recordText);
-      if (actual?.body) {
-        if (!byDate.has(m.date)) byDate.set(m.date, []);
-        byDate.get(m.date).push(actual);
-      }
-    } catch {}
-  }
-  for (const [date, hits] of byDate) {
-    const distinct = new Set(hits.map((h) => h.body));
-    if (distinct.size > 1) {
-      console.warn(`  ⚠️  ${config.cityName}: ${date} has records from multiple bodies (${[...distinct].join(", ")}) — leaving the label unresolved`);
-      continue;
-    }
-    console.warn(`  ⚠️  ${config.cityName}: no City Council meeting on ${date} — using "${hits[0].body}"`);
-    resolved.set(date, hits[0]);
-  }
-  return resolved;
-}
-
 async function findInterestingItems(config, meetings, bodyType, bodies = new Map()) {
   const content = meetings.map((m) => {
     const excerpt = (m.excerpt || "")
       .replace(/^Kind:\s*captions\s+Language:\s*\w+\s*/i, "")
       .trim();
-    const body = bodies.get(m.date)?.body || bodyType;
-    return `Date: ${m.date}\nBody: ${body}\nTitle: ${m.title || ""}\nAgenda: ${excerpt}\nKeywords: ${(m.keywords || []).join(", ")}`;
+    const body = bodies.get(String(m.id))?.body || bodyType;
+    return `Source record ID: ${m.id}\nDate: ${m.date}\nBody: ${body}\nTitle: ${m.title || ""}\nAgenda: ${excerpt}\nKeywords: ${(m.keywords || []).join(", ")}`;
   }).join("\n\n---\n\n");
 
   const bodyNote = bodyType === "Planning Commission"
@@ -221,7 +180,7 @@ NEVER NAME STAFF CONTACTS: Legistar agendas include bureaucratic metadata like "
 
 MATCH THE SOURCE'S FRAMING — DO NOT NARROW: if a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the agenda explicitly uses that word. Do not invent illustrative examples ("for immigration, tax, or other..."). Stick to the source's wording on sensitive framing.
 
-DO NOT ASSERT THE BODY UNLESS THE AGENDA SUPPORTS IT: the "Body" label above is how the upstream feed classified the record, and it is sometimes wrong — advisory bodies (Architectural Review Board, Historic Resources Board, Teen/Youth Commission) get ingested under "City Council". If the agenda title reads as a recommendation TO the council ("Recommendation on …") or otherwise indicates a board or commission, do not write "Council approved/will weigh". Either name the body the agenda itself names, or write it body-neutrally ("Palo Alto is weighing …", "city staff recommended …"). Never upgrade an advisory recommendation into a council action.
+DO NOT ASSERT THE BODY UNLESS THE AGENDA SUPPORTS IT: each "Body" label belongs only to its source record. Where a city portal verifier is available, the label has been checked against that record's agenda; otherwise upstream labels may be wrong. Never transfer a body or agenda item between records, even on the same date. If the agenda reads as an advisory recommendation TO the council, do not upgrade it to a council action. Name the body supported by that record, or write it body-neutrally ("Palo Alto is weighing …", "city staff recommended …").
 
 NEVER REPORT THE BROWN ACT ATTENDANCE NOTICE: agendas for scoping meetings, study sessions, and joint hearings carry a boilerplate legal notice that members of other bodies "may be in attendance" — it exists to avoid an unnoticed serial meeting, and it says nothing about who actually showed up. Never write "with City Council / Planning Commission / Commission members possibly (or may be) in attendance". It is a disclaimer, not an event detail. Omit it.
 
@@ -236,6 +195,7 @@ NO FILLER ADJECTIVES: do not call a project "significant", "substantial", "major
 
 Return a JSON array (may be empty if nothing is interesting). Each item:
 {
+  "sourceRecordId": "ID of the one meeting record supporting this item; never combine records even when they share a date",
   "date": "YYYY-MM-DD",
   "headline": "short plain-English headline (max 12 words, no jargon). NEVER start a number with $; fiscal years like 2026-27 must be written as 'FY 2026-27', not '$2026-27'.",
   "summary": "1-2 sentences. What happened, why it matters. Written for a resident. NEVER use relative time words (tonight, today, this week) — use date or day name. NEVER admit you don't know what happened ('though specifics weren't provided', 'details weren't clear', 'without more details') — if you would have to, return [] instead. NEVER pad with filler significance language (see NO FILLER ADJECTIVES above)."
@@ -392,20 +352,28 @@ async function gatherMeetingItems(meetingType) {
       // Only the council path needs this — the planning path already asks Stoa
       // for Planning Commission records by type.
       const bodies = sourceTag === "council"
-        ? await resolveMeetingBodies(config, cityMeetings)
-        : new Map();
-      const found = await findInterestingItems(config, cityMeetings, label, bodies);
+        ? await resolveAroundTownMeetingSources(config, cityMeetings)
+        : new Map(cityMeetings.filter((m) => m.id != null).map((m) => [String(m.id), {
+          body: label, date: m.date, sourceUrl: m.sourceUrl
+            ?? (config.legistar ? legistarMeetingUrl(config.legistar, m.date) : config.agendaUrl),
+        }]));
+      const verifiedMeetings = cityMeetings.filter((m) => bodies.has(String(m.id)));
+      if (!verifiedMeetings.length) continue;
+      const found = await findInterestingItems(config, verifiedMeetings, label, bodies);
       for (const item of found) {
-        // A relabeled item must cite the agenda the retitled body actually
-        // heard, not the Council calendar page for that date.
-        const sourceUrl = bodies.get(item.date)?.sourceUrl
-          ?? (config.legistar ? legistarMeetingUrl(config.legistar, item.date) : config.agendaUrl);
+        const source = aroundTownSourceForItem(item, bodies);
+        if (!source) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped highlight without a matching source record`);
+          continue;
+        }
+        const sourceUrl = source.sourceUrl;
         items.push({
           id: makeId(config.cityId, item.date, item.headline),
           cityId: config.cityId,
           cityName: config.cityName,
           date: item.date,
           headline: expandStreetAbbreviations(item.headline),
+          sourceRecordId: String(item.sourceRecordId),
           summary: expandStreetAbbreviations(item.summary),
           sourceUrl,
           source: sourceTag,
@@ -499,6 +467,10 @@ async function gatherPermitItems() {
           .map(([street, n]) => `- ${street}: exactly ${n} permits in the list above`)
           .join("\n")}`
       : "";
+    const aduCount = permits.filter((p) => /\bADU\b|accessory dwelling unit/i.test(`${p.subtype || ""} ${p.description || ""}`)).length;
+    const aduCountsText = aduCount
+      ? `\n\nVERIFIED ADU COUNT: exactly ${aduCount} ADU permits in the supplied notable-permit list. This is not a citywide total; say \"the feed lists ${aduCount} ADU permits\" if you report it.`
+      : "";
 
     console.log(`  ⏳ ${config.cityName}: evaluating ${permits.length} notable permits...`);
 
@@ -506,9 +478,9 @@ async function gatherPermitItems() {
       const found = await claudeJson(`These are recently issued building permits in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about — new businesses, new housing, large construction projects, or anything unusual. Skip routine renovations and ADUs unless they fit a broader pattern worth pointing out.
 
 Permits:
-${permitText}${countsText}
+${permitText}${countsText}${aduCountsText}
 
-IMPORTANT — a permit being issued means construction is *cleared to begin*, NOT that it has started. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches" — those imply a milestone the data does not support. Use language like "permitted", "receives building permit", "cleared to build", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
+IMPORTANT — a permit being issued does not establish whether construction has started. Never assert either that work has begun or that it has not yet begun. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches". Use language like "permitted", "receives building permit", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
 ADDRESSES: an address given as "<street> (no street number assigned yet)" is a new lot without a house number. Write it as "on <street>" — never print a leading "0" as if it were a street number.
 

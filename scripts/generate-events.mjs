@@ -2519,6 +2519,7 @@ function inferCategory(title, desc, type, venue = "") {
   // held in a theater is not an arts event, and a campus tour that mentions
   // lunch is not food programming.
   if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(titleLower)) return "community";
+  if (/\bstate of the (?:city|town)\b/.test(titleLower)) return "community";
   if (/\b(?:college|campus)\s+tour\b/.test(titleLower)) return "education";
   if (/\bpwhl\b/.test(titleLower)) return "sports";
   // A screening is an arts event even when a library or teen center frames it
@@ -6327,13 +6328,14 @@ const FARMERS_MARKETS = [
   // on one line ("Santa Clara Farmers Market Saturday 9am-1pm"), so the
   // weekday is pinned together with the hours rather than as a bare /Saturday/
   // — every UVFM page's nav lists "Santa Clara - SAT" and would match that.
-  // No closure dates are published for this market; leaving excludedDates off
-  // is deliberate rather than unresearched.
+  // UVFM's 2026 closure calendar excludes Oct. 3 for the Parade of Champions.
+  // https://uvfm.org/updates
   {
     title: "Santa Clara Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM",
     venue: "Jackson Street & Homestead Road", address: "Jackson St & Homestead Rd, Santa Clara",
     city: "santa-clara",
     url: "https://uvfm.org/santa-clara-saturdays", season: [1, 12],
+    excludedDates: ["2026-10-03"],
     evidencePatterns: [/Santa Clara Farmers[’']? Market/i, /Saturday\s*9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i, /Jackson Street and Homestead Road/i],
   },
   {

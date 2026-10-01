@@ -7,6 +7,10 @@ import {
 } from "../generate-events.mjs";
 import { inferCategory as inferPlaywrightCategory } from "../playwright-scrapers.mjs";
 
+test("a State of the City address stays civic despite a theater venue and performances", () => {
+  assert.equal(inferCategory("2026 State of the City Address", "Community awards and live performances", "", "Mission City Center for Performing Arts"), "community");
+});
+
 // Both fixtures below are real strings that reached upcoming-events.json on
 // 2026-08-29 and were surfaced on southbaytoday.org city briefings.
 

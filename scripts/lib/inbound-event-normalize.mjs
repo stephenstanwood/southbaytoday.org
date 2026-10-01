@@ -77,6 +77,18 @@ export function inboundClock(value) {
 function officialOverride(event) {
   const date = String(event?.startsAt || "").slice(0, 10);
   const identity = `${event?.title || ""} ${event?.location || ""}`;
+  // The city's Sept. 2026 notice gives doors at 5 PM and one address at 6 PM.
+  // Normalize both newsletter copies before dedup so doors aren't a second talk.
+  // https://www.santaclaraca.gov/recreation-community/events/state-of-the-city
+  if (date === "2026-09-30" && /state of the city/i.test(identity)
+      && /mission city center for performing arts/i.test(identity)) {
+    return {
+      time: "6:00 PM",
+      endTime: null,
+      venue: "Mission City Center for Performing Arts",
+      url: "https://www.santaclaraca.gov/recreation-community/events/state-of-the-city",
+    };
+  }
   const verifiedUrl = VERIFIED_INBOUND_URLS.get(`${date}|${event?.title || ""}`);
   if (verifiedUrl) return { url: verifiedUrl };
   if (date === "2026-07-20" && /jeremy\s+frey\s*:\s*woven/i.test(identity) && /cantor arts center/i.test(identity)) {

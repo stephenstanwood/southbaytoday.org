@@ -826,5 +826,9 @@ test("PrimeGov verifier uses agenda items, not body names, on a council day", as
   const council = await withStubbedFetchAsync(fetchStub, () =>
     verifyPrimeGovBodyOnDate("cityofpaloalto.primegov.com", "2026-09-22",
       "Conference with Real Property Negotiators for 4000 Middlefield Road Cubberley Site. Interview Candidates for Vacancies on the Parks Recreation Commission (PRC) and Public Art Commission (PAC)"));
-  assert.deepEqual(council, { body: null, sourceUrl: null, councilMet: true });
+  assert.deepEqual(council, {
+    body: null,
+    sourceUrl: "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=1",
+    councilMet: true,
+  });
 });

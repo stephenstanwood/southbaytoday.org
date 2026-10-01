@@ -85,6 +85,24 @@ test("inbound events prefer an explicit canonical URL", () => {
   }).url, "https://venue.example.com/events/example");
 });
 
+test("Santa Clara doors-open and address copies normalize to one 6 PM event", () => {
+  const copies = [
+    { startsAt: "2026-09-30T17:00:00-07:00", location: "Mission City Center for Performing Arts, 3250 Monroe St., Santa Clara" },
+    { startsAt: "2026-09-30T18:00:00-07:00", location: "Mission City Center for Performing Arts at Wilcox High School, 3250 Monroe St., Santa Clara" },
+  ];
+  const normalized = copies.map((copy) => normalizeInboundEventPresentation({
+    title: "2026 State of the City Address", ...copy,
+  }));
+  assert.deepEqual(normalized[0], normalized[1]);
+  assert.equal(normalized[0].time, "6:00 PM");
+  assert.equal(normalized[0].venue, "Mission City Center for Performing Arts");
+  assert.equal(normalized[0].url, "https://www.santaclaraca.gov/recreation-community/events/state-of-the-city");
+  assert.equal(normalizeInboundEventPresentation({
+    title: "2027 State of the City Address", startsAt: "2027-09-30T17:00:00-07:00",
+    location: copies[0].location,
+  }).time, "5:00 PM");
+});
+
 test("Stanford Athletics per-send redirects never reach public cards", () => {
   assert.equal(normalizeInboundEventPresentation({
     title: "Stanford Men's Soccer vs. Santa Clara",

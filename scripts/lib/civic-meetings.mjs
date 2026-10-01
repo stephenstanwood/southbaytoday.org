@@ -672,7 +672,7 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
       // Commission") scored as the PRC on names alone.
       const byItems = await pickBodyByPrimeGovItems(domain, named, recordText, toCandidate);
       if (byItems) {
-        if (/^city council\b/i.test(byItems.body)) return { body: null, sourceUrl: null, councilMet: true };
+        if (/^city council\b/i.test(byItems.body)) return { body: null, sourceUrl: byItems.sourceUrl, councilMet: true };
         const { score, ...winner } = byItems;
         return winner;
       }

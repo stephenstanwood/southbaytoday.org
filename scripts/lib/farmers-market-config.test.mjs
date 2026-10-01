@@ -69,3 +69,9 @@ test("Mountain View's published alternate-location Sundays are all configured", 
     "2026-11-08", "2026-11-29", "2026-12-13",
   ]);
 });
+
+test("Santa Clara suppresses the organizer's Parade of Champions closure", () => {
+  const market = FARMERS_MARKETS.find((m) => m.title === "Santa Clara Farmers Market");
+  assert.ok(market);
+  assert.ok(market.excludedDates.includes("2026-10-03"));
+});

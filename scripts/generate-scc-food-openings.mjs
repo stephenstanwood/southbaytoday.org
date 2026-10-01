@@ -204,6 +204,10 @@ const BLURB_OVERRIDES = {
 
 // Source IDs to explicitly skip — non-public venues, existing restaurants with equipment-only permits, etc.
 const SOURCE_ID_SKIP = new Set([
+  // Sunnyvale's official mobilehome-park map lists Casa de Amigos at this
+  // permit's 1085 Tasman Dr address; it is not a public restaurant opening.
+  // https://www.sunnyvale.ca.gov/home/showpublisheddocument/2950/637822754904930000
+  "SR0885980",
   "SR0881556", // Palo Alto Central — apartment complex amenity kitchen, not a public restaurant
   "SR0884332", // XPP Claypot — existing restaurant at 20950 Stevens Creek; permit is for new equipment only
   "SR0883385", // SAP Center Phase Concession — arena concession permit, not a public restaurant opening

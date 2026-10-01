@@ -540,6 +540,7 @@ async function main() {
         const actual = config.legistarApi
           ? await verifyLegistarBodyOnDate(config.legistarApi, meeting.date, recordText)
           : await verifyPrimeGovBodyOnDate(config.primegov, meeting.date, recordText);
+        if (actual?.councilMet === true) bodySourceUrl = actual.sourceUrl;
         if (actual?.body) {
           console.warn(`  ⚠️  ${config.cityName}: no City Council meeting on ${meeting.date} — relabeling as "${actual.body}" (city=${config.city})`);
           bodyLabel = actual.body;
@@ -588,7 +589,7 @@ async function main() {
         // config.schedule describes the *council's* cadence. When the digest is
         // relabeled to a committee or commission above, that cadence doesn't
         // apply — omit it rather than pair the wrong body with the wrong meets-on.
-        schedule: /council\b/i.test(bodyLabel) ? config.schedule : null,
+        schedule: /^(?:city|town) council(?:\s+(?:regular|special|joint)\s+meeting)?$/i.test(bodyLabel.trim()) ? config.schedule : null,
         // config.agendaUrl is the *City Council* agenda page, and it is the last
         // resort. When the digest was relabeled to another body above, citing it
         // misattributes the item to a body that never heard it — Palo Alto's
