@@ -775,12 +775,13 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "music",
     recurrence: "seasonal",
     months: [8],
-    cost: "free",
-    costNote: "Street festival free; some ticketed stages",
+    // Organizer requires adult admission: https://summerfest.sanjosejazz.org/tickets-payments
+    cost: "paid",
+    costNote: "Ticketed festival admission",
     kidFriendly: true,
     description:
       "Three-day jazz festival with performances across downtown San Jose.",
-    url: "https://sanjosejazz.org/summer-fest",
+    url: "https://summerfest.sanjosejazz.org/",
     emoji: "🎷",
     featured: true,
   },
