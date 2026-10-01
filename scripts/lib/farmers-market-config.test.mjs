@@ -19,7 +19,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { FARMERS_MARKETS } from "../generate-events.mjs";
+import { FARMERS_MARKETS, fetchFarmersMarketEvents } from "../generate-events.mjs";
 
 test("every projected market carries a complete, verifiable config", () => {
   assert.ok(FARMERS_MARKETS.length > 0);
@@ -74,4 +74,118 @@ test("Santa Clara suppresses the organizer's Parade of Champions closure", () =>
   const market = FARMERS_MARKETS.find((m) => m.title === "Santa Clara Farmers Market");
   assert.ok(market);
   assert.ok(market.excludedDates.includes("2026-10-03"));
+});
+
+const santanaRow = FARMERS_MARKETS.find((m) => m.title === "Santana Row Farmers Market");
+const scheduleHtml = "Santana Row Farmers Market, every Wednesday, 4pm–8pm through September";
+
+// Exercise the real adapter and verifier without contacting organizers or
+// Discord. Record the side effects as well as the published dates: an empty
+// result alone would miss the original off-season alert regression.
+async function collectMarket(today, { market = santanaRow, status = 200, html = scheduleHtml } = {}) {
+  const requests = [];
+  const alerts = [];
+  const events = await fetchFarmersMarketEvents({
+    today,
+    markets: [market],
+    fetchImpl: async (url) => {
+      requests.push(url);
+      return new Response(html, { status });
+    },
+    notify: async (alert) => { alerts.push(alert); },
+  });
+  return { events, requests, alerts };
+}
+
+test("expired Santana Row season neither verifies nor alerts, including the following year", async () => {
+  for (const today of ["2026-10-01", "2027-07-28"]) {
+    const result = await collectMarket(today, { status: 500 });
+    assert.deepEqual(result, { events: [], requests: [], alerts: [] }, today);
+  }
+});
+
+test("a season outside the 90-day window is not verified or escalated", async () => {
+  // July 22 is 91 days after April 22, outside the inclusive 90-day horizon.
+  const result = await collectMarket("2026-04-22", { status: 500 });
+  assert.deepEqual(result, { events: [], requests: [], alerts: [] });
+  // Also exercise the month bounds without explicit start/end dates.
+  const { startDate, endDate, ...seasonOnly } = santanaRow;
+  assert.deepEqual(await collectMarket("2026-10-01", { market: seasonOnly, status: 500 }), {
+    events: [], requests: [], alerts: [],
+  });
+});
+
+test("an upcoming season is verified when its first occurrence enters the window", async () => {
+  const result = await collectMarket("2026-04-23");
+  assert.deepEqual(result.requests, [santanaRow.url]);
+  assert.deepEqual(result.alerts, []);
+  assert.deepEqual(result.events.map((event) => event.date), ["2026-07-22"]);
+});
+
+test("active and final-day occurrences still require verification and carry matching evidence", async () => {
+  const result = await collectMarket("2026-09-01");
+  assert.deepEqual(result.requests, [santanaRow.url]);
+  assert.deepEqual(result.alerts, []);
+  assert.deepEqual(result.events.map((event) => event.date), [
+    "2026-09-02", "2026-09-09", "2026-09-16", "2026-09-23", "2026-09-30",
+  ]);
+  for (const event of result.events) {
+    assert.equal(event.occurrenceEvidence.kind, "first-party-market-schedule");
+    assert.equal(event.occurrenceEvidence.date, event.date);
+    assert.equal(event.occurrenceEvidence.sourceUrl, santanaRow.url);
+  }
+  const finalDay = await collectMarket("2026-09-30");
+  assert.deepEqual(finalDay.requests, [santanaRow.url]);
+  assert.deepEqual(finalDay.events.map((event) => event.date), ["2026-09-30"]);
+});
+
+test("HTTP failures still suppress and alert for upcoming and active seasons", async () => {
+  for (const today of ["2026-04-23", "2026-09-01"]) {
+    const result = await collectMarket(today, { status: 500 });
+    assert.deepEqual(result.requests, [santanaRow.url]);
+    assert.deepEqual(result.events, []);
+    assert.equal(result.alerts.length, 1);
+    assert.equal(result.alerts[0].key, "farmers-market-suppressed");
+    assert.match(result.alerts[0].body, /Santana Row Farmers Market \(http-500\)/);
+  }
+});
+
+test("an active market with unconfirmed page wording stays unpublished and alerts", async () => {
+  const result = await collectMarket("2026-09-01", { html: "Visit Santana Row" });
+  assert.deepEqual(result.events, []);
+  assert.deepEqual(result.requests, [santanaRow.url]);
+  assert.equal(result.alerts.length, 1);
+  assert.match(result.alerts[0].body, /schedule-not-confirmed/);
+});
+
+test("closures and weekday bounds can remove the last eligible occurrence before verification", async () => {
+  for (const market of [
+    { ...santanaRow, excludedDates: ["2026-09-30"] },
+    { ...santanaRow, endDate: "2026-09-29" },
+  ]) {
+    const result = await collectMarket("2026-09-24", { market, status: 500 });
+    assert.deepEqual(result, { events: [], requests: [], alerts: [] });
+  }
+});
+
+test("year-round markets retain date-specific closures and relocations", async () => {
+  const market = FARMERS_MARKETS.find((m) => m.title === "Mountain View Farmers Market");
+  const result = await collectMarket("2026-10-01", {
+    market,
+    html: "Mountain View Farmers Market. Sundays, 9:00am-1:00pm",
+  });
+  assert.deepEqual(result.requests, [market.url]);
+  assert.deepEqual(result.alerts, []);
+  const relocated = result.events.find((event) => event.date === "2026-10-04");
+  assert.equal(relocated.venue, "Hope St. Lots (Lots 4 & 8)");
+  assert.equal(relocated.address, "Hope St, Mountain View");
+  assert.equal(result.events.find((event) => event.date === "2026-10-11").venue, market.venue);
+  const santaClara = FARMERS_MARKETS.find((m) => m.title === "Santa Clara Farmers Market");
+  const closed = await collectMarket("2026-10-01", {
+    market: santaClara,
+    html: "Santa Clara Farmers Market Saturday 9am-1pm. Jackson Street and Homestead Road",
+  });
+  assert.deepEqual(closed.requests, [santaClara.url]);
+  assert.deepEqual(closed.alerts, []);
+  assert.equal(closed.events[0].date, "2026-10-10");
 });

@@ -51,6 +51,11 @@ separate recovery problem, not a reason to relax the workflow.
 
 ## Fail-closed contract
 
+- Projected farmers markets are verified only when their configured season,
+  start/end dates, weekday, and closures leave an eligible occurrence within
+  the 90-day publication horizon. Expired or out-of-window schedules neither
+  fetch nor alert; upcoming and active schedules still fail closed on HTTP or
+  wording failures. A known end date never rolls forward into another year.
 - Critical-source, per-source future-coverage, and aggregate-regression guards
   apply to **every** `generate-events.mjs` invocation, including the general
   data-refresh job and manual runs without `SBT_STRICT_EVENT_REFRESH=1`. Strict
