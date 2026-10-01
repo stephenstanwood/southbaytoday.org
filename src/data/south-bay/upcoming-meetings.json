@@ -1,97 +1,72 @@
 {
-  "generatedAt": "2026-09-30T04:37:04.101Z",
+  "generatedAt": "2026-10-01T04:38:01.130Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
-      "startTime": "13:30",
+      "date": "2026-10-02",
+      "displayDate": "Fri, Oct 2",
+      "startTime": "09:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8110&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8110,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8083&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8083,
       "agendaItems": [
         {
-          "title": "Amendment to the Lease of Airport Premises Agreement with Jett Pro Line Maintenance.",
-          "sequence": 44
+          "title": "Study Session - Infrastructure Financing Tools for Economic Development",
+          "sequence": 18
         },
         {
-          "title": "Amendment to the On-Airport Lease Agreement for General Services Administration Public Building Service.",
-          "sequence": 45
+          "title": "Technical Presentation of Infrastructure Financing Tools",
+          "sequence": 26
         },
         {
-          "title": "Amendment to the Lease of Airport Premises Agreement with PrimeFlight Aviation Services, Inc.",
-          "sequence": 46
-        },
-        {
-          "title": "First Amendment to the Master Consultant Agreement with HF&H Consultants, LLC, for Commercial Solid Waste Collections and Processing Program Services.",
-          "sequence": 47
-        },
-        {
-          "title": "Amendment to the Grant Agreement Between the City of San José and San José Public Library Foundation.",
-          "sequence": 49
+          "title": "Questions and Answers with Municipal Advisor (Fieldman)",
+          "sequence": 27
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-09-29",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-29T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
-      "startTime": "19:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4524&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4524,
-      "agendaItems": [
-        {
-          "title": "Filipino American History Month",
-          "sequence": 8
-        },
-        {
-          "title": "Hindu American Heritage Month",
-          "sequence": 9
-        },
-        {
-          "title": "Domestic Violence Awareness Month",
-          "sequence": 10
-        },
-        {
-          "title": "Adopt the City’s Investment Policy for Fiscal Year 2026/27 and Receive the Annual Performance Report for Fiscal Year 2025/26",
-          "sequence": 14
-        },
-        {
-          "title": "Adopt Positions on State and Local Ballot Measures for the November 3, 2026 Election",
-          "sequence": 21
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-09-29",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-29T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-02",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-30T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
-      "date": "2026-09-29",
-      "displayDate": "Tue, Sep 29",
-      "startTime": "18:00",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
+      "startTime": "17:45",
       "bodyName": "City Council",
-      "location": "Conference Room C &",
+      "location": "Council Chamber",
       "closedSession": true,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5377&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5377,
-      "agendaItems": [],
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5300&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5300,
+      "agendaItems": [
+        {
+          "title": "Recognition of the Community Development Department (Planning, Building, Housing, and Code Enforcement Divisions)",
+          "sequence": 14
+        },
+        {
+          "title": "Approval of a resolution increasing the employer's contribution for medical and hospitalization insurance consistent with the Public Employees’ Medical and Hospital Care Act (“PEMHCA” or the “Act”) for retired annuitants hired with the City of Cupertino prior to August 2004.",
+          "sequence": 23
+        },
+        {
+          "title": "Approval of a Resolution Authorizing Submittal of An Individual Grant Application for $80,000 for the Rubberized Pavement Grant Program.",
+          "sequence": 24
+        },
+        {
+          "title": "Tax and Equity Fiscal Responsibility Act (TEFRA) public hearing and approval of conduit financing for The RISE Block 5 Apartments Project",
+          "sequence": 27
+        },
+        {
+          "title": "City Manager Report",
+          "sequence": 33
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-09-29",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-29T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-06",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-09-30T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -101,13 +76,13 @@
       "bodyName": "City Council Special Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21633",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21648",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-09-30",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21633"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21648"
       }
     },
     "milpitas": {
@@ -124,7 +99,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-29T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-30T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -141,7 +116,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-29T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-09-30T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -156,7 +131,7 @@
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "cupertino": {
       "provider": "Legistar",

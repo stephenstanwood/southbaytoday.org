@@ -1,122 +1,120 @@
 {
   "_meta": {
-    "generatedAt": "2026-09-30T04:49:52.926Z",
+    "generatedAt": "2026-10-01T04:47:56.365Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 9
+    "sourceCount": 6
   },
   "summary": {
-    "threadsMined": 9,
-    "placesExtracted": 4,
-    "placesMatched": 3,
-    "placeGaps": 1,
-    "eventsExtracted": 3,
+    "threadsMined": 6,
+    "placesExtracted": 6,
+    "placesMatched": 1,
+    "placeGaps": 5,
+    "eventsExtracted": 2,
     "eventsMatched": 0,
-    "eventGaps": 3,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Florra Scent Bar",
-      "city": "Campbell",
-      "kind": "retail",
-      "context": "scent bar in downtown Campbell, considering for birthday",
+      "name": "SoFA Pocket Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "hosting First Friday event in SoFA District",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
-        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
-        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
-        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+      ]
+    },
+    {
+      "name": "El Veijon Food Truck",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "providing free food at SoFA Pocket Park event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+      ]
+    },
+    {
+      "name": "Luna",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "considered for stroller-friendly brunch",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+      ]
+    },
+    {
+      "name": "Uncle Bills",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "on the Alameda, considered for stroller-friendly brunch",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+      ]
+    },
+    {
+      "name": "City Sports Club",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "gym near Berryessa with scary Yelp reviews",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wtx0me/berryessa_gyms/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Dine for a Cause",
-      "when": "October 1",
+      "name": "South First Fridays Art Walk",
+      "when": "First Friday",
       "city": "San Jose",
-      "context": "fundraiser event at Lazy Dog Almaden",
+      "context": "monthly art walk in SoFA District",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
-        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
-        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/"
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
       ]
     },
     {
-      "name": "Hayley Williams concert",
-      "when": "October 2, 7pm",
-      "city": "Mountain View",
-      "context": "show at Shoreline Amphitheatre",
+      "name": "First Friday at SoFA Pocket Park",
+      "when": "5pm-10pm",
+      "city": "San Jose",
+      "context": "art vending, supply swap, live figure drawing, free food",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
-        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
-        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/",
-        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
-        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
-        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
-        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
-      ]
-    },
-    {
-      "name": "Peet's $0.25 Drip Coffee Promo",
-      "when": "September 29",
-      "city": "Mountain View",
-      "context": "one-day anniversary pricing promo",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
-        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
-        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
-        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
+        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
+        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
+        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
+        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
+        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Lazy Dog",
+      "name": "24 Hour Fitness",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "Almaden location hosting dine for a cause event",
+      "kind": "other",
+      "context": "gym near Berryessa with scary Yelp reviews",
       "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
-        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
-        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/"
+        "https://www.reddit.com/r/SanJose/comments/1wtx0me/berryessa_gyms/"
       ],
-      "matchedName": "Lazy Dog Restaurant & Bar"
-    },
-    {
-      "name": "Shoreline Amphitheatre",
-      "city": "Mountain View",
-      "kind": "venue",
-      "context": "hosting Hayley Williams concert",
-      "sourceUrls": [
-        "https://www.reddit.com/r/mountainview/comments/1wtox1h/best_bakeries_coffee_and_matcha_in_the_area/",
-        "https://www.reddit.com/r/SanJose/comments/1wtoes7/soccer_club_classes_for_225_yr_old_toddler/",
-        "https://www.reddit.com/r/SanJose/comments/1wtehyg/dine_for_a_cause_october_1_with_lazy_dog_almaden/",
-        "https://www.reddit.com/r/mountainview/comments/1wtr6b5/selling_two_tickets_for_mountain_view_shoreline/",
-        "https://www.reddit.com/r/SanJose/comments/1wtnjpi/local_food_banks/",
-        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
-        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
-        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
-        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
-      ],
-      "matchedName": "Shoreline Amphitheatre"
-    },
-    {
-      "name": "Peet's Coffee",
-      "city": "Mountain View",
-      "kind": "cafe",
-      "context": "$0.25 drip coffee promo on 9/29",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wtmnb1/any_recommendation_for_hair_salons_that_do_an/",
-        "https://www.reddit.com/r/mountainview/comments/1wtm6aj/shoreline_amphitheater_tips/",
-        "https://www.reddit.com/r/SanJose/comments/1wtejbw/is_the_florra_scent_bar_in_dt_campbell_nice/",
-        "https://www.reddit.com/r/mountainview/comments/1wtdt10/psa_drip_coffee_is_025_today_only_929_at_peets/"
-      ],
-      "matchedName": "Peet's Coffee"
+      "matchedName": "British Swim School at 24 Hour Fitness - Sunnyvale"
     }
   ],
   "eventMatches": []

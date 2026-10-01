@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-09-30T04:36:34.243Z",
+      "generatedAt": "2026-10-01T04:37:20.017Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 22 – Sep 29",
+      "dateRange": "Sep 23 – Sep 30",
       "stats": {
-        "total": 500,
-        "notable": 29,
-        "newUnits": 11,
-        "totalValuation": 88883814
+        "total": 460,
+        "notable": 26,
+        "newUnits": 10,
+        "totalValuation": 12961263
       },
       "permits": [
         {
@@ -36,18 +36,6 @@
           "valuation": 185772,
           "units": 1,
           "issueDate": "2026-09-23",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-131700-RS",
-          "address": "449 N 12th St #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 175920,
-          "units": 1,
-          "issueDate": "2026-09-22",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -99,18 +87,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-125344-RS",
-          "address": "3550 Chamberlain Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Lot 3new Attached JADU",
-          "valuation": 86130,
-          "units": 1,
-          "issueDate": "2026-09-22",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2026-097731-RS",
           "address": "1137 Pascoe Av #2",
           "category": "residential-new",
@@ -133,26 +109,50 @@
           "units": 1,
           "issueDate": "2026-09-23",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-121812-RS",
+          "address": "2523 Sleepy Hollow Ln #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 58757,
+          "units": 1,
+          "issueDate": "2026-09-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-110636-RS",
+          "address": "1111 Mayette Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 54535,
+          "units": 1,
+          "issueDate": "2026-09-23",
+          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-09-30T04:36:39.596Z",
+      "generatedAt": "2026-10-01T04:37:24.434Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 22 – Sep 29",
+      "dateRange": "Sep 23 – Sep 30",
       "stats": {
-        "total": 98,
+        "total": 100,
         "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02765",
-          "address": "3142 Flowers Ln",
+          "id": "26BLD-02758",
+          "address": "2370 Waverley St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
@@ -175,8 +175,8 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02758",
-          "address": "2370 Waverley St",
+          "id": "26BLD-02765",
+          "address": "3142 Flowers Ln",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
