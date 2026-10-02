@@ -1,25 +1,25 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-02T02:17:27.991Z",
+    "generatedAt": "2026-10-02T16:09:17.693Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 569,
+    "eventCount": 567,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (120)",
-      "Los Gatos Library (146)",
+      "Los Gatos Library (147)",
       "San Jose Jazz (19)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (12)",
+      "Mountain Winery (11)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (4)",
-      "Guadalupe River Park Conservancy (10)",
+      "Guadalupe River Park Conservancy (9)",
       "Santana Row (6)",
-      "City of Cupertino (60)",
+      "City of Cupertino (59)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 146,
+        "count": 147,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -96,7 +96,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 12,
+        "count": 11,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -219,7 +219,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 10,
+        "count": 9,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 60,
+        "count": 59,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,24 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "f61d141f208b",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17319776",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "a9f8cc903609",
       "title": "Pages and Paws",
@@ -2905,6 +2887,26 @@
         "All Ages"
       ],
       "url": "https://mountainview.libcal.com/event/17058573",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "807562a63adc",
+      "title": "New Year's Day Holiday",
+      "date": "2026-12-31",
+      "displayDate": "Thu, Dec 31",
+      "time": null,
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "The Library will be closed today in observance of the New Year's Day holiday.",
+      "sourceAudiences": [
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/17448609",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -5913,6 +5915,28 @@
       "kidFriendly": false
     },
     {
+      "id": "a6d8af6c9fa1",
+      "title": "Library Closed",
+      "date": "2026-12-31",
+      "displayDate": "Thu, Dec 31",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16374653",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "d7c2f1437d9a",
       "title": "SJZ Break Room Jazz Jam",
       "date": "2026-10-02",
@@ -6906,23 +6930,6 @@
       "kidFriendly": false
     },
     {
-      "id": "ab555e57b878",
-      "title": "Lynyrd Skynyrd with Nick Tyrrel",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1385233",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "5bed06abe6d6",
       "title": "Get The Led Out",
       "date": "2026-10-02",
@@ -7467,10 +7474,10 @@
       "kidFriendly": true
     },
     {
-      "id": "3459e16ce538",
+      "id": "ec2eba84c52f",
       "title": "Toddler Storytime",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
+      "date": "2026-10-02",
+      "displayDate": "Fri, Oct 2",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7484,10 +7491,10 @@
       "kidFriendly": true
     },
     {
-      "id": "4aae6afc1ae3",
+      "id": "f4625f97305c",
       "title": "All Ages Storytime",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
+      "date": "2026-10-02",
+      "displayDate": "Fri, Oct 2",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7516,28 +7523,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "199e494be841",
-      "title": "Rotary PlayGarden Closed For Construction",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Guadalupe River Park",
-      "address": "438 Coleman Ave, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.google.com/calendar/event?eid=NWpwMTNoZ3ZodDlycHR2Y3EzYTkwZTQ4dmogY19udmprdXBqbTRsbjVudDlxdGx0YmFpazBxOEBn&ctz=America/Los_Angeles",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-10-01"
-      }
     },
     {
       "id": "dcb6f9d9c004",
@@ -7838,23 +7823,6 @@
       "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
       "source": "Santana Row",
       "kidFriendly": false
-    },
-    {
-      "id": "187df5f4ef4c",
-      "title": "Cupertino Cybersecurity Public Awareness Events",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "06:00 PM",
-      "endTime": "08:00 PM",
-      "venue": "Cupertino Community Hall",
-      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Anyone can become a victim of cybercrime. Join the City’s panel discussion to hear cybersecurity experts share practical tips and guidance to help you recognize threats and protect yourself. A Q&A session will follow the presentation, giving attendees an opportunity to ask questions. Cybersecurity Panel Don Hester - CISA Cybersecurity Advisor, Dept. of Homeland Security Dr. May Wang - CTO, IoT Security, Palo Alto Networks Ramesh Gupta - CEO, Identra.AI Sandip Patel - Deputy District Attorney, High-Tech Prosecutions, Santa Clara County Balaram Donthi - Panel Moderator, TICC Commissioner Sudeep Kumar - Co-Host, TICC Vice Chair View Past Events Cybersecurity Public Education 2025 Cybersecurity Public Education 2023 Protect Yourself from Being Hacked on the Wild, Wild Internet",
-      "url": "https://www.cupertino.gov/Events-directory/Cupertino-Cybersecurity-Public-Awareness-Events",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "cc0dc6d0d6d2",
@@ -8871,7 +8839,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8888,7 +8856,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8905,7 +8873,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8922,7 +8890,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8939,7 +8907,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10543,23 +10511,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7696e2ba415b",
-      "title": "Home Opener",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Concert Tee Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-panthers-4",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "67aed8788ec8",
       "title": "Opening Weekend",
       "date": "2026-10-03",
@@ -10794,6 +10745,23 @@
       "cost": "paid",
       "description": "Mini Sharks Sugar Skull Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "50e822e9eaca",
+      "title": "Sharks vs Flames",
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
+      "time": "6:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
       "source": "SAP Center",
       "kidFriendly": false
     },
