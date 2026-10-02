@@ -1514,16 +1514,15 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     "NEX Team Inc., 333 W San Carlos St, Suite 600, San Jose, CA 95110" —
   //     the same bar Owner's Platform Terms, Rune's footer, and Gaia Dynamics'
   //     privacy policy cleared — and CB Insights independently lists the same
-  //     address. In coverage as San Jose. The amount is recorded as the
-  //     company's own headline figure ("more than $150 million in new equity
-  //     and debt financing"): the Series E equity led by Baillie Gifford and
-  //     BAI Capital and a new JPMorgan credit facility are announced as one
-  //     number, no split is disclosed by the company (GamesBeat reports
-  //     roughly half and half), and every source reports the blended total.
-  //     This is NOT the Lambda case above — that was a standalone debt
-  //     facility with no equity round attached; this is a lettered equity
-  //     round with a facility alongside it. The tagline says so, and the
-  //     card links the company's own domain so the logo resolver reads it.
+  //     address. In coverage as San Jose. The company announces more than
+  //     $150M in combined Series E equity and a JPMorgan credit facility,
+  //     without disclosing the split. Keep the package figure in the tagline,
+  //     but record the Series E amount as "Undisclosed" so the blended total
+  //     cannot inflate TechnologyView's equity-funding sum. A lettered round
+  //     alongside debt does not make the debt venture equity (the same rule
+  //     that keeps GMI Cloud's $445M credit facility out of its amount).
+  //     Primary source rechecked 2026-10-02:
+  //     https://www.nexplayground.com/blog/nex-raises-150-million-global-expansion
   //   * Terragrit is a strategic investment with no amount disclosed —
   //     recorded as "Undisclosed" on the SiMa.ai / Micron precedent further
   //     down. Its city needed the LinkedIn-and-exhibitor-profile route: the
@@ -1803,10 +1802,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     city: "San Jose",
     category: "hardware",
     round: "Series E",
-    amount: "$150M+",
+    amount: "Undisclosed",
     date: "2026-09-17",
     tagline:
-      "The console maker that got kids off the couch has sold a million of them. Nex, the San Jose company behind Nex Playground — a $300 controller-free box that tracks the player's body with a camera so families jump, dodge, and dance through more than 60 games, Bluey, Barbie, Kung Fu Panda, and Peppa Pig among them, with NFL Flag and PAC-MAN on the way — announced more than $150M in new equity and debt financing: a Series E co-led by Baillie Gifford and BAI Capital, with NBA Investments, Logitech, Medici Capital Partners, and the Raine Group joining, alongside a new JPMorgan credit facility, with the split between the two undisclosed. Motion data stays on the device, and every unit ships with a camera cover. The console sits in more than 7,000 U.S. stores — Costco, Sam's Club, Target, Walmart, Best Buy — and the subscriber base has grown sevenfold in 18 months to nearly a million. CEO and co-founder David Lee, who has said he is building a hundred-year company, has hired Niantic's former CFO Jeff Shouger into the same role and added him and former EA executive Bing Gordon to the board. The money goes to Germany later this year, Japan and Korea in 2027, and cross-household multiplayer.",
+      "San Jose's Nex makes Nex Playground, a camera-controlled console for active family games. Its September financing package exceeds $150M across a Series E co-led by Baillie Gifford and BAI Capital and a JPMorgan credit facility. Nex has not disclosed the equity and debt split, so the Series E amount is undisclosed. The company reports more than a million consoles sold; the money supports international expansion, retail distribution, and new games.",
     color: "#7C3AED",
     url: "https://www.nexplayground.com/",
   },
