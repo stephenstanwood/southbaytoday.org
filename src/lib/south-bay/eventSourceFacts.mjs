@@ -135,11 +135,97 @@ const CORRECTIONS = [
       blurb: "Make bug headbands at this week's drop-in craft session; supplies are limited, first come, first served.",
     },
   },
+  // October 2 growth review: the SJMA browser snapshot put calendar dates in
+  // `time` and defaulted every listing to paid. The direct adapter remains
+  // retired; these bounded corrections use the museum's published detail
+  // pages and survive carried-forward snapshots. Never roll them into a new
+  // year or infer general admission from an event title.
+  {
+    id: "0fd141a7f257",
+    date: "2026-10-02",
+    url: "https://sjmusart.org/event/first-friday-new-ballet-season-preview",
+    facts: {
+      time: "6:00 PM", endTime: "9:00 PM", cost: "free",
+      description: "Free evening galleries and a preview of New Ballet's 10th anniversary season. The ballet preview is in the Charlotte Wendel Education Center; doors open at 7:25 PM and seating is first come, first served.",
+      blurb: "Enjoy free evening galleries and a preview of New Ballet's 10th anniversary season.",
+      attendanceNote: "Advance registration speeds check-in. Ballet-preview doors open at 7:25 PM; seating is limited, first come, first served.",
+    },
+  },
+  {
+    id: "703687c2511a",
+    date: "2026-10-24",
+    url: "https://sjmusart.org/programs-at-sjma/community-days/dia-de-los-muertos",
+    aliasUrls: ["https://sjmusart.org/community-day-dia-de-los-muertos"],
+    facts: {
+      url: "https://sjmusart.org/programs-at-sjma/community-days/dia-de-los-muertos",
+      time: "11:00 AM", endTime: "4:00 PM", cost: "free",
+      kidFriendly: true, audienceAge: "all",
+      description: "Celebrate Día de los Muertos with live entertainment, cultural demonstrations, and art activities at San Jose Museum of Art. Museum admission is free all day and activities end at 4 PM.",
+      blurb: "Celebrate Día de los Muertos with free art activities, live entertainment, and cultural demonstrations.",
+      attendanceNote: "Advance registration is recommended; walk-ins are welcome. Sugar skull decorating requires a separate ticket available at the museum that day.",
+    },
+  },
+  {
+    id: "91accca935ec",
+    date: "2026-10-27",
+    url: "https://sjmusart.org/event/sjsu-art-galleries-tuesday-night-lecture-lua-vollaard",
+    facts: {
+      time: "2:00 PM", endTime: "3:00 PM", cost: "free",
+      venue: "San Jose State University, ART 133: Art Lecture Hall",
+      address: "One Washington Square, San Jose, CA 95192",
+      // The old fallback photo depicts SJMA, not this offsite lecture hall.
+      photoRef: null,
+      description: "Lua Vollaard discusses artists' responses to technological development. This free lecture takes place offsite at San Jose State University's ART 133: Art Lecture Hall.",
+      blurb: "Hear Lua Vollaard discuss art and technological development at SJSU's ART 133 lecture hall.",
+    },
+  },
+  ...[
+    { id: "e9db5308794a", date: "2026-10-28", url: "https://sjmusart.org/walk-naturalist-october-2026" },
+    { id: "fe4a7a23e4bd", date: "2026-11-18", url: "https://sjmusart.org/walk-naturalist-november-2026" },
+  ].map((occurrence) => ({
+    ...occurrence,
+    aliasUrls: ["https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist"],
+    facts: {
+      url: "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
+      time: "12:30 PM", endTime: "1:30 PM", cost: "paid",
+      costNote: "Tour included with museum admission",
+      kidFriendly: true, audienceAge: "all",
+      description: "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
+      blurb: "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
+      attendanceNote: "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants.",
+    },
+  })),
+  {
+    id: "8f7697d5027c",
+    date: "2026-11-06",
+    url: "https://sjmusart.org/event/first-fridays-november-2026",
+    facts: {
+      time: "6:00 PM", endTime: "9:00 PM", cost: "free",
+      description: "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
+      blurb: "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
+      attendanceNote: "Register in advance for faster check-in.",
+    },
+  },
+  {
+    id: "a322ab0c474f",
+    date: "2026-12-04",
+    url: "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
+    aliasUrls: ["https://sjmusart.org/event/first-fridays-december-2026"],
+    facts: {
+      title: "First Fridays: Celebrate the Holidays with Pride",
+      url: "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
+      time: "6:00 PM", endTime: "9:00 PM", cost: "free",
+      description: "Celebrate San Jose's LGBTQIA+ community with live music, storytelling, and drag performances. Museum admission is free after 6 PM.",
+      blurb: "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
+      attendanceNote: "Register in advance for faster check-in.",
+    },
+  },
 ];
 
 export function applyVerifiedEventFacts(event) {
   const correction = CORRECTIONS.find((c) => event?.date === c.date && (
     event.id === c.id || (c.url && event.url === c.url)
+      || c.aliasUrls?.includes(event.url)
       || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
   ));
   return correction ? { ...event, ...correction.facts } : event;

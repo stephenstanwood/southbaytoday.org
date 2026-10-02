@@ -9353,6 +9353,13 @@ async function main() {
     if (norm(e.description) === norm(e.title)) e.description = "";
   });
 
+  // Apply verified museum facts before time backfill and publication
+  // filtering. Applying them only during later blurb resolution dropped the
+  // SJMA Community Day entirely and cached noon for evening First Fridays.
+  allEvents.forEach((event) => {
+    if (event.source === "San Jose Museum of Art") Object.assign(event, applyVerifiedEventFacts(event));
+  });
+
   // Sanitize time field: clear values that aren't a clock time (e.g. "SATURDAY, APRIL 25, 2026"
   // ended up in the time field on a few SJMA / inbound listings). For comma-separated session
   // lists ("12pm, 1pm, 2pm") only the last token needs to parse.

@@ -90,6 +90,13 @@ separate recovery problem, not a reason to relax the workflow.
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.
+  Calendar date labels are not clock times, and a museum listing does not
+  establish paid admission. The browser adapter leaves both unknown unless
+  sourced. Verified October–December 2026 detail-page corrections live in
+  `eventSourceFacts.mjs`, apply before publication filtering, and preserve free
+  admission versus a tour included with paid museum admission. A rejected
+  browser request remains an error; these corrections do not imply that the
+  live crawl recovered or authorize bypassing the challenge.
 - City of Los Altos was retired on 2026-09-20 at Stephen's explicit request
   after its calendar HTML and published Main Calendar iCal both returned a
   managed Cloudflare 403. Do not retry or bypass the city endpoints. The prior

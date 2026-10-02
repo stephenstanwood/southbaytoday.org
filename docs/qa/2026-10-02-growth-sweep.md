@@ -115,3 +115,59 @@ Google Search Console API credentials are unavailable here. Search Analytics
 and sitemap acceptance could not be measured; the other checks completed.
 Production deployment, post-deploy checks, the single IndexNow submission,
 and the Discord completion receipt are recorded by the run after this commit.
+
+## Afternoon follow-up
+
+Repeated measurement through October 1 returned the same complete-window
+traffic figures above. Production was healthy at `38d2f19a`, which includes
+the morning sweep. A fresh 70-page crawl found no actionable errors, and all
+30 public-surface probes for the six search/retrieval user agents returned
+200 without a challenge. Rendered Home, Events, Sunnyvale, Gov, Food, Tech,
+Camps, Koyote, and First Friday pages had no page errors or horizontal overflow.
+
+The unresolved Community Day link exposed a substantive source defect. SJMA's
+browser snapshot stored date labels as times and assumed every program was
+paid. Ingestion then either discarded the listing or backfilled noon from the
+museum's calendar. Corrected seven existing museum occurrences against these
+first-party publications:
+
+- [October 2 First Friday](https://sjmusart.org/event/first-friday-new-ballet-season-preview):
+  free, 6–9 PM; the ballet-preview seating instructions are preserved separately.
+- [October 24 Community Day](https://sjmusart.org/programs-at-sjma/community-days/dia-de-los-muertos):
+  restored, free, 11 AM–4 PM, all ages. Registration is recommended and walk-ins
+  are welcome; sugar skull decorating needs its own same-day ticket.
+- [October 27 Lua Vollaard lecture](https://sjmusart.org/event/sjsu-art-galleries-tuesday-night-lecture-lua-vollaard):
+  free, 2–3 PM, at SJSU ART 133. Removed the incorrect museum directions and photo.
+- [October 28 and November 18 naturalist tours](https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist):
+  restored, 12:30–1:30 PM. Tours are included with museum admission; they do not
+  promise free admission.
+- [November 6 First Friday](https://sjmusart.org/event/first-fridays-november-2026)
+  and [December 4 holiday program](https://sjmusart.org/event/first-fridays-celebrate-holidays-pride):
+  free, 6–9 PM. Updated December's published title and preserved its old leaf URL
+  through the retired-slug ledger.
+
+These occurrence-specific facts now apply before time backfill and publication
+filtering, and when museum browser rows are normalized. Unknown future times
+and prices remain unknown. The browser adapter waits for content rather than
+network idle and fails closed on HTTP errors. The source remains challenged;
+held rows and the original crawl timestamp/error are preserved. No access
+restriction was bypassed or retired HTTP adapter restored.
+
+Recovered September 14 Vintage Media Lab from the original September 13
+publication `3da124ce9a03391d130162f70059b2da804cc33a`, carrying its original
+[Palo Alto City Library source URL](https://paloalto.bibliocommons.com/events/6aa1e7be4b3b060030829e10).
+The current organizer page no longer exposes the past session's facts, so the
+matching historical publication controls this recovery. Its exact slug was
+verified before insertion into the archive. The resulting page is marked
+passed, emits no Event object, and stays outside the current sitemap.
+
+Verification: `npm run check` passed 1,173 tests in 100 invocations;
+`npx astro check` returned zero errors and warnings; build and `git diff --check`
+passed. Discovery passed with 2,091 static sitemap URLs, 1,906 current event
+leaves, and 4,325 JSON-LD blocks. The same 48 source-less event warnings remain.
+Eight desktop/mobile browser checks covered the repaired leaves and date page,
+correct facts, canonical URLs, passed status, page errors, and overflow;
+screenshots were reviewed. The earlier three dependency audit findings remain;
+this follow-up does not change dependencies. Search Console API credentials
+remain unavailable. Post-push production, IndexNow, and Discord receipts are
+saved in the local `.snapshots/growth-sweep-2026-10-02-review/` directory.

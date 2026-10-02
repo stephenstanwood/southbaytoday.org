@@ -13,6 +13,66 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("SJMA's date-only snapshot recovers a free family event without requiring advance booking", async () => {
+  const { normalizePlaywrightEvent } = await import("../../../scripts/playwright-scrapers.mjs");
+  const raw = {
+    title: "Community Day: Día de Los Muertos", date: "2026-10-24",
+    time: "Saturday, October 24, 2026", cost: "paid", kidFriendly: false,
+    venue: "San Jose Museum of Art", city: "san-jose", source: "San Jose Museum of Art",
+    url: "https://sjmusart.org/community-day-dia-de-los-muertos",
+  };
+  const event = normalizePlaywrightEvent(raw);
+  assert.equal(event.time, "11:00 AM");
+  assert.equal(event.endTime, "4:00 PM");
+  assert.equal(event.cost, "free");
+  assert.equal(event.kidFriendly, true);
+  assert.match(event.url, /programs-at-sjma\/community-days\/dia-de-los-muertos$/);
+  assert.match(event.attendanceNote, /walk-ins are welcome.*separate ticket/i);
+  assert.equal(requiresAdvanceRegistration(event), false);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-24" }).time, raw.time);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/unrelated" }).time, raw.time);
+});
+
+test("SJMA facts preserve evening starts, offsite directions, and admission conditions", () => {
+  const firstFriday = applyVerifiedEventFacts({ id: "0fd141a7f257", date: "2026-10-02", time: "12:00 PM", cost: "paid" });
+  assert.equal(firstFriday.time, "6:00 PM");
+  assert.equal(firstFriday.endTime, "9:00 PM");
+  assert.equal(firstFriday.cost, "free");
+  assert.match(firstFriday.attendanceNote, /7:25 PM.*first come/i);
+
+  const lecture = applyVerifiedEventFacts({ id: "91accca935ec", date: "2026-10-27", photoRef: "museum-photo" });
+  assert.match(lecture.venue, /State University.*ART 133/);
+  assert.match(lecture.address, /One Washington Square/);
+  assert.equal(lecture.photoRef, null);
+
+  const walk = applyVerifiedEventFacts({ date: "2026-11-18", url: "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist" });
+  assert.equal(walk.time, "12:30 PM");
+  assert.equal(walk.cost, "paid", "free with admission must not become free admission");
+  assert.match(walk.costNote, /museum admission/);
+
+  const december = applyVerifiedEventFacts({ date: "2026-12-04", url: "https://sjmusart.org/event/first-fridays-december-2026" });
+  assert.equal(december.title, "First Fridays: Celebrate the Holidays with Pride");
+  assert.match(december.url, /celebrate-holidays-pride$/);
+});
+
+test("SJMA scraper rejects challenges and leaves unverified times and prices unknown", async () => {
+  const { scrapeSJMuseumOfArt } = await import("../../../scripts/playwright-scrapers.mjs");
+  await assert.rejects(scrapeSJMuseumOfArt({
+    goto: async () => ({ ok: () => false, status: () => 403 }),
+  }), /HTTP 403/);
+
+  const rows = await scrapeSJMuseumOfArt({
+    goto: async (_url, options) => {
+      assert.equal(options.waitUntil, "domcontentloaded");
+      return { ok: () => true };
+    },
+    waitForSelector: async () => {},
+    evaluate: async () => [{ title: "An unverified future program", date: "2027-02-01", time: "Monday, February 1, 2027", link: "https://sjmusart.org/event/unverified" }],
+  });
+  assert.equal(rows[0].time, null);
+  assert.equal(rows[0].cost, null);
+});
+
 test("September 6 library facts survive a sparse refresh and blurb resolution", async () => {
   const events = [
     { id: "sjpl-6a7bc1324cb69d003e203e28", title: "STEM: Balloon Car Derby", venue: "Berryessa Library", date: "2026-09-06", audienceAge: "all", kidFriendly: false },

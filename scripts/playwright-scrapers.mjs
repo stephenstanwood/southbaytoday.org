@@ -45,6 +45,7 @@ import {
   sourceTaskId,
 } from "./lib/playwright-source-resilience.mjs";
 import { describeRefreshFailureContext } from "./lib/host-load.mjs";
+import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -729,8 +730,13 @@ async function scrapeSJJazz(page) {
 // address. Mirrors the same guard in generate-events.mjs::fetchSjMuseumOfArtEvents.
 const SJMA_CROSS_PROMO_TITLE_RE = /\bvs\.?\s|\bversus\b/i;
 
-async function scrapeSJMuseumOfArt(page) {
-  await page.goto("https://sjmusart.org/calendar", { waitUntil: "networkidle", timeout: 25_000 });
+export async function scrapeSJMuseumOfArt(page) {
+  // Analytics requests can keep Drupal from reaching networkidle. Wait for
+  // content instead, and let the existing source-resilience layer retain
+  // prior rows on a challenge rather than publishing an empty success.
+  const response = await page.goto("https://sjmusart.org/calendar", { waitUntil: "domcontentloaded", timeout: 25_000 });
+  if (!response?.ok()) throw new Error(`SJMA calendar returned HTTP ${response?.status() ?? "unknown"}`);
+  await page.waitForSelector(".views-row, .calendar-item, [class*='event-item'], article", { timeout: 10_000 });
 
   const raw = await page.evaluate(() => {
     const events = [];
@@ -759,7 +765,9 @@ async function scrapeSJMuseumOfArt(page) {
       return {
         title: r.title,
         date,
-        time: normalizeTime(r.time),
+        // A date-display field is not an event clock. Unknown times stay null
+        // until the normal ingestion backfill or verified occurrence facts.
+        time: clockFromText(r.time),
         endTime: null,
         venue: "San Jose Museum of Art",
         address: "110 S Market St, San Jose, CA 95113",
@@ -767,7 +775,7 @@ async function scrapeSJMuseumOfArt(page) {
         url: r.link || "https://sjmusart.org/calendar",
         source: "San Jose Museum of Art",
         category: "arts",
-        cost: "paid",
+        cost: null,
         kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
       };
     })
@@ -2830,6 +2838,7 @@ async function main() {
 }
 
 export function normalizePlaywrightEvent(e) {
+  if (e.source === "San Jose Museum of Art") e = applyVerifiedEventFacts(e);
   const d = new Date(`${e.date}T12:00:00-07:00`);
   return {
     // Include time: same source/date/title/venue can carry multiple
@@ -2856,6 +2865,7 @@ export function normalizePlaywrightEvent(e) {
     ...(e.registration ? { registration: e.registration } : {}),
     category: e.category || inferCategory(e.title),
     cost: e.cost || null,
+    ...(e.costNote ? { costNote: e.costNote } : {}),
     description: e.description || "",
     ...(e.sourceAudiences ? { sourceAudiences: e.sourceAudiences } : {}),
     ...(e.attendanceNote ? { attendanceNote: e.attendanceNote } : {}),
