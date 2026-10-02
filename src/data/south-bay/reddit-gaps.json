@@ -1,120 +1,229 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-01T04:47:56.365Z",
+    "generatedAt": "2026-10-02T04:45:39.167Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 6
+    "sourceCount": 13
   },
   "summary": {
-    "threadsMined": 6,
-    "placesExtracted": 6,
-    "placesMatched": 1,
-    "placeGaps": 5,
-    "eventsExtracted": 2,
+    "threadsMined": 13,
+    "placesExtracted": 11,
+    "placesMatched": 4,
+    "placeGaps": 7,
+    "eventsExtracted": 5,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 5,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "SoFA Pocket Park",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "hosting First Friday event in SoFA District",
+      "name": "St. Lucy's FunFest",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "annual carnival at 2350 Winchester Blvd",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
       ]
     },
     {
-      "name": "El Veijon Food Truck",
+      "name": "Japantown",
       "city": "San Jose",
       "kind": "other",
-      "context": "providing free food at SoFA Pocket Park event",
+      "context": "staycation sightseeing recommendation",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
       ]
     },
     {
-      "name": "Luna",
+      "name": "Single Barrel",
       "city": "San Jose",
-      "kind": "restaurant",
-      "context": "considered for stroller-friendly brunch",
+      "kind": "bar",
+      "context": "speakeasy-style bar mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
       ]
     },
     {
-      "name": "Uncle Bills",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "on the Alameda, considered for stroller-friendly brunch",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
-      ]
-    },
-    {
-      "name": "City Sports Club",
+      "name": "Kitchen Nail Bar",
       "city": "San Jose",
       "kind": "other",
-      "context": "gym near Berryessa with scary Yelp reviews",
+      "context": "nail salon with a not-so-great experience",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wtx0me/berryessa_gyms/"
+        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
+        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
+        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
+      ]
+    },
+    {
+      "name": "AKA",
+      "city": "",
+      "kind": "other",
+      "context": "boxing gym mentioned as too far and expensive",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
+        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
+        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
+      ]
+    },
+    {
+      "name": "American Barbell",
+      "city": "Campbell",
+      "kind": "other",
+      "context": "gym being considered, asking about crowd and equipment",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
+        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
+        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
+      ]
+    },
+    {
+      "name": "South Bay Dog Trainers",
+      "city": "Campbell",
+      "kind": "venue",
+      "context": "location for pet painting event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
+        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
+        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "South First Fridays Art Walk",
-      "when": "First Friday",
-      "city": "San Jose",
-      "context": "monthly art walk in SoFA District",
+      "name": "St. Lucy's Annual FunFest",
+      "when": "October 9-11",
+      "city": "Campbell",
+      "context": "carnival rides, games, food, live music",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
       ]
     },
     {
-      "name": "First Friday at SoFA Pocket Park",
-      "when": "5pm-10pm",
+      "name": "Free rock show at Lake Cunningham",
+      "when": "October 2",
       "city": "San Jose",
-      "context": "art vending, supply swap, live figure drawing, free food",
+      "context": "free concert event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wudi3c/first_friday_at_sofa_pocket_park/",
-        "https://www.reddit.com/r/SanJose/comments/1wue5kp/restaurant_recs_stroller_friendly/",
-        "https://www.reddit.com/r/SanJose/comments/1wue4u1/best_maharastrian_restaurant_in_san_jose_or_nearby/",
-        "https://www.reddit.com/r/SanJose/comments/1wumaqy/mini_mooncakes/",
-        "https://www.reddit.com/r/SanJose/comments/1wum7gh/birthday_specials/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+      ]
+    },
+    {
+      "name": "Downtown Holiday Tree and Ice Rink",
+      "when": "December",
+      "city": "San Jose",
+      "context": "holiday staycation attraction",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+      ]
+    },
+    {
+      "name": "Nerf Convention",
+      "when": "this weekend",
+      "city": "San Jose",
+      "context": "huge Nerf convention happening",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
+        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
+        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
+        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
+      ]
+    },
+    {
+      "name": "Paint Your Pet Event",
+      "when": "",
+      "city": "Campbell",
+      "context": "pet portrait painting class at South Bay Dog Trainers",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
+        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
+        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "24 Hour Fitness",
+      "name": "Lake Cunningham",
       "city": "San Jose",
-      "kind": "other",
-      "context": "gym near Berryessa with scary Yelp reviews",
+      "kind": "park",
+      "context": "site of free rock show",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wtx0me/berryessa_gyms/"
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
       ],
-      "matchedName": "British Swim School at 24 Hour Fitness - Sunnyvale"
+      "matchedName": "Lake Cunningham Regional Park"
+    },
+    {
+      "name": "Japanese Friendship Garden",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "tea garden visit planned",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+      ],
+      "matchedName": "Japanese Friendship Garden"
+    },
+    {
+      "name": "Haberdasher",
+      "city": "San Jose",
+      "kind": "bar",
+      "context": "speakeasy-style bar mentioned",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+      ],
+      "matchedName": "Haberdasher"
+    },
+    {
+      "name": "La Casa Mia",
+      "city": "Santa Clara",
+      "kind": "restaurant",
+      "context": "Japanese-Italian fusion restaurant abruptly closing",
+      "sourceUrls": [
+        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
+        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
+        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
+        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
+        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+      ],
+      "matchedName": "La Casa Mia Milpitas"
     }
   ],
   "eventMatches": []
