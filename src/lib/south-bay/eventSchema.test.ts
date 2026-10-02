@@ -71,6 +71,19 @@ test("eventToSchema falls back to the primary source when no leaf page is known"
   assert.equal(schema.sameAs, undefined);
 });
 
+test("offers reflect full or closed registration without assuming unknown availability", () => {
+  const event = { title: "Workshop", date: "2026-10-03", url: "https://example.org/workshop" };
+  for (const cost of ["free", "paid", "low"]) {
+    const full = eventToSchema({ ...event, cost, registration: "full" });
+    const closed = eventToSchema({ ...event, cost, registration: "closed" });
+    const unknown = eventToSchema({ ...event, cost });
+    assert.equal((full?.offers as Record<string, unknown>).availability, "https://schema.org/SoldOut");
+    assert.equal((closed?.offers as Record<string, unknown>).availability, "https://schema.org/Discontinued");
+    assert.equal((unknown?.offers as Record<string, unknown>).availability, undefined);
+    assert.equal(full?.eventStatus, "https://schema.org/EventScheduled", "full does not mean cancelled");
+  }
+});
+
 test("eventToSchema describes explicitly online events as virtual", () => {
   const sourceUrl = "https://example.org/register/author-talk";
   const schema = eventToSchema({

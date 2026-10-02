@@ -9,9 +9,10 @@ import retiredData from "../../data/south-bay/events-retired.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { buildGoogleCalendarUrl } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
+import { eventPagePool } from "../../lib/south-bay/eventPagePool";
 import { resolveRetired } from "../../lib/south-bay/eventSlugLedger.mjs";
 import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
-import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
+import { isVirtualEvent, registrationLabel } from "../../lib/south-bay/eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl } from "../../lib/south-bay/httpUrl.mjs";
 
 interface RawEvent {
@@ -35,19 +36,16 @@ interface RawEvent {
   category?: string | null;
   source?: string | null;
   virtual?: boolean | null;
+  registration?: "none" | "required" | "appointment-only" | "full" | "closed" | null;
 }
 
 export function getStaticPaths() {
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
   const archived = (archiveData as { events?: RawEvent[] }).events ?? [];
   const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const upcoming = all.filter((e) => e.date && e.date >= todayPt && e.time);
-  // Passed events keep resolving for the archive window (90 days) with a
-  // "this event has passed" banner — no next-morning 404s. Upcoming wins when
-  // a recurring event appears in both pools.
-  const past = archived.filter((e) => e.date && e.date < todayPt && e.time);
-  const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
-  const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
+  // Includes yesterday still held in the current snapshot: the archive is
+  // updated by the evening refresh, not by each morning page build.
+  const pool = eventPagePool(all, archived, todayPt);
   const livePages = [...buildEventSlugs(pool)].map(([slug, event]) => ({
     params: { slug },
     props: {
@@ -95,6 +93,7 @@ const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 // to a room that doesn't exist. Flag comes from the source's own location
 // type at ingest (see eventFilters.mjs).
 const isVirtual = isVirtualEvent(event);
+const registration = !passed && !retired ? registrationLabel(event) : "";
 
 const dayLabel = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("en-US", {
   timeZone: "UTC",
@@ -125,10 +124,11 @@ const dayLabelNoYear = new Date(`${event.date}T12:00:00Z`).toLocaleDateString("e
 // stable slugs already differ; give their search-result titles the same
 // distinction. Prefer time because it is reader-useful and unique for the
 // current collision set, then fall back to venue or city when needed.
-const titlePool = [
-  ...((upcomingData as { events?: RawEvent[] }).events ?? []),
-  ...((archiveData as { events?: RawEvent[] }).events ?? []),
-];
+const titlePool = eventPagePool(
+  (upcomingData as { events?: RawEvent[] }).events ?? [],
+  (archiveData as { events?: RawEvent[] }).events ?? [],
+  new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" }),
+);
 const sameDayTitleEvents = titlePool.filter(
   (candidate) => candidate.date === event.date && candidate.title === event.title,
 );
@@ -340,13 +340,14 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
       {timeLabel && metaPlace.length > 0 && <span class="evx-meta-sep" aria-hidden="true">·</span>}
       {metaPlace.join(" · ")}
     </span>
-    {(isVirtual || event.cost === "free" || event.cost === "paid" || event.cost === "low" || event.kidFriendly) && (
+    {(isVirtual || event.cost === "free" || event.cost === "paid" || event.cost === "low" || event.kidFriendly || registration) && (
       <span class="evx-chips">
         {isVirtual && <span class="cal-chip cal-chip--virtual evx-chip">Virtual</span>}
         {event.cost === "free" && <span class="cal-chip evx-chip">Free</span>}
         {event.cost === "paid" && <span class="cal-chip cal-chip--paid evx-chip">Paid</span>}
         {event.cost === "low" && <span class="cal-chip cal-chip--low evx-chip">Low cost</span>}
         {event.kidFriendly && <span class="cal-chip cal-chip--kids evx-chip">Kids</span>}
+        {registration && <span class="cal-chip cal-chip--registration evx-chip">{registration}</span>}
       </span>
     )}
   </p>
@@ -398,6 +399,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
       </div>
     )}
     {event.source && <div><dt>Listed by</dt><dd>{event.source}</dd></div>}
+    {registration && <div><dt>Registration</dt><dd>{registration}{event.url && <> · <a href={event.url} rel="noopener noreferrer">Check with the organizer</a></>}</dd></div>}
     {updatedAt && updatedLabel && (
       <div><dt>{retired ? "Last seen" : "Refreshed"}</dt><dd><time datetime={updatedAt}>{updatedLabel}</time></dd></div>
     )}
@@ -533,7 +535,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     align-items: center;
     margin: 0;
     padding: 3px 9px;
-    font-size: 10.5px;
+    font-size: 12px;
     letter-spacing: 0.08em;
     line-height: 14px;
     vertical-align: baseline;

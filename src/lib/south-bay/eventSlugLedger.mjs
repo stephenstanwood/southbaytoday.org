@@ -22,6 +22,7 @@
 // ---------------------------------------------------------------------------
 
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
+import { eventPagePool } from "./eventPagePool.ts";
 
 export const RETAIN_DAYS = 90;
 
@@ -62,14 +63,11 @@ export function futureSlugs(events, todayPt) {
 }
 
 /**
- * Same pool /event/[slug] builds from: upcoming future events plus passed
- * archive events, upcoming winning on a date|title collision.
+ * Same pool both public event routes build from, including the day that just
+ * ended while it still lives in the current snapshot.
  */
 export function liveSlugs(upcomingEvents, archiveEvents, todayPt) {
-  const upcoming = (upcomingEvents ?? []).filter((e) => isDated(e) && e.date >= todayPt && e.time);
-  const past = (archiveEvents ?? []).filter((e) => isDated(e) && e.date < todayPt && e.time);
-  const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
-  return buildEventSlugs([...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))]);
+  return buildEventSlugs(eventPagePool(upcomingEvents ?? [], archiveEvents ?? [], todayPt));
 }
 
 /**

@@ -9,8 +9,9 @@ import archiveData from "../../data/south-bay/events-archive.json";
 import { CITIES } from "../../lib/south-bay/cities";
 import { parseClockTime } from "../../lib/south-bay/calendarLink";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
+import { eventPagePool } from "../../lib/south-bay/eventPagePool";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
-import { isVirtualEvent } from "../../lib/south-bay/eventFilters.mjs";
+import { isVirtualEvent, registrationLabel } from "../../lib/south-bay/eventFilters.mjs";
 
 // This file compiles to a component named `Date` (from the [date] param),
 // shadowing the global Date constructor in the language server's view of the
@@ -35,6 +36,7 @@ interface RawEvent {
   kidFriendly?: boolean | null;
   category?: string | null;
   virtual?: boolean | null;
+  registration?: "none" | "required" | "appointment-only" | "full" | "closed" | null;
 }
 
 export function getStaticPaths() {
@@ -43,24 +45,21 @@ export function getStaticPaths() {
   const all = (upcomingData as { events?: RawEvent[] }).events ?? [];
   const archived = (archiveData as { events?: RawEvent[] }).events ?? [];
   const todayPt = new DateCtor().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const isDated = (e: RawEvent) => Boolean(e?.date && /^\d{4}-\d{2}-\d{2}$/.test(e.date));
 
-  // Same pool as /event/[slug]: upcoming timed events plus passed ones from
-  // the archive (90 days), so a passed day keeps resolving with a "this day
+  // Same pool as /event/[slug]: timed events in the current snapshot plus
+  // passed ones from the archive (90 days), so a passed day keeps resolving with a "this day
   // has passed" banner instead of 404ing the next morning. Search engines,
   // RSS readers, and IndexNow-fed indexes hold /events/<date> links well past
   // the date — before this grace window, /404 was the most-viewed page on the
-  // site in Vercel analytics. Upcoming wins when a recurring event appears in
+  // site in Vercel analytics. Current facts win when the same occurrence is in
   // both pools. Exhibits / no-time records stay off date listings.
-  const upcoming = all.filter((e) => isDated(e) && (e.date as string) >= todayPt && e.time);
-  const past = archived.filter((e) => isDated(e) && (e.date as string) < todayPt && e.time);
-  const seen = new Set(upcoming.map((e) => `${e.date}|${e.title}`));
-  const pool = [...upcoming, ...past.filter((e) => !seen.has(`${e.date}|${e.title}`))];
+  const pool = eventPagePool(all, archived, todayPt);
 
-  // Reverse lookup id → detail slug so listing links match /event/[slug].
-  const slugById = new Map<string, string>();
+  // Keep each occurrence's detail URL, including a series that reuses its
+  // source id on different dates and timed records without a source id.
+  const slugByEvent = new Map<RawEvent, string>();
   for (const [slug, e] of buildEventSlugs(pool)) {
-    if (e.id) slugById.set(String(e.id), slug);
+    slugByEvent.set(e, slug);
   }
 
   // A listing page for EVERY date with a timed event in the pool — no forward
@@ -91,7 +90,7 @@ export function getStaticPaths() {
         return {
           ...e,
           cityName: e.city ? cityNames.get(e.city) ?? null : null,
-          detailSlug: e.id ? slugById.get(String(e.id)) ?? null : null,
+          detailSlug: slugByEvent.get(e) ?? null,
           // Minutes-since-midnight start time, used client-side to dim
           // already-started events when this date happens to be "today" in
           // the visitor's Pacific-time clock (the page itself is static and
@@ -208,6 +207,7 @@ const breadcrumbJsonLd = JSON.stringify({
   <ol class="cal-list evd-list">
     {events.map((e) => {
       const { clock, period } = splitClock(e.time);
+      const registration = !passed ? registrationLabel(e) : "";
       return (
         <li class="cal-event evd-row" data-start-min={e.startMinutes ?? ""}>
           <div class="cal-time evd-time">
@@ -232,6 +232,7 @@ const breadcrumbJsonLd = JSON.stringify({
               {isVirtualEvent(e) && <span class="cal-chip cal-chip--virtual evd-chip">Virtual</span>}
               {e.cost === "free" && <span class="cal-chip evd-chip">Free</span>}
               {e.kidFriendly && <span class="cal-chip cal-chip--kids evd-chip">Kids</span>}
+              {registration && <span class="cal-chip cal-chip--registration evd-chip">{registration}</span>}
             </p>
             {(e.blurb || e.description) && <p class="cal-copy evd-copy">{e.blurb || e.description}</p>}
           </div>
@@ -359,7 +360,7 @@ const breadcrumbJsonLd = JSON.stringify({
     }
     .evd-time-period {
       color: var(--sb-muted);
-      font-size: 10.5px;
+      font-size: 12px;
       letter-spacing: 0.08em;
     }
     .evd-body h2 {
@@ -385,7 +386,7 @@ const breadcrumbJsonLd = JSON.stringify({
       align-items: center;
       margin: 0;
       padding: 2px 8px;
-      font-size: 10.5px;
+      font-size: 12px;
       letter-spacing: 0.08em;
       line-height: 14px;
       vertical-align: baseline;

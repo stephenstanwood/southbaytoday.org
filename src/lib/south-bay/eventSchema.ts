@@ -160,12 +160,18 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
   if (e.pageUrl) schema.url = e.pageUrl;
   else if (e.url) schema.url = e.url;
   if (e.pageUrl && e.url && e.pageUrl !== e.url) schema.sameAs = e.url;
+  const availability = e.registration === "full"
+    ? "https://schema.org/SoldOut"
+    : e.registration === "closed"
+      ? "https://schema.org/Discontinued"
+      : null;
   if (e.cost === "free") {
     schema.isAccessibleForFree = true;
     schema.offers = {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
+      ...(availability ? { availability } : {}),
       ...(e.url ? { url: e.url } : {}),
     };
   } else if (e.cost === "paid" || e.cost === "low") {
@@ -175,7 +181,7 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
     const lowPrice = parseLowPrice(e.costNote);
     schema.offers = {
       "@type": lowPrice !== null ? "AggregateOffer" : "Offer",
-      availability: "https://schema.org/InStock",
+      ...(availability ? { availability } : {}),
       ...(e.url ? { url: e.url } : {}),
       ...(lowPrice !== null ? { lowPrice, priceCurrency: "USD" } : {}),
     };

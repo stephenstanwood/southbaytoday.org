@@ -75,7 +75,7 @@ function readToken() {
   throw new Error("Vercel authentication is unavailable. Set VERCEL_TOKEN or sign in with the Vercel CLI.");
 }
 
-async function query(token, window, by, limit) {
+async function query(token, window, by, limit, filter) {
   const params = new URLSearchParams({
     teamId: TEAM_ID,
     projectId: PROJECT_ID,
@@ -84,6 +84,7 @@ async function query(token, window, by, limit) {
     by,
   });
   if (limit) params.set("limit", String(limit));
+  if (filter) params.set("filter", filter);
 
   const response = await fetch(`${API}?${params}`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -153,7 +154,7 @@ const prior7 = previousWindow(last7);
 const last30 = windowEnding(completeThrough, 30);
 const prior30 = previousWindow(last30);
 
-const [days7, daysPrior7, days30, daysPrior30, pageRows, referrerRows, countryRows] = await Promise.all([
+const [days7, daysPrior7, days30, daysPrior30, pageRows, referrerRows, countryRows, notFoundRows] = await Promise.all([
   query(token, last7, "day"),
   query(token, prior7, "day"),
   query(token, last30, "day"),
@@ -161,6 +162,10 @@ const [days7, daysPrior7, days30, daysPrior30, pageRows, referrerRows, countryRo
   query(token, last30, "requestPath", 100),
   query(token, last30, "referrerHostname", 100),
   query(token, last30, "country", 100),
+  // Astro's 404 page preserves the requested URL while tagging the route as
+  // /404. Query that route to expose broken links that disappear below the
+  // overall top-pages cutoff. Older, unattributed hits still appear as /404.
+  query(token, last30, "requestPath", 100, "route eq '/404'"),
 ]);
 
 const referrers = cleanTop(referrerRows, "referrerHostname");
@@ -175,8 +180,9 @@ const report = {
   },
   topPages: cleanTop(pageRows, "requestPath"),
   topReferrers: referrers,
-  aiReferrers: referrers.filter((row) => aiPattern.test(row.referrerHostname)),
+  aiReferrers: cleanTop(referrerRows.filter((row) => aiPattern.test(row.referrerHostname ?? "")), "referrerHostname", 100),
   topCountries: cleanTop(countryRows, "country", 8),
+  notFoundPages: cleanTop(notFoundRows, "requestPath"),
 };
 
 if (jsonMode) {
@@ -190,4 +196,6 @@ if (jsonMode) {
   console.log("\nTop referrers (30 days)");
   for (const row of report.topReferrers.slice(0, 8)) console.log(`  ${row.visitors.toLocaleString().padStart(5)}  ${row.referrerHostname}`);
   console.log(`\nAI referrals: ${report.aiReferrers.length ? report.aiReferrers.map((row) => `${row.referrerHostname} (${row.visitors})`).join(", ") : "none in the top referrers"}`);
+  console.log("\nNot-found pages (30 days; /404 = older unattributed requests)");
+  for (const row of report.notFoundPages.slice(0, 8)) console.log(`  ${row.pageviews.toLocaleString().padStart(5)}  ${row.requestPath}`);
 }

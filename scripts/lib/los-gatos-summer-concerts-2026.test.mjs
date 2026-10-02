@@ -134,33 +134,27 @@ test("keeps the committed event database aligned with the verified schedule", ()
   const upcoming = upcomingDocument.events;
   const archive = archiveDocument.events;
 
-  // The event archive is a rolling window (ARCHIVE_DAYS in generate-events.mjs:
-  // 90 as of 2026-09-14, deepening day by day from the 30 it held before).
-  // Anchor the expected slice to the oldest date the committed archive actually
-  // holds, so the test stays deterministic as concerts age out and needs no
-  // magic number of its own that would drift from the generator.
+  // The archive deepens from its former 30-day window and can also contain
+  // individually recovered old listings. Its oldest row does not establish
+  // complete historical coverage. Check every retained concert's exact facts
+  // and require every concert that was still upcoming at the last refresh.
   const refreshedAt = new Date(archiveDocument.updatedAt || upcomingDocument.generatedAt);
-  const archiveCutoffPt =
-    archive.map((event) => event.date).filter((date) => typeof date === "string").sort()[0] ??
-    refreshedAt.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  const allExpected = getLosGatosSummerConcerts().filter(
-    (event) => event.date >= archiveCutoffPt,
-  );
+  const refreshedPt = refreshedAt.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const allExpected = getLosGatosSummerConcerts();
 
   const scheduleRows = [...upcoming, ...archive].filter((event) =>
     event.id?.startsWith("los-gatos-music-in-the-park-") ||
     event.id?.startsWith("los-gatos-jazz-on-the-plazz-"),
   );
 
-  assert.equal(scheduleRows.length, allExpected.length);
-  assert.deepEqual(
-    new Set(scheduleRows.map((event) => event.id)),
-    new Set(allExpected.map((event) => event.id)),
-  );
+  assert.equal(new Set(scheduleRows.map((event) => event.id)).size, scheduleRows.length);
+  for (const expected of allExpected.filter((event) => event.date >= refreshedPt)) {
+    assert.ok(upcoming.some((event) => event.id === expected.id), `missing upcoming event ${expected.id}`);
+  }
 
-  for (const expected of allExpected) {
-    const actual = scheduleRows.find((event) => event.id === expected.id);
-    assert.ok(actual, `missing committed event ${expected.id}`);
+  for (const actual of scheduleRows) {
+    const expected = allExpected.find((event) => event.id === actual.id);
+    assert.ok(expected, `unverified committed event ${actual.id}`);
     for (const [key, value] of Object.entries(expected)) {
       assert.deepEqual(actual[key], value, `${expected.id}.${key}`);
     }

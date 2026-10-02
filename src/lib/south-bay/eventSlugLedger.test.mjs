@@ -95,3 +95,15 @@ test("resolveRetired splits redirects from orphans and skips slugs that are live
   assert.equal(orphans.length, 1);
   assert.equal(orphans[0].slug, "2026-09-25-dropped-event");
 });
+
+test("yesterday in the current snapshot stays live while the archive awaits refresh", () => {
+  const yesterday = ev({ id: "yesterday", date: "2026-09-17" });
+  const renamed = { ...yesterday, title: "Storytme" };
+  const ledger = { entries: [
+    { slug: "2026-09-17-storytime", event: yesterday },
+    { slug: "2026-09-17-storytme", event: renamed },
+  ] };
+  const { redirects, orphans } = resolveRetired(ledger, [yesterday], [], TODAY);
+  assert.deepEqual(orphans, []);
+  assert.deepEqual([...redirects], [["2026-09-17-storytme", "2026-09-17-storytime"]]);
+});
