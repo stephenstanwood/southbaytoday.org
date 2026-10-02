@@ -554,6 +554,10 @@ export function shouldSkip(item) {
   if (isAddressDerivedBusinessName(rawName, item.site_location)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
+  // SR0885884: "RTI ZINGSTERS KITCHEN UPGRADE" is work on the existing
+  // Palo Alto restaurant, not a coming opening. County inspection history:
+  // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DA600DF8G.pdf
+  if (/\bKITCHEN\s+UPGRADES?\b/i.test(rawName)) return true;
   if (CORPORATE_PATTERNS.test(rawName)) return true;
   if (CITYLINE_OFFICE_PATTERN.test(rawName)) return true;
   if (NON_FOOD_PATTERNS.test(rawName)) return true;

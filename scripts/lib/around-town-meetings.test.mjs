@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim } from "./around-town-meetings.mjs";
 
 const config = {
   primegov: "cityofpaloalto.primegov.com",
@@ -45,4 +45,27 @@ test("cities without a verifier still bind highlights to supplied records", asyn
   assert.equal(sources.size, 2);
   assert.equal(aroundTownSourceForItem({ sourceRecordId: 7196, date: "2026-09-22" }, sources).sourceUrl, "https://example.gov/agendas");
   assert.equal(aroundTownSourceForItem({ sourceRecordId: "", date: "2026-09-22" }, sources), null);
+});
+
+test("a closed-session agenda cannot establish that no outcome was disclosed", () => {
+  const meeting = {
+    title: "5:00 P.M.-CLOSED SESSION",
+    excerpt: "Conference with Legal Counsel (1 potential case): Pierce Manufacturing, Oshkosh Corporation.",
+    fullAgendaText: "CLOSED SESSION REPORT. Public Employee Appointment: City Attorney.",
+  };
+  assert.equal(hasUnsupportedNonDisclosureClaim({
+    summary: "No outcome or further detail was disclosed in the open session.",
+  }, meeting), true);
+  assert.equal(hasUnsupportedNonDisclosureClaim({ summary: "There was no reportable action." }, meeting), true);
+  assert.equal(hasUnsupportedNonDisclosureClaim({ summary: "The outcome was not reported." }, meeting), true);
+  assert.equal(hasUnsupportedNonDisclosureClaim({
+    summary: "The September 22 agenda listed a potential case involving fire truck manufacturers.",
+  }, meeting), false);
+});
+
+test("an explicit source report can support a non-disclosure claim", () => {
+  assert.equal(hasUnsupportedNonDisclosureClaim({ summary: "There was no reportable action." }, {
+    source: "youtube-transcript",
+    excerpt: "The city attorney reported no reportable action from the closed session.",
+  }), false);
 });

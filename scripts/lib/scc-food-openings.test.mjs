@@ -165,6 +165,17 @@ test("minor remodels and single-fixture adds are not openings", () => {
   }), true);
 });
 
+test("an existing restaurant's kitchen upgrade is not a coming opening", () => {
+  const record = {
+    business_name: "RTI ZINGSTERS KITCHEN UPGRADE",
+    site_location: "220B UNIVERSITY AV., PALO ALTO, CA 94301",
+    city: "PALO ALTO",
+    record_id: "SR0885884",
+  };
+  assert.equal(shouldSkip(record), true);
+  assert.equal(shouldSkip({ ...record, business_name: "ZINGSTERS" }), false);
+});
+
 test("corporate cafeterias stay out while real public venues survive", () => {
   assert.equal(shouldSkip({
     business_name: "TESLA HANOVER CAFE",

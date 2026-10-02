@@ -18,7 +18,7 @@ import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem } from "./lib/around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim } from "./lib/around-town-meetings.mjs";
 import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
@@ -175,6 +175,8 @@ SKIP HARDER: items where the agenda only shows a title (e.g. "Terminal Elevator 
 NEVER FABRICATE: do not invent case names, party names, dollar amounts, vote counts, addresses, agency or regulator names, or any specific fact not present in the agenda data. Closed session line items often list only a citation like "Conf. with Legal Counsel — existing litigation" with no party names — if a name isn't in the source, do not make one up. Skip the item. When the source references compliance with regulations but doesn't name the specific agency, say "regional air quality regulations" or "state requirements" rather than inventing an agency name (e.g. there is no "South Bay Air District" — Bay Area air quality is regulated by BAAQMD).
 
 For a closed-session potential case, named parties alone do not establish the claim or outcome. Do not infer a theory such as antitrust, or say the city is joining another lawsuit, unless the agenda explicitly says so.
+
+A closed-session agenda does not establish what happened in the session or what was disclosed afterward. Never infer "no outcome was disclosed", "no reportable action", or an equivalent from an agenda or a generic "Closed Session Report" slot. Unless a transcript or minutes explicitly reports that result, describe only what the dated agenda listed.
 
 NEVER NAME STAFF CONTACTS: Legistar agendas include bureaucratic metadata like "Staff Contact: Jane Doe" or "Project Manager: John Smith" or "Sponsoring Department: …". These identify the city employee handling the paperwork, NOT the subject of the action. Never write "This follows the staff contact listing X", "named X as the new …", or treat a staff-contact name as the appointee/principal of the item. Omit these names entirely.
 
@@ -364,6 +366,11 @@ async function gatherMeetingItems(meetingType) {
         const source = aroundTownSourceForItem(item, bodies);
         if (!source) {
           console.warn(`  ⚠️  ${config.cityName}: dropped highlight without a matching source record`);
+          continue;
+        }
+        const sourceMeeting = verifiedMeetings.find((m) => String(m.id) === String(item.sourceRecordId));
+        if (hasUnsupportedNonDisclosureClaim(item, sourceMeeting)) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped unsupported claim about a meeting disclosure`);
           continue;
         }
         const sourceUrl = source.sourceUrl;

@@ -43,3 +43,13 @@ export function aroundTownSourceForItem(item, sources) {
   const source = sources.get(String(item.sourceRecordId));
   return source && item.date === source.date ? source : null;
 }
+
+const NONDISCLOSURE_CLAIM = /\bno\s+(?:reportable\s+)?(?:action|outcome|decision|vote|details?)\b[^.!?]{0,100}\b(?:disclosed|reported|announced)\b|\bnothing\s+(?:to\s+report|was\s+(?:disclosed|reported|announced))\b|\bno\s+reportable\s+action\b|\b(?:action|outcome|decision|vote|details?)\b[^.!?]{0,100}\bnot\s+(?:disclosed|reported|announced)\b/i;
+
+/** A closed-session agenda or report slot does not establish what was reported. */
+export function hasUnsupportedNonDisclosureClaim(item, meeting) {
+  const claim = `${item?.headline || ""} ${item?.summary || ""}`;
+  if (!NONDISCLOSURE_CLAIM.test(claim)) return false;
+  const evidence = `${meeting?.title || ""} ${meeting?.excerpt || ""} ${meeting?.fullAgendaText || ""}`;
+  return !NONDISCLOSURE_CLAIM.test(evidence);
+}

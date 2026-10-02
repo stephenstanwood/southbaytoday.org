@@ -97,6 +97,13 @@ test("keeps meetings inside the briefing week and rejects agenda-only tense upgr
   const items = [{ headline: "Council to hear an appeal", summary: "The council was scheduled to hear it." }];
   assert.equal(hasProspectiveCityHallUpgrade("The council heard an appeal.", items), true);
   assert.equal(hasProspectiveCityHallUpgrade("The council was scheduled to hear an appeal.", items), false);
+
+  const agendaItems = [{
+    headline: "Fire truck manufacturers listed in closed-session agenda",
+    summary: "The September 22 City Council agenda listed a potential case involving fire truck manufacturers.",
+  }];
+  assert.equal(hasProspectiveCityHallUpgrade("The council weighed a legal case against fire truck makers.", agendaItems), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The agenda listed a potential case involving fire truck manufacturers.", agendaItems), false);
 });
 
 test("rejects stale and timestamp-less snapshots", () => {
