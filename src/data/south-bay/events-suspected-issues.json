@@ -1,29 +1,48 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-01T04:48:22.485Z"
+    "auditedAt": "2026-10-02T02:20:48.128Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1932,
-    "totals": {
-      "hard": 0,
-      "soft": 0,
-      "info": 0
-    },
-    "byReason": {},
-    "hard": [],
-    "soft": []
-  },
-  "inbound": {
-    "label": "inbound-events.json",
-    "total": 253,
+    "total": 1947,
     "totals": {
       "hard": 0,
       "soft": 1,
       "info": 0
     },
     "byReason": {
-      "meeting-title": 1
+      "unknown-slug": 1
+    },
+    "hard": [],
+    "soft": [
+      {
+        "id": "inbound-9542c24070ff7e38",
+        "title": "Hands Only CPR/AED & Choking Relief Training",
+        "city": "monte-sereno",
+        "date": "2026-10-22",
+        "location": "Monte Sereno City Hall",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      }
+    ]
+  },
+  "inbound": {
+    "label": "inbound-events.json",
+    "total": 271,
+    "totals": {
+      "hard": 0,
+      "soft": 3,
+      "info": 0
+    },
+    "byReason": {
+      "meeting-title": 1,
+      "virtual-not-flagged": 1,
+      "unknown-slug": 1
     },
     "hard": [],
     "soft": [
@@ -38,6 +57,34 @@
             "severity": "soft",
             "reason": "meeting-title",
             "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mupowgj9_bwoaii",
+        "title": "Representation Matters Film Festival",
+        "city": null,
+        "date": "2026-10-09T17:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "inbound_muq4luqh_jbui2x",
+        "title": "Hands Only CPR/AED & Choking Relief Training",
+        "city": "monte-sereno",
+        "date": "2026-10-22T10:00:00-07:00",
+        "location": "Monte Sereno City Hall",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
           }
         ]
       }

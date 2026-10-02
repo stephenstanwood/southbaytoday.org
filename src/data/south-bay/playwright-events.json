@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-01T16:11:50.365Z",
+    "generatedAt": "2026-10-02T02:17:27.991Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 571,
+    "eventCount": 569,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (120)",
-      "Los Gatos Library (149)",
+      "Los Gatos Library (146)",
       "San Jose Jazz (19)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
@@ -24,7 +24,7 @@
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
       "SAP Center (15)",
-      "The Tech Interactive (9)",
+      "The Tech Interactive (10)",
       "San Jose Museum of Art (7)",
       "Peninsula Open Space Trust (6)"
     ],
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 149,
+        "count": 146,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -96,7 +96,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\n",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
@@ -305,7 +305,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 9,
+        "count": 10,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -350,29 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "ed61aba0ed12",
-      "title": "Courage, Choice, and What Comes Next with Dystopian Icon Veronica Roth",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Click this link to attend the virtual event . A single choice can transform your destiny. Join us for an online conversation with #1 New York Times bestselling author Veronica Roth as we celebrate the enduring legacy of her Divergent series, one of the most iconic young adult series of a generation, and get an exclusive sneak peek into her highly anticipated upcoming novel, The Sixth Faction ! Fifteen years after readers first stepped into dystopian Chicago alongside Tris Prior, the Divergent universe continues to captivate readers with its unflinching exploration of identity, courage, and sacrifice. And in the alternate universe of The Sixth Faction , we revisit familiar characters in a completely new way… Beatrice Prior stands on the brink of a decision every person in her world must make: five factions, five futures, five lives. She has a plan: she’s going to make the bravest choice and leave Abnegation to join Dauntless, even though it means abandoning her family. But when tragedy strikes at her choosing ceremony, everything changes—her world, her plans, even Beatrice herself. Her decision will thrust her into the crosshairs of an underground rebellion, where a boy with secrets as dangerous as her own—a boy with only a number for a name—may be the only person she can trust. One choice will change everything. Register now for the chance to ask questions and get an exclusive sneak peek of The Sixth Faction –out on October 6, 2026! Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author : Veronica Roth is the #1 New York Times best-selling author of numerous titles including When Among Crows, Chosen Ones , the Divergent series, Carve the Mark, and Seek the Traitor’s Son . Veronica lives with her husband and their dog in Chicago, a city that she lovingly features (and frequently destroys) in many of her novels. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Teens"
-      ],
-      "url": "https://mountainview.libcal.com/event/17423668",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "f61d141f208b",
       "title": "Community Preservation Lab Scanning Service",
@@ -1362,6 +1339,27 @@
       "url": "https://mountainview.libcal.com/event/17686493",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "bd9d2bd2fdea",
+      "title": "Murder Mystery Theater",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "6:30 PM",
+      "endTime": "8:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Step into the world of a mysterious mansion where one fateful evening takes a deadly turn. You’ll be given a character to play, complete with secrets, suspicions, and motives of your own. As the story unfolds, clues will be revealed and everyone becomes a suspect. Work with your fellow guests to uncover hidden secrets, piece together the evidence, and determine who committed the murder before the mystery is solved. Will you crack the case, or will the murderer get away with it? No acting experience is necessary—just bring your imagination and your detective skills! Whether you’re a seasoned sleuth or simply looking for a fun and theatrical evening, everyone has a role to play in this interactive murder mystery. For Grades 9-12. Registration required.",
+      "sourceAudiences": [
+        "Teens"
+      ],
+      "url": "https://mountainview.libcal.com/event/17713814",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "7cf978b75c20",
@@ -2908,69 +2906,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17058573",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "6c2fe70e5866",
-      "title": "Conservation Ambassadors (Ages 3+)",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "4:00 PM",
-      "endTime": "4:45 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Watch and learn as a wildlife conservator introduces us to rescued animals in the name of conservation and protecting our planet. Conservation Ambassadors (Zoo to You) is a non-profit organization based in Paso Robles, CA, that provides a permanent and loving home for displaced wild and exotic animals. Their assembles teach children of all ages to respect wildlife and make the world a better place by taking care of our planet and its living creatures. It is undisclosed which animals will be shown in this program.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17036679",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "7b1f8712e005",
-      "title": "Online Author Talk : Veronica Roth",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. A single choice can transform your destiny. Join us for an online conversation with #1 New York Times bestselling author Veronica Roth as we celebrate the enduring legacy of her Divergent series, one of the most iconic young adult series of a generation, and get an exclusive sneak peek into her highly anticipated upcoming novel, The Sixth Faction ! Fifteen years after readers first stepped into dystopian Chicago alongside Tris Prior, the Divergent universe continues to captivate readers with its unflinching exploration of identity, courage, and sacrifice. And in the alternate universe of The Sixth Faction , we revisit familiar characters in a completely new way… Beatrice Prior stands on the brink of a decision every person in her world must make: five factions, five futures, five lives. She has a plan: she’s going to make the bravest choice and leave Abnegation to join Dauntless, even though it means abandoning her family. But when tragedy strikes at her choosing ceremony, everything changes—her world, her plans, even Beatrice herself. Her decision will thrust her into the crosshairs of an underground rebellion, where a boy with secrets as dangerous as her own—a boy with only a number for a name—may be the only person she can trust. One choice will change everything. Register now for the chance to ask questions and get an exclusive sneak peek of The Sixth Faction –out on October 6, 2026! About the Author : Veronica Roth is the #1 New York Times best-selling author of numerous titles including When Among Crows, Chosen Ones , the Divergent series, Carve the Mark and the upcoming Seek the Traitor’s Son . Veronica lives with her husband and their dog in Chicago, a city that she lovingly features (and frequently destroys) in many of her novels.",
-      "sourceAudiences": [
-        "Teens",
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17371392",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "85f32df22e71",
-      "title": "Creative Break",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "4:30 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Have you been wanting to start journaling or using a planner but can't find the time or space to do it at home? Take some time for creativity at the Library and journal, work on your planner, or draw in your sketchbook. We'll provide some inspiration and fun stationery like washi tape, stickers, stamps, and pens, you bring your journal/planner/sketchbook/etc. This is a drop in program, so join us for 10 minutes if that's all you have, or stay for the whole time!",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/14510549",
-      "source": "Los Gatos Library",
       "kidFriendly": false
     },
     {
@@ -7039,8 +6974,8 @@
       "kidFriendly": false
     },
     {
-      "id": "04191fd14079",
-      "title": "Air Supply",
+      "id": "83c3e02e0e54",
+      "title": "Air Supply with Ripatti & Rose",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
       "time": "7:30 PM",
@@ -7515,11 +7450,11 @@
       "kidFriendly": false
     },
     {
-      "id": "3459e16ce538",
-      "title": "Toddler Storytime",
-      "date": "2026-10-01",
-      "displayDate": "Thu, Oct 1",
-      "time": "11:30 am",
+      "id": "b46490ca7efc",
+      "title": "Imagine Where VTA Can Take You",
+      "date": "2026-10-02",
+      "displayDate": "Fri, Oct 2",
+      "time": null,
       "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
@@ -7532,11 +7467,11 @@
       "kidFriendly": true
     },
     {
-      "id": "b46490ca7efc",
-      "title": "Imagine Where VTA Can Take You",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": null,
+      "id": "3459e16ce538",
+      "title": "Toddler Storytime",
+      "date": "2026-10-01",
+      "displayDate": "Thu, Oct 1",
+      "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
@@ -10608,11 +10543,11 @@
       "kidFriendly": false
     },
     {
-      "id": "78e58c0680f5",
+      "id": "7696e2ba415b",
       "title": "Home Opener",
       "date": "2026-10-01",
       "displayDate": "Thu, Oct 1",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -10861,6 +10796,23 @@
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
       "source": "SAP Center",
       "kidFriendly": false
+    },
+    {
+      "id": "c54ccdf23d60",
+      "title": "The Tech Challenge Virtual Interest Session",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "time": "5:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
     },
     {
       "id": "882cb6cb1591",
