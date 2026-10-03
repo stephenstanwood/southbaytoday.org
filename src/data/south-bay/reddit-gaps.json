@@ -1,229 +1,199 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-02T04:45:39.167Z",
+    "generatedAt": "2026-10-03T04:45:58.250Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 13
+    "sourceCount": 11
   },
   "summary": {
-    "threadsMined": 13,
-    "placesExtracted": 11,
-    "placesMatched": 4,
-    "placeGaps": 7,
-    "eventsExtracted": 5,
+    "threadsMined": 11,
+    "placesExtracted": 10,
+    "placesMatched": 6,
+    "placeGaps": 4,
+    "eventsExtracted": 4,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 4,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "St. Lucy's FunFest",
-      "city": "Campbell",
-      "kind": "venue",
-      "context": "annual carnival at 2350 Winchester Blvd",
+      "name": "Santo Market",
+      "city": "San Jose",
+      "kind": "restaurant",
+      "context": "known for shoyu and spicy poke",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
+        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
+        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
+        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
+        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
       ]
     },
     {
-      "name": "Japantown",
+      "name": "Kirk Center",
       "city": "San Jose",
       "kind": "other",
-      "context": "staycation sightseeing recommendation",
+      "context": "picked up grabber and trash bags near Foxworthy and Meridian",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
       ]
     },
     {
-      "name": "Single Barrel",
+      "name": "Fuse Service Inc.",
       "city": "San Jose",
-      "kind": "bar",
-      "context": "speakeasy-style bar mentioned",
+      "kind": "service",
+      "context": "electrician quoted $1K for switch box work",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
       ]
     },
     {
-      "name": "Kitchen Nail Bar",
+      "name": "SJSU Spartan Pantry",
       "city": "San Jose",
-      "kind": "other",
-      "context": "nail salon with a not-so-great experience",
+      "kind": "service",
+      "context": "food assistance program at SJSU",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
-        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
-        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
-        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
-      ]
-    },
-    {
-      "name": "AKA",
-      "city": "",
-      "kind": "other",
-      "context": "boxing gym mentioned as too far and expensive",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
-        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
-        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
-        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
-      ]
-    },
-    {
-      "name": "American Barbell",
-      "city": "Campbell",
-      "kind": "other",
-      "context": "gym being considered, asking about crowd and equipment",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
-        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
-        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
-      ]
-    },
-    {
-      "name": "South Bay Dog Trainers",
-      "city": "Campbell",
-      "kind": "venue",
-      "context": "location for pet painting event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
-        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
-        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
+        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "St. Lucy's Annual FunFest",
-      "when": "October 9-11",
-      "city": "Campbell",
-      "context": "carnival rides, games, food, live music",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
-      ]
-    },
-    {
-      "name": "Free rock show at Lake Cunningham",
-      "when": "October 2",
+      "name": "SOFA Night Market (First Fridays)",
+      "when": "October 2nd, 5-10pm",
       "city": "San Jose",
-      "context": "free concert event",
+      "context": "last night market of the season on First Street",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
+        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
+        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
+        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
+        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
       ]
     },
     {
-      "name": "Downtown Holiday Tree and Ice Rink",
-      "when": "December",
-      "city": "San Jose",
-      "context": "holiday staycation attraction",
-      "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
-      ]
-    },
-    {
-      "name": "Nerf Convention",
-      "when": "this weekend",
-      "city": "San Jose",
-      "context": "huge Nerf convention happening",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wva1t2/girliessan_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wv5igl/huge_nerf_convention_this_weekend/",
-        "https://www.reddit.com/r/Campbell/comments/1wt0t4h/would_a_small_vietnamese_togo_spot_be_successful/",
-        "https://www.reddit.com/r/SanJose/comments/1wveyjl/best_boxingkickboingmuay_thai_gyms_in_sj_near/",
-        "https://www.reddit.com/r/SanJose/comments/1wvc7r4/folklorico_outfits/"
-      ]
-    },
-    {
-      "name": "Paint Your Pet Event",
+      "name": "Concert at Shoreline Amphitheater",
       "when": "",
-      "city": "Campbell",
-      "context": "pet portrait painting class at South Bay Dog Trainers",
+      "city": "",
+      "context": "upcoming concert event mentioned in post title",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wv39oa/cheapestbest_place_to_buy_bulk_pumpkins_of/",
-        "https://www.reddit.com/r/Campbell/comments/1wuf0fj/gym_recs/",
-        "https://www.reddit.com/r/Campbell/comments/1wtvg9e/think_you_cant_paint_you_might_surprise_yourself/"
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
+      ]
+    },
+    {
+      "name": "Fun at the Tank",
+      "when": "",
+      "city": "San Jose",
+      "context": "event happening at 'the tank' landmark",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
+      ]
+    },
+    {
+      "name": "Spartan Pantry Donation Drop-off",
+      "when": "Wednesday 11/4/26",
+      "city": "San Jose",
+      "context": "donation drive at SJ City Hall",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Lake Cunningham",
+      "name": "Children's Discovery Museum",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "starting point of bike ride downtown",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
+        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
+        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
+        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
+        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
+      ],
+      "matchedName": "Children's Discovery Museum"
+    },
+    {
+      "name": "Guadalupe River Trail",
       "city": "San Jose",
       "kind": "park",
-      "context": "site of free rock show",
+      "context": "trail reported much cleaner now",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
+        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
+        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
+        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
+        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
       ],
-      "matchedName": "Lake Cunningham Regional Park"
+      "matchedName": "Guadalupe River Trail"
     },
     {
-      "name": "Japanese Friendship Garden",
+      "name": "Bay Trail",
       "city": "San Jose",
       "kind": "park",
-      "context": "tea garden visit planned",
+      "context": "end point of bike ride",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
+        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
+        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
+        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
+        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
       ],
-      "matchedName": "Japanese Friendship Garden"
+      "matchedName": "Sunnyvale Bay Trail"
     },
     {
-      "name": "Haberdasher",
+      "name": "Sacred Heart Community Service",
       "city": "San Jose",
-      "kind": "bar",
-      "context": "speakeasy-style bar mentioned",
+      "kind": "service",
+      "context": "donation location near 1st and Alma",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
       ],
-      "matchedName": "Haberdasher"
+      "matchedName": "Sacred Heart Community Service"
     },
     {
-      "name": "La Casa Mia",
-      "city": "Santa Clara",
-      "kind": "restaurant",
-      "context": "Japanese-Italian fusion restaurant abruptly closing",
+      "name": "Shoreline Amphitheatre",
+      "city": "",
+      "kind": "venue",
+      "context": "concert venue mentioned in event post",
       "sourceUrls": [
-        "https://www.reddit.com/r/Campbell/comments/1ws8cey/st_lucys_annual_funfest_october_9_10_11_carnival/",
-        "https://www.reddit.com/r/SanJose/comments/1wvacwq/free_rock_show_tomorrow_oct_2_at_lake_cunningham/",
-        "https://www.reddit.com/r/SanJose/comments/1wuqw8z/staycation_recommendations/",
-        "https://www.reddit.com/r/SanJose/comments/1wvk9fh/best_mariscos_in_sj/",
-        "https://www.reddit.com/r/SanJose/comments/1wvju1p/la_casa_mia/"
+        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
+        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
+        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
+        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
       ],
-      "matchedName": "La Casa Mia Milpitas"
+      "matchedName": "Shoreline Amphitheatre"
+    },
+    {
+      "name": "San Jose City Hall",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "drop off location for food donations",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
+      ],
+      "matchedName": "City Hall Cafe"
     }
   ],
   "eventMatches": []

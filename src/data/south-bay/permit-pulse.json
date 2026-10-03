@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-02T04:38:01.411Z",
+      "generatedAt": "2026-10-03T04:38:20.160Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 24 – Oct 1",
+      "dateRange": "Sep 25 – Oct 2",
       "stats": {
-        "total": 452,
-        "notable": 23,
-        "newUnits": 7,
-        "totalValuation": 12942328
+        "total": 430,
+        "notable": 18,
+        "newUnits": 6,
+        "totalValuation": 12489817
       },
       "permits": [
         {
@@ -25,18 +25,6 @@
           "units": 1,
           "issueDate": "2026-09-25",
           "subtype": "Condo"
-        },
-        {
-          "id": "2025-107003-RS",
-          "address": "5520 Leigh Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Attached ADU @ 1st Floor",
-          "valuation": 136287,
-          "units": 1,
-          "issueDate": "2026-09-24",
-          "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
           "id": "2026-125207-RS",
@@ -63,27 +51,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-107383-RS",
-          "address": "1146 Happy Valley Av",
+          "id": "2026-131702-RS",
+          "address": "3365 Casalegno Ct",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Hcd Detached ADU",
-          "valuation": 94997,
+          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to JADU",
+          "valuation": 66586,
           "units": 1,
-          "issueDate": "2026-09-24",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-097731-RS",
-          "address": "1137 Pascoe Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage Conversion to ADU",
-          "valuation": 85321,
-          "units": 1,
-          "issueDate": "2026-09-24",
+          "issueDate": "2026-09-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -96,6 +72,18 @@
           "valuation": 58757,
           "units": 1,
           "issueDate": "2026-09-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-106745-RS",
+          "address": "1029 Miller Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 57350,
+          "units": 1,
+          "issueDate": "2026-09-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -133,35 +121,35 @@
           "units": 0,
           "issueDate": "2026-09-28",
           "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2026-139611-CI",
+          "address": "2855 Stevens Creek Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Sleep Number #2270",
+          "valuation": 580000,
+          "units": 0,
+          "issueDate": "2026-09-29",
+          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-02T04:38:03.801Z",
+      "generatedAt": "2026-10-03T04:38:22.372Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 24 – Oct 1",
+      "dateRange": "Sep 25 – Oct 2",
       "stats": {
-        "total": 88,
-        "notable": 5,
+        "total": 95,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02758",
-          "address": "2370 Waverley St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-28",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02792",
           "address": "2624 Cowper St",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-30",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02758",
+          "address": "2370 Waverley St",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-09-28",
           "subtype": "Permit Issued"
         },
         {
@@ -187,8 +187,20 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00278",
-          "address": "75 Encina Av",
+          "id": "26PLN-00282",
+          "address": "180 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-01",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00279",
+          "address": "87 Encina Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
@@ -199,8 +211,8 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00279",
-          "address": "87 Encina Av",
+          "id": "26PLN-00278",
+          "address": "75 Encina Av",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
