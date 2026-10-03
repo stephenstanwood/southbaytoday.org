@@ -102,6 +102,9 @@ API/image, and deployment checks. This is an explicit upstream hold.
   no page exceptions or horizontal overflow, and the sold-out label visible.
 - Local API checks preserve JSON feeds/cache headers and anonymous auth/validation
   guards; Sharp PNG/JPEG/AVIF round trips pass.
+- `.vercelignore` excludes private evidence, environment files, runtime state,
+  and local caches from CLI previews. A dry upload manifest confirms exclusions
+  and the presence of required build inputs.
 - The original report and source/API/image/browser receipts are retained in the
   local growth-followup evidence archive. Release requires a verified preview
   and production deployment; acknowledgment follows those checks and the owner
