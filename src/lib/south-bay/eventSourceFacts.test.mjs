@@ -157,15 +157,14 @@ test("every LibCal appointment occurrence is gated, not just the corrected one",
     "d610aa488850", "beafbf0a38b7", "b7c1ea7f055a", "22a65f59e0b7",
     "a0b6ae3454e6", "dbf05ae12f85", "c5f16f14946d", "f61d141f208b",
   ];
-  let checked = 0;
+  // These dated occurrences can all age out. Stable LibCal parsing fixtures
+  // in scripts/newsletter/lib.test.mjs cover the appointment rule year-round.
   for (const id of scanning) {
     const event = byId.get(id);
     if (!event) continue; // The occurrence legitimately ages out of the live feed.
-    checked++;
     assert.equal(event.registration, "appointment-only", id);
     assert.equal(requiresAdvanceRegistration(event), true, id);
   }
-  assert.ok(checked > 0, "no Community Preservation Lab occurrence is in the feed at all");
 
   // Mountain View's "Landscape Design for Beginners" opens "Registration is
   // required. Seats and materials are limited." — a seat, not a slot.

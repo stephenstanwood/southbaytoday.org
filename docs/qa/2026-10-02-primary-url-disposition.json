@@ -10,7 +10,9 @@
     "activeRepairedRecords": 33,
     "activeHeldRecords": 11,
     "canonicalDuplicates": 1,
-    "notListed": 3
+    "notListed": 3,
+    "additionalCurrentHolds": 15,
+    "totalActiveSourceHolds": 26
   },
   "owners": {
     "newsletter-intake-and-event-refresh": {
@@ -1100,5 +1102,142 @@
   "publicationSnapshot": {
     "commit": "3bfb02738b87f7a1148250a2bb31f8db5e6d9690",
     "generatedAt": "2026-10-03T02:21:40.525Z"
-  }
+  },
+  "additionalCurrentHolds": [
+    {
+      "id": "inbound-8bdd49fdaa796a68",
+      "date": "2026-10-02",
+      "title": "Annual Glass Pumpkin Patch",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-1fb1fb86591a2a03",
+      "date": "2026-10-03",
+      "title": "Downtown Palo Alto Farmers' Market",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-3a632dddfec23ec2",
+      "date": "2026-10-04",
+      "title": "Susd Board Candidate Forum",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-3d8dc0430fe4729f",
+      "date": "2026-10-06",
+      "title": "Adults Create: Faux Taxidermy Insects",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-79fd43bcf86bef01",
+      "date": "2026-10-06",
+      "title": "Mission: Romance UnBook Club",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-ed916ef2c5e63da7",
+      "date": "2026-10-06",
+      "title": "Pasta with a Twist: A Fresh Take on Italian Classics with Joe Sasto",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-99257ceb86c26483",
+      "date": "2026-10-07",
+      "title": "Silent Book Club",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-a73a636abe3f18d5",
+      "date": "2026-10-08",
+      "title": "Adults Create: Sewing by Hand",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-dfffb24dbf2b4b9a",
+      "date": "2026-10-08",
+      "title": "Art in Flight: Reinventing Postmodernism with Carolyn Russo",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-906ef7a67fcebf4c",
+      "date": "2026-10-10",
+      "title": "Bike Safety Information and Repair Workshop",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-ad7c3e77f73ef184",
+      "date": "2026-10-10",
+      "title": "EasyTech Seniors: Spotting AI Scams and Fake Messages",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-780560b96929bcbc",
+      "date": "2026-10-17",
+      "title": "All Gregs Kids Come Home - Staged Reading",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-a66daf59c31aad00",
+      "date": "2026-10-26",
+      "title": "Cefcu Halloween Movie Night",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-684dac5b0da93885",
+      "date": "2026-11-07",
+      "title": "Document Shredding Event",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-70200f67edf3456e",
+      "date": "2026-11-07",
+      "title": "San Jose Roots Festival",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    }
+  ]
 }

@@ -4,13 +4,14 @@ The original report is Discord message `1555730917551644755`, published at
 2026-10-02 23:59:14.827 UTC. Its exact payload was preserved before acknowledgment
 in the local growth-followup evidence archive, with SHA-256
 `f793e69191d286248f5915f9d766073f8af4136bb6844d020b1a50215e113ae7`.
-This follow-up starts from `991ab8cbcee54442979e7c10853e8be07e99145e`.
-The seven verified museum records and their original source snapshot metadata
-are unchanged.
+This follow-up starts from `991ab8cbcee54442979e7c10853e8be07e99145e` and
+preserves the newer scheduled refresh `3bfb0273`. The seven verified museum
+occurrences retain their original factual corrections. The scheduled run's
+new data and honest source-health metadata are preserved.
 
 ## Primary links
 
-Repaired 35 of the 48 URL warnings using dated organizer publications,
+Recovered primary URLs for 35 of the 48 original warnings using dated organizer publications,
 registration pages, or the original organizer emails. The complete
 [48-row disposition](2026-10-02-primary-url-disposition.json) records each
 occurrence, source receipt, repair or hold, and owner. Recipient-specific
@@ -30,12 +31,20 @@ book/media record and is not used as an event link. The October 17 costume
 swap links to the swap, rather than its separate donation period.
 
 BAGI's own October 17 alebrije page confirms 1–3:30 PM and says Sold out.
-The event now carries Registration full and the verified end time. The existing
-SJMA fact correction also applies to the newly linked newsletter copy of
-First Friday, keeping it consistent with the already repaired museum record.
+The event now carries Registration full and the verified end time. The
+scheduled refresh deduplicated First Friday in favor of its existing,
+verified museum occurrence; the existing SJMA correction governs matching
+future newsletter copies.
 Unknown prices and other unverified fields remain unknown.
 
-Thirteen URLs remain held. Eleven original messages predate the oldest
+After the scheduled refresh, 33 repaired original records remain active and
+First Friday uses its canonical museum record. Buena Vista Orchestra, Jaemin
+Han and The Spinners are no longer in the active feed. Their original occurrence
+evidence and date/title overrides remain available to later matching intake.
+The manifest records all 48 original dispositions and their current publication
+state, without reintroducing removed rows.
+
+Thirteen original URLs remain held, including 11 active records. Eleven original messages predate the oldest
 receiving-API item available during this review (September 4; nine pages,
 894 items, no further page). The two available Mountain View emails include
 dated Zoe Caron / CSA Homecoming announcements but no matching public event
@@ -49,13 +58,19 @@ The next sweep should use new primary publications or newly available source
 emails, and preserve empty URLs until the occurrence matches. The intake and
 guarded events-refresh jobs own persistence of the 35 repairs.
 
+The scheduled refresh added 15 other records with missing primary links.
+They are separately listed in `additionalCurrentHolds` in the same manifest,
+under the verified `sbt-growth-sweep` owner and the same matching-primary-source
+release condition. They are outside the original 48-row warning set. The current
+audit therefore has 26 source gaps: 11 active original holds and these 15 records.
+
 ## Meeting and crawl owners
 
 | Item | Disposition | Verified owner and release condition |
 | --- | --- | --- |
 | Campbell | Restored from the public eScribe calendar. Its agenda confirms the October 5 special meeting, 6:20 PM, Public Works Conference Room. | `southbaysignal-data-refresh`, which runs `generate-upcoming-meetings.mjs`; current Mini scheduler log confirms its October 1 run. |
 | Los Gatos | The normal identifying crawler request still fails with `ERR_HTTP2_STREAM_ERROR`. No meeting is inferred from cadence. | The same data-refresh job owns ingestion; Town/MuniCode owns access policy. Resume only with a sanctioned accessible publication or a successful ordinary request. |
-| SJMA browser crawl | Source health retains its challenged/failed state and seven carried-forward rows. No successful crawl or new source freshness is claimed. | `org.southbaytoday.events-refresh` and `org.southbaytoday.events-refresh-watchdog`: both loaded on Mini, last exit 0. The guarded refresh must obtain a genuine successful source result before replacing the held snapshot. |
+| SJMA browser crawl | The newer scheduled run received HTTP 403 and retained seven carried-forward rows. No successful museum crawl or new museum source freshness is claimed. | `org.southbaytoday.events-refresh` and `org.southbaytoday.events-refresh-watchdog`: both loaded on Mini, last exit 0. The guarded refresh must obtain a genuine successful source result before replacing the held snapshot. |
 | GSC API | Optional helper credentials remain absent. Measurement has an existing browser owner. | `sbt-seo-sweep` / SBT weekly SEO is ACTIVE, Tuesdays 01:15 Pacific. The September 29 report contains verified browser Search Analytics, sitemap, coverage, security and manual-action checks. These are dated results, not October 2 index-status claims. |
 
 Campbell's confirmed agenda is
@@ -63,6 +78,9 @@ Campbell's confirmed agenda is
 The meeting generator was rerun through its normal adapters; its sole current
 source error is the deliberate Los Gatos access hold. No User-Agent spoofing,
 challenge bypass, retired museum adapter, or synthetic meeting was introduced.
+The same scheduled run also retained six POST records after an unexpected
+empty source result. The existing events-refresh/watchdog pair owns that source
+hold until a genuine successful result; its held rows remain in the fresh snapshot.
 
 ## Dependency compatibility
 
@@ -95,13 +113,17 @@ API/image, and deployment checks. This is an explicit upstream hold.
 - `npm run check`: passed, 1,179 tests across 100 invocations.
 - `npx astro check`: zero errors and warnings; 97 existing hints.
 - Production build: passed. Vercel's configured Node runtime is 24.x.
-- Discovery audit: zero errors; 2,091 sitemap URLs, 1,906 event leaves,
-  4,325 JSON-LD blocks. Thirteen missing-source warnings and one expected
+- Discovery audit: zero errors; 2,100 sitemap URLs, 1,915 event leaves,
+  4,343 JSON-LD blocks. Twenty-six missing-source warnings and one expected
   server-rendered-page warning remain.
 - Ten local desktop/mobile browser cases passed, with hydrated React islands,
   no page exceptions or horizontal overflow, and the sold-out label visible.
+- Eight built-client desktop/mobile cases also pass against the fresh snapshot;
+  Events search finds the verified workshop at both sizes.
 - Local API checks preserve JSON feeds/cache headers and anonymous auth/validation
-  guards; Sharp PNG/JPEG/AVIF round trips pass.
+  guards; Sharp PNG/JPEG/AVIF round trips pass on Node 24.
+- The LibCal feed regression check permits its dated appointment occurrences to
+  age out; stable source-parsing fixtures continue to enforce appointment gates.
 - `.vercelignore` excludes private evidence, environment files, runtime state,
   and local caches from CLI previews. A dry upload manifest confirms exclusions
   and the presence of required build inputs.
