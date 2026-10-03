@@ -13,6 +13,18 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("a sold-out organizer workshop stays unavailable on its verified date", () => {
+  const raw = {
+    id: "inbound-b451c136762c2e2c", date: "2026-10-17", time: "1:00 PM", cost: null,
+    url: "https://bagi.org/products/diy-alebrije-dia-de-los-muertos-edition",
+  };
+  const event = applyVerifiedEventFacts(raw);
+  assert.equal(event.registration, "full");
+  assert.equal(event.endTime, "3:30 PM");
+  assert.equal(event.cost, null);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-17" }).registration, undefined);
+});
+
 test("SJMA's date-only snapshot recovers a free family event without requiring advance booking", async () => {
   const { normalizePlaywrightEvent } = await import("../../../scripts/playwright-scrapers.mjs");
   const raw = {

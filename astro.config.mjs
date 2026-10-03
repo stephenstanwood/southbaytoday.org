@@ -60,6 +60,8 @@ try {
 export default defineConfig({
   site: 'https://southbaytoday.org',
   trailingSlash: 'never',
+  // Preserve Astro 6's spacing between inline elements after the Astro 7 upgrade.
+  compressHTML: true,
   output: 'static',
   adapter: vercel(),
   redirects: retiredRedirects,

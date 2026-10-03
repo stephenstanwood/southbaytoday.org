@@ -34,6 +34,7 @@ const TRACKER_FALLBACKS = [
 
 // The newsletter extractor did not retain links for these dated events.
 // Each replacement points to the organizer's official event or calendar page.
+// October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
   ["2026-09-27|Triton Tea Time with Preston Metcalf", "https://www.tritonmuseum.org/events"],
   ["2026-09-27|Genealogy Society Sunday Social", "https://www.sclibrary.org/Home/Components/Calendar/Event/113847/67?curm=9&cury=2026&recordid=17517"],
@@ -41,6 +42,42 @@ const VERIFIED_INBOUND_URLS = new Map([
   ["2026-09-30|Ordinary People (1980) Screening with Film Professor Discussion", "https://www.library.sunnyvale.ca.gov/Home/Components/Calendar/Event/12969/74?curm=9&cury=2026"],
   ["2026-09-29|Lecture: How the Internet Benefits Humanity", "https://www.sclibrary.org/Home/Components/Calendar/Event/113212/7956?curm=9&cury=2026"],
   ["2026-10-03|Palo Alto Art Walk + Art & Dine", "https://www.pacificartleague.org/community-events/f"],
+  ["2026-10-02|Organ Concert with Dr. Alison Luedecke", "https://www.agosanjose.org/events/alison-luedecke-recital"],
+  ["2026-10-02|First Friday: New Ballet Season Preview", "https://sjmusart.org/event/first-friday-new-ballet-season-preview"],
+  ["2026-10-02|South First Friday: Thresholds of Memory Exhibition", "https://montalvoarts.org/experience/arts/art-architecture-maybe/thresholds/"],
+  ["2026-10-02|Yarn Lab", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/429d0a7"],
+  ["2026-10-02|Hispanic American Heritage Month Movie: La Bamba (1987)", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/429d0a7"],
+  ["2026-10-03|Sutter Family Yoga", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114703/"],
+  ["2026-10-03|Teens Teach: Sustainability and Our Changing Climate", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114469/"],
+  ["2026-10-03|Ukrainian English Storytime", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114606/"],
+  ["2026-10-05|U.S. Citizenship Test Preparation Class", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114749/"],
+  ["2026-10-06|Reading With Pets", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114320/"],
+  ["2026-10-07|Middle School Hang Out at Mission Branch Library", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114709/"],
+  ["2026-10-07|Coffee With a Cop", "https://www.sjpd.org/Home/Components/Calendar/Event/2808/"],
+  ["2026-10-08|Landlord/Tenant Counseling with Project Sentinel", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/108781/"],
+  ["2026-10-09|PAL Speaker Series: Nature Through a Photographer's Eye w/ Judy Kramer", "https://www.pacificartleague.org/community-events/pacific-art-league-speaker-series-nature-through-a-photographers-eye"],
+  ["2026-10-10|Devon Blood Artist & Book Talk", "https://www.eventbrite.com/e/devon-blood-artist-and-book-talk-tickets-1990018921163"],
+  ["2026-10-14|Quilling Craft Club", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113797/"],
+  ["2026-10-14|Halloween Costume Swap", "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/12569/19?curm=10&cury=2026"],
+  ["2026-10-16|Art + Climate Symposium: Reimagining Our Waterways", "https://sjmusart.org/reimagining-our-waterways"],
+  ["2026-10-17|Community Ignition Opening Reception at NUMU", "https://www.numulosgatos.org/events/community-ignition"],
+  ["2026-10-17|Community Ignition Opening Reception", "https://www.numulosgatos.org/events/community-ignition"],
+  ["2026-10-17|Halloween Costume Swap", "https://www.sclibrary.org/Home/Components/Calendar/Event/114327/7953?curm=10&cury=2026"],
+  ["2026-10-17|Reinvent Yourself: A Career Without Borders - Session 1", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114312/"],
+  ["2026-10-17|Men's Basketball Exhibition: Santa Clara vs. Stanford", "https://scubroncos.scu.edu/events/santa-clara-mens-basketball-vs-stanford-exhibiti-yzr8oa"],
+  ["2026-10-17|DIY Alebrije: Dia de los Muertos Edition", "https://bagi.org/products/diy-alebrije-dia-de-los-muertos-edition"],
+  ["2026-10-19|U.S. Citizenship Test Preparation Class", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114751/"],
+  ["2026-10-22|FamilySearch at a Glance - Genealogy Toolbox Class", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113737/"],
+  ["2026-10-22|LGMSPD Recognition Luncheon", "https://www.montesereno.org/civicalerts.aspx?AID=702"],
+  ["2026-10-24|Reinvent Yourself: A Career Without Borders - Session 2", "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114312/"],
+  ["2026-10-28|Spooky StoryWalk", "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/12565/19?curm=10&cury=2026"],
+  ["2026-11-14|Congressional Gold Medal Dedication and Community Gathering", "https://docs.google.com/forms/d/e/1FAIpQLScMx_iIyKoadtSfZCEThqqEB2owdouilhGyIqTOiqOaSEiezQ/viewform"],
+  ["2026-11-15|Wreathmaking Workshop (10am session)", "https://my.montalvoarts.org/3275/3276"],
+  ["2026-11-15|Wreathmaking Workshop (3pm session)", "https://my.montalvoarts.org/3275/3277"],
+  ["2026-11-21|Triton Holiday Art Fair", "https://www.eventbrite.com/e/triton-holiday-art-fair-tickets-1998434110220"],
+  ["2026-12-06|Hélène Grimaud Piano Recital", "https://ticketing.purchase.live.stanford.edu/stanfordlive/website/ChooseSeats.aspx?EventInstanceId=33401&resize=true"],
+  ["2027-01-14|Poetry Live! with Franny Choi and Cameron Awkward-Rich", "https://live.stanford.edu/events/26-27season/studio/poetry-live"],
+  ["2027-03-16|Buena Vista Orchestra", "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/"],
 ]);
 
 function detrack(url) {
