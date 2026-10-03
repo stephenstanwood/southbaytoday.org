@@ -1013,7 +1013,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Recently funded South Bay startups — verified Q4 2025 – Q3 2026
+// Recently funded South Bay startups — verified Q4 2025 – Q4 2026
 // ---------------------------------------------------------------------------
 
 export interface RecentlyFunded {
@@ -1684,6 +1684,24 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // PaleBlueDot AI's Oct 1 release explicitly confirms Palo Alto HQ, beyond
+  // the dateline. This $200M Series C is new equity after January's $150M
+  // Series B, which stays below; July's $255M credit facility is not equity
+  // and is not added to the funding total. Reuse the company's existing logo.
+  // https://www.prnewswire.com/news-releases/palebluedot-ai-raises-200m-series-c-round-to-scale-super-intelligence-infrastructure-platform-302896601.html
+  {
+    id: "palebluedot-ai-series-c",
+    name: "PaleBlueDot AI",
+    city: "Palo Alto",
+    category: "cloud",
+    round: "Series C",
+    amount: "$200M",
+    date: "2026-10-01",
+    tagline:
+      "Palo Alto's PaleBlueDot AI provides GPU computing power through its own clusters, a marketplace, and services that run AI models on demand. ComputeCore led its $200M Series C at a $3.2B valuation, with B Capital participating. The company plans to expand computing capacity and invest in engineering and sales teams.",
+    color: "#2563eb",
+    url: "https://palebluedot.ai",
+  },
   // GMI Cloud's own release confirms Mountain View HQ in its boilerplate,
   // beyond the dateline. Count the $223M Series B equity here; the separate
   // $445M credit facility makes the full financing package $668M.

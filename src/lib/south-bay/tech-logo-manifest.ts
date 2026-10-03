@@ -154,6 +154,7 @@ export const TECH_LOGO_MANIFEST: Record<string, string> = {
   "owner": "/logos/owner.png",
   "oxmiq": "/logos/oxmiq.png",
   "palebluedot-ai": "/logos/palebluedot-ai.png",
+  "palebluedot-ai-series-c": "/logos/palebluedot-ai.png",
   "palm-computing": "/logos/palm-computing.png",
   "palmpilot-launch": "/logos/palmpilot-launch.png",
   "palo-alto": "/logos/palo-alto.png",
