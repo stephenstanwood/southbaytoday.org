@@ -22,7 +22,52 @@ import {
   parseLosAltosHistoryEventFacts,
   parseMusicInParkSchedule,
   parseSanJoseJazzLineup,
+  parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("Santana Row keeps each festival day's published hours", () => {
+  // The October 2026 card header starts Saturday, but the daily schedule
+  // includes Friday's preview. The first clock must not migrate to Saturday.
+  const occurrences = parseSantanaRowOccurrences(
+    "October 3 - October 4, 2026",
+    "Friday, October 2nd from 3 pm – 9 pm" +
+      "Saturday, October 3rd from 10 am – 9 pm" +
+      "Sunday, October 4th from 10 am – 5 pm",
+  );
+  assert.deepEqual(occurrences, [
+    { date: "2026-10-02", time: "3:00 PM", endTime: "9:00 PM" },
+    { date: "2026-10-03", time: "10:00 AM", endTime: "9:00 PM" },
+    { date: "2026-10-04", time: "10:00 AM", endTime: "5:00 PM" },
+  ]);
+});
+
+test("Santana Row preserves different carving demonstration hours and noon", () => {
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 24 - October 25, 2026",
+    "Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PM",
+  ), [
+    { date: "2026-10-24", time: "10:00 AM", endTime: "1:00 PM" },
+    { date: "2026-10-25", time: "12:00 PM", endTime: "2:00 PM" },
+  ]);
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 27, 2026", "Tuesday, October 27th from 10 AM – noon!",
+  ), [{ date: "2026-10-27", time: "10:00 AM", endTime: "12:00 PM" }]);
+});
+
+test("Santana Row keeps single-date markets and rejects unsupported ranges", () => {
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 10, 2026", "Every second Saturday from 11am-6pm",
+  ), [{ date: "2026-10-10", time: "11:00 AM", endTime: "6:00 PM" }]);
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 22 - October 25, 2026", "See the film schedule for showtimes.",
+  ), []);
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 3 - October 4, 2026", "Doors at 3 PM. Various hours each day.",
+  ), []);
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "October 3, 2027", "Saturday, October 3 from 10 AM – 9 PM",
+  ), []);
+});
 
 test("extracts the public locality from Squarespace address fields", () => {
   assert.equal(extractAddressLocality("Menlo Park, CA, 94025"), "Menlo Park");

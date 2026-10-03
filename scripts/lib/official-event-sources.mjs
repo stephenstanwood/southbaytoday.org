@@ -1,3 +1,5 @@
+import { isClockTime } from "./clock-time.mjs";
+
 const MONTHS = {
   jan: 1,
   january: 1,
@@ -131,6 +133,61 @@ function normalizeClock(value) {
   const match = String(value || "").match(/\b(\d{1,2})(?::(\d{2}))?\s*([ap])\.?m\.?\b/i);
   if (!match) return null;
   return `${Number(match[1])}:${match[2] || "00"} ${match[3].toUpperCase()}M`;
+}
+
+/**
+ * Santana Row's card date can describe a whole festival, while its body lists
+ * different hours for each day. Keep those dated hours together; never give
+ * Saturday Friday's first clock or project a range without daily schedules.
+ */
+export function parseSantanaRowOccurrences(dateText, bodyText) {
+  const header = plainText(dateText);
+  // The organizer's excerpts remove line breaks between daily schedules,
+  // leaving joins such as "9 pmSaturday" and "1:00 PMSunday".
+  const text = plainText(bodyText).replace(
+    /([ap]\.?m\.?)(?=(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)/gi,
+    "$1 ",
+  );
+  const year = Number(header.match(/\b20\d{2}\b/)?.[0]);
+  if (!year) return [];
+
+  const monthPattern = Object.keys(MONTHS).sort((a, b) => b.length - a.length).join("|");
+  const clockPattern = String.raw`(?:\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?|noon|midnight)`;
+  const schedulePattern = new RegExp(
+    String.raw`\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?(?:,\s*(20\d{2}))?\s*(?:from|at|[|:])?\s*(${clockPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?`,
+    "gi",
+  );
+  const matches = [...text.matchAll(schedulePattern)];
+  const validDate = (date) => {
+    const parsed = new Date(`${date}T12:00:00Z`);
+    return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === date;
+  };
+  const clock = (value) => {
+    const normalized = /^noon$/i.test(value || "") ? "12:00 PM"
+      : /^midnight$/i.test(value || "") ? "12:00 AM" : normalizeClock(value);
+    return isClockTime(normalized) ? normalized : null;
+  };
+
+  if (matches.length) {
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    return matches.flatMap((match) => {
+      const date = isoDate(Number(match[4] || year), match[2], Number(match[3]));
+      if (!date || !validDate(date)) return [];
+      const weekday = weekdays[new Date(`${date}T12:00:00Z`).getUTCDay()];
+      const time = clock(match[5]);
+      if (weekday.toLowerCase() !== match[1].toLowerCase() || !time) return [];
+      return [{ date, time, endTime: clock(match[6]) }];
+    });
+  }
+
+  // A multi-day header alone cannot establish each day's opening time.
+  if (/[-–—]\s*(?:[a-z]+\s+)?\d{1,2}/i.test(header)) return [];
+  const dateMatch = header.match(new RegExp(String.raw`^(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?\b`, "i"));
+  const date = dateMatch ? isoDate(year, dateMatch[1], Number(dateMatch[2])) : null;
+  if (!date || !validDate(date)) return [];
+  const clocks = [...text.matchAll(new RegExp(String.raw`\b${clockPattern}\b`, "gi"))];
+  const time = clock(clocks[0]?.[0]);
+  return time ? [{ date, time, endTime: clock(clocks[1]?.[0]) }] : [];
 }
 
 export function extractVboSession(html) {

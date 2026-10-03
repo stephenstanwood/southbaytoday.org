@@ -3,7 +3,7 @@
     "generatedAt": "2026-10-03T02:18:18.956Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 568,
+    "eventCount": 570,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (120)",
@@ -18,7 +18,7 @@
       "San Jose Theaters (20)",
       "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (9)",
-      "Santana Row (6)",
+      "Santana Row (8)",
       "City of Cupertino (59)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 6,
+        "count": 8,
         "error": null,
         "sources": [
           "Santana Row"
@@ -7735,21 +7735,50 @@
       }
     },
     {
-      "id": "1a3cf4983ce4",
+      "id": "83db750b0311",
       "title": "Glass Pumpkin Festival",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
-      "time": "3 pm",
-      "endTime": null,
+      "time": "10:00 AM",
+      "endTime": "9:00 PM",
       "venue": "Santana Row",
       "address": "377 Santana Row, San Jose, CA 95128",
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "",
+      "description": "Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
       "source": "Santana Row",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-03",
+        "checkedAt": "2026-10-03T09:00:34.854Z"
+      }
+    },
+    {
+      "id": "99b03214d5f5",
+      "title": "Glass Pumpkin Festival",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
+      "time": "10:00 AM",
+      "endTime": "5:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
+      "url": "https://santanarow.com/event/glass-pumpkin-festival/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-04",
+        "checkedAt": "2026-10-03T09:00:34.854Z"
+      }
     },
     {
       "id": "790590370c3d",
@@ -7791,16 +7820,45 @@
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
       "time": "10:00 AM",
-      "endTime": null,
+      "endTime": "1:00 PM",
       "venue": "Santana Row",
       "address": "377 Santana Row, San Jose, CA 95128",
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "",
+      "description": "Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
       "url": "https://santanarow.com/event/farmer-mike-pumpkin-carving/",
       "source": "Santana Row",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-24",
+        "checkedAt": "2026-10-03T09:00:34.854Z"
+      }
+    },
+    {
+      "id": "5e7c8c96931f",
+      "title": "Farmer Mike Pumpkin Carving",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "12:00 PM",
+      "endTime": "2:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
+      "url": "https://santanarow.com/event/farmer-mike-pumpkin-carving/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-25",
+        "checkedAt": "2026-10-03T09:00:34.854Z"
+      }
     },
     {
       "id": "811b2b8c1202",

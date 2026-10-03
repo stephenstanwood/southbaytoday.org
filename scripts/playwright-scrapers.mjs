@@ -38,6 +38,7 @@ import {
 } from "./lib/linden-tree-heading.mjs";
 import {
   normalizeMountainWineryCard,
+  parseSantanaRowOccurrences,
 } from "./lib/official-event-sources.mjs";
 import {
   finalizeUnexpectedEmptyRetry,
@@ -2117,14 +2118,14 @@ async function scrapeGuadalupeRiverPark(page) {
   return correctedEvents;
 }
 
-async function scrapeSantanaRow(page) {
+export async function scrapeSantanaRow(page) {
   await page.goto("https://www.santanarow.com/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
     const out = [];
     const links = [...document.querySelectorAll('a[href*="/event/"]')];
     for (const a of links) {
-      const text = a.textContent?.replace(/\s+/g, " ").trim() || "";
+      const text = a.innerText?.replace(/\s+/g, " ").trim() || "";
       const title = a.querySelector("h1,h2,h3,.title")?.textContent?.replace(/\s+/g, " ").trim();
       const date = a.querySelector(".date")?.textContent?.replace(/\s+/g, " ").trim();
       if (!title || !date) continue;
@@ -2132,24 +2133,31 @@ async function scrapeSantanaRow(page) {
     }
     return out;
   });
-  return raw.map((r) => {
-    const date = yearAwareDate(r.date);
-    if (!date || date < TODAY || !isUsefulTitle(r.title) || /work on the row/i.test(r.title)) return null;
-    return {
-      title: r.title,
-      date,
-      time: clockFromText(r.text),
-      endTime: null,
-      venue: "Santana Row",
-      address: "377 Santana Row, San Jose, CA 95128",
-      city: "san-jose",
-      url: r.link || "https://www.santanarow.com/events/",
-      source: "Santana Row",
-      category: inferCategory(r.title),
-      cost: null,
-      kidFriendly: KID_RE.test(r.text),
-    };
-  }).filter(Boolean);
+  return raw.flatMap((r) => {
+    if (!isUsefulTitle(r.title) || /work on the row/i.test(r.title)) return [];
+    const description = r.text.replace(r.date, "").replace(r.title, "").replace(/\s*Learn More\s*$/i, "").trim();
+    return parseSantanaRowOccurrences(r.date, r.text)
+      .filter((occurrence) => occurrence.date >= TODAY)
+      .map((occurrence) => ({
+        title: r.title,
+        ...occurrence,
+        venue: "Santana Row",
+        address: "377 Santana Row, San Jose, CA 95128",
+        city: "san-jose",
+        url: r.link || "https://www.santanarow.com/events/",
+        source: "Santana Row",
+        category: inferCategory(r.title),
+        cost: null,
+        kidFriendly: KID_RE.test(r.text),
+        description,
+        occurrenceEvidence: {
+          kind: "first-party-calendar",
+          sourceUrl: "https://www.santanarow.com/events/",
+          date: occurrence.date,
+          checkedAt: new Date().toISOString(),
+        },
+      }));
+  });
 }
 
 async function scrapeDowntownMountainView(page) {
