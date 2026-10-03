@@ -1,31 +1,31 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-03T02:18:18.956Z",
+    "generatedAt": "2026-10-03T16:09:57.939Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 570,
+    "eventCount": 566,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (120)",
-      "Los Gatos Library (147)",
-      "San Jose Jazz (19)",
+      "Mountain View Public Library (121)",
+      "Los Gatos Library (148)",
+      "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
-      "Montalvo Arts Center (6)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (11)",
+      "Mountain Winery (10)",
       "San Jose Theaters (20)",
-      "Children's Discovery Museum (4)",
+      "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (9)",
-      "Santana Row (8)",
+      "Santana Row (7)",
       "City of Cupertino (59)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
       "SAP Center (15)",
       "The Tech Interactive (10)",
-      "San Jose Museum of Art (7)",
+      "San Jose Museum of Art (6)",
       "Peninsula Open Space Trust (6)"
     ],
     "sourceHealth": [
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 125,
+        "count": 126,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 147,
+        "count": 148,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 19,
+        "count": 18,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -95,7 +95,7 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 7,
+        "count": 6,
         "error": "SJMA calendar returned HTTP 403",
         "sources": [
           "San Jose Museum of Art"
@@ -116,9 +116,9 @@
       {
         "id": "hicklebee-s",
         "label": "Hicklebee's",
-        "status": "empty",
+        "status": "error",
         "count": 0,
-        "error": null,
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -135,7 +135,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 11,
+        "count": 10,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 4,
+        "count": 3,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 8,
+        "count": 7,
         "error": null,
         "sources": [
           "Santana Row"
@@ -2902,6 +2902,26 @@
         "All Ages"
       ],
       "url": "https://mountainview.libcal.com/event/17448609",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "bf3b03648443",
+      "title": "New Year's Day Holiday",
+      "date": "2027-01-01",
+      "displayDate": "Fri, Jan 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "The Library will be closed today in observance of the New Year's Day holiday.",
+      "sourceAudiences": [
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -5932,21 +5952,26 @@
       "kidFriendly": true
     },
     {
-      "id": "d7c2f1437d9a",
-      "title": "SJZ Break Room Jazz Jam",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "5:20pm",
+      "id": "f6eda91d4a20",
+      "title": "Library Closed",
+      "date": "2027-01-01",
+      "displayDate": "Fri, Jan 1",
+      "time": null,
       "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
       "description": "",
-      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16374654",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
     },
     {
       "id": "9f8ed2a1d00c",
@@ -6687,23 +6712,6 @@
       "kidFriendly": false
     },
     {
-      "id": "deef4e2fa321",
-      "title": "Events Calendar",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "710e83571a08",
       "title": "Alphabet Rockers (Grade K-8)",
       "date": "2026-10-06",
@@ -6908,10 +6916,10 @@
       "kidFriendly": false
     },
     {
-      "id": "102051340b70",
+      "id": "9d0e2d8ae93c",
       "title": "Oscar Lopez: Without Them is Not Us",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2024-09-14",
+      "displayDate": "Sat, Sep 14",
       "time": null,
       "endTime": null,
       "venue": "ICA San José",
@@ -6939,23 +6947,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "5bed06abe6d6",
-      "title": "Get The Led Out",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1259545",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -7126,40 +7117,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "b39ee0f6085b",
-      "title": "Come Together: A Tribute to the Beatles",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "7:30pm",
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "5c791ac7e747",
-      "title": "Ryan Castro – Sende The Last Dance Tour",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -7469,27 +7426,44 @@
       "kidFriendly": false
     },
     {
-      "id": "b46490ca7efc",
-      "title": "Imagine Where VTA Can Take You",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": null,
+      "id": "feee73927455",
+      "title": "Engelbert Humperdinck",
+      "date": "2026-10-21",
+      "displayDate": "Wed, Oct 21",
+      "time": "7:30pm",
       "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "family",
+      "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
     },
     {
-      "id": "ec2eba84c52f",
+      "id": "1e608445a36e",
+      "title": "Jim Henson’s Labyrinth: In Concert",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "music",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "bfbe5a7fce22",
       "title": "Toddler Storytime",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-03",
+      "displayDate": "Sat, Oct 3",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7503,10 +7477,10 @@
       "kidFriendly": true
     },
     {
-      "id": "f4625f97305c",
+      "id": "512a74d54e33",
       "title": "All Ages Storytime",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-03",
+      "displayDate": "Sat, Oct 3",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7746,7 +7720,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
+      "description": "OCTOBER 3 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7754,7 +7728,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-03",
-        "checkedAt": "2026-10-03T09:00:34.854Z"
+        "checkedAt": "2026-10-03T16:08:40.655Z"
       }
     },
     {
@@ -7769,7 +7743,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
+      "description": "OCTOBER 3 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7777,42 +7751,31 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-04",
-        "checkedAt": "2026-10-03T09:00:34.854Z"
+        "checkedAt": "2026-10-03T16:08:40.655Z"
       }
     },
     {
-      "id": "790590370c3d",
+      "id": "823f8f059298",
       "title": "Makers Market's Local Artist Street Fair",
       "date": "2026-10-10",
       "displayDate": "Sat, Oct 10",
-      "time": "11am",
-      "endTime": null,
+      "time": "11:00 AM",
+      "endTime": "6:00 PM",
       "venue": "Santana Row",
       "address": "377 Santana Row, San Jose, CA 95128",
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "",
+      "description": "OCTOBER 10, 2026  Makers Market’s™ Local Artist Street Fair is returning to Santana Row! We’ve rounded up the best local Artists, Crafters, Designers, and Makers for a truly unforgettable shopping experience for every second Saturday of every month from 11am-6pm!60+ Local MakersHandmade jewelry, permanent jewelry, ceramics, woodwork, apparel, leather goods, glass art, candles, local honey, apothecary, art, crochet, pet treats/products, handbags, plants, and moreGreat food + drinks in the surrounding eateries. THIS IS A SIP & STROLL EVENT!Bring your kids + fur babiesEnjoy live music by local artistsFREE to attend!Shop in store! Stroll into our brick-and-mortar shop (adjacent to the market area) for more American-made jewelry, apparel, body products, home goods and more from 100+ Makers.",
       "url": "https://santanarow.com/event/makers-market-in-the-park/",
       "source": "Santana Row",
-      "kidFriendly": true
-    },
-    {
-      "id": "c10db572650e",
-      "title": "San Jose International Short Film Festival at Ciné Arts",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": null,
-      "endTime": null,
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "",
-      "url": "https://santanarow.com/event/san-jose-international-short-film-festival-at-cine-arts/",
-      "source": "Santana Row",
-      "kidFriendly": false
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-10",
+        "checkedAt": "2026-10-03T16:08:40.656Z"
+      }
     },
     {
       "id": "2beca39d5fee",
@@ -7826,7 +7789,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
+      "description": "OCTOBER 24 - OCTOBER 25, 2026  Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
       "url": "https://santanarow.com/event/farmer-mike-pumpkin-carving/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7834,7 +7797,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-03T09:00:34.854Z"
+        "checkedAt": "2026-10-03T16:08:40.656Z"
       }
     },
     {
@@ -7849,7 +7812,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
+      "description": "OCTOBER 24 - OCTOBER 25, 2026  Saturday, October 24 | 10:00 AM – 1:00 PMSunday, October 25 | 12:00 PM – 2:00 PMWearing signature orange overalls and a straw hat, “Farmer Mike” will be visiting Park Valencia at Santana Row. Guests are invited to watch him on stage as Farmer Mike, the Pumpkin Picasso, meticulously sculpts giant pumpkins into works of art.",
       "url": "https://santanarow.com/event/farmer-mike-pumpkin-carving/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7857,25 +7820,31 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-03T09:00:34.854Z"
+        "checkedAt": "2026-10-03T16:08:40.656Z"
       }
     },
     {
-      "id": "811b2b8c1202",
+      "id": "c7cd1aadc33f",
       "title": "Trick-or-Treat The Row Halloween Family Festival",
       "date": "2026-10-27",
       "displayDate": "Tue, Oct 27",
-      "time": "10 AM",
-      "endTime": null,
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
       "venue": "Santana Row",
       "address": "377 Santana Row, San Jose, CA 95128",
       "city": "san-jose",
       "category": "family",
       "cost": null,
-      "description": "",
+      "description": "OCTOBER 27, 2026  Santana Row is excited to announce the annual Halloween Family Fest on Tuesday, October 27th from 10 AM – noon!Enjoy live music, pumpkin decorating, trick or treating The Row, stilt-walkers, balloons and so much more! Bring your Trick-or-Treat Bags and costumes for a Halloween fun filled day.This event is free and open to the public. Trick-or-Treat stops to be announced soon",
       "url": "https://santanarow.com/event/trick-or-treat-the-row-halloween-family-festival/",
       "source": "Santana Row",
-      "kidFriendly": true
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-27",
+        "checkedAt": "2026-10-03T16:08:40.656Z"
+      }
     },
     {
       "id": "012ce621a519",
@@ -7883,16 +7852,22 @@
       "date": "2026-11-01",
       "displayDate": "Sun, Nov 1",
       "time": "10:30 AM",
-      "endTime": null,
+      "endTime": "10:00 PM",
       "venue": "Santana Row",
       "address": "377 Santana Row, San Jose, CA 95128",
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "",
+      "description": "NOVEMBER 1, 2026  Join the festivities as Santana Row hosts a very special tribute to Día de Los Muertos on Sunday, November 1st! The holiday is a time to remember loved ones that have passed, while we embrace our eternal connections. This is a free community event featuring face painting, Catrina and Catrin meet & greets, mariachi music, crafts, and a pop-up market.Entertainment Schedule:10:30 AM – 10 PM: Brunch at Zazil & contribute to the Community Ofrendas (Altars)12 – 5 PM: Cultural Pop-Up Market12 – 3 PM: Día de los Muertos Catrina Photo Ops in Oak Tree Lounge (by Blue Bottle Coffee)12 – 3 PM: Face Painting in Santana Row Park1 – 3 PM: Mariachi & Dance Performances in Santana Row Park3– 4:30 PM: Mariachi & Face Painting at El Jardín Tequila Bar4:30 – 6 PM: Mariachi at Zazil",
       "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
       "source": "Santana Row",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-01",
+        "checkedAt": "2026-10-03T16:08:40.656Z"
+      }
     },
     {
       "id": "cc0dc6d0d6d2",
@@ -8926,7 +8901,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8943,7 +8918,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8960,7 +8935,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8977,7 +8952,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -11004,25 +10979,6 @@
       "url": "https://www.thetech.org/explore/upcoming-events/",
       "source": "The Tech Interactive",
       "kidFriendly": true
-    },
-    {
-      "id": "0fd141a7f257",
-      "title": "First Friday: New Ballet Season Preview",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Free evening galleries and a preview of New Ballet's 10th anniversary season. The ballet preview is in the Charlotte Wendel Education Center; doors open at 7:25 PM and seating is first come, first served.",
-      "url": "https://sjmusart.org/event/first-friday-new-ballet-season-preview",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Enjoy free evening galleries and a preview of New Ballet's 10th anniversary season.",
-      "attendanceNote": "Advance registration speeds check-in. Ballet-preview doors open at 7:25 PM; seating is limited, first come, first served."
     },
     {
       "id": "703687c2511a",
