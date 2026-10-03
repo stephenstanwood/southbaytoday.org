@@ -839,6 +839,7 @@ const TITLE_FIXES = {
   " Pacl,": " PACL,",
   "Pacl Book": "PACL Book",
   "Sjdt ": "SJDT ",
+  "Srea Company Tour": "SREA Company Tour", // Spartan Real Estate Association
   "Lgpns ": "LGPNS ",
   "Fopal": "FOPAL",     // Friends of Palo Alto Library — biblio API title-cases it
   "Aanhpi": "AANHPI",   // Asian American/Native Hawaiian/Pacific Islander
@@ -870,6 +871,9 @@ const TITLE_FIXES = {
   // "US" so country uses ("In US") stay capitalized, but a few source titles
   // capitalize the pronoun ("Makes US"). Override the specific pronoun cases.
   "Makes US": "Makes Us",
+  // SJSU's SREA company-tour heading misspells the field; the same source's
+  // description correctly identifies it as commercial appraisal.
+  "Commerical Appraisal": "Commercial Appraisal",
 };
 
 // Misspelled proper nouns that a source repeats in BOTH the title and the blurb.
@@ -1034,6 +1038,7 @@ function cleanTitle(title) {
     // SJSU's International Student & Scholar Services office — its Localist
     // feed titles ("ISSS Campus Tours") were rendering as "Isss".
     "ISSS",
+    "SREA", // SJSU's Spartan Real Estate Association; restored earlier at ingest
     "FOPAL", "AANHPI", "PAUSD", "SJUSD", "FUHSD", "MVWSD", "CUSD", "BVAL", "SCVAL",
     // Japanese American Citizens League — appears as "SJ JACL" in JAMsj titles.
     // 4-letter so it survives the conservative pass, but the second 2+ pass
@@ -3254,7 +3259,10 @@ const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement
 // because the title patterns are unique to those internal programs.
 // `alumni panel` is consistently a student career-prep event ("hear from
 // alumni at Firm X") — surfaced via SCU Accounting Association feed.
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
+// SJSU's Department Door Decorating Competition asks campus departments to
+// decorate their office doors and lists Students as its audience; it is not a
+// public outing: events.sjsu.edu/event/departemnt-door-decorating-competition.
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel|department door decorating competition)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b|\bregister\b.{0,80}\bon\s+handshake\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni

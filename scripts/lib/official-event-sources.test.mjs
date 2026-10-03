@@ -342,3 +342,16 @@ test("drops SCU technology training and Handshake registration listings", () => 
     description: "Register for the Bash Career Fair on Handshake!",
   }), true);
 });
+
+test("drops SJSU's internal door competition while keeping public student art", () => {
+  assert.equal(isStudentOnlyEvent({
+    link: "https://events.sjsu.edu/event/departemnt-door-decorating-competition",
+    title: "Department Door Decorating Competition",
+    description: "We are seeking departments across campus to transform their office doors into Spartan showcases.",
+  }), true);
+  assert.equal(isStudentOnlyEvent({
+    link: "https://events.sjsu.edu/event/student-art-exhibition",
+    title: "Student Art Exhibition",
+    description: "Student artists share their work in an exhibition open to the public.",
+  }), false);
+});
