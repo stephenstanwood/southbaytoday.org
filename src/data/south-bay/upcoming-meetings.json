@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T04:38:14.830Z",
+  "generatedAt": "2026-10-03T01:15:26.811Z",
   "meetings": {
     "san-jose": {
       "date": "2026-10-02",
@@ -28,7 +28,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-02",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-01T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -66,45 +66,24 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-01T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "17:45",
+      "date": "2026-10-05",
+      "displayDate": "Mon, Oct 5",
+      "startTime": "19:30",
       "bodyName": "City Council",
-      "location": "Council Chamber",
+      "location": "Conference Room C",
       "closedSession": true,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5300&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5300,
-      "agendaItems": [
-        {
-          "title": "Recognition of the Community Development Department (Planning, Building, Housing, and Code Enforcement Divisions)",
-          "sequence": 14
-        },
-        {
-          "title": "Approval of a resolution increasing the employer's contribution for medical and hospitalization insurance consistent with the Public Employees’ Medical and Hospital Care Act (“PEMHCA” or the “Act”) for retired annuitants hired with the City of Cupertino prior to August 2004.",
-          "sequence": 23
-        },
-        {
-          "title": "Approval of a Resolution Authorizing Submittal of An Individual Grant Application for $80,000 for the Rubberized Pavement Grant Program.",
-          "sequence": 24
-        },
-        {
-          "title": "Tax and Equity Fiscal Responsibility Act (TEFRA) public hearing and approval of conduit financing for The RISE Block 5 Apartments Project",
-          "sequence": 27
-        },
-        {
-          "title": "City Manager Report",
-          "sequence": 33
-        }
-      ],
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5378&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5378,
+      "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-01T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-05",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -123,6 +102,22 @@
         "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21674"
       }
     },
+    "campbell": {
+      "date": "2026-10-05",
+      "displayDate": "Mon, Oct 5",
+      "startTime": "18:20",
+      "bodyName": "City Council Special Meeting",
+      "location": "Public Works Conference Room",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=cbe9f3fe-f585-4195-88d7-d31958bdba68&Agenda=Agenda&lang=English",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
+        "observedDate": "2026-10-05",
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
+      }
+    },
     "milpitas": {
       "date": "2026-10-06",
       "displayDate": "Tue, Oct 6",
@@ -137,7 +132,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-01T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -154,7 +149,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-01T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -189,8 +184,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "error",
-      "detail": "eScribe calendar returned no meetings for the next 3 months"
+      "status": "ok"
     },
     "milpitas": {
       "provider": "CivicClerk",

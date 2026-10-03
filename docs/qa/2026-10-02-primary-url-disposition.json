@@ -1,0 +1,1243 @@
+{
+  "reviewedAt": "2026-10-03T01:54:21Z",
+  "reportMessageId": "1555730917551644755",
+  "reportSha256": "f793e69191d286248f5915f9d766073f8af4136bb6844d020b1a50215e113ae7",
+  "counts": {
+    "originalWarnings": 48,
+    "repaired": 35,
+    "held": 13,
+    "activeOriginalRecords": 44,
+    "activeRepairedRecords": 33,
+    "activeHeldRecords": 11,
+    "canonicalDuplicates": 1,
+    "notListed": 3,
+    "additionalCurrentHolds": 15,
+    "totalActiveSourceHolds": 26
+  },
+  "owners": {
+    "newsletter-intake-and-event-refresh": {
+      "source": "src/lib/lookout/extractor.ts; scripts/pull-inbound-events.mjs; scripts/generate-events.mjs",
+      "publishingJob": "org.southbaytoday.events-refresh",
+      "verified": "Mini launchctl: loaded; last exit 0; source repairs are date/title-scoped."
+    },
+    "sbt-growth-sweep": {
+      "instruction": "ops/mini/sbt-growth-sweep/SKILL.md",
+      "schedule": "Friday 02:45 America/Los_Angeles",
+      "verified": "Mini Claude main.log confirms sbt-growth-sweep fired 2026-10-02 02:49:18; scheduler heartbeat loaded, last exit 0."
+    }
+  },
+  "receivingLookup": {
+    "pages": 9,
+    "items": 894,
+    "hasMore": false,
+    "oldest": "2026-09-04T02:03:23.688Z",
+    "originalsRead": 35
+  },
+  "sourceReceipts": {
+    "bb7e075a-75e6-47e1-a502-cac171adb9ba": {
+      "subject": "Join us at a reception for Community Ignition!",
+      "receivedAt": "2026-09-26T02:16:02.245Z",
+      "sha256": "7f85210cdbc527d12a8d3beafdf82866735acf469e3d5d23ea82635902db7d80"
+    },
+    "d7f785d6-7afd-4087-a37c-e88e68fe736f": {
+      "subject": "October 2026 e-News",
+      "receivedAt": "2026-10-01T15:03:33.239Z",
+      "sha256": "2139fa6735ffcb39052ebf2c0f6618d642e5d4394f1a85bed013150d1e94d535"
+    },
+    "1eda347c-1398-4868-8dbf-75ea97a1eb14": {
+      "subject": "CENTRAL: Reading With Pets | Leyendo con mascotas",
+      "receivedAt": "2026-09-15T14:01:58.188Z",
+      "sha256": "05395b70dceffee989ce732bfe590f1d1e6c545a5ec81e87de911a3d6f69a4d4"
+    },
+    "96434ae1-d600-454a-8638-e1f54572edcd": {
+      "subject": "CENTRAL: U.S. Citizenship Test Preparation Class",
+      "receivedAt": "2026-09-29T00:01:51.477Z",
+      "sha256": "c6e48b9fca9b891f28fb0c5199d79ce92add8df7619311a403423c426071b1dc"
+    },
+    "84d24a7f-f040-4d68-b7c4-812b3bd34675": {
+      "subject": "CENTRAL: U.S. Citizenship Test Preparation Class",
+      "receivedAt": "2026-09-29T00:01:38.218Z",
+      "sha256": "c7d73fbd7a8febef3490add5acbcfcbdcb92903bd59e658ca0e803df063a40a0"
+    },
+    "7322985f-8798-497e-8645-082f050ef66c": {
+      "subject": "CENTRAL: Quilling Craft Club",
+      "receivedAt": "2026-09-30T17:02:36.579Z",
+      "sha256": "34ebef14bd1b0ad641870db8a4d981699227419cafb7ead83a2eee1f3a99a41e"
+    },
+    "9cad35cf-07f4-4bb1-97d3-aac743e7b698": {
+      "subject": "Teens Teach: Sustainability and Our Changing Climate",
+      "receivedAt": "2026-09-27T23:00:58.616Z",
+      "sha256": "b4a2e80f5e8046cbb0bef8f3eab9985691845b3194c005c6febece1e68c18e0b"
+    },
+    "e1d0969f-c7b7-4c9c-9e0c-70e977929cba": {
+      "subject": "CENTRAL: Landlord/Tenant Counseling - Asesoramiento a Propietarios e Inquilinos",
+      "receivedAt": "2026-09-30T19:01:50.536Z",
+      "sha256": "1f3d31059cfc741b8dcb6a04efe4d7ae968049ab833888ae826c5dcdc30baeaf"
+    },
+    "3f8f7106-5bfb-4b40-a7b9-e4a1fa159f2a": {
+      "subject": "CENTRAL: Reinvent Yourself: A Career Without Borders",
+      "receivedAt": "2026-10-01T19:02:16.143Z",
+      "sha256": "af3535f3208278ba2b607320a2df3c97ca50f473927857002726fa4c1904275d"
+    },
+    "0116bdcb-399f-4604-a4fb-17ab1bf0e0d8": {
+      "subject": "CENTRAL: FamilySearch at a Glance - Genealogy Toolbox Class",
+      "receivedAt": "2026-09-10T17:02:20.749Z",
+      "sha256": "2e8357acff3b6d02e01aa189085e41ecf2d3f202225a331819a02d70078b0470"
+    },
+    "d00f16a4-9354-4b99-a50a-f853ca385a27": {
+      "subject": "Montalvo weekly roundup",
+      "receivedAt": "2026-09-26T18:01:59.266Z",
+      "sha256": "2ecf2a5039f91f49fe50970f2825d03042f2680c6337e969d4cc810a92b70816"
+    },
+    "ce713309-162d-423e-9aaa-af6cc0b6b02f": {
+      "subject": "Activities Newsletter October 2026",
+      "receivedAt": "2026-09-28T12:31:41.958Z",
+      "sha256": "b87d95a4248291716d168228e5388f33b69624179cbf560d01922eee2ca4db9a"
+    },
+    "be00ca9d-2583-4a30-83b2-b287efacb312": {
+      "subject": "Montalvo Weekly News: New Concerts and Workshops",
+      "receivedAt": "2026-09-20T17:01:01.129Z",
+      "sha256": "c6b812b497abc572ca98af5bd7d93fd3d025c77cfb99d44e0a74dde82a22badf"
+    },
+    "f0748acc-b070-4ee5-827e-d56388ae56d4": {
+      "subject": "Announcing the 2nd Art + Climate Symposium 🖼️ 🌲",
+      "receivedAt": "2026-09-18T00:00:24.467Z",
+      "sha256": "4c23ea3500fbc3ae481b24ab6248f693a9012fbe1881fe9eaacd6caafab59076"
+    },
+    "c4d6cfbd-23c7-4719-b76f-4f9e3d9f4c9c": {
+      "subject": "Costume Design Talk, Film Professor Discussion, Yarn Lab, and More!",
+      "receivedAt": "2026-09-25T17:02:24.614Z",
+      "sha256": "131cba576a1352b566518ecacdc1fc352c059796c77f1c798cabd6719046bbed"
+    },
+    "13d2d83f-187b-40ed-93f5-efaeedb0bafa": {
+      "subject": "National Coffee With a Cop Day",
+      "receivedAt": "2026-09-30T02:16:43.800Z",
+      "sha256": "860083b80526a742babf80ab57482f08ec2ad3dcb8928e3f00a04c1b8859e21a"
+    },
+    "08bbaad6-aeab-4699-b4ec-dacd81d6d7c6": {
+      "subject": "Halloween Costume Donations",
+      "receivedAt": "2026-09-28T15:02:05.630Z",
+      "sha256": "a78d7ea9948adfe1e5f83af0ffac0dddd99cf29fdf2815de3b4f5b28407760c4"
+    },
+    "5d065c8e-27bc-42a1-a0b0-1036080b73ae": {
+      "subject": "NORTHSIDE: Sutter Family Yoga",
+      "receivedAt": "2026-10-01T16:03:18.689Z",
+      "sha256": "8aba9fe5d32e8e5338f8077f88bab093b1a201f5057c4906eca479f400b6be70"
+    },
+    "d6016ea3-416a-4b10-9357-1732201b8110": {
+      "subject": "MISSION: Middle School Hang Out",
+      "receivedAt": "2026-09-23T23:40:58.124Z",
+      "sha256": "9e0d095b0cbab4dd963d407018fdb6b897ad437ef476d60cb6db1912b18fb5f3"
+    },
+    "64e0b516-a139-41f7-9f8c-0a4824296412": {
+      "subject": "Just Announced: Poetry Live!",
+      "receivedAt": "2026-09-28T17:01:05.159Z",
+      "sha256": "30e8f852324797431c6412da7e7bc50d2fa514f575ad6df11fd69fcf4dc938ad"
+    },
+    "76a2d125-862b-4b69-a77b-e4f7809d52b6": {
+      "subject": "Police Promotional and Swearing-In Ceremony for cityofmontesereno.org",
+      "receivedAt": "2026-10-01T16:50:11.206Z",
+      "sha256": "3e0fc401808de93da2693e2f37c65c2e3b5712c7f7e1ba94e175c13f9c6e5a34"
+    },
+    "e8ba6efc-e647-4c83-9be2-7a42dd70f390": {
+      "subject": "MISSION: Ukrainian English Storytime",
+      "receivedAt": "2026-09-25T20:01:26.722Z",
+      "sha256": "15c2990ad8963be05141166f8eecd8dac812f066fc50b2adea1a1596998e1b8b"
+    },
+    "0c6bd929-dd63-464c-9b31-0a0768a26f02": {
+      "subject": "First Look: Men's Basketball Hosts Stanford in Exhibition 🏀",
+      "receivedAt": "2026-09-08T22:48:50.793Z",
+      "sha256": "1bec58f2df9bf11b4796aa848be3db3974df22a2c2bcfae43fb276593896b30d"
+    },
+    "7ad6a776-53d2-4ad6-abad-53b294550111": {
+      "subject": "The Annual Glass Pumpkin Patch & Special Fall Classes!",
+      "receivedAt": "2026-09-27T23:45:59.379Z",
+      "sha256": "62080ce51c9cba00417bf6755aad00bf326d5bb96059125fe4c427df0320a8d1"
+    },
+    "6eebda7d-528f-46de-9bdd-eaeca6c1685e": {
+      "subject": "For Public Review and Comment: Public Art Strategy Draft Available Now!",
+      "receivedAt": "2026-10-01T21:58:34.099Z",
+      "sha256": "19a2a578ed776a57f8101b770d62324631df8754847c4655d8d878d4ae3e62bd"
+    },
+    "7eac0dba-9bc0-4fd6-a484-2cffaf3269a9": {
+      "subject": "CSA Resources: Learn about the Community Services Agency (CSA) in Mountain View Workshop",
+      "receivedAt": "2026-10-01T22:01:15.294Z",
+      "sha256": "d3495e321ff3673069627d0c1a6257c25391aba0029444fe0820999e8395abad"
+    },
+    "f8042d02-938f-4129-b9b8-a49287c67122": {
+      "subject": "CSA Resources: Learn about the Community Services Agency (CSA) in Mountain View Workshop",
+      "receivedAt": "2026-10-01T23:54:22.320Z",
+      "sha256": "8e814bc5fa39907ac3038d3166cd33e7c089cc3f5cd65ff4b5df9f7c8dab215c"
+    }
+  },
+  "events": [
+    {
+      "id": "inbound-a125352a5f953ef2",
+      "date": "2026-10-02",
+      "title": "First Friday: New Ballet Season Preview",
+      "rawTitles": [
+        "First Friday: New Ballet Season Preview"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://sjmusart.org/event/first-friday-new-ballet-season-preview",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "f0748acc-b070-4ee5-827e-d56388ae56d4"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "canonical",
+        "id": "0fd141a7f257",
+        "reason": "Scheduled refresh removed the newsletter duplicate; the original verified museum occurrence retains the same primary URL."
+      }
+    },
+    {
+      "id": "inbound-04970cf5ac115ecb",
+      "date": "2026-10-02",
+      "title": "Friday Night at the Art Center: \"Live the moment light\" Opening Celebration",
+      "rawTitles": [
+        "Friday Night at the Art Center: \"Live the moment light\" Opening Celebration"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Palo Alto Art Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-04970cf5ac115ecb"
+      }
+    },
+    {
+      "id": "inbound-e9abd6c7ac747ec3",
+      "date": "2026-10-02",
+      "title": "Hispanic American Heritage Month Movie: La Bamba (1987)",
+      "rawTitles": [
+        "Hispanic American Heritage Month Movie: La Bamba (1987)"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/429d0a7",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "c4d6cfbd-23c7-4719-b76f-4f9e3d9f4c9c"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-e9abd6c7ac747ec3"
+      }
+    },
+    {
+      "id": "inbound-e4259a6f46f8e23d",
+      "date": "2026-10-02",
+      "title": "Organ Concert with Dr. Alison Luedecke",
+      "rawTitles": [
+        "Organ Concert with Dr. Alison Luedecke"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.agosanjose.org/events/alison-luedecke-recital",
+      "proof": {
+        "kind": "organizer-page",
+        "url": "https://www.agosanjose.org/events/alison-luedecke-recital",
+        "verifiedDate": "2026-10-02"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-e4259a6f46f8e23d"
+      }
+    },
+    {
+      "id": "inbound-ac40db4a7a431c04",
+      "date": "2026-10-02",
+      "title": "South First Friday: Thresholds of Memory Exhibition",
+      "rawTitles": [
+        "South First Friday: Thresholds of Memory Exhibition"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://montalvoarts.org/experience/arts/art-architecture-maybe/thresholds/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "d00f16a4-9354-4b99-a50a-f853ca385a27"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-ac40db4a7a431c04"
+      }
+    },
+    {
+      "id": "inbound-7dcf721ba0f4d5d5",
+      "date": "2026-10-02",
+      "title": "Yarn Lab",
+      "rawTitles": [
+        "Yarn Lab"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/429d0a7",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "c4d6cfbd-23c7-4719-b76f-4f9e3d9f4c9c"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-7dcf721ba0f4d5d5"
+      }
+    },
+    {
+      "id": "inbound-80be222851ce227d",
+      "date": "2026-10-03",
+      "title": "Sabaa Tahir discusses Empire",
+      "rawTitles": [
+        "Sabaa Tahir discusses Empire",
+        "Sabaa Tahir discusses Empire"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Books Inc.",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-80be222851ce227d"
+      }
+    },
+    {
+      "id": "inbound-5b4a64eac6f2ea61",
+      "date": "2026-10-03",
+      "title": "Sutter Family Yoga",
+      "rawTitles": [
+        "Sutter Family Yoga"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114703/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "5d065c8e-27bc-42a1-a0b0-1036080b73ae"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-5b4a64eac6f2ea61"
+      }
+    },
+    {
+      "id": "inbound-c9ca068eb7e33370",
+      "date": "2026-10-03",
+      "title": "Teens Teach: Sustainability and Our Changing Climate",
+      "rawTitles": [
+        "Teens Teach: Sustainability and Our Changing Climate"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114469/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "9cad35cf-07f4-4bb1-97d3-aac743e7b698"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-c9ca068eb7e33370"
+      }
+    },
+    {
+      "id": "inbound-a072e91283175ad5",
+      "date": "2026-10-03",
+      "title": "Ukrainian English Storytime",
+      "rawTitles": [
+        "Ukrainian English Storytime"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114606/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "e8ba6efc-e647-4c83-9be2-7a42dd70f390"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-a072e91283175ad5"
+      }
+    },
+    {
+      "id": "inbound-ad3ed0e77ad73af3",
+      "date": "2026-10-04",
+      "title": "Culinary Demo & Lunch: A Tour of Italy Through Pasta",
+      "rawTitles": [
+        "Culinary Demo & Lunch: A Tour of Italy Through Pasta"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Testarossa Winery",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-ad3ed0e77ad73af3"
+      }
+    },
+    {
+      "id": "inbound-0b5a03117fe3a813",
+      "date": "2026-10-05",
+      "title": "U.S. Citizenship Test Preparation Class",
+      "rawTitles": [
+        "U.S. Citizenship Test Preparation Class"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114749/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "84d24a7f-f040-4d68-b7c4-812b3bd34675"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-0b5a03117fe3a813"
+      }
+    },
+    {
+      "id": "inbound-3e402572aa444ab3",
+      "date": "2026-10-06",
+      "title": "Helene Wecker discusses the Gates of Midnight",
+      "rawTitles": [
+        "Helene Wecker discusses The Gates of Midnight",
+        "Helene Wecker discusses The Gates of Midnight"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Books Inc.",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-3e402572aa444ab3"
+      }
+    },
+    {
+      "id": "inbound-82ec9e25ab9c3b7b",
+      "date": "2026-10-06",
+      "title": "Reading with Pets",
+      "rawTitles": [
+        "Reading With Pets"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114320/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "1eda347c-1398-4868-8dbf-75ea97a1eb14"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-82ec9e25ab9c3b7b"
+      }
+    },
+    {
+      "id": "inbound-c9ff1cf1062dd548",
+      "date": "2026-10-07",
+      "title": "Coffee with a Cop",
+      "rawTitles": [
+        "Coffee With a Cop"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.sjpd.org/Home/Components/Calendar/Event/2808/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "13d2d83f-187b-40ed-93f5-efaeedb0bafa"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-c9ff1cf1062dd548"
+      }
+    },
+    {
+      "id": "inbound-2eca69bb765c947e",
+      "date": "2026-10-07",
+      "title": "Middle School Hang Out",
+      "rawTitles": [
+        "Middle School Hang Out at Mission Branch Library"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114709/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "d6016ea3-416a-4b10-9357-1732201b8110"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-2eca69bb765c947e"
+      }
+    },
+    {
+      "id": "inbound-e366cb28867278b8",
+      "date": "2026-10-08",
+      "title": "Landlord/Tenant Counseling with Project Sentinel",
+      "rawTitles": [
+        "Landlord/Tenant Counseling with Project Sentinel"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/108781/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "e1d0969f-c7b7-4c9c-9e0c-70e977929cba"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-e366cb28867278b8"
+      }
+    },
+    {
+      "id": "inbound-da662e465b43a982",
+      "date": "2026-10-09",
+      "title": "PAL Speaker Series: Nature Through a Photographer's Eye with Judy Kramer",
+      "rawTitles": [
+        "PAL Speaker Series: Nature Through a Photographer's Eye w/ Judy Kramer"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.pacificartleague.org/community-events/pacific-art-league-speaker-series-nature-through-a-photographers-eye",
+      "proof": {
+        "kind": "organizer-page",
+        "url": "https://www.pacificartleague.org/community-events/pacific-art-league-speaker-series-nature-through-a-photographers-eye",
+        "verifiedDate": "2026-10-09"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-da662e465b43a982"
+      }
+    },
+    {
+      "id": "inbound-2387a90c0e244c0b",
+      "date": "2026-10-10",
+      "title": "College Tour: Chico State",
+      "rawTitles": [
+        "College Tour: Chico State"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "City of Mountain View — The View Teen Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-2387a90c0e244c0b"
+      }
+    },
+    {
+      "id": "inbound-23f7f1d69c41bc87",
+      "date": "2026-10-10",
+      "title": "Devon Blood Artist & Book Talk",
+      "rawTitles": [
+        "Devon Blood Artist & Book Talk"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.eventbrite.com/e/devon-blood-artist-and-book-talk-tickets-1990018921163",
+      "proof": {
+        "kind": "organizer-page",
+        "url": "https://www.tritonmuseum.org/events",
+        "verifiedDate": "2026-10-10"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-23f7f1d69c41bc87"
+      }
+    },
+    {
+      "id": "inbound-a1ede6aaf9e3c069",
+      "date": "2026-10-14",
+      "title": "Halloween Costume Swap",
+      "rawTitles": [
+        "Halloween Costume Swap",
+        "Halloween Costume Swap"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/12569/19?curm=10&cury=2026",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "ce713309-162d-423e-9aaa-af6cc0b6b02f"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-a1ede6aaf9e3c069"
+      }
+    },
+    {
+      "id": "inbound-d8a1fe4aac6b0815",
+      "date": "2026-10-14",
+      "title": "Quilling Craft Club",
+      "rawTitles": [
+        "Quilling Craft Club"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113797/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "7322985f-8798-497e-8645-082f050ef66c"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-d8a1fe4aac6b0815"
+      }
+    },
+    {
+      "id": "inbound-8702adea75cf95d6",
+      "date": "2026-10-16",
+      "title": "Art + Climate Symposium: Reimagining Our Waterways",
+      "rawTitles": [
+        "Art + Climate Symposium: Reimagining Our Waterways"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://sjmusart.org/reimagining-our-waterways",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "f0748acc-b070-4ee5-827e-d56388ae56d4"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-8702adea75cf95d6"
+      }
+    },
+    {
+      "id": "inbound-98adac7aed110367",
+      "date": "2026-10-16",
+      "title": "CSA Homecoming",
+      "rawTitles": [
+        "CSA Homecoming"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Community Services Agency / City of Mountain View",
+      "reason": "The original primary email contains the dated event, but no event-specific public link. Nearby links describe other programs and must not be reused.",
+      "receipts": [
+        "7eac0dba-9bc0-4fd6-a484-2cffaf3269a9",
+        "f8042d02-938f-4129-b9b8-a49287c67122"
+      ],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-98adac7aed110367"
+      }
+    },
+    {
+      "id": "inbound-0290241c5a552d00",
+      "date": "2026-10-17",
+      "title": "Community Ignition Opening Reception at NUMU",
+      "rawTitles": [
+        "Community Ignition Opening Reception at NUMU"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.numulosgatos.org/events/community-ignition",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "bb7e075a-75e6-47e1-a502-cac171adb9ba"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-0290241c5a552d00"
+      }
+    },
+    {
+      "id": "inbound-b451c136762c2e2c",
+      "date": "2026-10-17",
+      "title": "DIY Alebrije: Día de los Muertos Edition",
+      "rawTitles": [
+        "DIY Alebrije: Dia de los Muertos Edition"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://bagi.org/products/diy-alebrije-dia-de-los-muertos-edition",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "7ad6a776-53d2-4ad6-abad-53b294550111"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-b451c136762c2e2c"
+      }
+    },
+    {
+      "id": "inbound-6c8674148a8cf46a",
+      "date": "2026-10-17",
+      "title": "Halloween Costume Swap",
+      "rawTitles": [
+        "Halloween Costume Swap"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.sclibrary.org/Home/Components/Calendar/Event/114327/7953?curm=10&cury=2026",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "08bbaad6-aeab-4699-b4ec-dacd81d6d7c6"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-6c8674148a8cf46a"
+      }
+    },
+    {
+      "id": "inbound-9f4620514ef08f53",
+      "date": "2026-10-17",
+      "title": "Men's Basketball Exhibition: Santa Clara vs. Stanford",
+      "rawTitles": [
+        "Men's Basketball Exhibition: Santa Clara vs. Stanford"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://scubroncos.scu.edu/events/santa-clara-mens-basketball-vs-stanford-exhibiti-yzr8oa",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "0c6bd929-dd63-464c-9b31-0a0768a26f02"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-9f4620514ef08f53"
+      }
+    },
+    {
+      "id": "inbound-e08a80213578b11b",
+      "date": "2026-10-17",
+      "title": "Reinvent Yourself: A Career Without Borders - Session 1",
+      "rawTitles": [
+        "Reinvent Yourself: A Career Without Borders - Session 1"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114312/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "3f8f7106-5bfb-4b40-a7b9-e4a1fa159f2a"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-e08a80213578b11b"
+      }
+    },
+    {
+      "id": "inbound-8e78c8906fde6559",
+      "date": "2026-10-18",
+      "title": "Fall Family Day",
+      "rawTitles": [
+        "Fall Family Day"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Palo Alto Art Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-8e78c8906fde6559"
+      }
+    },
+    {
+      "id": "inbound-0c658afc20cb2c97",
+      "date": "2026-10-19",
+      "title": "U.S. Citizenship Test Preparation Class",
+      "rawTitles": [
+        "U.S. Citizenship Test Preparation Class"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114751/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "96434ae1-d600-454a-8638-e1f54572edcd"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-0c658afc20cb2c97"
+      }
+    },
+    {
+      "id": "inbound-f256f25ee696b234",
+      "date": "2026-10-22",
+      "title": "Adulting 101: College Paths Panel",
+      "rawTitles": [
+        "Adulting 101: College Paths Panel"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "City of Mountain View — The View Teen Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-f256f25ee696b234"
+      }
+    },
+    {
+      "id": "inbound-2c962f52d96b68ed",
+      "date": "2026-10-22",
+      "title": "FamilySearch at a Glance - Genealogy Toolbox Class",
+      "rawTitles": [
+        "FamilySearch at a Glance - Genealogy Toolbox Class"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113737/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "0116bdcb-399f-4604-a4fb-17ab1bf0e0d8"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-2c962f52d96b68ed"
+      }
+    },
+    {
+      "id": "inbound-439450d4be5938b3",
+      "date": "2026-10-22",
+      "title": "LGMSPD Recognition Luncheon",
+      "rawTitles": [
+        "LGMSPD Recognition Luncheon"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.montesereno.org/civicalerts.aspx?AID=702",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "76a2d125-862b-4b69-a77b-e4f7809d52b6"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-439450d4be5938b3"
+      }
+    },
+    {
+      "id": "inbound-a745ab79b13521b3",
+      "date": "2026-10-24",
+      "title": "Reinvent Yourself: A Career Without Borders - Session 2",
+      "rawTitles": [
+        "Reinvent Yourself: A Career Without Borders - Session 2"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114312/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "3f8f7106-5bfb-4b40-a7b9-e4a1fa159f2a"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-a745ab79b13521b3"
+      }
+    },
+    {
+      "id": "inbound-8052f22116e74539",
+      "date": "2026-10-28",
+      "title": "Spooky StoryWalk",
+      "rawTitles": [
+        "Spooky StoryWalk"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.sunnyvale.ca.gov/Home/Components/Calendar/Event/12565/19?curm=10&cury=2026",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "ce713309-162d-423e-9aaa-af6cc0b6b02f"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-8052f22116e74539"
+      }
+    },
+    {
+      "id": "inbound-c805739341b0e8c8",
+      "date": "2026-10-30",
+      "title": "AfterHours: Witches & Warlocks",
+      "rawTitles": [
+        "AfterHours: Witches & Warlocks"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "City of Mountain View — The View Teen Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-c805739341b0e8c8"
+      }
+    },
+    {
+      "id": "inbound-b262c63b801e6b7a",
+      "date": "2026-11-04",
+      "title": "Artist Reception & Gallery Talk featuring Zoe Caron",
+      "rawTitles": [
+        "Artist Reception & Gallery Talk featuring Zoe Caron"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "City of Mountain View",
+      "reason": "The original primary email contains the dated event, but no event-specific public link. Nearby links describe other programs and must not be reused.",
+      "receipts": [
+        "6eebda7d-528f-46de-9bdd-eaeca6c1685e"
+      ],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-b262c63b801e6b7a"
+      }
+    },
+    {
+      "id": "inbound-e0620392e54f7bbd",
+      "date": "2026-11-06",
+      "title": "Hysterical: Mary Lynn Rajskub",
+      "rawTitles": [
+        "Hysterical: Mary Lynn Rajskub"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Stanford Live",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "active",
+        "id": "inbound-e0620392e54f7bbd"
+      }
+    },
+    {
+      "id": "inbound-084aa0b65897647f",
+      "date": "2026-11-14",
+      "title": "Congressional Gold Medal Dedication and Community Gathering",
+      "rawTitles": [
+        "Congressional Gold Medal Dedication and Community Gathering"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://docs.google.com/forms/d/e/1FAIpQLScMx_iIyKoadtSfZCEThqqEB2owdouilhGyIqTOiqOaSEiezQ/viewform",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "d7f785d6-7afd-4087-a37c-e88e68fe736f"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-084aa0b65897647f"
+      }
+    },
+    {
+      "id": "inbound-9bdb4ac9633050ad",
+      "date": "2026-11-15",
+      "title": "Wreathmaking Workshop (10am session)",
+      "rawTitles": [
+        "Wreathmaking Workshop (10am session)"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://my.montalvoarts.org/3275/3276",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "be00ca9d-2583-4a30-83b2-b287efacb312"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-9bdb4ac9633050ad"
+      }
+    },
+    {
+      "id": "inbound-6c1b7f8b05fca10f",
+      "date": "2026-11-15",
+      "title": "Wreathmaking Workshop (3pm session)",
+      "rawTitles": [
+        "Wreathmaking Workshop (3pm session)"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://my.montalvoarts.org/3275/3277",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "be00ca9d-2583-4a30-83b2-b287efacb312"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-6c1b7f8b05fca10f"
+      }
+    },
+    {
+      "id": "inbound-58a50e6667fd3bdb",
+      "date": "2026-11-21",
+      "title": "Triton Holiday Art Fair",
+      "rawTitles": [
+        "Triton Holiday Art Fair"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://www.eventbrite.com/e/triton-holiday-art-fair-tickets-1998434110220",
+      "proof": {
+        "kind": "organizer-page",
+        "url": "https://www.tritonmuseum.org/events",
+        "verifiedDate": "2026-11-21"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-58a50e6667fd3bdb"
+      }
+    },
+    {
+      "id": "inbound-4be32447b8440dc4",
+      "date": "2026-12-06",
+      "title": "Hélène Grimaud Piano Recital",
+      "rawTitles": [
+        "Hélène Grimaud Piano Recital"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://ticketing.purchase.live.stanford.edu/stanfordlive/website/ChooseSeats.aspx?EventInstanceId=33401&resize=true",
+      "proof": {
+        "kind": "organizer-page",
+        "url": "https://ticketing.purchase.live.stanford.edu/stanfordlive/website/ChooseSeats.aspx?EventInstanceId=33401&resize=true",
+        "verifiedDate": "2026-12-06"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-4be32447b8440dc4"
+      }
+    },
+    {
+      "id": "inbound-c389aaf467e3c51c",
+      "date": "2027-01-14",
+      "title": "Poetry Live! with Franny Choi and Cameron Awkward-Rich",
+      "rawTitles": [
+        "Poetry Live! with Franny Choi and Cameron Awkward-Rich"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://live.stanford.edu/events/26-27season/studio/poetry-live",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "64e0b516-a139-41f7-9f8c-0a4824296412"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "active",
+        "id": "inbound-c389aaf467e3c51c"
+      }
+    },
+    {
+      "id": "inbound-1587f50df9527856",
+      "date": "2027-03-10",
+      "title": "Jaemin Han Cello Recital",
+      "rawTitles": [
+        "Jaemin Han Cello Recital",
+        "Jaemin Han Cello Recital"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Stanford Live",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "not-listed",
+        "reason": "Removed from the active feed by scheduled refresh 3bfb0273; keep the original occurrence evidence and date/title override for a future matching intake."
+      }
+    },
+    {
+      "id": "inbound-b0382cebabec4e42",
+      "date": "2027-03-16",
+      "title": "Buena Vista Orchestra",
+      "rawTitles": [
+        "Buena Vista Orchestra"
+      ],
+      "status": "repaired",
+      "sourceUrl": "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/",
+      "proof": {
+        "kind": "organizer-email",
+        "receipt": "be00ca9d-2583-4a30-83b2-b287efacb312"
+      },
+      "owner": "newsletter-intake-and-event-refresh",
+      "publication": {
+        "state": "not-listed",
+        "reason": "Removed from the active feed by scheduled refresh 3bfb0273; keep the original occurrence evidence and date/title override for a future matching intake."
+      }
+    },
+    {
+      "id": "inbound-8fa96b196b0649cd",
+      "date": "2027-03-19",
+      "title": "The Spinners",
+      "rawTitles": [
+        "The Spinners"
+      ],
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "publisher": "Montalvo Arts Center",
+      "reason": "The original message predates the oldest available receiving API item (2026-09-04); a matching dated primary event page was not verified. A publisher homepage or secondary listing is insufficient.",
+      "receipts": [],
+      "nextAction": "At the next growth sweep, use a newly available organizer publication or source email; preserve the empty URL until the event and occurrence match.",
+      "publication": {
+        "state": "not-listed",
+        "reason": "Removed from the active feed by scheduled refresh 3bfb0273; keep the original occurrence evidence and date/title override for a future matching intake."
+      }
+    }
+  ],
+  "publicationSnapshot": {
+    "commit": "3bfb02738b87f7a1148250a2bb31f8db5e6d9690",
+    "generatedAt": "2026-10-03T02:21:40.525Z"
+  },
+  "additionalCurrentHolds": [
+    {
+      "id": "inbound-8bdd49fdaa796a68",
+      "date": "2026-10-02",
+      "title": "Annual Glass Pumpkin Patch",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-1fb1fb86591a2a03",
+      "date": "2026-10-03",
+      "title": "Downtown Palo Alto Farmers' Market",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-3a632dddfec23ec2",
+      "date": "2026-10-04",
+      "title": "Susd Board Candidate Forum",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-3d8dc0430fe4729f",
+      "date": "2026-10-06",
+      "title": "Adults Create: Faux Taxidermy Insects",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-79fd43bcf86bef01",
+      "date": "2026-10-06",
+      "title": "Mission: Romance UnBook Club",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-ed916ef2c5e63da7",
+      "date": "2026-10-06",
+      "title": "Pasta with a Twist: A Fresh Take on Italian Classics with Joe Sasto",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-99257ceb86c26483",
+      "date": "2026-10-07",
+      "title": "Silent Book Club",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-a73a636abe3f18d5",
+      "date": "2026-10-08",
+      "title": "Adults Create: Sewing by Hand",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-dfffb24dbf2b4b9a",
+      "date": "2026-10-08",
+      "title": "Art in Flight: Reinventing Postmodernism with Carolyn Russo",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-906ef7a67fcebf4c",
+      "date": "2026-10-10",
+      "title": "Bike Safety Information and Repair Workshop",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-ad7c3e77f73ef184",
+      "date": "2026-10-10",
+      "title": "EasyTech Seniors: Spotting AI Scams and Fake Messages",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-780560b96929bcbc",
+      "date": "2026-10-17",
+      "title": "All Gregs Kids Come Home - Staged Reading",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-a66daf59c31aad00",
+      "date": "2026-10-26",
+      "title": "Cefcu Halloween Movie Night",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-684dac5b0da93885",
+      "date": "2026-11-07",
+      "title": "Document Shredding Event",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    },
+    {
+      "id": "inbound-70200f67edf3456e",
+      "date": "2026-11-07",
+      "title": "San Jose Roots Festival",
+      "status": "held",
+      "sourceUrl": null,
+      "owner": "sbt-growth-sweep",
+      "reason": "Missing primary URL on scheduled refresh 3bfb0273; release only after verifying a matching dated primary publication or original organizer email."
+    }
+  ]
+}

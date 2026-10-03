@@ -3,10 +3,19 @@
 // a sparse aggregator record or its previously invented cached copy.
 // Evidence: docs/qa/2026-09-05-newsletter.md, 2026-09-06-newsletter.md, and
 // 2026-09-08-newsletter.md.
-import { REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
+import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs";
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // October 2 URL follow-up: the organizer's own product page confirms the
+  // dated session and says Sold out. Do not promote it as bookable.
+  // Evidence: docs/qa/2026-10-02-growth-followup.md.
+  {
+    id: "inbound-b451c136762c2e2c",
+    date: "2026-10-17",
+    url: "https://bagi.org/products/diy-alebrije-dia-de-los-muertos-edition",
+    facts: { endTime: "3:30 PM", registration: REGISTRATION_FULL },
+  },
   {
     id: "sjpl-6a7bc1324cb69d003e203e28",
     date: "2026-09-06",

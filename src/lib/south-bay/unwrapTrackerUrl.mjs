@@ -50,6 +50,7 @@ const TRACKER_PATTERNS = [
   /\bclick\.icptrack\.com\b/i,                  // iContact
   /\btrk\.klclick\d*\.com\b/i,                  // Klaviyo
   /\bclicks\.aweber\.com\b/i,                   // AWeber
+  /\bapp\.dvcomms\.net\/api\/Communication\/Click\b/i, // JAMsj newsletter click wrapper
   /\bbit\.ly\b/i,                               // Bit.ly shorteners
   /\btinyurl\.com\b/i,                          // TinyURL
   /\blinks?-?\d*\.govdelivery\.com\/CL0\//i,    // GovDelivery / Granicus (city newsletters)

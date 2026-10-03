@@ -9,6 +9,7 @@
 
 import { MiniClaude } from "../miniClaude.js";
 import type { InboundEmail } from "./types.js";
+import { isTrackerUrl } from "../south-bay/unwrapTrackerUrl.mjs";
 
 type AnthropicTextBlock = { type: "text"; text: string };
 type AnthropicImageBlock = {
@@ -185,6 +186,7 @@ const URL_TITLE_STOP = new Set([
   "friday", "game", "games", "heritage", "monday", "night", "saturday",
   "sunday", "thursday", "ticket", "tickets", "tuesday", "wednesday",
   "2026", "2027", "free", "jose", "san", "the", "with", "from", "your",
+  "calendar", "month", "view", "index", "default", "aspx", "html", "civicalerts",
 ]);
 
 const OPAQUE_TICKET_VENDOR = /(?:^|\.)(?:ticketmaster|mlb\.tickets|tickets\.com|milb|gofevo)(?:\.|$)/i;
@@ -206,13 +208,31 @@ export function sourceUrlAlignsWithTitle(title: string, url: string | null): boo
   } catch {
     return true;
   }
+  // Newsletter redirects and numeric calendar ids contain no event title.
+  // Preserve them for the existing downstream unwrapping step; lack of title
+  // words is not evidence that a link belongs to a neighboring event.
+  if (isTrackerUrl(url)) {
+    // GovDelivery and SES embed the destination. Keep checking that slug so
+    // a wrapped link that clearly names another event is still rejected.
+    const embedded = /\/(?:CL0|L0)\/([^/]+)/i.exec(url);
+    if (!embedded) return true;
+    try {
+      const destination = decodeURIComponent(embedded[1]);
+      if (isTrackerUrl(destination)) return true;
+      parsed = new URL(destination);
+    } catch {
+      return true;
+    }
+  }
   if (OPAQUE_TICKET_VENDOR.test(parsed.hostname)) return true;
 
-  const haystack = `${parsed.hostname} ${parsed.pathname} ${parsed.search}`.toLowerCase();
   const titleTokens = significantUrlTitleTokens(title);
   if (titleTokens.length === 0) return true;
 
-  const urlTokens = significantUrlTitleTokens(haystack.replace(/\//g, " "));
+  const slug = parsed.pathname.split("/").filter(Boolean).at(-1) || "";
+  // BiblioCommons ids, UUIDs and other opaque record keys aren't prose slugs.
+  if (/^\d+$/.test(slug) || /^[0-9a-f]{16,}$/i.test(slug) || /^[0-9a-f-]{32,}$/i.test(slug)) return true;
+  const urlTokens = significantUrlTitleTokens(slug);
   if (urlTokens.length === 0) return true;
 
   return titleTokens.some((token) =>

@@ -1,7 +1,7 @@
 # southbaytoday.org
 
 ## Architecture
-- Astro 6 + Vercel + React + Tailwind v4
+- Astro 7 + Vite 8 + Vercel + React + Tailwind v4
 - Standalone app broken out from stanwood.dev
 - Single page (src/pages/index.astro) with tab-based navigation
 - All SBS components in src/components/south-bay/

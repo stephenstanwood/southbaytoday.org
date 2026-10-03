@@ -86,6 +86,30 @@ test("sourceUrlAlignsWithTitle allows opaque MiLB ticket vendors", () => {
   );
 });
 
+test("sourceUrlAlignsWithTitle preserves opaque organizer calendar links", () => {
+  for (const url of [
+    "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114703/",
+    "https://sjpl.bibliocommons.com/events/690e9cb6886bb73600b9c82d",
+    "https://www.library.sunnyvale.ca.gov/events/calendar-month-view",
+    "https://www.montesereno.org/civicalerts.aspx?AID=702",
+  ]) {
+    assert.equal(sourceUrlAlignsWithTitle("Sutter Family Yoga", url), true);
+  }
+});
+
+test("sanitizeExtractedEvent preserves newsletter wrappers for downstream unwrapping", () => {
+  const url = "https://links-2.govdelivery.com/CL0/https%3A%2F%2Fwww.santaclaraca.gov%2FHome%2FComponents%2FCalendar%2FEvent%2F114703%2F/1/example";
+  assert.equal(sanitizeExtractedEvent(ev({ title: "Sutter Family Yoga", sourceUrl: url })).sourceUrl, url);
+});
+
+test("a wrapped URL that clearly names another event is still rejected", () => {
+  const destination = "https://www.eventbrite.com/e/aapi-playwright-festival-sj-japantown-guided-tour-tickets-1989767460036";
+  const sourceUrl = `https://links-2.govdelivery.com/CL0/${encodeURIComponent(destination)}/1/example`;
+  assert.equal(sanitizeExtractedEvent(ev({
+    title: "San Jose Giants Japanese Heritage Game Night", sourceUrl,
+  })).sourceUrl, null);
+});
+
 test("sanitizeExtractedEvent does not mutate its input", () => {
   const original = ev({ sourceUrl: "mailto:hi@x.org" });
   sanitizeExtractedEvent(original);

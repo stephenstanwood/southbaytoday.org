@@ -40,6 +40,13 @@ test("flags Stanford Athletics Eloqua redirects", () => {
   );
 });
 
+test("flags JAMsj newsletter click wrappers before publication", () => {
+  assert.equal(
+    isTrackerUrl("https://app.dvcomms.net/api/Communication/Click?prm=recipient-token&target=campaign-link"),
+    true,
+  );
+});
+
 test("leaves real event pages alone", () => {
   assert.equal(isTrackerUrl("https://levisstadium.com/event/chris-brown-usher-the-randb-tour/"), false);
   assert.equal(isTrackerUrl("https://www.mountainwinery.com/events/detail?event_id=1374384"), false);

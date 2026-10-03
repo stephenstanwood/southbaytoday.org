@@ -13,6 +13,18 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("a sold-out organizer workshop stays unavailable on its verified date", () => {
+  const raw = {
+    id: "inbound-b451c136762c2e2c", date: "2026-10-17", time: "1:00 PM", cost: null,
+    url: "https://bagi.org/products/diy-alebrije-dia-de-los-muertos-edition",
+  };
+  const event = applyVerifiedEventFacts(raw);
+  assert.equal(event.registration, "full");
+  assert.equal(event.endTime, "3:30 PM");
+  assert.equal(event.cost, null);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-17" }).registration, undefined);
+});
+
 test("SJMA's date-only snapshot recovers a free family event without requiring advance booking", async () => {
   const { normalizePlaywrightEvent } = await import("../../../scripts/playwright-scrapers.mjs");
   const raw = {
@@ -145,15 +157,14 @@ test("every LibCal appointment occurrence is gated, not just the corrected one",
     "d610aa488850", "beafbf0a38b7", "b7c1ea7f055a", "22a65f59e0b7",
     "a0b6ae3454e6", "dbf05ae12f85", "c5f16f14946d", "f61d141f208b",
   ];
-  let checked = 0;
+  // These dated occurrences can all age out. Stable LibCal parsing fixtures
+  // in scripts/newsletter/lib.test.mjs cover the appointment rule year-round.
   for (const id of scanning) {
     const event = byId.get(id);
     if (!event) continue; // The occurrence legitimately ages out of the live feed.
-    checked++;
     assert.equal(event.registration, "appointment-only", id);
     assert.equal(requiresAdvanceRegistration(event), true, id);
   }
-  assert.ok(checked > 0, "no Community Preservation Lab occurrence is in the feed at all");
 
   // Mountain View's "Landscape Design for Beginners" opens "Registration is
   // required. Seats and materials are limited." — a seat, not a slot.

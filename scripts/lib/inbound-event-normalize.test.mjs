@@ -85,6 +85,20 @@ test("inbound events prefer an explicit canonical URL", () => {
   }).url, "https://venue.example.com/events/example");
 });
 
+test("recovered newsletter links stay bound to their occurrence and session", () => {
+  const citizenship = (date) => normalizeInboundEventPresentation({
+    title: "U.S. Citizenship Test Preparation Class", startsAt: `${date}T11:00:00-07:00`,
+  }).url;
+  assert.match(citizenship("2026-10-05"), /\/114749\//);
+  assert.match(citizenship("2026-10-19"), /\/114751\//);
+  assert.equal(citizenship("2026-10-12"), "");
+  const wreath = (session) => normalizeInboundEventPresentation({
+    title: `Wreathmaking Workshop (${session} session)`, startsAt: "2026-11-15T10:00:00-08:00",
+  }).url;
+  assert.equal(wreath("10am"), "https://my.montalvoarts.org/3275/3276");
+  assert.equal(wreath("3pm"), "https://my.montalvoarts.org/3275/3277");
+});
+
 test("Santa Clara doors-open and address copies normalize to one 6 PM event", () => {
   const copies = [
     { startsAt: "2026-09-30T17:00:00-07:00", location: "Mission City Center for Performing Arts, 3250 Monroe St., Santa Clara" },
