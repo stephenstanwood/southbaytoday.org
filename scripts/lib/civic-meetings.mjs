@@ -355,10 +355,11 @@ export function relabelIfOtherBodyMatches(others, recordText) {
 // smaller error than attributing an item to a body that never heard it.
 //
 // `candidates` is [{ body, sourceUrl }]; recordText is the record's title +
-// excerpt (empty string is fine — a single candidate is still returned).
-export function pickBodyForRecord(candidates, recordText = "") {
+// agenda text. requireTextMatch disables the single-candidate shortcut when
+// the calendar date alone cannot establish that the record belongs to it.
+export function pickBodyForRecord(candidates, recordText = "", { requireTextMatch = false } = {}) {
   if (candidates.length === 0) return null;
-  if (candidates.length === 1) return candidates[0];
+  if (candidates.length === 1 && !requireTextMatch) return candidates[0];
 
   const haystack = String(recordText).toLowerCase();
   const scored = candidates.map((c) => {
@@ -368,7 +369,7 @@ export function pickBodyForRecord(candidates, recordText = "") {
   });
   scored.sort((a, b) => b.score - a.score);
   if (scored[0].score === 0) return null;
-  if (scored[0].score === scored[1].score) return null;
+  if (scored.length > 1 && scored[0].score === scored[1].score) return null;
   return scored[0];
 }
 
@@ -567,9 +568,11 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
       }))
       .filter((c) => c.body);
 
-    // Name-token match first (cheap, no extra requests), then the agenda-item
-    // match above for records whose text never names the body.
-    const resolved = pickBodyForRecord(candidates, recordText)
+    // One sitting on the date does not prove this record belongs to it.
+    // Cupertino's Oct 1 cybersecurity record was attributed to Parks and
+    // Recreation solely because it was the only calendar entry, even though
+    // its agenda contained no cybersecurity item. Require a name or item match.
+    const resolved = pickBodyForRecord(candidates, recordText, { requireTextMatch: true })
       ?? await pickBodyByLegistarItems(client, candidates, recordText);
     // No council meeting exists on this date, so the "City Council" label is
     // disproven even when neither matcher can say which body it was. A bare

@@ -711,6 +711,32 @@ test("an unavailable calendar still blocks attribution even with the full source
   assert.equal(await verifyLegistarBodyOnDate("sanjose", fixture.record.date, agendaTextForMeeting(fixture.record)), null);
 });
 
+test("a lone calendar body cannot inherit an unrelated agenda record", async (t) => {
+  const sourceUrl = "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5209&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E";
+  const items = [
+    { EventItemAgendaNumber: "1", EventItemTitle: "Subject: Parks and Recreation Department Youth/Teen/Events/Facilties Division" },
+    { EventItemAgendaNumber: "2", EventItemTitle: "Subject: September 3, 2026 Parks and Recreation Commission Meeting Minutes" },
+    { EventItemAgendaNumber: "3", EventItemTitle: "Subject: Upcoming Draft Agenda Items" },
+  ];
+  t.mock.method(globalThis, "fetch", async (url) => jsonResponse(
+    String(url).includes("/EventItems") ? items : [{
+      EventId: 5209, EventBodyName: "Parks and Recreation Commission", EventInSiteURL: sourceUrl,
+    }],
+  ));
+
+  const unrelated = await verifyLegistarBodyOnDate(
+    "cupertino", "2026-10-01",
+    "IN-PERSON PUBLIC PARTICIPATION INFORMATION. Subject: Cupertino Cybersecurity Public Awareness Event.",
+  );
+  assert.deepEqual(unrelated, { body: null, sourceUrl: null, councilMet: false });
+
+  const matched = await verifyLegistarBodyOnDate(
+    "cupertino", "2026-10-01", items.map((item) => item.EventItemTitle).join(". "),
+  );
+  assert.equal(matched.body, "Parks and Recreation Commission");
+  assert.equal(matched.sourceUrl, sourceUrl);
+});
+
 test("sources without a full agenda retain their original excerpt", () => {
   assert.equal(agendaTextForMeeting({ excerpt: "Existing source", fullAgendaText: " " }), "Existing source");
   assert.equal(agendaTextForMeeting({ excerpt: "Existing source" }), "Existing source");

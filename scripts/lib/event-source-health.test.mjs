@@ -15,6 +15,7 @@ import { applyVerifiedSjsuEventOverride } from "./sjsu-event-overrides.mjs";
 import { applyVerifiedMeetupEventOverride } from "./meetup-event-overrides.mjs";
 import {
   hasProspectiveCityHallUpgrade,
+  hasUnsupportedEventMilestone,
   meetingWithinBriefingWindow,
 } from "./city-briefing-integrity.mjs";
 
@@ -104,6 +105,16 @@ test("keeps meetings inside the briefing week and rejects agenda-only tense upgr
   }];
   assert.equal(hasProspectiveCityHallUpgrade("The council weighed a legal case against fire truck makers.", agendaItems), true);
   assert.equal(hasProspectiveCityHallUpgrade("The agenda listed a potential case involving fire truck manufacturers.", agendaItems), false);
+});
+
+test("ordinary performance dates cannot become opening or closing dates in a briefing", () => {
+  const performances = [{ title: "Private Lives" }, { title: "Once Upon a Mattress" }];
+  assert.equal(hasUnsupportedEventMilestone('"Private Lives" closes out at The Pear Theatre Friday.', performances), true);
+  assert.equal(hasUnsupportedEventMilestone("Once Upon a Mattress opens at Saratoga Civic Theater Friday.", performances), true);
+  assert.equal(hasUnsupportedEventMilestone("Private Lives plays Friday and Once Upon a Mattress runs Saturday.", performances), false);
+  assert.equal(hasUnsupportedEventMilestone("Postcard Exhibit Opening Reception opens Friday.", [
+    { title: "Postcard Exhibit Opening Reception" },
+  ]), false);
 });
 
 test("rejects stale and timestamp-less snapshots", () => {

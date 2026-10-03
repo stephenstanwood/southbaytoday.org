@@ -3,6 +3,7 @@ import {
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./civic-meetings.mjs";
+import { agendaTextForMeeting } from "./digest-source.mjs";
 
 /** Keep provenance per upstream record: several bodies can meet on one date. */
 export async function resolveAroundTownMeetingSources(config, meetings, {
@@ -16,7 +17,7 @@ export async function resolveAroundTownMeetingSources(config, meetings, {
       ?? (config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl);
     let source = { body: config.councilBody || meeting.meetingType || "City Council", sourceUrl: fallbackUrl };
     if (config.legistarApi || config.primegov) {
-      const text = `${meeting.title || ""} ${meeting.excerpt || ""}`;
+      const text = `${meeting.title || ""} ${agendaTextForMeeting(meeting)}`;
       let actual;
       try {
         actual = config.legistarApi
@@ -52,4 +53,21 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   if (!NONDISCLOSURE_CLAIM.test(claim)) return false;
   const evidence = `${meeting?.title || ""} ${meeting?.excerpt || ""} ${meeting?.fullAgendaText || ""}`;
   return !NONDISCLOSURE_CLAIM.test(evidence);
+}
+
+const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board)\s+(?:also\s+)?(held|met|heard|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
+const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
+
+/** A past agenda date does not establish that the body heard or acted on an item. */
+export function hasUnsupportedMeetingAction(item, meeting) {
+  const claim = `${item?.headline || ""} ${item?.summary || ""}`;
+  const actions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
+  const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
+  if (!actions.length && !commentsClaimed) return false;
+  if (meeting?.source === "youtube-transcript") return false;
+  const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
+  if (commentsClaimed && !RECEIVED_PUBLIC_COMMENTS.test(evidence)) return true;
+  return actions.some((action) => !new RegExp(
+    `\\b(?:council|commission|committee|board)\\s+(?:also\\s+)?${action}\\b`, "i",
+  ).test(evidence));
 }

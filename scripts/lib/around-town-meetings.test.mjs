@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction } from "./around-town-meetings.mjs";
 
 const config = {
   primegov: "cityofpaloalto.primegov.com",
@@ -68,4 +68,47 @@ test("an explicit source report can support a non-disclosure claim", () => {
     source: "youtube-transcript",
     excerpt: "The city attorney reported no reportable action from the closed session.",
   }), false);
+});
+
+test("a dated agenda does not establish a completed council discussion or hearing", () => {
+  const agenda = {
+    title: "Conference with Legal Counsel",
+    excerpt: "Public Employee Appointment: City Attorney. Public Hearing: 408 residential units at 451-475 El Camino Real.",
+  };
+  for (const summary of [
+    "The council met in closed session to discuss a potential legal matter.",
+    "The City Council held a public hearing on the housing project.",
+    "The council discussed appointing a new city attorney.",
+    "The council also considered appointing a new city attorney.",
+    "Public comments were also heard on the housing proposal.",
+  ]) assert.equal(hasUnsupportedMeetingAction({ summary }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({
+    summary: "The September 22 agenda listed a public hearing on the housing project.",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The council heard the housing proposal." }, {
+    excerpt: "The council heard the housing proposal and continued the hearing.",
+  }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The council approved the housing proposal." }, {
+    excerpt: "The council heard the housing proposal and continued the hearing.",
+  }), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The council discussed the housing proposal." }, {
+    source: "youtube-transcript", excerpt: "Recorded council discussion of the housing proposal.",
+  }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "Public comments were heard on the housing proposal." }, {
+    excerpt: "Public comments were heard on the housing proposal and the hearing was continued.",
+  }), false);
+});
+
+test("Around Town body verification receives the full agenda instead of a clipped preview", async () => {
+  let observedText;
+  await resolveAroundTownMeetingSources(config, [{
+    ...meetings[0], excerpt: "Participation instructions", fullAgendaText: "Cubberley property negotiations",
+  }], {
+    verifyPrimeGov: async (_host, _date, text) => {
+      observedText = text;
+      return { body: null, councilMet: true, sourceUrl: councilUrl };
+    },
+  });
+  assert.match(observedText, /Cubberley property negotiations/);
+  assert.doesNotMatch(observedText, /Participation instructions/);
 });

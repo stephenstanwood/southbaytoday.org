@@ -25,6 +25,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { agendaTextForMeeting } from "./lib/digest-source.mjs";
+import { hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
 import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
@@ -297,7 +298,9 @@ async function summarize(config, meeting, bodyLabel) {
   const isUpcoming = meeting.date > ptDateISO();
   const tenseNote = isUpcoming
     ? `IMPORTANT: this meeting has NOT happened yet — it is scheduled for ${meeting.date} and the source is the published agenda. Write in the future tense ("the ${councilBody} will consider…", "is set to review…"). Never write that the ${councilBody} "met", "approved", "voted", "adopted", or "decided" — nothing has been decided yet.`
-    : `This meeting has already taken place. Past tense is fine, but the source is the agenda, not the minutes — describe what was taken up ("the ${councilBody} considered…"), not how any vote turned out.`;
+    : isYouTubeTranscript
+      ? `The source is a partial meeting transcript. Describe only discussions or actions explicitly captured in it.`
+      : `The meeting date is in the past, but an agenda alone does not confirm that the meeting occurred or an item was heard. Describe the published agenda ("the agenda listed…"), not completed discussions, public comments, or votes.`;
   const prompt = `Summarize this ${config.cityName}, CA ${councilBody} meeting for residents in plain English.
 
 Meeting date: ${meeting.date}
@@ -307,7 +310,7 @@ ${tenseNote}
 ${transcriptNote}
 
 Return JSON with:
-- "summary": 2-3 sentence plain-English overview of what was discussed (no jargon)
+- "summary": 2-3 sentence plain-English overview of the supplied agenda or transcript (no jargon)
 - "keyTopics": array of up to 5 short bullet strings (specific topics, not generic). Return only as many as the source actually supports — one distinct agenda item per bullet. A thin agenda gets 1-2 bullets; never restate the same item in different words to reach a count.
 
 Be concrete. Write for someone who wants to know what's happening in their city.
@@ -316,6 +319,7 @@ Do not include meta-commentary about incomplete or truncated source data (e.g. "
 Agenda excerpts are often cut off mid-sentence ("...for FY 2026-", "provide direction on the"). Summarize only the part you can actually read; never guess how a truncated sentence ends or invent the missing object. Saratoga's June 3 2026 digest turned the fragment "provide direction on the" into a bullet about "implementing the chosen service level" — nothing in the source said that.
 
 The source is an agenda, not minutes: it lists what is before the body, not the order things happened. Never narrate a sequence of events ("once the Council settled on X, it moved to Y") — the agenda cannot support it.
+Participation instructions and public-comment slots do not establish that anyone spoke. Never report that comments "were heard" or that the body discussed its attendance procedures based only on those notices.
 
 Match the source's wording on sensitive framing. If the agenda says "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the source explicitly uses that word.
 
@@ -571,6 +575,9 @@ async function main() {
       }
 
       const parsed = await summarize(config, meeting, bodyLabel);
+      if (hasUnsupportedMeetingAction(parsed, meeting)) {
+        throw new Error("Completed discussion or public-comment claim is not supported by the meeting source");
+      }
 
       const meetingDateFormatted = new Date(meeting.date + "T12:00:00").toLocaleDateString("en-US", {
         year: "numeric", month: "long", day: "numeric",

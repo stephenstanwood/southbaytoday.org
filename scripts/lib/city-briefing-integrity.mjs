@@ -19,3 +19,21 @@ export function hasProspectiveCityHallUpgrade(text, aroundItems = []) {
 
   return true;
 }
+
+const MILESTONE_VERB = /^\s+(?:(?:officially|finally)\s+)?(?:opens?|opening|closes?|closing|ends?|ending|debuts?|premieres?|wraps?\s+up)\b/i;
+const NAMED_MILESTONE = /\b(?:opening|closing|final|premiere|debut)\b/i;
+
+function normalizeEventWords(text) {
+  return String(text || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+/** An occurrence date is not evidence of a production's opening or closing. */
+export function hasUnsupportedEventMilestone(text, events = []) {
+  const words = normalizeEventWords(text);
+  return events.some((event) => {
+    const title = normalizeEventWords(event?.title);
+    if (!title || NAMED_MILESTONE.test(event.title)) return false;
+    const index = words.indexOf(title);
+    return index >= 0 && MILESTONE_VERB.test(words.slice(index + title.length));
+  });
+}

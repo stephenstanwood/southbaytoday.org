@@ -18,7 +18,7 @@ import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim } from "./lib/around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
 import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
@@ -187,6 +187,8 @@ DO NOT ASSERT THE BODY UNLESS THE AGENDA SUPPORTS IT: each "Body" label belongs 
 NEVER REPORT THE BROWN ACT ATTENDANCE NOTICE: agendas for scoping meetings, study sessions, and joint hearings carry a boilerplate legal notice that members of other bodies "may be in attendance" — it exists to avoid an unnoticed serial meeting, and it says nothing about who actually showed up. Never write "with City Council / Planning Commission / Commission members possibly (or may be) in attendance". It is a disclaimer, not an event detail. Omit it.
 
 DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: today is ${todayPT()} (Pacific). Any meeting dated ${todayPT()} or later has NOT happened yet — its agenda is a plan, not a record. Never write that the body "held", "met", "approved", "adopted", "discussed", or "voted" for such a meeting; write in the future tense ("is set to hold a study session", "will consider", "is scheduled to review") so the headline and summary agree. Same rule when an earlier-dated agenda reads as forward-looking ("proposed", "to consider", "study session"): don't upgrade it to an outcome.
+
+PAST AGENDAS ARE STILL AGENDAS: a date in the past does not prove an item was heard or a meeting took place. Unless the supplied source explicitly reports the discussion or action, write "the September 22 agenda listed…" or "a hearing was scheduled for…", never "the council held", "met", "heard", "discussed", or "weighed". Do not infer that approval is still pending.
 
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
@@ -373,6 +375,10 @@ async function gatherMeetingItems(meetingType) {
           console.warn(`  ⚠️  ${config.cityName}: dropped unsupported claim about a meeting disclosure`);
           continue;
         }
+        if (hasUnsupportedMeetingAction(item, sourceMeeting)) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped a completed-action claim supported only by an agenda`);
+          continue;
+        }
         const sourceUrl = source.sourceUrl;
         items.push({
           id: makeId(config.cityId, item.date, item.headline),
@@ -424,7 +430,7 @@ async function gatherPermitItems() {
       // on 2026-08-10 San José had three Villa Homes prefab ADUs at 3180 Rubino
       // Dr (#121/#123/#125), #125 fell outside the slice, and the item shipped
       // as "Two prefab ADUs permitted at same Rubino Drive complex".
-      allNotable.push({ config, permits });
+      allNotable.push({ config, permits, sourceUrl: cityData.sourceUrl || config.permitUrl || config.agendaUrl });
     }
   }
 
@@ -446,7 +452,7 @@ async function gatherPermitItems() {
 
   // Batch all notable permits into one Claude call per city
   const items = [];
-  for (const { config, permits } of allNotable) {
+  for (const { config, permits, sourceUrl } of allNotable) {
     const permitText = permits.map((p) =>
       // `subtype` carries the permit's use type ("School/Daycare",
       // "Medical/Dental Clinic", "Commercial/Industrial"). It used to be
@@ -455,7 +461,7 @@ async function gatherPermitItems() {
       // guessed at the use from the unit count ("No unit count is listed,
       // suggesting a non-residential build") — a guess the source could have
       // answered outright. Pass it through.
-      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} ($${(p.valuation || 0).toLocaleString()}, ${p.units || 0} units, issued ${p.issueDate})`
+      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} (declared permit valuation $${(p.valuation || 0).toLocaleString()}, source-reported dwelling units ${p.units || 0}, issued ${p.issueDate})`
     ).join("\n");
 
     // Counting is the one thing the model reliably gets wrong, so do it here
@@ -489,6 +495,8 @@ ${permitText}${countsText}${aduCountsText}
 
 IMPORTANT — a permit being issued does not establish whether construction has started. Never assert either that work has begun or that it has not yet begun. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches". Use language like "permitted", "receives building permit", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
+VALUATION: the dollar figure is the declared permit valuation, not a paid construction cost, permit fee, investment, or city expenditure. Label it "permit valuation" when quoting it. The source-reported dwelling-unit field can differ from the building description (a 5plex can report 1); do not treat it as a verified count of homes.
+
 ADDRESSES: an address given as "<street> (no street number assigned yet)" is a new lot without a house number. Write it as "on <street>" — never print a leading "0" as if it were a street number.
 
 USE TYPE OVER INFERENCE: when a permit line carries "[use type: …]", say what the building is for using that use type. Never infer the use from the unit count — "0 units" is what the field says for every non-residential permit, so do not write "no unit count is listed" or reason that a missing unit count "suggests" anything. If there is no use type, describe only what the description states.
@@ -516,7 +524,7 @@ Return [] if nothing is genuinely noteworthy.`, 512);
           date: item.date,
           headline: expandStreetAbbreviations(item.headline),
           summary: expandStreetAbbreviations(item.summary),
-          sourceUrl: config.permitUrl || config.agendaUrl,
+          sourceUrl,
           source: "permit",
         });
         console.log(`  ✅ ${config.cityName}: ${item.headline}`);

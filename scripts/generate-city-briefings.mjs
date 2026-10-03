@@ -19,6 +19,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { callClaude as callClaudeApi } from "./lib/claude.mjs";
 import {
   hasProspectiveCityHallUpgrade,
+  hasUnsupportedEventMilestone,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
 import {
@@ -173,6 +174,7 @@ Write ONE sentence (20-30 words) summarizing what's most interesting or notewort
 
 Important rules:
 - Only reference facts that are explicitly present in the data below. Never invent or infer specifics like company names, dollar amounts, project types, ridership counts, square footage, or unit counts that aren't literally written in the data. If a number or proper noun isn't in the data, leave it out.
+- An event's occurrence date is not its opening or closing date. Never say a play, exhibit, or concert series "opens", "closes", "ends", or "debuts" unless the supplied event title explicitly identifies an opening, closing, premiere, or final performance. Otherwise say it "plays", "runs", or "is on" that day.
 - Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another. When two events share a clause, give each its own day ("Coffee with the Mayor Friday and a town hall Saturday") — a single trailing day word ("Coffee with the Mayor and a town hall Saturday") wrongly puts both on that day.
 - Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
@@ -183,6 +185,7 @@ Important rules:
 - A hearing alone does not establish whether approval is still pending. Do not add "approvals pending" or an outcome unless the data explicitly states it.
 - A past agenda date does not prove a meeting occurred or an item was heard. If the source says "scheduled to," "set to," "expected to," or "council to hear/consider," preserve that uncertainty even after the date; never convert it to "heard," "considered," or another completed action.
 - Match tense to the date. City hall items show their date in parentheses; today is ${new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}. Items dated in the past must use past tense. Reserve present or future tense for items whose date is today or later.
+- For city hall items dated before this briefing week, state the calendar date (such as "September 22") rather than a bare weekday. Do not imply that an old hearing happened this week or that a project remains under consideration unless the source confirms its current status.
 - The text after "at" in an event line is a VENUE, never an organizer, host, sponsor, or performer. Meetup venue names routinely carry a landmark or trailhead label ("PG&E @ Rancho San Antonio Park", "Our Hub - A Bay Area Art & Wellness Community"). Never write that a venue "leads," "hosts," "sponsors," "presents," or "runs" the event unless the data says so in words — describe the event itself ("a 4.3-mile group hike at Rancho San Antonio") and leave the organizer out when you don't have one.
 - For Meetup listings, distinguish the group's meeting point from the destination named in the title. A meetup at a store for a walk to a festival does not mean the festival is held at that store.
 - Never write "today", "tonight", "tomorrow", or "this evening". This briefing is cached and read for days after it is written, so a relative day silently points at the wrong date. Name the day ("Friday", "Saturday") using the day labels in the data.
@@ -212,6 +215,9 @@ Reply with ONLY the sentence, no quotes or preamble.`;
     }
     if (hasProspectiveCityHallUpgrade(text, aroundItems)) {
       found.push("it upgraded an agenda-only city-hall item into a completed action");
+    }
+    if (hasUnsupportedEventMilestone(text, events)) {
+      found.push("it invented an opening or closing date from an ordinary event occurrence");
     }
     return found;
   };
@@ -329,7 +335,7 @@ async function main() {
         highlights.push({
           type: "cityhall",
           title: cityAroundItems[0].headline,
-          when: null,
+          when: formatEventDate(cityAroundItems[0].date),
           venue: null,
           category: "government",
           url: cityAroundItems[0].sourceUrl || null,
