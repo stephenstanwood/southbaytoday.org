@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-02T04:45:52.936Z"
+    "auditedAt": "2026-10-03T02:21:41.653Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1946,
+    "total": 1928,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -33,19 +33,33 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 271,
+    "total": 296,
     "totals": {
       "hard": 0,
-      "soft": 3,
+      "soft": 5,
       "info": 0
     },
     "byReason": {
+      "virtual-not-flagged": 3,
       "meeting-title": 1,
-      "virtual-not-flagged": 1,
       "unknown-slug": 1
     },
     "hard": [],
     "soft": [
+      {
+        "id": "inbound_mure8vc4_m7wqfj",
+        "title": "Saratoga City Council Candidate Forum",
+        "city": "saratoga",
+        "date": "2026-10-08T19:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
       {
         "id": "inbound_mtw80j34_zh7y6t",
         "title": "Los Gatos Town Council Candidate Forum",
@@ -57,6 +71,20 @@
             "severity": "soft",
             "reason": "meeting-title",
             "detail": "title matches meeting pattern: /\\btown\\s+council\\b/i"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mure8zpw_vzk6dy",
+        "title": "City Council Candidate Forum (Virtual)",
+        "city": "saratoga",
+        "date": "2026-10-08T19:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
           }
         ]
       },

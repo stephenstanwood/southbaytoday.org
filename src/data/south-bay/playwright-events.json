@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-02T16:09:17.693Z",
+    "generatedAt": "2026-10-03T02:18:18.956Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 567,
+    "eventCount": 568,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (120)",
@@ -11,7 +11,7 @@
       "San Jose Jazz (19)",
       "Linden Tree Books (15)",
       "History San Jose (6)",
-      "Montalvo Arts Center (5)",
+      "Montalvo Arts Center (6)",
       "City Lights Theater (6)",
       "ICA San José (3)",
       "Mountain Winery (11)",
@@ -96,7 +96,7 @@
         "label": "SJ Museum of Art",
         "status": "error",
         "count": 7,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://sjmusart.org/calendar\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "SJMA calendar returned HTTP 403",
         "sources": [
           "San Jose Museum of Art"
         ],
@@ -116,9 +116,9 @@
       {
         "id": "hicklebee-s",
         "label": "Hicklebee's",
-        "status": "error",
+        "status": "empty",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": null,
         "sources": []
       },
       {
@@ -135,7 +135,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 6,
+        "count": 7,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -350,28 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "a9f8cc903609",
-      "title": "Pages and Paws",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "time": "3:30 PM",
-      "endTime": "4:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "Therapy reading dogs provide a comforting presence for children as they navigate the exciting realm of books. This initiative aims to build confidence, enhance literacy skills and instill a lifelong love for reading. Therapy dogs plan to visit on the first Friday of each month, but review our calendar to confirm dates. Limited registration is intentional to allow readers rewarding one-on-one reading time with a therapy dog. More details on your confirmed time-slot, and instruction to follow once registered. Ages 8-12.",
-      "sourceAudiences": [
-        "Tweens",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/16357820",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "3f3def6b1c96",
       "title": "Sew Sew Saturday",
@@ -1687,6 +1665,23 @@
       "url": "https://mountainview.libcal.com/event/17722185",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "6aa591175159",
+      "title": "A Taste of History: Remembering the Wine History of Mountain View",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "2:00 PM",
+      "endTime": "3:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "food",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Before Silicon Valley, before the apricot orchards, this region was wine country. From the first vines planted at Mission Santa Clara in 1798 to more than 100 wineries operating across Santa Clara County by the 1890s, the South Bay was once one of California's most productive wine regions. Join us for a presentation by fourth-generation Mountain View resident and museum professional Julie Bly DeVere. She will present a lively look at the winemakers, vineyards, and forgotten history that shaped our local landscape long before the tech industry arrived.",
+      "url": "https://mountainview.libcal.com/event/16841787",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "2e6107fd6692",
@@ -6692,6 +6687,23 @@
       "kidFriendly": false
     },
     {
+      "id": "deef4e2fa321",
+      "title": "Events Calendar",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
       "id": "710e83571a08",
       "title": "Alphabet Rockers (Grade K-8)",
       "date": "2026-10-06",
@@ -6896,10 +6908,10 @@
       "kidFriendly": false
     },
     {
-      "id": "9d0e2d8ae93c",
+      "id": "102051340b70",
       "title": "Oscar Lopez: Without Them is Not Us",
-      "date": "2024-09-14",
-      "displayDate": "Sat, Sep 14",
+      "date": "2026-10-02",
+      "displayDate": "Fri, Oct 2",
       "time": null,
       "endTime": null,
       "venue": "ICA San José",
@@ -7723,10 +7735,10 @@
       }
     },
     {
-      "id": "431ec7465cdd",
+      "id": "1a3cf4983ce4",
       "title": "Glass Pumpkin Festival",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-03",
+      "displayDate": "Sat, Oct 3",
       "time": "3 pm",
       "endTime": null,
       "venue": "Santana Row",
@@ -8856,7 +8868,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8873,7 +8885,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8890,7 +8902,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8907,7 +8919,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
