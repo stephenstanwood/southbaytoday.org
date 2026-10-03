@@ -10,6 +10,7 @@ import {
   escribeRowDateISO,
   extractEscribeAgendaItems,
   extractEscribeAgendaTitles,
+  fetchCivicEngagePastMeeting,
   isSubstantiveAgendaTitle,
   parseCivicEngageAgendaLinks,
   substantiveAgendaTitles,
@@ -496,6 +497,72 @@ test("parseCivicEngageAgendaLinks dedupes the title and download links to one en
 test("parseCivicEngageAgendaLinks survives an empty or unrecognized page", () => {
   assert.deepEqual(parseCivicEngageAgendaLinks("", { baseUrl: "https://example.gov" }), []);
   assert.deepEqual(parseCivicEngageAgendaLinks(null, { baseUrl: "https://example.gov" }), []);
+});
+
+const saratogaFixtureRoot = new URL("./fixtures/saratoga-2026-10-03/", import.meta.url);
+const saratogaOctoberIndex = readFileSync(new URL("index.html", saratogaFixtureRoot), "utf8");
+const saratogaSource = {
+  baseUrl: "https://www.saratoga.ca.us",
+  calendarId: "City-Council-13",
+  today: "2026-10-03",
+};
+
+test("Saratoga's translated download aliases cannot displace the latest usable agenda", () => {
+  const links = parseCivicEngageAgendaLinks(saratogaOctoberIndex, saratogaSource);
+  assert.deepEqual(links.slice(0, 3).map(({ url }) => url.split("/").at(-1)), [
+    "_09302026-1481", "_09192026-1477", "_09162026-1475",
+  ]);
+  assert.ok(links.every(({ date }) => date <= saratogaSource.today));
+  assert.ok(!links.some(({ url }) => /-(1478|1476|1470)$/.test(url)));
+});
+
+test("translation exclusion applies to every alias, regardless of link order", () => {
+  const translated = "/AgendaCenter/ViewFile/Agenda/_09192026-1478";
+  const aliases = [
+    `<a href="${translated}">City Council Special Meeting Chinese Agenda</a>`,
+    `<a href="https://www.saratoga.ca.us${translated}">Agenda</a>`,
+  ];
+  for (const html of [aliases.join(""), [...aliases].reverse().join("")]) {
+    assert.deepEqual(parseCivicEngageAgendaLinks(html, saratogaSource), []);
+  }
+  assert.deepEqual(parseCivicEngageAgendaLinks(
+    `<a aria-label="City Council Special Meeting Chinese Agenda. Agenda" href="${translated}">Agenda</a>`,
+    saratogaSource,
+  ), []);
+});
+
+function stubSaratogaArchive(t) {
+  const requested = [];
+  t.mock.method(globalThis, "fetch", async (url) => {
+    requested.push(String(url));
+    if (String(url).endsWith("/AgendaCenter/City-Council-13")) {
+      return new Response(saratogaOctoberIndex);
+    }
+    const filename = `${String(url).split("/").at(-1)}.pdf`;
+    // Only the three official English PDFs are fixtures. Downloading a
+    // translation is a failure, even if the PDF parser would reject it later.
+    return new Response(readFileSync(new URL(filename, saratogaFixtureRoot)));
+  });
+  return requested;
+}
+
+test("the real Saratoga archive reaches September 16 within the existing three-document limit", async (t) => {
+  const requested = stubSaratogaArchive(t);
+  const record = await fetchCivicEngagePastMeeting(saratogaSource);
+  assert.equal(record?.date, "2026-09-16");
+  assert.equal(record.meetingType, "City Council");
+  assert.equal(record.sourceUrl, `${saratogaSource.baseUrl}/AgendaCenter/ViewFile/Agenda/_09162026-1475`);
+  assert.match(record.excerpt, /20517 Carniel Avenue/);
+  assert.match(record.excerpt, /Law Enforcement Discussion/);
+  assert.deepEqual(requested.slice(1).map(url => url.split("/").at(-1)), [
+    "_09302026-1481", "_09192026-1477", "_09162026-1475",
+  ]);
+});
+
+test("Saratoga's newer single-topic town halls still fail the existing content floor", async (t) => {
+  const requested = stubSaratogaArchive(t);
+  assert.equal(await fetchCivicEngagePastMeeting({ ...saratogaSource, maxCandidates: 2 }), null);
+  assert.equal(requested.length, 3, "one index plus two agendas; keep the fetch budget bounded");
 });
 
 // ── pickBodyByItemTitles ────────────────────────────────────────────────────

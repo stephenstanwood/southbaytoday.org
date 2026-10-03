@@ -1113,19 +1113,26 @@ const TRANSLATED_AGENDA =
  */
 export function parseCivicEngageAgendaLinks(html, { baseUrl, today = ptDateISO() } = {}) {
   const seen = new Set();
+  const translatedUrls = new Set();
   const candidates = [];
   for (const match of String(html ?? "").matchAll(CIVICENGAGE_AGENDA_LINK)) {
     const [, href, month, day, year, rawLabel] = match;
     const date = `${year}-${month}-${day}`;
     if (date > today) continue;
     const label = rawLabel.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-    if (TRANSLATED_AGENDA.test(label)) continue;
     const url = href.startsWith("http") ? href : `${baseUrl}${href}`;
+    const accessibleLabel = match[0].match(/\baria-label="([^"]*)"/i)?.[1] ?? "";
+    // The same PDF has both a descriptive title and a generic "Agenda"
+    // download link. Exclude the document after reading ALL its labels, so
+    // either link order stays safe and translations cannot use candidate slots.
+    if (TRANSLATED_AGENDA.test(`${label} ${accessibleLabel}`)) translatedUrls.add(url);
     if (seen.has(url)) continue;
     seen.add(url);
     candidates.push({ url, date, label });
   }
-  return candidates.sort((a, b) => b.date.localeCompare(a.date));
+  return candidates
+    .filter(({ url }) => !translatedUrls.has(url))
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
 
 /** Most recent past council meeting published on a CivicEngage agenda center. */
