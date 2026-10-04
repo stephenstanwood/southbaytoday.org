@@ -1,200 +1,97 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-03T04:45:58.250Z",
+    "generatedAt": "2026-10-04T04:45:35.988Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 11
+    "sourceCount": 7
   },
   "summary": {
-    "threadsMined": 11,
-    "placesExtracted": 10,
-    "placesMatched": 6,
+    "threadsMined": 7,
+    "placesExtracted": 4,
+    "placesMatched": 0,
     "placeGaps": 4,
-    "eventsExtracted": 4,
-    "eventsMatched": 0,
-    "eventGaps": 4,
+    "eventsExtracted": 2,
+    "eventsMatched": 1,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Santo Market",
+      "name": "Fremont Peak Observatory",
+      "city": "",
+      "kind": "venue",
+      "context": "public stargazing programs",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
+        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
+        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
+        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
+        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
+      ]
+    },
+    {
+      "name": "Illusive Games",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "local game store hosting Commander Night, Magic The Gathering",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
+        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
+        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
+        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
+        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
+      ]
+    },
+    {
+      "name": "Hokkaido Buffet",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "known for shoyu and spicy poke",
+      "context": "possibly closed permanently, located on Stevens Creek",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
-        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
-        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
-        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
-        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
+        "https://www.reddit.com/r/SanJose/comments/1wwx9pp/i_just_landed_a_job_in_milpitas_help_me_figure/",
+        "https://www.reddit.com/r/SanJose/comments/1wwfur6/did_hokkaido_buffet_close/"
       ]
     },
     {
-      "name": "Kirk Center",
-      "city": "San Jose",
+      "name": "KLA",
+      "city": "Milpitas",
       "kind": "other",
-      "context": "picked up grabber and trash bags near Foxworthy and Meridian",
+      "context": "user accepted a job here",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ]
-    },
-    {
-      "name": "Fuse Service Inc.",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "electrician quoted $1K for switch box work",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ]
-    },
-    {
-      "name": "SJSU Spartan Pantry",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "food assistance program at SJSU",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
+        "https://www.reddit.com/r/SanJose/comments/1wwx9pp/i_just_landed_a_job_in_milpitas_help_me_figure/",
+        "https://www.reddit.com/r/SanJose/comments/1wwfur6/did_hokkaido_buffet_close/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "SOFA Night Market (First Fridays)",
-      "when": "October 2nd, 5-10pm",
-      "city": "San Jose",
-      "context": "last night market of the season on First Street",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
-        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
-        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
-        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
-        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
-      ]
-    },
-    {
-      "name": "Concert at Shoreline Amphitheater",
-      "when": "",
-      "city": "",
-      "context": "upcoming concert event mentioned in post title",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ]
-    },
-    {
-      "name": "Fun at the Tank",
+      "name": "Commander Night",
       "when": "",
       "city": "San Jose",
-      "context": "event happening at 'the tank' landmark",
+      "context": "Magic The Gathering event at Illusive Games",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ]
-    },
-    {
-      "name": "Spartan Pantry Donation Drop-off",
-      "when": "Wednesday 11/4/26",
-      "city": "San Jose",
-      "context": "donation drive at SJ City Hall",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
+        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
+        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
+        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
+        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
+        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
       ]
     }
   ],
-  "placeMatches": [
+  "placeMatches": [],
+  "eventMatches": [
     {
-      "name": "Children's Discovery Museum",
+      "name": "Phantom of the Opera",
+      "when": "next week",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "starting point of bike ride downtown",
+      "context": "musical the poster plans to attend",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
-        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
-        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
-        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
-        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
+        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
+        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
+        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
+        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
+        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
       ],
-      "matchedName": "Children's Discovery Museum"
-    },
-    {
-      "name": "Guadalupe River Trail",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "trail reported much cleaner now",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
-        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
-        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
-        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
-        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
-      ],
-      "matchedName": "Guadalupe River Trail"
-    },
-    {
-      "name": "Bay Trail",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "end point of bike ride",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwc24l/pizza_guy_on_senter_rd_hellyer_rd_makes_an/",
-        "https://www.reddit.com/r/SanJose/comments/1wvz1vu/last_first_fridays_of_the_seasontonight_from_510pm/",
-        "https://www.reddit.com/r/SanJose/comments/1ww0xf5/san_jose_diridon_station_set_to_become/",
-        "https://www.reddit.com/r/SanJose/comments/1ww9w9y/the_grt_is_so_clean_now/",
-        "https://www.reddit.com/r/SanJose/comments/1ww8vgw/santo_market_poke_similar_recipes/"
-      ],
-      "matchedName": "Sunnyvale Bay Trail"
-    },
-    {
-      "name": "Sacred Heart Community Service",
-      "city": "San Jose",
-      "kind": "service",
-      "context": "donation location near 1st and Alma",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ],
-      "matchedName": "Sacred Heart Community Service"
-    },
-    {
-      "name": "Shoreline Amphitheatre",
-      "city": "",
-      "kind": "venue",
-      "context": "concert venue mentioned in event post",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvvdzd/i_was_feeling_sad_about_civics_lately_so_i_made/",
-        "https://www.reddit.com/r/SanJose/comments/1wvn1qw/concert_at_shoreline_amphitheater/",
-        "https://www.reddit.com/r/SanJose/comments/1wvllvl/where_can_i_buy_a_vegan_birthday_cake_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wwb0bh/who_is_your_goto_for_electrical_work/",
-        "https://www.reddit.com/r/SanJose/comments/1ww4yn0/some_kind_of_fun_at_the_tank/"
-      ],
-      "matchedName": "Shoreline Amphitheatre"
-    },
-    {
-      "name": "San Jose City Hall",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "drop off location for food donations",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wvxqg4/sjsu_spartan_pantry_drop_off_at_sj_city_hall_wed/"
-      ],
-      "matchedName": "City Hall Cafe"
+      "matchedName": "The Phantom of the Opera - Closed Caption Performance"
     }
-  ],
-  "eventMatches": []
+  ]
 }

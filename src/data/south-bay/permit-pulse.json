@@ -1,41 +1,29 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-03T04:38:20.160Z",
+      "generatedAt": "2026-10-04T04:37:55.180Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 25 – Oct 2",
+      "dateRange": "Sep 26 – Oct 3",
       "stats": {
-        "total": 430,
+        "total": 406,
         "notable": 18,
-        "newUnits": 6,
-        "totalValuation": 12489817
+        "newUnits": 7,
+        "totalValuation": 12002492
       },
       "permits": [
         {
-          "id": "2026-135758-MF",
-          "address": "2820 Florence Av",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "5plex (Plan a)",
-          "valuation": 1381899,
-          "units": 1,
-          "issueDate": "2026-09-25",
-          "subtype": "Condo"
-        },
-        {
-          "id": "2026-125207-RS",
-          "address": "3047 Betsy Wy #2",
+          "id": "2025-139243-RS",
+          "address": "1413 Gordy Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 134227,
+          "description": "ADU - Detached",
+          "valuation": 175920,
           "units": 1,
-          "issueDate": "2026-09-25",
+          "issueDate": "2026-10-01",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -51,6 +39,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-109823-RS",
+          "address": "1942 Loyola Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Pdox New Attached ADU",
+          "valuation": 83210,
+          "units": 1,
+          "issueDate": "2026-10-01",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-131702-RS",
           "address": "3365 Casalegno Ct",
           "category": "residential-new",
@@ -63,6 +63,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2025-142516-RS",
+          "address": "2557 Cottle Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 65970,
+          "units": 1,
+          "issueDate": "2026-10-01",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-121812-RS",
           "address": "2523 Sleepy Hollow Ln #2",
           "category": "residential-new",
@@ -71,7 +83,7 @@
           "description": "Garage Conversion to ADU",
           "valuation": 58757,
           "units": 1,
-          "issueDate": "2026-09-28",
+          "issueDate": "2026-10-01",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -121,30 +133,18 @@
           "units": 0,
           "issueDate": "2026-09-28",
           "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-139611-CI",
-          "address": "2855 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Sleep Number #2270",
-          "valuation": 580000,
-          "units": 0,
-          "issueDate": "2026-09-29",
-          "subtype": "Retail"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-03T04:38:22.372Z",
+      "generatedAt": "2026-10-04T04:37:57.763Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 25 – Oct 2",
+      "dateRange": "Sep 26 – Oct 3",
       "stats": {
-        "total": 95,
+        "total": 111,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0

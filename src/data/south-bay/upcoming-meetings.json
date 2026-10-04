@@ -1,34 +1,42 @@
 {
-  "generatedAt": "2026-10-03T04:38:33.145Z",
+  "generatedAt": "2026-10-04T04:38:09.803Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
-      "startTime": "09:30",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
+      "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8083&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8083,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8097&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8097,
       "agendaItems": [
         {
-          "title": "Study Session - Infrastructure Financing Tools for Economic Development",
-          "sequence": 18
+          "title": "Approval of Free Use of the Janet Gray Hayes Rotunda for the Santa Clara County Association of Realtors 2026 Fall General Membership Meeting Sponsored by Council District 9 as a City Council Sponsored Special Event to Expend City Funds and Accept Donations of Materials and Services for the Event.",
+          "sequence": 45
         },
         {
-          "title": "Technical Presentation of Infrastructure Financing Tools",
-          "sequence": 26
+          "title": "Dissolution of the Bay Area Regional Interoperable Communications Systems Authority.",
+          "sequence": 41
         },
         {
-          "title": "Questions and Answers with Municipal Advisor (Fieldman)",
-          "sequence": 27
+          "title": "Amendment to the Agreement Between the County of Santa Clara and City of San José for Access to the County of Santa Clara’s Criminal Justice Information Control System and the Integrated Justice System.",
+          "sequence": 42
+        },
+        {
+          "title": "Actions Related to the Intent to Annex Territory to Community Facilities District No. 8.",
+          "sequence": 43
+        },
+        {
+          "title": "Actions Related to the Regulation of Personal Delivery Devices in City Right-of-Way.",
+          "sequence": 56
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-02",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-06",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -66,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -83,7 +91,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-05",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -132,7 +140,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -149,7 +157,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
