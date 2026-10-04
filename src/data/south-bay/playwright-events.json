@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-03T16:09:57.939Z",
+    "generatedAt": "2026-10-04T02:17:15.669Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 566,
+    "eventCount": 562,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (121)",
-      "Los Gatos Library (148)",
+      "Mountain View Public Library (120)",
+      "Los Gatos Library (147)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
-      "History San Jose (6)",
+      "History San Jose (5)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (9)",
       "Santana Row (7)",
-      "City of Cupertino (59)",
+      "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 126,
+        "count": 125,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 148,
+        "count": 147,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -118,14 +118,14 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 12,
+        "count": 10,
         "error": null,
         "sources": [
           "History San Jose"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 59,
+        "count": 58,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,27 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "3f3def6b1c96",
-      "title": "Sew Sew Saturday",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "2:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Need a sewing machine? The Library has sewing machines (model: Baby Lock Joy) and a serger (model: Brother 1034D) that are available for use within the Library on a drop-in basis. Whether you’re working on a project or need to hem a garment, this casual, welcoming space is perfect for all skill levels. Volunteers are available to answer basic sewing questions. A limited number of supplies, such as scissors and thread, are provided. You are welcome to bring your own thread if you require a particular color. No registration required -- just bring your materials and drop in! This event is intended for adults, ages 18 and up. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/15691280",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "5f966a989bf6",
       "title": "Banned Book Week Trivia",
@@ -2924,27 +2903,6 @@
       "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "b6e855f65959",
-      "title": "Girls Who Code",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "education",
-      "cost": "free",
-      "description": "The Los Gatos Library has partnered with @GirlsWhoCode to create a club meant for people ages 12-18 to learn to code and change the world! \"What will I Learn? Our middle and high school Clubs encourage you to impact the community in a positive way through code. In order to build the skills you need to make an impact, you will learn how to code from our fun online tutorials and activities that will help you build animations, games, apps, and other things that you dream up! We have tutorials in Python, HTML/CSS, JavaScript, and Java.\" Email: signup@gwc-losgatos.org to register.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17444951",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "fac79ea83847",
@@ -6610,23 +6568,6 @@
       }
     },
     {
-      "id": "cd4fa6ff3776",
-      "title": "NAMI Walks Silicon Valley 2026",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "8:00 am",
-      "endTime": "3:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://historysanjose.org/event/nami-walks-silicon-valley/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
       "id": "6cec9e611f8c",
       "title": "Low Times Car Show",
       "date": "2026-10-04",
@@ -7720,7 +7661,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "OCTOBER 3 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
+      "description": "OCTOBER 4 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7728,7 +7669,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-03",
-        "checkedAt": "2026-10-03T16:08:40.655Z"
+        "checkedAt": "2026-10-04T02:15:55.138Z"
       }
     },
     {
@@ -7743,7 +7684,7 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "OCTOBER 3 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
+      "description": "OCTOBER 4 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
       "url": "https://santanarow.com/event/glass-pumpkin-festival/",
       "source": "Santana Row",
       "kidFriendly": false,
@@ -7751,7 +7692,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-04",
-        "checkedAt": "2026-10-03T16:08:40.655Z"
+        "checkedAt": "2026-10-04T02:15:55.138Z"
       }
     },
     {
@@ -7774,7 +7715,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-03T16:08:40.656Z"
+        "checkedAt": "2026-10-04T02:15:55.138Z"
       }
     },
     {
@@ -7797,7 +7738,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-03T16:08:40.656Z"
+        "checkedAt": "2026-10-04T02:15:55.139Z"
       }
     },
     {
@@ -7820,7 +7761,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-03T16:08:40.656Z"
+        "checkedAt": "2026-10-04T02:15:55.139Z"
       }
     },
     {
@@ -7843,7 +7784,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-03T16:08:40.656Z"
+        "checkedAt": "2026-10-04T02:15:55.139Z"
       }
     },
     {
@@ -7866,25 +7807,59 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-03T16:08:40.656Z"
+        "checkedAt": "2026-10-04T02:15:55.139Z"
       }
     },
     {
-      "id": "cc0dc6d0d6d2",
-      "title": "Na Leo Mokupuni in Cupertino",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "10:00 AM",
-      "endTime": "04:00 PM",
-      "venue": "Community Hall",
-      "address": "Community Hall, 10350 Torre Ave., 95014, View Map",
+      "id": "fe61cc9d92b1",
+      "title": "Candidate Forum - Cupertino City Council",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "Cupertino Senior Center",
+      "address": "Cupertino Senior Center, 21251 Stevens Creek Blvd., 95014, View Map",
       "city": "cupertino",
-      "category": "family",
+      "category": "community",
       "cost": null,
-      "description": "Na Leo Mokupuni in Cupertino – meaning island sounds in Cupertino Experience the rhythms, songs, and dances of the islands! Na Leo Mokupuni brings together performers to celebrate the vibrant traditions of island music and dance—right here in Cupertino. Preregistration is recommended. Limited tickets available at the door, while supplies last. Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Na-Leo-Mokupuni-ma-Cupertino/Na-Leo-Mokupuni-in-Cupertino",
+      "description": "The League of Women Voters of Cupertino-Sunnyvale and San José Spotlight are co-hosting a candidate forum for the upcoming Cupertino City Council elections. This event will be held from 6 to 7:30 p.m. on Wednesday, October 7, at the Cupertino Senior Center. Join is to learn more about the individuals seeking to represent your neighborhood. This event is not sponsored or endorsed by the City of Cupertino. RSVP Required Event Registration",
+      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-07",
       "source": "City of Cupertino",
-      "kidFriendly": true
+      "kidFriendly": false
+    },
+    {
+      "id": "10117d8c0877",
+      "title": "Pooch Plunge",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "09:00 AM",
+      "endTime": "12:45 PM",
+      "venue": "Blackberry Farm Park",
+      "address": "Blackberry Farm Park, 21979 San Fernando Avenue, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Let your pup take the plunge during a dog-only swim in the Blackberry Farm pools. It’s a paws-itively fun way for your pooch to enjoy the pools before they open for summer swimming—tail wags are highly encouraged. Swim Sessions (45 minutes of tail-wagging fun) Block 1 - 9 to 9:45 a.m. Block 2 - 10 to 10:45 a.m. Block 3 - 11 to 11:45 a.m. Block 4 - Noon to 12:45 p.m. Register Registration opens in February for the spring event and in June for the fall event. For additional information, visit the Pooch Plunge webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "4c4af055d356",
+      "title": "Pooch Plunge",
+      "date": "2027-05-16",
+      "displayDate": "Sun, May 16",
+      "time": "09:00 AM",
+      "endTime": "12:45 PM",
+      "venue": "Blackberry Farm Park",
+      "address": "Blackberry Farm Park, 21979 San Fernando Avenue, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Let your pup take the plunge during a dog-only swim in the Blackberry Farm pools. It’s a paws-itively fun way for your pooch to enjoy the pools before they open for summer swimming—tail wags are highly encouraged. Swim Sessions (45 minutes of tail-wagging fun) Block 1 - 9 to 9:45 a.m. Block 2 - 10 to 10:45 a.m. Block 3 - 11 to 11:45 a.m. Block 4 - Noon to 12:45 p.m. Register Registration opens in February for the spring event and in June for the fall event. For additional information, visit the Pooch Plunge webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "346d8b120070",
@@ -8106,57 +8081,6 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
       "source": "City of Cupertino",
       "kidFriendly": true
-    },
-    {
-      "id": "fe61cc9d92b1",
-      "title": "Candidate Forum - Cupertino City Council",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "06:00 PM",
-      "endTime": "07:30 PM",
-      "venue": "Cupertino Senior Center",
-      "address": "Cupertino Senior Center, 21251 Stevens Creek Blvd., 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "The League of Women Voters of Cupertino-Sunnyvale and San José Spotlight are co-hosting a candidate forum for the upcoming Cupertino City Council elections. This event will be held from 6 to 7:30 p.m. on Wednesday, October 7, at the Cupertino Senior Center. Join is to learn more about the individuals seeking to represent your neighborhood. This event is not sponsored or endorsed by the City of Cupertino. RSVP Required Event Registration",
-      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-07",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "10117d8c0877",
-      "title": "Pooch Plunge",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "09:00 AM",
-      "endTime": "12:45 PM",
-      "venue": "Blackberry Farm Park",
-      "address": "Blackberry Farm Park, 21979 San Fernando Avenue, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Let your pup take the plunge during a dog-only swim in the Blackberry Farm pools. It’s a paws-itively fun way for your pooch to enjoy the pools before they open for summer swimming—tail wags are highly encouraged. Swim Sessions (45 minutes of tail-wagging fun) Block 1 - 9 to 9:45 a.m. Block 2 - 10 to 10:45 a.m. Block 3 - 11 to 11:45 a.m. Block 4 - Noon to 12:45 p.m. Register Registration opens in February for the spring event and in June for the fall event. For additional information, visit the Pooch Plunge webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "4c4af055d356",
-      "title": "Pooch Plunge",
-      "date": "2027-05-16",
-      "displayDate": "Sun, May 16",
-      "time": "09:00 AM",
-      "endTime": "12:45 PM",
-      "venue": "Blackberry Farm Park",
-      "address": "Blackberry Farm Park, 21979 San Fernando Avenue, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Let your pup take the plunge during a dog-only swim in the Blackberry Farm pools. It’s a paws-itively fun way for your pooch to enjoy the pools before they open for summer swimming—tail wags are highly encouraged. Swim Sessions (45 minutes of tail-wagging fun) Block 1 - 9 to 9:45 a.m. Block 2 - 10 to 10:45 a.m. Block 3 - 11 to 11:45 a.m. Block 4 - Noon to 12:45 p.m. Register Registration opens in February for the spring event and in June for the fall event. For additional information, visit the Pooch Plunge webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "2b476ab9f286",
@@ -8884,7 +8808,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8901,7 +8825,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8918,7 +8842,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8935,7 +8859,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8952,7 +8876,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10556,11 +10480,11 @@
       "kidFriendly": false
     },
     {
-      "id": "67aed8788ec8",
+      "id": "e6c58e812d04",
       "title": "Opening Weekend",
       "date": "2026-10-03",
       "displayDate": "Sat, Oct 3",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
