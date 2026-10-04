@@ -1702,6 +1702,24 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#2563eb",
     url: "https://palebluedot.ai",
   },
+  // CScale's Sep 30 release confirms both the $145M Series C and Palo Alto HQ
+  // in its boilerplate. The $188M figure is cumulative, not this round's size.
+  // Its own contact page also lists the HQ at 3000 El Camino Real, Palo Alto.
+  // https://www.cscale.ai/press/cscale-exits-stealth
+  // https://www.cscale.ai/contact
+  {
+    id: "cscale",
+    name: "CScale",
+    city: "Palo Alto",
+    category: "chip",
+    round: "Series C",
+    amount: "$145M",
+    date: "2026-09-30",
+    tagline:
+      "Palo Alto's CScale is building optical links for large AI data centers, designed to keep processors working when a connection fails. It emerged from stealth with a $145M Series C co-led by Atreides Management, Valor Equity Partners, and Premji Invest, with NVIDIA and Intel Capital joining as strategic investors. The company has about 85 employees worldwide; the funding supports product development and commercialization.",
+    color: "#2563EB",
+    url: "https://www.cscale.ai/press/cscale-exits-stealth",
+  },
   // GMI Cloud's own release confirms Mountain View HQ in its boilerplate,
   // beyond the dateline. Count the $223M Series B equity here; the separate
   // $445M credit facility makes the full financing package $668M.
