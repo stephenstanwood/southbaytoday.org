@@ -7,6 +7,67 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // October 3 fact-check: dated first-party performance pages, documented in
+  // docs/qa/2026-10-03-fact-check.md. Never use lobby/doors times as showtimes.
+  {
+    id: "inbound-f4a4b72dea6f0e4f", date: "2027-02-24",
+    title: /rihab chaieb/i, venue: /bing concert hall/i,
+    facts: {
+      url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/rihab-chaieb-nomad-the-eternal-wanderer/",
+      description: "Mezzo-soprano Rihab Chaieb performs a vocal recital with pianist Ammiel Bushakevitz, featuring songs about wandering and belonging.",
+      blurb: "Hear mezzo-soprano Rihab Chaieb in a vocal recital with pianist Ammiel Bushakevitz.",
+    },
+  },
+  {
+    id: "inbound-1587f50df9527856", date: "2027-03-10",
+    title: /jaemin han cello recital/i, venue: /bing concert hall/i,
+    facts: {
+      time: "7:30 PM",
+      url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/jaemin-han-cello-recital/",
+    },
+  },
+  {
+    id: "inbound-dc74287346b53e2c", date: "2027-02-07",
+    title: /^taimane$/i, venue: /heritage theatre/i,
+    facts: { time: "7:30 PM", url: "https://www.heritagetheatre.org/2026-2027-season-of-shows" },
+  },
+  {
+    id: "inbound-7fcc5c68692b8e3f", date: "2027-02-04",
+    title: /renée qin and ania filochow/i, venue: /the studio/i,
+    facts: { title: "Renée Qin and Ania Filochowska: The World We Speak Into Being" },
+  },
+  {
+    id: "inbound-6ae1a3f06f4a40b4", date: "2027-03-03",
+    title: /300 paintings.*sam kissajukian/i, venue: /the studio/i,
+    facts: {
+      url: "https://live.stanford.edu/events/26-27season/studio/300-paintings/",
+      description: "Sam Kissajukian performs a comedy show drawing on his experience creating 300 paintings and exploring art, mental health, and creativity.",
+      blurb: "Watch Sam Kissajukian perform 300 Paintings, a show about art, mental health, and creativity.",
+    },
+  },
+  {
+    id: "inbound-ea1ef0ed5c36abf4", date: "2027-02-21",
+    title: /^international guitar night$/i, venue: /bing concert hall/i,
+    facts: { url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/international-guitar-night/" },
+  },
+  // These November/December newsletter timestamps used July's -07 offset,
+  // which would render 6 PM. The city/performer calendars confirm 7 PM starts.
+  {
+    date: "2026-11-17", title: /toast.*best of bread/i, venue: /heritage theatre/i,
+    facts: { time: "7:00 PM" },
+  },
+  {
+    date: "2026-11-19", title: /world ballet company.*swan lake/i, venue: /heritage theatre/i,
+    facts: { time: "7:00 PM" },
+  },
+  {
+    date: "2026-11-20", title: /harriet.*trying to get the feeling again/i, venue: /heritage theatre/i,
+    facts: { time: "7:00 PM" },
+  },
+  {
+    date: "2026-12-16", title: /world ballet company.*nutcracker/i, venue: /heritage theatre/i,
+    facts: { time: "7:00 PM" },
+  },
   // October 2 URL follow-up: the organizer's own product page confirms the
   // dated session and says Sold out. Do not promote it as bookable.
   // Evidence: docs/qa/2026-10-02-growth-followup.md.
@@ -233,7 +294,7 @@ const CORRECTIONS = [
 
 export function applyVerifiedEventFacts(event) {
   const correction = CORRECTIONS.find((c) => event?.date === c.date && (
-    event.id === c.id || (c.url && event.url === c.url)
+    (c.id && event.id === c.id) || (c.url && event.url === c.url)
       || c.aliasUrls?.includes(event.url)
       || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
   ));

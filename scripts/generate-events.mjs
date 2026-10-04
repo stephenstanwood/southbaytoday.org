@@ -1057,6 +1057,8 @@ function cleanTitle(title) {
     // Local arts/civic organizations and league/artist initialisms currently
     // present in source titles.
     "BAGI", "CHCP", "PWHL", "ABBA",
+    // Published school, nonprofit, sponsor, university, and artist initials.
+    "SUSD", "CSA", "CEFCU", "USF", "JT",
     "USPS", "USPTO", "USDA", "UCSF", "UCSC", "UCSD", "UCSB",
     // South Bay org/agency acronyms
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
@@ -1953,6 +1955,7 @@ function polishDescription(text) {
     // South Bay / arts venues
     "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "VTAA", "VTAS",
     "BAGI", "CHCP", "PWHL", "ABBA",
+    "SUSD", "CSA", "CEFCU", "USF", "JT",
     "SJMADE", "SCCFD", "SCVMC", "PACL", "SJDT", "LGPNS",
     // Los Gatos-Monte Sereno Police Department. The Town of Los Gatos
     // newsletter titles its programs "LGMSPD Community Police Academy";
@@ -2068,7 +2071,7 @@ function polishDescription(text) {
     // Mirrored from cleanTitle KEEP_UPPER — 3-letter institutional designations
     // that can appear inside body copy and would be downcased by the wedge rule
     // if surrounded by mixed-case neighbors ("Catholic JST programs offer…").
-    "HSI", "JST", "ICA", "SCC", "ID", "ACL",
+    "HSI", "JST", "ICA", "SCC", "ID", "ACL", "CSA", "USF", "JT",
     // Football-club designation: SJSU's CSU-alumni-night mailer for Bay FC
     // wrote "be a part of the Bay FC Legacy" in body copy. The wedge rule
     // matched "Bay " + FC + " Legacy" and downcased FC → "Fc" because the

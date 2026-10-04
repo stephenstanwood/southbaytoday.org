@@ -13,6 +13,25 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("verified artist identity and performance copy survive sparse ingest and blurb resolution", async () => {
+  const events = [
+    { title: "Rihab Chaieb: Nomad—the Eternal Wanderer", date: "2027-02-24", venue: "Bing Concert Hall", description: "Tunisian violinist Rihab Chaieb", blurb: "Hear violinist Rihab Chaieb." },
+    { title: "300 Paintings by Sam Kissajukian", date: "2027-03-03", venue: "The Studio", blurb: "Walk through 300 paintings." },
+    { title: "Renée Qin and Ania Filochowka: The World We Speak Into Being", date: "2027-02-04", venue: "The Studio" },
+  ];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].description, /mezzo-soprano/i);
+  assert.doesNotMatch(events[0].blurb, /violinist/i);
+  assert.match(events[0].url, /rihab-chaieb-nomad-the-eternal-wanderer\/$/);
+  assert.match(events[1].blurb, /Watch.*perform/);
+  assert.doesNotMatch(events[1].blurb, /walk through/i);
+  assert.match(events[2].title, /Ania Filochowska:/);
+  const later = { ...events[0], date: "2028-02-24", description: "A different program" };
+  assert.equal(applyVerifiedEventFacts(later), later);
+  const elsewhere = { ...events[0], venue: "Other Hall", description: "A different program" };
+  assert.equal(applyVerifiedEventFacts(elsewhere), elsewhere);
+});
+
 test("a sold-out organizer workshop stays unavailable on its verified date", () => {
   const raw = {
     id: "inbound-b451c136762c2e2c", date: "2026-10-17", time: "1:00 PM", cost: null,

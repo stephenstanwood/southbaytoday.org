@@ -149,7 +149,8 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
   const aroundLines = aroundItems.slice(0, 3).map((a) => {
     const date = a.date ? ` (${formatEventDate(a.date)})` : "";
     const summary = a.summary ? `\n   ${a.summary}` : "";
-    return `- ${a.headline}${date}${summary}`;
+    const body = a.meetingBody ? `; body: ${a.meetingBody}` : "";
+    return `- ${a.headline}${date}${body}${summary}`;
   }).join("\n");
 
   const agendaLines = (meetingData?.agendaItems ?? [])
@@ -177,8 +178,10 @@ Important rules:
 - An event's occurrence date is not its opening or closing date. Never say a play, exhibit, or concert series "opens", "closes", "ends", or "debuts" unless the supplied event title explicitly identifies an opening, closing, premiere, or final performance. Otherwise say it "plays", "runs", or "is on" that day.
 - Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another. When two events share a clause, give each its own day ("Coffee with the Mayor Friday and a town hall Saturday") — a single trailing day word ("Coffee with the Mayor and a town hall Saturday") wrongly puts both on that day.
 - Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event.
+- Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the Next council meeting agenda, or say council will consider it "that same day", unless that item is explicitly listed in the Next council meeting data. A Zoning Administrator hearing is not a Planning Commission or City Council meeting.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
 - No group-count nouns like "trifecta," "trio," "duo," or "quartet" — they imply specific counts and routinely don't match the actual data. Just say "three events" or list the items.
+- No unsupported rankings or superlatives such as "the week's biggest development story". State the sourced project or event without ranking it.
 - No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.
 - Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
 - Match the verb to the source summary. If a city hall summary says the council "held a public hearing," your verb is "heard" or "reviewed" — not "approved." If the summary says "approved," "adopted," or "filed," use that exact verb. Never upgrade a hearing to an approval.

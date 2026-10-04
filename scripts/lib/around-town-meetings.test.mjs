@@ -40,6 +40,29 @@ test("failed and ambiguous verification cannot publish an unchecked Council reco
   assert.equal(sources.size, 0);
 });
 
+test("a planning ingest label cannot override a verified Zoning Administrator hearing", async () => {
+  const sourceUrl = "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4568";
+  const sources = await resolveAroundTownMeetingSources({ legistarApi: "sunnyvaleca" }, [{
+    id: 26, date: "2026-09-30", meetingType: "Planning Commission",
+    title: "Use permit at 645 W. Fremont Avenue", excerpt: "Chabad of Sunnyvale, PLNG-2026-0312",
+  }], {
+    fallbackBody: "City hearing",
+    verifyLegistar: async (client, date, text) => {
+      assert.equal(client, "sunnyvaleca");
+      assert.equal(date, "2026-09-30");
+      assert.match(text, /PLNG-2026-0312/);
+      return { body: "Zoning Administrator Hearing", sourceUrl };
+    },
+  });
+  assert.deepEqual(aroundTownSourceForItem({ sourceRecordId: 26, date: "2026-09-30" }, sources), {
+    body: "Zoning Administrator Hearing", sourceUrl, date: "2026-09-30",
+  });
+  const fallback = await resolveAroundTownMeetingSources({ agendaUrl: "https://example.gov/agendas" }, [meetings[0]], {
+    fallbackBody: "City hearing",
+  });
+  assert.equal(fallback.get("7196").body, "City hearing");
+});
+
 test("cities without a verifier still bind highlights to supplied records", async () => {
   const sources = await resolveAroundTownMeetingSources({ agendaUrl: "https://example.gov/agendas" }, meetings);
   assert.equal(sources.size, 2);

@@ -1,4 +1,5 @@
 import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 const PT = "America/Los_Angeles";
 
@@ -95,6 +96,16 @@ export function inboundClock(value) {
   if (/T(?:00:00:00|23:59:59)(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})?$/i.test(String(value))) return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
+  // Offset-bearing newsletter timestamps describe a local Pacific event.
+  // The offset must agree with its occurrence date, not the extraction date.
+  // Leave an inconsistent clock unknown; a first-party override can recover it.
+  const offset = String(value).match(/([+-])0([78]):00$/);
+  if (offset) {
+    const actualOffset = new Intl.DateTimeFormat("en-US", {
+      timeZone: PT, timeZoneName: "shortOffset",
+    }).formatToParts(date).find((part) => part.type === "timeZoneName")?.value;
+    if (actualOffset !== `GMT${offset[1]}${offset[2]}`) return null;
+  }
   const detailed = date.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -208,12 +219,27 @@ function endsAtLooksLikeAClosingTime(startsAt, endsAt) {
 }
 
 export function normalizeInboundEventPresentation(event) {
-  const override = officialOverride(event);
+  const source = {
+    date: String(event?.startsAt || "").slice(0, 10),
+    title: event?.title, venue: event?.location, url: event?.sourceUrl,
+  };
+  const verified = applyVerifiedEventFacts(source);
+  const override = {
+    ...officialOverride(event),
+    ...(verified !== source ? {
+      ...(verified.time ? { time: verified.time } : {}),
+      ...(Object.hasOwn(verified, "endTime") ? { endTime: verified.endTime } : {}),
+      ...(verified.url !== source.url ? { url: verified.url } : {}),
+      ...(verified.venue !== source.venue ? { venue: verified.venue } : {}),
+    } : {}),
+  };
   const time = override?.time || inboundClock(event?.startsAt);
   const parsedEndTime = endsAtLooksLikeAClosingTime(event?.startsAt, event?.endsAt)
     ? inboundClock(event?.endsAt)
     : null;
-  const endTime = override?.endTime || (parsedEndTime && parsedEndTime !== time ? parsedEndTime : null);
+  const endTime = Object.hasOwn(override, "endTime")
+    ? override.endTime
+    : (parsedEndTime && parsedEndTime !== time ? parsedEndTime : null);
   return {
     time,
     endTime,

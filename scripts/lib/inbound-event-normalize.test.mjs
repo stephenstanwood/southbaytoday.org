@@ -19,6 +19,36 @@ test("inbound end-of-day and midnight sentinels are not visitor times", () => {
   assert.equal(inboundClock("2026-07-20T18:30:00-07:00"), "6:30 PM");
 });
 
+test("seasonally inconsistent Pacific offsets stay unknown without first-party evidence", () => {
+  assert.equal(inboundClock("2026-11-17T19:00:00-07:00"), null);
+  assert.equal(inboundClock("2027-03-10T19:30:00-07:00"), null);
+  assert.equal(inboundClock("2026-07-20T18:30:00-08:00"), null);
+  assert.equal(inboundClock("2026-11-17T19:00:00-08:00"), "7:00 PM");
+  assert.equal(inboundClock("2026-11-18T03:00:00Z"), "7:00 PM");
+  assert.equal(normalizeInboundEventPresentation({
+    title: "Unknown winter event", location: "Heritage Theatre",
+    startsAt: "2026-11-17T19:00:00-07:00",
+  }).time, null);
+});
+
+test("verified performance times survive bad newsletter offsets before deduplication", () => {
+  const cases = [
+    ["Taimane", "Heritage Theatre", "2027-02-07T19:30:00-07:00", "7:30 PM"],
+    ["Jaemin Han Cello Recital", "Bing Concert Hall", "2027-03-10T19:30:00-07:00", "7:30 PM"],
+    ["Toast - The Best of Bread", "Heritage Theatre", "2026-11-17T19:00:00-07:00", "7:00 PM"],
+    ["World Ballet Company: Swan Lake", "Heritage Theatre", "2026-11-19T19:00:00-07:00", "7:00 PM"],
+    ["Harriet: Trying to Get the Feeling Again", "Heritage Theatre", "2026-11-20T19:00:00-07:00", "7:00 PM"],
+    ["World Ballet Company: The Nutcracker", "Heritage Theatre", "2026-12-16T19:00:00-07:00", "7:00 PM"],
+  ];
+  for (const [title, location, startsAt, time] of cases) {
+    assert.equal(normalizeInboundEventPresentation({ title, location, startsAt }).time, time);
+  }
+  assert.match(normalizeInboundEventPresentation({
+    title: "Jaemin Han Cello Recital", location: "Bing Concert Hall",
+    startsAt: "2027-03-10T19:30:00-07:00",
+  }).url, /jaemin-han-cello-recital\/$/);
+});
+
 test("Jeremy Frey closing day uses official museum hours and exhibition URL", () => {
   assert.deepEqual(normalizeInboundEventPresentation({
     title: "Jeremy Frey: Woven closing",

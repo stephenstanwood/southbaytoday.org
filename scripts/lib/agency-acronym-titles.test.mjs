@@ -44,6 +44,16 @@ test("keeps agency acronyms uppercase in body copy too", () => {
   );
 });
 
+test("newsletter and ticket titles retain published organization and artist initials", () => {
+  for (const title of [
+    "SUSD Board Candidate Forum", "CSA Homecoming", "CEFCU Halloween Movie Night",
+    "Santa Clara Broncos Women's Volleyball vs. USF Dons Women's Volleyball", "Chad & JT",
+  ]) assert.equal(cleanTitle(title), title);
+  assert.match(polishDescription("Hear candidates for the three SUSD Board seats."), /\bSUSD\b/);
+  assert.match(polishDescription("Movie Night is presented by CEFCU."), /\bCEFCU\b/);
+  assert.match(polishDescription("The CSA Homecoming celebration."), /\bCSA\b/);
+});
+
 test("permit descriptions strip feed flags and keep permit acronyms", () => {
   assert.equal(cleanPermitDescription("Axis (BEM100%) Ste 500 TI", "Tenant Improvement", "Office"), "Axis Ste 500 TI");
   assert.equal(cleanPermitDescription("(BEMP 100%) Block A Family Affordable Apts", "New Construction", "Apartments"), "Block A Family Affordable Apts");

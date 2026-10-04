@@ -9,13 +9,14 @@ import { agendaTextForMeeting } from "./digest-source.mjs";
 export async function resolveAroundTownMeetingSources(config, meetings, {
   verifyLegistar = verifyLegistarBodyOnDate,
   verifyPrimeGov = verifyPrimeGovBodyOnDate,
+  fallbackBody,
 } = {}) {
   const sources = new Map();
   for (const meeting of meetings) {
     if (meeting.id == null) continue;
     const fallbackUrl = meeting.sourceUrl
       ?? (config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl);
-    let source = { body: config.councilBody || meeting.meetingType || "City Council", sourceUrl: fallbackUrl };
+    let source = { body: fallbackBody || config.councilBody || meeting.meetingType || "City Council", sourceUrl: fallbackUrl };
     if (config.legistarApi || config.primegov) {
       const text = `${meeting.title || ""} ${agendaTextForMeeting(meeting)}`;
       let actual;

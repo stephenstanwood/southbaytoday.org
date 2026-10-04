@@ -17,7 +17,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { legistarMeetingUrl } from "./lib/civic-meetings.mjs";
 import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
 import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
@@ -160,10 +159,10 @@ async function findInterestingItems(config, meetings, bodyType, bodies = new Map
   }).join("\n\n---\n\n");
 
   const bodyNote = bodyType === "Planning Commission"
-    ? "These are Planning Commission meetings — focus on development projects, zoning decisions, design review, and land use changes."
+    ? "These are land-use records. Their verified bodies may be a commission, committee, or Zoning Administrator; use each record's Body label. Focus on development projects, zoning, design review, and land use."
     : "";
 
-  const prompt = `You are reading recent ${config.cityName}, CA ${bodyType} meeting agendas and minutes.
+  const prompt = `You are reading recent ${config.cityName}, CA civic meeting agendas and minutes.
 ${bodyNote}
 
 Your job: identify items that a South Bay resident would genuinely find interesting, surprising, or worth knowing about.
@@ -353,14 +352,12 @@ async function gatherMeetingItems(meetingType) {
     console.log(`  ⏳ ${config.cityName} (${label}): evaluating ${cityMeetings.length} meetings...`);
 
     try {
-      // Only the council path needs this — the planning path already asks Stoa
-      // for Planning Commission records by type.
-      const bodies = sourceTag === "council"
-        ? await resolveAroundTownMeetingSources(config, cityMeetings)
-        : new Map(cityMeetings.filter((m) => m.id != null).map((m) => [String(m.id), {
-          body: label, date: m.date, sourceUrl: m.sourceUrl
-            ?? (config.legistar ? legistarMeetingUrl(config.legistar, m.date) : config.agendaUrl),
-        }]));
+      // Upstream planning records can be Zoning Administrator hearings. Verify
+      // their body and agenda exactly as on the council path; an ingest type
+      // does not establish which body considered an item.
+      const bodies = await resolveAroundTownMeetingSources(config, cityMeetings, {
+        fallbackBody: sourceTag === "planning" ? "City hearing" : undefined,
+      });
       const verifiedMeetings = cityMeetings.filter((m) => bodies.has(String(m.id)));
       if (!verifiedMeetings.length) continue;
       const found = await findInterestingItems(config, verifiedMeetings, label, bodies);
@@ -387,6 +384,7 @@ async function gatherMeetingItems(meetingType) {
           date: item.date,
           headline: expandStreetAbbreviations(item.headline),
           sourceRecordId: String(item.sourceRecordId),
+          meetingBody: source.body,
           summary: expandStreetAbbreviations(item.summary),
           sourceUrl,
           source: sourceTag,
