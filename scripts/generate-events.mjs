@@ -2503,7 +2503,7 @@ function inferCity(location, address) {
   return null;
 }
 
-function inferCategory(title, desc, type, venue = "") {
+function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Some callers pass raw RSS HTML descriptions. Strip tags/entities defensively
   // so anchor hrefs and class names ("...athletics-page", class="sports-tag")
   // can't trigger false-positive keyword matches in the rules below.
@@ -2523,6 +2523,11 @@ function inferCategory(title, desc, type, venue = "") {
   // arts). Trivia and live music are unambiguous when present in the title.
   if (/\btrivia\b/.test(titleLower)) return "community";
   if (/\blive\s+music\b/.test(titleLower)) return "music";
+  // A play can mention kids or childhood without being children's programming.
+  // Preserve explicitly named children's theater productions as family events.
+  if (/\bstaged\s+reading\b/.test(titleLower)
+    || (/\btheat(?:er|re)\s+presents\b/.test(titleLower)
+      && !/\b(?:children['’]?s|kids|family)\s+(?:musical\s+)?theat(?:er|re)\b/.test(titleLower))) return "arts";
   // Title-first rules must beat incidental venue/body words. A civic town hall
   // held in a theater is not an arts event, and a campus tour that mentions
   // lunch is not food programming.
@@ -2589,7 +2594,14 @@ function inferCategory(title, desc, type, venue = "") {
   // adult-only override on kidFriendly in the SCCL fetcher.
   const titleSaysAdult = /\b(adults?|seniors?|18\+|21\+)\b/.test(titleLower)
     && !/\b(kid|kids|child|children|family|families|teen|toddler|baby|preschool|all ages)\b/.test(titleLower);
-  if (!titleSaysAdult && (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t))) return "family";
+  // The library's explicit adult-only audience outranks incidental references
+  // to children in a novel's plot or a presenter's app. Mixed audiences do not.
+  const sourceSaysAdult = sourceAudiences.length > 0 && sourceAudiences.every((audience) => {
+    const name = typeof audience === "string" ? audience : audience?.name || "";
+    return /\b(adults?|seniors?)\b/i.test(name)
+      && !/\b(kids?|children|families|teens?|all ages)\b/i.test(name);
+  });
+  if (!titleSaysAdult && !sourceSaysAdult && (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t))) return "family";
   // Medical/clinical procedure courses are always education, never arts — even if descriptions
   // contain "performance" (as in "procedural performance") or the venue has "theater" (OR).
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
@@ -4795,7 +4807,7 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
             ...(registrationClosesBy ? { registrationClosesBy } : {}),
             // Pass the rendered venue so isIndoorVenue can detect "library" — short
             // branch names like "Cambrian" (no "Library" suffix) used to slip past it.
-            category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue),
+            category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue, details.sourceAudiences),
             cost: "free",
             ...details,
             url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
@@ -4926,7 +4938,7 @@ async function fetchScclEvents() {
           ...(isVirtual ? { virtual: true } : {}),
           ...(registration !== REGISTRATION_NONE ? { registration } : {}),
           ...(registrationClosesBy ? { registrationClosesBy } : {}),
-          category: inferCategory(title, stripHtml(desc), ev.type || "", branchVenue),
+          category: inferCategory(title, stripHtml(desc), ev.type || "", branchVenue, details.sourceAudiences),
           cost: "free",
           ...details,
           url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
@@ -8750,15 +8762,14 @@ const INBOUND_ACCEPTED_CITIES = new Set([
 // plan-day reads the same geography rules this ingest pass does — see the
 // header there on the caught-at-one-stage-not-the-other divergence bug.
 
-function fetchInboundEvents() {
+function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) {
   console.log("  ⏳ Inbound-email events...");
   try {
-    if (!existsSync(INBOUND_EVENTS_PATH)) {
+    if (!suppliedEvents && !existsSync(INBOUND_EVENTS_PATH)) {
       console.log("  ⚠️  Inbound events: no data file (run pull-inbound-events.mjs on Mini)");
       return [];
     }
-    const { events } = JSON.parse(readFileSync(INBOUND_EVENTS_PATH, "utf8"));
-    const today = todayPT();
+    const events = suppliedEvents ?? JSON.parse(readFileSync(INBOUND_EVENTS_PATH, "utf8")).events;
 
     const out = [];
     const inboundImageForEvent = (event) => {
@@ -8776,7 +8787,10 @@ function fetchInboundEvents() {
       // Defense in depth — block list applies to extracted events too
       if (isBlockedEvent(e.title)) { skipBlocked++; continue; }
 
-      const dateKey = e.startsAt.slice(0, 10);
+      // A verified correction must run before the past-date gate; otherwise
+      // a stale newsletter can keep yesterday's garage sale listed for today.
+      const presentation = normalizeInboundEventPresentation(e);
+      const dateKey = presentation.date || e.startsAt.slice(0, 10);
       if (dateKey < today) { skipPast++; continue; }
       // The extractor occasionally omits cityKey even for senders it normally
       // identifies correctly. Recover only from exact official sender addresses;
@@ -8797,14 +8811,13 @@ function fetchInboundEvents() {
       // Campbell Chamber golf tournament that motivated it.
       const inboundCity = resolveEventCity(publisherCity, inboundLocation, e.title);
 
-      const startDate = new Date(e.startsAt);
+      const startDate = new Date(presentation.date ? `${dateKey}T12:00:00-07:00` : e.startsAt);
       if (isNaN(startDate.getTime())) continue;
 
       // Normalize extractor timestamps before they become visitor-facing
       // clock times. Inbound feeds use midnight and 23:59:59 as unknown/all-day
       // sentinels; source-specific first-party overrides can then supply real
       // published visitor hours and canonical URLs.
-      const presentation = normalizeInboundEventPresentation(e);
       const { time, endTime } = presentation;
 
       // Real category inference instead of hardcoded "community" — this is
@@ -8819,8 +8832,8 @@ function fetchInboundEvents() {
       // "Babies", "Grades K-6". Mirrors the canonical regex in
       // playwright-scrapers.mjs; description check stays narrow to avoid
       // false positives from "family-friendly food trucks", etc.
-      const kidFriendly = /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|easter\s?egg|egg\s?hunt)/i.test(titleLower)
-        || /\b(kid|family|children|story\s?time)\b/i.test(descLower);
+      const kidFriendly = presentation.kidFriendly ?? (/\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|easter\s?egg|egg\s?hunt)/i.test(titleLower)
+        || /\b(kid|family|children|story\s?time)\b/i.test(descLower));
 
       // Extract venue name from location (first part before the comma).
       // If the leading segment is just a street address ("1680 Foley Avenue",
@@ -10108,6 +10121,7 @@ export {
   fetchFarmersMarketEvents,
   FARMERS_MARKETS,
   fetchHappyHollowEvents,
+  fetchInboundEvents,
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
   parseHeritageTheatreEvent,

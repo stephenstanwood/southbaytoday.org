@@ -227,6 +227,7 @@ export function normalizeInboundEventPresentation(event) {
   const override = {
     ...officialOverride(event),
     ...(verified !== source ? {
+      ...(verified.date !== source.date ? { date: verified.date } : {}),
       ...(verified.time ? { time: verified.time } : {}),
       ...(Object.hasOwn(verified, "endTime") ? { endTime: verified.endTime } : {}),
       ...(verified.url !== source.url ? { url: verified.url } : {}),
@@ -241,9 +242,11 @@ export function normalizeInboundEventPresentation(event) {
     ? override.endTime
     : (parsedEndTime && parsedEndTime !== time ? parsedEndTime : null);
   return {
+    ...(override?.date ? { date: override.date } : {}),
     time,
     endTime,
     url: override?.url || detrack(event?.canonicalUrl) || detrack(event?.sourceUrl) || "",
     ...(override?.venue ? { venue: override.venue } : {}),
+    ...(typeof verified.kidFriendly === "boolean" ? { kidFriendly: verified.kidFriendly } : {}),
   };
 }

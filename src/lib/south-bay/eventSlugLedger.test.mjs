@@ -107,3 +107,22 @@ test("yesterday in the current snapshot stays live while the archive awaits refr
   assert.deepEqual(orphans, []);
   assert.deepEqual([...redirects], [["2026-09-17-storytme", "2026-09-17-storytime"]]);
 });
+
+test("verified garage-sale date correction redirects the old date without relaxing recurring-event matching", () => {
+  const wrongDate = ev({
+    id: "inbound-13d9d066cbdfa615", title: "Annual Citywide Garage Sale",
+    date: "2026-10-04", city: "campbell", venue: null,
+    url: "http://www.campbellca.gov/597/Community-Garage-Sale",
+  });
+  const corrected = { ...wrongDate, date: "2026-10-03", url: wrongDate.url.replace("http:", "https:") };
+  const slug = "2026-10-04-annual-citywide-garage-sale";
+  const ledger = { entries: [{ slug, event: wrongDate }] };
+  const { redirects, orphans } = resolveRetired(ledger, [corrected], [], "2026-10-04");
+  assert.deepEqual([...redirects], [[slug, "2026-10-03-annual-citywide-garage-sale"]]);
+  assert.deepEqual(orphans, []);
+  // If the successor is unavailable, the old URL still shows the verified date.
+  assert.equal(resolveRetired(ledger, [], [], "2026-10-04").orphans[0].event.date, "2026-10-03");
+  // An unrelated event with a reused ID still cannot cross dates.
+  const unrelated = ev({ id: "recurring", date: "2026-10-03" });
+  assert.equal(findSuccessor({ ...unrelated, date: "2026-10-04" }, liveSlugs([unrelated], [], "2026-10-04")), null);
+});

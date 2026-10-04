@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { fetchInboundEvents } from "../generate-events.mjs";
 
 import {
   inboundClock,
@@ -9,6 +10,41 @@ import {
   SILICON_VALLEY_PRIDE_2026_URL,
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
+
+test("Campbell's verified Saturday date is applied before the past-occurrence filter", () => {
+  const raw = {
+    id: "inbound_mu62yvos_eogfnd", cityKey: "campbell",
+    title: "Annual Citywide Garage Sale",
+    startsAt: "2026-10-04T08:00:00-07:00",
+    endsAt: "2026-10-04T16:00:00-07:00",
+    sourceUrl: "http://www.campbellca.gov/597/Community-Garage-Sale",
+  };
+  const saturday = fetchInboundEvents({ events: [raw], today: "2026-10-03" });
+  assert.equal(saturday.length, 1);
+  assert.equal(saturday[0].date, "2026-10-03");
+  assert.equal(saturday[0].displayDate, "Sat, Oct 3");
+  assert.equal(saturday[0].time, "8:00 AM");
+  assert.equal(saturday[0].endTime, "4:00 PM");
+  assert.match(saturday[0].url, /^https:/);
+  assert.deepEqual(fetchInboundEvents({ events: [raw], today: "2026-10-04" }), []);
+
+  const otherYear = { ...raw, startsAt: "2027-10-04T08:00:00-07:00", endsAt: null };
+  assert.equal(fetchInboundEvents({ events: [otherYear], today: "2027-10-03" })[0].date, "2027-10-04");
+  const otherSource = { ...raw, sourceUrl: "https://example.org/garage-sale" };
+  assert.equal(fetchInboundEvents({ events: [otherSource], today: "2026-10-03" })[0].date, "2026-10-04");
+});
+
+test("a play with kids in its title is not promoted as children's programming", () => {
+  const event = fetchInboundEvents({ today: "2026-10-03", events: [{
+    id: "fixture-hodge", fromEmail: "latest@email.live.stanford.edu",
+    title: "All Gregs Kids Come Home - Staged Reading",
+    startsAt: "2026-10-17T19:00:00-07:00", location: "The Studio, Stanford",
+    description: "A staged reading of Chinaka Hodge's play about a family.",
+  }] })[0];
+  assert.equal(event.category, "arts");
+  assert.equal(event.kidFriendly, false);
+  assert.match(event.url, /\/studio\/chinaka-hodge\/$/);
+});
 
 test("inbound end-of-day and midnight sentinels are not visitor times", () => {
   assert.equal(inboundClock("2026-07-20T23:59:59-07:00"), null);

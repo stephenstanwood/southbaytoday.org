@@ -23,6 +23,7 @@
 
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
+import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
 
 export const RETAIN_DAYS = 90;
 
@@ -169,11 +170,14 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
   const redirects = new Map();
   const orphans = [];
   for (const entry of ledger?.entries ?? []) {
-    if (!entry?.slug || !isDated(entry.event) || entry.event.date < cutoff) continue;
+    // A verified date correction also belongs on the published old URL.
+    // Keep findSuccessor's same-day guard for reused recurring-event IDs.
+    const event = applyVerifiedEventFacts(entry?.event);
+    if (!entry?.slug || !isDated(event) || event.date < cutoff) continue;
     if (live.has(entry.slug)) continue;
-    const successor = findSuccessor(entry.event, live);
+    const successor = findSuccessor(event, live);
     if (successor) redirects.set(entry.slug, successor);
-    else orphans.push({ slug: entry.slug, event: entry.event, retiredAt: entry.retiredAt });
+    else orphans.push({ slug: entry.slug, event, retiredAt: entry.retiredAt });
   }
   return { redirects, orphans };
 }

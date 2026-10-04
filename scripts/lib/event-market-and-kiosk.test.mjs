@@ -11,6 +11,19 @@ test("a State of the City address stays civic despite a theater venue and perfor
   assert.equal(inferCategory("2026 State of the City Address", "Community awards and live performances", "", "Mission City Center for Performing Arts"), "community");
 });
 
+test("staged readings and theater productions are arts even when the plot mentions children", () => {
+  assert.equal(inferCategory("All Greg's Kids Come Home - Staged Reading", "A family's homecoming.", "", "The Studio"), "arts");
+  assert.equal(inferCategory("SJSU Theatre presents Sanctuary City", "Two teenagers brought to America as children.", "", "Hal Todd Studio Theatre"), "arts");
+  assert.equal(inferCategory("Children's Musical Theater presents Alice in Wonderland Jr.", "A musical for children.", "", "Montgomery Theater"), "family");
+});
+
+test("explicit adult-only library audiences outrank children mentioned in the description", () => {
+  assert.equal(inferCategory("Mystery Book Club: All the Sinners Bleed", "Adults discuss a novel about missing children.", "", "Cupertino Library", ["Adults", "Older Adults"]), "arts");
+  assert.equal(inferCategory("Bring Your Product Ideas to Life Using AI", "Learn to build an app. The presenter created a kids activities app.", "", "Mitchell Park Library", ["Adults"]), "education");
+  assert.equal(inferCategory("Family Storytime", "Read books with children.", "", "Cupertino Library", ["Adults", "Kids"]), "family");
+  assert.equal(inferCategory("Family Storytime", "Read books with children.", "", "Cupertino Library"), "family");
+});
+
 // Both fixtures below are real strings that reached upcoming-events.json on
 // 2026-08-29 and were surfaced on southbaytoday.org city briefings.
 

@@ -13,6 +13,22 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("October first-party links and registration conditions survive sparse newsletter input", () => {
+  const workshop = applyVerifiedEventFacts({
+    title: "Preparing Your Fruit Trees for Winter Workshop", date: "2026-10-03",
+    venue: "Saratoga Heritage Orchard", url: "",
+  });
+  assert.equal(workshop.cost, "free");
+  assert.equal(workshop.registration, "required");
+  assert.match(workshop.url, /\/message\/301201$/);
+  const market = applyVerifiedEventFacts({
+    title: "Downtown Palo Alto Farmers' Market", date: "2026-10-03",
+    venue: "Gilman Street between Hamilton and Forest", url: "",
+  });
+  assert.equal(market.url, "https://www.pafarmersmarket.org/home");
+  assert.equal(applyVerifiedEventFacts({ ...workshop, date: "2027-10-03", url: "" }).url, "");
+});
+
 test("verified artist identity and performance copy survive sparse ingest and blurb resolution", async () => {
   const events = [
     { title: "Rihab Chaieb: Nomad—the Eternal Wanderer", date: "2027-02-24", venue: "Bing Concert Hall", description: "Tunisian violinist Rihab Chaieb", blurb: "Hear violinist Rihab Chaieb." },

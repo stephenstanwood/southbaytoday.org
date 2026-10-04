@@ -7,6 +7,41 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // October 4 fact-check: exact first-party dates/links, recorded in
+  // docs/qa/2026-10-04-fact-check.md. Correct occurrence dates before filtering.
+  {
+    date: "2026-10-04",
+    url: "https://www.campbellca.gov/597/Community-Garage-Sale",
+    aliasUrls: ["http://www.campbellca.gov/597/Community-Garage-Sale"],
+    facts: {
+      date: "2026-10-03", displayDate: "Sat, Oct 3",
+      time: "8:00 AM", endTime: "4:00 PM",
+      url: "https://www.campbellca.gov/597/Community-Garage-Sale",
+    },
+  },
+  {
+    id: "inbound-780560b96929bcbc", date: "2026-10-17",
+    title: /all greg['’]?s kids come home/i, venue: /the studio/i,
+    facts: {
+      title: "All Greg's Kids Come Home - Staged Reading",
+      url: "https://live.stanford.edu/events/26-27season/studio/chinaka-hodge/",
+      category: "arts", kidFriendly: false,
+      description: "A staged reading of Chinaka Hodge's play All Greg's Kids Come Home, exploring the hidden systems behind a hyper-capable family's public facade.",
+    },
+  },
+  {
+    id: "inbound-34f99c30f80b4fe9", date: "2026-10-03",
+    title: /preparing your fruit trees for winter/i, venue: /saratoga heritage orchard/i,
+    facts: {
+      url: "https://www.saratoga.ca.us/CivicSend/ViewMessage/message/301201",
+      cost: "free", registration: "required",
+    },
+  },
+  {
+    id: "inbound-1fb1fb86591a2a03", date: "2026-10-03",
+    title: /downtown palo alto farmers['’]? market/i, venue: /gilman street/i,
+    facts: { url: "https://www.pafarmersmarket.org/home" },
+  },
   // October 3 fact-check: dated first-party performance pages, documented in
   // docs/qa/2026-10-03-fact-check.md. Never use lobby/doors times as showtimes.
   {
