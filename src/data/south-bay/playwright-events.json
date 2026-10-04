@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-04T02:17:15.669Z",
+    "generatedAt": "2026-10-04T16:09:45.496Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 562,
+    "eventCount": 560,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (120)",
-      "Los Gatos Library (147)",
+      "Los Gatos Library (148)",
       "San Jose Jazz (18)",
       "Linden Tree Books (15)",
       "History San Jose (5)",
@@ -15,18 +15,18 @@
       "City Lights Theater (6)",
       "ICA San José (3)",
       "Mountain Winery (10)",
-      "San Jose Theaters (20)",
+      "San Jose Theaters (19)",
       "Children's Discovery Museum (3)",
-      "Guadalupe River Park Conservancy (9)",
-      "Santana Row (7)",
+      "Guadalupe River Park Conservancy (8)",
+      "Santana Row (6)",
       "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
       "SAP Center (15)",
       "The Tech Interactive (10)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (6)"
+      "Peninsula Open Space Trust (6)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 147,
+        "count": 148,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -183,7 +183,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 20,
+        "count": 19,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -219,7 +219,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 9,
+        "count": 8,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -338,14 +338,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 6,
-        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -5932,6 +5930,28 @@
       "kidFriendly": true
     },
     {
+      "id": "e296009f5b4c",
+      "title": "Library Closed",
+      "date": "2027-01-02",
+      "displayDate": "Sat, Jan 2",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16374655",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "9f8ed2a1d00c",
       "title": "Secret Sidewalk",
       "date": "2026-10-09",
@@ -7061,57 +7081,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c53618f9892c",
-      "title": "The New World – Symphony San Jose",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": null,
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "33f3ee9e014f",
-      "title": "Sing Along",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "7:30pm",
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "dbb47902eedf",
-      "title": "Sonic Live In Concert",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "b7fe15176b7f",
       "title": "Gaurav Kapoor Live",
       "date": "2026-10-04",
@@ -7401,10 +7370,44 @@
       "kidFriendly": false
     },
     {
-      "id": "bfbe5a7fce22",
+      "id": "a5e4ecdb5c7a",
+      "title": "Bronco",
+      "date": "2026-10-23",
+      "displayDate": "Fri, Oct 23",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "adc2ad38e2bb",
+      "title": "Symphonic Spooktacular – Symphony San Jose",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": null,
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "music",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "3661d9868f7e",
       "title": "Toddler Storytime",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7418,10 +7421,10 @@
       "kidFriendly": true
     },
     {
-      "id": "512a74d54e33",
+      "id": "f538e79e427b",
       "title": "All Ages Storytime",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
+      "date": "2026-10-04",
+      "displayDate": "Sun, Oct 4",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7450,28 +7453,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "dcb6f9d9c004",
-      "title": "Neighborhood Hands Bi-monthly Cleanup",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "7:45 am",
-      "endTime": null,
-      "venue": "Guadalupe River Park",
-      "address": "438 Coleman Ave, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.neighborhoodhands.org/current-program.html",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-10-03"
-      }
     },
     {
       "id": "d341eeedfe4c",
@@ -7650,29 +7631,6 @@
       }
     },
     {
-      "id": "83db750b0311",
-      "title": "Glass Pumpkin Festival",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "10:00 AM",
-      "endTime": "9:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "OCTOBER 4 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
-      "url": "https://santanarow.com/event/glass-pumpkin-festival/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-10-03",
-        "checkedAt": "2026-10-04T02:15:55.138Z"
-      }
-    },
-    {
       "id": "99b03214d5f5",
       "title": "Glass Pumpkin Festival",
       "date": "2026-10-04",
@@ -7692,7 +7650,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-04",
-        "checkedAt": "2026-10-04T02:15:55.138Z"
+        "checkedAt": "2026-10-04T16:08:32.730Z"
       }
     },
     {
@@ -7715,7 +7673,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-04T02:15:55.138Z"
+        "checkedAt": "2026-10-04T16:08:32.731Z"
       }
     },
     {
@@ -7738,7 +7696,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-04T02:15:55.139Z"
+        "checkedAt": "2026-10-04T16:08:32.731Z"
       }
     },
     {
@@ -7761,7 +7719,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-04T02:15:55.139Z"
+        "checkedAt": "2026-10-04T16:08:32.731Z"
       }
     },
     {
@@ -7784,7 +7742,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-04T02:15:55.139Z"
+        "checkedAt": "2026-10-04T16:08:32.731Z"
       }
     },
     {
@@ -7807,7 +7765,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-04T02:15:55.139Z"
+        "checkedAt": "2026-10-04T16:08:32.731Z"
       }
     },
     {
@@ -7860,23 +7818,6 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pooch-Plunge/Pooch-Plunge-Event",
       "source": "City of Cupertino",
       "kidFriendly": false
-    },
-    {
-      "id": "346d8b120070",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "a88a93fcaf9b",
@@ -7936,6 +7877,23 @@
       "displayDate": "Sat, Oct 31",
       "time": "11:00 AM",
       "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "304e597fe848",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "12:00 PM",
+      "endTime": "04:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -10480,23 +10438,6 @@
       "kidFriendly": false
     },
     {
-      "id": "e6c58e812d04",
-      "title": "Opening Weekend",
-      "date": "2026-10-03",
-      "displayDate": "Sat, Oct 3",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Samisa Poster Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-12",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "0c3026fa9236",
       "title": "SOMBR",
       "date": "2026-10-07",
@@ -10735,6 +10676,23 @@
       "kidFriendly": false
     },
     {
+      "id": "776a7391ea30",
+      "title": "Don Omar",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "8:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/don-omar",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
       "id": "c54ccdf23d60",
       "title": "The Tech Challenge Virtual Interest Session",
       "date": "2026-10-20",
@@ -10905,6 +10863,108 @@
       "kidFriendly": true
     },
     {
+      "id": "a2e9918fb28c",
+      "title": "Representation Matters Film Festival (Virtual Viewing)",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": null,
+      "endTime": null,
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -11022,108 +11082,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
