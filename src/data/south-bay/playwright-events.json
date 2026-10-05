@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-04T16:09:45.496Z",
+    "generatedAt": "2026-10-05T02:17:14.921Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 560,
+    "eventCount": 558,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (120)",
-      "Los Gatos Library (148)",
+      "Mountain View Public Library (119)",
+      "Los Gatos Library (147)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (15)",
-      "History San Jose (5)",
+      "Linden Tree Books (17)",
+      "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
@@ -18,15 +18,15 @@
       "San Jose Theaters (19)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (8)",
-      "Santana Row (6)",
+      "Santana Row (5)",
       "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (7)",
       "SAP Center (15)",
       "The Tech Interactive (10)",
-      "Peninsula Open Space Trust (6)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (6)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 125,
+        "count": 124,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 148,
+        "count": 147,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 15,
+        "count": 17,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -118,14 +118,14 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 10,
+        "count": 8,
         "error": null,
         "sources": [
           "History San Jose"
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 6,
+        "count": 5,
         "error": null,
         "sources": [
           "Santana Row"
@@ -338,39 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 6,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "5f966a989bf6",
-      "title": "Banned Book Week Trivia",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "2:00 PM",
-      "endTime": "3:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required and seats are limited. This event is intended for ages 15 and up only. What do you know about banned books or Banned Book Week in general? Join us to test your knowledge on all things banned book related! In teams of 5, you will work together to answer 40 questions from 4 related categories. Fly solo or come with your friends, the top 3 teams will take home a prize. If you follow @mvpubliclibrary, your team will receive 2 bonus points! Light refreshments and snacks will be provided. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Teens",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17536954",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "98497728d7af",
       "title": "Outdoor Storytime",
@@ -2924,27 +2903,6 @@
       "url": "https://losgatosca.libcal.com/event/17651791",
       "source": "Los Gatos Library",
       "kidFriendly": true
-    },
-    {
-      "id": "0bc7e325e93e",
-      "title": "Nature Book Club",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "Nature lovers and science enthusiasts, we invite you to be part of our Nature Book Club! Every two months, we’ll explore nonfiction books about nature and science, and compare notes in a friendly, welcoming discussion. August's book is The Wild Dark , by Craig Childs. About The Wild Dark: At a time when most people on Earth live in regions of acute light pollution, Craig Childs takes us on a journey to rediscover the awesome power of night itself. Seeking not the absence of light, but the presence of the universe, master storyteller Craig Childs sets out to bike from the blinding lights of the Las Vegas Strip to one of the darkest spots in North America. A fearless explorer of both the natural world and the human imagination, Childs guides us on a quest to rediscover the heavens and to ask: \"What does it do to us to not see the night sky?\" The Wild Dark is at once an adventure story, a field guide, and a celebration of the awesome power of night itself, inviting us to look up and to look inward, eyes wide and sparkling with stars. CRAIG CHILDS has published more than a dozen critically acclaimed books, including The Secret Knowledge of Water , Atlas of a Lost World , Virga & Bone , and Tracing Time . Many of his books have won awards including Reading the West Book Award, Southwest Book of the Year, Foreword INDIES medalist, the Orion Book Award, and more. Childs lives in southwest Colorado.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17361056",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "3d0c6ab64c5c",
@@ -6390,6 +6348,28 @@
       }
     },
     {
+      "id": "af55e79f6fda",
+      "title": "Book Launch with Wendelin Van Draanen — In conversation with Mark Parsons",
+      "date": "2026-10-21",
+      "displayDate": "Wed, Oct 21",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-10-21"
+      }
+    },
+    {
       "id": "05a250eec959",
       "title": "Conversation with Trish Lundy & Charlotte Lillie Balogh",
       "date": "2026-10-24",
@@ -6544,6 +6524,28 @@
       }
     },
     {
+      "id": "f42b72258ae4",
+      "title": "Book Launch with Nathan Hale",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-11-12"
+      }
+    },
+    {
       "id": "367630676145",
       "title": "I Am Human: Storytime + Creative Writing Workshop",
       "date": "2026-11-15",
@@ -6586,23 +6588,6 @@
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-11-19"
       }
-    },
-    {
-      "id": "6cec9e611f8c",
-      "title": "Low Times Car Show",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "12:00 pm",
-      "endTime": "5:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://historysanjose.org/event/low-times-car-show/",
-      "source": "History San Jose",
-      "kidFriendly": false
     },
     {
       "id": "490ed1d1279a",
@@ -7404,8 +7389,8 @@
       "kidFriendly": false
     },
     {
-      "id": "3661d9868f7e",
-      "title": "Toddler Storytime",
+      "id": "f538e79e427b",
+      "title": "All Ages Storytime",
       "date": "2026-10-04",
       "displayDate": "Sun, Oct 4",
       "time": "11:30 am",
@@ -7421,8 +7406,8 @@
       "kidFriendly": true
     },
     {
-      "id": "f538e79e427b",
-      "title": "All Ages Storytime",
+      "id": "3661d9868f7e",
+      "title": "Toddler Storytime",
       "date": "2026-10-04",
       "displayDate": "Sun, Oct 4",
       "time": "11:30 am",
@@ -7631,29 +7616,6 @@
       }
     },
     {
-      "id": "99b03214d5f5",
-      "title": "Glass Pumpkin Festival",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "10:00 AM",
-      "endTime": "5:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "OCTOBER 4 - OCTOBER 4, 2026  Stroll through thousands of hand-blown glass pumpkins crafted by artists from the Bay Area Glass Institute and renowned glass artisans from around the country. This once-a-year event draws large crowds, so encourage guests to arrive early to find the perfect piece. The free public event includes live glassblowing demonstrations using a mobile hotshop trailer, with unique glass art available for purchase.Santana Row Glass Pumpkin Festival Schedule:Friday, October 2nd from 3 pm – 9 pmSaturday, October 3rd from 10 am – 9 pmSunday, October 4th from 10 am – 5 pm",
-      "url": "https://santanarow.com/event/glass-pumpkin-festival/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-10-04",
-        "checkedAt": "2026-10-04T16:08:32.730Z"
-      }
-    },
-    {
       "id": "823f8f059298",
       "title": "Makers Market's Local Artist Street Fair",
       "date": "2026-10-10",
@@ -7673,7 +7635,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-04T16:08:32.731Z"
+        "checkedAt": "2026-10-05T02:15:54.657Z"
       }
     },
     {
@@ -7696,7 +7658,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-04T16:08:32.731Z"
+        "checkedAt": "2026-10-05T02:15:54.658Z"
       }
     },
     {
@@ -7719,7 +7681,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-04T16:08:32.731Z"
+        "checkedAt": "2026-10-05T02:15:54.658Z"
       }
     },
     {
@@ -7742,7 +7704,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-04T16:08:32.731Z"
+        "checkedAt": "2026-10-05T02:15:54.658Z"
       }
     },
     {
@@ -7765,7 +7727,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-04T16:08:32.731Z"
+        "checkedAt": "2026-10-05T02:15:54.659Z"
       }
     },
     {
@@ -10863,108 +10825,6 @@
       "kidFriendly": true
     },
     {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -11082,6 +10942,108 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "a2e9918fb28c",
+      "title": "Representation Matters Film Festival (Virtual Viewing)",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": null,
+      "endTime": null,
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
