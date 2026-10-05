@@ -1,28 +1,28 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-05T02:17:14.921Z",
+    "generatedAt": "2026-10-05T15:04:47.830Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 558,
+    "eventCount": 556,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (119)",
-      "Los Gatos Library (147)",
+      "Los Gatos Library (146)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (17)",
+      "Linden Tree Books (16)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
       "Mountain Winery (10)",
-      "San Jose Theaters (19)",
+      "San Jose Theaters (20)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (8)",
       "Santana Row (5)",
       "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
-      "Levi's Stadium (7)",
+      "Levi's Stadium (6)",
       "SAP Center (15)",
       "The Tech Interactive (10)",
       "San Jose Museum of Art (6)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 147,
+        "count": 146,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 17,
+        "count": 16,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -183,7 +183,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 19,
+        "count": 20,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -285,7 +285,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -2880,29 +2880,6 @@
       "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "fac79ea83847",
-      "title": "Banned Books Week",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": null,
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "At Los Gatos Library, we believe: Books are tools for understanding complex issues, at any age. Everyone deserves to see themselves reflected in a library’s books. Individuals should be trusted to make their own decisions about what to read. Join us in celebrating your freedom to read! This week, come by the Library and take part in one of our Banned Books Week activities. You can add a leaf or apple to our tree mural on the doors, see what our Teen Room would look like without censored books, or check out a banned or challenged book from our collection .",
-      "sourceAudiences": [
-        "Children",
-        "Teens",
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17651791",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "3d0c6ab64c5c",
@@ -6216,28 +6193,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f5db3f49aa48",
-      "title": "Story Writing Workshops for Kids",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "2:30pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-04"
-      }
-    },
-    {
       "id": "5e2f41e7fc94",
       "title": "Book Launch with Marley Rose-Teter — In conversation with Samantha Chong",
       "date": "2026-10-09",
@@ -7066,23 +7021,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b7fe15176b7f",
-      "title": "Gaurav Kapoor Live",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": "5:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "7511a0202ce9",
       "title": "Phantom of The Opera – Broadway San Jose",
       "date": "2026-10-07",
@@ -7389,10 +7327,44 @@
       "kidFriendly": false
     },
     {
-      "id": "f538e79e427b",
+      "id": "fc2cec8c3979",
+      "title": "Kanan Gill: Not This Again",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "7:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "5fac58395a64",
+      "title": "W.A.S.P.",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "a03707dce239",
       "title": "All Ages Storytime",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
+      "date": "2026-10-05",
+      "displayDate": "Mon, Oct 5",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7406,10 +7378,10 @@
       "kidFriendly": true
     },
     {
-      "id": "3661d9868f7e",
+      "id": "3d323efed442",
       "title": "Toddler Storytime",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
+      "date": "2026-10-05",
+      "displayDate": "Mon, Oct 5",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7635,7 +7607,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-05T02:15:54.657Z"
+        "checkedAt": "2026-10-05T15:03:31.772Z"
       }
     },
     {
@@ -7658,7 +7630,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-05T02:15:54.658Z"
+        "checkedAt": "2026-10-05T15:03:31.772Z"
       }
     },
     {
@@ -7681,7 +7653,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-05T02:15:54.658Z"
+        "checkedAt": "2026-10-05T15:03:31.772Z"
       }
     },
     {
@@ -7704,7 +7676,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-05T02:15:54.658Z"
+        "checkedAt": "2026-10-05T15:03:31.772Z"
       }
     },
     {
@@ -7727,7 +7699,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-05T02:15:54.659Z"
+        "checkedAt": "2026-10-05T15:03:31.772Z"
       }
     },
     {
@@ -8728,7 +8700,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8745,7 +8717,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8762,7 +8734,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8779,7 +8751,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8796,7 +8768,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10278,23 +10250,6 @@
       "description": "Feel the earth move under your feet! Soulful and irresistible, this feel-good musical tells the true story of the woman behind the soundtrack of our lives. From teenage songwriter to chart-topping legend, Carole King finds her voice in a world that wasn’t always ready to hear it. Set against the vibrant music scene of the 1950s and 1960s, the journey follows love, resilience, the sort of friendships that shape a life—and a career that changed music forever. Featuring a thrilling lineup of iconic hits including “You’ve Got a Friend,” “It’s Too Late,” and “You Make Me Feel Like a Natural Woman,” Beautiful makes you laugh, tear up, and leave the theatre humming all the way home.",
       "url": "https://my.theatreworks.org/7464/7619",
       "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "d5665b3032c3",
-      "title": "DENVER BRONCOS VS. SAN FRANCISCO 49ERS",
-      "date": "2026-10-04",
-      "displayDate": "Sun, Oct 4",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
       "kidFriendly": false
     },
     {
