@@ -1,97 +1,99 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-04T04:45:35.988Z",
+    "generatedAt": "2026-10-05T04:45:38.893Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 7
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 7,
-    "placesExtracted": 4,
+    "threadsMined": 8,
+    "placesExtracted": 3,
     "placesMatched": 0,
-    "placeGaps": 4,
-    "eventsExtracted": 2,
-    "eventsMatched": 1,
-    "eventGaps": 1,
-    "autoAppendedOpenings": 0
+    "placeGaps": 3,
+    "eventsExtracted": 3,
+    "eventsMatched": 0,
+    "eventGaps": 3,
+    "autoAppendedOpenings": 1
   },
   "placeGaps": [
     {
-      "name": "Fremont Peak Observatory",
-      "city": "",
-      "kind": "venue",
-      "context": "public stargazing programs",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
-        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
-        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
-        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
-        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
-      ]
-    },
-    {
-      "name": "Illusive Games",
+      "name": "Spark Social San Jose",
       "city": "San Jose",
-      "kind": "retail",
-      "context": "local game store hosting Commander Night, Magic The Gathering",
+      "kind": "venue",
+      "context": "new venue opening Friday Oct 9",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
-        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
-        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
-        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
-        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
+        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
+        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
+        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
       ]
     },
     {
-      "name": "Hokkaido Buffet",
+      "name": "Campbell Cafe and More",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "possibly closed permanently, located on Stevens Creek",
+      "context": "formerly Bayon Temple, Cambodian dishes, Banh Mi, breakfast sandwiches, 2425 South Bascom",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwx9pp/i_just_landed_a_job_in_milpitas_help_me_figure/",
-        "https://www.reddit.com/r/SanJose/comments/1wwfur6/did_hokkaido_buffet_close/"
+        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
+        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
+        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
       ]
     },
     {
-      "name": "KLA",
-      "city": "Milpitas",
-      "kind": "other",
-      "context": "user accepted a job here",
+      "name": "Coyote Trail",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "asked if decent for hiking with dog",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwx9pp/i_just_landed_a_job_in_milpitas_help_me_figure/",
-        "https://www.reddit.com/r/SanJose/comments/1wwfur6/did_hokkaido_buffet_close/"
+        "https://www.reddit.com/r/SanJose/comments/1wxak36/on_leave_visiting_san_jose_with_my_pup/",
+        "https://www.reddit.com/r/SanJose/comments/1wxr7pa/early_morning_running_partners/",
+        "https://www.reddit.com/r/SanJose/comments/1wxi7bc/how_caltrain_solved_the_commuter_rail_problem/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Commander Night",
+      "name": "Urban Compassion Project San Jose Cleanup",
+      "when": "November 7",
+      "city": "San Jose",
+      "context": "community cleanup targeting illegal dumping areas",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
+        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
+        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
+      ]
+    },
+    {
+      "name": "Little Italy Car Show",
       "when": "",
       "city": "San Jose",
-      "context": "Magic The Gathering event at Illusive Games",
+      "context": "car show featuring Ferraris and a Pagani",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
-        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
-        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
-        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
-        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
+        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
+        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
+        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
+      ]
+    },
+    {
+      "name": "Willow Glen Coffee and Cars",
+      "when": "every first Sunday of the month",
+      "city": "San Jose",
+      "context": "monthly car meetup in Willow Glen",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
+        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
+        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
+        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
       ]
     }
   ],
   "placeMatches": [],
-  "eventMatches": [
-    {
-      "name": "Phantom of the Opera",
-      "when": "next week",
-      "city": "San Jose",
-      "context": "musical the poster plans to attend",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wwxgvk/san_jose_spots/",
-        "https://www.reddit.com/r/SanJose/comments/1wwpxpy/second_best_place_for_pozole/",
-        "https://www.reddit.com/r/SanJose/comments/1wwett5/bruh_are_we_for_real/",
-        "https://www.reddit.com/r/SanJose/comments/1wx2ak9/fremont_peak_observatory_what_are_the_public/",
-        "https://www.reddit.com/r/SanJose/comments/1wwxfv1/beginner_magic_the_gathering_buddies/"
-      ],
-      "matchedName": "The Phantom of the Opera - Closed Caption Performance"
-    }
-  ]
+  "eventMatches": []
 }

@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-04T04:37:55.180Z",
+      "generatedAt": "2026-10-05T04:37:17.393Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 26 – Oct 3",
+      "dateRange": "Sep 27 – Oct 4",
       "stats": {
-        "total": 406,
+        "total": 395,
         "notable": 18,
         "newUnits": 7,
-        "totalValuation": 12002492
+        "totalValuation": 11999492
       },
       "permits": [
         {
@@ -137,29 +137,29 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-04T04:37:57.763Z",
+      "generatedAt": "2026-10-05T04:37:19.674Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 26 – Oct 3",
+      "dateRange": "Sep 27 – Oct 4",
       "stats": {
-        "total": 111,
+        "total": 110,
         "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02792",
-          "address": "2624 Cowper St",
+          "id": "26BLD-02765",
+          "address": "3142 Flowers Ln",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-30",
+          "issueDate": "2026-09-28",
           "subtype": "Permit Issued"
         },
         {
@@ -175,28 +175,16 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02765",
-          "address": "3142 Flowers Ln",
+          "id": "26BLD-02792",
+          "address": "2624 Cowper St",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-28",
+          "issueDate": "2026-09-30",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00282",
-          "address": "180 Lytton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-01",
-          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00279",
@@ -220,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-30",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00282",
+          "address": "180 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-01",
           "subtype": "Over the Counter Approved"
         }
       ]

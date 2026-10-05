@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T04:38:09.803Z",
+  "generatedAt": "2026-10-05T04:37:52.049Z",
   "meetings": {
     "san-jose": {
       "date": "2026-10-06",
@@ -36,7 +36,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -74,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -91,7 +91,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-05",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -126,23 +126,6 @@
         "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
       }
     },
-    "milpitas": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "19:00",
-      "bodyName": "City Council Meeting",
-      "location": "Milpitas City Hall",
-      "closedSession": false,
-      "url": "https://www.milpitas.gov/129/Agendas-Minutes",
-      "civicClerkEventId": 2955,
-      "agendaItems": [],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "civicclerk",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
-      }
-    },
     "los-altos": {
       "date": "2026-10-13",
       "displayDate": "Tue, Oct 13",
@@ -157,7 +140,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-04T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -196,7 +179,8 @@
     },
     "milpitas": {
       "provider": "CivicClerk",
-      "status": "ok"
+      "status": "error",
+      "detail": "The operation was aborted due to timeout"
     },
     "los-altos": {
       "provider": "CivicClerk",
