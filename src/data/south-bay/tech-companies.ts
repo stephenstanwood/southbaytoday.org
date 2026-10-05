@@ -1702,6 +1702,23 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#2563eb",
     url: "https://palebluedot.ai",
   },
+  // Armadin's Oct 1 release carries a Palo Alto, Calif. dateline; its March
+  // launch coverage (SecurityWeek) also calls it Palo Alto-based. $445M is the
+  // cumulative total including March's $189.9M seed + Series A, not this round.
+  // https://www.prnewswire.com/news-releases/armadin-raises-255-5-million-series-b-to-scale-effective-autonomous-security-302895278.html
+  {
+    id: "armadin",
+    name: "Armadin",
+    city: "Palo Alto",
+    category: "security",
+    round: "Series B",
+    amount: "$255.5M",
+    date: "2026-10-01",
+    tagline:
+      "Palo Alto's Armadin runs AI agents that attack a company's own systems the way real hackers would, chaining vulnerabilities from initial break-in through to cloud compromise so they can be fixed first. Led by Mandiant founder Kevin Mandia, it raised a $255.5M Series B co-led by Andreessen Horowitz and Accel at a valuation above $2.5B, seven months after launching. Total funding is now $445M.",
+    color: "#4f46e5",
+    url: "https://armadin.com",
+  },
   // CScale's Sep 30 release confirms both the $145M Series C and Palo Alto HQ
   // in its boilerplate. The $188M figure is cumulative, not this round's size.
   // Its own contact page also lists the HQ at 3000 El Camino Real, Palo Alto.
