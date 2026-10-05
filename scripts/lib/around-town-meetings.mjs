@@ -72,3 +72,13 @@ export function hasUnsupportedMeetingAction(item, meeting) {
     `\\b(?:council|commission|committee|board)\\s+(?:also\\s+)?${action}\\b`, "i",
   ).test(evidence));
 }
+
+const CURRENT_BODY_ACTION = /\b(?:council|commission|committee|board|zoning administrator)\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny)\b|(?:weighs|considers)\b)/i;
+
+/** An old agenda supports dated agenda language, not a new pending hearing. */
+export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(item?.date || "")
+      || !/^\d{4}-\d{2}-\d{2}$/.test(asOfDate || "")
+      || item.date >= asOfDate || meeting?.source === "youtube-transcript") return false;
+  return CURRENT_BODY_ACTION.test(`${item?.headline || ""} ${item?.summary || ""}`);
+}

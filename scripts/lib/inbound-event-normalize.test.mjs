@@ -11,6 +11,27 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("verified Sunnyvale online talks keep their format when the newsletter loses its location", () => {
+  const talks = [
+    ["Pasta with a Twist: A Fresh Take on Italian Classics with Joe Sasto", "2026-10-06"],
+    ["Art in Flight: Reinventing Postmodernism with Carolyn Russo", "2026-10-08"],
+  ];
+  for (const [title, date] of talks) {
+    const raw = {
+      id: `fixture-${date}`, cityKey: "sunnyvale", title,
+      startsAt: `${date}T11:00:00-07:00`, endsAt: `${date}T12:00:00-07:00`,
+      location: null, sourceUrl: null,
+    };
+    const event = fetchInboundEvents({ events: [raw], today: "2026-10-04" })[0];
+    assert.equal(event.virtual, true);
+    assert.equal(event.venue, "Online");
+    assert.equal(event.time, "11:00 AM");
+    assert.match(event.url, /-curm-10\/-cury-2026/);
+    assert.equal(normalizeInboundEventPresentation({ ...raw, cityKey: "campbell" }).virtual, undefined);
+    assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: raw.startsAt.replace("2026", "2027") }).virtual, undefined);
+  }
+});
+
 test("Campbell's verified Saturday date is applied before the past-occurrence filter", () => {
   const raw = {
     id: "inbound_mu62yvos_eogfnd", cityKey: "campbell",

@@ -1,6 +1,24 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./around-town-meetings.mjs";
+
+test("old agendas cannot describe their hearing or appointment as upcoming", () => {
+  const meeting = { date: "2026-09-30", excerpt: "Proposed use permit" };
+  for (const text of [
+    "The Zoning Administrator is scheduled to consider a use permit.",
+    "Council to discuss appointing new City Attorney",
+    "Council weighs legal action against fire truck makers",
+  ]) {
+    assert.equal(hasPastAgendaFutureFraming({ date: "2026-09-30", headline: text }, meeting, "2026-10-04"), true);
+  }
+  assert.equal(hasPastAgendaFutureFraming({
+    date: "2026-09-30", summary: "The September 30 agenda listed a use permit for Chabad of Sunnyvale.",
+  }, meeting, "2026-10-04"), false);
+  const future = { date: "2026-10-06", headline: "Council will consider a use permit" };
+  assert.equal(hasPastAgendaFutureFraming(future, meeting, "2026-10-04"), false);
+  assert.equal(hasPastAgendaFutureFraming(future, meeting, "2026-10-06"), false);
+  assert.equal(hasPastAgendaFutureFraming({ ...future, date: "2026-09-30" }, { source: "youtube-transcript" }, "2026-10-04"), false);
+});
 
 const config = {
   primegov: "cityofpaloalto.primegov.com",

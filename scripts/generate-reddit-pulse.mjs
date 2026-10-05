@@ -28,6 +28,7 @@ import { generateAndUploadResized } from "./social/lib/recraft.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { callClaude as callClaudeApi } from "./lib/claude.mjs";
 import { summaryEchoesTitle } from "./lib/reddit-summary-echo.mjs";
+import { normalizeComingSoonDiscovery } from "./lib/scc-food-openings.mjs";
 
 loadEnvLocal();
 
@@ -960,7 +961,9 @@ Return ONLY the JSON object, no other text.`;
       const fo = JSON.parse(readFileSync(ARTIFACTS.foodOpenings, "utf8"));
       fo.opened = fo.opened || [];
       fo.inspections = fo.inspections || [];
-      fo.comingSoon = fo.comingSoon || [];
+      const priorComingSoon = JSON.stringify(fo.comingSoon || []);
+      fo.comingSoon = (fo.comingSoon || []).map(normalizeComingSoonDiscovery);
+      const normalizedExisting = JSON.stringify(fo.comingSoon) !== priorComingSoon;
 
       const restaurantPosts = enriched.filter(
         (p) => p.category === "restaurant_news" && p.relevance >= 7,
@@ -989,11 +992,10 @@ Output JSON (no other text):
   "name": "<official business name, or empty string>",
   "city": "<South Bay city, or empty string>",
   "signal": "opened" | "comingSoon" | "closed" | "other",
-  "blurb": "<one short sentence — what's happening>",
   "confidence": <integer 1-10>
 }
 
-Be strict. If this is a recommendation thread, a question, or general chat, valid=false. Only true for clear opening/closing/expansion announcements about a specific named place. Skip retail / non-food. confidence ≥8 means we'll auto-add.`;
+Be strict. If this is a recommendation thread, a question, or general chat, valid=false. Only true for clear opening/closing/expansion announcements about a specific named place. Skip retail / non-food. confidence ≥8 means we'll auto-add a discovery lead, not a verified opening date or description.`;
 
         try {
           const raw = await callClaude(validatePrompt, 512);
@@ -1019,7 +1021,7 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
               continue;
             }
             const status = "coming-soon";
-            const entry = {
+            const entry = normalizeComingSoonDiscovery({
               id: `soon-reddit-${post.id}`,
               name: v.name,
               address: null,
@@ -1027,12 +1029,14 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
               cityName: cityResolved.cityName,
               date: null,
               status,
-              blurb: v.blurb || post.title,
+              // A high model confidence does not verify an opening date or
+              // description. Only a checked first-party override supplies copy.
+              blurb: null,
               source: post.permalink,
               sourceLabel: `r/${post.sub}`,
               discoveredAt: new Date().toISOString(),
               discoveryMethod: "reddit-pulse",
-            };
+            });
             fo.comingSoon.push(entry);
             existingNames.add(normName);
             appendedCount++;
@@ -1043,10 +1047,10 @@ Be strict. If this is a recommendation thread, a question, or general chat, vali
         }
       }
 
-      if (appendedCount > 0) {
+      if (appendedCount > 0 || normalizedExisting) {
         fo.generatedAt = new Date().toISOString();
         writeFileAtomic(ARTIFACTS.foodOpenings, JSON.stringify(fo, null, 2) + "\n");
-        console.log(`✅ Auto-appended ${appendedCount} coming-soon restaurant signals → scc-food-openings.json`);
+        console.log(`✅ ${appendedCount} new coming-soon signals; first-party copy checks applied → scc-food-openings.json`);
       }
     } catch (err) {
       console.warn("auto-append failed:", err.message);

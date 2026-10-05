@@ -93,6 +93,28 @@ export function isVerifiedOpeningRecord(record) {
     && record.openingEvidence.source.trim().length > 0;
 }
 
+// First-party coming-soon facts checked October 4, 2026. A Reddit post is a
+// discovery lead; its date and model-written blurb are not opening evidence.
+const VERIFIED_COMING_SOON_DISCOVERIES = new Map([
+  ["san-jose|spark social san jose", {
+    address: "140 S Montgomery Blvd",
+    blurb: "A food-truck park with a full bar, putt-putt and live music is planned at 140 S Montgomery Blvd.",
+    source: "https://visitsparksocial.com/san-jose/",
+    sourceLabel: "SPARK Social",
+  }],
+]);
+
+export function normalizeComingSoonDiscovery(record) {
+  if (record?.discoveryMethod !== "reddit-pulse") return record;
+  const key = `${record.cityId}|${words(record.name).join(" ")}`;
+  return {
+    ...record,
+    date: null,
+    blurb: null,
+    ...VERIFIED_COMING_SOON_DISCOVERIES.get(key),
+  };
+}
+
 /** Normalize recurring South Bay street-name variants from SCC permit data. */
 export function normalizeSouthBayAddress(value) {
   return String(value ?? "")

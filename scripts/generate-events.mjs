@@ -8893,6 +8893,7 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
         description: e.description ?? "",
         url: presentation.url,
         source: "City Newsletter",
+        ...(presentation.virtual === true ? { virtual: true } : {}),
         ...(image ? { image } : {}),
         kidFriendly,
       });

@@ -7,8 +7,40 @@ import {
   isAddressDerivedBusinessName,
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
+  normalizeComingSoonDiscovery,
 } from "./scc-food-openings.mjs";
 import { shouldSkip } from "../generate-scc-food-openings.mjs";
+
+test("Reddit discovery dates and blurbs cannot become verified opening claims", () => {
+  const lead = {
+    name: "Example Cafe", cityId: "san-jose", date: "2026-10-09",
+    blurb: "Opening Friday, October 9 with the city's largest food hall.",
+    source: "https://www.reddit.com/r/SanJose/comments/example/",
+    discoveryMethod: "reddit-pulse",
+  };
+  const result = normalizeComingSoonDiscovery(lead);
+  assert.equal(result.date, null);
+  assert.equal(result.blurb, null);
+  assert.equal(result.source, lead.source);
+  assert.equal(lead.date, "2026-10-09");
+  const permit = { ...lead, discoveryMethod: undefined };
+  assert.equal(normalizeComingSoonDiscovery(permit), permit);
+});
+
+test("SPARK Social uses its own coming-soon page without the Reddit opening date", () => {
+  const lead = {
+    name: "Spark Social San Jose", cityId: "san-jose", date: null,
+    blurb: "A food hall opening on Friday, October 9.",
+    discoveryMethod: "reddit-pulse",
+  };
+  const result = normalizeComingSoonDiscovery(lead);
+  assert.equal(result.source, "https://visitsparksocial.com/san-jose/");
+  assert.equal(result.date, null);
+  assert.match(result.blurb, /food-truck park/);
+  assert.doesNotMatch(result.blurb, /October 9|food hall/);
+  assert.equal(normalizeComingSoonDiscovery({ ...lead, cityId: "santa-clara" }).blurb, null);
+  assert.deepEqual(normalizeComingSoonDiscovery(result), result);
+});
 
 test("normalizes De Anza street names from SCC permit spelling", () => {
   assert.equal(normalizeSouthBayAddress("1655 S Deanza Blvd"), "1655 S De Anza Blvd");

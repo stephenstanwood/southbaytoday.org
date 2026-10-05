@@ -37,6 +37,9 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // October 4 fact-check: these first-party pages confirm the occurrences.
+  ["2026-10-04|SUSD Board Candidate Forum", "https://ptasaratoga.membershiptoolkit.com/calendar/event/95402905"],
+  ["2026-10-04|Culinary Demo & Lunch: A Tour of Italy Through Pasta", "https://www.testarossa.com/"],
   ["2026-09-27|Triton Tea Time with Preston Metcalf", "https://www.tritonmuseum.org/events"],
   ["2026-09-27|Genealogy Society Sunday Social", "https://www.sclibrary.org/Home/Components/Calendar/Event/113847/67?curm=9&cury=2026&recordid=17517"],
   ["2026-09-28|Costume Design Talk with Bianca Hernandez-Knight", "https://www.library.sunnyvale.ca.gov/events/calendar-month-view"],
@@ -80,6 +83,16 @@ const VERIFIED_INBOUND_URLS = new Map([
   ["2027-01-14|Poetry Live! with Franny Choi and Cameron Awkward-Rich", "https://live.stanford.edu/events/26-27season/studio/poetry-live"],
   ["2027-03-16|Buena Vista Orchestra", "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/"],
 ]);
+
+// The newsletter extractor lost the ONLINE location on these two talks.
+// The library's dated October calendar explicitly labels both ONLINE:
+// https://www.library.sunnyvale.ca.gov/events/calendar-month-view/-curm-10/-cury-2026/-direct-true
+const SUNNYVALE_ONLINE_TALKS = new Set([
+  "2026-10-06|Pasta with a Twist: A Fresh Take on Italian Classics with Joe Sasto",
+  "2026-10-08|Art in Flight: Reinventing Postmodernism with Carolyn Russo",
+]);
+const SUNNYVALE_OCTOBER_CALENDAR =
+  "https://www.library.sunnyvale.ca.gov/events/calendar-month-view/-curm-10/-cury-2026/-direct-true";
 
 function detrack(url) {
   if (!url || !isTrackerUrl(url)) return url;
@@ -125,6 +138,11 @@ export function inboundClock(value) {
 function officialOverride(event) {
   const date = String(event?.startsAt || "").slice(0, 10);
   const identity = `${event?.title || ""} ${event?.location || ""}`;
+  if ((event?.cityKey === "sunnyvale"
+      || event?.fromEmail === "sunnyvalepubliclibrary@public.govdelivery.com")
+      && SUNNYVALE_ONLINE_TALKS.has(`${date}|${event?.title || ""}`)) {
+    return { venue: "Online", virtual: true, url: SUNNYVALE_OCTOBER_CALENDAR };
+  }
   // The city's Sept. 2026 notice gives doors at 5 PM and one address at 6 PM.
   // Normalize both newsletter copies before dedup so doors aren't a second talk.
   // https://www.santaclaraca.gov/recreation-community/events/state-of-the-city
@@ -247,6 +265,7 @@ export function normalizeInboundEventPresentation(event) {
     endTime,
     url: override?.url || detrack(event?.canonicalUrl) || detrack(event?.sourceUrl) || "",
     ...(override?.venue ? { venue: override.venue } : {}),
+    ...(override?.virtual === true ? { virtual: true } : {}),
     ...(typeof verified.kidFriendly === "boolean" ? { kidFriendly: verified.kidFriendly } : {}),
   };
 }

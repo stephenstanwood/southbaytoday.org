@@ -17,7 +17,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./lib/around-town-meetings.mjs";
 import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
@@ -188,6 +188,8 @@ NEVER REPORT THE BROWN ACT ATTENDANCE NOTICE: agendas for scoping meetings, stud
 DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: today is ${todayPT()} (Pacific). Any meeting dated ${todayPT()} or later has NOT happened yet — its agenda is a plan, not a record. Never write that the body "held", "met", "approved", "adopted", "discussed", or "voted" for such a meeting; write in the future tense ("is set to hold a study session", "will consider", "is scheduled to review") so the headline and summary agree. Same rule when an earlier-dated agenda reads as forward-looking ("proposed", "to consider", "study session"): don't upgrade it to an outcome.
 
 PAST AGENDAS ARE STILL AGENDAS: a date in the past does not prove an item was heard or a meeting took place. Unless the supplied source explicitly reports the discussion or action, write "the September 22 agenda listed…" or "a hearing was scheduled for…", never "the council held", "met", "heard", "discussed", or "weighed". Do not infer that approval is still pending.
+
+This rule applies to BOTH the headline and summary. An older agenda cannot establish that council currently "weighs" an item or "will discuss" it, or that a hearing "is scheduled" now. Give the original date and describe what its agenda listed.
 
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
@@ -374,6 +376,10 @@ async function gatherMeetingItems(meetingType) {
         }
         if (hasUnsupportedMeetingAction(item, sourceMeeting)) {
           console.warn(`  ⚠️  ${config.cityName}: dropped a completed-action claim supported only by an agenda`);
+          continue;
+        }
+        if (hasPastAgendaFutureFraming(item, sourceMeeting, today)) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped an old agenda framed as current or upcoming business`);
           continue;
         }
         const sourceUrl = source.sourceUrl;
