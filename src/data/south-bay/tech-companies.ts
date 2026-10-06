@@ -1684,6 +1684,28 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Clockwork.io (Clockwork Systems Inc.) — Oct 5 PR Newswire release
+  // datelines "PALO ALTO, Calif." No source names the round letter (SiliconANGLE,
+  // Pulse 2, and the release itself just say "new funding"), so it's entered as
+  // a Venture Round rather than guessing. $73M is the cumulative total, not this
+  // round. The Oct 2-5 sweep turned up nothing else in coverage: VC News Daily's
+  // lists for those days are otherwise SF, NY, or out of state, and GMI Cloud
+  // and Menos AI are already entered below.
+  // https://finance.yahoo.com/technology/ai/articles/clockwork-io-raises-31m-linkedin-130000766.html
+  // https://siliconangle.com/2026/10/05/clockwork-io-bags-31m-in-funding-to-keep-ai-inference-and-training-workloads-running-like-clockwork/
+  {
+    id: "clockwork-io",
+    name: "Clockwork.io",
+    city: "Palo Alto",
+    category: "cloud",
+    round: "Venture Round",
+    amount: "$31M",
+    date: "2026-10-05",
+    tagline:
+      "Palo Alto's Clockwork.io makes software that keeps AI training and inference jobs running when GPUs or network links fail, instead of restarting and wasting compute. Premji Invest, Wing Venture Capital, and Seligman Ventures co-led its $31M round, with NEA and e& Capital returning. LinkedIn, Together AI, and WhiteFiber are customers. Total funding is now $73M.",
+    color: "#2563eb",
+    url: "https://clockwork.io",
+  },
   // PaleBlueDot AI's Oct 1 release explicitly confirms Palo Alto HQ, beyond
   // the dateline. This $200M Series C is new equity after January's $150M
   // Series B, which stays below; July's $255M credit facility is not equity
