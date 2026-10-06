@@ -847,7 +847,8 @@ const TITLE_FIXES = {
   "Grpc's": "GRPC's",   // Guadalupe River Park Conservancy — Google Cal title-cases it
   " Uv ": " UV ",       // ultraviolet resin classes — library feeds/old data title-case the acronym
   "Ac/Dc": "AC/DC",     // City Newsletter sentence-cases the band name ("Ac/Dc concert")
-  "Cert Academy": "CERT Academy",  // Community Emergency Response Team — city calendars title-case it
+  "Cert Academy": "CERT Academy",
+  "Su Wellness Fair": "SU Wellness Fair", // Stanford Events title-cases its "SU" (Stanford University) prefix  // Community Emergency Response Team — city calendars title-case it
   // UC campus names arrive title-cased from university athletics + UC Master
   // Gardener program listings ("Uc Davis", "Uc Master Gardeners").
   "Uc Master Gardener": "UC Master Gardener",
@@ -901,6 +902,9 @@ const PROPER_NOUN_FIXES = {
   // slug carries the same typo, so every refresh re-imports it (2026-09-21).
   "Ohlone Langauge": "Ohlone Language",
   "Native Ameican": "Native American",
+  // SCCL's citizenship-prep listings title-case the agency acronym in both the
+  // heading area and body ("128 Uscis civics questions") — 2026-10-05.
+  Uscis: "USCIS",
 };
 
 function fixProperNouns(text) {
