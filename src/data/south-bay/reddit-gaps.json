@@ -1,99 +1,114 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-05T04:45:38.893Z",
+    "generatedAt": "2026-10-06T03:17:41.826Z",
     "generator": "generate-reddit-pulse",
     "sourceCount": 8
   },
   "summary": {
     "threadsMined": 8,
-    "placesExtracted": 3,
-    "placesMatched": 0,
-    "placeGaps": 3,
-    "eventsExtracted": 3,
+    "placesExtracted": 2,
+    "placesMatched": 1,
+    "placeGaps": 1,
+    "eventsExtracted": 5,
     "eventsMatched": 0,
-    "eventGaps": 3,
-    "autoAppendedOpenings": 1
+    "eventGaps": 5,
+    "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Spark Social San Jose",
+      "name": "Cambrian Park SDA Church",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "new venue opening Friday Oct 9",
+      "kind": "other",
+      "context": "location for free groceries distribution",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
-        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
-        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
-        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
-      ]
-    },
-    {
-      "name": "Campbell Cafe and More",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "formerly Bayon Temple, Cambodian dishes, Banh Mi, breakfast sandwiches, 2425 South Bascom",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
-        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
-        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
-        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
-      ]
-    },
-    {
-      "name": "Coyote Trail",
-      "city": "San Jose",
-      "kind": "park",
-      "context": "asked if decent for hiking with dog",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxak36/on_leave_visiting_san_jose_with_my_pup/",
-        "https://www.reddit.com/r/SanJose/comments/1wxr7pa/early_morning_running_partners/",
-        "https://www.reddit.com/r/SanJose/comments/1wxi7bc/how_caltrain_solved_the_commuter_rail_problem/"
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Urban Compassion Project San Jose Cleanup",
-      "when": "November 7",
+      "name": "Viva Callecita",
+      "when": "November 8",
       "city": "San Jose",
-      "context": "community cleanup targeting illegal dumping areas",
+      "context": "new mini-Viva Calle event",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
-        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
-        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
-        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
       ]
     },
     {
-      "name": "Little Italy Car Show",
+      "name": "Stand4 Inc Free Groceries",
+      "when": "Wed 10/7 3:30-5pm",
+      "city": "San Jose",
+      "context": "free groceries drive-thru, no ID required",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
+      ]
+    },
+    {
+      "name": "Public Service Job Fair",
+      "when": "Tue 10/27 11am-2pm",
+      "city": "San Jose",
+      "context": "job fair at 70 W Hedding Santa Clara County building",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
+      ]
+    },
+    {
+      "name": "Rock n Roll Half Marathon",
       "when": "",
       "city": "San Jose",
-      "context": "car show featuring Ferraris and a Pagani",
+      "context": "half marathon race, photos posted",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
-        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
-        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
-        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
       ]
     },
     {
-      "name": "Willow Glen Coffee and Cars",
-      "when": "every first Sunday of the month",
+      "name": "Neighborhood Home Haunt Halloween Haunted House",
+      "when": "Halloween",
       "city": "San Jose",
-      "context": "monthly car meetup in Willow Glen",
+      "context": "seeking scare actors for annual home haunt",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wxsymm/spark_social_san_jose_opening_on_friday_oct_9/",
-        "https://www.reddit.com/r/SanJose/comments/1wxqmnr/campbell_cafe_and_more_in_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wxxwaw/south_bay_we_heard_you_the_urban_compassion/",
-        "https://www.reddit.com/r/SanJose/comments/1wxni27/little_italy_car_show/",
-        "https://www.reddit.com/r/SanJose/comments/1wxkko8/willow_glen_coffee_and_cars/"
+        "https://www.reddit.com/r/SanJose/comments/1wxzq79/the_other_morning_we_saw_40_snowy_egrets_standing/",
+        "https://www.reddit.com/r/SanJose/comments/1wykyb2/i_live_in_japantown_there_are_a_lot_of_places_to/",
+        "https://www.reddit.com/r/SanJose/comments/1wybtur/looking_for_scare_actors_for_our_halloween/"
       ]
     }
   ],
-  "placeMatches": [],
+  "placeMatches": [
+    {
+      "name": "Valley Fair",
+      "city": "Santa Clara",
+      "kind": "retail",
+      "context": "mall with video about its history",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1wydq81/new_miniviva_calle_event_on_november_8_viva/",
+        "https://www.reddit.com/r/SanJose/comments/1wyf0ax/the_history_of_valley_fair/",
+        "https://www.reddit.com/r/SanJose/comments/1wyelu9/wed_107_3305pm_stand4_inc_cambrian_park_sda/",
+        "https://www.reddit.com/r/SanJose/comments/1wycrx2/vietnamese_food_dim_sum_east_side_san_jose/",
+        "https://www.reddit.com/r/SanJose/comments/1wy0grd/rock_n_roll_half_marathon/"
+      ],
+      "matchedName": "Bowlero Valley Fair"
+    }
+  ],
   "eventMatches": []
 }

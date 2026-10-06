@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-05T04:37:17.393Z",
+      "generatedAt": "2026-10-06T03:10:24.378Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 27 – Oct 4",
+      "dateRange": "Sep 28 – Oct 5",
       "stats": {
-        "total": 395,
-        "notable": 18,
-        "newUnits": 7,
-        "totalValuation": 11999492
+        "total": 484,
+        "notable": 28,
+        "newUnits": 11,
+        "totalValuation": 17994599
       },
       "permits": [
         {
@@ -24,6 +24,30 @@
           "valuation": 175920,
           "units": 1,
           "issueDate": "2026-10-01",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-087851-RS",
+          "address": "801 Bonita Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 131764,
+          "units": 1,
+          "issueDate": "2026-10-02",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-112270-RS",
+          "address": "2143 Mulberry Cl #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 125431,
+          "units": 1,
+          "issueDate": "2026-10-02",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -48,6 +72,18 @@
           "valuation": 83210,
           "units": 1,
           "issueDate": "2026-10-01",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-108118-RS",
+          "address": "1543 Burrell Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 72303,
+          "units": 1,
+          "issueDate": "2026-10-02",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -97,81 +133,33 @@
           "units": 1,
           "issueDate": "2026-09-30",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-139284-CI",
-          "address": "300 Holger Wy",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Nvidia Rack Installation",
-          "valuation": 1664913,
-          "units": 0,
-          "issueDate": "2026-09-28",
-          "subtype": "R & D Lab"
-        },
-        {
-          "id": "2026-139989-CI",
-          "address": "555 Coleman Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "555 Coleman Ave (Be 100%) Pv System",
-          "valuation": 800000,
-          "units": 0,
-          "issueDate": "2026-09-28",
-          "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-139990-CI",
-          "address": "561 Coleman Av",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "561 Coleman Ave (Be 100%) Pv System",
-          "valuation": 600000,
-          "units": 0,
-          "issueDate": "2026-09-28",
-          "subtype": "Commercial/Industrial"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-05T04:37:19.674Z",
+      "generatedAt": "2026-10-06T03:10:26.757Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 27 – Oct 4",
+      "dateRange": "Sep 28 – Oct 5",
       "stats": {
-        "total": 110,
-        "notable": 6,
+        "total": 85,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02765",
-          "address": "3142 Flowers Ln",
+          "id": "26BLD-02818",
+          "address": "940 Addison Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-28",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26BLD-02758",
-          "address": "2370 Waverley St",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-28",
+          "issueDate": "2026-10-04",
           "subtype": "Permit Issued"
         },
         {
@@ -185,6 +173,18 @@
           "units": 0,
           "issueDate": "2026-09-30",
           "subtype": "Permit Issued"
+        },
+        {
+          "id": "26PLN-00282",
+          "address": "180 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-01",
+          "subtype": "Over the Counter Approved"
         },
         {
           "id": "26PLN-00279",
@@ -208,18 +208,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-30",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00282",
-          "address": "180 Lytton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-01",
           "subtype": "Over the Counter Approved"
         }
       ]
