@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-06T02:17:16.173Z",
+    "generatedAt": "2026-10-06T15:04:34.156Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 554,
+    "eventCount": 555,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (119)",
-      "Los Gatos Library (144)",
+      "Los Gatos Library (145)",
       "San Jose Jazz (18)",
       "Linden Tree Books (16)",
       "History San Jose (4)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 144,
+        "count": 145,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -5847,6 +5847,26 @@
       "kidFriendly": true
     },
     {
+      "id": "a7cb49014ecf",
+      "title": "ESL Conversation Club",
+      "date": "2027-01-04",
+      "displayDate": "Mon, Jan 4",
+      "time": "11:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/16831257",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "9f8ed2a1d00c",
       "title": "Secret Sidewalk",
       "date": "2026-10-09",
@@ -7321,10 +7341,10 @@
       "kidFriendly": false
     },
     {
-      "id": "a03707dce239",
+      "id": "f9a816fb3606",
       "title": "All Ages Storytime",
-      "date": "2026-10-05",
-      "displayDate": "Mon, Oct 5",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7338,10 +7358,10 @@
       "kidFriendly": true
     },
     {
-      "id": "3d323efed442",
+      "id": "ca6645b8dc52",
       "title": "Toddler Storytime",
-      "date": "2026-10-05",
-      "displayDate": "Mon, Oct 5",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7567,7 +7587,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-06T02:15:56.152Z"
+        "checkedAt": "2026-10-06T15:03:17.251Z"
       }
     },
     {
@@ -7590,7 +7610,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-06T02:15:56.154Z"
+        "checkedAt": "2026-10-06T15:03:17.252Z"
       }
     },
     {
@@ -7613,7 +7633,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-06T02:15:56.154Z"
+        "checkedAt": "2026-10-06T15:03:17.252Z"
       }
     },
     {
@@ -7636,7 +7656,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-06T02:15:56.154Z"
+        "checkedAt": "2026-10-06T15:03:17.252Z"
       }
     },
     {
@@ -7659,7 +7679,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-06T02:15:56.154Z"
+        "checkedAt": "2026-10-06T15:03:17.252Z"
       }
     },
     {
