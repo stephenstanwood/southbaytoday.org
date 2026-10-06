@@ -941,7 +941,7 @@
   },
   "searchConsoleBrowser": {
     "available": true,
-    "reviewedAt": "2026-10-06T08:26:57.868Z",
+    "reviewedAt": "2026-10-06T08:36:19.026Z",
     "account": "stanwoodventures@gmail.com",
     "property": "https://southbaytoday.org/",
     "browser": "Brave Personal extension",
@@ -1260,6 +1260,12 @@
         "https": "Valid",
         "events": 39,
         "sitemapNote": "Temporary processing error in indexed snapshot; canonical sitemap fetched successfully"
+      },
+      {
+        "url": "https://southbaytoday.org/newsletters",
+        "status": "Indexed",
+        "https": "Valid",
+        "decision": "Archive index already indexed; repair its real internal links rather than bulk-requesting historic issues."
       }
     ],
     "opportunities": [
@@ -1285,6 +1291,10 @@
           "/event/2026-10-24-community-day-dia-de-los-muertos"
         ],
         "action": "Low CTR despite page-one positions; review source-backed, concise event snippets. Do not truncate real event names or invent optional schema facts."
+      },
+      {
+        "page": "/newsletters",
+        "action": "Expose all real published issues in the existing archive month groups; previously only the newest 30 of 108 were listed."
       }
     ],
     "verification": {
@@ -1292,13 +1302,35 @@
       "discoveryAudit": "Passed; noncritical existing source sameAs warnings",
       "seoParserRegression": "Passed",
       "crawlerSurfaceChecks": 24,
-      "crawlerSurfaceChecksPassed": 24
+      "crawlerSurfaceChecksPassed": 24,
+      "eventsLiveGoogleTest": {
+        "testedAt": "2026-10-06T08:29:00Z",
+        "availability": "URL is available to Google; page can be indexed",
+        "validEventItems": 38,
+        "criticalIssues": 0
+      },
+      "postdeployEventsCrawl": {
+        "crawled": 2263,
+        "sitemapUrlCount": 2263,
+        "errors": 0,
+        "notes": "The standalone audit CLI defaults to Infinity, unlike the weekly sweep. Future postdeploy audits must explicitly use --limit 250; do not compare full-crawl warning counts with the sampled baseline."
+      },
+      "indexNow": {
+        "status": 200,
+        "urls": 31
+      }
     },
     "gscActions": {
       "sitemapSubmissions": [],
       "validatedFixes": [],
-      "requestedIndexing": [],
-      "decision": "No sitemap submission or Validate fix warranted. Reassess /events after live deployment; all four inspected URLs were indexed."
+      "requestedIndexing": [
+        {
+          "url": "https://southbaytoday.org/events",
+          "result": "Accepted into priority crawl queue after deployed metadata and live Google test were verified",
+          "proof": "2026-10-06-gsc-indexing-request.jpg"
+        }
+      ],
+      "decision": "One materially changed core page requested; all other inspected pages already indexed. Canonical sitemap successful; no submission or Validate fix warranted."
     }
   },
   "changes": [
@@ -1307,6 +1339,20 @@
       "title": "South Bay Events Today & This Weekend — South Bay Today",
       "description": "Find concerts, festivals, free events, and family outings today and this weekend in San José, Santa Clara, Campbell, and nearby South Bay cities.",
       "reason": "The generic title did not identify place or the current-day/weekend coverage. GSC confirms relevant today queries and position 12.4; metadata keeps the canonical URL and real coverage."
+    },
+    {
+      "path": "src/pages/newsletters/index.astro",
+      "reason": "Remove the 30-issue display cutoff from the existing chronological month groups. The 108 published newsletter URLs were already in the sitemap, but 78 older issues were not linked from the archive index."
     }
-  ]
+  ],
+  "followupObservations": {
+    "archiveOrphansBeforeRepair": 78,
+    "savedPlanStaticGraphOrphans": 104,
+    "otherStaticGraphOrphan": "/city/santa-cruz",
+    "notes": [
+      "Saved plans remain published and included in their dedicated sitemap; no new top-level plan directory or deindexing was authorized.",
+      "23 filter query variants canonicalize to existing parent pages; the other missing-sitemap warning is an intentionally excluded past date.",
+      "Full-crawl findings include legitimate event-title lengths and optional structured-data information."
+    ]
+  }
 }

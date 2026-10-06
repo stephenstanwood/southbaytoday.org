@@ -65,8 +65,7 @@ if (token) {
         return m ? m[1] : null;
       })
       .filter((d): d is string => !!d)
-      .sort((a, b) => (a < b ? 1 : -1))
-      .slice(0, 30);
+      .sort((a, b) => (a < b ? 1 : -1));
 
     issues = dates.map((date) => {
       const dow = new Date(`${date}T12:00:00Z`).getUTCDay();
