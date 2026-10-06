@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-05T04:47:00.732Z"
+    "auditedAt": "2026-10-06T02:19:53.776Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1892,
+    "total": 1882,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -33,14 +33,14 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 270,
+    "total": 278,
     "totals": {
       "hard": 0,
-      "soft": 5,
+      "soft": 6,
       "info": 0
     },
     "byReason": {
-      "virtual-not-flagged": 3,
+      "virtual-not-flagged": 4,
       "meeting-title": 1,
       "unknown-slug": 1
     },
@@ -93,6 +93,20 @@
         "title": "Representation Matters Film Festival",
         "city": null,
         "date": "2026-10-09T17:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "inbound_muvkzssx_fl05lr",
+        "title": "Self Compassionate Budgeting Workshop",
+        "city": null,
+        "date": "2026-10-14T18:00:00-07:00",
         "location": "",
         "findings": [
           {
