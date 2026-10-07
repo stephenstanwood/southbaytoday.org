@@ -5591,11 +5591,23 @@ async function fetchEarthquakesSchedule() {
 
 // ── MiLB: San Jose Giants ──
 
-async function fetchSJGiantsSchedule() {
+// Last day of the window the schedule request covers each year (see below).
+const SJ_GIANTS_SEASON_END_MMDD = "10-05";
+
+async function fetchSJGiantsSchedule({ today = todayPT() } = {}) {
   console.log("  ⏳ SJ Giants (MiLB Stats API)...");
   try {
-    const today = todayPT();
-    const season = new Date().getFullYear();
+    const season = today.slice(0, 4);
+    const seasonEnd = `${season}-${SJ_GIANTS_SEASON_END_MMDD}`;
+    // Offseason (2026-10-07): from Oct 6 to Dec 31, startDate=today lands after
+    // endDate=Oct 5 and StatsAPI answers HTTP 400, which reported the source as
+    // down on every refresh and tripped the degraded-refresh alert. There are
+    // no home games left to find, so skip the request and report healthy-empty.
+    // On Jan 1 the season rolls over and the window covers the coming year.
+    if (today > seasonEnd) {
+      console.log(`  ✅ SJ Giants: offseason (window closed ${seasonEnd}), 0 home games`);
+      return [];
+    }
     // `gameType=R` hid the postseason, which is the best baseball of the year at
     // Excite Ballpark. Postseason uses F/D/L/W on StatsAPI; the window runs to
     // Oct 5 so a championship round stays visible instead of falling off a Sep
@@ -5607,7 +5619,7 @@ async function fetchSJGiantsSchedule() {
     // postseason codes; the window runs to Oct 5 so a run through the
     // championship round stays visible instead of falling off a Sep 30 cliff.
     const res = await fetch(
-      `https://statsapi.mlb.com/api/v1/schedule?sportId=14&teamId=476&startDate=${today}&endDate=${season}-10-05&gameType=R,F,D,L,W`,
+      `https://statsapi.mlb.com/api/v1/schedule?sportId=14&teamId=476&startDate=${today}&endDate=${seasonEnd}&gameType=R,F,D,L,W`,
       { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) },
     );
     if (!res.ok) throw new Error(`${res.status}`);

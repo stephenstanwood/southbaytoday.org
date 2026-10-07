@@ -36,7 +36,11 @@ function schedule(dates) {
   return { dates };
 }
 
-async function runWith(payload) {
+// Every fixture below is an in-season game, so the adapter runs as of a date
+// inside the schedule window rather than the real clock.
+const IN_SEASON = "2026-09-01";
+
+async function runWith(payload, { today = IN_SEASON } = {}) {
   const original = globalThis.fetch;
   const seen = [];
   globalThis.fetch = async (url) => {
@@ -47,7 +51,7 @@ async function runWith(payload) {
     });
   };
   try {
-    return { events: await fetchSJGiantsSchedule(), requests: seen };
+    return { events: await fetchSJGiantsSchedule({ today }), requests: seen };
   } finally {
     globalThis.fetch = original;
   }
@@ -272,4 +276,31 @@ test("a regular-season home game is unchanged", async () => {
     events[0].description,
     "San Jose Giants home game vs. Visalia Rawhide at Excite Ballpark.",
   );
+});
+
+// Offseason (2026-10-07): once today passed Oct 5, the request asked for
+// startDate=2026-10-07&endDate=2026-10-05, StatsAPI answered 400, and the
+// source reported as down on every refresh, which tripped the degraded alert.
+test("the offseason skips the request and reports no games instead of a 400", async () => {
+  const { events, requests } = await runWith(schedule([]), { today: "2026-10-07" });
+  assert.deepEqual(events, []);
+  assert.equal(requests.length, 0, "no request may be sent with startDate after endDate");
+});
+
+test("the offseason holds through Dec 31", async () => {
+  const { events, requests } = await runWith(schedule([]), { today: "2026-12-31" });
+  assert.deepEqual(events, []);
+  assert.equal(requests.length, 0);
+});
+
+test("Oct 5 is still inside the window", async () => {
+  const { requests } = await runWith(schedule([]), { today: "2026-10-05" });
+  assert.equal(requests.length, 1);
+  assert.match(requests[0], /startDate=2026-10-05&endDate=2026-10-05/);
+});
+
+test("the new year opens the coming season's window", async () => {
+  const { requests } = await runWith(schedule([]), { today: "2027-01-01" });
+  assert.equal(requests.length, 1);
+  assert.match(requests[0], /startDate=2027-01-01&endDate=2027-10-05/);
 });
