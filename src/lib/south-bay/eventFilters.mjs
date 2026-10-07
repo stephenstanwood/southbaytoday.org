@@ -762,6 +762,22 @@ export const COVERED_LOCATION =
   /\b(san jos[eé]|santa clara|sunnyvale|cupertino|campbell|milpitas|saratoga|los gatos|los altos|palo alto|mountain view|monte sereno|stanford|moffett)\b/i;
 
 /**
+ * True when a location string carries a full "<...City>, CA 9xxxx" postal tail
+ * for a place outside the coverage area. Campus feeds list off-site recruiting
+ * events with the host's address: SCU's "UC Berkeley Graduate Fair" at
+ * "Saint Mary's College of California | 1928 Saint Marys Rd Moraga, CA 94575"
+ * shipped on 2026-10-07 tagged Santa Clara. Name-based OUT_OF_AREA_LOCATION
+ * can't be used on campus feeds ("The Alameda" borders SCU), so key on the zip:
+ * covered cities sit in 943xx / 950xx / 951xx or name themselves.
+ */
+export function namesUncoveredCaPostalCity(text) {
+  const m = String(text || "").match(/^(.*?),?\s+CA\.?\s+(9\d{4})\b/i);
+  if (!m) return false;
+  if (COVERED_LOCATION.test(m[1])) return false;
+  return !/^(943|950|951)/.test(m[2]);
+}
+
+/**
  * Organized outings that depart from a covered city even though the
  * destination is elsewhere — "August Day Trip to San Francisco Zoo & Gardens"
  * is a Sunnyvale senior-center trip, not an SF event. These stay in the

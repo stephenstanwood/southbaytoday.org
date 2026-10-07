@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  namesUncoveredCaPostalCity,
   COVERED_LOCATION,
   LOCAL_DEPARTURE_TRIP,
   OUT_OF_AREA_LOCATION,
@@ -933,4 +934,12 @@ test("a same-day start is session 1 and stays recommendable", () => {
     }),
     false,
   );
+});
+
+test("namesUncoveredCaPostalCity flags off-site campus events by postal tail", () => {
+  assert.equal(namesUncoveredCaPostalCity("Saint Mary's College of California | 1928 Saint Marys Rd Moraga, CA 94575-2715 United States"), true);
+  assert.equal(namesUncoveredCaPostalCity("500 El Camino Real, Santa Clara, CA 95053"), false);
+  assert.equal(namesUncoveredCaPostalCity("Stanford, CA 94305"), false);
+  assert.equal(namesUncoveredCaPostalCity("Benson Center, The Alameda"), false);
+  assert.equal(namesUncoveredCaPostalCity(""), false);
 });

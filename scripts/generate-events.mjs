@@ -76,6 +76,7 @@ import {
   COVERED_LOCATION,
   LOCAL_DEPARTURE_TRIP,
   OUT_OF_AREA_LOCATION,
+  namesUncoveredCaPostalCity,
   REGISTRATION_CLOSED,
   REGISTRATION_NONE,
   VIRTUAL_EVENT_PATTERNS,
@@ -2274,6 +2275,9 @@ function cleanVenue(raw) {
   v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").replace(/\s*,\s*(?:,\s*)+/g, ", ").trim();
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
+  // LiveWhale pipes the street address after the place name:
+  // "Saint Mary's College of California | 1928 Saint Marys Rd Moraga, CA ...".
+  v = v.replace(/\s*\|\s*\d+\s.*$/, "").trim();
   // Bibliocommons puts the street address in a parenthetical after the place
   // name: "Backesto Park (551 N. 13th Street, San Jose, CA 95112)". Strip the
   // whole parenthetical when it opens with a house number — the address field
@@ -3568,6 +3572,10 @@ async function fetchScuEvents() {
       if (!start) return null;
       const geoCity = item.georssPoint ? nearestSouthBayCityFromGeoPoint(item.georssPoint) : null;
       if (item.georssPoint && !geoCity) {
+        skippedScu++;
+        return null;
+      }
+      if (namesUncoveredCaPostalCity(item.location || item.georssFeatureName)) {
         skippedScu++;
         return null;
       }
