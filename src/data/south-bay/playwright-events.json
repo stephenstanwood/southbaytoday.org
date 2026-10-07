@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-06T15:04:34.156Z",
+    "generatedAt": "2026-10-07T02:17:12.357Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 555,
+    "eventCount": 552,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (119)",
-      "Los Gatos Library (145)",
+      "Mountain View Public Library (116)",
+      "Los Gatos Library (142)",
       "San Jose Jazz (18)",
-      "Linden Tree Books (16)",
+      "Linden Tree Books (17)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
@@ -18,13 +18,13 @@
       "San Jose Theaters (20)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (8)",
-      "Santana Row (5)",
+      "Santana Row (6)",
       "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (6)",
       "SAP Center (15)",
-      "The Tech Interactive (10)",
+      "The Tech Interactive (11)",
       "San Jose Museum of Art (6)",
       "Peninsula Open Space Trust (6)"
     ],
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 124,
+        "count": 121,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 145,
+        "count": 142,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 16,
+        "count": 17,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 5,
+        "count": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -305,7 +305,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 10,
+        "count": 11,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -350,70 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "98497728d7af",
-      "title": "Outdoor Storytime",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Pioneer Park",
-      "address": "1146 Church St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
-      "sourceAudiences": [
-        "Babies",
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17142486",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "7899cfc5d416",
-      "title": "Pasta with a Twist: A Fresh Take on Italian Classics with Food Network Star Joe Sasto",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "food",
-      "cost": "free",
-      "description": "Registration is required. Click this link to attend the virtual event . It’s time to ditch the same boring recipes and bring big, playful creativity back into your kitchen! Join us for an online conversation with Top Chef finalist and Food Network star Joe Sasto as we explore his hit national bestselling cookbook, Breaking the Rules: A Fresh Take on Italian Classics . Whether you are a novice cook looking to build your kitchen confidence or an experienced chef eager to expand your culinary repertoire, Joe’s approachable philosophy will change how you view everyday ingredients. We will dive deep into his vibrant world of handcrafted pasta, step-by-step rolling techniques, and unexpected flavor profiles. From foundational family favorites like his mom’s red sauce to daring, crave-worthy creations like Corn Cacio e Pepe, Marinated Tomato “Amatriciana,” and Pesto Pinwheel Pull-Apart Bread, this conversation is an open invitation to trust your culinary instincts and cook with absolute freedom. Register today and learn how to make cooking fun again! Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author: Celebrity chef Joe Sasto found his love for cooking and appetite for Italian classics as a child at his mother's side. When the COVID-19 pandemic hit in March 2020, he pivoted his career by teaching virtual pasta-making classes. With more than half a billion likes and countless viral social media videos, Sasto has become a recurring judge and chef personality across multiple shows on the Food Network. He's also competed and appeared on Food Network shows such as Guy Fieri's Tournament of Champions, Guy's Grocery Games, and Chopped, as well as Bravo's Top Chef and Top Chef All-stars. In 2022, Sasto made the Food Network's first-ever \"Hot List.\" Aside from his career as a chef, Sasto has developed a high-end customizable pasta and pizza tool line, and he is the creator of Tantos, the first puffed pasta chip, and a gourmet frozen ravioli brand, Ripi. His first cookbook, Breaking the Rules – a fresh take on Italian classics, was published in October 2025. He lives in Chicago and enjoys spending time with his pup, Tito, and his wife, Kait. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17423669",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "4365b85e227e",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "1:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 1:00pm to 2:30pm Click Here to Register for 3:00pm to 4:30pm",
-      "url": "https://mountainview.libcal.com/event/17686488",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "a90fe7380cc4",
       "title": "The Financial Side of Estate Planning: Beyond Wills and Trusts",
@@ -2879,69 +2815,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "611767a4a0de",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249571",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "86adcf2be290",
-      "title": "Online Author Talk : Joe Sasto",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. It’s time to ditch the same boring recipes and bring big, playful creativity back into your kitchen! Join us for an online conversation with Top Chef finalist and Food Network star Joe Sasto as we explore his hit national bestselling cookbook, Breaking the Rules: A Fresh Take on Italian Classics . Whether you are a novice cook looking to build your kitchen confidence or an experienced chef eager to expand your culinary repertoire, Joe’s approachable philosophy will change how you view everyday ingredients. We will dive deep into his vibrant world of handcrafted pasta, step-by-step rolling techniques, and unexpected flavor profiles. From foundational family favorites like his mom’s red sauce to daring, crave-worthy creations like Corn Cacio e Pepe, Marinated Tomato “Amatriciana,” and Pesto Pinwheel Pull-Apart Bread, this conversation is an open invitation to trust your culinary instincts and cook with absolute freedom. Register today and learn how to make cooking fun again! About the Author: Celebrity chef Joe Sasto found his love for cooking and appetite for Italian classics as a child at his mother's side. When the COVID-19 pandemic hit in March 2020, he pivoted his career by teaching virtual pasta-making classes. With more than half a billion likes and countless viral social media videos, Sasto has become a recurring judge and chef personality across multiple shows on the Food Network. He's also competed and appeared on Food Network shows such as Guy Fieri's Tournament of Champions, Guy's Grocery Games, and Chopped, as well as Bravo's Top Chef and Top Chef All-stars. In 2022, Sasto made the Food Network's first-ever \"Hot List.\" Aside from his career as a chef, Sasto has developed a high-end customizable pasta and pizza tool line, and he is the creator of Tantos, the first puffed pasta chip, and a gourmet frozen ravioli brand, Ripi. His first cookbook, Breaking the Rules – a fresh take on Italian classics, was published in October 2025. He lives in Chicago and enjoys spending time with his pup, Tito, and his wife, Kait.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17371394",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "9c7423f355bf",
-      "title": "Drop-In Tech Help",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "3:00 PM",
-      "endTime": "4:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "education",
-      "cost": "free",
-      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "url": "https://losgatosca.libcal.com/event/16035531",
-      "source": "Los Gatos Library",
       "kidFriendly": false
     },
     {
@@ -6393,6 +6266,28 @@
       }
     },
     {
+      "id": "489eb101bfde",
+      "title": "Story Writing Workshops for Kids",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "2:30pm",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-11-01"
+      }
+    },
+    {
       "id": "d46d22f2bf26",
       "title": "Hilo: The Holiday Special with Judd Winick",
       "date": "2026-11-06",
@@ -6593,23 +6488,6 @@
       "kidFriendly": false
     },
     {
-      "id": "710e83571a08",
-      "title": "Alphabet Rockers (Grade K-8)",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3063",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
-    },
-    {
       "id": "5f53ba65f823",
       "title": "FALL Creekside Ceramics Series – Adult Arts Education",
       "date": "2026-10-07",
@@ -6676,6 +6554,23 @@
       "url": "https://my.montalvoarts.org/overview/3065",
       "source": "Montalvo Arts Center",
       "kidFriendly": true
+    },
+    {
+      "id": "e1685c8f5e8f",
+      "title": "An Intimate Evening with Kalani Pe’a",
+      "date": "2026-10-23",
+      "displayDate": "Fri, Oct 23",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/kalani-pea/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
     },
     {
       "id": "b780636bb7e8",
@@ -7341,23 +7236,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f9a816fb3606",
-      "title": "All Ages Storytime",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "ca6645b8dc52",
       "title": "Toddler Storytime",
       "date": "2026-10-06",
@@ -7380,6 +7258,23 @@
       "date": "2026-10-10",
       "displayDate": "Sat, Oct 10",
       "time": null,
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "f9a816fb3606",
+      "title": "All Ages Storytime",
+      "date": "2026-10-06",
+      "displayDate": "Tue, Oct 6",
+      "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
@@ -7587,7 +7482,30 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-06T15:03:17.251Z"
+        "checkedAt": "2026-10-07T02:15:53.433Z"
+      }
+    },
+    {
+      "id": "0b185523645b",
+      "title": "Cars & Croissants on The Row",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "OCTOBER 18, 2026  Join us on Sunday, October 18th from 9am-12pm for the 100|OCT Cars and Croissants on The Row! Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers.Whether you’re a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.This event is FREE to attend. If you’d like to showcase your vehicle, click HERE to reserve a car display space. We look forward to seeing you on the Row!",
+      "url": "https://santanarow.com/event/cars-croissants-on-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-10-18",
+        "checkedAt": "2026-10-07T02:15:53.434Z"
       }
     },
     {
@@ -7610,7 +7528,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-06T15:03:17.252Z"
+        "checkedAt": "2026-10-07T02:15:53.434Z"
       }
     },
     {
@@ -7633,7 +7551,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-06T15:03:17.252Z"
+        "checkedAt": "2026-10-07T02:15:53.434Z"
       }
     },
     {
@@ -7656,7 +7574,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-06T15:03:17.252Z"
+        "checkedAt": "2026-10-07T02:15:53.434Z"
       }
     },
     {
@@ -7679,7 +7597,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-06T15:03:17.252Z"
+        "checkedAt": "2026-10-07T02:15:53.435Z"
       }
     },
     {
@@ -10631,6 +10549,23 @@
       "time": "6:30PM",
       "endTime": null,
       "venue": "IMAX Dome Theater",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "f3bb520bc689",
+      "title": "Spooky Science Slime Lab",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "11:00AM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "community",

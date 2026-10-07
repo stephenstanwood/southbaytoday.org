@@ -1,20 +1,35 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-06T03:18:05.085Z"
+    "auditedAt": "2026-10-07T02:19:42.598Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1883,
+    "total": 1891,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 2,
       "info": 0
     },
     "byReason": {
+      "virtual-not-flagged": 1,
       "unknown-slug": 1
     },
     "hard": [],
     "soft": [
+      {
+        "id": "sjpl-693866301e64afd01e4e227d",
+        "title": "Santa Teresa Book Club (Hybrid)",
+        "city": "san-jose",
+        "date": "2026-10-08",
+        "location": "290 International Circle San Jose",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
       {
         "id": "inbound-9542c24070ff7e38",
         "title": "Hands Only CPR/AED & Choking Relief Training",
@@ -33,7 +48,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 278,
+    "total": 284,
     "totals": {
       "hard": 0,
       "soft": 6,
