@@ -1684,6 +1684,11 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Note on the Oct 6-7 2026 sweep: no in-coverage round surfaced. VC News
+  // Daily's Oct 6 list is General Medicine (San Francisco), Aventra Defense
+  // Systems (Herndon, VA), and Sante (New York); a broader search only
+  // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
+  // all already entered.
   // Clockwork.io (Clockwork Systems Inc.) — Oct 5 PR Newswire release
   // datelines "PALO ALTO, Calif." No source names the round letter (SiliconANGLE,
   // Pulse 2, and the release itself just say "new funding"), so it's entered as
