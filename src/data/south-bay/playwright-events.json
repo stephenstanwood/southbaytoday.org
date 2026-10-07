@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-07T02:17:12.357Z",
+    "generatedAt": "2026-10-07T15:04:17.632Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 552,
+    "eventCount": 551,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (116)",
+      "Mountain View Public Library (115)",
       "Los Gatos Library (142)",
       "San Jose Jazz (18)",
       "Linden Tree Books (17)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (6)",
       "SAP Center (15)",
       "The Tech Interactive (11)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (6)"
+      "Peninsula Open Space Trust (6)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 121,
+        "count": 120,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -338,39 +338,16 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 6,
-        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
   "events": [
-    {
-      "id": "a90fe7380cc4",
-      "title": "The Financial Side of Estate Planning: Beyond Wills and Trusts",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "time": "6:30 PM",
-      "endTime": "7:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Most people think of estate planning as a legal task — a will, a trust, a folder in a drawer. But many of the decisions that determine how your assets actually reach your family are financial ones, made on account forms and beneficiary designations years apart. What you'll learn: What legal documents do... and don't . Wills, trusts, powers of attorney, and healthcare directives: what each one accomplishes, and where its authority stops. How your assets actually transfer . Why beneficiary designations and account titling often decide who receives what - no matter what your will says. Overlooked areas that cause issues . Outdated beneficiaries, joint ownership problems, blended families, digital footprints, overlooked retirement rules and uncoordinated advice. Taxes, family, and legacy goals . How inherited retirement accounts are taxed, and how to coordinate family, charitable, and legal decisions into a cohesive plan. Every attendee receives complimentary resources, including an Estate Planning Readiness Checklist to organize their own information. Who should attend: Retirees Those approaching retirement Parents and grandparents Anyone who has accumulated assets and wants to protect their family We are also hosting the same workshop on Thursday, October 8 at 2:00 p.m. Presented by Daniel L. Foss, ChFC, CLU.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17223777",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "c2068c6d5919",
       "title": "Baby Storytime",
@@ -7236,10 +7213,10 @@
       "kidFriendly": false
     },
     {
-      "id": "ca6645b8dc52",
+      "id": "336f292c7124",
       "title": "Toddler Storytime",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7270,10 +7247,10 @@
       "kidFriendly": true
     },
     {
-      "id": "f9a816fb3606",
+      "id": "df89bdd89e8e",
       "title": "All Ages Storytime",
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
+      "date": "2026-10-07",
+      "displayDate": "Wed, Oct 7",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7482,7 +7459,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-07T02:15:53.433Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -7505,7 +7482,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-07T02:15:53.434Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -7528,7 +7505,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-07T02:15:53.434Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -7551,7 +7528,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-07T02:15:53.434Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -7574,7 +7551,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-07T02:15:53.434Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -7597,7 +7574,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-07T02:15:53.435Z"
+        "checkedAt": "2026-10-07T15:03:00.433Z"
       }
     },
     {
@@ -10695,6 +10672,108 @@
       "kidFriendly": true
     },
     {
+      "id": "a2e9918fb28c",
+      "title": "Representation Matters Film Festival (Virtual Viewing)",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": null,
+      "endTime": null,
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -10812,108 +10891,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
