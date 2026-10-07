@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-06T03:10:24.378Z",
+      "generatedAt": "2026-10-07T03:11:01.375Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 28 – Oct 5",
+      "dateRange": "Sep 29 – Oct 6",
       "stats": {
-        "total": 484,
-        "notable": 28,
+        "total": 401,
+        "notable": 22,
         "newUnits": 11,
-        "totalValuation": 17994599
+        "totalValuation": 14134640
       },
       "permits": [
         {
@@ -137,19 +137,31 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-06T03:10:26.757Z",
+      "generatedAt": "2026-10-07T03:11:03.641Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 28 – Oct 5",
+      "dateRange": "Sep 29 – Oct 6",
       "stats": {
-        "total": 85,
-        "notable": 5,
+        "total": 94,
+        "notable": 7,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-02825",
+          "address": "1585 Edgewood Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-05",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-02818",
           "address": "940 Addison Av",
@@ -175,15 +187,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26PLN-00282",
-          "address": "180 Lytton Av",
+          "id": "26PLN-00284",
+          "address": "520 Bryant St",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "description": "OTC Architectural Review for one new, Blade sign which reads Bistro Yiaya Greek Yogurt.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-01",
+          "issueDate": "2026-10-05",
           "subtype": "Over the Counter Approved"
         },
         {
@@ -196,6 +208,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-09-30",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00282",
+          "address": "180 Lytton Av",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-01",
           "subtype": "Over the Counter Approved"
         },
         {
