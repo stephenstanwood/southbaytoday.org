@@ -2541,6 +2541,11 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // lunch is not food programming.
   if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(titleLower)) return "community";
   if (/\bstate of the (?:city|town)\b/.test(titleLower)) return "community";
+  // Election forums and police meet-and-greets are civic, whatever the venue.
+  // "Chamber of Commerce Candidate Forum" at Los Gatos Theater and "National
+  // Coffee with a Cop Day" at Sue's Gallery Café both shipped as arts via the
+  // theater/gallery venue words.
+  if (/\bcandidates?\s+(?:forum|debate|night|meet\s*(?:&|and)\s*greet)\b|\bcoffee\s+with\s+a\s+cop\b/.test(titleLower)) return "community";
   if (/\b(?:college|campus)\s+tour\b/.test(titleLower)) return "education";
   if (/\bpwhl\b/.test(titleLower)) return "sports";
   // A screening is an arts event even when a library or teen center frames it

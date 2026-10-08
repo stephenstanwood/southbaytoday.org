@@ -262,6 +262,9 @@ const CITY_ID_MAP = {
 const NAME_TYPO_FIXES = [
   [/\bBlossim\s+Hill\b/gi, "Blossom Hill"],
   [/\bChick[-\s]?Fil[-\s]?A\b/gi, "Chick-fil-A"],
+  // All-caps chain brands that title-casing flattens ("IHOP" → "Ihop").
+  [/\bIhop\b/g, "IHOP"],
+  [/\bKfc\b/g, "KFC"],
 ];
 
 function cleanName(raw) {
