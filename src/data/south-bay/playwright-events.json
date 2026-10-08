@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-08T02:17:18.257Z",
+    "generatedAt": "2026-10-08T15:04:03.456Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 549,
+    "eventCount": 545,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (116)",
+      "Mountain View Public Library (115)",
       "Los Gatos Library (138)",
       "San Jose Jazz (18)",
       "Linden Tree Books (17)",
@@ -15,13 +15,13 @@
       "City Lights Theater (6)",
       "ICA San José (3)",
       "Mountain Winery (10)",
-      "San Jose Theaters (20)",
+      "San Jose Theaters (19)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (8)",
       "Santana Row (6)",
-      "City of Cupertino (58)",
+      "City of Cupertino (57)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (87)",
+      "TheatreWorks Silicon Valley (86)",
       "Levi's Stadium (6)",
       "SAP Center (15)",
       "The Tech Interactive (12)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 121,
+        "count": 120,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -183,7 +183,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 20,
+        "count": 19,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 58,
+        "count": 57,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 87,
+        "count": 86,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -350,28 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "17d611f9afd3",
-      "title": "The Messenger of Peace: Japanese Crane Textile Sculpture",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "6:30 PM",
-      "endTime": "8:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join sustainable artist and educator Leila Ghasempor for a hands-on art workshop exploring the beauty, history, and symbolism of the Japanese crane. Traditionally associated with hope, longevity, and peace. Participants will learn about the cultural meaning of the crane while exploring textile construction, sculptural form, and geometric folding techniques to create their own three-dimensional fabric crane. No sewing experience is required. All materials will be provided. This class is intended for ages 18 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17528266",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "3c3caaf87b11",
       "title": "Magical Bridge Storytime",
@@ -6811,23 +6789,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7511a0202ce9",
-      "title": "Phantom of The Opera – Broadway San Jose",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": null,
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "ad973b12d747",
       "title": "The Living Tombstone",
       "date": "2026-10-08",
@@ -7151,10 +7112,10 @@
       "kidFriendly": false
     },
     {
-      "id": "336f292c7124",
+      "id": "07a611fd2c13",
       "title": "Toddler Storytime",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
+      "date": "2026-10-08",
+      "displayDate": "Thu, Oct 8",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7185,10 +7146,10 @@
       "kidFriendly": true
     },
     {
-      "id": "df89bdd89e8e",
+      "id": "cbe3237a4e34",
       "title": "All Ages Storytime",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
+      "date": "2026-10-08",
+      "displayDate": "Thu, Oct 8",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7397,7 +7358,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-08T02:15:57.714Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
     },
     {
@@ -7420,7 +7381,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-08T02:15:57.715Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
     },
     {
@@ -7443,7 +7404,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-08T02:15:57.715Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
     },
     {
@@ -7466,7 +7427,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-08T02:15:57.715Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
     },
     {
@@ -7489,7 +7450,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-08T02:15:57.715Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
     },
     {
@@ -7512,25 +7473,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-08T02:15:57.715Z"
+        "checkedAt": "2026-10-08T15:02:46.365Z"
       }
-    },
-    {
-      "id": "fe61cc9d92b1",
-      "title": "Candidate Forum - Cupertino City Council",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "06:00 PM",
-      "endTime": "07:30 PM",
-      "venue": "Cupertino Senior Center",
-      "address": "Cupertino Senior Center, 21251 Stevens Creek Blvd., 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "The League of Women Voters of Cupertino-Sunnyvale and San José Spotlight are co-hosting a candidate forum for the upcoming Cupertino City Council elections. This event will be held from 6 to 7:30 p.m. on Wednesday, October 7, at the Cupertino Senior Center. Join is to learn more about the individuals seeking to represent your neighborhood. This event is not sponsored or endorsed by the City of Cupertino. RSVP Required Event Registration",
-      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-07",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "10117d8c0877",
@@ -8584,23 +8528,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "d20077df8292",
-      "title": "Dracula",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7496",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -10168,23 +10095,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f0a102b33200",
-      "title": "SOMBR",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Add the Sierra Nevada Concert Experience and enjoy the show as a VIP! With this perfect addition to your ticket purchase, you will enjoy unlimited premium hors d'oeuvres, wine, and non-alcoholic beverages, and private entry into The NetApp Celly Lounge. The Sierra Nevada Concert Experience begins 30 minutes prior to SAP Center doors opening to the general public and continues until 15 minutes prior to the main act taking the stage.** *Available to guests age 21 or older; photo ID required ** Subject to change Drink Responsibly | Responsibility.org Note: You MUST have a ticket to the event to purchase a ticket for the Sierra Nevada Concert Experience.",
-      "url": "https://www.sapcenter.com/events/detail/sombr",
-      "source": "SAP Center",
-      "kidFriendly": true
-    },
-    {
       "id": "1a2aa4ba04ac",
       "title": "Sharks x PWHL San Jose",
       "date": "2026-10-10",
@@ -10419,6 +10329,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/don-omar",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "21aad6fa7c4f",
+      "title": "Mon Laferte",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": "8:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/mon-laferte",
       "source": "SAP Center",
       "kidFriendly": false
     },
