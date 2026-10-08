@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-07T15:04:17.632Z",
+    "generatedAt": "2026-10-08T02:17:18.257Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 551,
+    "eventCount": 549,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (115)",
-      "Los Gatos Library (142)",
+      "Mountain View Public Library (116)",
+      "Los Gatos Library (138)",
       "San Jose Jazz (18)",
       "Linden Tree Books (17)",
       "History San Jose (4)",
@@ -24,9 +24,9 @@
       "TheatreWorks Silicon Valley (87)",
       "Levi's Stadium (6)",
       "SAP Center (15)",
-      "The Tech Interactive (11)",
-      "Peninsula Open Space Trust (6)",
-      "San Jose Museum of Art (6)"
+      "The Tech Interactive (12)",
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (6)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 120,
+        "count": 121,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 142,
+        "count": 138,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -305,7 +305,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 11,
+        "count": 12,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -338,81 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 6,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "c2068c6d5919",
-      "title": "Baby Storytime",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170814",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "125c27e6c68e",
-      "title": "ESL Conversation Club - IN PERSON",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/15895393",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "b8a18b5431c1",
-      "title": "ESL Conversation Club - ONLINE",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17249780",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "17d611f9afd3",
       "title": "The Messenger of Peace: Japanese Crane Textile Sculpture",
@@ -893,7 +830,7 @@
       "registration": "required",
       "category": "arts",
       "cost": "free",
-      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m.",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m. Additional dates: November 7 November 21 December 5 December 19",
       "sourceAudiences": [
         "Children"
       ],
@@ -1728,6 +1665,27 @@
       "kidFriendly": false
     },
     {
+      "id": "b586703a3385",
+      "title": "Reading Buddies",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "10:30 AM",
+      "endTime": "11:30 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17500299",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "1eed82d2d788",
       "title": "Sew Sew Saturday",
       "date": "2026-11-07",
@@ -2066,6 +2024,27 @@
       "kidFriendly": false
     },
     {
+      "id": "0c698df9fe71",
+      "title": "Reading Buddies",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "10:30 AM",
+      "endTime": "11:30 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m. Additional dates: November 7 November 21 December 5 December 19",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17500316",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "ccdf3587ac08",
       "title": "Smart Start Babytime",
       "date": "2026-11-23",
@@ -2371,6 +2350,27 @@
       "kidFriendly": true
     },
     {
+      "id": "8e017e5d26b7",
+      "title": "Reading Buddies",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "10:30 AM",
+      "endTime": "11:30 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m. Additional dates: November 7 November 21 December 5 December 19",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17500344",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "0c0019b4449f",
       "title": "Sew Sew Saturday",
       "date": "2026-12-05",
@@ -2652,6 +2652,27 @@
       "kidFriendly": false
     },
     {
+      "id": "d42db4b7eef6",
+      "title": "Reading Buddies",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
+      "time": "10:30 AM",
+      "endTime": "11:30 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17500349",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "481f7ff8192e",
       "title": "Choose Your Own Adventure Book Club",
       "date": "2026-12-21",
@@ -2793,89 +2814,6 @@
       "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "b9b26082a9ab",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249572",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "3bd584c57289",
-      "title": "AUTHOR TALK: Banned Books Week Conversation - Stories That Shape Us",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "1:00 PM",
-      "endTime": "2:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Join us for a discussion with Erika Lynne Jones, children's book author and illustrator of Zara in the Middle and explore how stories and images take shape, from the first spark of an idea through drafting, sketching, revision, and collaboration. We will consider why young readers deserve access to books that invite curiosity, empathy, imagination, and conversation. Erika will share insights into her artistic process, the choices behind the page, and the role children’s literature can play in helping readers see themselves and better understand others. A Creativebug Program. Click Here to Register",
-      "sourceAudiences": [
-        "Teens",
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17733139",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "7fc8e8b53e94",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16887023",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "a9a2d17fa0a4",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261935",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "16c9fbdac321",
@@ -6465,23 +6403,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5f53ba65f823",
-      "title": "FALL Creekside Ceramics Series – Adult Arts Education",
-      "date": "2026-10-07",
-      "displayDate": "Wed, Oct 7",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3273/3274",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "b402a0e00c51",
       "title": "Around the Americas with 123 Andrés? (Grades pre K-3)",
       "date": "2026-10-15",
@@ -6546,6 +6467,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://montalvoarts.org/experience/carriage-house-concerts/kalani-pea/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "b7122b02d4a7",
+      "title": "Goblins in the Garden",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3257/3258",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -7459,7 +7397,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.714Z"
       }
     },
     {
@@ -7482,7 +7420,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.715Z"
       }
     },
     {
@@ -7505,7 +7443,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.715Z"
       }
     },
     {
@@ -7528,7 +7466,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.715Z"
       }
     },
     {
@@ -7551,7 +7489,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.715Z"
       }
     },
     {
@@ -7574,7 +7512,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-07T15:03:00.433Z"
+        "checkedAt": "2026-10-08T02:15:57.715Z"
       }
     },
     {
@@ -10230,11 +10168,11 @@
       "kidFriendly": false
     },
     {
-      "id": "0c3026fa9236",
+      "id": "f0a102b33200",
       "title": "SOMBR",
       "date": "2026-10-07",
       "displayDate": "Wed, Oct 7",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -10587,6 +10525,23 @@
       "kidFriendly": true
     },
     {
+      "id": "99b5f908fdbf",
+      "title": "Godzilla Minus Zero",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "6:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
       "id": "14ac2c3257eb",
       "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes)",
       "date": "2026-11-14",
@@ -10670,108 +10625,6 @@
       "url": "https://www.thetech.org/explore/upcoming-events/",
       "source": "The Tech Interactive",
       "kidFriendly": true
-    },
-    {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     },
     {
       "id": "703687c2511a",
@@ -10891,6 +10744,108 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "a2e9918fb28c",
+      "title": "Representation Matters Film Festival (Virtual Viewing)",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": null,
+      "endTime": null,
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
