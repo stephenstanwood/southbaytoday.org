@@ -1,151 +1,38 @@
 {
-  "generatedAt": "2026-10-07T03:11:13.257Z",
+  "generatedAt": "2026-10-08T03:11:14.432Z",
   "meetings": {
-    "san-jose": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "13:30",
+    "mountain-view": {
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "startTime": "08:00",
       "bodyName": "City Council",
-      "location": "Hybrid Meeting - Council Chambers",
+      "location": "Council Chambers and Video Conference",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8097&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8097,
-      "agendaItems": [
-        {
-          "title": "Approval of Free Use of the Janet Gray Hayes Rotunda for the Santa Clara County Association of Realtors 2026 Fall General Membership Meeting Sponsored by Council District 9 as a City Council Sponsored Special Event to Expend City Funds and Accept Donations of Materials and Services for the Event.",
-          "sequence": 45
-        },
-        {
-          "title": "Dissolution of the Bay Area Regional Interoperable Communications Systems Authority.",
-          "sequence": 41
-        },
-        {
-          "title": "Amendment to the Agreement Between the County of Santa Clara and City of San José for Access to the County of Santa Clara’s Criminal Justice Information Control System and the Integrated Justice System.",
-          "sequence": 42
-        },
-        {
-          "title": "Actions Related to the Intent to Annex Territory to Community Facilities District No. 8.",
-          "sequence": 43
-        },
-        {
-          "title": "Actions Related to the Regulation of Personal Delivery Devices in City Right-of-Way.",
-          "sequence": 56
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "19:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4525&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4525,
-      "agendaItems": [
-        {
-          "title": "Indigenous Peoples’ Day",
-          "sequence": 9
-        },
-        {
-          "title": "Friends of the Library Week",
-          "sequence": 10
-        },
-        {
-          "title": "Sunnyvale Stands United Against Hate Week",
-          "sequence": 11
-        },
-        {
-          "title": "Recognition of the 2026 Sunnyvale Little League Junior Division All-Stars",
-          "sequence": 8
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of September 15, 2026",
-          "sequence": 14
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "cupertino": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "17:45",
-      "bodyName": "City Council",
-      "location": "Council Chamber",
-      "closedSession": true,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5300&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5300,
-      "agendaItems": [
-        {
-          "title": "Recognition of the Community Development Department (Planning, Building, Housing, and Code Enforcement Divisions)",
-          "sequence": 15
-        },
-        {
-          "title": "Approval of a resolution increasing the employer's contribution for medical and hospitalization insurance consistent with the Public Employees’ Medical and Hospital Care Act (“PEMHCA” or the “Act”) for retired annuitants hired with the City of Cupertino prior to August 2004.",
-          "sequence": 24
-        },
-        {
-          "title": "Approval of a Resolution Authorizing Submittal of An Individual Grant Application for $80,000 for the Rubberized Pavement Grant Program.",
-          "sequence": 25
-        },
-        {
-          "title": "Tax and Equity Fiscal Responsibility Act (TEFRA) public hearing and approval of conduit financing for The RISE Block 5 Apartments Project",
-          "sequence": 31
-        },
-        {
-          "title": "City Manager Report",
-          "sequence": 37
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "campbell": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Session Meeting",
-      "location": "Campbell Police Department EOC",
-      "closedSession": false,
-      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=39edefb9-445d-4941-9401-e4d460a04abc&Agenda=Agenda&lang=English",
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3569&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3569,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
-        "provider": "escribe",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
+        "provider": "legistar",
+        "observedDate": "2026-10-09",
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-07T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "milpitas": {
-      "date": "2026-10-06",
-      "displayDate": "Tue, Oct 6",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
       "startTime": "19:00",
       "bodyName": "City Council Meeting",
       "location": "Milpitas City Hall",
       "closedSession": false,
       "url": "https://www.milpitas.gov/129/Agendas-Minutes",
-      "civicClerkEventId": 2955,
+      "civicClerkEventId": 2944,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-10-06",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-07T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -162,26 +49,26 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-07T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
   "sourceHealth": {
     "san-jose": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "santa-clara": {
       "provider": "Legistar",
@@ -197,7 +84,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "milpitas": {
       "provider": "CivicClerk",

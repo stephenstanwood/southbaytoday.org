@@ -1,163 +1,57 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-07T03:18:57.248Z",
+    "generatedAt": "2026-10-08T03:17:55.281Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 11
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 11,
-    "placesExtracted": 6,
+    "threadsMined": 8,
+    "placesExtracted": 2,
     "placesMatched": 0,
-    "placeGaps": 6,
-    "eventsExtracted": 5,
+    "placeGaps": 2,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 5,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Bun Bo Hue An Nam",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "top-rated bun bo hue in San Jose",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "Pho Ga An Nam",
-      "city": "San Jose",
-      "kind": "restaurant",
-      "context": "original owner's restaurant, no longer serves BBH",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "ReStore San Jose",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "Habitat for Humanity store hosting Free Furniture Friday",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "Fresh Coast",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "new cold-pressed juicery at 20 N First Street, owner offering discount",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wzhj6c/looking_for_a_nonjudgmental_hair_stylist_for_a/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4v9/beautiful_sunrise_1052026/",
-        "https://www.reddit.com/r/SanJose/comments/1wzg0oj/fresh_flour_tortillas/",
-        "https://www.reddit.com/r/SanJose/comments/1wzcccv/you_probably_dont_want_to_adopt_this_dog/",
-        "https://www.reddit.com/r/SanJose/comments/1wzb3zs/downtown_businesses/"
-      ]
-    },
-    {
-      "name": "Cardenas",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "grocery store mentioned as known source for flour tortillas",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wzhj6c/looking_for_a_nonjudgmental_hair_stylist_for_a/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4v9/beautiful_sunrise_1052026/",
-        "https://www.reddit.com/r/SanJose/comments/1wzg0oj/fresh_flour_tortillas/",
-        "https://www.reddit.com/r/SanJose/comments/1wzcccv/you_probably_dont_want_to_adopt_this_dog/",
-        "https://www.reddit.com/r/SanJose/comments/1wzb3zs/downtown_businesses/"
-      ]
-    },
-    {
-      "name": "Adopt My Block",
+      "name": "San Jose Animal Care Center",
       "city": "San Jose",
       "kind": "service",
-      "context": "rescue organization that pulled dog Felix from shelter",
+      "context": "shelter with cats needing rescue, including Lily",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wzhj6c/looking_for_a_nonjudgmental_hair_stylist_for_a/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4v9/beautiful_sunrise_1052026/",
-        "https://www.reddit.com/r/SanJose/comments/1wzg0oj/fresh_flour_tortillas/",
-        "https://www.reddit.com/r/SanJose/comments/1wzcccv/you_probably_dont_want_to_adopt_this_dog/",
-        "https://www.reddit.com/r/SanJose/comments/1wzb3zs/downtown_businesses/"
+        "https://www.reddit.com/r/SanJose/comments/1x0e2e5/open_mic_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1x07qob/any_jazz_bars_in_dtsj/",
+        "https://www.reddit.com/r/SanJose/comments/1x055wc/lgbtqia_events_this_weekend/",
+        "https://www.reddit.com/r/SanJose/comments/1x0c4en/senior_cat_at_sjacc_needs_urgent_rescue/",
+        "https://www.reddit.com/r/SanJose/comments/1x04y0r/san_jose_sets_fines_regulations_for_delivery/"
+      ]
+    },
+    {
+      "name": "Williams St. Park",
+      "city": "San Jose",
+      "kind": "park",
+      "context": "carvings found at this park",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x00u8y/10_buzz_cut/",
+        "https://www.reddit.com/r/SanJose/comments/1wzoai9/has_anyone_seen_these_carved_anywhere_else_this/",
+        "https://www.reddit.com/r/SanJose/comments/1wznz07/tool_to_track_sanjose_housing_development/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Bay Area Geek Events This Weekend",
-      "when": "October 8-11, 2026",
-      "city": "",
-      "context": "weekend geek meetup roundup post",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "Free Furniture Friday",
-      "when": "Friday, October 9",
+      "name": "Open Mic Night",
+      "when": "tonight",
       "city": "San Jose",
-      "context": "free furniture giveaway at ReStore San Jose",
+      "context": "free open mic for comedians, poets, musicians",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "San Jose City Council meeting",
-      "when": "October 6, 2026",
-      "city": "San Jose",
-      "context": "council summary covering robot deliveries and housing",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "Walk & Roll to School Day",
-      "when": "October 7",
-      "city": "San Jose",
-      "context": "ceremonial council declaration",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
-      ]
-    },
-    {
-      "name": "National Arts and Humanities Month",
-      "when": "October 2026",
-      "city": "San Jose",
-      "context": "council declared theme month",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1wz7o9e/nice_or_really_good_dinner_any_asian_cuisine/",
-        "https://www.reddit.com/r/SanJose/comments/1wzjx39/no_bbh_at_pho_ga_an_nam/",
-        "https://www.reddit.com/r/SanJose/comments/1wzh4ox/bay_area_geek_events_this_weekend_october_8th_to/",
-        "https://www.reddit.com/r/SanJose/comments/1wzfn86/free_furniture_friday_109_at_restore_san_jose/",
-        "https://www.reddit.com/r/SanJose/comments/1wzizce/san_jose_city_council_summary_6_oct_2026_robots/"
+        "https://www.reddit.com/r/SanJose/comments/1x0e2e5/open_mic_tonight/",
+        "https://www.reddit.com/r/SanJose/comments/1x07qob/any_jazz_bars_in_dtsj/",
+        "https://www.reddit.com/r/SanJose/comments/1x055wc/lgbtqia_events_this_weekend/",
+        "https://www.reddit.com/r/SanJose/comments/1x0c4en/senior_cat_at_sjacc_needs_urgent_rescue/",
+        "https://www.reddit.com/r/SanJose/comments/1x04y0r/san_jose_sets_fines_regulations_for_delivery/"
       ]
     }
   ],

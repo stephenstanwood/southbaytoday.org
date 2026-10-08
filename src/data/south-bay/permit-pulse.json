@@ -1,19 +1,31 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-07T03:11:01.375Z",
+      "generatedAt": "2026-10-08T03:10:48.776Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 29 – Oct 6",
+      "dateRange": "Sep 30 – Oct 7",
       "stats": {
-        "total": 401,
-        "notable": 22,
-        "newUnits": 11,
-        "totalValuation": 14134640
+        "total": 435,
+        "notable": 23,
+        "newUnits": 12,
+        "totalValuation": 14331725
       },
       "permits": [
+        {
+          "id": "2026-140378-RS",
+          "address": "2046 Jonathan Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached JADU",
+          "valuation": 483014,
+          "units": 1,
+          "issueDate": "2026-10-05",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
         {
           "id": "2025-139243-RS",
           "address": "1413 Gordy Dr #2",
@@ -51,15 +63,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-145683-RS",
-          "address": "1226 Locust St #2",
+          "id": "2026-124552-RS",
+          "address": "1183 Shoreland Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Detached Garage Conversion to ADU",
-          "valuation": 97460,
+          "description": "Detached ADU",
+          "valuation": 87256,
           "units": 1,
-          "issueDate": "2026-09-29",
+          "issueDate": "2026-10-05",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -120,18 +132,6 @@
           "valuation": 58757,
           "units": 1,
           "issueDate": "2026-10-01",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-106745-RS",
-          "address": "1029 Miller Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 57350,
-          "units": 1,
-          "issueDate": "2026-09-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
