@@ -1684,6 +1684,13 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Note on the Oct 7-8 2026 sweep: no in-coverage round surfaced. VC News
+  // Daily's Oct 7 list is Agentiq Sports and Multiply Labs (San Francisco),
+  // Parallel Systems (Los Angeles), Matchpoint Therapeutics (Watertown, MA),
+  // TeddyHoldings.AI and Stuut (New York), and Guardrail Technologies (Park
+  // City, UT). Mecka AI's $60M (Oct 7) is New York / Markham, Ontario.
+  // Preference Model's $16M a16z seed names no city — re-check if a release
+  // places it in the South Bay. FinSMEs returned 403 this run.
   // Note on the Oct 6-7 2026 sweep: no in-coverage round surfaced. VC News
   // Daily's Oct 6 list is General Medicine (San Francisco), Aventra Defense
   // Systems (Herndon, VA), and Sante (New York); a broader search only
