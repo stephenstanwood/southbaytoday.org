@@ -24,16 +24,15 @@ import {
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
-import { agendaTextForMeeting } from "./lib/digest-source.mjs";
+import { agendaTextForMeeting, recoverLegistarDigestSource } from "./lib/digest-source.mjs";
 import { hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
 import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
   fetchEscribePastMeeting,
-  isCancelledLegistarEvent,
+  fetchLegistarPastMeeting,
   legistarMeetingUrl,
   ptDateISO,
-  substantiveAgendaTitles,
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./lib/civic-meetings.mjs";
@@ -86,7 +85,8 @@ const CITIES = [
   { city: "mountain-view", stoaCity: "Mountain View", cityName: "Mountain View", schedule: "2nd and 4th Tuesday",   agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview", legistarApi: "mountainview" },
   { city: "sunnyvale",     stoaCity: "Sunnyvale",     cityName: "Sunnyvale",     schedule: "Tuesdays",                agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale",    legistarApi: "sunnyvaleca" },
   { city: "cupertino",     stoaCity: "Cupertino",     cityName: "Cupertino",     schedule: "1st and 3rd Tuesday",   agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino",    legistarApi: "cupertino" },
-  { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",   legistarApi: "santaclara" },
+  { city: "santa-clara",   stoaCity: "Santa Clara",   cityName: "Santa Clara",   schedule: "2nd and 4th Tuesday",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",   legistarApi: "santaclara",
+    legistarBodies: ["City Council and Authorities Concurrent"] },
   // Milpitas + Palo Alto digests stall when Stoa lacks full agenda text: recent
   // Milpitas records are CivicClerk stubs ("Meeting record available on...") that
   // fail hasRealContent, and recent Palo Alto records are commission/item-level
@@ -156,59 +156,15 @@ async function fetchStoaMeetings() {
 // When Stoa hasn't ingested a city's most recent agenda yet, hit the Legistar
 // Web API directly. Returns a record shaped like a Stoa record so the rest of
 // the pipeline (hasRealContent, summarize, etc.) treats it the same way.
-const LEGISTAR_UA = "SouthBaySignal/1.0 (stanwood.dev; civic data aggregator)";
-
-async function fetchLegistarPastMeeting(client) {
-  const today = new Date().toISOString().split("T")[0];
-  const url =
-    `https://webapi.legistar.com/v1/${client}/Events` +
-    `?$filter=EventBodyName eq 'City Council' and EventDate lt datetime'${today}T23:59:59'` +
-    `&$orderby=EventDate desc&$top=3`;
-
-  const res = await fetch(url, {
-    headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" },
-    signal: AbortSignal.timeout(15_000),
-  });
-  if (!res.ok) return null;
-  const events = await res.json();
-  if (!events?.length) return null;
-
-  for (const ev of events) {
-    // A cancelled sitting still carries its posted agenda items; skip it so the
-    // digest never summarizes a meeting that never happened.
-    if (isCancelledLegistarEvent(ev)) continue;
-    const itemsRes = await fetch(
-      `https://webapi.legistar.com/v1/${client}/Events/${ev.EventId}/EventItems`,
-      { headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" }, signal: AbortSignal.timeout(15_000) },
-    );
-    if (!itemsRes.ok) continue;
-    const items = await itemsRes.json();
-    const substantive = substantiveAgendaTitles(items.map((i) => i.EventItemTitle));
-    if (substantive.length < 2) continue;
-
-    const excerpt = substantive.slice(0, 12).join(". ");
-    return {
-      id: `legistar-${client}-${ev.EventId}`,
-      city: null,
-      date: new Date(ev.EventDate).toISOString().split("T")[0],
-      meetingType: "City Council",
-      title: `City Council — ${ev.EventDate}`,
-      excerpt,
-      keywords: substantive.slice(0, 5),
-      source: "legistar-direct",
-    };
-  }
-  return null;
-}
-
-
 // Every city whose Stoa records have gone quiet reads from its own portal
 // instead. Ordered by preference: Legistar returns structured event items, the
 // rest return an agenda document this has to parse. A city with no entry here
 // has no fallback — it carries forward and the freshness audit says so.
 function pastMeetingFallback(config) {
   if (config.legistarApi) {
-    return { provider: "Legistar", fetch: () => fetchLegistarPastMeeting(config.legistarApi) };
+    return { provider: "Legistar", fetch: () => fetchLegistarPastMeeting({
+      client: config.legistarApi, bodyNames: config.legistarBodies,
+    }) };
   }
   if (config.escribe) {
     return { provider: "eScribe", fetch: () => fetchEscribePastMeeting(config.escribe) };
@@ -480,11 +436,13 @@ async function main() {
   for (const config of CITIES) {
     let meeting = byCity[config.stoaCity];
 
+    const publishedIso = previousDigests[config.city]?.meetingDateIso;
     const stoaStale = !meeting || meeting.date < stoaStaleCutoff;
+    const sourceRegressed = publishedIso && meeting && meeting.date < publishedIso;
     const fallbackSource = pastMeetingFallback(config);
-    if (stoaStale && fallbackSource) {
+    if ((stoaStale || sourceRegressed) && fallbackSource) {
       const stoaDateLabel = meeting ? meeting.date : "none";
-      process.stdout.write(`  ↻ ${config.cityName}: Stoa stale (${stoaDateLabel}), trying ${fallbackSource.provider}...`);
+      process.stdout.write(`  ↻ ${config.cityName}: Stoa ${sourceRegressed ? "regressed" : "stale"} (${stoaDateLabel}), trying ${fallbackSource.provider}...`);
       try {
         const fallback = await fallbackSource.fetch();
         if (fallback && (!meeting || fallback.date > meeting.date)) {
@@ -516,7 +474,6 @@ async function main() {
     // reads to a visitor as the city having gone quiet, which is worse than
     // holding the last good digest. Hit 2026-08-17: Los Gatos Aug 4 → May 19 and
     // Saratoga May 20 → March 18, neither city having a Legistar fallback.
-    const publishedIso = previousDigests[config.city]?.meetingDateIso;
     if (publishedIso && meeting.date < publishedIso) {
       console.warn(`  ⏮️  ${config.cityName}: source meeting ${meeting.date} predates published ${publishedIso} — holding previous digest (city=${config.city})`);
       carryForward(config, "source-regressed");
@@ -541,9 +498,23 @@ async function main() {
         // Pass the record's own text: when several bodies met that day, the
         // verifier needs it to tell which one this agenda came from.
         const recordText = `${meeting.title || ""} ${agendaTextForMeeting(meeting)}`;
-        const actual = config.legistarApi
+        let actual = config.legistarApi
           ? await verifyLegistarBodyOnDate(config.legistarApi, meeting.date, recordText)
           : await verifyPrimeGovBodyOnDate(config.primegov, meeting.date, recordText);
+        if (config.legistarApi && (!actual || (!actual.body && actual.councilMet === false))) {
+          const recovered = await recoverLegistarDigestSource({
+            client: config.legistarApi,
+            bodyNames: config.legistarBodies,
+            publishedDate: publishedIso,
+            today,
+          });
+          if (recovered) {
+            meeting = recovered.meeting;
+            actual = recovered.actual;
+            bodyLabel = meeting.meetingType;
+            console.log(`  ↻ ${config.cityName}: recovered verified ${bodyLabel} agenda (${meeting.date}) from Legistar`);
+          }
+        }
         if (actual?.councilMet === true) bodySourceUrl = actual.sourceUrl;
         if (actual?.body) {
           console.warn(`  ⚠️  ${config.cityName}: no City Council meeting on ${meeting.date} — relabeling as "${actual.body}" (city=${config.city})`);

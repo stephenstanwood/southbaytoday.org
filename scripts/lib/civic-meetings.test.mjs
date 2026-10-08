@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { agendaTextForMeeting } from "./digest-source.mjs";
+import { agendaTextForMeeting, recoverLegistarDigestSource } from "./digest-source.mjs";
 
 import {
   confirmMeeting,
@@ -11,6 +11,7 @@ import {
   extractEscribeAgendaItems,
   extractEscribeAgendaTitles,
   fetchCivicEngagePastMeeting,
+  fetchLegistarPastMeeting,
   isSubstantiveAgendaTitle,
   parseCivicEngageAgendaLinks,
   substantiveAgendaTitles,
@@ -776,6 +777,101 @@ test("complete source text still cannot relabel genuinely ambiguous agendas", as
 test("an unavailable calendar still blocks attribution even with the full source", async (t) => {
   t.mock.method(globalThis, "fetch", async () => { throw new Error("unavailable"); });
   assert.equal(await verifyLegistarBodyOnDate("sanjose", fixture.record.date, agendaTextForMeeting(fixture.record)), null);
+});
+
+const santaClaraFixture = JSON.parse(readFileSync(new URL("./fixtures/santa-clara-2026-10-08.json", import.meta.url)));
+const santaClaraBodies = ["City Council and Authorities Concurrent"];
+
+function stubSantaClaraSource(t, { events = santaClaraFixture.events, eventItems = santaClaraFixture.eventItems } = {}) {
+  const requests = [];
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const parsed = new URL(String(url));
+    requests.push(parsed);
+    const eventId = parsed.pathname.match(/Events\/(\d+)\/EventItems/)?.[1];
+    if (eventId) return jsonResponse(eventItems[eventId] ?? []);
+    const filter = parsed.searchParams.get("$filter") ?? "";
+    const date = filter.match(/EventDate ge datetime'(\d{4}-\d{2}-\d{2})/)?.[1];
+    if (date) return jsonResponse(events.filter(event => event.EventDate.startsWith(date)));
+    return jsonResponse(events);
+  });
+  return requests;
+}
+
+test("Santa Clara's disclosure-only Stoa record stays unresolved while its real council agenda recovers", async (t) => {
+  const requests = stubSantaClaraSource(t);
+  const { record } = santaClaraFixture;
+  assert.deepEqual(
+    await verifyLegistarBodyOnDate("santaclara", record.date, `${record.title} ${agendaTextForMeeting(record)}`),
+    { body: null, sourceUrl: null, councilMet: false },
+  );
+  const recovered = await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: "2026-09-22", today: "2026-10-08",
+  });
+  assert.equal(recovered.meeting.id, "legistar-santaclara-4890");
+  assert.equal(recovered.meeting.date, "2026-10-06");
+  assert.equal(recovered.meeting.meetingType, santaClaraBodies[0]);
+  assert.equal(recovered.actual.councilMet, true);
+  assert.equal(recovered.meeting.sourceUrl, santaClaraFixture.events.find(e => e.EventId === 4890).EventInSiteURL);
+  const longBusinessItem = santaClaraFixture.eventItems[4890].find(item => item.EventItemAgendaNumber === "7.").EventItemTitle;
+  assert.ok(longBusinessItem.length > 300);
+  assert.ok(agendaTextForMeeting(recovered.meeting).includes(longBusinessItem));
+  assert.ok(requests.some(url => url.searchParams.get("$filter")?.includes("EventBodyName eq 'City Council and Authorities Concurrent'")));
+
+  // A subsequent run may read the same older Stoa record. The real agenda
+  // remains eligible at the already-published date, with no timestamp bypass.
+  const nextRun = await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: recovered.meeting.date, today: "2026-10-08",
+  });
+  assert.equal(nextRun.meeting.id, recovered.meeting.id);
+});
+
+test("Legistar recovery excludes other bodies, cancelled council sittings, and future dates", async (t) => {
+  const council = santaClaraFixture.events.find(event => event.EventId === 4890);
+  const events = [
+    { ...council, EventId: 9001, EventDate: "2026-10-09T00:00:00" },
+    { ...council, EventId: 9002, EventDate: "2026-10-07T00:00:00", EventAgendaStatusName: "CANCELLED" },
+    ...santaClaraFixture.events,
+  ];
+  const requests = stubSantaClaraSource(t, { events });
+  const meeting = await fetchLegistarPastMeeting({ client: "santaclara", bodyNames: santaClaraBodies, today: "2026-10-08" });
+  assert.equal(meeting.id, "legistar-santaclara-4890");
+  assert.ok(requests.every(url => !/Events\/(?:9001|9002|4838|4868|4959)\//.test(url.pathname)));
+});
+
+test("Santa Clara fallback keeps the two-substantive-item content floor", async (t) => {
+  const council = santaClaraFixture.events.find(event => event.EventId === 4890);
+  stubSantaClaraSource(t, {
+    events: [council],
+    eventItems: { 4890: [{ EventItemAgendaNumber: "7.", EventItemTitle: "Discussion of the City's Data Center Water Usage Policy" }] },
+  });
+  assert.equal(await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: "2026-09-22", today: "2026-10-08",
+  }), null);
+});
+
+test("recovery cannot regress a published meeting or confirm an unavailable calendar", async (t) => {
+  const requests = stubSantaClaraSource(t);
+  assert.equal(await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: "2026-10-07", today: "2026-10-08",
+  }), null);
+  assert.equal(requests.length, 2); // No verification/summarization of an older source.
+
+  const council = santaClaraFixture.events.find(event => event.EventId === 4890);
+  t.mock.method(globalThis, "fetch", async url => {
+    const parsed = new URL(String(url));
+    if (parsed.searchParams.get("$filter")?.includes("EventDate ge")) throw new Error("calendar unavailable");
+    return jsonResponse(parsed.pathname.endsWith("/EventItems") ? santaClaraFixture.eventItems[4890] : [council]);
+  });
+  assert.equal(await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: "2026-09-22", today: "2026-10-08",
+  }), null);
+});
+
+test("unavailable council retrieval leaves the original carry-forward path intact", async (t) => {
+  t.mock.method(globalThis, "fetch", async () => { throw new Error("source unavailable"); });
+  assert.equal(await recoverLegistarDigestSource({
+    client: "santaclara", bodyNames: santaClaraBodies, publishedDate: "2026-09-22", today: "2026-10-08",
+  }), null);
 });
 
 test("a lone calendar body cannot inherit an unrelated agenda record", async (t) => {
