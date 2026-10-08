@@ -886,6 +886,63 @@ export function substantiveAgendaTitles(titles) {
     .filter(isSubstantiveAgendaTitle);
 }
 
+/** Read a past council agenda from the provider's explicitly configured bodies. */
+export async function fetchLegistarPastMeeting({
+  client,
+  bodyNames = ["City Council"],
+  today = ptDateISO(),
+  maxCandidates = 3,
+} = {}) {
+  const url = new URL(`https://webapi.legistar.com/v1/${client}/Events`);
+  const bodyFilter = bodyNames.map((name) => `EventBodyName eq '${name.replace(/'/g, "''")}'`).join(" or ");
+  url.searchParams.set("$filter", `(${bodyFilter}) and EventDate lt datetime'${today}T23:59:59'`);
+  url.searchParams.set("$orderby", "EventDate desc");
+  url.searchParams.set("$top", String(maxCandidates));
+  const options = () => ({
+    headers: { "User-Agent": LEGISTAR_UA, Accept: "application/json" },
+    signal: AbortSignal.timeout(15_000),
+  });
+  const response = await fetch(url, options());
+  if (!response.ok) return null;
+  const events = await response.json();
+  if (!Array.isArray(events)) return null;
+
+  const candidates = events
+    .filter((event) => bodyNames.includes(event.EventBodyName) && !isCancelledLegistarEvent(event))
+    .map((event) => ({ event, date: String(event.EventDate ?? "").slice(0, 10) }))
+    .filter(({ date }) => ISO_DATE.test(date) && date <= today)
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  for (const { event, date } of candidates.slice(0, maxCandidates)) {
+    const itemsResponse = await fetch(
+      `https://webapi.legistar.com/v1/${client}/Events/${event.EventId}/EventItems`, options(),
+    );
+    if (!itemsResponse.ok) continue;
+    const items = await itemsResponse.json();
+    if (!Array.isArray(items)) continue;
+    const substantive = substantiveAgendaTitles(items.map((item) => item.EventItemTitle));
+    if (substantive.length < 2) continue;
+
+    return {
+      id: `legistar-${client}-${event.EventId}`,
+      city: null,
+      date,
+      meetingType: event.EventBodyName,
+      title: `${event.EventBodyName} — ${date}`,
+      excerpt: substantive.slice(0, 12).join(". "),
+      // The preview's length limit must not discard long, numbered business
+      // items from the source used for attribution and summarization.
+      fullAgendaText: items.map((item) =>
+        `${item.EventItemAgendaNumber ?? ""} ${item.EventItemTitle ?? ""}`.trim(),
+      ).filter(Boolean).join("\n\n"),
+      keywords: substantive.slice(0, 5),
+      source: "legistar-direct",
+      sourceUrl: legistarMeetingUrl(client, date, event.EventInSiteURL),
+    };
+  }
+  return null;
+}
+
 /**
  * Most recent *past* council meeting published on a city's eScribe portal,
  * shaped like the upstream records the digest pipeline already handles.
