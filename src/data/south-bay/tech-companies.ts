@@ -1696,6 +1696,28 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // Turba Labs announced its funding on Oct 6 (06.10.2026 on its homepage).
+  // Its own privacy policy gives 1881 Page Mill Road, Palo Alto; CB Insights
+  // independently identifies that address as HQ. WSJ describes combined seed
+  // and Series A funding; Cusp Capital confirms $52M as cumulative. The latest
+  // round's amount is undisclosed: keep $52M out of the annual dollar sum.
+  // https://www.turbalabs.com/insights/announcing-52m-funding
+  // https://www.turbalabs.com/privacy
+  // https://uk.linkedin.com/company/cuspcapital
+  // https://www.wsj.com/pro/venture-capital/this-startup-wants-to-double-the-worlds-computewithout-building-a-single-data-center-f0bf8140
+  {
+    id: "turba-labs",
+    name: "Turba Labs",
+    city: "Palo Alto",
+    category: "cloud",
+    round: "Series A",
+    amount: "Undisclosed",
+    date: "2026-10-06",
+    tagline:
+      "Palo Alto's Turba Labs builds software that helps data-center operators get more useful AI work from the GPUs, memory, and networks they already have. It predicts how workloads will perform and adjusts how computing resources are assigned. Creandum and Cusp Capital led its latest financing, bringing total funding across seed and Series A rounds to $52M; the latest round's amount was not separately disclosed.",
+    color: "#2563EB",
+    url: "https://www.turbalabs.com/",
+  },
   // Clockwork.io (Clockwork Systems Inc.) — Oct 5 PR Newswire release
   // datelines "PALO ALTO, Calif." No source names the round letter (SiliconANGLE,
   // Pulse 2, and the release itself just say "new funding"), so it's entered as

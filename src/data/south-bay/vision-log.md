@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-10-09 — Cycle 231: Palo Alto's Turba Labs Joins the Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Turba Labs now leads the existing Tech funding list.** Its software helps
+data-center operators predict AI workload performance and assign the GPUs,
+memory, and networking they already own. The company's
+[funding announcement](https://www.turbalabs.com/insights/announcing-52m-funding)
+names Creandum and Cusp Capital; its
+[privacy policy](https://www.turbalabs.com/privacy) gives a Palo Alto address,
+independently identified as HQ by CB Insights. October 6 is the announcement
+date displayed on the company's homepage, rather than the October 7 date on
+aggregator republications.
+
+**The $52M stays labeled as cumulative funding.**
+[Cusp Capital's own announcement](https://uk.linkedin.com/company/cuspcapital)
+calls it total funding; WSJ describes combined seed and Series A financing.
+The latest round's amount is marked Undisclosed, so adding the company
+increases the tracked-round count by one without inflating the annual dollar
+sum. Source links and the reasoning are retained beside the data entry.
+
+Verification: production build and both prebuild gates passed; Astro check
+reported 0 errors and 0 warnings; all nine funding-date tests passed.
+Before/after company-link audits checked 194/195 links with no dead or
+relocated links and the same 11 bot walls. Chromium checks of the built
+Tech page at 1280px and 390px confirmed eight funding rows, Turba Labs first,
+correct labels and link, working expansion and collapse, no horizontal
+overflow, and no browser runtime errors. External assets were blocked during
+these local browser checks.
+
+---
+
 ## 2026-10-01 — Cycle 230: Mountain View's GMI Cloud Joins the Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).
