@@ -29,6 +29,7 @@
  *   - Montalvo Arts Center (RSS)
  *   - San Jose Jazz (RSS)
  *   - The Pear Theatre (VBO Tickets HTML)
+ *   - Sunnyvale Community Players (VBO Tickets HTML)
  *   - San Jose Theaters (sanjose.org event listing + detail pages; see
  *     scripts/lib/san-jose-theaters-events.mjs)
  *   - South Bay Musical Theatre (show pages)
@@ -5822,6 +5823,8 @@ async function fetchSunnyvaleLibraryEvents() {
   // around. Sunnyvale's 24 events over the next two weeks come from Meetup, the
   // City Newsletter intake, and our own listings; closing the gap needs either a
   // published feed or a human-scale arrangement with the city, not a scraper.
+  // Sunnyvale Community Players (fetchSunnyvalePlayersEvents, added 2026-10-09)
+  // is the one first-party Sunnyvale calendar that is open and structured.
   return fetchBiblioEvents("sunnyvale", "Sunnyvale Public Library", () => "sunnyvale");
 }
 
@@ -7925,6 +7928,145 @@ async function fetchPearTheatreEvents() {
   }
 }
 
+// ── Sunnyvale Community Players (VBO Tickets HTML) ──
+// Sunnyvale is our thinnest big city: its library and city calendars are shut
+// to automation (see fetchSunnyvaleLibraryEvents). SCP's season sells through
+// the same VBO plugin as the Pear, one record per performance. The plugin
+// needs only the site id from sunnyvaleplayers.org/season-calendar.
+
+const SCP_SITE_URL = "https://www.sunnyvaleplayers.org/";
+const SCP_CALENDAR_URL = "https://www.sunnyvaleplayers.org/season-calendar/";
+
+const scpKey = (value = "") => String(value).toLowerCase().replace(/&[a-z]+;|&#\d+;/g, "").replace(/[^a-z0-9]/g, "");
+
+/** Map a VBO show title to its sunnyvaleplayers.org show page, if the site links one. */
+function scpShowPageUrl(title, siteHtml) {
+  const titleKey = scpKey(title);
+  if (!titleKey) return null;
+  let best = null;
+  let bestLength = 0;
+  for (const [, path] of String(siteHtml || "").matchAll(/href="https:\/\/www\.sunnyvaleplayers\.org\/([a-z0-9-]+)\/?"/gi)) {
+    const pathKey = scpKey(path);
+    // Exact ("rent" → /rent/) or a long tail ("Disney's Descendants: The
+    // Musical" → /descendantsthemusical/). Short tails are too loose.
+    const ok = pathKey === titleKey || (pathKey.length >= 8 && titleKey.endsWith(pathKey));
+    if (ok && pathKey.length > bestLength) {
+      best = path.toLowerCase();
+      bestLength = pathKey.length;
+    }
+  }
+  return best ? `${SCP_SITE_URL}${best}/` : null;
+}
+
+const SCP_PRODUCTION_RE = /^((?:[\w.]+\s+){0,2}Production)\s*[-–—:]\s*/i;
+const SCP_RUNTIME_RE = /Approximate Running Time:\s*([^()]*?\(including intermission\)|[^.]*?minutes)\s*/i;
+const SCP_RATING_RE = /\bRating:\s*(G|PG-13|PG|R)\b\s*/;
+
+/**
+ * VBO intro text reads "Main Stage Production- <title> Approximate Running
+ * Time: 2 hour and 30 minutes (including intermission) Rating: PG-13 <synopsis>".
+ * Lead with the synopsis. The rating only feeds the kid flag: VBO and the show
+ * page disagree on Rent (PG-13 vs R), so it isn't printed as fact.
+ */
+function parseScpIntro(text, title) {
+  let rest = String(text || "").trim();
+  const production = rest.match(SCP_PRODUCTION_RE)?.[1] ?? "";
+  rest = rest.replace(SCP_PRODUCTION_RE, "");
+  const escapedTitle = String(title || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  if (escapedTitle) rest = rest.replace(new RegExp(`^${escapedTitle}\\s*`, "i"), "");
+  const runtime = rest.match(SCP_RUNTIME_RE)?.[1]?.trim() ?? "";
+  const rating = rest.match(SCP_RATING_RE)?.[1] ?? "";
+  const synopsis = rest.replace(SCP_RUNTIME_RE, "").replace(SCP_RATING_RE, "").trim();
+  const runLine = runtime
+    ? ` Running time: about ${runtime.replace(/\b(\d+) hour\b/, (m, n) => (n === "1" ? m : `${n} hours`))}.`
+    : "";
+  return { description: `${synopsis}${runLine}`.trim(), rating, production };
+}
+
+async function fetchSunnyvalePlayersEvents() {
+  console.log("  ⏳ Sunnyvale Community Players...");
+  try {
+    const siteId = "22884B75-BA13-4D03-B269-ED2C4D1FCB47";
+    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&eid=0&edid=0&PluginType=Embed`;
+    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
+    const session = extractVboSession(pluginHtml);
+    if (!session) throw new Error("missing VBO session");
+
+    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
+    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
+    let siteHtml = "";
+    try { siteHtml = await fetchText(SCP_SITE_URL, { timeout: 20_000 }); } catch { /* links fall back to the season calendar */ }
+    const today = todayPT();
+    const events = [];
+
+    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
+    for (const block of blocks) {
+      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
+      const eid = block.match(/\bEID(\d+)\b/)?.[1];
+      const title = decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
+        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? "");
+      if (!edid || !eid || !title) continue;
+
+      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "");
+      const intro = parseScpIntro(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""), title);
+      const description = truncate(intro.description);
+      // The plugin shows "FREE" for a show whose tickets aren't on sale yet
+      // (Mean Girls, Oct 2026, while its show page lists $44–$53 seats), so
+      // only a dollar range counts as a price.
+      const priceText = cleanPearHtml(block.match(/EventListPrice[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "")
+        .replace(/^price\s*:?\s*/i, "")
+        .replace(/\.00\b/g, "");
+      const hasPrice = /\$\d/.test(priceText);
+      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
+      const url = scpShowPageUrl(title, siteHtml) ?? SCP_CALENDAR_URL;
+      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
+
+      let occurrences = [];
+      try {
+        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
+        occurrences = parsePearOccurrences(sliderHtml, rangeText);
+      } catch (err) {
+        console.log(`  ↳ Sunnyvale Community Players date fetch failed for ${title}: ${err.message}`);
+        if (STRICT_EVENT_REFRESH) throw err;
+      }
+
+      for (const occurrence of occurrences) {
+        if (occurrence.date < today) continue;
+        const start = parseDatePT(`${occurrence.date}T12:00:00`);
+        events.push({
+          id: h("sunnyvaleplayers", eid, occurrence.date, occurrence.time),
+          title,
+          date: occurrence.date,
+          displayDate: displayDate(start),
+          time: occurrence.time,
+          endTime: null,
+          venue: "Sunnyvale Community Theatre",
+          address: "550 E Remington Dr, Sunnyvale, CA 94087",
+          city: "sunnyvale",
+          category: "arts",
+          cost: hasPrice ? "paid" : null,
+          ...(hasPrice ? { costNote: priceText } : {}),
+          description,
+          url,
+          source: "Sunnyvale Community Players",
+          ...(image ? { image } : {}),
+          // Jr. productions are the youth company's family shows.
+          kidFriendly: intro.rating === "G" || /^Jr\.?\s/i.test(intro.production),
+        });
+      }
+
+      await new Promise((r) => setTimeout(r, 200));
+    }
+
+    console.log(`  ✅ Sunnyvale Community Players: ${events.length} events`);
+    return events;
+  } catch (err) {
+    console.log(`  ⚠️  Sunnyvale Community Players: ${err.message}`);
+    if (STRICT_EVENT_REFRESH) throw err;
+    return [];
+  }
+}
+
 // ── Performing arts calendars ──
 
 function cleanEscapedCalendarText(value = "") {
@@ -9185,6 +9327,7 @@ async function main() {
     source(fetchJamsjEvents),
     source(fetchHistorySanJoseEvents),
     source(fetchPearTheatreEvents, { label: "The Pear Theatre" }),
+    source(fetchSunnyvalePlayersEvents, { label: "Sunnyvale Community Players" }),
     source(fetchSanJoseTheatersEvents),
     source(fetchSouthBayMusicalTheatreEvents),
     source(fetchLosAltosStageEvents),
@@ -10184,6 +10327,9 @@ export {
   fetchMusicInParkEvents,
   fetchPaloAltoPlayersEvents,
   fetchPearTheatreEvents,
+  fetchSunnyvalePlayersEvents,
+  parseScpIntro,
+  scpShowPageUrl,
   fetchSanJoseTheatersEvents,
   fetchSjJazzEvents,
   fetchSJGiantsSchedule,

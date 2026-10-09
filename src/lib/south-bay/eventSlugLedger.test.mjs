@@ -126,3 +126,37 @@ test("verified garage-sale date correction redirects the old date without relaxi
   const unrelated = ev({ id: "recurring", date: "2026-10-03" });
   assert.equal(findSuccessor({ ...unrelated, date: "2026-10-04" }, liveSlugs([unrelated], [], "2026-10-04")), null);
 });
+
+test("a rolling run's passed night is retired and 301s to the same record's later date", () => {
+  // Palo Alto Players lists a production as "today" for its whole run.
+  const show = { id: "pap-1", title: "A Gentleman's Guide to Love and Murder", venue: "Lucie Stern Theatre", city: "palo-alto", time: "7:30 PM" };
+  const yesterday = ev({ ...show, date: "2026-09-17" });
+  const today = ev({ ...show, date: TODAY });
+  const ledger = retireSlugs({ entries: [] }, [yesterday], [today], TODAY, "2026-09-18T03:00:00.000Z");
+  assert.equal(ledger.count, 1);
+  assert.equal(ledger.entries[0].slug, "2026-09-17-a-gentleman-s-guide-to-love-and-murder");
+  assert.equal(ledger.entries[0].rolled, true);
+
+  const { redirects, orphans } = resolveRetired(ledger, [today], [], TODAY);
+  assert.equal(redirects.get("2026-09-17-a-gentleman-s-guide-to-love-and-murder"), "2026-09-18-a-gentleman-s-guide-to-love-and-murder");
+  assert.equal(orphans.length, 0);
+
+  // After the run ends, the archived closing night still catches it.
+  const closing = ev({ ...show, date: "2026-09-27" });
+  const later = resolveRetired(ledger, [], [closing], "2026-10-09");
+  assert.equal(later.redirects.get("2026-09-17-a-gentleman-s-guide-to-love-and-murder"), "2026-09-27-a-gentleman-s-guide-to-love-and-murder");
+});
+
+test("a series that lists several sessions under one id is not treated as rolling", () => {
+  const series = { id: "meetup-1", title: "Coffee and Conversation", time: "9:00 AM" };
+  const past = ev({ ...series, date: "2026-09-17" });
+  const next = ev({ ...series, date: "2026-09-24" });
+  const ledger = retireSlugs({ entries: [] }, [past, next], [next], TODAY);
+  assert.deepEqual(ledger.entries, []);
+
+  // A retired session the rolling rule didn't record never jumps to next week.
+  const entry = { slug: "2026-09-17-coffee-and-conversation", retiredAt: "2026-09-17T20:00:00.000Z", event: past };
+  const { redirects, orphans } = resolveRetired({ entries: [entry] }, [next], [], TODAY);
+  assert.equal(redirects.size, 0);
+  assert.equal(orphans.length, 1);
+});

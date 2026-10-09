@@ -16,9 +16,13 @@
 //     run no longer publishes is recorded with a slim event snapshot. A slug
 //     that comes back is dropped again. Entries expire RETAIN_DAYS after the
 //     event date, matching the archive window.
+//     A run that keeps one record and rolls its date forward each day (Palo
+//     Alto Players lists a production as "today" for its whole run) leaves a
+//     passed slug behind every night; those are retired too.
 //   • resolveRetired() — run at build time. Each retired slug either 301s to
 //     its successor in the live pool (same id, same date + source URL, or same
-//     date + near-identical title) or renders as a "no longer listed" leaf.
+//     date + near-identical title; for a passed night of a rolling run, the
+//     same record's later date) or renders as a "no longer listed" leaf.
 // ---------------------------------------------------------------------------
 
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
@@ -26,6 +30,8 @@ import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
 
 export const RETAIN_DAYS = 90;
+/** How far back a refresh looks for a rolling run's passed nights. */
+const ROLLED_LOOKBACK_DAYS = 7;
 
 const SNAPSHOT_FIELDS = [
   "id", "title", "date", "time", "endTime", "venue", "address", "city", "url",
@@ -92,6 +98,22 @@ export function retireSlugs(ledger, previousEvents, currentEvents, todayPt, now 
     if (bySlug.has(slug)) continue;
     bySlug.set(slug, { slug, retiredAt: now, event: snapshotEvent(e) });
   }
+  // A passed slug normally ages into the archive with its record. When the
+  // record itself moved on to a later date, nothing archives the old night.
+  // Rolling means one record: a series listing several sessions under one id
+  // is separate occurrences, and its past session is not next week's.
+  const previousIdCount = new Map();
+  for (const e of previousEvents ?? []) {
+    if (e?.id) previousIdCount.set(String(e.id), (previousIdCount.get(String(e.id)) ?? 0) + 1);
+  }
+  const rolledIds = new Set(
+    (currentEvents ?? []).filter((e) => isDated(e) && e.date >= todayPt && e.id).map((e) => String(e.id)),
+  );
+  for (const [slug, e] of futureSlugs(previousEvents, shiftDate(todayPt, -ROLLED_LOOKBACK_DAYS))) {
+    if (e.date >= todayPt || !e.id || bySlug.has(slug)) continue;
+    if (!rolledIds.has(String(e.id)) || previousIdCount.get(String(e.id)) !== 1) continue;
+    bySlug.set(slug, { slug, retiredAt: now, rolled: true, event: snapshotEvent(e) });
+  }
 
   const entries = [...bySlug.values()]
     .filter((entry) => !current.has(entry.slug) && entry.event.date >= cutoff)
@@ -124,14 +146,32 @@ function normalizeUrl(url) {
 }
 
 /**
+ * A passed night of a rolling run → the same record's next live date. Only
+ * for ledger entries retireSlugs recorded as rolled: weekly series reuse one
+ * id across separate sessions, and a past session isn't next week's. The
+ * title and place must still agree.
+ */
+function findRolledSuccessor(retired, live) {
+  if (!retired.id) return null;
+  const retiredTokens = tokens(retired.title);
+  const later = [...live]
+    .filter(([, e]) => e.id && String(e.id) === String(retired.id) && e.date > retired.date)
+    .filter(([, e]) => jaccard(retiredTokens, tokens(e.title)) >= 0.6)
+    .filter(([, e]) => !retired.venue || !e.venue || normalizeVenue(retired.venue) === normalizeVenue(e.venue))
+    .sort(([, a], [, b]) => a.date.localeCompare(b.date));
+  return later[0]?.[0] ?? null;
+}
+
+/**
  * Find the live slug a retired listing should redirect to, if any.
  * @param {object} retired  snapshot from the ledger
  * @param {Map<string, object>} live  slug → event, from liveSlugs()
+ * @param {{rolled?: boolean}} [opts]  rolled: the entry is a rolling run's passed night
  */
-export function findSuccessor(retired, live) {
+export function findSuccessor(retired, live, { rolled = false } = {}) {
   if (!isDated(retired)) return null;
   const sameDay = [...live].filter(([, e]) => e.date === retired.date);
-  if (!sameDay.length) return null;
+  if (!sameDay.length) return rolled ? findRolledSuccessor(retired, live) : null;
 
   if (retired.id) {
     const byId = sameDay.find(([, e]) => e.id && String(e.id) === String(retired.id));
@@ -157,7 +197,7 @@ export function findSuccessor(retired, live) {
     bestScore = sim;
     best = slug;
   }
-  return best;
+  return best ?? (rolled ? findRolledSuccessor(retired, live) : null);
 }
 
 /**
@@ -175,7 +215,7 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
     const event = applyVerifiedEventFacts(entry?.event);
     if (!entry?.slug || !isDated(event) || event.date < cutoff) continue;
     if (live.has(entry.slug)) continue;
-    const successor = findSuccessor(event, live);
+    const successor = findSuccessor(event, live, { rolled: entry.rolled === true });
     if (successor) redirects.set(entry.slug, successor);
     else orphans.push({ slug: entry.slug, event, retiredAt: entry.retiredAt });
   }
