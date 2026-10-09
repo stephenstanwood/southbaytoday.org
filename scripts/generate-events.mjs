@@ -2384,6 +2384,10 @@ function cleanVenue(raw) {
     /\b(Trail|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln|Way|Court|Ct|Place|Pl|Highway|Hwy|Parkway|Pkwy|Circle|Cir|Terrace|Ter)\.?\s+\d{1,5}\s*$/i,
     (_m, suffix) => suffix,
   );
+  // CivicPlus duplicates a street-directions tail onto the place name:
+  // Saratoga's "Historic Saratoga Village - Along Big Basin Way, - Big Basin
+  // Way" (2026-10-08). "Along <street>" is directions, not part of the name.
+  v = v.replace(/\s+-\s+Along\b.*$/i, "");
   // Strip trailing " - " or lone dash at end
   v = v.replace(/\s*-\s*$/, "");
   // Strip " - <address>" suffix where address starts with a number, e.g.
@@ -8882,6 +8886,17 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
       // downtown Palo Alto gallery walk shipped as "Downtown Palo Alto (Node Foundation").
       const venueLocation = location.replace(/\s+\([^)]*,[^)]*\)\s*$/, "");
       let venueName = venueLocation.includes(",") ? venueLocation.split(",")[0].trim() : venueLocation;
+      // A leading sub-room ("Fiction Room, Sunnyvale Public Library") is not a
+      // display venue on its own — "Fiction Room" shipped as the Sunnyvale
+      // briefing venue on 2026-10-08. Prefer the facility named after it.
+      const venueParts = venueLocation.split(",").map((s) => s.trim());
+      if (
+        venueParts.length > 1 &&
+        /^(?:[\w'’.&-]+\s+){0,3}(?:Room|Rm)(?:\s+\w+)?$|^(?:Room|Rm)\s+\w+$/i.test(venueParts[0]) &&
+        /\b(Library|Center|Centre|Hall|Museum|Park|Church|Theatre|Theater|School|College|Building)\b/i.test(venueParts[1])
+      ) {
+        venueName = venueParts[1];
+      }
       // Strip leading street number and optional "block of" phrasing — newsletter
       // sources sometimes write "200 block of Castro Street (near Dana Street)"
       // which yields a useless "block of Castro Street …" venue otherwise.
