@@ -1,19 +1,43 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-08T03:10:48.776Z",
+      "generatedAt": "2026-10-09T03:10:26.393Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Sep 30 – Oct 7",
+      "dateRange": "Oct 1 – Oct 8",
       "stats": {
-        "total": 435,
-        "notable": 23,
-        "newUnits": 12,
-        "totalValuation": 14331725
+        "total": 468,
+        "notable": 27,
+        "newUnits": 382,
+        "totalValuation": 107768605
       },
       "permits": [
+        {
+          "id": "2026-117021-MF",
+          "address": "120 Yoshino Wy",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "'Trimble B' Residential & Commercial Shell",
+          "valuation": 66319496,
+          "units": 372,
+          "issueDate": "2026-10-06",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2026-139260-MF",
+          "address": "120 Yoshino Wy",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "Trimble B Parking Garage",
+          "valuation": 27952287,
+          "units": 0,
+          "issueDate": "2026-10-06",
+          "subtype": "Apartment"
+        },
         {
           "id": "2026-140378-RS",
           "address": "2046 Jonathan Av #2",
@@ -99,18 +123,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-131702-RS",
-          "address": "3365 Casalegno Ct",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to JADU",
-          "valuation": 66586,
-          "units": 1,
-          "issueDate": "2026-09-30",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2025-142516-RS",
           "address": "2557 Cottle Av #2",
           "category": "residential-new",
@@ -121,47 +133,23 @@
           "units": 1,
           "issueDate": "2026-10-01",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-121812-RS",
-          "address": "2523 Sleepy Hollow Ln #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 58757,
-          "units": 1,
-          "issueDate": "2026-10-01",
-          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-07T03:11:03.641Z",
+      "generatedAt": "2026-10-09T03:10:28.603Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Sep 29 – Oct 6",
+      "dateRange": "Oct 1 – Oct 8",
       "stats": {
-        "total": 94,
-        "notable": 7,
+        "total": 101,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02825",
-          "address": "1585 Edgewood Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-05",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02818",
           "address": "940 Addison Av",
@@ -175,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02792",
-          "address": "2624 Cowper St",
+          "id": "26BLD-02825",
+          "address": "1585 Edgewood Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-09-30",
+          "issueDate": "2026-10-05",
           "subtype": "Permit Issued"
         },
         {
@@ -196,42 +184,6 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-10-05",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00279",
-          "address": "87 Encina Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install three new light fixtures on the Encina Avenue facing facade. Zone District: Service Commercial (CS(TOD)). CEQA Status: Not a project. For more information please contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-30",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00282",
-          "address": "180 Lytton Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to replace the nameplate of an existing wall sign with the current tenant nameplate. The nameplate will be constructed of aluminum and will be 10 inches tall by 24 inches long by .4 inches thick. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-01",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00278",
-          "address": "75 Encina Av",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to install three new light fixtures on the Encina Avenue facing facade. Zone District: Service Commercial (CS(TOD)). CEQA Status: Not a project. For more information please contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-09-30",
           "subtype": "Over the Counter Approved"
         }
       ]
