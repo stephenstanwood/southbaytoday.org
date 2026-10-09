@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-08T15:04:03.456Z",
+    "generatedAt": "2026-10-09T02:17:14.790Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 545,
+    "eventCount": 540,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (115)",
-      "Los Gatos Library (138)",
+      "Mountain View Public Library (111)",
+      "Los Gatos Library (136)",
       "San Jose Jazz (18)",
       "Linden Tree Books (17)",
       "History San Jose (4)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (8)",
       "Santana Row (6)",
-      "City of Cupertino (57)",
+      "City of Cupertino (58)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (86)",
       "Levi's Stadium (6)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 120,
+        "count": 116,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 138,
+        "count": 136,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 57,
+        "count": 58,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,92 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "3c3caaf87b11",
-      "title": "Magical Bridge Storytime",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "10:00 AM",
-      "endTime": "10:30 AM",
-      "venue": "Magical Bridge Playground",
-      "address": "201 S Rengstorff Ave, Mountain View, CA 94040",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Stop by the Bookmobile for stories, songs, and rhymes in the heart of Rengstorff Park! Enjoy a fun-filled storytime at the Magical Bridge Playground, and take advantage of full library services available from 10:00–11:00 a.m. Events are weather permitting. Find us at 201 S. Rengstorff Ave, Mountain View, CA 94040.",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17290231",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "d28f05f247ac",
-      "title": "Art in Flight: Reinventing Postmodernism with Smithsonian Curator Carolyn Russo",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is required. Click this link to attend the virtual event . Join us for a captivating online conversation with acclaimed author and Smithsonian curator Carolyn Russo as we dive into her fascinating book, The Ascent of Rauschenberg . Explore the towering legacy, unexpected inspirations, and creative heights of one of America's most influential artistic icons. Most famous for his groundbreaking \"Combines\"—painting and sculpture hybrids that often incorporated everyday objects—American artist Robert Rauschenberg (1925-2008) created within a range of mediums, including collage, performance, photography, and printmaking. But a connective tissue through it all was his fascination with flight. The Ascent of Rauschenberg explores the flight motif across his work, spanning birds, insects, aviation, spaceflight, sensory experiences, and metaphors for his own life. More than 150 images reveal the vibrant scope of his work, from lithographs inspired by the Apollo 11 launch that NASA invited him to witness and document, to a Combine featuring a taxidermied eagle that evokes Roman mythology. Nine accompanying essays reflect on his many flight themes and subtleties that might otherwise be overlooked. The book also includes archival photographs and personal papers from the Robert Rauschenberg Foundation. Register now for the chance to view art history through the unique prism of flight. Not able to attend live? You can access the recording for this event and all Online Author Series events on our website shortly after they conclude. About the Author: Carolyn Russo is curator of the art collection at the Smithsonian's National Air and Space Museum. She has lectured internationally on the subject of art and flight and is the author of several publications including The Ascent of Rauschenberg: Reinventing the Art of Flight, Art of the Airport Tower, In Plane View: Abstractions of Flight, and Women and Flight: Portraits of Contemporary Women Pilots. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17423673",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "757707a4fe49",
-      "title": "The Financial Side of Estate Planning: Beyond Wills and Trusts",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "2:00 PM",
-      "endTime": "3:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Most people think of estate planning as a legal task — a will, a trust, a folder in a drawer. But many of the decisions that determine how your assets actually reach your family are financial ones, made on account forms and beneficiary designations years apart. What you'll learn: What legal documents do... and don't . Wills, trusts, powers of attorney, and healthcare directives: what each one accomplishes, and where its authority stops. How your assets actually transfer . Why beneficiary designations and account titling often decide who receives what - no matter what your will says. Overlooked areas that cause issues . Outdated beneficiaries, joint ownership problems, blended families, digital footprints, overlooked retirement rules and uncoordinated advice. Taxes, family, and legacy goals . How inherited retirement accounts are taxed, and how to coordinate family, charitable, and legal decisions into a cohesive plan. Every attendee receives complimentary resources, including an Estate Planning Readiness Checklist to organize their own information. Who should attend: Retirees Those approaching retirement Parents and grandparents Anyone who has accumulated assets and wants to protect their family We are also hosting the same workshop on Tuesday, October 6 at 6:30 p.m. Presented by Daniel L. Foss, ChFC, CLU.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17594821",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "d2e6e7ab593d",
-      "title": "Let's Create",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "3:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Drop in for an afternoon of art and crafts that is self-directed, choice-driven, and celebrates the experience of discovery. This program is for children ages 5 and up . This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Tweens",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17329163",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "7428f1ef6026",
       "title": "Community Preservation Lab Scanning Service",
@@ -2814,48 +2728,6 @@
       "url": "https://losgatosca.libcal.com/event/17674956",
       "source": "Los Gatos Library",
       "kidFriendly": true
-    },
-    {
-      "id": "0dff6d490696",
-      "title": "Park-It Market",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "10:00 AM",
-      "endTime": "11:15 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join the team from West Valley Community Services for their twice monthly Park-It Market. On the second and fourth Thursday of each month, WVCS offers free access to food inlcluding fresh produce, meat, dairy products, dry goods and canned food.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15783338",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "192987dcea60",
-      "title": "Online Author Talk : Carolyn Russo",
-      "date": "2026-10-08",
-      "displayDate": "Thu, Oct 8",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. Join us for a captivating online conversation with acclaimed author and Smithsonian curator Carolyn Russo as we dive into her fascinating book, The Ascent of Rauschenberg . Explore the towering legacy, unexpected inspirations, and creative heights of one of America's most influential artistic icons. Most famous for his groundbreaking \"Combines\"—painting and sculpture hybrids that often incorporated everyday objects—American artist Robert Rauschenberg (1925-2008) created within a range of mediums, including collage, performance, photography, and printmaking. But a connective tissue through it all was his fascination with flight. The Ascent of Rauschenberg explores the flight motif across his work, spanning birds, insects, aviation, spaceflight, sensory experiences, and metaphors for his own life. More than 150 images reveal the vibrant scope of his work, from lithographs inspired by the Apollo 11 launch that NASA invited him to witness and document, to a Combine featuring a taxidermied eagle that evokes Roman mythology. Nine accompanying essays reflect on his many flight themes and subtleties that might otherwise be overlooked. The book also includes archival photographs and personal papers from the Robert Rauschenberg Foundation. Register now for the chance to view art history through the unique prism of flight. About the Author: Carolyn Russo is curator of the art collection at the Smithsonian's National Air and Space Museum. She has lectured internationally on the subject of art and flight and is the author of several publications including The Ascent of Rauschenberg: Reinventing the Art of Flight, Art of the Airport Tower, In Plane View: Abstractions of Flight, and Women and Flight: Portraits of Contemporary Women Pilots.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17371395",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "c47c7415351b",
@@ -7358,7 +7230,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.726Z"
       }
     },
     {
@@ -7381,7 +7253,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.727Z"
       }
     },
     {
@@ -7404,7 +7276,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.727Z"
       }
     },
     {
@@ -7427,7 +7299,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.727Z"
       }
     },
     {
@@ -7450,7 +7322,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.727Z"
       }
     },
     {
@@ -7473,7 +7345,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-08T15:02:46.365Z"
+        "checkedAt": "2026-10-09T02:15:54.728Z"
       }
     },
     {
@@ -8068,6 +7940,23 @@
       "cost": "free",
       "description": "The third annual Cupertino Community Service Awards will take place on Wednesday, October 28. This ceremony will recognize the 2026 CREST Awards (Cupertino Recognizes Extra Steps Taken), and Commissioners who served on a City Commission. Doors open at 5:30 p.m., program starts at 6 p.m. RSVP is required, registration will open for the public on Monday, September 21. For more information and to submit a nomination for the CREST Awards, visit cupertino.gov/crest.",
       "url": "https://www.cupertino.gov/Events-directory/2026-Cupertino-Community-Service-Awards",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "8efa6fba6a03",
+      "title": "International Kung Fu & Taijiquan Day",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "10:00 AM",
+      "endTime": "05:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "International Kung Fu & Taijiquan Day is managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/International-Kung-Fu-Taijiquan-Day",
       "source": "City of Cupertino",
       "kidFriendly": false
     },
