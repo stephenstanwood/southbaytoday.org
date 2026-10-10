@@ -15,6 +15,7 @@ import { applyVerifiedSjsuEventOverride } from "./sjsu-event-overrides.mjs";
 import { applyVerifiedMeetupEventOverride } from "./meetup-event-overrides.mjs";
 import {
   hasProspectiveCityHallUpgrade,
+  hasEventSelectionCount,
   hasUnsupportedEventMilestone,
   meetingWithinBriefingWindow,
 } from "./city-briefing-integrity.mjs";
@@ -105,6 +106,27 @@ test("keeps meetings inside the briefing week and rejects agenda-only tense upgr
   }];
   assert.equal(hasProspectiveCityHallUpgrade("The council weighed a legal case against fire truck makers.", agendaItems), true);
   assert.equal(hasProspectiveCityHallUpgrade("The agenda listed a potential case involving fire truck manufacturers.", agendaItems), false);
+
+  assert.equal(hasProspectiveCityHallUpgrade("City Council held closed talks over the Finch Avenue property.", agendaItems), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The library held a book sale; the council agenda listed property negotiations.", agendaItems), false);
+  const permit = [{
+    headline: "Chabad seeks permit for Sunnyvale worship space",
+    summary: "A use permit application before the Zoning Administrator would allow a religious assembly space.",
+  }];
+  assert.equal(hasProspectiveCityHallUpgrade("A September 30 zoning hearing weighed a worship-space permit.", permit), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The September 30 zoning agenda listed a worship-space permit.", permit), false);
+});
+
+test("a limited briefing selection cannot establish event totals", () => {
+  assert.equal(hasEventSelectionCount("Heritage Theatre hosts three Durga Puja events including a fashion show."), true);
+  assert.equal(hasEventSelectionCount("The library offers 2 watercolor workshops Saturday."), true);
+  assert.equal(hasEventSelectionCount("Heritage Theatre hosts Durga Puja programs including a fashion show."), false);
+  assert.equal(hasEventSelectionCount("Two Concerts for Kids runs Saturday.", [{ title: "Two Concerts for Kids" }]), false);
+  assert.equal(hasEventSelectionCount("The Chamber celebrates its 100th anniversary Saturday."), false);
+  assert.equal(hasEventSelectionCount("October 10, the library offers watercolor workshops."), false);
+  assert.equal(hasEventSelectionCount("A 10 AM concert runs at the library."), false);
+  assert.equal(hasEventSelectionCount("A 10:30 AM concert runs at the library."), false);
+  assert.equal(hasEventSelectionCount("October 10, the library offers two watercolor workshops."), true);
 });
 
 test("ordinary performance dates cannot become opening or closing dates in a briefing", () => {

@@ -67,6 +67,23 @@ test("a play with kids in its title is not promoted as children's programming", 
   assert.match(event.url, /\/studio\/chinaka-hodge\/$/);
 });
 
+test("SVP's correction cannot leave a second Senior Center chat on Saturday", () => {
+  const original = {
+    id: "inbound_muvl3a1q_ktz8ma", cityKey: "santa-clara",
+    title: "Public Power Week Fireside Chat at Senior Center",
+    startsAt: "2026-10-10T10:00:00-07:00", endsAt: "2026-10-10T12:00:00-07:00",
+    location: "Santa Clara Senior Center, Santa Clara, CA",
+    sourceUrl: "https://www.siliconvalleypower.com",
+  };
+  const corrected = { ...original, id: "inbound_mux03i3s_iafre2", startsAt: "2026-10-09T10:00:00-07:00", endsAt: "2026-10-09T12:00:00-07:00" };
+  const friday = fetchInboundEvents({ events: [original, corrected], today: "2026-10-09" });
+  assert.equal(friday.length, 2);
+  assert.ok(friday.every((event) => event.date === "2026-10-09" && event.time === "10:00 AM" && event.endTime === "12:00 PM"));
+  assert.deepEqual(fetchInboundEvents({ events: [original, corrected], today: "2026-10-10" }), []);
+  assert.equal(normalizeInboundEventPresentation({ ...original, startsAt: "2027-10-10T10:00:00-07:00" }).date, undefined);
+  assert.equal(normalizeInboundEventPresentation({ ...original, title: "Another Senior Center chat" }).date, undefined);
+});
+
 test("inbound end-of-day and midnight sentinels are not visitor times", () => {
   assert.equal(inboundClock("2026-07-20T23:59:59-07:00"), null);
   assert.equal(inboundClock("2026-07-20T00:00:00-07:00"), null);

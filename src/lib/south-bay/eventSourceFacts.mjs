@@ -7,6 +7,16 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // SVP's October 6 CORRECTION newsletter supersedes its October 5 notice:
+  // the Senior Center chat is Friday, October 9, not Saturday, October 10.
+  // Both first-party extraction records remain in inbound-events.json.
+  // Evidence and record IDs: docs/qa/2026-10-09-fact-check.md.
+  {
+    id: "inbound-5f25d927141e66bc", date: "2026-10-10",
+    title: /^Public Power Week Fireside Chat at Senior Center$/i,
+    venue: /Santa Clara Senior Center/i,
+    facts: { date: "2026-10-09", displayDate: "Fri, Oct 9", time: "10:00 AM", endTime: "12:00 PM" },
+  },
   // October 4 fact-check: exact first-party dates/links, recorded in
   // docs/qa/2026-10-04-fact-check.md. Correct occurrence dates before filtering.
   {

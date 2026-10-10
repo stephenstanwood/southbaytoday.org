@@ -153,3 +153,24 @@ test("Around Town body verification receives the full agenda instead of a clippe
   assert.match(observedText, /Cubberley property negotiations/);
   assert.doesNotMatch(observedText, /Participation instructions/);
 });
+
+test("closed-session agenda language cannot become ongoing talks in a headline", () => {
+  const agenda = { fullAgendaText: "Property: 10480 Finch Avenue. Under Negotiation: Price and terms of payment." };
+  assert.equal(hasUnsupportedMeetingAction({ headline: "City in closed talks over Finch Avenue property" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ headline: "Finch Avenue property negotiations listed on October 6 council agenda" }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ headline: "City in closed talks over Finch Avenue property" }, {
+    excerpt: "The city is in closed talks over Finch Avenue property.",
+  }), false);
+});
+
+test("past commission and permit agendas do not establish current pending action", () => {
+  for (const headline of [
+    "Human Relations panel to weigh in on housing bond measure",
+    "Chabad seeks permit for Sunnyvale worship space",
+  ]) {
+    const item = { date: "2026-09-29", headline };
+    assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-10-09"), true);
+    assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-09-29"), false);
+    assert.equal(hasPastAgendaFutureFraming(item, { source: "youtube-transcript" }, "2026-10-09"), false);
+  }
+});

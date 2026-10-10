@@ -1,0 +1,35 @@
+# October 9, 2026 fact-check
+
+Audited main after `ec1c4830` under the `sbs-fact-check` repository lock. Read all twelve scheduled audit files and the latest twenty commits. Structural checks cover the full event feed; independent source verification focuses on changed and suspicious claims rather than every historical occurrence.
+
+## Corrections
+
+- **Silicon Valley Power Senior Center chat:** removed the superseded Saturday, October 10 occurrence. The first-party newsletter records in `inbound-events.json` establish the correction: `inbound_muvl3a1q_ktz8ma`, received October 5, carries October 10; `inbound_mux03i3s_iafre2`, received October 6 from the same official `svp@info.santaclaraca.gov` publisher, has the subject **CORRECTION: Silicon Valley Power and the City of Santa Clara Celebrate Public Power Week, Oct. 4-10** and gives **Friday, October 9, 10 AM–noon**. Kept the correct Friday record and the raw extraction evidence. The occurrence-specific shared source correction runs before past-date filtering, preventing the old newsletter from promoting the chat on Saturday. The old Saturday URL redirects to the Friday occurrence through the retired-slug ledger.
+- **Cupertino:** changed “City in closed talks” and the briefing's “City Council held closed talks” to dated agenda language. The [October 6 meeting page](https://cupertino.legistar.com/MeetingDetail.aspx?ID=1365647&GUID=29EDEDC0-2D0B-4B5A-9265-015AAE7E86BF) identifies property negotiations at 10480 Finch Avenue and names the city manager and interim city attorney as negotiators; its draft-minutes state does not establish that the discussion occurred. Removed the briefing's ambiguous grouping of two separate preserves under “the library or preserve.”
+- **Sunnyvale and Palo Alto:** dated the Chabad permit and Human Relations Commission housing-bond headlines instead of presenting old agendas as current pending business. Replaced the Sunnyvale briefing's “hearing weighed” with “zoning agenda listed.” The [September 30 Sunnyvale agenda](https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4568&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5) confirms the proposed religious assembly at 645 W. Fremont Avenue, R-1 zoning, and the Zoning Administrator body; finalized minutes/actions are unavailable. The [September 29 Palo Alto agenda](https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21576) confirms consideration of recommending a council position on Proposition 1, the Veterans and Affordable Housing Bond Act of 2026. Preserved agenda-only framing and each item's original body, date, and source record.
+- **Campbell event count:** removed “three Durga Puja events” from the briefing. The generator's five-row selection included three such listings, while the full feed has five Heritage Theatre listings across October 9–11. A selection cannot establish the venue's total. Retained the actual program names and dates, including the [October 9 Mahalaya](https://www.heritagetheatre.org/events/prothoma-durga-puja-2026-mahalaya) and [October 10 fashion show](https://www.heritagetheatre.org/events/prothoma-durga-puja-2026-a-fashion-show).
+
+## Prevention
+
+- Around Town rejects unsupported ongoing-talks headlines and past-agenda “panel to weigh” / “seeks permit” framing.
+- City briefing validation catches completed-meeting claims such as “held closed talks” and permit-hearing tense upgrades. It retries summaries that infer program counts from a limited selection, while preserving dates, times, and numbers in actual event titles.
+- The dated SVP correction uses the existing shared event-fact mechanism. It does not apply to another year or another Senior Center program. Regression coverage includes the Saturday past-occurrence filter, so even a stale input copy cannot restore the wrong date.
+
+## Reviewed without additional corrections
+
+- `development-data.ts`: all 19 projects, including existing rollup, developer, status, and timeline qualifications.
+- `events-data.ts`: all 53 recurring entries, market schedules, and the sports-season block.
+- `tech-companies.ts`: 18 anchor employers, 51 spotlights, and 144 funding records. SCC local-job estimates remain explicitly separate from global headcounts. The new Turba Labs record agrees with its [company announcement](https://www.turbalabs.com/insights/announcing-52m-funding) and [Palo Alto company address](https://www.turbalabs.com/privacy); its undisclosed individual-round amount does not inflate the annual funding total.
+- `digests.json`: all 11 city entries. Checked official Campbell, Saratoga, Cupertino, Santa Clara, Mountain View, San Jose, Sunnyvale, and Palo Alto source material for the reviewed claims. Agenda descriptions remain qualified rather than asserted decisions. No change to the known Campbell/SB 707 exceptions.
+- `permit-pulse.json`: both city feeds reviewed. A fresh read of the configured San Jose CKAN dataset exactly reproduces **476 permits, 381 source-reported new units, and $114,050,036 declared valuation** for October 2–9. All ten displayed San Jose permit IDs, issue dates, valuations, and unit fields agree with the source. Palo Alto's unpublished valuations remain zero/unknown; notable subsets are not treated as total permit counts.
+- `city-budgets.json`: all 11 rounded General Fund per-capita calculations agree with the stored General Fund amount and population. Verified fiscal-year labels and existing source qualifications; Sunnyvale's unverified all-funds total remains null.
+- `scc-food-openings.json`: all 24 displayed inspection/coming-soon IDs, dates, and final-inspection states match a fresh query of the configured county dataset. The opened list remains empty; completed inspections are not presented as opening dates. Retained the county's filed spelling of business names rather than guessing replacements.
+- Remaining events and briefing highlights: all event highlights match feed titles, venues, city labels, dates, times, and URLs. Missing-link rows still have specific newsletter-derived descriptions. No road-race sports misclassification, raw-address venue, source/blurb fact conflict, or self-contradictory location remains in the checked feed.
+- `upcoming-meetings.json` and `weekend-picks.json`: fresh timestamps and applicable dates/weekend. No attempt to bypass the recorded Los Gatos source rejection. The retired transit, real-estate, and sports-team files remain absent.
+
+## Validation
+
+- `npm test`: **1,226 tests passed** across 101 invocations, zero failures, cancellations, or skips.
+- `npm run build`: passed. The built Vercel configuration contains a **301 redirect from the Saturday chat URL to the Friday URL**, and only the corrected Friday occurrence has a generated event page.
+- Full-feed checks: **1,906 events and 1,906 unique IDs** after removing the superseded Saturday chat; zero remaining briefing count/agenda-tense flags, source/blurb fact conflicts, and blocking venue contradictions.
+- Retired URL resolution confirms the Saturday chat redirects to `/event/2026-10-09-public-power-week-fireside-chat-at-senior-center` with no orphan leaf.

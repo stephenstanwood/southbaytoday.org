@@ -56,29 +56,34 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   return !NONDISCLOSURE_CLAIM.test(evidence);
 }
 
-const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board)\s+(?:also\s+)?(held|met|heard|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
+const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\s+(?:also\s+)?(held|met|heard|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
+const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {
   const claim = `${item?.headline || ""} ${item?.summary || ""}`;
   const actions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
-  if (!actions.length && !commentsClaimed) return false;
+  const talksClaimed = ONGOING_BODY_TALKS.test(claim);
+  if (!actions.length && !commentsClaimed && !talksClaimed) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
   if (commentsClaimed && !RECEIVED_PUBLIC_COMMENTS.test(evidence)) return true;
+  if (talksClaimed && !ONGOING_BODY_TALKS.test(evidence)) return true;
   return actions.some((action) => !new RegExp(
-    `\\b(?:council|commission|committee|board)\\s+(?:also\\s+)?${action}\\b`, "i",
+    `\\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\\s+(?:also\\s+)?${action}\\b`, "i",
   ).test(evidence));
 }
 
-const CURRENT_BODY_ACTION = /\b(?:council|commission|committee|board|zoning administrator)\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny)\b|(?:weighs|considers)\b)/i;
+const CURRENT_BODY_ACTION = /\b(?:council|commission|committee|board|panel|zoning administrator)\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny)\b|(?:weighs|considers)\b)/i;
+const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
 
 /** An old agenda supports dated agenda language, not a new pending hearing. */
 export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(item?.date || "")
       || !/^\d{4}-\d{2}-\d{2}$/.test(asOfDate || "")
       || item.date >= asOfDate || meeting?.source === "youtube-transcript") return false;
-  return CURRENT_BODY_ACTION.test(`${item?.headline || ""} ${item?.summary || ""}`);
+  const claim = `${item?.headline || ""} ${item?.summary || ""}`;
+  return CURRENT_BODY_ACTION.test(claim) || CURRENT_PERMIT_REQUEST.test(claim);
 }
