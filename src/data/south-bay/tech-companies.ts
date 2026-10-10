@@ -1740,6 +1740,22 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#2563eb",
     url: "https://clockwork.io",
   },
+  // Satlyt's Oct 3 CEO post explicitly names Sunnyvale as its U.S. HQ and
+  // Nairobi as its Africa HQ, resolving the site's generic "San Francisco"
+  // footer. The date below is the original Oct 1 funding announcement:
+  // https://spaceinafrica.com/2026/10/01/satlyt-raises-usd-8-million-seed-to-turn-satellites-into-virtual-ai-data-centers/
+  {
+    id: "satlyt",
+    name: "Satlyt",
+    city: "Sunnyvale",
+    category: "ai",
+    round: "Seed",
+    amount: "$8M",
+    date: "2026-10-01",
+    tagline: "Satlyt, whose U.S. headquarters is in Sunnyvale, makes software that lets satellites process images and system data and run AI onboard. Non Sibi Ventures led its $8M seed round. The money will expand engineering and customer delivery teams and support more deployments on other operators' spacecraft. Its software already runs on individual satellites; sharing computing resources across multiple spacecraft is still a longer-term goal.",
+    color: "#2563EB",
+    url: "https://satlyt.ai/blog/satlyt-raises-8-million-seed-virtual-ai-data-centers",
+  },
   // PaleBlueDot AI's Oct 1 release explicitly confirms Palo Alto HQ, beyond
   // the dateline. This $200M Series C is new equity after January's $150M
   // Series B, which stays below; July's $255M credit facility is not equity
