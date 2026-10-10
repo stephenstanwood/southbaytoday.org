@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-09T16:09:15.930Z",
+    "generatedAt": "2026-10-10T02:17:23.196Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 536,
+    "eventCount": 535,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (110)",
+      "Mountain View Public Library (109)",
       "Los Gatos Library (136)",
       "San Jose Jazz (18)",
       "Linden Tree Books (17)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (6)",
       "SAP Center (15)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (6)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (6)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 115,
+        "count": 113,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
@@ -338,59 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 6,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "8e429476e541",
-      "title": "Baby Storytime: Rerun",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170830",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "2edad4e1fc06",
-      "title": "Amplify: Back to Bach",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "4:30 PM",
-      "endTime": "5:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "music",
-      "cost": "free",
-      "description": "The Back to Bach Project brings the joy of music to communities through performances and educational outreach. Young musicians will perform for children and families while leading interactive activities that introduce musical concepts, instruments, and creative listening skills. This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
-      "sourceAudiences": [
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17409868",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "39f7ed701987",
       "title": "Planning Your Cool Vegetable Garden  in Our Mediterranean Climate",
@@ -1657,7 +1616,7 @@
       "sourceAudiences": [
         "All Ages"
       ],
-      "url": "https://mountainview.libcal.com/event/15668880",
+      "url": "https://mountainview.libcal.com/event/17010620",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -1913,6 +1872,27 @@
         "Children"
       ],
       "url": "https://mountainview.libcal.com/event/17500316",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "5d4b47f97a52",
+      "title": "Amplify: Gatorbotics Gear Up!",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "1:00 PM",
+      "endTime": "3:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us for a hands-on exploration of design thinking and engineering. Learn how to interview, brainstorm, and make as we build solutions to real problems we find in the world around us. Practice hands-on engineering and learn design thinking foundational skills. Walk away with your very own prototype and a newfound excitement for engineering! Hosted by Castilleja School’s Robotics Team, Gatorbotics. Recommended Ages: 5-11 This event is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17737011",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -6945,11 +6925,11 @@
       "kidFriendly": false
     },
     {
-      "id": "7a429d9736fa",
-      "title": "Toddler Storytime",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "11:30 am",
+      "id": "90188ff5214d",
+      "title": "Make Your Own Mask!",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": null,
       "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
@@ -6962,11 +6942,11 @@
       "kidFriendly": true
     },
     {
-      "id": "90188ff5214d",
-      "title": "Make Your Own Mask!",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": null,
+      "id": "7a429d9736fa",
+      "title": "Toddler Storytime",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
@@ -7169,7 +7149,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-09T16:08:02.589Z"
+        "checkedAt": "2026-10-10T02:16:01.505Z"
       }
     },
     {
@@ -7192,7 +7172,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-09T16:08:02.590Z"
+        "checkedAt": "2026-10-10T02:16:01.507Z"
       }
     },
     {
@@ -7215,7 +7195,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-09T16:08:02.590Z"
+        "checkedAt": "2026-10-10T02:16:01.507Z"
       }
     },
     {
@@ -7238,7 +7218,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-09T16:08:02.590Z"
+        "checkedAt": "2026-10-10T02:16:01.507Z"
       }
     },
     {
@@ -7261,7 +7241,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-09T16:08:02.590Z"
+        "checkedAt": "2026-10-10T02:16:01.507Z"
       }
     },
     {
@@ -7284,7 +7264,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-09T16:08:02.590Z"
+        "checkedAt": "2026-10-10T02:16:01.508Z"
       }
     },
     {
@@ -8285,7 +8265,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8302,7 +8282,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8319,7 +8299,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -10365,108 +10345,6 @@
       "kidFriendly": true
     },
     {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -10584,6 +10462,108 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "a2e9918fb28c",
+      "title": "Representation Matters Film Festival (Virtual Viewing)",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": null,
+      "endTime": null,
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "06f8aeb9e2c5",
+      "title": "Morning Hike at Bear Creek Redwoods",
+      "date": "2026-10-09",
+      "displayDate": "Fri, Oct 9",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "199638a33dce",
+      "title": "Hike at Calero County Park",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
+      "time": "3:30 PM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
