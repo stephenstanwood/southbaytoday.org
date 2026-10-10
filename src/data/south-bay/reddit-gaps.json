@@ -1,194 +1,110 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-09T03:18:00.024Z",
+    "generatedAt": "2026-10-10T04:44:27.343Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 12
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 12,
-    "placesExtracted": 8,
-    "placesMatched": 4,
+    "threadsMined": 8,
+    "placesExtracted": 5,
+    "placesMatched": 1,
     "placeGaps": 4,
-    "eventsExtracted": 5,
-    "eventsMatched": 2,
-    "eventGaps": 3,
+    "eventsExtracted": 2,
+    "eventsMatched": 0,
+    "eventGaps": 2,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "Photoism",
-      "city": "Cupertino",
-      "kind": "retail",
-      "context": "being replaced by Maruwu Seicha",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
-      ]
-    },
-    {
-      "name": "Evergreen Village Square",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "top predicted spot for next Trader Joe's",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
-      ]
-    },
-    {
-      "name": "The Tech Museum",
+      "name": "MLK Library",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting 21+ party event At Nite tonight",
+      "context": "hosting Fixit Clinic repair workshop",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
+        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
+        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
+        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
+        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
       ]
     },
     {
-      "name": "Joseph D Grant County Park",
+      "name": "Reed Veterinary",
       "city": "San Jose",
-      "kind": "park",
-      "context": "spot for tarantula sightings",
+      "kind": "service",
+      "context": "privately owned vet clinic mentioned",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0ukkk/best_haunted_househalloween_experiences_in_san/",
-        "https://www.reddit.com/r/SanJose/comments/1x111nj/your_favorite_auto_detailer/",
-        "https://www.reddit.com/r/SanJose/comments/1x0xm1i/norcal_bats_at_the_east_san_jose_carnegie_library/",
-        "https://www.reddit.com/r/SanJose/comments/1x0i3yc/birthday_singing/",
-        "https://www.reddit.com/r/SanJose/comments/1x18kv1/tarantula_sightings/"
+        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
+        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
+        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
+        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
+      ]
+    },
+    {
+      "name": "Gold's Gym on Hamilton",
+      "city": "San Jose",
+      "kind": "other",
+      "context": "gym with good machines but bad etiquette culture",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
+        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
+        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
+        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
+      ]
+    },
+    {
+      "name": "The Container Store",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "line of people wrapping around store at Santana Row",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
+        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
+        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "At Nite at The Tech",
-      "when": "tonight 7-11pm",
+      "name": "Fixit Clinic Repair Workshop",
+      "when": "Saturday, October 17th, 1-4pm",
       "city": "San Jose",
-      "context": "21+ party event at The Tech Museum",
+      "context": "free repair workshop at MLK Library Room 225",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
+        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
+        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
+        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
+        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
+        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
       ]
     },
     {
-      "name": "Norcal Bats at the East San Jose Carnegie Library",
-      "when": "Sunday, October 11 at 3 pm",
+      "name": "Memorial cleanup",
+      "when": "10/24",
       "city": "San Jose",
-      "context": "live bat presentation and education program",
+      "context": "special memorial cleanup requested by Peng",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0ukkk/best_haunted_househalloween_experiences_in_san/",
-        "https://www.reddit.com/r/SanJose/comments/1x111nj/your_favorite_auto_detailer/",
-        "https://www.reddit.com/r/SanJose/comments/1x0xm1i/norcal_bats_at_the_east_san_jose_carnegie_library/",
-        "https://www.reddit.com/r/SanJose/comments/1x0i3yc/birthday_singing/",
-        "https://www.reddit.com/r/SanJose/comments/1x18kv1/tarantula_sightings/"
-      ]
-    },
-    {
-      "name": "Three Days Grace concert",
-      "when": "11/18",
-      "city": "San Jose",
-      "context": "concert at SAP Center, GA Pit",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0hkig/looking_for_anyone_going_to_the_three_days_grace/",
-        "https://www.reddit.com/r/SanJose/comments/1x0h58r/looking_for_halloween_plans/"
+        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
+        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
+        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Maruwu Seicha",
-      "city": "Cupertino",
-      "kind": "cafe",
-      "context": "new matcha shop replacing Photoism on Main Street",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
-      ],
-      "matchedName": "Maruwu Seicha - Palo Alto"
-    },
-    {
-      "name": "Winchester Mystery House",
+      "name": "Santana Row",
       "city": "San Jose",
       "kind": "venue",
-      "context": "haunted house event visited last year",
+      "context": "shopping center with long line reported",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0ukkk/best_haunted_househalloween_experiences_in_san/",
-        "https://www.reddit.com/r/SanJose/comments/1x111nj/your_favorite_auto_detailer/",
-        "https://www.reddit.com/r/SanJose/comments/1x0xm1i/norcal_bats_at_the_east_san_jose_carnegie_library/",
-        "https://www.reddit.com/r/SanJose/comments/1x0i3yc/birthday_singing/",
-        "https://www.reddit.com/r/SanJose/comments/1x18kv1/tarantula_sightings/"
+        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
+        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
+        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
       ],
-      "matchedName": "Winchester Mystery House"
-    },
-    {
-      "name": "East San Jose Carnegie Library",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "hosting Norcal Bats event",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0ukkk/best_haunted_househalloween_experiences_in_san/",
-        "https://www.reddit.com/r/SanJose/comments/1x111nj/your_favorite_auto_detailer/",
-        "https://www.reddit.com/r/SanJose/comments/1x0xm1i/norcal_bats_at_the_east_san_jose_carnegie_library/",
-        "https://www.reddit.com/r/SanJose/comments/1x0i3yc/birthday_singing/",
-        "https://www.reddit.com/r/SanJose/comments/1x18kv1/tarantula_sightings/"
-      ],
-      "matchedName": "East San Jose Carnegie Library"
-    },
-    {
-      "name": "SAP Center",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "venue for Three Days Grace concert",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x0hkig/looking_for_anyone_going_to_the_three_days_grace/",
-        "https://www.reddit.com/r/SanJose/comments/1x0h58r/looking_for_halloween_plans/"
-      ],
-      "matchedName": "SAP Center"
+      "matchedName": "Santana Row"
     }
   ],
-  "eventMatches": [
-    {
-      "name": "Campbell Oktoberfest",
-      "when": "Oct 17-18",
-      "city": "Campbell",
-      "context": "large downtown festival, volunteering and social mixer",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
-      ],
-      "matchedName": "Campbell Oktoberfest"
-    },
-    {
-      "name": "Mountain View Oktoberfest",
-      "when": "this weekend",
-      "city": "Mountain View",
-      "context": "expanded festival run by Chamber of Commerce",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x16v67/volunteer_make_friends_in_campbell_mountain_views/",
-        "https://www.reddit.com/r/Cupertino/comments/1x0zv2j/maruwu_seicha_coming_to_main_street/",
-        "https://www.reddit.com/r/SanJose/comments/1x14z55/young_toddler_activities/",
-        "https://www.reddit.com/r/SanJose/comments/1x0z0e2/where_will_the_next_trader_joes_go_in_san_jose_i/",
-        "https://www.reddit.com/r/SanJose/comments/1x0ynxf/party_at_the_tech_museum_tonight/"
-      ],
-      "matchedName": "Destination Mountain View – Oktoberfest"
-    }
-  ]
+  "eventMatches": []
 }

@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-09T03:10:26.393Z",
+      "generatedAt": "2026-10-10T04:36:57.882Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 1 – Oct 8",
+      "dateRange": "Oct 2 – Oct 9",
       "stats": {
-        "total": 468,
-        "notable": 27,
-        "newUnits": 382,
-        "totalValuation": 107768605
+        "total": 476,
+        "notable": 31,
+        "newUnits": 381,
+        "totalValuation": 114050036
       },
       "permits": [
         {
@@ -51,15 +51,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-139243-RS",
-          "address": "1413 Gordy Dr #2",
+          "id": "2025-107393-RS",
+          "address": "1407 Ford Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "ADU - Detached",
-          "valuation": 175920,
+          "description": "Preapproved ADU 2-Story 998 Sqft Collab Design Studio ADU",
+          "valuation": 175568,
           "units": 1,
-          "issueDate": "2026-10-01",
+          "issueDate": "2026-10-07",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-144551-RS",
+          "address": "1662 Roberts Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 140736,
+          "units": 1,
+          "issueDate": "2026-10-07",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -99,15 +111,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-109823-RS",
-          "address": "1942 Loyola Dr #2",
+          "id": "2026-120873-RS",
+          "address": "1463 Teresita Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Pdox New Attached ADU",
-          "valuation": 83210,
+          "description": "Garage Conversion to JADU",
+          "valuation": 82155,
           "units": 1,
-          "issueDate": "2026-10-01",
+          "issueDate": "2026-10-07",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -121,47 +133,23 @@
           "units": 1,
           "issueDate": "2026-10-02",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-142516-RS",
-          "address": "2557 Cottle Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 65970,
-          "units": 1,
-          "issueDate": "2026-10-01",
-          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-09T03:10:28.603Z",
+      "generatedAt": "2026-10-10T04:37:00.884Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 1 – Oct 8",
+      "dateRange": "Oct 2 – Oct 9",
       "stats": {
-        "total": 101,
+        "total": 106,
         "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02818",
-          "address": "940 Addison Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-04",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02825",
           "address": "1585 Edgewood Dr",
@@ -172,6 +160,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-10-05",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02818",
+          "address": "940 Addison Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-04",
           "subtype": "Permit Issued"
         },
         {
