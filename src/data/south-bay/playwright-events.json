@@ -1,32 +1,32 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-10T02:17:23.196Z",
+    "generatedAt": "2026-10-10T16:09:21.935Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 535,
+    "eventCount": 530,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (109)",
+      "Mountain View Public Library (110)",
       "Los Gatos Library (136)",
-      "San Jose Jazz (18)",
-      "Linden Tree Books (17)",
+      "San Jose Jazz (17)",
+      "Linden Tree Books (16)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (10)",
+      "Mountain Winery (9)",
       "San Jose Theaters (19)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (7)",
       "Santana Row (6)",
       "City of Cupertino (58)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (85)",
+      "TheatreWorks Silicon Valley (84)",
       "Levi's Stadium (6)",
       "SAP Center (15)",
       "The Tech Interactive (12)",
       "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (6)"
+      "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 113,
+        "count": 114,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 18,
+        "count": 17,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 17,
+        "count": 16,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 10,
+        "count": 9,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 85,
+        "count": 84,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -339,8 +339,8 @@
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
         "status": "error",
-        "count": 6,
-        "error": "unexpected empty result after retry; previous snapshot still has 6 future event(s) from Peninsula Open Space Trust",
+        "count": 4,
+        "error": "unexpected empty result after retry; previous snapshot still has 4 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
         ],
@@ -2666,6 +2666,28 @@
       "url": "https://mountainview.libcal.com/event/17200157",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "bb1e7a889cff",
+      "title": "Pages and Paws",
+      "date": "2027-01-08",
+      "displayDate": "Fri, Jan 8",
+      "time": "3:30 PM",
+      "endTime": "4:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "appointment-only",
+      "category": "community",
+      "cost": "free",
+      "description": "Therapy reading dogs provide a comforting presence for children as they navigate the exciting realm of books. This initiative aims to build confidence, enhance literacy skills and instill a lifelong love for reading. Therapy dogs plan to visit on the first Friday of each month, but review our calendar to confirm dates. Limited registration is intentional to allow readers rewarding one-on-one reading time with a therapy dog. More details on your confirmed time-slot, and instruction to follow once registered. Ages 8-12.",
+      "sourceAudiences": [
+        "Tweens",
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/16357823",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "c47c7415351b",
@@ -5463,23 +5485,6 @@
       "kidFriendly": false
     },
     {
-      "id": "9f8ed2a1d00c",
-      "title": "Secret Sidewalk",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/secret-sidewalk/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
       "id": "47ba7601c86f",
       "title": "Deep Grooves of Reflection with Mara Hruby",
       "date": "2026-10-10",
@@ -5767,28 +5772,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "5e2f41e7fc94",
-      "title": "Book Launch with Marley Rose-Teter — In conversation with Samantha Chong",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-09"
-      }
     },
     {
       "id": "2b91ab8b48a0",
@@ -6432,23 +6415,6 @@
       "kidFriendly": false
     },
     {
-      "id": "a545f8a53289",
-      "title": "Rumours of Fleetwood Mac",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1386829",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "49ee26736d1b",
       "title": "Los Horóscopos de Durango",
       "date": "2026-10-10",
@@ -6599,40 +6565,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "8d12b08f45b7",
-      "title": "The Price Is Right Live!",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "4d7fc8f30c63",
-      "title": "Trust Me!!!",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -6925,6 +6857,40 @@
       "kidFriendly": false
     },
     {
+      "id": "fb588d45d3c3",
+      "title": "Caifanes",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "71972c7d74d4",
+      "title": "Bluey’s Big Play",
+      "date": "2026-10-30",
+      "displayDate": "Fri, Oct 30",
+      "time": null,
+      "endTime": null,
+      "venue": "Center for the Performing Arts",
+      "address": "255 S Almaden Blvd, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
       "id": "90188ff5214d",
       "title": "Make Your Own Mask!",
       "date": "2026-10-10",
@@ -6942,10 +6908,10 @@
       "kidFriendly": true
     },
     {
-      "id": "7a429d9736fa",
+      "id": "f08d97b575c6",
       "title": "Toddler Storytime",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6959,10 +6925,10 @@
       "kidFriendly": true
     },
     {
-      "id": "5e972c881ae4",
+      "id": "eab1732ff3e8",
       "title": "All Ages Storytime",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
+      "date": "2026-10-10",
+      "displayDate": "Sat, Oct 10",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -7149,7 +7115,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-10",
-        "checkedAt": "2026-10-10T02:16:01.505Z"
+        "checkedAt": "2026-10-10T16:08:03.103Z"
       }
     },
     {
@@ -7172,7 +7138,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-10T02:16:01.507Z"
+        "checkedAt": "2026-10-10T16:08:03.104Z"
       }
     },
     {
@@ -7195,7 +7161,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-10T02:16:01.507Z"
+        "checkedAt": "2026-10-10T16:08:03.104Z"
       }
     },
     {
@@ -7218,7 +7184,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-10T02:16:01.507Z"
+        "checkedAt": "2026-10-10T16:08:03.104Z"
       }
     },
     {
@@ -7241,7 +7207,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-10T02:16:01.507Z"
+        "checkedAt": "2026-10-10T16:08:03.104Z"
       }
     },
     {
@@ -7264,7 +7230,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-10T02:16:01.508Z"
+        "checkedAt": "2026-10-10T16:08:03.104Z"
       }
     },
     {
@@ -8265,7 +8231,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8282,7 +8248,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8299,7 +8265,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8336,23 +8302,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "b14b59e2ad9a",
-      "title": "Dracula",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7498",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -10462,40 +10411,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "a2e9918fb28c",
-      "title": "Representation Matters Film Festival (Virtual Viewing)",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": null,
-      "endTime": null,
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/representation-matters-film-festival/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "06f8aeb9e2c5",
-      "title": "Morning Hike at Bear Creek Redwoods",
-      "date": "2026-10-09",
-      "displayDate": "Fri, Oct 9",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/morning-hike-at-bear-creek-redwoods-11/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     },
     {
       "id": "199638a33dce",
