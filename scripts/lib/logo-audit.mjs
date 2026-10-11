@@ -50,6 +50,7 @@ export const SHARED_LOGO_GROUPS = [
   ["lyte", "lyte-series-c"],
   ["sima-ai", "sima-ai-series-c"],
   ["palebluedot-ai", "palebluedot-ai-series-c"],
+  ["vinci", "vinci-series-b"],
   // Same company on two surfaces: the "Smaller, But Notable" spotlight card and
   // its Recently Funded round card. Converged once the spotlight entry started
   // resolving off sambanova.ai instead of Wikipedia — same brand, so this is the

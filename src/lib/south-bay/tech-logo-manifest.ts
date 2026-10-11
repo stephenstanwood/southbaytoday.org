@@ -221,6 +221,7 @@ export const TECH_LOGO_MANIFEST: Record<string, string> = {
   "verifaix": "/logos/verifaix.png",
   "viabot": "/logos/viabot.png",
   "vinci": "/logos/vinci.png",
+  "vinci-series-b": "/logos/vinci.png",
   "visko": "/logos/visko.png",
   "vmware": "/logos/vmware.png",
   "volta": "/logos/volta.png",

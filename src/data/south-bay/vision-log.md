@@ -2,6 +2,38 @@
 
 ---
 
+## 2026-10-11 — Cycle 232: Vinci's New Round Reaches the Tech Funding List
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Palo Alto's Vinci now leads the existing Tech funding list with its $250M
+Series B.** The company builds software for hardware engineers to simulate
+heat flow, cooling, and material warping while designs can still change. Its
+[CEO's October 6 announcement](https://www.getvinci.ai/blog/why-physics-needs-to-move-at-the-pace-of-design/)
+confirms the round and $1.5B valuation. The company-issued
+[release, syndicated by FinancialContent](https://markets.financialcontent.com/stocks/article/bizwire-2026-10-6-vinci-raises-250m-series-b-at-15b-valuation-to-build-the-intelligence-infrastructure-for-a-new-era-of-hardware-engineering)
+names Advent, Temasek, and Xora as co-leads; its own
+[hiring page](https://jobs.ashbyhq.com/vinci/9ec7701e-6eb4-4ab0-a74c-b78a9f3abea8/)
+explicitly identifies Palo Alto HQ. The card links directly to the CEO's
+announcement. This is a late catch from the earlier October 6–7 sweep.
+
+The new round has its own entry; Vinci's 2025 seed + Series A remains in the
+historical data. The card reuses the existing local Vinci logo, with both
+round IDs registered as the same company in the logo audit.
+
+Verification: the production build and both prebuild gates passed; Astro
+check reported 0 errors and 0 warnings (97 hints); all 32 existing funding-date
+and logo-audit tests passed. Before/after company-link audits checked 196/197
+links: the new announcement works, with the same six bot blocks and one
+pre-existing Ampere Computing connection failure. Chromium checks of the
+built Tech page at 1280px and 390px confirmed eight funding rows, Vinci first
+and present once, correct amount/location/source link, the loaded local logo,
+and no horizontal overflow or runtime errors. The summary fits in full on
+desktop; expansion and collapse work on mobile. External requests were
+blocked during these local browser checks.
+
+---
+
 ## 2026-10-09 — Cycle 231: Palo Alto's Turba Labs Joins the Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).

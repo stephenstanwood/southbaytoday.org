@@ -1696,6 +1696,26 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // Vinci's Oct 6 Series B was missed by the earlier Oct 6-7 sweep. The CEO's
+  // announcement confirms $250M of new funding at a $1.5B valuation, separate
+  // from the 2025 seed + Series A entry below. Its own hiring pages explicitly
+  // identify Palo Alto HQ; the company-issued release names the co-leads.
+  // https://www.getvinci.ai/blog/why-physics-needs-to-move-at-the-pace-of-design/
+  // https://www.businesswire.com/news/home/20261006307372/en/
+  // https://jobs.ashbyhq.com/vinci/9ec7701e-6eb4-4ab0-a74c-b78a9f3abea8/
+  {
+    id: "vinci-series-b",
+    name: "Vinci",
+    city: "Palo Alto",
+    category: "eda",
+    round: "Series B",
+    amount: "$250M",
+    date: "2026-10-06",
+    tagline:
+      "Palo Alto's Vinci helps hardware engineers simulate heat flow, cooling, and material warping in chip and circuit-board designs before manufacturing. Advent, Temasek, and Xora co-led its $250M Series B at a $1.5B valuation. The company plans to expand beyond semiconductors, develop its engineering software, and grow its team and computing capacity.",
+    color: "#6d28d9",
+    url: "https://www.getvinci.ai/blog/why-physics-needs-to-move-at-the-pace-of-design/",
+  },
   // Turba Labs announced its funding on Oct 6 (06.10.2026 on its homepage).
   // Its own privacy policy gives 1881 Page Mill Road, Palo Alto; CB Insights
   // independently identifies that address as HQ. WSJ describes combined seed
