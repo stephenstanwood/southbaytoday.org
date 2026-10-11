@@ -1,32 +1,32 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-11T02:17:10.372Z",
+    "generatedAt": "2026-10-11T16:08:46.735Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 526,
+    "eventCount": 518,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (109)",
       "Los Gatos Library (135)",
-      "San Jose Jazz (17)",
+      "San Jose Jazz (16)",
       "Linden Tree Books (16)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (9)",
+      "Mountain Winery (8)",
       "San Jose Theaters (19)",
-      "Children's Discovery Museum (3)",
-      "Guadalupe River Park Conservancy (7)",
+      "Children's Discovery Museum (2)",
+      "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
       "City of Cupertino (56)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (84)",
-      "Levi's Stadium (6)",
-      "SAP Center (16)",
+      "TheatreWorks Silicon Valley (83)",
+      "Levi's Stadium (5)",
+      "SAP Center (15)",
       "The Tech Interactive (12)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (4)"
+      "Peninsula Open Space Trust (3)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 17,
+        "count": 16,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 9,
+        "count": 8,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 3,
+        "count": 2,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -219,7 +219,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 84,
+        "count": 83,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -285,7 +285,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 6,
+        "count": 5,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -295,7 +295,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 16,
+        "count": 15,
         "error": null,
         "sources": [
           "SAP Center"
@@ -338,14 +338,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
-        "count": 4,
-        "error": "unexpected empty result after retry; previous snapshot still has 4 future event(s) from Peninsula Open Space Trust",
+        "status": "ok",
+        "count": 3,
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -5444,23 +5442,6 @@
       "kidFriendly": false
     },
     {
-      "id": "47ba7601c86f",
-      "title": "Deep Grooves of Reflection with Mara Hruby",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/deep-grooves-of-reflection-with-mara-hruby/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
       "id": "c163b7cada59",
       "title": "Irving Flores Afro-Cuban Jazz Trio",
       "date": "2026-10-16",
@@ -6374,23 +6355,6 @@
       "kidFriendly": false
     },
     {
-      "id": "49ee26736d1b",
-      "title": "Los Horóscopos de Durango",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1559119",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "83c3e02e0e54",
       "title": "Air Supply with Ripatti & Rose",
       "date": "2026-10-11",
@@ -6524,40 +6488,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "1cd5d3271a66",
-      "title": "Perfect Combination: Ledesma and Azarcon",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "4ba9c309b191",
-      "title": "Movements: Happier Now USA Tour",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "7:30pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -6850,27 +6780,44 @@
       "kidFriendly": false
     },
     {
-      "id": "90188ff5214d",
-      "title": "Make Your Own Mask!",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": null,
+      "id": "f4eedc329f62",
+      "title": "Maria Jose & Moenia – U.S. Tour 2026",
+      "date": "2026-10-30",
+      "displayDate": "Fri, Oct 30",
+      "time": "8:00pm",
       "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "family",
+      "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
     },
     {
-      "id": "f08d97b575c6",
+      "id": "812e755bc0b8",
+      "title": "Jorge Medina",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "0360e8dc8c2a",
       "title": "Toddler Storytime",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6884,10 +6831,10 @@
       "kidFriendly": true
     },
     {
-      "id": "eab1732ff3e8",
+      "id": "ee8017267f68",
       "title": "All Ages Storytime",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
+      "date": "2026-10-11",
+      "displayDate": "Sun, Oct 11",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6899,28 +6846,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "435d68cd0991",
-      "title": "Pumpkins in the Park: 30th Anniversary!! 🥳",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "10:00 am",
-      "endTime": null,
-      "venue": "Guadalupe River Park",
-      "address": "438 Coleman Ave, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.google.com/calendar/event?eid=NTY1dW1tNjZqcmM1OG9kNzRlY2E1ZzJ2OXUgY19udmprdXBqbTRsbjVudDlxdGx0YmFpazBxOEBn&ctz=America/Los_Angeles",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-10-10"
-      }
     },
     {
       "id": "34ca7dda6177",
@@ -7074,7 +6999,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-11T02:15:51.258Z"
+        "checkedAt": "2026-10-11T16:07:34.019Z"
       }
     },
     {
@@ -7097,7 +7022,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-11T02:15:51.259Z"
+        "checkedAt": "2026-10-11T16:07:34.019Z"
       }
     },
     {
@@ -7120,7 +7045,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-11T02:15:51.259Z"
+        "checkedAt": "2026-10-11T16:07:34.019Z"
       }
     },
     {
@@ -7143,7 +7068,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-11T02:15:51.259Z"
+        "checkedAt": "2026-10-11T16:07:34.019Z"
       }
     },
     {
@@ -7166,7 +7091,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-11T02:15:51.260Z"
+        "checkedAt": "2026-10-11T16:07:34.019Z"
       }
     },
     {
@@ -7442,23 +7367,6 @@
       "kidFriendly": true
     },
     {
-      "id": "a88a93fcaf9b",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
       "id": "6e8dd054162a",
       "title": "Environmental Education Center Open House",
       "date": "2026-10-17",
@@ -7514,6 +7422,23 @@
       "title": "Environmental Education Center Open House",
       "date": "2026-11-07",
       "displayDate": "Sat, Nov 7",
+      "time": "12:00 PM",
+      "endTime": "04:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "e2a86ea7bc7c",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": "12:00 PM",
       "endTime": "04:00 PM",
       "venue": "McClellan Ranch Preserve",
@@ -8133,7 +8058,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8150,7 +8075,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8167,7 +8092,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8204,23 +8129,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "967b00642511",
-      "title": "Dracula",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7499",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -9635,23 +9543,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5f188178b3b5",
-      "title": "BRUNO MARS: THE ROMANTIC TOUR",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
       "id": "5700683a7b15",
       "title": "BRUNO MARS: THE ROMANTIC TOUR",
       "date": "2026-10-11",
@@ -9992,23 +9883,6 @@
       "kidFriendly": false
     },
     {
-      "id": "189e00b77b9d",
-      "title": "Sharks x PWHL San Jose",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "Sharks x PWHL San Jose Tee Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-13",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "c54ccdf23d60",
       "title": "The Tech Challenge Virtual Interest Session",
       "date": "2026-10-20",
@@ -10213,6 +10087,57 @@
       "kidFriendly": true
     },
     {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -10330,74 +10255,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "199638a33dce",
-      "title": "Hike at Calero County Park",
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "time": "3:30 PM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-8/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
