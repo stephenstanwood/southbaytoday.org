@@ -17,6 +17,7 @@ import {
   hasProspectiveCityHallUpgrade,
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
+  isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./city-briefing-integrity.mjs";
 
@@ -127,6 +128,17 @@ test("a limited briefing selection cannot establish event totals", () => {
   assert.equal(hasEventSelectionCount("A 10 AM concert runs at the library."), false);
   assert.equal(hasEventSelectionCount("A 10:30 AM concert runs at the library."), false);
   assert.equal(hasEventSelectionCount("October 10, the library offers two watercolor workshops."), true);
+  assert.equal(hasEventSelectionCount("Frost brings Taking Back Sunday twice Saturday, with Thrice and Saves the Day."), true);
+  assert.equal(hasEventSelectionCount("The band performs 2 times Saturday."), true);
+  assert.equal(hasEventSelectionCount("Taking Back Sunday plays with Thrice and Saves the Day Saturday."), false);
+  assert.equal(hasEventSelectionCount("Twice Upon a Time plays Saturday.", [{ title: "Twice Upon a Time" }]), false);
+});
+
+test("city highlights exclude full and closed programs without excluding available reservations", () => {
+  assert.equal(isBriefingEventAvailable({ registration: "full" }), false);
+  assert.equal(isBriefingEventAvailable({ registration: "closed" }), false);
+  assert.equal(isBriefingEventAvailable({ registration: "required" }), true);
+  assert.equal(isBriefingEventAvailable({}), true);
 });
 
 test("ordinary performance dates cannot become opening or closing dates in a briefing", () => {

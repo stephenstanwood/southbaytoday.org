@@ -1,10 +1,23 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { extractTimeFromHtml, parseIcalDate } from "../generate-events.mjs";
+import { extractTimeFromHtml, isEventTimeBackfillCandidate, parseIcalDate } from "../generate-events.mjs";
 import { displayTime, isoDate } from "./dates.mjs";
 
 const page = (body) => `<html><body>${body}</body></html>`;
+
+test("venue overviews and calendars cannot supply another event's cached start", () => {
+  for (const url of [
+    "https://live.stanford.edu/your-visit/venues/frost-amphitheater/",
+    "https://example.org/venues/main-hall?date=2026-10-18",
+    "https://example.org/events/?category=music",
+    "https://example.org/",
+  ]) assert.equal(isEventTimeBackfillCandidate({ url }), false);
+  const event = { url: "https://live.stanford.edu/events/26-frost/muna/" };
+  assert.equal(isEventTimeBackfillCandidate(event), true);
+  assert.equal(isEventTimeBackfillCandidate({ ...event, time: "7:00 PM" }), false);
+  assert.equal(isEventTimeBackfillCandidate({ ...event, ongoing: true }), false);
+});
 
 test("JSON-LD start time wins over anything in the body copy", () => {
   const html = page(`
@@ -33,6 +46,14 @@ test("city hall footer hours do not become an event start time", () => {
 test("a real doors time still comes through", () => {
   const html = page("<p>Doors open at 7 PM, music at 8.</p>");
   assert.equal(extractTimeFromHtml(html, "2026-09-17"), "7:00 PM");
+});
+
+test("performance starts outrank parking, box office, and gates opening times", () => {
+  const html = page("<p>Parking opens at 4:00 PM</p><p>Gates open at 5:00 PM</p><p>Event starts at 6:00 PM</p>");
+  assert.equal(extractTimeFromHtml(html, "2026-10-10"), "6:00 PM");
+  assert.equal(extractTimeFromHtml(page("<p>Box office opens at 3 PM. Doors open at 7 PM. Show at 8 PM.</p>")), "8:00 PM");
+  assert.equal(extractTimeFromHtml(page("<p>Parking opens at 4:00 PM</p>")), null);
+  assert.equal(extractTimeFromHtml(page("<p>Box office opens at 3 PM</p>")), null);
 });
 
 test("an hours block is skipped in favor of the event time further down", () => {

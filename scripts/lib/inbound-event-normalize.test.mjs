@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { fetchInboundEvents } from "../generate-events.mjs";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 import {
   inboundClock,
@@ -82,6 +84,46 @@ test("SVP's correction cannot leave a second Senior Center chat on Saturday", ()
   assert.deepEqual(fetchInboundEvents({ events: [original, corrected], today: "2026-10-10" }), []);
   assert.equal(normalizeInboundEventPresentation({ ...original, startsAt: "2027-10-10T10:00:00-07:00" }).date, undefined);
   assert.equal(normalizeInboundEventPresentation({ ...original, title: "Another Senior Center chat" }).date, undefined);
+});
+
+test("Stanford newsletters resolve to one verified Taking Back Sunday performance", () => {
+  const raw = {
+    cityKey: "palo-alto", fromEmail: "latest@email.live.stanford.edu",
+    title: "Taking Back Sunday", location: "Frost Amphitheater, Stanford, CA",
+    sourceUrl: "https://live.stanford.edu/your-visit/venues/frost-amphitheater/",
+  };
+  const events = fetchInboundEvents({ today: "2026-10-10", events: [
+    { ...raw, id: "newsletter-latest", startsAt: "2026-10-10T00:00:00-07:00" },
+    { ...raw, id: "newsletter-original", title: "Taking Back Sunday with Thrice and Saves the Day", startsAt: "2026-10-10T19:00:00-07:00" },
+  ] });
+  assert.equal(events.length, 2);
+  assert.ok(events.every((e) => e.time === "6:00 PM"));
+  assert.ok(events.every((e) => e.url === "https://live.stanford.edu/events/26-frost/taking-back-sunday/"));
+  const kept = fuzzyDedupEvents(events).kept.map(applyVerifiedEventFacts);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].address, "351 Lasuen Street, Stanford, CA 94305");
+  assert.equal(kept[0].cost, "paid");
+  const nextYear = fetchInboundEvents({ today: "2027-10-10", events: [{ ...raw, startsAt: "2027-10-10T19:00:00-07:00" }] })[0];
+  assert.equal(nextYear.time, "7:00 PM");
+});
+
+test("MUNA's venue-only newsletter cannot produce a second afternoon show", () => {
+  const raw = {
+    cityKey: "palo-alto", fromEmail: "latest@email.live.stanford.edu",
+    location: "Frost Amphitheater, Stanford, CA",
+    sourceUrl: "https://live.stanford.edu/your-visit/venues/frost-amphitheater/",
+  };
+  const events = fetchInboundEvents({ today: "2026-10-10", events: [
+    { ...raw, id: "muna-latest", title: "Muna at Frost Amphitheater", startsAt: "2026-10-18T00:00:00-07:00" },
+    { ...raw, id: "muna-original", title: "Muna Gets So Hot Tour", startsAt: "2026-10-18T19:00:00-07:00" },
+  ] }).map(applyVerifiedEventFacts);
+  const kept = fuzzyDedupEvents(events).kept;
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].time, "7:00 PM");
+  assert.equal(kept[0].category, "music");
+  assert.equal(kept[0].url, "https://live.stanford.edu/events/26-frost/muna/");
+  const nextYear = { ...kept[0], date: "2027-10-18", time: "8:00 PM" };
+  assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
 });
 
 test("inbound end-of-day and midnight sentinels are not visitor times", () => {

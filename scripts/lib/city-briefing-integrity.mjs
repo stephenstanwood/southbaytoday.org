@@ -1,3 +1,10 @@
+import { REGISTRATION_CLOSED, REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
+
+/** Highlights have no availability badge; don't invite readers to full events. */
+export function isBriefingEventAvailable(event) {
+  return event?.registration !== REGISTRATION_FULL && event?.registration !== REGISTRATION_CLOSED;
+}
+
 const PROSPECTIVE_SOURCE =
   /\b(?:scheduled|set|expected|slated)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\b(?:council|commission|committee|board|panel)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\bagenda\s+(?:listed|lists|included|includes)\b|\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
 const CONFIRMED_ACTION =
@@ -41,7 +48,8 @@ export function hasEventSelectionCount(text, events = []) {
   copy = copy
     .replace(/\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\s+\d{1,2}(?:\s+\d{4})?\b/g, "")
     .replace(/\b\d{1,2}(?:\s+\d{2})?\s+(?:am|pm)\b/g, "");
-  return /\b(?:one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?:[a-z0-9]+\s+){0,5}(?:events?|programs?|performances?|concerts?|shows?|workshops?)\b/i.test(copy);
+  return /\b(?:one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?:[a-z0-9]+\s+){0,5}(?:events?|programs?|performances?|concerts?|shows?|workshops?)\b/i.test(copy)
+    || /\b(?:twice|(?:two|three|four|five|six|seven|eight|nine|ten|\d+)\s+times)\b/i.test(copy);
 }
 
 /** An occurrence date is not evidence of a production's opening or closing. */

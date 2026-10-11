@@ -11,6 +11,14 @@ import {
 } from "./scc-food-openings.mjs";
 import { shouldSkip } from "../generate-scc-food-openings.mjs";
 
+test("the verified operating Holger Way Target does not reappear as coming soon", () => {
+  assert.equal(shouldSkip({
+    record_id: "SR0879489", business_name: "E-TARGET SAN JOSE NORTH GROCERY",
+    site_location: "95 HOLGER WY., SAN JOSE, CA 95134", city: "SAN JOSE",
+    date_plan_approved: "2026-10-08T00:00:00.000",
+  }), true);
+});
+
 test("Reddit discovery dates and blurbs cannot become verified opening claims", () => {
   const lead = {
     name: "Example Cafe", cityId: "san-jose", date: "2026-10-09",

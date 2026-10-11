@@ -204,6 +204,10 @@ const BLURB_OVERRIDES = {
 
 // Source IDs to explicitly skip — non-public venues, existing restaurants with equipment-only permits, etc.
 const SOURCE_ID_SKIP = new Set([
+  // Target's own location and grocery pages confirm this operating store at
+  // 95 Holger Way. Its October 8 plan approval is not a new grocery opening.
+  // https://www.target.com/sl/san-jose-north/2581/grocery
+  "SR0879489",
   // Sunnyvale's official mobilehome-park map lists Casa de Amigos at this
   // permit's 1085 Tasman Dr address; it is not a public restaurant opening.
   // https://www.sunnyvale.ca.gov/home/showpublisheddocument/2950/637822754904930000

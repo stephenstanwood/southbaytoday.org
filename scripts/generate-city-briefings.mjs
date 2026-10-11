@@ -21,6 +21,7 @@ import {
   hasProspectiveCityHallUpgrade,
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
+  isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
 import {
@@ -181,7 +182,7 @@ Important rules:
 - Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event.
 - Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the Next council meeting agenda, or say council will consider it "that same day", unless that item is explicitly listed in the Next council meeting data. A Zoning Administrator hearing is not a Planning Commission or City Council meeting.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
-- Do not state event totals or counts, including ordinary numbers like "three events" or group-count nouns like "trio." The supplied events are a limited selection, not the full calendar. Name the programs instead; retain a number only when it belongs to an event's actual title.
+- Do not state event totals or counts, including ordinary numbers like "three events", repeat counts like "performs twice", or group-count nouns like "trio." The supplied events are a limited selection, not the full calendar; similar listings may describe the same performance. Name the programs instead; retain a number only when it belongs to an event's actual title.
 - No unsupported rankings or superlatives such as "the week's biggest development story". State the sourced project or event without ranking it.
 - No audience labels — don't write "for the intellectually curious," "for foodies," "for nature lovers," or similar. Describe what's happening, not who would like it.
 - Use neutral verbs for legal or council items ("discussed," "approved," "weighs," "considers"). Avoid sensational framing like "faces legal heat," "battles," "fights," or "tackles" when the source describes a routine agenda item.
@@ -286,7 +287,7 @@ async function main() {
 
     // Filter out non-public events (practices, rehearsals, etc.)
     const BRIEFING_SKIP = /\b(practice|rehearsal|staff meeting|board meeting)\b/i;
-    const publicEvents = cityEvents.filter((e) => !BRIEFING_SKIP.test(e.title));
+    const publicEvents = cityEvents.filter((e) => !BRIEFING_SKIP.test(e.title) && isBriefingEventAvailable(e));
 
     // Prefer non-sports events for the briefing lead; keep sports as fallback
     const interestingEvents = [

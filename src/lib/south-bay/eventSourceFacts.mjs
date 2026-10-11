@@ -7,6 +7,36 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford Live's October 10 page and AXS agree: parking 4 PM, gates 5 PM,
+  // show 6 PM. Older newsletters had 7 PM or no time, and venue-page backfill
+  // supplied an unrelated 4 PM time. Canonical facts let existing dedupe
+  // collapse both rows. Evidence: docs/qa/2026-10-10-fact-check.md.
+  {
+    date: "2026-10-10",
+    title: /^Taking Back Sunday\b/i, venue: /Frost Amphitheat(?:er|re)/i,
+    facts: {
+      title: "Taking Back Sunday with Thrice and Saves the Day",
+      time: "6:00 PM", endTime: null,
+      address: "351 Lasuen Street, Stanford, CA 94305",
+      url: "https://live.stanford.edu/events/26-frost/taking-back-sunday/",
+      cost: "paid",
+      description: "Taking Back Sunday performs with Thrice and Saves the Day at Frost Amphitheater. The show starts at 6 PM; gates open at 5 PM and parking opens at 4 PM.",
+      blurb: "Hear Taking Back Sunday with Thrice and Saves the Day at Frost Amphitheater.",
+    },
+  },
+  {
+    date: "2026-10-18",
+    title: /^MUNA\b/i, venue: /Frost Amphitheat(?:er|re)/i,
+    facts: {
+      title: "MUNA Gets So Hot Tour",
+      time: "7:00 PM", endTime: null, category: "music",
+      address: "351 Lasuen Street, Stanford, CA 94305",
+      url: "https://live.stanford.edu/events/26-frost/muna/",
+      cost: "paid",
+      description: "MUNA performs its Gets So Hot Tour with hemlocke springs at Frost Amphitheater. The show starts at 7 PM; gates open at 6 PM and parking opens at 5 PM.",
+      blurb: "Hear MUNA on its Gets So Hot Tour with hemlocke springs at Frost Amphitheater.",
+    },
+  },
   // SVP's October 6 CORRECTION newsletter supersedes its October 5 notice:
   // the Senior Center chat is Friday, October 9, not Saturday, October 10.
   // Both first-party extraction records remain in inbound-events.json.

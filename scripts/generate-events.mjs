@@ -7362,10 +7362,16 @@ function extractTimeFromHtml(html, eventDate) {
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ");
-  // Time patterns prefixed by labels like "doors at", "show", "starts", "@".
+    .replace(/\s+/g, " ")
+    // Arrival logistics are not performance times. Remove the whole labelled
+    // time so neither the label matcher nor the generic fallback can use it.
+    .replace(/\b(?:parking(?:\s+(?:lot|garage))?|box\s+office)\s+(?:opens?|starts?|begins?)\s*(?:at|:)?\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/gi, " ");
+  // Prefer an explicit show/start time over earlier doors or gates times.
+  const startMatch = matchOutsideBusinessHours(text, /\b(?:starts?|begins?|show(?:time)?|curtain)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
+  if (startMatch) return formatHourClock(startMatch);
+  // Time patterns prefixed by labels like "doors at", "opens", "@".
   // Two regexes — `@` doesn't sit at a word boundary so it needs its own pattern.
-  const labelMatch = matchOutsideBusinessHours(text, /\b(?:doors|starts?|begins?|opens?|show(?:time)?|curtain)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
+  const labelMatch = matchOutsideBusinessHours(text, /\b(?:doors|opens?)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
   if (labelMatch) return formatHourClock(labelMatch);
   const atSignMatch = matchOutsideBusinessHours(text, /@\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
   if (atSignMatch) return formatHourClock(atSignMatch);
@@ -7379,23 +7385,22 @@ function extractTimeFromHtml(html, eventDate) {
   return null;
 }
 
+export function isEventTimeBackfillCandidate(event) {
+  if (event.time || event.ongoing || !event.url) return false;
+  try {
+    const url = new URL(event.url);
+    if (!/^https?:$/.test(url.protocol)) return false;
+    const path = url.pathname.replace(/\/+$/, "");
+    // Homepages, calendars, and venue overviews describe many occurrences.
+    // Their first clock time cannot establish this particular event's start.
+    // Check before cache lookup: Frost's overview cached 4 PM for three dates.
+    return path !== "" && !/\/events$|\/venues?\/[^/]+$/i.test(path);
+  } catch { return false; }
+}
+
 async function backfillEventTimes(events) {
   const cache = loadTimeBackfillCache();
-  const candidates = events.filter((e) => {
-    if (e.time || e.ongoing || !e.url || !/^https?:/.test(e.url)) return false;
-    // Skip canned "events list" pages — they won't have per-event times
-    if (/\/events\/?$|\/pages\/events\/?$/.test(e.url)) return false;
-    // Skip domain-root URLs — the extractor's last-resort "first time in
-    // body text" fallback grabs gallery hours / random homepage numbers and
-    // pins them to whatever event happens to point at the homepage.
-    // Reproduced on Montalvo: homepage shows "8:30 AM" gallery hours and
-    // every Montalvo event with a bare URL inherited it.
-    try {
-      const path = new URL(e.url).pathname.replace(/\/+$/, "");
-      if (path === "") return false;
-    } catch { return false; }
-    return true;
-  });
+  const candidates = events.filter(isEventTimeBackfillCandidate);
   if (candidates.length === 0) {
     saveTimeBackfillCache(cache);
     return;
@@ -7421,6 +7426,9 @@ async function backfillEventTimes(events) {
           redirect: "follow",
         });
         if (!res.ok) { cache[cacheKey] = null; failed++; return; }
+        if (!isEventTimeBackfillCandidate({ url: res.url })) {
+          cache[cacheKey] = null; failed++; return;
+        }
         const html = await res.text();
         fetched++;
         const time = extractTimeFromHtml(html, e.date);
