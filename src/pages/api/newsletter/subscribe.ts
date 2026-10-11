@@ -1,5 +1,7 @@
 import type { APIRoute } from "astro";
 import config from "../../../data/south-bay/newsletter-config.json";
+import { readNewsletterContext } from "../../../lib/south-bay/newsletterFunnel";
+import { trackNewsletterStage } from "../../../lib/south-bay/newsletterAnalytics.server";
 import {
   RESEND_BASE,
   FROM_ADDRESS,
@@ -28,7 +30,7 @@ function ok(extra: Record<string, unknown> = {}) {
 }
 
 export const POST: APIRoute = async ({ request }) => {
-  let body: { email?: string; name?: string; website?: string };
+  let body: { email?: string; name?: string; website?: string; analytics?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -87,9 +89,10 @@ export const POST: APIRoute = async ({ request }) => {
   // Always the canonical origin, never `request.url` — a preview deployment
   // would otherwise email confirmation links pointing at a host that stops
   // resolving as soon as the preview is superseded.
-  const baseUrl = import.meta.env.SITE || "https://southbaytoday.org";
+  const context = readNewsletterContext(body.analytics);
+  const baseUrl = serverEnv("SITE") || "https://southbaytoday.org";
   const confirmUrl = new URL(
-    `/api/newsletter/confirm?token=${encodeURIComponent(createConfirmToken(email))}`,
+    `/api/newsletter/confirm?token=${encodeURIComponent(createConfirmToken(email, Date.now(), context))}`,
     baseUrl,
   ).toString();
   const { subject, html, text: plain } = confirmationEmail(confirmUrl);
@@ -107,5 +110,6 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonError(502, "could not send the confirmation email — try again in a minute");
   }
 
+  await trackNewsletterStage("Newsletter confirmation sent", context, request);
   return ok({ pending: true });
 };

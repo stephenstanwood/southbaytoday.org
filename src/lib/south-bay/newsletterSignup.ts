@@ -13,6 +13,7 @@
 // signed link in a confirmation email. Bots do not click confirmation links.
 
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { readNewsletterContext, type NewsletterContext } from "./newsletterFunnel.ts";
 
 export const CONFIRM_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 export const RESEND_BASE = "https://api.resend.com";
@@ -55,8 +56,9 @@ function fromB64url(input: string): Buffer {
   return Buffer.from(input.replace(/-/g, "+").replace(/_/g, "/"), "base64");
 }
 
-export function createConfirmToken(email: string, now = Date.now()): string {
-  const payload = b64url(JSON.stringify({ e: email, x: now + CONFIRM_TTL_MS }));
+export function createConfirmToken(email: string, now = Date.now(), context?: NewsletterContext | null): string {
+  const analytics = readNewsletterContext(context);
+  const payload = b64url(JSON.stringify({ e: email, x: now + CONFIRM_TTL_MS, ...(analytics ? { a: analytics } : {}) }));
   const sig = b64url(createHmac("sha256", signingSecret()).update(payload).digest());
   return `${payload}.${sig}`;
 }
@@ -66,7 +68,7 @@ export function createConfirmToken(email: string, now = Date.now()): string {
  * unverifiable. Never throws: a reader clicking a link should always land on a
  * page that explains itself, never on a 500.
  */
-export function readConfirmToken(token: string, now = Date.now()): string | null {
+export function readConfirmDetails(token: string, now = Date.now()): { email: string; context: NewsletterContext | null } | null {
   try {
     const [payload, sig] = String(token || "").split(".");
     if (!payload || !sig) return null;
@@ -76,12 +78,16 @@ export function readConfirmToken(token: string, now = Date.now()): string | null
     // timingSafeEqual throws on a length mismatch, which is itself a rejection.
     if (provided.length !== expected.length || !timingSafeEqual(provided, expected)) return null;
 
-    const { e, x } = JSON.parse(fromB64url(payload).toString("utf8"));
+    const { e, x, a } = JSON.parse(fromB64url(payload).toString("utf8"));
     if (typeof e !== "string" || typeof x !== "number" || now > x) return null;
-    return e;
+    return { email: e, context: readNewsletterContext(a) };
   } catch {
     return null;
   }
+}
+
+export function readConfirmToken(token: string, now = Date.now()): string | null {
+  return readConfirmDetails(token, now)?.email ?? null;
 }
 
 export function isValidEmail(email: string): boolean {

@@ -9,12 +9,27 @@ const {
   createConfirmToken,
   isValidEmail,
   rateLimited,
+  readConfirmDetails,
   readConfirmToken,
 } = await import("./newsletterSignup.ts");
 
 test("a fresh token round-trips to the address it was minted for", () => {
   const token = createConfirmToken("reader@example.com");
   assert.equal(readConfirmToken(token), "reader@example.com");
+  assert.deepEqual(readConfirmDetails(token), { email: "reader@example.com", context: null });
+});
+
+test("origin categories survive a signed link without carrying extra form data", () => {
+  const context = { pageType: "event", placement: "minimal", email: "do-not-track@example.com", url: "/event/private?token=secret" };
+  const token = createConfirmToken("reader@example.com", Date.now(), context);
+  assert.deepEqual(readConfirmDetails(token), {
+    email: "reader@example.com", context: { pageType: "event", placement: "minimal" },
+  });
+  assert.equal(Buffer.from(token.split(".")[0], "base64url").toString().includes("do-not-track"), false);
+  const [payload, signature] = token.split(".");
+  const altered = JSON.parse(Buffer.from(payload, "base64url"));
+  altered.a.pageType = "home";
+  assert.equal(readConfirmDetails(`${Buffer.from(JSON.stringify(altered)).toString("base64url")}.${signature}`), null);
 });
 
 test("an expired token is rejected", () => {

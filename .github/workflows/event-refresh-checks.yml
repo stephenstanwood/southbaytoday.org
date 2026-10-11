@@ -33,3 +33,6 @@ jobs:
       # scheduled plan/newsletter wrappers may only push verified data commits.
       - name: Check Mini launch agents and scheduled checkout guards
         run: node --test scripts/lib/launchd-plists.test.mjs scripts/newsletter/scheduled-preflight.test.mjs
+
+      - name: Check newsletter signup and confirmation tracking
+        run: npm run test:newsletter-signup

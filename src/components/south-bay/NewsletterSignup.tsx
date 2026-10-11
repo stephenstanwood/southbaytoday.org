@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
+import { newsletterPageType, type NewsletterContext } from "../../lib/south-bay/newsletterFunnel";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -12,34 +13,60 @@ export default function NewsletterSignup({
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const seen = useRef(false);
+
+  function analyticsContext(): NewsletterContext | null {
+    if (location.search.includes("notrack")) return null;
+    try { if (localStorage.getItem("notrack")) return null; } catch { /* Storage may be blocked. */ }
+    return { pageType: newsletterPageType(location.pathname), placement: variant };
+  }
+
+  function trackStage(name: string, extra: Record<string, string> = {}) {
+    const context = analyticsContext();
+    if (!context || website.trim()) return;
+    try { track(name, { ...context, ...extra }); } catch { /* Analytics never blocks signup. */ }
+  }
+
+  useEffect(() => {
+    const form = formRef.current;
+    if (!form || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver((entries) => {
+      if (!seen.current && entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.5)) {
+        seen.current = true;
+        trackStage("Newsletter signup seen");
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+    observer.observe(form);
+    return () => observer.disconnect();
+  }, [variant]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) return;
+    if (!email.trim() || status === "submitting") return;
     setStatus("submitting");
     setError(null);
+    trackStage("Newsletter signup submitted");
     try {
       const res = await fetch("/api/newsletter/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, website }),
+        body: JSON.stringify({ email, website, analytics: analyticsContext() }),
       });
       const data = await res.json();
       if (data.ok) {
         setStatus("success");
         setEmail("");
-        try {
-          track("Newsletter signup", { placement: variant });
-        } catch {
-          // Analytics should never turn a successful subscription into an error.
-        }
       } else {
         setStatus("error");
         setError(data.error || "Something went wrong");
+        trackStage("Newsletter signup error", { reason: `http-${res.status}` });
       }
     } catch {
       setStatus("error");
       setError("Network error — try again");
+      trackStage("Newsletter signup error", { reason: "network" });
     }
   }
 
@@ -84,7 +111,7 @@ export default function NewsletterSignup({
 
   // One form for every variant: pill input + ink pill button, same height.
   const form = (
-    <form onSubmit={onSubmit} className="sbt-nl-form">
+    <form ref={formRef} onSubmit={onSubmit} className="sbt-nl-form">
       {honeypot}
       <input
         type="email"
