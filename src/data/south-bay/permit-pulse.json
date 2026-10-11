@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-10T04:36:57.882Z",
+      "generatedAt": "2026-10-11T04:36:40.440Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 2 – Oct 9",
+      "dateRange": "Oct 3 – Oct 10",
       "stats": {
-        "total": 476,
-        "notable": 31,
-        "newUnits": 381,
-        "totalValuation": 114050036
+        "total": 484,
+        "notable": 30,
+        "newUnits": 380,
+        "totalValuation": 173262396
       },
       "permits": [
         {
@@ -75,27 +75,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2024-087851-RS",
-          "address": "801 Bonita Av #2",
+          "id": "2026-126750-RS",
+          "address": "4654 Blanco Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Detached ADU",
-          "valuation": 131764,
+          "valuation": 99571,
           "units": 1,
-          "issueDate": "2026-10-02",
+          "issueDate": "2026-10-08",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-112270-RS",
-          "address": "2143 Mulberry Cl #2",
+          "id": "2026-103221-RS",
+          "address": "3201 Knights Bridge Rd #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Attached ADU",
-          "valuation": 125431,
+          "valuation": 91478,
           "units": 1,
-          "issueDate": "2026-10-02",
+          "issueDate": "2026-10-08",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -111,6 +111,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-120315-RS",
+          "address": "1390 Alvernaz Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 86025,
+          "units": 1,
+          "issueDate": "2026-10-08",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-120873-RS",
           "address": "1463 Teresita Dr #2",
           "category": "residential-new",
@@ -121,35 +133,35 @@
           "units": 1,
           "issueDate": "2026-10-07",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-108118-RS",
-          "address": "1543 Burrell Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 72303,
-          "units": 1,
-          "issueDate": "2026-10-02",
-          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-10T04:37:00.884Z",
+      "generatedAt": "2026-10-11T04:36:42.736Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 2 – Oct 9",
+      "dateRange": "Oct 3 – Oct 10",
       "stats": {
-        "total": 106,
-        "notable": 3,
+        "total": 121,
+        "notable": 4,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
+        {
+          "id": "26BLD-02886",
+          "address": "631 Saint Claire Dr",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-09",
+          "subtype": "Permit Issued"
+        },
         {
           "id": "26BLD-02825",
           "address": "1585 Edgewood Dr",

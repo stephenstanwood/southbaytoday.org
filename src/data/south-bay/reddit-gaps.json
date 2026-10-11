@@ -1,109 +1,135 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-10T04:44:27.343Z",
+    "generatedAt": "2026-10-11T04:44:39.507Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 8
+    "sourceCount": 11
   },
   "summary": {
-    "threadsMined": 8,
-    "placesExtracted": 5,
-    "placesMatched": 1,
-    "placeGaps": 4,
-    "eventsExtracted": 2,
+    "threadsMined": 11,
+    "placesExtracted": 6,
+    "placesMatched": 3,
+    "placeGaps": 3,
+    "eventsExtracted": 3,
     "eventsMatched": 0,
-    "eventGaps": 2,
+    "eventGaps": 3,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "MLK Library",
+      "name": "Dancing Cat Lounge",
       "city": "San Jose",
       "kind": "venue",
-      "context": "hosting Fixit Clinic repair workshop",
+      "context": "hosting kitten adoption fair",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
-        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
-        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
-        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
       ]
     },
     {
-      "name": "Reed Veterinary",
+      "name": "Dead Time Dreams",
       "city": "San Jose",
-      "kind": "service",
-      "context": "privately owned vet clinic mentioned",
+      "kind": "venue",
+      "context": "haunted house at Eastridge Mall",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
-        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
-        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
-        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
       ]
     },
     {
-      "name": "Gold's Gym on Hamilton",
-      "city": "San Jose",
-      "kind": "other",
-      "context": "gym with good machines but bad etiquette culture",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
-        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
-        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
-        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
-      ]
-    },
-    {
-      "name": "The Container Store",
+      "name": "Eastridge Mall",
       "city": "San Jose",
       "kind": "retail",
-      "context": "line of people wrapping around store at Santana Row",
+      "context": "location of Dead Time Dreams haunt",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
-        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
-        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
       ]
     }
   ],
   "eventGaps": [
     {
-      "name": "Fixit Clinic Repair Workshop",
-      "when": "Saturday, October 17th, 1-4pm",
+      "name": "Kitten Adoption Fair",
+      "when": "Sunday, 10/11/2026, 1pm-3pm",
       "city": "San Jose",
-      "context": "free repair workshop at MLK Library Room 225",
+      "context": "adoption event at Dancing Cat Lounge",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1uoc8/fixit_clinic_repair_workshop/",
-        "https://www.reddit.com/r/SanJose/comments/1x1obcv/visiting_san_jose_for_the_weekend_what_are_some/",
-        "https://www.reddit.com/r/SanJose/comments/1x1r6hh/privately_owned_vets/",
-        "https://www.reddit.com/r/SanJose/comments/1x23oxx/halloween/",
-        "https://www.reddit.com/r/SanJose/comments/1x1xbm8/struggling_with_gyms/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
       ]
     },
     {
-      "name": "Memorial cleanup",
-      "when": "10/24",
+      "name": "Dead Time Dreams",
+      "when": "tonight and tomorrow, 7:30pm",
       "city": "San Jose",
-      "context": "special memorial cleanup requested by Peng",
+      "context": "haunted house event at Eastridge Mall",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
-        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
-        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
+      ]
+    },
+    {
+      "name": "Winchester Mystery House Trick or Treat",
+      "when": "one day, short window this year",
+      "city": "San Jose",
+      "context": "ticketed Halloween event, resale tickets discussed",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x2a7dr/i_hear_its_possible_to_get_winchesters_mystery/"
       ]
     }
   ],
   "placeMatches": [
     {
-      "name": "Santana Row",
+      "name": "SAP Center",
       "city": "San Jose",
       "kind": "venue",
-      "context": "shopping center with long line reported",
+      "context": "the Tank, home of Sharks games",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x1vpb9/special_request_from_peng_please_join_me_in_a/",
-        "https://www.reddit.com/r/SanJose/comments/1x1t4tc/whats_happening_at_santana_row/",
-        "https://www.reddit.com/r/SanJose/comments/1x1s0rq/title_moved_from_sf_to_san_jose_how_are_you_all/"
+        "https://www.reddit.com/r/SanJose/comments/1x2uka9/popular_nyc_japanese_supermarket_opens_in/",
+        "https://www.reddit.com/r/SanJose/comments/1x2mhzp/wheres_the_best_wet_burrito_in_the_south_bay/",
+        "https://www.reddit.com/r/SanJose/comments/1x2k3ra/kitten_adoption_fair_at_the_dancing_cat_lounge_on/",
+        "https://www.reddit.com/r/SanJose/comments/1x2vp64/local_haunt_to_check_out/",
+        "https://www.reddit.com/r/SanJose/comments/1x2pq7e/teal_wheels_free_carpool_website_to_help_fans_get/"
       ],
-      "matchedName": "Santana Row"
+      "matchedName": "SAP Center"
+    },
+    {
+      "name": "Mexican Heritage Plaza",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "artist's works on display there",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x2ho8u/two_of_my_works_are_currently_on_display_at_the/",
+        "https://www.reddit.com/r/SanJose/comments/1x2x48w/how_wheelchair_accessible_is_los_gatos/",
+        "https://www.reddit.com/r/SanJose/comments/1x2oc1q/mandarin_learning_center/",
+        "https://www.reddit.com/r/SanJose/comments/1x2hmmc/birders_anyone_know_where_to_find_a_belted/",
+        "https://www.reddit.com/r/SanJose/comments/1x2bsce/holiday_party_ideas_in_san_jose_for_a_half_remote/"
+      ],
+      "matchedName": "Mexican Heritage Plaza"
+    },
+    {
+      "name": "Winchester Mystery House",
+      "city": "San Jose",
+      "kind": "venue",
+      "context": "hosts annual trick or treat event",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x2a7dr/i_hear_its_possible_to_get_winchesters_mystery/"
+      ],
+      "matchedName": "Winchester Mystery House"
     }
   ],
   "eventMatches": []
