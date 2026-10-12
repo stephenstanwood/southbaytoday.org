@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-11T16:08:46.735Z",
+    "generatedAt": "2026-10-12T02:17:06.527Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 518,
+    "eventCount": 516,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (109)",
-      "Los Gatos Library (135)",
+      "Mountain View Public Library (108)",
+      "Los Gatos Library (134)",
       "San Jose Jazz (16)",
       "Linden Tree Books (16)",
       "History San Jose (3)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 114,
+        "count": 113,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 135,
+        "count": 134,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -118,7 +118,7 @@
         "label": "Hicklebee's",
         "status": "error",
         "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\u001b[22m\n",
+        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
         "sources": []
       },
       {
@@ -348,28 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "4ace70f68e96",
-      "title": "Create a DIY Award Ribbon",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": "1:30 PM",
-      "endTime": "3:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us to create a DIY award ribbon with a personalized button in the center! You will be able to create your button from images from recycled books, magazines, and newspapers or bring in a photo of a loved one or thing. We will have a wide variety of ribbons to choose from to decorate and elevate your creation. This class is intended for adults, ages 18 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17603995",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "95b09c52f77f",
       "title": "Outdoor Storytime",
@@ -2666,27 +2644,6 @@
       "url": "https://mountainview.libcal.com/event/16357823",
       "source": "Mountain View Public Library",
       "kidFriendly": true
-    },
-    {
-      "id": "fe2d7a944bf9",
-      "title": "Alzuleycha Wall Decors",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": "2:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Alzuleycha designs home decor accessories inspired by Portuguese architecture and design. Join us and make your own Alzuleycha wall decor! Registration Required.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16979835",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "4b8bcbf05ee6",
@@ -6814,8 +6771,8 @@
       "kidFriendly": false
     },
     {
-      "id": "0360e8dc8c2a",
-      "title": "Toddler Storytime",
+      "id": "ee8017267f68",
+      "title": "All Ages Storytime",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
       "time": "11:30 am",
@@ -6831,8 +6788,8 @@
       "kidFriendly": true
     },
     {
-      "id": "ee8017267f68",
-      "title": "All Ages Storytime",
+      "id": "0360e8dc8c2a",
+      "title": "Toddler Storytime",
       "date": "2026-10-11",
       "displayDate": "Sun, Oct 11",
       "time": "11:30 am",
@@ -6999,7 +6956,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-11T16:07:34.019Z"
+        "checkedAt": "2026-10-12T02:15:51.861Z"
       }
     },
     {
@@ -7022,7 +6979,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-11T16:07:34.019Z"
+        "checkedAt": "2026-10-12T02:15:51.862Z"
       }
     },
     {
@@ -7045,7 +7002,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-11T16:07:34.019Z"
+        "checkedAt": "2026-10-12T02:15:51.862Z"
       }
     },
     {
@@ -7068,7 +7025,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-11T16:07:34.019Z"
+        "checkedAt": "2026-10-12T02:15:51.862Z"
       }
     },
     {
@@ -7091,7 +7048,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-11T16:07:34.019Z"
+        "checkedAt": "2026-10-12T02:15:51.863Z"
       }
     },
     {
