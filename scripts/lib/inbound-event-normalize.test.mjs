@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { fetchInboundEvents } from "../generate-events.mjs";
+import { fetchInboundEvents, inferCategory } from "../generate-events.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
@@ -12,6 +12,53 @@ import {
   SILICON_VALLEY_PRIDE_2026_URL,
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
+
+test("Bruno Mars newsletter ingest keeps the verified show and gate times distinct", () => {
+  const raw = {
+    id: "fixture-bruno", cityKey: "santa-clara", title: "Bruno Mars: The Romantic Tour",
+    startsAt: "2026-10-11T19:00:00-07:00", location: "Levi's Stadium",
+    description: "Bruno Mars performs with gates opening at 11:25 a.m.",
+    sourceUrl: "https://levisstadium.com/",
+  };
+  const event = fetchInboundEvents({ today: "2026-10-11", events: [raw] }).map(applyVerifiedEventFacts)[0];
+  assert.equal(event.time, "7:00 PM");
+  assert.equal(event.category, "music");
+  assert.equal(event.cost, "paid");
+  assert.match(event.description, /gates open at 5:30 PM/);
+  assert.doesNotMatch(event.description, /11:25/);
+  assert.match(event.url, /bruno-mars-the-romantic-tour-october-11th\/$/);
+  const nextYear = { ...event, date: "2027-10-11", description: "Different event details" };
+  assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
+});
+
+test("a named ballet production wins over incidental symphony and composer words", () => {
+  assert.equal(inferCategory("Grand Kyiv Ballet Presents the Nutcracker: Symphony of Lights", "Set to Tchaikovsky's score", "", "Hammer Theatre Center"), "arts");
+  assert.equal(inferCategory("San Jose Symphony performs Tchaikovsky", "An orchestral concert", "", "Hammer Theatre Center"), "music");
+});
+
+test("Stanford newsletter events retain verified links and copy after ingestion", () => {
+  const cases = [
+    ["Kronos Quartet with Mahsa and Marjan Vahdat: Placeless", "2026-10-11T14:30:00-07:00", "Bing Concert Hall", "events.stanford.edu"],
+    ["Bob Marley: How Reggae Changed the World", "2026-11-11T19:00:00-08:00", "The Studio", "live.stanford.edu"],
+    ["Rachel Willis-Sørensen Vocal Recital", "2026-11-18T19:30:00-08:00", "Bing Concert Hall", "live.stanford.edu"],
+  ];
+  const events = fetchInboundEvents({ today: "2026-10-11", events: cases.map(([title, startsAt, location], i) => ({
+    id: `fixture-stanford-${i}`, cityKey: "palo-alto", title, startsAt, location,
+    sourceUrl: "https://stanfordlive.stanford.edu",
+    description: i === 2 ? "Grammy-winning soprano Rachel Willis-Sørensen performs a vocal recital." : undefined,
+  })) }).map(applyVerifiedEventFacts);
+  assert.equal(events.length, 3);
+  for (const [i, event] of events.entries()) {
+    assert.equal(new URL(event.url).hostname, cases[i][3]);
+    assert.notEqual(new URL(event.url).pathname, "/");
+    const otherDate = { ...event, date: "2027-11-18", url: "https://example.org/another-performance" };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+  assert.match(events[1].description, /Duane Forrest.*acoustic/);
+  assert.match(events[1].blurb, /Duane Forrest/);
+  assert.doesNotMatch(events[2].description, /Grammy/i);
+  assert.match(events[2].blurb, /Tamar Sanikidze/);
+});
 
 test("verified Sunnyvale online talks keep their format when the newsletter loses its location", () => {
   const talks = [

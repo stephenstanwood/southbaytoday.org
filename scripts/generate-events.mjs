@@ -2536,6 +2536,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // arts). Trivia and live music are unambiguous when present in the title.
   if (/\btrivia\b/.test(titleLower)) return "community";
   if (/\blive\s+music\b/.test(titleLower)) return "music";
+  // A ballet company's production remains performing arts even when its
+  // title or score contains "symphony" (Nutcracker: Symphony of Lights).
+  if (/\bballet\s+(?:presents|performs)\b/.test(titleLower)) return "arts";
   // A play can mention kids or childhood without being children's programming.
   // Preserve explicitly named children's theater productions as family events.
   if (/\bstaged\s+reading\b/.test(titleLower)

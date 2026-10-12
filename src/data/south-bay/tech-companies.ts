@@ -967,7 +967,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "hardware",
     stage: "public",
-    tagline: "Developing solid-state lithium-metal battery cells for next-gen EVs — higher energy density, faster charging, no lithium-ion degradation. Volkswagen is a lead strategic partner.",
+    // Eliminating one anode-interface loss mechanism is not zero battery fade.
+    // https://www.quantumscape.com/battery-technology/ reports >95% retention
+    // after 1,000+ cycles for its A0 prototype, not degradation-free cells.
+    tagline: "Developing solid-state lithium-metal battery cells for next-gen EVs, designed for higher energy density and faster charging. Volkswagen is a lead strategic partner.",
     color: "#0066CC",
     url: "https://www.quantumscape.com",
     employeesNote: "~700 employees",

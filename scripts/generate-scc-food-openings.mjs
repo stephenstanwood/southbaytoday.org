@@ -208,6 +208,10 @@ const SOURCE_ID_SKIP = new Set([
   // 95 Holger Way. Its October 8 plan approval is not a new grocery opening.
   // https://www.target.com/sl/san-jose-north/2581/grocery
   "SR0879489",
+  // The same store's Starbucks is already operating, with posted daily hours.
+  // Its separate plan approval also does not establish a new cafe opening.
+  // https://www.target.com/sl/san-jose-north/2581/starbucks
+  "SR0879490",
   // Sunnyvale's official mobilehome-park map lists Casa de Amigos at this
   // permit's 1085 Tasman Dr address; it is not a public restaurant opening.
   // https://www.sunnyvale.ca.gov/home/showpublisheddocument/2950/637822754904930000
@@ -561,6 +565,9 @@ export function shouldSkip(item) {
   if (isAddressDerivedBusinessName(rawName, item.site_location)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
+  // SCC abbreviates compartment as COMP and files milkshake stations as
+  // equipment work. Preserve the raw filing context before cleanName strips it.
+  if (/\b\d\s*[-\s]?COMP\.?\s+SINKS?\b|\bMILKSHAKE\s+STATION\b/i.test(rawName)) return true;
   // SR0885884: "RTI ZINGSTERS KITCHEN UPGRADE" is work on the existing
   // Palo Alto restaurant, not a coming opening. County inspection history:
   // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DA600DF8G.pdf

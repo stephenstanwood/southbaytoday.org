@@ -7,6 +7,45 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // These newsletters used the non-resolving stanfordlive.stanford.edu host.
+  // Stanford's event pages also support a recital (no Grammy claim) and
+  // Duane Forrest's acoustic reggae performance (not a staged biography).
+  // Evidence: docs/qa/2026-10-11-fact-check.md.
+  {
+    date: "2026-10-11",
+    title: /^Kronos Quartet with Mahsa and Marjan Vahdat/i, venue: /Bing Concert Hall/i,
+    facts: { url: "https://events.stanford.edu/event/kronos-quartet-with-mahsa-and-marjan-vahdat-placeless" },
+  },
+  {
+    date: "2026-11-11",
+    title: /^Bob Marley: How Reggae Changed the World/i, venue: /The Studio/i,
+    facts: {
+      url: "https://live.stanford.edu/events/26-27season/studio/bob-marley/",
+      description: "Duane Forrest performs acoustic versions of songs by Bob Marley and other reggae artists at The Studio.",
+      blurb: "Hear Duane Forrest perform acoustic versions of songs by Bob Marley and other reggae artists.",
+    },
+  },
+  {
+    date: "2026-11-18",
+    title: /^Rachel Willis-S[øo]rensen Vocal Recital/i, venue: /Bing Concert Hall/i,
+    facts: {
+      url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/rachel-willis-sorensen/",
+      description: "Soprano Rachel Willis-Sørensen performs a vocal recital with pianist Tamar Sanikidze.",
+      blurb: "Hear soprano Rachel Willis-Sørensen in a vocal recital with pianist Tamar Sanikidze.",
+    },
+  },
+  // Levi's dated event guide lists gates at 5:30 PM, not the newsletter's
+  // 11:25 AM. Keep showtime distinct from entry and parking clocks.
+  // Evidence: docs/qa/2026-10-11-fact-check.md.
+  {
+    date: "2026-10-11",
+    title: /^Bruno Mars\b/i, venue: /Levi['’]?s Stadium/i,
+    facts: {
+      time: "7:00 PM", category: "music", cost: "paid",
+      url: "https://levisstadium.com/event/bruno-mars-the-romantic-tour-october-11th/",
+      description: "Bruno Mars performs The Romantic Tour at Levi's Stadium. The show starts at 7 PM; stadium gates open at 5:30 PM and parking opens at 4 PM.",
+    },
+  },
   // Stanford Live's October 10 page and AXS agree: parking 4 PM, gates 5 PM,
   // show 6 PM. Older newsletters had 7 PM or no time, and venue-page backfill
   // supplied an unrelated 4 PM time. Canonical facts let existing dedupe

@@ -25,7 +25,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { agendaTextForMeeting, recoverLegistarDigestSource } from "./lib/digest-source.mjs";
-import { hasUnsupportedMeetingAction } from "./lib/around-town-meetings.mjs";
+import { hasUnsupportedMeetingAction, hasUnscopedMeetingCancellation } from "./lib/around-town-meetings.mjs";
 import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
@@ -270,6 +270,7 @@ Return JSON with:
 - "keyTopics": array of up to 5 short bullet strings (specific topics, not generic). Return only as many as the source actually supports — one distinct agenda item per bullet. A thin agenda gets 1-2 bullets; never restate the same item in different words to reach a count.
 
 Be concrete. Write for someone who wants to know what's happening in their city.
+Keep cancellations scoped to the exact body and meeting type. A canceled regular council meeting does not cancel a separately listed special or joint meeting on the same date; never flatten that distinction to "the meeting was canceled."
 Do not include meta-commentary about incomplete or truncated source data (e.g. "vendor name incomplete in agenda", "details not publicly shared", "agenda item unclear"). If a detail isn't in the source, just omit that bullet — do not substitute an invented one.
 
 Agenda excerpts are often cut off mid-sentence ("...for FY 2026-", "provide direction on the"). Summarize only the part you can actually read; never guess how a truncated sentence ends or invent the missing object. Saratoga's June 3 2026 digest turned the fragment "provide direction on the" into a bullet about "implementing the chosen service level" — nothing in the source said that.
@@ -548,6 +549,9 @@ async function main() {
       const parsed = await summarize(config, meeting, bodyLabel);
       if (hasUnsupportedMeetingAction(parsed, meeting)) {
         throw new Error("Completed discussion or public-comment claim is not supported by the meeting source");
+      }
+      if (hasUnscopedMeetingCancellation(parsed, meeting)) {
+        throw new Error("Cancellation claim must distinguish the regular meeting from the separate special or joint meeting");
       }
 
       const meetingDateFormatted = new Date(meeting.date + "T12:00:00").toLocaleDateString("en-US", {

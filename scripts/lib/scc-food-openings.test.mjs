@@ -17,6 +17,21 @@ test("the verified operating Holger Way Target does not reappear as coming soon"
     site_location: "95 HOLGER WY., SAN JOSE, CA 95134", city: "SAN JOSE",
     date_plan_approved: "2026-10-08T00:00:00.000",
   }), true);
+  assert.equal(shouldSkip({
+    record_id: "SR0879490", business_name: "E-TARGET SAN JOSE NORTH STARBUCKS RESTAURANT",
+    site_location: "95 HOLGER WY., SAN JOSE, CA 95134", city: "SAN JOSE",
+    date_plan_approved: "2026-10-08T00:00:00.000",
+  }), true);
+});
+
+test("abbreviated sink and milkshake station filings remain equipment work", () => {
+  for (const business_name of [
+    "TASTY NOODLE - 3 COMP SINK INSTALL",
+    "E-AMERICAN CAFE MILKSHAKE STATION",
+  ]) assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), true);
+  for (const business_name of ["TASTY NOODLE", "AMERICAN CAFE", "MILKSHAKE CAFE"]) {
+    assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), false);
+  }
 });
 
 test("Reddit discovery dates and blurbs cannot become verified opening claims", () => {

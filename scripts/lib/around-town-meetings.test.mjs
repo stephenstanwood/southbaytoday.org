@@ -1,6 +1,17 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
+
+test("a regular-meeting cancellation cannot hide a separate joint special meeting", () => {
+  const meeting = {
+    fullAgendaText: "Review October 13, 2026 Final Agenda. - Cancelled. Joint City of San José and Santa Clara Valley Water District Special\nMeeting.",
+  };
+  assert.equal(hasUnscopedMeetingCancellation({ summary: "The October 13, 2026 meeting was cancelled." }, meeting), true);
+  assert.equal(hasUnscopedMeetingCancellation({ keyTopics: ["October 13 meeting canceled"] }, meeting), true);
+  assert.equal(hasUnscopedMeetingCancellation({ summary: "The regular October 13 City Council meeting was canceled; a separate joint special meeting remains scheduled." }, meeting), false);
+  assert.equal(hasUnscopedMeetingCancellation({ summary: "The October 13 meeting was canceled." }, { excerpt: "October 13 meeting canceled." }), false);
+  assert.equal(hasUnscopedMeetingCancellation({ summary: "The agenda listed a joint special meeting." }, meeting), false);
+});
 
 test("old agendas cannot describe their hearing or appointment as upcoming", () => {
   const meeting = { date: "2026-09-30", excerpt: "Proposed use permit" };

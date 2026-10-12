@@ -79,6 +79,18 @@ export function hasUnsupportedMeetingAction(item, meeting) {
 const CURRENT_BODY_ACTION = /\b(?:council|commission|committee|board|panel|zoning administrator)\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny)\b|(?:weighs|considers)\b)/i;
 const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
 
+/** A canceled regular meeting must not obscure a separate special meeting. */
+export function hasUnscopedMeetingCancellation(item, meeting) {
+  const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`.replace(/\s+/g, " ");
+  const canceled = /\bcancell?ed\b/i;
+  if (!canceled.test(evidence) || !/\b(?:special|joint)\b[^.!?\n]{0,100}\bmeeting\b/i.test(evidence)) return false;
+  const claims = [item?.headline, item?.summary, ...(item?.keyTopics || [])].filter(Boolean);
+  return claims.some((claim) => String(claim).split(/(?<=[.!?])\s+/).some((sentence) =>
+    canceled.test(sentence) && /\bmeeting\b/i.test(sentence)
+      && !/\b(?:regular|special|joint|committee|commission|agenda\s+review)\b/i.test(sentence)
+  ));
+}
+
 /** An old agenda supports dated agenda language, not a new pending hearing. */
 export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(item?.date || "")
