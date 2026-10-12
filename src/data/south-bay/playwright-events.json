@@ -1,32 +1,32 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-12T02:17:06.527Z",
+    "generatedAt": "2026-10-12T15:04:57.652Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 516,
+    "eventCount": 501,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (108)",
       "Los Gatos Library (134)",
-      "San Jose Jazz (16)",
-      "Linden Tree Books (16)",
+      "San Jose Jazz (5)",
+      "Linden Tree Books (15)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (8)",
+      "Mountain Winery (7)",
       "San Jose Theaters (19)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
       "City of Cupertino (56)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (83)",
-      "Levi's Stadium (5)",
+      "TheatreWorks Silicon Valley (82)",
+      "Levi's Stadium (4)",
       "SAP Center (15)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (3)"
     ],
     "sourceHealth": [
       {
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 16,
+        "count": 5,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 16,
+        "count": 15,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 8,
+        "count": 7,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 83,
+        "count": 82,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -285,7 +285,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -338,12 +338,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 3,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -5484,215 +5486,6 @@
       "kidFriendly": false
     },
     {
-      "id": "685a1ddfd17a",
-      "title": "Top Chefs",
-      "date": "2026-10-30",
-      "displayDate": "Fri, Oct 30",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/top-chefs/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "fa25681f2a63",
-      "title": "Legally Blue",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/legally-blue-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "7b510d6897c4",
-      "title": "SJZ Break Room Jazz Jam",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "5:20pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "2fdb7144c2d8",
-      "title": "Emily Day Cosmo Alleycats",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/emily-day-cosmo-alleycats/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "1ec7c51d0858",
-      "title": "Andre Cruz & the Black Diamond Rhythm Band",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/andre-cruz-black-diamond-rhythm-band/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "4b1c55520560",
-      "title": "Black Nile",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/black-nile/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "23c9bfad6b7b",
-      "title": "Sandra & Katrina Pacheco: Music of Amalia Rodrigues",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/sandra-katrina-pacheco-music-of-amalia-rodrigues/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "b2b7a322597a",
-      "title": "Noah & the Arkiteks",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/noah-the-arkiteks/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "1bdffcc84b49",
-      "title": "SJZ Break Room Jazz Jam",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "5:20pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-3/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "eef6058e13d7",
-      "title": "Scott Amendola, Jeff Parker & Paul Bryan",
-      "date": "2026-12-05",
-      "displayDate": "Sat, Dec 5",
-      "time": "7pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "82430e7aa6dc",
-      "title": "Scott Amendola, Jeff Parker & Paul Bryan",
-      "date": "2026-12-05",
-      "displayDate": "Sat, Dec 5",
-      "time": "8:30pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "2b91ab8b48a0",
-      "title": "Storytime with Dr. Jenny Wang",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-11"
-      }
-    },
-    {
       "id": "c73b08b27829",
       "title": "Book Launch with Maggie Tokuda-Hall and Yas Imamura",
       "date": "2026-10-16",
@@ -6312,23 +6105,6 @@
       "kidFriendly": false
     },
     {
-      "id": "83c3e02e0e54",
-      "title": "Air Supply with Ripatti & Rose",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1378828",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "1d29e41d7ed3",
       "title": "The Wallflowers with Ragged Glory",
       "date": "2026-10-16",
@@ -6771,10 +6547,10 @@
       "kidFriendly": false
     },
     {
-      "id": "ee8017267f68",
+      "id": "f9f66743445e",
       "title": "All Ages Storytime",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
+      "date": "2026-10-12",
+      "displayDate": "Mon, Oct 12",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6788,10 +6564,10 @@
       "kidFriendly": true
     },
     {
-      "id": "0360e8dc8c2a",
+      "id": "c6d2357589cd",
       "title": "Toddler Storytime",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
+      "date": "2026-10-12",
+      "displayDate": "Mon, Oct 12",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6956,7 +6732,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-12T02:15:51.861Z"
+        "checkedAt": "2026-10-12T15:03:42.165Z"
       }
     },
     {
@@ -6979,7 +6755,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-12T02:15:51.862Z"
+        "checkedAt": "2026-10-12T15:03:42.165Z"
       }
     },
     {
@@ -7002,7 +6778,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-12T02:15:51.862Z"
+        "checkedAt": "2026-10-12T15:03:42.165Z"
       }
     },
     {
@@ -7025,7 +6801,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-12T02:15:51.862Z"
+        "checkedAt": "2026-10-12T15:03:42.165Z"
       }
     },
     {
@@ -7048,7 +6824,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-12T02:15:51.863Z"
+        "checkedAt": "2026-10-12T15:03:42.166Z"
       }
     },
     {
@@ -8015,7 +7791,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8032,7 +7808,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8049,7 +7825,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8066,7 +7842,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8083,26 +7859,9 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "e009c31f6ad8",
-      "title": "Dracula",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7500",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -9500,23 +9259,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5700683a7b15",
-      "title": "BRUNO MARS: THE ROMANTIC TOUR",
-      "date": "2026-10-11",
-      "displayDate": "Sun, Oct 11",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
       "id": "35481971d840",
       "title": "WASHINGTON COMMANDERS VS. SAN FRANCISCO 49ERS",
       "date": "2026-10-19",
@@ -10044,57 +9786,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -10212,6 +9903,57 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
