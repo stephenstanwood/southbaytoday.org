@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-11T04:36:40.440Z",
+      "generatedAt": "2026-10-12T04:36:40.841Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 3 – Oct 10",
+      "dateRange": "Oct 4 – Oct 11",
       "stats": {
-        "total": 484,
+        "total": 476,
         "notable": 30,
         "newUnits": 380,
-        "totalValuation": 173262396
+        "totalValuation": 173231496
       },
       "permits": [
         {
@@ -137,31 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-11T04:36:42.736Z",
+      "generatedAt": "2026-10-12T04:36:43.205Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 3 – Oct 10",
+      "dateRange": "Oct 4 – Oct 11",
       "stats": {
-        "total": 121,
-        "notable": 4,
+        "total": 122,
+        "notable": 3,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02886",
-          "address": "631 Saint Claire Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-09",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02825",
           "address": "1585 Edgewood Dr",
@@ -175,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02818",
-          "address": "940 Addison Av",
+          "id": "26BLD-02886",
+          "address": "631 Saint Claire Dr",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-04",
+          "issueDate": "2026-10-09",
           "subtype": "Permit Issued"
         },
         {

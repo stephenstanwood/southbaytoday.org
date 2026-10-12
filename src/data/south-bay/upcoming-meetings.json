@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T04:36:54.008Z",
+  "generatedAt": "2026-10-12T04:36:53.401Z",
   "meetings": {
     "san-jose": {
       "date": "2026-10-13",
@@ -36,24 +36,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
-      "date": "2026-10-10",
-      "displayDate": "Sat, Oct 10",
-      "startTime": "08:00",
+      "date": "2026-10-13",
+      "displayDate": "Tue, Oct 13",
+      "startTime": "18:30",
       "bodyName": "City Council",
       "location": "Council Chambers and Video Conference",
       "closedSession": false,
-      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3570&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
-      "legistarEventId": 3570,
-      "agendaItems": [],
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3372&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3372,
+      "agendaItems": [
+        {
+          "title": "Filipino American History Month Proclamation",
+          "sequence": 6
+        },
+        {
+          "title": "United Against Hate Week Proclamation",
+          "sequence": 7
+        },
+        {
+          "title": "Compassion Week Proclamation",
+          "sequence": 8
+        },
+        {
+          "title": "Caltrain Presentation",
+          "sequence": 9
+        },
+        {
+          "title": "Historic Preservation Ordinance and Zoning Map Amendment (Second Reading)",
+          "sequence": 11
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-13",
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -86,7 +107,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -103,7 +124,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
