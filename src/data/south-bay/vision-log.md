@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-10-12 — Cycle 233: Oct 8–12 Funding Sweep, OCP Link Repair
+
+The tightening roadmap remains fully shipped (6/6).
+
+**No new South Bay round surfaced for Oct 8–12.** VC News Daily's Oct 9 list
+and Crunchbase's Oct 9 top ten were checked; the only in-coverage round
+(Vinci) was already carded on Oct 11. Arena (ex-LMArena, $200M Series B) is
+San Francisco. The sweep is recorded beside the earlier sweep notes in
+`tech-companies.ts` so the next cycle doesn't repeat it. FinSMEs still 403s.
+
+**OCP Global Summit data fixed.** Its `url` pointed at
+`opencompute.org/summit/global-summit`, which now 404s, on the summit's own
+opening day. It now points at OCP's dated 2026 event page, and the description
+notes the Oct 12–15 summit sold out with no onsite registration. The
+conferences section has not been rendered since the May 22 polish pass, so
+this is a data/link-audit correction, not a visible change; it was not
+re-wired into the Tech tab.
+
+Verification: production build and prebuild gates passed; Astro check
+reported 0 errors and 0 warnings (97 hints).
+
+---
+
 ## 2026-10-11 — Cycle 232: Vinci's New Round Reaches the Tech Funding List
 
 The tightening roadmap remains fully shipped (6/6).

@@ -1687,6 +1687,15 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Note on the Oct 8-12 2026 sweep: no new in-coverage round surfaced.
+  // VC News Daily's Oct 9 list is Torch Systems (Lafayette), Oxide Computer
+  // (Emeryville), Sabi and Peppermint (San Francisco), Oratomic (Pasadena),
+  // Gallatin AI (El Segundo), Fortastra (Los Angeles), Type One Energy
+  // (Knoxville), Kapta Space (Seattle), Rebel Audio (Nashville), and Siena,
+  // pubX, Outro, Wally, Rein Security, and Vocca (New York). Crunchbase's Oct 9
+  // top ten has only Vinci (already carded) in coverage; Arena (ex-LMArena,
+  // $200M Series B) is San Francisco. Loops' $3.5M seed (Oct 12) names no
+  // city. FinSMEs returned 403 again.
   // Note on the Oct 7-8 2026 sweep: no in-coverage round surfaced. VC News
   // Daily's Oct 7 list is Agentiq Sports and Multiply Labs (San Francisco),
   // Parallel Systems (Los Angeles), Matchpoint Therapeutics (Watertown, MA),
@@ -4314,8 +4323,10 @@ export const TECH_CONFERENCES: TechConference[] = [
     typicalMonth: 10,
     typicalDay: 12,
     typicalEndDay: 15,
-    description: "The Open Compute Project's four-day annual gathering at the San Jose Convention Center, where its community presents open hardware and software work spanning racks, cooling, interconnects, and AI data centers. It is one of the largest events the building hosts — 10,835 people came in 2025 — and 2026 is the last San Jose edition: OCP has said the summit moves to Moscone Center in San Francisco starting in 2027.",
-    url: "https://www.opencompute.org/summit/global-summit",
+    description: "The Open Compute Project's four-day annual gathering at the San Jose Convention Center, where its community presents open hardware and software work spanning racks, cooling, interconnects, and AI data centers. It is one of the largest events the building hosts — 10,835 people came in 2025 — and 2026 is the last San Jose edition: OCP has said the summit moves to Moscone Center in San Francisco starting in 2027. The 2026 summit (Oct 12–15) sold out, and OCP is not offering onsite registration.",
+    // The old /summit/global-summit landing page 404s; the dated event page is
+    // OCP's current canonical summit page (dates, sold-out notice, 2027 move).
+    url: "https://www.opencompute.org/events/ocp-summit/2026-ocp-global-summit/",
     scale: "global",
   },
   {
