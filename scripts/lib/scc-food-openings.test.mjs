@@ -70,6 +70,12 @@ test("normalizes De Anza street names from SCC permit spelling", () => {
   assert.equal(normalizeSouthBayAddress("South Deanza Boulevard"), "South De Anza Boulevard");
 });
 
+test("repairs the SCC Santa Row typo to Santana Row", () => {
+  assert.equal(normalizeSouthBayAddress("355 Santa Row #1060"), "355 Santana Row #1060");
+  assert.equal(normalizeSouthBayAddress("377 Santana Row"), "377 Santana Row");
+  assert.equal(normalizeSouthBayAddress("82-96 E Santa Clara St."), "82-96 E Santa Clara St.");
+});
+
 test("collapses a street number SCC repeated at the front of the address", () => {
   // Spice Fusion, Sunnyvale, 2026-08-12 shipped as "1026 1026 W Evelyn Ave".
   assert.equal(normalizeSouthBayAddress("1026 1026 W Evelyn Ave"), "1026 W Evelyn Ave");

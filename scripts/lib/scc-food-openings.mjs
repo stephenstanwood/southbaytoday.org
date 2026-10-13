@@ -119,6 +119,9 @@ export function normalizeComingSoonDiscovery(record) {
 export function normalizeSouthBayAddress(value) {
   return String(value ?? "")
     .replace(/\bDeanza\b/gi, "De Anza")
+    // SCC permit typo: Flora (SR0882674, 2026-10-12) filed at "355 Santa Row".
+    // There is no Santa Row in the South Bay; it's Santana Row.
+    .replace(/\bSanta\s+Row\b/gi, "Santana Row")
     // SCC permit rows sometimes repeat the street number where the source form
     // concatenated a house number field with an already-complete street line,
     // shipping "1026 1026 W Evelyn Ave" (Spice Fusion, Sunnyvale, 2026-08-12).
