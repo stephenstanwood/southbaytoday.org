@@ -639,24 +639,35 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://www.nilesecure.com",
     employeesNote: "~200 employees",
   },
+  // Figure's BMW line was stale ("BMW pilot underway"). The Figure 02 fleet
+  // finished an 11-month run at BMW Spartanburg and was retired in late 2025
+  // (BGR, Dec 4 2025; Interesting Engineering). No 2026 Figure 03 deployment
+  // at the plant could be confirmed, so the card says only what's documented.
+  // https://www.bgr.com/2039425/humanoid-ai-robot-retired-figure-02-bmw-x3/
   {
     id: "figure-ai",
     name: "Figure AI",
     city: "San Jose",
     category: "robotics",
     stage: "startup",
-    tagline: "Humanoid robots for real warehouse and factory work, now mass-produced at its BotQ factory in San Jose. Raised $1B+ in a 2025 Series C at a $39B valuation, with backing from NVIDIA, Intel Capital, Qualcomm, and Salesforce. BMW pilot underway.",
+    tagline: "Humanoid robots for real warehouse and factory work, now mass-produced at its BotQ factory in San Jose. Raised $1B+ in a 2025 Series C at a $39B valuation, with backing from NVIDIA, Intel Capital, Qualcomm, and Salesforce. Its earlier Figure 02 robots finished an 11-month run at BMW's Spartanburg plant in late 2025, helping build more than 30,000 X3s.",
     color: "#18181B",
     url: "https://figure.ai",
     employeesNote: "~400 employees",
   },
+  // NEO status per 1X's Apr 30 2026 release: full-scale production began at
+  // the Hayward factory; customer deliveries are promised for 2026, and no
+  // delivery had been confirmed as of Oct 13 2026 — keep it phrased as a promise.
+  // Price is from the Oct 27 2025 launch release.
+  // https://letsdatascience.com/news/1x-ships-neo-humanoid-robots-to-us-homes-774b7a74
+  // https://www.businesswire.com/news/home/20251027434628/en/1X-Launches-NEO-The-Robot-Redefining-Life-at-Home
   {
     id: "1x-technologies",
     name: "1X Technologies",
     city: "Palo Alto",
     category: "robotics",
     stage: "startup",
-    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. US headquarters in Palo Alto.",
+    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. NEO went into full-scale production at its Hayward factory in April 2026, priced at $20,000 or $499 a month, with first US home deliveries promised this year. US headquarters in Palo Alto.",
     color: "#E11D48",
     url: "https://www.1x.tech",
     employeesNote: "~200 employees",
@@ -1687,6 +1698,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   //     Everest Biolabs (Massachusetts); Axio BioPharma (Madison). VC News
   //     Daily's Sep 25 list adds Sela (San Francisco), Baselayer (New York),
   //     and Rising Tide (Chicago), plus rounds already recorded above.
+  // Note on the Oct 12-13 2026 sweep: no new in-coverage round surfaced. VC
+  // News Daily adds Vitalize (San Francisco) and Navra (Las Vegas/Reno). The
+  // Postround week-of-Oct-4 Series A list tags Turba Labs "Mountain View";
+  // its own privacy policy (1881 Page Mill Rd) keeps it Palo Alto as carded.
   // Note on the Oct 8-12 2026 sweep: no new in-coverage round surfaced.
   // VC News Daily's Oct 9 list is Torch Systems (Lafayette), Oxide Computer
   // (Emeryville), Sabi and Peppermint (San Francisco), Oratomic (Pasadena),

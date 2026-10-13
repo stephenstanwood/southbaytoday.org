@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-10-13 — Cycle 234: Figure and 1X Cards Brought Current
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Figure AI card fixed.** The "Smaller, But Notable" card still said "BMW
+pilot underway." Figure's Figure 02 fleet finished an 11-month run at BMW
+Spartanburg and was retired in late 2025 after helping build 30,000+ X3s; no
+2026 Figure 03 deployment there could be confirmed. The card now says that.
+
+**1X card updated.** NEO entered full-scale production at the Hayward factory
+in April 2026 ($20,000 or $499/month), with first US home deliveries still a
+promise for this year. Added to the tagline, phrased as a promise.
+
+**Oct 12–13 funding sweep:** no new in-coverage round (Vitalize is SF; Navra
+is Nevada). Turba Labs' "Mountain View" tag on Postround doesn't override its
+Palo Alto primary source.
+
+---
+
 ## 2026-10-12 — Cycle 233: Oct 8–12 Funding Sweep, OCP Link Repair
 
 The tightening roadmap remains fully shipped (6/6).
