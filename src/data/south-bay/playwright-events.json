@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-12T15:04:57.652Z",
+    "generatedAt": "2026-10-13T02:17:12.852Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 501,
+    "eventCount": 512,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (108)",
-      "Los Gatos Library (134)",
-      "San Jose Jazz (5)",
+      "Mountain View Public Library (109)",
+      "Los Gatos Library (133)",
+      "San Jose Jazz (16)",
       "Linden Tree Books (15)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 113,
+        "count": 114,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 134,
+        "count": 133,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 5,
+        "count": 16,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -1574,7 +1574,7 @@
       "sourceAudiences": [
         "All Ages"
       ],
-      "url": "https://mountainview.libcal.com/event/17010620",
+      "url": "https://mountainview.libcal.com/event/15668880",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -2202,6 +2202,27 @@
       "kidFriendly": false
     },
     {
+      "id": "22fd3b1cce0c",
+      "title": "Amplify: Mystery of the Human Brain",
+      "date": "2026-12-07",
+      "displayDate": "Mon, Dec 7",
+      "time": "4:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Have you ever wondered what’s really going on in your head? The human brain is a weird, crazy, and fascinating thing, and most people (even adults!) barely understand it. In this interactive STEM event, teens from STEM Beyond Boundaries are going to help you explore the science behind memory, learning, dreams, and other cool stuff! Ages 8-13 This event is part of Amplify: Teen Voices , a program for teens who want to share their interests and passions with an audience.",
+      "sourceAudiences": [
+        "Children"
+      ],
+      "url": "https://mountainview.libcal.com/event/17755537",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "8b4b4c374cdc",
       "title": "Outdoor Storytime",
       "date": "2026-12-08",
@@ -2646,26 +2667,6 @@
       "url": "https://mountainview.libcal.com/event/16357823",
       "source": "Mountain View Public Library",
       "kidFriendly": true
-    },
-    {
-      "id": "4b8bcbf05ee6",
-      "title": "Monday Morning Book Club",
-      "date": "2026-10-12",
-      "displayDate": "Mon, Oct 12",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "Join us for a discussion of Milkman, by Anna Burns Winner of the Man Booker Prize. A young woman navigates romance, politics, and social judgment in Ireland during the “Troubles.” “Everything about this novel rings true…original, funny, disarmingly oblique and unique: different.” - The Guardian. The Monday Morning bookclub meets in the Library Conference Room, and new members are welcome at any time. Sign up for our newsletter here.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17691461",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "032576e09eba",
@@ -5486,6 +5487,193 @@
       "kidFriendly": false
     },
     {
+      "id": "685a1ddfd17a",
+      "title": "Top Chefs",
+      "date": "2026-10-30",
+      "displayDate": "Fri, Oct 30",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/top-chefs/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "fa25681f2a63",
+      "title": "Legally Blue",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/legally-blue-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "7b510d6897c4",
+      "title": "SJZ Break Room Jazz Jam",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": "5:20pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "2fdb7144c2d8",
+      "title": "Emily Day Cosmo Alleycats",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/emily-day-cosmo-alleycats/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "1ec7c51d0858",
+      "title": "Andre Cruz & the Black Diamond Rhythm Band",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/andre-cruz-black-diamond-rhythm-band/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "4b1c55520560",
+      "title": "Black Nile",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/black-nile/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "23c9bfad6b7b",
+      "title": "Sandra & Katrina Pacheco: Music of Amalia Rodrigues",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/sandra-katrina-pacheco-music-of-amalia-rodrigues/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "b2b7a322597a",
+      "title": "Noah & the Arkiteks",
+      "date": "2026-11-25",
+      "displayDate": "Wed, Nov 25",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/noah-the-arkiteks/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "1bdffcc84b49",
+      "title": "SJZ Break Room Jazz Jam",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "5:20pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-3/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "eef6058e13d7",
+      "title": "Scott Amendola, Jeff Parker & Paul Bryan",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "7pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "82430e7aa6dc",
+      "title": "Scott Amendola, Jeff Parker & Paul Bryan",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "8:30pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
       "id": "c73b08b27829",
       "title": "Book Launch with Maggie Tokuda-Hall and Yas Imamura",
       "date": "2026-10-16",
@@ -6732,7 +6920,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-12T15:03:42.165Z"
+        "checkedAt": "2026-10-13T02:15:53.228Z"
       }
     },
     {
@@ -6755,7 +6943,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-12T15:03:42.165Z"
+        "checkedAt": "2026-10-13T02:15:53.229Z"
       }
     },
     {
@@ -6778,7 +6966,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-12T15:03:42.165Z"
+        "checkedAt": "2026-10-13T02:15:53.229Z"
       }
     },
     {
@@ -6801,7 +6989,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-12T15:03:42.165Z"
+        "checkedAt": "2026-10-13T02:15:53.229Z"
       }
     },
     {
@@ -6824,7 +7012,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-12T15:03:42.166Z"
+        "checkedAt": "2026-10-13T02:15:53.230Z"
       }
     },
     {
@@ -7842,7 +8030,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7859,7 +8047,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
