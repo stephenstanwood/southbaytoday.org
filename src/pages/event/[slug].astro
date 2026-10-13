@@ -144,6 +144,7 @@ const uniqueCity = cityName && sameDayTitleEvents.filter((candidate) => candidat
 const titleDisambiguator = sameDayTitleEvents.length > 1 ? uniqueTime || uniqueVenue || uniqueCity : null;
 const titleCore = [event.title, titleDisambiguator, dayLabelNoYear].filter(Boolean).join(" — ");
 const title = titleCore.length > 68 ? titleCore : `${titleCore} — South Bay Today`;
+const descriptionTitle = [event.title, titleDisambiguator].filter(Boolean).join(" — ");
 
 function capDescription(text: string, max = 155): string {
   const trimmed = text.trim();
@@ -155,10 +156,10 @@ function capDescription(text: string, max = 155): string {
 }
 const description = capDescription(
   isVirtual
-    ? `${event.title} on ${dayLabel}. Online event${event.venue ? ` hosted by ${event.venue}` : ""}. ${(
+    ? `${descriptionTitle} on ${dayLabel}. Online event${event.venue ? ` hosted by ${event.venue}` : ""}. ${(
         event.blurb || event.description || ""
       ).trim()}`.trim()
-    : `${event.title} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
+    : `${descriptionTitle} on ${dayLabel}${event.venue ? ` at ${event.venue}` : ""}${
         cityName ? ` in ${cityName}` : ""
       }. ${(event.blurb || event.description || "").trim()}`.trim(),
 );
