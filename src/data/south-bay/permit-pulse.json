@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-12T04:36:40.841Z",
+      "generatedAt": "2026-10-13T03:11:17.149Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 4 – Oct 11",
+      "dateRange": "Oct 5 – Oct 12",
       "stats": {
-        "total": 476,
-        "notable": 30,
-        "newUnits": 380,
-        "totalValuation": 173231496
+        "total": 564,
+        "notable": 32,
+        "newUnits": 381,
+        "totalValuation": 174707307
       },
       "permits": [
         {
@@ -75,6 +75,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-127187-RS",
+          "address": "420 S Capitol Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Ab 2533 Legalize Attach Garage Conversion to ADU",
+          "valuation": 103089,
+          "units": 1,
+          "issueDate": "2026-10-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-126750-RS",
           "address": "4654 Blanco Dr #2",
           "category": "residential-new",
@@ -121,47 +133,23 @@
           "units": 1,
           "issueDate": "2026-10-08",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-120873-RS",
-          "address": "1463 Teresita Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to JADU",
-          "valuation": 82155,
-          "units": 1,
-          "issueDate": "2026-10-07",
-          "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-12T04:36:43.205Z",
+      "generatedAt": "2026-10-13T03:11:19.348Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 4 – Oct 11",
+      "dateRange": "Oct 5 – Oct 12",
       "stats": {
-        "total": 122,
-        "notable": 3,
+        "total": 87,
+        "notable": 1,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02825",
-          "address": "1585 Edgewood Dr",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-05",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02886",
           "address": "631 Saint Claire Dr",
@@ -173,18 +161,6 @@
           "units": 0,
           "issueDate": "2026-10-09",
           "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00284",
-          "address": "520 Bryant St",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "OTC Architectural Review for one new, Blade sign which reads Bistro Yiaya Greek Yogurt.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-05",
-          "subtype": "Over the Counter Approved"
         }
       ]
     }

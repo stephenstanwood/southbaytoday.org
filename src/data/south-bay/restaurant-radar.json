@@ -1,37 +1,11 @@
 {
-  "generatedAt": "2026-10-12T04:41:10.409Z",
+  "generatedAt": "2026-10-13T03:16:07.416Z",
   "cities": [
     "San Jose",
     "Palo Alto"
   ],
   "windowDays": 60,
   "items": [
-    {
-      "id": "2026-136360-CI",
-      "city": "san-jose",
-      "address": "1600 Saratoga Av",
-      "name": "Chagee",
-      "description": "(Bemp100%) Chagee Ti #201",
-      "workType": "Tenant Improvement",
-      "subtype": "Restaurant",
-      "signal": "opening",
-      "label": "Major Buildout",
-      "valuation": 650000,
-      "date": "2026-09-09"
-    },
-    {
-      "id": "2026-126919-CI",
-      "city": "san-jose",
-      "address": "77 N Almaden Av",
-      "name": "Palmetto Superfoods",
-      "description": "Palmetto Superfoods (Bepm 100%) Tenant Improvement",
-      "workType": "Tenant Improvement",
-      "subtype": "Restaurant",
-      "signal": "opening",
-      "label": "New Buildout",
-      "valuation": 415000,
-      "date": "2026-09-09"
-    },
     {
       "id": "2026-135892-CI",
       "city": "san-jose",
@@ -70,19 +44,6 @@
       "label": "New Buildout",
       "valuation": 205500,
       "date": "2026-10-08"
-    },
-    {
-      "id": "2026-136706-CI",
-      "city": "san-jose",
-      "address": "540 Newhall Dr #5",
-      "name": "Starbucks",
-      "description": "Srp (Bep100%) Starbucks #20",
-      "workType": "Tenant Improvement",
-      "subtype": "Restaurant",
-      "signal": "opening",
-      "label": "New Buildout",
-      "valuation": 175000,
-      "date": "2026-09-09"
     },
     {
       "id": "2026-140040-CI",
@@ -188,30 +149,6 @@
       "label": "New Signage",
       "valuation": 0,
       "date": "2026-09-11"
-    },
-    {
-      "id": "pa-611 Emerson St-2026-08-27",
-      "city": "palo-alto",
-      "address": "611 Emerson St",
-      "name": "Maison Saigon",
-      "description": "MAISON SAIGON :U&O & tenant improvement 6,700sf of an existing retail space t…",
-      "workType": "Building Permit",
-      "signal": "opening",
-      "label": "New Opening",
-      "valuation": 0,
-      "date": "2026-08-27"
-    },
-    {
-      "id": "pa-975 Page Mill Rd-2026-09-03",
-      "city": "palo-alto",
-      "address": "975 Page Mill Rd",
-      "name": "The Landing",
-      "description": "THE LANDING TI ~25,000 SF & UO. This project consists of a tenant improvement…",
-      "workType": "Building Permit",
-      "signal": "activity",
-      "label": "Renovation",
-      "valuation": 0,
-      "date": "2026-09-03"
     }
   ]
 }
