@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-13T03:11:17.149Z",
+      "generatedAt": "2026-10-14T03:11:02.580Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 5 – Oct 12",
+      "dateRange": "Oct 6 – Oct 13",
       "stats": {
-        "total": 564,
-        "notable": 32,
-        "newUnits": 381,
-        "totalValuation": 174707307
+        "total": 445,
+        "notable": 27,
+        "newUnits": 379,
+        "totalValuation": 171425348
       },
       "permits": [
         {
@@ -37,18 +37,6 @@
           "units": 0,
           "issueDate": "2026-10-06",
           "subtype": "Apartment"
-        },
-        {
-          "id": "2026-140378-RS",
-          "address": "2046 Jonathan Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached JADU",
-          "valuation": 483014,
-          "units": 1,
-          "issueDate": "2026-10-05",
-          "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
           "id": "2025-107393-RS",
@@ -111,18 +99,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-124552-RS",
-          "address": "1183 Shoreland Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 87256,
-          "units": 1,
-          "issueDate": "2026-10-05",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2026-120315-RS",
           "address": "1390 Alvernaz Dr #2",
           "category": "residential-new",
@@ -133,18 +109,42 @@
           "units": 1,
           "issueDate": "2026-10-08",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-120873-RS",
+          "address": "1463 Teresita Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to JADU",
+          "valuation": 82155,
+          "units": 1,
+          "issueDate": "2026-10-07",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-108710-CI",
+          "address": "123 Great Oaks Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Equinix TI Data Center",
+          "valuation": 48359602,
+          "units": 0,
+          "issueDate": "2026-10-08",
+          "subtype": "Data Center"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-13T03:11:19.348Z",
+      "generatedAt": "2026-10-14T03:11:04.908Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 5 – Oct 12",
+      "dateRange": "Oct 6 – Oct 13",
       "stats": {
-        "total": 87,
+        "total": 76,
         "notable": 1,
         "newUnits": 0,
         "totalValuation": 0

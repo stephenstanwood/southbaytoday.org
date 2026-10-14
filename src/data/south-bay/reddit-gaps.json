@@ -1,183 +1,96 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-13T03:19:36.889Z",
+    "generatedAt": "2026-10-14T03:18:45.824Z",
     "generator": "generate-reddit-pulse",
-    "sourceCount": 10
+    "sourceCount": 8
   },
   "summary": {
-    "threadsMined": 10,
-    "placesExtracted": 12,
-    "placesMatched": 2,
-    "placeGaps": 10,
-    "eventsExtracted": 0,
+    "threadsMined": 8,
+    "placesExtracted": 5,
+    "placesMatched": 1,
+    "placeGaps": 4,
+    "eventsExtracted": 1,
     "eventsMatched": 0,
-    "eventGaps": 0,
+    "eventGaps": 1,
     "autoAppendedOpenings": 0
   },
   "placeGaps": [
     {
-      "name": "SPARK Social",
-      "city": "San Jose",
-      "kind": "venue",
-      "context": "grand opening this past weekend",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/"
-      ]
-    },
-    {
-      "name": "Filoli",
+      "name": "San Martin Ceramics at Lehrfeld Farm",
       "city": "",
       "kind": "other",
-      "context": "pumpkin patch option mentioned as too far",
+      "context": "paint-your-own pottery barn with goats and mini horses",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/"
+        "https://www.reddit.com/r/SanJose/comments/1x5es6e/paint_your_own_pottery_barn_on_a_farm_in_san/",
+        "https://www.reddit.com/r/SanJose/comments/1x535m7/san_jose_t1d_meetup_this_thursday/",
+        "https://www.reddit.com/r/SanJose/comments/1x4zg6s/what_to_do_with_kids_visiting_oct_2326/",
+        "https://www.reddit.com/r/SanJose/comments/1x5cfgc/18_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1x59rjw/san_jose_food_bank_may_have_to_move_due_to/"
       ]
     },
     {
-      "name": "Lemos Farm",
-      "city": "",
-      "kind": "other",
-      "context": "pumpkin patch option mentioned as too far",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/"
-      ]
-    },
-    {
-      "name": "Spina Farms",
-      "city": "",
-      "kind": "other",
-      "context": "pumpkin patch option mentioned as too far",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/",
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "Ritz Camera/Wolfe Camera",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "remembered 1990s-2000s camera store on Hillsdale Ave",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "RadioShack",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "remembered store on Camden Ave in 1990s-2000s",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "CompUSA",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "remembered 1990s-2000s electronics store",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "DSW",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "used as size reference, located on Stevens Creek",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "Almaden Plaza",
-      "city": "San Jose",
-      "kind": "retail",
-      "context": "shopping plaza mentioned as location for OJ search",
-      "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
-      ]
-    },
-    {
-      "name": "Falafel Drive-In",
+      "name": "Hapa's",
       "city": "San Jose",
       "kind": "restaurant",
-      "context": "classic local spot, needed to pick table wisely",
+      "context": "on Lincoln, hosts monthly T1D meetup",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x3ubju/conspiracy_theories_scandals_ghost_stories_myths/",
-        "https://www.reddit.com/r/SanJose/comments/1x3rfu7/best_nearby_toddler_pumpkin_patch_experience/",
-        "https://www.reddit.com/r/SanJose/comments/1x4dotf/does_anyone_like_remember_san_jose_stores_in_the/",
-        "https://www.reddit.com/r/SanJose/comments/1x47tlt/fresh_squeezed_orange_juice_on_the_southside/",
-        "https://www.reddit.com/r/SanJose/comments/1x42esj/wanted_some_falafel_drivein_but_had_to_pick_my/"
+        "https://www.reddit.com/r/SanJose/comments/1x5es6e/paint_your_own_pottery_barn_on_a_farm_in_san/",
+        "https://www.reddit.com/r/SanJose/comments/1x535m7/san_jose_t1d_meetup_this_thursday/",
+        "https://www.reddit.com/r/SanJose/comments/1x4zg6s/what_to_do_with_kids_visiting_oct_2326/",
+        "https://www.reddit.com/r/SanJose/comments/1x5cfgc/18_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1x59rjw/san_jose_food_bank_may_have_to_move_due_to/"
+      ]
+    },
+    {
+      "name": "Lighthouse Food Rescue and Distribution",
+      "city": "San Jose",
+      "kind": "service",
+      "context": "food bank facing forced move due to rezoning",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x5es6e/paint_your_own_pottery_barn_on_a_farm_in_san/",
+        "https://www.reddit.com/r/SanJose/comments/1x535m7/san_jose_t1d_meetup_this_thursday/",
+        "https://www.reddit.com/r/SanJose/comments/1x4zg6s/what_to_do_with_kids_visiting_oct_2326/",
+        "https://www.reddit.com/r/SanJose/comments/1x5cfgc/18_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1x59rjw/san_jose_food_bank_may_have_to_move_due_to/"
+      ]
+    },
+    {
+      "name": "7/11",
+      "city": "San Jose",
+      "kind": "retail",
+      "context": "looking for horchata soda fountain option",
+      "sourceUrls": [
+        "https://www.reddit.com/r/SanJose/comments/1x4zilk/bay_area_events_this_weekend_october_15th_to_18th/",
+        "https://www.reddit.com/r/SanJose/comments/1x4njld/i_dont_think_anyone_still_remembers_the_santana/",
+        "https://www.reddit.com/r/SanJose/comments/1x4n0dh/711_horchata/"
       ]
     }
   ],
-  "eventGaps": [],
-  "placeMatches": [
+  "eventGaps": [
     {
-      "name": "San Pedro Square",
+      "name": "San Jose T1D Meetup",
+      "when": "Thursday",
       "city": "San Jose",
-      "kind": "venue",
-      "context": "common spot for weekday drinks",
+      "context": "monthly meetup for Type 1 Diabetics at Hapa's",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/"
-      ],
-      "matchedName": "San Pedro Square Market"
-    },
+        "https://www.reddit.com/r/SanJose/comments/1x5es6e/paint_your_own_pottery_barn_on_a_farm_in_san/",
+        "https://www.reddit.com/r/SanJose/comments/1x535m7/san_jose_t1d_meetup_this_thursday/",
+        "https://www.reddit.com/r/SanJose/comments/1x4zg6s/what_to_do_with_kids_visiting_oct_2326/",
+        "https://www.reddit.com/r/SanJose/comments/1x5cfgc/18_live_music/",
+        "https://www.reddit.com/r/SanJose/comments/1x59rjw/san_jose_food_bank_may_have_to_move_due_to/"
+      ]
+    }
+  ],
+  "placeMatches": [
     {
       "name": "Santana Row",
       "city": "San Jose",
       "kind": "venue",
-      "context": "common spot for weekday drinks",
+      "context": "site of 2002 construction fire, rebuilt in 80 days",
       "sourceUrls": [
-        "https://www.reddit.com/r/SanJose/comments/1x4c1zd/best_neighborhoods_for_trickortreatingdecorations/",
-        "https://www.reddit.com/r/SanJose/comments/1x4gm4g/did_anyone_go_to_spark_social_grand_opening_this/",
-        "https://www.reddit.com/r/SanJose/comments/1x4ghw5/searchable_fast_interactive_map_of_public_transit/",
-        "https://www.reddit.com/r/SanJose/comments/1x4fud5/weekday_drinks/",
-        "https://www.reddit.com/r/SanJose/comments/1x47aly/pumpkin_patch_for_baby/"
+        "https://www.reddit.com/r/SanJose/comments/1x4zilk/bay_area_events_this_weekend_october_15th_to_18th/",
+        "https://www.reddit.com/r/SanJose/comments/1x4njld/i_dont_think_anyone_still_remembers_the_santana/",
+        "https://www.reddit.com/r/SanJose/comments/1x4n0dh/711_horchata/"
       ],
       "matchedName": "Santana Row"
     }
