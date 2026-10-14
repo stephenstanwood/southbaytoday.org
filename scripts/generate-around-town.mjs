@@ -465,7 +465,7 @@ async function gatherPermitItems() {
       // guessed at the use from the unit count ("No unit count is listed,
       // suggesting a non-residential build") — a guess the source could have
       // answered outright. Pass it through.
-      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} (declared permit valuation $${(p.valuation || 0).toLocaleString()}, source-reported dwelling units ${p.units || 0}, issued ${p.issueDate})`
+      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}${p.workType ? ` [work type: ${p.workType}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} (declared permit valuation $${(p.valuation || 0).toLocaleString()}, source-reported dwelling units ${p.units || 0}, issued ${p.issueDate})`
     ).join("\n");
 
     // Counting is the one thing the model reliably gets wrong, so do it here
@@ -506,6 +506,10 @@ ADDRESSES: an address given as "<street> (no street number assigned yet)" is a n
 USE TYPE OVER INFERENCE: when a permit line carries "[use type: …]", say what the building is for using that use type. Never infer the use from the unit count — "0 units" is what the field says for every non-residential permit, so do not write "no unit count is listed" or reason that a missing unit count "suggests" anything. If there is no use type, describe only what the description states.
 
 NOT NAMES: San José permit descriptions carry a trade-scope code in parentheses — "(Bemp 100%)", "(Bepm100%)", "(Bep 100%)", "(B 100%)", "(B)", and "Srp" prefixes. These are Building/Electrical/Plumbing/Mechanical scope markers, NOT developers, businesses, or project names. Never name them as a party ("developer Bemp"). Ignore them entirely. Only name a developer, owner, or tenant when it appears in the description as an actual name.
+
+WORK TYPE: when a permit line carries "[work type: Tenant Improvement]", it is interior build-out of an existing building — never call it "new", a "new data center/building", or new construction. Only "New Construction" permits are new buildings.
+
+PROJECT NAMES: quoted or leading words in a description like "'Trimble B' Residential" are a project codename, not a location. Never write "at <codename>" as if it were a place; name the project ("the Trimble B project") or use the street address.
 
 COUNTS: the list above is the notable permits only, not every permit issued. If a VERIFIED COUNTS block appears, those totals are authoritative — state them exactly or omit the number; never substitute your own tally. Otherwise prefer wording that does not hinge on a total ("prefab ADUs permitted at…"). Never infer a gap, a missing unit, or a range from the unit/suite numbers in addresses — "#9" through "#15" is a naming scheme, not a sequence, so do not write "minus one", "all but one", "#9 through #15", or any similar range/exception phrasing.
 
