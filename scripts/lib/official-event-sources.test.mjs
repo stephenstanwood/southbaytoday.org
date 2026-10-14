@@ -22,8 +22,26 @@ import {
   parseLosAltosHistoryEventFacts,
   parseMusicInParkSchedule,
   parseSanJoseJazzLineup,
+  parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("SVLG uses the calendar occurrence, preserving unknown hours and refusing malformed cards", () => {
+  const card = `<article class="mec-event-article mec-toggle-202611-996">
+    <h3 class="mec-event-title"><a href="https://svlg.org/events/example/">Public talk</a></h3>
+    <div class="mec-event-description">A public conversation.</div>
+    <span class="mec-start-date-label">18 Nov</span>
+    <span class="mec-start-time">11:00 am</span><span class="mec-end-time">12:00 pm</span>
+    <div class="mec-venue-details"><span>Conference Room</span><address>2480 N First St, San Jose</address></div>
+  </article>`;
+  assert.deepEqual(parseSvlgCalendar(card), [{title: "Public talk", url: "https://svlg.org/events/example/",
+    date: "2026-11-18", time: "11:00 AM", endTime: "12:00 PM", venue: "Conference Room",
+    address: "2480 N First St, San Jose", description: "A public conversation."}]);
+  assert.equal(parseSvlgCalendar(card.replace('11:00 am', ''))[0].time, null);
+  assert.throws(() => parseSvlgCalendar(card.replace('18 Nov', '31 Nov')), /valid/);
+  assert.throws(() => parseSvlgCalendar(card.replace('18 Nov', '18 Dec')), /valid/);
+  assert.throws(() => parseSvlgCalendar('<html>upstream error</html>'), /no recognizable/);
+});
 
 test("Santana Row keeps each festival day's published hours", () => {
   // The October 2026 card header starts Saturday, but the daily schedule

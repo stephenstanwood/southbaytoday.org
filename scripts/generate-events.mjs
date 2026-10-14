@@ -140,6 +140,7 @@ import {
   parseLosAltosHistoryEventFacts,
   parseMusicInParkSchedule,
   parseSanJoseJazzLineup,
+  parseSvlgCalendar,
 } from "./lib/official-event-sources.mjs";
 import {
   DEFAULT_SNAPSHOT_MAX_AGE_HOURS,
@@ -3969,31 +3970,34 @@ async function fetchMontalvoEvents() {
 async function fetchSvlgEvents() {
   console.log("  ⏳ Silicon Valley Leadership Group...");
   try {
-    const xml = await fetchText("https://www.svlg.org/events/feed/");
-    const items = parseRssItems(xml);
+    // The legacy RSS endpoint fails and pubDate was publication time, not
+    // occurrence time. Read the organizer's current dated calendar cards.
+    const items = parseSvlgCalendar(await fetchText("https://svlg.org/events/"));
     const events = items.map((item) => {
       if (isBlockedEvent(item.title)) return null;
-      const start = parseDate(item.pubDate);
-      if (!start) return null;
-      const city = inferCity(item.title + " " + item.description, "");
+      if (/\b(?:by invitation only|meeting of members)\b/i.test(item.description)) return null;
+      if (/\bvirtual event\b/i.test(item.venue)) return null;
+      if (item.date < todayPT()) return null;
+      const start = parseDate(`${item.date}T12:00:00`);
+      const city = inferCity(item.address + " " + item.venue + " " + item.description, "");
       return {
-        id: h("svlg", item.link || item.title, item.pubDate),
+        id: h("svlg", item.url, item.date),
         title: item.title,
-        date: isoDate(start),
+        date: item.date,
         displayDate: displayDate(start),
-        time: displayTime(start),
-        endTime: null,
+        time: item.time,
+        endTime: item.endTime,
         // No venue fallback. The SVLG feed often omits <location>, and the old
         // `|| "Silicon Valley"` default shipped a region name in the venue slot
         // ("Tech & Innovation CoE Q3 Meeting · Silicon Valley"), which reads as
         // a real address the reader can go to. Leave it empty instead.
-        venue: item.location || null,
-        address: "",
+        venue: item.venue || null,
+        address: item.address,
         city: city || "san-jose",
         category: "community",
-        cost: "paid",
+        cost: "unknown",
         description: truncate(stripHtml(item.description)),
-        url: item.link,
+        url: item.url,
         source: "SVLG",
         kidFriendly: false,
       };
@@ -10343,6 +10347,7 @@ export {
   scpShowPageUrl,
   fetchSanJoseTheatersEvents,
   fetchSjJazzEvents,
+  fetchSvlgEvents,
   fetchSJGiantsSchedule,
   polishDescription,
   parseIcalDate,

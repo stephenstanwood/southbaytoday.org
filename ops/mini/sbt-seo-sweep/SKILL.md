@@ -1,9 +1,9 @@
 ---
 name: sbt-seo-sweep
-description: Weekly Search Console, technical-SEO, and search-opportunity sweep for South Bay Today. Fixes what is safe, reports what is not.
+description: Weekly combined Search Console, product, editorial, source, traffic, and discovery review for South Bay Today. Fixes what is safe, reports what is not.
 ---
 
-# South Bay Today weekly SEO sweep
+# South Bay Today weekly SEO and growth review
 
 Runs Tuesday 01:15 Pacific as the native `sbt-seo-sweep` Codex automation on
 Stephen's Mac Mini, in `/Users/stephenstanwood/Projects/southbaytoday.org`.
@@ -13,8 +13,10 @@ and editorial fixes directly to `main`, and report anything genuinely blocked.
 South Bay Today is a local news and civic-information site. Its readers arrive
 with a job to do: find something to do this weekend, work out what the council
 decided, see what opened. Search is how most of them arrive, so discovery is a
-product concern, not a marketing one. The sibling routine `sbt-growth-sweep`
-owns broad product and editorial strategy; this routine owns findability.
+product concern, not a marketing one. This single weekly review also owns the former `sbt-growth-sweep` product,
+editorial, source, and growth responsibilities. Collect one evidence pack, run
+the Search Console/findability pass first, then the substantive product pass.
+The separate Friday growth schedule is retired.
 
 ## Safe operating contract
 
@@ -106,6 +108,80 @@ Add `--inspect 20` to sample URL Inspection on flagged URLs when the API helper
 is available. Use `--fix-sitemaps` only when it reports
 `sitemap-not-submitted`; the browser may submit the sitemap directly instead.
 
+## Shared traffic and health evidence
+
+- Run `npm run report:growth -- --json` and compare complete trailing 7- and
+  30-day windows with their preceding windows. Review top pages, referrers,
+  countries, and AI referrers. Treat Vercel Web Analytics as human-oriented
+  traffic, not a bot-log census.
+- Run `npm run health-report -- --json`.
+- Check live status and content for `/`, `/events`, `/robots.txt`, `/llms.txt`,
+  `/sitemap-index.xml`, and several currently popular event leaf pages.
+- Check that Google, Bing, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, and
+  Claude-User can fetch the public discovery surfaces without a challenge.
+- Review current official search/AI-publisher guidance only when a material
+  behavior or standard may have changed. Prefer primary documentation.
+
+
+## Review the actual product
+
+Approach this as the weekly product/editorial meeting for South Bay Today, not
+as a code-maintenance checklist. Inspect the live experience, source corpus,
+generated artifacts, reader behavior, and current South Bay context. Ask:
+
+- What real reader jobs is the site solving well or poorly this week? What
+  questions, decisions, cities, audiences, dates, or moments are missing?
+- Are the source feeds authoritative, current, resilient, and broad enough?
+  Which cities, venues, public agencies, libraries, universities, cultural
+  groups, food records, or community calendars are absent or overrepresented?
+- Is ingestion, deduplication, categorization, scoring, and ranking choosing
+  the most useful material—or merely the easiest material to collect?
+- Is each surface showing the right facts in the right place? Review Home day
+  plans, Events, city pages, government, food, newsletter, event leaves, cards,
+  filters, labels, ordering, links, source credit, and empty/error states.
+- What should be promoted, demoted, combined, explained, moved, added, or
+  removed? Is important material buried? Is low-value material consuming space?
+- What did traffic, searches, feedback, seasonal context, and source failures
+  reveal about where the product should go next—not merely which title tag to
+  tweak?
+
+Use direct evidence from primary sources and the rendered product. You may
+automatically add or repair source integrations, rebalance coverage, improve
+ranking/scoring, change fields or presentation within existing surfaces,
+remove low-value clutter, and improve reader-facing copy or workflows when the
+case is strong and the change is reversible. Reader usefulness, factual
+quality, local coverage, and trust come before raw traffic or SEO volume.
+
+When a worthwhile change is too large or subjective to ship automatically,
+send Stephen a concise recommendation with the evidence, expected reader
+benefit, tradeoffs, and the smallest useful experiment. Do not reduce the
+weekly run to a report when a safe, valuable substantive improvement is clear;
+also do not manufacture churn just to create a commit.
+
+## Sweep and improve
+
+Inspect the full public site and current code for:
+
+- crawl/indexing regressions, sitemap integrity, canonical/meta/robots errors,
+  broken internal links, accidental thin/duplicate pages, and 404 growth;
+- structured data validity and agreement with visible content, especially the
+  canonical leaf URL, date/status/location/source for each Event;
+- answer-friendly factual structure, clear provenance, visible freshness,
+  semantic headings, descriptive links, accessibility, RSS/JSON discovery,
+  and organization/about/contact signals that help search and answer engines
+  understand and cite the publisher;
+- obvious performance, security, dependency, and conversion regressions;
+- traffic opportunities suggested by real queries/pages/referrers, without
+  keyword stuffing, fake FAQs, mass thin pages, or content written for bots.
+- substantive source, coverage, editorial-selection, information-placement,
+  and reader-usefulness opportunities found in the product review above.
+
+Implement all high-confidence reversible fixes and improvements you can verify.
+It is acceptable to make no code change when the evidence does not support one.
+Track source-less events as warnings; repair them only from a verified primary
+source. Do not fabricate a `sameAs` URL.
+
+
 ## Fix directly (no need to ask)
 
 - Indexable pages linked from the site but absent from the sitemap. The
@@ -156,18 +232,34 @@ where the honest answer is "this might be wrong".
 
 ## Allowlist
 
-Commit only within `src/`, `scripts/seo/`, `astro.config.mjs`, `public/*.txt`,
-`data/seo/`, and `docs/seo-*.md`. Anything else needs Stephen.
+The findability pass may change `src/`, `scripts/seo/`, `astro.config.mjs`,
+`public/*.txt`, `data/seo/`, and `docs/seo-*.md`. The product pass retains the
+former growth workflow authority to repair source adapters, generated source
+data, ranking and existing surfaces with their focused tests. Preserve the
+existing product constraints; major new sections and mission changes still
+require Stephen. Stage only files necessary for the verified improvement.
 
-## Close out
+## Verify and close out
 
-1. Push allowlisted commits to `main` while still holding the repo lock.
-2. Release the repo lock.
-3. Verify the changed public surface is live before clicking Search Console's
-   **Validate fix** or **Request indexing** for that change.
-4. DM Stephen one message starting with `🔍 SBT SEO sweep`: clicks and
-   impressions this window vs the prior one, what you fixed and pushed, the
-   best 1–3 opportunities with what you did or propose, and anything blocked
-   with exactly what unblocks it. Send with
-   `node ops/mini/sbt-seo-sweep/send-seo-dm.mjs "…"`.
-5. If the run fails, DM once starting with `⚠️ sbt-seo-sweep:` and stop.
+1. Run `npm run check`, `npx astro check`, `npm run build`,
+   `npm run audit:discovery`, and `git diff --check`, plus focused tests for
+   every source or ranking change. Render each changed page type.
+2. Push only this task's changes to `main` while holding the shared repo lock,
+   then release it. Wait for a healthy Git-connected production deployment
+   and verify the changed public surfaces live.
+3. Only after live verification, use Search Console **Validate fix** or
+   **Request indexing** where warranted; send one changed-URL IndexNow batch.
+4. Save one dated receipt under `data/seo/` with the confirmed GSC account and
+   property; 28-day search comparison; 7/30-day traffic comparisons; source
+   and product findings; changes, checks, deployment proof and unresolved work.
+5. Notify Stephen only for shipped changes, a material new finding, or a
+   decision/blocker. Combine search and product findings into one concise
+   message with `node ops/mini/sbt-seo-sweep/send-seo-dm.mjs --outcome shipped "…"`
+   (use `decision` for a required decision).
+   For unchanged success, call the same helper with `--outcome no_change` and
+   the allowed `🔍 SBT SEO sweep` prefix. This clears any recovered failure
+   locally and sends no message; keep the full result in the receipt.
+6. A new failure gets one concise message beginning `⚠️ sbt-seo-sweep:`.
+   Repeated identical failures remain in receipts without repeat messages.
+   Never claim a successful combined audit when the required GSC evidence is
+   unavailable. Preserve the native browser-capable Codex runtime.

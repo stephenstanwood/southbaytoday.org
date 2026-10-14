@@ -6,6 +6,8 @@
 //   node send-seo-dm.mjs [--dry-run] "🔍 SBT SEO sweep (...) ..."
 import fs from "node:fs";
 import os from "node:os";
+import path from "node:path";
+import { notificationDecision } from './notification-policy.mjs';
 
 const allowedPrefixes = [
   "🔍 SBT SEO sweep",
@@ -44,6 +46,11 @@ async function readStdin() {
 
 const dryRun = process.argv.includes("--dry-run");
 const args = process.argv.slice(2).filter((arg) => arg !== "--dry-run");
+const outcomeIndex = args.indexOf('--outcome');
+const explicitOutcome = outcomeIndex >= 0 ? args.splice(outcomeIndex, 2)[1] : null;
+if (explicitOutcome && !['no_change', 'failure', 'shipped', 'decision', 'completed'].includes(explicitOutcome)) {
+  throw new Error('Invalid notification outcome');
+}
 const content = (args.join(" ") || (await readStdin())).trim();
 
 if (!content) {
@@ -54,6 +61,23 @@ if (!content) {
 if (!allowedPrefixes.some((prefix) => content.startsWith(prefix))) {
   console.error("Refusing sbt-seo-sweep Discord message: not an allowed alert type.");
   process.exit(78);
+}
+
+const stateFile = path.join(os.homedir(), '.local/state/sbt-seo-sweep/notification.json');
+let previous = {};
+try { previous = JSON.parse(fs.readFileSync(stateFile, 'utf8')); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+const decision = notificationDecision(previous, content,
+  explicitOutcome || (content.startsWith('⚠️') ? 'failure' : 'completed'));
+function saveState() {
+  fs.mkdirSync(path.dirname(stateFile), { recursive: true, mode: 0o700 });
+  fs.writeFileSync(stateFile + '.tmp', JSON.stringify(decision.state), { mode: 0o600 });
+  fs.renameSync(stateFile + '.tmp', stateFile);
+}
+if (!decision.send) {
+  if (!dryRun) saveState();
+  console.log('quiet: unchanged success or previously reported failure');
+  process.exit(0);
 }
 
 if (dryRun) {
@@ -93,6 +117,7 @@ try {
     console.error(`Discord POST failed: ${response.status} (check token/channel)`);
     process.exit(75);
   }
+  saveState();
   console.log(`discord sent: ${response.status}`);
 } catch (err) {
   console.error(`Discord POST error: ${err?.name || "fetch failed"}`);

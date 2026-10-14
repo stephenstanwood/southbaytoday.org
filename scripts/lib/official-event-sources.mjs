@@ -271,6 +271,33 @@ export function parseSanJoseJazzLineup(html) {
   return entries;
 }
 
+export function parseSvlgCalendar(html) {
+  const source = String(html || "");
+  const blocks = source.match(/<article\b[^>]*class="[^"]*mec-event-article[^"]*"[\s\S]*?<\/article>/gi) || [];
+  if (!blocks.length) throw new Error("SVLG calendar has no recognizable event cards");
+  return blocks.map((block) => {
+    const month = block.match(/\bmec-toggle-(20\d{2})(\d{2})-/);
+    const day = plainText(block.match(/class="mec-start-date-label"[^>]*>([\s\S]*?)<\/span>/i)?.[1] || "").match(/^(\d{1,2})\s+([A-Za-z]+)$/);
+    const date = month && day ? isoDate(Number(month[1]), day[2], Number(day[1])) : null;
+    const heading = block.match(/<h3\b[^>]*class="mec-event-title"[^>]*>([\s\S]*?)<\/h3>/i)?.[1] || "";
+    const title = plainText(heading);
+    const url = decodeHtml(heading.match(/href="([^"]+)"/i)?.[1] || "");
+    if (!title || !/^https:\/\//.test(url) || !date || date.slice(5, 7) !== month[2]
+        || new Date(`${date}T12:00:00Z`).toISOString().slice(0, 10) !== date) {
+      throw new Error("SVLG calendar card is missing a valid title, date or URL");
+    }
+    const venueBlock = block.match(/class="mec-venue-details"[^>]*>([\s\S]*?)<\/div>/i)?.[1] || "";
+    return {
+      title, url, date,
+      time: normalizeClock(block.match(/class="mec-start-time"[^>]*>([^<]*)/i)?.[1]),
+      endTime: normalizeClock(block.match(/class="mec-end-time"[^>]*>([^<]*)/i)?.[1]),
+      venue: plainText(venueBlock.match(/<span[^>]*>([\s\S]*?)<\/span>/i)?.[1] || ""),
+      address: plainText(venueBlock.match(/<address[^>]*>([\s\S]*?)<\/address>/i)?.[1] || ""),
+      description: plainText(block.match(/class="mec-event-description"[^>]*>([\s\S]*?)<\/div>/i)?.[1] || ""),
+    };
+  });
+}
+
 export function extractSanJoseJazzDayUrls(html) {
   const origin = "https://summerfest.sanjosejazz.org";
   const urls = [];
