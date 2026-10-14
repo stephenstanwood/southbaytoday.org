@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-10-14 — Cycle 235: Hark Card Reflects Its Launch
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Hark card fixed.** Its funding tagline still said Hark's "first multimodal
+models [were] due this summer." That had expired: Hark Pro, a free assistant
+app for web, iOS, and Android, launched October 6, and Hark says devices will
+follow in 2027 (hark.com lists the app; TechRepublic, The Rundown, and Fast
+Company cover the launch). "Still-secretive" became "then-secretive." No other
+expired seasonal claims turned up in the tech data.
+
+**Oct 13–14 funding sweep:** no new in-coverage round. VC News Daily showed
+nothing in Santa Clara County through Oct 13. Salience Labs ($125M) is UK-based,
+Causa Prima is Munich/Madrid, and Forgepoint's HQ could not be confirmed (the
+GlobeNewswire release 403s). PaleBlueDot AI, Armadin, and CScale are already
+carded.
+
+---
+
 ## 2026-10-13 — Cycle 234: Figure and 1X Cards Brought Current
 
 The tightening roadmap remains fully shipped (6/6).

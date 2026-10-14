@@ -3629,6 +3629,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#4f46e5",
     url: "https://www.unframe.ai",
   },
+  // Hark tagline updated 2026-10-14: the "first multimodal models due this
+  // summer" line had expired. Hark Pro launched Oct 6 2026 (hark.com lists the
+  // app; TechRepublic, The Rundown, Fast Company cover the launch and the 2027
+  // hardware plan).
   {
     id: "hark",
     name: "Hark",
@@ -3637,7 +3641,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Series A",
     amount: "$700M",
     date: "2026-05-21",
-    tagline: "Brett Adcock's (Figure AI, Archer Aviation) new lab building a universal personal AI interface paired with custom hardware devices, with first multimodal models due this summer. The $700M Series A — led by Parkway Venture Capital with NVIDIA, AMD Ventures, Brookfield, Qualcomm Ventures, Intel Capital, and Salesforce Ventures all in — valued the still-secretive startup at $6B.",
+    tagline: "Brett Adcock's (Figure AI, Archer Aviation) new lab building a universal personal AI interface paired with custom hardware. Its first product, the free Hark Pro assistant app, launched October 6 on web, iOS, and Android; Hark says devices will follow in 2027. The $700M Series A — led by Parkway Venture Capital with NVIDIA, AMD Ventures, Brookfield, Qualcomm Ventures, Intel Capital, and Salesforce Ventures all in — valued the then-secretive startup at $6B.",
     color: "#4338ca",
     url: "https://hark.com",
   },
