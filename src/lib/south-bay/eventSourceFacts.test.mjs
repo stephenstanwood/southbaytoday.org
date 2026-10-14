@@ -13,6 +13,23 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Ticketmaster artist typos are scoped to the verified show without freezing its lineup", () => {
+  const raw = {
+    date: "2026-11-20",
+    url: "https://www.ticketmaster.com/who-want-the-smoke-san-jose-california-11-20-2026/event/1C006522E52E3A76",
+    description: "Shorline Mafia, Kamayiah, and a newly added guest. Linup subject to change.",
+    blurb: "Hear Kamayiah with Shorline Mafia.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.match(corrected.description, /Shoreline Mafia, Kamaiyah, and a newly added guest/);
+  assert.match(corrected.description, /Lineup subject to change/);
+  assert.match(corrected.blurb, /Kamaiyah with Shoreline Mafia/);
+  assert.equal(raw.description.includes("Kamayiah"), true);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-11-20" }).description, raw.description);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/unrelated" }).description, raw.description);
+  assert.equal(applyVerifiedEventFacts(corrected).description, corrected.description);
+});
+
 test("October first-party links and registration conditions survive sparse newsletter input", () => {
   const workshop = applyVerifiedEventFacts({
     title: "Preparing Your Fruit Trees for Winter Workshop", date: "2026-10-03",

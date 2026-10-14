@@ -418,7 +418,9 @@ export interface SccTechSpotlight {
   tagline: string;
   color: string;
   url: string;
-  employeesNote: string; // e.g. "18K employees globally" or "500 employees"
+  // Companywide unless explicitly labeled SCC/local. Date filing-backed counts;
+  // mark estimates with "~" and omit a headcount when it has no reliable source.
+  employeesNote: string;
 }
 
 export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
@@ -769,7 +771,9 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Custom AI ASICs for Amazon and Google, plus the networking silicon inside most hyperscale data centers. One of the quieter AI infrastructure plays — their chips are everywhere, but their name rarely comes up.",
     color: "#1D4ED8",
     url: "https://www.marvell.com",
-    employeesNote: "~20K employees globally",
+    // FY 2026 Form 10-K, Human Capital (January 31, 2026): 7,480 worldwide.
+    // https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm
+    employeesNote: "7,480 employees globally (Jan 2026)",
   },
   {
     id: "kla",
@@ -901,7 +905,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "hardware",
     stage: "public",
-    tagline: "After spinning off SanDisk in February 2025, Western Digital focuses on hard drives and enterprise cloud storage for data centers. The company has operated in San Jose since 1970.",
+    // The founding date is not the start of its San Jose presence: the company
+    // was founded in Santa Ana, per its FY 2021 Form 10-K, Business overview.
+    // https://www.sec.gov/Archives/edgar/data/106040/000010604021000040/wdc-20210702.htm
+    tagline: "After spinning off SanDisk in February 2025, Western Digital focuses on hard drives and enterprise cloud storage for data centers. Founded in Santa Ana in 1970, it is now headquartered in San Jose.",
     color: "#003DA5",
     url: "https://www.westerndigital.com",
     employeesNote: "~12K employees globally",
@@ -967,7 +974,10 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "chip",
     stage: "public",
-    tagline: "Designs the processor architectures inside virtually every smartphone on Earth — including Apple Silicon, Qualcomm Snapdragon, and most AI accelerators. Cambridge-headquartered, with a major North American campus in San Jose. Re-listed on NASDAQ in 2023.",
+    // Arm's data-center material describes CPUs orchestrating accelerators;
+    // it does not establish that most AI accelerators use Arm architecture.
+    // https://www.arm.com/markets/cloud-ai/datacenter-ai
+    tagline: "Designs the processor architectures inside virtually every smartphone on Earth — including Apple Silicon and Qualcomm Snapdragon. Cambridge-headquartered, with a major North American campus in San Jose. Re-listed on NASDAQ in 2023.",
     color: "#0091BD",
     url: "https://www.arm.com",
     employeesNote: "~7,000 employees globally",
@@ -2493,7 +2503,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$550M",
     date: "2026-07-30",
     tagline:
-      "Batteries that store energy as heat instead of chemistry: Antora runs cheap off-peak or renewable electricity into blocks of solid carbon, holds them at up to 2,400°C for days, and gives the energy back as industrial heat or power — so a factory or data center can run around the clock on power it bought when it was cheapest. The $550M Series C is one of the largest US clean-energy rounds of the year, co-led by G2 Venture Partners and Eclipse, with Ribbit Capital, Salesforce Ventures, Activate Capital, John Doerr, the Westly Group, StepStone Group, and Liberty Mutual Strategic Ventures coming in new and Breakthrough Energy Ventures, Lowercarbon Capital, Decarbonization Partners, Impact Science Ventures, and Trust Ventures returning. Most of it lands locally: Antora is expanding its San Jose plant — now a three-building campus staffed by welders, electricians, pipefitters, and machinists, and among the largest battery factories in the country — and adding a second US manufacturing hub.",
+      "Batteries that store energy as heat instead of chemistry: Antora runs cheap off-peak or renewable electricity into blocks of solid carbon, holds them at up to 2,400°C for days, and gives the energy back as industrial heat or power — so a factory or data center can run around the clock on power it bought when it was cheapest. The $550M Series C was co-led by G2 Venture Partners and Eclipse, with Ribbit Capital, Salesforce Ventures, Activate Capital, John Doerr, the Westly Group, StepStone Group, and Liberty Mutual Strategic Ventures coming in new and Breakthrough Energy Ventures, Lowercarbon Capital, Decarbonization Partners, Impact Science Ventures, and Trust Ventures returning. Antora is expanding its San Jose plant — now a three-building campus staffed by welders, electricians, pipefitters, and machinists, and among the largest battery factories in the country — and adding a second US manufacturing hub.",
     color: "#1e3a8a",
     url: "https://www.antora.com/insights/series-c",
   },
@@ -2930,7 +2940,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Series B",
     amount: "$500M",
     date: "2026-03-10",
-    tagline: "High-performance networking infrastructure for AI data centers and hyperscalers. Oversubscribed Series B catapulted valuation to $4.2 billion — one of the largest South Bay AI rounds of 2026.",
+    tagline: "High-performance networking infrastructure for AI data centers and hyperscalers. Oversubscribed Series B catapulted valuation to $4.2 billion.",
     color: "#0369a1",
     url: "https://nexthop.ai",
   },
@@ -3230,7 +3240,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     round: "Seed",
     amount: "$55M",
     date: "2026-04-09",
-    tagline: "Visual reasoning AI that understands the world directly through images — no text translation step. Founded by ex-Google DeepMind researchers led by Andrew Dai; backed by NVIDIA, Menlo Ventures, and Altimeter at a $300M valuation. One of the largest AI seed rounds of 2026.",
+    tagline: "Visual reasoning AI that understands the world directly through images — no text translation step. Founded by ex-Google DeepMind researchers led by Andrew Dai; backed by NVIDIA, Menlo Ventures, and Altimeter at a $300M valuation.",
     color: "#6366f1",
     url: "https://elorian.ai",
   },

@@ -144,6 +144,9 @@ const NAME_OVERRIDES = {
   "SR0881648": "sweetgreen",
   "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
   "SR0884719": "FujiSan Sushi @ Tawa1702",
+  // Great Mall's own directory supplies the brand spelling and coming-soon status.
+  // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice
+  "SR0885853": "TH Sugarcane & Juice",
 };
 
 const BLURB_OVERRIDES = {

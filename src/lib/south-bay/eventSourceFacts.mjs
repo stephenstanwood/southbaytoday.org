@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Ticketmaster's structured lineup spells these artists correctly while its
+  // Event Info text contains typos. Correct only those strings so future
+  // lineup changes remain intact. Evidence: docs/qa/2026-10-14-evening-fact-check.md.
+  {
+    id: "tm-G5vYZ_35P5NtU", date: "2026-11-20",
+    url: "https://www.ticketmaster.com/who-want-the-smoke-san-jose-california-11-20-2026/event/1C006522E52E3A76",
+    copyReplacements: [
+      [/\bShorline Mafia\b/g, "Shoreline Mafia"],
+      [/\bKamayiah\b/g, "Kamaiyah"],
+      [/\bLinup\b/g, "Lineup"],
+    ],
+  },
   // These newsletters used the non-resolving stanfordlive.stanford.edu host.
   // Stanford's event pages also support a recital (no Grammy claim) and
   // Duane Forrest's acoustic reggae performance (not a staged biography).
@@ -412,7 +424,15 @@ export function applyVerifiedEventFacts(event) {
       || c.aliasUrls?.includes(event.url)
       || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
   ));
-  return correction ? { ...event, ...correction.facts } : event;
+  if (!correction) return event;
+  const corrected = { ...event, ...correction.facts };
+  for (const field of ["description", "blurb"]) {
+    if (typeof corrected[field] !== "string") continue;
+    for (const [pattern, replacement] of correction.copyReplacements ?? []) {
+      corrected[field] = corrected[field].replace(pattern, replacement);
+    }
+  }
+  return corrected;
 }
 
 // ---------------------------------------------------------------------------

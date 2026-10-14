@@ -262,7 +262,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "weekly",
     days: ["thursday"],
     time: "4pm – 8pm",
-    months: [5, 6, 7, 8, 9, 10],
+    // PCFMA's published 2026 season starts April 30 and ends October 29.
+    months: [4, 5, 6, 7, 8, 9, 10],
     cost: "free",
     kidFriendly: true,
     description:
