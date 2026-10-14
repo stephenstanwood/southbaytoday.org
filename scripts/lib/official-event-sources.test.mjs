@@ -3,6 +3,10 @@ import test from "node:test";
 
 import {
   isStudentOnlyEvent,
+  isPublicEvent,
+  inferCategory,
+  isEventTimeBackfillCandidate,
+  fetchSvlgEvents,
   isStudentOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
@@ -13,6 +17,8 @@ import {
   extractVboSession,
   normalizeMidpenOccurrenceUrl,
   normalizeMountainWineryCard,
+  normalizeSapCenterTitle,
+  parseIcaExhibitionWindow,
   parseCivicPlusEventCost,
   parseCivicPlusEventDetail,
   parseCivicPlusEventTimes,
@@ -41,6 +47,66 @@ test("SVLG uses the calendar occurrence, preserving unknown hours and refusing m
   assert.throws(() => parseSvlgCalendar(card.replace('18 Nov', '31 Nov')), /valid/);
   assert.throws(() => parseSvlgCalendar(card.replace('18 Nov', '18 Dec')), /valid/);
   assert.throws(() => parseSvlgCalendar('<html>upstream error</html>'), /no recognizable/);
+});
+
+test("SVLG preserves an address in its venue span rather than a speaker's city", async () => {
+  const html = `<article class="mec-event-article mec-toggle-202612-57124">
+    <h3 class="mec-event-title"><a href="https://www.eventbrite.com/e/coffee-conversation-larry-klein-tickets-1998017392807">Coffee &amp; Conversation: Larry Klein</a></h3>
+    <div class="mec-event-description">A conversation with Sunnyvale Mayor Larry Klein.</div>
+    <span class="mec-start-date-label">10 Dec</span>
+    <span class="mec-start-time">10:00 am</span><span class="mec-end-time">11:00 am</span>
+    <div class="mec-venue-details"><span>2480 N First St San Jose, CA</span></div>
+  </article>`;
+  const [event] = parseSvlgCalendar(html);
+  assert.equal(event.venue, "");
+  assert.equal(event.address, "2480 N First St San Jose, CA");
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(html, { status: 200 });
+  try {
+    const generated = await fetchSvlgEvents({ today: "2026-10-14" });
+    assert.equal(generated[0].city, "san-jose");
+    assert.equal(generated[0].address, "2480 N First St San Jose, CA");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("ICA's published exhibition run ignores the post date and reception clocks", async () => {
+  const text = "October 14, 2026 by SJICA. On view: October 16 — November 14, 2026. Opening during the Artists’ Mixer on Friday, October 16, 5-8pm.";
+  const future = parseIcaExhibitionWindow(text, "2026-10-14");
+  assert.deepEqual(future, {
+    date: "2026-10-16", startDate: "2026-10-16", endDate: "2026-11-14",
+    ongoing: true, time: null, endTime: null,
+  });
+  const { normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
+  const event = normalizePlaywrightEvent({
+    title: "We Are California Artists: Wanxin Zhang and Diane Ding", source: "ICA San José",
+    venue: "ICA San José", city: "san-jose", url: "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/",
+    ...future,
+  });
+  assert.equal(event.ongoing, true);
+  assert.equal(event.startDate, "2026-10-16");
+  assert.equal(event.endDate, "2026-11-14");
+  assert.equal(event.time, null);
+  assert.equal(isEventTimeBackfillCandidate(event), false);
+  assert.equal(parseIcaExhibitionWindow(text, "2026-10-20").date, "2026-10-20");
+  assert.equal(parseIcaExhibitionWindow(text, "2026-11-15"), null);
+  assert.equal(parseIcaExhibitionWindow("October 14, 2026. Artists’ Mixer Friday, 5-8pm.", "2026-10-14"), null);
+  assert.equal(parseIcaExhibitionWindow("On view: October 16 — November 31, 2026", "2026-10-14"), null);
+  assert.equal(parseIcaExhibitionWindow("On view: December 16 — January 14, 2027", "2026-12-01").startDate, "2026-12-16");
+});
+
+test("SAP theme nights retain the hockey matchup and sports category", () => {
+  const title = normalizeSapCenterTitle({ title: "Military Appreciation", subtitle: "Sharks vs Penguins" });
+  assert.equal(title, "Sharks vs Penguins — Military Appreciation");
+  assert.equal(inferCategory(title, "", "", "SAP Center"), "sports");
+  assert.equal(normalizeSapCenterTitle({ title: "Sharks vs Penguins", subtitle: "Sharks vs Penguins" }), "Sharks vs Penguins");
+  assert.equal(normalizeSapCenterTitle({ title: "Concert", subtitle: "With special guests" }), "Concert");
+});
+
+test("invitation-only coffee chats do not become public calendar destinations", () => {
+  assert.equal(isPublicEvent("Service Now (Invite Only) Coffee Chat", "Santa Clara University", "", "Career Center"), false);
+  assert.equal(isPublicEvent("Public Coffee Chat", "Santa Clara University", "Open to the public", "Community Center"), true);
 });
 
 test("Santana Row keeps each festival day's published hours", () => {

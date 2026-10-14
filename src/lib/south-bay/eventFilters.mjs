@@ -33,6 +33,7 @@ export const VIRTUAL_EVENT_PATTERNS = [
   /^virtual[:\s-]/i,
   /^\[online\]/i,
   /^\[virtual\]/i,
+  /\((?:online|virtual)\)/i,
   /^(virtual|online):\s+/i,
 
   // SCU tUrn climate lectures — academic-only, no fixed address
@@ -44,7 +45,7 @@ export const VIRTUAL_EVENT_PATTERNS = [
 
   // Generic virtual/online/livestream markers
   /\b(webinar|livestream|live[-\s]?stream|virtual\s+(event|talk|class|meeting|tour|gathering|reading))\b/i,
-  /\bzoom\s+(meeting|call|session|event|webinar|link)\b/i,
+  /\bzoom\s+(meeting|call|session|event|webinar|link|presentation)\b/i,
 ];
 
 /**

@@ -287,15 +287,49 @@ export function parseSvlgCalendar(html) {
       throw new Error("SVLG calendar card is missing a valid title, date or URL");
     }
     const venueBlock = block.match(/class="mec-venue-details"[^>]*>([\s\S]*?)<\/div>/i)?.[1] || "";
+    const venue = plainText(venueBlock.match(/<span[^>]*>([\s\S]*?)<\/span>/i)?.[1] || "");
+    const address = plainText(venueBlock.match(/<address[^>]*>([\s\S]*?)<\/address>/i)?.[1] || "");
+    // Some cards put the whole street address in the venue span. Retain it
+    // as location evidence, rather than losing it when cleanVenue drops it.
+    const streetOnly = /^\d+\s/.test(venue);
     return {
       title, url, date,
       time: normalizeClock(block.match(/class="mec-start-time"[^>]*>([^<]*)/i)?.[1]),
       endTime: normalizeClock(block.match(/class="mec-end-time"[^>]*>([^<]*)/i)?.[1]),
-      venue: plainText(venueBlock.match(/<span[^>]*>([\s\S]*?)<\/span>/i)?.[1] || ""),
-      address: plainText(venueBlock.match(/<address[^>]*>([\s\S]*?)<\/address>/i)?.[1] || ""),
+      venue: streetOnly ? "" : venue,
+      address: address || (streetOnly ? venue : ""),
       description: plainText(block.match(/class="mec-event-description"[^>]*>([\s\S]*?)<\/div>/i)?.[1] || ""),
     };
   });
+}
+
+/** An ICA exhibition's dated run is not a timed performance or reception. */
+export function parseIcaExhibitionWindow(value, today) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(today || "")) return null;
+  const months = "Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?";
+  const range = plainText(value).match(new RegExp(
+    `\\bon\\s+view\\s*:?\\s*(${months})\\s+(\\d{1,2})(?:,?\\s+(20\\d{2}))?\\s*[–—-]\\s*(?:(${months})\\s+)?(\\d{1,2}),?\\s+(20\\d{2})\\b`, "i",
+  ));
+  if (!range) return null;
+  const [, startMonth, startDay, explicitStartYear, endMonth, endDay, endYear] = range;
+  const endMonthName = endMonth || startMonth;
+  const startYear = explicitStartYear ? Number(explicitStartYear)
+    : Number(endYear) - (MONTHS[startMonth.toLowerCase()] > MONTHS[endMonthName.toLowerCase()] ? 1 : 0);
+  const startDate = isoDate(startYear, startMonth, Number(startDay));
+  const endDate = isoDate(Number(endYear), endMonthName, Number(endDay));
+  const valid = (date) => date && !Number.isNaN(Date.parse(`${date}T12:00:00Z`))
+    && new Date(`${date}T12:00:00Z`).toISOString().slice(0, 10) === date;
+  if (!valid(startDate) || !valid(endDate) || endDate < startDate || endDate < today) return null;
+  return { date: startDate > today ? startDate : today, startDate, endDate, ongoing: true, time: null, endTime: null };
+}
+
+/** SAP sometimes puts the game in its subtitle and a theme in the headline. */
+export function normalizeSapCenterTitle({ title, subtitle } = {}) {
+  const heading = plainText(title);
+  const matchup = plainText(subtitle);
+  return /^(?:San Jose )?(?:Sharks|Barracuda)\s+vs\.?\s+\S/i.test(matchup) && !/\bvs\.?\s/i.test(heading)
+    ? `${matchup} — ${heading}`
+    : heading;
 }
 
 export function extractSanJoseJazzDayUrls(html) {

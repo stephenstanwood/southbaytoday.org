@@ -56,14 +56,17 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   return !NONDISCLOSURE_CLAIM.test(evidence);
 }
 
-const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\s+(?:also\s+)?(held|met|heard|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
+const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\s+(?:also\s+)?(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
+const COMPLETED_SESSION_ACTION = /\b(?:study|scoping)\s+session(?:\s+on\s+(?:[A-Za-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{4}-\d{2}-\d{2}))?\s+(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {
   const claim = `${item?.headline || ""} ${item?.summary || ""}`;
-  const actions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
+  const bodyActions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
+  const sessionActions = [...claim.matchAll(COMPLETED_SESSION_ACTION)].map((match) => match[1]);
+  const actions = [...bodyActions, ...sessionActions];
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
   const talksClaimed = ONGOING_BODY_TALKS.test(claim);
   if (!actions.length && !commentsClaimed && !talksClaimed) return false;
@@ -71,7 +74,8 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
   if (commentsClaimed && !RECEIVED_PUBLIC_COMMENTS.test(evidence)) return true;
   if (talksClaimed && !ONGOING_BODY_TALKS.test(evidence)) return true;
-  return actions.some((action) => !new RegExp(
+  if (sessionActions.some((action) => ![...evidence.matchAll(COMPLETED_SESSION_ACTION)].some((match) => match[1].toLowerCase() === action.toLowerCase()))) return true;
+  return bodyActions.some((action) => !new RegExp(
     `\\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\\s+(?:also\\s+)?${action}\\b`, "i",
   ).test(evidence));
 }

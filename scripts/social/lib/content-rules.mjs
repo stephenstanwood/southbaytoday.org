@@ -95,6 +95,7 @@ export const VIRTUAL_TITLE_SIGNALS = [
   /^virtual[:\s-]/i,
   /^\[online\]/i,
   /^\[virtual\]/i,
+  /\((?:online|virtual)\)/i,
   /\bwebinar\b/i,
   /\blivestream\b/i,
 ];

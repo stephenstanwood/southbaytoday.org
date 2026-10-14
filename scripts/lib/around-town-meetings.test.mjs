@@ -151,6 +151,15 @@ test("a dated agenda does not establish a completed council discussion or hearin
   }), false);
 });
 
+test("a study-session agenda cannot establish what the session covered", () => {
+  const agenda = { fullAgendaText: "6 P.M. SPECIAL PLANNING COMMISSION MEETING (Study Session). Proposed Project: Peery Park Specific Plan Amendment." };
+  const summary = "A special Planning Commission study session on October 12 covered a proposed amendment to the Peery Park Specific Plan.";
+  assert.equal(hasUnsupportedMeetingAction({ summary }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The October 12 agenda listed a study session on the proposed amendment." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { fullAgendaText: summary }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
+});
+
 test("Around Town body verification receives the full agenda instead of a clipped preview", async () => {
   let observedText;
   await resolveAroundTownMeetingSources(config, [{

@@ -221,6 +221,8 @@ function h(prefix, ...parts) {
 
 // ── Event title blocklist — skip private/internal/irrelevant events ──────────
 const TITLE_BLOCKLIST = [
+  // SCU's invitation-only employer coffee chat is not a public event.
+  /\b(?:invite|invitation)[-\s]+only\b/i,
   /\bpractice\b/i,        // team practices
   /\brehearsal\b/i,       // rehearsals
   /\bboard meeting\b/i,   // internal board meetings
@@ -2550,6 +2552,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // lunch is not food programming.
   if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(titleLower)) return "community";
   if (/\bstate of the (?:city|town)\b/.test(titleLower)) return "community";
+  // "Park" can be a housing property's name; carnival games are not sports.
+  if (/\bhousing\s+application\s+(?:help\s+)?session\b/.test(titleLower)) return "community";
+  if (/\bhalloween\s+(?:festival|carnival|party)\b/.test(titleLower)) return "family";
   // Election forums and police meet-and-greets are civic, whatever the venue.
   // "Chamber of Commerce Candidate Forum" at Los Gatos Theater and "National
   // Coffee with a Cop Day" at Sue's Gallery Café both shipped as arts via the
@@ -3967,7 +3972,7 @@ async function fetchMontalvoEvents() {
   }
 }
 
-async function fetchSvlgEvents() {
+async function fetchSvlgEvents({ today = todayPT() } = {}) {
   console.log("  ⏳ Silicon Valley Leadership Group...");
   try {
     // The legacy RSS endpoint fails and pubDate was publication time, not
@@ -3977,9 +3982,10 @@ async function fetchSvlgEvents() {
       if (isBlockedEvent(item.title)) return null;
       if (/\b(?:by invitation only|meeting of members)\b/i.test(item.description)) return null;
       if (/\bvirtual event\b/i.test(item.venue)) return null;
-      if (item.date < todayPT()) return null;
+      if (item.date < today) return null;
       const start = parseDate(`${item.date}T12:00:00`);
-      const city = inferCity(item.address + " " + item.venue + " " + item.description, "");
+      // A speaker's city in the biography must not override the event address.
+      const city = inferCity(item.address, "") || inferCity(item.venue, "") || inferCity(item.description, "");
       return {
         id: h("svlg", item.url, item.date),
         title: item.title,
@@ -10309,6 +10315,7 @@ export {
   cleanVenue,
   extractTimeFromHtml,
   inferCategory,
+  isPublicEvent,
   isAdminNonEvent,
   isOffRegionUniversityEvent,
   isBiblioEventCancelled,

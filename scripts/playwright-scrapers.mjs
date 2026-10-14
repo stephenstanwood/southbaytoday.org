@@ -38,6 +38,8 @@ import {
 } from "./lib/linden-tree-heading.mjs";
 import {
   normalizeMountainWineryCard,
+  normalizeSapCenterTitle,
+  parseIcaExhibitionWindow,
   parseSantanaRowOccurrences,
 } from "./lib/official-event-sources.mjs";
 import {
@@ -1227,24 +1229,14 @@ async function scrapeICASanJose(page) {
         if (!art.title || !art.link) continue;
         try {
           await page.goto(art.link, { waitUntil: "networkidle", timeout: 15_000 });
-          const detail = await page.evaluate(() => {
-            const text = document.body?.innerText || "";
-            // Look for date ranges like "January 16 – August 23, 2026"
-            const dateMatch = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}\s*[–\-—]\s*(?:(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+)?\d{4}/i);
-            // Also try single date like "Opens January 16, 2026"
-            const singleDate = text.match(/(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2},?\s+\d{4}/i);
-            return { dateRange: dateMatch?.[0], singleDate: singleDate?.[0] };
-          });
-
-          const dateStr = detail.singleDate || detail.dateRange;
-          const date = tryParseDate(dateStr);
-          // For exhibitions, use today's date if the show is current (so it shows up)
-          const effectiveDate = date || TODAY;
+          const text = await page.evaluate(() => document.body?.innerText || "");
+          const run = parseIcaExhibitionWindow(text, TODAY);
+          // No publication-date or "today" fallback: a current exhibition
+          // needs a published run, and has no clock for time backfill to guess.
+          if (!run) continue;
           events.push({
             title: art.title,
-            date: effectiveDate,
-            time: null,
-            endTime: null,
+            ...run,
             venue: "ICA San José",
             address: "560 S First St, San Jose, CA 95113",
             city: "san-jose",
@@ -2503,6 +2495,7 @@ async function scrapeSapCenter(page) {
         const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
         const title = document.querySelector("h1")?.textContent?.replace(/\s+/g, " ").trim()
           || document.title.replace(/\s*\|\s*SAP Center\s*$/i, "").trim();
+        const subtitle = document.querySelector(".event_heading h2.tagline")?.textContent?.trim() || "";
         const lineAfter = (label) => {
           const idx = lines.findIndex((line) => line.toLowerCase() === label.toLowerCase());
           return idx >= 0 ? lines[idx + 1] : null;
@@ -2526,7 +2519,7 @@ async function scrapeSapCenter(page) {
         const description = detailsStart >= 0
           ? lines.slice(detailsStart + 1, detailsEnd > detailsStart ? detailsEnd : detailsStart + 8).join(" ").replace(/\s+/g, " ").trim()
           : "";
-        return { title, venue, dateLine, eventStarts, schedules, description };
+        return { title, subtitle, venue, dateLine, eventStarts, schedules, description };
       });
 
       const slots = detail.schedules.length
@@ -2542,14 +2535,15 @@ async function scrapeSapCenter(page) {
 
   const seen = new Set();
   return raw.map((r) => {
+    const title = normalizeSapCenterTitle(r);
     const date = yearAwareDate(r.dateText);
     const time = clockFromText(r.time);
-    if (!date || date < TODAY || !time || !isUsefulTitle(r.title)) return null;
-    const key = `${date}|${time}|${r.title}|${r.venue}`;
+    if (!date || date < TODAY || !time || !isUsefulTitle(title)) return null;
+    const key = `${date}|${time}|${title}|${r.venue}`;
     if (seen.has(key)) return null;
     seen.add(key);
     return {
-      title: r.title,
+      title,
       date,
       time,
       endTime: null,
@@ -2558,7 +2552,7 @@ async function scrapeSapCenter(page) {
       city: "san-jose",
       url: r.url || calendarUrl,
       source: r.venue === "Tech CU Arena" ? "Tech CU Arena" : "SAP Center",
-      category: inferCategory(r.title),
+      category: inferCategory(title),
       cost: "paid",
       description: r.description || "",
       kidFriendly: KID_RE.test(`${r.title} ${r.description || ""}`),
@@ -2859,6 +2853,9 @@ export function normalizePlaywrightEvent(e) {
     displayDate: displayDate(d),
     time: e.time || null,
     endTime: e.endTime || null,
+    ...(e.ongoing ? { ongoing: true, time: null, endTime: null } : {}),
+    ...(e.startDate ? { startDate: e.startDate } : {}),
+    ...(e.endDate ? { endDate: e.endDate } : {}),
     venue: e.venue,
     address: e.address || "",
     city: e.city,

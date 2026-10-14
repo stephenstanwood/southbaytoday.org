@@ -1,5 +1,6 @@
 import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { resolveVirtualFlag } from "../../src/lib/south-bay/eventFilters.mjs";
 
 const PT = "America/Los_Angeles";
 
@@ -265,7 +266,7 @@ export function normalizeInboundEventPresentation(event) {
     endTime,
     url: override?.url || detrack(event?.canonicalUrl) || detrack(event?.sourceUrl) || "",
     ...(override?.venue ? { venue: override.venue } : {}),
-    ...(override?.virtual === true ? { virtual: true } : {}),
+    ...((override?.virtual === true || resolveVirtualFlag(event, event?.experience)) ? { virtual: true } : {}),
     ...(typeof verified.kidFriendly === "boolean" ? { kidFriendly: verified.kidFriendly } : {}),
   };
 }

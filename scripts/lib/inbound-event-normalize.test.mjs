@@ -3,6 +3,7 @@ import test from "node:test";
 import { fetchInboundEvents, inferCategory } from "../generate-events.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
 
 import {
   inboundClock,
@@ -12,6 +13,25 @@ import {
   SILICON_VALLEY_PRIDE_2026_URL,
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
+
+test("newsletter college-admissions Zoom presentations retain their online-only flag", () => {
+  const raw = {
+    id: "college-admissions-online", cityKey: "santa-clara", title: "Successfully Navigating College Admissions (Online)",
+    startsAt: "2026-10-21T16:30:00-07:00", endsAt: "2026-10-21T17:30:00-07:00", location: null,
+    description: "A free Zoom presentation by Stand Out For College for families of high school students.",
+    sourceUrl: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113977/",
+  };
+  assert.equal(normalizeInboundEventPresentation(raw).virtual, true);
+  assert.equal(VIRTUAL_TITLE_SIGNALS.some((pattern) => pattern.test(raw.title)), true);
+  assert.equal(fetchInboundEvents({ today: "2026-10-14", events: [raw] })[0].virtual, true);
+  assert.equal(normalizeInboundEventPresentation({ ...raw, title: "Staying Safe Online", description: "Learn online safety in person at the library." }).virtual, undefined);
+});
+
+test("newsletter Halloween festivals and housing help do not become sports or outdoor events", () => {
+  assert.equal(inferCategory("Monster Bash Halloween Festival", "Family-friendly Halloween festival with carnival games and inflatable slides.", "", "Rengstorff Park"), "family");
+  assert.equal(inferCategory("Paulson Park I Housing Application Help Session", "Help completing a senior housing waitlist application.", "", "Rent Stabilization Division Office"), "community");
+  assert.equal(inferCategory("Sharks vs Penguins", "Military appreciation game.", "", "SAP Center"), "sports");
+});
 
 test("Bruno Mars newsletter ingest keeps the verified show and gate times distinct", () => {
   const raw = {
