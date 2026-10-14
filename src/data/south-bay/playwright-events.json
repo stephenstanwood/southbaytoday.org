@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-13T15:04:35.772Z",
+    "generatedAt": "2026-10-14T02:17:13.159Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 490,
+    "eventCount": 494,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (109)",
-      "Los Gatos Library (134)",
+      "Mountain View Public Library (107)",
+      "Los Gatos Library (117)",
       "San Jose Jazz (16)",
-      "Linden Tree Books (15)",
+      "Linden Tree Books (14)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
@@ -19,7 +19,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (32)",
+      "City of Cupertino (56)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (82)",
       "Levi's Stadium (4)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 114,
+        "count": 112,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 134,
+        "count": 117,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 15,
+        "count": 14,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 32,
+        "count": 56,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -350,47 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "95b09c52f77f",
-      "title": "Outdoor Storytime",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Pioneer Park",
-      "address": "1146 Church St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
-      "sourceAudiences": [
-        "Babies",
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17142487",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "cfcd43d9f9c5",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "1:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 1:00pm to 2:30pm Click Here to Register for 3:00pm to 4:30pm",
-      "url": "https://mountainview.libcal.com/event/17686490",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "86fe482e3430",
       "title": "Cricut Basics - Paper Flowers",
@@ -619,7 +578,7 @@
       "registration": "required",
       "category": "arts",
       "cost": "free",
-      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m. Additional dates: November 7 November 21 December 5 December 19",
+      "description": "Practice your reading skills with a buddy! Children will be paired with a teen volunteer for read-aloud practice and literacy games. All reading levels welcome. Recommended for children in K-3rd grade. Please choose your 30 minute timeslot below: Click Here to Register for 10:30 a.m. to 11:00 a.m. Click Here to Register for 11:05 a.m. to 11:35 a.m. Additional dates: November 7 November 21 December 5 December 19",
       "sourceAudiences": [
         "Children"
       ],
@@ -868,7 +827,7 @@
       "city": "mountain-view",
       "category": "community",
       "cost": "free",
-      "description": "Drop in for an afternoon of art and crafts that is self-directed, choice-driven, and celebrates the experience of discovery. This program is for children ages 5 and up . This event is generously sponsored by the Friends of the Mountain View Library.",
+      "description": "This program has been canceled. We apologize for any inconvenience.",
       "sourceAudiences": [
         "Tweens",
         "Children"
@@ -2669,89 +2628,6 @@
       "kidFriendly": true
     },
     {
-      "id": "032576e09eba",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249573",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "4c6d3d90c075",
-      "title": "Online Author Talk : David Epstein",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. Join us for an inspiring virtual conversation with bestselling author David Epstein as we explore his latest book, Inside the Box , and redefine how to approach our greatest challenges! We are constantly told to \"think outside the box\" to innovate, solve complex problems, and reach our goals. But what if the secret to true breakthrough creativity and peak performance actually lies in working within our limitations? In Inside the Box , David Epstein draws on science, research, and fascinating real-world case studies to demonstrate how constraints, boundaries, and structure can become powerful catalysts for ingenuity and mastery. Epstein challenges traditional ideas about skill acquisition, focus, and problem-solving, revealing how top performers and innovators across industries turn rigid limits into unmatched strengths. Register now to learn how to reframe everyday obstacles and apply science-backed performance strategies to your career and personal life. About the Author: David Epstein is the author of three New York Times bestsellers — The Sports Gene , Range , and most recently Inside the Box: How Constraints Make Us Better. He was previously an investigative reporter at ProPublica, and before that a senior writer at Sports Illustrated . Prior to becoming a writer, he was living in a tent in the Arctic training to become an environmental scientist. Like many of the characters in Range , he has had a winding career path.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17371406",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "32574ead3238",
-      "title": "Drop-In Tech Help",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "3:00 PM",
-      "endTime": "4:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "education",
-      "cost": "free",
-      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
-      "url": "https://losgatosca.libcal.com/event/16035532",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "400d33fc4e2e",
-      "title": "Crafty Corner (Ages 3-10)",
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Take some time out of your afternoon to imagine and create! Join us for a crafty activity in the Children's Room. (Previously known as Tinker Tuesday.) This program is geared towards children ages 3 through ~10. This program takes place on the 2nd and 4th Tuesday of the month at 4 pm in the Children's Room.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16842095",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
       "id": "2052675fdc27",
       "title": "Storytime (Ages 0-5)",
       "date": "2026-10-14",
@@ -2918,26 +2794,6 @@
       "kidFriendly": true
     },
     {
-      "id": "dca2427c7be2",
-      "title": "ESL Conversation Club",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831246",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "0343646a8603",
       "title": "Social Stitching",
       "date": "2026-10-19",
@@ -2978,8 +2834,8 @@
       "kidFriendly": true
     },
     {
-      "id": "77c91a247353",
-      "title": "Drop-In Tech Help",
+      "id": "2d949601ea13",
+      "title": "CANCELLED -Drop-In Tech Help",
       "date": "2026-10-20",
       "displayDate": "Tue, Oct 20",
       "time": "3:00 PM",
@@ -2989,11 +2845,10 @@
       "city": "los-gatos",
       "category": "education",
       "cost": "free",
-      "description": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "description": "Tech Help is cancelled for this day, please join us next week. Thank you. -Francisco",
       "sourceAudiences": [
         "Adults"
       ],
-      "attendanceNote": "Do you have questions about your laptop, smartphone, or tablet? Join us for Drop-in Tech help. No appointment is needed, we help patrons on a first come first served basis. We meet in the 2nd floor Tech Lab and a clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
       "url": "https://losgatosca.libcal.com/event/16035533",
       "source": "Los Gatos Library",
       "kidFriendly": false
@@ -3161,26 +3016,6 @@
       "url": "https://losgatosca.libcal.com/event/17444954",
       "source": "Los Gatos Library",
       "kidFriendly": true
-    },
-    {
-      "id": "091bffe36548",
-      "title": "ESL Conversation Club",
-      "date": "2026-10-26",
-      "displayDate": "Mon, Oct 26",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831247",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "bb3d46797aaf",
@@ -3424,26 +3259,6 @@
         "Seniors"
       ],
       "url": "https://losgatosca.libcal.com/event/17161321",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "431feb4af6ac",
-      "title": "ESL Conversation Club",
-      "date": "2026-11-02",
-      "displayDate": "Mon, Nov 2",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831248",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -3694,26 +3509,6 @@
       "url": "https://losgatosca.libcal.com/event/17444956",
       "source": "Los Gatos Library",
       "kidFriendly": true
-    },
-    {
-      "id": "04a87fce6b1d",
-      "title": "ESL Conversation Club",
-      "date": "2026-11-09",
-      "displayDate": "Mon, Nov 9",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831249",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "1c7c433f6e83",
@@ -4027,26 +3822,6 @@
       "kidFriendly": true
     },
     {
-      "id": "2bd7a2a7f9a1",
-      "title": "ESL Conversation Club",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831250",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "6662650fb9d3",
       "title": "Social Stitching",
       "date": "2026-11-16",
@@ -4272,26 +4047,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d513d6e819c0",
-      "title": "ESL Conversation Club",
-      "date": "2026-11-23",
-      "displayDate": "Mon, Nov 23",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831251",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "21ebd9054a58",
       "title": "Social Stitching",
       "date": "2026-11-23",
@@ -4456,26 +4211,6 @@
       "url": "https://losgatosca.libcal.com/event/17444959",
       "source": "Los Gatos Library",
       "kidFriendly": true
-    },
-    {
-      "id": "982d7645eb65",
-      "title": "ESL Conversation Club",
-      "date": "2026-11-30",
-      "displayDate": "Mon, Nov 30",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831252",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
     },
     {
       "id": "d66021e5b434",
@@ -4656,26 +4391,6 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/17237344",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "24afdb7d14c2",
-      "title": "ESL Conversation Club",
-      "date": "2026-12-07",
-      "displayDate": "Mon, Dec 7",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831253",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -4904,26 +4619,6 @@
       "kidFriendly": true
     },
     {
-      "id": "36359cd963b1",
-      "title": "ESL Conversation Club",
-      "date": "2026-12-14",
-      "displayDate": "Mon, Dec 14",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831254",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "79a59a8cf0cb",
       "title": "Monday Morning Book Club",
       "date": "2026-12-14",
@@ -5086,26 +4781,6 @@
       "kidFriendly": true
     },
     {
-      "id": "287ccf74e103",
-      "title": "ESL Conversation Club",
-      "date": "2026-12-21",
-      "displayDate": "Mon, Dec 21",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831255",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "81745e63a7f3",
       "title": "Social Stitching",
       "date": "2026-12-21",
@@ -5235,26 +4910,6 @@
       "kidFriendly": true
     },
     {
-      "id": "c89b3b78a3ac",
-      "title": "ESL Conversation Club",
-      "date": "2026-12-28",
-      "displayDate": "Mon, Dec 28",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831256",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "8aa38f3765c8",
       "title": "Social Stitching",
       "date": "2026-12-28",
@@ -5362,26 +5017,6 @@
       "kidFriendly": true
     },
     {
-      "id": "a7cb49014ecf",
-      "title": "ESL Conversation Club",
-      "date": "2027-01-04",
-      "displayDate": "Mon, Jan 4",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831257",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "d573186ed612",
       "title": "Creative Break",
       "date": "2027-01-07",
@@ -5398,26 +5033,6 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/17783901",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "984080b4216e",
-      "title": "ESL Conversation Club",
-      "date": "2027-01-11",
-      "displayDate": "Mon, Jan 11",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us in-person at the Library for friendly and casual conversations with other English learners! This class is for adults 18+.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16831258",
       "source": "Los Gatos Library",
       "kidFriendly": false
     },
@@ -5779,28 +5394,6 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-10-21"
-      }
-    },
-    {
-      "id": "05a250eec959",
-      "title": "Conversation with Trish Lundy & Charlotte Lillie Balogh",
-      "date": "2026-10-24",
-      "displayDate": "Sat, Oct 24",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-24"
       }
     },
     {
@@ -6755,8 +6348,8 @@
       "kidFriendly": false
     },
     {
-      "id": "56dc6e0e6408",
-      "title": "All Ages Storytime",
+      "id": "29a782386010",
+      "title": "Toddler Storytime",
       "date": "2026-10-13",
       "displayDate": "Tue, Oct 13",
       "time": "11:30 am",
@@ -6772,8 +6365,8 @@
       "kidFriendly": true
     },
     {
-      "id": "29a782386010",
-      "title": "Toddler Storytime",
+      "id": "56dc6e0e6408",
+      "title": "All Ages Storytime",
       "date": "2026-10-13",
       "displayDate": "Tue, Oct 13",
       "time": "11:30 am",
@@ -6940,7 +6533,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-13T15:03:19.230Z"
+        "checkedAt": "2026-10-14T02:15:53.237Z"
       }
     },
     {
@@ -6963,7 +6556,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-13T15:03:19.230Z"
+        "checkedAt": "2026-10-14T02:15:53.238Z"
       }
     },
     {
@@ -6986,7 +6579,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-13T15:03:19.230Z"
+        "checkedAt": "2026-10-14T02:15:53.238Z"
       }
     },
     {
@@ -7009,7 +6602,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-13T15:03:19.230Z"
+        "checkedAt": "2026-10-14T02:15:53.238Z"
       }
     },
     {
@@ -7032,7 +6625,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-13T15:03:19.231Z"
+        "checkedAt": "2026-10-14T02:15:53.239Z"
       }
     },
     {
@@ -7580,6 +7173,414 @@
       "kidFriendly": true
     },
     {
+      "id": "54242884e953",
+      "title": "2026 Cupertino Community Service Awards",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": "05:30 PM",
+      "endTime": "08:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 N. Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "The third annual Cupertino Community Service Awards will take place on Wednesday, October 28. This ceremony will recognize the 2026 CREST Awards (Cupertino Recognizes Extra Steps Taken), and Commissioners who served on a City Commission. Doors open at 5:30 p.m., program starts at 6 p.m. RSVP is required, registration will open for the public on Monday, September 21. For more information and to submit a nomination for the CREST Awards, visit cupertino.gov/crest.",
+      "url": "https://www.cupertino.gov/Events-directory/2026-Cupertino-Community-Service-Awards",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "8efa6fba6a03",
+      "title": "International Kung Fu & Taijiquan Day",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "10:00 AM",
+      "endTime": "05:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "International Kung Fu & Taijiquan Day is managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/International-Kung-Fu-Taijiquan-Day",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "aef4a717b055",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "46499ae29bb7",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "67eed7ae1ff2",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-12-26",
+      "displayDate": "Sat, Dec 26",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "61d47a098908",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-01-31",
+      "displayDate": "Sun, Jan 31",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "601d176899e5",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-02-28",
+      "displayDate": "Sun, Feb 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "e8511809db22",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-03-28",
+      "displayDate": "Sun, Mar 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "5d05cfb0962a",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-04-25",
+      "displayDate": "Sun, Apr 25",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "87a6a57d8737",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-05-30",
+      "displayDate": "Sun, May 30",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "7111e77290dd",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-06-27",
+      "displayDate": "Sun, Jun 27",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "b25bfa3d500d",
+      "title": "Watershed Habitat of the Steelhead Nature Walk",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Join a Naturalist and learn about the Steelhead life cycle, riparian habitat and challenges faced in Stevens Creek. We will walk through history and view our ecosystem through the lens of this phenomenal species. You and your child will identify aquatic insects as a measure of water quality. The hike is approximately one mile on a combination of dirt trails and paved paths. All attendees must register and children must be accompanied by an adult. $25 Resident | $32 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "2ffc83c70291",
+      "title": "Join-A-Ranger: Bird ID and Guided Hike",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "08:00 AM",
+      "endTime": "10:00 AM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "The Park Rangers invite you to learn about the birds living in our riparian habitat and how to ID them! Walk the trails to see the environment they live in and maybe catch a glimpse of a Red-Shoulder Hawk, Screech Owl, or more! All attendees must register and an adult must accompany children. The hike is approximately one-quarter mile on a combination of dirt trails and paved paths. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "6c530208231f",
+      "title": "Veterans Day Ceremony",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "11:00 AM",
+      "endTime": "01:00 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Boulevard, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Cupertino’s Veterans Day Ceremony is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Veterans-Day-Ceremony",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "86e44567cb97",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "d7238747e0fd",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "2125da2e29d1",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2027-01-18",
+      "displayDate": "Mon, Jan 18",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "355fdc5dfe0e",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2027-04-26",
+      "displayDate": "Mon, Apr 26",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "371ac0e23f4d",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "c83bd5821441",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2027-01-17",
+      "displayDate": "Sun, Jan 17",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "297499f9509f",
+      "title": "Paper Shredding and Environmental Recycling",
+      "date": "2027-04-18",
+      "displayDate": "Sun, Apr 18",
+      "time": "08:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "De Anza College Parking Lot A",
+      "address": "De Anza College Parking Lot A, 21250 Stevens Creek Blvd Cupertino, CA 95014, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "No registration needed. Please bring identification to prove Cupertino residency. See eligible items and additional information at cupertino.gov/environmentalday.",
+      "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "743b061a5272",
+      "title": "Tree Lighting",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "06:00 PM",
+      "endTime": "08:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Kick off the holiday season at the City’s annual Community Tree Lighting! Enjoy the moment the tree is illuminated with hundreds of twinkling lights, live music from a local choir, and festive holiday cheer. After the tree lighting, families can visit Santa and take photos. For more information, please visit the Tree Lighting event page.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Tree-Lighting/Tree-Lighting-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "d8ae1f6e6a6d",
+      "title": "Breakfast with Santa",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "08:30 AM",
+      "endTime": "11:30 AM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "You and your family are invited to a festive breakfast celebration with Santa! Enjoy delicious North Pole pancakes prepared by Santa’s elves, take photos with Santa, and explore a holiday workshop filled with crafts and activities for children. Three seatings: 8:30 a.m., 9:30 a.m., 10:30 a.m. Register Registration opens in late July. For more information, please visit the Breakfast with Santa event page.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Breakfast-with-Santa/Breakfast-with-Santa-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "a2b447b7251a",
+      "title": "Signing Santa",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Deaf and hard of hearing children, along with their families, are invited to spend time with a Santa who understands sign language! Santa only communicates using sign language but an interpreter will be on-site to help translate for friends and family. Register Registration opens in late July. For more information, please visit the Signing Santa event page.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
       "id": "4bee933d9da1",
       "title": "Fiddler on the Roof",
       "date": "2026-11-15",
@@ -7591,7 +7592,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7608,7 +7609,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
