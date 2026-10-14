@@ -1,25 +1,25 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-14T15:04:18.522Z",
+    "generatedAt": "2026-10-14T21:58:47.282Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 492,
+    "eventCount": 500,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (106)",
-      "Los Gatos Library (117)",
+      "Mountain View Public Library (115)",
+      "Los Gatos Library (116)",
       "San Jose Jazz (16)",
       "Linden Tree Books (14)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
-      "ICA San José (3)",
+      "ICA San José (4)",
       "Mountain Winery (7)",
       "San Jose Theaters (19)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (56)",
+      "City of Cupertino (55)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (81)",
       "Levi's Stadium (4)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 111,
+        "count": 120,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 117,
+        "count": 116,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -155,7 +155,7 @@
         "id": "ica-san-jose",
         "label": "ICA San Jose",
         "status": "ok",
-        "count": 3,
+        "count": 4,
         "error": null,
         "sources": [
           "ICA San José"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 56,
+        "count": 55,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -348,28 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "2f6e191f8de9",
-      "title": "Baby Storytime",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170815",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "cfbb0c4bd686",
       "title": "ESL Conversation Club - IN PERSON",
@@ -1347,6 +1325,27 @@
       "kidFriendly": true
     },
     {
+      "id": "ef8416881a73",
+      "title": "Mastering MEDICARE: Turn Confusion into Confidence",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "6:00 PM",
+      "endTime": "7:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Join us for a free, beginner-focused educational session that explains Medicare parts, enrollment timelines, and coverage options. This is an opportunity to get expert insights and clarity on how the latest Medicare updates will affect you. Whether you're new to Medicare, nearing eligibility, or already enrolled, this seminar will help you understand everything you need to know to make informed decisions about your coverage. In this comprehensive discussion, we’ll explore critical topics about Medicare, such as: The ABCs (and D): Breakdown of Part A (hospital), Part B (medical), Part C (Advantage), and Part D (prescription drugs). Eligibility & Timelines: Critical enrollment windows (like the Initial Enrollment Period) to avoid late penalties. Plan Comparisons: Differences between Original Medicare, Medicare Supplement (Medigap) insurance, and Medicare Advantage. Cost Management: Review of premiums, deductibles, and strategies to lower out-of-pocket expenses. Medicare Qualifications: An overview of the eligibility requirements for Medicare, including age, disability, and any other special conditions. Cost & Penalties: Information on Medicare premiums, deductibles, co-pays, and the penalties for late enrollment. Medicare vs. Employer coverage: How Medicare works alongside employer health insurance and when to consider enrolling in Medicare if you’re still working. Don’t miss out on this crucial opportunity to understand how Medicare will change in 2027 and how those changes impact you. Whether you're just starting to navigate Medicare or need a refresher, this seminar is designed for everyone! This workshop will be led by Claudette G. Klein. About the Presenter: Ms. CLAUDETTE G. KLEIN is the owner and CEO of KLEIN FINANCIAL SERVICES, a full-service, financial services firm with a primary focus on health and wealth protection, and life coverage planning. She is a CERTIFIED FINANCIAL PLANNER with an exemplary track record in client care, honesty, reliability, commitment and dedication. With her industry expertise, she continues to be a steady source and adviser not only of her clients, but even those who simply desire to obtain a better and clearer understanding of health and life choices that can lead to security. With a reputation as a trusted financial advisor in the Bay Area for over thirty years, Ms. Claudette Klein continues to provide unmatched service and attention. She believes in always educating current and potential clients in creating strategies for their optimal benefit, helping them understand how to make sound financial choices, assisting them with strategies that can aid in reaching their personal plans and goals, along with the attainment of peace of mind for themselves and their families.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17713658",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "454f5faf11af",
       "title": "Pages and Paws",
       "date": "2026-11-06",
@@ -1645,6 +1644,28 @@
       "kidFriendly": true
     },
     {
+      "id": "854d19aa1452",
+      "title": "Baby Storytime",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170875",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "964967fb2b10",
       "title": "ESL Conversation Club - IN PERSON",
       "date": "2026-11-18",
@@ -1748,6 +1769,28 @@
       "kidFriendly": false
     },
     {
+      "id": "87b33e370330",
+      "title": "Baby Storytime: Rerun",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170902",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "0c698df9fe71",
       "title": "Reading Buddies",
       "date": "2026-11-21",
@@ -1832,6 +1875,28 @@
         "Families"
       ],
       "url": "https://mountainview.libcal.com/event/17142493",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "e7a49025a9f2",
+      "title": "Baby Storytime",
+      "date": "2026-11-25",
+      "displayDate": "Wed, Nov 25",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170876",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -1986,6 +2051,28 @@
       "kidFriendly": false
     },
     {
+      "id": "be36918f9866",
+      "title": "Baby Storytime",
+      "date": "2026-12-02",
+      "displayDate": "Wed, Dec 2",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170877",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "51751787fd80",
       "title": "ESL Conversation Club - IN PERSON",
       "date": "2026-12-02",
@@ -2071,6 +2158,28 @@
       "url": "https://mountainview.libcal.com/event/17716928",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "5d0bc8f83054",
+      "title": "Baby Storytime: Rerun",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170904",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "474d019049c8",
@@ -2204,6 +2313,28 @@
       "kidFriendly": false
     },
     {
+      "id": "1397643f8418",
+      "title": "Baby Storytime",
+      "date": "2026-12-09",
+      "displayDate": "Wed, Dec 9",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170878",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "7e9f407e141a",
       "title": "ESL Conversation Club - IN PERSON",
       "date": "2026-12-09",
@@ -2335,6 +2466,28 @@
       "kidFriendly": false
     },
     {
+      "id": "c44ddf2adec8",
+      "title": "Baby Storytime: Rerun",
+      "date": "2026-12-11",
+      "displayDate": "Fri, Dec 11",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170905",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "60ae1b34998c",
       "title": "Amplify: Back to Bach",
       "date": "2026-12-11",
@@ -2371,6 +2524,28 @@
         "Families"
       ],
       "url": "https://mountainview.libcal.com/event/17142496",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "18b4b465eec9",
+      "title": "Baby Storytime",
+      "date": "2026-12-16",
+      "displayDate": "Wed, Dec 16",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "A musical storytime for infants, babies, and new toddlers with books, baby bounces, and dancing! After storytime, we will host a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170879",
       "source": "Mountain View Public Library",
       "kidFriendly": true
     },
@@ -2416,6 +2591,28 @@
       "url": "https://mountainview.libcal.com/event/17249790",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "4c2854c42a97",
+      "title": "Baby Storytime: Rerun",
+      "date": "2026-12-18",
+      "displayDate": "Fri, Dec 18",
+      "time": "10:30 AM",
+      "endTime": "11:15 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "family",
+      "cost": "free",
+      "description": "Did you miss Wednesday's Baby Storytime? Come on Friday! We'll redo our musical storytime for infants, babies, and new toddlers with a brief Stay & Play for grownups to connect and mingle. This program is designed for ages 0-18 months. Assisted Listening Devices available upon request.",
+      "sourceAudiences": [
+        "Babies",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17170906",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "d42db4b7eef6",
@@ -2601,26 +2798,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/16357823",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "2052675fdc27",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249574",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -3095,6 +3272,26 @@
       "kidFriendly": true
     },
     {
+      "id": "897b6ef1e823",
+      "title": "Adventure Skeletons TTRPG",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us for a Halloween-themed roll playing game, Adventure Skeletons. Players will make their way through the haunted Spirit Halloween to... liberate their skeleton kin? Take over the world? Go on vacation? The choice is yours!",
+      "sourceAudiences": [
+        "Teens"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17261938",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "a778804bde81",
       "title": "Kids Knitting (Ages 7+)",
       "date": "2026-10-28",
@@ -3111,26 +3308,6 @@
         "Children"
       ],
       "url": "https://losgatosca.libcal.com/event/16887026",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "3f4fbf6df4c5",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261938",
       "source": "Los Gatos Library",
       "kidFriendly": true
     },
@@ -5831,6 +6008,23 @@
       "kidFriendly": false
     },
     {
+      "id": "4202503b1b94",
+      "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": null,
+      "endTime": null,
+      "venue": "ICA San José",
+      "address": "560 S First St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/",
+      "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
       "id": "e9beb2c9b1dd",
       "title": "Greg Ito: To Give and Take",
       "date": "2026-09-18",
@@ -6392,9 +6586,9 @@
       "category": "outdoor",
       "cost": "free",
       "description": "",
-      "url": "https://www.google.com/calendar/event?eid=NTV0aXJsYmFyNDE0MmY2OGplYXF1Ym50YXJfMjAyNjEwMTdUMTYwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
+      "url": "https://grpg.org/",
       "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
+      "kidFriendly": true,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
@@ -6509,7 +6703,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-14T15:03:02.713Z"
+        "checkedAt": "2026-10-14T21:57:32.091Z"
       }
     },
     {
@@ -6532,7 +6726,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-14T15:03:02.713Z"
+        "checkedAt": "2026-10-14T21:57:32.091Z"
       }
     },
     {
@@ -6555,7 +6749,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-14T15:03:02.713Z"
+        "checkedAt": "2026-10-14T21:57:32.091Z"
       }
     },
     {
@@ -6578,7 +6772,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-14T15:03:02.713Z"
+        "checkedAt": "2026-10-14T21:57:32.091Z"
       }
     },
     {
@@ -6601,25 +6795,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-14T15:03:02.713Z"
+        "checkedAt": "2026-10-14T21:57:32.091Z"
       }
-    },
-    {
-      "id": "2b476ab9f286",
-      "title": "Candidate Forum - Cupertino City Council",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "12:00 PM",
-      "endTime": "01:30 PM",
-      "venue": "Quinlan Community Center",
-      "address": "Quinlan Community Center, 10185 N. Stelling Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "The Rotary Club of Cupertino and the Cupertino Chamber of Commerce are sponsoring a candidate forum for the Cupertino City Council. This is an in-person forum, moderated by the League of Women Voters Cupertino - Sunnyvale, and will be held Wednesday, October 14 at 12 p.m. at the Quinlan Community Center, 10185 N. Stelling Rd, Cupertino CA 95014. This event is open to the public. Registration is not required. This event is not sponsored or endorsed by the City of Cupertino. Approximate Schedule: 11:45 p.m. Greetings and Set-Up 12 p.m. The Rotary meeting will come to order, Pledge of Allegiance 12:05 p.m. Candidate Forum 1:30 p.m. Rotary meeting closes Learn More Event Information",
-      "url": "https://www.cupertino.gov/Events-directory/Candidate-Forum-Cupertino-City-Council-2026-10-14",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "7ca959914ee5",
@@ -7568,7 +7745,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7585,7 +7762,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7602,7 +7779,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7619,7 +7796,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
