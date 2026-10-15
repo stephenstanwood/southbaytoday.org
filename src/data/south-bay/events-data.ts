@@ -39,7 +39,9 @@ export interface SBEvent {
   recurrence: RecurrenceType;
   days?: DayOfWeek[];
   time?: string;
-  months?: number[]; // 1=Jan, 12=Dec. omit = year-round
+  // 1=Jan, 12=Dec; omit only for year-round programs. Use the operator's
+  // current published season rather than carrying forward an older schedule.
+  months?: number[];
   // Admission only: free=$0, low=verified under $15, paid=$15+ or price unknown.
   // Free parking, free activities, and age-based exemptions do not make admission free.
   cost: "free" | "low" | "paid";
@@ -336,7 +338,9 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "weekly",
     days: ["saturday"],
     time: "9am",
-    months: [5, 6, 7, 8, 9, 10],
+    // Operator's 2026 program runs May–September, not through October:
+    // https://santanarow.com/event/yoga-pilates-on-the-row/
+    months: [5, 6, 7, 8, 9],
     cost: "free",
     kidFriendly: false,
     description:
@@ -455,55 +459,24 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     startDate: "2026-06-04",
   },
 
-  {
-    id: "lg-library-baby-lapsit",
-    title: "Baby Lap-Sit Storytime (Age 0–1) — Los Gatos Library",
-    city: "los-gatos",
-    venue: "Los Gatos Library",
-    address: "110 E Main St, Los Gatos",
-    category: "family",
-    recurrence: "weekly",
-    days: ["tuesday"],
-    time: "9:30am",
-    cost: "free",
-    kidFriendly: true,
-    description:
-      "Storytime for babies age 0–1 in the Children's Room. Also offered Saturday mornings (Weekend Baby Lap-Sit).",
-    url: "https://losgatosca.libcal.com",
-    emoji: "👶",
-  },
-  {
-    id: "lg-library-wonderful-ones",
-    title: "Wonderful Ones Storytime — Los Gatos Library",
-    city: "los-gatos",
-    venue: "Los Gatos Library",
-    address: "110 E Main St, Los Gatos",
-    category: "family",
-    recurrence: "weekly",
-    days: ["thursday"],
-    time: "11am",
-    cost: "free",
-    kidFriendly: true,
-    description:
-      "Storytime for one-year-olds in the Children's Room.",
-    url: "https://losgatosca.libcal.com",
-    emoji: "📖",
-  },
+  // The fall 2026 calendar lists a combined ages 0–5 program on Tuesday and
+  // Wednesday, without the former Baby Lap-Sit / Wonderful Ones sessions.
+  // https://losgatosca.libcal.com/event/17249574
   {
     id: "lg-library-preschool-storytime",
-    title: "Preschool Storytime (Ages 2–5) — Los Gatos Library",
+    title: "Storytime (Ages 0–5) — Los Gatos Library",
     city: "los-gatos",
     venue: "Los Gatos Library",
     address: "110 E Main St, Los Gatos",
     category: "family",
     recurrence: "weekly",
-    days: ["wednesday"],
+    days: ["tuesday", "wednesday"],
     time: "11am",
     cost: "free",
     kidFriendly: true,
     description:
-      "Storytime for preschoolers ages 2–5 in the Children's Room.",
-    url: "https://losgatosca.libcal.com",
+      "Storytime for children ages 0–5 and their families in the Children's Room, with songs, reading, and movement.",
+    url: "https://losgatosca.libcal.com/event/17249574",
     emoji: "📚",
   },
 
@@ -674,14 +647,16 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "arts",
     recurrence: "monthly",
     days: ["sunday"],
-    time: "12pm, 1pm, 2pm",
+    // The October–December 2026 program lists two sessions, with no 2pm slot.
+    // https://www.hakone.com/events
+    time: "12pm, 1pm",
     months: [4, 5, 6, 7, 8, 9, 10, 11, 12],
     cost: "paid",
     costNote: "Separate from garden admission",
     kidFriendly: true,
     description:
-      "Traditional Omote-senke tea ceremony demonstration on the first Sunday of every month, April through December. Three sessions available.",
-    url: "https://www.hakonegardens.org",
+      "Traditional Omote-senke tea ceremony demonstration on the first Sunday of every month, April through December. Two sessions available for guests ages 5 and up.",
+    url: "https://www.hakone.com/events",
     emoji: "🍵",
   },
   {
