@@ -13,6 +13,26 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("musical dynasties cannot become royalty in Delphian copy", async () => {
+  const event = {
+    title: "Delphian Lectures: Meet the Instruments & Meet the Dynasties",
+    venue: "Willow Glen Library", date: "2026-10-16",
+    description: "Meet the Strings; Meet the Bach Family; Meet the Mozart Family.",
+  };
+  const wrong = "Hear a Delphian lecture about musical instruments and royal dynasties.";
+  assert.equal(eventCopyFactConflict(wrong, event), "unsupported royal-dynasty topic");
+  assert.equal(eventCopyFactConflict("Learn about royal families.", event), "unsupported royal-dynasty topic");
+  assert.equal(eventCopyFactConflict("Hear a lecture about instruments and composer families.", event), null);
+  assert.equal(eventCopyFactConflict(wrong, { ...event, title: "European Royal Dynasties" }), null);
+  assert.equal(eventCopyFactConflict(wrong, { ...event, description: "Music of the Bach Family and royal dynasties." }), null);
+  assert.equal(eventCopyFactConflict(
+    "The Delphian Lectures explore the Bach Family. A separate history lecture explores royal dynasties.", event,
+  ), null);
+  const carried = { ...event, blurb: wrong };
+  await resolveEventBlurbs([carried], { enabled: false });
+  assert.notEqual(carried.blurb, wrong);
+});
+
 test("dated concert identities survive sparse refreshes without changing another show", async () => {
   const events = [
     { id: "heritage-1e9b8b39407d8f09", date: "2027-02-19", title: "Journey USA - The Hits of Journey", venue: "Heritage Theatre", blurb: "Vocalists who toured with the real lineup." },

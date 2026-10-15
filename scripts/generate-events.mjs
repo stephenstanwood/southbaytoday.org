@@ -1627,6 +1627,9 @@ const DESC_TYPO_FIXES = [
   // Montalvo's student matinee JSON-LD misspells the ensemble name even
   // though its title and official detail page use "Mariachi Viajero".
   [/(?<=\bMariachi\s)viejero\b/gi, "viajero"],
+  // The Delphian speaker bio misspells Tokyo's Suntory Hall. The hall's
+  // own site confirms the name: https://www.suntory.com/culture-sports/suntoryhall/
+  [/\bSantori(?= Hall\b)/g, "Suntory"],
   // Shakespeare's play is "Antony and Cleopatra". The Cupertino Parks & Rec
   // listing for SF Shakes' Free Shakespeare in the Park spells it "Anthony",
   // which then propagated into the AI blurb and the weekend picks.

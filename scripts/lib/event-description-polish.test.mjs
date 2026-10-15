@@ -21,6 +21,13 @@ test("restores Montalvo's Mariachi Viajero ensemble spelling", () => {
   assert.equal(polishDescription("Mariachi Viejero"), "Mariachi Viajero");
 });
 
+test("corrects the Tokyo concert hall without changing another Santori name", () => {
+  assert.equal(
+    polishDescription("She has performed at Santori Hall in Tokyo and with the Santori Quartet."),
+    "She has performed at Suntory Hall in Tokyo and with the Santori Quartet.",
+  );
+});
+
 test("repairs recurring performance-copy typos and compounds", () => {
   assert.equal(
     polishDescription(

@@ -685,6 +685,17 @@ export function eventCopyFactConflict(text, event) {
   }
   if (/\bbanda\b/i.test(copy) && !/\bbanda\b/i.test(source)) return "unsupported banda genre";
 
+  // This Delphian series lists the Bach, Mozart and other composer families;
+  // "dynasties" in its title is not evidence of a program about royalty.
+  // Evidence: docs/qa/2026-10-14-night-fact-check.md.
+  if (/^Delphian Lectures: Meet the Instruments & Meet the Dynasties$/i.test(event?.title || "")
+      && /\b(?:Bach|Mozart|Schumann|Strauss) Family\b/i.test(source)
+      && !/\broyal\b/i.test(source)) {
+    for (const claim of copy.matchAll(/\broyal (?:dynast(?:y|ies)|famil(?:y|ies))\b/gi)) {
+      if (claimAppliesToEvent(copy, claim.index, event)) return "unsupported royal-dynasty topic";
+    }
+  }
+
   const bounds = ageBounds(ageClaims(source));
   for (const claim of ageClaims(copy)) {
     if (!claimAppliesToEvent(copy, claim.index, event)) continue;
