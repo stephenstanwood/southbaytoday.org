@@ -13,6 +13,43 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the Tully Day 3 workshop does not repeat Day 1's topic in either language", async () => {
+  const raw = {
+    date: "2026-10-15", time: "11:30 AM", registration: "required",
+    url: "https://sjpl.bibliocommons.com/events/6aa1bf97101eb7003f2ec8f0",
+    title: "ESL Workforce Development Workshop - Day 3: Professional Communication & Workplace Expectations",
+    description: "Practice workplace communication. Workshop Topic: Professional Introductions & My Skills This is a Free program. Tema del taller: Presentaciones Profesionales y Mis Habilidades Este programa es Gratuito. Es necesario registrarse.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.description, "Practice workplace communication. This is a Free program. Este programa es Gratuito. Es necesario registrarse.");
+  assert.equal(corrected.title, raw.title);
+  assert.equal(corrected.registration, raw.registration);
+  assert.equal(corrected.time, raw.time);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }), { ...raw, date: "2027-10-15" });
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], corrected);
+});
+
+test("interview workshop copy omits an unsupported hiring percentage and discloses conflicting signup instructions", () => {
+  const raw = {
+    date: "2026-10-15", time: "12:00 PM", registration: "required",
+    url: "https://sjpl.bibliocommons.com/events/6a99d8351c197d11325d14f4",
+    description: "Prepare for interviews. When it comes to job searching, 80% of the US population gets their job through someone they know. This workshop will discuss networking. No Registration Required.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.doesNotMatch(corrected.description, /80%|No Registration Required/);
+  assert.match(corrected.description, /This workshop will discuss networking/);
+  assert.match(corrected.description, /description and signup instructions conflict/);
+  assert.equal(corrected.registration, raw.registration);
+  assert.equal(corrected.time, raw.time);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/other" }), { ...raw, url: "https://example.org/other" });
+  const source = { ...raw, description: raw.description.replace("know. This", "know, this") };
+  assert.match(applyVerifiedEventFacts(source).description, /interviews\. This workshop/);
+});
+
 test("line dancing's translated pickup clock does not become a waiver headcount", () => {
   const raw = {
     date: "2026-10-15", time: "1:30 PM",

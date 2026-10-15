@@ -36,8 +36,9 @@ export const VIRTUAL_EVENT_PATTERNS = [
   /\((?:online|virtual)\)/i,
   /^(virtual|online):\s+/i,
 
-  // SCU tUrn climate lectures — academic-only, no fixed address
-  /\btUrn\b/i,
+  // Preserve the exact SCU program-name filter. Case-insensitive matching
+  // mistakes ordinary "turn" wording for the brand and invents online venues.
+  /\btUrn\b/,
 
   // Online-prefixed activity types
   /\bonline\s+(author\s+talk|book\s+club|discussion|talk|lecture|q&a|class|workshop|group|conversation)\b/i,
@@ -167,8 +168,8 @@ const REGISTER_PATTERNS = [
 
 /**
  * Text that explicitly promises walk-up access. Only consulted when the source
- * published no registration provider — a provider is authoritative and text
- * must never downgrade it.
+ * published no registration provider. A provider remains authoritative except
+ * for an explicit reminder-only signup, handled separately below.
  *
  * Earns its keep on SJPL's "Indoor Family Storytime with Stay and Play", whose
  * instructions read "Seating ... is available on a first-come, first-served
@@ -226,7 +227,7 @@ export function registrationFromInstructions(instructions) {
  *
  * `provider` is the load-bearing field:
  *   null            no registration (657/900) — the ordinary storytime case
- *   "BIBLIO_EVENTS" registration runs inside BiblioCommons, always capped
+ *   "BIBLIO_EVENTS" signup runs inside BiblioCommons; it can be reminder-only
  *   "EXTERNAL"      registration happens off-platform; instructions say how
  *
  * TWO TRAPS, both of which produced the Vintage Media Lab bug if ignored:
@@ -269,6 +270,19 @@ export function registrationFromBiblioCommons(ev) {
     const text = stripInstructionMarkup(info.instructions);
     if (text && DROP_IN_PATTERNS.some((re) => re.test(text))) return REGISTRATION_NONE;
     return fromInstructions || REGISTRATION_NONE;
+  }
+
+  // Palo Alto also attaches capped BIBLIO_EVENTS forms solely for optional
+  // reminder emails. A full/ended reminder list cannot close walk-up admission.
+  // Require the organizer to say BOTH that registration is unnecessary and
+  // that it supplies a reminder; a bare drop-in phrase cannot defeat a gate.
+  // Booking instructions and explicit requirements still win. Verified source
+  // bodies and examples: docs/qa/2026-10-15-0507-fact-check.md.
+  const description = stripInstructionMarkup(ev.description || ev.definition?.description);
+  const reminderOnly = /\bregistration\s+(?:is\s+)?not\s+(?:required|necessary)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
+  const requiredInBody = /\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\b(?:must|need\s+to)\s+(?:register|reserve|enroll|book)\b/i.test(description);
+  if (provider === "BIBLIO_EVENTS" && !fromInstructions && reminderOnly && !requiredInBody) {
+    return REGISTRATION_NONE;
   }
 
   if (ev.isFull === true && hasSeatAccounting) return REGISTRATION_FULL;

@@ -7,6 +7,31 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Tully's Day 3 title and SJPL's published five-session curriculum agree;
+  // this occurrence's copied English/Spanish body still names Day 1's topic.
+  // Remove those conflicting fragments rather than inventing session copy.
+  // https://www.sjpl.org/news/esl-workforce-development-workshops/
+  // Evidence: docs/qa/2026-10-15-0507-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://sjpl.bibliocommons.com/events/6aa1bf97101eb7003f2ec8f0",
+    copyReplacements: [
+      [/\bWorkshop Topic:\s*Professional Introductions\s*&\s*My Skills\s*/g, ""],
+      [/\bTema del taller:\s*Presentaciones Profesionales y Mis Habilidades\s*/g, ""],
+    ],
+  },
+  // The library gives no study for its population-wide hiring percentage.
+  // Its body also says no registration while separate instructions request a
+  // signup. Omit the statistic and disclose that conflict; retain the existing
+  // conservative registration state rather than choosing an unsupported answer.
+  // https://sjpl.bibliocommons.com/events/6a99d8351c197d11325d14f4
+  // Evidence: docs/qa/2026-10-15-0507-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://sjpl.bibliocommons.com/events/6a99d8351c197d11325d14f4",
+    copyReplacements: [
+      [/\bWhen it comes to job searching,\s*80% of the US population gets their job through someone they know[,.]\s*[Tt]his workshop\b/g, "This workshop"],
+      [/\bNo Registration Required\./gi, "The library's description and signup instructions conflict; confirm registration requirements with the library."],
+    ],
+  },
   // SJPL's translated ticket-pickup sentence repeats "30 minutes" in Chinese.
   // Earlier English-only cleanup left its 30 attached to the next sentence;
   // the organizer requires ALL first-time participants to sign the waiver.

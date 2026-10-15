@@ -46,6 +46,24 @@ test("a physical event with an incidental word is not virtual", () => {
   assert.ok(!isVirtualEvent({ title: "Streamside Nature Walk" }));
 });
 
+test("ordinary turn wording never changes a library event into an online destination", () => {
+  for (const event of [
+    { title: "Murder Mystery Theater", description: "One evening takes a deadly turn." },
+    { title: "Mastering Medicare: Turn Confusion into Confidence" },
+    { title: "Writers Helping Writers", description: "How did memoirs turn into a career-planning book?" },
+    { title: "The Spies Among Us", description: "An investigation takes a turn." },
+    { title: "Don't Get Scammed", description: "As more of us turn to online shopping..." },
+    { title: "STEAM Lab Saturday: Zombie Juice!", description: "Watch dry ice turn from a solid to a gas." },
+  ]) {
+    assert.equal(isVirtualEvent(event), false, event.title);
+    assert.equal(resolveVirtualFlag(event, "inperson"), false, event.title);
+    assert.equal(isVirtualEvent({ ...event, virtual: true }), true, event.title);
+  }
+  // Keep the existing exact SCU program-name filter and actual online markers.
+  assert.equal(isVirtualEvent({ title: "tUrn Climate Action" }), true);
+  assert.equal(isVirtualEvent({ title: "Webinar: Turn Confusion into Confidence" }), true);
+});
+
 test("the text fallback alone cannot see the CRC meeting — that is the bug", () => {
   // Documents WHY the source signal exists. If this ever starts returning
   // true from text alone, the regex got broader, not the source signal
@@ -272,6 +290,45 @@ test("BIBLIO_EVENTS and EXTERNAL providers both require advance action", () => {
     })),
     "required",
   );
+});
+
+test("Palo Alto's optional reminder signups do not gate admission", () => {
+  // First-party occurrence bodies checked 2026-10-15; these all attach a
+  // BIBLIO_EVENTS form while explicitly offering registration for reminders.
+  const descriptions = [
+    "Registration is not required, but if you register, you'll receive an email reminder the day before the event.", // Writers Helping Writers
+    "Registration is not necessary but you'll receive a reminder email the day before if you do sign up.", // Voting Matters
+    "Registration is not required but you will receive an email reminder.", // Chair Yoga
+    "Registration is not required, but if you do register, you'll receive an email reminder.", // Halloween Karaoke
+    "Registration is not required but you will receive a reminder email the day before.", // Chamber Music
+    "Registration is not required. If you register, you will get an email reminder for the program including a link to the class playlist to practice.", // Line Dancing
+  ];
+  for (const description of descriptions) {
+    for (const state of [{}, { isFull: true }, { registrationClosed: true }]) {
+      const event = biblioEvent({ provider: "BIBLIO_EVENTS", cap: 50, maxSeats: 2, ...state });
+      event.definition.description = `<p>${description}</p>`;
+      const registration = registrationFromBiblioCommons(event);
+      assert.equal(registration, "none", description);
+      assert.equal(requiresAdvanceRegistration({ registration }), false);
+      assert.equal(registrationLabel({ registration }), "");
+    }
+  }
+});
+
+test("optional reminder language cannot relax an actual booking requirement", () => {
+  const optional = "Registration is not required but you will receive an email reminder.";
+  for (const [provider, instructions, description] of [
+    ["EXTERNAL", null, optional],
+    ["BIBLIO_EVENTS", "Please register for a seat.", optional],
+    ["BIBLIO_EVENTS", "Call to book an appointment.", optional],
+    ["BIBLIO_EVENTS", null, "No registration required."],
+    ["BIBLIO_EVENTS", null, "Register to receive an email reminder."],
+    ["BIBLIO_EVENTS", null, `${optional} Registration is required for the workshop.`],
+  ]) {
+    const event = biblioEvent({ provider, cap: 20, instructions });
+    event.definition.description = description;
+    assert.notEqual(registrationFromBiblioCommons(event), "none", description);
+  }
 });
 
 test("appointment language outranks generic register language", () => {
