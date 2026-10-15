@@ -7,6 +7,24 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // SJPL's translated ticket-pickup sentence repeats "30 minutes" in Chinese.
+  // Earlier English-only cleanup left its 30 attached to the next sentence;
+  // the organizer requires ALL first-time participants to sign the waiver.
+  // https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd
+  // Evidence: docs/qa/2026-10-15-0407-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd",
+    copyReplacements: [[/\b30\s+first-time participants will need to sign a waiver form\b/gi, "First-time participants will need to sign a waiver form"]],
+  },
+  // The library's Frida screening body misspells Kahlo's husband's surname.
+  // Museo Frida Kahlo's biography identifies Diego Rivera; keep the screening
+  // date and the rest of the organizer's description.
+  // https://www.museofridakahlo.org.mx/frida/?lang=en
+  // Evidence: docs/qa/2026-10-15-0407-fact-check.md.
+  {
+    date: "2026-10-17", url: "https://sjpl.bibliocommons.com/events/6a945850be148200298b2c83",
+    copyReplacements: [[/\bDiego River\b/g, "Diego Rivera"]],
+  },
   // JAMsj's companion Skate Day & Halloween listing explicitly calls this
   // same exhibition's October 31 opening a free family-friendly event.
   // https://www.jamsj.org/upcoming-events

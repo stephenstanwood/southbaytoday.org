@@ -31,6 +31,7 @@ import {
 import { LOCAL_DEPARTURE_TRIP } from "../src/lib/south-bay/eventFilters.mjs";
 import {
   eventBlurbCacheKey,
+  blurbStartTimeConflict,
   blurbSequencePositionConflict,
   blurbDayOfWeekConflict,
 } from "../src/lib/south-bay/eventBlurbs.mjs";
@@ -242,6 +243,11 @@ function classify(event) {
 // ---------------------------------------------------------------------------
 const BLURB_RUN_CHECKS = [
   {
+    reason: "blurb-start-time",
+    detect: blurbStartTimeConflict,
+    describe: (claim) => `claims a start at "${claim}"`,
+  },
+  {
     reason: "blurb-series-position",
     detect: blurbSequencePositionConflict,
     describe: (claim) => `claims "${claim}"`,
@@ -272,7 +278,7 @@ function blurbRunFindings(events) {
       const finding = {
         severity: "hard",
         reason,
-        detail: `blurb ${describe(claim)} but the same blurb is served on ${dates.length} dates (${dates[0]}..${dates[dates.length - 1]}): "${blurb}"`,
+        detail: `blurb ${describe(claim)} but the same blurb is served on ${dates.length} dates (${dates[0]}..${dates[dates.length - 1]}; start times ${[...new Set(group.map((e) => e.time).filter(Boolean))].join("/")}): "${blurb}"`,
       };
       for (const e of group) byEvent.set(e, [...(byEvent.get(e) || []), finding]);
     }
@@ -396,6 +402,7 @@ async function main() {
   // reason virtual-not-flagged does. Reported per blurb, not per event — six
   // Giants games sharing one bad blurb are one thing to fix, not six.
   for (const { reason, label } of [
+    { reason: "blurb-start-time", label: "name a start time their own occurrences contradict" },
     { reason: "blurb-series-position", label: "claim a position in a series that spans several dates" },
     { reason: "blurb-day-of-week", label: "name a weekday their own run contradicts" },
   ]) {

@@ -13,6 +13,37 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("line dancing's translated pickup clock does not become a waiver headcount", () => {
+  const raw = {
+    date: "2026-10-15", time: "1:30 PM",
+    url: "https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd",
+    description: "Tickets will be available 30 minutes in advance. 30 first-time participants will need to sign a waiver form.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.description, "Tickets will be available 30 minutes in advance. First-time participants will need to sign a waiver form.");
+  assert.equal(corrected.time, raw.time);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).description, raw.description);
+});
+
+test("the Frida screening corrects Diego Rivera without changing a different listing", async () => {
+  const raw = {
+    date: "2026-10-17", time: "2:30 PM",
+    url: "https://sjpl.bibliocommons.com/events/6a945850be148200298b2c83",
+    description: "Frida Kahlo's marriage to Diego River, and her growth as an artist.",
+    blurb: "Watch Frida at Joyce Ellington Library.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.description, raw.description.replace("Diego River,", "Diego Rivera,"));
+  assert.equal(corrected.time, raw.time);
+  assert.equal(corrected.blurb, raw.blurb);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/other" }).description, raw.description);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], corrected);
+});
+
 test("Judi Oyama's opening retains the companion Halloween event's explicit family admission", () => {
   const opening = { date: "2026-10-31", url: "https://www.jamsj.org/upcoming-events/judi-oyama", kidFriendly: false };
   assert.equal(applyVerifiedEventFacts(opening).kidFriendly, true);

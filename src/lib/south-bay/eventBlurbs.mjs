@@ -236,8 +236,28 @@ function timeOfDayFits(word, hour) {
   return windows.some(([lo, hi]) => hour >= lo && hour < hi);
 }
 
+/** An explicit event-start clock must agree with every occurrence sharing a
+ * cache key. Admission deadlines, doors, and pre-show activities have their
+ * own clocks; those are not claims about the event's start. */
+export function blurbStartTimeConflict(blurb, events) {
+  if (!blurb) return null;
+  const list = (Array.isArray(events) ? events : [events]).filter(Boolean);
+  const hours = list.map((e) => eventStartHour(e.time)).filter((h) => h !== null);
+  if (!hours.length) return null;
+  const text = String(blurb);
+  const starts = /\b(?:starts?|starting|begins?|beginning|tips?\s+off|tipping\s+off|kicks?\s+off|kicking\s+off)\s+(?:at\s+)?((?:1[0-2]|0?[1-9])(?::[0-5]\d)?\s*[ap]\.?\s*m\.?)(?!\w)/gi;
+  for (const match of text.matchAll(starts)) {
+    const before = text.slice(0, match.index).split(/[.!?;]/).at(-1);
+    if (/\b(?:doors?|gates?|parking|check[ -]?in|registration|sign[ -]?ups?|pre[ -]?show|seating|admission)\b/i.test(before)) continue;
+    if (list.some((e) => `${e.title || ""} ${e.venue || ""}`.toLowerCase().includes(match[0].toLowerCase()))) continue;
+    const hour = eventStartHour(match[1]);
+    if (hours.some((h) => h !== hour)) return match[1].trim().replace(/\.$/, "");
+  }
+  return null;
+}
+
 /**
- * The time-of-day word in `blurb` that none of `events` supports, or null.
+ * A time-of-day word or explicit start clock contradicted by `events`, or null.
  *
  * `events` is the full set of occurrences the blurb is serving. One cache
  * entry covers every occurrence sharing a title+venue+description, and 79 of
@@ -256,6 +276,8 @@ export function blurbTimeOfDayConflict(blurb, events) {
   if (!blurb) return null;
   const list = (Array.isArray(events) ? events : [events]).filter(Boolean);
   if (!list.length) return null;
+  const startConflict = blurbStartTimeConflict(blurb, list);
+  if (startConflict) return startConflict;
 
   const hours = list.map((e) => eventStartHour(e?.time)).filter((h) => h !== null);
   if (!hours.length) return null;
@@ -282,7 +304,7 @@ export function blurbTimeOfDayConflict(blurb, events) {
 export function timeLabelForOccurrences(events) {
   const times = [...new Set((events || []).map((e) => String(e?.time || "").trim()).filter(Boolean))];
   if (!times.length) return null;
-  if (times.length > 1) return "varies by date — do not name a time of day";
+  if (times.length > 1) return "varies by date — do not name a time of day or clock time";
   return times[0];
 }
 
@@ -308,7 +330,7 @@ export function sweepTimeOfDayConflicts(cache, events) {
     const conflict = blurbTimeOfDayConflict(blurb, group);
     if (!conflict) continue;
     console.warn(
-      `[eventBlurbs] dropped (time-of-day "${conflict}" vs ${group.map((e) => e.time).join("/")}): "${blurb}"`,
+      `[eventBlurbs] dropped (time "${conflict}" vs ${group.map((e) => e.time).join("/")}): "${blurb}"`,
     );
     delete cache.byKey[key];
     dropped++;
@@ -677,7 +699,7 @@ Strict rules:
 - NEVER include a specific date or month — the card displays those separately. No "June 14th", "May 21", "Saturday, June 14", "two May sessions", "today", "tomorrow", "tonight", etc. Recurring weekly patterns are fine ("Friday mornings", "every Tuesday"); specific calendar dates are not.
 - NEVER state where a date falls in a run of the same event — first, last, opening, closing, finale, opener, "wraps up", "kicks off", "game 2 of 6" — unless the title, venue, or description you were given says so in words. You are not shown the schedule and cannot work this out. A "runs:" field means one blurb is stamped on every date listed there, so any such claim is false on all but one of them.
 - The "day:" field is when THIS event falls. When it says "varies by date", name no day of the week at all — the same blurb runs on several of them.
-- The "time:" field is when THIS event starts. Any time-of-day wording you use — "morning", "afternoon", "evening", "midday", "night" — must agree with it. A 7:00 PM event is never "mornings". Never take a time of day from a neighbouring event in the list, from another event's title, or from the description of a related session. When time says "varies by date", name no time of day at all.
+- The "time:" field is when THIS event starts. Any clock time or time-of-day wording you use — "morning", "afternoon", "evening", "midday", "night" — must agree with it. A 7:00 PM event is never "mornings". Never take a time from a neighbouring event in the list, from another event's title, or from the description of a related session. When time says "varies by date", name no clock time or time of day at all.
 - Do not hedge ("might", "perhaps"). Recommend confidently.
 - Do not use em dashes in every sentence — vary sentence structure.
 - No hype. No exclamation points.`;
@@ -1034,7 +1056,8 @@ export async function resolveEventBlurbs(events, opts = {}) {
   for (const e of events) {
     // Both carried and cached LLM copy need the same source-fact check as a
     // newly generated sentence. Otherwise a prompt fix never heals old text.
-    if (eventCopyFactConflict(e.blurb, e) && !dryRun) delete e.blurb;
+    const group = occurrencesByKey.get(cacheKey(e)) || [e];
+    if ((eventCopyFactConflict(e.blurb, e) || blurbTimeOfDayConflict(e.blurb, group)) && !dryRun) delete e.blurb;
     const cached = cache.byKey[cacheKey(e)];
     if (cached && eventCopyFactConflict(cached.blurb, e)) delete cache.byKey[cacheKey(e)];
     if (e.blurb && String(e.blurb).trim()) {

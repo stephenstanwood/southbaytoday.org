@@ -9,6 +9,8 @@ import {
   buildUniqueUserPrompt,
   extractAnthropicText,
   eventBlurbCacheKey,
+  blurbStartTimeConflict,
+  resolveEventBlurbs,
   parseFpKey,
   isSameSeriesKey,
   migrateLegacyFingerprintKeys,
@@ -223,6 +225,51 @@ const LOS_ALTOS = {
   venue: "Los Altos Library",
   time: "10:30 AM",
 };
+
+test("a shared sports blurb cannot borrow one game's tipoff for another game", () => {
+  const games = ["7:00 PM", "5:30 PM"].map((time) => ({
+    title: "Santa Cruz Warriors vs. Rip City Remix",
+    venue: "Kaiser Permanente Arena", time,
+    description: "Santa Cruz Warriors home game vs. Rip City Remix at Kaiser Permanente Arena.",
+  }));
+  const bad = "Watch the Santa Cruz Warriors take on the Rip City Remix at Kaiser Permanente Arena starting at 7pm.";
+  assert.equal(eventBlurbCacheKey(games[0]), eventBlurbCacheKey(games[1]));
+  assert.equal(blurbStartTimeConflict(bad, games), "7pm");
+  assert.equal(blurbTimeOfDayConflict(bad, games), "7pm");
+  assert.equal(blurbStartTimeConflict(bad, [games[0]]), null);
+  assert.equal(blurbStartTimeConflict("Watch the Warriors host the Rip City Remix.", games), null);
+  const key = eventBlurbCacheKey(games[0]);
+  const cache = { byKey: { [key]: { blurb: bad } } };
+  assert.equal(sweepTimeOfDayConflicts(cache, games), 1);
+  assert.equal(cache.byKey[key], undefined);
+});
+
+test("explicit starts respect minutes and meridiem while leaving other clocks alone", () => {
+  const event = { title: "Basketball", venue: "Arena", time: "5:30 PM" };
+  assert.equal(blurbStartTimeConflict("The game tips off at 5:30 p.m.", event), null);
+  assert.equal(blurbStartTimeConflict("The game begins at 5 PM.", event), "5 PM");
+  assert.equal(blurbStartTimeConflict("The game starts at 5:30 AM.", event), "5:30 AM");
+  assert.equal(blurbStartTimeConflict("Doors open at 4 PM; the game starts at 5:30 PM.", event), null);
+  assert.equal(blurbStartTimeConflict("Pre-show activities start at 4 PM; the game starts at 5:30 PM.", event), null);
+  assert.equal(blurbStartTimeConflict("Free admission before 5 PM; music starts at 5:30 PM.", event), null);
+  assert.equal(blurbStartTimeConflict("A midnight screening starts at 12 a.m.", { time: "12:00 AM" }), null);
+  assert.equal(blurbStartTimeConflict("The game starts at 7 PM.", { time: null }), null);
+});
+
+test("carried wrong-clock blurbs are rejected with model generation disabled", async () => {
+  const events = ["7:00 PM", "5:30 PM"].map((time) => ({
+    title: "Clock guard regression", venue: "Test arena", time,
+    blurb: "Watch the game starting at 7pm.",
+  }));
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(stats.preexisting, 0);
+  assert.equal(stats.skipped, 2);
+  assert.ok(events.every((e) => !e.blurb));
+  const dryEvents = [{ ...events[0], blurb: "Watch the game starting at 6pm." }];
+  const original = structuredClone(dryEvents);
+  await resolveEventBlurbs(dryEvents, { enabled: false, dryRun: true });
+  assert.deepEqual(dryEvents, original);
+});
 
 test("the shipped defect is caught", () => {
   assert.equal(
