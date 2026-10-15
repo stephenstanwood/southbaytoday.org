@@ -13,6 +13,33 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("October Milpitas ESL occurrences omit contradictory term dates across refreshes", async () => {
+  const occurrences = [
+    ["2026-10-19", "6a5992919943bdf31e9f816b"],
+    ["2026-10-21", "6a5992919943bdf31e9f816c"],
+    ["2026-10-26", "6a5992919943bdf31e9f816d"],
+    ["2026-10-28", "6a5992919943bdf31e9f816e"],
+  ];
+  for (const [date, id] of occurrences) {
+    for (const springPhrase of ["between February 9th to May 20th", "from February 9th to May 20th"]) {
+      const raw = {
+        date, url: `https://sccl.bibliocommons.com/events/${id}`,
+        title: "Free Adult ESL Class", time: "6:00 PM", endTime: "8:00 PM",
+        venue: "Milpitas Library", cost: "free", audienceAge: "adult",
+        description: `The class meets twice a week on Mondays and Wednesdays, from 6:00 PM to 8:00 PM at the Milpitas Library Program Room ${springPhrase}. Regular attendance is required. Class Dates: August 17th, 2025 - November 18, 2026, Mon & Weds 6:00pm - 8:00pm. Please follow the link to make an appointment for your ESL assessment.`,
+        blurb: "Build your English skills in a free adult ESL class at Milpitas Library.",
+      };
+      const events = [{ ...raw }];
+      await resolveEventBlurbs(events, { enabled: false });
+      assert.equal(events[0].description, "The class meets twice a week on Mondays and Wednesdays, from 6:00 PM to 8:00 PM at the Milpitas Library Program Room. Regular attendance is required. Please follow the link to make an appointment for your ESL assessment.");
+      assert.deepEqual({ ...events[0], description: raw.description }, raw);
+      assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+      assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-19" }).description, raw.description);
+      assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-class" }).description, raw.description);
+    }
+  }
+});
+
 test("the Tully Day 3 workshop does not repeat Day 1's topic in either language", async () => {
   const raw = {
     date: "2026-10-15", time: "11:30 AM", registration: "required",

@@ -7,6 +7,24 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // These October occurrence records confirm 6–8 PM sessions but their shared
+  // body still gives a February–May term and a conflicting August 2025 start.
+  // Omit both term ranges; do not guess a replacement year or enrollment term.
+  // https://sccl.bibliocommons.com/events/6a5992919943bdf31e9f816b
+  // https://sccl.bibliocommons.com/events/6a5992919943bdf31e9f816e
+  // Evidence: docs/qa/2026-10-15-0607-fact-check.md.
+  ...[
+    ["2026-10-19", "6a5992919943bdf31e9f816b"],
+    ["2026-10-21", "6a5992919943bdf31e9f816c"],
+    ["2026-10-26", "6a5992919943bdf31e9f816d"],
+    ["2026-10-28", "6a5992919943bdf31e9f816e"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+    copyReplacements: [
+      [/\s+(?:between|from) February 9(?:th)? to May 20(?:th)?/gi, ""],
+      [/\bClass Dates:\s*August 17(?:th)?,\s*2025\s*[-–—]\s*November 18(?:th)?,\s*2026,\s*Mon\s*&\s*Weds\s*6:00\s*PM\s*[-–—]\s*8:00\s*PM\.\s*/gi, ""],
+    ],
+  })),
   // Tully's Day 3 title and SJPL's published five-session curriculum agree;
   // this occurrence's copied English/Spanish body still names Day 1's topic.
   // Remove those conflicting fragments rather than inventing session copy.
