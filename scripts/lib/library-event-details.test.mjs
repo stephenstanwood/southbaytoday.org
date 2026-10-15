@@ -96,6 +96,17 @@ test("library descriptions decode Latin named entities without dropping accents"
   assert.equal(description, "\u00A1Prep\u00E1rate! \u00DAnete a Jos\u00E9 & Pe\u00F1a.");
 });
 
+test("Cookbook Club retains Swedish letters from the organizer's encoded recipe name", () => {
+  // Los Gatos Library, October 28, 2026, event/17376578. Dropping these
+  // entities changed the published food name from smörgåstårta to smrgstrta.
+  assert.equal(libraryEventDetails({
+    description: '<p>Think a Swedish <a href="https://en.wikipedia.org/wiki/Sm%C3%B6rg%C3%A5st%C3%A5rta">sm&ouml;rg&aring;st&aring;rta</a> or a savory hand pie.</p>',
+  }).description, "Think a Swedish smörgåstårta or a savory hand pie.");
+  assert.equal(libraryEventDetails({
+    description: "<p>&Aring; &Auml; &Ouml; / &aring; &auml; &ouml; / sm&amp;ouml;rg&amp;aring;st&amp;aring;rta</p>",
+  }).description, "Å Ä Ö / å ä ö / smörgåstårta");
+});
+
 test("inline email fragments retain visible contact text through ingestion", async () => {
   const { polishDescription } = await import("../generate-events.mjs");
   // The October 15 Hillview occurrence links only the first letter, to a

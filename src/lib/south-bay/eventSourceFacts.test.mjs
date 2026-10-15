@@ -13,6 +13,23 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Palo Alto's Halloween skate retains the linked provider's actual name across refreshes", async () => {
+  const raw = {
+    date: "2026-10-24", time: "2:00 PM", endTime: "5:00 PM", registration: "required",
+    url: "https://paloalto.bibliocommons.com/events/6a873b1560ccaf01c01fb300",
+    title: "Teen Halloween Roller Derby!", venue: "Mitchell Park (Mitchell Park Bowl)",
+    description: "Two skating sessions from 2-3:30 PM and 3:30-5 PM with Open Skate Spaces. All attendees must fill out a waiver.",
+    blurb: "Skate and craft at Mitchell Park Bowl.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].description, "Two skating sessions from 2-3:30 PM and 3:30-5 PM with Skate Open Spaces. All attendees must fill out a waiver.");
+  assert.deepEqual({ ...events[0], description: raw.description }, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-24" }).description, raw.description);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-skate" }).description, raw.description);
+});
+
 test("King Library's October 18 replacement program survives a shared storytime blurb", async () => {
   const raw = {
     date: "2026-10-18", title: "Indoor Family Storytime + Stay & Play",

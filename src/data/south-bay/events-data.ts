@@ -45,6 +45,8 @@ export interface SBEvent {
   // Admission only: free=$0, low=verified under $15, paid=$15+ or price unknown.
   // Free parking, free activities, and age-based exemptions do not make admission free.
   cost: "free" | "low" | "paid";
+  // Numeric prices need a current organizer source. Preserve group-size,
+  // membership, season, and other eligibility conditions; omit guessed floors.
   costNote?: string;
   kidFriendly: boolean;
   description: string;
@@ -884,7 +886,6 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     months: [10, 11, 12, 1, 2, 3, 4, 5, 6],
     cost: "paid",
-    costNote: "Tickets from ~$35",
     kidFriendly: true,
     description:
       "NHL hockey at SAP Center during the regular season from October through April.",
@@ -902,7 +903,6 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     months: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     cost: "paid",
-    costNote: "Tickets from ~$25",
     kidFriendly: true,
     description:
       "MLS soccer at PayPal Park during the league's regular season.",
@@ -919,7 +919,6 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     months: [4, 5, 6, 7, 8, 9],
     cost: "low",
-    costNote: "Tickets from ~$12",
     kidFriendly: true,
     description:
       "The SF Giants' Minor League Baseball affiliate offers an affordable, fun way to see tomorrow's MLB stars up close.",
@@ -938,7 +937,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     months: [3, 4, 5, 6, 7, 8, 9, 10, 11],
     cost: "paid",
-    costNote: "Tickets from ~$20",
+    // https://bayfc.com/faq/ — the published $20 rate requires a group.
+    costNote: "Group tickets from $20 per seat (10+ people)",
     kidFriendly: true,
     description:
       "Bay FC is the Bay Area's NWSL women's soccer team at PayPal Park. High-level women's soccer in an intimate, family-friendly stadium.",
@@ -955,7 +955,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     months: [10, 11, 12, 1, 2, 3, 4],
     cost: "paid",
-    costNote: "Tickets from ~$15",
+    // https://sjbarracuda.com/memberships — not a single-game price.
+    costNote: "2026–27 season memberships from $15 per game",
     kidFriendly: true,
     description:
       "The San Jose Barracuda are the Sharks' AHL affiliate, offering affordable pro hockey with future NHL stars at Tech CU Arena.",

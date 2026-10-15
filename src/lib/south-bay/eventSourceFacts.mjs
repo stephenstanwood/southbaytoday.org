@@ -7,6 +7,15 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The library links its skating provider but reverses the words in its
+  // name. The provider identifies itself as Skate Open Spaces.
+  // https://paloalto.bibliocommons.com/events/6a873b1560ccaf01c01fb300
+  // https://skateopenspaces.com/
+  // Evidence: docs/qa/2026-10-15-1107-fact-check.md.
+  {
+    date: "2026-10-24", url: "https://paloalto.bibliocommons.com/events/6a873b1560ccaf01c01fb300",
+    copyReplacements: [[/\bopen skate spaces\b/gi, "Skate Open Spaces"]],
+  },
   // The October 18 occurrence explicitly substitutes For Goodness Snakes for
   // regular storytime; its shared series prose is not that day's program.
   // https://sjpl.bibliocommons.com/events/69fb8818703c33630025ded4

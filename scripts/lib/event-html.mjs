@@ -6,6 +6,10 @@ const NAMED_TEXT_ENTITIES = Object.freeze({
   aacute: "\u00E1", eacute: "\u00E9", iacute: "\u00ED", oacute: "\u00F3", uacute: "\u00FA",
   aacute_upper: "\u00C1", eacute_upper: "\u00C9", iacute_upper: "\u00CD", oacute_upper: "\u00D3", uacute_upper: "\u00DA",
   ntilde: "\u00F1", ntilde_upper: "\u00D1", uuml: "\u00FC", uuml_upper: "\u00DC",
+  // Scandinavian food and proper names occur in library copy too; deleting
+  // an unrecognized entity silently removes a letter from the source's word.
+  aring: "\u00E5", aring_upper: "\u00C5", auml: "\u00E4", auml_upper: "\u00C4",
+  ouml: "\u00F6", ouml_upper: "\u00D6",
 });
 
 function decodeNamedTextEntities(value) {
