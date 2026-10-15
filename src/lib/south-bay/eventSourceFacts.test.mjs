@@ -13,6 +13,30 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("dated Montalvo source facts preserve paid family admission and remove an unsupported stage claim", async () => {
+  const matinees = [
+    { date: "2026-10-15", url: "https://my.montalvoarts.org/overview/3064" },
+    { date: "2026-10-22", url: "https://my.montalvoarts.org/overview/3065", blurb: "Mariachi on an outdoor stage." },
+  ];
+  for (const event of matinees) {
+    const corrected = applyVerifiedEventFacts({ ...event, kidFriendly: false, cost: "paid" });
+    assert.equal(corrected.kidFriendly, true);
+    assert.equal(corrected.cost, "paid");
+    if (event.blurb) {
+      assert.match(corrected.blurb, /Angeles Danzantes/);
+      assert.doesNotMatch(corrected.blurb, /outdoor/);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.equal(applyVerifiedEventFacts({ ...event, date: "2027-10-22", kidFriendly: false }).kidFriendly, false);
+  }
+  const family = { date: "2026-10-25", url: "https://my.montalvoarts.org/3257/3258", cost: "free", kidFriendly: false };
+  const events = [{ ...family }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "paid");
+  assert.equal(events[0].kidFriendly, true);
+  assert.equal(applyVerifiedEventFacts({ ...family, url: "https://example.org/other" }).cost, "free");
+});
+
 test("SCU roundtable copy uses the official 2026 Election Day without changing the event date", () => {
   const raw = {
     date: "2026-10-20", time: "2:15 PM",

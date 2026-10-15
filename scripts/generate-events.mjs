@@ -3976,7 +3976,9 @@ async function fetchMontalvoEvents() {
           address: "15400 Montalvo Rd, Saratoga",
           city: "saratoga",
           category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
-          cost: Number(item.offers?.price) === 0 ? "free" : "paid",
+          // Missing/null/blank offer prices do not establish free admission.
+          cost: item.offers?.price != null && String(item.offers.price).trim() !== ""
+            && Number(item.offers.price) === 0 ? "free" : "paid",
           description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
           url,
           source: "Montalvo Arts Center",
@@ -4008,6 +4010,7 @@ async function fetchMontalvoEvents() {
           time: detail.time || event.time,
           endTime: detail.endTime || event.endTime,
           cost: detail.cost || event.cost,
+          kidFriendly: detail.kidFriendly ?? event.kidFriendly,
           occurrenceEvidence: {
             kind: "first-party-occurrence-page",
             sourceUrl: event.url,

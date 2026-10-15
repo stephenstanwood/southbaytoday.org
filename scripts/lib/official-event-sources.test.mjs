@@ -10,6 +10,7 @@ import {
   fetchSjsuEvents,
   fetchScuEvents,
   fetchMexicanHeritagePlazaEvents,
+  fetchMontalvoEvents,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
@@ -34,6 +35,38 @@ import {
   parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("Montalvo uses ticket-page admission and audience while null and blank calendar prices stay unknown", async () => {
+  const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const offers = [{ price: 0 }, { price: null }, { price: "" }, undefined, { price: "0" }];
+  const graph = offers.map((offer, index) => ({
+    "@type": "Event", name: `Program ${index}`, startDate: `${date}T11:00:00+00:00`,
+    url: `https://my.montalvoarts.org/program-${index}`, offers: offer,
+  }));
+  const requested = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url).endsWith("/events-calendar/")) {
+      return new Response(`<script type="application/ld+json">${JSON.stringify({ "@graph": graph })}</script>`);
+    }
+    const index = Number(String(url).match(/program-(\d+)$/)[1]);
+    return new Response(`<h1 id="tn-page-heading">Program ${index}</h1>${index === 0 ? `
+      <p class="tn-event-detail__description"><p>Bring the whole family.</p></p>
+      <div data-tn-price-amount="20.0000"></div>` : ""}`);
+  };
+  try {
+    const events = await fetchMontalvoEvents();
+    assert.equal(events.length, 5);
+    assert.equal(requested.length, 6);
+    assert.deepEqual(events.map((event) => event.cost), ["paid", "paid", "paid", "paid", "free"]);
+    assert.equal(events[0].kidFriendly, true);
+    assert.equal(events[1].kidFriendly, false);
+    assert.ok(events.every((event) => event.date === date && event.time === "11:00 AM"));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 test("Squarespace family admission survives excerpts and truncated descriptions without making paid admission free", async () => {
   const excerpt = "A community celebration of art and culture.";

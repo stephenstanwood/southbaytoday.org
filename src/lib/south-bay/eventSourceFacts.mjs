@@ -7,6 +7,25 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Montalvo's ticket pages identify these as student/family programs. Goblins
+  // charges $20 adult / $14 child including fees; calendar JSON-LD omits offers.
+  // The mariachi page does not support an outdoor stage.
+  // Evidence: docs/qa/2026-10-15-0207-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://my.montalvoarts.org/overview/3064",
+    facts: { kidFriendly: true },
+  },
+  {
+    date: "2026-10-22", url: "https://my.montalvoarts.org/overview/3065",
+    facts: {
+      kidFriendly: true,
+      blurb: "Hear Mariachi Viajero and Angeles Danzantes perform traditional Mexican music and dance at Montalvo Arts Center.",
+    },
+  },
+  {
+    date: "2026-10-25", url: "https://my.montalvoarts.org/3257/3258",
+    facts: { cost: "paid", kidFriendly: true },
+  },
   // The SCU listing itself has the wrong Election Day. California's official
   // calendar confirms November 3, 2026; preserve the roundtable's October date.
   // https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2026

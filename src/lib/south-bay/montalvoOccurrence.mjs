@@ -23,6 +23,23 @@ function textContent(value) {
     .trim();
 }
 
+// Ticket pages contain unrelated workshop promotions and checkout text. Read
+// audience claims only inside the current event's description blocks. Balance
+// nested tags, including the nested <p> wrappers Tessitura publishes as HTML.
+function contentForClass(source, className) {
+  const opening = new RegExp(`<([a-z][\\w:-]*)\\b[^>]*\\bclass=["'][^"']*\\b${className}(?=[\\s"'])[^"']*["'][^>]*>`, "i").exec(source);
+  if (!opening) return "";
+  const start = opening.index + opening[0].length;
+  const tags = new RegExp(`</?${opening[1]}\\b[^>]*>`, "gi");
+  tags.lastIndex = start;
+  let depth = 1;
+  for (let tag; (tag = tags.exec(source));) {
+    depth += tag[0].startsWith("</") ? -1 : 1;
+    if (depth === 0) return source.slice(start, tag.index);
+  }
+  return "";
+}
+
 function clock(value) {
   const match = String(value || "").match(/\b(\d{1,2})(?::(\d{2}))?\s*(a\.?m\.?|p\.?m\.?)\b/i);
   if (!match) return null;
@@ -60,8 +77,17 @@ export function parseMontalvoOccurrencePage(html) {
   const range = visibleText.match(/\bfrom\s+(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))\s*(?:to|[-–—])\s*(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))/i);
   const rangeStart = range ? clock(range[1]) : null;
   const endTime = range ? clock(range[2]) : null;
-  const isFree = /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText)
-    || /data-tn-price-amount=["']0(?:\.0+)?["']/i.test(body);
+  const prices = [...body.matchAll(/\bdata-tn-price-amount=["'](\d+(?:\.\d+)?)["']/gi)]
+    .map((match) => Number(match[1]));
+  // A paid adult ticket outranks a free-child tier or a zero in calendar JSON-LD.
+  const hasPaidTickets = prices.some((price) => price > 0);
+  const isFree = prices.includes(0) || /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText);
+  const audienceText = [
+    "tn-event-detail__description",
+    "tn-production-season-detail-page__description",
+    "tn-prod-season-header__description-text-content",
+  ].map((className) => textContent(contentForClass(body, className))).join(" ");
+  const familyAudience = /\b(?:whole family|family event|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {
@@ -69,6 +95,7 @@ export function parseMontalvoOccurrencePage(html) {
     date,
     time: rangeStart || startTime,
     endTime,
-    cost: isFree ? "free" : null,
+    cost: hasPaidTickets ? "paid" : isFree ? "free" : null,
+    ...(familyAudience ? { kidFriendly: true } : {}),
   };
 }
