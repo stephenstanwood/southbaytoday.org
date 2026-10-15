@@ -11,6 +11,11 @@ import {
   fetchScuEvents,
   fetchMexicanHeritagePlazaEvents,
   fetchMontalvoEvents,
+  fetchSouthBayMusicalTheatreEvents,
+  fetchSantaCruzWarriorsSchedule,
+  fetchSharksSchedule,
+  fetchEarthquakesSchedule,
+  fetchBayFCSchedule,
   squarespaceKidFriendly,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
@@ -36,6 +41,84 @@ import {
   parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("South Bay Musical Theatre never invents a shared ticket floor for different productions", async () => {
+  const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-US", {
+    timeZone: "America/Los_Angeles", month: "long", day: "numeric", year: "numeric",
+  });
+  const requested = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    const page = String(url);
+    requested.push(page);
+    assert.match(page, /^https:\/\/southbaymt\.com\/shows\/ticket-sales\//);
+    // The current production tables charge $37+, while the importer used to
+    // stamp every show $30. Missing or unrelated prices cannot supply a floor.
+    const prices = page.includes("come-from-away")
+      ? "<h2>TICKET PRICES</h2><table><tr><th>Adult</th><th>Child</th></tr><tr><td>$45-60</td><td>$37</td></tr></table>"
+      : page.includes("ouam") ? "<p>Support the theatre with a $30 donation.</p>" : "";
+    return new Response(`<title>Musical — South Bay Musical Theatre</title>
+      <h2>SHOW DATES &amp; TIMES</h2><p>${date} at 8:00 pm</p>${prices}`);
+  };
+  try {
+    const events = await fetchSouthBayMusicalTheatreEvents();
+    assert.equal(requested.length, 7);
+    assert.equal(events.length, 7);
+    assert.ok(events.every((event) => event.cost === "paid" && event.time === "8:00 PM"));
+    assert.ok(events.every((event) => !Object.hasOwn(event, "costNote")),
+      "an unparsed ticket table must not become an assumed $30 minimum");
+    assert.deepEqual(events.map((event) => event.url), requested);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("sports schedules without ticket prices cannot publish estimated admission floors", async () => {
+  const start = new Date(Date.now() + 14 * 86400000).toISOString();
+  const date = new Date(start).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const cases = [
+    [fetchSantaCruzWarriorsSchedule, "https://stats.gleague.nba.com/", {
+      leagueSchedule: { gameDates: [{ games: [{
+        gameId: "1", gameDateTimeUTC: start,
+        homeTeam: { teamCity: "Santa Cruz", teamName: "Warriors" },
+        awayTeam: { teamCity: "San Diego", teamName: "Clippers" },
+      }] }] },
+    }],
+    [fetchSharksSchedule, "https://api-web.nhle.com/", {
+      games: [{ id: 1, gameType: 2, gameDate: date, startTimeUTC: start,
+        homeTeam: { abbrev: "SJS" }, awayTeam: { commonName: { default: "Ducks" } } }],
+    }],
+    ...[
+      [fetchEarthquakesSchedule, "San Jose Earthquakes"],
+      [fetchBayFCSchedule, "Bay FC"],
+    ].map(([adapter, team]) => [adapter, "https://site.api.espn.com/", {
+      events: [{ id: "1", date: start, competitions: [{ competitors: [
+        { homeAway: "home", team: { displayName: team } },
+        { homeAway: "away", team: { displayName: "Visitors" } },
+      ] }] }],
+    }]),
+  ];
+  const originalFetch = globalThis.fetch;
+  try {
+    for (const [adapter, origin, schedule] of cases) {
+      const requested = [];
+      globalThis.fetch = async (url) => {
+        requested.push(String(url));
+        assert.ok(String(url).startsWith(origin));
+        return Response.json(schedule);
+      };
+      const events = await adapter();
+      assert.equal(requested.length, 1);
+      assert.equal(events.length, 1);
+      assert.equal(events[0].date, date);
+      assert.equal(events[0].category, "sports");
+      assert.equal(events[0].cost, "paid");
+      assert.equal(Object.hasOwn(events[0], "costNote"), false, adapter.name);
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 test("book plots, author biographies and minimum ages do not promise family admission", () => {
   for (const [title, copy] of [

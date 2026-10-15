@@ -5574,7 +5574,7 @@ async function fetchSantaCruzWarriorsSchedule() {
         city: "santa-cruz",
         category: "sports",
         cost: "paid",
-        costNote: "From $15",
+        // A league schedule supplies no ticket-price evidence.
         description: `Santa Cruz Warriors home game vs. ${opponent} at Kaiser Permanente Arena.`,
         url: "https://santacruz.gleague.nba.com/schedule/",
         source: "G League",
@@ -5620,7 +5620,7 @@ async function fetchSharksSchedule() {
           city: "san-jose",
           category: "sports",
           cost: "paid",
-          costNote: "From $30",
+          // A league schedule supplies no ticket-price evidence.
           description: `San Jose Sharks home game vs. ${opponent} at SAP Center.`,
           url: `https://www.nhl.com/sharks/schedule`,
           source: "NHL",
@@ -5672,7 +5672,7 @@ async function fetchEarthquakesSchedule() {
         city: "san-jose",
         category: "sports",
         cost: "paid",
-        costNote: "From $20",
+        // A scoreboard supplies no ticket-price evidence.
         description: `San Jose Earthquakes home game vs. ${opponent} at PayPal Park.`,
         url: "https://www.sjearthquakes.com/schedule",
         source: "MLS",
@@ -5863,7 +5863,7 @@ async function fetchBayFCSchedule() {
         city: "san-jose",
         category: "sports",
         cost: "paid",
-        costNote: "From $20",
+        // A scoreboard supplies no ticket-price evidence.
         description: `Bay FC home game vs. ${opponent} at PayPal Park.`,
         url: `https://www.bayfc.com/schedule`,
         source: "NWSL",
@@ -8524,7 +8524,8 @@ async function fetchSouthBayMusicalTheatreEvents() {
           city: "saratoga",
           category: "arts",
           cost: "paid",
-          costNote: "From $30",
+          // Ticket tables vary by production, performance, and eligibility.
+          // Omit a numeric floor until those source prices are actually parsed.
           description,
           url: pageUrl,
           source: "South Bay Musical Theatre",
@@ -10461,6 +10462,11 @@ export {
   parseScpIntro,
   scpShowPageUrl,
   fetchSanJoseTheatersEvents,
+  fetchSouthBayMusicalTheatreEvents,
+  fetchSantaCruzWarriorsSchedule,
+  fetchSharksSchedule,
+  fetchEarthquakesSchedule,
+  fetchBayFCSchedule,
   fetchSjJazzEvents,
   fetchSvlgEvents,
   fetchSJGiantsSchedule,

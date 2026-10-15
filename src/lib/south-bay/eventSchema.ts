@@ -35,7 +35,9 @@ export interface SchemaEventRecord {
   blurb?: string | null;
   description?: string | null;
   cost?: string | null;
-  costNote?: string | null; // e.g. "From $30" — a floor, not a fixed price
+  // Numeric floors require source ticket-price evidence; a schedule or
+  // "paid" admission alone cannot establish a minimum (e.g. "From $30").
+  costNote?: string | null;
   virtual?: boolean | null; // set at ingest from the source's own location type
   // Advance-registration gate, set at ingest from the source's own
   // registration fields. Absent means walk-up. See eventFilters.mjs.
