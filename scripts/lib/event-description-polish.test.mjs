@@ -35,6 +35,40 @@ test("preserves Palo Alto library's NeuroSphere group name through prose cleanup
   assert.equal(polishDescription(`Meet NeuroSphere. Details: ${url}`), `Meet NeuroSphere. Details: ${url}`);
 });
 
+test("keeps Cherie Dimaline's VenCo title intact through prose cleanup", () => {
+  // Publisher: penguinrandomhouse.ca/books/600424/venco-by-cherie-dimaline/9780735277236
+  const expected = "Discuss VenCo, a novel by Cherie Dimaline.";
+  for (const title of ["VenCo", "Ven Co", "Venco"]) {
+    assert.equal(polishDescription(`Discuss ${title}, a novel by Cherie Dimaline.`), expected);
+  }
+  assert.equal(polishDescription(polishDescription(expected)), expected);
+  const url = "https://example.org/VenCo?title=VenCo";
+  assert.equal(polishDescription(`Discuss VenCo. Details: ${url}`), `Discuss VenCo. Details: ${url}`);
+});
+
+test("corrects the sourced award names in Funeral Songs for Dying Girls copy", () => {
+  // CSFFA's 2024 results and AILA's 2024 Honor Books both list the novel.
+  const expected = "Other titles include Funeral Songs for Dying Girls (AILA Honor Book, Aurora Award winner).";
+  assert.equal(
+    polishDescription("Other titles include Funeral Songs for Dying Girls (Aila Honor Book, Aura Award winner)."),
+    expected,
+  );
+  assert.equal(polishDescription(expected), expected);
+  assert.equal(polishDescription("A different Aura Award ceremony."), "A different Aura Award ceremony.");
+});
+
+test("preserves SideXSide Studios and its TransMilitary film title", () => {
+  // Studio credits: sidexsidestudios.com/project/transmilitary/
+  const expected = "SideXSide Studios made TransMilitary. TransMilitary won the SXSW Audience Award.";
+  assert.equal(polishDescription(expected), expected);
+  assert.equal(
+    polishDescription("Side XSide Studios made Transmilitary. Trans Military won the SXSW Audience Award."),
+    expected,
+  );
+  assert.equal(polishDescription(polishDescription(expected)), expected);
+  assert.equal(polishDescription("A discussion of trans military service."), "A discussion of trans military service.");
+});
+
 test("keeps Pyet DeSpain and Gordon Ramsay correct through title and prose polishing", () => {
   assert.equal(cleanTitle("Online Author Talk: Pyet Despain"), "Online Author Talk: Pyet DeSpain");
   const expected = "Pyet DeSpain won Gordon Ramsay's Next Level Chef.";

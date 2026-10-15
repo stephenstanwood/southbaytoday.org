@@ -2173,6 +2173,23 @@ function polishDescription(text) {
   // Palo Alto library's youth group is NeuroSphere in its own event copy;
   // preserve that proper name after the generic camel-case splitter.
   t = t.replace(/\bNeuro Sphere\b/g, "NeuroSphere");
+  // Publisher and studio spellings in library author/screening listings.
+  // Preserve these names after camel-case splitting, including the source's
+  // inconsistent casing, so a refresh cannot undo verified corrections.
+  // https://www.penguinrandomhouse.ca/books/600424/venco-by-cherie-dimaline/9780735277236
+  // https://sidexsidestudios.com/project/transmilitary/
+  t = t.replace(/\bVen ?[Cc]o\b/g, "VenCo");
+  t = t.replace(/\bTrans ?[Mm]ilitary\b/g, "TransMilitary");
+  t = t.replace(/\bSide XSide\b/g, "SideXSide");
+  // The studio credits SXSW; the all-caps pass above otherwise writes Sxsw.
+  t = t.replace(/\bSxsw\b/g, "SXSW");
+  // The author's library bio misspells Aurora as Aura. Correct only the
+  // identified novel's copy; CSFFA and AILA confirm its respective honors.
+  // https://www.csffa.ca/wp-content/uploads/2024/08/2024-Aurora-results-grids.pdf (page 1)
+  // https://ailanet.org/literature_awards/2024-awards/
+  if (/\bFuneral Songs for Dying Girls\b/.test(t)) {
+    t = t.replace(/\bAura Award\b/g, "Aurora Award").replace(/\bAila Honor Book\b/g, "AILA Honor Book");
+  }
   // "NorCal" (Northern California, as in NorCal Academy of Performing Arts) is a
   // closed-up single token; the lowercase+uppercase splitter pulls it into
   // "Nor Cal". Capital-N "Nor Cal" only ever comes from that split — a genuine
