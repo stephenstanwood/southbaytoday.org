@@ -212,7 +212,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Mountain View City Council took up the development agreement for a mixed-use residential project at 490 East Middlefield Road on second reading at its March 24, 2026 meeting. The project adds residential units to one of Mountain View's key transit corridors, consistent with the city's goals for housing near employment centers and transit.",
+      "Mountain View City Council took up the development agreement for a mixed-use residential project at 490 East Middlefield Road on second reading at its March 24, 2026, meeting. The project adds residential units to one of Mountain View's key transit corridors, consistent with the city's goals for housing near employment centers and transit.",
     scale: "Residential + ground-floor uses",
     developer: "TBD",
     timeline: "Approved March 2026",
