@@ -567,23 +567,10 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     url: "https://sunnyvaledowntown.org/events",
     emoji: "🎶",
   },
-  {
-    id: "santana-row-concerts",
-    title: "Santana Row Weekend Concerts",
-    city: "san-jose",
-    venue: "Santana Row Plaza",
-    category: "music",
-    recurrence: "weekly",
-    days: ["saturday", "sunday"],
-    time: "Afternoons",
-    months: [5, 6, 7, 8, 9, 10],
-    cost: "free",
-    kidFriendly: true,
-    description:
-      "Free live music in Santana Row's outdoor plaza on weekend afternoons during the warm season.",
-    url: "https://www.santanarow.com/events/",
-    emoji: "🎼",
-  },
+  // Santana Row's organizer calendar lists dated events and the monthly Makers
+  // Market above. As of 2026-10-14, a weekly Saturday/Sunday afternoon concert
+  // series could not be verified at https://santanarow.com/events/; occasional
+  // live music is not evidence of a recurring concert schedule.
 
   // ── MONTHLY EVENTS ─────────────────────────────────────────────────────
 
