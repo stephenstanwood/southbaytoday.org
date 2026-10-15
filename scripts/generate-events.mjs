@@ -1755,7 +1755,20 @@ function repairSpacedDomainDots(text) {
 
 function polishDescription(text) {
   if (!text) return "";
-  let t = text;
+  // URLs are identifiers: prose casing, camel-case spacing, and sentence
+  // splitting must never rewrite their paths, queries, or fragments. SCCLD's
+  // tinyurl.com/TABcoffeehouse became tinyurl.com/TA Bcoffeehouse here.
+  const urls = [];
+  const urlPattern = new RegExp(
+    `\\b(?:https?:\\/\\/|www\\.)[^\\s<>"')\\]}]+|\\b(?:[a-z0-9-]+\\.)+(?:${KNOWN_TLDS})\\b(?:\\/[^\\s<>"')\\]}]*)?`,
+    "gi",
+  );
+  let t = text.replace(urlPattern, (match) => {
+    // Leave prose terminators visible to the sentence/boilerplate filters.
+    const url = match.replace(/[.,;!?]+$/, "");
+    const token = `\uE001${urls.push(url) - 1}\uE002`;
+    return token + match.slice(url.length);
+  });
 
   // Drop boilerplate "About this Event:" / "Text from presenter:" prefixes that
   // BiblioCommons feeds emit at the head of some descriptions. The content
@@ -2246,7 +2259,7 @@ function polishDescription(text) {
   // split PUBLIQuartet into "Publi Quartet" when re-polishing stored copy.
   t = t.replace(/\bPUBLI Quartet\b/gi, "PUBLIQuartet");
 
-  return cleanDisplayCopy(t);
+  return cleanDisplayCopy(t).replace(/\uE001(\d+)\uE002/g, (_, index) => urls[Number(index)]);
 }
 
 // Localist ("Sign in to download the location") and similar calendars put an

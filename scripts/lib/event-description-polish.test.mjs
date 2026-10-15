@@ -251,6 +251,26 @@ test("keeps email local-part dots intact through sentence splitting", () => {
   );
 });
 
+test("preserves case-sensitive signup URLs through prose cleanup", () => {
+  // SCCLD's Teen Coffeehouse page supplies this exact shortlink. The camel-case
+  // splitter used to insert a space into its path: tinyurl.com/TA Bcoffeehouse.
+  const copy = "Teen performers: sign up at tinyurl.com/TABcoffeehouse to perform.";
+  assert.equal(polishDescription(copy), copy);
+  assert.equal(polishDescription(polishDescription(copy)), copy);
+
+  const links = "Join at https://example.org/JoinNow?group=TABcoffeehouse&key=ABCdef#NextStep. Bring a friend!";
+  assert.equal(polishDescription(links), links);
+  assert.equal(polishDescription(polishDescription(links)), links);
+  assert.equal(
+    polishDescription("Try www.example.org/ArtClub and example.org/ABCdef.pdf. MeetTheArtist afterward."),
+    "Try www.example.org/ArtClub and example.org/ABCdef.pdf. Meet The Artist afterward.",
+  );
+  assert.equal(
+    polishDescription("Join at tinyurl.com/TABcoffeehouse. Register online at https://example.org/JoinNow. Bring water."),
+    "Join at tinyurl.com/TABcoffeehouse. Bring water.",
+  );
+});
+
 test("normalizes doubled periods, fused age tags, doubled prepositions, and padded quotes", () => {
   assert.equal(
     polishDescription("Sessions at 3:30 and 5:30 p.m.. Free, with limited capacity."),
