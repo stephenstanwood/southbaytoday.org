@@ -13,6 +13,34 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("NUMU's Cassady talk keeps its Thursday label, closing time, and registration requirement", async () => {
+  const raw = {
+    id: "inbound-d897162cdf670c51", date: "2026-11-19", displayDate: "Wed, Nov 18",
+    title: "Talk of the Town: Neal Cassady & the Beats", venue: "New Museum Los Gatos (NUMU)",
+    time: "11:00 AM", endTime: null, cost: null, url: "https://www.numulosgatos.org/events/cassady",
+    description: "A free public history talk featuring Dan Pulcano.",
+    blurb: "Hear publisher Dan Pulcano discuss Neal Cassady's ties to the Beat Generation in Los Gatos.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [corrected] = events;
+  assert.equal(corrected.date, raw.date);
+  assert.equal(corrected.displayDate, "Thu, Nov 19");
+  assert.equal(corrected.time, "11:00 AM");
+  assert.equal(corrected.endTime, "11:45 AM");
+  assert.equal(corrected.cost, "free");
+  assert.equal(corrected.registration, "required");
+  assert.match(corrected.attendanceNote, /free with registration/i);
+  assert.equal(requiresAdvanceRegistration(corrected), true);
+  assert.equal(corrected.description, raw.description);
+  assert.equal(corrected.blurb, raw.blurb);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const other of [
+    { ...raw, date: "2027-11-19" },
+    { ...raw, url: "https://www.numulosgatos.org/events/another-talk" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("FOPAL's organizer schedule corrects the library's November Sunday occurrence", async () => {
   const raw = {
     id: "paloalto-69667a0394297d3600a4e8a0", date: "2026-11-08", displayDate: "Sun, Nov 8",

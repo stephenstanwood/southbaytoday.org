@@ -9127,8 +9127,12 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
       // Campbell Chamber golf tournament that motivated it.
       const inboundCity = resolveEventCity(publisherCity, inboundLocation, e.title);
 
-      const startDate = new Date(presentation.date ? `${dateKey}T12:00:00-07:00` : e.startsAt);
-      if (isNaN(startDate.getTime())) continue;
+      // dateKey is the source's calendar date, including verified corrections.
+      // Extracted midnight sentinels can retain a summer offset in winter:
+      // November 19 at 00:00-07:00 would label the card November 18 in Pacific
+      // time. Format the same calendar date used for filtering and identity.
+      const startDate = parseDatePT(`${dateKey}T12:00:00`);
+      if (!startDate) continue;
 
       // Normalize extractor timestamps before they become visitor-facing
       // clock times. Inbound feeds use midnight and 23:59:59 as unknown/all-day

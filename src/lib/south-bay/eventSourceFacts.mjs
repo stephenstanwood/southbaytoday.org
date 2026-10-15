@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // NUMU's program details confirm Thursday, November 19, 11–11:45 AM,
+  // free with registration. The newsletter's stale summer offset labeled its
+  // midnight sentinel November 18, and omitted the required reservation.
+  // https://www.numulosgatos.org/events/cassady
+  // Evidence: docs/qa/2026-10-15-1507-fact-check.md.
+  {
+    date: "2026-11-19", url: "https://www.numulosgatos.org/events/cassady",
+    facts: {
+      displayDate: "Thu, Nov 19", time: "11:00 AM", endTime: "11:45 AM",
+      cost: "free", registration: "required", attendanceNote: "Free with registration.",
+    },
+  },
   // FOPAL's dated 2026 schedule says November 14–15; the library's external
   // Sunday listing incorrectly says November 8. Its Sunday hours agree with
   // FOPAL's sale information. Correct the date from the organizer's schedule,

@@ -14,6 +14,23 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("newsletter date labels preserve calendar dates across stale daylight-saving offsets", () => {
+  for (const [startsAt, date, label, time] of [
+    ["2026-11-19T00:00:00-07:00", "2026-11-19", "Thu, Nov 19", null],
+    ["2026-11-19T00:00:00-08:00", "2026-11-19", "Thu, Nov 19", null],
+    ["2026-10-15T00:00:00-07:00", "2026-10-15", "Thu, Oct 15", null],
+    ["2026-11-19T19:30:00-08:00", "2026-11-19", "Thu, Nov 19", "7:30 PM"],
+  ]) {
+    const [event] = fetchInboundEvents({ today: "2026-10-15", events: [{
+      id: "calendar-date-fixture", cityKey: "los-gatos", title: "Local history talk",
+      startsAt, location: "Local museum, Los Gatos", sourceUrl: "https://example.org/talk",
+    }] });
+    assert.equal(event.date, date);
+    assert.equal(event.displayDate, label);
+    assert.equal(event.time, time);
+  }
+});
+
 test("newsletter college-admissions Zoom presentations retain their online-only flag", () => {
   const raw = {
     id: "college-admissions-online", cityKey: "santa-clara", title: "Successfully Navigating College Admissions (Online)",
