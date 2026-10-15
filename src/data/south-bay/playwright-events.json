@@ -1,19 +1,19 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-14T21:58:47.282Z",
+    "generatedAt": "2026-10-15T03:47:09.462Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 500,
+    "eventCount": 490,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (115)",
-      "Los Gatos Library (116)",
+      "Mountain View Public Library (111)",
+      "Los Gatos Library (111)",
       "San Jose Jazz (16)",
       "Linden Tree Books (14)",
       "History San Jose (3)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
-      "ICA San José (4)",
+      "ICA San José (3)",
       "Mountain Winery (7)",
       "San Jose Theaters (19)",
       "Children's Discovery Museum (2)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 120,
+        "count": 116,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 116,
+        "count": 111,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -155,7 +155,7 @@
         "id": "ica-san-jose",
         "label": "ICA San Jose",
         "status": "ok",
-        "count": 4,
+        "count": 3,
         "error": null,
         "sources": [
           "ICA San José"
@@ -348,93 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "cfbb0c4bd686",
-      "title": "ESL Conversation Club - IN PERSON",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/15895394",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "3c54c4150e9e",
-      "title": "ESL Conversation Club - ONLINE",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17249781",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "13efe46ae6b3",
-      "title": "Bilingual Storytime: Mandarin/English",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "6:30 PM",
-      "endTime": "7:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Stories, rhymes and songs in Mandarin and English with Miss Renee in the Children's Room Octagon. For ages 2-5, no registration required.",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17329158",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "72d20672f7db",
-      "title": "Ukulele Jam Sing and Play Along",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "6:30 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "free",
-      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Would you like to learn some fun songs on the ukulele? Beginners and ukulele enthusiasts are welcome to join us to sing and play together. Ukulele instructor Chuck Monahan will teach participants how to play basic chords on the ukulele and lead the group in an informal performance of popular songs from the last 50 years. Bring your own uke, or use one of ours. Ages 12 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Teens",
-        "Seniors",
-        "Tweens"
-      ],
-      "url": "https://mountainview.libcal.com/event/17028028",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "d2da7ceffecd",
       "title": "Cuesta Park Storytime",
@@ -2801,66 +2714,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d63cd492fe66",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16887024",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "424669ba3f42",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261936",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "c8293f72b99e",
-      "title": "Mystery Lover's Book Club",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "5:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 We're reading \"Bruno, Chief of Police\" by Martin Walker. If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15240737",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "2743563357b5",
       "title": "Cafecito Book Club",
       "date": "2026-10-15",
@@ -3831,26 +3684,6 @@
       "kidFriendly": false
     },
     {
-      "id": "4d8948e2fc82",
-      "title": "Mystery Lover's Book Club",
-      "date": "2026-11-11",
-      "displayDate": "Wed, Nov 11",
-      "time": "5:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15240738",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
       "id": "7c655949913e",
       "title": "Cafecito Book Club",
       "date": "2026-11-12",
@@ -4116,6 +3949,26 @@
       "kidFriendly": true
     },
     {
+      "id": "584de9d29b53",
+      "title": "Mystery Lover's Book Club",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "5:00 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/15240738",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "77caf5419611",
       "title": "Bug Power with Beetlelady! (Ages 6-12)",
       "date": "2026-11-19",
@@ -4341,27 +4194,6 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/16374648",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "b9759a759259",
-      "title": "Girls Who Code",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "education",
-      "cost": "free",
-      "description": "The Los Gatos Library has partnered with @GirlsWhoCode to create a club meant for people ages 12-18 to learn to code and change the world! \"What will I Learn? Our middle and high school Clubs encourage you to impact the community in a positive way through code. In order to build the skills you need to make an impact, you will learn how to code from our fun online tutorials and activities that will help you build animations, games, apps, and other things that you dream up! We have tutorials in Python, HTML/CSS, JavaScript, and Java.\" Email: signup@gwc-losgatos.org to register.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17444959",
       "source": "Los Gatos Library",
       "kidFriendly": true
     },
@@ -4911,27 +4743,6 @@
       "url": "https://losgatosca.libcal.com/event/17591745",
       "source": "Los Gatos Library",
       "kidFriendly": false
-    },
-    {
-      "id": "029342a21795",
-      "title": "Girls Who Code",
-      "date": "2026-12-19",
-      "displayDate": "Sat, Dec 19",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "education",
-      "cost": "free",
-      "description": "The Los Gatos Library has partnered with @GirlsWhoCode to create a club meant for people ages 12-18 to learn to code and change the world! \"What will I Learn? Our middle and high school Clubs encourage you to impact the community in a positive way through code. In order to build the skills you need to make an impact, you will learn how to code from our fun online tutorials and activities that will help you build animations, games, apps, and other things that you dream up! We have tutorials in Python, HTML/CSS, JavaScript, and Java.\" Email: signup@gwc-losgatos.org to register.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17444962",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "81745e63a7f3",
@@ -6008,32 +5819,35 @@
       "kidFriendly": false
     },
     {
-      "id": "4202503b1b94",
+      "id": "82ed259ebbea",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
       "date": "2026-10-16",
       "displayDate": "Fri, Oct 16",
       "time": null,
       "endTime": null,
+      "ongoing": true,
+      "startDate": "2026-10-16",
+      "endDate": "2026-11-14",
       "venue": "ICA San José",
       "address": "560 S First St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "arts",
       "cost": "free",
-      "description": "Exhibition on view October 16 – November 14, 2026.",
+      "description": "",
       "url": "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/",
       "source": "ICA San José",
-      "kidFriendly": false,
-      "ongoing": true,
-      "startDate": "2026-10-16",
-      "endDate": "2026-11-14"
+      "kidFriendly": false
     },
     {
-      "id": "e9beb2c9b1dd",
+      "id": "64b95cd99ac5",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-09-18",
-      "displayDate": "Fri, Sep 18",
+      "date": "2026-10-14",
+      "displayDate": "Wed, Oct 14",
       "time": null,
       "endTime": null,
+      "ongoing": true,
+      "startDate": "2026-09-18",
+      "endDate": "2027-02-21",
       "venue": "ICA San José",
       "address": "560 S First St, San Jose, CA 95113",
       "city": "san-jose",
@@ -6045,29 +5859,15 @@
       "kidFriendly": false
     },
     {
-      "id": "9d0e2d8ae93c",
-      "title": "Oscar Lopez: Without Them is Not Us",
-      "date": "2024-09-14",
-      "displayDate": "Sat, Sep 14",
-      "time": null,
-      "endTime": null,
-      "venue": "ICA San José",
-      "address": "560 S First St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.icasanjose.org/current-exhibitions/withoutthemisnotus/",
-      "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "00e6ae932a88",
+      "id": "1c61b2b354cb",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-02",
-      "displayDate": "Fri, Oct 2",
+      "date": "2026-10-14",
+      "displayDate": "Wed, Oct 14",
       "time": null,
       "endTime": null,
+      "ongoing": true,
+      "startDate": "2026-10-02",
+      "endDate": "2027-02-21",
       "venue": "ICA San José",
       "address": "560 S First St, San Jose, CA 95113",
       "city": "san-jose",
@@ -6706,7 +6506,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-14T21:57:32.091Z"
+        "checkedAt": "2026-10-15T03:45:54.451Z"
       }
     },
     {
@@ -6729,7 +6529,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-14T21:57:32.091Z"
+        "checkedAt": "2026-10-15T03:45:54.452Z"
       }
     },
     {
@@ -6752,7 +6552,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-14T21:57:32.091Z"
+        "checkedAt": "2026-10-15T03:45:54.452Z"
       }
     },
     {
@@ -6775,7 +6575,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-14T21:57:32.091Z"
+        "checkedAt": "2026-10-15T03:45:54.452Z"
       }
     },
     {
@@ -6798,144 +6598,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-14T21:57:32.091Z"
+        "checkedAt": "2026-10-15T03:45:54.453Z"
       }
-    },
-    {
-      "id": "7ca959914ee5",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2027-02-11",
-      "displayDate": "Thu, Feb 11",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "57436e69d568",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2027-03-11",
-      "displayDate": "Thu, Mar 11",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "037ded1f3bd8",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2027-04-08",
-      "displayDate": "Thu, Apr 8",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "460f546d89fa",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2027-05-13",
-      "displayDate": "Thu, May 13",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "fc2a7ce3476a",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2027-06-10",
-      "displayDate": "Thu, Jun 10",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "d154959154a1",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "4149d96f87bf",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "7d0462a47e52",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-12-02",
-      "displayDate": "Wed, Dec 2",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "0fb398e91088",
@@ -7548,6 +7212,142 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "7ca959914ee5",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2027-02-11",
+      "displayDate": "Thu, Feb 11",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "57436e69d568",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2027-03-11",
+      "displayDate": "Thu, Mar 11",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "037ded1f3bd8",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2027-04-08",
+      "displayDate": "Thu, Apr 8",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "460f546d89fa",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2027-05-13",
+      "displayDate": "Thu, May 13",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "fc2a7ce3476a",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2027-06-10",
+      "displayDate": "Thu, Jun 10",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "d154959154a1",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2026-10-14",
+      "displayDate": "Wed, Oct 14",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "4149d96f87bf",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "7d0462a47e52",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2026-12-02",
+      "displayDate": "Wed, Dec 2",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "6c530208231f",
@@ -9420,8 +9220,8 @@
       "kidFriendly": false
     },
     {
-      "id": "171edda8cb5f",
-      "title": "Los Tiburones",
+      "id": "9b7c1b291b81",
+      "title": "Sharks vs Senators — Los Tiburones",
       "date": "2026-10-31",
       "displayDate": "Sat, Oct 31",
       "time": "1:00 pm",
@@ -9429,7 +9229,7 @@
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "sports",
       "cost": "paid",
       "description": "Mini Sharks Sugar Skull Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
@@ -9505,8 +9305,8 @@
       "kidFriendly": false
     },
     {
-      "id": "2524cfcb5332",
-      "title": "Native American Heritage Celebration",
+      "id": "923f1c768558",
+      "title": "Sharks vs Islanders — Native American Heritage Celebration",
       "date": "2026-11-09",
       "displayDate": "Mon, Nov 9",
       "time": "7:00 pm",
@@ -9514,7 +9314,7 @@
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "sports",
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
@@ -9522,7 +9322,7 @@
       "kidFriendly": false
     },
     {
-      "id": "79079c9a6c4a",
+      "id": "3f13a60acaca",
       "title": "Sharks vs Penguins — Military Appreciation",
       "date": "2026-11-11",
       "displayDate": "Wed, Nov 11",
@@ -9533,7 +9333,7 @@
       "city": "san-jose",
       "category": "sports",
       "cost": "paid",
-      "description": "Sharks vs Penguins on Military Appreciation night at SAP Center.",
+      "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
       "source": "SAP Center",
       "kidFriendly": false
