@@ -42,6 +42,11 @@ export function stripHtml(html) {
     .replace(/&#8230;|&#x2026;/gi, "\u2026")
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code, 10)))
     .replace(/&[a-z][a-z0-9]+;/gi, "")
+    // Inline markup can bisect an email's visible local part: SJPL publishes
+    // `<a href="mailto:someone-else@...">j</a>in.luong@sjlibrary.org`.
+    // Preserve that text, never substitute the href or join authored spaces.
+    // Block tags still become separators in the catch-all below.
+    .replace(/([\w.%+-])(?:<\/?(?:a|strong|em|b|i|u|span)\b[^>]*>)+(?=(?:[\w.%+-]|<\/?(?:a|strong|em|b|i|u|span)\b[^>]*>)*@[\w.-]+\.[a-z]{2,}\b)/gi, "$1")
     // BiblioCommons (and other rich-text editors) occasionally save a word
     // wrapped across two adjacent same-tag inline-formatting runs — e.g.
     // `<strong>g</strong><strong>rades 4-5</strong>` from an SCCL Page

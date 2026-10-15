@@ -76,3 +76,29 @@ test("library descriptions decode Latin named entities without dropping accents"
   });
   assert.equal(description, "\u00A1Prep\u00E1rate! \u00DAnete a Jos\u00E9 & Pe\u00F1a.");
 });
+
+test("inline email fragments retain visible contact text through ingestion", async () => {
+  const { polishDescription } = await import("../generate-events.mjs");
+  // The October 15 Hillview occurrence links only the first letter, to a
+  // different person's mailto. Its visible text and structured contact agree.
+  const { description } = libraryEventDetails({ definition: {
+    description: '<p>Email Jin Luong at <a href="mailto:marlene.sanchez@sjlibrary.org">j</a>in.luong@sjlibrary.org.</p>',
+  } });
+  assert.match(description, /jin\.luong@sjlibrary\.org/);
+  assert.doesNotMatch(description, /marlene|j in\.luong/);
+  assert.match(polishDescription(description), /jin\.luong@sjlibrary\.org/);
+
+  assert.equal(libraryEventDetails({
+    description: '<p>Email <span>j</span><em>in</em>.luong@sjlibrary.org</p>',
+  }).description, "Email jin.luong@sjlibrary.org");
+  // Whitespace and separate blocks are evidence of separate words.
+  assert.equal(libraryEventDetails({
+    description: '<p>Ask <a>J</a> Smith at jin.luong@sjlibrary.org</p>',
+  }).description, "Ask J Smith at jin.luong@sjlibrary.org");
+  assert.equal(libraryEventDetails({
+    description: '<p>Email <a>j</a> in.luong@sjlibrary.org</p>',
+  }).description, "Email j in.luong@sjlibrary.org");
+  assert.equal(libraryEventDetails({
+    description: '<p>J</p><p>in.luong@sjlibrary.org</p>',
+  }).description, "J in.luong@sjlibrary.org");
+});
