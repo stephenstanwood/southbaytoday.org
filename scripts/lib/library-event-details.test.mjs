@@ -102,3 +102,34 @@ test("inline email fragments retain visible contact text through ingestion", asy
     description: '<p>J</p><p>in.luong@sjlibrary.org</p>',
   }).description, "J in.luong@sjlibrary.org");
 });
+
+test("LibCal ingestion preserves a real exhausted occurrence through normalization", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-15T14:00:00Z") });
+  const { scrapeLibCal, normalizePlaywrightEvent, LIBCAL_LIBRARIES } = await import("../playwright-scrapers.mjs");
+  // Public Mountain View list row captured October 15; the occurrence page
+  // independently confirms the date, farm location, and open waiting list.
+  const occurrence = {
+    id: 16984474, title: "Deer Hollow Spooky Storytime",
+    startdt: "2026-10-16 11:00:00", start: "11:00 am", end: "12:00 pm",
+    location: "Offsite", online_event: false,
+    url: "https://mountainview.libcal.com/event/16984474",
+    description: "<p>Together with our friends at Deer Hollow Farm, our librarians will present a spooky-themed storytime at the farm with books, songs, and rhymes.</p><p>Meet us there: Deer Hollow Farm, 22500 Cristo Rey Dr., Cupertino</p>",
+    registration_enabled: true,
+    seats: 15, seatsleft: 0, seatsleft_multiple: false, waitlist: "Wait list",
+    audiences: [{ name: "Preschoolers" }],
+  };
+  t.mock.method(globalThis, "fetch", async () => new Response(JSON.stringify({
+    total_results: 1, results: [occurrence],
+  }), { headers: { "content-type": "application/json" } }));
+  const [scraped] = await scrapeLibCal(null, LIBCAL_LIBRARIES[0]);
+  const event = normalizePlaywrightEvent(scraped);
+  assert.equal(event.registration, "full");
+  assert.equal(event.date, "2026-10-16");
+  assert.equal(event.time, "11:00 AM");
+  assert.equal(event.venue, "Deer Hollow Farm");
+  // The adapter retains the publisher's city; the final importer resolves
+  // the farm's Cupertino address separately.
+  assert.equal(event.city, "mountain-view");
+  assert.equal(event.url, occurrence.url);
+  assert.equal(requiresAdvanceRegistration(event), true);
+});

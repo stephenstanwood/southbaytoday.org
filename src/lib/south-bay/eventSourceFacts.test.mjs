@@ -13,6 +13,23 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("King Library's October 18 replacement program survives a shared storytime blurb", async () => {
+  const raw = {
+    date: "2026-10-18", title: "Indoor Family Storytime + Stay & Play",
+    url: "https://sjpl.bibliocommons.com/events/69fb8818703c33630025ded4",
+    venue: "King Library", time: "4:00 PM", endTime: "5:00 PM",
+    description: "**10/18 We will offer the special program For Goodness Snakes in lieu of our regular storytime! ** Best for children ages 0-8 with their caregivers; all families welcome! Storytime is designed to accommodate a mix of ages.",
+    blurb: "Join families at King Library for stories, songs, and playtime designed for kids of all ages.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].blurb, "For Goodness Snakes replaces the regular storytime at King Library; recommended for ages 0–8 with caregivers.");
+  assert.deepEqual({ ...events[0], blurb: raw.blurb }, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2026-10-25" }).blurb, raw.blurb);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-storytime" }).blurb, raw.blurb);
+});
+
 test("October Milpitas ESL occurrences omit contradictory term dates across refreshes", async () => {
   const occurrences = [
     ["2026-10-19", "6a5992919943bdf31e9f816b"],

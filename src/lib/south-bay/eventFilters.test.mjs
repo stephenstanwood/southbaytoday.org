@@ -622,6 +622,55 @@ test("a plain capped LibCal class is required, not appointment-only", () => {
   assert.equal(registrationLabel(registrationFromLibCal(LIBCAL_LANDSCAPE)), "Reserve ahead");
 });
 
+// Mountain View's public list row, checked October 15, 2026. The occurrence
+// page agrees: no seats remain, but readers may join the waiting list.
+const LIBCAL_FULL_STORYTIME = {
+  id: 16984474,
+  title: "Deer Hollow Spooky Storytime",
+  registration_enabled: true,
+  description: "<p>Together with our friends at Deer Hollow Farm, our librarians will present a spooky-themed storytime at the farm with books, songs, and rhymes.</p>",
+  seats: 15,
+  seatsleft: 0,
+  seatsleft_multiple: false,
+  waitlist: "Wait list",
+};
+
+test("LibCal exhausted seats mean full even while its waitlist remains open", () => {
+  const state = registrationFromLibCal(LIBCAL_FULL_STORYTIME);
+  assert.equal(state, "full");
+  assert.equal(registrationLabel(state), "Registration full");
+  assert.equal(requiresAdvanceRegistration({ registration: state }), true);
+  assert.equal(registrationFromLibCal({ ...LIBCAL_FULL_STORYTIME, waitlist: "" }), "full");
+});
+
+test("LibCal seat accounting marks an exhausted appointment session full", () => {
+  assert.equal(registrationFromLibCal({
+    ...LIBCAL_FULL_STORYTIME,
+    description: "Book an appointment for a 90-minute scanning session.",
+  }), "full");
+});
+
+test("LibCal optional signups never turn exhausted form seats into an admission gate", () => {
+  assert.equal(registrationFromLibCal({ ...LIBCAL_FULL_STORYTIME, ...LIBCAL_UKULELE }), "none");
+});
+
+test("LibCal requires unambiguous finite seat counts before marking a session full", () => {
+  for (const fields of [
+    { seatsleft: 1 },
+    { seatsleft: -1 },
+    { seats: 0 },
+    { seats: null },
+    { seatsleft: null },
+    { seatsleft: "" },
+    { seatsleft: "0" },
+    { seats: NaN },
+    { seatsleft: Infinity },
+  ]) {
+    assert.equal(registrationFromLibCal({ ...LIBCAL_FULL_STORYTIME, ...fields }), "required", JSON.stringify(fields));
+  }
+  assert.equal(registrationFromLibCal({ ...LIBCAL_FULL_STORYTIME, registration_enabled: false }), "none");
+});
+
 test("a LibCal walk-up promise beats the registration flag", () => {
   // Trap 2, and the direction that differs from BiblioCommons: LibCal's flag
   // only says a form is attached, so five real Mountain View walk-up programs

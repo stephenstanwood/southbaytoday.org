@@ -447,6 +447,7 @@ function libcalRegistrationText(ev) {
  *   ev.online_registration        <- Boolean
  *   ev.in_person_registration     <- Boolean
  *   ev.description / ev.more_info <- HTML the library writes itself
+ *   ev.seats / ev.seatsleft       <- numeric capacity / remaining seats
  *
  * Shipped 2026-09-08 after the September 8 issue made Mountain View's
  * "Community Preservation Lab Scanning Service" its afternoon plan card and
@@ -487,12 +488,24 @@ function libcalRegistrationText(ev) {
  * whose copy reads "No appointment is needed, we help patrons on a first come
  * first served basis", matching APPOINTMENT_PATTERNS on the very word that
  * says it is not one.
+ *
+ * October 15, 2026: the same endpoint also publishes seat availability.
+ * Deer Hollow Storytime, Sewing with FabMo, and Intro to 3D Printing had zero
+ * seats left but were imported as merely required. Only a registered session
+ * with a positive finite capacity and exactly zero remaining seats
+ * can establish `full`; missing counts or a zero/unlimited capacity cannot.
+ * An explicit walk-in promise still wins over an exhausted optional form.
  */
 export function registrationFromLibCal(ev) {
   if (!ev) return REGISTRATION_NONE;
   const text = libcalRegistrationText(ev);
   // Trap 2: an explicit walk-up promise outranks the flag and the prose.
   if (text && DROP_IN_PATTERNS.some((re) => re.test(text))) return REGISTRATION_NONE;
+  if (
+    ev.registration_enabled === true
+    && Number.isFinite(ev.seats) && ev.seats > 0
+    && ev.seatsleft === 0
+  ) return REGISTRATION_FULL;
   // Appointment beats seat-registration, the same precedence
   // registrationFromInstructions applies for BiblioCommons.
   const fromText = registrationFromInstructions(text);

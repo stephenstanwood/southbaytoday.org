@@ -7,6 +7,16 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The October 18 occurrence explicitly substitutes For Goodness Snakes for
+  // regular storytime; its shared series prose is not that day's program.
+  // https://sjpl.bibliocommons.com/events/69fb8818703c33630025ded4
+  // Evidence: docs/qa/2026-10-15-0707-fact-check.md.
+  {
+    date: "2026-10-18", url: "https://sjpl.bibliocommons.com/events/69fb8818703c33630025ded4",
+    facts: {
+      blurb: "For Goodness Snakes replaces the regular storytime at King Library; recommended for ages 0–8 with caregivers.",
+    },
+  },
   // These October occurrence records confirm 6–8 PM sessions but their shared
   // body still gives a February–May term and a conflicting August 2025 start.
   // Omit both term ranges; do not guess a replacement year or enrollment term.
