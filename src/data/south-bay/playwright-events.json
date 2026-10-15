@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-15T03:47:09.462Z",
+    "generatedAt": "2026-10-15T15:04:40.710Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 490,
+    "eventCount": 492,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (111)",
-      "Los Gatos Library (111)",
+      "Mountain View Public Library (112)",
+      "Los Gatos Library (113)",
       "San Jose Jazz (16)",
       "Linden Tree Books (14)",
-      "History San Jose (3)",
+      "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
@@ -19,9 +19,9 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (55)",
+      "City of Cupertino (54)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (81)",
+      "TheatreWorks Silicon Valley (80)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 116,
+        "count": 117,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 111,
+        "count": 113,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -125,7 +125,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 6,
+        "count": 8,
         "error": null,
         "sources": [
           "History San Jose"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 55,
+        "count": 54,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 81,
+        "count": 80,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -2714,6 +2714,29 @@
       "kidFriendly": true
     },
     {
+      "id": "70b1e507c625",
+      "title": "Ukulele Jam Sing and Play Along",
+      "date": "2027-01-13",
+      "displayDate": "Wed, Jan 13",
+      "time": "6:30 PM",
+      "endTime": "8:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Would you like to learn some fun songs on the ukulele? Beginners and ukulele enthusiasts are welcome to join us to sing and play together. Ukulele instructor Chuck Monahan will teach participants how to play basic chords on the ukulele and lead the group in an informal performance of popular songs from the last 50 years. Bring your own uke, or use one of ours. Ages 12 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Teens",
+        "Seniors",
+        "Tweens"
+      ],
+      "url": "https://mountainview.libcal.com/event/17028031",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "2743563357b5",
       "title": "Cafecito Book Club",
       "date": "2026-10-15",
@@ -5001,6 +5024,47 @@
       "kidFriendly": false
     },
     {
+      "id": "b27d6e6e19b6",
+      "title": "Still Life Drawing @ NUMU",
+      "date": "2027-01-13",
+      "displayDate": "Wed, Jan 13",
+      "time": "12:00 PM",
+      "endTime": "1:30 PM",
+      "venue": "NUMU - 106 E. Main St",
+      "address": "",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "Join our self-guided still life drawing sessions in NUMU’s Flick Studio. Adults of all skill levels work at their own pace with provided easels, paper, and pencils. Enjoy a quiet, creative space to practice observation and technique with a tableau of artifacts from the museum’s collection.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17286098",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "f45ca86f915d",
+      "title": "Mystery Lover's Book Club",
+      "date": "2027-01-13",
+      "displayDate": "Wed, Jan 13",
+      "time": "5:00 PM",
+      "endTime": "6:00 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "arts",
+      "cost": "free",
+      "description": "Enjoy a good mystery? Us too! Come chat with Librarian Breanna and others IN PERSON OR ON ZOOM about: Zoom Link : https://us06web.zoom.us/j/88384184677?pwd=VVRRRFBLNmU3dXd5NFJrdDRvMVlwQT09 If you sign up for our Mystery Lover's Book Club newsletter , you will receive meeting reminders and learn about the upcoming books we will be reading. Subscribe to our Mystery News newsletter to get the latest information on the new mystery books headed to our collection, mystery staff picks, and so more!",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17709155",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "c163b7cada59",
       "title": "Irving Flores Afro-Cuban Jazz Trio",
       "date": "2026-10-16",
@@ -5632,6 +5696,23 @@
       "kidFriendly": false
     },
     {
+      "id": "a18ccd8100ff",
+      "title": "History Park Heritage Holiday Tea",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "11:00 am",
+      "endTime": "3:30 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
       "id": "b402a0e00c51",
       "title": "Around the Americas with 123 Andrés? (Grades pre K-3)",
       "date": "2026-10-15",
@@ -5839,10 +5920,10 @@
       "kidFriendly": false
     },
     {
-      "id": "64b95cd99ac5",
+      "id": "d32c93b30e05",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5859,10 +5940,10 @@
       "kidFriendly": false
     },
     {
-      "id": "1c61b2b354cb",
+      "id": "1f8391e5417f",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5995,23 +6076,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "472fd2ec8745",
-      "title": "Juanes – North America Tour 2026",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -6321,10 +6385,27 @@
       "kidFriendly": false
     },
     {
-      "id": "a71538a279d9",
+      "id": "4ff5c9d15ee9",
+      "title": "How to Train Your Dragon The Musical Jr.",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": null,
+      "endTime": null,
+      "venue": "Montgomery Theater",
+      "address": "271 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "5b2322cad07c",
       "title": "Toddler Storytime",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6338,10 +6419,10 @@
       "kidFriendly": true
     },
     {
-      "id": "5bdc6d0630de",
+      "id": "2a99c71d187f",
       "title": "All Ages Storytime",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
+      "date": "2026-10-15",
+      "displayDate": "Thu, Oct 15",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6506,7 +6587,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-15T03:45:54.451Z"
+        "checkedAt": "2026-10-15T15:03:25.398Z"
       }
     },
     {
@@ -6529,7 +6610,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-15T03:45:54.452Z"
+        "checkedAt": "2026-10-15T15:03:25.399Z"
       }
     },
     {
@@ -6552,7 +6633,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-15T03:45:54.452Z"
+        "checkedAt": "2026-10-15T15:03:25.399Z"
       }
     },
     {
@@ -6575,7 +6656,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-15T03:45:54.452Z"
+        "checkedAt": "2026-10-15T15:03:25.399Z"
       }
     },
     {
@@ -6598,7 +6679,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-15T03:45:54.453Z"
+        "checkedAt": "2026-10-15T15:03:25.399Z"
       }
     },
     {
@@ -7299,23 +7380,6 @@
       "kidFriendly": false
     },
     {
-      "id": "d154959154a1",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
       "id": "4149d96f87bf",
       "title": "Monthly Chat with Mayor Moore",
       "date": "2026-11-10",
@@ -7619,23 +7683,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "4f33732d4ffd",
-      "title": "Dracula",
-      "date": "2026-10-14",
-      "displayDate": "Wed, Oct 14",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7503",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
