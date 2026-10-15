@@ -26,6 +26,7 @@ import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
+import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
 import {
   REGISTRATION_NONE,
   registrationFromLibCal,
@@ -2014,7 +2015,7 @@ async function scrapeHammerTheatre(page) {
   return events.filter((e) => !/\bthere are no upcoming events\b|events search/i.test(e.title));
 }
 
-async function scrapeChildrensDiscoveryMuseum(page) {
+export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {}) {
   await page.setExtraHTTPHeaders({
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   });
@@ -2027,7 +2028,7 @@ async function scrapeChildrensDiscoveryMuseum(page) {
     const labels = /^(Art Activity|Performance|Special Event|Ongoing|Always on)$/i;
     for (let i = 0; i < lines.length; i++) {
       const date = lines[i];
-      if (!/^(Weekdays|Weekends|Every|Saturday|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|March|April|May|June|July|August|September|October|November|December)\b/i.test(date)) continue;
+      if (!/^(Weekdays|Weekends|Every|Saturday|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|January|February|March|April|May|June|July|August|September|October|November|December)\b/i.test(date)) continue;
       const title = lines[i - 1];
       const type = lines[i - 2];
       if (!title || labels.test(title) || !labels.test(type || "Special Event")) continue;
@@ -2038,14 +2039,12 @@ async function scrapeChildrensDiscoveryMuseum(page) {
   });
 
   return raw.map((r) => {
-    let date = yearAwareDate(r.date);
-    if (/^(weekdays|weekends|every)/i.test(r.date)) date = TODAY;
-    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    const date = parseCdmOccurrenceDate(r.date, today);
+    if (!date || date < today || !isUsefulTitle(r.title)) return null;
     return {
       title: r.title,
       date,
-      time: clockFromText(r.time),
-      endTime: null,
+      ...clockRangeFromText(r.time),
       venue: "Children's Discovery Museum",
       address: "180 Woz Way, San Jose, CA 95110",
       city: "san-jose",

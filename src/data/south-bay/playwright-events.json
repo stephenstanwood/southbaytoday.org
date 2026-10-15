@@ -3,7 +3,7 @@
     "generatedAt": "2026-10-15T15:04:40.710Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 492,
+    "eventCount": 491,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (112)",
@@ -16,7 +16,7 @@
       "ICA San José (3)",
       "Mountain Winery (7)",
       "San Jose Theaters (19)",
-      "Children's Discovery Museum (2)",
+      "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
       "City of Cupertino (54)",
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 2,
+        "count": 1,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -5042,7 +5042,8 @@
       ],
       "url": "https://losgatosca.libcal.com/event/17286098",
       "source": "Los Gatos Library",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "registration": "required"
     },
     {
       "id": "f45ca86f915d",
@@ -6404,23 +6405,6 @@
     {
       "id": "5b2322cad07c",
       "title": "Toddler Storytime",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
-      "id": "2a99c71d187f",
-      "title": "All Ages Storytime",
       "date": "2026-10-15",
       "displayDate": "Thu, Oct 15",
       "time": "11:30 am",

@@ -22,6 +22,27 @@ import {
   walkUpSupportedByEventText,
 } from "./eventFilters.mjs";
 
+test("LibCal's required-registration category survives a signup window that has not opened", () => {
+  // Los Gatos 17286098 (Jan 13, 2027): its form is not enabled until Dec 23,
+  // but the first-party category and occurrence page already require booking.
+  const event = {
+    description: "Join our self-guided still life drawing sessions in NUMU's Flick Studio.",
+    registration_enabled: false,
+    in_person_registration: true,
+    categories: "Adult, Class or Workshop, Registration Required",
+    categories_arr: [{ name: "Registration Required" }],
+  };
+  assert.equal(registrationFromLibCal(event), "required");
+  assert.equal(registrationFromLibCal({ ...event, categories: "", categories_arr: [{ name: "Registration Required" }] }), "required");
+  assert.equal(registrationFromLibCal({ ...event, categories_arr: undefined }), "required");
+  assert.equal(registrationFromLibCal({ ...event, description: "Registration recommended. Walk-ins welcome." }), "none");
+  assert.equal(registrationFromLibCal({ ...event, description: "Book a one-on-one appointment." }), "appointment-only");
+  for (const category of ["No Registration Required", "Registration Recommended", "Adult", ""]) {
+    assert.equal(registrationFromLibCal({ ...event, categories: category, categories_arr: [] }), "none", category);
+  }
+  assert.equal(registrationFromLibCal({ ...event, categories: null, categories_arr: [null, {}, "Registration Required"] }), "none");
+});
+
 // The event that shipped as an in-person newsletter destination on
 // 2026-08-05. events.sjsu.edu lists it VIRTUAL; nothing in its title or blurb
 // says so, and SJSU's RSS defaults every event to the San Jose campus.

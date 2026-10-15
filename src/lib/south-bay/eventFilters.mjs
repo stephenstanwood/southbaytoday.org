@@ -447,6 +447,7 @@ function libcalRegistrationText(ev) {
  *   ev.online_registration        <- Boolean
  *   ev.in_person_registration     <- Boolean
  *   ev.description / ev.more_info <- HTML the library writes itself
+ *   ev.categories / categories_arr <- first-party registration requirements
  *   ev.seats / ev.seatsleft       <- numeric capacity / remaining seats
  *
  * Shipped 2026-09-08 after the September 8 issue made Mountain View's
@@ -510,6 +511,18 @@ export function registrationFromLibCal(ev) {
   // registrationFromInstructions applies for BiblioCommons.
   const fromText = registrationFromInstructions(text);
   if (fromText) return fromText;
+  // Los Gatos labels future NUMU sessions "Registration Required" before the
+  // signup window opens, when registration_enabled is still false and the
+  // description says nothing about booking. An exact category is a positive
+  // requirement; "No Registration Required" and optional categories are not.
+  // Explicit walk-in instructions above still outrank a generic category.
+  const categories = [
+    ...(typeof ev.categories === "string" ? ev.categories.split(",") : []),
+    ...(Array.isArray(ev.categories_arr) ? ev.categories_arr.map((category) => category?.name) : []),
+  ];
+  if (categories.some((category) => typeof category === "string" && /^registration required$/i.test(category.trim()))) {
+    return REGISTRATION_REQUIRED;
+  }
   // Trap 1: the flag only speaks when the library's own words did not.
   if (ev.registration_enabled === true) return REGISTRATION_REQUIRED;
   return REGISTRATION_NONE;

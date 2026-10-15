@@ -44,6 +44,25 @@ test("normal library adapters preserve late attendance paragraphs and structured
   assert.equal(classifyAudienceAge({ ...narcan, id: "next-occurrence", date: "2026-10-04" }), "adult");
 });
 
+test("LibCal's unopened required-registration category reaches the planner through the scraper", async (t) => {
+  const { scrapeLibCal, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
+  const date = new Date(Date.now() + 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  t.mock.method(globalThis, "fetch", async () => Response.json({ total_results: 1, results: [{
+    id: 17286098, title: "Still Life Drawing @ NUMU", startdt: `${date} 12:00:00`, start: "12:00pm", end: "1:30pm",
+    url: "https://losgatosca.libcal.com/event/17286098", location: "NUMU - 106 E. Main St",
+    description: "Join our self-guided still life drawing sessions in NUMU's Flick Studio.",
+    registration_enabled: false, in_person_registration: true,
+    categories: "Adult, Class or Workshop, Registration Required", categories_arr: [{ name: "Registration Required" }],
+  }] }));
+  const [raw] = await scrapeLibCal(null, { name: "Los Gatos Library", city: "los-gatos", urls: ["https://losgatosca.libcal.com"] });
+  const event = normalizePlaywrightEvent(raw);
+  assert.equal(event.registration, "required");
+  assert.equal(requiresAdvanceRegistration(event), true);
+  assert.equal(event.date, date);
+  assert.equal(event.time, "12:00 PM");
+  assert.equal(event.endTime, "1:30 PM");
+});
+
 test("same-day tickets stay distinct from advance registration and ordinary drop-ins", () => {
   const details = libraryEventDetails({ definition: {
     description: "<p>Learn about cats.</p><p>Limited space; tickets at the Information Desk starting at 1 PM.</p>",
