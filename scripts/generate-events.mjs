@@ -1595,6 +1595,41 @@ const DESC_TYPO_FIXES = [
   // across multiple future occurrences. Fix it at ingest so nightly refreshes
   // do not restore the typo after a manual copy-edit.
   [/\bofanother\b/gi, "of another"],
+
+  // Narrow repairs for source-copy grammar and flattened library/theatre
+  // headings. Keep occurrence details and registration language intact.
+  [/\binlcluding\b/gi, "including"],
+  [/will be lead an interactive collage workshop/g, "will lead an interactive collage workshop"],
+  [/Join Art\s*See Expression very own, Sharvi, in this teen-led where/gi, "Join Art See Expression's very own Sharvi in this teen-led program where"],
+  [/^Fiddler on the Roof (?=Tradition meets revolution\b)/i, "Fiddler on the Roof: "],
+  [/SJSU University Dance Theater Featuring choreography/g, "SJSU University Dance Theater, featuring choreography"],
+  [/No appointment is needed, we help patrons/g, "No appointment is needed; we help patrons"],
+  [/You'll learn how to: Start the game What the tiles mean The rules of the game and how to win How to create sets and play Playing Mahjong improves/g, "You'll learn how to start the game, what the tiles mean, the rules of the game and how to win, and how to create sets and play. Playing Mahjong improves"],
+  [/making jokes, learn to play Dungeons & Dragons, and having fun with art/g, "making jokes, learning to play Dungeons & Dragons, and having fun with art"],
+  [/Participants will learn the basics of playing piano, introduce to music notation, and staff lines\./g, "Participants will learn the basics of playing piano and be introduced to music notation and staff lines."],
+  [/You're welcome to bring your keyboard if you have one but not required\./g, "You're welcome to bring your keyboard if you have one, but it is not required."],
+  [/Sessions will include creating simple sentence structures, some basic grammar, and build up to writing a simple paragraph\./g, "Sessions will cover simple sentence structures and basic grammar, building up to writing a simple paragraph."],
+  [/These workshops sessions are led/g, "These workshop sessions are led"],
+  [/a series workshop on financial health/g, "a workshop series on financial health"],
+  [/Multi-generational take of the Tran family/g, "Multi-generational tale of the Tran family"],
+  [/Sound and music is used/g, "Sound and music are used"],
+  [/Age Range: Adults and Seniors Note:/g, "Age Range: Adults and Seniors. Note:"],
+  [/for 12-36 months olds/g, "for 12-36-month-olds"],
+  [/15 - 20 minutes storytime/g, "15-20-minute storytime"],
+  [/Nuestra voluntaria maravillosa, leerá cuentos en ingles y español/g, "Nuestra voluntaria maravillosa leerá cuentos en inglés y español"],
+  [/for their babies to lay on/g, "for their babies to lie on"],
+  [/Drop-in for an afternoon of coloring/g, "Drop in for an afternoon of coloring"],
+  [/coloring and drawing improves fine motor skills, encourages focus, and nurtures creativity/g, "coloring and drawing improve fine motor skills, encourage focus, and nurture creativity"],
+  [/This workshop is opened to Grades 5-8 only\./g, "This workshop is open to grades 5-8 only."],
+  [/As founder of Clorofil, and animal advocacy nonprofit/g, "As founder of Clorofil, an animal advocacy nonprofit"],
+  [/October 27, 2026 Santana Row/g, "October 27, 2026. Santana Row"],
+  [/Join Rachel-Anne Palacios, a local artist and educator as she/g, "Join Rachel-Anne Palacios, a local artist and educator, as she"],
+  [/A second event, Infant and Toddler Storytime B will start/g, "A second event, Infant and Toddler Storytime B, will start"],
+  [/Another event, Music and Movement B will start/g, "Another event, Music and Movement B, will start"],
+  [/Featured Dance: Bachata & Merengue Class will be led/g, "Featured Dance: Bachata & Merengue. Class will be led"],
+  [/Todos los materiales serán proporcionados ¡Los cupos/g, "Todos los materiales serán proporcionados. ¡Los cupos"],
+  [/There are hundreds of varieties of each, how do you choose\?/g, "There are hundreds of varieties of each. How do you choose?"],
+  [/students \(must have basic conversational skills\.\)/g, "students (must have basic conversational skills)."],
   [/\bpreformance(s?)\b/gi, "performance"],
   [/\bpefromance(s?)\b/gi, "performance"],
   [/\battendence\b/gi, "attendance"],
@@ -1916,7 +1951,7 @@ function polishDescription(text) {
   // the missing space and does not alter the represented time.
   t = t.replace(/([A-Za-z\u00C0-\u024F]),(?=[A-Za-z\u00C0-\u024F])/g, "$1, ");
   t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
-  t = t.replace(/\bfirst come,?\s+first served\b/gi, (phrase) =>
+  t = t.replace(/\bfirst[ -]come,?\s+first[ -]served?\b/gi, (phrase) =>
     phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served",
   );
   t = t.replace(/\b([Ff])or Ages\b/g, (_, initial) => `${initial}or ages`);
@@ -2126,6 +2161,11 @@ function polishDescription(text) {
   // Lounge", "Cross Fit Games"). Both are single-word brand marks.
   t = t.replace(/\bNet App\b/g, "NetApp");
   t = t.replace(/\bCross Fit\b/g, "CrossFit");
+  // These names also occur intact in the published event title or venue.
+  // Restore them after the generic splitter, including previously split copy.
+  t = t.replace(/\bSMa Rt Station\b/gi, "SMaRT Station");
+  t = t.replace(/\bSTE Mtober\b/gi, "STEMtober");
+  t = t.replace(/\bour Annual STEMtober science celebration\b/g, "our annual STEMtober science celebration");
   // Los Gatos Music in the Park performer The BentPeter Band uses a closed-up
   // stage name; the generic camel-case splitter must not rewrite that proper noun.
   t = t.replace(/\bBent Peter\b/g, "BentPeter");
