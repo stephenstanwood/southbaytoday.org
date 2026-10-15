@@ -13,6 +13,12 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Judi Oyama's opening retains the companion Halloween event's explicit family admission", () => {
+  const opening = { date: "2026-10-31", url: "https://www.jamsj.org/upcoming-events/judi-oyama", kidFriendly: false };
+  assert.equal(applyVerifiedEventFacts(opening).kidFriendly, true);
+  assert.equal(applyVerifiedEventFacts({ ...opening, date: "2027-10-31" }).kidFriendly, false);
+});
+
 test("dated Montalvo source facts preserve paid family admission and remove an unsupported stage claim", async () => {
   const matinees = [
     { date: "2026-10-15", url: "https://my.montalvoarts.org/overview/3064" },

@@ -7,6 +7,14 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // JAMsj's companion Skate Day & Halloween listing explicitly calls this
+  // same exhibition's October 31 opening a free family-friendly event.
+  // https://www.jamsj.org/upcoming-events
+  // Evidence: docs/qa/2026-10-15-0307-fact-check.md.
+  {
+    date: "2026-10-31", url: "https://www.jamsj.org/upcoming-events/judi-oyama",
+    facts: { kidFriendly: true },
+  },
   // Montalvo's ticket pages identify these as student/family programs. Goblins
   // charges $20 adult / $14 child including fees; calendar JSON-LD omits offers.
   // The mariachi page does not support an outdoor stage.

@@ -11,6 +11,7 @@ import {
   fetchScuEvents,
   fetchMexicanHeritagePlazaEvents,
   fetchMontalvoEvents,
+  squarespaceKidFriendly,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
@@ -35,6 +36,34 @@ import {
   parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("book plots, author biographies and minimum ages do not promise family admission", () => {
+  for (const [title, copy] of [
+    ["Nathaniel Philbrick with John Markoff", "The origin story of America's contradictions."],
+    ["Douglas Stuart with Karen Joy Fowler", "A story of childhood, family and faith."],
+    ["Kelly McGonigal", "Weaving personal storytelling with psychology."],
+    ["Jen Murphy Parker with Irena Smith", "A memoir about raising four children."],
+    ["Story Is the Thing", "Fiction authors read from their novels."],
+    ["Psychic Readings", "For ages 18 and older."],
+    ["Full Immersion Comfort Sound Bath Saturday", "For ages 18 and older."],
+    ["Existence Beyond Death", "For ages 15 and older."],
+    ["Family Concert", "Adults only. No minors."],
+    ["Annual Benefit", "Celebrating 70 years of storytelling, supporting our mission to bring people of all ages and backgrounds together."],
+  ]) assert.equal(squarespaceKidFriendly(title, copy), false, title);
+  assert.equal(squarespaceKidFriendly("Storytime: Home Is a Door We Carry", "A reading with the author."), true);
+  assert.equal(squarespaceKidFriendly("Festival Por La Paz", "Family-friendly event. Kids under 12 enter FREE."), true);
+  assert.equal(squarespaceKidFriendly("Museum Halloween", "Bring the whole family."), true);
+  assert.equal(squarespaceKidFriendly("Science Workshop", "Designed for children ages 5–10."), true);
+  assert.equal(squarespaceKidFriendly("Mercadito", "Pick up fresh food and support your family."), true);
+  assert.equal(squarespaceKidFriendly("Collage Capsules", "Best suited for teens and adults."), true);
+  assert.equal(squarespaceKidFriendly("Monument Dedication", "Relatives, and friends are warmly invited to attend."), true);
+});
+
+test("a campus reading-program omnibus cannot publish daily placeholder hours", () => {
+  assert.equal(isPublicEvent("Campus Reading Program October Events!", "SJSU Events", "See flyer for locations", ""), false);
+  assert.equal(isPublicEvent("Campus Reading Program November Events", "SJSU Events", "", ""), false);
+  assert.equal(isPublicEvent("Campus Reading Program: I, Robot discussion", "SJSU Events", "Open to the public", "King Library"), true);
+});
 
 test("Montalvo uses ticket-page admission and audience while null and blank calendar prices stay unknown", async () => {
   const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });

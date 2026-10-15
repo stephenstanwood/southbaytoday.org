@@ -221,6 +221,9 @@ function h(prefix, ...parts) {
 
 // ── Event title blocklist — skip private/internal/irrelevant events ──────────
 const TITLE_BLOCKLIST = [
+  // SJSU's October 2026 flyer names individual 3:30/5:30 PM sessions;
+  // this omnibus listing instead repeats daily at 8 AM with no venue.
+  /^Campus Reading Program\s+[A-Za-z]+\s+Events!?$/i,
   // SCU's invitation-only employer coffee chat is not a public event.
   /\b(?:invite|invitation)[-\s]+only\b/i,
   /\bpractice\b/i,        // team practices
@@ -811,6 +814,7 @@ function isPublicEvent(title, source, description, venue) {
 // Known recurring scraper typos — keyed by the bad string, value is the fix.
 // Add entries here when a source consistently sends bad data.
 const TITLE_FIXES = {
+  "Environmental Humanties Project": "Environmental Humanities Project",
   "Fun Runa": "Fun Run",
   // See PROPER_NOUN_FIXES below — misspellings that also appear in blurbs are
   // corrected in both places, so a card's title and its description agree.
@@ -4574,6 +4578,15 @@ function parseOperaSanJoseClock(text) {
   return match ? match[1].replace(/\s+/g, " ").toUpperCase() : null;
 }
 
+function parseOperaSanJoseDate(text) {
+  const match = String(text || "").match(/\b([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/);
+  if (!match) return null;
+  const calendar = parseNaturalDateTime(match[1], match[2], match[3], "12:00", "PM");
+  // Performance labels are Pacific calendar days, not host-local instants.
+  // Bare new Date("Sun, November 15, 2026") became Nov 14 on UTC runners.
+  return calendar ? parseDatePT(calendar.date) : null;
+}
+
 /** Per-performance rows from a production page's performances-container. */
 function parseOperaSanJosePerformances(html) {
   const performances = [];
@@ -4629,7 +4642,7 @@ async function fetchOperaSanJoseEvents() {
       if (!performances.length) continue;
 
       for (const perf of performances) {
-        const start = parseDate(perf.dateText);
+        const start = parseOperaSanJoseDate(perf.dateText);
         if (!start || isNaN(start.getTime())) continue;
         const date = isoDate(start);
         if (date < today || date > horizon) continue;
@@ -7120,6 +7133,28 @@ async function fetchMeetupEvents() {
 
 // ── Bookstores ──
 
+const SQUARESPACE_FAMILY_INVITATIONS = [
+  /\bfamil(?:y|ies)[-\s]+(?:friendly|fun|activities)\b/i,
+  /\b(?:whole|entire)\s+family\b/i,
+  /\b(?:kids?|children|families)\s+(?:are\s+)?(?:welcome|invited|admitted|enter\b|under\s+\d+)\b/i,
+  /\b(?:for|bring\s+your|designed\s+for)\s+(?:kids?|children|families|toddlers?|preschoolers?|teens?|tweens?|youth)\b/i,
+  /\b(?:for|open\s+to)\s+all\s+ages\b|\ball\s+ages\s+welcome\b/i,
+  /\bsupport\s+your\s+family\b/i,
+  /\brelatives[,\s]+and\s+friends\s+are\s+(?:warmly\s+)?invited\b/i,
+  /\bgrades?\s+[K0-9]\b/i,
+  /\bages?\s+(?:\d|1[0-2])\s*(?:[-–]|to\s+)\s*(?:\d|1[0-7])\b/i,
+];
+
+function squarespaceKidFriendly(title, copy) {
+  const text = `${title} ${copy}`;
+  // A minimum age is an admission restriction, not a family invitation.
+  // Full bodies also contain novels' plots and speakers' biographies: a
+  // "family story", "childhood", or "storytelling" does not identify an audience.
+  if (/\b(?:ages?\s*)?(?:1[3-9]|[2-9]\d)\s*(?:\+|(?:and|&)\s+(?:older|over|up))|\badults?\s+only\b/i.test(text)) return false;
+  return /\b(?:story\s*time|baby\s+lapsit|toddler|preschool|puppet\s+show|picture\s+book|family|all[-\s]ages|kids?|children|youth|teens?|tweens?)\b/i.test(title)
+    || SQUARESPACE_FAMILY_INVITATIONS.some((pattern) => pattern.test(text));
+}
+
 // Shared Squarespace event fetcher — works for any site that exposes ?format=json
 async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue, defaultAddress) {
   console.log(`  ⏳ ${source}...`);
@@ -7188,7 +7223,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           description: desc,
           url: fullUrl,
           source,
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(audienceText),
+          kidFriendly: squarespaceKidFriendly(item.title, audienceText),
         };
       })
       .filter(Boolean);
@@ -10402,6 +10437,9 @@ export {
   fetchOperaSanJoseEvents,
   operaSanJoseSeasonProductionUrls,
   parseOperaSanJosePerformances,
+  parseOperaSanJoseDate,
+  squarespaceKidFriendly,
+  fetchSquarespaceEvents,
   fetchScccfdEvents,
   parseEventbriteOrganizerEvents,
   fetchJazzOnThePlazzEvents,
