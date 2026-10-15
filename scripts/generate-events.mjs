@@ -9689,11 +9689,12 @@ async function main() {
     if (norm(e.description) === norm(e.title)) e.description = "";
   });
 
-  // Apply verified museum facts before time backfill and publication
-  // filtering. Applying them only during later blurb resolution dropped the
-  // SJMA Community Day entirely and cached noon for evening First Fridays.
+  // Apply verified facts before time backfill, publication filtering and date
+  // sorting. Late corrections dropped SJMA Community Day, cached noon for
+  // evening First Fridays, and left FOPAL's corrected November 15 sale in the
+  // November 8 position. Date corrections must use the verified occurrence.
   allEvents.forEach((event) => {
-    if (event.source === "San Jose Museum of Art") Object.assign(event, applyVerifiedEventFacts(event));
+    Object.assign(event, applyVerifiedEventFacts(event));
   });
 
   // Sanitize time field: clear values that aren't a clock time (e.g. "SATURDAY, APRIL 25, 2026"

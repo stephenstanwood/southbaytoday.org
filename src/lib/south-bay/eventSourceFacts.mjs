@@ -7,6 +7,38 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // FOPAL's dated 2026 schedule says November 14–15; the library's external
+  // Sunday listing incorrectly says November 8. Its Sunday hours agree with
+  // FOPAL's sale information. Correct the date from the organizer's schedule,
+  // not from recurrence arithmetic, and link that primary evidence.
+  // https://www.fopal.org/2026-book-sale-dates
+  // https://www.fopal.org/book-sale-info
+  // Evidence: docs/qa/2026-10-15-1307-fact-check.md.
+  {
+    date: "2026-11-08", url: "https://paloalto.bibliocommons.com/events/69667a0394297d3600a4e8a0",
+    facts: { date: "2026-11-15", displayDate: "Sun, Nov 15", url: "https://www.fopal.org/2026-book-sale-dates" },
+  },
+  // The library conflates Kepler's candidate sample with confirmed planets.
+  // NASA's archive distinguishes 2,787 confirmed Kepler discoveries from the
+  // larger candidate sample. Avoid both the conflation and a live count here.
+  // https://exoplanetarchive.ipac.caltech.edu/docs/counts_detail.html
+  // https://sccl.bibliocommons.com/events/6aa329f860748300382614b2
+  // Evidence: docs/qa/2026-10-15-1307-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://sccl.bibliocommons.com/events/6aa329f860748300382614b2",
+    copyReplacements: [[/NASA['’]s Kepler mission discovered over 4,400 transiting planets around other stars, including over 700 systems with multiple planets\./gi, "NASA's Kepler mission identified thousands of planets and planet candidates around other stars, including multi-planet systems."]],
+  },
+  // The series names tech tutors, not librarians. Its cached blurb invented
+  // the staff role; preserve the source's wording on the two listed sessions.
+  // https://sjpl.bibliocommons.com/events/68df10f9023ff328007ce8c8
+  // Evidence: docs/qa/2026-10-15-1307-fact-check.md.
+  ...[
+    ["2026-10-15", "68df10f9023ff328007ce8c8"],
+    ["2026-10-17", "68df10f9023ff328007ce8c9"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    copyReplacements: [[/\bfrom a librarian at Willow Glen Library\b/gi, "from a tech tutor at Willow Glen Library"]],
+  })),
   // The library's occurrence confirms October 18, the third Sunday, while its
   // shared body says fourth Sunday. Keep the dated session and walk-in terms.
   // https://sjpl.bibliocommons.com/events/6a02128243b41b3d0065b38d

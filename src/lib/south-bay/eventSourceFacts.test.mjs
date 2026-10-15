@@ -13,6 +13,69 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("FOPAL's organizer schedule corrects the library's November Sunday occurrence", async () => {
+  const raw = {
+    id: "paloalto-69667a0394297d3600a4e8a0", date: "2026-11-08", displayDate: "Sun, Nov 8",
+    time: "1:00 PM", endTime: "4:00 PM", venue: "Cubberley Community Center", city: "palo-alto",
+    title: "FOPAL Book Sale", url: "https://paloalto.bibliocommons.com/events/69667a0394297d3600a4e8a0",
+    description: "Browse three rooms. Sunday hours: all rooms, 1 PM – 4 PM.",
+    blurb: "Browse used books at the Friends of the Palo Alto Library sale.", cost: "free",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], {
+    ...raw, date: "2026-11-15", displayDate: "Sun, Nov 15", url: "https://www.fopal.org/2026-book-sale-dates",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-12-13" }), { ...raw, date: "2026-12-13" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, id: "different", url: "https://example.org/another-sale" }), { ...raw, id: "different", url: "https://example.org/another-sale" });
+  const { retireSlugs, resolveRetired } = await import("./eventSlugLedger.mjs");
+  const ledger = retireSlugs({ entries: [] }, [raw], events, "2026-10-15");
+  const { redirects, orphans } = resolveRetired(ledger, events, [], "2026-10-15");
+  assert.equal(redirects.get("2026-11-08-fopal-book-sale"), "2026-11-15-fopal-book-sale");
+  assert.deepEqual(orphans, []);
+});
+
+test("Los Altos astronomy talk distinguishes Kepler discoveries from planet candidates", async () => {
+  const raw = {
+    date: "2026-10-15", time: "7:00 PM", endTime: "8:30 PM",
+    url: "https://sccl.bibliocommons.com/events/6aa329f860748300382614b2",
+    title: "Why Are Exoplanetary Systems Unlike the Solar System?", venue: "Los Altos Library",
+    description: "NASA's Kepler mission discovered over 4,400 transiting planets around other stars, including over 700 systems with multiple planets. Speaker Daniel Jontof-Hutter studies planetary dynamics.",
+    blurb: "Hear how Kepler-discovered exoplanet systems compare to our own solar system's planetary layout.",
+    cost: "free", sourceAudiences: ["Adults", "Older Adults", "Teens"],
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].description, "NASA's Kepler mission identified thousands of planets and planet candidates around other stars, including multi-planet systems. Speaker Daniel Jontof-Hutter studies planetary dynamics.");
+  assert.deepEqual({ ...events[0], description: raw.description }, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }), { ...raw, date: "2027-10-15" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-astronomy-talk" }), { ...raw, url: "https://example.org/another-astronomy-talk" });
+});
+
+test("Willow Glen tech assistance preserves the source's tutor role through blurb resolution", async () => {
+  for (const [date, sourceId, time] of [
+    ["2026-10-15", "68df10f9023ff328007ce8c8", "11:00 AM"],
+    ["2026-10-17", "68df10f9023ff328007ce8c9", "10:00 AM"],
+  ]) {
+    const raw = {
+      date, time, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+      title: "1 on 1 Tech Assistance", venue: "Willow Glen Library", cost: "free",
+      description: "Our experienced and dedicated tech tutors can help with Word, Excel, and online forms. Participants are encouraged to pre-register; however, drop-ins are also considered.",
+      blurb: "Get one-on-one help with Word, Excel, PowerPoint, or online forms from a librarian at Willow Glen Library.",
+      registration: "required",
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].blurb, "Get one-on-one help with Word, Excel, PowerPoint, or online forms from a tech tutor at Willow Glen Library.");
+    assert.deepEqual({ ...events[0], blurb: raw.blurb }, raw);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }), { ...raw, date: "2027-10-15" });
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-tech-session" }), { ...raw, url: "https://example.org/another-tech-session" });
+  }
+});
+
 test("October Nameless Anime Club retains its dated Sunday without a conflicting fourth-Sunday claim", async () => {
   const raw = {
     date: "2026-10-18", time: "12:00 PM", endTime: "4:00 PM",
