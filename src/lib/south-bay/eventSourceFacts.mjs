@@ -7,6 +7,25 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The SCU listing itself has the wrong Election Day. California's official
+  // calendar confirms November 3, 2026; preserve the roundtable's October date.
+  // https://www.sos.ca.gov/elections/upcoming-elections/general-election-november-3-2026
+  {
+    date: "2026-10-20",
+    url: "https://events.scu.edu/arts-and-sciences/event/517594-whats-on-silicon-valleys-ballot-a-roundtable-on",
+    copyReplacements: [[/elections will close on November 2nd/gi, "Election Day is November 3, 2026"]],
+  },
+  // SCU's full Event JSON-LD says this session is via Zoom, with registration
+  // required for its link. Its online_type field is empty and RSS has no body.
+  // https://events.scu.edu/leavey-school-of-business/event/509849-job-search-series-2-resume-linkedin-and-practical
+  {
+    date: "2026-10-15",
+    url: "https://events.scu.edu/leavey-school-of-business/event/509849-job-search-series-2-resume-linkedin-and-practical",
+    facts: {
+      venue: "Online", address: "", virtual: true,
+      description: "Online workshop on resumes, LinkedIn profiles, and practical networking. Register to receive the Zoom link.",
+    },
+  },
   // Stanford's occurrence page explicitly says Virtual Event, General Public,
   // and free with a personal or Stanford Zoom login. The sparse feed's campus
   // fallback must not turn this into a physical visit. Only published dates.

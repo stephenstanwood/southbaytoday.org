@@ -7,6 +7,8 @@ import {
   inferCategory,
   isEventTimeBackfillCandidate,
   fetchSvlgEvents,
+  fetchSjsuEvents,
+  fetchScuEvents,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
@@ -469,6 +471,75 @@ test("drops Stanford events restricted to known campus audiences, preserving pub
   assert.equal(isCampusOnlyLocalistAudience({ event_audience: ["Affiliates", "Everyone"] }), false);
   assert.equal(isCampusOnlyLocalistAudience({ event_audience: ["Community Members"] }), false);
   assert.equal(isCampusOnlyLocalistAudience({}), false);
+  assert.equal(isCampusOnlyLocalistAudience({
+    event_target_audience: ["Students", "Current Students", "SJSU Employees", "Undergraduate Students", "Graduate Students"],
+  }), true);
+  assert.equal(isCampusOnlyLocalistAudience({
+    event_target_audience: ["Students", "General Public"],
+  }), false);
+  assert.equal(isCampusOnlyLocalistAudience({
+    event_audience: ["General Public"], event_target_audience: ["Students"],
+  }), false);
+});
+
+test("SJSU applies source audience filters even without an attendance-mode field", async () => {
+  const origin = "https://events.sjsu.edu";
+  const rows = [
+    ["FSL PNME #2", "private", { event_target_audience: [{ name: "Students" }] }],
+    ["Public art workshop", "public", { event_target_audience: [{ name: "Students" }, { name: "General Public" }] }],
+    ["Unspecified audience", "unspecified", {}],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, slug]) => `<item><title>${title}</title><link>${origin}/event/${slug}</link><description>Program details.</description><pubDate>2026-10-15T12:00:00-07:00</pubDate></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url) === `${origin}/calendar.xml`) return new Response(xml);
+    assert.match(String(url), /^https:\/\/events\.sjsu\.edu\/api\/2\/events\?/);
+    return Response.json({ page: { total: 1 }, events: rows.map(([, slug, filters]) => ({ event: {
+      localist_url: `${origin}/event/${slug}`, filters,
+      ...(slug === "public" ? { experience: "virtual" } : {}),
+    } })) });
+  };
+  try {
+    const events = await fetchSjsuEvents();
+    assert.deepEqual(events.map((event) => event.title), ["Public art workshop", "Unspecified audience"]);
+    assert.equal(events[0].virtual, true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("SCU aliases retain canonical department filtering and online attendance", async () => {
+  const origin = "https://events.scu.edu";
+  const rows = [
+    ["Career appointment", "510473", "accounting", null],
+    ["Writing retreat", "507131", "faculty-development", null],
+    ["Public faculty recital", "469690", "arts-and-sciences", null],
+    ["Public online talk", "517594", "arts-and-sciences", "Online only"],
+    ["LSB CASH", "511538", "live", null],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, id]) => `<item><title>${title}</title><link>${origin}/live/events/${id}-program</link><description>Program details.</description><pubDate>2026-10-15T12:00:00-07:00</pubDate>${id === "511538" ? "<livewhale:categories>Career &amp; Employer Events,Leavey School of Business</livewhale:categories>" : ""}</item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(url), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: rows.map(([, id, department, online_type]) => ({
+      id: `${id}9`, parent: id, url: `${origin}/${department}/event/${id}-program`, online_type,
+    })) });
+  };
+  try {
+    const events = await fetchScuEvents();
+    assert.deepEqual(events.map((event) => event.title), ["Public faculty recital", "Public online talk"]);
+    assert.equal(events[1].virtual, true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+test("internal SCU training and new-major welcomes do not exclude public faculty art", () => {
+  assert.equal(isStudentOnlyEvent({ title: "AIM Faculty Portal Training" }), true);
+  assert.equal(isStudentOnlyEvent({ title: "SCU COMM New Major Welcome" }), true);
+  assert.equal(isStudentOnlyEvent({ title: "Connor Group Coffee Chat", description: "Register in Handshake." }), true);
+  assert.equal(isStudentOnlyEvent({ title: "Faculty Recital Series", link: "https://events.scu.edu/arts-and-sciences/event/1-recital" }), false);
 });
 
 test("drops SCU technology training and Handshake registration listings", () => {

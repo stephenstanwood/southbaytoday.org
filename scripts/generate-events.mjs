@@ -3131,9 +3131,11 @@ function parseIcalDate(dtStr) {
 /**
  * Localist (SJSU, Stanford): /api/2/events exposes `experience` =
  * "virtual" | "inperson" | "hybrid". The RSS feed we list from does not.
- * Returns Map<localist_url, experience>.
+ * Keep audience filters alongside attendance mode: SJSU calls its audience
+ * field `event_target_audience`, while Stanford uses `event_audience`.
+ * Returns Map<localist_url, { experience, filters }>.
  */
-async function fetchLocalistExperienceMap(origin, { days = 370, maxPages = 12 } = {}) {
+async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
   const start = todayPT();
   let pages = 1;
@@ -3143,8 +3145,10 @@ async function fetchLocalistExperienceMap(origin, { days = 370, maxPages = 12 } 
     pages = data?.page?.total ?? 1;
     for (const wrapper of data?.events ?? []) {
       const ev = wrapper?.event;
-      if (!ev?.localist_url || !ev.experience) continue;
-      map.set(ev.localist_url.replace(/\/+$/, ""), ev.experience);
+      if (!ev?.localist_url) continue;
+      map.set(ev.localist_url.replace(/\/+$/, ""), {
+        experience: ev.experience, filters: ev.filters,
+      });
     }
   }
   if (pages > maxPages) {
@@ -3159,9 +3163,12 @@ async function fetchLocalistExperienceMap(origin, { days = 370, maxPages = 12 } 
  * Keyed by the numeric event id, because the JSON `url` omits the group
  * path segment the RSS `<link>` carries
  * (/event/469593-… vs /archives-and-special-collections/event/469593-…).
- * Returns Map<numericId, onlineType>.
+ * Keep the canonical URL even when online_type is absent. RSS aliases under
+ * /live/events/ omit the owning department (Career Center, Accounting, etc.)
+ * and must not bypass the campus-program filter.
+ * Returns Map<numericId, { onlineType, url }>.
  */
-async function fetchLiveWhaleOnlineMap(origin, { maxPages = 14 } = {}) {
+async function fetchLiveWhaleMetadataMap(origin, { maxPages = 14 } = {}) {
   const map = new Map();
   let pages = 1;
   for (let page = 1; page <= Math.min(pages, maxPages); page++) {
@@ -3172,8 +3179,11 @@ async function fetchLiveWhaleOnlineMap(origin, { maxPages = 14 } = {}) {
       // online_type is the descriptive field ("Online only" / "Hybrid");
       // is_online alone can't distinguish those two.
       const signal = ev.online_type ?? (ev.is_online ? "Online only" : null);
-      if (signal === null) continue;
-      map.set(String(ev.id), signal);
+      const metadata = { onlineType: signal, url: ev.url };
+      map.set(String(ev.id), metadata);
+      // Shared LiveWhale copies have their own id but link to the parent's
+      // /live/events/<id> URL. RSS may identify either record.
+      if (ev.parent !== undefined && ev.parent !== null) map.set(String(ev.parent), metadata);
     }
   }
   if (pages > maxPages) {
@@ -3184,7 +3194,7 @@ async function fetchLiveWhaleOnlineMap(origin, { maxPages = 14 } = {}) {
 
 /** LiveWhale event URL → numeric id ("…/event/469593-reflections-of-faith" → "469593"). */
 function liveWhaleEventId(url) {
-  const m = String(url || "").match(/\/event\/(\d+)\b/);
+  const m = String(url || "").match(/\/events?\/(\d+)\b/);
   return m ? m[1] : null;
 }
 
@@ -3193,10 +3203,11 @@ function liveWhaleEventId(url) {
 const CAMPUS_ONLY_LOCALIST_AUDIENCES = new Set([
   "students", "students - undergraduates", "students - graduates", "postdocs",
   "faculty", "staff", "staff - academic", "staff - managers", "alumni", "affiliates",
+  "sjsu employees", "current students", "undergraduate students", "graduate students",
 ]);
 
 function isCampusOnlyLocalistAudience(filters) {
-  const audiences = (filters?.event_audience || [])
+  const audiences = [...(filters?.event_audience || []), ...(filters?.event_target_audience || [])]
     .map((audience) => String(audience?.name || audience || "").trim().toLowerCase())
     .filter(Boolean);
   // Missing or unfamiliar audience tags do not prove restricted admission.
@@ -3321,7 +3332,7 @@ async function fetchStanfordEvents() {
 // events. `osher` covers SCU's Osher Lifelong Learning Institute, a
 // paid-membership program for adults 50+ whose listings ("Tech SIG",
 // "Volunteer Luncheon Reception") are members-only.
-const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|technology-training|advancement-services|teaching-and-learning|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
+const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|technology-training|advancement-services|teaching-and-learning|faculty-development|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
 // `scuaa` = SCU Accounting Association (student club); `bva café` /
 // `bronco ventures accelerator` = SCU's internal startup accelerator program
 // (cohort-only events). Both leaked through cycle 146's broader SCU filter
@@ -3332,7 +3343,7 @@ const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement
 // decorate their office doors and lists Students as its audience; it is not a
 // public outing: events.sjsu.edu/event/departemnt-door-decorating-competition.
 const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel|department door decorating competition)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
-const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b|\bregister\b.{0,80}\bon\s+handshake\b/i;
+const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b|\bregister\b.{0,80}\b(?:on|in)\s+handshake\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
 // — join…) reliably signals a campus-internal event even when the title looks
@@ -3350,6 +3361,12 @@ const SCU_INTERNAL_DESC = /\b(?:free|open)\s+to\s+(?:all\s+)?broncos\b|\bbronco\
 const STUDENT_ONLY_AUDIENCE = /\b(?:students?[\s-]only|for\s+(?:scu\s+|sjsu\s+|spartan\s+|bronco\s+|current\s+|currently[\s-]enrolled\s+|enrolled\s+|all\s+|our\s+|fellow\s+)?students\b|open\s+to\s+(?:all\s+)?students\b|currently\s+enrolled|valid\s+student\s+id|with\s+(?:a\s+)?(?:valid\s+)?student\s+id|finals?\s+week|during\s+finals|study\s+break)\b/i;
 
 function isStudentOnlyEvent(item) {
+  // Faculty portal training and a department's new-major welcome are internal
+  // programs, unlike a public faculty recital or student art exhibition.
+  if (/\bfaculty\s+portal\s+training\b|\bnew\s+major\s+welcome\b/i.test(item.title || "")) return true;
+  // SCU's RSS can use a /live/events/ alias that hides /career-center/.
+  // The source category still identifies the internal recruiting program.
+  if (/\bCareer\s*&(?:amp;)?\s*Employer\s+Events\b/i.test(item.livewhaleCategories || "")) return true;
   if (STUDENT_ONLY_URL_PATHS.test(item.link || "")) return true;
   if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
   if (STUDENT_ONLY_AUDIENCE.test(item.title || "")) return true;
@@ -3446,12 +3463,14 @@ async function fetchSjsuEvents() {
     // The RSS carries no location field at all — SJSU's Localist API does,
     // and its `localist_url` joins 1:1 with the RSS <link>. Without this, ~20%
     // of the SJSU feed is online-only and looks in-person.
-    const experienceByUrl = await fetchLocalistExperienceMap("https://events.sjsu.edu");
+    const metadataByUrl = await fetchLocalistMetadataMap("https://events.sjsu.edu");
     let skipped = 0;
     let adminSkipped = 0;
     let venueCityFixes = 0;
     let virtualFromSource = 0;
     const parsed = items.map((item) => {
+      const metadata = metadataByUrl.get(String(item.link || "").replace(/\/+$/, ""));
+      if (isCampusOnlyLocalistAudience(metadata?.filters)) { skipped++; return null; }
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
@@ -3488,7 +3507,7 @@ async function fetchSjsuEvents() {
       const COMMERCIAL_TICKET_VENUE = /\b(paypal park|excite ballpark|levi'?s stadium|sap center|cefcu stadium|spartan stadium|provident credit union event center|shoreline amphitheatre|mountain winery|mountain west championship)\b/i;
       const cost = category === "sports" || COMMERCIAL_TICKET_VENUE.test(venue) ? "paid" : "free";
       const isVirtual =
-        virtualFromSourceSignal(experienceByUrl.get(String(item.link || "").replace(/\/+$/, ""))) === true;
+        virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;
       return applyVerifiedSjsuEventOverride({
         id: h("sjsu", item.link || item.title, item.pubDate),
@@ -3609,11 +3628,12 @@ async function fetchScuEvents() {
     // The RSS exposes no online/location-type field; LiveWhale's JSON API does.
     // Ids missing from the map (paging drift between the two endpoints) fall
     // through to the text patterns rather than being assumed in-person.
-    const onlineTypeById = await fetchLiveWhaleOnlineMap("https://events.scu.edu");
+    const metadataById = await fetchLiveWhaleMetadataMap("https://events.scu.edu");
     let skippedScu = 0;
     let virtualFromSourceScu = 0;
     const parsed = items.map((item) => {
-      if (isStudentOnlyEvent(item)) { skippedScu++; return null; }
+      const metadata = metadataById.get(String(item.livewhaleId || liveWhaleEventId(item.link)));
+      if (isStudentOnlyEvent({ ...item, link: metadata?.url || item.link })) { skippedScu++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
       const geoCity = item.georssPoint ? nearestSouthBayCityFromGeoPoint(item.georssPoint) : null;
@@ -3649,7 +3669,7 @@ async function fetchScuEvents() {
         ? "Santa Clara University"
         : (isRoomOnly && !namesCampus ? `Santa Clara University — ${scuLocation}` : scuLocation);
       const isVirtual =
-        virtualFromSourceSignal(onlineTypeById.get(liveWhaleEventId(item.link))) === true;
+        virtualFromSourceSignal(metadata?.onlineType) === true;
       if (isVirtual) virtualFromSourceScu++;
       return {
         id: h("scu", item.link || item.title, item.pubDate),
@@ -10372,6 +10392,8 @@ export {
   fetchLosAltosHistoryEvents,
   fetchMaclaEvents,
   fetchStanfordEvents,
+  fetchSjsuEvents,
+  fetchScuEvents,
   fetchMontalvoEvents,
   fetchMusicInParkEvents,
   fetchPaloAltoPlayersEvents,

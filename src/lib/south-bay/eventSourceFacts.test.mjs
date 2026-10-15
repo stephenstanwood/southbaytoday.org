@@ -13,6 +13,41 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("SCU roundtable copy uses the official 2026 Election Day without changing the event date", () => {
+  const raw = {
+    date: "2026-10-20", time: "2:15 PM",
+    url: "https://events.scu.edu/arts-and-sciences/event/517594-whats-on-silicon-valleys-ballot-a-roundtable-on",
+    description: "Early voting has begun, and elections will close on November 2nd. All are welcome!",
+    blurb: "Discuss local ballot issues.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.match(corrected.description, /Election Day is November 3, 2026/);
+  assert.match(corrected.description, /All are welcome/);
+  assert.equal(corrected.date, raw.date);
+  assert.equal(corrected.time, raw.time);
+  assert.equal(corrected.blurb, raw.blurb);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-20" }).description, raw.description);
+});
+
+test("SCU's sparse job-search row remains online despite empty platform mode metadata", async () => {
+  const raw = {
+    date: "2026-10-15", time: "12:00 PM", venue: "Santa Clara University",
+    url: "https://events.scu.edu/leavey-school-of-business/event/509849-job-search-series-2-resume-linkedin-and-practical",
+    description: "", blurb: "Learn practical tips on resumes and networking.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.venue, "Online");
+  assert.equal(corrected.virtual, true);
+  assert.match(corrected.description, /Register to receive the Zoom link/);
+  assert.equal(corrected.time, raw.time);
+  assert.equal(corrected.blurb, raw.blurb);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], corrected);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).venue, raw.venue);
+});
+
 test("public virtual Drupallers sessions retain online attendance across sparse refreshes", async () => {
   const raw = {
     title: "Drupallers Drop-in Web Help", date: "2026-10-15",
