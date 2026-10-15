@@ -912,6 +912,12 @@ const PROPER_NOUN_FIXES = {
   // SCCL's citizenship-prep listings title-case the agency acronym in both the
   // heading area and body ("128 Uscis civics questions") — 2026-10-05.
   Uscis: "USCIS",
+  // The author's own cookbook page uses DeSpain and credits Gordon Ramsay.
+  // LibCal title-cases her surname; prose polishing also splits DeSpain.
+  // https://www.pyetsplate.com/cookbook
+  "Pyet Despain": "Pyet DeSpain",
+  "Pyet De Spain": "Pyet DeSpain",
+  "Gordon Ramsey": "Gordon Ramsay",
 };
 
 function fixProperNouns(text) {
@@ -2260,6 +2266,10 @@ function polishDescription(text) {
   // Official jazz quartet styling. The generic camel-case/all-caps passes can
   // split PUBLIQuartet into "Publi Quartet" when re-polishing stored copy.
   t = t.replace(/\bPUBLI Quartet\b/gi, "PUBLIQuartet");
+
+  // Run after prose casing/splitting as well as at ingest: DeSpain otherwise
+  // becomes De Spain again. URLs are still masked so their bytes stay intact.
+  t = fixProperNouns(t);
 
   return cleanDisplayCopy(t).replace(/\uE001(\d+)\uE002/g, (_, index) => urls[Number(index)]);
 }
@@ -7133,6 +7143,10 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
         const desc = item.excerpt
           ? stripHtml(item.excerpt)
           : (item.body ? truncate(stripHtml(item.body)) : "");
+        // Excerpts and truncated descriptions can omit explicit family
+        // admission later in the body (Festival Por La Paz, Dec 4, 2026).
+        // Use the already-fetched full body for audience signals.
+        const audienceText = `${item.title} ${desc} ${stripHtml(item.body || "")}`;
         // Museums on Squarespace file a months-long show as one item whose
         // start date is opening day. JAMsj's "Now on View" redress exhibit runs
         // Feb–Sep and was being dropped the day after it opened.
@@ -7171,7 +7185,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           description: desc,
           url: fullUrl,
           source,
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(item.title + " " + desc),
+          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(audienceText),
         };
       })
       .filter(Boolean);
@@ -10391,6 +10405,7 @@ export {
   fetchLosAltosVillageEvents,
   fetchLosAltosHistoryEvents,
   fetchMaclaEvents,
+  fetchMexicanHeritagePlazaEvents,
   fetchStanfordEvents,
   fetchSjsuEvents,
   fetchScuEvents,

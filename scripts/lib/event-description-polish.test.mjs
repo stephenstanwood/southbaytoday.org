@@ -26,6 +26,18 @@ test("preserves the official BentPeter performer spelling", () => {
   );
 });
 
+test("keeps Pyet DeSpain and Gordon Ramsay correct through title and prose polishing", () => {
+  assert.equal(cleanTitle("Online Author Talk: Pyet Despain"), "Online Author Talk: Pyet DeSpain");
+  const expected = "Pyet DeSpain won Gordon Ramsay's Next Level Chef.";
+  for (const name of ["Pyet DeSpain", "Pyet De Spain", "Pyet Despain"]) {
+    assert.equal(polishDescription(`${name} won Gordon Ramsey's Next Level Chef.`), expected);
+  }
+  assert.equal(polishDescription(expected), expected);
+  const url = "https://example.org/PyetDeSpain/GordonRamsey?name=PyetDespain";
+  assert.equal(polishDescription(`Meet Pyet DeSpain. Details: ${url}`), `Meet Pyet DeSpain. Details: ${url}`);
+  assert.equal(polishDescription("Jane De Spain reads Ramsey Campbell."), "Jane De Spain reads Ramsey Campbell.");
+});
+
 test("restores Montalvo's Mariachi Viajero ensemble spelling", () => {
   assert.equal(polishDescription("Mariachi Viejero"), "Mariachi Viajero");
 });

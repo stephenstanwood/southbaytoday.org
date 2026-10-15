@@ -9,6 +9,7 @@ import {
   fetchSvlgEvents,
   fetchSjsuEvents,
   fetchScuEvents,
+  fetchMexicanHeritagePlazaEvents,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
@@ -33,6 +34,42 @@ import {
   parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+
+test("Squarespace family admission survives excerpts and truncated descriptions without making paid admission free", async () => {
+  const excerpt = "A community celebration of art and culture.";
+  const startDate = Date.now() + 7 * 86400000;
+  const item = {
+    title: "Festival Por La Paz",
+    startDate, endDate: startDate + 6 * 3600000,
+    fullUrl: "/allevents/festival-por-la-paz",
+    excerpt: `<p>${excerpt}</p>`,
+    body: "<p>Enjoy over 20 live artists on stage.</p><p>Family-friendly event. Kids under 12 enter FREE. Tickets: $20.</p>",
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    assert.equal(String(url), "https://mhplaza.org/allevents?format=json");
+    return Response.json({ upcoming: [item, {
+      ...item, title: "Community Festival", fullUrl: "/allevents/community-festival", excerpt: "",
+      body: `<p>${excerpt}</p><p>${"Local artists share their work. ".repeat(12)}</p>${item.body}`,
+    }, {
+      ...item, title: "Evening Concert", fullUrl: "/allevents/evening-concert", body: "<p>A concert for adults, 21+ only. Tickets: $20.</p>",
+    }] });
+  };
+  try {
+    const [family, fromBody, adult] = await fetchMexicanHeritagePlazaEvents();
+    assert.equal(family.kidFriendly, true);
+    assert.equal(family.description, excerpt);
+    assert.equal(family.cost, "paid");
+    assert.equal(family.url, "https://mhplaza.org/allevents/festival-por-la-paz");
+    assert.equal(fromBody.kidFriendly, true);
+    assert.doesNotMatch(fromBody.description, /family|kids/i);
+    assert.equal(fromBody.cost, "paid");
+    assert.equal(adult.kidFriendly, false);
+    assert.equal(adult.description, excerpt);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 test("SVLG uses the calendar occurrence, preserving unknown hours and refusing malformed cards", () => {
   const card = `<article class="mec-event-article mec-toggle-202611-996">
