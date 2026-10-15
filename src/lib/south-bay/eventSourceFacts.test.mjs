@@ -18,7 +18,7 @@ test("NUMU's Cassady talk keeps its Thursday label, closing time, and registrati
     id: "inbound-d897162cdf670c51", date: "2026-11-19", displayDate: "Wed, Nov 18",
     title: "Talk of the Town: Neal Cassady & the Beats", venue: "New Museum Los Gatos (NUMU)",
     time: "11:00 AM", endTime: null, cost: null, url: "https://www.numulosgatos.org/events/cassady",
-    description: "A free public history talk featuring Dan Pulcano.",
+    description: "A free public history talk featuring Los Gatan publisher Dan Pulcano discussing Neal Cassady and the Beat Generation's ties to Los Gatos.",
     blurb: "Hear publisher Dan Pulcano discuss Neal Cassady's ties to the Beat Generation in Los Gatos.",
   };
   const events = [{ ...raw }];
@@ -32,11 +32,38 @@ test("NUMU's Cassady talk keeps its Thursday label, closing time, and registrati
   assert.equal(corrected.registration, "required");
   assert.match(corrected.attendanceNote, /free with registration/i);
   assert.equal(requiresAdvanceRegistration(corrected), true);
-  assert.equal(corrected.description, raw.description);
-  assert.equal(corrected.blurb, raw.blurb);
+  assert.equal(corrected.description, raw.description.replace("Dan Pulcano", "Dan Pulcrano"));
+  assert.equal(corrected.blurb, raw.blurb.replace("Dan Pulcano", "Dan Pulcrano"));
+  const withoutBlurb = { ...raw };
+  delete withoutBlurb.blurb;
+  const sparse = [withoutBlurb];
+  await resolveEventBlurbs(sparse, { enabled: false });
+  assert.match(sparse[0].blurb, /Dan Pulcrano/);
+  assert.doesNotMatch(sparse[0].blurb, /Dan Pulcano/);
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
   for (const other of [
     { ...raw, date: "2027-11-19" },
+    { ...raw, url: "https://www.numulosgatos.org/events/another-talk" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("NUMU's Canneries talk requires registration even with sparse newsletter attendance fields", async () => {
+  const raw = {
+    id: "inbound-6e0c73154efef76b", date: "2026-10-15", displayDate: "Thu, Oct 15",
+    title: "Talk of the Town: Canneries & Agriculture", venue: "New Museum Los Gatos (NUMU)",
+    time: "11:00 AM", endTime: null, cost: null, url: "https://www.numulosgatos.org/events/canneries",
+    description: "A free public history talk exploring the role of canneries and agriculture in Los Gatos's early economy.",
+    blurb: "Hear historians unpack how canneries and farming shaped early Los Gatos in this free talk at NUMU.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAdvanceRegistration(events[0]), true);
+  assert.deepEqual(events[0], {
+    ...raw, endTime: "11:45 AM", cost: "free", registration: "required", attendanceNote: "Free with registration.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2027-10-15" },
     { ...raw, url: "https://www.numulosgatos.org/events/another-talk" },
   ]) assert.equal(applyVerifiedEventFacts(other), other);
 });

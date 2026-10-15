@@ -12,11 +12,27 @@ const CORRECTIONS = [
   // midnight sentinel November 18, and omitted the required reservation.
   // https://www.numulosgatos.org/events/cassady
   // Evidence: docs/qa/2026-10-15-1507-fact-check.md.
+  // NUMU misspells the speaker's surname; his own newspaper's notice of this
+  // same talk identifies Dan Pulcrano. Correct source and cached copy alike.
+  // https://losgatan.com/march-came-in-like-a-lamb-but-whats-next/
+  // Evidence: docs/qa/2026-10-15-1607-fact-check.md.
   {
     date: "2026-11-19", url: "https://www.numulosgatos.org/events/cassady",
     facts: {
       displayDate: "Thu, Nov 19", time: "11:00 AM", endTime: "11:45 AM",
       cost: "free", registration: "required", attendanceNote: "Free with registration.",
+    },
+    copyReplacements: [[/\bDan Pulcano\b/g, "Dan Pulcrano"]],
+  },
+  // The companion October talk also requires registration; the newsletter
+  // omitted that condition and its 11:45 AM closing time. Do not infer those
+  // terms for other NUMU programs from their shared series title.
+  // https://www.numulosgatos.org/events/canneries
+  // Evidence: docs/qa/2026-10-15-1607-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://www.numulosgatos.org/events/canneries",
+    facts: {
+      endTime: "11:45 AM", cost: "free", registration: "required", attendanceNote: "Free with registration.",
     },
   },
   // FOPAL's dated 2026 schedule says November 14–15; the library's external
