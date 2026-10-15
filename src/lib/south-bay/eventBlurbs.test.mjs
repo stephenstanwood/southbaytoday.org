@@ -5,6 +5,8 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
+  buildUserPrompt,
+  buildUniqueUserPrompt,
   extractAnthropicText,
   eventBlurbCacheKey,
   parseFpKey,
@@ -25,6 +27,20 @@ import {
 } from "./eventBlurbs.mjs";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+
+test("batch and uniqueness prompts distinguish online attendance from a campus venue", () => {
+  const event = {
+    title: "Web Help", venue: "Stanford University", city: "palo-alto", date: "2026-10-15",
+    description: "Drop-in help with website questions.", virtual: true,
+  };
+  assert.match(buildUserPrompt([{ event }]), /attendance: online only/);
+  assert.match(buildUniqueUserPrompt(event, []), /attendance: online only/);
+  for (const virtual of [false, undefined]) {
+    const physical = { ...event, virtual };
+    assert.doesNotMatch(buildUserPrompt([{ event: physical }]), /attendance: online only/);
+    assert.doesNotMatch(buildUniqueUserPrompt(physical, []), /attendance: online only/);
+  }
+});
 
 test("extracts the text block when adaptive thinking comes first", () => {
   const response = {

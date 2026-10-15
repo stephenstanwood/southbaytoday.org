@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford's occurrence page explicitly says Virtual Event, General Public,
+  // and free with a personal or Stanford Zoom login. The sparse feed's campus
+  // fallback must not turn this into a physical visit. Only published dates.
+  // https://events.stanford.edu/event/drupallers-drop-in-web-help-q1-fy2027
+  ...["2026-10-15", "2026-11-19", "2026-12-17"].map((date) => ({
+    date, url: "https://events.stanford.edu/event/drupallers-drop-in-web-help-q1-fy2027",
+    facts: {
+      venue: "Online", address: "", virtual: true, cost: "free",
+      description: "Free online drop-in help with Drupal, Stanford Sites, and other website questions. A personal or Stanford Zoom login is required.",
+      blurb: "Join an online drop-in session for help with Drupal, Stanford Sites, and other website questions.",
+    },
+  })),
   // The Heritage Theatre page supports Steve Perry solo work, not touring
   // with Journey's original lineup. Evidence: docs/qa/2026-10-14-late-fact-check.md.
   {

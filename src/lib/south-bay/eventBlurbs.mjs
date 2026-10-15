@@ -666,6 +666,7 @@ Strict rules:
 - Describe what happens THERE (specific action, not generic "swing by").
 - Lead with a concrete action verb (See, Hear, Tour, Walk, Make, Watch, Taste, Learn). Avoid the vague openers "explore" and "discover" — name what visitors actually do.
 - If a description is given, rewrite its substance in planner voice — don't copy marketing prose.
+- An event marked "attendance: online only" has no physical destination. Describe joining online; its venue may otherwise name the organizing institution.
 - A description marked [NONE] means we have no description. Write only what the title, venue, and category state plainly, and stay general. Do not invent difficulty, distance, duration, terrain, skill level, age suitability, price, or what is provided.
 - Never invent a musical genre, lineup, or whether performers are cover/tribute acts or original members. Those identities must be stated in the source title or description; a decade-themed tour title proves none of them.
 - A description marked [TRUNCATED] is cut off mid-sentence. Write only from the text you can actually see. NEVER complete or guess the missing part, and never state what attendees should bring, what is provided or included, whether registration is needed, or what anything costs unless that fact appears in full in the visible text. Getting this backwards sends readers to an event unprepared.
@@ -806,12 +807,13 @@ function descPromptLine(description) {
   return `desc: ${d}${cut ? " [TRUNCATED — text is cut off here]" : ""}`;
 }
 
-function buildUserPrompt(items) {
+export function buildUserPrompt(items) {
   const lines = items.map(({ event: e, timeLabel, dayLabel, runLabel }, i) => {
     const parts = [`${i + 1}. ${e.title || "Untitled"}`];
     if (e.category) parts.push(`cat: ${e.category}`);
     if (e.venue) parts.push(`venue: ${e.venue}`);
     if (e.city) parts.push(`city: ${e.city}`);
+    if (e.virtual === true) parts.push("attendance: online only");
     // Time is per-event and never inherited from a neighbour in this batch —
     // omitting it is what let the 7:00 PM Woodland meditation take "Monday
     // mornings" from the 10:30 AM Los Altos session sharing its description.
@@ -878,11 +880,12 @@ function parseBlurbArray(raw, expectedLen) {
   return out;
 }
 
-function buildUniqueUserPrompt(event, conflictBlurbs, timeLabel, runLabel, dayLabel) {
+export function buildUniqueUserPrompt(event, conflictBlurbs, timeLabel, runLabel, dayLabel) {
   const parts = [`Event: ${event.title || "Untitled"}`];
   if (event.category) parts.push(`cat: ${event.category}`);
   if (event.venue) parts.push(`venue: ${event.venue}`);
   if (event.city) parts.push(`city: ${event.city}`);
+  if (event.virtual === true) parts.push("attendance: online only");
   const dow = dayLabel ?? dayOfWeek(event.date);
   if (dow) parts.push(`day: ${dow}`);
   if (timeLabel ?? event.time) parts.push(`time: ${timeLabel ?? event.time}`);

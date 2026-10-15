@@ -7,7 +7,7 @@ import {
   inferCategory,
   isEventTimeBackfillCandidate,
   fetchSvlgEvents,
-  isStudentOnlyLocalistAudience,
+  isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
 } from "../generate-events.mjs";
 
@@ -449,14 +449,26 @@ test("restores Bay FC's full San Diego Wave FC opponent name", () => {
   assert.equal(mapped.time, "2:00 PM");
 });
 
-test("drops Stanford events whose only Localist audience is students", () => {
-  assert.equal(isStudentOnlyLocalistAudience({
+test("drops Stanford events restricted to known campus audiences, preserving public access", () => {
+  assert.equal(isCampusOnlyLocalistAudience({
     event_audience: [{ name: "Students" }],
   }), true);
-  assert.equal(isStudentOnlyLocalistAudience({
+  // Actual DAAAS Alumni Homecoming audience tags, October 15, 2026.
+  const campus = ["Students", "Students - Undergraduates", "Students - Graduates",
+    "Postdocs", "Faculty", "Staff", "Staff - Academic", "Staff - Managers", "Alumni"];
+  assert.equal(isCampusOnlyLocalistAudience({
+    event_audience: campus.map((name) => ({ name })),
+  }), true);
+  assert.equal(isCampusOnlyLocalistAudience({
     event_audience: [{ name: "Students" }, { name: "General Public" }],
   }), false);
-  assert.equal(isStudentOnlyLocalistAudience({}), false);
+  assert.equal(isCampusOnlyLocalistAudience({
+    event_audience: [...campus, "General Public"],
+  }), false);
+  assert.equal(isCampusOnlyLocalistAudience({ event_audience: ["Affiliates"] }), true);
+  assert.equal(isCampusOnlyLocalistAudience({ event_audience: ["Affiliates", "Everyone"] }), false);
+  assert.equal(isCampusOnlyLocalistAudience({ event_audience: ["Community Members"] }), false);
+  assert.equal(isCampusOnlyLocalistAudience({}), false);
 });
 
 test("drops SCU technology training and Handshake registration listings", () => {

@@ -886,6 +886,8 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // Meetup misspells the orchestra; its own paphil.org season page uses this name.
+  "Palo Alto Philarmonic": "Palo Alto Philharmonic",
   // SCCL's Milpitas book-group listings spell the Newbery medalist's name two
   // different ways across the same book's two sessions; "Barba" is correct.
   "Donna Barbra Higuera": "Donna Barba Higuera",
@@ -2443,6 +2445,9 @@ function cleanVenue(raw) {
     (w) => w[0].toUpperCase() + w.slice(1),
   );
   // Source-typo fixes (sources occasionally publish misspelled venue names)
+  // Meetup's 460 Lincoln Ave sketch outing names "Chromatic Cafeun"; the
+  // operator identifies that cafe as Chromatic Coffee. Match only this typo.
+  v = v.replace(/^Chromatic Cafeun$/i, "Chromatic Coffee");
   v = v.replace(/\bNursey\b/g, "Nursery");
   v = v.replace(/\bInfront\b/g, "In Front");
   // SJDA's WP feed occasionally drops the "&" between "Quilts" and "Textiles"
@@ -3185,12 +3190,19 @@ function liveWhaleEventId(url) {
 
 // ── Sources ──
 
-function isStudentOnlyLocalistAudience(filters) {
+const CAMPUS_ONLY_LOCALIST_AUDIENCES = new Set([
+  "students", "students - undergraduates", "students - graduates", "postdocs",
+  "faculty", "staff", "staff - academic", "staff - managers", "alumni", "affiliates",
+]);
+
+function isCampusOnlyLocalistAudience(filters) {
   const audiences = (filters?.event_audience || [])
-    .map((audience) => String(audience?.name || audience || "").trim())
+    .map((audience) => String(audience?.name || audience || "").trim().toLowerCase())
     .filter(Boolean);
+  // Missing or unfamiliar audience tags do not prove restricted admission.
+  // A General Public tag always keeps the event, even alongside campus tags.
   return audiences.length > 0
-    && audiences.every((audience) => /\bstudents?\b/i.test(audience));
+    && audiences.every((audience) => CAMPUS_ONLY_LOCALIST_AUDIENCES.has(audience));
 }
 
 async function fetchStanfordEvents() {
@@ -3201,10 +3213,9 @@ async function fetchStanfordEvents() {
     const todayIso = todayPT();
     const events = (data.events || []).map((e) => {
       const ev = e.event;
-      // Localist exposes explicit audience tags. Events whose only published
-      // audience is students (NSO, auditions, club recruiting) are campus
-      // programming, not public South Bay events.
-      if (isStudentOnlyLocalistAudience(ev.filters)) return null;
+      // Localist exposes explicit audience tags. A mix of students, faculty,
+      // staff, and alumni is still campus-only unless public access is listed.
+      if (isCampusOnlyLocalistAudience(ev.filters)) return null;
       // Stanford Localist returns ONE ROW PER OCCURRENCE. `first_date` and
       // `last_date` bound the whole series; `event_instances[0].event_instance`
       // is the occurrence this row stands for, and it is the only field
@@ -10337,7 +10348,7 @@ export {
   isBiblioEventCancelled,
   isOrganizationName,
   isStudentOnlyEvent,
-  isStudentOnlyLocalistAudience,
+  isCampusOnlyLocalistAudience,
   looksCancelled,
   looksLikeEmbedCode,
   mapTicketmasterEvent,

@@ -102,7 +102,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "14K in SCC; 996 Santa Clara jobs cut on WARN filings since July 2025, more than in any full year EDD has published",
     highlights: [
       "The US government has held a roughly 9.9% stake since August 2025, when the Trump administration converted $8.9B of CHIPS Act grants into Intel shares; NVIDIA invested a further $5B that autumn",
-      "Fortinet became Intel Foundry's first publicly named outside customer in July 2026 — a real win, but for the mature Intel 4 node rather than the leading-edge 18A and 14A the turnaround actually rides on",
+      // Intel's July 21, 2026 announcement describes SP6 design, packaging,
+      // and manufacturing collaboration. MediaTek was already a named foundry
+      // customer in 2022; do not turn this into a first-ever customer claim.
+      // https://www.intc.com/news-events/press-releases/detail/1561/intel-and-mediatek-form-foundry-partnership
+      "Intel and Fortinet announced a July 2026 collaboration to develop Fortinet's SP6 security processor, combining Intel's chip design, packaging, and manufacturing capabilities",
     ],
     description:
       "CPU pioneer mid-restructuring under CEO Lip-Bu Tan. Once the defining company of Silicon Valley.",

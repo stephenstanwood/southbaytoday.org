@@ -10,6 +10,15 @@ import {
 } from "../generate-events.mjs";
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 
+test("repairs verified orchestra and cafe names without changing other names", () => {
+  const title = "A Night with Beethoven, Mozart & Dvořák in Palo Alto Philarmonic";
+  assert.match(cleanTitle(title), /Palo Alto Philharmonic$/);
+  assert.equal(cleanTitle("Palo Alto Philharmonic"), "Palo Alto Philharmonic");
+  assert.equal(cleanVenue("Chromatic Cafeun"), "Chromatic Coffee");
+  assert.equal(cleanVenue("Chromatic Coffee"), "Chromatic Coffee");
+  assert.equal(cleanVenue("Another Chromatic Cafeun Studio"), "Another Chromatic Cafeun Studio");
+});
+
 test("preserves the official BentPeter performer spelling", () => {
   assert.equal(
     polishDescription("Free outdoor concert featuring The BentPeter Band."),

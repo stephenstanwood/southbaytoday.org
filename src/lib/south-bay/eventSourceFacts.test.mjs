@@ -13,6 +13,31 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("public virtual Drupallers sessions retain online attendance across sparse refreshes", async () => {
+  const raw = {
+    title: "Drupallers Drop-in Web Help", date: "2026-10-15",
+    url: "https://events.stanford.edu/event/drupallers-drop-in-web-help-q1-fy2027",
+    venue: "Stanford University", address: "", virtual: true,
+    blurb: "Drop in at Stanford University for help with Drupal.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.venue, "Online");
+  assert.equal(corrected.address, "");
+  assert.equal(corrected.virtual, true);
+  assert.equal(corrected.cost, "free");
+  assert.match(corrected.description, /personal or Stanford Zoom login/);
+  assert.match(corrected.blurb, /online/);
+  assert.doesNotMatch(corrected.blurb, /at Stanford/);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], corrected);
+  for (const date of ["2026-11-19", "2026-12-17"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, date }).venue, "Online");
+  }
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).venue, raw.venue);
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/other" }).venue, raw.venue);
+});
+
 test("musical dynasties cannot become royalty in Delphian copy", async () => {
   const event = {
     title: "Delphian Lectures: Meet the Instruments & Meet the Dynasties",
