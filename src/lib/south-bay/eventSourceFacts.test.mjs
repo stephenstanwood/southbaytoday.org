@@ -13,6 +13,27 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("dated concert identities survive sparse refreshes without changing another show", async () => {
+  const events = [
+    { id: "heritage-1e9b8b39407d8f09", date: "2027-02-19", title: "Journey USA - The Hits of Journey", venue: "Heritage Theatre", blurb: "Vocalists who toured with the real lineup." },
+    { date: "2026-11-27", title: "Hammer Presents Merry-Achi Christmas 2026", venue: "Hammer Theatre Center", description: "", url: "https://plugin.vbotickets.com/new-session", blurb: "Grammy-nominated group Merry-Achi Christmas." },
+    { date: "2026-11-28", title: "Hammer Presents Merry-Achi Christmas 2026", venue: "Hammer Theatre Center", description: "", blurb: "Grammy-nominated group Merry-Achi Christmas." },
+  ];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.doesNotMatch(events[0].blurb, /toured|real lineup/);
+  assert.match(events[0].blurb, /Journey USA.*hits of Journey/);
+  for (const event of events.slice(1)) {
+    assert.match(event.description, /José Hernández and Mariachi Sol de México/);
+    assert.match(event.blurb, /José Hernández and Mariachi Sol de México/);
+    assert.doesNotMatch(event.blurb, /group Merry-Achi/);
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+  }
+  const nextYear = { ...events[1], date: "2027-11-27", description: "A new lineup", blurb: "A new program" };
+  assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
+  const elsewhere = { ...events[1], venue: "Another Hall", description: "A different production" };
+  assert.equal(applyVerifiedEventFacts(elsewhere), elsewhere);
+});
+
 test("Ticketmaster artist typos are scoped to the verified show without freezing its lineup", () => {
   const raw = {
     date: "2026-11-20",

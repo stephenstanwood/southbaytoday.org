@@ -7,6 +7,24 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The Heritage Theatre page supports Steve Perry solo work, not touring
+  // with Journey's original lineup. Evidence: docs/qa/2026-10-14-late-fact-check.md.
+  {
+    id: "heritage-1e9b8b39407d8f09", date: "2027-02-19",
+    url: "https://www.heritagetheatre.org/events/journey-usa-the-hits-of-journey",
+    facts: { blurb: "Watch Journey USA perform the hits of Journey at Heritage Theatre." },
+  },
+  // Merry-Achi Christmas is the show; VBO names José Hernández and Sol de
+  // México as the performers. Match the dated show even when VBO rotates its
+  // session URL. Evidence: docs/qa/2026-10-14-late-fact-check.md.
+  ...["2026-11-27", "2026-11-28"].map((date) => ({
+    date, title: /^Hammer Presents Merry-Achi Christmas 2026$/i,
+    venue: /^Hammer Theatre Center$/i,
+    facts: {
+      description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
+      blurb: "Hear José Hernández and Mariachi Sol de México perform Merry-Achi Christmas at Hammer Theatre.",
+    },
+  })),
   // Ticketmaster's structured lineup spells these artists correctly while its
   // Event Info text contains typos. Correct only those strings so future
   // lineup changes remain intact. Evidence: docs/qa/2026-10-14-evening-fact-check.md.

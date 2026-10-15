@@ -420,6 +420,8 @@ export interface SccTechSpotlight {
   url: string;
   // Companywide unless explicitly labeled SCC/local. Date filing-backed counts;
   // mark estimates with "~" and omit a headcount when it has no reliable source.
+  // Preserve full-time vs. total scope and cite the filing beside the entry.
+  // A global filing count never establishes or replaces an SCC-local estimate.
   employeesNote: string;
 }
 
@@ -444,7 +446,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Semiconductors and enterprise software (VMware), headquartered in Palo Alto.",
     color: "#CC0000",
     url: "https://www.broadcom.com",
-    employeesNote: "40K+ employees globally",
+    // FY 2025 10-K: https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm
+    employeesNote: "~33,000 employees globally (Nov 2025)",
   },
   {
     id: "arista",
@@ -466,7 +469,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Network security appliances and SASE platform. Built and run by Ken Xie out of Sunnyvale.",
     color: "#EE3124",
     url: "https://www.fortinet.com",
-    employeesNote: "13K employees globally",
+    // FY 2025 10-K: https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm
+    employeesNote: "15,109 employees globally (Dec 2025)",
   },
   {
     id: "cadence",
@@ -477,7 +481,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Electronic design automation software used to develop advanced semiconductors.",
     color: "#00A896",
     url: "https://www.cadence.com",
-    employeesNote: "10K employees globally",
+    // FY 2025 10-K: https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm
+    employeesNote: "~13,800 employees globally (Dec 2025)",
   },
   {
     id: "synopsys",
@@ -488,7 +493,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "The other EDA giant. Closed its $35B acquisition of Ansys in July 2025 to add simulation to chip design software.",
     color: "#5C3693",
     url: "https://www.synopsys.com",
-    employeesNote: "20K employees globally",
+    // FY 2025 10-K, including Ansys: https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm
+    employeesNote: "~28,000 employees globally (Oct 2025)",
   },
   {
     // Renamed 2026-08-07: Pure Storage rebranded to Everpure on 2026-02-23 and
@@ -503,7 +509,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "All-flash storage arrays for enterprise and AI data infrastructure, sold as Pure Storage until a February 2026 rebrand that pushed the company past storage hardware into managing the data itself.",
     color: "#FF6900",
     url: "https://www.everpuredata.com",
-    employeesNote: "5K employees globally",
+    // FY 2026 10-K: https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm
+    employeesNote: "~6,400 employees globally (Feb 2026)",
   },
   {
     id: "nutanix",
@@ -525,7 +532,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "da Vinci robotic surgery systems from a pioneer in robot-assisted surgery.",
     color: "#00A3E0",
     url: "https://www.intuitive.com",
-    employeesNote: "12K employees globally",
+    // FY 2025 10-K: https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm
+    employeesNote: "~17,021 full-time employees globally (Dec 2025)",
   },
   {
     id: "cerebras",
@@ -536,7 +544,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Wafer-scale AI processors built on a single chip roughly the size of a dinner plate. Went public on the Nasdaq (CBRS) May 14, 2026, raising about $5.5B and surging roughly 68% on debut.",
     color: "#FF4D00",
     url: "https://cerebras.ai",
-    employeesNote: "500 employees",
+    // IPO S-1: https://www.sec.gov/Archives/edgar/data/2021728/000162828026025762/cerebras-sx1april2026.htm
+    employeesNote: "708 full-time employees globally (Dec 2025)",
   },
   // Groq moved to San Jose and is no longer a chip company — both facts were
   // stale here for months. HQ: the company's SEC Form D filed 2026-07-24 lists
@@ -842,7 +851,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Flash storage company making consumer SSDs, memory cards, and enterprise NAND solutions. Spun off from Western Digital in February 2025 and trades independently as SNDK; founded in 1988 and headquartered in Milpitas.",
     color: "#E31937",
     url: "https://www.sandisk.com",
-    employeesNote: "~8K employees globally",
+    // FY 2026 10-K: https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm
+    employeesNote: "~11,100 employees globally (Jul 2026)",
   },
   {
     id: "trellix",
@@ -858,13 +868,15 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
   {
     id: "lumentum",
     name: "Lumentum",
-    city: "Milpitas",
+    city: "San Jose",
     category: "hardware",
     stage: "public",
-    tagline: "The optical components inside your phone's Face ID are made here. Lumentum's VCSEL lasers power 3D sensing on iPhones, while their fiber optic transceivers connect hyperscale data centers. Spun out of JDSU in 2015, headquartered in Milpitas.",
+    tagline: "Lumentum makes VCSEL lasers for 3D sensing and optical transceivers that connect cloud data centers. Spun out of JDSU in 2015, headquartered in San Jose.",
     color: "#0077C8",
     url: "https://www.lumentum.com",
-    employeesNote: "~6K employees globally",
+    // FY 2026 10-K also confirms HQ at 1001 Ridder Park Drive, San Jose:
+    // https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm
+    employeesNote: "~13,757 full-time employees globally (Jun 2026)",
   },
   {
     id: "chargepoint",
@@ -883,10 +895,11 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "San Jose",
     category: "security",
     stage: "public",
-    tagline: "When your company replaces its VPN with 'Zscaler,' that's a San Jose company. Zscaler's zero trust cloud architecture secures 40% of the Fortune 500. Founded by Jay Chaudhry in 2007 from San Jose.",
+    tagline: "When your company replaces its VPN with 'Zscaler,' that's a San Jose company. Its Zero Trust Exchange serves over 50% of the Fortune 500 (FY 2026). Founded by Jay Chaudhry in 2007 from San Jose.",
     color: "#0061FF",
     url: "https://www.zscaler.com",
-    employeesNote: "~7K employees globally",
+    // FY 2026 10-K: https://www.sec.gov/Archives/edgar/data/1713683/000171368326000157/zs-20260731.htm
+    employeesNote: "8,700+ employees globally (Jul 2026)",
   },
   {
     id: "barracuda-networks",
@@ -911,7 +924,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "After spinning off SanDisk in February 2025, Western Digital focuses on hard drives and enterprise cloud storage for data centers. Founded in Santa Ana in 1970, it is now headquartered in San Jose.",
     color: "#003DA5",
     url: "https://www.westerndigital.com",
-    employeesNote: "~12K employees globally",
+    // FY 2026 10-K: https://investor.wdc.com/static-files/12a72667-a479-42d3-abfa-5046fa1050a0
+    employeesNote: "~40,000 employees globally (FY 2026)",
   },
   {
     id: "matx",
@@ -963,10 +977,11 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Los Gatos",
     category: "software",
     stage: "public",
-    tagline: "Subscription streaming service headquartered in Los Gatos. Founded in 1997, Netflix helped make on-demand streaming mainstream. ~13,000 employees globally.",
+    tagline: "Subscription streaming service headquartered in Los Gatos. Founded in 1997, Netflix helped make on-demand streaming mainstream.",
     color: "#E50914",
     url: "https://www.netflix.com",
-    employeesNote: "~13,000 employees globally",
+    // FY 2025 10-K: https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm
+    employeesNote: "~16,000 full-time employees globally (Dec 2025)",
   },
   {
     id: "arm-holdings",
@@ -980,7 +995,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     tagline: "Designs the processor architectures inside virtually every smartphone on Earth — including Apple Silicon and Qualcomm Snapdragon. Cambridge-headquartered, with a major North American campus in San Jose. Re-listed on NASDAQ in 2023.",
     color: "#0091BD",
     url: "https://www.arm.com",
-    employeesNote: "~7,000 employees globally",
+    // FY 2026 20-F: https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm
+    employeesNote: "9,584 employees globally (Mar 2026)",
   },
   {
     id: "quantumscape",

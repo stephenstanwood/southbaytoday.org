@@ -40,7 +40,9 @@ export interface SBEvent {
   days?: DayOfWeek[];
   time?: string;
   months?: number[]; // 1=Jan, 12=Dec. omit = year-round
-  cost: "free" | "low" | "paid"; // free=0, low=<$15, paid=$15+
+  // Admission only: free=$0, low=verified under $15, paid=$15+ or price unknown.
+  // Free parking, free activities, and age-based exemptions do not make admission free.
+  cost: "free" | "low" | "paid";
   costNote?: string;
   kidFriendly: boolean;
   description: string;
@@ -724,15 +726,18 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     id: "sj-downtown-ice-rink",
     title: "Downtown San Jose Ice Rink",
     city: "san-jose",
-    venue: "Rotary International Ice Rink",
+    venue: "Circle of Palms Plaza",
+    address: "120 S Market St, San Jose",
     category: "family",
     recurrence: "seasonal",
     months: [11, 12, 1],
-    cost: "low",
-    costNote: "~$12 admission + skate rental",
+    cost: "paid",
+    costNote: "Check the organizer for current admission and skate-rental prices",
     kidFriendly: true,
-    description: "Outdoor holiday ice rink in downtown San Jose's Plaza de César Chávez, open from November through January.",
-    url: "https://www.downtownicesj.com/",
+    // SJDA confirms the location: https://sjdowntown.com/dticecelebration/.
+    // Season dates and prices need a current announcement; the old domain is parked.
+    description: "Seasonal outdoor ice skating at Circle of Palms Plaza, between the San Jose Museum of Art and Signia by Hilton. Check the organizer for season dates and hours.",
+    url: "https://www.skateunderthepalms.com/",
     emoji: "⛸️",
   },
   {
@@ -844,8 +849,9 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "seasonal",
     // Official 2026 schedule: May 29–31; this is a late-May festival, not October.
     months: [5],
-    cost: "free",
-    costNote: "Food and entertainment purchased separately",
+    // https://www.sanjosegreekfestival.com/attend — general admission is not free.
+    cost: "low",
+    costNote: "2026 admission: $5; free for children under 12 and seniors over 65. Food extra",
     kidFriendly: true,
     description:
       "Three-day late-May festival celebrating Greek culture with authentic food, traditional dancing, and live music.",
