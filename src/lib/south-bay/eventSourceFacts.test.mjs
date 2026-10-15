@@ -13,6 +13,83 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("October Nameless Anime Club retains its dated Sunday without a conflicting fourth-Sunday claim", async () => {
+  const raw = {
+    date: "2026-10-18", time: "12:00 PM", endTime: "4:00 PM",
+    url: "https://sjpl.bibliocommons.com/events/6a02128243b41b3d0065b38d",
+    title: "Nameless Anime Club", venue: "Edenvale Library", cost: "free",
+    description: "Do you enjoy anime and manga? Join Edenvale Branch Library's Nameless Anime Club every fourth Sunday of the month! Participants are welcome to drop in anytime during our program. Free. No registration required.",
+    blurb: "Drop in to watch anime and meet other fans at Edenvale Library.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].description, "Do you enjoy anime and manga? Join Edenvale Branch Library's Nameless Anime Club! Participants are welcome to drop in anytime during our program. Free. No registration required.");
+  assert.deepEqual({ ...events[0], description: raw.description }, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-18" }), { ...raw, date: "2027-10-18" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-anime-club" }), { ...raw, url: "https://example.org/another-anime-club" });
+});
+
+test("October Little Learners keeps its explicit dates and registration without a conflicting Tuesday ordinal", async () => {
+  const raw = {
+    date: "2026-10-20", time: "3:30 PM", endTime: "4:15 PM", registration: "required",
+    url: "https://sccl.bibliocommons.com/events/6a68e7ccf4e5db3d00c4dc6a",
+    title: "Little Learners STEAM for Ages 3-5", venue: "Milpitas Library", cost: "free",
+    description: "Join us every second Tuesday of the month* at Milpitas for our Little Learners STEAM series. Registration is required. Parents must participate with their child aged 3-5. September 15; October 20; November 17; December 8.",
+    blurb: "Explore STEAM activities with your preschooler at Milpitas Library.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].description, "Join us at Milpitas for our Little Learners STEAM series. Registration is required. Parents must participate with their child aged 3-5. September 15; October 20; November 17; December 8.");
+  assert.deepEqual({ ...events[0], description: raw.description }, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-20" }), { ...raw, date: "2027-10-20" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-preschool-class" }), { ...raw, url: "https://example.org/another-preschool-class" });
+});
+
+test("October Milpitas book discussions retain dated sessions without contradictory monthly boilerplate", async () => {
+  const cadence = "The Milpitas Library Book Discussion Group meets on the 4th Wednesday morning and 4th Thursday evening of each month with the exception of November and December, when we will reschedule to accommodate holiday schedules.";
+  for (const [date, sourceId, time] of [
+    ["2026-10-21", "6a4c9f94541102b7fa8aea8d", "11:00 AM"],
+    ["2026-10-22", "6a4c9f94541102b7fa8aea8e", "7:30 PM"],
+  ]) {
+    const raw = {
+      date, time, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+      title: "Milpitas Adult Book Discussion Group - Treasure Island by Robert Louis Stevenson",
+      venue: "Milpitas Library", cost: "free",
+      description: `Read Treasure Island. October 21st at 11:00 AM; October 22nd at 7:30 PM. ${cadence} For adults, ages 18+.`,
+      blurb: "Discuss Treasure Island at Milpitas Library.",
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, "Read Treasure Island. October 21st at 11:00 AM; October 22nd at 7:30 PM. For adults, ages 18+.");
+    assert.deepEqual({ ...events[0], description: raw.description }, raw);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-21" }), { ...raw, date: "2027-10-21" });
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-book-club" }), { ...raw, url: "https://example.org/another-book-club" });
+  }
+});
+
+test("October Cafecito omits conflicting English and Spanish cadence and room directions", async () => {
+  for (const spanishClock of ["a.m.", "a. m."]) {
+    const raw = {
+      date: "2026-10-15", time: "10:00 AM", endTime: "11:00 AM",
+      url: "https://losgatosca.libcal.com/event/16035613", title: "Cafecito Book Club",
+      venue: "Los Gatos Library", cost: "free",
+      description: `This book club reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11 AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en español y se reúne el segundo jueves de cada mes de 10 a 11 ${spanishClock} en la sala de conferencias de la biblioteca (primer piso).`,
+      blurb: "Talk through a Spanish-language book with other readers in the library's first-floor conference room.",
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, "This book club reads exclusively Spanish books. Este club de lectura lee libros exclusivamente en español.");
+    assert.equal(events[0].blurb, "Talk through a Spanish-language book with other readers at Los Gatos Library.");
+    assert.deepEqual({ ...events[0], description: raw.description, blurb: raw.blurb }, raw);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-11-12" }), { ...raw, date: "2026-11-12" });
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-book-club" }), { ...raw, url: "https://example.org/another-book-club" });
+  }
+});
+
 test("Palo Alto's Halloween skate retains the linked provider's actual name across refreshes", async () => {
   const raw = {
     date: "2026-10-24", time: "2:00 PM", endTime: "5:00 PM", registration: "required",

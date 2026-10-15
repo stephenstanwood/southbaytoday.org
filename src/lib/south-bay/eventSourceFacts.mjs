@@ -7,6 +7,47 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The library's occurrence confirms October 18, the third Sunday, while its
+  // shared body says fourth Sunday. Keep the dated session and walk-in terms.
+  // https://sjpl.bibliocommons.com/events/6a02128243b41b3d0065b38d
+  // Evidence: docs/qa/2026-10-15-1207-fact-check.md.
+  {
+    date: "2026-10-18", url: "https://sjpl.bibliocommons.com/events/6a02128243b41b3d0065b38d",
+    copyReplacements: [[/\s+every fourth Sunday of the month\b/gi, ""]],
+  },
+  // The occurrence and explicit date list confirm October 20, the third
+  // Tuesday. Omit the incompatible second-Tuesday clause; preserve signup,
+  // caregiver participation, age limits, and every published series date.
+  // https://sccl.bibliocommons.com/events/6a68e7ccf4e5db3d00c4dc6a
+  // Evidence: docs/qa/2026-10-15-1207-fact-check.md.
+  {
+    date: "2026-10-20", url: "https://sccl.bibliocommons.com/events/6a68e7ccf4e5db3d00c4dc6a",
+    copyReplacements: [[/\bJoin us every second Tuesday of the month\*? at Milpitas for our\b/gi, "Join us at Milpitas for our"]],
+  },
+  // The dated October sessions are October 21/22. October 21 is the third
+  // Wednesday, so the shared fourth-Wednesday boilerplate conflicts with it.
+  // Keep the explicit dates and omit the cadence rather than move a session.
+  // Evidence: docs/qa/2026-10-15-1207-fact-check.md.
+  ...[
+    ["2026-10-21", "6a4c9f94541102b7fa8aea8d"],
+    ["2026-10-22", "6a4c9f94541102b7fa8aea8e"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+    copyReplacements: [[/\bThe Milpitas Library Book Discussion Group meets on the 4th Wednesday morning and 4th Thursday evening of each month with the exception of November and December, when we will reschedule to accommodate holiday schedules\.\s*/gi, ""]],
+  })),
+  // The October Cafecito occurrence is on the third Thursday, and its
+  // Location is Technology Lab. The bilingual body repeats a second-Thursday
+  // cadence and conference-room directions; omit those conflicting clauses.
+  // https://losgatosca.libcal.com/event/16035613
+  // Evidence: docs/qa/2026-10-15-1207-fact-check.md.
+  {
+    date: "2026-10-15", url: "https://losgatosca.libcal.com/event/16035613",
+    copyReplacements: [
+      [/\s+and meets on the 2nd Thursday of every month from 10[-–]11\s*AM in the library['’]s conference room \(1st Floor\)/gi, ""],
+      [/\s+y se reúne el segundo jueves de cada mes de 10 a 11 a\.\s*m\.\s+en la sala de conferencias de la biblioteca \(primer piso\)/gi, ""],
+      [/\bin the library['’]s first-floor conference room\b/gi, "at Los Gatos Library"],
+    ],
+  },
   // The library links its skating provider but reverses the words in its
   // name. The provider identifies itself as Skate Open Spaces.
   // https://paloalto.bibliocommons.com/events/6a873b1560ccaf01c01fb300
