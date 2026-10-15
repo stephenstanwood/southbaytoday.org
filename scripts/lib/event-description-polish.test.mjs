@@ -26,6 +26,15 @@ test("preserves the official BentPeter performer spelling", () => {
   );
 });
 
+test("preserves Palo Alto library's NeuroSphere group name through prose cleanup", () => {
+  // First-party occurrence: paloalto.bibliocommons.com/events/6a384108c134422d50e9a7b1
+  const source = "Come join teen-led group NeuroSphere! NeuroSphere is a community for curious 2nd-7th graders about medicine!";
+  assert.equal(polishDescription(source), source);
+  assert.equal(polishDescription(polishDescription(source)), source);
+  const url = "https://example.org/NeuroSphere?group=NeuroSphere";
+  assert.equal(polishDescription(`Meet NeuroSphere. Details: ${url}`), `Meet NeuroSphere. Details: ${url}`);
+});
+
 test("keeps Pyet DeSpain and Gordon Ramsay correct through title and prose polishing", () => {
   assert.equal(cleanTitle("Online Author Talk: Pyet Despain"), "Online Author Talk: Pyet DeSpain");
   const expected = "Pyet DeSpain won Gordon Ramsay's Next Level Chef.";

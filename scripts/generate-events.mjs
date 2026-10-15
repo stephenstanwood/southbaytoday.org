@@ -2170,6 +2170,9 @@ function polishDescription(text) {
   // turned it into "Viet Steps" and the 2026-09-17 events file carried both
   // spellings. Same family as PayPal/NetApp/CrossFit/NorCal.
   t = t.replace(/\bViet Steps\b/g, "VietSteps");
+  // Palo Alto library's youth group is NeuroSphere in its own event copy;
+  // preserve that proper name after the generic camel-case splitter.
+  t = t.replace(/\bNeuro Sphere\b/g, "NeuroSphere");
   // "NorCal" (Northern California, as in NorCal Academy of Performing Arts) is a
   // closed-up single token; the lowercase+uppercase splitter pulls it into
   // "Nor Cal". Capital-N "Nor Cal" only ever comes from that split — a genuine
