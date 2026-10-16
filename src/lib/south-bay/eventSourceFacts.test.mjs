@@ -13,6 +13,65 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("NUMU exhibitions use the visitor address when intake extracted the mailing box", () => {
+  const raw = {
+    date: "2027-01-22", venue: "New Museum Los Gatos",
+    address: "New Museum Los Gatos, PO Box 1904, Los Gatos, CA 95031",
+    url: "https://www.numulosgatos.org/exhibitions-2/belle-yang",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.address, "106 E. Main Street, Los Gatos, CA 95030");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-02-01" }).address, fixed.address,
+    "an ongoing exhibition's daily date must not restore the mailing address");
+  for (const other of [
+    { ...raw, url: "https://example.org/exhibitions-2/belle-yang" },
+    { ...raw, url: "https://www.numulosgatos.org/events/offsite-program" },
+    { ...raw, venue: "Another Museum" },
+    { ...raw, virtual: true },
+    { ...raw, address: "A different published street address" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("the ongoing Ofrenda exhibit cannot invite visitors to its past reception", async () => {
+  const raw = {
+    date: "2026-10-16", ongoing: true, title: "Art of Remembrance Ofrenda Exhibit",
+    venue: "King Library", url: "https://events.sjsu.edu/event/art-of-remembrance-ofrenda-exhibit-2026",
+    description: "Explore vibrant ofrendas created by local artists. Enjoy live performances, artist presentations, hot chocolate,…",
+    blurb: "See vibrant ofrendas made by local artists and catch live performances and artist presentations at King Library.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.doesNotMatch(events[0].description + events[0].blurb, /performances|presentations|reception|chocolate/);
+  assert.match(events[0].blurb, /ofrendas.*local artists.*King Library/);
+  for (const date of ["2026-10-09", "2026-11-05"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, date }).blurb, events[0].blurb);
+  }
+  for (const other of [
+    { ...raw, date: "2026-10-08" },
+    { ...raw, date: "2026-11-06" },
+    { ...raw, url: "https://events.sjsu.edu/event/another-exhibit" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Masala Mic's rescheduled November event retains required signup and age conditions", () => {
+  const raw = {
+    date: "2026-11-01", title: "Masala Mic Monthly November 1, 2026",
+    url: "https://www.meetup.com/masalamic/events/316730245/",
+    city: "milpitas", venue: "India Community Center (ICC)",
+    time: "5:00 PM", endTime: "9:00 PM", registration: "none", cost: null,
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.registration, "required");
+  assert.equal(requiresAdvanceRegistration(fixed), true);
+  assert.match(fixed.attendanceNote, /signup and payment.*no children under 10/i);
+  assert.equal(fixed.time, raw.time);
+  assert.equal(fixed.endTime, raw.endTime);
+  assert.equal(fixed.city, raw.city);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2026-12-01" }).registration, "none");
+});
+
 test("Stanford's field trip keeps its departure bucket and the museum's real postal locality", () => {
   const raw = {
     date: "2026-10-16", city: "palo-alto", venue: "San Jose Musuem of Art",

@@ -3236,7 +3236,9 @@ function parseIcalDate(dtStr) {
  * "virtual" | "inperson" | "hybrid". The RSS feed we list from does not.
  * Keep audience filters alongside attendance mode: SJSU calls its audience
  * field `event_target_audience`, while Stanford uses `event_audience`.
- * Returns Map<localist_url, { experience, filters }>.
+ * Admission comes from `free` / `ticket_cost`; an unset price is unknown,
+ * and a ticket URL alone may be free registration.
+ * Returns Map<localist_url, { experience, filters, free, ticket_cost }>.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -3251,6 +3253,7 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
       if (!ev?.localist_url) continue;
       map.set(ev.localist_url.replace(/\/+$/, ""), {
         experience: ev.experience, filters: ev.filters,
+        free: ev.free, ticket_cost: ev.ticket_cost,
       });
     }
   }
@@ -3599,16 +3602,10 @@ async function fetchSjsuEvents() {
       // crops to "SAN UNI" on a square tile. Pin a real square asset:
       // Spartan helmet for athletics, SJSU monogram for everything else.
       const image = category === "sports" ? "/logos/sjsu-spartan.png" : "/logos/sjsu-monogram.png";
-      // SJSU's Localist feed has no price field, so we default to free —
-      // accurate for campus lectures, library events, exhibits. Two
-      // exceptions: every athletics entry, and the "Alumni Night at the
-      // <pro team>" promotions SJSU runs at PayPal Park, Excite Ballpark,
-      // and the Mountain West Championship. Those are commercial-ticket
-      // events and the FREE badge is wrong. Match on category OR the
-      // commercial-venue signature — "food" / "community" categorization
-      // bleeds when the description plays up the alumni dinner.
-      const COMMERCIAL_TICKET_VENUE = /\b(paypal park|excite ballpark|levi'?s stadium|sap center|cefcu stadium|spartan stadium|provident credit union event center|shoreline amphitheatre|mountain winery|mountain west championship)\b/i;
-      const cost = category === "sports" || COMMERCIAL_TICKET_VENUE.test(venue) ? "paid" : "free";
+      // RSS omits admission, but our existing Localist metadata request has
+      // it. Campus venues and sports categories cannot establish a price:
+      // Sanctuary City ($16–$27) shipped free under the former default.
+      const cost = localistCost({ ...metadata, title: item.title });
       const isVirtual =
         virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;

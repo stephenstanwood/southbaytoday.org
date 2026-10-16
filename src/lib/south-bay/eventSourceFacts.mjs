@@ -7,6 +7,61 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The exhibition runs October 5–November 5, but performances and artist
+  // presentations belong to its October 8 reception, already past. Bound
+  // the correction to this run so daily re-anchoring cannot restore it.
+  // https://events.sjsu.edu/event/art-of-remembrance-ofrenda-exhibit-2026
+  // Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  {
+    dateFrom: "2026-10-09", dateThrough: "2026-11-05",
+    url: "https://events.sjsu.edu/event/art-of-remembrance-ofrenda-exhibit-2026",
+    facts: {
+      description: "View ofrendas created by local artists, offering perspectives on traditional and contemporary visual arts.",
+      blurb: "See ofrendas made by local artists at King Library.",
+    },
+  },
+  // The organizer moved this event to November 1 at ICC and requires advance
+  // signup/payment. Its listener discount conflicts with its later fee text,
+  // so leave the price unspecified rather than choosing one.
+  // https://www.meetup.com/masalamic/events/316730245/
+  // Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  {
+    date: "2026-11-01", url: "https://www.meetup.com/masalamic/events/316730245/",
+    facts: {
+      registration: "required",
+      attendanceNote: "Advance signup and payment required; no children under 10. Check the organizer for singer availability and current fees.",
+    },
+  },
+  // The organizer describes season-dependent restoration, not an October
+  // promise of weed pulling. RSVP confirms the workday; first-timers need a
+  // signed waiver. Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  // https://www.meetup.com/california-native-plant-society-santa-clara-valley-chapter/events/316736813/
+  {
+    date: "2026-10-17", url: "https://www.meetup.com/california-native-plant-society-santa-clara-valley-chapter/events/316736813/",
+    facts: {
+      blurb: "Help restore habitat at Cataldi Park with the California Native Plant Society.",
+      registration: "required",
+      attendanceNote: "RSVP to confirm the workday and check updates Friday night. First-time volunteers must bring a signed waiver.",
+    },
+  },
+  // This is an improv meetup led by a group member; the source does not
+  // establish a spectator performance or audience-suggestion format.
+  // https://www.meetup.com/southbayimprovfun/events/316792378/
+  // Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  {
+    date: "2026-10-19", url: "https://www.meetup.com/southbayimprovfun/events/316792378/",
+    facts: { blurb: "Join South Bay Improv Fun for an improv meetup at the Mountain View Community Center." },
+  },
+  // These first-party descriptions explicitly call the event free even
+  // though Localist leaves `free` false and `ticket_cost` blank. Preserve
+  // that evidence without treating unrelated free food or student perks as
+  // admission. Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  ...[
+    ["2026-10-20", "humhonculturecon-movie-event-jai-bhim-2021"],
+    ["2026-10-23", "2026-sjsu-responsible-innovation-in-ai-conference"],
+  ].map(([date, slug]) => ({
+    date, url: `https://events.sjsu.edu/event/${slug}`, facts: { cost: "free" },
+  })),
   // Stanford organizes transportation, so this field trip retains its Palo
   // Alto departure bucket. Its destination's postal locality is San José.
   // https://events.stanford.edu/event/environmental-humanities-project-field-trip-reimagining-our-waterways-climate-and-art-symposium
@@ -729,11 +784,29 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
-  const correction = CORRECTIONS.find((c) => event?.date === c.date && (
-    (c.id && event.id === c.id) || (c.url && event.url === c.url)
-      || c.aliasUrls?.includes(event.url)
-      || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
-  ));
+  // NUMU's exhibition pages give 106 E. Main Street as the visitor location;
+  // newsletter intake instead picked up its mailing box. Limit this repair
+  // to that museum, its own exhibition URLs, and the known mailing address.
+  // It must survive the daily date change of an ongoing exhibition.
+  // https://www.numulosgatos.org/exhibitions-2/belle-yang
+  // Evidence: docs/qa/2026-10-16-0307-fact-check.md.
+  if (!event?.virtual
+      && /^https:\/\/(?:www\.)?numulosgatos\.org\/exhibitions-2\//i.test(event?.url || "")
+      && /^(?:NUMU\s+)?New Museum Los Gatos(?:\s+\(NUMU\))?$/i.test(event?.venue || "")
+      && /\bp\.?\s*o\.?\s+box\s+1904\b/i.test(event?.address || "")) {
+    event = { ...event, address: "106 E. Main Street, Los Gatos, CA 95030" };
+  }
+  const correction = CORRECTIONS.find((c) => {
+    // A range is inclusive and must have both bounds; it is reserved for a
+    // verified exhibition run whose displayed date advances each day.
+    const matchesDate = c.date ? event?.date === c.date
+      : Boolean(c.dateFrom && c.dateThrough && event?.date >= c.dateFrom && event?.date <= c.dateThrough);
+    return matchesDate && (
+      (c.id && event.id === c.id) || (c.url && event.url === c.url)
+        || c.aliasUrls?.includes(event.url)
+        || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
+    );
+  });
   if (!correction) return event;
   const corrected = { ...event, ...correction.facts };
   for (const field of ["description", "blurb"]) {

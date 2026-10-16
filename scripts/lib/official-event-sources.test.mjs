@@ -736,6 +736,36 @@ test("SJSU applies source audience filters even without an attendance-mode field
   }
 });
 
+test("SJSU reads Localist admission instead of assuming campus events are free", async () => {
+  const origin = "https://events.sjsu.edu";
+  const rows = [
+    ["Sanctuary City", "sanctuary-city", { free: false, ticket_cost: "$16 - $27" }, "paid"],
+    ["Public recital", "recital", { free: true, ticket_cost: "Free" }, "free"],
+    ["Free RSVP lecture", "lecture", { free: false, ticket_cost: "Free RSVP", ticket_url: "https://example.org/rsvp" }, "free"],
+    ["Unpriced workshop", "workshop", { free: false, ticket_cost: "", ticket_url: "https://example.org/register" }, null],
+    ["Softball vs. Visitors", "softball", { free: false, ticket_cost: null }, null],
+    ["Missing metadata", "missing", null, null],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, slug]) => `<item><title>${title}</title><link>${origin}/event/${slug}</link><description>Public program.</description><pubDate>2026-10-22T19:30:00-07:00</pubDate></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url) === `${origin}/calendar.xml`) return new Response(xml);
+    assert.match(String(url), /^https:\/\/events\.sjsu\.edu\/api\/2\/events\?/);
+    return Response.json({ page: { total: 1 }, events: rows.filter(([, , admission]) => admission).map(([title, slug, admission]) => ({ event: {
+      title, localist_url: `${origin}/event/${slug}`, ...admission,
+    } })) });
+  };
+  try {
+    const events = await fetchSjsuEvents();
+    assert.deepEqual(events.map((event) => [event.title, event.cost]), rows.map(([title, , , cost]) => [title, cost]));
+    assert.equal(requested.length, 2, "reuse the existing metadata fetch, with no per-event request");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("SCU aliases retain canonical department filtering and online attendance", async () => {
   const origin = "https://events.scu.edu";
   const rows = [
