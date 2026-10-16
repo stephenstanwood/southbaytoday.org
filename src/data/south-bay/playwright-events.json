@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-15T15:04:40.710Z",
+    "generatedAt": "2026-10-16T03:47:14.457Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 491,
+    "eventCount": 493,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (112)",
-      "Los Gatos Library (113)",
+      "Mountain View Public Library (111)",
+      "Los Gatos Library (111)",
       "San Jose Jazz (16)",
       "Linden Tree Books (14)",
       "History San Jose (4)",
@@ -16,17 +16,17 @@
       "ICA San José (3)",
       "Mountain Winery (7)",
       "San Jose Theaters (19)",
-      "Children's Discovery Museum (1)",
+      "Children's Discovery Museum (7)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (54)",
+      "City of Cupertino (53)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (80)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (3)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 117,
+        "count": 116,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 113,
+        "count": 111,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 1,
+        "count": 7,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 54,
+        "count": 53,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -338,56 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 3,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "d2da7ceffecd",
-      "title": "Cuesta Park Storytime",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "10:00 AM",
-      "endTime": "11:00 AM",
-      "venue": "Cuesta Park",
-      "address": "615 Cuesta Dr, Mountain View, CA 94040",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Stop by the Bookmobile for stories, songs, and rhymes in the heart of Cuesta Park! Enjoy a fun-filled storytime at the playground, and take advantage of full library services available from 10:00–11:00 a.m. Events are weather permitting. Find us at 615 Cuesta Drive, Mountain View, CA 94040",
-      "sourceAudiences": [
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17295775",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "7c9916e251c2",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17686491",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "232167e4f9d6",
       "title": "Canceled--Baby Storytime Rerun",
@@ -420,7 +382,6 @@
       "venue": "Deer Hollow Farm",
       "address": "22500 Cristo Rey Dr, Cupertino, CA",
       "city": "mountain-view",
-      "registration": "full",
       "category": "family",
       "cost": "free",
       "description": "Together with our friends at Deer Hollow Farm, our librarians will present a spooky-themed storytime at the farm with books, songs, and rhymes. We will also get to meet some of the farm animals up close! Meet us there: Deer Hollow Farm, 22500 Cristo Rey Dr., Cupertino Please note: the parking lot for Deer Hollow Farm is about a one-mile flat, paved walk to the farm. We recommend walking shoes, hats, and/or strollers. Also, there will be limited seating-- prepare to sit on the floor if you can.",
@@ -1876,6 +1837,29 @@
       "kidFriendly": false
     },
     {
+      "id": "a9c3b071e1ca",
+      "title": "Western Ballet Presents the Nutcracker",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "11:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Western Ballet’s The Nutcracker is a holiday tradition filled with delight. Join us for a short performance and a chance to meet the dancers up close.",
+      "sourceAudiences": [
+        "Preschoolers",
+        "All Ages",
+        "Children",
+        "Families"
+      ],
+      "url": "https://mountainview.libcal.com/event/17762592",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
+    },
+    {
       "id": "3ecd3a08547d",
       "title": "Choose Your Own Adventure Book Club",
       "date": "2026-11-30",
@@ -2734,48 +2718,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17028031",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "2743563357b5",
-      "title": "Cafecito Book Club",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "10:00 AM",
-      "endTime": "11:00 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "arts",
-      "cost": "free",
-      "description": "This bookclub reads exclusively Spanish books and meets on the 2nd Thursday of every month from 10-11AM in the library's conference room (1st Floor). Este club de lectura lee libros exclusivamente en español y se reúne el segundo jueves de cada mes de 10 a 11 a. m. en la sala de conferencias de la biblioteca (primer piso).",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16035613",
-      "source": "Los Gatos Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "d772afd5105a",
-      "title": "NUMU Youth Still Life: Spooky Skeleton Figure Drawing (Ages 7-16)",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "4:00 PM",
-      "endTime": "5:15 PM",
-      "venue": "NUMU - 106 E. Main St",
-      "address": "",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "family",
-      "cost": "free",
-      "description": "Meet us at the New Museum Los Gatos, where the staff will arrange a (fake decor) skeleton and a (decor) dog skeleton along with a few spooky objects from our collection for children ages 7-16 to sketch on black or gray paper with white drawing pencils. This event is a young artist's dream as it will take place in the Museum's professional studio setting! All materials are provided. Registration opens 3 weeks prior to the event.",
-      "sourceAudiences": [
-        "Children",
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17008173",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -5033,6 +4975,7 @@
       "venue": "NUMU - 106 E. Main St",
       "address": "",
       "city": "los-gatos",
+      "registration": "required",
       "category": "community",
       "cost": "free",
       "description": "Join our self-guided still life drawing sessions in NUMU’s Flick Studio. Adults of all skill levels work at their own pace with provided easels, paper, and pencils. Enjoy a quiet, creative space to practice observation and technique with a tableau of artifacts from the museum’s collection.",
@@ -5042,8 +4985,7 @@
       ],
       "url": "https://losgatosca.libcal.com/event/17286098",
       "source": "Los Gatos Library",
-      "kidFriendly": false,
-      "registration": "required"
+      "kidFriendly": false
     },
     {
       "id": "f45ca86f915d",
@@ -5714,23 +5656,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b402a0e00c51",
-      "title": "Around the Americas with 123 Andrés? (Grades pre K-3)",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3064",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "d5bb5d8971ad",
       "title": "St. Paul & The Minneapolis Funk All Stars",
       "date": "2026-10-16",
@@ -5795,6 +5720,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://my.montalvoarts.org/3257/3258",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "461bcf36220e",
+      "title": "Direct from Sweden: The Music of ABBA",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/direct-from-sweden/",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -6420,6 +6362,108 @@
       "kidFriendly": true
     },
     {
+      "id": "cc93ccdb64df",
+      "title": "Mars Expedition with VEX Robotics",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
+      "time": "10:30 am",
+      "endTime": "12:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "35c3ee9682c9",
+      "title": "Daisy Day: Fun with Movement",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "10:00 am",
+      "endTime": "11:30 am",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "c9e17fdb5166",
+      "title": "Daisy Day: Shapes with Nature",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "1:00 pm",
+      "endTime": "2:30 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "c74a4850d931",
+      "title": "Gatorbotics",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "10:00 am",
+      "endTime": "12:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "8d909d6d0e1a",
+      "title": "Halloween at the Purple Museum",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": null,
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "8620529cc723",
+      "title": "Play Your Way – Halloween",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "5:00 pm",
+      "endTime": "8:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
       "id": "34ca7dda6177",
       "title": "Neighborhood Hands Bi-monthly Cleanup",
       "date": "2026-10-17",
@@ -6571,7 +6615,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-15T15:03:25.398Z"
+        "checkedAt": "2026-10-16T03:45:54.454Z"
       }
     },
     {
@@ -6594,7 +6638,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-15T15:03:25.399Z"
+        "checkedAt": "2026-10-16T03:45:54.454Z"
       }
     },
     {
@@ -6617,7 +6661,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-15T15:03:25.399Z"
+        "checkedAt": "2026-10-16T03:45:54.454Z"
       }
     },
     {
@@ -6640,7 +6684,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-15T15:03:25.399Z"
+        "checkedAt": "2026-10-16T03:45:54.454Z"
       }
     },
     {
@@ -6663,25 +6707,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-15T15:03:25.399Z"
+        "checkedAt": "2026-10-16T03:45:54.455Z"
       }
-    },
-    {
-      "id": "0fb398e91088",
-      "title": "Pizza and Politics",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "06:30 PM",
-      "endTime": "08:00 PM",
-      "venue": "Cupertino Community Hall",
-      "address": "Cupertino Community Hall, 10350 Torre Ave, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Pizza and Politics is an award-winning, youth-led biannual pre-election political forum coordinated by youth for youth. The event encourages youth and teen civic engagement, makes politics more accessible, and provides young people with the opportunity to connect directly with politicians. For more information, please visit the Pizza and Politics event page.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Pizza-and-Politics/Pizza-and-Politics-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "a9d2815ce5ed",
@@ -9098,11 +9125,11 @@
       "kidFriendly": false
     },
     {
-      "id": "83a23c9b378b",
+      "id": "29685fae390f",
       "title": "Rush",
       "date": "2026-10-15",
       "displayDate": "Thu, Oct 15",
-      "time": "7:30 pm",
+      "time": "7:30 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -9574,57 +9601,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9742,6 +9718,57 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
