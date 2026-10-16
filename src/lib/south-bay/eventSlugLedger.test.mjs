@@ -16,6 +16,19 @@ const ev = (over) => ({
   ...over,
 });
 
+test("the phantom December 10 tea URL redirects to the organizer's December 5 occurrence", () => {
+  const old = ev({
+    id: "historysj-f6db24f857516c7b", title: "History Park Heritage Holiday Tea",
+    date: "2026-12-10", time: "11:00 AM", venue: "History Park",
+    url: "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
+  });
+  const live = { ...old, id: "a18ccd8100ff", date: "2026-12-05", url: "https://historysanjose.org/programs-events/" };
+  const ledger = retireSlugs({ entries: [] }, [old], [live], "2026-10-15");
+  const { redirects, orphans } = resolveRetired(ledger, [live], [], "2026-10-15");
+  assert.equal(redirects.get("2026-12-10-history-park-heritage-holiday-tea"), "2026-12-05-history-park-heritage-holiday-tea");
+  assert.equal(orphans.length, 0);
+});
+
 test("retireSlugs records a future slug that the new run stopped publishing", () => {
   const gone = ev({ id: "a", title: "44th Annual Art & Wine Festival" });
   const kept = ev({ id: "b", title: "Book Club" });

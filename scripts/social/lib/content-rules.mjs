@@ -46,7 +46,7 @@ export const OUT_OF_AREA_CITIES = [
   "santa cruz", "oakland", "berkeley", "san francisco", "hayward",
   "fremont", "union city", "daly city", "san mateo", "redwood city",
   "menlo park", "walnut creek", "concord", "monterey", "capitola",
-  "half moon bay", "gilroy", "morgan hill", "watsonville",
+  "half moon bay", "gilroy", "morgan hill", "watsonville", "riverside",
 ];
 
 // Venues on the border of the coverage area that we allow to ship as in-area

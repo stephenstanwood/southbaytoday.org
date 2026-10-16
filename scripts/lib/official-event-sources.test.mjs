@@ -11,6 +11,7 @@ import {
   fetchScuEvents,
   fetchMexicanHeritagePlazaEvents,
   fetchMontalvoEvents,
+  fetchHistorySanJoseEvents,
   fetchSouthBayMusicalTheatreEvents,
   fetchSantaCruzWarriorsSchedule,
   fetchSharksSchedule,
@@ -41,6 +42,51 @@ import {
   parseSvlgCalendar,
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
+import { parseHistorySjDateRange } from "./history-sj.mjs";
+
+test("History San Jose date paragraphs preserve ranges and reject impossible dates", () => {
+  const card = (date) => `<div class="event-content"><p>${date}</p><h2>Event</h2></div>`;
+  assert.deepEqual(parseHistorySjDateRange(card("11/22/2026 &#8211; 12/21/2026")), {
+    startDate: "2026-11-22", endDate: "2026-12-21",
+  });
+  assert.deepEqual(parseHistorySjDateRange(card("2/29/2028")), { startDate: "2028-02-29", endDate: null });
+  for (const date of ["24/10/2025", "2/29/2027", "4/31/2027", "12/21/2026 – 11/22/2026", "Date TBD"]) {
+    assert.equal(parseHistorySjDateRange(card(date)), null, date);
+  }
+  assert.equal(parseHistorySjDateRange('<div style="background:url(/2024/10/2025-art.png)"><h2>No published date</h2></div>'), null);
+});
+
+test("History San Jose uses the displayed date, never dates inside an image URL", async () => {
+  // The real tea card's image path contains /2024/10/2025-Website-Graphics.
+  // Scanning the entire block reads 24/10/2025 and Date silently rolls that
+  // invalid month into December 10, 2026 instead of the displayed December 5.
+  const year = new Date().getFullYear() + 1;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    assert.match(String(url), /^https:\/\/historysanjose\.org\/programs-events\//);
+    return new Response(String(url).includes("/page/") ? "" : `
+      <div class="event-box event_all_box">
+        <div class="event-inner" style="background-image:url('/2024/10/2025-Website-Graphics-3.png')"></div>
+        <div class="event-content">
+          <p>12/05/${year}</p>
+          <h2>History Park Heritage Holiday Tea</h2>
+          <span class="eventlocation">History Park, Empire Fire House</span>
+          <span class="eventtime">11:00 am</span><span class="eventtime">3:30 pm</span>
+          <a class="backend-button" href="https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/">Book Now</a>
+        </div>
+      </div>`);
+  };
+  try {
+    const events = await fetchHistorySanJoseEvents();
+    assert.equal(events.length, 1);
+    assert.equal(events[0].date, `${year}-12-05`);
+    assert.equal(events[0].time.replace(/\s+/g, ""), "11:00AM");
+    assert.equal(events[0].endTime.replace(/\s+/g, ""), "3:30PM");
+    assert.equal(events[0].url, "https://historysanjose.org/programs-events/");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
 
 test("South Bay Musical Theatre never invents a shared ticket floor for different productions", async () => {
   const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-US", {

@@ -69,7 +69,7 @@ import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-locatio
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
-import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost } from "./lib/history-sj.mjs";
+import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
@@ -2379,6 +2379,9 @@ function cleanVenue(raw) {
   // strip below glued the lines together. Turn line breaks into ", " first.
   v = v.replace(/<\/(?:p|div|li|h\d)>\s*(?=<(?:p|div|li|h\d)\b)|<br\s*\/?>/gi, ", ");
   v = v.replace(/<[^>]+>/g, "").replace(/&[a-zA-Z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").replace(/\s*,\s*(?:,\s*)+/g, ", ").trim();
+  // Stanford's Waterways field-trip page misspells the museum in its venue
+  // field; the same page's program details use the correct institution name.
+  v = v.replace(/\bSan Jos[eé] Musuem of Art\b/gi, "San José Museum of Art");
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
   // LiveWhale pipes the street address after the place name:
@@ -9314,20 +9317,14 @@ async function fetchHistorySanJoseEvents() {
         const title = titleMatch[1].replace(/<[^>]+>/g, "").replace(/\*/g, "").trim();
         if (!title || title.length < 5) continue;
 
-        // Dates are MM/DD/YYYY inside a <p> tag in .event-content
-        const dateMatch = block.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-        if (!dateMatch) continue;
-
-        const month = parseInt(dateMatch[1]) - 1; // 0-indexed
-        const day = parseInt(dateMatch[2]);
-        const year = parseInt(dateMatch[3]);
-
-        // For date ranges (e.g. "11/22/2025 – 12/21/2026"), use the start date
-        const start = new Date(year, month, day, 12, 0);
-        // Check if there's an end date — skip if the end date is in the past
-        const endDateMatch = block.match(/\d{1,2}\/\d{1,2}\/\d{4}[^<]*?(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-        if (endDateMatch) {
-          const endDate = new Date(parseInt(endDateMatch[3]), parseInt(endDateMatch[1]) - 1, parseInt(endDateMatch[2]));
+        // The image URL can contain /2024/10/2025, which an unscoped date
+        // regex reads as month 24 and rolls into December 10, 2026. Only the
+        // visible paragraph establishes an occurrence; reject invalid dates.
+        const dateRange = parseHistorySjDateRange(block);
+        if (!dateRange) continue;
+        const start = new Date(`${dateRange.startDate}T12:00:00`);
+        if (dateRange.endDate) {
+          const endDate = new Date(`${dateRange.endDate}T00:00:00`);
           if (endDate < now) continue;
         } else if (start < now) {
           continue;
@@ -10522,6 +10519,7 @@ export {
   fetchLosAltosVillageEvents,
   fetchLosAltosHistoryEvents,
   fetchMaclaEvents,
+  fetchHistorySanJoseEvents,
   fetchMexicanHeritagePlazaEvents,
   fetchStanfordEvents,
   fetchSjsuEvents,

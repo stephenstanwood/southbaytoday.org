@@ -7,6 +7,48 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford organizes transportation, so this field trip retains its Palo
+  // Alto departure bucket. Its destination's postal locality is San José.
+  // https://events.stanford.edu/event/environmental-humanities-project-field-trip-reimagining-our-waterways-climate-and-art-symposium
+  // Evidence: docs/qa/2026-10-15-2107-fact-check.md.
+  {
+    date: "2026-10-16", url: "https://events.stanford.edu/event/environmental-humanities-project-field-trip-reimagining-our-waterways-climate-and-art-symposium",
+    facts: { venue: "San José Museum of Art", locality: "San José" },
+  },
+  // https://www.moah.org/moahevents/repair-cafe-of-silicon-valley-2
+  // The detail page explicitly says FREE; the sparse listing defaulted to paid.
+  // Evidence: docs/qa/2026-10-15-2107-fact-check.md.
+  {
+    date: "2026-11-08", url: "https://www.moah.org/moahevents/repair-cafe-of-silicon-valley-2",
+    facts: {
+      cost: "free",
+      attendanceNote: "Limit two items per household. Check-in closes at 2:30 PM and may close earlier if capacity is reached.",
+    },
+  },
+  // The current organizer listing places the tea at the Empire Fire House,
+  // not outdoors. The old booking URL is dated December 2024.
+  // https://historysanjose.org/programs-events/
+  // Evidence: docs/qa/2026-10-15-2107-fact-check.md.
+  {
+    date: "2026-12-05", title: /^History Park Heritage Holiday Tea$/i,
+    venue: /^History Park(?:, Empire Fire House)?$/i,
+    facts: {
+      url: "https://historysanjose.org/programs-events/",
+      category: "community",
+      blurb: "Join the Heritage Holiday Tea at History Park's Empire Fire House.",
+    },
+  },
+  // Correct the already published phantom date on its retired URL too. The
+  // December 10 record came from an image filename, not another tea session.
+  {
+    date: "2026-12-10", id: "historysj-f6db24f857516c7b",
+    facts: {
+      date: "2026-12-05", displayDate: "Sat, Dec 5",
+      url: "https://historysanjose.org/programs-events/",
+      category: "community",
+      blurb: "Join the Heritage Holiday Tea at History Park's Empire Fire House.",
+    },
+  },
   // This event's Squarespace location incorrectly says Palo Alto / 94301.
   // The bookstore's contact page confirms 1010 El Camino Real in Menlo Park,
   // 94025; the foundation's attendee FAQ also identifies its in-store venue.

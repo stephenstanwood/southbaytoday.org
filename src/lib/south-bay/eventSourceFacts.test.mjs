@@ -13,6 +13,55 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Stanford's field trip keeps its departure bucket and the museum's real postal locality", () => {
+  const raw = {
+    date: "2026-10-16", city: "palo-alto", venue: "San Jose Musuem of Art",
+    address: "110 S Market Street, San José, CA 95113",
+    url: "https://events.stanford.edu/event/environmental-humanities-project-field-trip-reimagining-our-waterways-climate-and-art-symposium",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.city, "palo-alto");
+  assert.equal(fixed.venue, "San José Museum of Art");
+  assert.equal(fixed.locality, "San José");
+  assert.equal(fixed.address, raw.address);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [{ ...raw, date: "2027-10-16" }, { ...raw, url: "https://events.stanford.edu/event/another-trip" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("MOAH's verified free repair session keeps its check-in deadline and item limit", () => {
+  const raw = {
+    date: "2026-11-08", url: "https://www.moah.org/moahevents/repair-cafe-of-silicon-valley-2",
+    title: "Repair Cafe of Silicon Valley", cost: "paid", time: "11:00 AM", endTime: "3:00 PM",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.cost, "free");
+  assert.match(fixed.attendanceNote, /two items.*2:30 PM.*earlier if capacity/);
+  assert.equal(fixed.endTime, "3:00 PM", "the check-in deadline is not the event's closing time");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [{ ...raw, date: "2027-11-08" }, { ...raw, url: "https://www.moah.org/another-event" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("History Park tea links the current organizer listing without an invented outdoor setting", () => {
+  const raw = {
+    date: "2026-12-05", title: "History Park Heritage Holiday Tea", venue: "History Park", category: "outdoor",
+    url: "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
+    blurb: "Taste holiday tea service and sweets outdoors at History Park's Heritage Holiday Tea.",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.url, "https://historysanjose.org/programs-events/");
+  assert.equal(fixed.category, "community");
+  assert.match(fixed.blurb, /Empire Fire House/);
+  assert.doesNotMatch(fixed.blurb, /outdoors|sweets/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [{ ...raw, date: "2026-12-10" }, { ...raw, title: "Another Tea" }, { ...raw, venue: "Other Park" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Kepler's Community Reads uses the bookstore's verified Menlo Park address", async () => {
   const raw = {
     date: "2026-10-24", time: "2:00 PM", endTime: "4:00 PM",

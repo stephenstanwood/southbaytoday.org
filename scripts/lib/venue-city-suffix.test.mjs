@@ -47,6 +47,7 @@ test("cleanVenue still drops a bare city suffix with no address", () => {
 test("cleanVenue leaves a plain venue name alone", () => {
   assert.equal(cleanVenue("Cupertino Library"), "Cupertino Library");
   assert.equal(cleanVenue("Computer History Museum"), "Computer History Museum");
+  assert.equal(cleanVenue("San Jose Musuem of Art"), "San José Museum of Art");
 });
 
 // ---------------------------------------------------------------------------

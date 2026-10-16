@@ -155,6 +155,16 @@ test("either signal is enough — an in-person label cannot override webinar cop
 
 // ── hasOutOfAreaDestination ──
 
+test("SJSU's Riverside conference cannot inherit the publisher's San Jose location", () => {
+  const conference = {
+    title: "iSchool at the California Library Association Conference",
+    city: "san-jose", venue: "Riverside Convention Center", address: "",
+  };
+  assert.equal(hasOutOfAreaDestination(conference), true);
+  assert.equal(hasOutOfAreaDestination({ ...conference, venue: "Library", address: "Riverside Dr, San Jose, CA" }), false);
+  assert.equal(hasOutOfAreaDestination({ ...conference, venue: "King Library", description: "Learn about the conference in Riverside." }), false);
+});
+
 test("out-of-area venue is flagged even when the city slug is in-area", () => {
   // The live case: a Sunnyvale senior-center day trip whose destination is SF.
   assert.ok(
