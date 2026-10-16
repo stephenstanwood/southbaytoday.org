@@ -1125,6 +1125,9 @@ function cleanTitle(title) {
     // ("An Ssir Author Conversation"), CME = continuing medical education
     // ("Pediatric Grand Rounds (Cme)").
     "NSO", "NGSO", "SSIR", "CME",
+    // Contemplation by Design — Stanford's summit titles use "CBD 2026".
+    // Keep the source acronym so refreshes preserve the verified program name.
+    "CBD",
     // 2–3 letter acronyms that legitimately appear in event titles. Anything
     // NOT in this list gets title-cased when the surrounding title is mostly
     // mixed-case (which is how we catch stylized fillers like THE/ALL/KID).

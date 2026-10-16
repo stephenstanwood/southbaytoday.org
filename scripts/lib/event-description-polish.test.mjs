@@ -10,6 +10,21 @@ import {
 } from "../generate-events.mjs";
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 
+test("preserves Stanford's Contemplation by Design acronym on refresh", () => {
+  // Official occurrence titles: events.stanford.edu/event/cbd-2026-
+  // mindfulness-embodied-self-awareness-and-disembodied-ai-with-shaun-gallagher
+  // and /event/cbd-2026-interbeing-meditation-with-kaira-jewel-lingo.
+  const titles = [
+    "CBD 2026: Mindfulness, Embodied Self-awareness, and Disembodied AI with Shaun Gallagher, PhD, Hon DPhil",
+    "CBD 2026: Interbeing Meditation: Touching Our Source and Growing Our Connection with Kaira Jewel Lingo",
+  ];
+  for (const title of titles) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+  }
+  assert.equal(cleanTitle("Learn about cbd and mindfulness"), "Learn about cbd and mindfulness");
+});
+
 test("repairs verified orchestra and cafe names without changing other names", () => {
   const title = "A Night with Beethoven, Mozart & Dvořák in Palo Alto Philarmonic";
   assert.match(cleanTitle(title), /Palo Alto Philharmonic$/);
