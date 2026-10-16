@@ -1,5 +1,45 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { scrapeCupertinoOpenCities, yearAwareDate } from "../playwright-scrapers.mjs";
+
+test("dated calendar labels retain their explicit year beside a time range", () => {
+  for (const [label, expected] of [
+    ["Saturday, January 31, 2026 | 11:00 AM - 03:00 PM", "2026-01-31"],
+    ["Friday, October 17, 2025 | 6:00 PM - 07:00 PM", "2025-10-17"],
+    ["Saturday, January 30, 2027 | 11:00 AM - 03:00 PM", "2027-01-30"],
+    ["February 29, 2028 | 11:00 AM - 03:00 PM", "2028-02-29"],
+  ]) {
+    assert.equal(yearAwareDate(label), expected, label);
+  }
+  assert.equal(yearAwareDate("February 30, 2027 | 11:00 AM - 03:00 PM"), null);
+});
+
+test("Cupertino drops past dated slots instead of republishing them next year", async () => {
+  const url = "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations";
+  const detail = {
+    title: "Baer Blacksmith Shop Demonstrations",
+    slots: [
+      "Saturday, January 31, 2026 | 11:00 AM - 03:00 PM",
+      "Saturday, February 28, 2026 | 11:00 AM - 03:00 PM",
+      "Saturday, October 31, 2026 | 11:00 AM - 03:00 PM",
+      "Saturday, November 28, 2026 | 11:00 AM - 03:00 PM",
+      "Saturday, January 30, 2027 | 11:00 AM - 03:00 PM",
+    ],
+    description: "Blacksmith demonstrations.",
+    location: "McClellan Ranch Preserve, 22221 McClellan Road, 95014",
+    cost: "Free",
+  };
+  let evaluations = 0;
+  const page = {
+    goto: async () => {},
+    waitForTimeout: async () => {},
+    evaluate: async () => evaluations++ === 0 ? [{ href: url }] : detail,
+    locator: () => ({ first: () => ({ count: async () => 0 }) }),
+  };
+  const events = await scrapeCupertinoOpenCities(page, { today: "2026-10-16" });
+  assert.deepEqual(events.map((event) => event.date), ["2026-10-31", "2026-11-28", "2027-01-30"]);
+  assert.ok(events.every((event) => event.time === "11:00 AM" && event.endTime === "03:00 PM"));
+});
 
 import {
   isStudentOnlyEvent,

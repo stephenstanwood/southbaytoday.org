@@ -19,7 +19,7 @@
 
 import { readFileSync, realpathSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
-import { todayPT } from "./lib/dates.mjs";
+import { isoDateParts, todayPT } from "./lib/dates.mjs";
 import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
@@ -136,10 +136,28 @@ const MONTH_RE = "Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?
 const NAV_JUNK_RE = /^(skip\s+to|back\s+to\s+top|navigation|breadcrumb|close\s+menu|view\s+all|load\s+more|show\s+more|read\s+more|subscribe|donate|search|menu|events?\s+search|events?\s+search\s+and\s+views\s+navigation)$/i;
 const KID_RE = /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i;
 
-function yearAwareDate(raw) {
+export function yearAwareDate(raw) {
   if (!raw) return null;
   const text = String(raw).replace(/\s+/g, " ").trim();
   if (!text) return null;
+
+  // OpenCities appends "| 11:00 AM - 03:00 PM", which Date cannot parse.
+  // Read the complete calendar date before the yearless fallback: dropping
+  // its explicit year used to turn past 2025/2026 slots into future events.
+  const dated = text.match(new RegExp(
+    `\\b(${MONTH_RE})\\s+(\\d{1,2})(?:st|nd|rd|th)?(?:\\s*,\\s*|\\s+)(\\d{4})\\b`, "i",
+  ));
+  if (dated) {
+    const month = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+      .indexOf(dated[1].slice(0, 3).toLowerCase()) + 1;
+    const date = `${dated[3]}-${String(month).padStart(2, "0")}-${dated[2].padStart(2, "0")}`;
+    try {
+      isoDateParts(date);
+      return date;
+    } catch {
+      return null;
+    }
+  }
 
   const withYear = tryParseDate(text);
   if (withYear) return withYear;
@@ -2162,7 +2180,7 @@ async function scrapeDowntownMountainView(page) {
   });
 }
 
-async function scrapeCupertinoOpenCities(page) {
+export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
   const directoryUrl = "https://www.cupertino.gov/Events-directory";
   await page.goto(directoryUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(1500);
@@ -2232,7 +2250,7 @@ async function scrapeCupertinoOpenCities(page) {
     if (/observed holidays|working group meetings/i.test(r.title)) return null;
     const date = yearAwareDate(r.slot);
     const { time, endTime } = clockRangeFromText(r.slot);
-    if (!date || date < TODAY || !time || !isUsefulTitle(r.title)) return null;
+    if (!date || date < today || !time || !isUsefulTitle(r.title)) return null;
     const venue = normalizeVenueText((r.location || "").split(",")[0], "Cupertino");
     const key = `${date}|${time}|${r.title}|${venue}`;
     if (seen.has(key)) return null;
