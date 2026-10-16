@@ -13,6 +13,59 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Halloween Candlelight cannot inherit the VBO card's unrelated ABBA program", async () => {
+  const raw = {
+    id: "hammertheatre-f4a357599047b1d0", date: "2026-10-30", time: "8:45 PM",
+    title: "Fever presents Candlelight: A Haunted Evening of Halloween Classics",
+    venue: "Hammer Theatre Center", url: "https://feverup.com/m/140936",
+    description: "Fever presents Candlelight: Tribute to ABBA & More",
+    blurb: "Watch a candlelit tribute performance of ABBA and other Halloween-season favorites at Hammer Theatre.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].description, /string quartet.*Halloween-inspired music/i);
+  assert.match(events[0].blurb, /Halloween-inspired music/);
+  assert.doesNotMatch(events[0].description + events[0].blurb, /ABBA/i);
+  assert.equal(events[0].title, raw.title);
+  assert.equal(events[0].time, raw.time);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2027-10-30" },
+    { ...raw, url: "https://feverup.com/m/another-concert" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Queen vs. ABBA keeps both acts on the verified November and January concerts", async () => {
+  const raw = {
+    id: "hammertheatre-e0001fa8bc4f7aa4", date: "2027-01-31", time: "7:45 PM",
+    title: "Fever presents Candlelight: Tribute to ABBA & More",
+    venue: "Hammer Theatre Center", url: "https://feverup.com/m/415717",
+    description: "", blurb: "Watch string musicians perform ABBA hits and other pop favorites by candlelight.",
+  };
+  for (const date of ["2026-11-29", "2027-01-31"]) {
+    const events = [{ ...raw, date }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].title, "Fever presents Candlelight: Queen vs. ABBA");
+    assert.match(events[0].description, /Queen and ABBA/);
+    assert.match(events[0].blurb, /Queen and ABBA/);
+    assert.equal(events[0].time, raw.time);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  }
+  for (const other of [
+    { ...raw, date: "2028-01-31" },
+    { ...raw, url: "https://feverup.com/m/another-concert" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+  const corrected = applyVerifiedEventFacts(raw);
+  const { retireSlugs, resolveRetired } = await import("./eventSlugLedger.mjs");
+  const ledger = retireSlugs({ entries: [] }, [raw], [corrected], "2026-10-16");
+  const { redirects, orphans } = resolveRetired(ledger, [corrected], [], "2026-10-16");
+  assert.equal(
+    redirects.get("2027-01-31-fever-presents-candlelight-tribute-to-abba-and-more"),
+    "2027-01-31-fever-presents-candlelight-queen-vs-abba",
+  );
+  assert.deepEqual(orphans, []);
+});
+
 test("NUMU exhibitions use the visitor address when intake extracted the mailing box", () => {
   const raw = {
     date: "2027-01-22", venue: "New Museum Los Gatos",

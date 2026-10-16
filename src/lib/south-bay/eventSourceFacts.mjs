@@ -7,6 +7,30 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Hammer's VBO card reuses an ABBA intro for the Halloween concert. Fever's
+  // own program identifies Halloween music performed by a string quartet.
+  // Apply before blurb resolution so the misleading cached copy cannot return.
+  // https://feverup.com/m/140936
+  // Evidence: docs/qa/2026-10-16-0407-fact-check.md.
+  {
+    date: "2026-10-30", url: "https://feverup.com/m/140936",
+    facts: {
+      description: "A string quartet performs Halloween-inspired music by candlelight at Hammer Theatre Center.",
+      blurb: "Hear a string quartet play Halloween-inspired music by candlelight at Hammer Theatre.",
+    },
+  },
+  // The same VBO template omits Queen from November's intro and January's
+  // title. The organizer explicitly lists both dates under Queen vs. ABBA.
+  // https://feverup.com/m/415717
+  // Evidence: docs/qa/2026-10-16-0407-fact-check.md.
+  ...["2026-11-29", "2027-01-31"].map((date) => ({
+    date, url: "https://feverup.com/m/415717",
+    facts: {
+      title: "Fever presents Candlelight: Queen vs. ABBA",
+      description: "A string quartet performs music by Queen and ABBA by candlelight at Hammer Theatre Center.",
+      blurb: "Hear a candlelit tribute concert covering Queen and ABBA classics performed live.",
+    },
+  })),
   // The exhibition runs October 5–November 5, but performances and artist
   // presentations belong to its October 8 reception, already past. Bound
   // the correction to this run so daily re-anchoring cannot restore it.
