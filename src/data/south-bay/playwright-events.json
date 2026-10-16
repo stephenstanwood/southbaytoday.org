@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-16T03:47:14.457Z",
+    "generatedAt": "2026-10-16T15:04:37.622Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 465,
+    "eventCount": 464,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (111)",
@@ -21,12 +21,12 @@
       "Santana Row (5)",
       "City of Cupertino (25)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (80)",
+      "TheatreWorks Silicon Valley (79)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (3)"
+      "Peninsula Open Space Trust (3)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 80,
+        "count": 79,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -338,14 +338,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 3,
-        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -5651,7 +5649,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://fareharbor.com/embeds/book/historysanjose/items/314593/calendar/2024/12/?full-items=yes",
+      "url": "https://historysanjose.org/programs-events/",
       "source": "History San Jose",
       "kidFriendly": false
     },
@@ -5863,10 +5861,10 @@
       "kidFriendly": false
     },
     {
-      "id": "d32c93b30e05",
+      "id": "1a87ddb8b638",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5883,10 +5881,10 @@
       "kidFriendly": false
     },
     {
-      "id": "1f8391e5417f",
+      "id": "d4b3590c3178",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -6345,10 +6343,10 @@
       "kidFriendly": false
     },
     {
-      "id": "5b2322cad07c",
+      "id": "067c331cbaf8",
       "title": "Toddler Storytime",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6615,7 +6613,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-16T03:45:54.454Z"
+        "checkedAt": "2026-10-16T15:03:24.375Z"
       }
     },
     {
@@ -6638,7 +6636,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-16T03:45:54.454Z"
+        "checkedAt": "2026-10-16T15:03:24.376Z"
       }
     },
     {
@@ -6661,7 +6659,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-16T03:45:54.454Z"
+        "checkedAt": "2026-10-16T15:03:24.376Z"
       }
     },
     {
@@ -6684,7 +6682,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-16T03:45:54.454Z"
+        "checkedAt": "2026-10-16T15:03:24.376Z"
       }
     },
     {
@@ -6707,7 +6705,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-16T03:45:54.455Z"
+        "checkedAt": "2026-10-16T15:03:24.377Z"
       }
     },
     {
@@ -7218,23 +7216,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "b3f7f939d883",
-      "title": "Dracula",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7504",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -8649,23 +8630,6 @@
       "kidFriendly": false
     },
     {
-      "id": "29685fae390f",
-      "title": "Rush",
-      "date": "2026-10-15",
-      "displayDate": "Thu, Oct 15",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/rush-1",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "fa216b014a36",
       "title": "Rush",
       "date": "2026-10-17",
@@ -8921,6 +8885,23 @@
       "kidFriendly": false
     },
     {
+      "id": "74e4cfbc37e3",
+      "title": "Life Surge San Jose",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "8:30 am",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
       "id": "c54ccdf23d60",
       "title": "The Tech Challenge Virtual Interest Session",
       "date": "2026-10-20",
@@ -9125,6 +9106,57 @@
       "kidFriendly": true
     },
     {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9242,57 +9274,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
