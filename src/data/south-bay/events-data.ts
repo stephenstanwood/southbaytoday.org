@@ -401,7 +401,10 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "family",
     recurrence: "weekly",
     days: ["tuesday"],
-    time: "10:30am",
+    // Fall 2026 schedule: SCCLD lists 10:45–11:15 AM on October 20 and 27.
+    // https://sccl.bibliocommons.com/events/6a9323931c197d11325bbacc
+    // https://sccl.bibliocommons.com/events/6a9323931c197d11325bbacd
+    time: "10:45am",
     cost: "free",
     kidFriendly: true,
     description: "All-ages music and movement program at the newly reopened Campbell Library. The 30-minute program includes songs, instruments, and dancing.",
