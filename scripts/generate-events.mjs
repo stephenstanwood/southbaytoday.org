@@ -2213,6 +2213,16 @@ function polishDescription(text) {
   // Palo Alto library's youth group is NeuroSphere in its own event copy;
   // preserve that proper name after the generic camel-case splitter.
   t = t.replace(/\bNeuro Sphere\b/g, "NeuroSphere");
+  // Preserve verified names from the community/library feeds after splitting.
+  // Primary spellings: fabmo.org, defrankcenter.org, calmatters.org/about,
+  // chompshop.com/collections/chompsaws/products/chompsaw, and Palo Alto's
+  // ArtSEE listings (paloalto.bibliocommons.com/events/6ac8309f377296003a4ab25d).
+  // Scope ArtSEE to its program name and DeFrank to Billy's full name.
+  t = t.replace(/\bFab Mo\b/g, "FabMo");
+  t = t.replace(/\bBilly De Frank\b/g, "Billy DeFrank");
+  t = t.replace(/\bChomp Saw\b/g, "ChompSaw");
+  t = t.replace(/\bArt See(?= Expression\b)/g, "ArtSEE");
+  t = t.replace(/\bCal Matters\b/g, "CalMatters");
   // Publisher and studio spellings in library author/screening listings.
   // Preserve these names after camel-case splitting, including the source's
   // inconsistent casing, so a refresh cannot undo verified corrections.

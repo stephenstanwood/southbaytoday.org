@@ -35,6 +35,26 @@ test("preserves Palo Alto library's NeuroSphere group name through prose cleanup
   assert.equal(polishDescription(`Meet NeuroSphere. Details: ${url}`), `Meet NeuroSphere. Details: ${url}`);
 });
 
+test("preserves verified community and maker names through prose cleanup", () => {
+  const cases = [
+    ["FabMo", "Fab Mo"],
+    ["Billy DeFrank LGBTQ+ Community Center", "Billy De Frank LGBTQ+ Community Center"],
+    ["ChompSaw", "Chomp Saw"],
+    ["ArtSEE Expression", "Art See Expression"],
+    ["CalMatters", "Cal Matters"],
+  ];
+  for (const [canonical, split] of cases) {
+    const expected = `Learn more about ${canonical}.`;
+    assert.equal(polishDescription(expected), expected, canonical);
+    assert.equal(polishDescription(`Learn more about ${split}.`), expected, split);
+    assert.equal(polishDescription(polishDescription(expected)), expected, `${canonical} idempotence`);
+    const url = `https://example.org/${canonical.replaceAll(" ", "")}?name=${split.replaceAll(" ", "%20")}`;
+    assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`, `${canonical} URL`);
+  }
+  assert.equal(polishDescription("Art See is an unrelated name. Meet Billy De Marco."),
+    "Art See is an unrelated name. Meet Billy De Marco.");
+});
+
 test("keeps Cherie Dimaline's VenCo title intact through prose cleanup", () => {
   // Publisher: penguinrandomhouse.ca/books/600424/venco-by-cherie-dimaline/9780735277236
   const expected = "Discuss VenCo, a novel by Cherie Dimaline.";
