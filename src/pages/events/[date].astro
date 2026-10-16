@@ -27,6 +27,7 @@ interface RawEvent {
   venue?: string | null;
   address?: string | null;
   city?: string | null;
+  locality?: string | null;
   url?: string | null;
   image?: string | null;
   photoRef?: string | null;
@@ -89,7 +90,7 @@ export function getStaticPaths() {
         const t = parseClockTime(e.time);
         return {
           ...e,
-          cityName: e.city ? cityNames.get(e.city) ?? null : null,
+          cityName: e.locality || (e.city ? cityNames.get(e.city) ?? null : null),
           detailSlug: slugByEvent.get(e) ?? null,
           // Minutes-since-midnight start time, used client-side to dim
           // already-started events when this date happens to be "today" in

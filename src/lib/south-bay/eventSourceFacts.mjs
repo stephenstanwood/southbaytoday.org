@@ -7,6 +7,17 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // This event's Squarespace location incorrectly says Palo Alto / 94301.
+  // The bookstore's contact page confirms 1010 El Camino Real in Menlo Park,
+  // 94025; the foundation's attendee FAQ also identifies its in-store venue.
+  // Keep the established palo-alto coverage bucket for this border venue.
+  // https://keplers.com/contact
+  // https://www.keplers.org/attendee-faq
+  // Evidence: docs/qa/2026-10-15-1707-fact-check.md.
+  {
+    date: "2026-10-24", url: "https://www.keplers.org/upcoming-events-internal/community-reads",
+    facts: { address: "1010 El Camino Real, Menlo Park, CA 94025", locality: "Menlo Park" },
+  },
   // NUMU's program details confirm Thursday, November 19, 11–11:45 AM,
   // free with registration. The newsletter's stale summer offset labeled its
   // midnight sentinel November 18, and omitted the required reservation.

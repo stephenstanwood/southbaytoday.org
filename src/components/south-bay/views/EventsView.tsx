@@ -73,6 +73,8 @@ interface UpcomingEvent {
   venue: string;
   address: string;
   city: string;
+  /** Actual municipality; city remains the coverage/filter bucket. */
+  locality?: string | null;
   category: string;
   cost: string;
   description: string;
@@ -538,10 +540,10 @@ function UpcomingEventCard({
                 <>
                   {venue}
                   <span className="sb-event-sep" aria-hidden="true">·</span>
-                  {cityLabel(event.city)}
+                  {event.locality || cityLabel(event.city)}
                 </>
               ) : (
-                cityLabel(event.city)
+                event.locality || cityLabel(event.city)
               )}
             </span>
           </div>
@@ -658,7 +660,7 @@ function buildEventMapsUrl(event: UpcomingEvent): string | null {
   // Flag first, text second — the flag catches source-declared virtual events
   // whose title and blurb never say so.
   if (isVirtualEvent(event)) return null;
-  const cityName = event.city ? cityLabel(event.city) : "";
+  const cityName = event.locality || (event.city ? cityLabel(event.city) : "");
   // Prefer venue + address + city when available — most specific.
   // Some scrapers stuff the address into the venue field; if address starts
   // with venue (or vice versa) drop the venue to avoid "1234 Main St 1234

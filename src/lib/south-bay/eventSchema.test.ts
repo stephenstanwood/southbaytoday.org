@@ -71,6 +71,18 @@ test("eventToSchema falls back to the primary source when no leaf page is known"
   assert.equal(schema.sameAs, undefined);
 });
 
+test("eventToSchema uses a border venue's actual locality instead of its coverage bucket", () => {
+  const schema = eventToSchema({
+    title: "Community Reads: Her Right Foot", date: "2026-10-24", time: "2:00 PM",
+    venue: "Kepler's Books", address: "1010 El Camino Real, Menlo Park, CA 94025",
+    city: "palo-alto", cityName: "Palo Alto", locality: "Menlo Park",
+  });
+  assert.ok(schema);
+  const place = schema.location as { address: { addressLocality: string; streetAddress: string } };
+  assert.equal(place.address.addressLocality, "Menlo Park");
+  assert.equal(place.address.streetAddress, "1010 El Camino Real, Menlo Park, CA 94025");
+});
+
 test("offers reflect full or closed registration without assuming unknown availability", () => {
   const event = { title: "Workshop", date: "2026-10-03", url: "https://example.org/workshop" };
   for (const cost of ["free", "paid", "low"]) {

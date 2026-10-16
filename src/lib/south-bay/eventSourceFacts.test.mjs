@@ -13,6 +13,29 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Kepler's Community Reads uses the bookstore's verified Menlo Park address", async () => {
+  const raw = {
+    date: "2026-10-24", time: "2:00 PM", endTime: "4:00 PM",
+    title: "Community Reads: Her Right Foot by Dave Eggers and Shawn Harris",
+    venue: "Kepler's Books", city: "palo-alto",
+    address: "1010 El Camino Real, Palo Alto, CA, 94301", locality: "Palo Alto",
+    url: "https://www.keplers.org/upcoming-events-internal/community-reads",
+    description: "Illustrator Shawn Harris will lead an interactive collage workshop.",
+    blurb: "Join an all-ages collage workshop with illustrator Shawn Harris.",
+    kidFriendly: true,
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], {
+    ...raw, address: "1010 El Camino Real, Menlo Park, CA 94025", locality: "Menlo Park",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2027-10-24" },
+    { ...raw, url: "https://www.keplers.org/upcoming-events-internal/another-event" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("NUMU's Cassady talk keeps its Thursday label, closing time, and registration requirement", async () => {
   const raw = {
     id: "inbound-d897162cdf670c51", date: "2026-11-19", displayDate: "Wed, Nov 18",

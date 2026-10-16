@@ -24,6 +24,7 @@ interface RawEvent {
   venue?: string | null;
   address?: string | null;
   city?: string | null;
+  locality?: string | null;
   url?: string | null;
   image?: string | null;
   photoRef?: string | null;
@@ -83,7 +84,7 @@ interface Props {
 }
 
 const { event, passed, retired, updatedAt } = Astro.props;
-const cityName = event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null;
+const cityName = event.locality || (event.city ? CITIES.find((c) => c.id === event.city)?.name ?? null : null);
 const pageUrl = `https://southbaytoday.org${Astro.url.pathname}`;
 
 // Online-only events still get a page — they're real, attendable things — but

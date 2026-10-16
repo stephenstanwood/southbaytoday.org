@@ -26,7 +26,8 @@ export interface SchemaEventRecord {
   organizerName?: string | null;
   organizerUrl?: string | null; // verified first-party organizer/venue homepage
   address?: string | null;
-  city?: string | null; // city id, e.g. "san-jose"
+  city?: string | null; // coverage/filter id; border venues can use a nearby city
+  locality?: string | null; // actual source-backed municipality; use for location labels
   cityName?: string | null; // pre-resolved display name, optional
   url?: string | null; // primary-source / ticketing URL
   pageUrl?: string | null; // canonical South Bay Today leaf page
@@ -132,7 +133,7 @@ export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | n
     schema.endDate = isoDateTime(e.date, end, offset);
   }
 
-  const locality = e.cityName || null;
+  const locality = e.locality || e.cityName || null;
   const address: Record<string, unknown> = {
     "@type": "PostalAddress",
     addressRegion: "CA",
