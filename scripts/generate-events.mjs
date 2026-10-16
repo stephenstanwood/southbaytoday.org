@@ -927,6 +927,19 @@ const PROPER_NOUN_FIXES = {
 function fixProperNouns(text) {
   let t = String(text ?? "");
   for (const [bad, fix] of Object.entries(PROPER_NOUN_FIXES)) t = t.replaceAll(bad, fix);
+  // Preserve verified names after the prose camel-case splitter and title's
+  // acronym casing pass. Capitalized forms only; ordinary "one in math" and
+  // "math works" prose must stay unchanged. BISH is scoped to its group name.
+  // https://oneinmath.com/
+  // https://www.sanjose.org/theaters/events/nier-orchestra-concert-12026-yorha
+  // https://www.meetup.com/bishbash/events/316756941/
+  // https://www.sjpl.org/blogs/post/celebrating-10-years-of-teenhq-where-it-all-began/
+  t = t.replace(/\bOne ?[Ii]n ?Math\b/g, "OneInMath");
+  t = t.replace(/\bNie ?R\b/g, "NieR");
+  t = t.replace(/\bYo ?RHa\b/g, "YoRHa");
+  t = t.replace(/\bMath(?: ?Works|works)\b/g, "MathWorks");
+  t = t.replace(/\bTeen ?H[Qq]\b/g, "TeenHQ");
+  t = t.replace(/\bBish(?= Bash\b)/g, "BISH");
   return t;
 }
 

@@ -55,6 +55,31 @@ test("preserves verified community and maker names through prose cleanup", () =>
     "Art See is an unrelated name. Meet Billy De Marco.");
 });
 
+test("preserves verified OneInMath, NieR, MathWorks, and TeenHQ names on refresh", () => {
+  const cases = [
+    ["OneInMath", ["One In Math", "One in Math", "OneinMath", "Onein Math"]],
+    ["NieR", ["Nie R"]],
+    ["YoRHa", ["Yo RHa"]],
+    ["MathWorks", ["Math Works", "Mathworks"]],
+    ["TeenHQ", ["Teen HQ", "Teen Hq"]],
+    ["BISH Bash", ["Bish Bash"]],
+  ];
+  for (const [canonical, variants] of cases) {
+    const expected = `Learn more about ${canonical}.`;
+    for (const name of [canonical, ...variants]) {
+      assert.equal(polishDescription(`Learn more about ${name}.`), expected, name);
+      assert.equal(cleanTitle(`Meet ${name}`), `Meet ${canonical}`, `${name} title`);
+    }
+    assert.equal(polishDescription(expected), expected);
+    assert.equal(polishDescription(polishDescription(expected)), expected, `${canonical} idempotence`);
+    assert.equal(cleanTitle(cleanTitle(`Meet ${canonical}`)), `Meet ${canonical}`);
+    const url = `https://example.org/${canonical.replaceAll(" ", "")}?name=${variants[0].replaceAll(" ", "%20")}`;
+    assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`, `${canonical} URL`);
+  }
+  assert.equal(polishDescription("One in math class. Math works for us. Bish reads a book."),
+    "One in math class. Math works for us. Bish reads a book.");
+});
+
 test("keeps Cherie Dimaline's VenCo title intact through prose cleanup", () => {
   // Publisher: penguinrandomhouse.ca/books/600424/venco-by-cherie-dimaline/9780735277236
   const expected = "Discuss VenCo, a novel by Cherie Dimaline.";
