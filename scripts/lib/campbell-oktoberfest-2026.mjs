@@ -45,6 +45,7 @@ export function mergeCampbellOktoberfest(events, { fromDate = "0000-01-01" } = {
       category: "food",
       cost: "free",
       costNote: "Food, drinks and Kinderplatz tickets sold separately.",
+      attendanceNote: "Free festival admission; food, drinks and Kinderplatz tickets sold separately.",
       description: "A free, family-friendly festival in Downtown Campbell with live music, artisan booths, food vendors, and a Kids Zone.",
       url: SOURCE_URL,
       source: "Campbell Chamber of Commerce",

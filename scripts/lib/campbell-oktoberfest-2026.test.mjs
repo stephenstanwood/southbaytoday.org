@@ -27,6 +27,7 @@ test("one sparse newsletter date becomes the two published daily sessions", () =
     assert.equal(event.photoRef, "venue-art");
     assert.equal(event.occurrenceEvidence.date, event.date);
     assert.equal(event.occurrenceEvidence.sourceUrl, event.url);
+    assert.match(event.attendanceNote, /Free festival admission;.*Kinderplatz tickets sold separately/);
   }
 });
 
