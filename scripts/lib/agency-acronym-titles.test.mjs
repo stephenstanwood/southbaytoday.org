@@ -44,6 +44,18 @@ test("keeps agency acronyms uppercase in body copy too", () => {
   );
 });
 
+test("preserves SJPL partner AACI YTI in titles and workshop descriptions", () => {
+  // SJPL's October 20, 2026 listing: /events/6ac530c9377296003a4a18fa.
+  const title = "Halloween Crafts with AACI YTI";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(
+    polishDescription("Join AACI YTI for a Halloween themed crafts workshop."),
+    "Join AACI YTI for a Halloween themed crafts workshop.",
+  );
+  assert.equal(polishDescription("Join YTI Volunteers for crafts."), "Join YTI Volunteers for crafts.");
+});
+
 test("newsletter and ticket titles retain published organization and artist initials", () => {
   for (const title of [
     "SUSD Board Candidate Forum", "CSA Homecoming", "CEFCU Halloween Movie Night",

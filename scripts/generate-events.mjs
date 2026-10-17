@@ -1080,6 +1080,9 @@ function cleanTitle(title) {
     "JACL",
     // Local youth-program brand names that arrive ALL-CAPS from BiblioCommons
     "XFYD",
+    // SJPL publishes its Halloween crafts partner as AACI YTI; preserve the
+    // organization's initials instead of turning them into apparent names.
+    "AACI", "YTI",
     // Library/program acronyms that arrive ALL-CAPS in source titles but the
     // 2+ regex would downcase ("TLAB Relaunch" → "Tlab Relaunch", "(HICAP)"
     // → "(Hicap)"). TLAB = Teen Library Advisory Board (Palo Alto Library);
@@ -2040,6 +2043,8 @@ function polishDescription(text) {
     "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
     "AAVE", "ADHD", "PTSD", "ISSS",
+    // SJPL partner; mirrored from cleanTitle. YTI uses KEEP_UPPER_SHORT below.
+    "AACI",
     // South Bay / arts venues
     "SJMA", "MACLA", "SJZ", "SVLG", "SJDA", "SCCC", "MOFAD", "SVCF", "VTAA", "VTAS",
     "BAGI", "CHCP", "PWHL", "ABBA",
@@ -2160,6 +2165,7 @@ function polishDescription(text) {
     // that can appear inside body copy and would be downcased by the wedge rule
     // if surrounded by mixed-case neighbors ("Catholic JST programs offer…").
     "HSI", "JST", "ICA", "SCC", "ID", "ACL", "CSA", "USF", "JT",
+    "YTI",
     // Football-club designation: SJSU's CSU-alumni-night mailer for Bay FC
     // wrote "be a part of the Bay FC Legacy" in body copy. The wedge rule
     // matched "Bay " + FC + " Legacy" and downcased FC → "Fc" because the

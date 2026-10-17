@@ -1,8 +1,17 @@
-// Editorial suppressions for event rows that must not publish until a human
-// reconfirms them against a first-party occurrence page. A review date is a
-// prompt to recheck the source, not an automatic expiry.
+// Editorial suppressions for withdrawn occurrences and event rows still
+// awaiting first-party reconfirmation. A review date is a prompt to recheck
+// the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  Object.freeze({
+    title: /\bengelbert humperdinck\b/i,
+    venue: /^california theatre$/i,
+    date: "2026-10-21",
+    reviewOn: "2027-07-18",
+    reason:
+      "The venue and presenter explicitly rescheduled October 21, 2026 to July 18, 2027. Suppress only the withdrawn date, including stale Timely and ticket-feed copies.",
+    source: "https://www.sanjose.org/theaters/events/engelbert-humperdinck",
+  }),
   Object.freeze({
     ids: Object.freeze(["sccl-6a5a7fe7fa641fe01af3cb52"]),
     title: /lotus lantern craft/i,

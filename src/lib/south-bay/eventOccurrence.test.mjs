@@ -115,6 +115,25 @@ test("publishability combines occurrence evidence with editorial place availabil
   }), false);
 });
 
+test("the rescheduled Engelbert show cannot return through a stale calendar", () => {
+  const old = {
+    id: "feee73927455", title: "Engelbert Humperdinck",
+    date: "2026-10-21", venue: "California Theatre", source: "San Jose Theaters",
+  };
+  assert.equal(isEventPublishable(old), false);
+  assert.equal(isEventPublishable({
+    ...old, id: "another-feed", title: "Engelbert Humperdinck - The Celebration Tour 2026",
+    source: "Ticketmaster",
+  }), false);
+  // The exclusion belongs to the withdrawn occurrence, not the artist or ID.
+  for (const event of [
+    { ...old, date: "2027-07-18" },
+    { ...old, date: "2026-10-22" },
+    { ...old, venue: "San Jose Civic" },
+    { ...old, title: "Another Concert" },
+  ]) assert.equal(isEventPublishable(event), true);
+});
+
 test("canonical evidence-required rows contain exact occurrence evidence", () => {
   const upcoming = JSON.parse(readFileSync(
     new URL("../../data/south-bay/upcoming-events.json", import.meta.url),
