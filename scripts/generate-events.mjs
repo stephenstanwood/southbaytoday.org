@@ -925,6 +925,15 @@ const PROPER_NOUN_FIXES = {
   "Gordon Ramsey": "Gordon Ramsay",
 };
 
+// These source-published initials name organizations, programs and tools;
+// they are not shouted prose. Share them across all three casing passes so
+// a refresh cannot undo verified title/body spellings. Preserve uppercase
+// source tokens only: ordinary words and names such as "Ros" stay untouched.
+// Evidence: docs/qa/2026-10-17-1407-fact-check.md.
+const SOURCE_EVENT_ACRONYMS = [
+  "CERT", "CLA", "LWV", "ACM", "CI", "CD", "ROS", "WGSS", "JS", "TTRPG",
+];
+
 function fixProperNouns(text) {
   let t = String(text ?? "");
   for (const [bad, fix] of Object.entries(PROPER_NOUN_FIXES)) t = t.replaceAll(bad, fix);
@@ -1066,6 +1075,7 @@ function cleanTitle(title) {
   // "In Stanford"). Titles that are mostly all-caps (BLACKPINK-style brand
   // marks) fall back to the 4+ rule so two-letter brand fragments stay intact.
   const KEEP_UPPER = new Set([
+    ...SOURCE_EVENT_ACRONYMS,
     "ICYMI", "LGBTQ", "LGBTQIA", "BIPOC", "STEAM", "LEGO",
     // 4-letter acronyms to preserve
     "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
@@ -2040,6 +2050,7 @@ function polishDescription(text) {
   // Downcase ALL-CAPS runs of 4+ uppercase letters (preserve common acronyms).
   // Same logic as cleanTitle but applied to body text.
   const KEEP_UPPER = new Set([
+    ...SOURCE_EVENT_ACRONYMS,
     "ICYMI", "LGBTQ", "LGBTQIA", "BIPOC", "STEAM", "LEGO",
     "SJSU", "SJPL", "SJPD", "SJFD", "FIFA", "UEFA", "ESPN", "STEM", "AAPI", "ACLU",
     "NASA", "IEEE", "YMCA", "YWCA", "ROTC", "FEMA", "NOAA", "WWII", "UCLA",
@@ -2155,6 +2166,7 @@ function polishDescription(text) {
   // KEEP_UPPER_SHORT protects 3-letter acronyms ("The ESL Conversation Club")
   // which the wedge rule would otherwise downcase to "The Esl Conversation Club".
   const KEEP_UPPER_SHORT = new Set([
+    ...SOURCE_EVENT_ACRONYMS,
     "ESL", "ELL", "BBQ", "CEO", "CFO", "CTO", "CPR", "AED", "API", "DIY",
     "FBI", "GED", "ICU", "IRS", "LED", "MLB", "MLS", "NBA", "NFL", "NHL",
     "PAC", "POV", "PSA", "SAT", "SAP", "SCU", "SJZ", "SUV", "TBA", "TBD",

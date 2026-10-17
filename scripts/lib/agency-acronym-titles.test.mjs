@@ -37,6 +37,27 @@ test("still downcases shouted words that are not known acronyms", () => {
   assert.equal(cleanTitle("ANNUAL Pancake Breakfast"), "Annual Pancake Breakfast");
 });
 
+test("refresh preserves organizer, safety-program and mapping/tool initials", () => {
+  for (const title of [
+    "Community Emergency Response Team (CERT) Academy",
+    "CLA Presents Barbara Kingsolver Receiving the Steinbeck Award",
+    "LWV- 14 State Propositions",
+    "From Silent Data Failures to Enforceable CI/CD Gates",
+    "ROS By-The-Bay October Meetup at Intrinsic: Swift for ROS + ROSCon Global Recap",
+    "WGSS Lecture: Drag Story Time as a Site of Resistance",
+    "Get Started with Mapping: StoryMap JS, ArcGIS, Leaflet",
+    "Adventure Skeletons TTRPG",
+  ]) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+  }
+  assert.equal(polishDescription("Meetup event by SF Bay ACM Chapter."), "Meetup event by SF Bay ACM Chapter.");
+  assert.equal(polishDescription("The WGSS Lecture Series hosts a talk."), "The WGSS Lecture Series hosts a talk.");
+  assert.equal(polishDescription("Play TTRPG games at the library."), "Play TTRPG games at the library.");
+  assert.equal(cleanTitle("Ros reads with her family"), "Ros reads with her family");
+  assert.equal(cleanTitle("A CERTAIN Halloween Story"), "A Certain Halloween Story");
+});
+
 test("keeps agency acronyms uppercase in body copy too", () => {
   assert.match(
     polishDescription("The LGMSPD hosts an eight-week academy each fall."),

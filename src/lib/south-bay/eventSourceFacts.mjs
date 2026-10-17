@@ -7,6 +7,35 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Newsletter extraction put Saratoga's puppet show on October 17 at 11 AM.
+  // The library's occurrence page gives October 19, 4–4:30 PM. Correct before
+  // date filtering/deduplication so the official Monday listing wins and the
+  // false Saturday occurrence cannot return with a different intake ID.
+  // https://sccl.bibliocommons.com/events/6abc4d747c8c150075767bd5
+  // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
+  // Include the corrected date because inbound presentation fixes the clock
+  // and date first, then the publication pass applies the remaining facts.
+  ...["2026-10-17", "2026-10-19"].map((date) => ({
+    date,
+    title: /^Fratello Marionettes(?::| Present(?:s)?) Spooktacular(?: \(All Ages\))?$/i,
+    venue: /^Saratoga Library(?:,.*)?$/i,
+    facts: {
+      title: "Fratello Marionettes: Spooktacular",
+      date: "2026-10-19", displayDate: "Mon, Oct 19",
+      time: "4:00 PM", endTime: "4:30 PM",
+      url: "https://sccl.bibliocommons.com/events/6abc4d747c8c150075767bd5",
+      cost: "free", category: "community", kidFriendly: true, audienceAge: "all",
+    },
+  })),
+  // The city newsletter explicitly confirms the donation drive, including
+  // its 10 AM–4 PM hours. Link the retained source instead of a blank URL.
+  // https://saratoga.ca.us/CivicSend/ViewMessage/message/303691
+  {
+    date: "2026-10-17",
+    title: /^Friends of the Saratoga Libraries Book Donation Event$/i,
+    venue: /^Saratoga Library(?:,.*)?$/i,
+    facts: { url: "https://saratoga.ca.us/CivicSend/ViewMessage/message/303691" },
+  },
   // The county explicitly describes this ride as all ages and family-friendly.
   // Keep its first-party event page instead of the newsletter tracking link;
   // the festival's 10 AM start is not evidence of the ride's departure time.

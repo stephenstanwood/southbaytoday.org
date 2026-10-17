@@ -14,6 +14,52 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("Saratoga's newsletter puppet show resolves to the official Monday occurrence before deduplication", () => {
+  const raw = {
+    id: "different-newsletter-id", cityKey: "saratoga",
+    title: "Fratello Marionettes Present Spooktacular", location: "Saratoga Library",
+    startsAt: "2026-10-17T11:00:00-07:00", endsAt: null,
+    description: "A free Halloween-themed marionette puppet show for families at Saratoga Library.",
+    sourceUrl: "https://sccl.bibliocommons.com/v2/events?q=halloween&locations=SA",
+  };
+  const [event] = fetchInboundEvents({ today: "2026-10-17", events: [raw] }).map(applyVerifiedEventFacts);
+  assert.equal(event.title, "Fratello Marionettes: Spooktacular");
+  assert.equal(event.date, "2026-10-19");
+  assert.equal(event.displayDate, "Mon, Oct 19");
+  assert.equal(event.time, "4:00 PM");
+  assert.equal(event.endTime, "4:30 PM");
+  assert.equal(event.cost, "free");
+  assert.equal(event.kidFriendly, true);
+  assert.equal(event.url, "https://sccl.bibliocommons.com/events/6abc4d747c8c150075767bd5");
+  assert.deepEqual(applyVerifiedEventFacts(event), event);
+  const official = {
+    ...event, id: "sccl-6abc4d747c8c150075767bd5", source: "Santa Clara County Library",
+    description: "Fratello Marionettes Halloween variety show is family-friendly fun for all ages. The show features happy ghosts, Frankenstein, the Purple People Eater, a not-so-scary spider and more.",
+  };
+  const { kept } = fuzzyDedupEvents([event, official]);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].id, official.id);
+  for (const other of [
+    { ...raw, startsAt: "2027-10-17T11:00:00-07:00" },
+    { ...raw, location: "Los Gatos Library" },
+    { ...raw, title: "A different puppet show" },
+  ]) assert.equal(normalizeInboundEventPresentation(other).date, undefined);
+});
+
+test("Saratoga's donation drive retains its exact city-newsletter source", () => {
+  const raw = {
+    id: "donation-fixture", cityKey: "saratoga",
+    title: "Friends of the Saratoga Libraries Book Donation Event", location: "Saratoga Library",
+    startsAt: "2026-10-17T10:00:00-07:00", endsAt: "2026-10-17T16:00:00-07:00",
+    sourceUrl: null,
+  };
+  const [event] = fetchInboundEvents({ today: "2026-10-17", events: [raw] });
+  assert.equal(event.url, "https://saratoga.ca.us/CivicSend/ViewMessage/message/303691");
+  assert.equal(event.time, "10:00 AM");
+  assert.equal(event.endTime, "4:00 PM");
+  assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: "2027-10-17T10:00:00-07:00" }).url, "");
+});
+
 test("Bike to the Bay stays family-friendly when a later newsletter changes its source ID or link", () => {
   for (const [id, location, sourceUrl] of [
     ["oct9-newsletter", "70 W Hedding St to Alviso Marina County Park, San Jose, CA", "https://go.sparkpostmail.com/f/a/newsletter-tracking-link"],
