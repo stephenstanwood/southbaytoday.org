@@ -13,6 +13,35 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Pageturners cannot restore a misspelled author or an unsupported Booker winner claim", async () => {
+  for (const [date, sourceId] of [
+    ["2026-11-12", "6759fea0da3a5e3d00ca4d1a"],
+    ["2026-12-10", "6759fea0da3a5e3d00ca4d1b"],
+  ]) {
+    const raw = {
+      date, url: `https://paloalto.bibliocommons.com/events/${sourceId}`,
+      title: "Pageturners", time: "6:30 PM", endTime: "7:45 PM", venue: "Rinconada Library",
+      description: "My Friends by Fredrik Bachman; visiting International Booker Prize winner Andrey Kurkov (Diary of an Invasion).",
+      blurb: "Discuss books by Fredrik Bachman and International Booker Prize winner Andrey Kurkov.",
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    for (const field of ["description", "blurb"]) {
+      assert.match(events[0][field], /Fredrik Backman/);
+      assert.match(events[0][field], /Andrey Kurkov/);
+      assert.doesNotMatch(events[0][field], /Bachman|Booker Prize winner/);
+    }
+    for (const field of ["date", "url", "title", "time", "endTime", "venue"]) {
+      assert.equal(events[0][field], raw[field]);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    for (const other of [
+      { ...raw, date: "2027-11-12" },
+      { ...raw, url: "https://paloalto.bibliocommons.com/events/another-book-club" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Hillview's October 18 storytime cannot inherit the source body's AM typo", async () => {
   const raw = {
     date: "2026-10-18", title: "Family Storytime", venue: "Hillview Library",

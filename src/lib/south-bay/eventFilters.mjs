@@ -277,9 +277,11 @@ export function registrationFromBiblioCommons(ev) {
   // Require the organizer to say BOTH that registration is unnecessary and
   // that it supplies a reminder; a bare drop-in phrase cannot defeat a gate.
   // Booking instructions and explicit requirements still win. Verified source
-  // bodies and examples: docs/qa/2026-10-15-0507-fact-check.md.
+  // bodies and examples: docs/qa/2026-10-15-0507-fact-check.md and
+  // docs/qa/2026-10-17-0007-fact-check.md. "You don't have to register",
+  // "recommended but not required", and "optional" also describe reminders.
   const description = stripInstructionMarkup(ev.description || ev.definition?.description);
-  const reminderOnly = /\bregistration\s+(?:is\s+)?not\s+(?:required|necessary)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
+  const reminderOnly = /\b(?:registration\s+(?:is\s+)?(?:not\s+(?:required|necessary)|(?:recommended|requested|encouraged)\s*,?\s*but\s+not\s+required|optional)|you\s+(?:don['’]t|do\s+not)\s+have\s+to\s+register)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
   const requiredInBody = /\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\b(?:must|need\s+to)\s+(?:register|reserve|enroll|book)\b/i.test(description);
   if (provider === "BIBLIO_EVENTS" && !fromInstructions && reminderOnly && !requiredInBody) {
     return REGISTRATION_NONE;

@@ -7,6 +7,23 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The library's shared reading-list body misspells Backman's surname and
+  // calls Kurkov an International Booker winner. The publisher identifies
+  // Fredrik Backman; the prize organizer records Kurkov as a judge/longlistee.
+  // Keep the author's name and omit the unsupported accolade on these dates.
+  // https://www.simonandschuster.com/books/My-Friends/Fredrik-Backman/9781982112837
+  // https://thebookerprizes.com/the-booker-library/authors/andrey-kurkov
+  // Evidence: docs/qa/2026-10-17-0007-fact-check.md.
+  ...[
+    ["2026-11-12", "6759fea0da3a5e3d00ca4d1a"],
+    ["2026-12-10", "6759fea0da3a5e3d00ca4d1b"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://paloalto.bibliocommons.com/events/${sourceId}`,
+    copyReplacements: [
+      [/\bFredrik Bachman\b/gi, "Fredrik Backman"],
+      [/\bInternational Booker Prize winner Andrey Kurkov\b/gi, "Andrey Kurkov"],
+    ],
+  })),
   // Hammer's VBO card reuses an ABBA intro for the Halloween concert. Fever's
   // own program identifies Halloween music performed by a string quartet.
   // Apply before blurb resolution so the misleading cached copy cannot return.

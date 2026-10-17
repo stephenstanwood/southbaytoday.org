@@ -333,6 +333,11 @@ test("Palo Alto's optional reminder signups do not gate admission", () => {
     "Registration is not required, but if you do register, you'll receive an email reminder.", // Halloween Karaoke
     "Registration is not required but you will receive a reminder email the day before.", // Chamber Music
     "Registration is not required. If you register, you will get an email reminder for the program including a link to the class playlist to practice.", // Line Dancing
+    "You don't have to register, but you will receive a reminder email if you do.", // Pageturners, November/December 2026
+    "You don’t have to register, but you will receive a reminder email if you do.",
+    "You do not have to register, but you will receive a reminder email if you do.",
+    "Registration is recommended but NOT required. Register in order to receive a reminder email the day before the event.", // Don't Get Scammed, November 18
+    "Registration is optional. If you register, you will receive an email reminder.", // Learn English, December 18
   ];
   for (const description of descriptions) {
     for (const state of [{}, { isFull: true }, { registrationClosed: true }]) {
@@ -359,6 +364,27 @@ test("optional reminder language cannot relax an actual booking requirement", ()
     const event = biblioEvent({ provider, cap: 20, instructions });
     event.definition.description = description;
     assert.notEqual(registrationFromBiblioCommons(event), "none", description);
+  }
+});
+
+test("optional signup variants still require explicit reminder-only evidence and no booking instructions", () => {
+  for (const optional of [
+    "You don't have to register",
+    "Registration is recommended but NOT required",
+    "Registration is optional",
+  ]) {
+    const reminder = `${optional}. You will receive a reminder email if you register.`;
+    for (const [provider, instructions, description] of [
+      ["EXTERNAL", null, reminder],
+      ["BIBLIO_EVENTS", "Please register for a seat.", reminder],
+      ["BIBLIO_EVENTS", "Call to book an appointment.", reminder],
+      ["BIBLIO_EVENTS", null, optional],
+      ["BIBLIO_EVENTS", null, `${reminder} You must register for the workshop.`],
+    ]) {
+      const event = biblioEvent({ provider, cap: 20, instructions });
+      event.definition.description = description;
+      assert.notEqual(registrationFromBiblioCommons(event), "none", description);
+    }
   }
 });
 
