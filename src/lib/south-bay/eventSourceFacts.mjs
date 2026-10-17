@@ -7,6 +7,26 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // All three library pages give grades 3–8 in the title but grades 2–7 only
+  // in the description. Neither range establishes eligibility. Omit both
+  // definitive limits and disclose the source conflict without choosing one.
+  // Evidence: docs/qa/2026-10-17-0107-fact-check.md (fresh occurrence HTML).
+  ...[
+    ["2026-10-18", "6a384108c134422d50e9a7b1"],
+    ["2026-11-15", "6a384108c134422d50e9a7b2"],
+    ["2026-12-20", "6a384108c134422d50e9a7b3"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://paloalto.bibliocommons.com/events/${sourceId}`,
+    facts: {
+      title: "Neurosphere: Neuroscience and More!",
+      blurb: "Join teen-led NeuroSphere to dig into brain function basics and test your brainpower with hands-on activities.",
+      attendanceNote: "The library's title lists grades 3–8, but its description says grades 2–7 only. Confirm eligibility with Mitchell Park Library.",
+    },
+    copyReplacements: [
+      [/\bNeuroSphere is a community for (?:curious 2nd-7th graders about medicine|2nd-7th graders curious about medicine)!\s*/gi, ""],
+      [/\s*This program is open for 2nd-7th graders only\./gi, ""],
+    ],
+  })),
   // The library's shared reading-list body misspells Backman's surname and
   // calls Kurkov an International Booker winner. The publisher identifies
   // Fredrik Backman; the prize organizer records Kurkov as a judge/longlistee.

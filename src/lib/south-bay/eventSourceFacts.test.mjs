@@ -13,6 +13,46 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("NeuroSphere does not choose between the library's conflicting grade ranges", async () => {
+  for (const [date, sourceId] of [
+    ["2026-10-18", "6a384108c134422d50e9a7b1"],
+    ["2026-11-15", "6a384108c134422d50e9a7b2"],
+    ["2026-12-20", "6a384108c134422d50e9a7b3"],
+  ]) {
+    for (const gradeSentence of [
+      "NeuroSphere is a community for curious 2nd-7th graders about medicine!",
+      "NeuroSphere is a community for 2nd-7th graders curious about medicine!",
+    ]) {
+      const raw = {
+        id: `paloalto-${sourceId}`, date, url: `https://paloalto.bibliocommons.com/events/${sourceId}`,
+        title: "Neurosphere: Neuroscience and More! Grades 3-8",
+        venue: "Mitchell Park Library", time: "11:00 AM", endTime: "12:00 PM",
+        cost: "free", registration: "required", kidFriendly: true, audienceAge: "kids",
+        description: `Come join teen-led group NeuroSphere! ${gradeSentence} Explore brain function with hands-on activities. This program is open for 2nd-7th graders only.`,
+        blurb: "Join a neuroscience workshop for students in grades 3-8.",
+      };
+      const events = [{ ...raw }];
+      const stats = await resolveEventBlurbs(events, { enabled: false });
+      const corrected = events[0];
+      assert.equal(corrected.title, "Neurosphere: Neuroscience and More!");
+      assert.equal(corrected.description, "Come join teen-led group NeuroSphere! Explore brain function with hands-on activities.");
+      assert.doesNotMatch(corrected.title + corrected.description + corrected.blurb, /graders|grades|2nd|3-8/i);
+      assert.match(corrected.attendanceNote, /title lists grades 3–8.*description says grades 2–7 only/);
+      assert.match(corrected.attendanceNote, /Confirm eligibility with Mitchell Park Library/);
+      for (const field of ["id", "date", "url", "venue", "time", "endTime", "cost", "registration", "kidFriendly", "audienceAge"]) {
+        assert.equal(corrected[field], raw[field]);
+      }
+      assert.equal(stats.generated, 0);
+      assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+      assert.match(raw.description, /2nd-7th/);
+      for (const other of [
+        { ...raw, date: "2027-10-18" },
+        { ...raw, url: "https://paloalto.bibliocommons.com/events/another-workshop" },
+      ]) assert.equal(applyVerifiedEventFacts(other), other);
+    }
+  }
+});
+
 test("Pageturners cannot restore a misspelled author or an unsupported Booker winner claim", async () => {
   for (const [date, sourceId] of [
     ["2026-11-12", "6759fea0da3a5e3d00ca4d1a"],
