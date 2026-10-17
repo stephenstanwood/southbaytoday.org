@@ -17,6 +17,7 @@ import {
   hasProspectiveCityHallUpgrade,
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
+  hasUnsupportedSharedEventVenue,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./city-briefing-integrity.mjs";
@@ -149,6 +150,36 @@ test("ordinary performance dates cannot become opening or closing dates in a bri
   assert.equal(hasUnsupportedEventMilestone("Postcard Exhibit Opening Reception opens Friday.", [
     { title: "Postcard Exhibit Opening Reception" },
   ]), false);
+});
+
+test("briefings cannot assign one event's venue to both named events", () => {
+  const events = [
+    { title: "Monthly Chat with Mayor Moore", venue: null },
+    { title: 'Flex Prep "College Admissions in the Age of AI: Policies, Ethics, and Impact"', venue: "Cupertino Library" },
+  ];
+  const shared = 'Chat with Mayor Moore and a "College Admissions in the Age of AI" discussion both land at Cupertino Library Wednesday.';
+  assert.equal(hasUnsupportedSharedEventVenue(shared, events), true);
+  assert.equal(hasUnsupportedSharedEventVenue(shared, [
+    { ...events[0], venue: "Quinlan Community Center" }, events[1],
+  ]), true);
+  assert.equal(hasUnsupportedSharedEventVenue(shared, [
+    { ...events[0], venue: "Cupertino Library" }, events[1],
+  ]), false);
+  assert.equal(hasUnsupportedSharedEventVenue(
+    'Chat with Mayor Moore is Wednesday; Cupertino Library hosts "College Admissions in the Age of AI" Wednesday.',
+    events,
+  ), false);
+  assert.equal(hasUnsupportedSharedEventVenue(
+    'Chat with Mayor Moore is at Quinlan Community Center Wednesday, while "College Admissions in the Age of AI" is at Cupertino Library Wednesday.',
+    [{ ...events[0], venue: "Quinlan Community Center" }, events[1]],
+  ), false);
+  // Different occurrences of the same program do not establish two named events.
+  assert.equal(hasUnsupportedSharedEventVenue(
+    "Monthly Chat with Mayor Moore runs on both days at Cupertino Library.",
+    [events[0], { ...events[0], venue: "Cupertino Library" }],
+  ), false);
+  assert.equal(hasUnsupportedSharedEventVenue("Both workshops are at Cupertino Library.", events), false);
+  assert.equal(hasUnsupportedSharedEventVenue(null, events), false);
 });
 
 test("rejects stale and timestamp-less snapshots", () => {

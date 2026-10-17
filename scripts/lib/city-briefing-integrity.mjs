@@ -62,3 +62,45 @@ export function hasUnsupportedEventMilestone(text, events = []) {
     return index >= 0 && MILESTONE_VERB.test(words.slice(index + title.length));
   });
 }
+
+const TITLE_CONNECTORS = new Set(["a", "an", "and", "at", "for", "in", "of", "on", "the", "to", "with"]);
+
+function mentionsEventTitle(copy, title) {
+  const words = normalizeEventWords(title).split(" ").filter(Boolean);
+  const width = Math.min(4, words.length);
+  if (!width) return false;
+  // Briefings often shorten a long title. Require a contiguous title phrase,
+  // not a bag of common words that could match an unrelated program.
+  for (let i = 0; i <= words.length - width; i += 1) {
+    const phrase = words.slice(i, i + width);
+    if (phrase.filter((word) => !TITLE_CONNECTORS.has(word)).length < Math.min(2, width)) continue;
+    if (` ${copy} `.includes(` ${phrase.join(" ")} `)) return true;
+  }
+  return false;
+}
+
+/** Catch explicit "A and B both at X" claims; an unknown venue is not evidence. */
+export function hasUnsupportedSharedEventVenue(text, events = []) {
+  const venues = [...new Set(events.map((event) => normalizeEventWords(event?.venue)).filter(Boolean))]
+    .sort((a, b) => b.length - a.length);
+  for (const sentence of String(text || "").split(/[.!?;]+/)) {
+    const copy = normalizeEventWords(sentence);
+    for (const claim of copy.matchAll(/\b(?:both|all)\s+(?:\w+\s+){0,4}(?:at|in)\s+/g)) {
+      const after = copy.slice(claim.index + claim[0].length);
+      const venue = venues.find((value) => after === value || after.startsWith(`${value} `));
+      if (!venue) continue;
+      const named = new Map();
+      for (const event of events) {
+        if (!mentionsEventTitle(copy.slice(0, claim.index), event?.title)) continue;
+        const title = normalizeEventWords(event.title);
+        if (!named.has(title)) named.set(title, []);
+        named.get(title).push(event);
+      }
+      if (named.size < 2) continue;
+      if ([...named.values()].some((occurrences) =>
+        !occurrences.some((event) => normalizeEventWords(event.venue) === venue)
+      )) return true;
+    }
+  }
+  return false;
+}

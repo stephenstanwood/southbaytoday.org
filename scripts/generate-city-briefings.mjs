@@ -21,6 +21,7 @@ import {
   hasProspectiveCityHallUpgrade,
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
+  hasUnsupportedSharedEventVenue,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
@@ -179,7 +180,7 @@ Important rules:
 - Only reference facts that are explicitly present in the data below. Never invent or infer specifics like company names, dollar amounts, project types, ridership counts, square footage, or unit counts that aren't literally written in the data. If a number or proper noun isn't in the data, leave it out.
 - An event's occurrence date is not its opening or closing date. Never say a play, exhibit, or concert series "opens", "closes", "ends", or "debuts" unless the supplied event title explicitly identifies an opening, closing, premiere, or final performance. Otherwise say it "plays", "runs", or "is on" that day.
 - Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another. When two events share a clause, give each its own day ("Coffee with the Mayor Friday and a town hall Saturday") — a single trailing day word ("Coffee with the Mayor and a town hall Saturday") wrongly puts both on that day.
-- Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event.
+- Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event. A missing venue is unknown; never borrow a neighboring event's venue.
 - Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the Next council meeting agenda, or say council will consider it "that same day", unless that item is explicitly listed in the Next council meeting data. A Zoning Administrator hearing is not a Planning Commission or City Council meeting.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
 - Do not state event totals or counts, including ordinary numbers like "three events", repeat counts like "performs twice", or group-count nouns like "trio." The supplied events are a limited selection, not the full calendar; similar listings may describe the same performance. Name the programs instead; retain a number only when it belongs to an event's actual title.
@@ -226,6 +227,9 @@ Reply with ONLY the sentence, no quotes or preamble.`;
     }
     if (hasEventSelectionCount(text, events)) {
       found.push("it inferred an event total from a limited calendar selection");
+    }
+    if (hasUnsupportedSharedEventVenue(text, events)) {
+      found.push("it assigned a shared venue to named events without venue evidence for each event");
     }
     return found;
   };
