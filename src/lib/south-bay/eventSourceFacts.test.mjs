@@ -13,6 +13,32 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Hillview's October 18 storytime cannot inherit the source body's AM typo", async () => {
+  const raw = {
+    date: "2026-10-18", title: "Family Storytime", venue: "Hillview Library",
+    url: "https://sjpl.bibliocommons.com/events/6aa86a287825b4006406d77d",
+    time: "12:30 PM", endTime: "1:30 PM",
+    blurb: "Join stories, songs, and movement activities with the whole family.",
+  };
+  for (const description of [
+    "Storytime 12:30 - 1:00 am Stay & Play 1:00 - 1:30 pm. Free.",
+    "Storytime: 12:30 - 1:00 am; Stay & Play: 1:00 - 1:30 pm. Free.",
+  ]) {
+    const events = [{ ...raw, description }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].description, /Storytime: 12:30 - 1:00 pm/);
+    assert.doesNotMatch(events[0].description, /1:00 am/);
+    assert.match(events[0].description, /Stay & Play:? 1:00 - 1:30 pm\. Free\./);
+    assert.equal(events[0].time, raw.time);
+    assert.equal(events[0].endTime, raw.endTime);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    for (const other of [
+      { ...raw, description, date: "2027-10-18" },
+      { ...raw, description, url: "https://sjpl.bibliocommons.com/events/another-storytime" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Halloween Candlelight cannot inherit the VBO card's unrelated ABBA program", async () => {
   const raw = {
     id: "hammertheatre-f4a357599047b1d0", date: "2026-10-30", time: "8:45 PM",

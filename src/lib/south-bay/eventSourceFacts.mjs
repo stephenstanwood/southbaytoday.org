@@ -320,6 +320,15 @@ const CORRECTIONS = [
     date: "2026-10-17", url: "https://sjpl.bibliocommons.com/events/6a945850be148200298b2c83",
     copyReplacements: [[/\bDiego River\b/g, "Diego Rivera"]],
   },
+  // Hillview's body has "12:30 - 1:00 am", but this occurrence's structured
+  // start/end are 12:30–13:30 and its final 30 minutes are Stay & Play.
+  // Correct only the storytime meridiem, leaving the event's clocks intact.
+  // https://sjpl.bibliocommons.com/events/6aa86a287825b4006406d77d
+  // Evidence: docs/qa/2026-10-16-2107-fact-check.md.
+  {
+    date: "2026-10-18", url: "https://sjpl.bibliocommons.com/events/6aa86a287825b4006406d77d",
+    copyReplacements: [[/\bStorytime:?\s+12:30\s*[-–—]\s*1:00\s+am\b/gi, "Storytime: 12:30 - 1:00 pm"]],
+  },
   // JAMsj's companion Skate Day & Halloween listing explicitly calls this
   // same exhibition's October 31 opening a free family-friendly event.
   // https://www.jamsj.org/upcoming-events
