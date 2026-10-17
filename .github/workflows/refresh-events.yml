@@ -20,6 +20,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The publication preflight must be able to merge competing writers.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -55,7 +58,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add src/data/south-bay
           git diff --staged --quiet || git commit -m "chore: refresh upcoming events"
-          git push
+          node scripts/events/publish-refresh.mjs
 
       - name: Alert on refresh failure
         if: ${{ failure() }}

@@ -222,7 +222,8 @@ export function preflightNewsletterCheckout({
  * preflight, so a push only ever leaves a clean checkout that contains
  * origin/main and differs from it in generated data alone. A rejected push
  * (origin moved after the fetch) re-fetches and absorbs the new remote head
- * before trying again.
+ * before trying again. Callers may verify the merged output before each push;
+ * a failed verification aborts publication without retrying or relaxing it.
  */
 export function pushGeneratedDataCheckout({
   repoRoot = DEFAULT_REPO_ROOT,
@@ -230,10 +231,12 @@ export function pushGeneratedDataCheckout({
   branch = DEFAULT_BRANCH,
   log = console.log,
   attempts = 3,
+  verify = () => {},
 } = {}) {
   let failure = "no push attempted";
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     const verified = preflightNewsletterCheckout({ repoRoot, remote, branch, log });
+    verify(verified);
     if (verified.head === verified.originHead) {
       emit(log, `${remote}/${branch} already has HEAD=${shortSha(verified.head)}; nothing to push`);
       return { pushed: false, head: verified.head };
