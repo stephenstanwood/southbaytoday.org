@@ -124,6 +124,7 @@ import {
 import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 import { mergePaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
+import { mergeCampbellOktoberfest } from "./lib/campbell-oktoberfest-2026.mjs";
 import { normalizeInboundEventPresentation } from "./lib/inbound-event-normalize.mjs";
 import { applyVerifiedMeetupEventOverride } from "./lib/meetup-event-overrides.mjs";
 import { rehomeScrapedEvent, resolveEventCity } from "./lib/event-city.mjs";
@@ -9706,6 +9707,15 @@ async function main() {
       `  ✅ Palo Alto State of the City: official Paly PAC record `
         + `(${paloAltoStateOfTheCity.replacedCount} source row(s) replaced)`,
     );
+  }
+
+  // The organizer gives Saturday and Sunday different closing times. Restore
+  // both verified dates even when newsletter intake retains only the first.
+  const oktoberfest = mergeCampbellOktoberfest(allEvents, { fromDate: todayPT() });
+  allEvents.length = 0;
+  allEvents.push(...oktoberfest.events);
+  for (const event of oktoberfest.canonicalEvents) {
+    if (!sourceNames.includes(event.source)) sourceNames.push(event.source);
   }
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events

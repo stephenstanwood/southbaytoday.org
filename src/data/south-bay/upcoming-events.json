@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-17T02:21:15.925Z",
-  "eventCount": 1829,
+  "eventCount": 1830,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -59,7 +59,8 @@
     "The Tech Interactive",
     "San Jose Museum of Art",
     "Peninsula Open Space Trust",
-    "City Newsletter"
+    "City Newsletter",
+    "Campbell Chamber of Commerce"
   ],
   "sourceHealth": [
     {
@@ -2635,6 +2636,34 @@
       "photoRef": "places/ChIJiVyFzMywj4ARPLuAlYVzhmE/photos/Aa-ngMaVIbJqg0F4kGJouDzIbtDBhApRdWeOBqUveZPWCu69ZmPD2J3Q1dusv0z5yYUG6EpaUlS1bPXYAtow0BdBIf2Nt9u4IL11CnecSiDmXk7cKRON9fK6PAwAAB5Yw4OMuLecXBb35ysnmZJN6abMp9udBALTbwSxsRGFpV-kpKMuuOP-Pl9NPOUTK8c4rwYKUTYrG8_Mi1IqREheP48ADLk3RpCnjSXA8i9poIgHf3eSH5JTYFUApabxrhMU_e0y1rgA1RJWUn7VbqY3wHEtJh4flRbL9WLZLcSf4scI8dvstDTbQcPfoCoh3k8dr4Hsoxqod_iaQ6VLNsibiy0PonYuN0iZ5werLTBEzbyWigNMzjxZffoCzGN2jPNq3u0ULCbmrdDchE3dHPuWvuyrMyQ79hDf5pNklE86DsneYG6Q3kR9",
       "blurb": "Hear how Mountain View residents celebrated the Bicentennial with parades, pageants, and kites throughout 1976.",
       "firstSeenAt": "2026-10-01T02:20:36.006Z"
+    },
+    {
+      "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/Aa-ngMa7NxUhU0DagBl0YYS6A_6F9NJpxowtc6fSNvgC4ewUVez_yozhesJGN2ymrct_VUUvHgzGGOG1nuRLTuJtJt4CTaTGsUi5lmwsVU5T9xb_CUXgAOkz7t8AQHLySAoieV1t51gdrKlvvbkho19HrLqp3I2w3mU4PrMBe82W24_lu5_ffDs4ctHLAcoPk2Uz1-iV_zo8Iwknf1jijk8-iLhXgo87Y4lyAcqHvwi8or8MW4S7PyjjLIMeapM_n9149JmkVcetF2z6G49CDKbVBDdTdqloMPQltQxM2UbjIeQGGI9n4F_4WlRVdPObXdu78wZeJZ1LPnmmQvK6KhABlq-sB8-YmPZGbGr93BMOEpjmmuzFE-KWJjr_WOvlNQF3U7waHm0lPI0E8yv6LZiL6D9x-rTsWa06T8PepLU-JX3J",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "endTime": "5:00 PM",
+      "id": "campbell-oktoberfest-2026-10-18",
+      "title": "Campbell Oktoberfest",
+      "time": "10:00 AM",
+      "venue": "Downtown Campbell",
+      "address": "Downtown Campbell",
+      "city": "campbell",
+      "category": "food",
+      "cost": "free",
+      "costNote": "Food, drinks and Kinderplatz tickets sold separately.",
+      "description": "A free, family-friendly festival in Downtown Campbell with live music, artisan booths, food vendors, and a Kids Zone.",
+      "url": "https://campbelloktoberfest.com",
+      "source": "Campbell Chamber of Commerce",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "blurb": "Sip beer, snack on pretzels, and wander polka bands and vendor booths through Downtown Campbell.",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "date": "2026-10-18",
+        "sourceUrl": "https://campbelloktoberfest.com",
+        "checkedAt": "2026-10-17T10:10:09.000Z"
+      },
+      "firstSeenAt": "2026-10-17T10:13:28.123Z"
     },
     {
       "id": "sjpl-6938708d1e64afd01e4e250f",
@@ -40739,25 +40768,32 @@
       "firstSeenAt": "2026-09-29T02:19:36.491Z"
     },
     {
-      "id": "inbound-db1a800a2b149cef",
-      "title": "Campbell Oktoberfest",
+      "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/Aa-ngMa7NxUhU0DagBl0YYS6A_6F9NJpxowtc6fSNvgC4ewUVez_yozhesJGN2ymrct_VUUvHgzGGOG1nuRLTuJtJt4CTaTGsUi5lmwsVU5T9xb_CUXgAOkz7t8AQHLySAoieV1t51gdrKlvvbkho19HrLqp3I2w3mU4PrMBe82W24_lu5_ffDs4ctHLAcoPk2Uz1-iV_zo8Iwknf1jijk8-iLhXgo87Y4lyAcqHvwi8or8MW4S7PyjjLIMeapM_n9149JmkVcetF2z6G49CDKbVBDdTdqloMPQltQxM2UbjIeQGGI9n4F_4WlRVdPObXdu78wZeJZ1LPnmmQvK6KhABlq-sB8-YmPZGbGr93BMOEpjmmuzFE-KWJjr_WOvlNQF3U7waHm0lPI0E8yv6LZiL6D9x-rTsWa06T8PepLU-JX3J",
+      "firstSeenAt": "2026-08-08T15:21:42.349Z",
       "date": "2026-10-17",
       "displayDate": "Sat, Oct 17",
+      "endTime": "6:00 PM",
+      "id": "inbound-db1a800a2b149cef",
+      "title": "Campbell Oktoberfest",
       "time": "10:00 AM",
-      "endTime": null,
       "venue": "Downtown Campbell",
       "address": "Downtown Campbell",
       "city": "campbell",
       "category": "food",
-      "cost": null,
-      "description": "The 31st annual Campbell Oktoberfest brings beer, pretzels, and festivities to Downtown Campbell over two days, drawing tens of thousands of festival-goers.",
+      "cost": "free",
+      "costNote": "Food, drinks and Kinderplatz tickets sold separately.",
+      "description": "A free, family-friendly festival in Downtown Campbell with live music, artisan booths, food vendors, and a Kids Zone.",
       "url": "https://campbelloktoberfest.com",
-      "source": "City Newsletter",
-      "kidFriendly": false,
+      "source": "Campbell Chamber of Commerce",
+      "kidFriendly": true,
       "audienceAge": "all",
-      "photoRef": "places/ChIJXZDxu2E1joAR_cHEl7LMQW0/photos/Aa-ngMa7NxUhU0DagBl0YYS6A_6F9NJpxowtc6fSNvgC4ewUVez_yozhesJGN2ymrct_VUUvHgzGGOG1nuRLTuJtJt4CTaTGsUi5lmwsVU5T9xb_CUXgAOkz7t8AQHLySAoieV1t51gdrKlvvbkho19HrLqp3I2w3mU4PrMBe82W24_lu5_ffDs4ctHLAcoPk2Uz1-iV_zo8Iwknf1jijk8-iLhXgo87Y4lyAcqHvwi8or8MW4S7PyjjLIMeapM_n9149JmkVcetF2z6G49CDKbVBDdTdqloMPQltQxM2UbjIeQGGI9n4F_4WlRVdPObXdu78wZeJZ1LPnmmQvK6KhABlq-sB8-YmPZGbGr93BMOEpjmmuzFE-KWJjr_WOvlNQF3U7waHm0lPI0E8yv6LZiL6D9x-rTsWa06T8PepLU-JX3J",
       "blurb": "Sip beer, snack on pretzels, and wander polka bands and vendor booths through Downtown Campbell.",
-      "firstSeenAt": "2026-08-08T15:21:42.349Z"
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "date": "2026-10-17",
+        "sourceUrl": "https://campbelloktoberfest.com",
+        "checkedAt": "2026-10-17T10:10:09.000Z"
+      }
     },
     {
       "id": "meetup-5e3fc75262f5ce95",
