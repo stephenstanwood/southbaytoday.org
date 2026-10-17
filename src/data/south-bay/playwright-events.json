@@ -1,32 +1,32 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-17T02:17:17.994Z",
+    "generatedAt": "2026-10-17T15:03:22.909Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 463,
+    "eventCount": 459,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (109)",
       "Los Gatos Library (113)",
-      "San Jose Jazz (16)",
-      "Linden Tree Books (14)",
+      "San Jose Jazz (15)",
+      "Linden Tree Books (13)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
-      "Mountain Winery (7)",
-      "San Jose Theaters (18)",
+      "Mountain Winery (6)",
+      "San Jose Theaters (19)",
       "Children's Discovery Museum (7)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (25)",
+      "City of Cupertino (24)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (79)",
+      "TheatreWorks Silicon Valley (78)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (3)"
+      "Peninsula Open Space Trust (3)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -85,7 +85,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 16,
+        "count": 15,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 14,
+        "count": 13,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -183,7 +183,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 18,
+        "count": 19,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 25,
+        "count": 24,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 79,
+        "count": 78,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -338,14 +338,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 3,
-        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -5009,23 +5007,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c163b7cada59",
-      "title": "Irving Flores Afro-Cuban Jazz Trio",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/irving-flores-afro-cuban-jazz-trio/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
       "id": "d76824d5853a",
       "title": "Kazemde George Trio",
       "date": "2026-10-17",
@@ -5279,28 +5260,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "c73b08b27829",
-      "title": "Book Launch with Maggie Tokuda-Hall and Yas Imamura",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "5pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-16"
-      }
     },
     {
       "id": "e8eeed8f32d6",
@@ -5657,23 +5616,6 @@
       "kidFriendly": false
     },
     {
-      "id": "d5bb5d8971ad",
-      "title": "St. Paul & The Minneapolis Funk All Stars",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/st-paul/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "a34ae09c5db3",
       "title": "Mariachi Viajero y Angeles Danzantes (Grades K-8)",
       "date": "2026-10-22",
@@ -5738,6 +5680,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://montalvoarts.org/experience/carriage-house-concerts/direct-from-sweden/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "cb8470ec8a27",
+      "title": "4th Lowrider Art Showcase – Celebrating Dia de los Muertos",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3248/3250",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -5844,10 +5803,10 @@
       "kidFriendly": false
     },
     {
-      "id": "82ed259ebbea",
+      "id": "2f46145ceefa",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5864,10 +5823,10 @@
       "kidFriendly": false
     },
     {
-      "id": "1a87ddb8b638",
+      "id": "07c5728b5895",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5884,10 +5843,10 @@
       "kidFriendly": false
     },
     {
-      "id": "d4b3590c3178",
+      "id": "d892fff18594",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5901,23 +5860,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "1d29e41d7ed3",
-      "title": "The Wallflowers with Ragged Glory",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1261246",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -6023,40 +5965,6 @@
       "kidFriendly": false
     },
     {
-      "id": "d289e343afd6",
-      "title": "Maher Zain – USA Tour 2026",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "7:30pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "86868fd7eb3c",
-      "title": "Small Town Murder",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "f0455f26177d",
       "title": "9th International Performing Arts Festival",
       "date": "2026-10-17",
@@ -6118,6 +6026,23 @@
       "address": "135 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "feee73927455",
+      "title": "Engelbert Humperdinck",
+      "date": "2026-10-21",
+      "displayDate": "Wed, Oct 21",
+      "time": "7:30pm",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
       "cost": "paid",
       "description": "",
       "url": "https://www.sanjose.org/theaters",
@@ -6329,6 +6254,40 @@
       "kidFriendly": false
     },
     {
+      "id": "450961ec7a70",
+      "title": "Álvaro Díaz – Omakase Tour",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "8:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "796f7d27bd05",
+      "title": "Koyote",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
+      "time": "6:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
       "id": "cc93ccdb64df",
       "title": "Mars Expedition with VEX Robotics",
       "date": "2026-10-17",
@@ -6346,10 +6305,10 @@
       "kidFriendly": true
     },
     {
-      "id": "067c331cbaf8",
+      "id": "a428c2e45565",
       "title": "Toddler Storytime",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6599,7 +6558,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-17T02:15:57.329Z"
+        "checkedAt": "2026-10-17T15:02:11.099Z"
       }
     },
     {
@@ -6622,7 +6581,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-17T02:15:57.329Z"
+        "checkedAt": "2026-10-17T15:02:11.099Z"
       }
     },
     {
@@ -6645,7 +6604,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-17T02:15:57.329Z"
+        "checkedAt": "2026-10-17T15:02:11.099Z"
       }
     },
     {
@@ -6668,7 +6627,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-17T02:15:57.330Z"
+        "checkedAt": "2026-10-17T15:02:11.099Z"
       }
     },
     {
@@ -6691,59 +6650,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-17T02:15:57.331Z"
+        "checkedAt": "2026-10-17T15:02:11.099Z"
       }
-    },
-    {
-      "id": "a9d2815ce5ed",
-      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "07:00 PM",
-      "endTime": "08:30 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "da31818465bd",
-      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "06:00 PM",
-      "endTime": "07:30 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "db16d19d3bfe",
-      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
-      "date": "2026-12-18",
-      "displayDate": "Fri, Dec 18",
-      "time": "06:00 PM",
-      "endTime": "07:30 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "6e8dd054162a",
@@ -7052,6 +6960,40 @@
       "kidFriendly": false
     },
     {
+      "id": "da31818465bd",
+      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "db16d19d3bfe",
+      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
+      "date": "2026-12-18",
+      "displayDate": "Fri, Dec 18",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
       "id": "86e44567cb97",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-14",
@@ -7202,23 +7144,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "f07da5964635",
-      "title": "Dracula",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7505",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -9092,6 +9017,57 @@
       "kidFriendly": true
     },
     {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9209,57 +9185,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
