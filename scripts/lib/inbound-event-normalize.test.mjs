@@ -14,6 +14,28 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("Bike to the Bay stays family-friendly when a later newsletter changes its source ID or link", () => {
+  for (const [id, location, sourceUrl] of [
+    ["oct9-newsletter", "70 W Hedding St to Alviso Marina County Park, San Jose, CA", "https://go.sparkpostmail.com/f/a/newsletter-tracking-link"],
+    ["oct14-newsletter", "70 West Hedding, San Jose, CA to Alviso Marina County Park", "https://www.eventbrite.com/e/day-on-the-bay-community-bike-ride-tickets-1998974412278?aff=oddtdtcreator"],
+  ]) {
+    const raw = {
+      id, location, sourceUrl, cityKey: "san-jose", title: "Bike to the Bay Ride",
+      startsAt: "2026-10-17T09:00:00-07:00", endsAt: null,
+      description: "A group bike ride to Alviso Marina County Park ahead of Day on the Bay.",
+    };
+    const [event] = fetchInboundEvents({ today: "2026-10-17", events: [raw] });
+    assert.equal(event.kidFriendly, true);
+    assert.equal(event.url, "https://d3.santaclaracounty.gov/dayonthebay2026");
+    assert.equal(event.date, "2026-10-17");
+    assert.equal(event.time, "9:00 AM");
+    assert.equal(event.endTime, null);
+    assert.equal(event.cost, null);
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+    assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: "2027-10-17T09:00:00-07:00" }).kidFriendly, undefined);
+  }
+});
+
 test("newsletter date labels preserve calendar dates across stale daylight-saving offsets", () => {
   for (const [startsAt, date, label, time] of [
     ["2026-11-19T00:00:00-07:00", "2026-11-19", "Thu, Nov 19", null],

@@ -13,6 +13,31 @@ import { requiresAdvanceRegistration } from "./eventFilters.mjs";
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Bike to the Bay retains the county's all-ages classification and primary URL on refresh", async () => {
+  const raw = {
+    id: "inbound-5a0ec185106f165a", date: "2026-10-17", title: "Bike to the Bay Ride",
+    url: "https://go.sparkpostmail.com/f/a/newsletter-tracking-link",
+    venue: "W Hedding St to Alviso Marina County Park", time: "9:00 AM", endTime: null,
+    cost: null, kidFriendly: false, audienceAge: "all",
+    description: "A group bike ride from the County building at 70 W Hedding to Alviso Marina County Park.",
+    blurb: "Ride with the group from the County building on Hedding Street to Alviso Marina County Park.",
+  };
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], {
+    ...raw, kidFriendly: true, url: "https://d3.santaclaracounty.gov/dayonthebay2026",
+  });
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(raw.kidFriendly, false);
+  for (const other of [
+    { ...raw, date: "2027-10-17" },
+    { ...raw, id: "another-ride", venue: "A different starting point" },
+    { ...raw, id: "another-event", title: "A different event" },
+    { ...raw, id: "another-ride", venue: "A different starting point", url: "https://d3.santaclaracounty.gov/dayonthebay2026" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("NeuroSphere does not choose between the library's conflicting grade ranges", async () => {
   for (const [date, sourceId] of [
     ["2026-10-18", "6a384108c134422d50e9a7b1"],

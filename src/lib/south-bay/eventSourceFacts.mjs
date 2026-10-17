@@ -7,6 +7,16 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs"
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The county explicitly describes this ride as all ages and family-friendly.
+  // Keep its first-party event page instead of the newsletter tracking link;
+  // the festival's 10 AM start is not evidence of the ride's departure time.
+  // https://d3.santaclaracounty.gov/dayonthebay2026
+  // Evidence: docs/qa/2026-10-17-0407-fact-check.md.
+  {
+    date: "2026-10-17", id: "inbound-5a0ec185106f165a",
+    title: /^Bike to the Bay Ride$/i, venue: /\bW(?:est)?\.?\s+Hedding\b/i,
+    facts: { kidFriendly: true, url: "https://d3.santaclaracounty.gov/dayonthebay2026" },
+  },
   // All three library pages give grades 3–8 in the title but grades 2–7 only
   // in the description. Neither range establishes eligibility. Omit both
   // definitive limits and disclose the source conflict without choosing one.
