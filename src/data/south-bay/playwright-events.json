@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-16T15:04:37.622Z",
+    "generatedAt": "2026-10-17T02:17:17.994Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
     "eventCount": 464,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (111)",
-      "Los Gatos Library (111)",
+      "Mountain View Public Library (109)",
+      "Los Gatos Library (113)",
       "San Jose Jazz (16)",
       "Linden Tree Books (14)",
       "History San Jose (4)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (3)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 116,
+        "count": 114,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 111,
+        "count": 113,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -338,59 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 3,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "232167e4f9d6",
-      "title": "Canceled--Baby Storytime Rerun",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "10:30 AM",
-      "endTime": "11:15 AM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "This Friday's Baby Storytime Rerun is canceled because our Librarians will be presenting a special storytime with our friends at Deer Hollow Farm! We'll see you back next week.",
-      "sourceAudiences": [
-        "Babies",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17170831",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "c1a8d645d21d",
-      "title": "Deer Hollow Spooky Storytime",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Deer Hollow Farm",
-      "address": "22500 Cristo Rey Dr, Cupertino, CA",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Together with our friends at Deer Hollow Farm, our librarians will present a spooky-themed storytime at the farm with books, songs, and rhymes. We will also get to meet some of the farm animals up close! Meet us there: Deer Hollow Farm, 22500 Cristo Rey Dr., Cupertino Please note: the parking lot for Deer Hollow Farm is about a one-mile flat, paved walk to the farm. We recommend walking shoes, hats, and/or strollers. Also, there will be limited seating-- prepare to sit on the floor if you can.",
-      "sourceAudiences": [
-        "Preschoolers"
-      ],
-      "attendanceNote": "Please note: the parking lot for Deer Hollow Farm is about a one-mile flat, paved walk to the farm. We recommend walking shoes, hats, and/or strollers. Also, there will be limited seating-- prepare to sit on the floor if you can.",
-      "url": "https://mountainview.libcal.com/event/16984474",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "2caf2f5b21c2",
       "title": "Reading Buddies",
@@ -4323,6 +4282,28 @@
       "kidFriendly": true
     },
     {
+      "id": "1a7e6a5de4a8",
+      "title": "Suminagashi: The Art of Floating Ink",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "3:00 PM",
+      "endTime": "4:30 PM",
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "registration": "required",
+      "category": "arts",
+      "cost": "free",
+      "description": "Suminagashi is a 900-year-old Japanese marbling art. Touch ink to still water, watch it drift into rings and ripples, then lift the pattern onto paper. No two prints are ever the same. This workshop is an invitation to slow down and practice mindfulness. You can’t force the ink, so you learn to breathe, observe, and let things unfold. There’s no right way to do it and no experience needed, which makes it a gentle break from screens, busy thoughts, and perfectionism. Many people find the process calming, and making something with your hands is a simple way to care for your mind. You’ll begin with a short introduction and a guided breathing warm-up, then create several prints to take home. All materials provided. Open to all levels.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17833190",
+      "source": "Los Gatos Library",
+      "kidFriendly": false
+    },
+    {
       "id": "d742f3456a0a",
       "title": "Sound Bath Healing Meditation",
       "date": "2026-12-06",
@@ -4940,6 +4921,28 @@
         "Adults"
       ],
       "url": "https://losgatosca.libcal.com/event/16374655",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
+      "id": "fdb25bff2a68",
+      "title": "Library Closed",
+      "date": "2027-01-03",
+      "displayDate": "Sun, Jan 3",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17842471",
       "source": "Los Gatos Library",
       "kidFriendly": true
     },
@@ -6343,12 +6346,12 @@
       "kidFriendly": false
     },
     {
-      "id": "067c331cbaf8",
-      "title": "Toddler Storytime",
-      "date": "2026-10-16",
-      "displayDate": "Fri, Oct 16",
-      "time": "11:30 am",
-      "endTime": null,
+      "id": "cc93ccdb64df",
+      "title": "Mars Expedition with VEX Robotics",
+      "date": "2026-10-17",
+      "displayDate": "Sat, Oct 17",
+      "time": "10:30 am",
+      "endTime": "12:00 pm",
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -6360,12 +6363,12 @@
       "kidFriendly": true
     },
     {
-      "id": "cc93ccdb64df",
-      "title": "Mars Expedition with VEX Robotics",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "10:30 am",
-      "endTime": "12:00 pm",
+      "id": "067c331cbaf8",
+      "title": "Toddler Storytime",
+      "date": "2026-10-16",
+      "displayDate": "Fri, Oct 16",
+      "time": "11:30 am",
+      "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -6613,7 +6616,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-16T15:03:24.375Z"
+        "checkedAt": "2026-10-17T02:15:57.329Z"
       }
     },
     {
@@ -6636,7 +6639,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-16T15:03:24.376Z"
+        "checkedAt": "2026-10-17T02:15:57.329Z"
       }
     },
     {
@@ -6659,7 +6662,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-16T15:03:24.376Z"
+        "checkedAt": "2026-10-17T02:15:57.329Z"
       }
     },
     {
@@ -6682,7 +6685,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-16T15:03:24.376Z"
+        "checkedAt": "2026-10-17T02:15:57.330Z"
       }
     },
     {
@@ -6705,7 +6708,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-16T15:03:24.377Z"
+        "checkedAt": "2026-10-17T02:15:57.331Z"
       }
     },
     {
@@ -9106,57 +9109,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9274,6 +9226,57 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
