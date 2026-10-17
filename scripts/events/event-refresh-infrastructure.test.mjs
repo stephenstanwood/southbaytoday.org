@@ -72,6 +72,9 @@ test("GitHub is a same-night independent check with explicit failure alerting", 
   assert.match(workflow, /verify-refresh-output\.mjs --max-age-hours 1 --snapshot-max-age-hours 8/);
   assert.match(workflow, /if: \$\{\{ failure\(\) \}\}/);
   assert.match(workflow, /notify-workflow-failure\.mjs/);
+  assert.match(workflow, /fetch-depth: 0/);
+  assert.match(workflow, /node scripts\/events\/publish-refresh\.mjs/);
+  assert.doesNotMatch(workflow, /^\s*git push\s*$/m);
 });
 
 test("the refresh and its PR checks use the same native Node runtime", () => {

@@ -49,6 +49,17 @@ generation, output health, and the data commit/push all succeed before clearing
 failure alerts. Keep the eight-hour input snapshot ceiling; stale inputs are a
 separate recovery problem, not a reason to relax the workflow.
 
+The workflow publishes through `scripts/events/publish-refresh.mjs`, using the
+same guarded Git preflight as the Mini's scheduled publishers. It fetches and
+merges competing `main` commits before pushing, retries a rejected push at most
+three times, and preserves the remote version of conflicting generated JSON.
+Mini snapshots and concurrent editorial/source commits remain in the merged
+history. The one-hour output and eight-hour input-snapshot health gates run
+again after every merge, including a no-op, so a conflict cannot quietly replace
+the checked output with stale or unhealthy remote data. Dirty checkouts and
+local source/configuration commits still block publication; no force push or
+shared-checkout reset is used.
+
 ## Fail-closed contract
 
 - Projected farmers markets are verified only when their configured season,
