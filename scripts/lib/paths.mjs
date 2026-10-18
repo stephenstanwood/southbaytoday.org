@@ -45,6 +45,7 @@ export const ARTIFACTS = {
   schoolCalendar:   join(DATA_DIR, "school-calendar.json"),
   places:           join(DATA_DIR, "places.json"),
   playwrightEvents: join(DATA_DIR, "playwright-events.json"),
+  officialEventSources: join(DATA_DIR, "official-event-sources.json"),
   defaultPlans:     join(DATA_DIR, "default-plans.json"),
   redditPulse:      join(DATA_DIR, "reddit-pulse.json"),
   redditGaps:       join(DATA_DIR, "reddit-gaps.json"),

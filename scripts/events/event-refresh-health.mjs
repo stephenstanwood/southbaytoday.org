@@ -86,7 +86,7 @@ export function inspectEventRefreshOutput({
   if (!snapshots) {
     problems.push("upcoming-events output has no inputSnapshots array");
   } else {
-    for (const name of ["playwright-events", "inbound-events"]) {
+    for (const name of new Set(["playwright-events", "inbound-events", ...snapshots.map((item) => item?.name)])) {
       const snapshot = snapshots.find((item) => item?.name === name);
       if (!snapshot) {
         problems.push(`required input snapshot is missing: ${name}`);

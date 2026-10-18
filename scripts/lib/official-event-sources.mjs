@@ -1,5 +1,12 @@
 import { isClockTime } from "./clock-time.mjs";
 
+export function assertOfficialSourceResponse(body, label) {
+  if (/\/\.well-known\/sgcaptcha\//i.test(String(body || ""))) {
+    throw new Error(`${label} returned an upstream CAPTCHA challenge`);
+  }
+  return body;
+}
+
 const MONTHS = {
   jan: 1,
   january: 1,

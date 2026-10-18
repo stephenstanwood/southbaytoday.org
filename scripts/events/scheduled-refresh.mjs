@@ -104,6 +104,7 @@ function runNode(repoRoot, relativePath, lockScript, timeout) {
       ...process.env,
       SBT_STRICT_EVENT_REFRESH: "1",
       SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "2",
+      SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1",
     },
     timeout,
   });
@@ -189,6 +190,7 @@ try {
       generated = true;
       runNode(repoRoot, "scripts/playwright-scrapers.mjs", lockScript, 40 * 60_000);
       runNode(repoRoot, "scripts/pull-inbound-events.mjs", lockScript, 10 * 60_000);
+      runNode(repoRoot, "scripts/events/snapshot-official-sources.mjs", lockScript, 5 * 60_000);
       runNode(repoRoot, "scripts/generate-events.mjs", lockScript, 45 * 60_000);
       // Audit before commit: a hard virtual-not-flagged finding means an
       // online-only event would ship with a venue, a city and a map link, so

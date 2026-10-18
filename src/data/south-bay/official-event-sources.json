@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-18T11:47:19.105Z",
+  "sources": {
+    "fetchLosAltosHistoryEvents": {
+      "status": "ok",
+      "sourceUrl": "https://www.losaltoshistory.org/events/?ical=1",
+      "observedAt": "2026-10-18T11:47:17.734Z",
+      "events": [
+        {
+          "id": "los-altos-72181d7f85094787",
+          "title": "Not Quite Created Equal? Who Got Left Out of the Declaration of Independence",
+          "date": "2026-10-21",
+          "displayDate": "Wed, Oct 21",
+          "time": "5:30 PM",
+          "endTime": "7:00 PM",
+          "venue": "Los Altos History Museum, 51 So. San Antonio Road",
+          "address": "",
+          "city": "los-altos",
+          "category": "arts",
+          "cost": null,
+          "description": "“All men are created equal”: who did these famous lines of the Declaration of Independence actually include? This lecture by Caroline Winterer will look at women and Black people during the American…",
+          "url": "https://www.losaltoshistory.org/events/not-quite-created-equal-who-got-left-out-of-the-declaration-of-independence/",
+          "source": "Los Altos History Museum",
+          "kidFriendly": false
+        },
+        {
+          "id": "los-altos-e747e31cf7f8de07",
+          "title": "The Road I Call Home",
+          "date": "2026-11-19",
+          "displayDate": "Thu, Nov 19",
+          "time": null,
+          "endTime": null,
+          "venue": "Los Altos History Museum, 51 So. San Antonio Road",
+          "address": "",
+          "city": "los-altos",
+          "category": "arts",
+          "cost": null,
+          "description": "Appearing in the Main Gallery November 19, 2026 - January 24, 2027.",
+          "url": "https://www.losaltoshistory.org/events/the-road-call-home/",
+          "source": "Los Altos History Museum",
+          "kidFriendly": false
+        }
+      ]
+    },
+    "fetchSjJazzEvents": {
+      "status": "ok",
+      "sourceUrl": "https://summerfest.sanjosejazz.org/lineup",
+      "observedAt": "2026-10-18T11:47:19.105Z",
+      "events": []
+    }
+  }
+}

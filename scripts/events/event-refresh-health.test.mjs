@@ -49,6 +49,17 @@ test("accepts a fresh complete refresh output", () => {
   assert.deepEqual(health.problems, []);
 });
 
+test("verifies additional consumed snapshots instead of ignoring stale official sources", () => {
+  const data = healthyOutput();
+  data.inputSnapshots.push({ name: "official-event-sources", status: "ok", timestamp: "2026-07-20T04:20:00Z" });
+  assert.equal(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).ok, true);
+  data.inputSnapshots.at(-1).timestamp = "2026-07-19T20:59:59Z";
+  assert.match(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).problems.join("; "), /official-event-sources snapshot is 8.0h old/);
+  data.inputSnapshots.at(-1).timestamp = "2026-07-20T04:20:00Z";
+  data.inputSnapshots.at(-1).status = "error";
+  assert.match(inspectEventRefreshOutput({ data, now: NOW }).problems.join("; "), /official-event-sources snapshot is error/);
+});
+
 test("detects missing adapters, stale snapshots, and count mismatches", () => {
   const data = healthyOutput();
   data.eventCount = 99;
