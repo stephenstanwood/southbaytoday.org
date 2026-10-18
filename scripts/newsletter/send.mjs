@@ -153,13 +153,13 @@ async function main() {
     console.log(`newsletter archive: ${archiveUrl}`);
     if (dmEnabled) {
       await sendNewsletterDiscordDm(data, subject, archiveUrl);
-      console.log("discord DM sent");
+      console.log("legacy notification routed to MILO intake");
     } else {
-      console.log("discord DM skipped (NEWSLETTER_DISCORD_DM not set)");
+      console.log("routine newsletter notification stays quiet");
     }
   } catch (err) {
     dmError = err;
-    console.error(`discord DM failed: ${err.message}`);
+    console.error(`newsletter archive/intake failed: ${err.message}`);
   }
 
   await recordNewsletterSend({ data, subject, broadcastId: broadcast.id, archiveUrl });

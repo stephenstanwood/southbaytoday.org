@@ -1,3 +1,4 @@
+import { queueNotification } from "../lib/notification-intake.mjs";
 // ---------------------------------------------------------------------------
 // South Bay Today — Daily Newsletter
 // Shared helpers: env, Resend API, data loaders, HTML renderer.
@@ -2890,24 +2891,7 @@ function resolveDiscordBotToken() {
 }
 
 async function sendDiscordDmChunks(content) {
-  const token = resolveDiscordBotToken();
-  const channel = process.env.DISCORD_DM_CHANNEL || process.env.STEPHEN_DM_CHANNEL_ID || "1486102002474811524";
-  if (!token) throw new Error("DISCORD_BOT_TOKEN missing for newsletter DM");
-  const chunks = splitDiscordMessage(content, 1850);
-  for (let i = 0; i < chunks.length; i++) {
-    const prefix = chunks.length > 1 ? `(${i + 1}/${chunks.length}) ` : "";
-    const res = await fetch(`https://discord.com/api/v10/channels/${channel}/messages`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bot ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content: `${prefix}${chunks[i]}`.slice(0, 1990) }),
-    });
-    if (!res.ok) {
-      throw new Error(`Discord DM ${res.status}: ${(await res.text()).slice(0, 300)}`);
-    }
-  }
+  await queueNotification(content, { producer: "southbaytoday-newsletter" });
 }
 
 function splitDiscordMessage(content, maxLen) {
