@@ -7,6 +7,31 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The library's title spells saranggola correctly; its body misspells it.
+  // Keep the carried attendance note and cached blurb consistent too.
+  // Evidence: docs/qa/2026-10-18-0107-fact-check.md (fresh occurrence HTML).
+  {
+    date: "2026-10-26",
+    url: "https://sccl.bibliocommons.com/events/6ab70960d6cf1f1a037de276",
+    facts: {
+      blurb: "Make a simple Filipino saranggola kite with other kids to celebrate Filipino heritage month.",
+    },
+    copyReplacements: [[/\bsarrangola\b/gi, "saranggola"]],
+  },
+  // The occurrence's location field names Conference Room, while its body
+  // names the second-floor Technology Lab. Neither establishes the room.
+  // Keep the confirmed library venue and disclose the conflict without
+  // choosing a room or carrying the definite direction into generated copy.
+  // Evidence: docs/qa/2026-10-18-0107-fact-check.md (fresh occurrence HTML).
+  {
+    date: "2026-11-03",
+    url: "https://losgatosca.libcal.com/event/17036748",
+    facts: {
+      blurb: "Make a dropper-art gratitude tree with instructor Makiko Niwa after a brief guided meditation.",
+      attendanceNote: "The library's location field says Conference Room, but its description says the second-floor Technology Lab. Confirm the room with the library.",
+    },
+    copyReplacements: [[/\s*This class will take place in the Technology Lab on the 2nd floor\./gi, ""]],
+  },
   // These two Bascom occurrence pages explicitly say registration is
   // recommended but not required. The presence/deadline of their signup form
   // does not establish an admission requirement. Keep this exception dated;
@@ -975,7 +1000,8 @@ export function applyVerifiedEventFacts(event) {
   });
   if (!correction) return event;
   const corrected = { ...event, ...correction.facts };
-  for (const field of ["description", "blurb"]) {
+  // Attendance notes also carry source copy and need the same verified fixes.
+  for (const field of ["description", "blurb", "attendanceNote"]) {
     if (typeof corrected[field] !== "string") continue;
     for (const [pattern, replacement] of correction.copyReplacements ?? []) {
       corrected[field] = corrected[field].replace(pattern, replacement);

@@ -13,6 +13,63 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration } from "./event
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the Cupertino kite occurrence keeps its spelling across source notes and blurb refreshes", async () => {
+  const raw = {
+    date: "2026-10-26", url: "https://sccl.bibliocommons.com/events/6ab70960d6cf1f1a037de276",
+    title: "Saranggola (Kite) Craft for Kids", venue: "Cupertino Library",
+    time: "4:00 PM", endTime: "4:30 PM", cost: "free",
+    description: "Make a sarrangola kite in room 101. Space is limited.",
+    attendanceNote: "Make a sarrangola kite in room 101. Space is limited.",
+    blurb: "Make a simple Filipino sarrangola kite.",
+  };
+  for (const blurb of [raw.blurb, undefined]) {
+    const events = [{ ...raw, blurb }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].blurb, /Filipino saranggola kite/);
+    assert.equal(events[0].description, "Make a saranggola kite in room 101. Space is limited.");
+    assert.equal(events[0].attendanceNote, events[0].description);
+    for (const field of ["date", "url", "title", "venue", "time", "endTime", "cost"]) {
+      assert.equal(events[0][field], raw[field]);
+    }
+    assert.equal(stats.generated, 0);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  }
+  assert.match(raw.attendanceNote, /sarrangola/);
+  for (const other of [
+    { ...raw, date: "2027-10-26" },
+    { ...raw, url: "https://sccl.bibliocommons.com/events/another-kite-craft" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("the Los Gatos gratitude class discloses conflicting rooms without selecting one on refresh", async () => {
+  const raw = {
+    date: "2026-11-03", url: "https://losgatosca.libcal.com/event/17036748",
+    title: "Kids Mindful Art: Gratitude Trees (Ages 7-12)", venue: "Los Gatos Library",
+    address: "110 E Main St, Los Gatos, CA 95030", time: "4:00 PM", endTime: "5:00 PM",
+    registration: "required", cost: "free",
+    description: "Make a gratitude tree with Makiko Niwa. This class will take place in the Technology Lab on the 2nd floor.",
+    blurb: "Make a gratitude tree in the second-floor Technology Lab.",
+  };
+  for (const blurb of [raw.blurb, undefined]) {
+    const events = [{ ...raw, blurb }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, "Make a gratitude tree with Makiko Niwa.");
+    assert.doesNotMatch(events[0].blurb, /Technology Lab|Conference Room/);
+    assert.match(events[0].attendanceNote, /location field says Conference Room/);
+    assert.match(events[0].attendanceNote, /description says the second-floor Technology Lab/);
+    for (const field of ["date", "url", "title", "venue", "address", "time", "endTime", "registration", "cost"]) {
+      assert.equal(events[0][field], raw[field]);
+    }
+    assert.equal(stats.generated, 0);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  }
+  assert.match(raw.blurb, /second-floor Technology Lab/);
+  for (const other of [
+    { ...raw, date: "2027-11-03" },
+    { ...raw, url: "https://losgatosca.libcal.com/event/another-art-class" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("online library sessions cannot acquire a physical attendance claim from carried or cached copy", async () => {
   const blurb = "Practice everyday English conversation with fellow adult learners in a relaxed weekly session at the library.";
   const event = {
