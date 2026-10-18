@@ -566,30 +566,7 @@ if (process.env.DRY_RUN) {
   process.exit(0);
 }
 
-const botToken = process.env.DISCORD_BOT_TOKEN;
-const dmChannel = process.env.DISCORD_DM_CHANNEL;
-if (!botToken) {
-  console.error("[openings-dm] DISCORD_BOT_TOKEN not set");
-  process.exit(1);
-}
-if (!dmChannel) {
-  console.error("[openings-dm] DISCORD_DM_CHANNEL not set");
-  process.exit(1);
-}
-
-const res = await fetch(
-  `https://discord.com/api/v10/channels/${dmChannel}/messages`,
-  {
-    method: "POST",
-    headers: {
-      Authorization: `Bot ${botToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ content: body.slice(0, 1990) }),
-  },
-);
-if (!res.ok) {
-  console.error(`[openings-dm] DM ${res.status}: ${await res.text()}`);
-  process.exit(1);
-}
-console.log(`[openings-dm] ${TODAY}: DM'd ${items.length} item(s)`);
+// Personal DMs are retired. Keep this routine digest in the job log; actual
+// source/refresh failures continue through the normal automatic repair intake.
+console.log(body);
+console.log(`[openings-dm] ${TODAY}: ${items.length} item(s) recorded; personal notifications retired`);

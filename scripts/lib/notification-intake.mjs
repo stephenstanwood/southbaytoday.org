@@ -7,9 +7,11 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 
 export async function queueNotification(content, { producer = 'southbaytoday', run = execFileSync, request = fetch } = {}) {
+  const installed = join(homedir(), '.local/bin/stoa-notify');
   const gateway = join(homedir(), 'Projects/stoa.works/scripts/queue-agent-notification.mjs');
-  if (!process.env.GITHUB_ACTIONS && !process.env.VERCEL && existsSync(gateway)) {
-    const result = JSON.parse(run('/opt/homebrew/bin/node', [gateway, '--producer', producer],
+  if (!process.env.GITHUB_ACTIONS && !process.env.VERCEL && (existsSync(installed) || existsSync(gateway))) {
+    const result = JSON.parse(run(existsSync(installed) ? installed : '/opt/homebrew/bin/node',
+      existsSync(installed) ? ['--producer', producer] : [gateway, '--producer', producer],
       { input: content, encoding: 'utf8', timeout: 45000 }));
     if (!result.queued) throw Error('MILO intake did not retain this exact notification');
     return result;
