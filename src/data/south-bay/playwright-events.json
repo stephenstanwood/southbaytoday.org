@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-17T20:53:26.869Z",
+    "generatedAt": "2026-10-18T02:17:05.855Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 456,
+    "eventCount": 454,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (107)",
-      "Los Gatos Library (113)",
+      "Mountain View Public Library (108)",
+      "Los Gatos Library (112)",
       "San Jose Jazz (15)",
       "Linden Tree Books (13)",
       "History San Jose (4)",
@@ -19,11 +19,11 @@
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (24)",
+      "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (78)",
       "Levi's Stadium (4)",
-      "SAP Center (16)",
+      "SAP Center (15)",
       "The Tech Interactive (12)",
       "Peninsula Open Space Trust (3)",
       "San Jose Museum of Art (6)"
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 112,
+        "count": 113,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 113,
+        "count": 112,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 24,
+        "count": 23,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -295,7 +295,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 16,
+        "count": 15,
         "error": null,
         "sources": [
           "SAP Center"
@@ -348,29 +348,6 @@
     ]
   },
   "events": [
-    {
-      "id": "80537e34a4b7",
-      "title": "Am I Being Tracked?: A Guide to Digital Privacy",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "2:00 PM",
-      "endTime": "3:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Sign up below to receive the Zoom information on the morning of the event. Every click, search, and scroll leaves a trail but how much of your life is actually being monitored, and by whom? In \"Am I Being Tracked?\", we take a hype-free look at the modern tracking ecosystem. First, we’ll debunk some myths around online privacy. Next, we’ll reframe how you think about digital privacy, shifting the goal from \"total invisibility\" to smart data management. Finally, you’ll get a practical checklist of steps you can take right now to gain control over your personal data. About the Presenter: Iman Saleh is a local Mountain View mom and a privacy professional with more than 24 years of experience in big tech and academia. She holds a PhD in Software Engineering and is recognized as a Fellow of Information Privacy by the International Association of Privacy Professionals (IAPP).",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17443377",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "129f9cb0a496",
       "title": "Spirit of '76: A Look Back at Mountain View's Bicentennial",
@@ -659,6 +636,29 @@
       "url": "https://mountainview.libcal.com/event/16612703",
       "source": "Mountain View Public Library",
       "kidFriendly": false
+    },
+    {
+      "id": "2c325d7b4e24",
+      "title": "Amplify: Misinformation in the Age of AI",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "education",
+      "cost": "free",
+      "description": "In a world of deepfakes, AI-generated content, and viral misinformation, knowing what to trust online has never been more important. Join us for an interactive workshop where you’ll learn how to fact-check claims, spot AI-generated content, and become better equipped to navigate the digital world. This program is part of Amplify: Teen Voices, a program for teens who want to share their interests and passions with an audience.",
+      "sourceAudiences": [
+        "Adults",
+        "Teens",
+        "Seniors",
+        "Parents"
+      ],
+      "url": "https://mountainview.libcal.com/event/17644315",
+      "source": "Mountain View Public Library",
+      "kidFriendly": true
     },
     {
       "id": "b519f5837027",
@@ -1597,6 +1597,27 @@
       "url": "https://mountainview.libcal.com/event/17500316",
       "source": "Mountain View Public Library",
       "kidFriendly": true
+    },
+    {
+      "id": "2ebb9d6d09e8",
+      "title": "Drop-in Bike Clinic",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "10:30 AM",
+      "endTime": "1:30 PM",
+      "venue": "Bike Fix-it Station (Outside Franklin St. Entrance)",
+      "address": "",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Come join us every third Saturday of the month for the Drop-in Bike Clinic! Use our tools to work on your bike. All ages welcome. Professional bike mechanic Ryan Murphy will be available for advice and help with: Changing a tire Adjusting gears and brakes Identifying that mysterious noise, and more! Meet at our Dero Fix-it station, on Franklin Street. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/17844573",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
     },
     {
       "id": "5d4b47f97a52",
@@ -2631,27 +2652,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17028031",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "ece6851ef2eb",
-      "title": "Girls Who Code",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "registration": "required",
-      "category": "education",
-      "cost": "free",
-      "description": "The Los Gatos Library has partnered with @GirlsWhoCode to create a club meant for people ages 12-18 to learn to code and change the world! \"What will I Learn? Our middle and high school Clubs encourage you to impact the community in a positive way through code. In order to build the skills you need to make an impact, you will learn how to code from our fun online tutorials and activities that will help you build animations, games, apps, and other things that you dream up! We have tutorials in Python, HTML/CSS, JavaScript, and Java.\" Email: signup@gwc-losgatos.org to register.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17444953",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -6499,7 +6499,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-18",
-        "checkedAt": "2026-10-17T20:52:14.590Z"
+        "checkedAt": "2026-10-18T02:15:50.048Z"
       }
     },
     {
@@ -6522,7 +6522,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-17T20:52:14.590Z"
+        "checkedAt": "2026-10-18T02:15:50.048Z"
       }
     },
     {
@@ -6545,7 +6545,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-17T20:52:14.590Z"
+        "checkedAt": "2026-10-18T02:15:50.048Z"
       }
     },
     {
@@ -6568,7 +6568,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-17T20:52:14.590Z"
+        "checkedAt": "2026-10-18T02:15:50.048Z"
       }
     },
     {
@@ -6591,8 +6591,25 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-17T20:52:14.590Z"
+        "checkedAt": "2026-10-18T02:15:50.049Z"
       }
+    },
+    {
+      "id": "5d51f3e5dad5",
+      "title": "Hidden Treasures",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "09:00 AM",
+      "endTime": "02:00 PM",
+      "venue": "Cupertino Senior Center",
+      "address": "Cupertino Senior Center, 21251 Stevens Creek Boulevard, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "Join us at the Senior Center for Hidden Treasures! With hundreds of items to choose from, this event is the perfect opportunity to discover unique antiques, artwork, handknits, toys, glassware, housewares, jewelry, and more. For more information, please visit the Hidden Treasures event page.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Hidden-Treasures/Hidden-Treasures-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "6e8dd054162a",
@@ -6678,40 +6695,6 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
       "source": "City of Cupertino",
       "kidFriendly": true
-    },
-    {
-      "id": "5847e6aaf4cc",
-      "title": "Diwali Festival",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "11:00 AM",
-      "endTime": "06:00 PM",
-      "venue": "Memorial Park",
-      "address": "Memorial Park, 21121 Stevens Creek Blvd, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "The Diwali Festival is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Diwali-Festival",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "5d51f3e5dad5",
-      "title": "Hidden Treasures",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "09:00 AM",
-      "endTime": "02:00 PM",
-      "venue": "Cupertino Senior Center",
-      "address": "Cupertino Senior Center, 21251 Stevens Creek Boulevard, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us at the Senior Center for Hidden Treasures! With hundreds of items to choose from, this event is the perfect opportunity to discover unique antiques, artwork, handknits, toys, glassware, housewares, jewelry, and more. For more information, please visit the Hidden Treasures event page.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Hidden-Treasures/Hidden-Treasures-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "dcbd516b2a4a",
@@ -8479,23 +8462,6 @@
       "description": "",
       "url": "https://levisstadium.com/events/",
       "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
-      "id": "fa216b014a36",
-      "title": "Rush",
-      "date": "2026-10-17",
-      "displayDate": "Sat, Oct 17",
-      "time": "7:30 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/rush-2",
-      "source": "SAP Center",
       "kidFriendly": false
     },
     {
