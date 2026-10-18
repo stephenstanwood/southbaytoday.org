@@ -961,6 +961,15 @@ function fixProperNouns(text) {
   t = t.replace(/\bMath(?: ?Works|works)\b/g, "MathWorks");
   t = t.replace(/\bTeen ?H[Qq]\b/g, "TeenHQ");
   t = t.replace(/\bBish(?= Bash\b)/g, "BISH");
+  // The prose splitter separates MacLean's surname; restore only this author.
+  // https://www.penguinrandomhouse.com/books/768403/these-summer-storms-by-sarah-maclean/
+  t = t.replace(/\bSarah Mac ?Lean\b/g, "Sarah MacLean");
+  // Correct the library's character-name typo without changing other names.
+  // https://www.wallaceandgromit.com/
+  t = t.replace(/\bWallace (and|&) Gromet\b/g, "Wallace $1 Gromit");
+  // SJPL's video-call app list pluralizes the product; keep ordinary verbs.
+  // https://workspace.google.com/products/meet/
+  t = t.replace(/\b(Zoom,\s*FaceTime,\s*)Google Meets\b/g, "$1Google Meet");
   return t;
 }
 
