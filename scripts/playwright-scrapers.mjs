@@ -1465,8 +1465,8 @@ const BN_STORES = [
 // so we (a) drop events whose titles name a non-South-Bay location (San Mateo
 // County coast, EPA, Portola Valley, etc.), (b) drop events in unincorporated
 // SCC outside our 11-city footprint (Morgan Hill, Gilroy), and (c) map known
-// preserve names to the city slug they're actually in. Events whose location
-// can't be inferred fall back to santa-clara-county.
+// preserve names to the city slug they're actually in. Trails crossing city
+// boundaries need occurrence-specific evidence; unresolved locations are dropped.
 
 // Title fragments that mean "this event is outside South Bay coverage."
 // Lowercase, matched as substrings.
@@ -1502,7 +1502,8 @@ const POST_LOCATION_RULES = [
   ["foothills park",       "palo-alto",     "Foothills Nature Preserve"],
   ["arastradero",          "palo-alto",     "Pearson-Arastradero Preserve"],
   ["alum rock",            "san-jose",      "Alum Rock Park"],
-  ["coyote creek",         "san-jose",      "Coyote Creek"],
+  // Coyote Creek Trail spans several cities. Resolve a verified occurrence
+  // below; its title cannot establish San Jose (or any other meeting point).
   ["sierra azul",          "los-gatos",     "Sierra Azul OSP"],
   ["st. joseph",           "los-gatos",     "St. Joseph's Hill OSP"],
   ["el sereno",            "saratoga",      "El Sereno OSP"],
@@ -1514,10 +1515,14 @@ const POST_LOCATION_RULES = [
   ["calero",               "san-jose",      "Calero County Park"],
 ];
 
-function inferPostLocation(title) {
+export function inferPostLocation(title, { date, url } = {}) {
   const t = (title || "").toLowerCase();
   for (const tok of POST_OUT_OF_AREA_TOKENS) {
     if (t.includes(tok)) return null; // signal: drop
+  }
+  const verified = applyVerifiedEventFacts({ title, date, url });
+  if (verified.city && verified.venue) {
+    return { city: verified.city, venue: verified.venue, address: verified.address || "" };
   }
   for (const [name, slug, venue] of POST_LOCATION_RULES) {
     if (t.includes(name)) return { city: slug, venue };
@@ -1530,7 +1535,7 @@ function inferPostLocation(title) {
   return null;
 }
 
-async function scrapePOST(page) {
+export async function scrapePOST(page, { today = TODAY } = {}) {
   // Force a realistic desktop UA so Cloudflare serves the real page.
   await page.setExtraHTTPHeaders({
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -1579,9 +1584,8 @@ async function scrapePOST(page) {
   });
 
   const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-  const now = new Date();
-  const curYear = now.getFullYear();
-  const curMonth = now.getMonth();
+  const { year: curYear, month } = isoDateParts(today);
+  const curMonth = month - 1;
   const seen = new Set();
   const events = [];
 
@@ -1590,9 +1594,9 @@ async function scrapePOST(page) {
     if (m == null) continue;
     // Infer year: if the month is >= 4 months behind now, it's next year.
     const y = m < curMonth - 3 ? curYear + 1 : curYear;
-    const d = new Date(y, m, parseInt(r.day, 10));
-    const date = isoDate(d);
-    if (date < TODAY) continue;
+    const date = `${y}-${String(m + 1).padStart(2, "0")}-${String(parseInt(r.day, 10)).padStart(2, "0")}`;
+    try { isoDateParts(date); } catch { continue; }
+    if (date < today) continue;
 
     const dedup = `${date}|${r.title.toLowerCase()}`;
     if (seen.has(dedup)) continue;
@@ -1607,11 +1611,11 @@ async function scrapePOST(page) {
       venue = "Online (POST Webinar)";
       address = "";
     } else {
-      const loc = inferPostLocation(r.title);
+      const loc = inferPostLocation(r.title, { date, url: r.link });
       if (loc === null) continue;
       city = loc.city;
       venue = loc.venue ?? "Peninsula Open Space Trust";
-      address = loc.venue ? "" : "Various POST preserves + partner locations";
+      address = loc.address || "";
     }
 
     events.push({
@@ -1624,6 +1628,7 @@ async function scrapePOST(page) {
       city,
       url: r.link || "https://openspacetrust.org/events/",
       source: "Peninsula Open Space Trust",
+      ...(r.virtual ? { virtual: true } : {}),
       // EventCategory enum (src/data/south-bay/events-data.ts) doesn't include
       // "nature" or "volunteer" — UI filters drop those events. Map to valid keys.
       category: r.volunteer ? "community" : "outdoor",
@@ -2857,7 +2862,9 @@ async function main() {
 }
 
 export function normalizePlaywrightEvent(e) {
-  if (e.source === "San Jose Museum of Art") e = applyVerifiedEventFacts(e);
+  if (e.source === "San Jose Museum of Art" || e.source === "Peninsula Open Space Trust") {
+    e = applyVerifiedEventFacts(e);
+  }
   const d = new Date(`${e.date}T12:00:00-07:00`);
   return {
     // Include time: same source/date/title/venue can carry multiple

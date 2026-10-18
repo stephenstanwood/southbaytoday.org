@@ -15,6 +15,39 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("stale BioBlitz snapshots retain the dated Milpitas entrance and required RSVP", async () => {
+  const url = "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post";
+  const raw = {
+    id: "replacement-post-id", date: "2026-10-18", title: "Coyote Creek Trail BioBlitz",
+    city: "san-jose", venue: "Coyote Creek", address: "", url,
+    time: "9:00 AM", endTime: "11:30 AM", cost: "free", description: "",
+    blurb: "Join a community survey of plants and wildlife along Coyote Creek Trail.",
+  };
+  for (const sourceUrl of [url, url.split("?")[0], "https://261018-bioblitz.eventbrite.com/"]) {
+    const events = [{ ...raw, url: sourceUrl }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    const corrected = events[0];
+    assert.equal(corrected.city, "milpitas");
+    assert.equal(corrected.venue, "Coyote Creek Trail");
+    assert.equal(corrected.address, "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035");
+    assert.equal(corrected.registration, "required");
+    assert.equal(requiresAdvanceRegistration(corrected), true);
+    assert.match(corrected.attendanceNote, /Ranch Drive entrance/);
+    const { city, venue, address, registration, attendanceNote, ...preserved } = corrected;
+    assert.deepEqual({ ...preserved, city: raw.city, venue: raw.venue, address: raw.address }, { ...raw, url: sourceUrl });
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.equal(stats.generated, 0);
+  }
+  for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2026-10-25" },
+    { ...raw, url: "https://example.org/another-bioblitz" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+  assert.equal(raw.city, "san-jose");
+});
+
 test("stale Edenvale tech-help copy retains the verified Chinese language option", async () => {
   const { polishDescription } = await import("../../../scripts/generate-events.mjs");
   const tail = "Would you like to find out more about computers? Learn at your own pace! No registration or appointment required.";

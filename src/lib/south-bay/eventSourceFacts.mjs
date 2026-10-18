@@ -7,6 +7,25 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // This BioBlitz uses the Milpitas section of a trail spanning several cities.
+  // The dated organizer page names the Ranch Drive entrance; its volunteer
+  // listing requires Eventbrite registration. A trail name alone is not a city.
+  // Evidence: docs/qa/2026-10-18-0807-fact-check.md.
+  {
+    date: "2026-10-18",
+    url: "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+    aliasUrls: [
+      "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062",
+      "https://261018-bioblitz.eventbrite.com/",
+    ],
+    facts: {
+      city: "milpitas",
+      venue: "Coyote Creek Trail",
+      address: "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Register through Keep Coyote Creek Beautiful's Eventbrite page before attending. Meet at the Ranch Drive entrance near Alviso Milpitas Road.",
+    },
+  },
   // SJPL's dated Edenvale occurrence says "in English or 中文". Older
   // snapshots lost the Chinese label or sentence during display cleanup.
   // Do not infer a dialect or carry this into other dates or branches.
