@@ -142,6 +142,20 @@ test("city highlights exclude full and closed programs without excluding availab
   assert.equal(isBriefingEventAvailable({}), true);
 });
 
+test("city highlights honor verified closures even when an older snapshot has no signup state", () => {
+  const older = {
+    title: "Multi-Level ESL Class Session", date: "2026-10-14",
+    url: "https://sccl.bibliocommons.com/events/6a5a9d66f4e5db3d00c27e15",
+  };
+  for (const registration of [undefined, "none", "required"]) {
+    const event = { ...older, registration };
+    assert.equal(isBriefingEventAvailable(event), false);
+    assert.equal(event.registration, registration);
+  }
+  assert.equal(isBriefingEventAvailable({ ...older, date: "2027-10-14" }), true);
+  assert.equal(isBriefingEventAvailable({ ...older, url: "https://sccl.bibliocommons.com/events/another-class" }), true);
+});
+
 test("ordinary performance dates cannot become opening or closing dates in a briefing", () => {
   const performances = [{ title: "Private Lives" }, { title: "Once Upon a Mattress" }];
   assert.equal(hasUnsupportedEventMilestone('"Private Lives" closes out at The Pear Theatre Friday.', performances), true);

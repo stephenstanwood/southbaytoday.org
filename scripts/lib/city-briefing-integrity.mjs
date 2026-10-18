@@ -1,8 +1,12 @@
 import { REGISTRATION_CLOSED, REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 /** Highlights have no availability badge; don't invite readers to full events. */
 export function isBriefingEventAvailable(event) {
-  return event?.registration !== REGISTRATION_FULL && event?.registration !== REGISTRATION_CLOSED;
+  // Older snapshots may predate a verified closure; apply the same dated facts
+  // used by event publication before treating missing signup state as available.
+  const verified = applyVerifiedEventFacts(event);
+  return verified?.registration !== REGISTRATION_FULL && verified?.registration !== REGISTRATION_CLOSED;
 }
 
 const PROSPECTIVE_SOURCE =

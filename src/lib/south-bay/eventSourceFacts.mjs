@@ -23,12 +23,14 @@ const CORRECTIONS = [
       attendanceNote: "Registration is recommended but not required.",
     },
   })),
-  // These five occurrence pages explicitly close enrollment for the same
+  // These six occurrence pages explicitly close enrollment for the same
   // August 31–November 4 semester. Missing registrar metadata is not evidence
   // of walk-up admission. Keep the class listed with its actual signup state;
   // do not carry this closure into another semester or another branch.
-  // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
+  // Evidence: docs/qa/2026-10-17-2007-fact-check.md and
+  // docs/qa/2026-10-17-2207-fact-check.md (the retained briefing occurrence).
   ...[
+    ["2026-10-14", "6a5a9d66f4e5db3d00c27e15"],
     ["2026-10-19", "6a5a9d66f4e5db3d00c27e16"],
     ["2026-10-21", "6a5a9d66f4e5db3d00c27e17"],
     ["2026-10-26", "6a5a9d66f4e5db3d00c27e18"],
@@ -1206,6 +1208,12 @@ const ACTIVITY_TAIL = /\s+\b(?:for|at|on|in|with|from|starting|beginning)\b.*$/i
 export function eventCopyFactConflict(text, event) {
   const copy = String(text || "");
   const source = sourceText(event);
+  // A virtual event may name its organizing library as the venue. That is not
+  // a physical destination; check carried/cached copy as well as new blurbs.
+  if (event?.virtual === true
+      && /\b(?:session|class|workshop|program|meeting|club)\s+(?:at|in)\s+the\s+library\b/i.test(copy)) {
+    return "physical library attendance for online event";
+  }
   if (/\b(?:cover|tribute)[\s-]+(?:bands?|acts?|groups?|artists?)\b/i.test(copy)
       && !/\b(?:cover|tribute)\b/i.test(source)) return "unsupported cover/tribute identity";
   if (/\b(?:original|founding)\s+(?:members?|vocalists?|singers?|lineup)\b/i.test(copy)

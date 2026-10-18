@@ -13,6 +13,36 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration } from "./event
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("online library sessions cannot acquire a physical attendance claim from carried or cached copy", async () => {
+  const blurb = "Practice everyday English conversation with fellow adult learners in a relaxed weekly session at the library.";
+  const event = {
+    title: "English Language Learners' (ELL) Conversation Club (via Pearl and Cambrian)",
+    date: "2026-10-20", time: "11:00 AM", venue: "San Jose Public Library", virtual: true,
+    url: "https://sjpl.bibliocommons.com/events/6938708d1e64afd01e4e250f",
+    description: "We meet online on Tuesdays, 11 AM–12 PM. Register to receive the Zoom meeting link.",
+    registration: "required", blurb,
+  };
+  assert.equal(eventCopyFactConflict(blurb, event), "physical library attendance for online event");
+  for (const virtual of [false, undefined]) {
+    assert.equal(eventCopyFactConflict(blurb, { ...event, virtual }), null);
+  }
+  for (const copy of [
+    "Practice English conversation in a relaxed weekly online session.",
+    "Discuss short stories with fellow readers at this virtual book club.",
+    "Collect a book at the library before joining the online discussion.",
+  ]) assert.equal(eventCopyFactConflict(copy, event), null);
+
+  const events = [{ ...event }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].blurb, undefined);
+  assert.equal(stats.generated, 0);
+  assert.equal(stats.skipped, 1);
+  for (const field of ["title", "date", "time", "venue", "virtual", "url", "description", "registration"]) {
+    assert.equal(events[0][field], event[field]);
+  }
+  assert.equal(event.blurb, blurb);
+});
+
 test("Bascom's optional craft signups do not become admission gates on refresh", async () => {
   for (const [date, sourceId, title, time] of [
     ["2026-10-18", "6a85eaec69166f088b934e2d", "LEGO Fun!", "2:00 PM"],
@@ -49,6 +79,7 @@ test("Bascom's optional craft signups do not become admission gates on refresh",
 
 test("Saratoga's enrolled ESL semester cannot become a walk-up on refresh", async () => {
   for (const [date, sourceId] of [
+    ["2026-10-14", "6a5a9d66f4e5db3d00c27e15"],
     ["2026-10-19", "6a5a9d66f4e5db3d00c27e16"],
     ["2026-10-21", "6a5a9d66f4e5db3d00c27e17"],
     ["2026-10-26", "6a5a9d66f4e5db3d00c27e18"],
