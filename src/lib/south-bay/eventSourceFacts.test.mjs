@@ -10,10 +10,57 @@ import {
   rotationActivityForOccurrence,
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
-import { isRegistrationClosedForDay, requiresAdvanceRegistration, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
+import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
+
+test("Milpitas ESL preserves dated sessions while disclosing conflicting term and assessment information", async () => {
+  const occurrences = [
+    ["2026-10-19", "6a5992919943bdf31e9f816b"],
+    ["2026-10-21", "6a5992919943bdf31e9f816c"],
+    ["2026-10-26", "6a5992919943bdf31e9f816d"],
+    ["2026-10-28", "6a5992919943bdf31e9f816e"],
+    ["2026-11-02", "6a5992919943bdf31e9f816f"],
+  ];
+  for (const [date, sourceId] of occurrences) {
+    for (const [rangeWord, booking] of [
+      ["to", "Please follow the link to make an appointment for your ESL assessment: https://outlook.office.com/boo..."],
+      ["and", "Please make an appointment for your ESL assessment."],
+    ]) {
+      const raw = {
+        id: `sccl-${sourceId}`, date, time: "6:00 PM", endTime: "8:00 PM",
+        url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+        title: "Free Adult ESL Class", venue: "Milpitas Library", city: "milpitas", cost: "free",
+        description: `The class meets from 6:00 PM to 8:00 PM at the Milpitas Library Program Room between February 9th ${rangeWord} May 20th. Regular attendance is required. ESL assessment dates: July 27th - August 19th. Class Dates: August 17th, 2025 - November 18, 2026, Mon & Weds 6:00 PM - 8:00 PM. ${booking}`,
+        blurb: "Practice English speaking and listening skills at a beginner-to-intermediate level.",
+      };
+      const events = [{ ...raw }];
+      const stats = await resolveEventBlurbs(events, { enabled: false });
+      const corrected = events[0];
+      assert.equal(requiresAttendanceConfirmation(corrected), true);
+      assert.match(corrected.attendanceNote, /July 27–August 19 assessment dates and conflicting class date ranges/);
+      assert.match(corrected.description, /Program Room\. Regular attendance is required\./);
+      assert.match(corrected.description, /Confirm assessment and enrollment availability with Milpitas Library\./);
+      assert.doesNotMatch(corrected.description, /February 9|Class Dates:|2025|ESL assessment dates:|outlook\.office/);
+      assert.equal(corrected.registration, undefined, "uncertainty must not invent a closed or appointment-only class");
+      for (const field of ["id", "date", "time", "endTime", "url", "title", "venue", "city", "cost", "blurb"]) {
+        assert.equal(corrected[field], raw[field]);
+      }
+      assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+      assert.equal(stats.generated, 0);
+      for (const other of [
+        { ...raw, date: "2027-10-19" },
+        { ...raw, date: "2026-10-20" },
+        { ...raw, url: "https://sccl.bibliocommons.com/events/another-esl-class" },
+      ]) assert.equal(applyVerifiedEventFacts(other), other);
+      for (const registration of ["required", "full", "closed", REGISTRATION_APPOINTMENT]) {
+        assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+      }
+      assert.equal(raw.attendanceStatus, undefined, "do not mutate the source record");
+    }
+  }
+});
 
 test("verified concert times and links survive newsletter refreshes and changed intake IDs", async () => {
   const rows = [
@@ -841,8 +888,11 @@ test("October Milpitas ESL occurrences omit contradictory term dates across refr
       };
       const events = [{ ...raw }];
       await resolveEventBlurbs(events, { enabled: false });
-      assert.equal(events[0].description, "The class meets twice a week on Mondays and Wednesdays, from 6:00 PM to 8:00 PM at the Milpitas Library Program Room. Regular attendance is required. Please follow the link to make an appointment for your ESL assessment.");
-      assert.deepEqual({ ...events[0], description: raw.description }, raw);
+      assert.equal(events[0].description, "The class meets twice a week on Mondays and Wednesdays, from 6:00 PM to 8:00 PM at the Milpitas Library Program Room. Regular attendance is required. Confirm assessment and enrollment availability with Milpitas Library.");
+      const { attendanceNote, attendanceStatus, ...preserved } = events[0];
+      assert.equal(attendanceStatus, "needs-confirmation");
+      assert.match(attendanceNote, /Confirm class and enrollment details with Milpitas Library/);
+      assert.deepEqual({ ...preserved, description: raw.description }, raw);
       assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
       assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-19" }).description, raw.description);
       assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-class" }).description, raw.description);

@@ -7,6 +7,30 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // These dated Milpitas occurrences exist, but their shared body conflicts
+  // with itself about the class term and lists assessment dates already past.
+  // Preserve the occurrence clocks without promising new enrollment or
+  // guessing a corrected term. This is not evidence that classes are closed.
+  // Evidence: docs/qa/2026-10-18-0407-fact-check.md (all five source records).
+  ...[
+    ["2026-10-19", "6a5992919943bdf31e9f816b"],
+    ["2026-10-21", "6a5992919943bdf31e9f816c"],
+    ["2026-10-26", "6a5992919943bdf31e9f816d"],
+    ["2026-10-28", "6a5992919943bdf31e9f816e"],
+    ["2026-11-02", "6a5992919943bdf31e9f816f"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library lists July 27–August 19 assessment dates and conflicting class date ranges. Confirm class and enrollment details with Milpitas Library.",
+    },
+    copyReplacements: [
+      [/\s+(?:between|from) February 9(?:th)? (?:to|and) May 20(?:th)?/gi, ""],
+      [/\bClass Dates:\s*August 17(?:th)?,\s*2025\s*[-–—]\s*November 18(?:th)?,\s*2026,\s*Mon\s*&\s*Weds\s*6:00\s*PM\s*[-–—]\s*8:00\s*PM\.\s*/gi, ""],
+      [/\s*ESL assessment dates: July 27th - August 19th\./gi, ""],
+      [/\bPlease (?:follow the link to )?make an appointment for your ESL assessment(?::\s*https:\/\/outlook\.office\.com\/boo\.{3}|\.)/gi, "Confirm assessment and enrollment availability with Milpitas Library."],
+    ],
+  })),
   // Newsletter intake carried 8 PM and omitted usable concert links. The
   // organizer's occurrence pages and ticket pages agree on 7:30 PM. Match
   // the dated title/venue too so a different intake ID cannot undo the facts.
@@ -473,24 +497,6 @@ const CORRECTIONS = [
       blurb: "For Goodness Snakes replaces the regular storytime at King Library; recommended for ages 0–8 with caregivers.",
     },
   },
-  // These October occurrence records confirm 6–8 PM sessions but their shared
-  // body still gives a February–May term and a conflicting August 2025 start.
-  // Omit both term ranges; do not guess a replacement year or enrollment term.
-  // https://sccl.bibliocommons.com/events/6a5992919943bdf31e9f816b
-  // https://sccl.bibliocommons.com/events/6a5992919943bdf31e9f816e
-  // Evidence: docs/qa/2026-10-15-0607-fact-check.md.
-  ...[
-    ["2026-10-19", "6a5992919943bdf31e9f816b"],
-    ["2026-10-21", "6a5992919943bdf31e9f816c"],
-    ["2026-10-26", "6a5992919943bdf31e9f816d"],
-    ["2026-10-28", "6a5992919943bdf31e9f816e"],
-  ].map(([date, sourceId]) => ({
-    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
-    copyReplacements: [
-      [/\s+(?:between|from) February 9(?:th)? to May 20(?:th)?/gi, ""],
-      [/\bClass Dates:\s*August 17(?:th)?,\s*2025\s*[-–—]\s*November 18(?:th)?,\s*2026,\s*Mon\s*&\s*Weds\s*6:00\s*PM\s*[-–—]\s*8:00\s*PM\.\s*/gi, ""],
-    ],
-  })),
   // Tully's Day 3 title and SJPL's published five-session curriculum agree;
   // this occurrence's copied English/Spanish body still names Day 1's topic.
   // Remove those conflicting fragments rather than inventing session copy.
