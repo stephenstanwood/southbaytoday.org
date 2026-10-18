@@ -1,3 +1,4 @@
+import { queueNotification } from "./notification-intake.mjs";
 // Direct Discord cat-signal alerts from generator scripts.
 //
 // Use case: a script gets a hard error mid-run (API out of credits, hard 401, etc.)
@@ -36,10 +37,7 @@ function stampCooldown(key) {
 }
 
 /** Ping target for alert embeds. Unset means the embed posts without a ping. */
-function mention() {
-  const id = String(process.env.DISCORD_ALERT_USER_ID || "").trim();
-  return /^\d{5,}$/.test(id) ? `<@${id}>` : "";
-}
+
 
 /**
  * Fire a red Discord DM. Returns immediately if cooldown active or no webhook.
@@ -50,43 +48,11 @@ function mention() {
  * @param {string} opts.body  - Plain body. Markdown OK.
  */
 export async function catSignal({ key, title, body }) {
-  const webhook = process.env.DISCORD_WEBHOOK;
-  if (!webhook) return;
   if (inCooldown(key)) return;
-  stampCooldown(key);
-
   try {
-    await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        // A literal "<@me>" is not valid Discord mention syntax — it renders as
-        // plain text and pings nobody, which is how five days of blocked event
-        // refreshes went unnoticed in Aug 2026. Real mentions need a numeric id.
-        content: mention(),
-        embeds: [{
-          title: `🚨 ${title}`,
-          description: body.slice(0, 1800),
-          color: 0xe53935,
-          timestamp: new Date().toISOString(),
-        }],
-      }),
-    });
-  } catch {
-    // never throw from a notify path
+    await queueNotification(`${title}\n${body}`, { producer: `southbaytoday-${key}` });
+    stampCooldown(key);
+  } catch (error) {
+    console.error(`[cat-signal] intake failed; source retained: ${error.message}`);
   }
-}
-
-/**
- * Convenience: "<api> API is out of credits / quota / etc." with a sensible default body.
- */
-export async function notifyApiOut(api, detail = "") {
-  await catSignal({
-    key: `${api.toLowerCase()}-credits`,
-    title: `${api} API out of credits`,
-    body:
-      `${api} just rejected a request with an out-of-credits / quota error.\n` +
-      `Scripts that depend on it may be running in degraded mode.\n\n` +
-      (detail ? `\`\`\`\n${detail.slice(0, 600)}\n\`\`\`` : ""),
-  });
 }
