@@ -3,13 +3,31 @@
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { writeJsonAtomic } from './io.mjs';
 
-export async function queueNotification(content, { producer = 'southbaytoday', run = execFileSync, request = fetch } = {}) {
+export async function queueNotification(content, options = {}) {
+  const { producer = 'southbaytoday', run = execFileSync, request = fetch } = options;
+  // Node's test runner marks its workers. CLI fixtures must preserve that
+  // context and use their own sink; an installed personal gateway is never a
+  // test transport. Explicitly injected transports remain available to tests.
+  if (process.env.NODE_TEST_CONTEXT) {
+    const directory = process.env.SBT_NOTIFICATION_TEST_DIR;
+    if (directory) {
+      if (!isAbsolute(directory)) throw Error('Notification test sink must be absolute');
+      const id = createHash('sha256').update(`${producer}\n${content}`).digest('hex');
+      writeJsonAtomic(join(directory, `${id}.json`), { producer, content: String(content) });
+      return { queued: true, routed: 'isolated-test-intake' };
+    }
+  }
   const installed = join(homedir(), '.local/bin/stoa-notify');
   const gateway = join(homedir(), 'Projects/stoa.works/scripts/queue-agent-notification.mjs');
-  if (!process.env.GITHUB_ACTIONS && !process.env.VERCEL && (existsSync(installed) || existsSync(gateway))) {
+  const local = !process.env.GITHUB_ACTIONS && !process.env.VERCEL && (existsSync(installed) || existsSync(gateway));
+  if (process.env.NODE_TEST_CONTEXT && typeof options[local ? 'run' : 'request'] !== 'function') {
+    throw Error('Node tests require an isolated notification sink or injected transport for this route');
+  }
+  if (local) {
     const result = JSON.parse(run(existsSync(installed) ? installed : '/opt/homebrew/bin/node',
       existsSync(installed) ? ['--producer', producer] : [gateway, '--producer', producer],
       { input: content, encoding: 'utf8', timeout: 45000 }));

@@ -285,6 +285,14 @@ shared-checkout reset is used.
 
 ## Verification and recovery
 
+Offline publication fixtures intentionally produce source failures and must
+never reach personal MILO intake. `notification-intake.mjs` rejects uninjected
+live transports inside Node test workers. CLI fixtures preserve
+`NODE_TEST_CONTEXT` and set `SBT_NOTIFICATION_TEST_DIR` to their own temporary
+directory; both notification intents and cooldowns stay there. The fixtures
+assert that their blocking alerts were recorded locally and that published
+files remain byte-identical. Production callers keep their normal intake route.
+
 ```bash
 uptime  # load-per-core first: a saturated Mini fakes a mass source outage
 node scripts/events/verify-refresh-output.mjs --max-age-hours 30 --snapshot-max-age-hours 30
