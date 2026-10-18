@@ -697,6 +697,36 @@ test("keeps credible Ticketmaster zero-price events free", () => {
   assert.equal(mapTicketmasterEvent(ticketmasterEvent()).cost, "free");
 });
 
+test("TicketWeb's explicit sold-out title reaches the existing attendance gate", () => {
+  for (const name of [
+    "SOLD OUT Tauren Wells: Air1 Worship Now Tour - San Jose, CA",
+    "[Sold Out] Example Show",
+    "(SOLD-OUT) Example Show",
+  ]) {
+    const mapped = mapTicketmasterEvent(ticketmasterEvent({ name }));
+    assert.equal(mapped.registration, "full");
+    assert.match(mapped.attendanceNote, /Tickets are sold out/);
+    assert.equal(mapped.time, "7:30 PM");
+    assert.equal(mapped.venue, "Example Venue");
+  }
+});
+
+test("Ticketmaster offsale status and past sold-out biography do not imply a full event", () => {
+  const mapped = mapTicketmasterEvent(ticketmasterEvent({
+    name: "Example Show",
+    info: "Following a sold-out tour last year, the band returns.",
+    dates: { start: { localDate: "2026-11-12", localTime: "19:00:00" }, status: { code: "offsale" } },
+  }));
+  assert.equal(mapped.registration, undefined);
+  assert.equal(mapped.attendanceNote, undefined);
+  for (const code of ["cancelled", "postponed"]) {
+    assert.equal(mapTicketmasterEvent(ticketmasterEvent({
+      name: "SOLD OUT Example Show",
+      dates: { start: { localDate: "2026-11-12", localTime: "19:00:00" }, status: { code } },
+    })), null);
+  }
+});
+
 test("does not call paid TicketWeb Improv shows free", () => {
   const mapped = mapTicketmasterEvent(ticketmasterEvent({
     url: "https://www.ticketweb.com/event/desi-banks-san-jose-improv-tickets/14880633",

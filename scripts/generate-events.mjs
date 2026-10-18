@@ -79,6 +79,7 @@ import {
   OUT_OF_AREA_LOCATION,
   namesUncoveredCaPostalCity,
   REGISTRATION_CLOSED,
+  REGISTRATION_FULL,
   REGISTRATION_NONE,
   VIRTUAL_EVENT_PATTERNS,
   hasOutOfAreaDestination,
@@ -5293,6 +5294,12 @@ function mapTicketmasterEvent(e) {
   const tmStatus = (e.dates?.status?.code || "").toLowerCase();
   if (tmStatus === "cancelled" || tmStatus === "postponed") return null;
 
+  // TicketWeb can prefix the source title with SOLD OUT. Preserve that
+  // explicit availability signal for recommendation gates independently of
+  // Discovery's on/off-sale code. Offsale alone does not prove sold out,
+  // and an artist biography mentioning a past sold-out show is not evidence.
+  const soldOut = /^\s*(?:\[\s*|\(\s*)?sold[\s-]+out\b/i.test(e.name || "");
+
   // Discovery returns a Pacific local wall clock, not an offset-bearing ISO
   // instant. Let the shared parser resolve the actual PST/PDT offset so events
   // after the November fallback do not publish one hour early.
@@ -5357,6 +5364,10 @@ function mapTicketmasterEvent(e) {
     category: inferCategory(e.name, genre, segment, venueName),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
+    ...(soldOut ? {
+      registration: REGISTRATION_FULL,
+      attendanceNote: "Tickets are sold out according to the ticket seller.",
+    } : {}),
     description: truncate(descCandidate),
     url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",

@@ -15,6 +15,31 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the verified sold-out concert cannot return as an available stale ticket listing", async () => {
+  const raw = {
+    id: "replacement-ticket-id", date: "2026-11-12", time: "7:00 PM",
+    title: "Tauren Wells: Air1 Worship Now Tour - San Jose, CA", venue: "Cathedral of Faith",
+    url: "https://www.ticketweb.com/event/sold-out-tauren-wells-air1-cathedral-of-faith-tickets/14232924",
+    description: "The Air1 Worship Now Tour returns this fall.",
+    blurb: "Hear Tauren Wells at Cathedral of Faith.",
+  };
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "full");
+  assert.match(events[0].attendanceNote, /Tickets are sold out/);
+  assert.equal(requiresAdvanceRegistration(events[0]), true);
+  assert.equal(stats.generated, 0);
+  const { registration, attendanceNote, ...preserved } = events[0];
+  assert.deepEqual(preserved, raw);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(applyVerifiedEventFacts({ ...raw, registration: "closed" }).registration, "closed");
+  assert.equal(raw.registration, undefined);
+  for (const other of [
+    { ...raw, date: "2027-11-12" },
+    { ...raw, url: "https://www.ticketweb.com/event/a-different-show/14232925" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("older museum snapshots cannot turn a full in-person lecture into a walk-up recommendation", async () => {
   const raw = {
     id: "replacement-snapshot-id", date: "2026-10-21", time: "5:30 PM", endTime: "7:00 PM",

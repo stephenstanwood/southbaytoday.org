@@ -7,6 +7,17 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The organizer's TicketWeb occurrence explicitly marks this show SOLD OUT.
+  // Protect sparse/stale copies too, even if they omit the title's status prefix.
+  // Evidence: docs/qa/2026-10-18-0607-fact-check.md.
+  {
+    date: "2026-11-12",
+    url: "https://www.ticketweb.com/event/sold-out-tauren-wells-air1-cathedral-of-faith-tickets/14232924",
+    facts: {
+      registration: REGISTRATION_FULL,
+      attendanceNote: "Tickets are sold out according to the ticket seller.",
+    },
+  },
   // The complete museum iCal body and occurrence page agree that physical
   // seats are full, with Zoom registration still available. Protect this
   // occurrence while older official-source snapshots lack attendance fields.
