@@ -1,96 +1,172 @@
 {
-  "generatedAt": "2026-10-14T03:11:14.328Z",
+  "generatedAt": "2026-10-18T23:31:32.860Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "startTime": "13:00",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "startTime": "13:30",
       "bodyName": "City Council",
-      "location": "Valley Water Headquarters Building Boardroom",
+      "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8262&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8262,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8107&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8107,
       "agendaItems": [
         {
-          "title": "Joint City Council/Santa Clara Valley Water District Board",
-          "sequence": 18
-        },
-        {
-          "title": "Introductions/Opening Remarks",
+          "title": "Evening Session, Council Chambers, City Hall – Cancelled",
           "sequence": 21
         },
         {
-          "title": "Receive a Joint Update on El Niño Preparedness for the 2026-2027 Rainy Season.",
-          "sequence": 23
+          "title": "Approval of the District 9 End-of-Term, Farewell Celebration Sponsored by Council District 9 as a City Council Sponsored Special Event to Expend City Funds and Accept Donations of Materials and Services for the Event.",
+          "sequence": 47
         },
         {
-          "title": "Receive an Update on the Anderson Dam Seismic Retrofit Project and Coyote Creek Flood Protection Project.",
-          "sequence": 24
+          "title": "Retroactive Approval of Free Use of the Janet Gray Hayes Rotunda for the Responsive Cities Network San José Kickoff.",
+          "sequence": 46
         },
         {
-          "title": "Receive an Update on the Pure Water Silicon Valley Potable Reuse Project.",
-          "sequence": 25
+          "title": "Conditional Vacation of a Portion of Spring Street between Asbury Street and West Taylor Street.",
+          "sequence": 56
+        },
+        {
+          "title": "2025 Independent Police Auditor Year End Report.",
+          "sequence": 58
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-18T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
       "startTime": "18:30",
       "bodyName": "City Council",
       "location": "Council Chambers and Video Conference",
       "closedSession": false,
-      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3372&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
-      "legistarEventId": 3372,
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3366&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3366,
       "agendaItems": [
         {
-          "title": "Filipino American History Month Proclamation",
+          "title": "Environmental Planning Commission Applicant Interviews",
           "sequence": 6
-        },
-        {
-          "title": "United Against Hate Week Proclamation",
-          "sequence": 7
-        },
-        {
-          "title": "Compassion Week Proclamation",
-          "sequence": 8
-        },
-        {
-          "title": "Caltrain Presentation",
-          "sequence": 9
-        },
-        {
-          "title": "Historic Preservation Ordinance and Zoning Map Amendment (Second Reading)",
-          "sequence": 11
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-18T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "cupertino": {
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "startTime": "17:45",
+      "bodyName": "City Council",
+      "location": "Council Chamber",
+      "closedSession": false,
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5301&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5301,
+      "agendaItems": [
+        {
+          "title": "Recognition of National First Responders Day of October 28, 2026.",
+          "sequence": 15
+        },
+        {
+          "title": "Recognition of October as Domestic Violence Awareness Month.",
+          "sequence": 14
+        },
+        {
+          "title": "Second reading of Ordinance No. 26-2286: “An Ordinance of the City Council of the City of Cupertino to amend Municipal Code Chapter 19.08 (Definitions).”",
+          "sequence": 24
+        },
+        {
+          "title": "Award of contract to Red Line Gymnastics LLC, DBA: Bay Aerials Gymnastics for Gymnastics Class Programs and Camps for a total not-to-exceed amount of $480,000; Authority to Extend for Two Additional Years for a Five-Year Total Not to Exceed $800,000",
+          "sequence": 26
+        },
+        {
+          "title": "Year One Update of the FY 2025-2027 City Work Program (CWP) and FY 2026-27 First Quarter (Q1) Update",
+          "sequence": 27
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-18T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "santa-clara": {
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "startTime": "17:30",
+      "bodyName": "City Council and Authorities Concurrent",
+      "location": "Hybrid Meeting\r\nCity Hall Council Chambers/Virtual\r\n1500 Warburton Avenue\r\nSa...",
+      "closedSession": false,
+      "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4892&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+      "legistarEventId": 4892,
+      "agendaItems": [
+        {
+          "title": "Consideration of a Historic Resource Designation for the Tiburcio Vásquez Gravesite Located in Santa Clara Mission Cemetery (DEFERRED FROM AUGUST 25, 2026 AND SEPTEMBER 15, 2026)",
+          "sequence": 7
+        },
+        {
+          "title": "Update on FIFA Risk Analysis Disclosures Investigation",
+          "sequence": 8
+        },
+        {
+          "title": "Action to Receive Artwork Donation from the Santa Clara City Library Foundation and Friends",
+          "sequence": 18
+        },
+        {
+          "title": "Commendation of the 40th Anniversary of the City of Santa Clara and City of Izumo Sister Cities",
+          "sequence": 15
+        },
+        {
+          "title": "Proclamation of October 2026 as Hindu American Awareness & Appreciation Month",
+          "sequence": 16
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-10-18T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "startTime": "17:00",
-      "bodyName": "City Council Special Meeting",
+      "date": "2026-10-19",
+      "displayDate": "Mon, Oct 19",
+      "startTime": "17:30",
+      "bodyName": "City Council Regular Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21753",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21814",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-10-13",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21753"
+        "observedDate": "2026-10-19",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21814"
+      }
+    },
+    "campbell": {
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Session Meeting",
+      "location": "City Hall Council Chamber",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=e1c38040-6364-4852-b54c-255525e508ef&Agenda=Agenda&lang=English",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
+        "observedDate": "2026-10-20",
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
       }
     },
     "milpitas": {
@@ -107,24 +183,24 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-13T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-18T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
-      "date": "2026-10-13",
-      "displayDate": "Tue, Oct 13",
-      "startTime": "17:30",
-      "bodyName": "City Council Closed Session Meeting",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Meeting",
       "location": null,
-      "closedSession": true,
-      "url": "https://losaltosca.portal.civicclerk.com/event/5422/overview",
-      "civicClerkEventId": 5422,
+      "closedSession": false,
+      "url": "https://losaltosca.portal.civicclerk.com/event/209/overview",
+      "civicClerkEventId": 209,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-10-13",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-13T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-10-27",
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-18T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },
@@ -143,11 +219,11 @@
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "santa-clara": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "palo-alto": {
       "provider": "PrimeGov",
@@ -159,7 +235,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "milpitas": {
       "provider": "CivicClerk",
@@ -172,7 +248,7 @@
     "los-gatos": {
       "provider": "MuniCode",
       "status": "error",
-      "detail": "municodemeetings.com rejected our User-Agent (ERR_HTTP2_STREAM_ERROR) — site is up and robots.txt allows us; town's only published agenda source. Only workaround is UA spoofing; not done deliberately"
+      "detail": "MuniCode request failed (ERR_HTTP2_STREAM_ERROR): https://losgatos-ca.municodemeetings.com/"
     }
   }
 }
