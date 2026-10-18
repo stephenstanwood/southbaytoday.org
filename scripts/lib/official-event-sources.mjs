@@ -1,4 +1,5 @@
 import { isClockTime } from "./clock-time.mjs";
+import { REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
 
 export function assertOfficialSourceResponse(body, label) {
   if (/\/\.well-known\/sgcaptcha\//i.test(String(body || ""))) {
@@ -508,6 +509,19 @@ export function parseLosAltosHistoryEventFacts(value) {
   const unavailable = /\b(?:this (?:session|tour|event) is closed|registration (?:is |has )?closed|sold out)\b/i.test(text);
   if (unavailable) return { unavailable: true, cost: null, costNote: null };
 
+  // Attendance restrictions can follow several paragraphs of biography in
+  // the iCal body. Read them before the display description is truncated.
+  // An open Zoom registration does not reopen the museum's physical seats
+  // or make this entire hybrid event virtual.
+  const attendance = /\b(?:the |this )?in[- ]person (?:event|attendance) is full\b/i.test(text)
+    ? {
+      registration: REGISTRATION_FULL,
+      attendanceNote: /\bto attend via Zoom register\b/i.test(text)
+        ? "In-person attendance is full. Register through the museum's event page to attend via Zoom."
+        : "In-person attendance is full.",
+    }
+    : {};
+
   const memberPricing = text.match(
     /\$\s*(\d+(?:\.\d{1,2})?)\s*per person\s*;\s*\$\s*(\d+(?:\.\d{1,2})?)\s*for (?:museum )?members?/i,
   );
@@ -515,12 +529,13 @@ export function parseLosAltosHistoryEventFacts(value) {
     const publicPrice = Number(memberPricing[1]);
     return {
       unavailable: false,
+      ...attendance,
       cost: publicPrice < 25 ? "low" : "paid",
       costNote: `$${memberPricing[1]}; $${memberPricing[2]} members`,
     };
   }
 
-  return { unavailable: false, ...parseCivicPlusEventCost(text) };
+  return { unavailable: false, ...parseCivicPlusEventCost(text), ...attendance };
 }
 
 function nthWeekdayOfMonth(year, month, weekday, occurrence) {

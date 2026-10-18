@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The complete museum iCal body and occurrence page agree that physical
+  // seats are full, with Zoom registration still available. Protect this
+  // occurrence while older official-source snapshots lack attendance fields.
+  // Evidence: docs/qa/2026-10-18-0507-fact-check.md.
+  {
+    date: "2026-10-21",
+    url: "https://www.losaltoshistory.org/events/not-quite-created-equal-who-got-left-out-of-the-declaration-of-independence/",
+    facts: {
+      registration: REGISTRATION_FULL,
+      attendanceNote: "In-person attendance is full. Register through the museum's event page to attend via Zoom.",
+    },
+  },
   // These dated Milpitas occurrences exist, but their shared body conflicts
   // with itself about the class term and lists assessment dates already past.
   // Preserve the occurrence clocks without promising new enrollment or
@@ -1063,9 +1075,11 @@ export function applyVerifiedEventFacts(event) {
   if (!correction) return event;
   const corrected = { ...event, ...correction.facts };
   // A verified signup requirement cannot reopen a session whose current
-  // provider metadata says full/closed or replace an appointment gate.
-  if (correction.facts?.registration === REGISTRATION_REQUIRED
-      && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)) {
+  // provider metadata says full/closed or replace an appointment gate. A
+  // full-seat correction likewise cannot reopen an explicitly closed window.
+  if ((correction.facts?.registration === REGISTRATION_REQUIRED
+      && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration))
+      || (correction.facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
     corrected.registration = event.registration;
   }
   // Attendance notes also carry source copy and need the same verified fixes.

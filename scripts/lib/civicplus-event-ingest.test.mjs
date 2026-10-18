@@ -113,3 +113,28 @@ END:VCALENDAR`;
   assert.equal(events[0].costNote, "$15; $10 members");
   assert.equal(events[0].url, "https://www.losaltoshistory.org/event/open-tour/");
 });
+
+test("museum ingest carries full physical attendance past the description cutoff", async () => {
+  const date = dayPT(10);
+  const feedUrl = "https://www.losaltoshistory.org/events/?ical=1";
+  const feed = `BEGIN:VCALENDAR
+BEGIN:VEVENT
+UID:hybrid-lecture
+DTSTART:${icalDate(date)}T173000
+DTEND:${icalDate(date)}T190000
+SUMMARY:History Lecture
+LOCATION:Los Altos History Museum
+DESCRIPTION:${"Speaker biography. ".repeat(25)}The in-person event is full. To attend via Zoom register below.
+URL:https://www.losaltoshistory.org/events/history-lecture/
+END:VEVENT
+END:VCALENDAR`;
+  const events = await withFetchRoutes({ [feedUrl]: feed }, () => fetchLosAltosHistoryEvents({ live: true }));
+  assert.equal(events.length, 1);
+  assert.equal(events[0].registration, "full");
+  assert.match(events[0].attendanceNote, /In-person attendance is full/);
+  assert.match(events[0].attendanceNote, /Register.*via Zoom/);
+  assert.doesNotMatch(events[0].description, /full|Zoom/);
+  assert.equal(events[0].virtual, undefined);
+  assert.equal(events[0].venue, "Los Altos History Museum");
+  assert.equal(events[0].cost, null);
+});

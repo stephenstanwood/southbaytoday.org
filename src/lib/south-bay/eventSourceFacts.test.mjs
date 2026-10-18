@@ -15,6 +15,33 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("older museum snapshots cannot turn a full in-person lecture into a walk-up recommendation", async () => {
+  const raw = {
+    id: "replacement-snapshot-id", date: "2026-10-21", time: "5:30 PM", endTime: "7:00 PM",
+    title: "Not Quite Created Equal? Who Got Left Out of the Declaration of Independence",
+    venue: "Los Altos History Museum", city: "los-altos", cost: null,
+    url: "https://www.losaltoshistory.org/events/not-quite-created-equal-who-got-left-out-of-the-declaration-of-independence/",
+    description: "Caroline Winterer discusses the Declaration of Independence.",
+    blurb: "Hear Caroline Winterer discuss who the Declaration included.",
+  };
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAdvanceRegistration(events[0]), true);
+  assert.equal(events[0].registration, "full");
+  assert.match(events[0].attendanceNote, /In-person attendance is full/);
+  assert.match(events[0].attendanceNote, /Register.*via Zoom/);
+  const { registration, attendanceNote, ...preserved } = events[0];
+  assert.deepEqual(preserved, raw);
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(applyVerifiedEventFacts({ ...raw, registration: "closed" }).registration, "closed");
+  assert.equal(raw.registration, undefined);
+  for (const other of [
+    { ...raw, date: "2027-10-21" },
+    { ...raw, url: "https://www.losaltoshistory.org/events/another-lecture/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Milpitas ESL preserves dated sessions while disclosing conflicting term and assessment information", async () => {
   const occurrences = [
     ["2026-10-19", "6a5992919943bdf31e9f816b"],

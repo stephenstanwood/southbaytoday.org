@@ -71,6 +71,8 @@ test("refresh preserves university seminar, donor and opponent initials", () => 
     "ISA Research Seminar: Vahid Akbari (University of Nottingham)",
     "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
     "Santa Clara University Men's Water Polo vs LIU",
+    "An Intimate Evening with Dr. Samuel Waymon at DAAAS",
+    "Designing for Safety with Caitlin Burke, PhD, JD",
   ]) {
     assert.equal(cleanTitle(title), title);
     assert.equal(cleanTitle(cleanTitle(title)), title);

@@ -644,6 +644,23 @@ test("reads Los Altos History Museum prices and blocks closed sessions", () => {
   );
 });
 
+test("museum attendance notices survive biography copy without closing the Zoom option", () => {
+  const facts = parseLosAltosHistoryEventFacts(
+    `${"Speaker biography. ".repeat(25)}The in-person event is full. To attend via Zoom register below.`,
+  );
+  assert.equal(facts.unavailable, false);
+  assert.equal(facts.registration, "full");
+  assert.match(facts.attendanceNote, /In-person attendance is full/);
+  assert.match(facts.attendanceNote, /Register.*via Zoom/);
+  assert.equal(facts.virtual, undefined);
+  assert.equal(facts.cost, null);
+  assert.equal(parseLosAltosHistoryEventFacts("A full program of lectures.").registration, undefined);
+  assert.equal(
+    parseLosAltosHistoryEventFacts("The in-person attendance is full. Cost: $15 per person; $10 for Museum members.").registration,
+    "full",
+  );
+});
+
 test("derives Happy Hollow's published recurring and dated events", () => {
   const entries = parseHappyHollowSchedules({
     seniorHtml: "<p>The 2026 season is here! Join us the fourth Thursday of the month from May through October from 9-10 a.m.</p>",

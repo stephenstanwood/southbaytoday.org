@@ -938,6 +938,10 @@ const SOURCE_EVENT_ACRONYMS = [
   // seminar, the ST Lee Lecture, and Long Island University's team initials.
   // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
   "ESE", "ISA", "ST", "LIU",
+  // Stanford's Department of African and African American Studies, and
+  // Caitlin Burke's published law degree. Preserve the source's initials.
+  // Evidence: docs/qa/2026-10-18-0507-fact-check.md.
+  "DAAAS", "JD",
 ];
 
 function fixProperNouns(text) {
@@ -2197,6 +2201,8 @@ function polishDescription(text) {
   // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
   // copy ("Pay Pal Park") survives polishing intact.
   t = t.replace(/\bPay Pal\b/g, "PayPal");
+  // Academic degree, split by the same lowercase-to-uppercase rule.
+  t = t.replace(/\bPh D\b/g, "PhD");
   // Ticketmaster CrossFit Games + Sierra Nevada VIP lounge feeds leak the
   // sponsor "NetApp" and brand "CrossFit" as two-word splits ("Net App Celly
   // Lounge", "Cross Fit Games"). Both are single-word brand marks.
@@ -4395,6 +4401,8 @@ async function fetchCivicPlusIcal(
           category: inferCategory(ev.summary, ev.description || "", ""),
           cost,
           ...(facts?.costNote ? { costNote: facts.costNote } : {}),
+          ...(facts?.registration ? { registration: facts.registration } : {}),
+          ...(facts?.attendanceNote ? { attendanceNote: facts.attendanceNote } : {}),
           description,
           url: eventUrl,
           source: name,
