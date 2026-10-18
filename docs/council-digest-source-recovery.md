@@ -110,3 +110,33 @@ and confirmed run at 20:10:31 PT. The live registry records
 Neither the retired digest runner nor the separate events launch agent was
 changed. The Mini still requires an explicit fast-forward under its repo lock
 after the GitHub merge.
+
+## October 18, 2026: upcoming meetings and contended refreshes
+
+Four consecutive evening `southbaysignal-data-refresh` attempts (October 14–17)
+correctly deferred behind `sbs-fact-check`, but no follow-up ran after the mutex
+was released. The scheduler's recorded firing did not establish data freshness;
+the meetings file still contained October 13 rows on October 18.
+
+The existing caller now uses `scripts/data-refresh-recovery.mjs wait` to wait up
+to 25 minutes for the same cooperative mutex, without changing other callers or
+stealing an occupied lock. A deferred request persists outside Git and remains
+pending until an existing canonical run publishes freshly validated meetings.
+`check` validates dates, confirmations and all 11 provider outcomes; `complete`
+requires local artifact bytes matching committed and pushed main before clearing
+pending recovery. Meetings run first in the existing pipeline. The versioned
+Mini prompt and installation notes are in `ops/mini/data-refresh/`.
+
+Santa Clara's upcoming-meetings query now uses the same verified `City Council
+and Authorities Concurrent` name as the council-digest source, recovering its
+October 20 meeting. A live generator probe confirmed eight future council rows.
+Los Gatos's HTTP transport still failed while normal browser navigation showed
+the October 20 Town Council meeting at 7 p.m. Its automated provider outcome
+remains explicitly `error`; browser access does not establish an unattended
+source recovery. Error text reports only the current failure, rather than
+claiming a User-Agent denial or current robots policy from historical evidence.
+
+Source publication and production verification remain separate: install the
+merged code on the Mini under its mutex, install and byte-check the versioned
+prompt, run the canonical scoped civic recovery, then verify the deployed Gov
+and city data. Never overwrite Mini data with a different checkout's artifact.

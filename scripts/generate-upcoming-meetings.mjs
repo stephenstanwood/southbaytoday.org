@@ -12,7 +12,7 @@
  * Run: node scripts/generate-upcoming-meetings.mjs
  */
 
-import { join, dirname } from "path";
+import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { writeFileAtomic } from "./lib/io.mjs";
 import {
@@ -35,12 +35,12 @@ const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-mee
 
 const UA = "SouthBaySignal/1.0 (stanwood.dev; public civic data aggregator)";
 
-const LEGISTAR_CITIES = [
+export const LEGISTAR_CITIES = [
   { city: "san-jose",      client: "sanjose",      site: "sanjose",      body: "City Council" },
   { city: "mountain-view", client: "mountainview", site: "mountainview", body: "City Council" },
   { city: "sunnyvale",     client: "sunnyvaleca",  site: "sunnyvaleca",  body: "City Council" },
   { city: "cupertino",     client: "cupertino",    site: "cupertino",    body: "City Council" },
-  { city: "santa-clara",   client: "santaclara",   site: "santaclara",   body: "City Council" },
+  { city: "santa-clara",   client: "santaclara",   site: "santaclara",   body: "City Council and Authorities Concurrent" },
 ];
 
 // Phrases that indicate a boilerplate/procedural agenda item to skip
@@ -309,7 +309,7 @@ async function fetchAgendaItems(client, eventId) {
   }
 }
 
-async function fetchNextMeeting(client, site, body) {
+export async function fetchNextMeeting(client, site, body) {
   const today = ptDateISO();
   const url =
     `https://webapi.legistar.com/v1/${client}/Events` +
@@ -715,15 +715,9 @@ async function fetchLosGatosMeeting() {
   // Granicus tenant to switch to. (losgatos.legistar.com resolves but serves no
   // Los Gatos content — don't mistake it for a migration target.)
   //
-  // The block is narrower than "the host is down", which the old wording here
-  // implied and cost a later session a full re-diagnosis: the site is up and
-  // serving, and its robots.txt allows `User-agent: *` with Crawl-delay: 15.
-  // What fails is this UA specifically — measured 2026-08-28, the WAF kills the
-  // HTTP/2 stream (ERR_HTTP2_STREAM_ERROR) for "SouthBaySignal/1.0" while the
-  // same request with a browser UA, or none at all, returns 200 with the real
-  // agenda list. So the only workaround available is to stop identifying
-  // ourselves honestly, which is bot-detection evasion and stays off the table
-  // without Stephen's explicit call. Report it; don't spoof.
+  // Historical requests failed at this provider. Report only what this run
+  // observes: a transport error alone cannot establish its cause, current
+  // robots policy, or whether another supported access path is available.
   const url = "https://losgatos-ca.municodemeetings.com/";
   let res;
   try {
@@ -733,9 +727,7 @@ async function fetchLosGatosMeeting() {
     });
   } catch (err) {
     throw new Error(
-      `municodemeetings.com rejected our User-Agent (${err?.cause?.code || err.message}) — `
-      + "site is up and robots.txt allows us; town's only published agenda source. "
-      + "Only workaround is UA spoofing; not done deliberately",
+      `MuniCode request failed (${err?.cause?.code || err.message}): ${url}`,
     );
   }
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -870,7 +862,9 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error("Fatal:", err);
-  process.exit(1);
-});
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => {
+    console.error("Fatal:", err);
+    process.exitCode = 1;
+  });
+}
