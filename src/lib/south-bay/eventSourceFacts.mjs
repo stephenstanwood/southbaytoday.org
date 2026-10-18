@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // SJPL's dated Edenvale occurrence says "in English or 中文". Older
+  // snapshots lost the Chinese label or sentence during display cleanup.
+  // Do not infer a dialect or carry this into other dates or branches.
+  // Evidence: docs/qa/2026-10-18-0707-fact-check.md.
+  {
+    date: "2026-10-20",
+    url: "https://sjpl.bibliocommons.com/events/6a07b6ef278f7c2f008d79d9",
+    copyReplacements: [
+      [/\bOffered in(?:-| )person, in English(?: or)?\./gi, "Offered in person, in English or Chinese."],
+      [/^Free\.(?=\s+Would you like to find out more about computers\?)/, "Free. Offered in person, in English or Chinese."],
+    ],
+  },
   // The organizer's TicketWeb occurrence explicitly marks this show SOLD OUT.
   // Protect sparse/stale copies too, even if they omit the title's status prefix.
   // Evidence: docs/qa/2026-10-18-0607-fact-check.md.

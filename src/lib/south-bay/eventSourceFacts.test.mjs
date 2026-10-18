@@ -15,6 +15,38 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("stale Edenvale tech-help copy retains the verified Chinese language option", async () => {
+  const { polishDescription } = await import("../../../scripts/generate-events.mjs");
+  const tail = "Would you like to find out more about computers? Learn at your own pace! No registration or appointment required.";
+  for (const sentence of [
+    "Offered in-person, in English or.",
+    "Offered in person, in English.",
+    "Offered in-person, in English.",
+    "",
+  ]) {
+    const raw = {
+      id: "sjpl-6a07b6ef278f7c2f008d79d9", date: "2026-10-20",
+      title: "1:1 Tech Mentor", venue: "Edenvale Library", city: "san-jose",
+      time: "3:30 PM", endTime: "5:30 PM", cost: "free",
+      url: "https://sjpl.bibliocommons.com/events/6a07b6ef278f7c2f008d79d9",
+      description: `Free. ${sentence} ${tail}`.replaceAll("  ", " "),
+      blurb: "Get one-on-one help using your computer.",
+    };
+    const events = [{ ...raw, description: polishDescription(raw.description) }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description,
+      `Free. Offered in person, in English or Chinese. ${tail}`);
+    assert.deepEqual({ ...events[0], description: raw.description }, raw);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(stats.generated, 0);
+    assert.equal(raw.description, `Free. ${sentence} ${tail}`.replaceAll("  ", " "));
+    for (const other of [
+      { ...raw, date: "2026-10-27" },
+      { ...raw, url: "https://sjpl.bibliocommons.com/events/another-tech-session" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("the verified sold-out concert cannot return as an available stale ticket listing", async () => {
   const raw = {
     id: "replacement-ticket-id", date: "2026-11-12", time: "7:00 PM",

@@ -1843,6 +1843,10 @@ function repairSpacedDomainDots(text) {
 
 function polishDescription(text) {
   if (!text) return "";
+  // SJPL uses 中文 as a language label inside an English attendance sentence.
+  // Preserve it as "Chinese" before English-display cleanup removes CJK text;
+  // a dangling "English or." alone cannot establish the missing language.
+  text = text.replace(/\b(in English (?:or|and))\s+中文(?=[\s.,;:!?]|$)/g, "$1 Chinese");
   // URLs are identifiers: prose casing, camel-case spacing, and sentence
   // splitting must never rewrite their paths, queries, or fragments. SCCLD's
   // tinyurl.com/TABcoffeehouse became tinyurl.com/TA Bcoffeehouse here.

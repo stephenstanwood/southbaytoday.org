@@ -9,6 +9,22 @@ import {
   polishDescription,
 } from "../generate-events.mjs";
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
+import { libraryEventDetails } from "./library-event-details.mjs";
+
+test("keeps an inline Chinese language option through library ingestion and display cleanup", () => {
+  // SJPL's October 20 Edenvale Tech Mentor occurrence, verified 2026-10-18.
+  const details = libraryEventDetails({ definition: { description:
+    "<p><strong>Free.</strong> Offered in-person, in<strong> English or&nbsp;中文.</strong></p><p>Would you like to find out more about computers? Learn at your own pace! 您想了解更多关于计算机的信息吗？按照自己的节奏学习！</p><p>No registration or appointment required. Just drop by and ask for assistance.</p>",
+  } });
+  const actual = polishDescription(details.description);
+  assert.match(actual, /Offered in-person, in English or Chinese\./);
+  assert.match(actual, /No registration or appointment required\./);
+  assert.doesNotMatch(actual, /Mandarin|中文|您想/);
+  assert.equal(polishDescription(actual), actual);
+  assert.doesNotMatch(polishDescription("Offered in-person, in English or. Bring your computer."), /Chinese/);
+  const url = "https://example.org/in-English-or-中文?language=中文";
+  assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`);
+});
 
 test("preserves Stanford's Contemplation by Design acronym on refresh", () => {
   // Official occurrence titles: events.stanford.edu/event/cbd-2026-
