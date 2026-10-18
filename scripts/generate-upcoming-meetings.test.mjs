@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { LEGISTAR_CITIES, fetchNextMeeting } from './generate-upcoming-meetings.mjs';
+import { LEGISTAR_CITIES, fetchNextMeeting, isSubstantiveItem } from './generate-upcoming-meetings.mjs';
 import { ptDateISO } from './lib/civic-meetings.mjs';
 
 test('Santa Clara upcoming meetings query the actual council and authorities body', async t => {
@@ -22,4 +22,11 @@ test('Santa Clara upcoming meetings query the actual council and authorities bod
   assert.equal(meeting.startTime, '17:30');
   assert.equal(meeting.url, sourceUrl);
   assert.equal(meeting.confirmation.observedDate, today);
+});
+
+
+test('San Jose session headings do not become agenda previews, including a canceled evening block', () => {
+  assert.equal(isSubstantiveItem('Evening Session, Council Chambers, City Hall – Cancelled'), false);
+  assert.equal(isSubstantiveItem('Afternoon Session, Council Chambers, City Hall'), false);
+  assert.equal(isSubstantiveItem('Approval of Cancellation of the Services Agreement with the Contractor.'), true);
 });

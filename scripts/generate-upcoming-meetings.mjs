@@ -71,6 +71,7 @@ const SKIP_EXACT = new Set([
 // Prefixes that indicate procedural/non-substantive items
 const SKIP_STARTS_WITH = [
   "call to order", "roll call", "regular session,", "closed session,",
+  "morning session,", "afternoon session,", "evening session,",
   "public comment", "subject:  conference with legal counsel",
   "subject:  conference with real property",
   // Invocation: drop the heading itself ("Invocation (District 5)") and the
@@ -220,7 +221,7 @@ function cleanAgendaTitle(rawTitle) {
   return t;
 }
 
-function isSubstantiveItem(rawTitle) {
+export function isSubstantiveItem(rawTitle) {
   if (!rawTitle) return false;
   // Use only the first line (some items have addresses/details appended via \r\n)
   const t = rawTitle.split(/\r?\n/)[0].trim();
