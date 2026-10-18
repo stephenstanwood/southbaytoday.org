@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-18T02:19:02.435Z"
+    "auditedAt": "2026-10-18T11:52:26.803Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1833,
+    "total": 1803,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -33,46 +33,16 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 283,
+    "total": 221,
     "totals": {
-      "hard": 2,
+      "hard": 0,
       "soft": 1,
       "info": 0
     },
     "byReason": {
-      "slug-mismatch": 2,
       "unknown-slug": 1
     },
-    "hard": [
-      {
-        "id": "inbound_mv1eaxr0_u5f1u0",
-        "title": "Let's Hike Saratoga: Zinfandel Trail",
-        "city": "saratoga",
-        "date": "2026-10-17T08:00:00-07:00",
-        "location": "Picchetti Ranch Open Space Preserve Parking Lot, 13100 Montebello Rd, Cupertino, CA",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "slug-mismatch",
-            "detail": "city=\"saratoga\" but location references \"cupertino\""
-          }
-        ]
-      },
-      {
-        "id": "inbound_mvbeq7cb_80z5zr",
-        "title": "Let's Hike Saratoga: Zinfandel Trail",
-        "city": "saratoga",
-        "date": "2026-10-17T08:00:00-07:00",
-        "location": "Picchetti Ranch Open Space Preserve, 13100 Montebello Rd, Cupertino, CA",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "slug-mismatch",
-            "detail": "city=\"saratoga\" but location references \"cupertino\""
-          }
-        ]
-      }
-    ],
+    "hard": [],
     "soft": [
       {
         "id": "inbound_muq4luqh_jbui2x",
