@@ -87,7 +87,14 @@ export function completeRefresh({ root = ROOT, stateDir = STATE, helper = HELPER
   const status = execFileSync('/bin/bash', [helper, 'status', TASK], { encoding: 'utf8' }).trim();
   if (!status.startsWith(`held by '${TASK}' `)) throw Error('Keep the refresh mutex through publication verification');
   const bytes = fs.readFileSync(path.join(root, DATA));
-  const summary = validateMeetings(JSON.parse(bytes));
+  const data = JSON.parse(bytes);
+  const pendingFile = path.join(stateDir, 'pending.json');
+  const pending = JSON.parse(fs.readFileSync(pendingFile, 'utf8'));
+  if (pending.task !== TASK || pending.status !== 'acquired' || !Number.isFinite(Date.parse(pending.acquiredAt))
+    || Date.parse(data.generatedAt) < Date.parse(pending.acquiredAt)) {
+    throw Error('Meetings must be generated during this acquired refresh, not inherited from an earlier run');
+  }
+  const summary = validateMeetings(data);
   const git = args => execFileSync('git', ['-C', root, ...args], { encoding: 'utf8' }).trim();
   const head = git(['rev-parse', 'HEAD']);
   const committed = execFileSync('git', ['-C', root, 'show', `HEAD:${DATA}`]);
@@ -96,7 +103,7 @@ export function completeRefresh({ root = ROOT, stateDir = STATE, helper = HELPER
   const receipt = { task: TASK, status: 'published', checkedAt: new Date().toISOString(),
     commit: head, artifactSha256: hash(bytes), ...summary };
   writeJsonAtomic(path.join(stateDir, 'completed.json'), receipt);
-  fs.rmSync(path.join(stateDir, 'pending.json'), { force: true });
+  fs.rmSync(pendingFile);
   return receipt;
 }
 

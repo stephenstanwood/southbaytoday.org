@@ -92,7 +92,9 @@ test('recovery clears only after the fresh artifact matches committed and pushed
   fs.mkdirSync(path.join(root, 'src/data/south-bay'), { recursive: true });
   fs.mkdirSync(stateDir);
   fs.writeFileSync(helper, `printf "held by '${TASK}' age 0m (stale at 45m)"`);
-  fs.writeFileSync(path.join(stateDir, 'pending.json'), '{}');
+  const pendingFile = path.join(stateDir, 'pending.json');
+  const pending = { task: TASK, status: 'acquired', acquiredAt: new Date(Date.now() - 60_000).toISOString() };
+  fs.writeFileSync(pendingFile, JSON.stringify(pending));
   const artifact = path.join(root, 'src/data/south-bay/upcoming-meetings.json');
   fs.writeFileSync(artifact, JSON.stringify(data()));
   const git = args => execFileSync('git', ['-C', root, ...args], { stdio: 'pipe' });
@@ -103,6 +105,10 @@ test('recovery clears only after the fresh artifact matches committed and pushed
   assert.throws(() => completeRefresh({ root, stateDir, helper }), /pushed main/);
   assert.ok(fs.existsSync(path.join(stateDir, 'pending.json')));
   git(['push', 'origin', 'main']);
+  fs.writeFileSync(pendingFile, JSON.stringify({ ...pending, acquiredAt: new Date(Date.now() + 1000).toISOString() }));
+  assert.throws(() => completeRefresh({ root, stateDir, helper }), /during this acquired refresh/);
+  assert.ok(fs.existsSync(pendingFile));
+  fs.writeFileSync(pendingFile, JSON.stringify(pending));
   fs.appendFileSync(artifact, '\n');
   assert.throws(() => completeRefresh({ root, stateDir, helper }), /pushed main/);
   git(['restore', 'src/data/south-bay/upcoming-meetings.json']);
