@@ -95,6 +95,7 @@ import {
 import { SLUG_TO_CITY_TOKENS } from "./social/lib/content-rules.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
+import { officialSnapshotEvents, readOfficialEventSnapshot } from "./lib/official-event-snapshot.mjs";
 import {
   midpenPreserveCity,
   midpenTrailhead,
@@ -131,6 +132,7 @@ import { rehomeScrapedEvent, resolveEventCity } from "./lib/event-city.mjs";
 import { applyVerifiedSjsuEventOverride } from "./lib/sjsu-event-overrides.mjs";
 import { BOARDWALK_2026_EVENTS } from "./lib/santa-cruz-picks-2026.mjs";
 import {
+  assertOfficialSourceResponse,
   extractAddressLocality,
   extractSanJoseJazzDayUrls,
   extractVboSession,
@@ -3166,6 +3168,7 @@ function parseRssItems(xml) {
 // upcoming show vanishing. Every real iCal body opens a VCALENDAR — even one
 // with no events in it — so anything else is a source error, not a season.
 function assertIcalCalendar(body, label) {
+  assertOfficialSourceResponse(body, label);
   const raw = String(body ?? "");
   if (/^\s*BEGIN:VCALENDAR\b/i.test(raw.replace(/^\uFEFF/, ""))) return raw;
   const trimmed = raw.trimStart();
@@ -3965,7 +3968,10 @@ async function fetchChmEvents() {
   }
 }
 
-async function fetchSjJazzEvents() {
+async function fetchSjJazzEvents({ live = false } = {}) {
+  if (!live && process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
+    return officialSnapshotEvents("fetchSjJazzEvents", { maxAgeHours: strictSnapshotMaxAgeHours() });
+  }
   console.log("  ⏳ San Jose Jazz Summer Fest...");
   try {
     // The legacy sanjosejazz.org/events page currently renders "No events
@@ -3973,17 +3979,17 @@ async function fetchSjJazzEvents() {
     // day/time/stage records. Use the stable lineup route instead of dated
     // filter slugs, which change every festival year.
     const origin = "https://summerfest.sanjosejazz.org";
-    const lineupHtml = await fetchText(`${origin}/lineup`);
+    const jazzPage = async (url) => assertOfficialSourceResponse(await fetchText(url), "San Jose Jazz");
+    const lineupHtml = await jazzPage(`${origin}/lineup`);
     let lineup = parseSanJoseJazzLineup(lineupHtml);
 
-    // The official host occasionally returns a complete shell with no artist
-    // cards to GitHub-hosted runners while serving the full page to the Mini.
-    // Recover through its other stable view, then through the current day URLs
-    // discovered from the first-party menu. The dated slugs remain data, not
-    // hardcoded configuration, so this rolls forward with each festival year.
+    // Recover a genuine empty view through the other stable view, then through
+    // current day URLs discovered from the first-party menu. Explicit CAPTCHA
+    // responses fail above without probing alternate routes. Dated slugs remain
+    // data rather than configuration, so this rolls forward each festival year.
     if (lineup.length === 0) {
       console.log("  ↻ San Jose Jazz lineup was empty; trying official chronological view");
-      const chronologicalHtml = await fetchText(`${origin}/chronological`);
+      const chronologicalHtml = await jazzPage(`${origin}/chronological`);
       lineup = parseSanJoseJazzLineup(chronologicalHtml);
 
       if (lineup.length === 0) {
@@ -3993,7 +3999,7 @@ async function fetchSjJazzEvents() {
         ])];
         if (dayUrls.length > 0) {
           console.log(`  ↻ San Jose Jazz: trying ${dayUrls.length} discovered official day page(s)`);
-          const dayPages = await Promise.all(dayUrls.map((url) => fetchText(url)));
+          const dayPages = await Promise.all(dayUrls.map(jazzPage));
           const unique = new Map();
           for (const event of dayPages.flatMap(parseSanJoseJazzLineup)) {
             unique.set(`${event.url}|${event.date}|${event.time}|${event.stage}`, event);
@@ -4030,8 +4036,7 @@ async function fetchSjJazzEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  San Jose Jazz: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    throw err;
   }
 }
 
@@ -4310,7 +4315,7 @@ async function fetchCivicPlusIcal(
   url,
   defaultCity,
   defaultCost = "free",
-  { eventFacts = null } = {},
+  { eventFacts = null, failClosed = false } = {},
 ) {
   console.log(`  ⏳ ${name}...`);
   try {
@@ -4410,7 +4415,7 @@ async function fetchCivicPlusIcal(
     return events;
   } catch (err) {
     console.log(`  ⚠️  ${name}: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
+    if (STRICT_EVENT_REFRESH || failClosed) throw err;
     return [];
   }
 }
@@ -4792,13 +4797,16 @@ async function fetchOperaSanJoseEvents() {
   }
 }
 
-async function fetchLosAltosHistoryEvents() {
+async function fetchLosAltosHistoryEvents({ live = false } = {}) {
+  if (!live && process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
+    return officialSnapshotEvents("fetchLosAltosHistoryEvents", { maxAgeHours: strictSnapshotMaxAgeHours() });
+  }
   return fetchCivicPlusIcal(
     "Los Altos History Museum",
     "https://www.losaltoshistory.org/events/?ical=1",
     "los-altos",
     null,
-    { eventFacts: parseLosAltosHistoryEventFacts },
+    { eventFacts: parseLosAltosHistoryEventFacts, failClosed: true },
   );
 }
 
@@ -9448,6 +9456,11 @@ async function main() {
     inbound: readJsonFile(INBOUND_EVENTS_PATH),
     maxAgeHours: strictSnapshotMaxAgeHours(),
   });
+  if (process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
+    // This read fails before any output write, including non-strict runs.
+    const { health } = readOfficialEventSnapshot({ maxAgeHours: strictSnapshotMaxAgeHours() });
+    inputHealth.snapshots.push(health);
+  }
   if (STRICT_EVENT_REFRESH) {
     if (!inputHealth.ok) {
       const detail = inputHealth.problems.join("; ");

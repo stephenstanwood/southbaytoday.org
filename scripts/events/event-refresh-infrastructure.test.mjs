@@ -64,11 +64,15 @@ test("primary and watchdog mutually restore one another", () => {
   assert.match(installer, /org\.southbaytoday\.events-refresh-watchdog/);
   assert.match(scheduled, /install-mini-refresh\.sh"\), "--watchdog-only"/);
   assert.match(scheduled, /SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "2"/);
+  assert.match(scheduled, /SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1"/);
+  const snapshotIndex = scheduled.indexOf('runNode(repoRoot, "scripts/events/snapshot-official-sources.mjs"');
+  assert.ok(snapshotIndex > 0 && snapshotIndex < scheduled.indexOf('runNode(repoRoot, "scripts/generate-events.mjs"'));
 });
 
 test("GitHub is a same-night independent check with explicit failure alerting", () => {
   const workflow = read("../../.github/workflows/refresh-events.yml");
   assert.match(workflow, /SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"/);
+  assert.match(workflow, /SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1"/);
   assert.match(workflow, /verify-refresh-output\.mjs --max-age-hours 1 --snapshot-max-age-hours 8/);
   assert.match(workflow, /if: \$\{\{ failure\(\) \}\}/);
   assert.match(workflow, /notify-workflow-failure\.mjs/);

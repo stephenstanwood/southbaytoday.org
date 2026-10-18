@@ -10,7 +10,7 @@ failure must never be represented as a successful empty season.
    8:45 PM retry. A success under three hours old coalesces the retry; older
    daytime recoveries never suppress the whole nightly cycle.
 2. `scripts/events/scheduled-refresh.mjs` acquires the shared repo lock, refreshes
-   Playwright and inbound snapshots, runs every adapter in strict mode, commits
+   Playwright, inbound, and official-source snapshots, runs every adapter in strict mode, commits
    generated data, preflights again, pushes, and writes the success heartbeat.
 3. `org.southbaytoday.events-refresh-watchdog` runs every three hours. It restores
    the primary launch agent if it is missing and forces one guarded refresh when
@@ -98,6 +98,21 @@ shared-checkout reset is used.
   Jose Jazz starts at `/lineup`; if that official view is semantically empty,
   it tries `/chronological` and the current day pages discovered from the
   first-party menu instead of hardcoding yearly filter slugs.
+- Los Altos History Museum and the San Jose Jazz Summer Fest lineup are fetched
+  live by the Mini's `scripts/events/snapshot-official-sources.mjs`. Both sites
+  returned HTTP 202 SiteGround CAPTCHA interstitials (`sg-captcha: challenge`)
+  to GitHub-hosted runners on October 18, including for robots.txt; the Mini
+  received their normal public calendar and lineup with the existing honest
+  aggregator User-Agent. Do not solve the CAPTCHA, spoof a browser, or probe
+  alternate endpoints after a challenge. The scheduled Mini refresh and GitHub
+  set `SBT_USE_OFFICIAL_EVENT_SNAPSHOT=1` to read the committed
+  `official-event-sources.json` instead. The writer calls the real adapters,
+  rejects unrecognized content even without strict mode, and atomically replaces
+  the snapshot only after both succeed. A parsed past festival can contribute
+  zero future rows; a parser failure cannot. Consumers validate each source,
+  its timestamp, and the envelope against the unchanged two-hour Mini/eight-hour
+  GitHub ceiling. Missing, failed, or stale snapshots block before publication;
+  every consumed snapshot remains visible in `inputSnapshots` and output health.
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.
