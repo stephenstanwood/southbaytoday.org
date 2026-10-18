@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { cpSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -55,8 +55,12 @@ for (const strict of [undefined, "0", "1"]) {
       return new Response("Access denied", { status: 403 });
     };\n`);
 
+    const notificationDirectory = join(sandbox, "notification-intake");
+    assert.ok(process.env.NODE_TEST_CONTEXT, "the CLI fixture must inherit the Node test context");
     const env = {
       PATH: process.env.PATH,
+      NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
+      SBT_NOTIFICATION_TEST_DIR: notificationDirectory,
       TICKETMASTER_API_KEY: "fixture",
       MEETUP_CLIENT_ID: "fixture", MEETUP_MEMBER_ID: "fixture",
       MEETUP_KID: "fixture", MEETUP_PRIVATE_KEY: "fixture",
@@ -71,6 +75,10 @@ for (const strict of [undefined, "0", "1"]) {
     assert.doesNotMatch(output, /fixture: retired city source requested/);
     assert.equal(result.status, 1, output);
     assert.match(output, /critical event sources failed:.*Ticketmaster is (?:empty|error: 403)/, output);
+    const notifications = readdirSync(notificationDirectory).filter((name) => name.endsWith(".json"))
+      .map((name) => JSON.parse(readFileSync(join(notificationDirectory, name), "utf8")));
+    assert.ok(notifications.some((item) => item.producer === "southbaytoday-events-refresh-critical-source"
+      && item.content.includes("Event refresh blocked before overwrite")), "the blocking alert must be captured inside the fixture");
     for (const name of Object.keys(files)) {
       assert.deepEqual(readFileSync(join(dataDir, name)), before[name], `${name} must stay byte-identical`);
     }

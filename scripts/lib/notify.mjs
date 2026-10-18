@@ -18,7 +18,9 @@ const COOLDOWN_MIN = 60;
 
 function cooldownFile(key) {
   const safe = key.replace(/[^a-z0-9-]/gi, "_");
-  return join(tmpdir(), `sbt-notify-${safe}.ts`);
+  const directory = process.env.NODE_TEST_CONTEXT && process.env.SBT_NOTIFICATION_TEST_DIR
+    ? join(process.env.SBT_NOTIFICATION_TEST_DIR, "cooldowns") : tmpdir();
+  return join(directory, `sbt-notify-${safe}.ts`);
 }
 
 function inCooldown(key) {
