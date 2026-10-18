@@ -3,10 +3,60 @@
 // a sparse aggregator record or its previously invented cached copy.
 // Evidence: docs/qa/2026-09-05-newsletter.md, 2026-09-06-newsletter.md, and
 // 2026-09-08-newsletter.md.
-import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE } from "./eventFilters.mjs";
+import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Newsletter intake carried 8 PM and omitted usable concert links. The
+  // organizer's occurrence pages and ticket pages agree on 7:30 PM. Match
+  // the dated title/venue too so a different intake ID cannot undo the facts.
+  // Evidence: docs/qa/2026-10-18-0307-fact-check.md.
+  {
+    date: "2027-03-16",
+    id: "inbound-b0382cebabec4e42",
+    title: /^(?:The )?Buena Vista Orchestra$/i,
+    venue: /^(?:The )?Carriage House(?: Theatre)?$/i,
+    url: "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/",
+    facts: {
+      time: "7:30 PM",
+      url: "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/",
+    },
+  },
+  {
+    date: "2027-04-16",
+    id: "inbound-2d2899ec28bc302e",
+    title: /^Peter Asher(?:: Songs and Stories)?$/i,
+    venue: /^(?:The )?Carriage House(?: Theatre)?$/i,
+    url: "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/",
+    facts: {
+      time: "7:30 PM",
+      url: "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/",
+    },
+  },
+  // Replace blank/dead newsletter links only for these verified concerts.
+  // Do not redirect every stanfordlive.stanford.edu link to one performance.
+  // Evidence: docs/qa/2026-10-18-0307-fact-check.md.
+  {
+    date: "2027-03-19",
+    id: "inbound-8fa96b196b0649cd",
+    title: /^The Spinners$/i,
+    venue: /^Heritage Theatre$/i,
+    facts: { url: "https://www.heritagetheatre.org/2026-2027-season-of-shows" },
+  },
+  {
+    date: "2027-03-13",
+    id: "inbound-ee6230957f50486c",
+    title: /^Stanley Clarke and Hiromi with (?:the )?PUBLIQuartet$/i,
+    venue: /^Bing Concert Hall$/i,
+    facts: { url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/stanley-clarke-and-hiromi-with-the-publiquartet/" },
+  },
+  {
+    date: "2027-04-03",
+    id: "inbound-46189d1f46f2ac9d",
+    title: /^Jack West: Guitars on Life$/i,
+    venue: /^The Studio$/i,
+    facts: { url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/" },
+  },
   // The library's title spells saranggola correctly; its body misspells it.
   // Keep the carried attendance note and cached blurb consistent too.
   // Evidence: docs/qa/2026-10-18-0107-fact-check.md (fresh occurrence HTML).
@@ -86,6 +136,12 @@ const CORRECTIONS = [
   {
     date: "2026-10-19",
     url: "https://events.stanford.edu/event/st-lee-lecture-featuring-former-congressman-and-ambassador-to-turkey-jeff-flake",
+    // The full occurrence text requires registration; the short feed excerpt
+    // ends before that sentence. An omitted field is not walk-up permission.
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "This event is open to the public. Registration is required.",
+    },
     copyReplacements: [[/\bSt(?= Lee Lecture\b)/g, "ST"]],
   },
   // Newsletter extraction put Saratoga's puppet show on October 17 at 11 AM.
@@ -1000,6 +1056,12 @@ export function applyVerifiedEventFacts(event) {
   });
   if (!correction) return event;
   const corrected = { ...event, ...correction.facts };
+  // A verified signup requirement cannot reopen a session whose current
+  // provider metadata says full/closed or replace an appointment gate.
+  if (correction.facts?.registration === REGISTRATION_REQUIRED
+      && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)) {
+    corrected.registration = event.registration;
+  }
   // Attendance notes also carry source copy and need the same verified fixes.
   for (const field of ["description", "blurb", "attendanceNote"]) {
     if (typeof corrected[field] !== "string") continue;

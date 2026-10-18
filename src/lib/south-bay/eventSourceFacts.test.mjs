@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import fs, { readFileSync } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
+import { fileURLToPath } from "node:url";
 import {
   applyVerifiedEventFacts,
   copyMentionsEvent,
@@ -8,10 +10,103 @@ import {
   rotationActivityForOccurrence,
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
-import { isRegistrationClosedForDay, requiresAdvanceRegistration } from "./eventFilters.mjs";
+import { isRegistrationClosedForDay, requiresAdvanceRegistration, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
+
+test("verified concert times and links survive newsletter refreshes and changed intake IDs", async () => {
+  const rows = [
+    ["2027-03-16", "Buena Vista Orchestra", "Carriage House", "8:00 PM", "", "7:30 PM",
+      "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/"],
+    ["2027-04-16", "Peter Asher: Songs and Stories", "Carriage House", "8:00 PM", "", "7:30 PM",
+      "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/"],
+    ["2027-03-19", "The Spinners", "Heritage Theatre", "8:00 PM", "", "8:00 PM",
+      "https://www.heritagetheatre.org/2026-2027-season-of-shows"],
+    ["2027-03-13", "Stanley Clarke and Hiromi with the PUBLIQuartet", "Bing Concert Hall", "7:30 PM",
+      "https://stanfordlive.stanford.edu", "7:30 PM",
+      "https://live.stanford.edu/events/26-27season/bing-concert-hall/stanley-clarke-and-hiromi-with-the-publiquartet/"],
+    ["2027-04-03", "Jack West: Guitars on Life", "The Studio", "7:00 PM", "https://stanfordlive.stanford.edu", "7:00 PM",
+      "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/"],
+  ];
+  for (const [date, title, venue, time, url, expectedTime, expectedUrl] of rows) {
+    const raw = {
+      id: "replacement-newsletter-id", date, title, venue, time, url,
+      address: "Source address", cost: null, description: "A live concert.",
+      blurb: "Hear a live concert.",
+    };
+    const events = [{ ...raw }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.deepEqual(events[0], { ...raw, time: expectedTime, url: expectedUrl });
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(stats.generated, 0);
+    assert.equal(raw.time, time);
+    for (const other of [
+      { ...raw, date: "2028-04-16" },
+      { ...raw, title: "An unrelated concert", venue: "Another theatre" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("the ST Lee lecture retains required signup and never reopens a full or closed session", async () => {
+  for (const registration of [undefined, "none", "required", "full", "closed", REGISTRATION_APPOINTMENT]) {
+    const raw = {
+      date: "2026-10-19", time: "4:00 PM", endTime: "5:00 PM", venue: "Encina Hall",
+      title: "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
+      url: "https://events.stanford.edu/event/st-lee-lecture-featuring-former-congressman-and-ambassador-to-turkey-jeff-flake",
+      description: "Join Stanford's Freeman Spogli Institute for the ST Lee Lecture.",
+      blurb: "Hear Stanford's St Lee Lecture.", registration,
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    const expected = ["full", "closed", REGISTRATION_APPOINTMENT].includes(registration) ? registration : "required";
+    assert.equal(events[0].registration, expected);
+    assert.equal(requiresAdvanceRegistration(events[0]), true);
+    assert.match(events[0].attendanceNote, /Registration is required/);
+    assert.equal(events[0].blurb, "Hear Stanford's ST Lee Lecture.");
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    for (const field of ["date", "time", "endTime", "venue", "description", "url"]) {
+      assert.equal(events[0][field], raw[field]);
+    }
+    for (const other of [
+      { ...raw, date: "2027-10-19" },
+      { ...raw, url: "https://events.stanford.edu/event/another-lecture" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("late cache hits cannot restore incorrect university initials", async (t) => {
+  const events = [
+    {
+      date: "2026-10-19", venue: "Encina Hall", time: "4:00 PM",
+      title: "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
+      url: "https://events.stanford.edu/event/st-lee-lecture-featuring-former-congressman-and-ambassador-to-turkey-jeff-flake",
+    },
+    {
+      date: "2026-10-23", venue: "Lucas 106", time: "12:00 PM",
+      title: "ISA Research Seminar: Vahid Akbari (University of Nottingham)",
+      url: "https://events.scu.edu/leavey-school-of-business/event/518247-isa-research-seminar-vahid-akbari-university-of",
+    },
+  ];
+  const cache = { byKey: {
+    [eventBlurbCacheKey(events[0])]: { blurb: "Hear Stanford's St Lee Lecture." },
+    [eventBlurbCacheKey(events[1])]: { blurb: "Hear the Isa Research Seminar." },
+  } };
+  const original = structuredClone(cache);
+  const cachePath = fileURLToPath(new URL("../../data/south-bay/event-blurb-cache.json", import.meta.url));
+  const originalRead = fs.readFileSync;
+  t.mock.method(fs, "readFileSync", (path, ...args) =>
+    path === cachePath ? JSON.stringify(cache) : originalRead(path, ...args));
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(stats.cache_hits, 2, "exercise actual late cache assignment with no carried blurb");
+  assert.equal(stats.generated, 0);
+  assert.equal(events[0].blurb, "Hear Stanford's ST Lee Lecture.");
+  assert.equal(events[1].blurb, "Hear the ISA Research Seminar.");
+  for (const event of events) assert.deepEqual(applyVerifiedEventFacts(event), event);
+  assert.deepEqual(cache, original, "dated repairs must not rewrite copy shared with other occurrences");
+});
 
 test("the Cupertino kite occurrence keeps its spelling across source notes and blurb refreshes", async () => {
   const raw = {

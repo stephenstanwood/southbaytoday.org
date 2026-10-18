@@ -1067,7 +1067,9 @@ export async function resolveEventBlurbs(events, opts = {}) {
     const key = cacheKey(e);
     const hit = cache.byKey[key];
     if (hit?.blurb) {
-      if (!dryRun) e.blurb = hit.blurb;
+      // Cache hits arrive after the initial fact pass. Apply the occurrence's
+      // verified copy corrections to this newly selected sentence as well.
+      if (!dryRun) e.blurb = applyVerifiedEventFacts({ ...e, blurb: hit.blurb }).blurb;
       stats.cache_hits++;
       continue;
     }
@@ -1111,6 +1113,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
           stats.failed++;
           continue;
         }
+        blurb = applyVerifiedEventFacts({ ...batch[i].event, blurb }).blurb;
         if (blurbLeaksDateContext(blurb, batch[i].event)) {
           console.warn(`[eventBlurbs] dropped (date leak): "${blurb}" for ${batch[i].event.title}`);
           stats.failed++;
@@ -1164,6 +1167,7 @@ export async function resolveEventBlurbs(events, opts = {}) {
               console.warn(`[eventBlurbs] dedup retry failed for ${batch[i].event.title}: ${err.message}`);
               break;
             }
+            if (candidate) candidate = applyVerifiedEventFacts({ ...batch[i].event, blurb: candidate }).blurb;
             if (
               !candidate ||
               !isPlausibleBlurb(candidate) ||
