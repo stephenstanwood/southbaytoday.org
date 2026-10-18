@@ -18,9 +18,10 @@ export async function queueNotification(content, { producer = 'southbaytoday', r
   }
   const webhook = process.env.DISCORD_WEBHOOK;
   if (!webhook) throw Error('Quiet MILO intake unavailable; never fall back to a DM');
-  const response = await request(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+  const endpoint = new URL(webhook); endpoint.searchParams.set('wait', 'true');
+  const response = await request(endpoint.toString(), { method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ content: String(content).slice(0, 1900).replace(/<@!?\d+>|<@&\d+>|@everyone|@here/g, '[mention suppressed]'),
-      allowed_mentions: { parse: [], users: [], roles: [], replied_user: false },
+      allowed_mentions: { parse: [], users: [], roles: [], replied_user: false }, flags: 1 << 12,
       embeds: [{ title: 'MILO intake: South Bay Today', color: 15105570,
         footer: { text: createHash('sha256').update(content).digest('hex') } }] }) });
   if (!response.ok) throw Error(`Quiet MILO intake HTTP ${response.status}`);
