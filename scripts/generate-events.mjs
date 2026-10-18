@@ -926,6 +926,9 @@ const PROPER_NOUN_FIXES = {
   "Pyet Despain": "Pyet DeSpain",
   "Pyet De Spain": "Pyet DeSpain",
   "Gordon Ramsey": "Gordon Ramsay",
+  // Palo Alto's Pageturners reading list drops the author's given-name hyphen.
+  // https://us.macmillan.com/books/9781250897930/theworldsisee/
+  "Fei Fei Li": "Fei-Fei Li",
 };
 
 // These source-published initials name organizations, programs and tools;

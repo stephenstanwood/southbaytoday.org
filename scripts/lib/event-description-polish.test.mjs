@@ -157,6 +157,20 @@ test("keeps Pyet DeSpain and Gordon Ramsay correct through title and prose polis
   assert.equal(polishDescription("Jane De Spain reads Ramsey Campbell."), "Jane De Spain reads Ramsey Campbell.");
 });
 
+test("corrects Fei-Fei Li's name through library ingestion without rewriting links or attendance", () => {
+  // Macmillan's The Worlds I See author credit confirms the hyphenated name.
+  const details = libraryEventDetails({ definition: { description:
+    "<p>Read <em>The Worlds I See</em> by Fei Fei Li.</p><p>You don't have to register.</p><p>Details: https://example.org/FeiFeiLi?author=Fei%20Fei%20Li</p>",
+  } });
+  const expected = "Read The Worlds I See by Fei-Fei Li. You don't have to register. Details: https://example.org/FeiFeiLi?author=Fei%20Fei%20Li";
+  assert.equal(polishDescription(details.description), expected);
+  assert.equal(polishDescription(expected), expected);
+  assert.equal(cleanTitle("Meet Fei Fei Li"), "Meet Fei-Fei Li");
+  assert.equal(cleanTitle("Meet Fei-Fei Li"), "Meet Fei-Fei Li");
+  assert.equal(polishDescription("Read a book by Fei Li. Meet Fei Fei Chen."),
+    "Read a book by Fei Li. Meet Fei Fei Chen.");
+});
+
 test("restores Montalvo's Mariachi Viajero ensemble spelling", () => {
   assert.equal(polishDescription("Mariachi Viejero"), "Mariachi Viajero");
 });
