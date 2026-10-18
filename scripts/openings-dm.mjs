@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Daily pre-wakeup check (3:30 AM PT, run from Mac Mini): if anything notable
-// is opening today, DM Stephen directly via the cat-signal bot. Silent on
-// empty days.
+// is opening today, record the digest in the job log. Personal notifications
+// are retired; real source failures use the shared automatic repair intake.
 //
 // Sources:
 //   1. scc-food-openings.json  → opened[] entries with date == today
