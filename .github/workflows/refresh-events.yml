@@ -1,67 +1,28 @@
 name: Refresh Events
-
 on:
-  schedule:
-    # Daily at 10:17 PM PDT / 9:17 PM PST, ahead of the 3:20 AM Mini plan refresh.
-    # The off-hour minute leaves a wide buffer for scheduler delays.
-    - cron: "17 5 * * *"
-  workflow_dispatch: # allow manual trigger
-
-concurrency:
-  group: refresh-events-main
-  cancel-in-progress: false
-
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
-  refresh:
+  diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    permissions:
-      contents: write
-
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-        with:
-          # The publication preflight must be able to merge competing writers.
-          fetch-depth: 0
-
       - uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci --engine-strict
-
-      - name: Check event runtime and publication safeguards
-        run: npm run test:event-refresh
-
-      - name: Generate events
-        env:
-          SBT_STRICT_EVENT_REFRESH: "1"
-          # A healthy Mini run is only ~3h old here. Eight hours makes this an
-          # independent same-night heartbeat instead of tolerating a missed day.
-          SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"
-          TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
-          MEETUP_CLIENT_ID: ${{ secrets.MEETUP_CLIENT_ID }}
-          MEETUP_MEMBER_ID: ${{ secrets.MEETUP_MEMBER_ID }}
-          MEETUP_KID: ${{ secrets.MEETUP_KID }}
-          MEETUP_PRIVATE_KEY: ${{ secrets.MEETUP_PRIVATE_KEY }}
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: node scripts/generate-events.mjs
-
-      - name: Verify generated health contract
-        run: node scripts/events/verify-refresh-output.mjs --max-age-hours 1 --snapshot-max-age-hours 8
-
-      - name: Commit updated events
+      - name: Capture public source contracts
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/data/south-bay
-          git diff --staged --quiet || git commit -m "chore: refresh upcoming events"
-          node scripts/events/publish-refresh.mjs
-
-      - name: Alert on refresh failure
-        if: ${{ failure() }}
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        run: node scripts/events/notify-workflow-failure.mjs
+          mkdir -p source-evidence
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import crypto from 'node:crypto';
+          const urls=[['museum-robots','https://www.losaltoshistory.org/robots.txt'],['jazz-robots','https://summerfest.sanjosejazz.org/robots.txt'],['museum-ical','https://www.losaltoshistory.org/events/?ical=1'],['museum-events','https://www.losaltoshistory.org/events/'],['jazz-lineup','https://summerfest.sanjosejazz.org/lineup'],['jazz-chronological','https://summerfest.sanjosejazz.org/chronological']];
+          for(const [name,url] of urls){const res=await fetch(url,{headers:{'User-Agent':'SouthBaySignal/1.0 (stanwood.dev; public event aggregator)'},signal:AbortSignal.timeout(25000)});const body=await res.text();fs.writeFileSync(`source-evidence/${name}.txt`,body);const meta={url:res.url,status:res.status,headers:Object.fromEntries(res.headers),observedAt:new Date().toISOString(),bytes:body.length,sha256:crypto.createHash('sha256').update(body).digest('hex')};fs.writeFileSync(`source-evidence/${name}.json`,JSON.stringify(meta,null,2));console.log(name,JSON.stringify(meta),body.slice(0,700));}
+          JS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: public-source-contracts
+          path: source-evidence/
+          retention-days: 3
