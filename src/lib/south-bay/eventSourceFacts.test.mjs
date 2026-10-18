@@ -59,7 +59,7 @@ test("NeuroSphere does not choose between the library's conflicting grade ranges
       const events = [{ ...raw }];
       const stats = await resolveEventBlurbs(events, { enabled: false });
       const corrected = events[0];
-      assert.equal(corrected.title, "Neurosphere: Neuroscience and More!");
+      assert.equal(corrected.title, "NeuroSphere: Neuroscience and More!");
       assert.equal(corrected.description, "Come join teen-led group NeuroSphere! Explore brain function with hands-on activities.");
       assert.doesNotMatch(corrected.title + corrected.description + corrected.blurb, /graders|grades|2nd|3-8/i);
       assert.match(corrected.attendanceNote, /title lists grades 3–8.*description says grades 2–7 only/);
