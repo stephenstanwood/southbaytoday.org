@@ -3,10 +3,26 @@
 // a sparse aggregator record or its previously invented cached copy.
 // Evidence: docs/qa/2026-09-05-newsletter.md, 2026-09-06-newsletter.md, and
 // 2026-09-08-newsletter.md.
-import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL } from "./eventFilters.mjs";
+import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE } from "./eventFilters.mjs";
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // These two Bascom occurrence pages explicitly say registration is
+  // recommended but not required. The presence/deadline of their signup form
+  // does not establish an admission requirement. Keep this exception dated;
+  // do not relax the conservative provider rule for other library programs.
+  // Evidence: docs/qa/2026-10-17-2107-fact-check.md (fresh occurrence HTML).
+  ...[
+    ["2026-10-18", "6a85eaec69166f088b934e2d"],
+    ["2026-10-20", "6a83713669166f088b92df77"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    facts: {
+      registration: REGISTRATION_NONE,
+      registrationClosesBy: null,
+      attendanceNote: "Registration is recommended but not required.",
+    },
+  })),
   // These five occurrence pages explicitly close enrollment for the same
   // August 31–November 4 semester. Missing registrar metadata is not evidence
   // of walk-up admission. Keep the class listed with its actual signup state;

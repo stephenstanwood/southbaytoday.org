@@ -13,6 +13,40 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration } from "./event
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Bascom's optional craft signups do not become admission gates on refresh", async () => {
+  for (const [date, sourceId, title, time] of [
+    ["2026-10-18", "6a85eaec69166f088b934e2d", "LEGO Fun!", "2:00 PM"],
+    ["2026-10-20", "6a83713669166f088b92df77", "Origami for Kids", "3:15 PM"],
+  ]) {
+    for (const registration of ["required", "full", "closed"]) {
+      const raw = {
+        date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+        title, time, venue: "Bascom Library", cost: "free",
+        description: "Registration recommended but not required.",
+        blurb: "Make something at the library.", registration,
+        registrationClosesBy: `${date}T21:00:00.000Z`,
+      };
+      const events = [{ ...raw }];
+      const stats = await resolveEventBlurbs(events, { enabled: false });
+      assert.equal(events[0].registration, "none");
+      assert.equal(events[0].registrationClosesBy, null);
+      assert.equal(requiresAdvanceRegistration(events[0]), false);
+      assert.equal(isRegistrationClosedForDay(events[0], date), false);
+      assert.equal(events[0].attendanceNote, "Registration is recommended but not required.");
+      for (const field of ["title", "time", "date", "url", "venue", "cost", "description", "blurb"]) {
+        assert.equal(events[0][field], raw[field]);
+      }
+      assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+      assert.equal(stats.generated, 0);
+      assert.equal(raw.registration, registration);
+      for (const other of [
+        { ...raw, date: "2027-10-18" },
+        { ...raw, url: "https://sjpl.bibliocommons.com/events/another-craft" },
+      ]) assert.equal(applyVerifiedEventFacts(other), other);
+    }
+  }
+});
+
 test("Saratoga's enrolled ESL semester cannot become a walk-up on refresh", async () => {
   for (const [date, sourceId] of [
     ["2026-10-19", "6a5a9d66f4e5db3d00c27e16"],
