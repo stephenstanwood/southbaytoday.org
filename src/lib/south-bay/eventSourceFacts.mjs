@@ -3,10 +3,48 @@
 // a sparse aggregator record or its previously invented cached copy.
 // Evidence: docs/qa/2026-09-05-newsletter.md, 2026-09-06-newsletter.md, and
 // 2026-09-08-newsletter.md.
-import { REGISTRATION_APPOINTMENT, REGISTRATION_FULL } from "./eventFilters.mjs";
+import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL } from "./eventFilters.mjs";
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // These five occurrence pages explicitly close enrollment for the same
+  // August 31–November 4 semester. Missing registrar metadata is not evidence
+  // of walk-up admission. Keep the class listed with its actual signup state;
+  // do not carry this closure into another semester or another branch.
+  // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
+  ...[
+    ["2026-10-19", "6a5a9d66f4e5db3d00c27e16"],
+    ["2026-10-21", "6a5a9d66f4e5db3d00c27e17"],
+    ["2026-10-26", "6a5a9d66f4e5db3d00c27e18"],
+    ["2026-10-28", "6a5a9d66f4e5db3d00c27e19"],
+    ["2026-11-02", "6a5a9d66f4e5db3d00c27e1a"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+    facts: {
+      registration: REGISTRATION_CLOSED,
+      attendanceNote: "Registration is closed for this class session. Check back with the library in January for spring classes.",
+    },
+  })),
+  // Preserve the university's published initials in titles and cached blurbs.
+  // The shared title normalizer now also preserves uppercase source tokens.
+  // Evidence: docs/qa/2026-10-17-2007-fact-check.md (fresh university HTML).
+  {
+    date: "2026-10-19",
+    url: "https://events.stanford.edu/event/ese-seminar-ines-azevedo-what-is-the-stanford-woods-institute-for-the-environment-a-journey-into-the-worlds-most-pressing-environmental-problems",
+    facts: { title: "ESE Seminar - Inês Azevedo" },
+    copyReplacements: [[/\bEse(?= Seminar\b)/g, "ESE"]],
+  },
+  {
+    date: "2026-10-23",
+    url: "https://events.scu.edu/leavey-school-of-business/event/518247-isa-research-seminar-vahid-akbari-university-of",
+    facts: { title: "ISA Research Seminar: Vahid Akbari (University of Nottingham)" },
+    copyReplacements: [[/\bIsa(?= Research Seminar\b)/g, "ISA"]],
+  },
+  {
+    date: "2026-10-19",
+    url: "https://events.stanford.edu/event/st-lee-lecture-featuring-former-congressman-and-ambassador-to-turkey-jeff-flake",
+    copyReplacements: [[/\bSt(?= Lee Lecture\b)/g, "ST"]],
+  },
   // Newsletter extraction put Saratoga's puppet show on October 17 at 11 AM.
   // The library's occurrence page gives October 19, 4–4:30 PM. Correct before
   // date filtering/deduplication so the official Monday listing wins and the

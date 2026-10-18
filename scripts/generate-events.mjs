@@ -932,6 +932,10 @@ const PROPER_NOUN_FIXES = {
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
   "CERT", "CLA", "LWV", "ACM", "CI", "CD", "ROS", "WGSS", "JS", "TTRPG",
+  // University source headings: Energy Science & Engineering, SCU's ISA
+  // seminar, the ST Lee Lecture, and Long Island University's team initials.
+  // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
+  "ESE", "ISA", "ST", "LIU",
 ];
 
 function fixProperNouns(text) {

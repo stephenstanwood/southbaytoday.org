@@ -65,6 +65,21 @@ test("keeps agency acronyms uppercase in body copy too", () => {
   );
 });
 
+test("refresh preserves university seminar, donor and opponent initials", () => {
+  for (const title of [
+    "ESE Seminar - Inês Azevedo",
+    "ISA Research Seminar: Vahid Akbari (University of Nottingham)",
+    "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
+    "Santa Clara University Men's Water Polo vs LIU",
+  ]) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+    assert.equal(polishDescription(`Hear the ${title} presentation.`), `Hear the ${title} presentation.`);
+  }
+  assert.equal(cleanTitle("Isa and Liu read together"), "Isa and Liu read together");
+  assert.equal(polishDescription("Meet Isa and Liu at Main St."), "Meet Isa and Liu at Main St.");
+});
+
 test("preserves SJPL partner AACI YTI in titles and workshop descriptions", () => {
   // SJPL's October 20, 2026 listing: /events/6ac530c9377296003a4a18fa.
   const title = "Halloween Crafts with AACI YTI";

@@ -8,10 +8,70 @@ import {
   rotationActivityForOccurrence,
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
-import { requiresAdvanceRegistration } from "./eventFilters.mjs";
+import { isRegistrationClosedForDay, requiresAdvanceRegistration } from "./eventFilters.mjs";
 
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
+
+test("Saratoga's enrolled ESL semester cannot become a walk-up on refresh", async () => {
+  for (const [date, sourceId] of [
+    ["2026-10-19", "6a5a9d66f4e5db3d00c27e16"],
+    ["2026-10-21", "6a5a9d66f4e5db3d00c27e17"],
+    ["2026-10-26", "6a5a9d66f4e5db3d00c27e18"],
+    ["2026-10-28", "6a5a9d66f4e5db3d00c27e19"],
+    ["2026-11-02", "6a5a9d66f4e5db3d00c27e1a"],
+  ]) {
+    const raw = {
+      id: `sccl-${sourceId}`, date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+      title: "Multi-Level ESL Class Session", venue: "Saratoga Library",
+      time: "10:00 AM", endTime: "12:00 PM", registration: null,
+      description: "Registration is now closed. Classes run August 31st to November 4th.",
+      blurb: "Build your English speaking and listening skills with professional instructors.",
+    };
+    const events = [{ ...raw }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].registration, "closed");
+    assert.equal(isRegistrationClosedForDay(events[0], date), true);
+    assert.equal(requiresAdvanceRegistration(events[0]), true);
+    assert.match(events[0].attendanceNote, /Registration is closed/);
+    for (const field of ["title", "date", "url", "venue", "time", "endTime", "description", "blurb"]) {
+      assert.equal(events[0][field], raw[field]);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(stats.generated, 0);
+    assert.equal(raw.registration, null);
+    for (const other of [
+      { ...raw, date: "2027-10-19" },
+      { ...raw, url: "https://sccl.bibliocommons.com/events/another-esl-class" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("university source initials survive old cached title and blurb casing", async () => {
+  for (const [date, url, title, blurb, expectedTitle, expectedBlurb] of [
+    ["2026-10-19", "https://events.stanford.edu/event/ese-seminar-ines-azevedo-what-is-the-stanford-woods-institute-for-the-environment-a-journey-into-the-worlds-most-pressing-environmental-problems",
+      "Ese Seminar - Inês Azevedo", "Hear the Ese Seminar.", "ESE Seminar - Inês Azevedo", "Hear the ESE Seminar."],
+    ["2026-10-23", "https://events.scu.edu/leavey-school-of-business/event/518247-isa-research-seminar-vahid-akbari-university-of",
+      "Isa Research Seminar: Vahid Akbari (University of Nottingham)", "Hear the Isa Research Seminar.",
+      "ISA Research Seminar: Vahid Akbari (University of Nottingham)", "Hear the ISA Research Seminar."],
+    ["2026-10-19", "https://events.stanford.edu/event/st-lee-lecture-featuring-former-congressman-and-ambassador-to-turkey-jeff-flake",
+      "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake", "Hear Stanford's St Lee Lecture.",
+      "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake", "Hear Stanford's ST Lee Lecture."],
+  ]) {
+    const raw = { date, url, title, blurb, venue: "University campus", time: "12:00 PM" };
+    const events = [{ ...raw }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].title, expectedTitle);
+    assert.equal(events[0].blurb, expectedBlurb);
+    assert.equal(events[0].time, raw.time);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(stats.generated, 0);
+    for (const other of [
+      { ...raw, date: "2027-10-19" },
+      { ...raw, url: "https://example.edu/another-seminar" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
 
 test("Bike to the Bay retains the county's all-ages classification and primary URL on refresh", async () => {
   const raw = {
