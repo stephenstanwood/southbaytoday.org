@@ -18,6 +18,11 @@ failure must never be represented as a successful empty season.
    the pushed success or generated output is unhealthy. Recovery uses the whole
    producer pipeline: live Playwright/inbound/official fetches, strict generation,
    audit, commit and push, then a fresh health check. It does not restamp old data.
+   Recovery passes `--wait-for-lock`, retrying the existing mutex once a minute
+   for up to 20 minutes. This lets an active fact-check or copy-edit finish before
+   recovery instead of repeatedly deferring at the same hourly phase. A holder
+   that outlasts the wait still blocks publication and leaves health unhealthy.
+   Normal primary slots and manual `--force` calls still defer immediately.
    The four-hour threshold leaves room for the next hourly check, a busy repo
    lock, and source collection before GitHub's unchanged eight-hour limit.
 4. The primary job restores the watchdog if that companion agent disappears.
@@ -314,13 +319,25 @@ files remain byte-identical. Production callers keep their normal intake route.
 ```bash
 uptime  # load-per-core first: a saturated Mini fakes a mass source outage
 node scripts/events/verify-refresh-output.mjs --max-age-hours 30 --snapshot-max-age-hours 30
-node scripts/events/refresh-watchdog.mjs --check-only
+node --input-type=module <<'NODE'
+import fs from "node:fs";
+import os from "node:os";
+import { inspectMiniEventRefresh } from "./scripts/events/event-refresh-health.mjs";
+console.log(inspectMiniEventRefresh({
+  state: JSON.parse(fs.readFileSync(`${os.homedir()}/Library/Application Support/SouthBayToday/events-refresh-state.json`)),
+  data: JSON.parse(fs.readFileSync("src/data/south-bay/upcoming-events.json")),
+}));
+NODE
 node scripts/events/scheduled-refresh.mjs --force
 launchctl print gui/$(id -u)/org.southbaytoday.events-refresh
 launchctl print gui/$(id -u)/org.southbaytoday.events-refresh-watchdog
 tail -n 200 ~/Library/Logs/sbt-events-refresh.log
 tail -n 200 ~/Library/Logs/sbt-events-refresh-watchdog.log
 ```
+
+The module inspection above is read-only. `refresh-watchdog.mjs --check-only`
+still ensures the primary launch agent and signals unhealthy output; use it
+only when those effects are intended.
 
 When adding a source, register it in the main `sources` array and return actual
 event dates. Do not add a degraded catch-and-empty path for strict mode; date

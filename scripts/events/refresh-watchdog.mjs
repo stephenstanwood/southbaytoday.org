@@ -71,7 +71,7 @@ if (installerProblem) health = { ...health, ok: false, problems: [installerProbl
 if (!health.ok && !checkOnly) {
   log(`unhealthy; forcing one guarded recovery: ${health.problems.join("; ")}`);
   try {
-    run(process.execPath, [join(repoRoot, "scripts", "events", "scheduled-refresh.mjs"), "--force"], {
+    run(process.execPath, [join(repoRoot, "scripts", "events", "scheduled-refresh.mjs"), "--force", "--wait-for-lock"], {
       cwd: repoRoot,
       env: { ...process.env, SBT_SKIP_AGENT_ENSURE: "1" },
     });
