@@ -820,6 +820,21 @@ function isPublicEvent(title, source, description, venue) {
 const TITLE_FIXES = {
   "Environmental Humanties Project": "Environmental Humanities Project",
   "Fun Runa": "Fun Run",
+  // Source copy that otherwise regresses on each library/Meetup refresh.
+  "Tech Help/ Asistencia": "Tech Help / Asistencia",
+  "Asistencia tecnologica": "Asistencia tecnológica",
+  "Dinner-Los Altos": "Dinner - Los Altos",
+  '"Share a Meal With one in need "': '"Share a Meal With one in need"',
+  "Fine Dining&Conversation": "Fine Dining & Conversation",
+  "For New memebers Fine Dining": "For New Members: Fine Dining",
+  "classes&social dancing": "classes & social dancing",
+  "Party -San Jose- Free": "Party - San Jose - Free",
+  "Agentic AI doesnt have an Intelligence problem, it has a Governance problem!":
+    "Agentic AI doesn't have an intelligence problem; it has a governance problem!",
+  "Almaden Quicksilver (Webb Canyon) with Country Inn.":
+    "Almaden Quicksilver (Webb Canyon) with Country Inn",
+  "Korean Indigenous Futures: The Art of Kim Bong-Jun: - K":
+    "Korean Indigenous Futures: The Art of Kim Bong-Jun",
   // These source-copy errors have reappeared after earlier manual corrections.
   "Victim to Common Scams": "Victim of Common Scams",
   "2000's Night": "2000s Night",
@@ -991,7 +1006,7 @@ const SOURCE_EVENT_ACRONYMS = [
   // Santa Clara City's newsletter names the county's Trusted Response Urgent
   // Support Team as TRUST. Keep its initials distinct from the ordinary word.
   "TRUST",
-  "CNBC", "MSNBC", "AIA",
+  "CNBC", "MSNBC", "AIA", "COVID",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1992,7 +2007,79 @@ function polishDescription(text) {
     .replace(/\bMore details on your confirmed time-slot, and instruction to follow once registered\./g,
       "More details on your confirmed time slot and instructions will follow once you register.")
     .replace(/\bNo experience needed, we'll have all the supplies on hand, just bring\b/g,
-      "No experience needed. We'll have all the supplies on hand; just bring");
+      "No experience needed. We'll have all the supplies on hand; just bring")
+    .replace(/\bClub meetings will convene weekly with an online meeting with\b/g,
+      "Club meetings will convene online each week with")
+    .replace(/\ban ELL facilitator, on Tuesdays,/g, "an ELL facilitator on Tuesdays,")
+    .replace(/\bthe Zoom meeting, on the day\b/g, "the Zoom meeting on the day")
+    .replace(/\bavaialble\b/g, "available")
+    .replace(/\bDurateion\b/g, "Duration")
+    .replace(/\bShowcasre\b/g, "Showcase")
+    .replace(/\broll playing game\b/g, "role-playing game")
+    .replace(/\bfolding and dying paper\b/g, "folding and dyeing paper")
+    .replace(/\bThis event is program is\b/g, "This program is")
+    .replace(/\bfor ages (18\+), it is an adult and senior only program\./g,
+      "for ages $1; it is for adults and seniors only.")
+    .replace(/\bThis workshop will include various prompts for participants to respond to, experiences fun drills, work in groups, & more!/g,
+      "Participants will respond to various prompts, experience fun drills, work in groups, and more!")
+    .replace(/\bOur Tech Mentor assistance can include,? but (?:is )?not limited to:/g,
+      "Our Tech Mentor assistance includes, but is not limited to,")
+    .replace(/\bTuesday afternoons in at\b/g, "Tuesday afternoons at")
+    .replace(/\bThis series will run from Tuesday\. May\b/g,
+      "This series will run from Tuesday, May")
+    .replace(/\bas spaces allows\b/g, "as space allows")
+    .replace(/\bputting it altogether\b/g, "putting it all together")
+    .replace(/\bgrades K to3\b/g, "grades K to 3")
+    .replace(/\bwill be able explore\b/g, "will be able to explore")
+    .replace(/\bWe'll provide the supplies and brief slime making demo, you bring\b/g,
+      "We'll provide the supplies and a brief slime-making demo; you bring")
+    .replace(/\bwhile supplies and time lasts\b/g, "while supplies and time last")
+    .replace(/\bstickers, stamps, and pens, you bring\b/g,
+      "stickers, stamps, and pens; you bring")
+    .replace(/\bThis is a drop in program\b/g, "This is a drop-in program")
+    .replace(/\bThis class is for Beginners\./g, "This class is for beginners.")
+    .replace(/\bweekly get together\b/g, "weekly get-together")
+    .replace(/\bIt's evil lies\b/g, "Its evil lies")
+    .replace(/\bRegistration Is Required\./g, "Registration is required.")
+    .replace(/\bF ollow us\b/g, "Follow us")
+    .replace(/\bhelp chose the route\b/g, "help choose the route")
+    .replace(/\bto be present this year's Armanini Lecture\./g,
+      "will present this year's Armanini Lecture.")
+    .replace(/\bNorth America cities\b/g, "North American cities")
+    .replace(/\bTrixie Mattel and Katya Zamo features\b/g,
+      "Trixie Mattel and Katya Zamo feature")
+    .replace(/\bAnd now, its back\b/g, "And now, it's back")
+    .replace(/\bShen Yun 's\b/g, "Shen Yun's")
+    .replace(/\bNutracker\b/g, "Nutcracker")
+    .replace(/\bAny student looking to explore recovery, sobriety, or a life without substance use looks like\b/g,
+      "Any student looking to explore what recovery, sobriety, or a life without substance use looks like")
+    .replace(/\bSJSU Dance presents Images the annual Fall showcase of student choreography\. And performance\./g,
+      "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.");
+
+  // Scraped horizontal rules and translated link labels carry no event copy.
+  t = t.replace(/_{5,}\.?/g, " ").replace(/\.;+[,.]?/g, ".");
+  t = t.replace(/\s+bolg:,+\s*\(Overdrive\)\.\s*Overdirve:,+\s*Hoopla:\s*\(ADA\)\s*$/i, "");
+  t = t.replace(/\b(Schedule|Agenda):(?=\d)/g, "$1: ");
+  t = t.replace(/\b(\d{4}) (?=(?:Join us|Join the festivities|Beginning November|Get in the Spirit)\b)/g, "$1. ");
+  t = t.replace(/\b(Recommended Ages?: \d+-\d+|Ages \d+-\d+) (?=This event)/g, "$1. ");
+  t = t.replace(/\bGaby Castro-Moroder is Back\b/g, "Gaby Castro-Moroder is back");
+  t = t.replace(/\ba Free hands-on Vermicomposting workshop\b/g, "a free hands-on vermicomposting workshop");
+  t = t.replace(/\bDr\. Dr\./g, "Dr.");
+  t = t.replace(/([!?])\.(?!\.)/g, "$1");
+  t = t.replace(/\bfor short! — Free movie events/g, "for short! Free movie events");
+  t = t.replace(/^YOU MAY BE Photographed, Videotaped AND\/OR Recorded Please be advised/g,
+    "You may be photographed, videotaped and/or recorded. Please be advised");
+
+  // Preserve the complete age/ID requirement before discarding a clipped
+  // refund clause. Do not guess the missing refund policy.
+  t = t.replace(/(Any ticket holder unable to present valid identification indicating that they are at least \d+ years of age will not be admitted to this event), and will not be eligible for(?:…|\.{3})\s*$/g, "$1.");
+  t = t.replace(/^Flex Schedule: Please be aware that there are certain games that are subject to flexible scheduling and the date and time of those games may be changed from what is currently reflected on the(?:…|\.{3})\s*$/,
+    "Flex Schedule: Some games are subject to flexible scheduling, so their dates and times may change.");
+  t = t.replace(/\b(Run Time: \d+ minutes) with no(?:…|\.{3})\s*$/g, "$1.");
+  t = t.replace(/\b(corner of Main and State Streets) in(?:…|\.{3})\s*$/g, "$1.");
+  t = t.replace(/\b(\d{1,2}:\d{2} PM to \d{1,2}:\d{2} PM) with sign-ups starting(?:…|\.{3})\s*$/g, "$1.");
+  t = t.replace(/^(Sparta Meet & Greet Package \(VIP1\))- One general admission ticket- Early entry into the venue- Exclusive meet and greet with Sparta- Personal photograph with Sparta- Intimate Q&A with Sparta- Solo Jim(?:…|\.{3})\s*$/,
+    "$1: one general admission ticket; early entry into the venue; exclusive meet and greet with Sparta; personal photograph with Sparta; intimate Q&A with Sparta.");
 
   // Rich-text library lists also arrive as plain words with all item breaks
   // lost. Restore only these supplied item labels, preserving every service,
@@ -2480,6 +2567,9 @@ function polishDescription(text) {
   // "neither … nor Cal" conjunction would be lowercase "nor" — so reuniting is
   // safe. Same family as PayPal/NetApp/CrossFit/NeXT/McFly.
   t = t.replace(/\bNor Cal\b/g, "NorCal");
+  // The library styles its science/arts program STEaM; the camel-case rule
+  // above must not leave its final letter detached in body copy.
+  t = t.replace(/\bSTEa M\b/g, "STEaM");
 
   // BiblioCommons bodies concatenate a newsletter CTA onto the end of the
   // preceding sentence with no terminator between them ("...by Michael Chabon
@@ -2499,6 +2589,23 @@ function polishDescription(text) {
   // ending the sentence (`...as an "urgent manifesto for our tumultuous time."`)
   // doesn't split into `...time.` + lone `"`, which the drop-trailing-noise
   // step below would then strip as an unclosed-quote artifact.
+  // These feeds cap previews at about 200 characters, often midway through
+  // a sentence. Keep complete supplied sentences; an empty description lets
+  // the event's separately generated blurb render. Short rhetorical ellipses
+  // remain intentional copy. Segmenter recognizes U.S./Dr./initials, unlike
+  // splitting on every period (which can strand half an abbreviation).
+  if ((text.length >= 140 && /(?:…|\.{3})["')\]]*\s*$/.test(t)) || /^\s*…\s*$/.test(t)) {
+    // Intl can mistake the H. in "Cecil H. Green Library" for a terminator.
+    // Protect a middle initial followed by a surname, while letting an actual
+    // new sentence after an abbreviated name ("Mallik K. You'll…") split.
+    const previewText = t.replace(/\b([A-Z][a-z]+ [A-Z])\.(?=\s+(?!(?:You|The|This|That|Join|Learn|Meet|Here|It|In|On|At|All|With|From|An|A|Please)\b)[A-Z][a-z]{2,}\b)/g,
+      `$1${DOT_PLACEHOLDER}`);
+    const previewSentences = [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(previewText)];
+    while (previewSentences.length && /(?:…|\.{3})["')\]]*\s*$/.test(previewSentences.at(-1).segment)) {
+      previewSentences.pop();
+    }
+    t = previewSentences.map((sentence) => sentence.segment).join("").trim();
+  }
   const sentences = t.match(/[^.!?]+[.!?]+["'’”)\]]*|[^.!?]+$/g) || [t];
   const kept = sentences.filter((s) => {
     const trimmed = s.trim();
@@ -2544,6 +2651,9 @@ function polishDescription(text) {
 
   // Capitalize first letter of each sentence
   t = t.replace(/(^|[.!?]\s+)([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+  // The question mark belongs to the TV show's title, not a sentence break.
+  t = t.replace(/\bWhose Line Is It Anyway\? Are proud\b/g, "Whose Line Is It Anyway? are proud");
+  t = t.replace(/\bJane! Celebrates\b/g, "Jane! celebrates");
 
   // Restore masked abbreviations (must run after capitalization so an "a.m."
   // at the start of a sentence isn't accidentally re-cased to "A.m.")
@@ -2570,7 +2680,7 @@ function polishDescription(text) {
   // Doubled function words from hand-edited listings ("vote on on them",
   // "located at at 50 N. Fourth St."). Limited to prepositions/articles that
   // are never legitimately repeated.
-  t = t.replace(/\b(at|on|of|to|the|and|for|with|from)\s+\1\b/gi, "$1");
+  t = t.replace(/\b(at|on|of|to|the|and|for|with|from|by)\s+\1\b/gi, "$1");
   // Quote padding from BiblioCommons markup: `" Mi nombre es Emilia "` →
   // `"Mi nombre es Emilia"`. Anchored so the opening quote must follow a space
   // (or start) and the closing one must precede space/punctuation — otherwise

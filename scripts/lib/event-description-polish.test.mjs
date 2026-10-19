@@ -935,3 +935,80 @@ test("repairs library follow-up and supply sentences while preserving attendance
     "Details: https://example.org/More-details-on-your-confirmed-time-slot?supplies=No-experience-needed",
   ]) assert.equal(polishDescription(source), source);
 });
+
+test("keeps refreshed community titles readable without changing identifiers or acronyms", () => {
+  const cases = [
+    ["1-on-1 Tech Help/ Asistencia Tecnológica", "1-on-1 Tech Help / Asistencia Tecnológica"],
+    ["Asistencia tecnologica y ayuda personalizada", "Asistencia tecnológica y ayuda personalizada"],
+    ["For New memebers Fine Dining&Conversation in Roger B&R, Mountain View",
+      "For New Members: Fine Dining & Conversation in Roger B&R, Mountain View"],
+    ["Agentic AI doesnt have an Intelligence problem, it has a Governance problem!",
+      "Agentic AI doesn't have an intelligence problem; it has a governance problem!"],
+    ["Almaden Quicksilver (Webb Canyon) with Country Inn.",
+      "Almaden Quicksilver (Webb Canyon) with Country Inn"],
+    ["Korean Indigenous Futures: The Art of Kim Bong-Jun: - K",
+      "Korean Indigenous Futures: The Art of Kim Bong-Jun"],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(cleanTitle(source), expected);
+    assert.equal(cleanTitle(expected), expected);
+  }
+  for (const source of ["800 Welch: Flu & COVID-19 Vaccination Clinic", "W.A.S.P.",
+    "Hands-Only CPR/AED & Choking Relief Training", "From Silent Data Failures to Enforceable CI/CD Gates",
+    "SJSU Music presents SJSU Wind Ensemble: Dark/Night"]) {
+    assert.equal(cleanTitle(source), source);
+  }
+});
+
+test("repairs refreshed library grammar while retaining ages, appointment gates and links", () => {
+  const cases = [
+    ["This event is program is for ages 18+, it is an adult and senior only program. Registration is required.",
+      "This program is for ages 18+; it is for adults and seniors only. Registration is required."],
+    ["Our Tech Mentor assistance can include but not limited to: email help. Appointment required.",
+      "Our Tech Mentor assistance includes, but is not limited to, email help. Appointment required."],
+    ["Walk-ins welcome as spaces allows. Basic school supplies will be provided.",
+      "Walk-ins welcome as space allows. Basic school supplies will be provided."],
+    ["Participants will be able explore. We'll provide the supplies and brief slime making demo, you bring your energy. We'll make slime while supplies and time lasts. Recommended for ages 5 to 12. Registration required.",
+      "Participants will be able to explore. We'll provide the supplies and a brief slime-making demo; you bring your energy. We'll make slime while supplies and time last. Recommended for ages 5 to 12. Registration required."],
+    ["Join us for a Halloween-themed roll playing game, Adventure Skeletons.",
+      "Join us for a Halloween-themed role-playing game, Adventure Skeletons."],
+    ["Free. ___________________. For children and their caretakers.;;;, Registration required.",
+      "Free. For children and their caretakers. Registration required."],
+    ["Join our line dance. First-time participants will need to sign a waiver form. bolg:,, (Overdrive). Overdirve:,, Hoopla: (ADA)",
+      "Join our line dance. First-time participants will need to sign a waiver form."],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  const source = "Bring paper for dyeing. Details: https://example.org/roll-playing-game?word=Durateion&name=Showcasre";
+  assert.equal(polishDescription(source), source);
+});
+
+test("removes clipped preview tails without fabricating completions or stranding initials", () => {
+  const lead = "The East Asia Library at Stanford University will host a print exhibition by Kim Bong-Jun, a leading figure in Korean Minjung (People's) Art, from September 29 to December 11, 2026.";
+  assert.equal(polishDescription(`${lead} Active since the…`), lead);
+  const incomplete = "Stanford University Libraries presents A Vision of Paris: the Roxane Debuisson Collection at Stanford, on view in the Peterson Gallery and Munger Rotunda of the Cecil H. Green Library from September…";
+  assert.equal(polishDescription(incomplete), "");
+  assert.equal(polishDescription("…"), "");
+  const abbreviation = "Legendary heavy metal band W.A.S.P. brings their 1984 to Headless 2026 U.S. and Canada Tour to the San Jose Civic on Tuesday, October 27 with KK's Priest joining as special guest.";
+  assert.equal(polishDescription(`${abbreviation} Tickets are…`), abbreviation);
+  for (const source of [lead, abbreviation, "Who knows…", "Stay tuned...", "Free. Registration required. Visit https://example.org/show?item=1.5&group=U.S."]) {
+    assert.equal(polishDescription(source), source);
+  }
+});
+
+test("completes clipped attendance and schedule clauses before trimming previews", () => {
+  for (const age of [18, 21]) {
+    const lead = `This event is ${age} and over. Any ticket holder unable to present valid identification indicating that they are at least ${age} years of age will not be admitted to this event`;
+    const actual = polishDescription(`${lead}, and will not be eligible for…`);
+    assert.equal(actual, `${lead}.`);
+    assert.equal(polishDescription(actual), actual);
+  }
+  assert.equal(polishDescription("Flex Schedule: Please be aware that there are certain games that are subject to flexible scheduling and the date and time of those games may be changed from what is currently reflected on the…"),
+    "Flex Schedule: Some games are subject to flexible scheduling, so their dates and times may change.");
+  assert.equal(polishDescription("Doors: 7:30 PM | Show: 8:00 PM Run Time: 90 minutes with no…"),
+    "Doors: 7:30 PM | Show: 8:00 PM Run Time: 90 minutes.");
+  assert.equal(polishDescription("San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM with sign-ups starting…"),
+    "San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM.");
+});
