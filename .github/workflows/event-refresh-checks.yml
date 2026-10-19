@@ -32,7 +32,7 @@ jobs:
       # Homebrew node launch is SIGKILLed after every node upgrade), and the
       # scheduled plan/newsletter wrappers may only push verified data commits.
       - name: Check Mini launch agents and scheduled checkout guards
-        run: node --test scripts/lib/launchd-plists.test.mjs scripts/newsletter/scheduled-preflight.test.mjs
+        run: node --test scripts/lib/launchd-plists.test.mjs scripts/newsletter/scheduled-preflight.test.mjs scripts/social/lib/published-default-plans.test.mjs
 
       - name: Check Recraft imports and quiet outage notifications (offline)
         run: node --test scripts/social/lib/recraft.test.mjs

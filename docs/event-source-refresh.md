@@ -290,6 +290,17 @@ shared-checkout reset is used.
   lock; that crash also left `upcoming-events.json` without its
   `inputSnapshots` array, which is what turned the heartbeat red alongside it.
 
+## Shared-lock retries and homepage plans
+
+A source refresh may overlap the homepage-plan retry. A busy plan retry verifies
+all four current today/tomorrow plans at the actual `origin/main` tip, including
+the shared pillar-pair contract, before deciding whether publication is missing.
+Already published plans make that retry a quiet no-op. The check downloads Git
+objects without changing HEAD, the index, FETCH_HEAD or remote refs. Missing,
+invalid or unverifiable remote plans keep the existing failure alert; local-only
+plans never establish publication. Forced refreshes and explicit preflights still
+require the shared lock.
+
 ## Verification and recovery
 
 Offline publication fixtures intentionally produce source failures and must

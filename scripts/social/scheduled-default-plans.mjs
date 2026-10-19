@@ -13,6 +13,7 @@ import {
   pushGeneratedDataCheckout,
 } from "../newsletter/scheduled-preflight.mjs";
 import { nowHHMM_PT, todayPT } from "./lib/slot-scheduler.mjs";
+import { publishedDefaultPlans } from "./lib/published-default-plans.mjs";
 
 const PREFIX = "[default-plans-scheduled]";
 const LOCK_TASK = "default-plans-refresh";
@@ -42,7 +43,9 @@ function runRepoLock(script, action) {
   }
   if (action === "acquire" && result.status === 1) {
     const holder = output.match(/held by '([^']+)'/)?.[1] || "unknown";
-    throw new Error(`repo lock is busy (held by '${holder}'); plans were not refreshed`);
+    const error = new Error(`repo lock is busy (held by '${holder}'); plans were not refreshed`);
+    error.code = "SBT_REPO_LOCK_BUSY";
+    throw error;
   }
   if (result.status !== 0) {
     throw new Error(`repo lock ${action} failed with exit ${result.status}`);
@@ -118,7 +121,18 @@ try {
   if (!existsSync(lockScript)) {
     throw new Error(`required SBT repo lock is missing: ${lockScript}`);
   }
-  runRepoLock(lockScript, "acquire");
+  try {
+    runRepoLock(lockScript, "acquire");
+  } catch (error) {
+    if (error.code === "SBT_REPO_LOCK_BUSY" && !force && !preflightOnly) {
+      const published = publishedDefaultPlans({ repoRoot, today: todayPT() });
+      if (published) {
+        log(`plans for ${published.today} are already verified on origin/main at HEAD=${published.head.slice(0, 12)}; busy retry is a no-op`);
+        process.exit(0);
+      }
+    }
+    throw error;
+  }
   lockHeld = true;
   log(`acquired shared repo lock (${LOCK_TASK})`);
 
