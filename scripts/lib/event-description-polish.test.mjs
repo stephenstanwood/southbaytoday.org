@@ -477,7 +477,7 @@ test("normalizes doubled periods, fused age tags, doubled prepositions, and padd
     polishDescription("Sessions at 3:30 and 5:30 p.m.. Free, with limited capacity."),
     "Sessions at 3:30 and 5:30 p.m. Free, with limited capacity.",
   );
-  assert.equal(polishDescription("Please note that this is for ages12+"), "Please note that this is for ages 12+");
+  assert.equal(polishDescription("Please note that this is for ages12+"), "Please note that this is for ages 12+.");
   assert.equal(
     polishDescription("Fill out the form 7+days prior to the event."),
     "Fill out the form 7+ days prior to the event.",
@@ -862,5 +862,53 @@ test("leaves ordinary clock, room, age and date prose intact", () => {
     "The movie begins at 2:10 PM and adults are welcome.",
     "Starting Time: 2:30 pm. Story Time: 4:00 pm.",
     "The evening ended. And then we went home.",
+  ]) assert.equal(polishDescription(source), source);
+});
+
+test("keeps recurring title copy corrections through refreshes", () => {
+  for (const [source, expected] of [
+    ["How to Identify and Avoid Becoming a Victim to Common Scams", "How to Identify and Avoid Becoming a Victim of Common Scams"],
+    ["2000's Night", "2000s Night"],
+  ]) {
+    assert.equal(cleanTitle(source), expected);
+    assert.equal(cleanTitle(expected), expected);
+  }
+  assert.equal(cleanTitle("A Night's Journey"), "A Night's Journey");
+});
+
+test("repairs library music copy while retaining supplies, eligibility and act duration", () => {
+  for (const [source, expected] of [
+    [
+      "Bring your own guitar or ukulele, all other materials will be provided. Intermediate players and above are welcome.",
+      "Bring your own guitar or ukulele; all other materials will be provided. Intermediate players and above are welcome.",
+    ],
+    [
+      "Sign ups for the open mic are first-come, first-served and every act will be limited to 6 minutes.",
+      "Sign-ups for the open mic are first-come, first-served; every act will be limited to 6 minutes.",
+    ],
+    ["Enjoy a reading and a sing-a-long! Registration required.", "Enjoy a reading and a sing-along! Registration required."],
+  ]) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  const url = "https://example.org/sing-a-long/sign-ups?title=2000%27sNight";
+  assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`);
+});
+
+test("finishes complete source sentences without closing off links or cut-off prose", () => {
+  const dance = "SJSU Dance presents Emerging by SJSU University Dance Theater, featuring choreography by Resident Dance Artist Monica Bill Barnes and SJSU Dance faculty Jenni Hong and Chafin Seymour";
+  for (const [source, expected] of [
+    ["Please note that this is for ages12+", "Please note that this is for ages 12+."],
+    [dance, `${dance}.`],
+    ['Reviews: "researched" (Washington Post);"outstanding" (Boston Globe).', 'Reviews: "researched" (Washington Post); "outstanding" (Boston Globe).'],
+  ]) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  for (const source of [
+    "Please note that this is for ages 12+ with a caregiver",
+    "Please note that this is for ages",
+    "Questions? Email library@example.org",
+    "Details: https://example.org/review;name",
   ]) assert.equal(polishDescription(source), source);
 });

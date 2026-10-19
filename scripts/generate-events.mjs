@@ -820,6 +820,9 @@ function isPublicEvent(title, source, description, venue) {
 const TITLE_FIXES = {
   "Environmental Humanties Project": "Environmental Humanities Project",
   "Fun Runa": "Fun Run",
+  // These source-copy errors have reappeared after earlier manual corrections.
+  "Victim to Common Scams": "Victim of Common Scams",
+  "2000's Night": "2000s Night",
   // See PROPER_NOUN_FIXES below — misspellings that also appear in blurbs are
   // corrected in both places, so a card's title and its description agree.
   "Pop Up Art Event": "Pop Up Art Gallery",
@@ -1706,6 +1709,10 @@ const DESC_TYPO_FIXES = [
   [/^Fiddler on the Roof (?=Tradition meets revolution\b)/i, "Fiddler on the Roof: "],
   [/SJSU University Dance Theater Featuring choreography/g, "SJSU University Dance Theater, featuring choreography"],
   [/No appointment is needed, we help patrons/g, "No appointment is needed; we help patrons"],
+  [/Bring your own guitar or ukulele, all other materials will be provided\./g, "Bring your own guitar or ukulele; all other materials will be provided."],
+  [/\bsign ups\b/gi, "sign-ups"],
+  [/\bfirst-come, first-served and every act will be limited to\b/g, "first-come, first-served; every act will be limited to"],
+  [/\bsing-a-long\b/gi, "sing-along"],
   [/You'll learn how to: Start the game What the tiles mean The rules of the game and how to win How to create sets and play Playing Mahjong improves/g, "You'll learn how to start the game, what the tiles mean, the rules of the game and how to win, and how to create sets and play. Playing Mahjong improves"],
   [/making jokes, learn to play Dungeons & Dragons, and having fun with art/g, "making jokes, learning to play Dungeons & Dragons, and having fun with art"],
   [/Participants will learn the basics of playing piano, introduce to music notation, and staff lines\./g, "Participants will learn the basics of playing piano and be introduced to music notation and staff lines."],
@@ -2551,6 +2558,11 @@ function polishDescription(text) {
   // Fused age/lead-time tags from SCCLD and SJPL copy: "ages12+" → "ages 12+",
   // "7+days prior" → "7+ days prior".
   t = t.replace(/\b(ages?)(\d)/gi, "$1 $2").replace(/(\d\+)(?=[A-Za-z])/g, "$1 ");
+  // Finish these complete source sentences without adding punctuation to bare
+  // links, contact details, price labels, or potentially truncated fragments.
+  t = t.replace(/\b(Please note that this is for ages \d+\+)$/, "$1.");
+  t = t.replace(/^(SJSU Dance presents Emerging\b.+\band Chafin Seymour)$/, "$1.");
+  t = t.replace(/;(?=["'][A-Za-z])/g, "; ");
   // Doubled function words from hand-edited listings ("vote on on them",
   // "located at at 50 N. Fourth St."). Limited to prepositions/articles that
   // are never legitimately repeated.
