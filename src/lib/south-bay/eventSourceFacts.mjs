@@ -7,6 +7,21 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Evergreen's dated occurrences are October 19 (Monday) and October 20
+  // (the third Tuesday), while their bilingual body repeats a fourth-Tuesday
+  // schedule. Keep both sessions and the separate Friday programming; omit
+  // only the conflicting clauses.
+  // Evidence: docs/qa/2026-10-18-1707-fact-check.md.
+  ...[
+    ["2026-10-19", "6a555243dee4ff5300c93bf4"],
+    ["2026-10-20", "6a5553c764ed854800a5510a"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    copyReplacements: [
+      [/,\s+plus a special bilingual session on the fourth Tuesday of each month\b/gi, ""],
+      [/;\s*riêng thứ Ba tuần thứ tư hằng tháng sẽ có chương trình kể chuyện song ngữ đặc biệt/gi, ""],
+    ],
+  })),
   // This BioBlitz uses the Milpitas section of a trail spanning several cities.
   // The dated organizer page names the Ranch Drive entrance; its volunteer
   // listing requires Eventbrite registration. A trail name alone is not a city.

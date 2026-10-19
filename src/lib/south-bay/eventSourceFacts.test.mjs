@@ -15,6 +15,37 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Evergreen's dated bilingual sessions keep their attendance facts without conflicting monthly claims", async () => {
+  const { polishDescription } = await import("../../../scripts/generate-events.mjs");
+  for (const [date, sourceId] of [
+    ["2026-10-19", "6a555243dee4ff5300c93bf4"],
+    ["2026-10-20", "6a5553c764ed854800a5510a"],
+  ]) {
+    const raw = {
+      id: `sjpl-${sourceId}`, date,
+      title: "Music and Movement in Vietnamese and English and Craft",
+      venue: "Evergreen Library", address: "2635 Aborn Rd San Jose", city: "san-jose",
+      time: "4:30 PM", endTime: "5:30 PM", cost: "free", registration: "none",
+      url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+      description: "We host Vietnamese Storytime and Craft every Friday, plus a special bilingual session on the fourth Tuesday of each month. Free, no registration is required. Thứ Sáu hằng tuần có hoạt động kể chuyện và thủ công tiếng Việt; riêng thứ Ba tuần thứ tư hằng tháng sẽ có chương trình kể chuyện song ngữ đặc biệt. Chương trình hoàn toàn miễn phí và không cần phải đăng ký trước.",
+      blurb: "Sing songs and do movement activities in Vietnamese and English with the whole family at Evergreen Library.",
+    };
+    const expected = "We host Vietnamese Storytime and Craft every Friday. Free, no registration is required. Thứ Sáu hằng tuần có hoạt động kể chuyện và thủ công tiếng Việt. Chương trình hoàn toàn miễn phí và không cần phải đăng ký trước.";
+    const original = structuredClone(raw);
+    const events = [{ ...raw, description: polishDescription(raw.description) }];
+    const stats = await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, expected);
+    assert.deepEqual({ ...events[0], description: raw.description }, raw);
+    assert.deepEqual(raw, original);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(stats.generated, 0);
+    for (const other of [
+      { ...raw, date: "2026-10-27" },
+      { ...raw, url: "https://sjpl.bibliocommons.com/events/another-session" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("stale BioBlitz snapshots retain the dated Milpitas entrance and required RSVP", async () => {
   const url = "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post";
   const raw = {
