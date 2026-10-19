@@ -952,6 +952,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // Buddhist Community at Stanford, as styled on its own meditation listing:
   // https://events.stanford.edu/event/bcas-weekly-meditation
   "BCAS",
+  // Foothills Amateur Radio Society and radio-frequency topics. Preserve
+  // the organizer's source spelling (docs/qa/2026-10-19-0907-fact-check.md).
+  "FARS", "RF",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
