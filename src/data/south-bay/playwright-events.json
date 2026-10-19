@@ -1,32 +1,32 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-19T02:17:09.332Z",
+    "generatedAt": "2026-10-19T10:59:51.713Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 449,
+    "eventCount": 443,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (107)",
-      "Los Gatos Library (112)",
+      "Los Gatos Library (111)",
       "San Jose Jazz (14)",
-      "Linden Tree Books (12)",
+      "Linden Tree Books (11)",
       "History San Jose (6)",
       "Montalvo Arts Center (5)",
-      "City Lights Theater (6)",
+      "City Lights Theater (5)",
       "ICA San José (3)",
-      "Mountain Winery (5)",
-      "San Jose Theaters (19)",
-      "Children's Discovery Museum (6)",
+      "Mountain Winery (4)",
+      "San Jose Theaters (20)",
+      "Children's Discovery Museum (5)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (4)",
       "City of Cupertino (23)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (77)",
+      "TheatreWorks Silicon Valley (76)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
       "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (3)"
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 112,
+        "count": 111,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 12,
+        "count": 11,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -145,7 +145,7 @@
         "id": "city-lights-theater",
         "label": "City Lights Theater",
         "status": "ok",
-        "count": 6,
+        "count": 5,
         "error": null,
         "sources": [
           "City Lights Theater"
@@ -173,7 +173,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -183,7 +183,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 19,
+        "count": 20,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 6,
+        "count": 5,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 77,
+        "count": 76,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -339,8 +339,8 @@
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
         "status": "error",
-        "count": 3,
-        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
+        "count": 2,
+        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
         ],
@@ -2633,29 +2633,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17028031",
       "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "be1e77c5b04f",
-      "title": "United Against Hate Week",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": null,
-      "endTime": null,
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "United Against Hate Week was created by civic leaders in direct response to the sharp rise in expressions of hate in our communities. When cities and their residents work together against hate, we can restore respect and civil discourse, embrace the strength of diversity, and build inclusive and equitable communities for all. Join us in celebrating United Against Hate week. Come by the Library and take part in one of our UAH activities. Fill out a 'Stand United Against Hate' poster for the front window, collect a sticker, or read a book from our UAH booklists .",
-      "sourceAudiences": [
-        "Children",
-        "Teens",
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17735539",
-      "source": "Los Gatos Library",
       "kidFriendly": true
     },
     {
@@ -5184,28 +5161,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b99336387813",
-      "title": "Storytime with Alan Barillaro",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-18"
-      }
-    },
-    {
       "id": "af55e79f6fda",
       "title": "Book Launch with Wendelin Van Draanen — In conversation with Mark Parsons",
       "date": "2026-10-21",
@@ -5250,8 +5205,8 @@
       }
     },
     {
-      "id": "f73fb2badb83",
-      "title": "Book Launch with Kate O’Shaughnessy",
+      "id": "0c59efa1dc9a",
+      "title": "Middle Grade Book Club: Brittle Magic",
       "date": "2026-10-25",
       "displayDate": "Sun, Oct 25",
       "time": "4pm",
@@ -5720,27 +5675,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b780636bb7e8",
-      "title": "Eureka Day",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": null,
-      "endTime": null,
-      "venue": "City Lights Theater Company",
-      "address": "529 S Second St, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://cltc.org/event/eureka-day/",
-      "source": "City Lights Theater",
-      "kidFriendly": false
-    },
-    {
-      "id": "c1e46089d0e3",
+      "id": "110b125dabbe",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
+      "date": "2026-10-19",
+      "displayDate": "Mon, Oct 19",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5757,10 +5695,10 @@
       "kidFriendly": false
     },
     {
-      "id": "bab036d58964",
+      "id": "f6182909c9fa",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
+      "date": "2026-10-19",
+      "displayDate": "Mon, Oct 19",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5777,10 +5715,10 @@
       "kidFriendly": false
     },
     {
-      "id": "13917f1150be",
+      "id": "595484a7f7e4",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
+      "date": "2026-10-19",
+      "displayDate": "Mon, Oct 19",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5794,23 +5732,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "f36c0dcbaf2d",
-      "title": "John Mulaney: Mister Whatever",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1379991",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -5879,40 +5800,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "78cc6daf36d3",
-      "title": "The Papas and Mamas – Songs of The Mamas and Papas",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "5:00pm",
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "b811a2542245",
-      "title": "Big Time Wrestling 30th Anniversary Show",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "5:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -6205,21 +6092,55 @@
       "kidFriendly": false
     },
     {
-      "id": "e6c4c4d56942",
-      "title": "Toddler Storytime",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "11:30 am",
+      "id": "c36a328d98c8",
+      "title": "Rodrigo y Gabriela",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "8:15pm",
       "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "family",
+      "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "5983ed4fedbe",
+      "title": "Fiddler on the Roof – Opera San José",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": null,
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 S 1st St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "4621202c7af9",
+      "title": "Marisela: Eterna Tour 2026",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "7:00pm",
+      "endTime": null,
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
     },
     {
       "id": "35c3ee9682c9",
@@ -6414,7 +6335,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-19T02:15:50.556Z"
+        "checkedAt": "2026-10-19T10:58:35.834Z"
       }
     },
     {
@@ -6437,7 +6358,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-19T02:15:50.556Z"
+        "checkedAt": "2026-10-19T10:58:35.834Z"
       }
     },
     {
@@ -6452,7 +6373,7 @@
       "city": "san-jose",
       "category": "family",
       "cost": null,
-      "description": "OCTOBER 27, 2026  Santana Row is excited to announce the annual Halloween Family Fest on Tuesday, October 27th from 10 AM – noon!Enjoy live music, pumpkin decorating, trick or treating The Row, stilt-walkers, balloons and so much more! Bring your Trick-or-Treat Bags and costumes for a Halloween fun filled day.This event is free and open to the public. Trick-or-Treat stops to be announced soon",
+      "description": "OCTOBER 27, 2026  Santana Row is excited to announce the annual Halloween Family Fest on Tuesday, October 27th from 10 AM – noon!Enjoy live music, pumpkin decorating, trick or treating The Row, stilt-walkers, balloons and so much more! Bring your Trick-or-Treat Bags and costumes for a Halloween fun filled day.This event is free and open to the public. Click HERE to view Trick or Treat stops and merchant offers!",
       "url": "https://santanarow.com/event/trick-or-treat-the-row-halloween-family-festival/",
       "source": "Santana Row",
       "kidFriendly": true,
@@ -6460,7 +6381,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-19T02:15:50.557Z"
+        "checkedAt": "2026-10-19T10:58:35.834Z"
       }
     },
     {
@@ -6483,7 +6404,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-19T02:15:50.557Z"
+        "checkedAt": "2026-10-19T10:58:35.835Z"
       }
     },
     {
@@ -6889,7 +6810,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6906,7 +6827,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6923,7 +6844,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6960,23 +6881,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "37c208ff0c73",
-      "title": "Dracula",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7508",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -8933,25 +8837,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek Trail",
-      "address": "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035",
-      "city": "milpitas",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false,
-      "registration": "required",
-      "attendanceNote": "Register through Keep Coyote Creek Beautiful's Eventbrite page before attending. Meet at the Ranch Drive entrance near Alviso Milpitas Road."
     },
     {
       "id": "7cc888f61ff1",
