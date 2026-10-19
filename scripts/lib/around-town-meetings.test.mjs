@@ -194,3 +194,49 @@ test("past commission and permit agendas do not establish current pending action
     assert.equal(hasPastAgendaFutureFraming(item, { source: "youtube-transcript" }, "2026-10-09"), false);
   }
 });
+
+test("past agendas cannot become present-tense interview or pay headlines", () => {
+  const agenda = {
+    date: "2026-10-09",
+    fullAgendaText: "CLOSED SESSION: Public Employee Appointment: City Attorney.",
+  };
+  for (const headline of [
+    "Council holds closed-session interviews for new city attorney",
+    "Council holds second day of city attorney interviews",
+    "Council to address city attorney transition, manager's pay",
+    "Council will address the city attorney transition",
+    "Task force reviews the draft Station Area plan",
+  ]) {
+    const item = { date: "2026-10-09", headline };
+    assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-18"), true, headline);
+    assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-09"), false);
+    assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-08"), false);
+    assert.equal(hasPastAgendaFutureFraming(item, { ...agenda, source: "youtube-transcript" }, "2026-10-18"), false);
+  }
+  assert.equal(hasPastAgendaFutureFraming({
+    date: "2026-10-09", headline: "October 9 agenda listed city attorney interviews",
+  }, agenda, "2026-10-18"), false);
+  const summary = "The October 9 agenda listed a closed session for City Council to interview candidates for the City Attorney position.";
+  assert.equal(hasPastAgendaFutureFraming({ date: "2026-10-09", summary }, agenda, "2026-10-18"), false);
+  assert.equal(hasPastAgendaFutureFraming({
+    date: "2026-10-09", headline: "Council holds city attorney interviews", summary,
+  }, agenda, "2026-10-18"), true, "a source-qualified summary cannot excuse a false headline");
+  assert.equal(hasPastAgendaFutureFraming({
+    date: "2026-10-09", summary: `${summary} The council holds the interviews.`,
+  }, agenda, "2026-10-18"), true, "agenda context does not carry into another sentence");
+});
+
+test("a task-force agenda cannot establish that the task force reviewed a plan", () => {
+  const agenda = {
+    fullAgendaText: "Station Area Task Force. Public Hearing: Benton-Brokaw Multimodal Crossing Feasibility Study. Review of the Complete Draft Specific Plan.",
+  };
+  const headline = "Task force reviewed draft Station Area plan, crossing study";
+  assert.equal(hasUnsupportedMeetingAction({ headline }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({
+    headline: "October 15 task force agenda listed Station Area plan, crossing study",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ headline }, {
+    excerpt: "The task force reviewed the draft Station Area plan and the crossing study.",
+  }), false);
+  assert.equal(hasUnsupportedMeetingAction({ headline }, { ...agenda, source: "youtube-transcript" }), false);
+});

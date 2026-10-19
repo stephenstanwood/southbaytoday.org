@@ -56,7 +56,9 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   return !NONDISCLOSURE_CLAIM.test(evidence);
 }
 
-const COMPLETED_BODY_ACTION = /\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\s+(?:also\s+)?(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
+// Task forces publish agendas too; their names need the same outcome guard.
+const CIVIC_BODY = String.raw`(?:council|commission|committee|board|panel|task\s+force|hearing|city|zoning\s+administrator)`;
+const COMPLETED_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:also\s+)?(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b`, "gi");
 const COMPLETED_SESSION_ACTION = /\b(?:study|scoping)\s+session(?:\s+on\s+(?:[A-Za-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{4}-\d{2}-\d{2}))?\s+(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
@@ -76,12 +78,13 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   if (talksClaimed && !ONGOING_BODY_TALKS.test(evidence)) return true;
   if (sessionActions.some((action) => ![...evidence.matchAll(COMPLETED_SESSION_ACTION)].some((match) => match[1].toLowerCase() === action.toLowerCase()))) return true;
   return bodyActions.some((action) => !new RegExp(
-    `\\b(?:council|commission|committee|board|panel|hearing|city|zoning administrator)\\s+(?:also\\s+)?${action}\\b`, "i",
+    `\\b${CIVIC_BODY}\\s+(?:also\\s+)?${action}\\b`, "i",
   ).test(evidence));
 }
 
-const CURRENT_BODY_ACTION = /\b(?:council|commission|committee|board|panel|zoning administrator)\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny)\b|(?:weighs|considers)\b)/i;
-const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
+const CURRENT_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny|address|hold|interview)\b|(?:weighs|considers|holds|meets|reviews|addresses|interviews)\b)`, "gi");
+const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/gi;
+const AGENDA_PLAN_CONTEXT = /\bagenda\s+(?:listed|included|scheduled)\b[^.!?;]*$/i;
 
 /** A canceled regular meeting must not obscure a separate special meeting. */
 export function hasUnscopedMeetingCancellation(item, meeting) {
@@ -100,6 +103,13 @@ export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(item?.date || "")
       || !/^\d{4}-\d{2}-\d{2}$/.test(asOfDate || "")
       || item.date >= asOfDate || meeting?.source === "youtube-transcript") return false;
-  const claim = `${item?.headline || ""} ${item?.summary || ""}`;
-  return CURRENT_BODY_ACTION.test(claim) || CURRENT_PERMIT_REQUEST.test(claim);
+  // "The agenda listed a session for council to interview candidates" reports
+  // the old plan accurately. Check each field and clause so that qualification
+  // cannot excuse a separate present-tense headline or a later sentence.
+  return [item?.headline, item?.summary].some((value) => {
+    const claim = String(value || "");
+    return [CURRENT_BODY_ACTION, CURRENT_PERMIT_REQUEST].some((pattern) =>
+      [...claim.matchAll(pattern)].some((match) => !AGENDA_PLAN_CONTEXT.test(claim.slice(0, match.index))),
+    );
+  });
 }

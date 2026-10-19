@@ -40,6 +40,15 @@ test("Legistar links use the provider-owned public URL instead of rebuilding API
   );
 });
 
+test("Sunnyvale legacy callers retain the current city's provider URL and calendar", () => {
+  const providerUrl = "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?GUID=2C17C703-F1E3-43D4-A094-5B4D8ECBACE0&ID=1351627&Search=";
+  for (const site of ["sunnyvale", "sunnyvaleca"]) {
+    assert.equal(legistarMeetingUrl(site, "2026-10-06", providerUrl), providerUrl);
+    assert.equal(legistarMeetingUrl(site, "2026-10-06"), "https://sunnyvaleca.legistar.com/Calendar.aspx?From=10%2F6%2F2026&To=10%2F6%2F2026");
+    assert.equal(legistarMeetingUrl(site, "2026-10-06", "https://evil.example/MeetingDetail.aspx?ID=1351627"), "https://sunnyvaleca.legistar.com/Calendar.aspx?From=10%2F6%2F2026&To=10%2F6%2F2026");
+  }
+});
+
 test("the publication gate rejects projected or date-mismatched meetings", () => {
   const projected = { date: "2026-07-21", bodyName: "City Council" };
   const mismatched = confirmMeeting(projected, {

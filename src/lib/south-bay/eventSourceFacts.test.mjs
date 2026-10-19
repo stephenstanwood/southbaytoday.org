@@ -15,6 +15,39 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Fall Family Day keeps the city's dated end time, free admission and source through intake", async () => {
+  const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
+  const url = "https://www.paloalto.gov/Events-Directory/Community-Services/2026-Fall-Family-Day";
+  const intake = {
+    title: "Fall Family Day", startsAt: "2026-10-18T14:00:00-07:00", endsAt: "2026-10-18T16:30:00-07:00",
+    location: "Palo Alto Art Center, 1313 Newell Road, Palo Alto, CA 94303", sourceUrl: null,
+  };
+  const originalIntake = structuredClone(intake);
+  const presentation = normalizeInboundEventPresentation(intake);
+  assert.equal(presentation.time, "2:00 PM");
+  assert.equal(presentation.endTime, "4:15 PM");
+  assert.equal(presentation.url, url);
+  const raw = {
+    id: "replacement-newsletter-id", date: "2026-10-18", title: intake.title,
+    venue: "Palo Alto Art Center", city: "palo-alto", address: intake.location,
+    time: "2:00 PM", endTime: "4:30 PM", url: "", cost: null,
+    description: "Family-friendly art activities inspired by the fall exhibition.",
+    blurb: "Make art at the Palo Alto Art Center.",
+  };
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], { ...raw, endTime: "4:15 PM", url, cost: "free" });
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(intake, originalIntake);
+  assert.equal(raw.endTime, "4:30 PM");
+  for (const other of [
+    { ...raw, date: "2027-10-18" },
+    { ...raw, title: "Another Family Day" },
+    { ...raw, venue: "Another Art Center" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("the dated Roots newsletter and organizer records converge before cross-source dedupe", async () => {
   const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
   const { fuzzyDedupEvents } = await import("./eventFuzzyDedup.mjs");

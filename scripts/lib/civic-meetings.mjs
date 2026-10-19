@@ -195,7 +195,10 @@ function safeHttpUrl(value) {
 export function legistarMeetingUrl(site, date, eventInSiteUrl = null) {
   if (!/^[a-z0-9-]+$/i.test(String(site || ""))) throw new Error("invalid Legistar site");
   if (!ISO_DATE.test(String(date || ""))) throw new Error("invalid meeting date");
-  const expectedHost = `${site.toLowerCase()}.legistar.com`;
+  // The old Sunnyvale hostname returns "Invalid parameters" even with HTTP 200.
+  // Keep legacy callers on the city's current public site and API client name.
+  const canonicalSite = site.toLowerCase() === "sunnyvale" ? "sunnyvaleca" : site.toLowerCase();
+  const expectedHost = `${canonicalSite}.legistar.com`;
   const providerUrl = safeHttpUrl(eventInSiteUrl);
   if (
     providerUrl?.protocol === "https:"

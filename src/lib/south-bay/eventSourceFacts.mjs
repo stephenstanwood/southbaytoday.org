@@ -7,6 +7,20 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The city's dated program supersedes an earlier newsletter's 4:30 PM end.
+  // Match the raw intake location too so a replacement ID keeps the source link.
+  // https://www.paloalto.gov/Events-Directory/Community-Services/2026-Fall-Family-Day
+  // Evidence: docs/qa/2026-10-18-2107-fact-check.md.
+  {
+    date: "2026-10-18",
+    title: /^(?:2026 )?Fall Family Day$/i,
+    venue: /^Palo Alto Art Center(?:,.*)?$/i,
+    facts: {
+      endTime: "4:15 PM",
+      url: "https://www.paloalto.gov/Events-Directory/Community-Services/2026-Fall-Family-Day",
+      cost: "free",
+    },
+  },
   // The organizer and market identify the same November 7, noon–4 PM event
   // at 87 N. San Pedro. A newsletter's extra "Festival" and omitted accent
   // kept it separate from the organizer's listing in cross-source dedupe.

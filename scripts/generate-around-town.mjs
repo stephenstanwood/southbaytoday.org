@@ -50,7 +50,7 @@ const CITIES = [
   // It drives the body check below; `legistar` only builds the source link.
   { stoaCity: "San Jose",      cityId: "san-jose",      cityName: "San José",      agendaUrl: "https://sanjose.legistar.com/Calendar.aspx",      legistar: "sanjose",      legistarApi: "sanjose",      permitUrl: "https://sjpermits.org/" },
   { stoaCity: "Mountain View", cityId: "mountain-view", cityName: "Mountain View", agendaUrl: "https://mountainview.legistar.com/Calendar.aspx", legistar: "mountainview",  legistarApi: "mountainview", permitUrl: null },
-  { stoaCity: "Sunnyvale",     cityId: "sunnyvale",     cityName: "Sunnyvale",     agendaUrl: "https://sunnyvale.legistar.com/Calendar.aspx",    legistar: "sunnyvale",     legistarApi: "sunnyvaleca",  permitUrl: null },
+  { stoaCity: "Sunnyvale",     cityId: "sunnyvale",     cityName: "Sunnyvale",     agendaUrl: "https://sunnyvaleca.legistar.com/Calendar.aspx",  legistar: "sunnyvaleca",   legistarApi: "sunnyvaleca",  permitUrl: null },
   { stoaCity: "Cupertino",     cityId: "cupertino",     cityName: "Cupertino",     agendaUrl: "https://cupertino.legistar.com/Calendar.aspx",    legistar: "cupertino",     legistarApi: "cupertino",    permitUrl: null },
   { stoaCity: "Santa Clara",   cityId: "santa-clara",   cityName: "Santa Clara",   agendaUrl: "https://santaclara.legistar.com/Calendar.aspx",   legistar: "santaclara",    legistarApi: "santaclara",   permitUrl: null },
   // Milpitas: ci.milpitas.ca.gov no longer presents a valid cert — milpitas.gov
@@ -499,7 +499,7 @@ ${permitText}${countsText}${aduCountsText}
 
 IMPORTANT — a permit being issued does not establish whether construction has started. Never assert either that work has begun or that it has not yet begun. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches". Use language like "permitted", "receives building permit", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
-VALUATION: the dollar figure is the declared permit valuation, not a paid construction cost, permit fee, investment, or city expenditure. Label it "permit valuation" when quoting it. The source-reported dwelling-unit field can differ from the building description (a 5plex can report 1); do not treat it as a verified count of homes.
+VALUATION: the dollar figure is the declared permit valuation, not a paid construction cost, permit fee, investment, or city expenditure. Label it "permit valuation" when quoting it. The source-reported dwelling-unit field can differ from the building description (a 5plex can report 1); do not treat it as a verified count of homes. A permit row is not one home either: report a count of listed permits, never convert the number of rows into a housing-unit count. Several permits on one street do not establish a subdivision or that construction is underway.
 
 ADDRESSES: an address given as "<street> (no street number assigned yet)" is a new lot without a house number. Write it as "on <street>" — never print a leading "0" as if it were a street number.
 
