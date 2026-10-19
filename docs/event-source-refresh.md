@@ -12,13 +12,20 @@ failure must never be represented as a successful empty season.
 2. `scripts/events/scheduled-refresh.mjs` acquires the shared repo lock, refreshes
    Playwright, inbound, and official-source snapshots, runs every adapter in strict mode, commits
    generated data, preflights again, pushes, and writes the success heartbeat.
-3. `org.southbaytoday.events-refresh-watchdog` runs every three hours. It restores
-   the primary launch agent if it is missing and forces one guarded refresh when
-   the pushed success or generated output is stale.
+3. `org.southbaytoday.events-refresh-watchdog` checks hourly. It restores the
+   primary launch agent if it is missing and forces one guarded refresh when
+   any of the three input snapshots is over four hours old or missing, or when
+   the pushed success or generated output is unhealthy. Recovery uses the whole
+   producer pipeline: live Playwright/inbound/official fetches, strict generation,
+   audit, commit and push, then a fresh health check. It does not restamp old data.
+   The four-hour threshold leaves room for the next hourly check, a busy repo
+   lock, and source collection before GitHub's unchanged eight-hour limit.
 4. The primary job restores the watchdog if that companion agent disappears.
 5. `.github/workflows/refresh-events.yml` runs after the Mini with an eight-hour
-   snapshot ceiling. It is an independent same-night check and alerts on any
-   workflow failure.
+   snapshot ceiling. GitHub scheduled starts can be hours late: the October 19
+   05:17 UTC check started at 10:42 UTC, after its nightly inputs were 8.4 hours
+   old. The Mini now maintains source freshness independently of that schedule.
+   GitHub remains an independent strict check and alerts on workflow failure.
 
 Install or repair both Mini agents — and relink the tracked pre-commit hook —
 with:

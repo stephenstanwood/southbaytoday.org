@@ -3,7 +3,8 @@
 <!--
   Independent heartbeat for the primary event refresh. It restores the main
   launch agent if needed and forces one guarded run when the last pushed
-  success or generated output becomes stale.
+  success, generated output, or any staged input becomes stale. Hourly checks
+  refresh inputs after four hours, ahead of GitHub's eight-hour limit.
 
   Node runs as a child of /bin/zsh, never as the launchd program itself: after
   `brew upgrade node`, macOS SIGKILLs the next direct launch with "Launch
@@ -23,7 +24,7 @@
     <key>WorkingDirectory</key>
     <string>/Users/stephenstanwood/Projects/southbaytoday.org</string>
     <key>StartInterval</key>
-    <integer>10800</integer>
+    <integer>3600</integer>
     <key>RunAtLoad</key>
     <true/>
     <key>ProcessType</key>

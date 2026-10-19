@@ -4,6 +4,15 @@ import { auditEventLocations } from "../lib/venue-location-audit.mjs";
 export const DEFAULT_MINI_SUCCESS_MAX_AGE_HOURS = 26;
 export const DEFAULT_OUTPUT_MAX_AGE_HOURS = 30;
 export const DEFAULT_OUTPUT_SNAPSHOT_MAX_AGE_HOURS = 30;
+// Refresh proactively on the Mini. An hourly check plus the guarded run has
+// headroom before GitHub's unchanged eight-hour input limit, even when its
+// scheduled workflow starts several hours late.
+export const MINI_SNAPSHOT_REFRESH_AFTER_HOURS = 4;
+export const MINI_REQUIRED_SNAPSHOT_NAMES = Object.freeze([
+  "playwright-events",
+  "inbound-events",
+  "official-event-sources",
+]);
 
 export const REQUIRED_SOURCE_IDS = Object.freeze([
   "fetchMusicInParkEvents",
@@ -38,6 +47,7 @@ export function inspectEventRefreshOutput({
   maxAgeHours = DEFAULT_OUTPUT_MAX_AGE_HOURS,
   snapshotMaxAgeHours = DEFAULT_OUTPUT_SNAPSHOT_MAX_AGE_HOURS,
   requiredSourceIds = REQUIRED_SOURCE_IDS,
+  requiredSnapshotNames = ["playwright-events", "inbound-events"],
 } = {}) {
   const problems = [];
   if (!data || typeof data !== "object") {
@@ -86,7 +96,7 @@ export function inspectEventRefreshOutput({
   if (!snapshots) {
     problems.push("upcoming-events output has no inputSnapshots array");
   } else {
-    for (const name of new Set(["playwright-events", "inbound-events", ...snapshots.map((item) => item?.name)])) {
+    for (const name of new Set([...requiredSnapshotNames, ...snapshots.map((item) => item?.name)])) {
       const snapshot = snapshots.find((item) => item?.name === name);
       if (!snapshot) {
         problems.push(`required input snapshot is missing: ${name}`);
@@ -137,7 +147,12 @@ export function inspectMiniRefreshState({
 
 export function inspectMiniEventRefresh({ state, data, now = new Date() } = {}) {
   const stateHealth = inspectMiniRefreshState({ state, now });
-  const outputHealth = inspectEventRefreshOutput({ data, now });
+  const outputHealth = inspectEventRefreshOutput({
+    data,
+    now,
+    snapshotMaxAgeHours: MINI_SNAPSHOT_REFRESH_AFTER_HOURS,
+    requiredSnapshotNames: MINI_REQUIRED_SNAPSHOT_NAMES,
+  });
   return {
     ok: stateHealth.ok && outputHealth.ok,
     problems: [...stateHealth.problems, ...outputHealth.problems],

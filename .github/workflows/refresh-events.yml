@@ -3,7 +3,7 @@ name: Refresh Events
 on:
   schedule:
     # Daily at 10:17 PM PDT / 9:17 PM PST, ahead of the 3:20 AM Mini plan refresh.
-    # The off-hour minute leaves a wide buffer for scheduler delays.
+    # GitHub can start this hours late; the Mini watchdog keeps inputs fresh.
     - cron: "17 5 * * *"
   workflow_dispatch: # allow manual trigger
 
@@ -38,8 +38,8 @@ jobs:
       - name: Generate events
         env:
           SBT_STRICT_EVENT_REFRESH: "1"
-          # A healthy Mini run is only ~3h old here. Eight hours makes this an
-          # independent same-night heartbeat instead of tolerating a missed day.
+          # Mini checks inputs hourly and refreshes them after four hours.
+          # Keep rejecting stale inputs when the producer or publication fails.
           SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"
           # These two public hosts challenge cloud IPs. Mini parses them live;
           # this runner verifies its fresh, fail-closed snapshot instead.
