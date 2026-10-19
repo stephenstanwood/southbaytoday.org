@@ -15,6 +15,46 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the dated Roots newsletter and organizer records converge before cross-source dedupe", async () => {
+  const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
+  const { fuzzyDedupEvents } = await import("./eventFuzzyDedup.mjs");
+  const intake = {
+    title: "San Jose Roots Festival", startsAt: "2026-11-07T12:00:00-08:00", endsAt: "2026-11-07T16:00:00-08:00",
+    location: "San Pedro Square Market, W. St John Street, San Jose, CA", sourceUrl: null,
+  };
+  const presentation = normalizeInboundEventPresentation(intake);
+  const raw = {
+    id: "replacement-newsletter-id", date: "2026-11-07", city: "san-jose",
+    title: intake.title, venue: "San Pedro Square Market", address: intake.location,
+    time: presentation.time, endTime: presentation.endTime, url: presentation.url,
+    category: "arts", source: "City Newsletter", description: "A free festival celebrating San Jose's history.",
+    blurb: "Celebrate San Jose's history with the community.",
+  };
+  const organizer = {
+    ...raw, id: "organizer-id", title: "San José Roots", venue: "History Park",
+    source: "History San Jose", description: "", url: "https://historysanjose.org/event/san-jose-roots/",
+  };
+  const original = structuredClone([raw, organizer]);
+  const events = [raw, organizer].map((event) => ({ ...event }));
+  await resolveEventBlurbs(events, { enabled: false });
+  const { kept, droppedCount } = fuzzyDedupEvents(events);
+  assert.equal(droppedCount, 1);
+  assert.equal(kept.length, 1);
+  assert.equal(kept[0].title, "San José Roots");
+  assert.equal(kept[0].venue, "Gonzales/Peralta Adobe");
+  assert.equal(kept[0].address, "87 N San Pedro St., San José");
+  assert.equal(kept[0].cost, "free");
+  assert.equal(presentation.url, organizer.url, "the raw newsletter also gets the verified link before dedupe");
+  assert.equal(presentation.venue, "Gonzales/Peralta Adobe");
+  assert.equal(kept[0].time, "12:00 PM");
+  assert.equal(kept[0].endTime, "4:00 PM");
+  assert.deepEqual([raw, organizer], original);
+  assert.deepEqual(applyVerifiedEventFacts(kept[0]), kept[0]);
+  for (const other of [{ ...raw, date: "2027-11-07" }, { ...raw, venue: "Another Library" }, { ...raw, title: "Another Roots Concert" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Evergreen's dated bilingual sessions keep their attendance facts without conflicting monthly claims", async () => {
   const { polishDescription } = await import("../../../scripts/generate-events.mjs");
   for (const [date, sourceId] of [

@@ -9425,18 +9425,19 @@ async function fetchHistorySanJoseEvents() {
         const eventCopy = stripHtml(block).replace(/\s+/g, " ").trim();
 
         // Location from <span class="eventlocation">
-        const locMatch = block.match(/<span class="eventlocation">\s*(.*?)\s*<\/span>/i);
-        const location = locMatch ? locMatch[1].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "History Park";
-        const venue = cleanVenue(location.split("|")[0].trim()) || "History Park";
-        // History San Jose's "eventlocation" field sometimes carries trailing
-        // editorial copy ("Stay tuned for ticket information!"). When we know
-        // we're at History Park, use its canonical street address; otherwise
-        // strip any sentence after the address line.
-        const HISTORY_PARK_ADDRESS = "635 Phelan Ave, San Jose, CA 95112";
-        const rawAddress = location.includes("|") ? location.split("|")[1].trim() : HISTORY_PARK_ADDRESS;
-        const address = /history park/i.test(venue)
-          ? HISTORY_PARK_ADDRESS
-          : rawAddress.split(/\s+(?=Stay tuned|Tickets|Tickets:|Note:)/i)[0].trim();
+        // The source puts newlines and <br> inside this span, including for
+        // downtown events at Gonzales/Peralta Adobe. A single-line match
+        // silently sent those events to the former History Park fallback.
+        const locMatch = block.match(/<span class="eventlocation">\s*(.*?)\s*<\/span>/is);
+        const locationLines = (locMatch?.[1] || "").replace(/<br\s*\/?\s*>/gi, "\n")
+          .split(/\r?\n/).map(stripHtml).filter(Boolean);
+        const [venueText = "", inlineAddress = ""] = (locationLines[0] || "").split("|");
+        const venue = cleanVenue(venueText.trim());
+        if (!venue) continue; // The publisher operates more than one site.
+        // Preserve the source's address line, excluding its separate price
+        // and ticket notes. A missing address is not evidence of History Park.
+        const rawAddress = inlineAddress.trim() || locationLines.slice(1).find((line) => /^\d+\s/.test(line)) || "";
+        const address = rawAddress.split(/\s+(?=Stay tuned|Tickets|Cost:|Note:|Pumpkin and carving)/i)[0].trim();
 
         events.push({
           id: h("historysj", title, isoDate(start)),

@@ -7,6 +7,34 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The organizer and market identify the same November 7, noon–4 PM event
+  // at 87 N. San Pedro. A newsletter's extra "Festival" and omitted accent
+  // kept it separate from the organizer's listing in cross-source dedupe.
+  // https://historysanjose.org/programs-events/
+  // https://sanpedrosquaremarket.com/calendar/san-jose-roots-1
+  // Evidence: docs/qa/2026-10-18-2007-fact-check.md.
+  {
+    date: "2026-11-07",
+    title: /^San Jos[ée] Roots(?: Festival)?$/i,
+    venue: /^(?:Gonzales\/Peralta Adobe|San Pedro Square Market|History Park)(?:,.*)?$/i,
+    facts: {
+      title: "San José Roots",
+      venue: "Gonzales/Peralta Adobe",
+      address: "87 N San Pedro St., San José",
+      url: "https://historysanjose.org/event/san-jose-roots/",
+      cost: "free",
+    },
+  },
+  // A newsletter copy displaced the city's linked occurrence during dedupe.
+  // Match its date/title/venue so a new intake ID cannot restore a blank link.
+  // https://www.saratoga.ca.us/Calendar.aspx?EID=2695
+  // Evidence: docs/qa/2026-10-18-2007-fact-check.md.
+  {
+    date: "2026-10-18",
+    title: /^Flag Retirement Ceremony$/i,
+    venue: /^Blaney Plaza(?:, Downtown Saratoga)?$/i,
+    facts: { url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2695" },
+  },
   // Evergreen's dated occurrences are October 19 (Monday) and October 20
   // (the third Tuesday), while their bilingual body repeats a fourth-Tuesday
   // schedule. Keep both sessions and the separate Friday programming; omit

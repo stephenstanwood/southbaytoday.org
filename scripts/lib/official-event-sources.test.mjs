@@ -128,6 +128,45 @@ test("History San Jose uses the displayed date, never dates inside an image URL"
   }
 });
 
+test("History San Jose preserves multiline downtown locations without inventing a park fallback", async () => {
+  const year = new Date().getFullYear() + 1;
+  const originalFetch = globalThis.fetch;
+  const card = (title, location) => `
+    <div class="event-box event_all_box"><div class="event-content">
+      <p>10/23/${year}</p><h2>${title}</h2>
+      ${location === null ? "" : `<span class="eventlocation">${location}</span>`}
+      <span class="eventtime">7:00 pm</span><span class="eventtime">9:00 pm</span>
+    </div></div>`;
+  globalThis.fetch = async (url) => {
+    assert.match(String(url), /^https:\/\/historysanjose\.org\/programs-events\//);
+    return new Response(String(url).includes("/page/") ? "" : [
+      card("Slash and Sip: Adult Pumpkin Carving at San Pedro Square Market",
+        "Gonzales/Peralta Adobe | 87 N San Pedro St., San Jos&eacute;\n<br>Pumpkin and carving supplies included in ticket price"),
+      card("San José Roots", "Gonzales/Peralta Adobe | 87 N San Pedro St., San José\n<br>Cost: FREE"),
+      card("History Park Heritage Holiday Tea", "History Park, Empire Fire House\n<br>635 Phelan Ave., San José\n<br>Cost: $55 General Admission $50 Members"),
+      card("An event without a published location", null),
+    ].join(""));
+  };
+  try {
+    const events = await fetchHistorySanJoseEvents();
+    assert.equal(events.length, 3, "an absent location must not become an invented History Park occurrence");
+    for (const event of events.slice(0, 2)) {
+      assert.equal(event.venue, "Gonzales/Peralta Adobe");
+      assert.equal(event.address, "87 N San Pedro St., San José");
+      assert.equal(event.city, "san-jose");
+      assert.equal(event.date, `${year}-10-23`);
+      assert.equal(event.time.replace(/\s+/g, ""), "7:00PM");
+      assert.doesNotMatch(event.address, /Cost:|Pumpkin|Phelan/);
+    }
+    assert.equal(events[0].cost, "paid");
+    assert.equal(events[1].cost, "free");
+    assert.equal(events[2].venue, "History Park, Empire Fire House");
+    assert.equal(events[2].address, "635 Phelan Ave., San José");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("South Bay Musical Theatre never invents a shared ticket floor for different productions", async () => {
   const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles", month: "long", day: "numeric", year: "numeric",
