@@ -6,7 +6,7 @@
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { notifyApiOut } from "../../lib/notify.mjs";
+import { catSignal } from "../../lib/notify.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RECRAFT_API = "https://external.api.recraft.ai/v1";
@@ -54,7 +54,14 @@ export async function generateRecraftImage({ prompt, size = "4:5", colors, model
   if (!res.ok) {
     const text = await res.text();
     if (/not_enough_credits|insufficient.+credit|credit.+(exhausted|too low)|quota.*exceeded/i.test(text)) {
-      await notifyApiOut("Recraft", text);
+      await catSignal({
+        key: "recraft-credits",
+        title: "Recraft API out of credits",
+        body:
+          "Recraft just rejected a request with an out-of-credits / quota error.\n" +
+          "Scripts that depend on it may be running in degraded mode.\n\n" +
+          "```\n" + text.slice(0, 600) + "\n```",
+      });
     }
     throw new Error(`Recraft API error (${res.status}): ${text}`);
   }

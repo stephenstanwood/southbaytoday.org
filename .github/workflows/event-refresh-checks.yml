@@ -34,5 +34,8 @@ jobs:
       - name: Check Mini launch agents and scheduled checkout guards
         run: node --test scripts/lib/launchd-plists.test.mjs scripts/newsletter/scheduled-preflight.test.mjs
 
+      - name: Check Recraft imports and quiet outage notifications (offline)
+        run: node --test scripts/social/lib/recraft.test.mjs
+
       - name: Check newsletter signup and confirmation tracking
         run: npm run test:newsletter-signup
