@@ -15,6 +15,37 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("MACLA's October 23 concert keeps paid admission and the performance clock through sparse publication", async () => {
+  const raw = {
+    id: "replacement-macla-id", date: "2026-10-23",
+    title: "MACLA Presents: Diana Gameros in Concert Ft. Magik*Magik",
+    venue: "MACLA", city: "san-jose", time: "7:30 PM", endTime: "9:30 PM",
+    cost: "free", url: "https://maclaarte.org/events/volveralaluz/",
+    description: "Tickets on sale now!", blurb: "Hear Diana Gameros with Magik*Magik.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].time, "8:00 PM");
+  assert.equal(events[0].cost, "paid");
+  assert.match(events[0].costNote, /General admission \$30/);
+  assert.match(events[0].costNote, /\$10 student/);
+  assert.match(events[0].attendanceNote, /Doors open at 7:30 PM/);
+  for (const key of ["id", "title", "date", "endTime", "venue", "city", "url", "description", "blurb"]) {
+    assert.equal(events[0][key], raw[key], key);
+  }
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-10-23" },
+    { ...raw, url: "https://maclaarte.org/events/another-concert/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Linden Tree's replacement book club retains its signup and age restrictions", async () => {
   const raw = {
     id: "replacement-book-club-id", date: "2026-10-25", time: "4:00 PM",

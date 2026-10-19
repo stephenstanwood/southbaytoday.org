@@ -7,6 +7,21 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The dated organizer page and complete RSS body agree on paid admission
+  // and an 8 PM performance. MEC's 7:30 PM start is doors, and the adapter
+  // formerly labeled every MACLA event free. Protect sparse intake too.
+  // https://maclaarte.org/events/volveralaluz/
+  // Evidence: docs/qa/2026-10-19-0607-fact-check.md.
+  {
+    date: "2026-10-23",
+    url: "https://maclaarte.org/events/volveralaluz/",
+    facts: {
+      time: "8:00 PM",
+      cost: "paid",
+      costNote: "General admission $30; $10 student pay-what-you-can tickets; reserved seating $50 or $75.",
+      attendanceNote: "Doors open at 7:30 PM; performance starts at 8 PM.",
+    },
+  },
   // The freshly read organizer calendar replaces the author launch with a
   // bookseller-led club for ages 9+. Its body asks readers to RSVP by email
   // and says Kate cannot attend; the heading-only scraper omits these facts.

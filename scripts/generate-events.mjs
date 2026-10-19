@@ -6173,6 +6173,18 @@ async function fetchMaclaEvents() {
         const start = parseDatePT(item.mecStartDate) || parseDate(item.startDate || item.pubDate);
         const end = item.mecEndDate ? parseDatePT(item.mecEndDate) : null;
         const description = stripHtml(item.description || item.content || "");
+        // RSS excerpts can cut off the ticket tiers; use the complete item
+        // body already in this feed. Gallery admission does not establish a
+        // concert's price. Unknown admission stays null, never assumed free.
+        const fullText = stripHtml(item.content || item.description || "");
+        const generalAdmission = fullText.match(/\$(\d+(?:\.\d{1,2})?)\s+General Admission\b/i);
+        const admissionPrice = generalAdmission ? Number(generalAdmission[1]) : null;
+        const cost = admissionPrice !== null
+          ? (admissionPrice === 0 ? "free" : admissionPrice < 15 ? "low" : "paid")
+          : (/\b(?:free admission|admission is free)\s*(?=[.!]|$)/i.test(fullText) ? "free" : null);
+        // MEC's clock can be doors. A labeled show clock in the same source
+        // body is the performance start, without an extra detail-page fetch.
+        const showTime = fullText.match(/\bshow\s*:\s*((?:1[0-2]|0?[1-9])(?::[0-5]\d)?\s*[ap]m)\b/i)?.[1];
         // MACLA's gallery shows run for months. Keep them while they're open.
         const run = resolveRunWindow(start, end, now, {
           title: item.title,
@@ -6192,14 +6204,15 @@ async function fetchMaclaEvents() {
           title: item.title,
           date: isoDate(run.date),
           displayDate: displayDate(run.date),
-          time: run.ongoing ? null : startTime,
+          time: run.ongoing ? null : (showTime ? formatHourClock(showTime) : startTime),
           endTime: run.ongoing ? null : endTime,
           ...(run.ongoing ? { ongoing: true } : {}),
           venue: "MACLA",
           address: "510 S 1st St, San Jose, CA 95113",
           city: "san-jose",
           category: inferCategory(item.title, item.description || "", ""),
-          cost: "free",
+          cost,
+          ...(generalAdmission ? { costNote: `General admission $${generalAdmission[1]}.` } : {}),
           description: truncate(stripHtml(item.description || item.content || "")),
           url: item.link,
           source: "MACLA",
