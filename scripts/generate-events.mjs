@@ -888,6 +888,14 @@ const TITLE_FIXES = {
   // SJSU's SREA company-tour heading misspells the field; the same source's
   // description correctly identifies it as commercial appraisal.
   "Commerical Appraisal": "Commercial Appraisal",
+  // Recurring library labels mix grade numbers with ordinal suffixes and
+  // omit compound punctuation. Keep the supplied grades, ages, and wording.
+  "Grades K-6th": "Grades K-6",
+  "Grades K-5th": "Grades K-5",
+  "Grades K-8th": "Grades K-8",
+  "12-36 Month Olds": "12-36-Month-Olds",
+  "Witches Cauldron Slime": "Witches' Cauldron Slime",
+  "Curator Led Talk": "Curator-Led Talk",
 };
 
 // Misspelled proper nouns that a source repeats in BOTH the title and the blurb.
@@ -929,6 +937,8 @@ const PROPER_NOUN_FIXES = {
   // Palo Alto's Pageturners reading list drops the author's given-name hyphen.
   // https://us.macmillan.com/books/9781250897930/theworldsisee/
   "Fei Fei Li": "Fei-Fei Li",
+  // Preserve the chapter acronym already supplied in the drawing meetup's venue.
+  "Sketching Together Aia Silicon Valley Chapter": "Sketching Together AIA Silicon Valley Chapter",
 };
 
 // These source-published initials name organizations, programs and tools;
@@ -958,6 +968,7 @@ const SOURCE_EVENT_ACRONYMS = [
   // Preserve initials already supplied by the OCD-awareness, Silicon Valley
   // and West Valley Community Services listings; do not upcase ordinary words.
   "OCD", "SV", "WVCS",
+  "CNBC", "MSNBC", "AIA",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1924,6 +1935,24 @@ function polishDescription(text) {
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
   t = t.replace(/[‘’‚‛]/g, "'").replace(/[“”„‟]/g, '"');
+  // Small grammar repairs in recurring library copy. URLs are masked above;
+  // grades, durations, schedules, and participation requirements stay intact.
+  t = t
+    .replace(/\bgrades (K-[56])th\b/g, "grades $1")
+    .replace(/\bAre you a student in (grades K-[56]) and need help with homework\?/g,
+      "Are you a student in $1 who needs help with homework?")
+    .replace(/\bWe have tutors for you to receive homework help, /g,
+      "Tutors are available to help with homework on ")
+    .replace(/\bWe have tutors for you to receive homework help on /g,
+      "Tutors are available to help with homework on ")
+    .replace(/\bHigh and Middle Students welcome\./g,
+      "High school and middle school students welcome.")
+    .replace(/\bThis is a baby and caregivers program with\b/g,
+      "This is a program for babies and caregivers with")
+    .replace(/\b15 to 20 minute program\b/g, "15- to 20-minute program")
+    .replace(/\btwenty to twenty-five minute storytime\b/g, "twenty- to twenty-five-minute storytime")
+    .replace(/\bWitches Cauldron Slime\b/g, "Witches' Cauldron Slime")
+    .replace(/\bSTEM related\b/g, "STEM-related");
   // Comma runs from flattened SCCLD/SJPL link lists ("Chinese.,,, For",
   // "Thursdays,, 1:30 PM"). Runs before sentence splitting, which otherwise
   // leaves a stray "Chinese., For".
@@ -2137,6 +2166,8 @@ function polishDescription(text) {
   // some acronyms in descriptions, not just titles).
   t = t.replace(/\bAanhpi\b/g, "AANHPI");
   t = t.replace(/\bFopal\b/g, "FOPAL");
+  // Broadcaster initials in the library's author biography; URLs remain masked.
+  t = t.replace(/\b(?:Cnbc|Msnbc)\b/g, (initials) => initials.toUpperCase());
 
   // Mask abbreviations so their internal periods don't trip the sentence splitter.
   for (const [pat, sub] of ABBR_MASK_PAIRS) t = t.replace(pat, sub);
