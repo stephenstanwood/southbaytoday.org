@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T03:15:28.672Z",
+  "generatedAt": "2026-10-19T03:32:37.899Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -44,6 +44,19 @@
       "label": "New Buildout",
       "valuation": 205500,
       "date": "2026-10-08"
+    },
+    {
+      "id": "2026-142315-CI",
+      "city": "san-jose",
+      "address": "1085 S De Anza Bl",
+      "name": "Fukumitsu Ramen",
+      "description": "Srp (Bepm10%) Fukumitsu Ramen",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "New Buildout",
+      "valuation": 185000,
+      "date": "2026-10-14"
     },
     {
       "id": "2026-140040-CI",
@@ -111,6 +124,19 @@
       "date": "2026-10-02"
     },
     {
+      "id": "2026-141214-CI",
+      "city": "san-jose",
+      "address": "3055 Olin Av",
+      "name": "Johnny Doughnuts",
+      "description": "Johnny Doughnuts (Be 100%) Illuminated Signs",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "New Signage",
+      "valuation": 22420,
+      "date": "2026-10-13"
+    },
+    {
       "id": "2026-138576-CI",
       "city": "san-jose",
       "address": "3243 S White Rd",
@@ -123,43 +149,6 @@
       "valuation": 0,
       "date": "2026-09-22",
       "blurb": "Round Table Pizza franchise fitting out a new location on South White Road in East San Jose"
-    },
-    {
-      "id": "2026-136653-CI",
-      "city": "san-jose",
-      "address": "685 Coleman Av",
-      "name": "Slice House",
-      "description": "Slice House (E 100%) Illuminated Signs",
-      "workType": "Tenant Improvement",
-      "subtype": "Restaurant",
-      "signal": "opening",
-      "label": "New Signage",
-      "valuation": 0,
-      "date": "2026-09-14"
-    },
-    {
-      "id": "pa-611 Emerson St-2026-08-27",
-      "city": "palo-alto",
-      "address": "611 Emerson St",
-      "name": "Maison Saigon",
-      "description": "MAISON SAIGON :U&O & tenant improvement 6,700sf of an existing retail space t…",
-      "workType": "Building Permit",
-      "signal": "opening",
-      "label": "New Opening",
-      "valuation": 0,
-      "date": "2026-08-27"
-    },
-    {
-      "id": "pa-975 Page Mill Rd-2026-09-03",
-      "city": "palo-alto",
-      "address": "975 Page Mill Rd",
-      "name": "The Landing",
-      "description": "THE LANDING TI ~25,000 SF & UO. This project consists of a tenant improvement…",
-      "workType": "Building Permit",
-      "signal": "activity",
-      "label": "Renovation",
-      "valuation": 0,
-      "date": "2026-09-03"
     }
   ]
 }
