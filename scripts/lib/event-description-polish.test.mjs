@@ -699,3 +699,121 @@ test("still normalizes shouted prose and source punctuation", () => {
   assert.equal(polishDescription("JOIN us for a SPECIAL PERFORMANCE."), "Join us for a Special Performance.");
   assert.equal(polishDescription("At 7:30 p.m.. RSVP is required."), "At 7:30 p.m. RSVP is required.");
 });
+
+test("preserves source names, initials, honorifics and Spanish ordinals on repeated cleanup", () => {
+  const descriptions = [
+    "WVCS offers fresh produce at the Park-It Market.",
+    "Using iPads and FlipaClip, animate a scene inspired by DreamWorks.",
+    "iPad devices will be provided to all participants.",
+    "Join Mr. and Mrs. Tweedy for a screening.",
+    "Meet Dr. Chen and Prof. Wilson.",
+    "Ayuda de lectura para estudiantes de 1.º a 3.º grado.",
+    "See the exhibition. patty chang: surfacing engages the ocean as a symbolic space.",
+  ];
+  for (const source of descriptions) {
+    assert.equal(polishDescription(source), source);
+    assert.equal(polishDescription(polishDescription(source)), source);
+  }
+  for (const title of ["OCD Awareness Event", "[SV] Enterprise AI Showcase", "WVCS Park-It Market"]) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+  }
+  const url = "https://example.org/iPads/FlipaClip?studio=DreamWorks";
+  assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`);
+});
+
+test("separates flattened schedules and attendance text without changing their facts", () => {
+  const cases = [
+    [
+      "Doors open at 2:00 PM, and movie begins at 2:10 PM Adults need to stay in the room with their children.",
+      "Doors open at 2:00 PM, and the movie begins at 2:10 PM. Adults need to stay in the room with their children.",
+    ],
+    [
+      "Materials will be provided, recommended for ages 7+ Free. Limited iPads available.",
+      "Materials will be provided. Recommended for ages 7+. Free. Limited iPads available.",
+    ],
+    [
+      "Storytime 5:30-6:00 PM Stay & Play 6:00-6:30 PM Free, with limited capacity.",
+      "Storytime: 5:30-6:00 PM; Stay & Play: 6:00-6:30 PM. Free, with limited capacity.",
+    ],
+    [
+      "Storytime 11:00-11:30 AM Stay & Play 11:30 AM-12:00 PM This program is developed to align with the Early Education Quality Standards.",
+      "Storytime: 11:00-11:30 AM; Stay & Play: 11:30 AM-12:00 PM. This program is developed to align with the Early Education Quality Standards.",
+    ],
+    [
+      "Lapsit Storytime 11:00 - 11:30 am Stay & Play 11:30 am - 12:00 pm Please note that this will be an indoor program.",
+      "Lapsit Storytime: 11:00 - 11:30 am; Stay & Play: 11:30 am - 12:00 pm. Please note that this will be an indoor program.",
+    ],
+    [
+      "Children and caregivers continue the fun together Storytime: 11:30 a.m. to noon Stay & Play: noon to 12:30 p.m.",
+      "Children and caregivers continue the fun together. Storytime: 11:30 a.m. to noon; Stay & Play: noon to 12:30 p.m.",
+    ],
+    [
+      "October 24 - October 25, 2026 Saturday, October 24 | 10:00 AM – 1:00 PM Sunday, October 25 | 12:00 PM – 2:00 PM Wearing signature orange overalls, Farmer Mike carves pumpkins.",
+      "October 24 - October 25, 2026. Saturday, October 24 | 10:00 AM – 1:00 PM; Sunday, October 25 | 12:00 PM – 2:00 PM. Wearing signature orange overalls, Farmer Mike carves pumpkins.",
+    ],
+    [
+      "Saturday Hours: Bargain Room 9:30 AM – 4 PM Children's Room 10 AM – 4 PM Main Room 11 AM – 4 PM Sunday Hours: All Rooms 1 PM – 4 PM",
+      "Saturday Hours: Bargain Room: 9:30 AM – 4 PM; Children's Room: 10 AM – 4 PM; Main Room: 11 AM – 4 PM. Sunday Hours: All Rooms: 1 PM – 4 PM.",
+    ],
+    [
+      "October 21st at 11:00 AM In Our Program Room October 22nd at 7:30 PM In Our Program Room Classic Library copies are available. For Adults, Ages 18+ We thank the Friends of the Library.",
+      "October 21st at 11:00 AM in our program room; October 22nd at 7:30 PM in our program room. Classic Library copies are available. For adults, ages 18+. We thank the Friends of the Library.",
+    ],
+    [
+      "When: Wednesdays, 1:00 PM – 2:00 PM Where: Los Altos Library, Orchard Room For accessibility accommodations, use the form at sccld.org/accessibility 7+ days prior to the event.",
+      "When: Wednesdays, 1:00 PM – 2:00 PM; Where: Los Altos Library, Orchard Room. For accessibility accommodations, use the form at sccld.org/accessibility 7+ days prior to the event.",
+    ],
+    [
+      "The program has an interactive 20 minutes of: Catchy Songs & Silly Rhymes Gentle Movement & Baby Sign Language Short Books perfect for little eyes Stick around afterward!",
+      "The program has an interactive 20 minutes of catchy songs & silly rhymes; gentle movement & baby sign language; and short books perfect for little eyes. Stick around afterward!",
+    ],
+    [
+      "Homework Help will not be held on the following dates: September 7 October 12 November 2 November 11 November 23 to November 26 December 21 to January 4 Are you interested in volunteering for Homework Help?",
+      "Homework Help will not be held on the following dates: September 7; October 12; November 2; November 11; November 23 to November 26; December 21 to January 4. Are you interested in volunteering for Homework Help?",
+    ],
+    [
+      "Saturday, June 20, King Plaza Saturday, July 18, King Plaza Saturday, August 8, Downtown Library Saturday, September 12, Downtown Library Workshops supported by the Palo Alto Public Art Program.",
+      "Saturday, June 20, King Plaza; Saturday, July 18, King Plaza; Saturday, August 8, Downtown Library; Saturday, September 12, Downtown Library. Workshops supported by the Palo Alto Public Art Program.",
+    ],
+    [
+      "Starting Time: 2:30 pm Ending Time: 4:00 pm Community Room 201A On the first Friday of each month we will meet in Room 201B On Friday, October 30, we will meet in the Library Think Tank.",
+      "Starting Time: 2:30 pm; Ending Time: 4:00 pm; Community Room 201A. On the first Friday of each month we will meet in Room 201B. On Friday, October 30, we will meet in the Library Think Tank.",
+    ],
+    [
+      "The Spooky Movies Festival hosts a Triple feature. Sunday, October 18th - Funny movies 11:00 AM - Abbott and Costello Meet Frankenstein 1:00 PM - Little Shop of Horrors (1986) 3:00 PM - Gremlins Sunday, October 25th - Haunted House movies 11:00 AM - The Innocents 1:00 PM - The Haunting (1963) 3:00 PM - The Others.",
+      "The Spooky Movies Festival hosts a triple feature. Sunday, October 18th - Funny movies: 11:00 AM - Abbott and Costello Meet Frankenstein; 1:00 PM - Little Shop of Horrors (1986); 3:00 PM - Gremlins. Sunday, October 25th - Haunted House movies: 11:00 AM - The Innocents; 1:00 PM - The Haunting (1963); 3:00 PM - The Others.",
+    ],
+  ];
+  for (const [source, expected] of cases) {
+    const actual = polishDescription(source);
+    assert.equal(actual, expected);
+    assert.equal(polishDescription(actual), expected);
+    assert.deepEqual(actual.match(/\d+(?:[:.]\d+)?\+?/g), source.match(/\d+(?:[:.]\d+)?\+?/g));
+  }
+});
+
+test("separates class labels while preserving course numbers, contact addresses and instructor names", () => {
+  const source = "Submit the registration form To schedule your assessment, email marcela.guevara@sjlibrary.org ESL 502 Course Information: Starts: August 25, 2026 Ends: December 10, 2026 Class Days: Tuesday, Wednesday, and Thursday Time: 5:15 PM – 6:45 PM Instructor: TBD We will assist you in person.";
+  const expected = "Submit the registration form. To schedule your assessment, email marcela.guevara@sjlibrary.org. ESL 502 Course Information: Starts: August 25, 2026; Ends: December 10, 2026; Class Days: Tuesday, Wednesday, and Thursday; Time: 5:15 PM – 6:45 PM; Instructor: TBD. We will assist you in person.";
+  assert.equal(polishDescription(source), expected);
+  assert.equal(polishDescription(expected), expected);
+  const reading = "ESL 501 Reading & Writing 1 What will you learn? Course Information Starts: August 25, 2026 Ends: December 10, 2026 Meeting Days: Tuesday, Wednesday, and Thursday Time: 10:30 AM - 12:30 PM Instructor: Michelle N. Henninger Before the classes start, complete a Guided Self-Placement (GSP).";
+  const actual = polishDescription(reading);
+  assert.match(actual, /ESL 501 Reading & Writing 1\. What will you learn\?/);
+  assert.match(actual, /Course Information: Starts: August 25, 2026; Ends: December 10, 2026;/);
+  assert.match(actual, /Instructor: Michelle N\. Henninger\. Before the classes start,/);
+  assert.equal(polishDescription(actual), actual);
+});
+
+test("leaves ordinary clock, room, age and date prose intact", () => {
+  for (const source of [
+    "Until 12 PM the storytime librarian will be in the Children's Room.",
+    "Meet in the Children's Room for stories at 10 AM with a caregiver.",
+    "For ages 7+ with an adult. Free materials will be provided.",
+    "The project runs from November 23 to November 26 and December 21 to January 4.",
+    "The movie begins at 2:10 PM and adults are welcome.",
+    "Starting Time: 2:30 pm. Story Time: 4:00 pm.",
+    "The evening ended. And then we went home.",
+  ]) assert.equal(polishDescription(source), source);
+});

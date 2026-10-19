@@ -955,6 +955,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // Foothills Amateur Radio Society and radio-frequency topics. Preserve
   // the organizer's source spelling (docs/qa/2026-10-19-0907-fact-check.md).
   "FARS", "RF",
+  // Preserve initials already supplied by the OCD-awareness, Silicon Valley
+  // and West Valley Community Services listings; do not upcase ordinary words.
+  "OCD", "SV", "WVCS",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1815,6 +1818,10 @@ function maskDomainAndDecimalDots(text) {
   let t = text;
   // Decimals: "1.5", "24.3", "$1.5M"
   t = t.replace(/(\d)\.(\d)/g, `$1${DOT_PLACEHOLDER}$2`);
+  // Spanish ordinal abbreviations and personal titles have non-terminal dots.
+  // Splitting these introduced "1. º" and "Mr. And Mrs." on repeated cleanup.
+  t = t.replace(/(\d)\.(?=[ºª])/g, `$1${DOT_PLACEHOLDER}`);
+  t = t.replace(/\b(Mr|Mrs|Ms|Dr|Prof)\./g, `$1${DOT_PLACEHOLDER}`);
   // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
   // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
   // gets masked the same as the polite form. Without `i` the dot survives,
@@ -1888,6 +1895,11 @@ function polishDescription(text) {
     const token = `\uE001${urls.push(url) - 1}\uE002`;
     return token + match.slice(url.length);
   });
+  // Keep source-supplied brand/artwork spelling intact through camel-case
+  // splitting and sentence capitalization, including sentence-initial iPad.
+  const sourceNames = [];
+  t = t.replace(/\b(?:iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
+    (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
 
   // Drop boilerplate "About this Event:" / "Text from presenter:" prefixes that
   // BiblioCommons feeds emit at the head of some descriptions. The content
@@ -2063,6 +2075,50 @@ function polishDescription(text) {
     /Discover the restorative power of Qigong in this 90-minute group practice combines/g,
     "Discover the restorative power of Qigong in this 90-minute group practice, which combines",
   );
+
+  // Restore separators lost when library/newsletter HTML lists flatten into
+  // prose. Match explicit labels and sentence openings, leaving every supplied
+  // date, clock, room, age, contact and attendance requirement in place.
+  t = t.replace(/\bTech mentoring and Computer 1-on-1 assistance\b/g, "Tech mentoring and computer 1-on-1 assistance");
+  t = t.replace(/\bA Volunteer Tech Mentor\/computer coach\b/g, "A volunteer tech mentor / computer coach");
+  t = t.replace(/\bMaterials will be provided, recommended for ages (\d+(?:[-–]\d+|\+)) Free\./g,
+    "Materials will be provided. Recommended for ages $1. Free.");
+  t = t.replace(/\band movie begins at\b/g, "and the movie begins at");
+  t = t.replace(/\b([APap][Mm]) (?=(?:Adults need|This program|Free|Please note|Wearing signature orange overalls)\b)/g, "$1. ");
+  t = t.replace(/\b([APap][Mm]|noon) (?=Stay & Play(?::| \d))/g, "$1; ");
+  t = t.replace(/\b(Storytime|Stay & Play) (?=\d{1,2}:\d{2})/g, "$1: ");
+  t = t.replace(/\bcontinue the fun together (?=Storytime:)/g, "continue the fun together. ");
+  t = t.replace(/\bSubmit the registration form (?=To schedule)/g, "Submit the registration form. ");
+  t = t.replace(/([^.!?;:\s])\s+(?=ESL \d{3} Course Information:)/g, "$1. ");
+  t = t.replace(/\b(ESL \d{3} Reading & Writing \d+) (?=What will you learn)/g, "$1. ");
+  t = t.replace(/\bCourse Information (?=Starts:)/g, "Course Information: ");
+  t = t.replace(/([^.!?;:\s])\s+(?=(?:Ends|Class Days|Meeting Days|Ending Time|Instructor|Where):)/g, "$1; ");
+  t = t.replace(/\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) (?=Time:)/g, "$1; ");
+  t = t.replace(/\bInstructor: TBD (?=We will assist)/g, "Instructor: TBD. ");
+  t = t.replace(/([^.!?;:\s]) (?=Before the classes start,|For accessibility accommodations\b)/g, "$1. ");
+  t = t.replace(/\b(AM|PM) In Our Program Room (?=[A-Z][a-z]+ \d)/g, "$1 in our program room; ");
+  t = t.replace(/\b(AM|PM) In Our Program Room (?=Classic Library copies)/g, "$1 in our program room. ");
+  t = t.replace(/\bFor Adults, Ages (\d+\+) (?=We thank)/g, "For adults, ages $1. ");
+  t = t.replace(/\b(an interactive \d+ minutes of): Catchy Songs & Silly Rhymes Gentle Movement & Baby Sign Language Short Books perfect for little eyes Stick around/g,
+    "$1 catchy songs & silly rhymes; gentle movement & baby sign language; and short books perfect for little eyes. Stick around");
+  t = t.replace(/\b(AM|PM) (?=(?:Children's Room|Main Room) \d)/g, "$1; ");
+  t = t.replace(/\b(AM|PM) (?=Sunday Hours:)/g, "$1. ");
+  t = t.replace(/\b(Bargain Room|Children's Room|Main Room|All Rooms) (?=\d)/g, "$1: ");
+  if (/\b(?:Saturday|Sunday) Hours:/.test(t)) t = t.replace(/\b(AM|PM)$/, "$1.");
+  t = t.replace(/\b(\d{4}) (?=Saturday, [A-Z][a-z]+ \d{1,2} \|)/g, "$1. ");
+  t = t.replace(/\b(AM|PM) (?=(?:Saturday|Sunday), [A-Z][a-z]+ \d{1,2} \|)/g, "$1; ");
+  t = t.replace(/\b(King Plaza|Downtown Library) (?=Saturday, [A-Z][a-z]+ \d{1,2},)/g, "$1; ");
+  t = t.replace(/\bDowntown Library (?=Workshops supported by)/g, "Downtown Library. ");
+  t = t.replace(/\b([APap][Mm]) (?=Community Room \d)/g, "$1; ");
+  t = t.replace(/\b(Room \d+[A-Z]) (?=On |Cupertino Library)/g, "$1. ");
+  if (/\bSpooky Movies Festival\b/.test(t)) {
+    t = t.replace(/\ba Triple feature\b/g, "a triple feature");
+    t = t.replace(/\bmovies (?=\d{1,2}:\d{2} [AP]M -)/g, "movies: ");
+    t = t.replace(/([^.!?;:\s]) (?=\d{1,2}:\d{2} [AP]M -)/g, "$1; ");
+    t = t.replace(/([^.!?;:\s]) (?=Sunday, [A-Z][a-z]+ \d)/g, "$1. ");
+  }
+  t = t.replace(/(following dates: )([^.!?]+?)(?= Are you interested in volunteering)/g, (_, label, dates) =>
+    label + dates.replace(/(\b\d{1,2}) (?=(?:January|February|March|April|May|June|July|August|September|October|November|December) \d)/g, "$1; ") + ".");
 
   // Recover from prior-regen artifacts where p.m./a.m. was already split into
   // "p. M." (capital M, space after period). The mask below only matches the
@@ -2429,7 +2485,9 @@ function polishDescription(text) {
   // becomes De Spain again. URLs are still masked so their bytes stay intact.
   t = fixProperNouns(t);
 
-  return cleanDisplayCopy(t).replace(/\uE001(\d+)\uE002/g, (_, index) => urls[Number(index)]);
+  return cleanDisplayCopy(t)
+    .replace(/\uE003(\d+)\uE004/g, (_, index) => sourceNames[Number(index)])
+    .replace(/\uE001(\d+)\uE002/g, (_, index) => urls[Number(index)]);
 }
 
 // Localist ("Sign in to download the location") and similar calendars put an
