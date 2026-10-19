@@ -11,7 +11,7 @@
 //
 // Data: this is a client:load island, so every import here ships to the
 // browser on every city page. Don't import the all-city JSON files. The
-// meeting, digest, Reddit, and camp data arrive as the `data` prop, and the
+// meeting, digest, and camp data arrive as the `data` prop, and the
 // Open Right Now pool is fetched after mount from /city/<slug>/open-now.json.
 // Both are sliced to this city at build time by lib/south-bay/cityPageData.ts.
 
@@ -31,7 +31,7 @@ import {
   isBucket, inferBucketFromTimeBlock,
 } from "../../../lib/south-bay/buckets";
 import type {
-  AgendaItem, CityDigest, CityMeeting, CityPageData, CityReddit, OpenNowCandidate,
+  AgendaItem, CityDigest, CityMeeting, CityPageData, OpenNowCandidate,
 } from "../../../lib/south-bay/cityPageData";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 
@@ -238,9 +238,6 @@ export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) 
           cityName={cityName}
           todayIso={todayIso}
         />
-
-        {/* ═══ THE CONVERSATION (Reddit tiles) ═══ */}
-        <CityRedditTiles reddit={data.reddit} />
 
         {/* ═══ OPEN RIGHT NOW — randomized "oh yeah, THAT place" panel ═══ */}
         <CityOpenNow cityId={cityId} cityName={cityName} todayIso={todayIso} />
@@ -1188,67 +1185,6 @@ function CityEventsBlock({
           </>
         )}
       </div>
-    </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// City Reddit Tiles — tile-grid Reddit block scoped to this city.
-// Visual cousin of homepage RedditPulseTeaser. Which posts make the grid
-// (local subs first, then regional subs that mention the city by name, then
-// bare regional posts) is decided at build time in cityPageData.ts.
-// ---------------------------------------------------------------------------
-
-function chatterAge(hours: number): string {
-  if (hours < 1) return "now";
-  if (hours < 24) return `${Math.round(hours)}h ago`;
-  const days = Math.round(hours / 24);
-  return days === 1 ? "1d ago" : `${days}d ago`;
-}
-
-function CityRedditTiles({ reddit }: { reddit: CityReddit | null }) {
-  if (!reddit) return null;
-
-  // Subtitle reflects what's actually showing — if every visible tile is from a
-  // regional sub, don't promise "r/<localsub>" content the user won't see.
-  const subtitle = reddit.localSub
-    ? `From r/${reddit.localSub} and regional subs`
-    : `Regional chatter from the Bay Area`;
-
-  return (
-    <section className="city-section" aria-labelledby="city-reddit-heading">
-      <div className="sb-section-header city-section-head">
-        <h2 id="city-reddit-heading" className="sb-section-title">The Conversation</h2>
-        <p className="city-section-sub">{subtitle}</p>
-      </div>
-
-      <div className="city-reddit-grid">
-        {reddit.tiles.map((p) => (
-          <a
-            key={p.id}
-            href={p.permalink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="city-reddit-tile"
-            style={{ backgroundImage: `url(${p.image})` }}
-          >
-            <span className="city-reddit-shade" aria-hidden="true" />
-            <span className="city-reddit-badge">r/{p.sub}</span>
-            <span className="city-reddit-bottom">
-              <span className="city-reddit-title">{p.title}</span>
-              <span className="city-reddit-meta">
-                {p.score > 0 && <><span>↑ {p.score}</span><span aria-hidden="true">·</span></>}
-                {p.numComments > 0 && <><span>💬 {p.numComments}</span><span aria-hidden="true">·</span></>}
-                <span>{chatterAge(p.ageHours)}</span>
-              </span>
-            </span>
-          </a>
-        ))}
-      </div>
-
-      <p className="city-note" style={{ textAlign: "right" }}>
-        Tap any post to jump into the thread on Reddit
-      </p>
     </section>
   );
 }

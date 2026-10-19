@@ -18,7 +18,7 @@ export function getStaticPaths() {
 const { cityId, cityName } = Astro.props;
 const title = `${cityName} — South Bay Today`;
 const description = `What's happening in ${cityName} today: events, city council meetings, development updates, and local news.`;
-// This city's slice of the meetings, digests, Reddit, and camps data.
+// This city's slice of the meetings, digests, and camps data.
 // CityPage is a client:load island, so importing the all-city files there
 // would ship every city's data to every city page. (Its Open Right Now pool
 // comes from ./[slug]/open-now.json.ts instead.)

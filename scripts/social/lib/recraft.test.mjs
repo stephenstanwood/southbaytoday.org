@@ -106,24 +106,24 @@ test("an unavailable notification sink cannot mask the Recraft error or reach li
   assert.deepEqual(notifications(directory), []);
 });
 
-test("the real Reddit generator links and reaches its RSS boundary without network or writes", t => {
+test("retired Reddit refresh and backfill never call providers or rewrite cached data", t => {
   const directory = isolate(t);
-  const preload = join(directory, "stop-before-network.mjs");
-  writeFileSync(preload, `
-    globalThis.fetch = async url => {
-      if (String(url) !== "https://www.reddit.com/r/SanJose/top/.rss?t=day") {
-        throw Error("Unexpected source boundary: " + url);
-      }
-      console.log("REDDIT_SOURCE_BOUNDARY_VERIFIED");
-      process.exit(0);
-    };
-  `);
-  const script = fileURLToPath(new URL("../../generate-reddit-pulse.mjs", import.meta.url));
-  const output = execFileSync(process.execPath, ["--import", pathToFileURL(preload).href, script], {
-    encoding: "utf8",
-    timeout: 15000,
-    env: { ...process.env, ANTHROPIC_API_KEY: "fixture-key" },
+  const preload = join(directory, "forbid-network.mjs");
+  writeFileSync(preload, `globalThis.fetch = () => { process.exit(97); };`);
+  const files = ["reddit-pulse.json", "reddit-gaps.json", "reddit-image-cache.json", "places.json", "scc-food-openings.json"];
+  const before = files.map(name => {
+    const file = new URL(`../../../src/data/south-bay/${name}`, import.meta.url);
+    return { file, bytes: readFileSync(file) };
   });
-  assert.match(output, /REDDIT_SOURCE_BOUNDARY_VERIFIED/);
+  for (const name of ["generate-reddit-pulse.mjs", "backfill-places-from-reddit.mjs"]) {
+    const script = fileURLToPath(new URL(`../../${name}`, import.meta.url));
+    const output = execFileSync(process.execPath, ["--import", pathToFileURL(preload).href, script], {
+      encoding: "utf8",
+      timeout: 15000,
+      env: { ...process.env, ANTHROPIC_API_KEY: "", RECRAFT_API_KEY: "", GOOGLE_PLACES_API_KEY: "" },
+    });
+    assert.match(output, /is retired; no data fetched or changed/);
+  }
+  for (const { file, bytes } of before) assert.deepEqual(readFileSync(file), bytes);
   assert.deepEqual(notifications(directory), []);
 });

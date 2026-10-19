@@ -18,7 +18,6 @@ import {
   inferBucketFromTimeBlock,
 } from "../../../lib/south-bay/buckets";
 import PhotoStrip from "./PhotoStrip";
-import RedditPulseTeaser from "./RedditPulseTeaser";
 import WeekendAheadCard from "./WeekendAheadCard";
 import NewsletterSignup from "../NewsletterSignup";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
@@ -585,17 +584,12 @@ export default function SouthBayTodayView(_props: Props) {
       )}
 
       {/* Weekend ahead — curated picks for the upcoming Sat/Sun, visible
-          Tue–Sun. Sits between the day's plan and the regional chatter so a
-          resident scrolling the homepage sees "today" → "this weekend" →
-          "what people are talking about" in that natural order. */}
+          Tue–Sun, following today's plan. */}
       <WeekendAheadCard onNavigate={_props.onNavigate} />
-
-      {/* Reddit pulse — what people are saying on regional subs */}
-      <RedditPulseTeaser />
 
       {/* Browse-by-city navigation. Not a teaser — a navigation row that links
           to per-city pages (/city/[slug]) for residents who want their own
-          town's day plan, events, and chatter. Inline JSX, no new local
+          town's day plan and events. Inline JSX, no new local
           import, so the home-locked guardrail stays satisfied. */}
       <nav aria-label="Browse by city" className="sbt-home-section sbt-home-cities">
         <div className="sb-section-header sbt-home-head">

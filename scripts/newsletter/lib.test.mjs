@@ -10,6 +10,7 @@ import {
   civicMeetingsHeading,
   planCardPriceBand,
   renderEmail,
+  loadRedditPulse,
   finalizeNewsletterImages,
   repairNewsletterProperNames,
   formatLongDate,
@@ -37,6 +38,20 @@ function septemberIssue(events = []) {
     civicMeetings: [], todayHistory: [], redditPosts: [], visuals: {}, editorial: {},
   };
 }
+
+test("retired Reddit data cannot return in a newly rendered newsletter", () => {
+  assert.deepEqual(loadRedditPulse(), { posts: [] });
+  const data = {
+    ...septemberIssue(),
+    redditPosts: [{
+      id: "retired-fixture", sub: "SanJose", title: "Retired fixture thread",
+      displayTitle: "Retired fixture thread", permalink: "https://www.reddit.com/r/SanJose/comments/fixture",
+      summary: "Old cached Reddit content.", image: "https://fixture.invalid/reddit.png", score: 0, numComments: 0,
+    }],
+  };
+  const { html } = renderEmail(data);
+  assert.doesNotMatch(html, /Retired fixture thread|reddit\.com|The Conversation/);
+});
 
 test("the September 9 community note survives edited and fallback builds only on its scheduled date", () => {
   const expected = "Wondering what’s going up down the street? A local high school senior built South Bay Dashboard to help neighbors follow development projects, catch up on local news, and find public meetings. He learned mapping tools and sought feedback from South Bay city planners along the way. It’s a thoughtful project from a young neighbor who wants more people to understand—and get involved in—the changes shaping their community.";
