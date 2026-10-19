@@ -18,7 +18,6 @@ const HOME_FILE = resolve(__dirname, "../src/components/south-bay/homepage/South
 
 const ALLOWED_LOCAL_IMPORTS = new Set([
   "./PhotoStrip",
-  "./RedditPulseTeaser",
   "./WeekendAheadCard",
 ]);
 

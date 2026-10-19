@@ -7,9 +7,7 @@ import { openCampLastDatesForCity } from "./cityCamps";
 import {
   getCityPageData,
   selectOpenNowCandidates,
-  selectRedditTiles,
   type RawOpenNowCandidate,
-  type RawRedditPost,
 } from "./cityPageData";
 
 const DE_SAISSET_ID = "ChIJUVuaM6zLj4ARoQSjNyb1ebQ"; // flagged temporarily unavailable
@@ -31,20 +29,7 @@ function place(id: string, extra: Partial<RawOpenNowCandidate> = {}): RawOpenNow
   };
 }
 
-function post(id: string, sub: string, ageHours: number, extra: Partial<RawRedditPost> = {}): RawRedditPost {
-  return {
-    id,
-    sub,
-    title: `Post ${id}`,
-    summary: "",
-    image: `https://img.example/${id}.jpg`,
-    score: 10,
-    numComments: 3,
-    ageHours,
-    permalink: `https://reddit.com/${id}`,
-    ...extra,
-  };
-}
+
 
 test("open-now candidates: only this city, minus unavailable places, trimmed to rendered fields", () => {
   const byCity = {
@@ -69,31 +54,6 @@ test("open-now candidates: only this city, minus unavailable places, trimmed to 
   // Serializable as-is: no undefined values for JSON.stringify to drop.
   assert.equal(out[1].photoRef, null);
   assert.deepEqual(selectOpenNowCandidates(byCity, "saratoga"), []);
-});
-
-test("reddit tiles: local sub, then regional mentioning the city, then bare regional; newest first", () => {
-  const posts = [
-    post("regional-old", "bayarea", 30),
-    post("mention", "bayarea", 40, { summary: "New park opening in Campbell" }),
-    post("local-old", "campbell", 20),
-    post("local-new", "Campbell", 2, { displayTitle: "Cleaner title" }),
-    post("other-city", "SanJose", 1),
-    post("no-image", "campbell", 1, { image: null }),
-  ];
-  const out = selectRedditTiles(posts, "campbell", "Campbell");
-  assert.ok(out);
-  assert.deepEqual(out.tiles.map((t) => t.id), ["local-new", "local-old", "mention", "regional-old"]);
-  assert.equal(out.tiles[0].title, "Cleaner title");
-  assert.equal(out.tiles[1].title, "Post local-old");
-  assert.equal(out.localSub, "campbell");
-});
-
-test("reddit tiles: regional-only grids don't credit a local sub, and one tile isn't a grid", () => {
-  const regional = selectRedditTiles([post("r1", "bayarea", 1), post("r2", "AskSF", 2)], "cupertino", "Cupertino");
-  assert.equal(regional?.localSub, null);
-  assert.equal(selectRedditTiles([post("r1", "bayarea", 1)], "cupertino", "Cupertino"), null);
-  const many = Array.from({ length: 12 }, (_, i) => post(`p${i}`, "SanJose", i));
-  assert.equal(selectRedditTiles(many, "san-jose", "San José")?.tiles.length, 8);
 });
 
 test("camp last dates: one entry per open camp, the last session's end date", () => {

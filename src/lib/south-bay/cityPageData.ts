@@ -20,7 +20,6 @@
 
 import upcomingMeetingsJson from "../../data/south-bay/upcoming-meetings.json";
 import digestsJson from "../../data/south-bay/digests.json";
-import redditPulseJson from "../../data/south-bay/reddit-pulse.json";
 import openNowCandidatesJson from "../../data/south-bay/open-now-candidates.json";
 import { isPlaceTemporarilyUnavailable } from "./placeAvailability.mjs";
 import { openCampLastDatesForCity } from "./cityCamps";
@@ -59,27 +58,9 @@ export type OpenNowCandidate = {
   photoRef: string | null;
 };
 
-export type RedditTile = {
-  id: string;
-  sub: string;
-  title: string;
-  image: string;
-  score: number;
-  numComments: number;
-  ageHours: number;
-  permalink: string;
-};
-
-export type CityReddit = {
-  tiles: RedditTile[];
-  /** The local subreddit to credit in the subtitle, when one of its posts made the grid. */
-  localSub: string | null;
-};
-
 export type CityPageData = {
   nextMeeting: CityMeeting | null;
   digest: CityDigest | null;
-  reddit: CityReddit | null;
   /** See openCampLastDatesForCity: one entry per camp still open at build time. */
   campLastDates: Array<string | null>;
 };
@@ -112,19 +93,6 @@ export type RawOpenNowCandidate = {
   mapsUrl?: string | null;
   url?: string | null;
   photoRef?: string | null;
-};
-
-export type RawRedditPost = {
-  id: string;
-  sub: string;
-  title: string;
-  displayTitle?: string;
-  summary?: string;
-  image?: string | null;
-  score: number;
-  numComments: number;
-  ageHours: number;
-  permalink: string;
 };
 
 // ── Meeting + digest ──
@@ -177,86 +145,12 @@ export function selectOpenNowCandidates(
     }));
 }
 
-// ── The Conversation (Reddit tiles) ──
-//
-// Filter rule: local subs first, then regional subs that mention the city by
-// name, then bare regional posts to keep the grid full when local subs are
-// sparse. Newest first within each tier.
-
-// City id → subreddit names that count as "the local sub" for this city.
-// Case-insensitive match; canonical spellings the data uses.
-const CITY_SUBREDDITS: Record<string, string[]> = {
-  "san-jose":      ["SanJose"],
-  "palo-alto":     ["PaloAlto"],
-  "mountain-view": ["mountainview", "MountainView"],
-  "sunnyvale":     ["Sunnyvale"],
-  "santa-clara":   ["SantaClara"],
-  "cupertino":     ["Cupertino"],
-  "saratoga":      ["Saratoga_CA"],
-  "los-gatos":     ["losgatos"],
-  "milpitas":      ["Milpitas"],
-  "campbell":      ["campbell", "Campbell"],
-};
-
-const REGIONAL_SUBS = new Set(["bayarea", "AskSF", "siliconvalley"]);
-
-// Take up to 8 tiles. Smaller datasets (Los Gatos, Saratoga) ship whatever
-// they have so long as there are at least 2 candidates — a single tile reads
-// as broken, but 2-3 is fine in a 2-col mobile layout, and the desktop
-// 4-col grid just auto-flows with empty trailing cells.
-const TILE_TARGET = 8;
-
-export function selectRedditTiles(posts: RawRedditPost[], cityId: string, cityName: string): CityReddit | null {
-  const localSubs = (CITY_SUBREDDITS[cityId] ?? []).map((s) => s.toLowerCase());
-  const cityNeedle = cityName.toLowerCase();
-
-  const ranked = posts
-    .filter((p) => !!p.image)
-    .map((p) => {
-      const subLower = (p.sub || "").toLowerCase();
-      const isLocal = localSubs.includes(subLower);
-      const isRegional = REGIONAL_SUBS.has(p.sub);
-      const hay = `${p.title || ""} ${p.summary || ""}`.toLowerCase();
-      const cityMention = hay.includes(cityNeedle);
-      let rank = 99;
-      if (isLocal) rank = 0;
-      else if (isRegional && cityMention) rank = 1;
-      else if (isRegional) rank = 2;
-      return { post: p, rank };
-    })
-    .filter((x) => x.rank <= 2)
-    .sort((a, b) => {
-      if (a.rank !== b.rank) return a.rank - b.rank;
-      return a.post.ageHours - b.post.ageHours;
-    })
-    .slice(0, TILE_TARGET);
-
-  if (ranked.length < 2) return null;
-
-  return {
-    tiles: ranked.map(({ post: p }) => ({
-      id: p.id,
-      sub: p.sub,
-      title: p.displayTitle || p.title,
-      image: p.image as string,
-      score: p.score,
-      numComments: p.numComments,
-      ageHours: p.ageHours,
-      permalink: p.permalink,
-    })),
-    // Only credit r/<localsub> when one of its posts is actually showing.
-    localSub: ranked.some((x) => x.rank === 0) ? (CITY_SUBREDDITS[cityId] ?? [])[0] ?? null : null,
-  };
-}
-
 // ── Entry points ──
 
-export function getCityPageData(cityId: string, cityName: string): CityPageData {
-  const redditPosts = (redditPulseJson as unknown as { posts?: RawRedditPost[] }).posts ?? [];
+export function getCityPageData(cityId: string, _cityName: string): CityPageData {
   return {
     nextMeeting: meetingFor(cityId),
     digest: digestFor(cityId),
-    reddit: selectRedditTiles(redditPosts, cityId, cityName),
     campLastDates: openCampLastDatesForCity(cityId),
   };
 }

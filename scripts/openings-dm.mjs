@@ -133,7 +133,7 @@ function todaysOpeningEvents() {
 }
 
 // ── Date extraction for free-text opening claims ─────────────────────────────
-// Used by around-town + reddit readers to resolve phrases like "May 9",
+// Used by the around-town reader to resolve phrases like "May 9",
 // "Saturday, May 21st", "5/9" to ISO calendar dates.
 const MONTHS = {
   jan: 0, january: 0, feb: 1, february: 1, mar: 2, march: 2,
@@ -219,49 +219,6 @@ function todaysAroundTown() {
       url: it.sourceUrl || it.url || null,
       time: null,
       _src: "around-town",
-    });
-  }
-  return out;
-}
-
-function todaysReddit() {
-  const rd = readJson("reddit-pulse.json");
-  if (!rd?.posts) return [];
-  const out = [];
-  for (const p of rd.posts) {
-    const blob = `${p.title || ""} ${p.displayTitle || ""} ${p.summary || ""}`;
-    if (!OPENING_RX.test(blob)) continue;
-    // Reddit posts include a creation timestamp; use it to anchor relative date phrases.
-    let sourceISO = null;
-    if (typeof p.createdUtc === "number") {
-      sourceISO = new Date(p.createdUtc * 1000).toISOString().slice(0, 10);
-    } else if (p.createdAt || p.created) {
-      sourceISO = (p.createdAt || p.created).slice(0, 10);
-    }
-    const extracted = extractOpeningDate(blob, sourceISO);
-    if (!extracted) continue;
-    if (extracted !== TODAY) continue;
-    // Try to pull a city from the subreddit name (e.g. r/Sunnyvale → Sunnyvale).
-    const subKey = (p.sub || "").toLowerCase();
-    const cityDisplay =
-      CITY_NORMALIZE[subKey] ||
-      (subKey === "sanjose" ? "San Jose" :
-       subKey === "paloalto" ? "Palo Alto" :
-       subKey === "losgatos" ? "Los Gatos" :
-       subKey === "losaltos" ? "Los Altos" : "");
-    // permalink may be absolute (https://www.reddit.com/...) or relative (/r/...).
-    const link = p.permalink
-      ? (p.permalink.startsWith("http") ? p.permalink : `https://reddit.com${p.permalink}`)
-      : (p.externalUrl || p.url || null);
-    out.push({
-      kind: "Reddit tip",
-      emoji: "🗣️",
-      name: p.displayTitle || p.title,
-      blurb: p.summary ? p.summary.slice(0, 220) : null,
-      where: cityDisplay || (p.sub ? `r/${p.sub}` : ""),
-      url: link,
-      time: null,
-      _src: "reddit",
     });
   }
   return out;
@@ -536,7 +493,6 @@ const items = dedupAcrossSources([
   ...todaysFood(),
   ...todaysOpeningEvents(),
   ...todaysAroundTown(),
-  ...todaysReddit(),
   ...(await todaysChamberEvents()),
 ]);
 
