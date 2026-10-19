@@ -620,3 +620,82 @@ test("keeps dotted initialisms intact and collapses comma runs", () => {
     "Stories in English and Mandarin Chinese. For accommodations, ask staff.",
   );
 });
+
+test("preserves corrected source initials and venue names in titles and descriptions", () => {
+  const descriptions = [
+    "RSVP is required.",
+    "RSVP for the Lowrider Art Showcase.",
+    "The ghosts are out at MOAH this Halloween! Grab your costumes for a night of eerie vibes and spine-tingling fun. Click to RSVP.",
+    "At 7:30 p.m. Created by SBMT.",
+    'At 7:30 p.m. Created and directed by Brad Handshy. From Brad Handshy, the creator of SBMT\'s beloved "Broadway By The Decade" series, comes a new concert with a twist: every song will be funny.',
+    "Meetup event by Bay Area Social Hub (BASH).",
+    "Meet at BJ's for happy hour.",
+  ];
+  const titles = [
+    "Wednesday Happy Hour at BJ's!",
+    "Wednesday Happy Hour at BJ’s!",
+    "RSVP for the Museum Tour",
+    "A Night with SBMT and MOAH",
+  ];
+  for (const description of descriptions) {
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+  for (const title of titles) {
+    const expected = title.replaceAll("’", "'");
+    assert.equal(cleanTitle(title), expected);
+    assert.equal(cleanTitle(cleanTitle(title)), expected);
+  }
+  // Initials are protected as supplied, never guessed from ordinary words.
+  assert.equal(polishDescription("Meet Bj at the museum."), "Meet Bj at the museum.");
+});
+
+test("preserves Roman numerals through every title and description casing pass", () => {
+  const copy = "Join us in honoring the World War II Japanese American veterans who fought in World War II with a community gathering and monument dedication.";
+  assert.equal(polishDescription(copy), copy);
+  assert.equal(polishDescription(polishDescription(copy)), copy);
+  for (const numeral of ["II", "III", "IV", "VIII", "XII", "XXI", "XLII", "LX"]) {
+    const title = `Community Concert Part ${numeral}`;
+    const description = `Hear Part ${numeral} Performed Live.`;
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+});
+
+test("preserves complete quoted subtitles across sentence boundaries", () => {
+  const stanford = 'Fireside Chat: "What is the Stanford Woods Institute for the Environment? A journey into the world\'s most pressing environmental problems"';
+  const descriptions = [
+    stanford,
+    'A conversation: "What comes next? A journey together! An evening of discovery"',
+    'Hear "What comes next? A journey together" and "Why now? A shared future"',
+    'A complete sentence. "What comes next? A journey together"',
+    'Hear "A new beginning." A complete subtitle',
+  ];
+  for (const description of descriptions) {
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+  assert.equal(polishDescription(stanford.replaceAll('"', '“').replace(/“$/, '”')), stanford);
+});
+
+test("still removes genuinely incomplete quote tails and scraper metadata", () => {
+  for (const [raw, expected] of [
+    ['A complete sentence. This fragment has an "unfinished quote', 'A complete sentence.'],
+    ['Hear "A new beginning." This fragment has an "unfinished quote', 'Hear "A new beginning."'],
+    ['A complete sentence. This fragment stops in a […]', 'A complete sentence.'],
+    ['Hear "A new beginning." Wheelchair Accessible', 'Hear "A new beginning."'],
+    ['A complete sentence. Register', 'A complete sentence.'],
+  ]) {
+    assert.equal(polishDescription(raw), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+});
+
+test("still normalizes shouted prose and source punctuation", () => {
+  assert.equal(cleanTitle("KID Cudi and ALL Things"), "Kid Cudi and All Things");
+  assert.equal(cleanTitle("A CIVIC Conversation"), "A Civic Conversation");
+  assert.equal(polishDescription("JOIN us for a SPECIAL PERFORMANCE."), "Join us for a Special Performance.");
+  assert.equal(polishDescription("At 7:30 p.m.. RSVP is required."), "At 7:30 p.m. RSVP is required.");
+});
