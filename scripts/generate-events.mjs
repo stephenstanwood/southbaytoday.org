@@ -949,6 +949,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // Attendance copy and source-published museum/theatre/venue initials. Use
   // the same protection in titles and both description casing passes.
   "RSVP", "MOAH", "SBMT", "BJ",
+  // Buddhist Community at Stanford, as styled on its own meditation listing:
+  // https://events.stanford.edu/event/bcas-weekly-meditation
+  "BCAS",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.

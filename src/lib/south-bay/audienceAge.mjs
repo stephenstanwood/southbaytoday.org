@@ -103,6 +103,12 @@ const NON_AUDIENCE_AGE_PHRASES = [
   /\bbabysit(?:ting|ter)\s+(?:available|provided)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
 ];
 
+// An academic talk can study storytime without being a children's program.
+// Strip only that explicit subject phrase, leaving real audience ages,
+// children's activities and adult restrictions to the usual classifiers.
+const ACADEMIC_TALK_TITLE = /\b(?:lecture|talk|symposium|conference|panel)\b/i;
+const STORYTIME_AS_SUBJECT = /\bstory ?times?\b(?=\s+as\s+(?:a|an)\b)/gi;
+
 // Title-only kid signals — "X for Kids/Children" pattern where the title
 // ENDS with the kid audience tag. Title-restricted because descriptions
 // commonly say "great for kids and adults" or "programs for kids in need"
@@ -127,6 +133,7 @@ export function classifyAudienceAge(event) {
   const desc = String(event.description || "").slice(0, 400);
   let hay = `${title}\n${desc}`;
   for (const r of NON_AUDIENCE_AGE_PHRASES) hay = hay.replace(r, "");
+  if (ACADEMIC_TALK_TITLE.test(title)) hay = hay.replace(STORYTIME_AS_SUBJECT, "");
 
   const isKids =
     KIDS_SIGNALS.some((r) => r.test(hay)) ||

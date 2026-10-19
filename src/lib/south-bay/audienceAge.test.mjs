@@ -177,3 +177,23 @@ test("'ages 12 to 25' young-adult ranges do NOT classify as kids", () => {
     "kids",
   );
 });
+
+test("lectures discussing story time are not themselves children's storytimes", () => {
+  const lecture = ev(
+    "WGSS Lecture: Drag Story Time as a Site of Resistance, Queer World-Making and Community Building",
+    "SJSU Women, Gender & Sexuality Studies Program presents The Carol Mukhopadhyay Feminist Lecture Series Drag Story Time as a Site of Resistance, Queer World-Making and Community Building Danny…",
+  );
+  assert.equal(classifyAudienceAge(lecture), "all");
+  assert.equal(classifyAudienceAge(ev("Research Talk: Storytime as an Educational Practice")), "all");
+
+  // Real programs, explicit ages, structured audiences and adult restrictions
+  // retain their own evidence; a lecture word alone never cancels those gates.
+  assert.equal(classifyAudienceAge(ev("Drag Story Time", "Join us for stories.")), "kids");
+  assert.equal(classifyAudienceAge(ev("Storytime as a Family Tradition", "Read together.")), "kids");
+  assert.equal(classifyAudienceAge(ev("Lecture and Storytime for Kids", "Ages 5-8.")), "kids");
+  assert.equal(classifyAudienceAge({ ...lecture, description: "For ages 8-12." }), "kids");
+  assert.equal(classifyAudienceAge({ ...lecture, sourceAudiences: ["Children"] }), "kids");
+  assert.equal(classifyAudienceAge({ ...lecture, sourceAudiences: ["Adults"] }), "adult");
+  assert.equal(classifyAudienceAge({ ...lecture, description: "18+ only." }), "adult");
+  assert.equal(classifyAudienceAge(lecture), "all"); // repeat calls are stable
+});
