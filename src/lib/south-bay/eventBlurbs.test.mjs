@@ -30,6 +30,21 @@ import {
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
+test("both blurb prompts omit a book selection cut off by the description limit", () => {
+  const event = {
+    title: "Informed Community Book Club", venue: "Los Gatos Library",
+    description: "Join us for the Informed Community Book Club, a space dedicated to exploring and discussing pertinent social, economic, and political issues. If you are interested in participating in our democratic institutions or just making friends, join us! November's book will be The Corporate Sabotage of America's Future and What We Can Do About It, by Robert Weissman.",
+  };
+  for (const prompt of [buildUserPrompt([{ event }]), buildUniqueUserPrompt(event, [])]) {
+    assert.match(prompt, /join us! \[TRUNCATED/);
+    assert.doesNotMatch(prompt, /November's book|The Corpora/);
+  }
+
+  const complete = { ...event, description: "Discuss The Corporate Sabotage of America's Future and What We Can Do About It." };
+  assert.ok(buildUserPrompt([{ event: complete }]).includes(`desc: ${complete.description}`));
+  assert.doesNotMatch(buildUserPrompt([{ event: complete }]), /TRUNCATED/);
+});
+
 test("batch and uniqueness prompts distinguish online attendance from a campus venue", () => {
   const event = {
     title: "Web Help", venue: "Stanford University", city: "palo-alto", date: "2026-10-15",

@@ -692,6 +692,7 @@ Strict rules:
 - A description marked [NONE] means we have no description. Write only what the title, venue, and category state plainly, and stay general. Do not invent difficulty, distance, duration, terrain, skill level, age suitability, price, or what is provided.
 - Never invent a musical genre, lineup, or whether performers are cover/tribute acts or original members. Those identities must be stated in the source title or description; a decade-themed tour title proves none of them.
 - A description marked [TRUNCATED] is cut off mid-sentence. Write only from the text you can actually see. NEVER complete or guess the missing part, and never state what attendees should bring, what is provided or included, whether registration is needed, or what anything costs unless that fact appears in full in the visible text. Getting this backwards sends readers to an event unprepared.
+- Name a book, film, or other work only when its complete title is visible in the source. Never complete or rename a partial title; omit the name instead.
 - NEVER say: "real event", "only today", "one-time", "unforgettable", "anchor event", "right now".
 - NEVER use AI-marketing tone words: "legendary", "iconic", "magical", "whimsical", "cozy", "laid-back", "charming", "delightful", "must-see", "world-class", "hidden gem", "nestled", "tucked away", "quaint", "powerhouse", "vibrant", "bustling", "immersive", "tapestry", "delve". State what the act/event is concretely instead (e.g. "Grammy-winning vocalist", "six-piece Hawaiian reggae band").
 - NEVER mention distance, travel time, "near", "nearby", "close to", "minutes from".
@@ -824,8 +825,18 @@ export function blurbInventsTruncatedDetail(blurb, event) {
 function descPromptLine(description) {
   const full = String(description || "").replace(/\s+/g, " ").trim();
   if (!full) return "desc: [NONE — no description available for this event]";
-  const d = full.slice(0, 280);
+  let d = full.slice(0, 280);
   const cut = isTruncatedDescription(full) || d.length < full.length;
+  if (cut) {
+    // A 280-character cut exposed "The Corpora" from a longer book title;
+    // the cached blurb called it "The Corporation". Prefer a complete sentence;
+    // if none fits, at least omit the word cut by the character limit.
+    const visible = visibleDescription(d);
+    const ends = [...visible.matchAll(/[.!?]["'”’)\]]*(?=\s|$)/g)];
+    const last = ends.at(-1);
+    if (last) d = visible.slice(0, last.index + last[0].length);
+    else if (d.length < full.length && /\S/.test(full[d.length])) d = d.replace(/\S+$/, "").trimEnd();
+  }
   return `desc: ${d}${cut ? " [TRUNCATED — text is cut off here]" : ""}`;
 }
 
