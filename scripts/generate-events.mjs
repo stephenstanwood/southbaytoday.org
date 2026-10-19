@@ -946,7 +946,16 @@ const SOURCE_EVENT_ACRONYMS = [
   // Caitlin Burke's published law degree. Preserve the source's initials.
   // Evidence: docs/qa/2026-10-18-0507-fact-check.md.
   "DAAAS", "JD",
+  // Attendance copy and source-published museum/theatre/venue initials. Use
+  // the same protection in titles and both description casing passes.
+  "RSVP", "MOAH", "SBMT", "BJ",
 ];
+
+// Roman numerals in wars, sequels and personal names are not shouted words.
+// Require canonical numeral order rather than accepting any IVXLCDM run.
+function isRomanEventNumeral(word) {
+  return /^(?=[IVXLCDM]+$)M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})$/.test(word);
+}
 
 function fixProperNouns(text) {
   let t = String(text ?? "");
@@ -1281,7 +1290,7 @@ function cleanTitle(title) {
     // Same shape covers B52s, MC5, SR71. Only guards a digit that FOLLOWS the
     // run: a run preceded by a digit ("49ERS") is an ordinary shouted word.
     const keepsCase = (w, offset, src) =>
-      KEEP_UPPER.has(w) || (w.length <= 3 && /^\d/.test(src.slice(offset + w.length)));
+      KEEP_UPPER.has(w) || isRomanEventNumeral(w) || (w.length <= 3 && /^\d/.test(src.slice(offset + w.length)));
     t = t.replace(re, (w, offset, src) =>
       keepsCase(w, offset, src) ? w : w[0] + w.slice(1).toLowerCase(),
     );
@@ -2158,7 +2167,7 @@ function polishDescription(text) {
   // (IAPP)" — never shouting. Six of those shipped as "(Baqc)"/"(Mcosj)"/
   // "(Iapp)" on 2026-09-15; the shape is the guard, so no list entry is needed.
   t = t.replace(/\b[A-Z]{4,}\b/g, (w, offset, src) => (
-    KEEP_UPPER.has(w) || (src[offset - 1] === "(" && src[offset + w.length] === ")")
+    KEEP_UPPER.has(w) || isRomanEventNumeral(w) || (src[offset - 1] === "(" && src[offset + w.length] === ")")
       ? w
       : w[0] + w.slice(1).toLowerCase()
   ));
@@ -2213,7 +2222,7 @@ function polishDescription(text) {
     // FC is unambiguously a football-club abbreviation in English body copy.
     "FC",
   ]);
-  t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => KEEP_UPPER_SHORT.has(w) ? w : w[0] + w.slice(1).toLowerCase());
+  t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => (KEEP_UPPER_SHORT.has(w) || isRomanEventNumeral(w)) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.
   // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
   // copy ("Pay Pal Park") survives polishing intact.
@@ -2350,11 +2359,16 @@ function polishDescription(text) {
   if (kept.length > 1) {
     const last = kept[kept.length - 1].trim();
     const prev = kept[kept.length - 2].trim();
-    if (!/[.!?…]$/.test(last) && /[.!?…]$/.test(prev)) {
-      const openQuotes = (last.match(/"/g) || []).length;
-      const hasUnclosedQuote = openQuotes % 2 === 1;
+    const endsSentence = (s) => /[.!?…]["'’”)\]]*$/.test(s);
+    const isBracketTruncation = /\[(?:…|\.\.\.)\]\s*$/.test(last);
+    if ((!endsSentence(last) || isBracketTruncation) && endsSentence(prev)) {
+      const tailQuotes = (last.match(/"/g) || []).length;
+      const totalQuotes = (kept.join(" ").match(/"/g) || []).length;
+      // A closing quote after a question mark may belong to an opening quote
+      // in an earlier fragment. Drop only a tail that introduces an unmatched
+      // quote; a balanced question/subtitle must survive as complete copy.
+      const hasUnclosedQuote = tailQuotes % 2 === 1 && totalQuotes % 2 === 1;
       const isMetadataLabel = /^(ADA Accommodation Requests|Wheelchair Accessible|Reading Levels|Hearing Loop|Audio Description|Closed Captioning|Sign Language Interpretation|Sensory[\s-]?Friendly|Accessibility Features?|Special Accommodations?)\b/i.test(last);
-      const isBracketTruncation = /\[(?:…|\.\.\.)\]\s*$/.test(last);
       // Bare call-to-action verb left dangling when the scraper truncated the
       // CTA sentence mid-phrase (e.g. "...accompanied by an adult. Register"
       // from a cut "Register at the door"). The complete CTA forms are dropped
