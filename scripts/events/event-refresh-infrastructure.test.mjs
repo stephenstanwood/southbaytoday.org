@@ -53,7 +53,7 @@ test("independent watchdog runs repeatedly and can restore the primary agent", (
   assert.match(plist, /<key>StartInterval<\/key>\s*<integer>3600<\/integer>/);
   assert.match(plist, /<key>RunAtLoad<\/key>\s*<true\/>/);
   assert.match(watchdog, /install-mini-refresh\.sh"\), "--refresh-only"/);
-  assert.match(watchdog, /scheduled-refresh\.mjs"\), "--force"/);
+  assert.match(watchdog, /scheduled-refresh\.mjs"\), "--force", "--wait-for-lock"/);
 });
 
 test("primary and watchdog mutually restore one another", () => {
