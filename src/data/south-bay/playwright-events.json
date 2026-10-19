@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-18T15:04:12.415Z",
+    "generatedAt": "2026-10-19T02:17:09.332Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
     "eventCount": 449,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (108)",
+      "Mountain View Public Library (107)",
       "Los Gatos Library (112)",
       "San Jose Jazz (14)",
       "Linden Tree Books (12)",
-      "History San Jose (4)",
+      "History San Jose (6)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (6)",
       "ICA San José (3)",
@@ -18,15 +18,15 @@
       "San Jose Theaters (19)",
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (4)",
-      "Santana Row (5)",
+      "Santana Row (4)",
       "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (77)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (3)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 113,
+        "count": 112,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -125,7 +125,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 8,
+        "count": 12,
         "error": null,
         "sources": [
           "History San Jose"
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null,
         "sources": [
           "Santana Row"
@@ -338,37 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 3,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 3 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "129f9cb0a496",
-      "title": "Spirit of '76: A Look Back at Mountain View's Bicentennial",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "2:00 PM",
-      "endTime": "3:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Learn how the “Spirit of ‘76” excited the residents of Mountain View as they celebrated the Bicentennial. The entire year of 1976 was filled with parades, lectures, pageants, kites, fire hydrants and more. See examples of the community coming together to learn and participate in the commemoration of the Declaration of Independence. Participants will then create artwork about how they are feeling about the 250th anniversary of American independence. We'll put the artwork together to form a \"quilt\" in the spirit of the Bicentennial Quilt created by a group of local women in 1976. Participants will have a chance to conduct a gallery walk to observe and reflect on the other squares in our community quilt. This event is generously sponsored by the Friends of the Mountain View Library.",
-      "sourceAudiences": [
-        "Adults",
-        "Seniors"
-      ],
-      "url": "https://mountainview.libcal.com/event/17713417",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "66b6c87ec741",
       "title": "Board of Library Trustees Meeting",
@@ -582,7 +563,7 @@
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
       "city": "mountain-view",
-      "registration": "required",
+      "registration": "full",
       "category": "arts",
       "cost": "free",
       "description": "Step into the world of a mysterious mansion where one fateful evening takes a deadly turn. You’ll be given a character to play, complete with secrets, suspicions, and motives of your own. As the story unfolds, clues will be revealed and everyone becomes a suspect. Work with your fellow guests to uncover hidden secrets, piece together the evidence, and determine who committed the murder before the mystery is solved. Will you crack the case, or will the murderer get away with it? No acting experience is necessary—just bring your imagination and your detective skills! Whether you’re a seasoned sleuth or simply looking for a fun and theatrical evening, everyone has a role to play in this interactive murder mystery. For Grades 9-12. Registration required.",
@@ -5535,6 +5516,40 @@
       "kidFriendly": false
     },
     {
+      "id": "1f9145761e09",
+      "title": "Gingerbread Village Workshop",
+      "date": "2026-12-11",
+      "displayDate": "Fri, Dec 11",
+      "time": "7:00 pm",
+      "endTime": "9:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://fareharbor.com/embeds/book/historysanjose/items/375330/calendar/2023/12/?full-items=yes",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "4b85ee90826c",
+      "title": "History Park Children’s Heritage Holiday",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "2:00 pm",
+      "endTime": "6:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave., San José",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://fareharbor.com/embeds/book/historysanjose/items/314585/calendar/2024/12/?full-items=yes",
+      "source": "History San Jose",
+      "kidFriendly": true
+    },
+    {
       "id": "a34ae09c5db3",
       "title": "Mariachi Viajero y Angeles Danzantes (Grades K-8)",
       "date": "2026-10-22",
@@ -5620,23 +5635,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b780636bb7e8",
-      "title": "Eureka Day",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": null,
-      "endTime": null,
-      "venue": "City Lights Theater Company",
-      "address": "529 S Second St, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://cltc.org/event/eureka-day/",
-      "source": "City Lights Theater",
-      "kidFriendly": false
-    },
-    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -5718,6 +5716,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://cltc.org/event/company/",
+      "source": "City Lights Theater",
+      "kidFriendly": false
+    },
+    {
+      "id": "b780636bb7e8",
+      "title": "Eureka Day",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": null,
+      "endTime": null,
+      "venue": "City Lights Theater Company",
+      "address": "529 S Second St, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://cltc.org/event/eureka-day/",
       "source": "City Lights Theater",
       "kidFriendly": false
     },
@@ -6380,29 +6395,6 @@
       }
     },
     {
-      "id": "0b185523645b",
-      "title": "Cars & Croissants on The Row",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "OCTOBER 18, 2026  Join us on Sunday, October 18th from 9am-12pm for the 100|OCT Cars and Croissants on The Row! Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers.Whether you’re a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.This event is FREE to attend. If you’d like to showcase your vehicle, click HERE to reserve a car display space. We look forward to seeing you on the Row!",
-      "url": "https://santanarow.com/event/cars-croissants-on-the-row/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-10-18",
-        "checkedAt": "2026-10-18T15:02:59.669Z"
-      }
-    },
-    {
       "id": "2beca39d5fee",
       "title": "Farmer Mike Pumpkin Carving",
       "date": "2026-10-24",
@@ -6422,7 +6414,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-18T15:02:59.669Z"
+        "checkedAt": "2026-10-19T02:15:50.556Z"
       }
     },
     {
@@ -6445,7 +6437,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-18T15:02:59.669Z"
+        "checkedAt": "2026-10-19T02:15:50.556Z"
       }
     },
     {
@@ -6468,7 +6460,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-18T15:02:59.669Z"
+        "checkedAt": "2026-10-19T02:15:50.557Z"
       }
     },
     {
@@ -6491,7 +6483,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-18T15:02:59.670Z"
+        "checkedAt": "2026-10-19T02:15:50.557Z"
       }
     },
     {
@@ -6897,7 +6889,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6914,7 +6906,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6931,7 +6923,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6948,7 +6940,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -6965,7 +6957,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8824,60 +8816,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d80f9e88f1c7",
-      "title": "Coyote Creek Trail BioBlitz",
-      "date": "2026-10-18",
-      "displayDate": "Sun, Oct 18",
-      "time": "9:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Coyote Creek Trail",
-      "address": "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035",
-      "city": "milpitas",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false,
-      "registration": "required",
-      "attendanceNote": "Register through Keep Coyote Creek Beautiful's Eventbrite page before attending. Meet at the Ranch Drive entrance near Alviso Milpitas Road."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false,
-      "virtual": true
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -8995,6 +8933,60 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "d80f9e88f1c7",
+      "title": "Coyote Creek Trail BioBlitz",
+      "date": "2026-10-18",
+      "displayDate": "Sun, Oct 18",
+      "time": "9:00 AM",
+      "endTime": "11:30 AM",
+      "venue": "Coyote Creek Trail",
+      "address": "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035",
+      "city": "milpitas",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false,
+      "registration": "required",
+      "attendanceNote": "Register through Keep Coyote Creek Beautiful's Eventbrite page before attending. Meet at the Ranch Drive entrance near Alviso Milpitas Road."
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false,
+      "virtual": true
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }

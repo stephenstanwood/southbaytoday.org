@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-18T11:55:32.531Z",
+  "generatedAt": "2026-10-19T02:17:18.317Z",
   "sources": {
     "fetchLosAltosHistoryEvents": {
       "status": "ok",
       "sourceUrl": "https://www.losaltoshistory.org/events/?ical=1",
-      "observedAt": "2026-10-18T11:55:31.189Z",
+      "observedAt": "2026-10-19T02:17:16.884Z",
       "events": [
         {
           "id": "los-altos-72181d7f85094787",
@@ -19,6 +19,8 @@
           "city": "los-altos",
           "category": "arts",
           "cost": null,
+          "registration": "full",
+          "attendanceNote": "In-person attendance is full. Register through the museum's event page to attend via Zoom.",
           "description": "“All men are created equal”: who did these famous lines of the Declaration of Independence actually include? This lecture by Caroline Winterer will look at women and Black people during the American…",
           "url": "https://www.losaltoshistory.org/events/not-quite-created-equal-who-got-left-out-of-the-declaration-of-independence/",
           "source": "Los Altos History Museum",
@@ -46,7 +48,7 @@
     "fetchSjJazzEvents": {
       "status": "ok",
       "sourceUrl": "https://summerfest.sanjosejazz.org/lineup",
-      "observedAt": "2026-10-18T11:55:32.531Z",
+      "observedAt": "2026-10-19T02:17:18.317Z",
       "events": []
     }
   }
