@@ -912,3 +912,26 @@ test("finishes complete source sentences without closing off links or cut-off pr
     "Details: https://example.org/review;name",
   ]) assert.equal(polishDescription(source), source);
 });
+
+test("repairs library follow-up and supply sentences while preserving attendance instructions", () => {
+  const cases = [
+    [
+      "Limited registration is intentional to allow readers rewarding one-on-one reading time with a therapy dog. More details on your confirmed time-slot, and instruction to follow once registered. Ages 8-12.",
+      "Limited registration is intentional to allow readers rewarding one-on-one reading time with a therapy dog. More details on your confirmed time slot and instructions will follow once you register. Ages 8-12.",
+    ],
+    [
+      "Come craft beautiful, handmade cards. No experience needed, we'll have all the supplies on hand, just bring your creativity and a warm heart! Drop by and be part of a year filled with kindness.",
+      "Come craft beautiful, handmade cards. No experience needed. We'll have all the supplies on hand; just bring your creativity and a warm heart! Drop by and be part of a year filled with kindness.",
+    ],
+  ];
+  for (const [source, expected] of cases) {
+    const actual = polishDescription(source);
+    assert.equal(actual, expected);
+    assert.equal(polishDescription(actual), expected);
+  }
+  for (const source of [
+    "More details on your confirmed appointment will follow. Registration required.",
+    "No experience needed, but registration is required. Bring your own supplies.",
+    "Details: https://example.org/More-details-on-your-confirmed-time-slot?supplies=No-experience-needed",
+  ]) assert.equal(polishDescription(source), source);
+});

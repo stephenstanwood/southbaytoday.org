@@ -1988,7 +1988,11 @@ function polishDescription(text) {
     .replace(/\bMonday Morning book club\b/g, "Monday Morning Book Club")
     .replace(/\bA perfect follow up to\b/g, "A perfect follow-up to")
     .replace(/\bcollection- (?=don't worry\b)/g, "collection — ")
-    .replace(/\bhand- (?=it's up to you\b)/g, "hand — ");
+    .replace(/\bhand- (?=it's up to you\b)/g, "hand — ")
+    .replace(/\bMore details on your confirmed time-slot, and instruction to follow once registered\./g,
+      "More details on your confirmed time slot and instructions will follow once you register.")
+    .replace(/\bNo experience needed, we'll have all the supplies on hand, just bring\b/g,
+      "No experience needed. We'll have all the supplies on hand; just bring");
 
   // Rich-text library lists also arrive as plain words with all item breaks
   // lost. Restore only these supplied item labels, preserving every service,
