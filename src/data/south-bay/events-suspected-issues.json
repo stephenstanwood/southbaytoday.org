@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-19T15:05:44.773Z"
+    "auditedAt": "2026-10-19T19:10:55.485Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1804,
+    "total": 1802,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -17,7 +17,7 @@
     "soft": [
       {
         "id": "inbound-9542c24070ff7e38",
-        "title": "Hands Only CPR/AED & Choking Relief Training",
+        "title": "Hands-Only CPR/AED & Choking Relief Training",
         "city": "monte-sereno",
         "date": "2026-10-22",
         "location": "Monte Sereno City Hall",
@@ -33,14 +33,15 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 209,
+    "total": 226,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 2,
       "info": 0
     },
     "byReason": {
-      "unknown-slug": 1
+      "unknown-slug": 1,
+      "virtual-not-flagged": 1
     },
     "hard": [],
     "soft": [
@@ -55,6 +56,20 @@
             "severity": "soft",
             "reason": "unknown-slug",
             "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mvffkize_xup4js",
+        "title": "Opposing Viewpoints Virtual Library Talk",
+        "city": null,
+        "date": "2026-10-21T11:00:00-07:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
           }
         ]
       }

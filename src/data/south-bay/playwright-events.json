@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-19T15:03:54.050Z",
+    "generatedAt": "2026-10-19T19:07:59.123Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 443,
+    "eventCount": 446,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (107)",
@@ -18,7 +18,7 @@
       "San Jose Theaters (20)",
       "Children's Discovery Museum (5)",
       "Guadalupe River Park Conservancy (4)",
-      "Santana Row (4)",
+      "Santana Row (7)",
       "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (76)",
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 4,
+        "count": 7,
         "error": null,
         "sources": [
           "Santana Row"
@@ -6333,7 +6333,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-19T15:02:38.581Z"
+        "checkedAt": "2026-10-19T19:06:43.362Z"
       }
     },
     {
@@ -6356,7 +6356,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-19T15:02:38.581Z"
+        "checkedAt": "2026-10-19T19:06:43.362Z"
       }
     },
     {
@@ -6379,7 +6379,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-19T15:02:38.582Z"
+        "checkedAt": "2026-10-19T19:06:43.362Z"
       }
     },
     {
@@ -6402,7 +6402,76 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-19T15:02:38.583Z"
+        "checkedAt": "2026-10-19T19:06:43.363Z"
+      }
+    },
+    {
+      "id": "3d2ddac93b55",
+      "title": "Spirit of The Row",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, photos with Santa, balloons, and more.Spirit of The Row Dates: December 1st, 8th, & 15th.Spirit of The Row Line Up to be announced soon!",
+      "url": "https://santanarow.com/event/spirit-of-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-01",
+        "checkedAt": "2026-10-19T19:06:43.366Z"
+      }
+    },
+    {
+      "id": "8b3387287baf",
+      "title": "Photos with Santa Claus",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 1, 2026  Get into the holiday spirit with free photos with Santa and Mrs. Claus in the Oak Tree Lounge (in front of Blue Bottle) on December 1, 8, and 15 from 6pm–8pm during Spirit of The Row—capture a festive moment with the merry duo!",
+      "url": "https://santanarow.com/event/photos-with-santa-claus/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-01",
+        "checkedAt": "2026-10-19T19:06:43.366Z"
+      }
+    },
+    {
+      "id": "4751761886f4",
+      "title": "Cars & Croissants on The Row",
+      "date": "2026-12-13",
+      "displayDate": "Sun, Dec 13",
+      "time": "9:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 13, 2026  Join us on Sunday, December 13th from 9am-12pm for the 100|OCT Cars and Croissants on The Row! Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers.Whether you’re a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.This event is FREE to attend. If you’d like to showcase your vehicle, click HERE to reserve a car display space. We look forward to seeing you on the Row!",
+      "url": "https://santanarow.com/event/cars-croissants-on-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-13",
+        "checkedAt": "2026-10-19T19:06:43.366Z"
       }
     },
     {
