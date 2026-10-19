@@ -896,6 +896,20 @@ const TITLE_FIXES = {
   "12-36 Month Olds": "12-36-Month-Olds",
   "Witches Cauldron Slime": "Witches' Cauldron Slime",
   "Curator Led Talk": "Curator-Led Talk",
+  "Grade 4 - 8": "Grades 4-8",
+  "Homework Help for K-6 Grade": "Homework Help for Grades K-6",
+  "Self Portraits": "Self-Portraits",
+  "Hands Only CPR": "Hands-Only CPR",
+  // Space prose alternatives without rewriting acronym pairs (CPR/AED,
+  // CI/CD), URLs, or an artwork's supplied Dark/Night title.
+  "Mandarin/English": "Mandarin / English",
+  "Craft/Múa": "Craft / Múa",
+  "Baby/Toddler": "Baby / Toddler",
+  "Beginners/Improvers": "Beginners / Improvers",
+  "Knitting/Crocheting/Tatting/Bobbin Lace": "Knitting / Crocheting / Tatting / Bobbin Lace",
+  "Halloween/Fall": "Halloween / Fall",
+  "Global/Spiritual": "Global / Spiritual",
+  "Human/Agent": "Human / Agent",
 };
 
 // Misspelled proper nouns that a source repeats in BOTH the title and the blurb.
@@ -1952,7 +1966,42 @@ function polishDescription(text) {
     .replace(/\b15 to 20 minute program\b/g, "15- to 20-minute program")
     .replace(/\btwenty to twenty-five minute storytime\b/g, "twenty- to twenty-five-minute storytime")
     .replace(/\bWitches Cauldron Slime\b/g, "Witches' Cauldron Slime")
-    .replace(/\bSTEM related\b/g, "STEM-related");
+    .replace(/\bSTEM related\b/g, "STEM-related")
+    .replace(/\bflannel board story, fingerplay and a craft project with Children Librarian\b/g,
+      "a flannel board story, fingerplay, and a craft project with a children's librarian")
+    .replace(/\bhabrán juguetes\b/g, "habrá juguetes")
+    .replace(/\bTime magazine, one of the Best (?:Ya|YA) Books of All Time\b/g,
+      "Time magazine as one of the Best YA Books of All Time")
+    .replace(/\bMonday Morning book club\b/g, "Monday Morning Book Club")
+    .replace(/\bA perfect follow up to\b/g, "A perfect follow-up to")
+    .replace(/\bcollection- (?=don't worry\b)/g, "collection — ")
+    .replace(/\bhand- (?=it's up to you\b)/g, "hand — ");
+
+  // Rich-text library lists also arrive as plain words with all item breaks
+  // lost. Restore only these supplied item labels, preserving every service,
+  // contact, and appointment condition in the surrounding copy.
+  t = t.replace(
+    /Basic smartphone, tablet, and computer help Setting up and using Email Downloading and using apps Making video calls \(Zoom, FaceTime, Google Meet, etc\.\) Browsing the internet \(search engine basics, making simple searches, etc\.\) Navigating the SJPL website and digital resources(?: How to use 311 app)?(?= \*Please note:)/g,
+    (list) => "basic smartphone, tablet, and computer help; setting up and using email; downloading and using apps; making video calls (Zoom, FaceTime, Google Meet, etc.); browsing the internet (search engine basics, making simple searches, etc.); navigating the SJPL website and digital resources"
+      + (list.endsWith("How to use 311 app") ? "; how to use the 311 app." : "."),
+  );
+  t = t.replace(/\. \*Please note: Tech Mentor/g, ". Please note: Tech Mentor");
+  t = t.replace(
+    /Ayuda básica con teléfonos inteligentes, tabletas y computadoras Configurar y usar el correo electrónico Descargar y usar aplicaciones Hacer videollamadas \(Zoom, FaceTime, Google Meet, etc\.\) Navegar por internet \(conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc\.\) Navegar el sitio web y los recursos digitales de SJPL Cómo usar la aplicación 311 \* Ten en cuenta:/g,
+    "ayuda básica con teléfonos inteligentes, tabletas y computadoras; configurar y usar el correo electrónico; descargar y usar aplicaciones; hacer videollamadas (Zoom, FaceTime, Google Meet, etc.); navegar por internet (conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc.); navegar el sitio web y los recursos digitales de SJPL; cómo usar la aplicación 311. Ten en cuenta:",
+  );
+  t = t.replace(
+    /Submitting an online job application: Downloading an e-book/g,
+    "Submitting an online job application; downloading an e-book",
+  );
+  t = t.replace(
+    /help with: Changing a tire Adjusting gears and brakes Identifying that mysterious noise, and more!/g,
+    "help with changing a tire, adjusting gears and brakes, identifying that mysterious noise, and more!",
+  );
+  t = t.replace(
+    /Prevención del cáncer Factores de riesgo Síntomas Detección, diagnóstico y tratamiento Dos participantes/g,
+    "prevención del cáncer; factores de riesgo; síntomas; detección, diagnóstico y tratamiento. Dos participantes",
+  );
   // Comma runs from flattened SCCLD/SJPL link lists ("Chinese.,,, For",
   // "Thursdays,, 1:30 PM"). Runs before sentence splitting, which otherwise
   // leaves a stray "Chinese., For".
@@ -2314,6 +2363,8 @@ function polishDescription(text) {
     // 2-letter club designation wasn't mirrored from cleanTitle's KEEP_UPPER.
     // FC is unambiguously a football-club abbreviation in English body copy.
     "FC",
+    // Young-adult book lists introduce this short acronym between title words.
+    "YA",
   ]);
   t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => (KEEP_UPPER_SHORT.has(w) || isRomanEventNumeral(w)) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.

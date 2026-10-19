@@ -60,7 +60,7 @@ test("cleanTitle keeps a bilingual parenthesized title from losing its bracket",
 test("cleanTitle still strips a plain CJK prefix", () => {
   assert.equal(
     cleanTitle("中/英文雙語說故事時間 Mandarin/English Storytime"),
-    "Mandarin/English Storytime",
+    "Mandarin / English Storytime",
   );
   assert.equal(cleanTitle("四姐 Special Noodle"), "Special Noodle");
 });

@@ -212,6 +212,53 @@ test("repairs recurring library-description grammar", () => {
   );
 });
 
+test("punctuates tech-help services while preserving optional and required appointments", () => {
+  // Two SJPL occurrences share a flattened list but have different booking
+  // rules and contacts. Copy repairs must not turn either into the other.
+  const list = "Basic smartphone, tablet, and computer help Setting up and using Email Downloading and using apps Making video calls (Zoom, FaceTime, Google Meet, etc.) Browsing the internet (search engine basics, making simple searches, etc.) Navigating the SJPL website and digital resources";
+  for (const [extra, condition] of [
+    [" How to use 311 app", "Appointments are recommended. Call (408) 808-3033 or email marlene.sanchez@sjlibrary.org."],
+    ["", "Appointments are required. Call 408-808-3073 or email caitlin.bosworth@sjlibrary.org."],
+  ]) {
+    const actual = polishDescription(`Our Tech Mentor can help you with: ${list}${extra} *Please note: Tech Mentor support is limited to basic technology questions. ${condition}`);
+    assert.match(actual, /computer help; setting up and using email; downloading and using apps; making video calls/);
+    assert.match(actual, /Google Meet, etc\.\); browsing the internet/);
+    assert.match(actual, /simple searches, etc\.\); navigating the SJPL website/);
+    assert.match(actual, /\. Please note: Tech Mentor support is limited to basic technology questions\./);
+    assert.ok(actual.endsWith(condition), "booking rules and contact bytes survive");
+    assert.equal(actual.includes("; how to use the 311 app."), Boolean(extra));
+    assert.equal(polishDescription(actual), actual);
+  }
+});
+
+test("keeps bilingual tech-help list items and attendance text through punctuation repair", () => {
+  const source = "Nuestra asistencia de Tech Mentor puede incluir, pero no se limita a: Ayuda básica con teléfonos inteligentes, tabletas y computadoras Configurar y usar el correo electrónico Descargar y usar aplicaciones Hacer videollamadas (Zoom, FaceTime, Google Meet, etc.) Navegar por internet (conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc.) Navegar el sitio web y los recursos digitales de SJPL Cómo usar la aplicación 311 * Ten en cuenta: el apoyo de Tech Mentor se limita a preguntas básicas de tecnología. Se recomienda hacer una cita. Llame al (408) 808-3033 o escriba a marlene.sanchez@sjlibrary.org.";
+  const actual = polishDescription(source);
+  assert.match(actual, /computadoras; configurar y usar el correo electrónico; descargar y usar aplicaciones; hacer videollamadas/);
+  assert.match(actual, /Google Meet, etc\.\); navegar por internet/);
+  assert.match(actual, /recursos digitales de SJPL; cómo usar la aplicación 311\. Ten en cuenta:/);
+  assert.ok(actual.endsWith("Se recomienda hacer una cita. Llame al (408) 808-3033 o escriba a marlene.sanchez@sjlibrary.org."));
+  const words = (text) => text.toLocaleLowerCase().replace(/[^\p{L}\p{N}@]+/gu, " ").trim();
+  assert.equal(words(actual), words(source), "only punctuation and capitalization change");
+  assert.equal(polishDescription(actual), actual);
+});
+
+test("copy fixes retain technical slash pairs, artwork titles, and URL identifiers", () => {
+  for (const title of [
+    "From Silent Data Failures to Enforceable CI/CD Gates",
+    "SJSU Music presents SJSU Wind Ensemble: Dark/Night",
+    "Hands-Only CPR/AED & Choking Relief Training",
+  ]) {
+    assert.equal(cleanTitle(title), title);
+  }
+  assert.equal(cleanTitle("Bilingual Storytime: Mandarin/English"), "Bilingual Storytime: Mandarin / English");
+  assert.equal(cleanTitle("Gaming Club (Grade 4 - 8)"), "Gaming Club (Grades 4-8)");
+  const url = "https://example.org/Human/Agent?text=Time-magazine,one-of-the-Best-Ya-Books-of-All-Time";
+  assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`);
+  assert.equal(polishDescription("Best YA Books of All Time."), "Best YA Books of All Time.");
+  assert.equal(polishDescription("See ya at the library."), "See ya at the library.");
+});
+
 test("removes orphaned bilingual scrape debris while preserving English copy", () => {
   assert.equal(
     polishDescription(
@@ -558,7 +605,7 @@ test("drops dangling-reference CTA sentences the reader cannot follow", () => {
     polishDescription(
       "The Monday Morning book club meets in the Library Conference Room. Sign up for our newsletter.",
     ),
-    "The Monday Morning book club meets in the Library Conference Room.",
+    "The Monday Morning Book Club meets in the Library Conference Room.",
   );
   assert.equal(
     polishDescription(
