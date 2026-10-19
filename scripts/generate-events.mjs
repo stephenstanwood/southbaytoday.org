@@ -982,6 +982,12 @@ const SOURCE_EVENT_ACRONYMS = [
   // Preserve initials already supplied by the OCD-awareness, Silicon Valley
   // and West Valley Community Services listings; do not upcase ordinary words.
   "OCD", "SV", "WVCS",
+  // Ilia Delio's religious-order initials, as published by Stanford and
+  // Villanova. Source-supplied uppercase only; do not capitalize ordinary words.
+  "OSF",
+  // Santa Clara City's newsletter names the county's Trusted Response Urgent
+  // Support Team as TRUST. Keep its initials distinct from the ordinary word.
+  "TRUST",
   "CNBC", "MSNBC", "AIA",
 ];
 
@@ -9163,13 +9169,35 @@ function cleanHammerTitle(title) {
     .trim();
 }
 
-async function fetchGambleGardenEvents() {
+function gambleGardenPageDescription(html) {
+  // The Events Calendar API omits Gamble Garden's descriptions. Read only
+  // the event's own body, never the family/education links in site navigation.
+  const opening = /<div\b[^>]*\bclass=["'][^"']*\btribe-events-single-event-description\b[^"']*["'][^>]*>/i.exec(html);
+  if (!opening) throw new Error("Gamble Garden detail page has no event description body");
+  const body = html.slice(opening.index + opening[0].length);
+  let depth = 1;
+  for (const tag of body.matchAll(/<\/?div\b[^>]*>/gi)) {
+    depth += /^<\//.test(tag[0]) ? -1 : 1;
+    if (depth === 0) return stripHtml(body.slice(0, tag.index).replace(/<\/li\s*>/gi, "; "));
+  }
+  throw new Error("Gamble Garden event description body is incomplete");
+}
+
+async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms)) } = {}) {
   console.log("  ⏳ Gamble Garden...");
   try {
     const today = todayPT();
     const events = [];
+    const descriptions = new Map();
+    let requested = false;
+    const beforeRequest = async () => {
+      // https://www.gamblegarden.org/robots.txt specifies Crawl-delay: 10.
+      if (requested) await wait(10_000);
+      requested = true;
+    };
     for (let page = 1; page <= 5; page++) {
       const url = `https://www.gamblegarden.org/wp-json/tribe/events/v1/events?per_page=50&page=${page}`;
+      await beforeRequest();
       const data = await fetchJson(url, { timeout: 20_000 });
       const rawEvents = data.events || [];
       for (const ev of rawEvents) {
@@ -9188,7 +9216,28 @@ async function fetchGambleGardenEvents() {
           ev.venue?.zip,
         ].filter(Boolean);
         const address = addressParts.length ? addressParts.join(", ") : "1431 Waverley Street, Palo Alto, CA 94301";
-        const description = truncate(stripBareUrls(stripHtml(ev.description || ev.excerpt || "")));
+        const apiDescription = stripHtml(ev.description || ev.excerpt || "");
+        const apiExcerpt = truncate(stripBareUrls(apiDescription));
+        let sourceDescription = apiDescription;
+        if (!sourceDescription && ev.url) {
+          const detailUrl = new URL(ev.url, "https://www.gamblegarden.org");
+          if (detailUrl.protocol === "https:" && /^(?:www\.)?gamblegarden\.org$/.test(detailUrl.hostname) && detailUrl.pathname.startsWith("/event/")) {
+            const key = detailUrl.href;
+            if (!descriptions.has(key)) {
+              await beforeRequest();
+              const html = await fetchText(key, { timeout: 20_000 });
+              descriptions.set(key, gambleGardenPageDescription(html));
+            }
+            sourceDescription = descriptions.get(key);
+          }
+        }
+        // Display a complete opening sentence from recovered page copy;
+        // retain the full source body below for audience classification.
+        // API excerpts keep their existing display length.
+        const description = apiDescription
+          ? apiExcerpt
+          : (stripBareUrls(sourceDescription).match(/^.*?[.!?](?=\s|$)/)?.[0]
+            || truncate(stripBareUrls(sourceDescription)));
         const image = ev.image?.url || "";
 
         events.push({
@@ -9202,16 +9251,20 @@ async function fetchGambleGardenEvents() {
           address,
           city: "palo-alto",
           category: inferCategory(title, description, "", venue),
-          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${description}`) ? "free" : (ev.cost ? "paid" : null),
+          // Detail text may offer free refreshments/parking; it does not
+          // establish admission. Keep the existing API price evidence.
+          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) ? "free" : (ev.cost ? "paid" : null),
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",
           source: "Gamble Garden",
           ...(image ? { image } : {}),
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|second saturday|scavenger|craft)\b/i.test(title + " " + description),
+          // Use the complete first-party audience text before truncation.
+          // A renamed title can drop "Family Night" while its body still
+          // welcomes "kids and families" or describes children's crafts.
+          kidFriendly: /\b(kids?|child(?:ren)?|famil(?:y|ies)|stor(?:y|ies)|youth|teens?|toddlers?|bab(?:y|ies)|preschool|infants?|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|second saturday|scavenger|crafts?)\b/i.test(title + " " + sourceDescription),
         });
       }
       if (page >= (data.total_pages || 1)) break;
-      await new Promise((r) => setTimeout(r, 150));
     }
 
     console.log(`  ✅ Gamble Garden: ${events.length} events`);
@@ -10782,6 +10835,7 @@ export {
   fetchFarmersMarketEvents,
   FARMERS_MARKETS,
   fetchHappyHollowEvents,
+  fetchGambleGardenEvents,
   fetchInboundEvents,
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
