@@ -20,10 +20,16 @@ export function libraryEventDetails(event, entities = {}) {
   // 60 minutes before the program." once as the series note and again inside
   // the week's own paragraph with an extra age line, so a paragraph-level Set
   // printed the ticket sentence twice in the 2026-09-15 issue.
-  const attendanceNote = uniqueSentences(`${html}\n${instructions}`
+  const attendanceParagraphs = `${html}\n${instructions}`
     .split(/<\/(?:p|li|div)>|<br\s*\/?>|\n/gi)
     .map(text)
-    .filter((paragraph) => /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b/i.test(paragraph)));
+    .filter((paragraph) => /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b/i.test(paragraph));
+  // An optional appointment must not hide the condition on walk-up access.
+  // Select only that sentence, since unused booking directions can name a
+  // different branch and the source may HTML-encode its paragraph breaks.
+  const walkUpCaveats = text(instructions).split(/(?<=[.!?])\s+/)
+    .filter((sentence) => /\b(?:drop[-\s]?ins?|walk[-\s]?ins?)\b[^.!?]*\b(?:availability|space|capacity)\b/i.test(sentence));
+  const attendanceNote = uniqueSentences([...attendanceParagraphs, ...walkUpCaveats]);
   return {
     description: text(html),
     ...(sourceAudiences.length ? { sourceAudiences } : {}),

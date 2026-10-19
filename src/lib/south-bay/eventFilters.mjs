@@ -180,6 +180,8 @@ const REGISTER_PATTERNS = [
 const DROP_IN_PATTERNS = [
   /\bfirst[-\s]come\b/i,
   /\bdrop[-\s]?in\b/i,
+  // Plural access promises count too; "no drop-ins" is not a walk-up offer.
+  /\bdrop[-\s]?ins\s+(?:(?:are|also)\s+)*(?:welcome|subject\s+to\s+availability)\b/i,
   /\bwalk[-\s]?ins?\b/i,
   /\bno\s+(advance\s+)?(registration|reservation|sign[-\s]?up|rsvp)\b/i,
   /\bregistration\s+(is\s+)?not\s+(required|needed|necessary)\b/i,

@@ -317,6 +317,30 @@ test("an ordinary drop-in library event needs no registration", () => {
   assert.equal(registrationLabel({ registration: "none" }), "");
 });
 
+test("plural drop-ins keep an optional library appointment from becoming mandatory", () => {
+  // SJPL's October 21, 2026 Santa Teresa tech-help occurrence, event
+  // 6a7b58a64cb69d003e201978: provider is null and appointments are optional.
+  for (const dropIns of ["Drop-ins", "Drop ins", "Dropins", "Drop-in"]) {
+    const instructions = `Appointment recommended. ${dropIns} subject to availability. To make an appointment, call the library.`;
+    const event = biblioEvent({ instructions });
+    assert.equal(registrationFromBiblioCommons(event), "none", dropIns);
+    assert.equal(registrationFromLibCal({ description: instructions }), "none", dropIns);
+    // A real registrar still takes precedence over a generic walk-up phrase.
+    assert.equal(registrationFromBiblioCommons(biblioEvent({ provider: "EXTERNAL", instructions })), "appointment-only");
+    assert.equal(registrationFromBiblioCommons(biblioEvent({ provider: "BIBLIO_EVENTS", instructions, isFull: true })), "full");
+    assert.equal(registrationFromBiblioCommons(biblioEvent({ provider: "BIBLIO_EVENTS", instructions, registrationClosed: true })), "closed");
+  }
+  assert.equal(registrationFromBiblioCommons(biblioEvent({ instructions: "Book an appointment for a one-on-one session." })), "appointment-only");
+  for (const instructions of [
+    "No drop-ins. Book an appointment.",
+    "Drop-ins are not permitted. Book an appointment.",
+    "We cannot accommodate drop-ins. Book an appointment.",
+  ]) {
+    assert.equal(registrationFromBiblioCommons(biblioEvent({ instructions })), "appointment-only", instructions);
+    assert.equal(registrationFromLibCal({ description: instructions }), "appointment-only", instructions);
+  }
+});
+
 test("a room capacity alone does NOT mean registration", () => {
   // Palo Alto's Open Sewing Studio, Photography Meetup and Meditation with
   // Sara all carry cap/maxSeats with no provider and nobody registered —

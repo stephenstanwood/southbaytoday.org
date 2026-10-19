@@ -73,6 +73,40 @@ test("same-day tickets stay distinct from advance registration and ordinary drop
   assert.equal(libraryEventDetails({ description: "<p>Drop in for board games.</p>" }).attendanceNote, undefined);
 });
 
+test("optional appointments retain the drop-in availability caveat through library ingestion", async (t) => {
+  // Captured from the October 21 Santa Teresa occurrence. Its unused booking
+  // directions name a different branch; preserve only the access caveat.
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-19T14:00:00Z") });
+  const { fetchBiblioEvents } = await import("../generate-events.mjs");
+  const event = {
+    id: "6a7b58a64cb69d003e201978",
+    definition: {
+      title: "One-On-One Tech Help (English or Tiếng Việt)",
+      start: "2026-10-21T10:00", end: "2026-10-21T12:00",
+      branchLocationId: "19",
+      description: "<p>Free, No Registration Required</p>",
+      registrationInfo: {
+        provider: null, cap: null, maxSeats: null,
+        instructions: "&lt;p&gt;&lt;strong&gt;Appointment recommended&lt;/strong&gt;. Drop-ins subject to availability.&lt;/p&gt;\n&lt;p&gt;To make an appointment, stop by the Vineland Library or call us at 408-808-3000.&lt;/p&gt;",
+      },
+    },
+  };
+  const original = structuredClone(event);
+  t.mock.method(globalThis, "fetch", async () => Response.json({
+    entities: { events: { [event.id]: event }, locations: { "19": { name: "Santa Teresa" } } },
+  }));
+  const [result] = await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose");
+  assert.equal(result.date, "2026-10-21");
+  assert.equal(result.time, "10:00 AM");
+  assert.equal(result.endTime, "12:00 PM");
+  assert.equal(result.venue, "Santa Teresa Library");
+  assert.equal(requiresAdvanceRegistration(result), false);
+  assert.equal(result.registrationClosesBy, undefined);
+  assert.equal(result.attendanceNote, "Drop-ins subject to availability.");
+  assert.doesNotMatch(result.attendanceNote, /Vineland|408-808-3000|&lt;|<p>/);
+  assert.deepEqual(event, original);
+});
+
 test("attendanceNote dedupes a ticket sentence repeated across paragraphs", () => {
   // SJPL After-School STEaM at Almaden (sjpl 6a73854af213992f00c9cfdd): the
   // series note and the week's own paragraph both open with the same two
