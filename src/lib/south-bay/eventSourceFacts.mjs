@@ -7,6 +7,20 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The museum's dated dedication page says free with RSVP. The published
+  // description omits that line, and the adapter defaulted to paid with no
+  // signup requirement. Preserve the full-page admission facts through refreshes.
+  // https://www.jamsj.org/upcoming-events/cgm-dedication
+  // Evidence: docs/qa/2026-10-18-2207-fact-check.md.
+  {
+    date: "2026-11-14",
+    url: "https://www.jamsj.org/upcoming-events/cgm-dedication",
+    facts: {
+      cost: "free",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free with RSVP. See the museum's event page for signup details.",
+    },
+  },
   // The city's dated program supersedes an earlier newsletter's 4:30 PM end.
   // Match the raw intake location too so a replacement ID keeps the source link.
   // https://www.paloalto.gov/Events-Directory/Community-Services/2026-Fall-Family-Day

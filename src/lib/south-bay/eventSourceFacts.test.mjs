@@ -15,6 +15,37 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the November 14 JAMsj dedication preserves free admission and required RSVP through publication", async () => {
+  const raw = {
+    id: "replacement-museum-id", date: "2026-11-14",
+    title: "World War II Japanese American Veteran Monument: Dedication & Gathering",
+    venue: "Japanese American Museum of San Jose", city: "san-jose",
+    time: "9:30 AM", endTime: "11:30 AM", cost: "paid",
+    url: "https://www.jamsj.org/upcoming-events/cgm-dedication",
+    description: "A community gathering and monument dedication.",
+    blurb: "Gather at the museum for a monument dedication.",
+  };
+  const original = structuredClone(raw);
+  const expected = {
+    ...raw, cost: "free", registration: "required",
+    attendanceNote: "Free with RSVP. See the museum's event page for signup details.",
+  };
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], expected);
+  assert.equal(requiresAdvanceRegistration(events[0]), true);
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(raw, original);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-11-14" },
+    { ...raw, url: "https://www.jamsj.org/upcoming-events/another-dedication" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Fall Family Day keeps the city's dated end time, free admission and source through intake", async () => {
   const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
   const url = "https://www.paloalto.gov/Events-Directory/Community-Services/2026-Fall-Family-Day";
