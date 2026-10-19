@@ -38,6 +38,7 @@ function healthyOutput() {
     inputSnapshots: [
       { name: "playwright-events", status: "ok", timestamp: "2026-07-20T04:20:00.000Z" },
       { name: "inbound-events", status: "ok", timestamp: "2026-07-20T04:25:00.000Z" },
+      { name: "official-event-sources", status: "ok", timestamp: "2026-07-20T04:26:00.000Z" },
     ],
   };
 }
@@ -51,7 +52,7 @@ test("accepts a fresh complete refresh output", () => {
 
 test("verifies additional consumed snapshots instead of ignoring stale official sources", () => {
   const data = healthyOutput();
-  data.inputSnapshots.push({ name: "official-event-sources", status: "ok", timestamp: "2026-07-20T04:20:00Z" });
+  data.inputSnapshots.at(-1).timestamp = "2026-07-20T04:20:00Z";
   assert.equal(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).ok, true);
   data.inputSnapshots.at(-1).timestamp = "2026-07-19T20:59:59Z";
   assert.match(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).problems.join("; "), /official-event-sources snapshot is 8.0h old/);
@@ -152,4 +153,37 @@ test("names the individual stale input rather than the whole array", () => {
   assert.equal(health.ok, false);
   assert.ok(health.problems.includes("inbound-events snapshot is stale"));
   assert.ok(!health.problems.some((problem) => problem.includes("no inputSnapshots array")));
+});
+
+test("Mini refreshes every input before a delayed GitHub check reaches eight hours", () => {
+  const state = { lastSuccessAt: "2026-07-20T04:30:00Z", head: "a".repeat(40) };
+  for (const name of ["playwright-events", "inbound-events", "official-event-sources"]) {
+    const data = healthyOutput();
+    const input = data.inputSnapshots.find((snapshot) => snapshot.name === name);
+    input.timestamp = "2026-07-20T01:00:00Z";
+    assert.equal(inspectMiniEventRefresh({ state, data, now: NOW }).ok, true,
+      `${name} at four hours still has headroom`);
+    input.timestamp = "2026-07-20T00:59:59Z";
+    const health = inspectMiniEventRefresh({ state, data, now: NOW });
+    assert.equal(health.ok, false);
+    assert.ok(health.problems.some((problem) => problem.includes(`${name} snapshot is`)));
+    assert.equal(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).ok, true,
+      "Mini must recover while GitHub would still accept the source bytes");
+    input.timestamp = "2026-07-19T20:36:00Z";
+    assert.equal(inspectMiniEventRefresh({ state, data, now: NOW }).ok, false,
+      "the actual 8.4-hour incident cannot be reported healthy");
+    assert.equal(inspectEventRefreshOutput({ data, now: NOW, snapshotMaxAgeHours: 8 }).ok, false);
+    input.timestamp = "2026-07-20T04:59:00Z";
+    assert.equal(inspectMiniEventRefresh({ state, data, now: NOW }).ok, true,
+      "a newly published source snapshot restores health");
+  }
+});
+
+test("Mini cannot lose an input snapshot while retaining a healthy pushed heartbeat", () => {
+  const state = { lastSuccessAt: "2026-07-20T04:30:00Z", head: "a".repeat(40) };
+  const data = healthyOutput();
+  data.inputSnapshots = data.inputSnapshots.filter((snapshot) => snapshot.name !== "official-event-sources");
+  const health = inspectMiniEventRefresh({ state, data, now: NOW });
+  assert.equal(health.ok, false);
+  assert.ok(health.problems.includes("required input snapshot is missing: official-event-sources"));
 });

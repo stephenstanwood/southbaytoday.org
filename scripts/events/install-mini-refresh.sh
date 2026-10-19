@@ -94,5 +94,5 @@ case "$MODE" in
 esac
 
 echo "Verified SBT event refresh agents ($MODE)."
-echo "Primary: daily 19:15 with 20:45 retry. Watchdog: every 3 hours."
+echo "Primary: daily 19:15 with 20:45 retry. Watchdog: hourly; refresh inputs after 4 hours."
 echo "Force now: /opt/homebrew/bin/node $REPO/scripts/events/scheduled-refresh.mjs --force"

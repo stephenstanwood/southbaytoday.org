@@ -50,7 +50,7 @@ test("independent watchdog runs repeatedly and can restore the primary agent", (
   const plist = read("./events-refresh-watchdog.plist");
   const watchdog = read("./refresh-watchdog.mjs");
   assert.match(plist, /org\.southbaytoday\.events-refresh-watchdog/);
-  assert.match(plist, /<key>StartInterval<\/key>\s*<integer>10800<\/integer>/);
+  assert.match(plist, /<key>StartInterval<\/key>\s*<integer>3600<\/integer>/);
   assert.match(plist, /<key>RunAtLoad<\/key>\s*<true\/>/);
   assert.match(watchdog, /install-mini-refresh\.sh"\), "--refresh-only"/);
   assert.match(watchdog, /scheduled-refresh\.mjs"\), "--force"/);
