@@ -16,6 +16,7 @@ import {
   hasRecentSuccessfulRefresh,
   RETRY_SLOT_SUPPRESSION_HOURS,
 } from "./refresh-schedule.mjs";
+import { acquireRefreshLock, WATCHDOG_LOCK_WAIT_MS } from "./refresh-lock.mjs";
 
 const PREFIX = "[events-scheduled]";
 const LOCK_TASK = "events-refresh";
@@ -146,6 +147,7 @@ function commitGeneratedData(repoRoot) {
 const args = new Set(process.argv.slice(2));
 const force = args.has("--force");
 const preflightOnly = args.has("--preflight-only");
+const waitForLock = args.has("--wait-for-lock");
 const repoRoot = process.env.SBT_EVENTS_REPO_ROOT || DEFAULT_REPO_ROOT;
 const lockScript = process.env.SBT_REPO_LOCK_SCRIPT || DEFAULT_LOCK_SCRIPT;
 const statePath = process.env.SBT_EVENTS_REFRESH_STATE || DEFAULT_STATE_PATH;
@@ -177,7 +179,11 @@ let generated = false;
 let primaryError = null;
 try {
   if (!existsSync(lockScript)) throw new Error(`required SBT repo lock is missing: ${lockScript}`);
-  lockHeld = runRepoLock(lockScript, "acquire", { allowBusy: true });
+  lockHeld = await acquireRefreshLock({
+    tryAcquire: () => runRepoLock(lockScript, "acquire", { allowBusy: true }),
+    maxWaitMs: waitForLock ? WATCHDOG_LOCK_WAIT_MS : 0,
+    onWait: (ms) => log(`shared repo lock is busy; retrying acquisition in ${ms / 1_000}s`),
+  });
   if (!lockHeld) {
     log("shared repo lock is busy; deferring to the next launchd retry slot");
     process.exitCode = 0;
