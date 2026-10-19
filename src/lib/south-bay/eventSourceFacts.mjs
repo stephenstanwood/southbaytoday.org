@@ -7,6 +7,22 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The freshly read organizer calendar replaces the author launch with a
+  // bookseller-led club for ages 9+. Its body asks readers to RSVP by email
+  // and says Kate cannot attend; the heading-only scraper omits these facts.
+  // Match title + venue, not the calendar URL shared by other events that day.
+  // https://www.lindentreebooks.com/events-calendar/
+  // Evidence: docs/qa/2026-10-19-0407-fact-check.md.
+  {
+    date: "2026-10-25",
+    title: /^Middle Grade Book Club: Brittle Magic$/i,
+    venue: /^Linden Tree Books$/i,
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      kidFriendly: true,
+      attendanceNote: "For ages 9 and up. RSVP by email using the organizer's calendar. Kate O'Shaughnessy will not attend.",
+    },
+  },
   // The museum's dated dedication page says free with RSVP. The published
   // description omits that line, and the adapter defaulted to paid with no
   // signup requirement. Preserve the full-page admission facts through refreshes.

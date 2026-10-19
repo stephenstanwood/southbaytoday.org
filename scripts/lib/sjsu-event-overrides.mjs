@@ -7,6 +7,13 @@ const SEPTEMBER_10_READING_URL =
 // in Uchida Hall 124.
 export function applyVerifiedSjsuEventOverride(event) {
   const url = String(event?.url || "").replace(/\/+$/, "");
+  // SJSU and the organizer place this conference in Savannah, Georgia,
+  // October 25–28. Exclude it even when an older metadata snapshot lacks its
+  // address; inheriting San José from the calendar would invent a local event.
+  // https://events.sjsu.edu/event/ischool-at-arma-infocon-2026
+  // https://infocon.arma.org/
+  // Evidence: docs/qa/2026-10-19-0407-fact-check.md.
+  if (url === "https://events.sjsu.edu/event/ischool-at-arma-infocon-2026") return null;
   if (url !== SEPTEMBER_10_READING_URL) return event;
   if (event.date !== "2026-09-10") return null;
 

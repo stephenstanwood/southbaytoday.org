@@ -2446,6 +2446,9 @@ function cleanVenue(raw) {
   // Stanford's Waterways field-trip page misspells the museum in its venue
   // field; the same page's program details use the correct institution name.
   v = v.replace(/\bSan Jos[eé] Musuem of Art\b/gi, "San José Museum of Art");
+  // The county names the park for Ed R. Levin; Ed is not an acronym.
+  // https://parks.santaclaracounty.gov/locations/ed-r-levin-county-park
+  v = v.replace(/\bED Levin Park\b/g, "Ed Levin Park");
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
   // LiveWhale pipes the street address after the place name:
@@ -3287,7 +3290,9 @@ function parseIcalDate(dtStr) {
  * field `event_target_audience`, while Stanford uses `event_audience`.
  * Admission comes from `free` / `ticket_cost`; an unset price is unknown,
  * and a ticket URL alone may be free registration.
- * Returns Map<localist_url, { experience, filters, free, ticket_cost }>.
+ * Keep the source address too: a university calendar can list an out-of-state
+ * conference. The publishing university does not establish the event's city.
+ * Returns Map<localist_url, { experience, filters, free, ticket_cost, address }>.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -3303,6 +3308,7 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
       map.set(ev.localist_url.replace(/\/+$/, ""), {
         experience: ev.experience, filters: ev.filters,
         free: ev.free, ticket_cost: ev.ticket_cost,
+        address: typeof ev.address === "string" ? ev.address : "",
       });
     }
   }
@@ -3621,6 +3627,7 @@ async function fetchSjsuEvents() {
     const metadataByUrl = await fetchLocalistMetadataMap("https://events.sjsu.edu");
     let skipped = 0;
     let adminSkipped = 0;
+    let locationSkipped = 0;
     let venueCityFixes = 0;
     let virtualFromSource = 0;
     const parsed = items.map((item) => {
@@ -3658,6 +3665,11 @@ async function fetchSjsuEvents() {
       const isVirtual =
         virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;
+      const address = metadata?.address || "";
+      if (!isVirtual && (namesUncoveredCaPostalCity(address) || hasOutOfAreaDestination({ venue, address }))) {
+        locationSkipped++;
+        return null;
+      }
       return applyVerifiedSjsuEventOverride({
         id: h("sjsu", item.link || item.title, item.pubDate),
         title: item.title,
@@ -3666,7 +3678,7 @@ async function fetchSjsuEvents() {
         time: displayTime(start),
         endTime: null,
         venue,
-        address: "",
+        address,
         city,
         ...(isVirtual ? { virtual: true } : {}),
         category,
@@ -3712,7 +3724,7 @@ async function fetchSjsuEvents() {
       .filter((e) => !dropIds.has(e.id))
       .map(({ _startMs, ...e }) => e);
 
-    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${adminSkipped ? `, ${adminSkipped} front-desk kiosk rows filtered` : ""}${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${venueCityFixes ? `, ${venueCityFixes} venue-vs-city corrections` : ""}${virtualFromSource ? `, ${virtualFromSource} flagged virtual by source` : ""})`);
+    console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${adminSkipped ? `, ${adminSkipped} front-desk kiosk rows filtered` : ""}${locationSkipped ? `, ${locationSkipped} out-of-area locations filtered` : ""}${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${venueCityFixes ? `, ${venueCityFixes} venue-vs-city corrections` : ""}${virtualFromSource ? `, ${virtualFromSource} flagged virtual by source` : ""})`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);

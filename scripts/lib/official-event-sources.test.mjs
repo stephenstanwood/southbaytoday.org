@@ -862,6 +862,37 @@ test("SJSU applies source audience filters even without an attendance-mode field
   }
 });
 
+test("SJSU keeps source addresses and rejects off-site conferences without extra requests", async () => {
+  const origin = "https://events.sjsu.edu";
+  const rows = [
+    ["Visiting conference", "remote", "1 International Dr, Savannah, GA 31421", "inperson"],
+    ["Campus lecture", "local", "150 E San Fernando St, San Jose, CA 95112", "inperson"],
+    ["Remote webinar", "virtual", "1 International Dr, Savannah, GA 31421", "virtual"],
+    ["Public workshop", "no-address", null, "inperson"],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, slug]) => `<item><title>${title}</title><link>${origin}/event/${slug}</link><description>Public program.</description><pubDate>2026-10-25T12:00:00-07:00</pubDate></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url) === `${origin}/calendar.xml`) return new Response(xml);
+    assert.match(String(url), /^https:\/\/events\.sjsu\.edu\/api\/2\/events\?/);
+    return Response.json({ page: { total: 1 }, events: rows.map(([, slug, address, experience]) => ({ event: {
+      localist_url: `${origin}/event/${slug}`, address, experience,
+    } })) });
+  };
+  try {
+    const events = await fetchSjsuEvents();
+    assert.deepEqual(events.map((event) => event.title), ["Campus lecture", "Remote webinar", "Public workshop"]);
+    assert.equal(events[0].address, rows[1][2]);
+    assert.equal(events[1].virtual, true);
+    assert.equal(events[2].address, "");
+    assert.equal(requested.length, 2, "reuse existing RSS and metadata reads");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("SJSU reads Localist admission instead of assuming campus events are free", async () => {
   const origin = "https://events.sjsu.edu";
   const rows = [

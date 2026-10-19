@@ -804,6 +804,11 @@ export const OUT_OF_AREA_LOCATION =
 export const COVERED_LOCATION =
   /\b(san jos[eé]|santa clara|sunnyvale|cupertino|campbell|milpitas|saratoga|los gatos|los altos|palo alto|mountain view|monte sereno|stanford|moffett)\b/i;
 
+// A source-published state + ZIP is stronger evidence than an inherited local
+// campus name. Read location fields only; a speaker's biography is not a venue.
+const NON_CA_POSTAL_LOCATION =
+  /\b(?:AK|AL|AR|AZ|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NC|ND|NE|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY)\.?\s+\d{5}(?:-\d{4})?\b/;
+
 /**
  * True when a location string carries a full "<...City>, CA 9xxxx" postal tail
  * for a place outside the coverage area. Campus feeds list off-site recruiting
@@ -832,7 +837,9 @@ export const LOCAL_DEPARTURE_TRIP =
 
 /**
  * Returns true if the event's own address/venue names an out-of-area city and
- * names no covered city — i.e. the thing physically happens outside coverage.
+ * names no covered city, or publishes an out-of-state postal address — i.e.
+ * the thing physically happens outside coverage. Virtual-only programs have
+ * no physical destination.
  *
  * Reads address/venue ONLY, never the description: descriptions name sponsors,
  * beneficiaries and "supports families in <city>" asides that are not the
@@ -848,11 +855,12 @@ export const LOCAL_DEPARTURE_TRIP =
  * San Francisco for the afternoon and books lunch in Sunnyvale.
  */
 export function hasOutOfAreaDestination(event) {
-  if (!event) return false;
+  if (!event || event.virtual === true) return false;
   const hay =
     typeof event === "string"
       ? event
       : [event.address, event.location, event.venue].filter(Boolean).join(" | ");
   if (!hay) return false;
-  return OUT_OF_AREA_LOCATION.test(hay) && !COVERED_LOCATION.test(hay);
+  return NON_CA_POSTAL_LOCATION.test(hay)
+    || (OUT_OF_AREA_LOCATION.test(hay) && !COVERED_LOCATION.test(hay));
 }

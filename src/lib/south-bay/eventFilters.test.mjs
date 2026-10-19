@@ -155,6 +155,20 @@ test("either signal is enough — an in-person label cannot override webinar cop
 
 // ── hasOutOfAreaDestination ──
 
+test("an out-of-state postal address overrides an inherited local campus name", () => {
+  const event = {
+    title: "iSchool at ARMA InfoCon 2026", city: "san-jose",
+    venue: "San Jose State University", address: "1 International Dr, Savannah, GA 31421",
+  };
+  assert.equal(hasOutOfAreaDestination(event), true);
+  assert.equal(hasOutOfAreaDestination({ ...event, virtual: true }), false);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "1 International Dr, Savannah, GA 31421-1234, USA" }), true);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "150 E San Fernando St, San Jose, CA 95112" }), false);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "", description: "Meet exhibitors from Savannah, GA 31421." }), false);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "110 GA Court, San Jose, CA 95112" }), false);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "King Library in 95112" }), false);
+});
+
 test("SJSU's Riverside conference cannot inherit the publisher's San Jose location", () => {
   const conference = {
     title: "iSchool at the California Library Association Conference",

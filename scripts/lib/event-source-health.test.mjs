@@ -24,6 +24,15 @@ import {
 
 const NOW = new Date("2026-07-20T03:00:00.000Z");
 
+test("SJSU's verified Savannah conference stays excluded without location metadata", () => {
+  const url = "https://events.sjsu.edu/event/ischool-at-arma-infocon-2026";
+  for (const date of ["2026-10-25", "2026-10-26", "2026-10-27", "2026-10-28"]) {
+    assert.equal(applyVerifiedSjsuEventOverride({ url, date, venue: "Savannah Convention Center", address: "" }), null);
+  }
+  const other = { url: "https://events.sjsu.edu/event/local-conference", date: "2026-10-25" };
+  assert.equal(applyVerifiedSjsuEventOverride(other), other);
+});
+
 test("corrects SJSU's false multi-day September 10 reading occurrence", () => {
   const url = "https://events.sjsu.edu/event/september-10-campus-reading-discussion-and-film";
   assert.equal(applyVerifiedSjsuEventOverride({ url, date: "2026-09-09" }), null);

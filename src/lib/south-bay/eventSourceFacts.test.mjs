@@ -15,6 +15,38 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Linden Tree's replacement book club retains its signup and age restrictions", async () => {
+  const raw = {
+    id: "replacement-book-club-id", date: "2026-10-25", time: "4:00 PM",
+    title: "Middle Grade Book Club: Brittle Magic", venue: "Linden Tree Books",
+    url: "https://www.lindentreebooks.com/events-calendar/", cost: "free",
+    kidFriendly: false, description: "",
+    blurb: "Discuss Brittle Magic with fellow middle grade readers.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.equal(events[0].kidFriendly, true);
+  assert.match(events[0].attendanceNote, /ages 9 and up/i);
+  assert.match(events[0].attendanceNote, /RSVP by email/i);
+  assert.match(events[0].attendanceNote, /Kate O'Shaughnessy will not attend/);
+  for (const key of ["title", "date", "time", "venue", "url", "cost", "description", "blurb"]) {
+    assert.equal(events[0][key], raw[key], key);
+  }
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-10-25" },
+    { ...raw, title: "Storytime with Oliver Chin" },
+    { ...raw, venue: "Another bookstore" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("the November 14 JAMsj dedication preserves free admission and required RSVP through publication", async () => {
   const raw = {
     id: "replacement-museum-id", date: "2026-11-14",
