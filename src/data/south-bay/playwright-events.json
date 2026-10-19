@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-19T19:07:59.123Z",
+    "generatedAt": "2026-10-19T23:21:46.408Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 446,
+    "eventCount": 447,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (107)",
@@ -18,15 +18,15 @@
       "San Jose Theaters (20)",
       "Children's Discovery Museum (5)",
       "Guadalupe River Park Conservancy (4)",
-      "Santana Row (7)",
+      "Santana Row (8)",
       "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (76)",
       "Levi's Stadium (4)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -229,7 +229,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 7,
+        "count": 8,
         "error": null,
         "sources": [
           "Santana Row"
@@ -338,12 +338,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -6333,7 +6335,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-19T19:06:43.362Z"
+        "checkedAt": "2026-10-19T23:20:30.575Z"
       }
     },
     {
@@ -6356,7 +6358,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-19T19:06:43.362Z"
+        "checkedAt": "2026-10-19T23:20:30.575Z"
       }
     },
     {
@@ -6379,7 +6381,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-19T19:06:43.362Z"
+        "checkedAt": "2026-10-19T23:20:30.575Z"
       }
     },
     {
@@ -6402,7 +6404,30 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-19T19:06:43.363Z"
+        "checkedAt": "2026-10-19T23:20:30.575Z"
+      }
+    },
+    {
+      "id": "1976efde4066",
+      "title": "Cielo Hotel Valencia Rooftop Holiday Experience",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
+      "time": "9:00 PM",
+      "endTime": null,
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "NOVEMBER 27, 2026  Beginning November 27, join us Tuesday through Saturday from 5:00–9:00 pm, for winter evenings at Cielo Rooftop at Hotel Valencia. The experience will be closed Sundays and Mondays.This holiday season, Cielo Rooftop transforms into an intimate winter retreat high above Santana Row, where seasonal warmth and elevated style come together against the backdrop of the Santa Cruz Mountains. Settle in beneath the open sky and enjoy seasonal cocktails and a curated menu of winter-inspired bites in a warm and inviting rooftop setting. Thoughtful seasonal touches and the glow of the city below create the perfect atmosphere for festive gatherings, date nights, or simply savoring the season.Click HERE for details!",
+      "url": "https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-27",
+        "checkedAt": "2026-10-19T23:20:30.575Z"
       }
     },
     {
@@ -6425,7 +6450,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-19T19:06:43.366Z"
+        "checkedAt": "2026-10-19T23:20:30.576Z"
       }
     },
     {
@@ -6448,7 +6473,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-19T19:06:43.366Z"
+        "checkedAt": "2026-10-19T23:20:30.576Z"
       }
     },
     {
@@ -6471,7 +6496,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-19T19:06:43.366Z"
+        "checkedAt": "2026-10-19T23:20:30.576Z"
       }
     },
     {
@@ -8787,41 +8812,6 @@
       "kidFriendly": true
     },
     {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -8939,6 +8929,41 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
