@@ -3,6 +3,20 @@ const SIGN_PERMIT = /\b(?:signs?|signage)\b/i;
 const SUBSTANTIVE_PROJECT =
   /\b(?:addition|commercial|demolition|housing|mixed-use|new construction|office|residential|tenant improvement|units?)\b/i;
 
+/** Nonpositive or missing valuations are unavailable, not a reported $0. */
+export function permitValuationForPrompt(permit) {
+  const value = permit?.valuation;
+  return Number.isFinite(value) && value > 0
+    ? `declared permit valuation $${value.toLocaleString("en-US")}`
+    : "permit valuation unavailable";
+}
+
+/** No supplied permit valuation establishes a zero-dollar project. */
+export function hasUnsupportedZeroPermitValuation(item) {
+  const text = `${item?.headline || ""} ${item?.summary || ""}`;
+  return /\$\s*0(?:\.0+)?(?!\d|[.,]\d)|\b(?:zero[- ]dollar|zero)\s+(?:declared\s+|permit\s+)*valuation\b|\bvaluation\s+(?:(?:is|of|was)\s+)?zero\b/i.test(text);
+}
+
 /** Keep only permits that can support a substantive Around Town item. */
 export function isAroundTownPermitCandidate(permit) {
   const description = String(permit?.description || "");

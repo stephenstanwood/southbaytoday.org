@@ -48,6 +48,8 @@ test("cleanVenue leaves a plain venue name alone", () => {
   assert.equal(cleanVenue("Cupertino Library"), "Cupertino Library");
   assert.equal(cleanVenue("Computer History Museum"), "Computer History Museum");
   assert.equal(cleanVenue("San Jose Musuem of Art"), "San José Museum of Art");
+  assert.equal(cleanVenue("Lucky Strike Milpitasu"), "Lucky Strike Milpitas");
+  assert.equal(cleanVenue("Lucky Strike Milpitas"), "Lucky Strike Milpitas");
 });
 
 // ---------------------------------------------------------------------------

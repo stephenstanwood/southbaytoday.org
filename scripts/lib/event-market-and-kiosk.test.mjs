@@ -135,6 +135,14 @@ test("holiday facility-hours notices are not events", () => {
   assert.equal(isAdminNonEvent("Hours of Operation Update", ""), true);
 });
 
+test("early library closures are hours notices, while performances remain events", () => {
+  assert.equal(isAdminNonEvent("Early Closure: Christmas Eve", "All libraries will be closing early at 5 p.m."), true);
+  assert.equal(isAdminNonEvent("Library Closing Early", ""), true);
+  assert.equal(isAdminNonEvent("All Branches Close Early", ""), true);
+  assert.equal(isAdminNonEvent("The Who's Tommy Closed Caption Performance", ""), false);
+  assert.equal(isAdminNonEvent("Closing Reception: Early Works", ""), false);
+});
+
 test("real events whose titles contain 'hours' survive", () => {
   // The qualifier list is closed for exactly this reason — both of these ran as
   // genuine listings alongside the Stanford notice.

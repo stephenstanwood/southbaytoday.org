@@ -2860,6 +2860,9 @@ function cleanVenue(raw) {
   // The county names the park for Ed R. Levin; Ed is not an acronym.
   // https://parks.santaclaracounty.gov/locations/ed-r-levin-county-park
   v = v.replace(/\bED Levin Park\b/g, "Ed Levin Park");
+  // The venue's own location page confirms this Meetup venue-field typo.
+  // https://www.luckystrikeent.com/location/lucky-strike-milpitas
+  v = v.replace(/\bLucky Strike Milpitasu\b/gi, "Lucky Strike Milpitas");
   // Remove leading "- " dash artifact from CivicPlus iCal
   v = v.replace(/^-\s+/, "");
   // LiveWhale pipes the street address after the place name:
@@ -3996,6 +3999,9 @@ const ADMIN_CHECKIN_BLURB = /\bkiosk\b|\bfront\s+desk\b|\b(?:sign|check)[\s-]?in
 // The qualifier list is deliberately closed: bare "hours" is common in real
 // event names ("Open Lab Hours", "Volunteer Workday Hours") and must not match.
 const ADMIN_HOURS_NOTICE = /\b(?:facility|facilities|operating|holiday|modified|adjusted|reduced)\s+hours\b|\bhours\s+of\s+operation\b|\bhours\s+(?:change|update|adjustment)\b/i;
+// A library's early-closing time is when attendance ends, not when an event
+// starts. Palo Alto published a 5–9 PM "Early Closure: Christmas Eve" row.
+const ADMIN_EARLY_CLOSURE = /^\s*(?:(?:all\s+)?(?:library|libraries|branches)\s+)?(?:early\s+(?:closure|clos(?:ing|es?))|clos(?:ing|es?)\s+early)\b/i;
 
 function isAdminNonEvent(title, description = "") {
   // Localist sometimes prefixes the raw RSS title with a date. Normalize it
@@ -4004,6 +4010,7 @@ function isAdminNonEvent(title, description = "") {
   const t = cleanTitle(String(title || ""));
   if (ADMIN_KIOSK_TITLE.test(t)) return true;
   if (ADMIN_HOURS_NOTICE.test(t)) return true;
+  if (ADMIN_EARLY_CLOSURE.test(t)) return true;
   if (ADMIN_BARE_CHECKIN_TITLE.test(t)) return ADMIN_CHECKIN_BLURB.test(`${t} ${description}`);
   return false;
 }

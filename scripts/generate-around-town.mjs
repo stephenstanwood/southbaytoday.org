@@ -18,7 +18,7 @@ import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./lib/around-town-meetings.mjs";
-import { isAroundTownPermitCandidate } from "./lib/around-town-permits.mjs";
+import { isAroundTownPermitCandidate, permitValuationForPrompt, hasUnsupportedZeroPermitValuation } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -457,16 +457,19 @@ async function gatherPermitItems() {
   // Batch all notable permits into one Claude call per city
   const items = [];
   for (const { config, permits, sourceUrl } of allNotable) {
-    const permitText = permits.map((p) =>
+    const permitText = permits.map((p) => {
       // `subtype` carries the permit's use type ("School/Daycare",
       // "Medical/Dental Clinic", "Commercial/Industrial"). It used to be
       // withheld, so on 2026-09-03 a $28.6M School/Daycare permit at 4333
       // Rincon Av shipped as a generic "commercial project" whose summary
       // guessed at the use from the unit count ("No unit count is listed,
       // suggesting a non-residential build") — a guess the source could have
-      // answered outright. Pass it through.
-      `- ${p.categoryLabel || p.category}${p.subtype ? ` [use type: ${p.subtype}]` : ""}${p.workType ? ` [work type: ${p.workType}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} (declared permit valuation $${(p.valuation || 0).toLocaleString()}, source-reported dwelling units ${p.units || 0}, issued ${p.issueDate})`
-    ).join("\n");
+      // answered outright. Palo Alto instead stores RECORD_STATUS in subtype;
+      // label it as status so architectural approval is not a building use.
+      const subtypeLabel = config.cityId === "palo-alto" ? "status" : "use type";
+      const dateLabel = config.cityId === "palo-alto" ? "record opened" : "issued";
+      return `- ${p.categoryLabel || p.category}${p.subtype ? ` [${subtypeLabel}: ${p.subtype}]` : ""}${p.workType ? ` [work type: ${p.workType}]` : ""}: ${p.description || "No description"} at ${permitAddressForPrompt(p.address)} (${permitValuationForPrompt(p)}, source-reported dwelling units ${p.units || 0}, ${dateLabel} ${p.issueDate})`;
+    }).join("\n");
 
     // Counting is the one thing the model reliably gets wrong, so do it here
     // and hand it the answer. On 2026-09-09 the seven ADU permits at 584 N 2nd
@@ -492,7 +495,7 @@ async function gatherPermitItems() {
     console.log(`  ⏳ ${config.cityName}: evaluating ${permits.length} notable permits...`);
 
     try {
-      const found = await claudeJson(`These are recently issued building permits in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about — new businesses, new housing, large construction projects, or anything unusual. Skip routine renovations and ADUs unless they fit a broader pattern worth pointing out.
+      const found = await claudeJson(`These are recent building-permit and planning records in ${config.cityName}, CA. Pick the 1-2 most interesting ones that a resident would care about — new businesses, new housing, large construction projects, or anything unusual. Skip routine renovations and ADUs unless they fit a broader pattern worth pointing out.
 
 Permits:
 ${permitText}${countsText}${aduCountsText}
@@ -500,6 +503,10 @@ ${permitText}${countsText}${aduCountsText}
 IMPORTANT — a permit being issued does not establish whether construction has started. Never assert either that work has begun or that it has not yet begun. Do NOT write "breaks ground", "groundbreaking", "construction begins", "construction starts", or "launches". Use language like "permitted", "receives building permit", "permit issued for". Do NOT label projects as "affordable", "workforce", or "luxury" unless that wording appears in the permit description.
 
 VALUATION: the dollar figure is the declared permit valuation, not a paid construction cost, permit fee, investment, or city expenditure. Label it "permit valuation" when quoting it. The source-reported dwelling-unit field can differ from the building description (a 5plex can report 1); do not treat it as a verified count of homes. A permit row is not one home either: report a count of listed permits, never convert the number of rows into a housing-unit count. Several permits on one street do not establish a subdivision or that construction is underway.
+
+UNAVAILABLE VALUATIONS: "permit valuation unavailable" means the source provides no usable dollar amount. Omit the valuation; never convert it into $0, a zero valuation, or free work. Palo Alto PermitView has no valuation field.
+
+APPROVAL TYPE: an Entitlement or Zoning record with "Over the Counter Approved" status establishes architectural or planning approval only. Describe that approval; do not call it an issued building permit or imply that construction is authorized.
 
 ADDRESSES: an address given as "<street> (no street number assigned yet)" is a new lot without a house number. Write it as "on <street>" — never print a leading "0" as if it were a street number.
 
@@ -525,6 +532,10 @@ Return a JSON array. Each item:
 Return [] if nothing is genuinely noteworthy.`, 512);
 
       for (const item of found) {
+        if (hasUnsupportedZeroPermitValuation(item)) {
+          console.warn(`  ⚠️  ${config.cityName}: dropped an unsupported zero-dollar permit valuation`);
+          continue;
+        }
         items.push({
           id: makeId(config.cityId, item.date, item.headline),
           cityId: config.cityId,
