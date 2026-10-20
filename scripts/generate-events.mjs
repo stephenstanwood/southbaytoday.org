@@ -1008,6 +1008,10 @@ const SOURCE_EVENT_ACRONYMS = [
   // Support Team as TRUST. Keep its initials distinct from the ordinary word.
   "TRUST",
   "CNBC", "MSNBC", "AIA", "COVID",
+  // Reviewed library/Stanford copy: interview framework, East San Jose,
+  // social-work credential, and Center for Medieval and Early Modern Studies.
+  // Preserve uppercase source forms across titles and both prose passes.
+  "STAR", "SJ", "LCSW", "CMEMS",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1890,6 +1894,11 @@ function maskDomainAndDecimalDots(text) {
   // selection"); their dots do not end a sentence. Keep the source's case.
   t = t.replace(/\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\./g,
     `$1${DOT_PLACEHOLDER}`);
+  // A name abbreviation before a lowercase English/Spanish conjunction
+  // continues a list ("Super Smash Bros. y más"), rather than starting a new
+  // sentence. Leave other following words available for sentence casing.
+  t = t.replace(/\b(Bros|Jr|Sr)\.(?=\s+(?:and|or|y|e|o|u)\b)/g,
+    `$1${DOT_PLACEHOLDER}`);
   // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
   // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
   // gets masked the same as the polite form. Without `i` the dot survives,
@@ -1966,7 +1975,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
+  t = t.replace(/\b(?:OpenAI|LinkedIn|iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
