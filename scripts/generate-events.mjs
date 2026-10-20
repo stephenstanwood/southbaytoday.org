@@ -1135,6 +1135,8 @@ function cleanTitle(title) {
     // brand styling ("LETS") and substrings ("Outlets", "Tablets") stay intact.
     // Recurring manual copy-edit in the title data — handle it upstream.
     .replace(/\bLets\b/g, "Let's")
+    .replace(/\bAlbertos Night Club\b/g, "Alberto's Night Club")
+    .replace(/\bSing-a-long\b/g, "Sing-along")
     // Strip a bare trailing price. Meetup organizers append the ticket price to
     // the event name ("UX Wizards Talk: with Josh Gold, Staff Product Designer
     // @LinkedIn $12"), which reads as part of the title on a card. Price belongs
@@ -2069,6 +2071,92 @@ function polishDescription(text) {
       "Any student looking to explore what recovery, sobriety, or a life without substance use looks like")
     .replace(/\bSJSU Dance presents Images the annual Fall showcase of student choreography\. And performance\./g,
       "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.");
+
+  // Copy-desk repairs for recurring source prose. Keep these specific to the
+  // supplied wording; URLs are masked, and no schedule or eligibility changes.
+  t = t
+    .replace(/\bpost doctoral researcher\b/g, "postdoctoral researcher")
+    .replace(/\bspace and time in the Vintage Media Lab is limited\b/g,
+      "space and time in the Vintage Media Lab are limited")
+    .replace(/\bspace and seating is limited\b/g, "space and seating are limited")
+    .replace(/\bFriends' of the Cambrian Library\b/g, "Friends of the Cambrian Library")
+    .replace(/\bTopic list is subject to change, please\b/g, "Topic list is subject to change; please")
+    .replace(/\bSuggested ages vary, please\b/g, "Suggested ages vary; please")
+    .replace(/\bAdults and (?:seniors|Seniors) interested in learning the basics or need a refresher of how to play\b/g,
+      "Adults and seniors who are interested in learning the basics or need a refresher on how to play")
+    .replace(/\bdifferent ages and background\b/g, "different ages and backgrounds")
+    .replace(/\bTheir Eyes were Watching God\b/g, "Their Eyes Were Watching God")
+    .replace(/\bbetween (3 p\.m\.) to (4:30 p\.?m\.?)/g, "between $1 and $2")
+    .replace(/\bbetween (\d{1,2}:\d{2} [APap][Mm]) - (\d{1,2}:\d{2} [APap][Mm])\b/g,
+      "between $1 and $2")
+    .replace(/\bParticipants will learn about propulsion and list then create their own rockets\./g,
+      "Participants will learn about propulsion, then create their own rockets.")
+    .replace(/\banyone interested in volunteering away their library fines, gaining service hours for school\/work or just wants to volunteer\./g,
+      "anyone who is interested in volunteering away their library fines or gaining service hours for school/work, or who just wants to volunteer.")
+    .replace(/\bto sign-in at the Information Desk\b/g, "to sign in at the Information Desk")
+    .replace(/\ban in person adult English Language Learner\b/g,
+      "an in-person adult English Language Learner")
+    .replace(/\braffles prizes\b/g, "raffle prizes")
+    .replace(/\bthree hour event\b/g, "three-hour event")
+    .replace(/\( ages 11-18 \)/g, "(ages 11-18)")
+    .replace(/Doors open at 5:30 p\.m\., program starts at 6 p\.m\./g,
+      "Doors open at 5:30 p.m. The program starts at 6 p.m.")
+    .replace(/\bRSVP is required, registration will open\b/g,
+      "RSVP is required. Registration will open")
+    .replace(/\bRegister Registration opens\b/g, "Registration opens")
+    .replace(/\bThe Stanford Department of African and African American Studies in collaboration with the African Connections Research and Education Fund, Inc\. Present an Intimate Evening\b/g,
+      "The Stanford Department of African and African American Studies, in collaboration with the African Connections Research and Education Fund, Inc., presents an Intimate Evening")
+    .replace(/\bPlease join Italian Lecture Series\b/g, "Please join the Italian Lecture Series")
+    .replace(/\bthe Future of Dante's Comedy a conversation\b/g,
+      "the Future of Dante's Comedy, a conversation")
+    .replace(/\blearn all about bike gears as well as the opportunity to ask\b/g,
+      "learn all about bike gears and have the opportunity to ask")
+    .replace(/\bMuch of the Santa Cruz Mountains are part\b/g,
+      "Much of the Santa Cruz Mountains is part")
+    .replace(/\b(The Department of Surgery invited Dr\. Herb Chen, Chair of the Department of Surgery at University of Alabama at Birmingham,) will present\b/g,
+      "$1 to present");
+
+  // Restore the boundaries of flattened library headings and item lists.
+  // Every supplied item, clock, age restriction, and contact remains present.
+  t = t
+    .replace(/\bLEGOs will be supplied Join the building fun\b/g,
+      "LEGOs will be supplied. Join the building fun")
+    .replace(/\bWednesday, August 26 Wednesday, September 30 Wednesday, October 28 This event\b/g,
+      "Wednesday, August 26; Wednesday, September 30; Wednesday, October 28. This event")
+    .replace(/\bHow to Access Check\b/g, "How to access: Check")
+    .replace(/\bWhat to Bring Laptop Sd Card, Memory Card USB Drive, Flash Drive or Memory Stick External Hard Drive Your Vintage Media!/g,
+      "What to bring: laptop; SD card, memory card; USB drive, flash drive or memory stick; external hard drive; your vintage media!")
+    .replace(/\bPrinting Using email Connecting to Wi-Fi Creating documents Accessing library resources Registering for an appointment/g,
+      "printing; using email; connecting to Wi-Fi; creating documents; accessing library resources. Registering for an appointment")
+    .replace(/\bTheir Eyes Were Watching God by Zora Neale Hurston The Teacher of Nomad Land by Daniel Nayeri What to Expect:/g,
+      "Their Eyes Were Watching God by Zora Neale Hurston; The Teacher of Nomad Land by Daniel Nayeri. What to expect:")
+    .replace(/\bAppointment Required Please call\b/g, "Appointment required. Please call")
+    .replace(/\bSpace Available Medicare Without Stress — Free, Unbiased Help Confused about Medicare\?/g,
+      "Space available. Medicare Without Stress — Free, Unbiased Help. Confused about Medicare?")
+    .replace(/\bMedicare Enrollment Original Medicare \(Part A & B\) Medicare Advantage Plans \(Part C\) Prescription Drug Coverage \(Part D\) Supplemental Insurance \(Medigap\) Limited Income Programs for Medicare Medicare and Medi-Cal Options Tips for Avoiding Medicare Fraud Call/g,
+      "Medicare enrollment; Original Medicare (Part A & B); Medicare Advantage plans (Part C); prescription drug coverage (Part D); supplemental insurance (Medigap); limited income programs for Medicare; Medicare and Medi-Cal options; tips for avoiding Medicare fraud. Call")
+    .replace(/\bHow to set up the game tiles and understand them - The flow of the game - Make sets during the game - How to win it Learning/g,
+      "How to set up the game tiles and understand them; the flow of the game; making sets during the game; how to win. Learning")
+    .replace(/\bplaying the game: - How to\b/g, "playing the game: how to")
+    .replace(/\bInformation Desk Must sign\b/g, "Information Desk; must sign")
+    .replace(/\(parents must sign for those under the age of 18\) Must be able/g,
+      "(parents must sign for those under the age of 18); must be able")
+    .replace(/\b(full session(?: \([^)]*\))?) Anyone under\b/g, "$1; anyone under")
+    .replace(/\bparent\/guardian No experience or special skills necessary Training and supplies will be provided\b/g,
+      "parent/guardian. No experience or special skills necessary. Training and supplies will be provided.")
+    .replace(/\bExplore watercolor through simple, approachable techniques Discover how repetition and color create movement and harmony Build confidence with the elements of art through playful composition Foster relaxation, mindfulness, and joyful creative expression Designed/g,
+      "Explore watercolor through simple, approachable techniques; discover how repetition and color create movement and harmony; build confidence with the elements of art through playful composition; foster relaxation, mindfulness, and joyful creative expression. Designed")
+    .replace(/\bHighlights include: -The little-known internment of Italian Americans alongside Japanese and German communities -The devastation of family-run industries like fishing in California -Stories of resilience, cultural erasure, and rediscovery -Legislation and resolutions acknowledging past injustices Lindsay/g,
+      "Highlights include: the little-known internment of Italian Americans alongside Japanese and German communities; the devastation of family-run industries like fishing in California; stories of resilience, cultural erasure, and rediscovery; legislation and resolutions acknowledging past injustices. Lindsay")
+    .replace(/\bwith Skate Open Spaces Free pizza\b/g, "with Skate Open Spaces; free pizza")
+    .replace(/\bCrafts Raffle drawing at 4:30 PM A few things/g,
+      "Crafts; raffle drawing at 4:30 PM. A few things")
+    .replace(/\bthe attendee's name All attendees\b/g, "the attendee's name. All attendees")
+    .replace(/\bCostumes are welcome and encouraged, however please\b/g,
+      "Costumes are welcome and encouraged; however, please")
+    .replace(/\bfor roller skating Many thanks\b/g, "for roller skating. Many thanks")
+    .replace(/^(?:Summiting in Search of Manzanitas|Winter Ramble at Rancho) \| Midpeninsula Regional Open Space District Skip to main content Show Mobile Menu (Approximately \d+(?:\.\d+)? miles\.)$/,
+      "$1");
 
   // Scraped horizontal rules and translated link labels carry no event copy.
   t = t.replace(/_{5,}\.?/g, " ").replace(/\.;+[,.]?/g, ".");

@@ -948,6 +948,10 @@ test("keeps refreshed community titles readable without changing identifiers or 
       "Almaden Quicksilver (Webb Canyon) with Country Inn"],
     ["Korean Indigenous Futures: The Art of Kim Bong-Jun: - K",
       "Korean Indigenous Futures: The Art of Kim Bong-Jun"],
+    ["Salsa classes & social dancing at Albertos Night Club, Mountain View",
+      "Salsa classes & social dancing at Alberto's Night Club, Mountain View"],
+    ["Voices United Against Hate: Group Sing-a-long",
+      "Voices United Against Hate: Group Sing-along"],
   ];
   for (const [source, expected] of cases) {
     assert.equal(cleanTitle(source), expected);
@@ -1047,4 +1051,71 @@ test("separates tech-help and VIP lists while preserving participation and ticke
   assert.equal(polishDescription(ticket), ticket);
   const url = "Details: https://example.org/snacks-feel-free?project=Scarfs&question=Como-participar";
   assert.equal(polishDescription(url), url);
+});
+
+test("keeps media-lab appointments, equipment and booking identifiers through list repair", () => {
+  for (const branch of ["Mitchell Park", "Rinconada"]) {
+    const source = `How to Access Check the Vintage Media Lab page. Click Book@${branch}. Appointments are limited to a single two-hour appointment per week per person. Because space and time in the Vintage Media Lab is limited, we appreciate your cooperation. What to Bring Laptop Sd Card, Memory Card USB Drive, Flash Drive or Memory Stick External Hard Drive Your Vintage Media! Details: https://example.org/What-to-Bring?branch=${branch.replaceAll(" ", "%20")}`;
+    const actual = polishDescription(source);
+    assert.match(actual, /How to access: Check/);
+    assert.match(actual, /space and time in the Vintage Media Lab are limited/);
+    assert.match(actual, /What to bring: laptop; SD card, memory card; USB drive, flash drive or memory stick; external hard drive; your vintage media!/);
+    assert.ok(actual.includes(`Book@${branch}`));
+    assert.ok(actual.includes("a single two-hour appointment per week per person"));
+    assert.equal(actual.match(/https:\/\/\S+/)[0], source.match(/https:\/\/\S+/)[0]);
+    assert.equal(polishDescription(actual), actual);
+  }
+});
+
+test("preserves volunteer eligibility and event clocks when separating flattened source copy", () => {
+  const volunteer = "Details and Requirements: Must arrive by 4:45 p.m. to sign-in at the Information Desk Must sign a waiver form provided (parents must sign for those under the age of 18) Must be able to commit to the full session (5:00 p.m. to 6:00 p.m.) Anyone under the age of 15 must volunteer alongside a parent/guardian No experience or special skills necessary Training and supplies will be provided For more information, please call 408-808-3036.";
+  const actual = polishDescription(volunteer);
+  assert.deepEqual(actual.match(/\d+/g), volunteer.match(/\d+/g));
+  for (const fact of ["Must arrive by 4:45 p.m.", "must sign a waiver form provided", "parents must sign for those under the age of 18", "must be able to commit to the full session (5:00 p.m. to 6:00 p.m.)", "anyone under the age of 15 must volunteer alongside a parent/guardian", "Training and supplies will be provided.", "408-808-3036"]) {
+    assert.ok(actual.includes(fact), fact);
+  }
+  assert.match(actual, /sign in at the Information Desk; must sign/);
+  assert.equal(polishDescription(actual), actual);
+
+  const awards = "Doors open at 5:30 p.m., program starts at 6 p.m. RSVP is required, registration will open for the public on Monday, September 21.";
+  assert.equal(polishDescription(awards), "Doors open at 5:30 p.m. The program starts at 6 p.m. RSVP is required. Registration will open for the public on Monday, September 21.");
+  for (const miles of ["8.5", "5.5"]) {
+    const title = miles === "8.5" ? "Summiting in Search of Manzanitas" : "Winter Ramble at Rancho";
+    assert.equal(polishDescription(`${title} | Midpeninsula Regional Open Space District Skip to main content Show Mobile Menu Approximately ${miles} miles.`), `Approximately ${miles} miles.`);
+  }
+  const unrelated = "A landscape illustration of Skip to main content. This display has space and time as its theme. Details: https://example.org/Register-Registration-opens?text=raffles-prizes";
+  assert.equal(polishDescription(unrelated), unrelated);
+});
+
+test("repairs academic-event grammar without changing names, affiliations or access", () => {
+  const cases = [
+    ["The Department of Surgery invited Dr. Herb Chen, Chair of the Department of Surgery at University of Alabama at Birmingham, will present this year's Armanini Lecture.",
+      "The Department of Surgery invited Dr. Herb Chen, Chair of the Department of Surgery at University of Alabama at Birmingham, to present this year's Armanini Lecture."],
+    ["The Stanford Department of African and African American Studies in collaboration with the African Connections Research and Education Fund, Inc. Present an Intimate Evening with Dr. Samuel Waymon.",
+      "The Stanford Department of African and African American Studies, in collaboration with the African Connections Research and Education Fund, Inc., presents an Intimate Evening with Dr. Samuel Waymon."],
+    ["This is a free class for Stanford students, faculty and staff who would like to learn all about bike gears as well as the opportunity to ask a seasoned bike mechanic any questions.",
+      "This is a free class for Stanford students, faculty and staff who would like to learn all about bike gears and have the opportunity to ask a seasoned bike mechanic any questions."],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+});
+
+test("keeps supplied library dates and clock values when fixing prose range connectors", () => {
+  const cases = [
+    ["LEGOs will be supplied Join the building fun on three dates: Wednesday, August 26 Wednesday, September 30 Wednesday, October 28 This event is generously sponsored by the Friends of the Mountain View Library.",
+      "LEGOs will be supplied. Join the building fun on three dates: Wednesday, August 26; Wednesday, September 30; Wednesday, October 28. This event is generously sponsored by the Friends of the Mountain View Library."],
+    ["Drop in between 4:00 pm - 5:00 pm to decorate your own trick-or-treat bag. One bag per child.",
+      "Drop in between 4:00 pm and 5:00 pm to decorate your own trick-or-treat bag. One bag per child."],
+    ["Walk-ins starting between 3 p.m. to 4:30 p.m. are also welcome.",
+      "Walk-ins starting between 3 p.m. and 4:30 p.m. are also welcome."],
+    ["Participants will learn about propulsion and list then create their own rockets.",
+      "Participants will learn about propulsion, then create their own rockets."],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishDescription(source), expected);
+    assert.deepEqual(expected.match(/\d+/g), source.match(/\d+/g));
+    assert.equal(polishDescription(expected), expected);
+  }
 });
