@@ -2042,6 +2042,20 @@ function polishDescription(text) {
     .replace(/\bIt's evil lies\b/g, "Its evil lies")
     .replace(/\bRegistration Is Required\./g, "Registration is required.")
     .replace(/\bF ollow us\b/g, "Follow us")
+    .replace(/\bThere will be snacks- feel free\b/g, "There will be snacks; feel free")
+    .replace(/\bComo participar\?/g, "¿Cómo participar?")
+    .replace(/\bcódigo QR de abajo\s*$/g, "código QR de abajo.")
+    .replace(/\bA casual beginner friendly introduction to crocheting\./g,
+      "A casual beginner-friendly introduction to crocheting.")
+    .replace(/\bCrochet Club's current project: Scarfs\s*$/g,
+      "Crochet Club's current project: scarves.")
+    .replace(/\bDream labs is an art integrated education program\b/g,
+      "Dream Labs is an art-integrated education program")
+    .replace(/\bCounty of Santa Clara- Office of the District Attorney\s*$/g,
+      "County of Santa Clara — Office of the District Attorney.")
+    .replace(/\btheir end of the year concert\b/g, "their end-of-the-year concert")
+    .replace(/\bunder the direction of Dr\. Grant Knox\s*$/g,
+      "under the direction of Dr. Grant Knox.")
     .replace(/\bhelp chose the route\b/g, "help choose the route")
     .replace(/\bto be present this year's Armanini Lecture\./g,
       "will present this year's Armanini Lecture.")
@@ -2097,6 +2111,23 @@ function polishDescription(text) {
   t = t.replace(
     /Submitting an online job application: Downloading an e-book/g,
     "Submitting an online job application; downloading an e-book",
+  );
+  t = t.replace(/\bOffered in English, or Tiếng Việt\./g, "Offered in English or Tiếng Việt.");
+  t = t.replace(
+    /Setting up an email account, composing & sending emails, using email attachments Web searches and basic data entry Learning the basics of Microsoft Word and Excel and web-based productivity software such as Google docs Using the library's pay-for-print and photocopy machines Downloading apps on your phone or tablet And much more!/g,
+    "setting up an email account, composing & sending emails, using email attachments; web searches and basic data entry; learning the basics of Microsoft Word and Excel and web-based productivity software such as Google Docs; using the library's pay-for-print and photocopy machines; downloading apps on your phone or tablet; and much more!",
+  );
+  t = t.replace(/\bFree, No Registration Required\s*$/g, "Free. No registration required.");
+  // Santana Row's schedule loses every list boundary in its HTML excerpt.
+  // Restore separators without changing its supplied clocks or place names.
+  if (/Entertainment Schedule: 10:30 AM – 10 PM: Brunch at Zazil\b/.test(t)) {
+    t = t.replace(/(\(Altars\)|Cultural Pop-Up Market|\(by Blue Bottle Coffee\)|Santana Row Park|El Jardín Tequila Bar)(?=\d)/g, "$1; ");
+    t = t.replace(/\bPark; 3– /g, "Park; 3 – ");
+    t = t.replace(/\bMariachi at Zazil\s*$/g, "Mariachi at Zazil.");
+  }
+  t = t.replace(
+    /^Modern Hel Tour Pre-Show VIP M&G Ticket Includes:- GA Ticket & Early Venue Entry \(1 hour prior to doors\)- Early Merch Access- Exclusive Poster- Photo \/ Signing Opportunity- Acoustic Set\s*$/,
+    "Modern Hel Tour pre-show VIP M&G ticket includes: GA ticket & early venue entry (1 hour prior to doors); early merch access; exclusive poster; photo / signing opportunity; acoustic set.",
   );
   t = t.replace(
     /help with: Changing a tire Adjusting gears and brakes Identifying that mysterious noise, and more!/g,

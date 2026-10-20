@@ -1012,3 +1012,39 @@ test("completes clipped attendance and schedule clauses before trimming previews
   assert.equal(polishDescription("San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM with sign-ups starting…"),
     "San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM.");
 });
+
+test("restores Santana Row schedule boundaries without changing clocks or venues", () => {
+  const source = "Entertainment Schedule: 10:30 AM – 10 PM: Brunch at Zazil & contribute to the Community Ofrendas (Altars)12 – 5 PM: Cultural Pop-Up Market12 – 3 PM: Día de los Muertos Catrina Photo Ops in Oak Tree Lounge (by Blue Bottle Coffee)12 – 3 PM: Face Painting in Santana Row Park1 – 3 PM: Mariachi & Dance Performances in Santana Row Park3– 4:30 PM: Mariachi & Face Painting at El Jardín Tequila Bar4:30 – 6 PM: Mariachi at Zazil";
+  const actual = polishDescription(source);
+  assert.equal(actual.split("; ").length, 7);
+  assert.deepEqual(actual.match(/\d+(?::\d+)?|\b[AP]M\b/g), source.match(/\d+(?::\d+)?|\b[AP]M\b/g));
+  for (const place of ["Zazil", "Community Ofrendas (Altars)", "Cultural Pop-Up Market", "Oak Tree Lounge (by Blue Bottle Coffee)", "Santana Row Park", "El Jardín Tequila Bar"]) {
+    assert.equal(actual.split(place).length, source.split(place).length, place);
+  }
+  assert.match(actual, /Park; 1 – 3 PM:/);
+  assert.match(actual, /Park; 3 – 4:30 PM:/);
+  assert.match(actual, /Mariachi at Zazil\.$/);
+  assert.equal(polishDescription(actual), actual);
+  const unrelated = "Concert at Park3– 4:30 PM. Details: https://example.org/Park3–4:30?room=12";
+  assert.equal(polishDescription(unrelated), unrelated);
+});
+
+test("separates tech-help and VIP lists while preserving participation and ticket details", () => {
+  const source = "Offered in English, or Tiếng Việt. They can assist you with basic tech issues, such as: Setting up an email account, composing & sending emails, using email attachments Web searches and basic data entry Learning the basics of Microsoft Word and Excel and web-based productivity software such as Google docs Using the library's pay-for-print and photocopy machines Downloading apps on your phone or tablet And much more! Free, No Registration Required";
+  const actual = polishDescription(source);
+  for (const service of ["email account", "email attachments", "web searches", "basic data entry", "Microsoft Word and Excel", "Google Docs", "pay-for-print and photocopy machines", "apps on your phone or tablet"]) {
+    assert.ok(actual.toLowerCase().includes(service.toLowerCase()), service);
+  }
+  assert.match(actual, /^Offered in English or Tiếng Việt\./);
+  assert.match(actual, /Free\. No registration required\.$/);
+  assert.equal(actual.split("; ").length, 6);
+  assert.equal(polishDescription(actual), actual);
+
+  const ticket = polishDescription("Modern Hel Tour Pre-Show VIP M&G Ticket Includes:- GA Ticket & Early Venue Entry (1 hour prior to doors)- Early Merch Access- Exclusive Poster- Photo / Signing Opportunity- Acoustic Set");
+  assert.equal(ticket.split("; ").length, 5);
+  assert.match(ticket, /VIP M&G ticket includes: GA ticket & early venue entry \(1 hour prior to doors\)/);
+  assert.match(ticket, /early merch access; exclusive poster; photo \/ signing opportunity; acoustic set\.$/);
+  assert.equal(polishDescription(ticket), ticket);
+  const url = "Details: https://example.org/snacks-feel-free?project=Scarfs&question=Como-participar";
+  assert.equal(polishDescription(url), url);
+});
