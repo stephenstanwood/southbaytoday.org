@@ -70,6 +70,53 @@ test("Gamble does not borrow family navigation or body text from another event",
   assert.equal(events[0].description, "Learn rose pruning techniques.");
 });
 
+test("Gamble does not treat an instructor's family biography as the class audience", async (t) => {
+  const { events } = await scrape(t, { rows: [{ ...row, title: "Peony Flower Arranging" }], html: `
+    <div class="tribe-events-single-event-description">
+      <p>Create spring floral arrangements with Jacqueline Pham.</p>
+      <h2>Required Materials</h2><p>Bring floral clippers.</p>
+      <h2><strong>Instructor Bio</strong></h2>
+      <p>Her childhood led her to teach families. She has three children.</p>
+      <h2>Terms and Conditions</h2><p>Registration is nonrefundable.</p>
+    </div>` });
+  assert.equal(events[0].kidFriendly, false);
+  assert.equal(events[0].description, "Create spring floral arrangements with Jacqueline Pham.");
+});
+
+test("Gamble keeps an explicit audience before its instructor biography", async (t) => {
+  const { events } = await scrape(t, { rows: [{ ...row, title: "Guided Tour" }], html: `
+    <div class="tribe-events-single-event-description">
+      <p>Explore the historic house and gardens.</p><p>Audience: Ages 10+.</p>
+      <h3>About the Instructor</h3><p>The guide grew up in Palo Alto.</p>
+    </div>` });
+  assert.equal(events[0].kidFriendly, true);
+});
+
+test("Gamble applies the same biography boundary to API descriptions", async (t) => {
+  const { events, requests } = await scrape(t, { rows: [{
+    ...row, title: "Planting Tulip Bulbs for Spring",
+    description: "<p>Plant tulip bulbs in containers.</p><h2>Instructor Bio</h2><p>She teaches families and children.</p>",
+  }] });
+  assert.equal(events[0].kidFriendly, false);
+  assert.equal(requests.length, 1);
+});
+
+test("a senior age threshold alone does not make a Gamble class kid friendly", async (t) => {
+  const { events } = await scrape(t, { rows: [{
+    ...row, title: "Garden Workshop", description: "A workshop for ages 50 and up.",
+  }] });
+  assert.equal(events[0].kidFriendly, false);
+});
+
+test("a holiday luncheon remains a food event at a garden venue", async (t) => {
+  const { events } = await scrape(t, { rows: [{ ...row, title: "Holiday Luncheon (Tuesday)" }], html: `
+    <div class="tribe-events-single-event-description">
+      <p>One of Gamble Garden's traditions, our Holiday Luncheons celebrate the holidays.</p>
+      <p>Enjoy a festive menu prepared and served by our volunteer committee.</p>
+    </div>` });
+  assert.equal(events[0].category, "food");
+});
+
 test("Gamble fetches a repeated detail URL only once per refresh", async (t) => {
   const { events, requests, waits } = await scrape(t, {
     rows: [row, { ...row, id: 25685, start_date: "2026-12-05 17:00:00" }],

@@ -14,6 +14,27 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("a stale Willis newsletter date resolves before the past-date gate", () => {
+  const raw = {
+    id: "stale-willis-newsletter", cityKey: "palo-alto",
+    title: "Jontavious Willis Live at The Studio", location: "The Studio, Stanford, CA",
+    startsAt: "2026-10-21T19:00:00-07:00", endsAt: null,
+    sourceUrl: "https://live.stanford.edu/events/26-27season/studio/jontavious-willis/",
+    description: "West Georgia bluesman Jontavious Willis performs live.",
+  };
+  const [event] = fetchInboundEvents({ today: "2026-10-22", events: [raw] }).map(applyVerifiedEventFacts);
+  assert.ok(event);
+  assert.equal(event.date, "2026-10-23");
+  assert.equal(event.displayDate, "Fri, Oct 23");
+  assert.equal(event.time, "7:00 PM");
+  assert.equal(event.category, "music");
+  assert.deepEqual(applyVerifiedEventFacts(event), event);
+  for (const other of [
+    { ...raw, startsAt: "2027-10-21T19:00:00-07:00" },
+    { ...raw, sourceUrl: "https://live.stanford.edu/events/another-performance/" },
+  ]) assert.equal(normalizeInboundEventPresentation(other).date, undefined);
+});
+
 test("Saratoga's newsletter puppet show resolves to the official Monday occurrence before deduplication", () => {
   const raw = {
     id: "different-newsletter-id", cityKey: "saratoga",

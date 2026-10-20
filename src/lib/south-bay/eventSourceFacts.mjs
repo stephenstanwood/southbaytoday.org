@@ -7,6 +7,49 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford's current program gives Friday, October 23 at 7 and 9 PM.
+  // Correct the stale October 21 newsletter date before the past-date gate
+  // and URL/date/time dedup, preserving both real performance clocks.
+  // https://live.stanford.edu/events/26-27season/studio/jontavious-willis/
+  // Evidence: docs/qa/2026-10-19-1707-fact-check.md.
+  {
+    date: "2026-10-21",
+    url: "https://live.stanford.edu/events/26-27season/studio/jontavious-willis/",
+    facts: { date: "2026-10-23", category: "music" },
+  },
+  {
+    date: "2026-10-23",
+    url: "https://live.stanford.edu/events/26-27season/studio/jontavious-willis/",
+    facts: { category: "music" },
+  },
+  // The organizer places this fan fest in the hammer-throw area outside
+  // Stanford Stadium. Free T-shirts do not establish free admission.
+  // https://gostanford.com/the-crossover-2026
+  {
+    date: "2026-10-23",
+    url: "https://gostanford.com/the-crossover-2026",
+    facts: {
+      venue: "Cobb Track and Angell Field — Hammer Throw area",
+      address: "",
+      kidFriendly: true,
+    },
+    copyReplacements: [[/^A free outdoor preseason basketball event\b/, "An outdoor preseason basketball event"]],
+  },
+  // The organizer's opening-night page gives 5–9 PM at Hotel Valencia,
+  // 355 Santana Row. The calendar parser previously took 9 PM as the start
+  // and supplied the shopping district's generic 377 Santana Row address.
+  // https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/
+  // Evidence: docs/qa/2026-10-19-1707-fact-check.md.
+  {
+    date: "2026-11-27",
+    url: "https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/",
+    facts: {
+      time: "5:00 PM",
+      endTime: "9:00 PM",
+      venue: "Cielo Rooftop at Hotel Valencia",
+      address: "355 Santana Row, San Jose, CA 95128",
+    },
+  },
   // The dated organizer page and complete RSS body agree on paid admission
   // and an 8 PM performance. MEC's 7:30 PM start is doors, and the adapter
   // formerly labeled every MACLA event free. Protect sparse intake too.
@@ -804,9 +847,11 @@ const CORRECTIONS = [
   },
   {
     date: "2026-11-11",
+    url: "https://live.stanford.edu/events/26-27season/studio/bob-marley/",
     title: /^Bob Marley: How Reggae Changed the World/i, venue: /The Studio/i,
     facts: {
       url: "https://live.stanford.edu/events/26-27season/studio/bob-marley/",
+      category: "music",
       description: "Duane Forrest performs acoustic versions of songs by Bob Marley and other reggae artists at The Studio.",
       blurb: "Hear Duane Forrest perform acoustic versions of songs by Bob Marley and other reggae artists.",
     },

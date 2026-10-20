@@ -462,6 +462,23 @@ test("Santana Row keeps single-date markets and rejects unsupported ranges", () 
   ), []);
 });
 
+test("Santana Row keeps both clocks when a range supplies one meridiem", () => {
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "November 27, 2026",
+    "Beginning November 27, join us Tuesday through Saturday from 5:00–9:00 pm. Closed Sundays and Mondays.",
+  ), [{ date: "2026-11-27", time: "5:00 PM", endTime: "9:00 PM" }]);
+  assert.deepEqual(parseSantanaRowOccurrences(
+    "November 27 - November 28, 2026",
+    "Friday, November 27 from 5–9 pm. Saturday, November 28 from 12 to 2 pm.",
+  ), [
+    { date: "2026-11-27", time: "5:00 PM", endTime: "9:00 PM" },
+    { date: "2026-11-28", time: "12:00 PM", endTime: "2:00 PM" },
+  ]);
+  for (const hours of ["11–1 pm", "25:00–9:00 pm", "5:70–9:00 pm"]) {
+    assert.deepEqual(parseSantanaRowOccurrences("November 27, 2026", hours), [], hours);
+  }
+});
+
 test("extracts the public locality from Squarespace address fields", () => {
   assert.equal(extractAddressLocality("Menlo Park, CA, 94025"), "Menlo Park");
   assert.equal(extractAddressLocality("1010 El Camino Real, Menlo Park, CA 94025"), "Menlo Park");

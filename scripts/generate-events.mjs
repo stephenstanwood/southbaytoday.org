@@ -3169,12 +3169,12 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\bdirected\s+by\b/i.test(cleanDesc) || /\bplaywright\b/i.test(cleanDesc) || /\bplay\s+by\b/i.test(cleanDesc)) return "arts";
   // Book clubs and discussions are arts/reading events, not formal education
   if (/\bbook\s+(club|discussion|group)\b/.test(t)) return "arts";
-  // Brunch / breakfast / dinner with optional ambient live music is primarily a food
+  // Brunch and luncheons with optional ambient live music are primarily food
   // event, not music. SJDA tags Mother's Day brunches at hotel restaurants as "Music"
   // because of background entertainment, but the title-anchored meal is the headline.
   // Skip if title is explicitly a music format (concert, recital, jazz brunch is fine
   // as music — "jazz" in title is enough to override).
-  if (/\bbrunch\b/.test(titleLower) && !/\b(jazz|concert|recital|symphony|live\s+music)\b/.test(titleLower)) return "food";
+  if (/\b(?:brunch|luncheons?)\b/.test(titleLower) && !/\b(jazz|concert|recital|symphony|live\s+music)\b/.test(titleLower)) return "food";
   // Genre tour titles ("Usher & Chris Brown - The R&B Tour", hip-hop bills) come in
   // from the City Newsletter feed with no Ticketmaster classification to lean on,
   // so the bare "music" keyword check above misses them. R&B and hip-hop are
@@ -9295,6 +9295,19 @@ function cleanHammerTitle(title) {
     .trim();
 }
 
+function gambleGardenProgramDescription(html) {
+  let program = String(html || "");
+  for (const heading of program.matchAll(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]\s*>/gi)) {
+    if (/^(?:Instructor Bio(?:graphy)?|About (?:the )?Instructor|Terms\s*(?:and|&)\s*Conditions)$/i.test(stripHtml(heading[1]).trim())) {
+      program = program.slice(0, heading.index);
+      break;
+    }
+  }
+  // An instructor's childhood or family describes the presenter, not who
+  // may attend. Keep program ages and family invitations before that section.
+  return stripHtml(program.replace(/<\/li\s*>/gi, "; "));
+}
+
 function gambleGardenPageDescription(html) {
   // The Events Calendar API omits Gamble Garden's descriptions. Read only
   // the event's own body, never the family/education links in site navigation.
@@ -9304,7 +9317,7 @@ function gambleGardenPageDescription(html) {
   let depth = 1;
   for (const tag of body.matchAll(/<\/?div\b[^>]*>/gi)) {
     depth += /^<\//.test(tag[0]) ? -1 : 1;
-    if (depth === 0) return stripHtml(body.slice(0, tag.index).replace(/<\/li\s*>/gi, "; "));
+    if (depth === 0) return gambleGardenProgramDescription(body.slice(0, tag.index));
   }
   throw new Error("Gamble Garden event description body is incomplete");
 }
@@ -9342,7 +9355,7 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           ev.venue?.zip,
         ].filter(Boolean);
         const address = addressParts.length ? addressParts.join(", ") : "1431 Waverley Street, Palo Alto, CA 94301";
-        const apiDescription = stripHtml(ev.description || ev.excerpt || "");
+        const apiDescription = gambleGardenProgramDescription(ev.description || ev.excerpt || "");
         const apiExcerpt = truncate(stripBareUrls(apiDescription));
         let sourceDescription = apiDescription;
         if (!sourceDescription && ev.url) {
@@ -9387,7 +9400,7 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           // Use the complete first-party audience text before truncation.
           // A renamed title can drop "Family Night" while its body still
           // welcomes "kids and families" or describes children's crafts.
-          kidFriendly: /\b(kids?|child(?:ren)?|famil(?:y|ies)|stor(?:y|ies)|youth|teens?|toddlers?|bab(?:y|ies)|preschool|infants?|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|second saturday|scavenger|crafts?)\b/i.test(title + " " + sourceDescription),
+          kidFriendly: /\b(kids?|child(?:ren)?|famil(?:y|ies)|stor(?:y|ies)|youth|teens?|toddlers?|bab(?:y|ies)|preschool|infants?|lap[-\s]?sit|ages?\s*(?:\d|1[0-7])|grades?\s+[K0-9]|second saturday|scavenger|crafts?)\b/i.test(title + " " + sourceDescription),
         });
       }
       if (page >= (data.total_pages || 1)) break;

@@ -15,6 +15,64 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Stanford's Crossover uses the outdoor fan-fest site without claiming free admission", () => {
+  const raw = {
+    date: "2026-10-23", title: "The Crossover: Basketball Fan Fest",
+    url: "https://gostanford.com/the-crossover-2026", venue: "Stanford Stadium",
+    address: "Stanford Stadium, 625 Nelson Rd, Stanford, CA", kidFriendly: false,
+    time: "5:30 PM", endTime: "6:30 PM", cost: null, category: "family",
+    description: "A free outdoor preseason basketball event before the football game, featuring a shooting competition, kids' dunk contest, meet-and-greets with Stanford student-athletes, and free T-shirts.",
+    blurb: "Watch a shooting competition and kids' dunk contest at this outdoor basketball fan fest.",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.venue, "Cobb Track and Angell Field — Hammer Throw area");
+  assert.equal(corrected.address, "");
+  assert.equal(corrected.kidFriendly, true);
+  assert.match(corrected.description, /^An outdoor preseason/);
+  assert.match(corrected.description, /free T-shirts/);
+  for (const key of ["date", "time", "endTime", "cost", "category", "blurb"]) assert.equal(corrected[key], raw[key]);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const other = { ...raw, date: "2027-10-23" };
+  assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("the verified Stanford Live performances retain their music category", () => {
+  for (const raw of [
+    { date: "2026-10-23", time: "7:00 PM", url: "https://live.stanford.edu/events/26-27season/studio/jontavious-willis/", category: "community" },
+    { date: "2026-10-23", time: "9:00 PM", url: "https://live.stanford.edu/events/26-27season/studio/jontavious-willis/", category: "community" },
+    { date: "2026-11-11", time: "7:00 PM", url: "https://live.stanford.edu/events/26-27season/studio/bob-marley/", category: "education" },
+  ]) {
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(corrected.category, "music");
+    assert.equal(corrected.time, raw.time);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const other = { ...raw, date: "2027-10-23" };
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Cielo's opening night keeps its published hours and hotel address through stale intake", () => {
+  const raw = {
+    id: "replacement-cielo-id", date: "2026-11-27",
+    title: "Cielo Hotel Valencia Rooftop Holiday Experience", city: "san-jose",
+    time: "9:00 PM", endTime: null, venue: "Santana Row",
+    address: "377 Santana Row, San Jose, CA 95128", cost: null,
+    url: "https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/",
+  };
+  const original = structuredClone(raw);
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.deepEqual(corrected, {
+    ...raw, time: "5:00 PM", endTime: "9:00 PM",
+    venue: "Cielo Rooftop at Hotel Valencia", address: "355 Santana Row, San Jose, CA 95128",
+  });
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const other of [
+    { ...raw, date: "2027-11-27" },
+    { ...raw, url: "https://santanarow.com/event/another-event/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("MACLA's October 23 concert keeps paid admission and the performance clock through sparse publication", async () => {
   const raw = {
     id: "replacement-macla-id", date: "2026-10-23",

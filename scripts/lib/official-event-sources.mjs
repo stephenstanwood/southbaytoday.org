@@ -161,8 +161,11 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
 
   const monthPattern = Object.keys(MONTHS).sort((a, b) => b.length - a.length).join("|");
   const clockPattern = String.raw`(?:\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?|noon|midnight)`;
+  // A shared suffix in "5:00–9:00 pm" belongs to both clocks. Matching
+  // only fully written clocks used to turn the closing time into the start.
+  const startPattern = String.raw`(?:${clockPattern}|\d{1,2}(?::\d{2})?(?=\s*(?:[-–—]|to)\s*${clockPattern}))`;
   const schedulePattern = new RegExp(
-    String.raw`\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?(?:,\s*(20\d{2}))?\s*(?:from|at|[|:])?\s*(${clockPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?`,
+    String.raw`\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?(?:,\s*(20\d{2}))?\s*(?:from|at|[|:])?\s*(${startPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?`,
     "gi",
   );
   const matches = [...text.matchAll(schedulePattern)];
@@ -175,6 +178,22 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
       : /^midnight$/i.test(value || "") ? "12:00 AM" : normalizeClock(value);
     return isClockTime(normalized) ? normalized : null;
   };
+  const occurrenceClocks = (startValue, endValue) => {
+    let time = clock(startValue);
+    const endTime = clock(endValue);
+    if (!time && /^\d{1,2}(?::\d{2})?$/.test(startValue || "")) {
+      const suffix = endValue?.match(/([ap]\.?m\.?)$/i)?.[1];
+      time = suffix ? clock(`${startValue} ${suffix}`) : null;
+      const minutes = (value) => {
+        const [, hour, minute, meridiem] = value.match(/^(\d+):(\d+) ([AP])M$/);
+        return (Number(hour) % 12 + (meridiem === "P" ? 12 : 0)) * 60 + Number(minute);
+      };
+      // "11–1 pm" leaves the first meridiem ambiguous. Omit the occurrence
+      // rather than infer an AM start or publish its 1 PM closing time.
+      if (!time || !endTime || minutes(time) >= minutes(endTime)) return null;
+    }
+    return time ? { time, endTime } : null;
+  };
 
   if (matches.length) {
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -182,9 +201,9 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
       const date = isoDate(Number(match[4] || year), match[2], Number(match[3]));
       if (!date || !validDate(date)) return [];
       const weekday = weekdays[new Date(`${date}T12:00:00Z`).getUTCDay()];
-      const time = clock(match[5]);
-      if (weekday.toLowerCase() !== match[1].toLowerCase() || !time) return [];
-      return [{ date, time, endTime: clock(match[6]) }];
+      const clocks = occurrenceClocks(match[5], match[6]);
+      if (weekday.toLowerCase() !== match[1].toLowerCase() || !clocks) return [];
+      return [{ date, ...clocks }];
     });
   }
 
@@ -193,9 +212,11 @@ export function parseSantanaRowOccurrences(dateText, bodyText) {
   const dateMatch = header.match(new RegExp(String.raw`^(${monthPattern})\s+(\d{1,2})(?:st|nd|rd|th)?\b`, "i"));
   const date = dateMatch ? isoDate(year, dateMatch[1], Number(dateMatch[2])) : null;
   if (!date || !validDate(date)) return [];
-  const clocks = [...text.matchAll(new RegExp(String.raw`\b${clockPattern}\b`, "gi"))];
-  const time = clock(clocks[0]?.[0]);
-  return time ? [{ date, time, endTime: clock(clocks[1]?.[0]) }] : [];
+  const clocks = [...text.matchAll(new RegExp(
+    String.raw`\b(${startPattern})(?:\s*(?:[-–—]|to)\s*(${clockPattern}))?\b`, "gi",
+  ))];
+  const times = occurrenceClocks(clocks[0]?.[1], clocks[0]?.[2] || clocks[1]?.[1]);
+  return times ? [{ date, ...times }] : [];
 }
 
 export function extractVboSession(html) {
