@@ -5,8 +5,67 @@ import { libraryEventDetails } from "./library-event-details.mjs";
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
+import { stripHtml } from "./event-html.mjs";
 
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/library-attendance-2026-09-06.json", import.meta.url)));
+const listFixture = JSON.parse(readFileSync(new URL("./fixtures/library-description-lists-2026-10-20.json", import.meta.url)));
+
+test("real library HTML lists retain equipment, exception dates and attendance through ingestion", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-20T12:00:00Z") });
+  const { fetchBiblioEvents, polishDescription } = await import("../generate-events.mjs");
+  for (const { library, event } of listFixture.events) {
+    const original = structuredClone(event);
+    t.mock.method(globalThis, "fetch", async () => Response.json({ entities: {
+      events: { [event.id]: event },
+      locations: { [event.definition.branchLocationId]: { name: library === "paloalto" ? "Rinconada" : "Edenvale" } },
+    } }));
+    const [ingested] = await fetchBiblioEvents(library, "Fixture Library", () => library === "paloalto" ? "palo-alto" : "san-jose");
+    const actual = polishDescription(ingested.description);
+    assert.equal(ingested.id, `${library}-${event.id}`);
+    assert.equal(ingested.url, `https://${library}.bibliocommons.com/events/${event.id}`);
+    assert.equal(ingested.date, event.definition.start.slice(0, 10));
+    assert.equal(ingested.time, library === "paloalto" ? "2:00 PM" : "4:00 PM");
+    assert.equal(ingested.endTime, library === "paloalto" ? "4:00 PM" : "6:00 PM");
+    assert.equal(ingested.cost, "free");
+    if (library === "paloalto") {
+      assert.match(actual, /How to Access: Check/);
+      assert.match(actual, /What to Bring: Laptop; SD Card, Memory Card; USB Drive, Flash Drive or Memory Stick; External Hard Drive; Your Vintage Media!/);
+      assert.match(actual, /a single two-hour appointment per week per person/);
+      assert.match(actual, /Book@Rinconada/);
+      assert.equal(ingested.registration, "appointment-only");
+      assert.match(ingested.attendanceNote, /Space is limited!/);
+    } else {
+      assert.match(actual, /breaks: September 29th; November 3rd; November 24th\. Homework Club will end on November 17th/);
+      assert.match(actual, /Tuesdays each week from 4:00 PM – 6:00 PM/);
+      assert.match(actual, /No registration is required; however, Homework Club has a limited capacity/);
+      assert.match(actual, /first-come, first-served/);
+      assert.doesNotMatch(actual, /\u200B/);
+      assert.equal(ingested.registration, undefined);
+    }
+    assert.equal(polishDescription(actual), actual);
+    assert.deepEqual(event, original, "ingestion must not mutate source records");
+
+    // Gateway HTML and the public page's entity-encoded HTML use one path.
+    const decoded = event.definition.description.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+    assert.equal(polishDescription(libraryEventDetails({ description: decoded }).description), actual);
+    const shorter = { definition: { ...event.definition, description: "<p>New shorter source description. Appointment required.</p>" } };
+    assert.equal(polishDescription(libraryEventDetails(shorter).description),
+      "New shorter source description. Appointment required.");
+  }
+});
+
+test("list extraction handles novel, nested and sentence items without changing ordinary HTML cleanup", () => {
+  for (const [html, expected] of [
+    ["<p>Bring</p><ul><li>Clay</li><li>Water</li></ul><p>Free. Ages 8+.</p>", "Bring: Clay; Water. Free. Ages 8+."],
+    ["<ol><li><p>Arrive at 4:30 p.m.</p></li><li>Sign in.</li></ol>", "Arrive at 4:30 p.m. Sign in."],
+    ["<p>Bring:</p><ul><li>Media<ul><li>SD card</li><li>USB drive</li></ul></li><li>Paper</li></ul>", "Bring: Media: SD card; USB drive. Paper."],
+    ["<p>Use <strong>OpenAI</strong>. Bring your laptop.</p>", "Use OpenAI. Bring your laptop."],
+    ["<ul><li>https://example.org/List?name=SDCard</li><li>Paper</li></ul>", "https://example.org/List?name=SDCard; Paper."],
+  ]) {
+    assert.equal(libraryEventDetails({ description: html }).description, expected);
+  }
+  assert.equal(stripHtml("<ul><li>Label one</li><li>Label two</li></ul>"), "Label one Label two");
+});
 
 test("normal library adapters preserve late attendance paragraphs and structured audiences", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-09-06T12:00:00Z") });

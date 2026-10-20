@@ -308,6 +308,17 @@ require the shared lock.
 
 ## Verification and recovery
 
+Library descriptions preserve HTML list boundaries before tag stripping, then
+pass through `polishDescription`. Keep that order: once a list becomes a run
+of words, generic prose cleanup cannot recover arbitrary item boundaries.
+The shared library extractor covers BiblioCommons and LibCal, including
+entity-encoded HTML. Its captured source fixtures and the normalizer tests run
+in `npm run test:event-refresh` before publication. They preserve brand names,
+month abbreviations, raw and previously split meridiems, equipment acronyms,
+exception dates, attendance requirements and identifiers. New shorter source
+copy still replaces older wording; the pipeline does not restore historical
+descriptions by event ID.
+
 Offline publication fixtures intentionally produce source failures and must
 never reach personal MILO intake. `notification-intake.mjs` rejects uninjected
 live transports inside Node test workers. CLI fixtures preserve

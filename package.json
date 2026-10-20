@@ -17,7 +17,7 @@
     "astro": "astro",
     "generate-digests": "node scripts/generate-digests.mjs",
     "generate-events": "node scripts/generate-events.mjs",
-    "test:event-refresh": "node --test scripts/events/*.test.mjs scripts/lib/farmers-market-config.test.mjs scripts/lib/notification-intake.test.mjs src/lib/south-bay/eventSlugLedger.test.mjs scripts/lib/event-description-polish.test.mjs scripts/lib/agency-acronym-titles.test.mjs scripts/lib/bracket-balance.test.mjs scripts/lib/gamble-garden-events.test.mjs",
+    "test:event-refresh": "node --test scripts/events/*.test.mjs scripts/lib/farmers-market-config.test.mjs scripts/lib/notification-intake.test.mjs src/lib/south-bay/eventSlugLedger.test.mjs scripts/lib/event-description-polish.test.mjs scripts/lib/library-event-details.test.mjs scripts/lib/agency-acronym-titles.test.mjs scripts/lib/bracket-balance.test.mjs scripts/lib/gamble-garden-events.test.mjs",
     "generate-upcoming-meetings": "node scripts/generate-upcoming-meetings.mjs",
     "generate-around-town": "node scripts/generate-around-town.mjs",
     "generate-weekend-picks": "node scripts/generate-weekend-picks.mjs",

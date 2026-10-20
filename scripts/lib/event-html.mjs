@@ -31,10 +31,40 @@ function decodeNamedTextEntities(value) {
   return text;
 }
 
-// Shared source HTML cleanup; preserve the established ingest behavior.
-export function stripHtml(html) {
+// Preserve authored list boundaries before the generic tag stripper loses
+// them. Sentence items keep their punctuation; fragments get semicolons and
+// a final stop. A stack keeps nested lists from consuming adjacent prose.
+function preserveListSeparators(html) {
+  const lists = [];
+  let output = "", offset = 0;
+  function separate(punctuation) {
+    const visible = stripHtml(output);
+    if (visible && !/[.!?;:]["')\]]*$/.test(visible)) output += punctuation;
+    output += " ";
+  }
+  for (const tag of html.matchAll(/<(\/?)(ul|ol|li)\b[^>]*>/gi)) {
+    output += html.slice(offset, tag.index);
+    offset = tag.index + tag[0].length;
+    const closing = tag[1], name = tag[2].toLowerCase();
+    if (name === "li") {
+      if (!closing && lists.length) {
+        const list = lists.at(-1);
+        separate(list.items++ ? ";" : ":");
+      }
+    } else if (!closing) {
+      lists.push({ items: 0 });
+    } else if (lists.length && lists.pop().items) {
+      separate(".");
+    }
+  }
+  return output + html.slice(offset);
+}
+
+// List punctuation is for description prose only; labels, locations and
+// other existing stripHtml callers retain their established behavior.
+export function stripHtml(html, { preserveLists = false } = {}) {
   if (!html) return "";
-  return decodeNamedTextEntities(html)
+  let text = decodeNamedTextEntities(html)
     // Decode numeric entities before stripping tags.
     .replace(/&#x2019;/gi, "\u2019").replace(/&#x2018;/gi, "\u2018")
     .replace(/&#x201C;/gi, "\u201C").replace(/&#x201D;/gi, "\u201D")
@@ -73,8 +103,11 @@ export function stripHtml(html) {
     // so all eight Community Preservation Lab descriptions shipped a rule set
     // ("#s_lc_event_16714527 { background: #228B22; ... }") into
     // playwright-events.json, saved from readers only by a later truncation.
-    .replace(/<(style|script)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
-    // Then strip all HTML tags
+    .replace(/<(style|script)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ");
+  if (preserveLists) text = preserveListSeparators(text);
+  text = text
+    // Then strip all HTML tags.
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ").trim();
+  return preserveLists ? text.replace(/\s+([,.;:!?])/g, "$1") : text;
 }

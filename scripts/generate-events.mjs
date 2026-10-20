@@ -1885,6 +1885,10 @@ function maskDomainAndDecimalDots(text) {
   // Splitting these introduced "1. º" and "Mr. And Mrs." on repeated cleanup.
   t = t.replace(/(\d)\.(?=[ºª])/g, `$1${DOT_PLACEHOLDER}`);
   t = t.replace(/\b(Mr|Mrs|Ms|Dr|Prof)\./g, `$1${DOT_PLACEHOLDER}`);
+  // Abbreviated months introduce dates or qualify a noun ("our Nov.
+  // selection"); their dots do not end a sentence. Keep the source's case.
+  t = t.replace(/\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\./g,
+    `$1${DOT_PLACEHOLDER}`);
   // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
   // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
   // gets masked the same as the polite form. Without `i` the dot survives,
@@ -1961,8 +1965,12 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
+  t = t.replace(/\b(?:OpenAI|iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
+  // Rich-text editors leak zero-width spacing into otherwise plain prose.
+  // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
+  // the identifiers already masked above intact.
+  t = t.replace(/\u200B/g, " ").replace(/[\u2060\uFEFF]/g, "");
 
   // Drop boilerplate "About this Event:" / "Text from presenter:" prefixes that
   // BiblioCommons feeds emit at the head of some descriptions. The content
@@ -2307,11 +2315,16 @@ function polishDescription(text) {
   // first real sentence into a single chunk that no BOILERPLATE_SENTENCE_PATTERN
   // matches — the preamble leaks into description search/city-page text.
   // Strip only blocks containing an age tag (`\d+\+`) or `Doors/show start`,
-  // so legitimate `*emphasis*` formatting is preserved.
+  // so substantive emphasized text is retained.
   t = t.replace(
     /\s*\*\s*[^*]*?(?:\d+\+|Doors\/show\s+start)[^*]*?\*\s*/gi,
     " ",
   );
+  // Descriptions render as plain text. Drop balanced source emphasis marks,
+  // retaining their contents; word boundaries keep Magik*Magik, multiplication
+  // and unpaired footnote markers intact. URLs remain masked above.
+  t = t.replace(/(^|[\s([{])(\*{1,3})(?=\S)([^*]*?\S)\s*\2(?=$|[\s,.;:!?)}\]])/g,
+    "$1$3");
 
   // Strip stray space before terminal punctuation ("Birds !", "Social ,",
   // "Passage ;"). Source feeds wrap and re-flow text leaving these. Restricted
@@ -2437,6 +2450,11 @@ function polishDescription(text) {
   t = t.replace(/(\d)\s*([pa])\. M,/g, "$1 $2.m.,");
   t = t.replace(/(\s)([pa])\. M\./g, "$1$2.m.");
   t = t.replace(/(\s)([pa])\. M,/g, "$1$2.m.,");
+  // Raw BiblioCommons clocks also omit the gap ("4:30p.m."). Without
+  // inserting it first, the abbreviation mask's word boundary never matches
+  // and this very pass creates a fresh "4:30p. M." regression.
+  t = t.replace(/(\d)\s*([ap])\.\s*m\./gi,
+    (_, digit, meridiem) => `${digit} ${meridiem.toLowerCase()}.m.`);
 
   // Repair domains/emails previously split by a source flattener before the
   // period-masking sentence splitter sees them (sccld. org -> sccld.org).
@@ -2594,14 +2612,17 @@ function polishDescription(text) {
     // 2-letter club designation wasn't mirrored from cleanTitle's KEEP_UPPER.
     // FC is unambiguously a football-club abbreviation in English body copy.
     "FC",
-    // Young-adult book lists introduce this short acronym between title words.
-    "YA",
+    // Book and equipment lists introduce these acronyms between title words.
+    "YA", "SD",
   ]);
   t = t.replace(/(?<=[A-Z][a-z]+ )([A-Z]{2,3})(?= [A-Z][a-z])/g, (w) => (KEEP_UPPER_SHORT.has(w) || isRomanEventNumeral(w)) ? w : w[0] + w.slice(1).toLowerCase());
   // Reunite known compound brand names broken by the lowercase+uppercase splitter.
   // The split rule above turns "PayPal" → "Pay Pal"; restore them here so brand
   // copy ("Pay Pal Park") survives polishing intact.
   t = t.replace(/\bPay Pal\b/g, "PayPal");
+  // Recover the exact previously split Model Spec credit as well as keeping
+  // fresh OpenAI source spelling masked above. Ordinary "open AI" prose stays.
+  t = t.replace(/\bOpen AI(?='s Model Spec\b)/g, "OpenAI");
   // Academic degree, split by the same lowercase-to-uppercase rule.
   t = t.replace(/\bPh D\b/g, "PhD");
   // Ticketmaster CrossFit Games + Sierra Nevada VIP lounge feeds leak the

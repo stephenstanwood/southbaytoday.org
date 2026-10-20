@@ -31,7 +31,7 @@ export function libraryEventDetails(event, entities = {}) {
     .filter((sentence) => /\b(?:drop[-\s]?ins?|walk[-\s]?ins?)\b[^.!?]*\b(?:availability|space|capacity)\b/i.test(sentence));
   const attendanceNote = uniqueSentences([...attendanceParagraphs, ...walkUpCaveats]);
   return {
-    description: text(html),
+    description: stripHtml(String(html).replace(/<!--[^]*?-->/g, ""), { preserveLists: true }),
     ...(sourceAudiences.length ? { sourceAudiences } : {}),
     ...(attendanceNote ? { attendanceNote } : {}),
   };
