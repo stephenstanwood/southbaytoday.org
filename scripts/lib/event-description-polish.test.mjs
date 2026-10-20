@@ -11,6 +11,73 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("preserves OpenAI in prose while leaving source links byte-identical", () => {
+  for (const source of [
+    "Read OpenAI's Model Spec.",
+    "OpenAI publishes the Model Spec. Discuss OpenAI and AI safety.",
+    "Read OpenAI's Model Spec at https://example.org/OpenAI?month=Nov.&name=OpenAI.",
+  ]) {
+    assert.equal(polishDescription(source), source);
+    assert.equal(polishDescription(polishDescription(source)), source);
+  }
+  assert.equal(polishDescription("An open AI discussion follows. Join us!"),
+    "An open AI discussion follows. Join us!");
+  assert.equal(polishDescription("Read Open AI's Model Spec."), "Read OpenAI's Model Spec.");
+});
+
+test("month abbreviations keep following prose lowercase through repeated polishing", () => {
+  for (const month of ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Sept", "Oct", "Nov", "Dec"]) {
+    const source = `A perfect follow-up to The Women (our ${month}. selection). Registration required.`;
+    assert.equal(polishDescription(source), source);
+    assert.equal(polishDescription(polishDescription(source)), source);
+    assert.equal(polishDescription(`Meet on ${month}. 21 at 4:30 p.m. Bring a book.`),
+      `Meet on ${month}. 21 at 4:30 p.m. Bring a book.`);
+  }
+  assert.equal(polishDescription("The November selection is here. bring a book."),
+    "The November selection is here. Bring a book.");
+});
+
+test("removes invisible spacing outside identifiers without breaking joined emoji", () => {
+  const source = "Homework Club. \u200b No registration is required. Bring\u200bpaper. A\u2060rt \uFEFFsupplies. 👩‍👧";
+  const expected = "Homework Club. No registration is required. Bring paper. Art supplies. 👩‍👧";
+  assert.equal(polishDescription(source), expected);
+  assert.equal(polishDescription(expected), expected);
+  const url = "https://example.org/OpenAI\u200b?month=Nov.\u2060&item=SD";
+  assert.equal(polishDescription(`Details: ${url}`), `Details: ${url}`);
+});
+
+test("preserves separated equipment and repairs previously split meridiems", () => {
+  const list = "Please bring: Laptop; SD Card; USB Drive.";
+  assert.equal(polishDescription(list), list);
+  assert.equal(polishDescription("Free homework help from 4:30p. M. - 6:00p. M."),
+    "Free homework help from 4:30 p.m. - 6:00 p.m.");
+  for (const source of [
+    "Free homework help from 4:30p.m. - 6:00p.m.",
+    "Free homework help from 4:30p. m. - 6:00p. m.",
+    "Free homework help from 4:30 p.m. - 6:00 p.m.",
+  ]) assert.equal(polishDescription(source), "Free homework help from 4:30 p.m. - 6:00 p.m.");
+  assert.equal(polishDescription("Doors at 9:30a.m. No registration required."),
+    "Doors at 9:30 a.m. No registration required.");
+});
+
+test("plain-text descriptions retain emphasized wording without raw markup", () => {
+  for (const [source, expected] of [
+    ["Read **The Book** before the Nov. discussion. *Registration required.*",
+      "Read The Book before the Nov. discussion. Registration required."],
+    ["***Please note the room change.*** No registration required.",
+      "Please note the room change. No registration required."],
+    ["**Note: The November 7th session is at the Art Center. ** Join us.",
+      "Note: The November 7th session is at the Art Center. Join us."],
+    ["Meetup event by South Bay *Brazilian* Portuguese Conversation and Culture.",
+      "Meetup event by South Bay Brazilian Portuguese Conversation and Culture."],
+  ]) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  const source = "Magik*Magik performs. Calculate 2 * 3 * 4. Seats* are limited. Details: https://example.org/**Book**?name=*Brazilian*";
+  assert.equal(polishDescription(source), source);
+});
+
 test("keeps an inline Chinese language option through library ingestion and display cleanup", () => {
   // SJPL's October 20 Edenvale Tech Mentor occurrence, verified 2026-10-18.
   const details = libraryEventDetails({ definition: { description:
