@@ -15,6 +15,55 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("homework blurbs cannot expand a program's published subject coverage", () => {
+  const event = {
+    title: "Homework Help for Grades K-6", venue: "Cupertino Library",
+    description: "Free homework help with a trained tutor. No registration is required.",
+  };
+  for (const copy of [
+    "Bring your homework and work with a trained tutor for free help in any subject.",
+    "Get free homework help in all school subjects.",
+    "Tutors can help with every academic subject.",
+  ]) assert.equal(eventCopyFactConflict(copy, event), "unsupported tutoring subject coverage");
+  assert.equal(eventCopyFactConflict("Bring your homework and work with a trained tutor for free.", event), null);
+  assert.equal(eventCopyFactConflict(
+    "Get homework help in any subject.",
+    { ...event, description: "Get homework help in any subject with a live online tutor." },
+  ), null);
+  assert.equal(eventCopyFactConflict(
+    "Explore any subject in a painting.", { title: "Open Art Studio", description: "Paint together." },
+  ), null);
+  assert.equal(eventCopyFactConflict(
+    "Homework Help has free trained tutors. Open Art Studio lets you paint any subject.", event,
+  ), null);
+});
+
+test("unsupported subject coverage is rejected from carried and cached homework blurbs", async (t) => {
+  const event = {
+    title: "Homework Help for Grades K-6", venue: "Cupertino Library",
+    date: "2026-10-20", time: "4:30 PM",
+    url: "https://sccl.bibliocommons.com/events/6a86814fdb86e4004d866f3f",
+    description: "Free homework help with a trained tutor. No registration is required.",
+    blurb: "Bring your homework and work with a trained tutor for free help in any subject.",
+  };
+  const cache = { byKey: { [eventBlurbCacheKey(event)]: { blurb: event.blurb } } };
+  const cachePath = fileURLToPath(new URL("../../data/south-bay/event-blurb-cache.json", import.meta.url));
+  const originalRead = fs.readFileSync;
+  t.mock.method(fs, "readFileSync", (path, ...args) =>
+    path === cachePath ? JSON.stringify(cache) : originalRead(path, ...args));
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const events = [{ ...event }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].blurb, undefined);
+  assert.equal(stats.generated, 0);
+  assert.equal(stats.cache_hits, 0);
+  for (const field of ["title", "venue", "date", "time", "url", "description"]) {
+    assert.equal(events[0][field], event[field]);
+  }
+  assert.match(event.blurb, /any subject/);
+});
+
 test("Stanford's Crossover uses the outdoor fan-fest site without claiming free admission", () => {
   const raw = {
     date: "2026-10-23", title: "The Crossover: Basketball Fan Fest",

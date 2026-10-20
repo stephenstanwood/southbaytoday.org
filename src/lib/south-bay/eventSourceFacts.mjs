@@ -1519,6 +1519,18 @@ export function eventCopyFactConflict(text, event) {
   }
   if (/\bbanda\b/i.test(copy) && !/\bbanda\b/i.test(source)) return "unsupported banda genre";
 
+  // Free homework help does not promise tutoring in every subject. SCCLD's
+  // in-person program names Math and English; its separate online service
+  // explicitly offers any subject. Require that broader promise in this
+  // event's own source, including when checking carried or cached blurbs.
+  // https://sccld.org/volunteer/ and https://sccld.org/kids-subject/learning/
+  if (/\bhomework\b/i.test(event?.rawTitle || event?.title || "")
+      && !/\b(?:any|all|every)\s+(?:school\s+|academic\s+)?subjects?\b/i.test(source)) {
+    for (const claim of copy.matchAll(/\b(?:any|all|every)\s+(?:school\s+|academic\s+)?subjects?\b/gi)) {
+      if (claimAppliesToEvent(copy, claim.index, event)) return "unsupported tutoring subject coverage";
+    }
+  }
+
   // This Delphian series lists the Bach, Mozart and other composer families;
   // "dynasties" in its title is not evidence of a program about royalty.
   // Evidence: docs/qa/2026-10-14-night-fact-check.md.
