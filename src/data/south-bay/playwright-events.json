@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-20T03:34:07.159Z",
+    "generatedAt": "2026-10-20T07:45:30.270Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 455,
+    "eventCount": 456,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (116)",
-      "Los Gatos Library (110)",
+      "Los Gatos Library (111)",
       "San Jose Jazz (14)",
       "Linden Tree Books (11)",
       "History San Jose (6)",
@@ -16,13 +16,13 @@
       "ICA San José (3)",
       "Mountain Winery (4)",
       "San Jose Theaters (20)",
-      "Children's Discovery Museum (5)",
+      "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (8)",
       "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (76)",
-      "Levi's Stadium (4)",
+      "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
       "San Jose Museum of Art (6)",
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 110,
+        "count": 111,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -201,7 +201,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 5,
+        "count": 6,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -285,7 +285,7 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 4,
+        "count": 3,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -350,26 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "66b6c87ec741",
-      "title": "Board of Library Trustees Meeting",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
-      "time": "7:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "Regular meeting of the Board of Library Trustees View the meeting agenda and supporting documents at mountainview.legistar.com For more information on the Board of Library Trustees, please visit their webpage.",
-      "sourceAudiences": [
-        "All Ages"
-      ],
-      "url": "https://mountainview.libcal.com/event/15945832",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "3ee0bea57a47",
       "title": "Outdoor Storytime",
@@ -2798,6 +2778,26 @@
       "kidFriendly": true
     },
     {
+      "id": "837f65dd0811",
+      "title": "Dr. Martin Luther King, Jr. Day Holiday",
+      "date": "2027-01-18",
+      "displayDate": "Mon, Jan 18",
+      "time": null,
+      "endTime": null,
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "The Library will be closed today in observance of Dr. Martin Luther King, Jr. Day.",
+      "sourceAudiences": [
+        "All Ages"
+      ],
+      "url": "https://mountainview.libcal.com/event/17200176",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "3b5716d078d7",
       "title": "Storytime (Ages 0-5)",
       "date": "2026-10-20",
@@ -5065,6 +5065,28 @@
       "kidFriendly": false
     },
     {
+      "id": "fddd094bdb5b",
+      "title": "Library Closed",
+      "date": "2027-01-18",
+      "displayDate": "Mon, Jan 18",
+      "time": null,
+      "endTime": null,
+      "venue": "Los Gatos Library",
+      "address": "110 E Main St, Los Gatos, CA 95030",
+      "city": "los-gatos",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Children",
+        "Teens",
+        "Adults"
+      ],
+      "url": "https://losgatosca.libcal.com/event/17842474",
+      "source": "Los Gatos Library",
+      "kidFriendly": true
+    },
+    {
       "id": "ee2d0f08dcca",
       "title": "Alicia Camiña",
       "date": "2026-10-23",
@@ -5817,10 +5839,10 @@
       "kidFriendly": false
     },
     {
-      "id": "110b125dabbe",
+      "id": "f2038fb0e4dc",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5837,10 +5859,10 @@
       "kidFriendly": false
     },
     {
-      "id": "f6182909c9fa",
+      "id": "39198b063bf5",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5857,10 +5879,10 @@
       "kidFriendly": false
     },
     {
-      "id": "595484a7f7e4",
+      "id": "4486c901046f",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -6285,6 +6307,23 @@
       "kidFriendly": false
     },
     {
+      "id": "ce0cdc81af4b",
+      "title": "All Ages Storytime",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
       "id": "35c3ee9682c9",
       "title": "Daisy Day: Fun with Movement",
       "date": "2026-10-24",
@@ -6477,7 +6516,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-20T03:32:47.550Z"
+        "checkedAt": "2026-10-20T07:44:11.347Z"
       }
     },
     {
@@ -6500,7 +6539,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-20T03:32:47.550Z"
+        "checkedAt": "2026-10-20T07:44:11.347Z"
       }
     },
     {
@@ -6523,7 +6562,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-20T03:32:47.551Z"
+        "checkedAt": "2026-10-20T07:44:11.347Z"
       }
     },
     {
@@ -6546,7 +6585,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-20T03:32:47.554Z"
+        "checkedAt": "2026-10-20T07:44:11.349Z"
       }
     },
     {
@@ -6569,7 +6608,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-20T03:32:47.556Z"
+        "checkedAt": "2026-10-20T07:44:11.350Z"
       }
     },
     {
@@ -6592,7 +6631,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T03:32:47.561Z"
+        "checkedAt": "2026-10-20T07:44:11.353Z"
       }
     },
     {
@@ -6615,7 +6654,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T03:32:47.561Z"
+        "checkedAt": "2026-10-20T07:44:11.354Z"
       }
     },
     {
@@ -6638,7 +6677,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-20T03:32:47.562Z"
+        "checkedAt": "2026-10-20T07:44:11.354Z"
       }
     },
     {
@@ -7044,7 +7083,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7061,7 +7100,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7078,7 +7117,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7095,7 +7134,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7112,7 +7151,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8407,23 +8446,6 @@
       "description": "Feel the earth move under your feet! Soulful and irresistible, this feel-good musical tells the true story of the woman behind the soundtrack of our lives. From teenage songwriter to chart-topping legend, Carole King finds her voice in a world that wasn’t always ready to hear it. Set against the vibrant music scene of the 1950s and 1960s, the journey follows love, resilience, the sort of friendships that shape a life—and a career that changed music forever. Featuring a thrilling lineup of iconic hits including “You’ve Got a Friend,” “It’s Too Late,” and “You Make Me Feel Like a Natural Woman,” Beautiful makes you laugh, tear up, and leave the theatre humming all the way home.",
       "url": "https://my.theatreworks.org/7464/7619",
       "source": "TheatreWorks Silicon Valley",
-      "kidFriendly": false
-    },
-    {
-      "id": "35481971d840",
-      "title": "WASHINGTON COMMANDERS VS. SAN FRANCISCO 49ERS",
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
       "kidFriendly": false
     },
     {
