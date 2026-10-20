@@ -1010,6 +1010,26 @@ test("EVENT_START windows close relative to the start, hours units included", ()
   assert.equal(hourBefore.getTime(), start.getTime() - 60 * 60 * 1000);
 });
 
+test("EVENT_START and EVENT_END ignore a leftover clock from another window type", () => {
+  // SJPL's October 20 Color Your Feelings page and registration window close
+  // at its 5 PM start, while registrationEnd still contains time: T09:45.
+  const start = new Date("2026-10-20T17:00:00-07:00");
+  const end = new Date("2026-10-20T18:00:00-07:00");
+  const closes = resolveRegistrationClosesBy(
+    biblioWindowEvent({ ordinal: 0, unit: "days", windowType: "EVENT_START", time: "T09:45" }),
+    start, end,
+  );
+  assert.equal(closes.getTime(), start.getTime());
+  assert.equal(isRegistrationClosedForDay({
+    date: "2026-10-20", registration: "required", registrationClosesBy: closes.toISOString(),
+  }), false);
+  const beforeEnd = resolveRegistrationClosesBy(
+    biblioWindowEvent({ ordinal: 1, unit: "hours", windowType: "EVENT_END", time: "T09:45" }),
+    start, end,
+  );
+  assert.equal(beforeEnd.getTime(), end.getTime() - 60 * 60 * 1000);
+});
+
 test("STATIC windows are absolute and a missing clock reads as end of day", () => {
   const withClock = resolveRegistrationClosesBy(
     biblioWindowEvent({ date: "2026-09-18", time: "T10:00", windowType: "STATIC" }),
@@ -1023,6 +1043,25 @@ test("STATIC windows are absolute and a missing clock reads as end of day", () =
     null,
   );
   assert.equal(noClock.toISOString(), new Date("2026-09-18T23:59:00-07:00").toISOString());
+});
+
+test("registration clocks follow Pacific daylight-saving dates rather than months", () => {
+  for (const [date, offset] of [
+    ["2026-03-01", "-08:00"], ["2026-03-09", "-07:00"],
+    ["2026-10-31", "-07:00"], ["2026-11-02", "-08:00"],
+    ["2026-11-05", "-08:00"],
+  ]) {
+    const closes = resolveRegistrationClosesBy(
+      biblioWindowEvent({ date, time: "T13:00", windowType: "STATIC" }), null, null,
+    );
+    assert.equal(closes.toISOString(), new Date(`${date}T13:00:00${offset}`).toISOString());
+  }
+  assert.equal(resolveRegistrationClosesBy(
+    biblioWindowEvent({ date: "2026-11-01", time: "T01:30", windowType: "STATIC" }), null, null,
+  ).toISOString(), "2026-11-01T09:30:00.000Z", "use the later plausible close in a repeated hour");
+  assert.equal(resolveRegistrationClosesBy(
+    biblioWindowEvent({ date: "2026-03-08", time: "T02:30", windowType: "STATIC" }), null, null,
+  ), null, "do not invent an instant in the skipped spring hour");
 });
 
 test("an EXTERNAL provider's window rule is vestigial and derives nothing", () => {

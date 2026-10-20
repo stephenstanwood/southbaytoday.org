@@ -7,6 +7,20 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford's complete page identifies a free exhibition, not a talk.
+  // Keep its published occurrence clocks; the description also names the
+  // gallery hours and Thanksgiving closure omitted by the sparse feed.
+  // https://events.stanford.edu/event/tangling-the-digital-weaving-printmaking-computing
+  // Evidence: docs/qa/2026-10-20-1407-fact-check.md.
+  {
+    dateFrom: "2026-09-29", dateThrough: "2026-12-04",
+    url: "https://events.stanford.edu/event/tangling-the-digital-weaving-printmaking-computing",
+    facts: {
+      category: "arts", cost: "free",
+      description: "Free exhibition exploring weaving, printmaking, and computing at Coulter Art Gallery in the McMurtry Building. On view September 29–December 4, 2026, Monday–Friday, 1–5 PM; closed November 23–27.",
+      blurb: "Visit a free exhibition exploring weaving, printmaking, and computing at Coulter Art Gallery.",
+    },
+  },
   // Stanford's current program gives Friday, October 23 at 7 and 9 PM.
   // Correct the stale October 21 newsletter date before the past-date gate
   // and URL/date/time dedup, preserving both real performance clocks.
@@ -206,19 +220,21 @@ const CORRECTIONS = [
       attendanceNote: "In-person attendance is full. Register through the museum's event page to attend via Zoom.",
     },
   },
-  // These dated Milpitas occurrences exist, but their shared body conflicts
-  // with itself about the class term and lists assessment dates already past.
-  // Preserve the occurrence clocks without promising new enrollment or
-  // guessing a corrected term. This is not evidence that classes are closed.
-  // Evidence: docs/qa/2026-10-18-0407-fact-check.md (all five source records).
-  ...[
-    ["2026-10-19", "6a5992919943bdf31e9f816b"],
-    ["2026-10-21", "6a5992919943bdf31e9f816c"],
-    ["2026-10-26", "6a5992919943bdf31e9f816d"],
-    ["2026-10-28", "6a5992919943bdf31e9f816e"],
-    ["2026-11-02", "6a5992919943bdf31e9f816f"],
-  ].map(([date, sourceId]) => ({
-    date, url: `https://sccl.bibliocommons.com/events/${sourceId}`,
+  // The same conflicting term copy reached November 4 under a new source ID.
+  // Match the source-listed Mon/Wed program and both stale ranges, within
+  // this term, so new occurrences receive the same caution. This never
+  // creates dates or changes corrected source text or enrollment status.
+  // Evidence: docs/qa/2026-10-18-0407-fact-check.md and
+  // docs/qa/2026-10-20-1407-fact-check.md.
+  {
+    dateFrom: "2026-10-19", dateThrough: "2026-11-18",
+    matches: (event) => (!event.city || event.city === "milpitas")
+      && /^Free Adult ESL Class(?: at Milpitas Library)?$/i.test(event.title || "")
+      && /^Milpitas Library$/i.test(event.venue || "")
+      && /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/[a-f0-9]{24}$/.test(event.url || "")
+      && [1, 3].includes(new Date(`${event.date}T12:00:00Z`).getUTCDay())
+      && /\bFebruary 9(?:th)? (?:to|and) May 20(?:th)?\b/i.test(event.description || "")
+      && /\bClass Dates:\s*August 17(?:th)?,\s*2025\s*[-–—]\s*November 18(?:th)?,\s*2026\b/i.test(event.description || ""),
     facts: {
       attendanceStatus: "needs-confirmation",
       attendanceNote: "The library lists July 27–August 19 assessment dates and conflicting class date ranges. Confirm class and enrollment details with Milpitas Library.",
@@ -229,7 +245,7 @@ const CORRECTIONS = [
       [/\s*ESL assessment dates: July 27th - August 19th\./gi, ""],
       [/\bPlease (?:follow the link to )?make an appointment for your ESL assessment(?::\s*https:\/\/outlook\.office\.com\/boo\.{3}|\.)/gi, "Confirm assessment and enrollment availability with Milpitas Library."],
     ],
-  })),
+  },
   // Newsletter intake carried 8 PM and omitted usable concert links. The
   // organizer's occurrence pages and ticket pages agree on 7:30 PM. Match
   // the dated title/venue too so a different intake ID cannot undo the facts.
@@ -1251,14 +1267,15 @@ export function applyVerifiedEventFacts(event) {
     event = { ...event, address: "106 E. Main Street, Los Gatos, CA 95030" };
   }
   const correction = CORRECTIONS.find((c) => {
-    // A range is inclusive and must have both bounds; it is reserved for a
-    // verified exhibition run whose displayed date advances each day.
+    // A range is inclusive and must have both bounds. It can protect a
+    // verified run or narrowly matched source conflict, never create dates.
     const matchesDate = c.date ? event?.date === c.date
       : Boolean(c.dateFrom && c.dateThrough && event?.date >= c.dateFrom && event?.date <= c.dateThrough);
     return matchesDate && (
       (c.id && event.id === c.id) || (c.url && event.url === c.url)
         || c.aliasUrls?.includes(event.url)
         || (c.title?.test(event.title || "") && c.venue?.test(event.venue || ""))
+        || c.matches?.(event)
     );
   });
   if (!correction) return event;

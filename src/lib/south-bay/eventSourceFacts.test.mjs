@@ -15,6 +15,39 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Tangling the Digital keeps exhibition facts through sparse intake and carried blurbs", async () => {
+  const raw = {
+    id: "stanford-53948654465100-2026-10-21", date: "2026-10-21",
+    title: "Tangling the Digital: Weaving, Printmaking, Computing",
+    url: "https://events.stanford.edu/event/tangling-the-digital-weaving-printmaking-computing",
+    venue: "McMurtry Building", city: "palo-alto", time: "1:00 PM", endTime: "5:00 PM",
+    ongoing: false, category: "education", cost: null,
+    description: "Digital objects are often seen as alien to craft, as though no hands had shaped them.",
+    blurb: "See how weaving, printmaking, and computing intersect in this talk on digital craft.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  const corrected = events[0];
+  assert.equal(corrected.category, "arts");
+  assert.equal(corrected.cost, "free");
+  assert.match(corrected.description, /Coulter Art Gallery/);
+  assert.match(corrected.description, /Monday–Friday, 1–5 PM; closed November 23–27/);
+  assert.match(corrected.blurb, /free exhibition/);
+  assert.doesNotMatch(corrected.blurb, /talk/);
+  for (const key of ["id", "date", "title", "url", "venue", "city", "time", "endTime", "ongoing"]) {
+    assert.equal(corrected[key], raw[key], key);
+  }
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const other of [
+    { ...raw, date: "2026-09-28" },
+    { ...raw, date: "2026-12-05" },
+    { ...raw, url: "https://events.stanford.edu/event/a-separate-talk" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("homework blurbs cannot expand a program's published subject coverage", () => {
   const event = {
     title: "Homework Help for Grades K-6", venue: "Cupertino Library",
@@ -444,6 +477,7 @@ test("Milpitas ESL preserves dated sessions while disclosing conflicting term an
     ["2026-10-26", "6a5992919943bdf31e9f816d"],
     ["2026-10-28", "6a5992919943bdf31e9f816e"],
     ["2026-11-02", "6a5992919943bdf31e9f816f"],
+    ["2026-11-04", "6a5992919943bdf31e9f8170"],
   ];
   for (const [date, sourceId] of occurrences) {
     for (const [rangeWord, booking] of [
@@ -475,6 +509,9 @@ test("Milpitas ESL preserves dated sessions while disclosing conflicting term an
         { ...raw, date: "2027-10-19" },
         { ...raw, date: "2026-10-20" },
         { ...raw, url: "https://sccl.bibliocommons.com/events/another-esl-class" },
+        { ...raw, venue: "Cupertino Library" },
+        { ...raw, city: "cupertino" },
+        { ...raw, description: "Free adult English classes meet Mondays and Wednesdays, August 17–November 18, 2026. Contact Milpitas Library for enrollment." },
       ]) assert.equal(applyVerifiedEventFacts(other), other);
       for (const registration of ["required", "full", "closed", REGISTRATION_APPOINTMENT]) {
         assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);

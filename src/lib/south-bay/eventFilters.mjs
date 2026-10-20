@@ -642,28 +642,34 @@ export function walkUpSupportedByEventText(event) {
 // (scripts/newsletter/registration-recheck.mjs).
 // ---------------------------------------------------------------------------
 
-/** PT offset by month — same heuristic as scripts/lib/dates.mjs parseDatePT
- * (PDT Mar–Nov, PST Dec–Feb). Off by an hour for a few DST-transition hours a
- * year, which is harmless at the day granularity these deadlines are used at. */
-function ptOffsetForMonth(month) {
-  return month >= 3 && month <= 11 ? "-07:00" : "-08:00";
-}
-
 /** The event's calendar date in Pacific Time, as YYYY-MM-DD. */
 function ptCalendarDate(d) {
   return d.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 }
+
+const registrationClockPT = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "America/Los_Angeles", hourCycle: "h23",
+  hour: "2-digit", minute: "2-digit", second: "2-digit",
+});
 
 /** Parse "YYYY-MM-DD" (+ optional "T10:00"/"10:00" clock) as a PT instant. */
 function parsePtDateTime(isoDate, time) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(isoDate || ""))) return null;
   const hhmm = String(time || "").replace(/^T/, "");
   const clock = /^\d{2}:\d{2}(:\d{2})?$/.test(hhmm) ? hhmm : null;
-  const month = parseInt(isoDate.slice(5, 7), 10);
-  const parsed = new Date(
-    `${isoDate}T${clock || "23:59:00"}${clock && clock.length === 5 ? ":00" : ""}${ptOffsetForMonth(month)}`,
-  );
-  return Number.isNaN(parsed.getTime()) ? null : parsed;
+  const expectedClock = clock ? `${clock}${clock.length === 5 ? ":00" : ""}` : "23:59:00";
+  // November deadlines can be PST. A month-based guess closed them an hour
+  // early. Validate both offsets against the actual Pacific wall clock;
+  // prefer the later instant when fall-back repeats an hour, since this
+  // function promises the latest plausible close. Spring's missing hour
+  // has no matching instant and yields no inferred deadline.
+  for (const offset of ["-08:00", "-07:00"]) {
+    const parsed = new Date(`${isoDate}T${expectedClock}${offset}`);
+    if (!Number.isNaN(parsed.getTime())
+        && ptCalendarDate(parsed) === isoDate
+        && registrationClockPT.format(parsed) === expectedClock) return parsed;
+  }
+  return null;
 }
 
 /**
@@ -675,7 +681,8 @@ function parsePtDateTime(isoDate, time) {
  *                that PT day, the latest reading).
  *   EVENT_START  closes `ordinal` × `unit` before the instance starts
  *                (ordinal 0 = at start; SJPL teen meetings use hours).
- *   EVENT_END    same, anchored to the instance end.
+ *   EVENT_END    same, anchored to the instance end. Both ignore a leftover
+ *                `time` clock; only STATIC and RELATIVE use that field.
  *   RELATIVE     `ordinal` × `unit` before the start, at the `time` clock —
  *                BiblioCommons resolves this against the SERIES' first
  *                session, which the instance record doesn't carry, so this
@@ -718,7 +725,11 @@ export function resolveRegistrationClosesBy(ev, start, end) {
     : 24 * 60 * 60 * 1000;
   const shifted = new Date(anchor.getTime() - ordinal * unitMs);
   const clock = String(rule.time || "").replace(/^T/, "");
-  if (/^\d{2}:\d{2}(:\d{2})?$/.test(clock)) {
+  // The provider retains old clock settings after switching window types.
+  // SJPL's October 20 art workshop has EVENT_START / ordinal 0 / T09:45,
+  // but its actual window closes at the 5 PM start. Applying that old clock
+  // falsely closed registration more than seven hours early.
+  if (windowType === "RELATIVE" && /^\d{2}:\d{2}(:\d{2})?$/.test(clock)) {
     const atClock = parsePtDateTime(ptCalendarDate(shifted), clock);
     if (atClock) return atClock;
   }
