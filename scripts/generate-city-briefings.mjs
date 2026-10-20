@@ -22,6 +22,7 @@ import {
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
   hasUnsupportedSharedEventVenue,
+  briefingEventWhen,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
@@ -323,7 +324,7 @@ async function main() {
         highlights.push({
           type: "event",
           title: e.title,
-          when: e.displayDate ? `${e.displayDate}${e.time ? ` · ${e.time}` : ""}` : e.date,
+          when: briefingEventWhen(e),
           venue: e.venue || null,
           category: e.category,
           url: e.url || null,

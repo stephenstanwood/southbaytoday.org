@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import {
   buildSourceHealth,
@@ -18,8 +21,10 @@ import {
   hasEventSelectionCount,
   hasUnsupportedEventMilestone,
   hasUnsupportedSharedEventVenue,
+  briefingEventWhen,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
+  refreshBriefingAvailability,
 } from "./city-briefing-integrity.mjs";
 
 const NOW = new Date("2026-07-20T03:00:00.000Z");
@@ -163,6 +168,69 @@ test("city highlights honor verified closures even when an older snapshot has no
   }
   assert.equal(isBriefingEventAvailable({ ...older, date: "2027-10-14" }), true);
   assert.equal(isBriefingEventAvailable({ ...older, url: "https://sccl.bibliocommons.com/events/another-class" }), true);
+});
+
+test("event refresh removes newly unavailable briefing occurrences without rewriting the lead", (t) => {
+  const dir = mkdtempSync(join(tmpdir(), "sbt-briefing-availability-"));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const path = join(dir, "briefing.json");
+  const event = {
+    title: "ESL Conversation Club", city: "cupertino", date: "2026-10-20",
+    displayDate: "Tue, Oct 20", time: "10:30 AM", url: "https://library.example/events/esl",
+    registration: "closed",
+  };
+  const highlight = { type: "event", title: event.title, url: event.url, when: briefingEventWhen(event) };
+  const nextDay = { ...highlight, when: "Wed, Oct 21 · 10:30 AM" };
+  const otherTime = { ...highlight, when: "Tue, Oct 20 · 1:30 PM" };
+  const otherUrl = { ...highlight, url: "https://library.example/events/other" };
+  const fullEvent = { ...event, title: "Book Club", registration: "full" };
+  const fullHighlight = { ...highlight, title: fullEvent.title };
+  const council = { ...highlight, type: "council" };
+  const input = {
+    generatedAt: "2026-10-20T03:00:00Z", weekStart: "2026-10-19", weekEnd: "2026-10-26",
+    cities: {
+      cupertino: { summary: "Tuesday's council agenda lists a second reading.", highlights: [highlight, fullHighlight, nextDay, otherTime, otherUrl, council] },
+      campbell: { summary: "Another city.", highlights: [highlight] },
+    },
+  };
+  writeFileSync(path, JSON.stringify(input));
+  assert.equal(refreshBriefingAvailability(path, [event, fullEvent]), 2);
+  const expected = structuredClone(input);
+  expected.cities.cupertino.highlights = [nextDay, otherTime, otherUrl, council];
+  assert.deepEqual(JSON.parse(readFileSync(path, "utf8")), expected);
+  const bytes = readFileSync(path, "utf8");
+  assert.equal(refreshBriefingAvailability(path, [event, fullEvent]), 0);
+  assert.equal(readFileSync(path, "utf8"), bytes);
+});
+
+test("available events and absent feed rows do not change a briefing snapshot", (t) => {
+  const dir = mkdtempSync(join(tmpdir(), "sbt-briefing-available-"));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const path = join(dir, "briefing.json");
+  assert.equal(refreshBriefingAvailability(path, []), 0, "a missing briefing is not created");
+  const event = { title: "ESL", city: "cupertino", date: "2026-10-20", url: "https://library.example/esl", registration: "required" };
+  const input = { weekStart: "2026-10-19", weekEnd: "2026-10-26", cities: {
+    cupertino: { highlights: [{ type: "event", title: event.title, url: event.url, when: briefingEventWhen(event) }] },
+  } };
+  const bytes = JSON.stringify(input);
+  writeFileSync(path, bytes);
+  assert.equal(refreshBriefingAvailability(path, [event]), 0);
+  assert.equal(refreshBriefingAvailability(path, []), 0);
+  assert.equal(refreshBriefingAvailability(path, [{ ...event, date: "2027-10-20", registration: "closed" }]), 0);
+  assert.equal(readFileSync(path, "utf8"), bytes);
+});
+
+test("the Vasona walk keeps its verified Oak Meadow meeting point through ingest", () => {
+  const event = {
+    title: "Green Exercise Walk / Hike Los Gatos Vasona Lake", date: "2026-11-07",
+    url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316788593/",
+    venue: "Bay Area Hiking, Walking, Wellness Club", address: "233 Blossom Hill Rd, Los Gatos",
+    time: "1:30 PM", endTime: "4:30 PM", city: "los-gatos",
+  };
+  assert.deepEqual(applyVerifiedMeetupEventOverride(event), { ...event, venue: "Oak Meadow Park parking lot" });
+  assert.equal(applyVerifiedMeetupEventOverride({ ...event, date: "2026-11-08" }).venue, event.venue);
+  assert.equal(applyVerifiedMeetupEventOverride({ ...event, url: event.url.replace("316788593", "316788594") }).venue, event.venue);
+  assert.equal(event.venue, "Bay Area Hiking, Walking, Wellness Club");
 });
 
 test("ordinary performance dates cannot become opening or closing dates in a briefing", () => {

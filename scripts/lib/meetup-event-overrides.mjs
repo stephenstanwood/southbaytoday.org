@@ -7,6 +7,15 @@ const MACINTALKERS_PROFILE_URL =
 // club site also gives the 7 PM end. Keep Meetup as the date-specific
 // occurrence source, but normalize these durable club facts.
 export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "" } = {}) {
+  // The source calls this a Vasona Lake walk but explicitly meets at Oak Meadow
+  // Park's entrance parking lot by the airplane. The generic "Parking lot"
+  // venue was discarded at ingest and replaced with the organizing club.
+  // https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316788593/
+  if (event?.date === "2026-11-07"
+    && /\/events\/316788593\/?(?:\?|$)/.test(String(event?.url || ""))) {
+    return { ...event, venue: "Oak Meadow Park parking lot" };
+  }
+
   // The organizer's title names the festival, but this listing is a group walk
   // from Safeway to the festival at Civic Center Lawn. Keep the meetup time and
   // URL; label its actual meeting point so readers do not go to Safeway for the

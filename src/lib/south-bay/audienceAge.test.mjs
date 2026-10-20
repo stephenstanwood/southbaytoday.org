@@ -40,6 +40,14 @@ test("21 and over / adults only still classify as adult", () => {
   assert.equal(classifyAudienceAge(ev("Speakeasy Night", "Adults only.")), "adult");
 });
 
+test("hyphenated adult-only restrictions exclude an event from family plans", () => {
+  for (const restriction of ["adult-only", "adults-only", "adults‐only", "adults‑only"]) {
+    assert.equal(classifyAudienceAge(ev("Art After Dark", `An ${restriction} arts and crafts evening.`)), "adult", restriction);
+  }
+  assert.equal(classifyAudienceAge(ev("Community Art", "Adults and children welcome.")), "all");
+  assert.equal(classifyAudienceAge(ev("Community Art", "Please use paint with adult supervision only.")), "all");
+});
+
 test("kids signals still win on kids-only events", () => {
   assert.equal(classifyAudienceAge(ev("Toddler Story Time", "Ages 2-4.")), "kids");
   assert.equal(classifyAudienceAge(ev("Kindergarten Craft Hour", "")), "kids");

@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { writeFileAtomic } from "./io.mjs";
 import { REGISTRATION_CLOSED, REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
@@ -7,6 +9,43 @@ export function isBriefingEventAvailable(event) {
   // used by event publication before treating missing signup state as available.
   const verified = applyVerifiedEventFacts(event);
   return verified?.registration !== REGISTRATION_FULL && verified?.registration !== REGISTRATION_CLOSED;
+}
+
+export function briefingEventWhen(event) {
+  return event.displayDate
+    ? `${event.displayDate}${event.time ? ` · ${event.time}` : ""}`
+    : event.date;
+}
+
+/** Event refreshes can close registration after the weekly briefing is written. */
+export function refreshBriefingAvailability(path, events) {
+  let briefings;
+  try {
+    briefings = JSON.parse(readFileSync(path, "utf8"));
+  } catch (error) {
+    if (error.code === "ENOENT") return 0;
+    throw error;
+  }
+
+  const key = (city, item, when) => JSON.stringify([city, item.title, item.url || null, when]);
+  const unavailable = new Set(events
+    .filter((event) => event.date >= briefings.weekStart && event.date <= briefings.weekEnd
+      && !isBriefingEventAvailable(event))
+    .map((event) => key(event.city, event, briefingEventWhen(event))));
+
+  let removed = 0;
+  for (const [city, briefing] of Object.entries(briefings.cities || {})) {
+    briefing.highlights = (briefing.highlights || []).filter((highlight) => {
+      // Preserve other occurrences and historical highlights absent from the
+      // current feed. A missing row does not establish a cancellation.
+      if (highlight.type !== "event" || !unavailable.has(key(city, highlight, highlight.when))) return true;
+      removed += 1;
+      return false;
+    });
+  }
+  // Do not imply that the lead was regenerated or replace an unverified slot.
+  if (removed) writeFileAtomic(path, JSON.stringify(briefings, null, 2) + "\n");
+  return removed;
 }
 
 const PROSPECTIVE_SOURCE =

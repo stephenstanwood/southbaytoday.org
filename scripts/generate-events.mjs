@@ -60,6 +60,7 @@
 
 import { readFileSync, existsSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { refreshBriefingAvailability } from "./lib/city-briefing-integrity.mjs";
 import { advanceLedger } from "./lib/event-slug-ledger-io.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-suffix.mjs";
@@ -11095,6 +11096,11 @@ async function main() {
   }
 
   writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
+  const removedHighlights = refreshBriefingAvailability(
+    join(__dirname, "..", "src", "data", "south-bay", "city-briefings.json"),
+    output.events,
+  );
+  if (removedHighlights) console.log(`Removed ${removedHighlights} unavailable event highlight(s) from city briefings`);
   console.log(`\n✅ Done — ${collapsedEvents.length} events (${ongoingCount} ongoing) from ${sourceNames.length} sources → ${OUT_PATH}`);
 
   // Summary by city

@@ -71,7 +71,7 @@ const ADULT_SIGNALS = [
   /\b18\s*\+/,
   /\b21\s*(?:and|&)\s*over\b/i,
   /\b18\s*(?:and|&)\s*over\b/i,
-  /\badults?\s+only\b/i,
+  /\badults?(?:\s+|\s*[-‐‑]\s*)only\b/i,
   /\bno\s+minors\b/i,
   /\bspeakeas(?:y|ies)\b/i,
   /\bburlesque\b/i,
