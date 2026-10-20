@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-20T16:05:07.259Z",
+    "generatedAt": "2026-10-20T20:17:36.754Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 456,
+    "eventCount": 455,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (116)",
-      "Los Gatos Library (111)",
+      "Los Gatos Library (110)",
       "San Jose Jazz (14)",
       "Linden Tree Books (11)",
       "History San Jose (6)",
@@ -25,8 +25,8 @@
       "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 111,
+        "count": 110,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -338,39 +338,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "3ee0bea57a47",
-      "title": "Outdoor Storytime",
-      "date": "2026-10-20",
-      "displayDate": "Tue, Oct 20",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Pioneer Park",
-      "address": "1146 Church St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "family",
-      "cost": "free",
-      "description": "Bring a blanket and enjoy stories, songs, and rhymes with our Children's Librarians in Pioneer Park. Tuesdays at 10:30 a.m. All ages welcome, no registration required. All events are weather permitting.",
-      "sourceAudiences": [
-        "Babies",
-        "Preschoolers",
-        "Children",
-        "Families"
-      ],
-      "url": "https://mountainview.libcal.com/event/17142488",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "a173a4b43af4",
       "title": "Community Preservation Lab Scanning Service",
@@ -1208,6 +1187,27 @@
         "Seniors"
       ],
       "url": "https://mountainview.libcal.com/event/15691281",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "40573f9bce01",
+      "title": "Media, Information & AI Literacy: Navigating Our Changing Digital World",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "3:00 PM",
+      "endTime": "4:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "education",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. We live in an age of unprecedented access to information. But figuring out what to trust is becoming increasingly difficult. Social media algorithms shape what we see, headlines compete for our attention, and generative AI can now create remarkably convincing images, videos, and other content. In this interactive workshop, participants will build practical media and AI literacy skills for navigating this changing landscape. The workshop aims to help participants become critical thinkers and confident consumers of information and AI. About the Speaker: Tracy Wu is the founder of Meiflower, a Los Altos-based 501(c)(3) nonprofit focused on helping children, families, and communities develop the critical-thinking and digital-literacy skills needed to thrive in an increasingly technology-filled world. Tracy brings decades of corporate experience and a Master’s degree in Finance. Most recently, she served as a Senior Program Manager in Platform Trust & Safety at LinkedIn, with experience related to online safety, platform integrity, and user trust. In the community, Tracy is also an Art Docent with the Los Altos School District and a reading tutor through the Santa Clara County Library District’s Adult Literacy Program. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17592152",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -2794,26 +2794,6 @@
       "url": "https://mountainview.libcal.com/event/17200176",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "3b5716d078d7",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-20",
-      "displayDate": "Tue, Oct 20",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249575",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "2d949601ea13",
@@ -6305,23 +6285,6 @@
       "kidFriendly": false
     },
     {
-      "id": "ce0cdc81af4b",
-      "title": "All Ages Storytime",
-      "date": "2026-10-20",
-      "displayDate": "Tue, Oct 20",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "35c3ee9682c9",
       "title": "Daisy Day: Fun with Movement",
       "date": "2026-10-24",
@@ -6362,6 +6325,23 @@
       "displayDate": "Sun, Oct 25",
       "time": "10:00 am",
       "endTime": "12:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "ce0cdc81af4b",
+      "title": "All Ages Storytime",
+      "date": "2026-10-20",
+      "displayDate": "Tue, Oct 20",
+      "time": "11:30 am",
+      "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -6514,7 +6494,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-20T16:03:51.054Z"
+        "checkedAt": "2026-10-20T20:16:16.796Z"
       }
     },
     {
@@ -6537,7 +6517,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-20T16:03:51.054Z"
+        "checkedAt": "2026-10-20T20:16:16.796Z"
       }
     },
     {
@@ -6560,7 +6540,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-20T16:03:51.054Z"
+        "checkedAt": "2026-10-20T20:16:16.796Z"
       }
     },
     {
@@ -6583,7 +6563,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-20T16:03:51.057Z"
+        "checkedAt": "2026-10-20T20:16:16.798Z"
       }
     },
     {
@@ -6606,7 +6586,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-20T16:03:51.058Z"
+        "checkedAt": "2026-10-20T20:16:16.799Z"
       }
     },
     {
@@ -6629,7 +6609,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T16:03:51.063Z"
+        "checkedAt": "2026-10-20T20:16:16.802Z"
       }
     },
     {
@@ -6652,7 +6632,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T16:03:51.063Z"
+        "checkedAt": "2026-10-20T20:16:16.802Z"
       }
     },
     {
@@ -6675,7 +6655,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-20T16:03:51.063Z"
+        "checkedAt": "2026-10-20T20:16:16.802Z"
       }
     },
     {
@@ -8974,41 +8954,6 @@
       "kidFriendly": true
     },
     {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9126,6 +9071,41 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
