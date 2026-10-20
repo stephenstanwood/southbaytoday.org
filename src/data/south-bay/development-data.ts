@@ -31,7 +31,9 @@ export interface DevProject {
   description: string;
   scale?: string;      // "7.3M sq ft", "4,000+ units", "$4.5B"
   developer?: string;
-  timeline?: string;   // "Expected 2032" | "Completed 2024" | "Multiple phases"
+  // Use a sourced near-term milestone or confirmed status; omit guessed dates.
+  // Projects with 2030s+ or open-ended long-term delivery do not belong here.
+  timeline?: string;
   featured?: boolean;
   sourceNote?: string; // brief context on data source
 }
