@@ -155,6 +155,30 @@ test("either signal is enough — an in-person label cannot override webinar cop
 
 // ── hasOutOfAreaDestination ──
 
+test("Stanford's Pacific Grove campus is not a Palo Alto destination", () => {
+  // Official October 20, 2026 listing: the coral-recovery talk is hybrid at
+  // Hopkins Marine Station, 120 Ocean View Blvd, Pacific Grove, CA 93950.
+  const event = {
+    title: "Coral Bleaching Recovery with the Help of Healthy Corals",
+    city: "palo-alto", venue: "Hopkins Marine Station",
+    address: "120 Ocean View Blvd Pacific Grove, CA 93950",
+  };
+  assert.equal(hasOutOfAreaDestination(event), true);
+  assert.equal(hasOutOfAreaDestination({ ...event, venue: "Stanford University" }), true);
+  assert.equal(hasOutOfAreaDestination({ ...event, address: "Pacific Grove, CA" }), true);
+  assert.equal(hasOutOfAreaDestination({ ...event, virtual: true }), false);
+  assert.equal(hasOutOfAreaDestination({
+    ...event, address: "", venue: "Stanford University",
+    description: "A talk by researchers from Hopkins Marine Station in Pacific Grove.",
+  }), false);
+  assert.equal(hasOutOfAreaDestination({
+    ...event, address: "10 Pacific Grove Way, San Jose, CA 95112",
+  }), false);
+  assert.equal(hasOutOfAreaDestination({
+    venue: "Kepler's Books", address: "1010 El Camino Real, Menlo Park, CA 94025",
+  }), false, "the established border-venue coverage stays eligible");
+});
+
 test("an out-of-state postal address overrides an inherited local campus name", () => {
   const event = {
     title: "iSchool at ARMA InfoCon 2026", city: "san-jose",

@@ -3826,6 +3826,12 @@ async function fetchStanfordEvents() {
       // Localist publishes the attendance mode outright — no need to guess it
       // from the copy. "hybrid" stays a physical destination.
       const isVirtual = virtualFromSourceSignal(ev.experience) === true;
+      // University ownership does not place a satellite campus in Palo Alto.
+      // Filter before the source cap so off-site rows cannot displace local
+      // programs. Keep online-only events and locally organized field trips.
+      if (!isVirtual && (namesUncoveredCaPostalCity(ev.address)
+        || hasOutOfAreaDestination({ venue, address: ev.address }))
+        && !LOCAL_DEPARTURE_TRIP.test(ev.title || "")) return null;
       // A multi-day exhibit that is open today is a run, not an appointment:
       // anchor it to today with no clock so it files under Exhibits. This has
       // to be decided from the series bounds rather than from the occurrence —

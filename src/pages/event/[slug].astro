@@ -329,8 +329,8 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   )}
   {retired && !passed && (
     <p class="cal-passed">
-      This listing is no longer on {event.source ? `the ${event.source} calendar` : "the organizer's calendar"} — it may
-      have been cancelled, moved, or renamed. {event.url ? <>Check <a href={event.url} rel="noopener noreferrer">the source</a> before you go, or </>: <>Check with the organizer before you go, or </>}
+      This listing is no longer in South Bay Today's calendar.
+      {event.url ? <>Check <a href={event.url} rel="noopener noreferrer">the source</a> before you go, or </>: <>Check with the organizer before you go, or </>}
       <a href={`/events/${event.date}`}>see what else is on {dayLabelNoYear} →</a>
     </p>
   )}

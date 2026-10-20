@@ -800,7 +800,7 @@ export function seriesStartedBeforeEvent(event) {
  * don't cover, regardless of what its city slug says.
  */
 export const OUT_OF_AREA_LOCATION =
-  /\b(san francisco|oakland|berkeley|alameda|fremont|hayward|walnut creek|san mateo|redwood city|daly city|san leandro|richmond|concord|vallejo|sacramento|los angeles|riverside|san rafael|novato|petaluma|napa|emeryville|burlingame|san bruno|pacifica|half moon bay|morgan hill|gilroy|marin|pleasanton|livermore|danville|san ramon|diablo|tri-valley)\b/i;
+  /\b(san francisco|oakland|berkeley|alameda|fremont|hayward|walnut creek|san mateo|redwood city|daly city|san leandro|richmond|concord|vallejo|sacramento|los angeles|riverside|pacific grove|san rafael|novato|petaluma|napa|emeryville|burlingame|san bruno|pacifica|half moon bay|morgan hill|gilroy|marin|pleasanton|livermore|danville|san ramon|diablo|tri-valley)\b/i;
 
 /** Cities inside the coverage area, plus the two campus tokens that carry no city name. */
 export const COVERED_LOCATION =
@@ -863,6 +863,11 @@ export function hasOutOfAreaDestination(event) {
       ? event
       : [event.address, event.location, event.venue].filter(Boolean).join(" | ");
   if (!hay) return false;
+  const address = typeof event === "string" ? event : event.address || event.location || "";
   return NON_CA_POSTAL_LOCATION.test(hay)
+    // Stanford's Hopkins Marine Station is in Pacific Grove. A source's full
+    // off-site postal address outranks an inherited "Stanford University" venue.
+    // Limit this to named exclusions so approved border venues remain eligible.
+    || (OUT_OF_AREA_LOCATION.test(address) && namesUncoveredCaPostalCity(address))
     || (OUT_OF_AREA_LOCATION.test(hay) && !COVERED_LOCATION.test(hay));
 }

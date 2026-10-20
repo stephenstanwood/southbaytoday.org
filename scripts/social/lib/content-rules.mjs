@@ -45,7 +45,7 @@ export const IN_AREA_CITIES = new Set([
 export const OUT_OF_AREA_CITIES = [
   "santa cruz", "oakland", "berkeley", "san francisco", "hayward",
   "fremont", "union city", "daly city", "san mateo", "redwood city",
-  "menlo park", "walnut creek", "concord", "monterey", "capitola",
+  "menlo park", "walnut creek", "concord", "monterey", "pacific grove", "capitola",
   "half moon bay", "gilroy", "morgan hill", "watsonville", "riverside",
 ];
 

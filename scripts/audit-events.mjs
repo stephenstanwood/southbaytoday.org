@@ -17,6 +17,7 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import {
@@ -83,7 +84,7 @@ function getVirtualFlag(e) {
   return false;
 }
 
-function classify(event) {
+export function classify(event) {
   const findings = [];
   const title = event.title || "";
   const loc = getLocationText(event);
@@ -132,7 +133,9 @@ function classify(event) {
         // Tolerate out-of-area city names that appear inside a recognizable
         // address for an in-area city (rare, but possible for street names).
         const tokens = city ? SLUG_TO_CITY_TOKENS[city] : null;
-        const inAreaHit = tokens && tokens.some(t => locLower.includes(t));
+        // A speaker's Stanford affiliation in the description cannot turn
+        // Hopkins Marine Station's Pacific Grove address into Palo Alto.
+        const inAreaHit = tokens && tokens.some(t => addrLower.includes(t));
         if (!inAreaHit) {
           // Organized outings that depart from a covered city are supposed to
           // have an out-of-area destination — a Sunnyvale senior-center bus to
@@ -423,4 +426,6 @@ async function main() {
   }
 }
 
-await main();
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  await main();
+}

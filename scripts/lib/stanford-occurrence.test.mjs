@@ -71,6 +71,25 @@ test("a dated event takes its day and clock from the occurrence, not first_date"
   assert.equal(event.ongoing, false);
 });
 
+test("off-site Stanford events are filtered before spending the source's local-event cap", async () => {
+  const tomorrow = dayPT(1);
+  const instances = [{ start: `${tomorrow}T18:00:00-07:00`, end: `${tomorrow}T19:15:00-07:00` }];
+  const offsite = {
+    title: "Coral Bleaching Recovery with the Help of Healthy Corals",
+    location_name: "Hopkins Marine Station",
+    address: "120 Ocean View Blvd Pacific Grove, CA 93950", instances,
+  };
+  const events = await runWith([
+    localistEvent({ id: 1, instances }),
+    localistEvent({ ...offsite, id: 2, experience: "inperson" }),
+    localistEvent({ ...offsite, id: 3, experience: "hybrid" }),
+    localistEvent({ ...offsite, id: 4, experience: "virtual" }),
+    localistEvent({ ...offsite, id: 5, title: "Field Trip to Hopkins Marine Station" }),
+  ]);
+  assert.deepEqual(events.map((e) => e.id), [1, 4, 5].map((id) => `stanford-${id}-${tomorrow}`));
+  assert.equal(events[1].virtual, true, "an online-only event has no physical destination");
+});
+
 test("an all-day occurrence keeps a null time instead of inventing one", async () => {
   // The old bug's signature was a wall of identical "5:00 PM" starts — the
   // Pacific rendering of midnight UTC. No time is the honest answer here, and

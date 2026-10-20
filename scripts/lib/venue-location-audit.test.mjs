@@ -2,6 +2,29 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { auditEventLocation, auditEventLocations } from "./venue-location-audit.mjs";
+import { classify } from "../audit-events.mjs";
+
+test("a Stanford biography cannot excuse an out-of-area destination in the event audit", () => {
+  const event = {
+    title: "Coral Bleaching Recovery with the Help of Healthy Corals",
+    city: "palo-alto", venue: "Hopkins Marine Station",
+    address: "120 Ocean View Blvd Pacific Grove, CA 93950",
+    description: "Danny Collins is a third-year PhD student in Stanford University's Oceans Department.",
+  };
+  assert.ok(classify(event).some((f) => f.reason === "out-of-area" && f.severity === "hard"));
+  const trip = classify({ ...event, title: "Field Trip to Hopkins Marine Station" });
+  assert.ok(trip.some((f) => f.reason === "local-departure-trip" && f.severity === "info"));
+  assert.ok(!trip.some((f) => f.reason === "out-of-area"));
+});
+
+test("a biography's Pacific Grove affiliation cannot move a local event out of area", () => {
+  const findings = classify({
+    title: "Coral Research Talk", city: "palo-alto",
+    venue: "Stanford University", address: "Stanford, CA 94305",
+    description: "Our guest works at Hopkins Marine Station in Pacific Grove.",
+  });
+  assert.ok(!findings.some((f) => f.reason === "out-of-area"));
+});
 
 // ── the 2026-09-03 records ─────────────────────────────────────────────────
 
