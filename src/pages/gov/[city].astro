@@ -50,7 +50,11 @@ interface Props {
 const { digest } = Astro.props;
 const cityId = digest.city;
 const cityName = digest.cityName;
-const meeting = ((meetingsJson as unknown as { meetings?: Record<string, Meeting> }).meetings ?? {})[cityId] ?? null;
+// A fresh snapshot can still contain yesterday's meeting after Pacific midnight.
+// Keep the next-agenda card, page title, and Event metadata on the same date gate.
+const buildDayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+const candidateMeeting = ((meetingsJson as unknown as { meetings?: Record<string, Meeting> }).meetings ?? {})[cityId] ?? null;
+const meeting = candidateMeeting?.date && candidateMeeting.date >= buildDayPt ? candidateMeeting : null;
 
 const meetingDayLabel = meeting?.date
   ? new Date(`${meeting.date}T12:00:00Z`).toLocaleDateString("en-US", {
