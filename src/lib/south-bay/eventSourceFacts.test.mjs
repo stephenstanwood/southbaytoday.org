@@ -15,6 +15,43 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Panama Deception drops obsolete current claims from source and polished descriptions", async () => {
+  const { polishDescription } = await import("../../../scripts/generate-events.mjs");
+  const event = {
+    id: "paloalto-6a61028ecca66c2f00a54304", date: "2026-12-03",
+    title: "Documentary: UNAFF presents the Panama Deception", city: "palo-alto",
+    venue: "Rinconada Library", time: "6:00 PM", endTime: "7:45 PM",
+    url: "https://paloalto.bibliocommons.com/events/6a61028ecca66c2f00a54304",
+    blurb: "Watch the Academy Award-winning documentary The Panama Deception at the library.",
+  };
+  const lead = "The screening includes a discussion.";
+  const history = "It was cablecast on Cinemax in the United States during October of that same year";
+  const relocation = "EP has recently moved its offices out of New York and California. The new headquarters for all operations is now in Chapel Hill, North Carolina.";
+  for (const description of [
+    `${lead} ${relocation} ${history} and currently, Bravo-the Independent Film Channel retains the rights to cablecast the film. Funding includes the I. Roderick MacArthur Foundation.`,
+    `${lead} ${relocation} ${history}. Currently, Bravo (the Independent Film Channel) retains the rights to cablecast the film. Funding includes the I. Roderick Mac Arthur Foundation.`,
+  ]) {
+    const raw = { ...event, description };
+    const original = structuredClone(raw);
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, `${lead} ${history}. Funding includes the I. Roderick MacArthur Foundation.`);
+    assert.equal(applyVerifiedEventFacts({ ...raw, description: polishDescription(description) }).description,
+      events[0].description);
+    for (const key of Object.keys(event)) assert.equal(events[0][key], event[key], key);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(raw, original);
+    for (const other of [
+      { ...raw, date: "2026-12-04" },
+      { ...raw, url: "https://paloalto.bibliocommons.com/events/another-film" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+  const correctedSource = { ...event, description: "The screening includes a discussion. No television-rights claim is made." };
+  assert.deepEqual(applyVerifiedEventFacts(correctedSource), correctedSource);
+  const alias = { ...event, url: event.url.replace("/events/", "/v2/events/"), description: `${history} and currently, Bravo-the IndependentFilm Channel retains the rights to cablecast the film.` };
+  assert.equal(applyVerifiedEventFacts(alias).description, `${history}.`);
+});
+
 test("Tangling the Digital keeps exhibition facts through sparse intake and carried blurbs", async () => {
   const raw = {
     id: "stanford-53948654465100-2026-10-21", date: "2026-10-21",

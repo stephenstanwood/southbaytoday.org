@@ -7,6 +7,24 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // This listing republishes a ©2000–2003 film page's "currently" claim.
+  // Bravo and IFC are separate networks; no current broadcast rights were
+  // verified. Remove that clause and the same page's undated "recent" office
+  // move, preserving the sourced 1993 Cinemax history.
+  // Also restore the funder's source spelling after the prose splitter.
+  // https://www.empowermentproject.org/pages/panama.html
+  // Evidence: docs/qa/2026-10-20-1607-fact-check.md.
+  {
+    date: "2026-12-03",
+    url: "https://paloalto.bibliocommons.com/events/6a61028ecca66c2f00a54304",
+    aliasUrls: ["https://paloalto.bibliocommons.com/v2/events/6a61028ecca66c2f00a54304"],
+    copyReplacements: [
+      [/\s*EP has recently moved its offices out of New York and California\.\s+The new headquarters for all operations is now in Chapel Hill, North Carolina\./i, ""],
+      [/\s+and currently,\s*Bravo\s*[-–—]\s*the Independent\s*Film Channel retains the rights to cablecast the film\./i, "."],
+      [/\s*Currently,\s*Bravo\s*\(the Independent Film Channel\) retains the rights to cablecast the film\./i, ""],
+      [/\bI\. Roderick Mac Arthur Foundation\b/g, "I. Roderick MacArthur Foundation"],
+    ],
+  },
   // Stanford's complete page identifies a free exhibition, not a talk.
   // Keep its published occurrence clocks; the description also names the
   // gallery hours and Thanksgiving closure omitted by the sparse feed.
