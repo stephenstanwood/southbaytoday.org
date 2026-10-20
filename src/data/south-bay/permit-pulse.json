@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-19T03:27:50.247Z",
+      "generatedAt": "2026-10-20T03:15:36.414Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 11 – Oct 18",
+      "dateRange": "Oct 12 – Oct 19",
       "stats": {
-        "total": 488,
-        "notable": 37,
-        "newUnits": 20,
-        "totalValuation": 43289297
+        "total": 580,
+        "notable": 44,
+        "newUnits": 21,
+        "totalValuation": 61332361
       },
       "permits": [
         {
@@ -137,14 +137,14 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-19T03:27:52.857Z",
+      "generatedAt": "2026-10-20T03:15:38.670Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 11 – Oct 18",
+      "dateRange": "Oct 12 – Oct 19",
       "stats": {
-        "total": 142,
+        "total": 135,
         "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
@@ -163,18 +163,6 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02926",
-          "address": "640 Kendall Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-14",
-          "subtype": "Permit Issued"
-        },
-        {
           "id": "26BLD-02962",
           "address": "618 Wildwood Ln",
           "category": "residential-remodel",
@@ -184,6 +172,18 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-10-15",
+          "subtype": "Permit Issued"
+        },
+        {
+          "id": "26BLD-02926",
+          "address": "640 Kendall Av",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-14",
           "subtype": "Permit Issued"
         },
         {

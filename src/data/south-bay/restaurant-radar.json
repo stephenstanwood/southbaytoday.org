@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T03:32:37.899Z",
+  "generatedAt": "2026-10-20T03:29:30.741Z",
   "cities": [
     "San Jose",
     "Palo Alto"
@@ -111,6 +111,19 @@
       "date": "2026-10-06"
     },
     {
+      "id": "2026-142823-CI",
+      "city": "san-jose",
+      "address": "414 E William St",
+      "name": "Spartan Brew Cafe Ste C",
+      "description": "Srp (Bep100%) Spartan Brew Cafe Ste C",
+      "workType": "Tenant Improvement",
+      "subtype": "Restaurant",
+      "signal": "opening",
+      "label": "Renovation",
+      "valuation": 70000,
+      "date": "2026-10-16"
+    },
+    {
       "id": "2026-122380-CI",
       "city": "san-jose",
       "address": "1701 Park Av",
@@ -149,6 +162,30 @@
       "valuation": 0,
       "date": "2026-09-22",
       "blurb": "Round Table Pizza franchise fitting out a new location on South White Road in East San Jose"
+    },
+    {
+      "id": "pa-611 Emerson St-2026-08-27",
+      "city": "palo-alto",
+      "address": "611 Emerson St",
+      "name": "Maison Saigon",
+      "description": "MAISON SAIGON :U&O & tenant improvement 6,700sf of an existing retail space t…",
+      "workType": "Building Permit",
+      "signal": "opening",
+      "label": "New Opening",
+      "valuation": 0,
+      "date": "2026-08-27"
+    },
+    {
+      "id": "pa-975 Page Mill Rd-2026-09-03",
+      "city": "palo-alto",
+      "address": "975 Page Mill Rd",
+      "name": "The Landing",
+      "description": "THE LANDING TI ~25,000 SF & UO. This project consists of a tenant improvement…",
+      "workType": "Building Permit",
+      "signal": "activity",
+      "label": "Renovation",
+      "valuation": 0,
+      "date": "2026-09-03"
     }
   ]
 }
