@@ -319,6 +319,12 @@ exception dates, attendance requirements and identifiers. New shorter source
 copy still replaces older wording; the pipeline does not restore historical
 descriptions by event ID.
 
+The exported title/body normalizers also keep source-supplied LinkedIn, STAR,
+SJ, LCSW and CMEMS spellings. Name abbreviations before English or Spanish
+conjunctions (for example, "Super Smash Bros. y más") keep their continuation
+case, while genuine following sentences still capitalize. Full reviewed-copy
+fixtures cover all six October 20 regressions and repeated normalization.
+
 Offline publication fixtures intentionally produce source failures and must
 never reach personal MILO intake. `notification-intake.mjs` rejects uninjected
 live transports inside Node test workers. CLI fixtures preserve

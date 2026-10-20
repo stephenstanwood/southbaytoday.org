@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
@@ -10,6 +11,59 @@ import {
 } from "../generate-events.mjs";
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
+
+// Reviewed public listings captured on October 20, 2026. Exercise the exported
+// normalizers directly so the next refresh cannot undo the source spellings.
+const reviewedCopy = JSON.parse(readFileSync(
+  new URL("./fixtures/reviewed-event-normalization.json", import.meta.url), "utf8",
+));
+for (const { id, field, text } of reviewedCopy) {
+  test(`reviewed ${field} survives repeated normalization: ${id}`, () => {
+    const normalize = field === "title" ? cleanTitle : polishDescription;
+    assert.equal(normalize(text), text);
+    assert.equal(normalize(normalize(text)), text);
+  });
+}
+
+test("preserves LinkedIn spelling in prose and identifiers without joining ordinary words", () => {
+  for (const source of [
+    "LinkedIn hosts a workshop. Learn about LinkedIn's safety tools.",
+    "Details: https://www.linkedin.com/in/CaseSensitive?name=LinkedIn&mode=STAR.",
+    "The accounts are linked in the handout. Bring paper.",
+  ]) {
+    assert.equal(polishDescription(source), source);
+    assert.equal(polishDescription(polishDescription(source)), source);
+  }
+});
+
+test("shared acronym guards preserve published credentials, programs and place initials", () => {
+  for (const acronym of ["STAR", "SJ", "LCSW", "CMEMS"]) {
+    const title = `Discuss ${acronym} with Anne`;
+    const description = `Join ${acronym} Volunteers. Ask about ${acronym}!`;
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+  assert.equal(cleanTitle("A BRIGHT Star over San Jose"), "A Bright Star over San Jose");
+  assert.equal(polishDescription("See a BRIGHT star. bring a friend."), "See a Bright star. Bring a friend.");
+  assert.equal(polishDescription("Meet Star and Sj at the library."), "Meet Star and Sj at the library.");
+});
+
+test("name abbreviations preserve English and Spanish list continuations, then capitalize new sentences", () => {
+  for (const continuation of ["and Mario Kart", "or Mario Kart", "y Super Mario", "e historias", "o más juegos", "u otras opciones"]) {
+    const source = `Play Super Smash Bros. ${continuation}. bring a friend.`;
+    const expected = `Play Super Smash Bros. ${continuation}. Bring a friend.`;
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  assert.equal(polishDescription("Play Super Smash Bros. bring a friend."),
+    "Play Super Smash Bros. Bring a friend.");
+  assert.equal(polishDescription("Mario Kart, Super Smash Bros., and Super Mario Party. Free. No registration required."),
+    "Mario Kart, Super Smash Bros., and Super Mario Party. Free. No registration required.");
+  assert.equal(polishDescription("Meet Martin Luther King Jr. and his family. bring a book."),
+    "Meet Martin Luther King Jr. and his family. Bring a book.");
+});
 
 test("preserves OpenAI in prose while leaving source links byte-identical", () => {
   for (const source of [
