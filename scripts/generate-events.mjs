@@ -1040,6 +1040,14 @@ function fixProperNouns(text) {
   // SJPL's video-call app list pluralizes the product; keep ordinary verbs.
   // https://workspace.google.com/products/meet/
   t = t.replace(/\b(Zoom,\s*FaceTime,\s*)Google Meets\b/g, "$1Google Meet");
+  // SJPL's AI-rulebooks event names OpenAI's Model Spec. The prose splitter
+  // separates OpenAI at n/A; restore the source spelling after that pass.
+  // https://sjpl.bibliocommons.com/events/6ab4117c101eb7003f3262d9
+  t = t.replace(/\bOpen ?AI\b/g, "OpenAI");
+  // SCCL inserts empty inline markup inside Día; HTML cleanup adds a space.
+  // Restore only the holiday name from this occurrence's source description.
+  // https://sccl.bibliocommons.com/v2/events/6abf0b7a11bbf300684abd55
+  t = t.replace(/\bDí a de los Muertos\b/g, "Día de los Muertos");
   return t;
 }
 
