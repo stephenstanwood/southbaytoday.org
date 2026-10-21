@@ -443,6 +443,7 @@ test("Palo Alto's optional reminder signups do not gate admission", () => {
     "You do not have to register, but you will receive a reminder email if you do.",
     "Registration is recommended but NOT required. Register in order to receive a reminder email the day before the event.", // Don't Get Scammed, November 18
     "Registration is optional. If you register, you will receive an email reminder.", // Learn English, December 18
+    "No need to register, but registering means you will receive a reminder email the day before.", // Master Gardeners, November 15; Nathan's Fearless Five, December 19
   ];
   for (const description of descriptions) {
     for (const state of [{}, { isFull: true }, { registrationClosed: true }]) {
@@ -500,6 +501,7 @@ test("optional signup variants still require explicit reminder-only evidence and
     "You don't have to register",
     "Registration is recommended but NOT required",
     "Registration is optional",
+    "No need to register",
   ]) {
     const reminder = `${optional}. You will receive a reminder email if you register.`;
     for (const [provider, instructions, description] of [

@@ -7,6 +7,40 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford's dated location note directs attendees to Huffington Barn at
+  // 555 Fremont Road and explicitly rejects the farm's generic map address.
+  // https://events.stanford.edu/event/rescheduled-to-1021-a-thyme-to-gather-at-the-farm-a-herbalism-workshop
+  // Evidence: docs/qa/2026-10-21-1307-fact-check.md.
+  {
+    date: "2026-10-21",
+    url: "https://events.stanford.edu/event/rescheduled-to-1021-a-thyme-to-gather-at-the-farm-a-herbalism-workshop",
+    facts: {
+      venue: "Huffington Barn at O'Donohue Educational Farm",
+      address: "555 Fremont Rd, Stanford, CA 94305",
+      attendanceNote: "Use Huffington Barn at 555 Fremont Road. The organizer says not to use the farm's 175 Electioneer Road address.",
+    },
+  },
+  // These dated library bodies describe recommended signup or reminder-only
+  // forms, not admission requirements. Protect older retained snapshots too.
+  // Evidence: docs/qa/2026-10-21-1307-fact-check.md (first-party page bodies).
+  ...[
+    ["2026-10-24", "sjpl", "6ab19c4ba5dbde002aa64a61", "Registration is recommended."],
+    ["2026-11-15", "paloalto", "697a5067834cbb3dea29ea08", "Registration is not required. Optional signup provides a reminder email the day before."],
+    ["2026-12-19", "paloalto", "6ad7a697295d793e2d1803ec", "Registration is not required. Optional signup provides a reminder email the day before."],
+  ].map(([date, library, sourceId, attendanceNote]) => ({
+    date, url: `https://${library}.bibliocommons.com/events/${sourceId}`,
+    aliasUrls: [`https://${library}.bibliocommons.com/v2/events/${sourceId}`],
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceNote },
+  })),
+  // The Pear's current season page starts this run February 19. Its ticket
+  // dates agree; the old introductory copy still says February 20.
+  // https://www.thepear.org/season25
+  // Evidence: docs/qa/2026-10-21-1307-fact-check.md.
+  {
+    dateFrom: "2027-02-19", dateThrough: "2027-03-07",
+    url: "https://thepear.vbotickets.com/events?eid=193671",
+    copyReplacements: [[/\bFeb 20\s*[-–—]\s*March 7\b/gi, "Feb 19 – March 7"]],
+  },
   // The city's dated listing requires the signup form; the newsletter
   // intake omitted the registration field despite preserving the requirement
   // in its description. Sparse intake must not advertise this as a walk-up.

@@ -15,6 +15,82 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the herbalism workshop retains Stanford's explicit barn entrance through sparse blurb resolution", async () => {
+  const raw = {
+    id: "stanford-54178302622575-2026-10-21", date: "2026-10-21",
+    title: "10/21: A Thyme to Gather at the Farm: An Herbalism Workshop",
+    url: "https://events.stanford.edu/event/rescheduled-to-1021-a-thyme-to-gather-at-the-farm-a-herbalism-workshop",
+    venue: "O'Donohue Educational Farm", address: "175 Electioneer Rd, Stanford, CA 94305",
+    time: "5:00 PM", endTime: "6:30 PM", cost: "free", description: "",
+    blurb: "Gather at O'Donohue Educational Farm for a hands-on herbalism workshop.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].venue, "Huffington Barn at O'Donohue Educational Farm");
+  assert.equal(events[0].address, "555 Fremont Rd, Stanford, CA 94305");
+  assert.match(events[0].attendanceNote, /Use Huffington Barn at 555 Fremont Road/);
+  for (const key of ["id", "date", "title", "url", "time", "endTime", "cost", "description", "blurb"]) {
+    assert.equal(events[0][key], raw[key], key);
+  }
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2026-10-22" },
+    { ...raw, url: "https://events.stanford.edu/event/another-farm-workshop" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "the farm's other programs keep their own entrance");
+});
+
+test("verified optional library signups stay ungated in retained snapshots without changing other occurrences", async () => {
+  for (const [date, library, sourceId] of [
+    ["2026-10-24", "sjpl", "6ab19c4ba5dbde002aa64a61"],
+    ["2026-11-15", "paloalto", "697a5067834cbb3dea29ea08"],
+    ["2026-12-19", "paloalto", "6ad7a697295d793e2d1803ec"],
+  ]) {
+    const raw = {
+      date, url: `https://${library}.bibliocommons.com/events/${sourceId}`,
+      title: "Library program", time: "3:00 PM", registration: "required",
+      registrationClosesBy: `${date}T23:00:00.000Z`,
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(requiresAdvanceRegistration(events[0]), false);
+    assert.equal(isRegistrationClosedForDay(events[0], date), false);
+    assert.equal(events[0].registrationClosesBy, null);
+    assert.equal(events[0].time, raw.time);
+    assert.match(events[0].attendanceNote, /Registration is (?:recommended|not required)\./);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: raw.url.replace("/events/", "/v2/events/") }).registration, "none");
+    for (const other of [
+      { ...raw, date: "2027-12-19" },
+      { ...raw, url: `https://${library}.bibliocommons.com/events/another-program` },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Guys & Dolls corrects the stale run opening without moving any ticketed performance", async () => {
+  const raw = {
+    title: "Guys & Dolls", url: "https://thepear.vbotickets.com/events?eid=193671",
+    venue: "The Pear Theatre", time: "8:00 PM", endTime: null, cost: "paid",
+    description: "Guys & Dolls by Frank Loesser. Feb 20 – March 7. Welcome to a vibrant New York City.",
+    blurb: "Watch gamblers and missionaries collide in Guys & Dolls.",
+  };
+  for (const date of ["2027-02-19", "2027-02-27", "2027-03-07"]) {
+    const events = [{ ...raw, date }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].description, /Feb 19 – March 7/);
+    for (const key of ["date", "time", "endTime", "cost", "blurb", "url"]) {
+      assert.equal(events[0][key], key === "date" ? date : raw[key], key);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  }
+  for (const other of [
+    { ...raw, date: "2027-02-18" },
+    { ...raw, date: "2027-03-08" },
+    { ...raw, date: "2027-02-19", url: "https://thepear.vbotickets.com/events?eid=193670" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("retained Los Gatos LibCal records use the verified library entrance without moving other venues", async () => {
   const raw = {
     date: "2026-10-24", title: "Girls Who Code", city: "los-gatos",
