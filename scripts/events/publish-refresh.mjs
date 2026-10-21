@@ -11,13 +11,13 @@ import { inspectEventRefreshOutput } from "./event-refresh-health.mjs";
 // publisher: it preserves remote commits, takes the remote version of any
 // conflicting generated file, and never force-pushes. Recheck health AFTER
 // every merge so remote overlap cannot bypass the original publication gate.
-export function publishEventRefresh({ repoRoot = DEFAULT_REPO_ROOT, log = console.log } = {}) {
+export function publishEventRefresh({ repoRoot = DEFAULT_REPO_ROOT, log = console.log, snapshotMaxAgeHours = 8 } = {}) {
   return pushGeneratedDataCheckout({
     repoRoot,
     log,
     verify() {
       const data = JSON.parse(readFileSync(join(repoRoot, "src/data/south-bay/upcoming-events.json"), "utf8"));
-      const health = inspectEventRefreshOutput({ data, maxAgeHours: 1, snapshotMaxAgeHours: 8 });
+      const health = inspectEventRefreshOutput({ data, maxAgeHours: 1, snapshotMaxAgeHours });
       if (!health.ok) throw new Error(`event publication blocked: ${health.problems.join("; ")}`);
       log(`[events-publication] healthy: ${health.eventCount} events across ${health.sourceCount} adapters`);
     },

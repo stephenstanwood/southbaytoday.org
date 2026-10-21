@@ -2144,9 +2144,7 @@ function polishDescription(text) {
     .replace(/\bShen Yun 's\b/g, "Shen Yun's")
     .replace(/\bNutracker\b/g, "Nutcracker")
     .replace(/\bAny student looking to explore recovery, sobriety, or a life without substance use looks like\b/g,
-      "Any student looking to explore what recovery, sobriety, or a life without substance use looks like")
-    .replace(/\bSJSU Dance presents Images the annual Fall showcase of student choreography\. And performance\./g,
-      "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.");
+      "Any student looking to explore what recovery, sobriety, or a life without substance use looks like");
 
   // Copy-desk repairs for recurring source prose. Keep these specific to the
   // supplied wording; URLs are masked, and no schedule or eligibility changes.
@@ -2859,6 +2857,11 @@ function polishDescription(text) {
 
   // Capitalize first letter of each sentence
   t = t.replace(/(^|[.!?]\s+)([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+  // Hammer supplies "IMAGES" and lowercase "and performance". Match after
+  // ALL CAPS and sentence casing, so the existing repair works on the first
+  // source pass as well as on already-rendered copy.
+  t = t.replace(/\bSJSU Dance presents Images the annual Fall showcase of student choreography\. And performance\./g,
+    "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.");
   // The question mark belongs to the TV show's title, not a sentence break.
   t = t.replace(/\bWhose Line Is It Anyway\? Are proud\b/g, "Whose Line Is It Anyway? are proud");
   t = t.replace(/\bJane! Celebrates\b/g, "Jane! celebrates");

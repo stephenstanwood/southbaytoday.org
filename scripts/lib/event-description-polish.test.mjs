@@ -13,6 +13,21 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("Hammer Images copy is repaired on the first raw-source pass", () => {
+  const expected = "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.";
+  // The first two source sentences precede a clipped preview in Hammer's
+  // EventIntroText. Testing only the published Images/And form hid the miss.
+  for (const source of [
+    "SJSU Dance presents IMAGES the annual Fall showcase of student choreography. and performance.",
+    "SJSU Dance presents IMAGES the annual Fall showcase of student choreography. and performance. Featuring new and original works created and performed by SJSU Dance Majors and Minors as well as…",
+    "SJSU Dance presents Images the annual Fall showcase of student choreography. And performance.",
+    expected,
+  ]) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(polishDescription(source)), expected);
+  }
+});
+
 test("attendance copy fixes typos without removing capacity or appointment instructions", () => {
   const cases = [
     [

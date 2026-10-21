@@ -72,6 +72,17 @@ the checked output with stale or unhealthy remote data. Dirty checkouts and
 local source/configuration commits still block publication; no force push or
 shared-checkout reset is used.
 
+The Mini uses this same publisher with its unchanged two-hour input ceiling,
+and records its success heartbeat only after the merged output passes and is
+pushed. A competing edit with older recorded inputs blocks publication even
+when the raw snapshot files collected by the Mini are fresh; it never restamps
+those older inputs or treats a successful scrape alone as recovery.
+
+Copy repairs must also work on the first source pass. Hammer's Images preview
+arrives with `IMAGES` and lowercase `and performance`; its existing sentence
+repair runs after prose casing. Re-polishing the published `Images`/`And` form
+alone would miss that ordering regression.
+
 ## Fail-closed contract
 
 - Projected farmers markets are verified only when their configured season,

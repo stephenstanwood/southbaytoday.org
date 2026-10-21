@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import { REQUIRED_SOURCE_IDS } from "./event-refresh-health.mjs";
 import { publishEventRefresh } from "./publish-refresh.mjs";
@@ -57,6 +58,78 @@ function setup(t) {
   put(checkout, OUTPUT, output("fresh"));
   const local = commit(checkout, "chore: refresh upcoming events");
   return { remote, seed, checkout, local };
+}
+
+for (const staleOverlap of [false, true]) {
+  test(`the installed scheduled CLI ${staleOverlap ? "blocks a stale merge without a heartbeat" : "normalizes source copy and publishes before its heartbeat"}`, (t) => {
+    const { remote, seed, checkout } = setup(t);
+    const root = dirname(checkout);
+    const statePath = join(root, "heartbeat.json");
+    const lockPath = join(root, "repo-lock.sh");
+    const lockLog = join(root, "lock.log");
+    put(root, "repo-lock.sh", `#!/bin/sh\nprintf '%s\\n' "$1" >> '${lockLog}'\n`);
+    chmodSync(lockPath, 0o755);
+    const expected = "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.";
+    const sourceEvents = [
+      ["hammertheatre-d02b97ae57983195", "2026-12-03"],
+      ["hammertheatre-4dc7d7ae9f93e02d", "2026-12-04"],
+    ].map(([id, date]) => ({
+      id, date, title: "SJSU Dance presents Images", time: "3:30 PM", endTime: null,
+      city: "san-jose", venue: "SJSU Dance Theatre, SPX 216 (Spartan Complex)",
+      address: "1 Washington Sq, San Jose, CA 95113", category: "arts", cost: "paid",
+      source: "Hammer Theatre",
+      url: "https://plugin.vbotickets.com/v5.0/event.asp?eid=209941&s=79a65cd2-b50c-42b3-9e4f-8c90b2436a6d",
+      description: "SJSU Dance presents IMAGES the annual Fall showcase of student choreography. and performance. Featuring new and original works created and performed by SJSU Dance Majors and Minors as well as…",
+    }));
+    const normalizer = new URL("../generate-events.mjs", import.meta.url).href;
+    // Replace only external collection in the disposable Git fixture. Run the
+    // real installed scheduler, normalizer, merge/push guard and heartbeat.
+    put(seed, "scripts/generate-events.mjs", `
+      import { writeFileSync } from 'node:fs';
+      import { execFileSync } from 'node:child_process';
+      import { polishDescription } from ${JSON.stringify(normalizer)};
+      const data = ${JSON.stringify(output("fresh"))};
+      data.events = ${JSON.stringify(sourceEvents)};
+      for (const event of data.events) event.description = polishDescription(event.description);
+      data.eventCount = data.events.length;
+      writeFileSync(${JSON.stringify(OUTPUT)}, JSON.stringify(data, null, 2) + '\\n');
+      ${staleOverlap ? `
+        const older = structuredClone(data);
+        older.inputSnapshots.forEach(item => item.timestamp = new Date(Date.now() - 4.3 * 3600000).toISOString());
+        writeFileSync(${JSON.stringify(join(seed, OUTPUT))}, JSON.stringify(older, null, 2) + '\\n');
+        const git = (...args) => execFileSync('git', ['-C', ${JSON.stringify(seed)}, ...args]);
+        git('add', ${JSON.stringify(OUTPUT)}); git('commit', '-m', 'competing editorial output with older inputs'); git('push');
+      ` : ""}
+    `);
+    for (const script of ["playwright-scrapers.mjs", "pull-inbound-events.mjs", "events/snapshot-official-sources.mjs", "audit-events.mjs"]) {
+      put(seed, `scripts/${script}`, "// External producer fixture: no network or source writes.\n");
+    }
+    commit(seed, "installed producer fixtures");
+    git(seed, "push");
+    const result = spawnSync(process.execPath, [fileURLToPath(new URL("./scheduled-refresh.mjs", import.meta.url)), "--force"], {
+      cwd: checkout, encoding: "utf8", timeout: 30_000,
+      env: { PATH: process.env.PATH, NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
+        SBT_NOTIFICATION_TEST_DIR: join(root, "notifications"), SBT_SKIP_AGENT_ENSURE: "1",
+        SBT_EVENTS_REPO_ROOT: checkout, SBT_REPO_LOCK_SCRIPT: lockPath, SBT_EVENTS_REFRESH_STATE: statePath },
+    });
+    assert.ifError(result.error);
+    const logs = result.stdout + result.stderr;
+    assert.equal(result.status, staleOverlap ? 1 : 0, logs);
+    const published = JSON.parse(git(remote, "show", `main:${OUTPUT}`));
+    assert.deepEqual(published.events, sourceEvents.map(event => ({ ...event, description: expected })));
+    const lockActions = readFileSync(lockLog, "utf8").trim().split("\n");
+    assert.equal(lockActions[0], "acquire");
+    assert.equal(lockActions.at(-1), "release");
+    if (staleOverlap) {
+      assert.match(logs, /resolving generated-data overlap/);
+      assert.match(logs, /event publication blocked:.*maximum 2h/);
+      assert.equal(existsSync(statePath), false, "failed merged-output validation cannot stamp success");
+      assert.equal(git(remote, "rev-parse", "main"), git(seed, "rev-parse", "HEAD"), "the local refresh stays unpublished");
+    } else {
+      assert.match(logs, /\[events-publication\] healthy:/);
+      assert.equal(JSON.parse(readFileSync(statePath, "utf8")).head, git(remote, "rev-parse", "main"));
+    }
+  });
 }
 
 test("publication retries the rejected push and preserves the competing fact-check and Mini snapshot", (t) => {

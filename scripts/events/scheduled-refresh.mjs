@@ -17,6 +17,7 @@ import {
   RETRY_SLOT_SUPPRESSION_HOURS,
 } from "./refresh-schedule.mjs";
 import { acquireRefreshLock, WATCHDOG_LOCK_WAIT_MS } from "./refresh-lock.mjs";
+import { publishEventRefresh } from "./publish-refresh.mjs";
 
 const PREFIX = "[events-scheduled]";
 const LOCK_TASK = "events-refresh";
@@ -207,8 +208,10 @@ try {
 
       // Re-fetch after the long scrape. Data-only local commits can safely
       // absorb a newer origin/main; source-ahead or dirty states fail closed.
-      const after = preflightNewsletterCheckout({ repoRoot, log: console.log });
-      runGit(repoRoot, ["push", "origin", "main"], { timeout: 5 * 60_000 });
+      // A competing editorial commit can replace the fresh output during the
+      // merge. Recheck its recorded inputs before EVERY push, using the same
+      // two-hour ceiling as this Mini run's generator, then stamp success.
+      const after = publishEventRefresh({ repoRoot, log: console.log, snapshotMaxAgeHours: 2 });
       writeJsonAtomic(statePath, {
         lastSuccessAt: new Date().toISOString(),
         head: after.head,
