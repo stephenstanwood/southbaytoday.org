@@ -967,6 +967,34 @@ test("SCU aliases retain canonical department filtering and online attendance", 
   }
 });
 
+test("SCU's public Music@Noon concert stays music despite its class boilerplate", async () => {
+  // https://events.scu.edu/arts-and-sciences/event/510144-musicnoon-all-that-jazz
+  const origin = "https://events.scu.edu";
+  const description = "Carl Schultz and guests perform favorite jazz standards. Wildly diverse and enriching concerts are presented as a part of the Music@Noon class, which is also open to the public.";
+  const rows = [
+    ["Music@Noon – All That Jazz", "510144", "music"],
+    ["Music@Noon Lecture: Jazz History", "test-lecture", "education"],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, id]) => `<item><title>${title}</title><link>${origin}/arts-and-sciences/event/${id}-program</link><description>${description}</description><pubDate>2026-10-21T12:00:00-07:00</pubDate><georss:featurename>Music Recital Hall</georss:featurename></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(url), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: [] });
+  };
+  try {
+    const events = await fetchScuEvents();
+    assert.deepEqual(events.map((event) => [event.title, event.category]), rows.map(([title, , category]) => [title, category]));
+    assert.equal(events[0].time, "12:00 PM");
+    assert.equal(events[0].venue, "Music Recital Hall");
+    assert.equal(requested.length, 2);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("internal SCU training and new-major welcomes do not exclude public faculty art", () => {
   assert.equal(isStudentOnlyEvent({ title: "AIM Faculty Portal Training" }), true);
   assert.equal(isStudentOnlyEvent({ title: "SCU COMM New Major Welcome" }), true);

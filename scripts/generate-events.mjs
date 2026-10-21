@@ -3639,6 +3639,11 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   const hasMatchup = titleLower.includes("vs.") || titleLower.includes(" vs ");
   if (hasMatchup && /\b(football|basketball|baseball|softball|soccer|hockey|volleyball|lacrosse|water polo|rugby)\b/.test(titleLower)) return "sports";
 
+  // SCU's public Music@Noon concerts also form part of a class. That body
+  // boilerplate must not turn the concert into an educational event.
+  if (/\bmusic\s*@\s*noon\b/.test(titleLower)
+    && !/\b(lecture|workshop|class|course|seminar|training)\b/.test(titleLower)) return "music";
+
   if (isOngoingExhibitLike(title, desc, venue)) return "arts";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
   if (/\b(guest speaker|speaker series|lecture|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";

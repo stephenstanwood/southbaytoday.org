@@ -160,6 +160,16 @@ test("a study-session agenda cannot establish what the session covered", () => {
   assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
 });
 
+test("proposed agenda actions cannot become a list of notable decisions", () => {
+  const agenda = { fullAgendaText: "Hakone Gardens Koi Pond Renovation Project – Budget Amendment. Recommended Action: Adopt the Resolution amending the budget for $2,500,000." };
+  const summary = "The agenda listed several notable decisions: a $2.5 million budget amendment and a new no-parking zone.";
+  assert.equal(hasUnsupportedMeetingAction({ summary }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The agenda listed items for consideration: a proposed budget amendment and a no-parking zone." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The agenda listed a decision on the long-term law enforcement provider." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { fullAgendaText: summary }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
+});
+
 test("Around Town body verification receives the full agenda instead of a clipped preview", async () => {
   let observedText;
   await resolveAroundTownMeetingSources(config, [{

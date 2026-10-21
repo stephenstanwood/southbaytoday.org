@@ -62,6 +62,7 @@ const COMPLETED_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:also\s+
 const COMPLETED_SESSION_ACTION = /\b(?:study|scoping)\s+session(?:\s+on\s+(?:[A-Za-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{4}-\d{2}-\d{2}))?\s+(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
+const DECISION_LIST = /\b(?:notable|major|key|significant)\s+decisions\s*:/i;
 
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {
@@ -71,11 +72,14 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   const actions = [...bodyActions, ...sessionActions];
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
   const talksClaimed = ONGOING_BODY_TALKS.test(claim);
-  if (!actions.length && !commentsClaimed && !talksClaimed) return false;
+  const decisionsClaimed = DECISION_LIST.test(claim);
+  if (!actions.length && !commentsClaimed && !talksClaimed && !decisionsClaimed) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
   if (commentsClaimed && !RECEIVED_PUBLIC_COMMENTS.test(evidence)) return true;
   if (talksClaimed && !ONGOING_BODY_TALKS.test(evidence)) return true;
+  // A list of proposed resolutions is not a list of decisions already made.
+  if (decisionsClaimed && !DECISION_LIST.test(evidence)) return true;
   if (sessionActions.some((action) => ![...evidence.matchAll(COMPLETED_SESSION_ACTION)].some((match) => match[1].toLowerCase() === action.toLowerCase()))) return true;
   return bodyActions.some((action) => !new RegExp(
     `\\b${CIVIC_BODY}\\s+(?:also\\s+)?${action}\\b`, "i",

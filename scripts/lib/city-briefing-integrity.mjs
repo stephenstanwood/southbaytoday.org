@@ -51,7 +51,7 @@ export function refreshBriefingAvailability(path, events) {
 const PROSPECTIVE_SOURCE =
   /\b(?:scheduled|set|expected|slated)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\b(?:council|commission|committee|board|panel)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\bagenda\s+(?:listed|lists|included|includes)\b|\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
 const CONFIRMED_ACTION =
-  /\b(?:heard|considered|reviewed|weighed|voted|decided|approved|adopted|rejected|denied)\b/i;
+  /\b(?:heard|considered|reviewed|weighed|eyed|voted|decided|approved|adopted|rejected|denied)\b/i;
 const COMPLETED_MEETING =
   /\b(?:council|city|commission|committee|board|panel|hearing)\b[^.!?]{0,50}\b(?:held|met|discussed)\b/i;
 

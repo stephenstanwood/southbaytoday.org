@@ -472,6 +472,29 @@ test("optional reminder language cannot relax an actual booking requirement", ()
   }
 });
 
+test("SJPL reminder registration leaves the citizenship study group's drop-in access open", () => {
+  // Seven Trees, October 24, 2026: https://sjpl.bibliocommons.com/v2/events/6a4e94207f5b862800a707ab
+  const description = "Free. Register for reminders. Drop-ins welcome.";
+  for (const state of [{}, { isFull: true }, { registrationClosed: true }]) {
+    const event = biblioEvent({ provider: "BIBLIO_EVENTS", cap: 10, maxSeats: 2, ...state });
+    event.definition.description = description;
+    assert.equal(registrationFromBiblioCommons(event), "none");
+  }
+  for (const [provider, instructions, body] of [
+    ["EXTERNAL", null, description],
+    ["BIBLIO_EVENTS", "Register for a seat.", description],
+    ["BIBLIO_EVENTS", "Book an appointment.", description],
+    ["BIBLIO_EVENTS", null, "Register for reminders."],
+    ["BIBLIO_EVENTS", null, "Drop-ins welcome."],
+    ["BIBLIO_EVENTS", null, `${description} Registration is required for the workshop.`],
+    ["BIBLIO_EVENTS", null, "Register for reminders. No drop-ins welcome."],
+  ]) {
+    const event = biblioEvent({ provider, cap: 10, instructions });
+    event.definition.description = body;
+    assert.notEqual(registrationFromBiblioCommons(event), "none", body);
+  }
+});
+
 test("optional signup variants still require explicit reminder-only evidence and no booking instructions", () => {
   for (const optional of [
     "You don't have to register",

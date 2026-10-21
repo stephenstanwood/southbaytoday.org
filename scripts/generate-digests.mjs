@@ -275,7 +275,7 @@ Do not include meta-commentary about incomplete or truncated source data (e.g. "
 
 Agenda excerpts are often cut off mid-sentence ("...for FY 2026-", "provide direction on the"). Summarize only the part you can actually read; never guess how a truncated sentence ends or invent the missing object. Saratoga's June 3 2026 digest turned the fragment "provide direction on the" into a bullet about "implementing the chosen service level" — nothing in the source said that.
 
-The source is an agenda, not minutes: it lists what is before the body, not the order things happened. Never narrate a sequence of events ("once the Council settled on X, it moved to Y") — the agenda cannot support it.
+The source is an agenda, not minutes: it lists what is before the body, not the order things happened. Never narrate a sequence of events ("once the Council settled on X, it moved to Y") — the agenda cannot support it. Describe proposed actions as items for consideration, not a list of "notable decisions" already made.
 Participation instructions and public-comment slots do not establish that anyone spoke. Never report that comments "were heard" or that the body discussed its attendance procedures based only on those notices.
 
 Match the source's wording on sensitive framing. If the agenda says "federal civil enforcement," do not narrow it to "immigration enforcement," "tax enforcement," or any specific subtype unless the source explicitly uses that word.

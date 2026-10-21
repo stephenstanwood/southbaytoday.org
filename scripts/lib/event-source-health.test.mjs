@@ -121,6 +121,8 @@ test("keeps meetings inside the briefing week and rejects agenda-only tense upgr
     summary: "The September 22 City Council agenda listed a potential case involving fire truck manufacturers.",
   }];
   assert.equal(hasProspectiveCityHallUpgrade("The council weighed a legal case against fire truck makers.", agendaItems), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The Planning Commission's October 12 session eyed expanding Peery Park's offices, R&D and housing.", agendaItems), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The Planning Commission's October 12 agenda listed a proposed expansion of Peery Park's offices, R&D and housing.", agendaItems), false);
   assert.equal(hasProspectiveCityHallUpgrade("The agenda listed a potential case involving fire truck manufacturers.", agendaItems), false);
 
   assert.equal(hasProspectiveCityHallUpgrade("City Council held closed talks over the Finch Avenue property.", agendaItems), true);
