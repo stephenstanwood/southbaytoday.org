@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 
 import {
   fetchCampbellEvents,
+  fetchSaratogaEvents,
   fetchLosAltosHistoryEvents,
 } from "../generate-events.mjs";
 
@@ -34,6 +36,26 @@ async function withFetchRoutes(routes, callback) {
     globalThis.fetch = original;
   }
 }
+
+test("Saratoga's captured winter occurrences keep their published wall clocks", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-21T19:00:00Z") });
+  const url = "https://www.saratoga.ca.us/common/modules/iCalendar/iCalendar.aspx?catID=35&feed=calendar";
+  const { body: feed } = JSON.parse(readFileSync(new URL("./fixtures/saratoga-2026-10-21/calendar.ics.json", import.meta.url), "utf8"));
+  const events = await withFetchRoutes({ [url]: feed }, () => fetchSaratogaEvents());
+  for (const [sourceId, date, time, endTime] of [
+    ["2690", "2026-11-01", "2:00 PM", "5:00 PM"],
+    ["2686", "2026-11-27", "3:00 PM", "5:00 PM"],
+    ["2681", "2026-12-05", "6:30 PM", "11:59 PM"],
+    ["2687", "2026-11-27", "6:00 PM", "9:00 PM"],
+    ["2698", "2026-11-27", "5:30 PM", "6:30 PM"],
+    ["2696", "2026-11-14", "9:00 AM", "12:00 PM"],
+    ["2697", "2026-12-12", "9:00 AM", "12:00 PM"],
+  ]) {
+    const event = events.find((e) => e.url.endsWith(`EID=${sourceId}`));
+    assert.ok(event, `official occurrence ${sourceId} is retained`);
+    assert.deepEqual([event.date, event.time, event.endTime], [date, time, endTime]);
+  }
+});
 
 test("Campbell enriches sparse RSS rows from the official occurrence page", async () => {
   const date = dayPT(10);

@@ -3789,7 +3789,10 @@ function parseIcalDate(dtStr) {
     if (clean.length === 8) return parseDatePT(`${y}-${m}-${d}`);
     const h = clean.length >= 11 ? clean.substring(9, 11) : "00";
     const min = clean.length >= 13 ? clean.substring(11, 13) : "00";
-    return new Date(`${y}-${m}-${d}T${h}:${min}:00-07:00`); // PDT
+    const sec = clean.length >= 15 ? clean.substring(13, 15) : "00";
+    // Floating/TZID=America/Los_Angeles values are Pacific wall clocks on the
+    // event date, not permanently PDT. A trailing Z is an actual UTC instant.
+    return parseDatePT(`${y}-${m}-${d}T${h}:${min}:${sec}${/Z$/i.test(dtStr) ? "Z" : ""}`);
   }
   return parseDate(dtStr);
 }
@@ -7575,7 +7578,10 @@ function meetupVenueFromTitle(title) {
 // sentence.
 function trimMeetupCapTruncation(title) {
   if (!title || title.length < 78 || /[.!?)"'”]$/.test(title)) return title;
-  const m = title.match(/^(.{20,}[.!?])\s+\S[^.!?]*$/);
+  // A period inside a place/person abbreviation is not a sentence boundary:
+  // "Hike St. Joseph's Hill Preserve" must retain the destination, even when
+  // the raw title reaches the cap because its emojis use surrogate pairs.
+  const m = title.match(/^(.{20,}(?:[!?]|(?<!\b(?:St|Mt|Dr|Mr|Mrs|Ms|Prof|Jr|Sr)|\b[A-Z])\.))\s+\S[^.!?]*$/);
   return m ? m[1] : title;
 }
 
@@ -11176,6 +11182,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 export {
   assertIcalCalendar,
   cleanTitle,
+  trimMeetupCapTruncation,
   cleanVenue,
   extractTimeFromHtml,
   inferCategory,
@@ -11191,6 +11198,7 @@ export {
   mapTicketmasterEvent,
   resolveBiblioLocationFields,
   fetchCampbellEvents,
+  fetchSaratogaEvents,
   fetchBiblioEvents,
   fetchScclEvents,
   fetchFarmersMarketEvents,

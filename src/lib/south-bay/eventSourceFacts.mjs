@@ -7,6 +7,59 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The city's dated listing requires the signup form; the newsletter
+  // intake omitted the registration field despite preserving the requirement
+  // in its description. Sparse intake must not advertise this as a walk-up.
+  // https://www.santaclaraca.gov/Home/Components/Calendar/Event/114375/41?curm=11&cury=2026&date=20191208031809
+  // Evidence: docs/qa/2026-10-21-1207-fact-check.md.
+  {
+    date: "2026-11-04", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114375/",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Registration is required; space is limited. Use the form on the library's event page.",
+    },
+  },
+  // The city's occurrence pages and Pacific-TZID iCal feed agree on starts.
+  // The old fixed PDT parser shifted winter events one hour early. The
+  // carol-sing page publishes no end; omit the feed's 23:59 placeholder.
+  // Evidence: docs/qa/2026-10-21-1207-fact-check.md.
+  ...[
+    ["2026-11-01", "2690", "2:00 PM", "5:00 PM"],
+    ["2026-11-27", "2686", "3:00 PM", "5:00 PM"],
+    ["2026-12-05", "2681", "6:30 PM", null],
+    ["2026-11-27", "2687", "6:00 PM", "9:00 PM"],
+    ["2026-11-27", "2698", "5:30 PM", "6:30 PM"],
+    ["2026-11-14", "2696", "9:00 AM", "12:00 PM"],
+    ["2026-12-12", "2697", "9:00 AM", "12:00 PM"],
+  ].map(([date, sourceId, time, endTime]) => ({
+    date, url: `https://www.saratoga.ca.us/calendar.aspx?EID=${sourceId}`,
+    aliasUrls: [`https://www.saratoga.ca.us/Calendar.aspx?EID=${sourceId}`],
+    facts: { time, endTime },
+  })),
+  // These occurrence pages explicitly make signup optional. Their form and
+  // its deadline cannot turn walk-in admission into required/closed signup.
+  // Keep the capacity and priority conditions visible, and keep the repair
+  // dated rather than weakening BiblioCommons' conservative provider rule.
+  // Evidence: docs/qa/2026-10-21-1207-fact-check.md (first-party page bodies).
+  ...[
+    ["2026-10-24", "6a3f10c0f56bd86e00b95e69", "Registration is requested but not required."],
+    ["2026-10-24", "6a87354c46e4c80031cbd152", "Preregistration is recommended but not required. Limited to 20 participants; preregistered teens receive priority if capacity is reached."],
+    ["2026-10-24", "68fc0358c313c23700ded894", "Registration is recommended. Walk-ins are welcome if space is available; the class is limited to 10 attendees."],
+    ["2026-10-22", "6a83721e4cb69d003e216ef0", "Registration is encouraged but not required."],
+  ].map(([date, sourceId, attendanceNote]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceNote },
+  })),
+  // The capped-title cleanup mistook the abbreviation "St." for a sentence
+  // ending and discarded the hike's actual destination. Preserve the named
+  // place from the organizer's dated occurrence in older sparse snapshots.
+  // https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/317070276/
+  // Evidence: docs/qa/2026-10-21-1207-fact-check.md.
+  {
+    date: "2026-10-31", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/317070276/",
+    facts: { title: "Green Excises Wellness Hike St. Joseph's Hill Preserve Rain or Shine" },
+  },
   // The dated header says 3–7 PM, but the organizer's body starts cooking at
   // 5 PM and distributes meals from 6:30–8 PM. Preserve the header clocks
   // and show the conflict instead of choosing a replacement schedule.

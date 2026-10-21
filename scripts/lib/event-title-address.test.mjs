@@ -1,7 +1,30 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { cleanTitle } from "../generate-events.mjs";
+import { cleanTitle, trimMeetupCapTruncation } from "../generate-events.mjs";
+
+test("Meetup's title cap does not cut a destination or person at an abbreviation", () => {
+  for (const title of [
+    "💚Green Excises Wellness 🥾Hike St. Joseph's Hill Preserve🏞️ Rain☔or Shine 🌞",
+    "Join our weekend outdoor wellness walk near St. Joseph's Hill Preserve with friends",
+    "Join our weekend outdoor wellness walk near Mt. Hamilton with friends and neighbors",
+    "Join our community science conversation with Dr. Rivera and all our curious neighbors",
+    "Join our community science conversation with A. Rivera and all our curious neighbors",
+  ]) {
+    assert.ok(title.length >= 78);
+    assert.equal(trimMeetupCapTruncation(title), title);
+  }
+});
+
+test("Meetup's title cap still drops a dangling fragment after a complete sentence", () => {
+  const complete = "Join our weekend kite flying meetup and fly for fun! All levels welcome.";
+  assert.equal(trimMeetupCapTruncation(`${complete} Bayland`), complete);
+  const withPlace = "Join our weekend wellness walk near St. Joseph's Hill Preserve with friends.";
+  assert.equal(trimMeetupCapTruncation(`${withPlace} Neighbo`), withPlace);
+  for (const title of ["A short title. More", `${complete} All welcome!`, null, ""]) {
+    assert.equal(trimMeetupCapTruncation(title), title);
+  }
+});
 
 // ---------------------------------------------------------------------------
 // Mailing addresses concatenated onto event titles

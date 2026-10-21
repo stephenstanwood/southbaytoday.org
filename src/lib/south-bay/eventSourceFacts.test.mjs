@@ -903,6 +903,106 @@ test("online library sessions cannot acquire a physical attendance claim from ca
   assert.equal(event.blurb, blurb);
 });
 
+test("Quilling Craft Club keeps its required signup when newsletter intake omits it", async () => {
+  const raw = {
+    date: "2026-11-04", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114375/",
+    title: "Quilling Craft Club", venue: "Central Park Library - Heritage Pavilion",
+    time: "11:00 AM", endTime: "12:00 PM", blurb: "Learn paper quilling at the library.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.match(events[0].attendanceNote, /Registration is required; space is limited/);
+  assert.equal(requiresAdvanceRegistration(events[0]), true);
+  for (const [key, value] of Object.entries(raw)) assert.equal(events[0][key], value);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2026-12-04" },
+    { ...raw, url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/other/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Saratoga's verified winter clocks also repair stale retained occurrences", async () => {
+  for (const [date, sourceId, time, endTime] of [
+    ["2026-11-01", "2690", "2:00 PM", "5:00 PM"],
+    ["2026-11-27", "2686", "3:00 PM", "5:00 PM"],
+    ["2026-12-05", "2681", "6:30 PM", null],
+    ["2026-11-27", "2687", "6:00 PM", "9:00 PM"],
+    ["2026-11-27", "2698", "5:30 PM", "6:30 PM"],
+    ["2026-11-14", "2696", "9:00 AM", "12:00 PM"],
+    ["2026-12-12", "2697", "9:00 AM", "12:00 PM"],
+  ]) {
+    const raw = {
+      date, url: `https://www.saratoga.ca.us/calendar.aspx?EID=${sourceId}`,
+      title: "City event", time: "8:00 AM", endTime: "11:00 AM", venue: "Source venue",
+    };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.deepEqual(events[0], { ...raw, time, endTime });
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    for (const other of [
+      { ...raw, date: "2027-11-14" },
+      { ...raw, url: "https://www.saratoga.ca.us/calendar.aspx?EID=9999" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("verified library walk-ins survive optional form deadlines without losing capacity terms", async () => {
+  for (const [date, sourceId, title, condition] of [
+    ["2026-10-24", "6a3f10c0f56bd86e00b95e69", "Language and Culture Swap", /requested but not required/],
+    ["2026-10-24", "6a87354c46e4c80031cbd152", "Teen Entrepreneurs & Small Business Skills", /20 participants; preregistered teens receive priority/],
+    ["2026-10-24", "68fc0358c313c23700ded894", "Easy Tech Seniors", /if space is available;.*10 attendees/],
+    ["2026-10-22", "6a83721e4cb69d003e216ef0", "Chess Club for Kids", /encouraged but not required/],
+  ]) {
+    for (const registration of ["required", "full", "closed"]) {
+      const raw = {
+        date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+        title, venue: "Source library", time: "2:00 PM", cost: "free",
+        description: "The library's full participation terms.", registration,
+        registrationClosesBy: "2026-09-24T18:00:00.000Z",
+        blurb: "Join the library program.",
+      };
+      const original = structuredClone(raw);
+      const events = [{ ...raw }];
+      const stats = await resolveEventBlurbs(events, { enabled: false });
+      assert.equal(events[0].registration, "none");
+      assert.equal(events[0].registrationClosesBy, null);
+      assert.equal(requiresAdvanceRegistration(events[0]), false);
+      assert.equal(isRegistrationClosedForDay(events[0], date), false);
+      assert.match(events[0].attendanceNote, condition);
+      for (const field of ["title", "venue", "date", "time", "url", "cost", "description", "blurb"]) {
+        assert.equal(events[0][field], raw[field]);
+      }
+      assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+      assert.deepEqual(raw, original);
+      assert.equal(stats.generated, 0);
+      assert.equal(applyVerifiedEventFacts({ ...raw, url: raw.url.replace("/events/", "/v2/events/") }).registration, "none");
+      for (const other of [
+        { ...raw, date: "2027-10-24" },
+        { ...raw, url: "https://sjpl.bibliocommons.com/events/another-session" },
+      ]) assert.equal(applyVerifiedEventFacts(other), other);
+    }
+  }
+});
+
+test("the St. Joseph's Hill hike retains its verified destination on sparse refresh", async () => {
+  const raw = {
+    date: "2026-10-31", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/317070276/",
+    title: "Green Excises Wellness Hike St.", venue: "Los Gatos Library", registration: "required",
+    blurb: "Walk a group wellness hike.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].title, "Green Excises Wellness Hike St. Joseph's Hill Preserve Rain or Shine");
+  assert.deepEqual({ ...events[0], title: raw.title }, raw);
+  for (const other of [
+    { ...raw, date: "2026-11-01" },
+    { ...raw, url: "https://www.meetup.com/another-group/events/123/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Bascom's optional craft signups do not become admission gates on refresh", async () => {
   for (const [date, sourceId, title, time] of [
     ["2026-10-18", "6a85eaec69166f088b934e2d", "LEGO Fun!", "2:00 PM"],

@@ -74,3 +74,24 @@ test("date-only iCal values stay on their Pacific calendar date in winter", () =
   assert.equal(isoDate(date), "2026-11-04");
   assert.equal(displayTime(date), null);
 });
+
+test("timed iCal values use the event date's Pacific offset and retain seconds", () => {
+  for (const [raw, expected] of [
+    ["20261021T173015", "2026-10-22T00:30:15.000Z"],
+    ["20261127T173000", "2026-11-28T01:30:00.000Z"],
+    ["20261114T090000", "2026-11-14T17:00:00.000Z"],
+    ["20261212T090000", "2026-12-12T17:00:00.000Z"],
+    ["20261101T013000", "2026-11-01T08:30:00.000Z"],
+    ["20261101T023000", "2026-11-01T10:30:00.000Z"],
+    ["20260308T090000", "2026-03-08T16:00:00.000Z"],
+  ]) assert.equal(parseIcalDate(raw).toISOString(), expected);
+  assert.equal(parseIcalDate("20260308T023000"), null, "the spring-forward gap is not an invented time");
+});
+
+test("UTC iCal values remain instants instead of being relabeled Pacific", () => {
+  const winter = parseIcalDate("20261128T013015Z");
+  assert.equal(winter.toISOString(), "2026-11-28T01:30:15.000Z");
+  assert.equal(isoDate(winter), "2026-11-27");
+  assert.equal(displayTime(winter), "5:30 PM");
+  assert.equal(parseIcalDate("20261022T003000Z").toISOString(), "2026-10-22T00:30:00.000Z");
+});
