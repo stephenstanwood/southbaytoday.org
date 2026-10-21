@@ -18,6 +18,9 @@ test("event city follows the venue address, not the sending organization", () =>
 });
 
 test("event city pins landmark venues against a wrong city in the address", () => {
+  assert.equal(resolveEventCity("palo-alto", "Campbell Recital Hall, Braun Music Center"), "palo-alto");
+  assert.equal(resolveEventCity("campbell", "Campbell Recital Hall, Braun Music Center"), "palo-alto");
+  assert.equal(resolveEventCity("campbell", "Campbell Community Center"), "campbell");
   // The Earthquakes' own list sent "Levi's Stadium, San Jose, CA" for the
   // Sep 19 2026 LAFC match. The stadium is in Santa Clara; the club is branded
   // for San Jose. Without the pin the bad string won and split one game across

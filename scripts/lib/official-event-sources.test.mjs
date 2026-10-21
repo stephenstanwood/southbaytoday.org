@@ -306,14 +306,35 @@ test("Squarespace admission uses the full body without treating free perks as fr
       excerpt: "Relatives and friends are warmly invited.",
       body: "<p>Free with RSVP.</p>",
     },
+    {
+      title: "Annual Holiday Party",
+      excerpt: "Enjoy cookies and a cocktail. Members receive 10% off purchases.",
+      body: "<p>RSVP on Eventbrite.</p>",
+    },
+    {
+      title: "Evening Talk",
+      excerpt: "Meet the author.",
+      body: "<p>Admission fee: $15.</p>",
+    },
+    {
+      title: "Bookstore Celebration",
+      excerpt: "Meet our booksellers.",
+      body: "<p>Book price: $25. Free refreshments. RSVP on Eventbrite.</p>",
+    },
   ].map((item, index) => ({ ...item, startDate, fullUrl: `/events/${index}` }));
   t.mock.method(globalThis, "fetch", async () => Response.json({ upcoming: items }));
   const events = await fetchSquarespaceEvents(
     "https://museum.example/events", "Museum", "palo-alto", "Museum", "Palo Alto, CA",
   );
-  assert.deepEqual(events.map((event) => event.cost), ["free", "free", "paid", "paid", "paid", "free", "free"]);
+  assert.deepEqual(events.map((event) => event.cost), ["free", "free", "paid", null, "paid", "free", "free", null, "paid", null]);
   assert.equal(events[0].description, items[0].excerpt);
   assert.equal(events[0].kidFriendly, true);
+});
+
+test("library social-service referrals remain community programming despite food assistance", () => {
+  assert.equal(inferCategory("Social Workers in the Library Drop-In Hours", "Find shelter, food, showers, mental health services and legal help.", "", "Tully Library"), "community");
+  assert.equal(inferCategory("Social Worker in the Library", "Food assistance referrals.", ""), "community");
+  assert.equal(inferCategory("Wine Tasting", "Taste local wine.", ""), "food");
 });
 
 test("a campus reading-program omnibus cannot publish daily placeholder hours", () => {

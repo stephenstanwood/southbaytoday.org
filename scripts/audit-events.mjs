@@ -30,6 +30,7 @@ import {
   BORDER_VENUE_ALLOWLIST,
 } from "./social/lib/content-rules.mjs";
 import { LOCAL_DEPARTURE_TRIP } from "../src/lib/south-bay/eventFilters.mjs";
+import { cityForFixedVenue } from "./lib/event-city.mjs";
 import {
   eventBlurbCacheKey,
   blurbStartTimeConflict,
@@ -128,6 +129,9 @@ export function classify(event) {
   );
   if (!borderAllowed) {
     for (const ooaCity of OUT_OF_AREA_CITIES) {
+      // Santa Cruz is an explicitly supported regional bucket. Its own
+      // address is correct there; the same address under Santa Clara is not.
+      if (city === "santa-cruz" && SLUG_TO_CITY_TOKENS[city].includes(ooaCity)) continue;
       const re = new RegExp(`\\b${ooaCity}\\b`, "i");
       if (re.test(addrLower)) {
         // Tolerate out-of-area city names that appear inside a recognizable
@@ -170,7 +174,10 @@ export function classify(event) {
   // Slug vs. in-area mismatch. Skip if the venue is a known multi-city system
   // (SCCL, VTA, SJPL, etc.) — those span branches in every city.
   const isMultiCityVenue = MULTI_CITY_VENUE_PATTERNS.some(re => re.test(loc));
-  if (city && SLUG_TO_CITY_TOKENS[city] && loc && !isMultiCityVenue) {
+  const fixedCity = cityForFixedVenue(getAddressText(event));
+  if (city && fixedCity && fixedCity !== city) {
+    findings.push({ severity: "hard", reason: "slug-mismatch", detail: `city="${city}" but the fixed venue is in "${fixedCity}"` });
+  } else if (!fixedCity && city && SLUG_TO_CITY_TOKENS[city] && loc && !isMultiCityVenue) {
     const tokens = SLUG_TO_CITY_TOKENS[city];
     if (!tokens.some(t => addrLower.includes(t))) {
       let otherSlug = null;

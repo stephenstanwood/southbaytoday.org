@@ -15,6 +15,27 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("dated festival, off-site workshop and admission repairs survive sparse blurb resolution", async () => {
+  const rows = [
+    { date: "2026-10-31", url: "https://www.aztecadancers.com/dia-de-muertos", time: "10:00 PM", expected: { time: "2:00 PM", endTime: "10:00 PM", cost: "free", kidFriendly: true } },
+    { date: "2026-11-01", url: "https://www.aztecadancers.com/dia-de-muertos", time: "10:00 PM", expected: { time: "10:00 AM", endTime: "6:00 PM" } },
+    { date: "2026-10-25", url: "https://events.scu.edu/live/events/511268-encore-markey-center-on-the-road-with-fr-bill", city: "santa-clara", expected: { city: "santa-cruz", venue: "Villa Maria Del Mar", address: "21918 E Cliff Dr, Santa Cruz, CA 95062", endTime: "4:30 PM" } },
+    { date: "2027-01-02", url: "https://paloalto.bibliocommons.com/events/6ab8557e607483003829d148", registration: "required", registrationClosesBy: "2026-11-06T19:00:00Z", expected: { registration: "none", registrationClosesBy: null } },
+    { date: "2026-12-06", url: "https://www.keplers.org/upcoming-events-internal/holiday-party-2026", venue: "Kepler's", cost: "paid", expected: { venue: "Kepler's Books", cost: null } },
+    { date: "2026-12-31", url: "https://paloalto.bibliocommons.com/events/6a750a3788e9bf28003613ac", category: "arts", expected: { category: "family" } },
+  ];
+  for (const { expected, ...raw } of rows) {
+    const original = structuredClone(raw);
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    for (const [field, value] of Object.entries(expected)) assert.deepEqual(events[0][field], value, `${raw.url}: ${field}`);
+    assert.deepEqual(raw, original);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.equal(applyVerifiedEventFacts({ ...raw, date: "2028-01-01" }).url, raw.url);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2028-01-01" }), { ...raw, date: "2028-01-01" });
+  }
+});
+
 test("the herbalism workshop retains Stanford's explicit barn entrance through sparse blurb resolution", async () => {
   const raw = {
     id: "stanford-54178302622575-2026-10-21", date: "2026-10-21",
@@ -1779,16 +1800,18 @@ test("interview workshop copy omits an unsupported hiring percentage and disclos
 });
 
 test("line dancing's translated pickup clock does not become a waiver headcount", () => {
-  const raw = {
-    date: "2026-10-15", time: "1:30 PM",
-    url: "https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd",
-    description: "Tickets will be available 30 minutes in advance. 30 first-time participants will need to sign a waiver form.",
-  };
-  const corrected = applyVerifiedEventFacts(raw);
-  assert.equal(corrected.description, "Tickets will be available 30 minutes in advance. First-time participants will need to sign a waiver form.");
-  assert.equal(corrected.time, raw.time);
-  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
-  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).description, raw.description);
+  for (const [date, sourceId] of [["2026-10-15", "6aa49028101eb7003f2f6dfd"], ["2026-10-22", "6aa49028101eb7003f2f6dfe"]]) {
+    const raw = {
+      date, time: "1:30 PM", url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+      description: "Tickets will be available 30 minutes in advance. 30 First-time participants will need to sign a waiver form.",
+    };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(corrected.description, "Tickets will be available 30 minutes in advance. First-time participants will need to sign a waiver form.");
+    assert.equal(corrected.time, raw.time);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.equal(applyVerifiedEventFacts({ ...raw, url: raw.url.replace("/events/", "/v2/events/") }).description, corrected.description);
+    assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).description, raw.description);
+  }
 });
 
 test("the Frida screening corrects Diego Rivera without changing a different listing", async () => {

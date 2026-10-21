@@ -38,6 +38,9 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // Original October 21 city media advisory, including its public archive URL.
+  // Evidence: docs/qa/2026-10-21-1607-fact-check.md.
+  ["2026-10-31|Lakewood Branch Library Grand Opening", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42ffcdb"],
   // October 4 fact-check: these first-party pages confirm the occurrences.
   ["2026-10-04|SUSD Board Candidate Forum", "https://ptasaratoga.membershiptoolkit.com/calendar/event/95402905"],
   ["2026-10-04|Culinary Demo & Lunch: A Tour of Italy Through Pasta", "https://www.testarossa.com/"],

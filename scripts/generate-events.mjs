@@ -3235,6 +3235,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\bstate of the (?:city|town)\b/.test(titleLower)) return "community";
   // "Park" can be a housing property's name; carnival games are not sports.
   if (/\bhousing\s+application\s+(?:help\s+)?session\b/.test(titleLower)) return "community";
+  // Referrals to food, shelter and legal help are social services, not a meal.
+  if (/\bsocial\s+workers?\s+in\s+the\s+library\b/.test(titleLower)) return "community";
   if (/\bhalloween\s+(?:festival|carnival|party)\b/.test(titleLower)) return "family";
   // Election forums and police meet-and-greets are civic, whatever the venue.
   // "Chamber of Commerce Candidate Forum" at Los Gatos Theater and "National
@@ -7844,12 +7846,13 @@ function squarespaceKidFriendly(title, copy) {
 function squarespaceCost(title, copy) {
   const text = `${title} ${copy}`;
   // A complimentary perk or a children's discount does not waive admission.
-  if (/\b(?:admission|tickets?|entry|registration)\s*(?:(?:is|are|costs?|from|at|starts? at)\s*)?[:–-]?\s*\$\s*[1-9]\d*/i.test(text)) return "paid";
+  if (/\b(?:admission(?:\s+fee)?|tickets?|entry(?:\s+fee)?|registration(?:\s+fee)?)\s*(?:(?:is|are|costs?|from|at|starts? at)\s*)?[:–-]?\s*\$\s*[1-9]\d*/i.test(text)) return "paid";
   return /^free\b/i.test(title.trim())
     || /\bfree\s+(?:admission|event|concert|workshop|family\s+fun|community\s+crafting|food\s+distribution|with\s+(?:RSVP|registration))\b/i.test(text)
     || /\badmission\s+is\s+free\b/i.test(text)
     ? "free"
-    : "paid";
+    // A ticket/RSVP link or complimentary refreshments does not establish a fee.
+    : null;
 }
 
 // Shared Squarespace event fetcher — works for any site that exposes ?format=json
@@ -8179,10 +8182,20 @@ function extractTimeFromHtml(html, eventDate) {
   const atSignMatch = matchOutsideBusinessHours(text, /@\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
   if (atSignMatch) return formatHourClock(atSignMatch);
   // Fallback: first time mention in the first 2KB of body text
-  const head = text.slice(0, 2000);
+  const head = text.slice(0, 2000).replace(
+    /\b(\d{1,2}(?::\d{2})?)\s*[-–—]\s*(\d{1,2}(?::\d{2})?)\s*(am|pm)\b/gi,
+    (range, start, end, period) => {
+      // "2–10 PM" shares its meridiem. Never let the trailing 10 PM become
+      // the start. A wrap such as "10–2 PM" is ambiguous; leave it unknown.
+      const minutes = (clock) => {
+        const [hour, minute = 0] = clock.split(":").map(Number);
+        return hour >= 1 && hour <= 12 && minute < 60 ? (hour % 12) * 60 + minute : NaN;
+      };
+      return minutes(start) <= minutes(end) ? `${start} ${period} – ${end} ${period}` : " ";
+    },
+  );
   const generalMatch =
-    matchOutsideBusinessHours(head, /\b(\d{1,2}:\d{2}\s*(?:am|pm))\b/gi) ||
-    matchOutsideBusinessHours(head, /\b(\d{1,2}\s*(?:am|pm))\b/gi);
+    matchOutsideBusinessHours(head, /\b(\d{1,2}(?::\d{2})?\s*(?:am|pm))\b/gi);
   if (generalMatch) return formatHourClock(generalMatch);
 
   return null;

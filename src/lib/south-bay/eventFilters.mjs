@@ -309,7 +309,7 @@ export function registrationFromBiblioCommons(ev) {
   // docs/qa/2026-10-17-0007-fact-check.md. "You don't have to register",
   // "recommended but not required", "optional", and "no need to register"
   // also describe reminders (October 21 verified PACL occurrence bodies).
-  const reminderOnly = /\b(?:registration\s+(?:is\s+)?(?:not\s+(?:required|necessary)|(?:recommended|requested|encouraged)\s*,?\s*but\s+not\s+required|optional)|you\s+(?:don['’]t|do\s+not)\s+have\s+to\s+register|no\s+need\s+to\s+register)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
+  const reminderOnly = /\b(?:registration\s+(?:(?:is\s+)?not\s+(?:required|necessary|needed)|isn['’]t\s+(?:required|necessary|needed)|(?:is\s+)?(?:recommended|requested|encouraged)\s*,?\s*but\s+not\s+required|(?:is\s+)?optional)|you\s+(?:don['’]t|do\s+not)\s+have\s+to\s+register|no\s+need\s+to\s+register)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
   // SJPL also says "Register for reminders. Drop-ins welcome." Require both
   // statements; a reminder form alone does not establish walk-up admission.
   const welcomesDropInsForReminders = /\bregister\s+for\s+(?:e-?mail\s+)?reminders?\b/i.test(description)

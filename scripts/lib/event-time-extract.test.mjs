@@ -69,6 +69,19 @@ test("a page with nothing but opening hours yields no time", () => {
   assert.equal(extractTimeFromHtml(html, "2026-09-17"), null);
 });
 
+test("abbreviated ranges use their opening time rather than their closing time", () => {
+  for (const [copy, expected] of [
+    ["OCTOBER 31: 2 - 10 PM", "2:00 PM"],
+    ["Program: 2–10:30 PM", "2:00 PM"],
+    ["Program: 12–4 PM", "12:00 PM"],
+    ["Program: 7:15—10 PM", "7:15 PM"],
+    ["Program: 2 PM–10:30 PM", "2:00 PM"],
+    ["Program: 10–2 PM", null],
+    ["Program: 25–30 PM", null],
+    ["Gallery hours: 2–10 PM daily.", null],
+  ]) assert.equal(extractTimeFromHtml(page(`<p>${copy}</p>`), "2026-10-31"), expected, copy);
+});
+
 test("date-only iCal values stay on their Pacific calendar date in winter", () => {
   const date = parseIcalDate("20261104");
   assert.equal(isoDate(date), "2026-11-04");

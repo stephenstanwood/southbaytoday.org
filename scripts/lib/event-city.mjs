@@ -90,6 +90,9 @@ const TRUNCATED_CITY_STREET = new RegExp(
  * the better signal everywhere else, which is the whole point of the function.
  */
 const FIXED_VENUE_CITY = [
+  // Stanford's hall is named Campbell; it is not in the city of Campbell.
+  // https://music.stanford.edu/venues-facilities/venues/campbell-recital-hall
+  [/\bcampbell\s+recital\s+hall\b/i, "palo-alto"],
   [/\blevi'?s\s+stadium\b/i, "santa-clara"],
   [/\bsap\s+center\b/i, "san-jose"],
   [/\bpaypal\s+park\b/i, "san-jose"],
@@ -97,6 +100,10 @@ const FIXED_VENUE_CITY = [
   [/\bshoreline\s+amphitheatre\b/i, "mountain-view"],
   [/\bmountain\s+winery\b/i, "saratoga"],
 ];
+
+export function cityForFixedVenue(location = "") {
+  return FIXED_VENUE_CITY.find(([pattern]) => pattern.test(location))?.[1] || null;
+}
 
 /**
  * Pick the city slug an event actually happens in.
@@ -126,9 +133,8 @@ export function resolveEventCity(cityKey, location, title = "") {
   // own mailing list sent "Levi's Stadium, San Jose, CA" for the Sep 19 LAFC
   // match — the stadium is in Santa Clara, and every other feed had it right, so
   // the one bad string split a single game across two city tabs.
-  for (const [re, slug] of FIXED_VENUE_CITY) {
-    if (re.test(location)) return slug;
-  }
+  const fixedCity = cityForFixedVenue(location);
+  if (fixedCity) return fixedCity;
 
   // Strip diacritics on both sides: the token list carries "san josé", and
   // /\bsan josé\b/ never matches "San José," because é isn't a word character,

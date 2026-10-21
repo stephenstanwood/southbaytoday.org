@@ -14,6 +14,21 @@ import {
   normalizeInboundEventPresentation,
 } from "./inbound-event-normalize.mjs";
 
+test("Lakewood's original city advisory restores its public URL without changing the opening schedule", () => {
+  const raw = {
+    title: "Lakewood Branch Library Grand Opening", cityKey: "sunnyvale",
+    startsAt: "2026-10-31T10:00:00-07:00", endsAt: "2026-10-31T17:00:00-07:00",
+    location: "Lakewood Branch Library and Learning Center, 760 Lakechime Drive, Sunnyvale, CA 94089",
+    sourceUrl: null,
+  };
+  const result = normalizeInboundEventPresentation(raw);
+  assert.equal(result.url, "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42ffcdb");
+  assert.equal(result.time, "10:00 AM");
+  assert.equal(result.endTime, "5:00 PM");
+  assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: "2026-11-01T10:00:00-08:00" }).url, "");
+  assert.equal(raw.sourceUrl, null);
+});
+
 test("a stale Willis newsletter date resolves before the past-date gate", () => {
   const raw = {
     id: "stale-willis-newsletter", cityKey: "palo-alto",

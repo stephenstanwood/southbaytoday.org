@@ -7,6 +7,47 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // First-party October 21 refresh review. Keep these occurrence-specific
+  // repairs ahead of sparse feeds, retained snapshots and cached blurbs.
+  // Evidence: docs/qa/2026-10-21-1607-fact-check.md.
+  ...[
+    ["2026-10-31", "2:00 PM", "10:00 PM"],
+    ["2026-11-01", "10:00 AM", "6:00 PM"],
+  ].map(([date, time, endTime]) => ({
+    date, url: "https://www.aztecadancers.com/dia-de-muertos",
+    facts: { time, endTime, cost: "free", kidFriendly: true, address: "635 Phelan Ave, San Jose, CA 95112" },
+  })),
+  {
+    date: "2026-10-25",
+    url: "https://events.scu.edu/live/events/511268-encore-markey-center-on-the-road-with-fr-bill",
+    aliasUrls: [
+      "https://events.scu.edu/markey-center/event/511268-encore-markey-center-on-the-road-with-fr-bill",
+      "https://events.scu.edu/event/511268-encore-markey-center-on-the-road-with-fr-bill",
+    ],
+    facts: {
+      city: "santa-cruz", venue: "Villa Maria Del Mar",
+      address: "21918 E Cliff Dr, Santa Cruz, CA 95062", endTime: "4:30 PM",
+    },
+  },
+  {
+    date: "2027-01-02", url: "https://paloalto.bibliocommons.com/events/6ab8557e607483003829d148",
+    aliasUrls: ["https://paloalto.bibliocommons.com/v2/events/6ab8557e607483003829d148"],
+    facts: {
+      registration: REGISTRATION_NONE, registrationClosesBy: null,
+      attendanceNote: "Registration is not required. Optional signup provides an email reminder.",
+    },
+  },
+  {
+    date: "2026-12-06", url: "https://www.keplers.org/upcoming-events-internal/holiday-party-2026",
+    // The party page publishes no admission price. A generic Eventbrite
+    // button cannot establish paid admission; keep the unknown price null.
+    facts: { venue: "Kepler's Books", cost: null },
+  },
+  {
+    date: "2026-12-31", url: "https://paloalto.bibliocommons.com/events/6a750a3788e9bf28003613ac",
+    aliasUrls: ["https://paloalto.bibliocommons.com/v2/events/6a750a3788e9bf28003613ac"],
+    facts: { category: "family" },
+  },
   // Stanford's dated location note directs attendees to Huffington Barn at
   // 555 Fremont Road and explicitly rejects the farm's generic map address.
   // https://events.stanford.edu/event/rescheduled-to-1021-a-thyme-to-gather-at-the-farm-a-herbalism-workshop
@@ -933,11 +974,16 @@ const CORRECTIONS = [
   // Earlier English-only cleanup left its 30 attached to the next sentence;
   // the organizer requires ALL first-time participants to sign the waiver.
   // https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd
-  // Evidence: docs/qa/2026-10-15-0407-fact-check.md.
-  {
-    date: "2026-10-15", url: "https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd",
+  // Evidence: docs/qa/2026-10-15-0407-fact-check.md and
+  // docs/qa/2026-10-21-1607-fact-check.md (October 22 occurrence).
+  ...[
+    ["2026-10-15", "6aa49028101eb7003f2f6dfd"],
+    ["2026-10-22", "6aa49028101eb7003f2f6dfe"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],
     copyReplacements: [[/\b30\s+first-time participants will need to sign a waiver form\b/gi, "First-time participants will need to sign a waiver form"]],
-  },
+  })),
   // The library's Frida screening body misspells Kahlo's husband's surname.
   // Museo Frida Kahlo's biography identifies Diego Rivera; keep the screening
   // date and the rest of the organizer's description.
