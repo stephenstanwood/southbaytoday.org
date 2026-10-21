@@ -15,6 +15,16 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the museum's free Halloween admission survives sparse intake without affecting other dates", () => {
+  const raw = {
+    date: "2026-10-31", title: "Halloween Night at the Museum", cost: "paid",
+    url: "https://www.moah.org/moahevents/halloween-night-at-the-museum-1",
+  };
+  assert.equal(applyVerifiedEventFacts(raw).cost, "free");
+  const otherDate = { ...raw, date: "2027-10-31" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("October's verified workshop topic, meeting cadence and family audience survive refresh", async () => {
   const workshop = {
     date: "2026-10-22", title: "ESL Workforce Development Workshop - Day 4: Interview Skills & Answering Questions",

@@ -7855,6 +7855,17 @@ function squarespaceKidFriendly(title, copy) {
     || SQUARESPACE_FAMILY_INVITATIONS.some((pattern) => pattern.test(text));
 }
 
+function squarespaceCost(title, copy) {
+  const text = `${title} ${copy}`;
+  // A complimentary perk or a children's discount does not waive admission.
+  if (/\b(?:admission|tickets?|entry|registration)\s*(?:(?:is|are|costs?|from|at|starts? at)\s*)?[:–-]?\s*\$\s*[1-9]\d*/i.test(text)) return "paid";
+  return /^free\b/i.test(title.trim())
+    || /\bfree\s+(?:admission|event|concert|workshop|family\s+fun|community\s+crafting|food\s+distribution|with\s+(?:RSVP|registration))\b/i.test(text)
+    || /\badmission\s+is\s+free\b/i.test(text)
+    ? "free"
+    : "paid";
+}
+
 // Shared Squarespace event fetcher — works for any site that exposes ?format=json
 async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue, defaultAddress) {
   console.log(`  ⏳ ${source}...`);
@@ -7881,10 +7892,10 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
         const desc = item.excerpt
           ? stripHtml(item.excerpt)
           : (item.body ? truncate(stripHtml(item.body)) : "");
-        // Excerpts and truncated descriptions can omit explicit family
-        // admission later in the body (Festival Por La Paz, Dec 4, 2026).
-        // Use the already-fetched full body for audience signals.
-        const audienceText = `${item.title} ${desc} ${stripHtml(item.body || "")}`;
+        // Excerpts can omit both audience and admission terms. MOAH's Halloween
+        // and Collage Capsules previews omit the full bodies' explicit FREE.
+        // Use the already-fetched body without lengthening the display copy.
+        const eventText = `${desc} ${stripHtml(item.body || "")}`;
         // Museums on Squarespace file a months-long show as one item whose
         // start date is opening day. JAMsj's "Now on View" redress exhibit runs
         // Feb–Sep and was being dropped the day after it opened.
@@ -7913,17 +7924,11 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
           city,
           ...(locality ? { locality } : {}),
           category: inferCategory(item.title, desc, "", venue),
-          // "Free Admission" or "Free " in the title (e.g. JAMsj's free-admission
-          // days) overrides the venue's default "paid" cost.
-          cost: /\bfree\s+(admission|event|food|concert|workshop)\b/i.test(item.title + " " + desc)
-            || /\badmission\s+is\s+free\b/i.test(desc)
-            || /^free\b/i.test(item.title.trim())
-            ? "free"
-            : "paid",
+          cost: squarespaceCost(item.title, eventText),
           description: desc,
           url: fullUrl,
           source,
-          kidFriendly: squarespaceKidFriendly(item.title, audienceText),
+          kidFriendly: squarespaceKidFriendly(item.title, eventText),
         };
       })
       .filter(Boolean);

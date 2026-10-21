@@ -57,6 +57,7 @@ import {
   fetchSharksSchedule,
   fetchEarthquakesSchedule,
   fetchBayFCSchedule,
+  fetchSquarespaceEvents,
   squarespaceKidFriendly,
   isCampusOnlyLocalistAudience,
   mapTicketmasterEvent,
@@ -265,6 +266,54 @@ test("book plots, author biographies and minimum ages do not promise family admi
   assert.equal(squarespaceKidFriendly("Mercadito", "Pick up fresh food and support your family."), true);
   assert.equal(squarespaceKidFriendly("Collage Capsules", "Best suited for teens and adults."), true);
   assert.equal(squarespaceKidFriendly("Monument Dedication", "Relatives, and friends are warmly invited to attend."), true);
+});
+
+test("Squarespace admission uses the full body without treating free perks as free entry", async (t) => {
+  const startDate = Date.now() + 14 * 86400000;
+  const items = [
+    {
+      title: "Halloween Night at the Museum",
+      excerpt: "Grab your costumes for a night of eerie vibes and spine-tingling fun.",
+      body: "<p>A spooky night of <strong>FREE</strong> family fun!</p>",
+    },
+    {
+      title: "Collage Capsules: Build a Mini Bookshelf or Exhibit",
+      excerpt: "An afternoon of crafting and imaginative making. Supplies included.",
+      body: "<p>Join us for an afternoon of FREE community crafting with the library!</p>",
+    },
+    {
+      title: "Museum Workshop",
+      excerpt: "An evening workshop.",
+      body: "<p>Tickets $20. Free food and refreshments are included.</p>",
+    },
+    {
+      title: "Evening Workshop",
+      excerpt: "An evening workshop with refreshments.",
+      body: "<p>Free food will be served.</p>",
+    },
+    {
+      title: "Family Museum Night",
+      excerpt: "Bring the family.",
+      body: "<p>Adult admission: $20. Free admission for children.</p>",
+    },
+    {
+      title: "Mercadito",
+      excerpt: "Walk-up community food distribution.",
+      body: "<p>FREE FOOD DISTRIBUTION. Line starts at 11 AM.</p>",
+    },
+    {
+      title: "Community Dedication",
+      excerpt: "Relatives and friends are warmly invited.",
+      body: "<p>Free with RSVP.</p>",
+    },
+  ].map((item, index) => ({ ...item, startDate, fullUrl: `/events/${index}` }));
+  t.mock.method(globalThis, "fetch", async () => Response.json({ upcoming: items }));
+  const events = await fetchSquarespaceEvents(
+    "https://museum.example/events", "Museum", "palo-alto", "Museum", "Palo Alto, CA",
+  );
+  assert.deepEqual(events.map((event) => event.cost), ["free", "free", "paid", "paid", "paid", "free", "free"]);
+  assert.equal(events[0].description, items[0].excerpt);
+  assert.equal(events[0].kidFriendly, true);
 });
 
 test("a campus reading-program omnibus cannot publish daily placeholder hours", () => {

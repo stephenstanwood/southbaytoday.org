@@ -7,6 +7,14 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The museum's full Halloween event body advertises FREE family fun;
+  // its Squarespace excerpt omits admission.
+  // Keep sparse intake and retired-page snapshots from restoring paid badges.
+  // Evidence: docs/qa/2026-10-21-0107-fact-check.md.
+  {
+    date: "2026-10-31", url: "https://www.moah.org/moahevents/halloween-night-at-the-museum-1",
+    facts: { cost: "free" },
+  },
   // The full SCU occurrence explicitly welcomes children and families; its
   // one-sentence feed preview omits the hands-on family activities.
   // https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit
