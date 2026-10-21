@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { classify } from "./audit-events.mjs";
+import { classify } from "../audit-events.mjs";
 
 test("regional Santa Cruz events pass geography while mislabeled campus events fail", () => {
   const event = {
