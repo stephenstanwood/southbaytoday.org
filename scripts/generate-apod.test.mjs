@@ -53,6 +53,17 @@ test("landing pages, date/title/canonical mismatches and missing featured media 
   assert.throws(() => parseApodArticle(noImage, entries[0]), /image URL/);
 });
 
+test("NASA's space and nonbreaking-space teaser labels never enter explanation text", () => {
+  for (const label of ["<strong>Tomorrow's picture: </strong>", "<strong>Tomorrow's picture: </strong>",
+    "<strong>Tomorrow's picture:&nbsp;</strong>", '<strong class="label">Tomorrow&#039;s picture: </strong>',
+    "<strong>Tomorrow’s picture: </strong>"]) {
+    const parsed = parseApodArticle(rollover.replace("<strong>Tomorrow's picture:</strong>", label), entries[0]);
+    assert.equal(parsed.explanation, latest.explanation);
+    assert.doesNotMatch(parsed.explanation, /Tomorrow|source teaser/);
+  }
+  assert.throws(() => validateApodItems([{ ...latest, explanation: latest.explanation + " Tomorrow's picture: open space" }]), /unparsed/);
+});
+
 test("the exact rejected 12-row committed artifact cannot pass semantic validation", () => {
   const invalid = JSON.parse(fixture("invalid-baseline.json"));
   assert.equal(invalid.items.length, 12);
