@@ -2,6 +2,42 @@
 // Preserve them before display-copy shortening or blurb generation, and keep
 // the source's audience labels separate from guesses based on the prose.
 import { stripHtml } from "./event-html.mjs";
+import { displayDate, displayTime, isoDate, parseDatePT } from "./dates.mjs";
+
+// BiblioCommons date-only ranges include their final calendar day. A display
+// that opened at midnight must stay listed after that instant, through its
+// published end, without turning midnight into visiting hours. Timed classes
+// and overnight events keep their ordinary start-time cutoff.
+export function biblioEventOccurrence(event, now = new Date()) {
+  const startValue = event.start || event.definition?.start;
+  const endValue = event.end || event.definition?.end;
+  const start = parseDatePT(startValue);
+  const end = parseDatePT(endValue);
+  if (!start) return null;
+
+  const startDate = isoDate(start);
+  const endDate = isoDate(end);
+  const today = isoDate(now);
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue || "")
+    && /^\d{4}-\d{2}-\d{2}$/.test(endValue || "");
+  // Compare local calendar days, rather than 24-hour durations, across DST.
+  const ongoing = endDate > startDate && displayTime(start) === displayTime(end);
+  if (start < now && !ongoing) return null;
+  if (ongoing && (dateOnly ? endDate < today : end <= now)) return null;
+
+  const visibleStart = ongoing && startDate < today ? parseDatePT(today) : start;
+  return {
+    start,
+    end,
+    fields: {
+      date: isoDate(visibleStart),
+      displayDate: displayDate(visibleStart),
+      time: ongoing ? null : displayTime(start),
+      endTime: ongoing ? null : end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+      ...(ongoing ? { ongoing: true, startDate, endDate } : {}),
+    },
+  };
+}
 
 const text = (html) => stripHtml(String(html || "").replace(/<!--[^]*?-->/g, ""));
 

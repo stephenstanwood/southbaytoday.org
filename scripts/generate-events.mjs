@@ -67,7 +67,7 @@ import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-su
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-location.mjs";
-import { libraryEventDetails } from "./lib/library-event-details.mjs";
+import { biblioEventOccurrence, libraryEventDetails } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
@@ -5526,12 +5526,9 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
         .map((ev) => {
           if (isBiblioEventCancelled(ev)) return null;
 
-          const startStr = ev.start || ev.definition?.start;
-          const endStr = ev.end || ev.definition?.end;
-          const start = parseDatePT(startStr);
-          if (!start || start < now) return null;
-
-          const end = parseDatePT(endStr);
+          const occurrence = biblioEventOccurrence(ev, now);
+          if (!occurrence) return null;
+          const { start, end } = occurrence;
           const branchId = ev.branchId || ev.definition?.branchLocationId;
           const branchStore = entities.locations || entities.branches;
           const branch = branchId && branchStore ? branchStore[branchId] : null;
@@ -5561,32 +5558,10 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
           });
           const displayVenue = place.venue;
 
-          // Month-long exhibits arrive from BiblioCommons as start = open day @
-          // arbitrary clock, end = close day @ same clock (e.g. Oil Painting
-          // Exhibit: May 31 5:00 PM → Jun 30 5:00 PM). Underlying timestamps
-          // differ so the getTime-based dedupe below doesn't fire, but both
-          // sides format to "5:00 PM" and the card renders a deceptive
-          // one-minute event. When end is on a different calendar day AND the
-          // clock-time display matches start, the API endpoints aren't real
-          // event times — treat as ongoing and null both clocks.
-          const dayMs = 24 * 60 * 60 * 1000;
-          const spansMultipleDays = end && (end.getTime() - start.getTime()) >= dayMs;
-          const sameClockDisplay = end && displayTime(start) === displayTime(end);
-          const isOngoingExhibit = spansMultipleDays && sameClockDisplay;
-
           return {
             id: `${libraryId}-${ev.id}`,
             title,
-            date: isoDate(start),
-            displayDate: displayDate(start),
-            time: isOngoingExhibit ? null : displayTime(start),
-            // BiblioCommons sometimes returns end == start for ongoing exhibits
-            // and drop-in programs — surface that as "no end time" rather than a
-            // zero-duration block.
-            endTime: isOngoingExhibit
-              ? null
-              : (end && end.getTime() !== start.getTime() ? displayTime(end) : null),
-            ...(isOngoingExhibit ? { ongoing: true } : {}),
+            ...occurrence.fields,
             venue: displayVenue,
             address: place.address,
             city,
@@ -5696,12 +5671,9 @@ async function fetchScclEvents() {
         const city = scclCityMapper("", "", locationCode);
         if (!city) continue; // skip Morgan Hill, Gilroy, etc.
 
-        const startStr = ev.start || ev.definition?.start;
-        const endStr = ev.end || ev.definition?.end;
-        const start = parseDatePT(startStr);
-        if (!start || start < now) continue;
-
-        const end = parseDatePT(endStr);
+        const occurrence = biblioEventOccurrence(ev, now);
+        if (!occurrence) continue;
+        const { start, end } = occurrence;
         const title = ev.title || ev.definition?.title || "";
         const desc = ev.description || ev.definition?.description || "";
         const details = libraryEventDetails(ev, data.entities);
@@ -5716,10 +5688,7 @@ async function fetchScclEvents() {
         allEvents.push({
           id: `${libraryId}-${ev.id}`,
           title,
-          date: isoDate(start),
-          displayDate: displayDate(start),
-          time: displayTime(start),
-          endTime: end && end.getTime() !== start.getTime() ? displayTime(end) : null,
+          ...occurrence.fields,
           venue: branchVenue,
           address: "",
           city,
@@ -11215,6 +11184,7 @@ export {
   resolveBiblioLocationFields,
   fetchCampbellEvents,
   fetchBiblioEvents,
+  fetchScclEvents,
   fetchFarmersMarketEvents,
   FARMERS_MARKETS,
   fetchHappyHollowEvents,

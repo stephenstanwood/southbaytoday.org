@@ -283,7 +283,7 @@ function isOngoingExhibitEvent(event: UpcomingEvent): boolean {
   if (/\b(yoga|pilates|meditation|mindfulness|workshop|training|class|course|rounds?|speaker series|guest speaker|worship|service|volunteer|volunteering|al-anon|qualtrics|upstander|storytime)\b/.test(text)) {
     return false;
   }
-  return /\b(exhibit|exhibition|showcase|installation|on view|gallery|art\s+show|book display|map exhibit|sculpture walk|works by|mfa thesis|archive room|collection|artist|artwork|sculpture|painting|photography|printmaker|contemporary art|art and architecture)\b/.test(text);
+  return /\b(exhibit|exhibition|showcase|installation|on view|gallery|art\s+show|book display|interactive display|map exhibit|sculpture walk|works by|mfa thesis|archive room|collection|artist|artwork|sculpture|painting|photography|printmaker|contemporary art|art and architecture)\b/.test(text);
 }
 
 function normalizedEventCategory(event: UpcomingEvent): string {

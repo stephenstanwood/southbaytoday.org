@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // SJAA explicitly welcomes walk-ins; a Meetup group-approval requirement
+  // applies to that site's RSVP, not admission to this public observing event.
+  // https://www.sjaa.net/events/solar-observing/
+  // The dated Meetup occurrence confirms November 1, 1:30–3:30 PM, Houge Park.
+  // Evidence: docs/qa/2026-10-21-0507-fact-check.md.
+  {
+    date: "2026-11-01", url: "https://www.meetup.com/sj-astronomy/events/312677419/",
+    facts: {
+      registration: REGISTRATION_NONE, registrationClosesBy: null, cost: "free",
+      attendanceNote: "Open to the public. Walk-ins welcome; a Meetup RSVP is optional.",
+    },
+  },
   // The museum's full Halloween event body advertises FREE family fun;
   // its Squarespace excerpt omits admission.
   // Keep sparse intake and retired-page snapshots from restoring paid badges.

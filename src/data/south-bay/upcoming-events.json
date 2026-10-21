@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-21T10:14:25.202Z",
-  "eventCount": 1818,
+  "eventCount": 1819,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -27114,6 +27114,35 @@
       "firstSeenAt": "2026-10-17T02:21:15.896Z"
     },
     {
+      "id": "sjpl-69c41db41e64afd01e64a8d9",
+      "title": "Halloween Interactive Activity",
+      "date": "2026-10-21",
+      "displayDate": "Wed, Oct 21",
+      "time": null,
+      "endTime": null,
+      "ongoing": true,
+      "venue": "Mt. Pleasant Library",
+      "address": "3411 Rocky Mountain Dr San Jose",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "free",
+      "description": "Join the Mt Pleasant Neighborhood Library as it celebrates Halloween with an interactive display. Children and Patrons of all ages are invited to celebrate and ask a Halloween question.",
+      "sourceAudiences": [
+        "Kids, ages 5-10",
+        "Pre-Teens, ages 10-12",
+        "Young Children, ages 0-5"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/69c41db41e64afd01e64a8d9",
+      "source": "San Jose Public Library",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/5ac550569b82cca0e24a87ea7bc43607/IMG_5321(1).jpg",
+      "blurb": "Stop by Mt. Pleasant Library's interactive Halloween display and ask your own Halloween question.",
+      "firstSeenAt": "2026-10-21T00:34:56.698Z",
+      "startDate": "2026-10-21",
+      "endDate": "2026-10-31"
+    },
+    {
       "id": "macla-f83dfb5edd3f8067",
       "title": "Poetic Utterances: Work by Viviana Paredes",
       "date": "2026-10-21",
@@ -40261,16 +40290,18 @@
       "address": "3972 Twilight Dr, San Jose",
       "city": "san-jose",
       "category": "community",
-      "cost": null,
+      "cost": "free",
       "description": "Meetup event by SJ Astronomy.",
       "url": "https://www.meetup.com/sj-astronomy/events/312677419/",
       "source": "Meetup",
       "kidFriendly": false,
-      "registration": "required",
+      "registration": "none",
       "audienceAge": "all",
       "photoRef": "places/ChIJk96pBVI0joAR1yIPoms5vdk/photos/Aa-ngMYPN5gjA_0EE-HZijIJAZWcjlDQIAPDFoUUUWU_KaBpwiBBIi0cuhHZsEO3UKzRmgymlcssIuHkueCAhC-fH7Gt9Pagr3LA68uttnuMPkOhp_Yv0nE95qtMtjkhuQF11XeV3eghBNZfiSNUJQCrP0oap6KNe1Pqtiv_2v1qXy2kZXysRv_XPYFLnijASZQxdJ8mSWu9dpipVlkqt_Mc_JaMXsElOivPCTGK0PDogrfZVVlYyHrn86161sSLQEZlYBpi5nTot1bKipu-6wqVElbKItaGb1vvsx8UjRn6JMwjmzQYePOgBQ2ovCZTmjf0cFKaJZcU3EXixiJ8afJDeCekp7Mv80I4ZvfsQ7zg1pHM4K209fYmW5hvcbOZGMuq4gEHQKcgkxLY8it25xTIF2WqfHA",
       "blurb": "Look through telescopes at Houge Park to see the sun up close with SJ Astronomy.",
-      "firstSeenAt": "2026-10-19T11:01:39.910Z"
+      "firstSeenAt": "2026-10-19T11:01:39.910Z",
+      "registrationClosesBy": null,
+      "attendanceNote": "Open to the public. Walk-ins welcome; a Meetup RSVP is optional."
     },
     {
       "id": "meetup-b7a74270a7894073",

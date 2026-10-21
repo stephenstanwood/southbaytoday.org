@@ -15,6 +15,30 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Solar Sunday's optional Meetup RSVP cannot become a public-admission gate", async () => {
+  const raw = {
+    id: "meetup-6b6657a0f25625c8", date: "2026-11-01", title: "Solar Sunday – See Our Sun Up Close",
+    url: "https://www.meetup.com/sj-astronomy/events/312677419/", venue: "Houge Park",
+    time: "1:30 PM", endTime: "3:30 PM", registration: "required", cost: null,
+    registrationClosesBy: "2026-10-31T23:59:00Z",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.equal(actual.cost, "free");
+  assert.equal(actual.registration, "none");
+  assert.equal(actual.registrationClosesBy, null);
+  assert.equal(requiresAdvanceRegistration(actual), false);
+  assert.match(actual.attendanceNote, /Walk-ins welcome.*RSVP is optional/);
+  for (const key of ["id", "date", "title", "url", "venue", "time", "endTime"]) assert.equal(actual[key], raw[key]);
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  for (const other of [{ ...raw, date: "2026-12-06" }, { ...raw, url: "https://www.meetup.com/sj-astronomy/events/another-session/" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other, "unverified occurrences keep their own access state");
+  }
+});
+
 test("the museum's free Halloween admission survives sparse intake without affecting other dates", () => {
   const raw = {
     date: "2026-10-31", title: "Halloween Night at the Museum", cost: "paid",

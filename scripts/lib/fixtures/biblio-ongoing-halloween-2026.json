@@ -1,0 +1,82 @@
+{
+  "sourceUrl": "https://sjpl.bibliocommons.com/events/69c41db41e64afd01e64a8d9",
+  "capturedAt": "2026-10-21T12:10:30Z",
+  "event": {
+    "id": "69c41db41e64afd01e64a8d9",
+    "definition": {
+      "start": "2026-10-21",
+      "registrationInfo": {
+        "registrationEnd": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 0,
+          "windowType": null
+        },
+        "instructions": null,
+        "loginToRegister": false,
+        "registrationStart": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 0,
+          "windowType": null
+        },
+        "maxSeats": null,
+        "waitlistEnabled": false,
+        "enabledMethods": [],
+        "provider": null,
+        "cap": null,
+        "scope": null,
+        "onlineInstructions": null,
+        "isFull": false,
+        "instructionsToAttend": null,
+        "waitlistAutoPromote": false
+      },
+      "isCancelled": false,
+      "branchLocationId": "26",
+      "audienceIds": [
+        "5d5f0926be771f2300369397",
+        "5d714d6c4464033900bac7c2",
+        "5d5f09306bb98139001cffcc"
+      ],
+      "title": "Halloween Interactive Activity",
+      "end": "2026-10-31",
+      "description": "&lt;p&gt;Join the&nbsp;Mt Pleasant Neighborhood Library as it celebrates Halloween with an interactive display.&lt;/p&gt;\n&lt;p&gt;Children and Patrons of&nbsp;all ages are invited to celebrate and ask a Halloween question.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;a href=\"https://www.sjpl.org/ada-event-accommodation/?_gl=1*zayrer*_ga*NzU0NTQ4NzQ5LjE3NzM5NTA0NDk.*_ga_G99DMMNG39*czE3NzQyOTIyODgkbzMkZzEkdDE3NzQyOTI3NTckajU0JGwwJGgw*_ga_F5QPDQX1BM*czE3NzQyOTIyODgkbzMkZzEkdDE3NzQyOTI3NTYkajU1JGwwJGgw\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" title=\"https://www.sjpl.org/ada-event-accommodation/\" data-linkindex=\"6\"&gt;ADA Accommodation Requests&lt;/a&gt;&lt;/p&gt;"
+    },
+    "isFull": false,
+    "registrationClosed": false
+  },
+  "entities": {
+    "locations": {
+      "26": {
+        "name": "Mt. Pleasant",
+        "address": {
+          "country": "US",
+          "zip": "95127",
+          "state": "CA",
+          "city": "San Jose",
+          "street": "Rocky Mountain Dr",
+          "number": "3411"
+        }
+      }
+    },
+    "eventAudiences": {
+      "5d5f0926be771f2300369397": {
+        "id": "5d5f0926be771f2300369397",
+        "name": "Kids, ages 5-10",
+        "imageId": null
+      },
+      "5d5f09306bb98139001cffcc": {
+        "id": "5d5f09306bb98139001cffcc",
+        "name": "Young Children, ages 0-5",
+        "imageId": null
+      },
+      "5d714d6c4464033900bac7c2": {
+        "id": "5d714d6c4464033900bac7c2",
+        "name": "Pre-Teens, ages 10-12",
+        "imageId": null
+      }
+    }
+  }
+}

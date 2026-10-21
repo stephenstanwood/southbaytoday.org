@@ -1,7 +1,68 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { libraryEventDetails } from "./library-event-details.mjs";
+import { biblioEventOccurrence, libraryEventDetails } from "./library-event-details.mjs";
+
+const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
+
+test("the captured Halloween display survives both library adapters after its midnight opening", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-21T12:00:00Z") });
+  const { fetchBiblioEvents, fetchScclEvents } = await import("../generate-events.mjs");
+  const original = structuredClone(ongoingFixture);
+  for (const library of ["sjpl", "sccl"]) {
+    const event = structuredClone(ongoingFixture.event);
+    if (library === "sccl") event.definition.branchLocationId = "SA";
+    const cancelled = { ...event, id: "cancelled", definition: { ...event.definition, isCancelled: true } };
+    t.mock.method(globalThis, "fetch", async () => Response.json({ entities: {
+      ...ongoingFixture.entities,
+      events: { [event.id]: event, cancelled },
+    } }));
+    const rows = library === "sjpl"
+      ? await fetchBiblioEvents(library, "San Jose Public Library", () => "san-jose")
+      : await fetchScclEvents();
+    assert.equal(rows.length, 1, "the active display survives; the cancelled copy does not");
+    const [actual] = rows;
+    assert.equal(actual.id, `${library}-${event.id}`);
+    assert.equal(actual.date, "2026-10-21");
+    assert.equal(actual.startDate, "2026-10-21");
+    assert.equal(actual.endDate, "2026-10-31");
+    assert.equal(actual.time, null);
+    assert.equal(actual.endTime, null);
+    assert.equal(actual.ongoing, true);
+    assert.equal(actual.cost, "free");
+    assert.match(actual.description, /interactive display/);
+  }
+  assert.deepEqual(ongoingFixture, original);
+});
+
+test("date-only library runs include their closing day and expire on the next Pacific day", () => {
+  const event = ongoingFixture.event;
+  const fields = biblioEventOccurrence(event, new Date("2026-10-31T23:30:00-07:00")).fields;
+  assert.equal(fields.date, "2026-10-31");
+  assert.equal(fields.startDate, "2026-10-21");
+  assert.equal(fields.endDate, "2026-10-31");
+  assert.equal(fields.time, null);
+  assert.equal(biblioEventOccurrence(event, new Date("2026-11-01T00:00:00-07:00")), null);
+  assert.equal(biblioEventOccurrence(event, new Date("2026-11-01T01:30:00-08:00")), null);
+});
+
+test("library display windows preserve source dates across DST without reopening timed events", () => {
+  const now = new Date("2027-03-14T12:00:00-07:00");
+  const display = { start: "2027-03-13T17:00", end: "2027-03-14T17:00" };
+  const fields = biblioEventOccurrence(display, now).fields;
+  assert.equal(fields.ongoing, true, "a 23-hour span still crosses two Pacific dates");
+  assert.equal(fields.date, "2027-03-14");
+  assert.equal(fields.startDate, "2027-03-13");
+  assert.equal(biblioEventOccurrence(display, new Date("2027-03-14T17:00:00-07:00")), null);
+  assert.equal(biblioEventOccurrence({ start: "2027-03-14T10:00", end: "2027-03-14T13:00" }, now), null);
+  assert.equal(biblioEventOccurrence({ start: "2027-03-13T20:00", end: "2027-03-14T01:00" }, now), null);
+  assert.equal(biblioEventOccurrence({ start: "not a date", end: "2027-03-15" }, now), null);
+  const future = biblioEventOccurrence({ start: "2027-03-15T10:00", end: "2027-03-15T11:00" }, now).fields;
+  assert.equal(future.date, "2027-03-15");
+  assert.equal(future.time, "10:00 AM");
+  assert.equal(future.endTime, "11:00 AM");
+  assert.equal(future.ongoing, undefined);
+});
 
 test("availability notices and Spanish appointments retain the organizer's attendance instructions", () => {
   for (const instructions of [
