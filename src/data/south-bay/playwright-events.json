@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-21T18:28:15.287Z",
+    "generatedAt": "2026-10-21T22:50:32.686Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 453,
+    "eventCount": 455,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (116)",
-      "Los Gatos Library (108)",
+      "Mountain View Public Library (118)",
+      "Los Gatos Library (107)",
       "San Jose Jazz (14)",
       "Linden Tree Books (11)",
-      "History San Jose (7)",
+      "History San Jose (8)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 121,
+        "count": 123,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 108,
+        "count": 107,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -125,7 +125,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 14,
+        "count": 16,
         "error": null,
         "sources": [
           "History San Jose"
@@ -1440,6 +1440,27 @@
       "kidFriendly": false
     },
     {
+      "id": "570fbf1b832d",
+      "title": "Sewing with FabMo: Owl Doorstops",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "registration": "required",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating owl doorstops (one per person) using upcycled fabric. Please note that some hand sewing will be required with this project. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up. This event is generously sponsored by the Friends of the Mountain View Library. Fabrics and notions for this event are provided by the Bay Area creative reuse non-profit FabMo.",
+      "sourceAudiences": [
+        "Adults"
+      ],
+      "url": "https://mountainview.libcal.com/event/14866783",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "854d19aa1452",
       "title": "Baby Storytime",
       "date": "2026-11-18",
@@ -1579,6 +1600,27 @@
       "cost": "free",
       "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
       "url": "https://mountainview.libcal.com/event/17853947",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "398d2b31ce12",
+      "title": "We Will Receive Justice: Native Histories of the Collapse of the California Missions",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
+      "time": "6:30 PM",
+      "endTime": "7:30 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Join us for an illuminating talk on California indigenous history with Gustavo Flores and Lee Panich, co-authors of We Will Receive Justice: Native Histories of the Collapse of the California Missions. We Will Receive Justice explores how Native people in the southern San Francisco Bay Area—the ancestors of today’s Ohlone community—navigated the collapse of the California mission system. The volume spans from Mexican independence in 1821 through the region’s annexation by the United States in 1846, as Native people from Mission Santa Clara and Mission San José fought for emancipation and restitution amid rapidly changing colonial circumstances. The narrative is driven by a reexamination of archives related to the Pueblo of San José, the territorial capital of Monterey, and early U.S. court cases regarding Mexican-era land grants, contextualized through an in-depth analysis of mission records that illuminate the complex social connections of Native individuals and families. We Will Receive Justice offers an ethnohistorical lens for viewing the Indigenous history of Mexican California, examining not simply the history of colonization but how Native people drew on cultural traditions and social relationships to create new lives for themselves in the wake of the Franciscan mission system. About the Presenters: Gustavo Flores received his M.A. in Applied Anthropology from San Jose State in 2014. In addition to teaching courses at SJSU, he also teaches courses at Evergreen Valley College and Mission College. He is currently conducting archaeological research with researchers from Stanford University, using primary sources to understand the past of the indigenous peoples of the Bay Area. Lee Panich is an archaeologist and historical anthropologist. In his research and teaching, he uses a combination of archaeological, ethnographic, and archival sources to examine the long-term interactions between California’s Indigenous societies and colonial institutions, particularly the mission system. He has conducted investigations of Native life at various colonial-era sites, including Mission Santa Clara and Mission San José. On these projects, he has been fortunate to partner with members of the Muwekma Ohlone Tribe and other Native Californian communities, scholars from a range of institutions, as well as numerous undergraduate students. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17621760",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -2805,26 +2847,6 @@
       "url": "https://mountainview.libcal.com/event/17200176",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "6ad35491dd32",
-      "title": "Storytime (Ages 0-5)",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "11:00 AM",
-      "endTime": "11:30 AM",
-      "venue": "Los Gatos Library",
-      "address": "100 Villa Ave, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Early learners (babies and toddlers) and their families are welcome to join us at the Library for Storytime, where we will wiggle, sing, read, and dance together! Our program is developmentally appropriate for ages 0-5, and our goal is to create memories and special bonds between caregivers and their children, and to help with building skills for school readiness and for a future of loving books!",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17249576",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "d813316fa78e",
@@ -5550,6 +5572,23 @@
       "kidFriendly": true
     },
     {
+      "id": "7226fbdf5705",
+      "title": "22nd Annual Micailhuitl: Día de Muertos",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": null,
+      "endTime": null,
+      "venue": "History Park",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "",
+      "url": "https://www.aztecadancers.com/dia-de-muertos",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
       "id": "0b2b97a39872",
       "title": "San José Roots",
       "date": "2026-11-07",
@@ -6482,7 +6521,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-21T18:26:55.663Z"
+        "checkedAt": "2026-10-21T22:49:13.110Z"
       }
     },
     {
@@ -6505,7 +6544,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-21T18:26:55.663Z"
+        "checkedAt": "2026-10-21T22:49:13.110Z"
       }
     },
     {
@@ -6528,7 +6567,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-21T18:26:55.663Z"
+        "checkedAt": "2026-10-21T22:49:13.110Z"
       }
     },
     {
@@ -6551,7 +6590,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-21T18:26:55.665Z"
+        "checkedAt": "2026-10-21T22:49:13.112Z"
       }
     },
     {
@@ -6574,7 +6613,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-21T18:26:55.666Z"
+        "checkedAt": "2026-10-21T22:49:13.113Z"
       }
     },
     {
@@ -6597,7 +6636,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-21T18:26:55.672Z"
+        "checkedAt": "2026-10-21T22:49:13.116Z"
       }
     },
     {
@@ -6620,7 +6659,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-21T18:26:55.672Z"
+        "checkedAt": "2026-10-21T22:49:13.116Z"
       }
     },
     {
@@ -6643,7 +6682,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-21T18:26:55.672Z"
+        "checkedAt": "2026-10-21T22:49:13.116Z"
       }
     },
     {
@@ -7066,7 +7105,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7083,7 +7122,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7100,7 +7139,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7117,7 +7156,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7134,7 +7173,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
