@@ -7,6 +7,33 @@ missing or ambiguous evidence still carries the previous digest forward.
 Legistar source links point to the matched event's own meeting page.
 The per-city page names that verified body in the digest heading as well.
 
+## October 21, 2026: Milpitas
+
+The fact check found Milpitas still displaying September 15, now 36 days old.
+Stoa's October 6 and October 20 records were portal stubs. The configured
+first-party fallback retrieved the real agendas but parsed no public items:
+`ADJOURN TO CLOSED SESSION` prematurely ended the agenda body, and the parser
+did not recognize Milpitas's `C1.` consent-item prefix.
+
+The parser now distinguishes that explicit closed-session recess from final
+adjournment, reads consent and regular items in the same flat outline, and
+uses the source's staff-contact boundary to join wrapped titles. It removes
+running page headers. The CivicClerk fallback also excludes sittings whose
+names mark them cancelled or postponed before spending its document budget.
+
+The captured October 20 agenda and event row are in
+`scripts/lib/fixtures/milpitas-2026-10-20/`. Tests exercise the complete
+fallback, eight recovered public items, the $130,000 recommendation, final
+adjournment, future/deleted/cancelled/closed exclusions, failed downloads, and
+the existing two-substantive-item floor. The Los Altos and Saratoga parsing
+regressions remain covered.
+
+The live fallback now retrieves the October 20 agenda using one events query
+and one agenda download. Only Milpitas's digest was refreshed, citing its
+[own meeting page](https://milpitasca.portal.civicclerk.com/event/2944/files).
+Its summary describes agenda proposals, not votes or adopted actions. No
+full-data or paid-model regeneration was necessary.
+
 ## September 12, 2026: San José
 
 Alert `1548312020678610946` reported three `body-unresolved` carries. The selected

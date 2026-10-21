@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 
 import {
   agendaBodyLines,
@@ -72,6 +73,36 @@ Authorize the City Manager to execute a five-year agreement with the Santa Clara
 ADJOURNMENT
 CERTIFICATE OF POSTING OF THE AGENDA
 `;
+
+const MILPITAS = readFileSync(new URL("./fixtures/milpitas-2026-10-20/agenda.txt", import.meta.url), "utf8");
+
+test("Milpitas's closed-session adjournment does not hide the later public agenda", () => {
+  const body = agendaBodyLines(MILPITAS);
+  assert.ok(body.some((line) => line.includes("Mosquito and Vector Control District")));
+  assert.ok(!body.some((line) => line.includes("KNOW YOUR RIGHTS")), "the final adjournment still ends the body");
+});
+
+test("Milpitas's real consent and regular items retain complete titles and recommendations", () => {
+  assert.equal(looksLikeReadableAgenda(MILPITAS), true);
+  const items = parseAgendaOutline(MILPITAS);
+  assert.deepEqual(items.map((item) => item.number), ["C1.", "C2.", "C3.", "C4.", "C5.", "6.", "7.", "8."]);
+  const park = items.find((item) => item.number === "C5.");
+  assert.equal(park.title, "Approve an Amendment to the Agreement with Callander Associates Landscape Architecture, Inc., for the Metro Tango Subdistrict Park Project, CIP No. 2023");
+  assert.match(park.detail, /not-to-exceed \$130,000/);
+  const garden = items.find((item) => item.number === "7.");
+  assert.equal(garden.title, "Adopt a Resolution to Re-Name the Cesar Chavez Community Garden and Cesar Chavez Plaza and to Name a New Community Garden in Delano Manongs Park");
+  assert.match(garden.detail, /Larry Itliong Community Garden/);
+  for (const item of items) {
+    assert.doesNotMatch(item.title + item.detail, /Staff Contact:|Milpitas City Council Agenda|408-586/);
+  }
+});
+
+test("ordinary adjournments still stop parsing before notices and later numbered material", () => {
+  for (const end of ["ADJOURN", "ADJOURNMENT", "ADJOURN TO THE NEXT REGULAR MEETING"]) {
+    const items = parseAgendaOutline(`CALL TO ORDER\n1. A substantive public item\n${end}\n2. A numbered notice after adjournment`);
+    assert.deepEqual(items.map((item) => item.number), ["1."]);
+  }
+});
 
 test("agendaBodyLines drops the participation boilerplate and the ADA tail", () => {
   const body = agendaBodyLines(LOS_ALTOS);

@@ -1118,6 +1118,7 @@ export async function fetchCivicClerkPastMeeting({
 
   const candidates = events
     .filter((event) => event?.hasAgenda && !event?.isDeleted)
+    .filter((event) => !/cancel(?:led|ed)|postponed/i.test(String(event.eventName || "")))
     // A closed session is not public business a resident can read about.
     .filter((event) => !isClosedSessionMeeting({ bodyName: event.eventName, description: event.eventDescription }))
     .map((event) => ({ event, date: String(event.eventDate ?? "").slice(0, 10) }))

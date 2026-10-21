@@ -28,17 +28,20 @@ const BODY_START = /^\s*(?:pledge of allegiance|call (?:the )?(?:meeting )?to or
 
 // Everything after adjournment is ADA notices and records-inspection language.
 const BODY_END = /^\s*(?:adjourn(?:ment)?|certificate of posting)\b/i;
+// Milpitas first adjourns TO closed session, then resumes its public agenda.
+// Only this explicit recess may pass the end marker; final adjournment still stops it.
+const CLOSED_SESSION_RECESS = /^\s*adjourn(?:ment)?\s+(?:to|into)\s+(?:a\s+)?closed session\b/i;
 
-// `N.` (Los Altos, "3.   Adoption of…") or `N.N` (Saratoga, "1.4 Award of…").
+// `N.` (Los Altos), `CN.` (Milpitas consent) or `N.N` (Saratoga).
 //
 // The whitespace after the number is required, not optional. Without it every
 // line that merely *begins* with digits reads as a new item, and agenda prose
 // wraps mid-number constantly: "Section 21080.66" broke across lines as
 // "080.66 (Attachment 1)", "987, 994, and 1005 Acacia" as "7, 994, and 1005",
 // and "2026 Annual Community Awards" as its own item numbered 20.
-const ITEM_START = /^\s*(\d{1,2}\.\d{1,2}|\d{1,2}\.)\s+(\S.*)$/;
+const ITEM_START = /^\s*(\d{1,2}\.\d{1,2}|C?\d{1,2}\.)\s+(\S.*)$/;
 
-/** "1.4" is a dotted outline; "1." is a flat one. */
+/** "1.4" is dotted; "1." and the consent prefix "C1." share a flat outline. */
 function numberStyle(number) {
   return number.includes(".") && !number.endsWith(".") ? "dotted" : "flat";
 }
@@ -54,6 +57,7 @@ const NOISE_LINE = [
   /^(?:presentation|powerpoint|slides)\b/i,
   // The running header/footer repeats on every page and lands mid-item.
   /meeting agenda\s*[–—-]\s*.*page \d+ of \d+/i,
+  /^.*\bCity Council Agenda\s+Page \d+(?: of \d+)?$/i,
   /^page \d+ of \d+$/i,
   /^\d{1,3}$/,
 ];
@@ -82,7 +86,7 @@ export function agendaBodyLines(text) {
 
   const start = lines.findIndex((l) => BODY_START.test(l));
   const from = start === -1 ? 0 : start + 1;
-  const endOffset = lines.slice(from).findIndex((l) => BODY_END.test(l));
+  const endOffset = lines.slice(from).findIndex((l) => BODY_END.test(l) && !CLOSED_SESSION_RECESS.test(l));
   const to = endOffset === -1 ? lines.length : from + endOffset;
   return lines.slice(from, to);
 }
@@ -90,8 +94,9 @@ export function agendaBodyLines(text) {
 /**
  * Parse a plain-text agenda into `{ number, title, detail }` items.
  *
- * `title` is the item's own line; `detail` is the prose under it with the
- * attachment list stripped. Both are already whitespace-collapsed.
+ * `title` is the item's own line, extended through an explicit staff-contact
+ * boundary when present; `detail` is its prose with attachment lists stripped.
+ * Both are already whitespace-collapsed.
  */
 export function parseAgendaOutline(text, { maxDetailChars = 260 } = {}) {
   const items = [];
@@ -105,10 +110,20 @@ export function parseAgendaOutline(text, { maxDetailChars = 260 } = {}) {
 
   const flush = () => {
     if (!current) return;
-    const detail = current.detail.join(" ").replace(/\s+/g, " ").trim();
+    let title = current.title.replace(/\s+/g, " ").trim();
+    let detail = current.detail.join(" ").replace(/\s+/g, " ").trim();
+    // Milpitas wraps titles and explicitly ends them with a staff-contact
+    // parenthesis. Use that boundary to keep the complete title, rather than
+    // guessing that every continuation line belongs to it. Other layouts keep
+    // their existing title/detail split.
+    const staffTitle = `${title} ${detail}`.match(/^(.*?)\s*\(Staff Contacts?:[^)]*\)\s*(.*)$/i);
+    if (staffTitle) {
+      title = staffTitle[1].trim();
+      detail = staffTitle[2].replace(/^Recommendation:\s*/i, "");
+    }
     items.push({
       number: current.number,
-      title: current.title.replace(/\s+/g, " ").trim(),
+      title,
       detail: truncateAtWord(detail, maxDetailChars),
     });
     current = null;

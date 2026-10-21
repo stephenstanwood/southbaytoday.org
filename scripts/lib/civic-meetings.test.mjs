@@ -10,6 +10,7 @@ import {
   escribeRowDateISO,
   extractEscribeAgendaItems,
   extractEscribeAgendaTitles,
+  fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
   fetchLegistarPastMeeting,
   isSubstantiveAgendaTitle,
@@ -507,6 +508,62 @@ test("parseCivicEngageAgendaLinks dedupes the title and download links to one en
 test("parseCivicEngageAgendaLinks survives an empty or unrecognized page", () => {
   assert.deepEqual(parseCivicEngageAgendaLinks("", { baseUrl: "https://example.gov" }), []);
   assert.deepEqual(parseCivicEngageAgendaLinks(null, { baseUrl: "https://example.gov" }), []);
+});
+
+const milpitasFixtureRoot = new URL("./fixtures/milpitas-2026-10-20/", import.meta.url);
+const milpitasOctoberEvent = JSON.parse(readFileSync(new URL("event.json", milpitasFixtureRoot), "utf8"));
+const milpitasOctoberAgenda = readFileSync(new URL("agenda.txt", milpitasFixtureRoot), "utf8");
+const milpitasSource = { apiHost: "milpitasca.api.civicclerk.com", today: "2026-10-21" };
+
+function stubMilpitasArchive(t, { events = [milpitasOctoberEvent], agenda = milpitasOctoberAgenda, fileStatus = 200 } = {}) {
+  const requested = [];
+  t.mock.method(globalThis, "fetch", async (input) => {
+    const url = new URL(String(input));
+    requested.push(url.toString());
+    assert.equal(url.hostname, milpitasSource.apiHost);
+    if (url.pathname === "/v1/Events") return Response.json({ value: events });
+    assert.equal(url.pathname, "/v1/Meetings/GetMeetingFileStream(fileId=5631,plainText=true)");
+    return new Response(agenda, { status: fileStatus });
+  });
+  return requested;
+}
+
+test("the real Milpitas fallback recovers October 20 public business from CivicClerk", async (t) => {
+  const requested = stubMilpitasArchive(t);
+  const record = await fetchCivicClerkPastMeeting(milpitasSource);
+  assert.equal(record?.date, "2026-10-20");
+  assert.equal(record.meetingType, "City Council");
+  assert.equal(record.sourceUrl, "https://milpitasca.portal.civicclerk.com/event/2944/files");
+  assert.match(record.excerpt, /Callander Associates Landscape Architecture, Inc\./);
+  assert.match(record.excerpt, /not-to-exceed \$130,000/);
+  assert.match(record.excerpt, /Larry Itliong Community Garden/);
+  assert.match(record.excerpt, /FY2026-27 Commission Work Plans for Eight Commissions/);
+  assert.doesNotMatch(record.excerpt, /CONFERENCE WITH LEGAL COUNSEL|Staff Contact:|Milpitas City Council Agenda/);
+  assert.equal(requested.length, 2, "one index and one official agenda; no speculative downloads");
+});
+
+test("Milpitas recovery excludes future, deleted, cancelled and wholly closed sittings", async (t) => {
+  const event = milpitasOctoberEvent;
+  const requested = stubMilpitasArchive(t, { events: [
+    { ...event, eventDate: "2026-10-22T19:00:00Z" },
+    { ...event, isDeleted: true },
+    { ...event, eventName: "City Council Meeting - CANCELLED" },
+    { ...event, eventName: "City Council Special Closed Session Meeting" },
+  ] });
+  assert.equal(await fetchCivicClerkPastMeeting(milpitasSource), null);
+  assert.equal(requested.length, 1, "excluded meetings must not consume the document budget");
+});
+
+test("Milpitas recovery keeps the two-substantive-item floor and refuses failed downloads", async (t) => {
+  const request = stubMilpitasArchive(t, {
+    agenda: "CALL TO ORDER\nC1. Receive the City Council calendar of meetings\n" + "Recommendation: receive the calendar. ".repeat(10) + "\nADJOURNMENT",
+  });
+  assert.equal(await fetchCivicClerkPastMeeting(milpitasSource), null);
+  assert.equal(request.length, 2);
+  t.mock.restoreAll();
+  const failed = stubMilpitasArchive(t, { fileStatus: 503 });
+  assert.equal(await fetchCivicClerkPastMeeting(milpitasSource), null);
+  assert.equal(failed.length, 2);
 });
 
 const saratogaFixtureRoot = new URL("./fixtures/saratoga-2026-10-03/", import.meta.url);
