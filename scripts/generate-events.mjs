@@ -1723,9 +1723,24 @@ const POSSESSIVE_FIXES = [
   // deliberately not listed here.
 ];
 
+// Keep these library copy repairs shared between descriptions and attendance
+// notes, whose enrollment and capacity instructions must remain intact.
+const LIBRARY_COPY_FIXES = [
+  [/\bat the first floor program room\b/g, "in the first-floor program room"],
+  [/\bfirst floor program room\b/g, "first-floor program room"],
+  [/\bAdult Caregivers(?= will learn\b)/g, "Adult caregivers"],
+  [/\bSchool age children\b/g, "School-age children"],
+  [/\bschool age children\b/g, "school-age children"],
+  [/\bage appropriate toys\b/g, "age-appropriate toys"],
+  [/Winners get a prize and since it is Halloween we will also be holding a costume contest\./g, "Winners get a prize, and since it is Halloween, we will also be holding a costume contest."],
+  [/\bRegistration opens September\b/g, "Registration opens in September"],
+  [/\bAdvanced registration required, drop-ins not available\./g, "Advance registration required; drop-ins not available."],
+];
+
 // Common scraper-introduced typos. Replacement preserves the original case of
 // the matched word (lowercase → lowercase, Capitalized → Capitalized).
 const DESC_TYPO_FIXES = [
+  ...LIBRARY_COPY_FIXES,
   // Los Gatos LibCal's Tuesday book-club copy has shipped this closed-up word
   // across multiple future occurrences. Fix it at ingest so nightly refreshes
   // do not restore the typo after a manual copy-edit.
@@ -1963,6 +1978,7 @@ function polishAttendanceNote(text) {
     phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served");
   t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
   const fixes = [
+    ...LIBRARY_COPY_FIXES,
     [/\b([Bb])e be\b/gi, "$1e"],
     [/\b([Ss])(?:inging|igning)-up\b/gi, "$1igning up"],
     [/No appointment is needed, we help patrons/g, "No appointment is needed; we help patrons"],
@@ -1971,13 +1987,11 @@ function polishAttendanceNote(text) {
     [/\b(\d+)-minutes before\b/g, "$1 minutes before"],
     [/\b(\d+) person maximum\b/g, "$1-person maximum"],
     [/\b(\d+(?:st|nd|rd|th)) floor (?=Tech Lab|reference desk)/g, "$1-floor "],
-    [/\bfirst floor program room\b/g, "first-floor program room"],
     [/A second event, Infant and Toddler Storytime B will start/g, "A second event, Infant and Toddler Storytime B, will start"],
     [/Another event, Music and Movement B will start/g, "Another event, Music and Movement B, will start"],
     [/\bNo Registration required\b/g, "No registration required"],
     [/\bREGISTRATION IS REQUIRED\b/g, "Registration is required"],
     [/\b15 Robots available\b/g, "15 robots available"],
-    [/\bAdult Caregivers\b/g, "Adult caregivers"],
     [/\bbefore program starts\b/g, "before the program starts"],
     [/\bo telefono,/g, "o teléfono,"],
   ];

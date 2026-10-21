@@ -56,6 +56,33 @@ test("description cleanup preserves the source's MacArthur foundation name on re
   assert.equal(polishDescription(polishDescription(source)), source);
 });
 
+test("library copy stays consistent across body and attendance without changing access details", () => {
+  const source = "Join us for Sign and Sing for Babies in our first floor program room! This program is for infants and prewalking babies only, ages 0-12 months. Adult Caregivers will learn basic American Sign Language signs to communicate with their babies.";
+  const expected = "Join us for Sign and Sing for Babies in our first-floor program room! This program is for infants and prewalking babies only, ages 0-12 months. Adult caregivers will learn basic American Sign Language signs to communicate with their babies.";
+  for (const normalize of [polishDescription, polishAttendanceNote]) {
+    assert.equal(normalize(source), expected);
+    assert.equal(normalize(expected), expected);
+  }
+
+  const requirements = "School age children. Space is limited. Registration opens September and closes the day before the first session. Advanced registration required, drop-ins not available. Call 408.808.3033 or email staff@example.org. Details: https://example.org/SchoolAge?room=101&time=4pm.";
+  const corrected = "School-age children. Space is limited. Registration opens in September and closes the day before the first session. Advance registration required; drop-ins not available. Call 408.808.3033 or email staff@example.org. Details: https://example.org/SchoolAge?room=101&time=4pm.";
+  assert.equal(polishAttendanceNote(requirements), corrected);
+  assert.equal(polishAttendanceNote(corrected), corrected);
+});
+
+test("library grammar fixes preserve literal names and the floor when it is not a modifier", () => {
+  const source = "We meet on the first floor. Adult Caregivers Forum presents School Age Children. Bring a friend.";
+  for (const normalize of [polishDescription, polishAttendanceNote]) {
+    assert.equal(normalize(source), source);
+  }
+  const sourceCopy = "We meet at the first floor program room. School age children can play with age appropriate toys. Winners get a prize and since it is Halloween we will also be holding a costume contest.";
+  const expected = "We meet in the first-floor program room. School-age children can play with age-appropriate toys. Winners get a prize, and since it is Halloween, we will also be holding a costume contest.";
+  for (const normalize of [polishDescription, polishAttendanceNote]) {
+    assert.equal(normalize(sourceCopy), expected);
+    assert.equal(normalize(expected), expected);
+  }
+});
+
 test("garden lessons and band presentations outrank incidental arts words", () => {
   assert.equal(inferCategory("Growing Great Garlic and Shallots",
     "Learn soil preparation and the patient art of harvesting and curing.", "", "Rose Garden Library"), "education");
