@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T03:15:36.225Z",
+  "generatedAt": "2026-10-21T04:46:48.199Z",
   "meetings": {
     "san-jose": {
       "date": "2026-10-20",
@@ -36,7 +36,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-19T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-20T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -58,7 +58,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-19T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-20T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -96,7 +96,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-19T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-20T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
@@ -134,23 +134,23 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-10-19T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-10-20T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-10-19",
-      "displayDate": "Mon, Oct 19",
+      "date": "2026-10-26",
+      "displayDate": "Mon, Oct 26",
       "startTime": "17:30",
-      "bodyName": "City Council Regular Meeting ",
+      "bodyName": "City Council Special Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21832",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21806",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-10-19",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21832"
+        "observedDate": "2026-10-26",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21806"
       }
     },
     "campbell": {
@@ -183,24 +183,24 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-20",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-19T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-20T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
       "date": "2026-10-27",
       "displayDate": "Tue, Oct 27",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Meeting",
+      "startTime": "18:30",
+      "bodyName": "City Council Closed Session Meeting",
       "location": null,
-      "closedSession": false,
-      "url": "https://losaltosca.portal.civicclerk.com/event/209/overview",
-      "civicClerkEventId": 209,
+      "closedSession": true,
+      "url": "https://losaltosca.portal.civicclerk.com/event/5526/overview",
+      "civicClerkEventId": 5526,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-27",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-19T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-20T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     }
   },

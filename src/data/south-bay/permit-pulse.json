@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-20T03:15:36.414Z",
+      "generatedAt": "2026-10-21T04:46:48.667Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 12 – Oct 19",
+      "dateRange": "Oct 13 – Oct 20",
       "stats": {
-        "total": 580,
+        "total": 510,
         "notable": 44,
         "newUnits": 21,
-        "totalValuation": 61332361
+        "totalValuation": 59322167
       },
       "permits": [
         {
@@ -137,29 +137,29 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-20T03:15:38.670Z",
+      "generatedAt": "2026-10-21T04:46:50.985Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 12 – Oct 19",
+      "dateRange": "Oct 13 – Oct 20",
       "stats": {
-        "total": 135,
-        "notable": 5,
+        "total": 144,
+        "notable": 8,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02970",
-          "address": "3423 Ashton Ct",
+          "id": "26BLD-02994",
+          "address": "3593 Arbutus Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-16",
+          "issueDate": "2026-10-19",
           "subtype": "Permit Issued"
         },
         {
@@ -187,6 +187,18 @@
           "subtype": "Permit Issued"
         },
         {
+          "id": "26BLD-02970",
+          "address": "3423 Ashton Ct",
+          "category": "residential-remodel",
+          "categoryLabel": "Home Remodel",
+          "workType": "Web - Kitchen or Bath Remodel",
+          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-16",
+          "subtype": "Permit Issued"
+        },
+        {
           "id": "26PLN-00295",
           "address": "471 Emerson St",
           "category": "entitlement",
@@ -208,6 +220,30 @@
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-10-14",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00299",
+          "address": "882 Emerson St",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to allow for the installation of a non-illuminated wall sign. The sign will be constructed of acrylic letters and will be 13.5 inches tall by 81 inches long. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-19",
+          "subtype": "Over the Counter Approved"
+        },
+        {
+          "id": "26PLN-00298",
+          "address": "844 E Charleston Rd",
+          "category": "entitlement",
+          "categoryLabel": "Entitlement / Zoning",
+          "workType": "Entitlement",
+          "description": "Request for an Over the Counter Architectural Review to repaint the existing building to Sherwin Williams Extra White (SW 7006) and Iron Ore (SW 7069). The changes to the project will not affect the nature of the historic resource. Zone District: General Manufacturing. CEQA Status: Not a project. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
+          "valuation": 0,
+          "units": 0,
+          "issueDate": "2026-10-19",
           "subtype": "Over the Counter Approved"
         }
       ]
