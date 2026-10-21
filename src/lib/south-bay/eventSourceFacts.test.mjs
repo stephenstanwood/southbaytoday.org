@@ -1071,7 +1071,7 @@ test("the St. Joseph's Hill hike retains its verified destination on sparse refr
   };
   const events = [{ ...raw }];
   await resolveEventBlurbs(events, { enabled: false });
-  assert.equal(events[0].title, "Green Excises Wellness Hike St. Joseph's Hill Preserve Rain or Shine");
+  assert.equal(events[0].title, "Green Exercise Wellness Hike St. Joseph's Hill Preserve Rain or Shine");
   assert.deepEqual({ ...events[0], title: raw.title }, raw);
   for (const other of [
     { ...raw, date: "2026-11-01" },

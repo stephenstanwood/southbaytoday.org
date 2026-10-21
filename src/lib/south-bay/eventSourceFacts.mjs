@@ -88,11 +88,13 @@ const CORRECTIONS = [
   // The capped-title cleanup mistook the abbreviation "St." for a sentence
   // ending and discarded the hike's actual destination. Preserve the named
   // place from the organizer's dated occurrence in older sparse snapshots.
+  // Keep the editorial spelling correction so this override cannot restore
+  // the organizer's "Excises" typo after the copy pass.
   // https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/317070276/
   // Evidence: docs/qa/2026-10-21-1207-fact-check.md.
   {
     date: "2026-10-31", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/317070276/",
-    facts: { title: "Green Excises Wellness Hike St. Joseph's Hill Preserve Rain or Shine" },
+    facts: { title: "Green Exercise Wellness Hike St. Joseph's Hill Preserve Rain or Shine" },
   },
   // The dated header says 3–7 PM, but the organizer's body starts cooking at
   // 5 PM and distributes meals from 6:30–8 PM. Preserve the header clocks
