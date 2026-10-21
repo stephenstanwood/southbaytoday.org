@@ -85,7 +85,9 @@ export function parseApodArticle(html, entry) {
     .find(href => /\.(?:jpe?g|png|gif|webp|avif)(?:\?|$)/i.test(href));
   const description = [...hero.matchAll(/<p\b[^>]*>[\s\S]*?<\/p>/gi)]
     .find(tag => attr(tag[0].match(/^<p\b[^>]*>/i)[0], "class").split(/\s+/).includes("media-detail-hero__description"))?.[0] || "";
-  const explanation = text(description.split(/<strong>Tomorrow(?:'|’|&#0*39;|&rsquo;)s picture:<\/strong>/i)[0]).replace(/^Explanation:\s*/, "");
+  // NASA varies the strong tag, whitespace and entity encoding around this
+  // label. Normalize the text before separating explanation from navigation.
+  const explanation = text(description).replace(/^Explanation:\s*/, "").split(/\s+Tomorrow['’]s picture:\s*/i)[0];
   const item = { date: entry.date, title, explanation, url, hdurl: linked || url,
     copyright: metadata.get("Credit & Copyright") || metadata.get("Credit") || null, sourceUrl: entry.sourceUrl };
   validateApodItems([item]);
@@ -114,7 +116,7 @@ export function validateApodItems(items, { startDate, endDate } = {}) {
     const title = typeof item.title === "string" ? item.title.replace(/\s+/g, " ").trim().toLowerCase() : "";
     const explanation = typeof item.explanation === "string" ? item.explanation.replace(/\s+/g, " ").trim().toLowerCase() : "";
     if (title.length < 3 || /^(?:nasa(?: science)?|apod|astronomy picture of the day)$/.test(title) || titles.has(title)) throw Error("Generic or repeated NASA APOD title");
-    if (explanation.length < 80 || explanations.has(explanation)) throw Error("Missing or repeated NASA APOD explanation");
+    if (explanation.length < 80 || explanations.has(explanation) || /tomorrow['’]s picture:/i.test(explanation)) throw Error("Missing, repeated or unparsed NASA APOD explanation");
     const assets = new Set([imageKey(item.url), imageKey(item.hdurl)]);
     if ([...assets].some(asset => images.has(asset))) throw Error("Repeated NASA APOD image");
     if (item.sourceUrl) {
