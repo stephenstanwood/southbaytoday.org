@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-20T20:17:36.754Z",
+    "generatedAt": "2026-10-21T00:27:21.293Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 455,
+    "eventCount": 456,
     "sourceCount": 21,
     "sources": [
       "Mountain View Public Library (116)",
-      "Los Gatos Library (110)",
+      "Los Gatos Library (109)",
       "San Jose Jazz (14)",
       "Linden Tree Books (11)",
-      "History San Jose (6)",
+      "History San Jose (7)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
@@ -19,14 +19,14 @@
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (8)",
-      "City of Cupertino (23)",
+      "City of Cupertino (24)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (76)",
       "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (12)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (2)"
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 110,
+        "count": 109,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -125,7 +125,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 12,
+        "count": 14,
         "error": null,
         "sources": [
           "History San Jose"
@@ -247,7 +247,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 23,
+        "count": 24,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -338,36 +338,16 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
   "events": [
-    {
-      "id": "a173a4b43af4",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-20",
-      "displayDate": "Tue, Oct 20",
-      "time": "1:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 1:00pm to 2:30pm Click Here to Register for 3:00pm to 4:30pm",
-      "url": "https://mountainview.libcal.com/event/17686492",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "3eead433ca13",
       "title": "Sewing with FabMo: Reversible Storage Totes",
@@ -1415,6 +1395,27 @@
       "cost": "free",
       "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
       "url": "https://mountainview.libcal.com/event/17853942",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
+      "id": "adae29dcf8f9",
+      "title": "Coloring for Adults",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "1:30 PM",
+      "endTime": "3:00 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "community",
+      "cost": "free",
+      "description": "Registration is recommended. Walk-ins are also welcome. Coloring sheets aren't just for kids! Come join us to unwind and color at the same time. You will be able to select from crayons, colored pencils, or markers to personalize your coloring sheet. Pencil in this moment of relaxation on your Sunday afternoon. This class is intended for adults, ages 18 and up only. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "sourceAudiences": [
+        "Adults",
+        "Seniors"
+      ],
+      "url": "https://mountainview.libcal.com/event/17676368",
       "source": "Mountain View Public Library",
       "kidFriendly": false
     },
@@ -2793,26 +2794,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17200176",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "2d949601ea13",
-      "title": "CANCELLED -Drop-In Tech Help",
-      "date": "2026-10-20",
-      "displayDate": "Tue, Oct 20",
-      "time": "3:00 PM",
-      "endTime": "4:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "110 E Main St, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "education",
-      "cost": "free",
-      "description": "Tech Help is cancelled for this day, please join us next week. Thank you. -Francisco",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16035533",
-      "source": "Los Gatos Library",
       "kidFriendly": false
     },
     {
@@ -5596,6 +5577,23 @@
       "kidFriendly": false
     },
     {
+      "id": "8b3cbcd17913",
+      "title": "South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "11:00 am",
+      "endTime": "1:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave., San José",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
       "id": "a18ccd8100ff",
       "title": "History Park Heritage Holiday Tea",
       "date": "2026-12-05",
@@ -5630,21 +5628,21 @@
       "kidFriendly": false
     },
     {
-      "id": "4b85ee90826c",
-      "title": "History Park Children’s Heritage Holiday",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
+      "id": "fc8e02e611b6",
+      "title": "History Park Heritage Holiday",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
       "time": "2:00 pm",
       "endTime": "6:00 pm",
       "venue": "History Park",
       "address": "635 Phelan Ave., San José",
       "city": "san-jose",
-      "category": "family",
+      "category": "community",
       "cost": "paid",
       "description": "",
       "url": "https://fareharbor.com/embeds/book/historysanjose/items/314585/calendar/2024/12/?full-items=yes",
       "source": "History San Jose",
-      "kidFriendly": true
+      "kidFriendly": false
     },
     {
       "id": "a34ae09c5db3",
@@ -6494,7 +6492,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-20T20:16:16.796Z"
+        "checkedAt": "2026-10-21T00:26:01.642Z"
       }
     },
     {
@@ -6517,7 +6515,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-20T20:16:16.796Z"
+        "checkedAt": "2026-10-21T00:26:01.642Z"
       }
     },
     {
@@ -6540,7 +6538,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-20T20:16:16.796Z"
+        "checkedAt": "2026-10-21T00:26:01.642Z"
       }
     },
     {
@@ -6563,7 +6561,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-20T20:16:16.798Z"
+        "checkedAt": "2026-10-21T00:26:01.644Z"
       }
     },
     {
@@ -6586,7 +6584,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-20T20:16:16.799Z"
+        "checkedAt": "2026-10-21T00:26:01.645Z"
       }
     },
     {
@@ -6609,7 +6607,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T20:16:16.802Z"
+        "checkedAt": "2026-10-21T00:26:01.648Z"
       }
     },
     {
@@ -6632,7 +6630,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-20T20:16:16.802Z"
+        "checkedAt": "2026-10-21T00:26:01.648Z"
       }
     },
     {
@@ -6655,7 +6653,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-20T20:16:16.802Z"
+        "checkedAt": "2026-10-21T00:26:01.648Z"
       }
     },
     {
@@ -6878,6 +6876,23 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "55c1e46ce876",
+      "title": "Women in Business Symposium Luncheon",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
+      "time": "11:30 AM",
+      "endTime": "01:00 PM",
+      "venue": "Cupertino Community Hall",
+      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.cupertino.gov/Meetings/November-3-2026-Womens-Networking-Luncheon",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "2ffc83c70291",
@@ -8954,6 +8969,41 @@
       "kidFriendly": true
     },
     {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9071,41 +9121,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
