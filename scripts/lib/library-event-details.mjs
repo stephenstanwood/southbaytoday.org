@@ -23,7 +23,7 @@ export function libraryEventDetails(event, entities = {}) {
   const attendanceParagraphs = `${html}\n${instructions}`
     .split(/<\/(?:p|li|div)>|<br\s*\/?>|\n/gi)
     .map(text)
-    .filter((paragraph) => /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b/i.test(paragraph));
+    .filter((paragraph) => /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b|\b(?:registration|enrollment)\s+(?:is\s+)?(?:now\s+)?closed\b|\bthis\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?full\b|\bpor\s+cita\s+(?:únicamente|unicamente|previa)\b/i.test(paragraph));
   // An optional appointment must not hide the condition on walk-up access.
   // Select only that sentence, since unused booking directions can name a
   // different branch and the source may HTML-encode its paragraph breaks.

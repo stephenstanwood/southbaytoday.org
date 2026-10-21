@@ -3239,7 +3239,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Symphony, San Jose Wind Symphony, Brandi Carlile, hand bell choir) into arts
   // because of a "theater"/"theatre" / "performance" substring match in the
   // venue or description.
-  if (/\bconcert\b/.test(titleLower) || /\bchoir\b/.test(titleLower) || /\bsymphony\b/.test(titleLower) || /\borchestra\b/.test(titleLower) || /\bphilharmonic\b/.test(titleLower)) return "music";
+  if (/\bconcert\b/.test(titleLower) || /\bchoir\b/.test(titleLower) || /\bsymphony\b/.test(titleLower) || /\borchestra\b/.test(titleLower) || /\bphilharmonic\b/.test(titleLower)
+      || /\b(?:band|ensemble)\s+presents?\b/.test(titleLower)) return "music";
   // "baby" check: only match when it's not a proper name (e.g. "Baby Bash" the rapper)
   const hasBaby = /\bbaby\b/.test(t) && !/\bbaby\s+bash\b/i.test(t);
   // A title that says the program is FOR adults outranks a keyword that only
@@ -3299,6 +3300,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // further down reads as a food event. A talk about traveling somewhere is
   // education no matter what the blurb name-drops.
   if (/\btravel\s+(?:night|talk|series|presentation|program)s?\b/i.test(titleLower)) return "education";
+  // A gardening lesson's "art of harvesting" is horticulture, not visual art.
+  // Keep this tied to an explicit growing/planting subject in the title.
+  if (/\b(?:growing|planting|harvesting|pruning)\b[^.!?]*\b(?:garlic|shallots|vegetables?|fruit trees?|native plants?|herbs?)\b/i.test(titleLower)
+      && !/\b(?:painting|drawing|watercolou?r|printmaking|art)\b/i.test(titleLower)) return "education";
   if (/\b(qi\s*gong|qigong|falun\s+dafa|tai\s+chi)\b/i.test(titleLower)) return "community";
   // Meditation / mindfulness / yoga / pilates classes are community wellness, not arts —
   // anchor on title so a stray "Art of Living" sponsor name (a meditation org) can't

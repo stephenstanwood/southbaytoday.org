@@ -2,6 +2,19 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { libraryEventDetails } from "./library-event-details.mjs";
+
+test("availability notices and Spanish appointments retain the organizer's attendance instructions", () => {
+  for (const instructions of [
+    "We're sorry, this event is full. Contact the librarian for a waitlist for future sessions.",
+    "Por cita únicamente. Por favor contactar a la biblioteca para agendar su cita.",
+  ]) {
+    const actual = libraryEventDetails({ definition: { description: "A library program.",
+      registrationInfo: { instructions: `<p>${instructions}</p>` } } });
+    assert.equal(actual.attendanceNote, instructions);
+  }
+  const closure = "Registration is now closed. Please check back in January for our Spring Classes.";
+  assert.equal(libraryEventDetails({ definition: { description: `<p>${closure}</p>` } }).attendanceNote, closure);
+});
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";

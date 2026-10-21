@@ -12,6 +12,15 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("garden lessons and band presentations outrank incidental arts words", () => {
+  assert.equal(inferCategory("Growing Great Garlic and Shallots",
+    "Learn soil preparation and the patient art of harvesting and curing.", "", "Rose Garden Library"), "education");
+  assert.equal(inferCategory("San Jose Metropolitan Band presents 'Tis the Season", "", "", "Hammer Theatre Center"), "music");
+  assert.equal(inferCategory("Painting Garlic and Shallots", "Explore the art of growing garlic.", "", "Art Gallery"), "arts");
+  assert.equal(inferCategory("Growing Herbs in Watercolor", "An art class.", "", "Art Gallery"), "arts");
+  assert.equal(inferCategory("Ensemble Portrait Drawing", "An art class.", "", "Art Gallery"), "arts");
+});
+
 // Reviewed public listings captured on October 20, 2026. Exercise the exported
 // normalizers directly so the next refresh cannot undo the source spellings.
 const reviewedCopy = JSON.parse(readFileSync(

@@ -7,6 +7,25 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The full SCU occurrence explicitly welcomes children and families; its
+  // one-sentence feed preview omits the hands-on family activities.
+  // https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit
+  // Evidence: docs/qa/2026-10-20-1807-fact-check.md.
+  {
+    date: "2026-10-24",
+    url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",
+    facts: { category: "family", kidFriendly: true },
+  },
+  // October 24 is a Saturday. The dated library occurrence is authoritative;
+  // its copied first-Thursday boilerplate must not move the meeting.
+  // https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48cf
+  // Evidence: docs/qa/2026-10-20-1807-fact-check.md.
+  {
+    date: "2026-10-24",
+    url: "https://sjpl.bibliocommons.com/events/6a3d7bfbed35742f00fe48cf",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48cf"],
+    copyReplacements: [[/\bCome join us the first Thursday of the month for our\b/gi, "Come join us for our"]],
+  },
   // This listing republishes a ©2000–2003 film page's "currently" claim.
   // Bravo and IFC are separate networks; no current broadcast rights were
   // verified. Remove that clause and the same page's undated "recent" office
@@ -660,15 +679,20 @@ const CORRECTIONS = [
     copyReplacements: [[/NASA['’]s Kepler mission discovered over 4,400 transiting planets around other stars, including over 700 systems with multiple planets\./gi, "NASA's Kepler mission identified thousands of planets and planet candidates around other stars, including multi-planet systems."]],
   },
   // The series names tech tutors, not librarians. Its cached blurb invented
-  // the staff role; preserve the source's wording on the two listed sessions.
+  // the staff role; preserve the source's wording on the verified sessions.
   // https://sjpl.bibliocommons.com/events/68df10f9023ff328007ce8c8
-  // Evidence: docs/qa/2026-10-15-1307-fact-check.md.
+  // Evidence: docs/qa/2026-10-15-1307-fact-check.md and
+  // docs/qa/2026-10-20-1807-fact-check.md.
   ...[
     ["2026-10-15", "68df10f9023ff328007ce8c8"],
     ["2026-10-17", "68df10f9023ff328007ce8c9"],
+    ["2026-10-24", "68df10f9023ff328007ce8cc"],
   ].map(([date, sourceId]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
-    copyReplacements: [[/\bfrom a librarian at Willow Glen Library\b/gi, "from a tech tutor at Willow Glen Library"]],
+    copyReplacements: [
+      [/\bfrom a librarian at Willow Glen Library\b/gi, "from a tech tutor at Willow Glen Library"],
+      [/\bwith library staff\b/gi, "with a tech tutor"],
+    ],
   })),
   // The library's occurrence confirms October 18, the third Sunday, while its
   // shared body says fourth Sunday. Keep the dated session and walk-in terms.
@@ -730,18 +754,23 @@ const CORRECTIONS = [
       blurb: "For Goodness Snakes replaces the regular storytime at King Library; recommended for ages 0–8 with caregivers.",
     },
   },
-  // Tully's Day 3 title and SJPL's published five-session curriculum agree;
+  // Tully's Day 3/4 titles and SJPL's published five-session curriculum agree;
   // this occurrence's copied English/Spanish body still names Day 1's topic.
   // Remove those conflicting fragments rather than inventing session copy.
   // https://www.sjpl.org/news/esl-workforce-development-workshops/
-  // Evidence: docs/qa/2026-10-15-0507-fact-check.md.
-  {
-    date: "2026-10-15", url: "https://sjpl.bibliocommons.com/events/6aa1bf97101eb7003f2ec8f0",
+  // Evidence: docs/qa/2026-10-15-0507-fact-check.md and
+  // docs/qa/2026-10-20-1807-fact-check.md.
+  ...[
+    ["2026-10-15", "6aa1bf97101eb7003f2ec8f0"],
+    ["2026-10-22", "6aa1bf97101eb7003f2ec8f1"],
+  ].map(([date, sourceId]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],
     copyReplacements: [
-      [/\bWorkshop Topic:\s*Professional Introductions\s*&\s*My Skills\s*/g, ""],
-      [/\bTema del taller:\s*Presentaciones Profesionales y Mis Habilidades\s*/g, ""],
+      [/\bWorkshop Topic:\s*Professional Introductions\s*&\s*My Skills\.?\s*/g, ""],
+      [/\bTema del taller:\s*Presentaciones Profesionales y Mis Habilidades\.?\s*/g, ""],
     ],
-  },
+  })),
   // The library gives no study for its population-wide hiring percentage.
   // Its body also says no registration while separate instructions request a
   // signup. Omit the statistic and disclose that conflict; retain the existing

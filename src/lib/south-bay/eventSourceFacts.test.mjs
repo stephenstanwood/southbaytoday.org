@@ -15,6 +15,39 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("October's verified workshop topic, meeting cadence and family audience survive refresh", async () => {
+  const workshop = {
+    date: "2026-10-22", title: "ESL Workforce Development Workshop - Day 4: Interview Skills & Answering Questions",
+    url: "https://sjpl.bibliocommons.com/events/6aa1bf97101eb7003f2ec8f1", venue: "Tully Library",
+    time: "11:30 AM", description: "Learn workplace communication. Workshop Topic: Professional Introductions & My Skills. Registration is required. Tema del taller: Presentaciones Profesionales y Mis Habilidades. Es necesario registrarse.",
+  };
+  const correctedWorkshop = applyVerifiedEventFacts(workshop);
+  assert.equal(correctedWorkshop.description, "Learn workplace communication. Registration is required. Es necesario registrarse.");
+  assert.equal(correctedWorkshop.time, workshop.time);
+  const correctedSource = { ...workshop, description: "Workshop Topic: Interview Skills & Answering Questions. Registration is required." };
+  assert.deepEqual(applyVerifiedEventFacts(correctedSource), correctedSource);
+  assert.equal(applyVerifiedEventFacts({ ...workshop, date: "2026-10-24" }).description, workshop.description);
+
+  const meeting = { date: "2026-10-24", time: "4:00 PM", venue: "Calabazas Library",
+    url: "https://sjpl.bibliocommons.com/events/6a3d7bfbed35742f00fe48cf",
+    description: "Come join us the first Thursday of the month for our monthly Calabazas Teens Reach meeting. No registration required." };
+  assert.equal(applyVerifiedEventFacts(meeting).description,
+    "Come join us for our monthly Calabazas Teens Reach meeting. No registration required.");
+  assert.equal(applyVerifiedEventFacts({ ...meeting, date: "2026-11-05" }).description, meeting.description);
+
+  const summit = { date: "2026-10-24", title: "Child Studies Legislative Summit", time: "2:00 PM",
+    url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",
+    venue: "Alumni Science Hall", category: "education", kidFriendly: false, description: "Join an interactive afternoon focused on youth voice and civic engagement." };
+  const events = [{ ...summit }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].category, "family");
+  assert.equal(events[0].kidFriendly, true);
+  assert.equal(events[0].description, summit.description);
+  assert.equal(events[0].time, summit.time);
+  const otherSummit = { ...summit, date: "2026-10-25" };
+  assert.equal(applyVerifiedEventFacts(otherSummit), otherSummit);
+});
+
 test("Panama Deception drops obsolete current claims from source and polished descriptions", async () => {
   const { polishDescription } = await import("../../../scripts/generate-events.mjs");
   const event = {
@@ -1237,6 +1270,7 @@ test("Willow Glen tech assistance preserves the source's tutor role through blur
   for (const [date, sourceId, time] of [
     ["2026-10-15", "68df10f9023ff328007ce8c8", "11:00 AM"],
     ["2026-10-17", "68df10f9023ff328007ce8c9", "10:00 AM"],
+    ["2026-10-24", "68df10f9023ff328007ce8cc", "10:00 AM"],
   ]) {
     const raw = {
       date, time, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
@@ -1252,6 +1286,9 @@ test("Willow Glen tech assistance preserves the source's tutor role through blur
     assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
     assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }), { ...raw, date: "2027-10-15" });
     assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://example.org/another-tech-session" }), { ...raw, url: "https://example.org/another-tech-session" });
+    const staffClaim = { ...raw, blurb: "Sit down one-on-one with library staff to get help sharpening your computer skills." };
+    assert.equal(applyVerifiedEventFacts(staffClaim).blurb,
+      "Sit down one-on-one with a tech tutor to get help sharpening your computer skills.");
   }
 });
 

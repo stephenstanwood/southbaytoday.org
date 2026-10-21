@@ -149,6 +149,8 @@ export const REGISTRATION_CLOSED = "closed";
 /** Instructions describing an individually booked slot rather than a seat. */
 const APPOINTMENT_PATTERNS = [
   /\bappointments?\b/i,
+  /\bpor\s+cita(?:s)?\s+(?:únicamente|unicamente|previa|previas)\b/i,
+  /\bagendar\s+(?:su|una)\s+cita\b/i,
   /\bbook\s*@/i,
   /\bbook\s+(an?|your)\s+(appointment|slot|time|session|visit)\b/i,
   /\bschedule\s+(an?|your)\s+(appointment|slot|time|session|visit|consultation)\b/i,
@@ -217,6 +219,26 @@ export function registrationFromInstructions(instructions) {
   return null;
 }
 
+// Missing off-platform seat counts cannot contradict an explicit admission
+// notice. Campbell's November 4 tween D&D session says "this event is full"
+// in its instructions; Saratoga's ESL body says enrollment is closed despite
+// having no registrar. Match direct statements, not hypothetical conditions
+// or a description of a full session's curriculum.
+function declaredRegistrationAvailability(html) {
+  const text = stripInstructionMarkup(String(html || "")
+    .replace(/&lt;/gi, "<").replace(/&gt;/gi, ">"));
+  for (const sentence of text.split(/[.!?]+[)"'’”]*\s*/)) {
+    const statement = sentence.trim();
+    if (/^(?:registration|enrollment)\s+(?:(?:is|has)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
+      return REGISTRATION_CLOSED;
+    }
+    if (/^(?:(?:we['’]re|we are)\s+sorry\s*[,;:]\s*)?(?:this|the|our)\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?(?:full|sold[-\s]out)\b/i.test(statement)) {
+      return REGISTRATION_FULL;
+    }
+  }
+  return null;
+}
+
 /**
  * Normalize one raw BiblioCommons event into a registration state.
  *
@@ -260,6 +282,10 @@ export function registrationFromBiblioCommons(ev) {
   const cap = Number.isFinite(info.cap) ? info.cap : null;
   const maxSeats = Number.isFinite(info.maxSeats) ? info.maxSeats : null;
   const fromInstructions = registrationFromInstructions(info.instructions);
+  const description = stripInstructionMarkup(ev.description || ev.definition?.description);
+  const declaredInInstructions = declaredRegistrationAvailability(info.instructions);
+  const declaredInBody = DROP_IN_PATTERNS.some((re) => re.test(description))
+    ? null : declaredRegistrationAvailability(ev.description || ev.definition?.description);
 
   // Seats are only really being counted when a cap exists or BiblioCommons is
   // itself the registrar. See trap 1 above.
@@ -271,7 +297,7 @@ export function registrationFromBiblioCommons(ev) {
     // treat silence as a drop-in — that is the overwhelming majority case.
     const text = stripInstructionMarkup(info.instructions);
     if (text && DROP_IN_PATTERNS.some((re) => re.test(text))) return REGISTRATION_NONE;
-    return fromInstructions || REGISTRATION_NONE;
+    return declaredInInstructions || declaredInBody || fromInstructions || REGISTRATION_NONE;
   }
 
   // Palo Alto also attaches capped BIBLIO_EVENTS forms solely for optional
@@ -282,7 +308,6 @@ export function registrationFromBiblioCommons(ev) {
   // bodies and examples: docs/qa/2026-10-15-0507-fact-check.md and
   // docs/qa/2026-10-17-0007-fact-check.md. "You don't have to register",
   // "recommended but not required", and "optional" also describe reminders.
-  const description = stripInstructionMarkup(ev.description || ev.definition?.description);
   const reminderOnly = /\b(?:registration\s+(?:is\s+)?(?:not\s+(?:required|necessary)|(?:recommended|requested|encouraged)\s*,?\s*but\s+not\s+required|optional)|you\s+(?:don['’]t|do\s+not)\s+have\s+to\s+register)\b[\s\S]{0,240}\b(?:e-?mail\s+reminder|reminder\s+e-?mail)\b/i.test(description);
   const requiredInBody = /\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\b(?:must|need\s+to)\s+(?:register|reserve|enroll|book)\b/i.test(description);
   if (provider === "BIBLIO_EVENTS" && !fromInstructions && reminderOnly && !requiredInBody) {
@@ -303,6 +328,8 @@ export function registrationFromBiblioCommons(ev) {
   // is what resolveRegistrationClosesBy below and the newsletter's live
   // window re-check are for.
   if (ev.registrationClosed === true && hasSeatAccounting) return REGISTRATION_CLOSED;
+
+  if (declaredInInstructions || declaredInBody) return declaredInInstructions || declaredInBody;
 
   if (provider === "EXTERNAL") {
     // Off-platform registration always needs advance action; the instructions

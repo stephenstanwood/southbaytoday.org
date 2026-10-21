@@ -341,6 +341,49 @@ test("an ordinary drop-in library event needs no registration", () => {
   assert.equal(registrationLabel({ registration: "none" }), "");
 });
 
+test("explicit library closure and full notices survive missing external seat accounting", () => {
+  const full = biblioEvent({ provider: "EXTERNAL", isFull: true, registrationClosed: true,
+    instructions: "&lt;p&gt;We're sorry, this event is full. Contact the librarian for future sessions.&lt;/p&gt;" });
+  assert.equal(registrationFromBiblioCommons(full), "full");
+  const closed = biblioEvent();
+  closed.definition.description = "&lt;p&gt;Registration is now closed. Please check back in January for spring classes.&lt;/p&gt;";
+  assert.equal(registrationFromBiblioCommons(closed), "closed");
+  closed.definition.description = "Students must have basic conversational skills.) Registration is now closed. Please check back in January.";
+  assert.equal(registrationFromBiblioCommons(closed), "closed");
+  assert.equal(registrationFromBiblioCommons({ ...closed, definition: { ...closed.definition,
+    description: "Registration has closed. Check the next term." } }), "closed");
+});
+
+test("conditional and reminder-list closures cannot close walk-up admission", () => {
+  for (const description of [
+    "If registration is closed, contact the library.",
+    "If this event is full, join the waitlist.",
+    "When registration is closed, please check back.",
+    "The full session covers English grammar.",
+    "Registration is not closed.",
+    "Registration is closed for reminders. Walk-ins welcome.",
+  ]) {
+    const event = biblioEvent();
+    event.definition.description = description;
+    assert.equal(registrationFromBiblioCommons(event), "none", description);
+  }
+  const reminder = biblioEvent({ provider: "BIBLIO_EVENTS", cap: 20, registrationClosed: true });
+  reminder.definition.description = "Registration is not required but you will receive an email reminder. Registration is now closed.";
+  assert.equal(registrationFromBiblioCommons(reminder), "none");
+});
+
+test("Spanish appointment-only instructions retain their admission gate", () => {
+  for (const instructions of [
+    "Por cita únicamente. Por favor contactar a Marlene Sanchez para agendar su cita.",
+    "Por cita unicamente. Contacte a la biblioteca.",
+    "Por cita previa.",
+  ]) {
+    assert.equal(registrationFromInstructions(instructions), "appointment-only");
+    assert.equal(registrationFromBiblioCommons(biblioEvent({ provider: "EXTERNAL", instructions })), "appointment-only");
+  }
+  assert.equal(registrationFromInstructions("No se necesita cita."), null);
+});
+
 test("plural drop-ins keep an optional library appointment from becoming mandatory", () => {
   // SJPL's October 21, 2026 Santa Teresa tech-help occurrence, event
   // 6a7b58a64cb69d003e201978: provider is null and appointments are optional.
