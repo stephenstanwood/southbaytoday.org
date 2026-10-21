@@ -144,7 +144,7 @@ test("list extraction handles novel, nested and sentence items without changing 
 test("normal library adapters preserve late attendance paragraphs and structured audiences", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-09-06T12:00:00Z") });
   const { fetchBiblioEvents } = await import("../generate-events.mjs");
-  const { scrapeLibCal, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
+  const { scrapeLibCal, normalizePlaywrightEvent, LIBCAL_LIBRARIES } = await import("../playwright-scrapers.mjs");
   t.mock.method(globalThis, "fetch", async (url) => {
     const data = String(url).includes("bibliocommons") ? fixture.bibliocommons : fixture.libcal;
     return new Response(JSON.stringify(data), { headers: { "content-type": "application/json" } });
@@ -161,11 +161,9 @@ test("normal library adapters preserve late attendance paragraphs and structured
   assert.match(derby.attendanceNote, /confirm pickup timing/);
   assert.doesNotMatch(derby.description + derby.attendanceNote, /12:30|1:30/);
 
-  const [scrapedNarcan] = await scrapeLibCal(null, {
-    name: "Los Gatos Library", city: "los-gatos", address: "110 E Main St, Los Gatos, CA 95030",
-    urls: ["https://losgatosca.libcal.com"], onsiteLocations: [],
-  });
+  const [scrapedNarcan] = await scrapeLibCal(null, LIBCAL_LIBRARIES.find((library) => library.city === "los-gatos"));
   const narcan = normalizePlaywrightEvent(scrapedNarcan);
+  assert.equal(narcan.address, "100 Villa Ave, Los Gatos, CA 95030", "use the library entrance rather than the civic center");
   assert.equal(narcan.id, "cbdd438d7fbe", "the occurrence ID must remain stable");
   assert.equal(narcan.time, "4:00 PM");
   assert.equal(narcan.endTime, "5:00 PM");

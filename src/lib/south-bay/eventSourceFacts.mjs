@@ -7,6 +7,18 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The dated header says 3–7 PM, but the organizer's body starts cooking at
+  // 5 PM and distributes meals from 6:30–8 PM. Preserve the header clocks
+  // and show the conflict instead of choosing a replacement schedule.
+  // https://www.meetup.com/san-jose-diet-meetup-group/events/316768949/
+  // Evidence: docs/qa/2026-10-21-1007-fact-check.md.
+  {
+    date: "2026-10-24", url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316768949/",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's event header lists 3–7 PM, but the description says cooking begins at 5 PM and meal distribution runs 6:30–8 PM. Confirm the volunteer schedule with Mantra Room before going.",
+    },
+  },
   // The organizer separates paid competition entry from a free walk-in corner.
   // Preserve both terms instead of presenting the timed competition as drop-in.
   // https://www.meetup.com/social-speed-puzzling/events/315893663/
@@ -1345,6 +1357,18 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // Older LibCal snapshots inherited the civic center address from our config.
+  // Repair only that known error at the library itself; off-site programs,
+  // online events and the civic center's own events keep their locations.
+  // https://www.losgatosca.gov/2828/Los-Gatos-Public-Library
+  // Evidence: docs/qa/2026-10-21-1007-fact-check.md.
+  if (!event?.virtual
+      && (!event?.city || event.city === "los-gatos")
+      && /^https:\/\/losgatosca\.libcal\.com\/event\//i.test(event?.url || "")
+      && /^Los Gatos Library$/i.test(event?.venue || "")
+      && /^110 E\.? (?:Main St(?:reet)?\.?), Los Gatos(?:, CA(?: 95030)?)?$/i.test(event?.address || "")) {
+    event = { ...event, address: "100 Villa Ave, Los Gatos, CA 95030" };
+  }
   // NUMU's exhibition pages give 106 E. Main Street as the visitor location;
   // newsletter intake instead picked up its mailing box. Limit this repair
   // to that museum, its own exhibition URLs, and the known mailing address.

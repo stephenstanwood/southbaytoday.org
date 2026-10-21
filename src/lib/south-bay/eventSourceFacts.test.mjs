@@ -15,6 +15,55 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("retained Los Gatos LibCal records use the verified library entrance without moving other venues", async () => {
+  const raw = {
+    date: "2026-10-24", title: "Girls Who Code", city: "los-gatos",
+    venue: "Los Gatos Library", address: "110 E Main St, Los Gatos, CA 95030",
+    url: "https://losgatosca.libcal.com/event/17444954", time: "10:00 AM", endTime: "12:00 PM",
+    blurb: "Learn coding skills at Los Gatos Library.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.deepEqual(events[0], { ...raw, address: "100 Villa Ave, Los Gatos, CA 95030" });
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.deepEqual(raw, original);
+  for (const address of ["110 E Main St, Los Gatos", "110 E. Main Street, Los Gatos, CA 95030"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, address }).address, "100 Villa Ave, Los Gatos, CA 95030");
+  }
+  for (const other of [
+    { ...raw, venue: "Los Gatos Civic Center Lawn" },
+    { ...raw, venue: "NUMU" },
+    { ...raw, virtual: true },
+    { ...raw, city: "mountain-view" },
+    { ...raw, url: "https://example.org/another-event" },
+    { ...raw, address: "Another source address" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "unrelated locations remain unchanged");
+});
+
+test("the volunteer meal's conflicting header and body clocks require confirmation without inventing a schedule", async () => {
+  const raw = {
+    date: "2026-10-24", title: "Share a Meal with One in Need", venue: "Mantra Room",
+    url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316768949/",
+    time: "3:00 PM", endTime: "7:00 PM", registration: "none", cost: null,
+    blurb: "Cook and distribute vegan meals at Mantra Room.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const { attendanceStatus, attendanceNote, ...preserved } = events[0];
+  assert.deepEqual(preserved, raw);
+  assert.equal(attendanceStatus, "needs-confirmation");
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  assert.match(attendanceNote, /header lists 3–7 PM/);
+  assert.match(attendanceNote, /cooking begins at 5 PM.*6:30–8 PM/);
+  assert.match(attendanceNote, /Confirm the volunteer schedule/);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2026-11-07" },
+    { ...raw, url: "https://www.meetup.com/san-jose-diet-meetup-group/events/another-session/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "other occurrences keep their source schedule");
+});
+
 test("speed puzzling preserves paid competition signup and its separate free walk-in corner", async () => {
   const raw = {
     id: "meetup-52f12c160d54c2c9", date: "2026-11-07", title: "11/7 Team Speed Puzzling!",
@@ -799,7 +848,7 @@ test("the Los Gatos gratitude class discloses conflicting rooms without selectin
   const raw = {
     date: "2026-11-03", url: "https://losgatosca.libcal.com/event/17036748",
     title: "Kids Mindful Art: Gratitude Trees (Ages 7-12)", venue: "Los Gatos Library",
-    address: "110 E Main St, Los Gatos, CA 95030", time: "4:00 PM", endTime: "5:00 PM",
+    address: "100 Villa Ave, Los Gatos, CA 95030", time: "4:00 PM", endTime: "5:00 PM",
     registration: "required", cost: "free",
     description: "Make a gratitude tree with Makiko Niwa. This class will take place in the Technology Lab on the 2nd floor.",
     blurb: "Make a gratitude tree in the second-floor Technology Lab.",

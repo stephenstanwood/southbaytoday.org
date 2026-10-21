@@ -20,7 +20,7 @@ const MV = {
 const LG = {
   name: "Los Gatos Library",
   city: "los-gatos",
-  address: "110 E Main St, Los Gatos, CA 95030",
+  address: "100 Villa Ave, Los Gatos, CA 95030",
   onsiteLocations: [],
 };
 
@@ -71,7 +71,7 @@ test("per-library onsiteLocations cover in-building spaces the suffix rule can't
   assert.equal(mv.address, MV.address);
 
   // Los Gatos doesn't list one, so the same string is treated as off-site
-  // rather than silently borrowing 110 E Main St.
+  // rather than silently borrowing 100 Villa Ave.
   const lg = classifyLibCalLocation("History Center", LG);
   assert.equal(lg.kind, "offsite");
   assert.equal(lg.address, "");

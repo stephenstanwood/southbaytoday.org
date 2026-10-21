@@ -501,7 +501,9 @@ export const LIBCAL_LIBRARIES = [
       "https://losgatosca.libcal.com/calendar",
     ],
     city: "los-gatos",
-    address: "110 E Main St, Los Gatos, CA 95030",
+    // Library visitor entrance; 110 E Main St is the neighboring civic center.
+    // https://www.losgatosca.gov/2828/Los-Gatos-Public-Library
+    address: "100 Villa Ave, Los Gatos, CA 95030",
     onsiteLocations: [],
   },
   // Milpitas: SCCL LibCal returns 404; covered by SCCL BiblioCommons in generate-events.mjs
