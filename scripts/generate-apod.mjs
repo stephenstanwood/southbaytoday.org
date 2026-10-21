@@ -1,76 +1,66 @@
 #!/usr/bin/env node
-/**
- * generate-apod.mjs
- *
- * Fetches the last 12 NASA Astronomy Picture of the Day (APOD) images.
- * Filters for actual images (not videos). Saves to src/data/south-bay/apod.json.
- *
- * API: https://api.nasa.gov/planetary/apod
- * Rate limit: DEMO_KEY = 30 req/hr, 50 req/day. One call per run → fine.
- *
- * Run: node scripts/generate-apod.mjs
- */
-
+// NASA's legacy API follows retired daily URLs to a generic page after the
+// NASA Science migration. Read the dated articles linked by NASA itself.
+import { readFileSync } from "node:fs";
+import { resolve, dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
 import { writeFileAtomic } from "./lib/io.mjs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { APOD_ARCHIVE, parseApodArchive, parseApodArticle, validateApodItems } from "./lib/apod.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "apod.json");
+const OUT_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "src/data/south-bay/apod.json");
+const BLOCKED_DATES = new Set(["2026-03-28"]); // Stephen's existing photo exclusion
 
-const API_KEY = process.env.NASA_API_KEY || "DEMO_KEY";
+export async function generateApod({ outPath = OUT_PATH, fetchImpl = fetch,
+  now = new Date(), pause = delay, report = console.log } = {}) {
+  // NASA publishes APOD on the US Eastern calendar. Never inherit the host TZ.
+  const endDate = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York" }).format(now);
+  const startDate = new Date(Date.parse(`${endDate}T00:00:00Z`) - 14 * 86_400_000).toISOString().slice(0, 10);
+  async function getPage(url) {
+    const res = await fetchImpl(url, {
+      headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
+      signal: AbortSignal.timeout(30_000),
+      redirect: "error", // A retired permalink must never become today's page.
+    });
+    if (!res.ok) throw Error(`NASA APOD HTTP ${res.status}: ${url}`);
+    if (res.url && res.url !== url) throw Error(`NASA APOD redirected: ${url}`);
+    if (!res.headers.get("content-type")?.includes("text/html")) throw Error(`NASA APOD expected HTML: ${url}`);
+    return res.text();
+  }
 
-// Specific APOD dates to exclude (historical/archival photos that don't fit the vibe)
-const BLOCKED_DATES = new Set([
-  "2026-03-28", // Robert Goddard and Nell — historical B&W, not space imagery
-]);
-
-// Fetch the last 14 days; filter to images only, keep up to 12
-function daysAgo(n) {
-  const d = new Date();
-  d.setDate(d.getDate() - n);
-  return d.toISOString().slice(0, 10);
+  report(`Fetching NASA APOD archive (${startDate} → ${endDate})…`);
+  const entries = parseApodArchive(await getPage(APOD_ARCHIVE), { startDate, endDate });
+  if (!entries.length || Date.parse(`${endDate}T00:00:00Z`) - Date.parse(`${entries[0].date}T00:00:00Z`) > 2 * 86_400_000) {
+    throw Error("NASA APOD archive has no current dated entries; preserving existing output");
+  }
+  const items = [];
+  for (const entry of entries) {
+    if (BLOCKED_DATES.has(entry.date)) continue;
+    await pause(1_000); // One sequential request per second; no retry storm.
+    const item = parseApodArticle(await getPage(entry.sourceUrl), entry);
+    if (!item) { report(`  Skipping video: ${entry.date}`); continue; }
+    items.push(item);
+    if (items.length === 12) break;
+  }
+  validateApodItems(items, { startDate, endDate });
+  const output = { items, generatedAt: now.toISOString(),
+    source: "NASA Astronomy Picture of the Day", sourceUrl: "https://science.nasa.gov/apod/" };
+  // Every source/page/semantic check finishes before the only mutation.
+  writeFileAtomic(outPath, JSON.stringify(output, null, 2) + "\n");
+  report(`✅ ${items.length} verified APOD images written`);
+  items.forEach(item => report(`  • ${item.date}: ${item.title}`));
+  return output;
 }
 
-async function main() {
-  const startDate = daysAgo(14);
-  const endDate = daysAgo(0);
-  const url = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&start_date=${startDate}&end_date=${endDate}&thumbs=true`;
-
-  console.log(`Fetching NASA APOD (${startDate} → ${endDate})…`);
-  const res = await fetch(url, {
-    headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
-    signal: AbortSignal.timeout(30_000),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status} — ${await res.text()}`);
-
-  const raw = await res.json();
-  if (!Array.isArray(raw)) throw new Error("Unexpected response shape");
-
-  // Keep images only (skip videos and blocked dates)
-  const items = raw
-    .filter((d) => d.media_type === "image" && !BLOCKED_DATES.has(d.date))
-    .slice(-12) // most recent 12
-    .reverse()  // newest first
-    .map((d) => ({
-      date: d.date,
-      title: d.title,
-      explanation: d.explanation,
-      url: d.url,           // standard resolution
-      hdurl: d.hdurl ?? d.url,
-      copyright: d.copyright?.replace(/\n/g, " ").trim() ?? null,
-    }));
-
-  const output = {
-    items,
-    generatedAt: new Date().toISOString(),
-    source: "NASA Astronomy Picture of the Day",
-    sourceUrl: "https://apod.nasa.gov/apod/astropix.html",
-  };
-
-  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
-  console.log(`✅ ${items.length} APOD images written to apod.json`);
-  items.forEach((i) => console.log(`  • ${i.date}: ${i.title}`));
+async function main(args) {
+  if (args[0] === "--check" && args.length <= 2) {
+    const data = JSON.parse(readFileSync(args[1] || OUT_PATH, "utf8"));
+    validateApodItems(data.items);
+    console.log(`Verified ${data.items.length} APOD images`);
+  } else if (!args.length || (args[0] === "--output" && args.length === 2)) {
+    await generateApod(args.length ? { outPath: resolve(args[1]) } : {});
+  } else throw Error("Use generate-apod.mjs [--output PATH | --check [PATH]]");
 }
-
-main().catch((err) => { console.error(err); process.exit(1); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main(process.argv.slice(2)).catch(error => { console.error(error.message); process.exitCode = 1; });
+}
