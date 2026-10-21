@@ -1952,6 +1952,42 @@ function repairSpacedDomainDots(text) {
   return t;
 }
 
+// Attendance requirements must survive intact: description polishing removes
+// promotional/registration sentences, so share only conservative copy repairs.
+function polishAttendanceNote(text) {
+  let t = cleanDisplayCopy(text) || "";
+  const identifiers = [];
+  t = t.replace(/\b(?:https?:\/\/|www\.)[^\s<>]+|\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|\b(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s<>]*)?/gi,
+    (value) => `__SBT_ATTENDANCE_IDENTIFIER_${identifiers.push(value) - 1}__`);
+  t = t.replace(/\bfirst[ -]come,?\s+first[ -]served?\b/gi, (phrase) =>
+    phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served");
+  t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
+  const fixes = [
+    [/\b([Bb])e be\b/gi, "$1e"],
+    [/\b([Ss])(?:inging|igning)-up\b/gi, "$1igning up"],
+    [/No appointment is needed, we help patrons/g, "No appointment is needed; we help patrons"],
+    [/\b([Ss])ign ups\b/g, "$1ign-ups"],
+    [/first-come, first-served and every act/g, "first-come, first-served; every act"],
+    [/\b(\d+)-minutes before\b/g, "$1 minutes before"],
+    [/\b(\d+) person maximum\b/g, "$1-person maximum"],
+    [/\b(\d+(?:st|nd|rd|th)) floor (?=Tech Lab|reference desk)/g, "$1-floor "],
+    [/\bfirst floor program room\b/g, "first-floor program room"],
+    [/A second event, Infant and Toddler Storytime B will start/g, "A second event, Infant and Toddler Storytime B, will start"],
+    [/Another event, Music and Movement B will start/g, "Another event, Music and Movement B, will start"],
+    [/\bNo Registration required\b/g, "No registration required"],
+    [/\bREGISTRATION IS REQUIRED\b/g, "Registration is required"],
+    [/\b15 Robots available\b/g, "15 robots available"],
+    [/\bAdult Caregivers\b/g, "Adult caregivers"],
+    [/\bbefore program starts\b/g, "before the program starts"],
+    [/\bo telefono,/g, "o teléfono,"],
+  ];
+  for (const [pattern, replacement] of fixes) t = t.replace(pattern, replacement);
+  t = t.replace(/(^|\s)\*([^*]+)\*(?=\s|$)/g, "$1$2")
+    .replace(/^\*(?=We will be\b)/, "");
+  return t.replace(/__SBT_ATTENDANCE_IDENTIFIER_(\d+)__/g,
+    (token, index) => identifiers[Number(index)] ?? token);
+}
+
 function polishDescription(text) {
   if (!text) return "";
   // SJPL uses 中文 as a language label inside an English attendance sentence.
@@ -1975,7 +2011,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|LinkedIn|iPads?|FlipaClip|DreamWorks|patty chang: surfacing)\b/g,
+  t = t.replace(/\b(?:OpenAI|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
@@ -10383,7 +10419,7 @@ async function main() {
   // Polish descriptions: drop boilerplate sentences, downcase ALL CAPS, capitalize sentence starts
   allEvents.forEach((e) => {
     if (e.description) e.description = polishDescription(e.description);
-    if (e.attendanceNote) e.attendanceNote = cleanDisplayCopy(e.attendanceNote);
+    if (e.attendanceNote) e.attendanceNote = polishAttendanceNote(e.attendanceNote);
   });
 
   // Drop descriptions that are actually a ticketing widget's embed snippet
@@ -11194,6 +11230,7 @@ export {
   fetchSvlgEvents,
   fetchSJGiantsSchedule,
   polishDescription,
+  polishAttendanceNote,
   parseIcalDate,
   resolveRunWindow,
   stripRedundantVenueSuffix,

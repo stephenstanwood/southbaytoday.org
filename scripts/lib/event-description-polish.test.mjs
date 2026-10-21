@@ -7,10 +7,54 @@ import {
   cleanVenue,
   inferCategory,
   looksLikeEmbedCode,
+  polishAttendanceNote,
   polishDescription,
 } from "../generate-events.mjs";
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
+
+test("attendance copy fixes typos without removing capacity or appointment instructions", () => {
+  const cases = [
+    [
+      "No appointment is needed, we help patrons on a first come first served basis. A clipboard for singing-up is at the 2nd floor reference desk starting at 2:30PM.",
+      "No appointment is needed; we help patrons on a first-come, first-served basis. A clipboard for signing up is at the 2nd-floor reference desk starting at 2:30 PM.",
+    ],
+    [
+      "Free, with limited capacity. *Child must be be present to receive a ticket.* Tickets available 30-minutes before program starts. Free, 50 person maximum.",
+      "Free, with limited capacity. Child must be present to receive a ticket. Tickets available 30 minutes before the program starts. Free, 50-person maximum.",
+    ],
+    [
+      "Sign ups are first come, first serve and every act will be limited to 6 minutes. REGISTRATION IS REQUIRED.",
+      "Sign-ups are first-come, first-served; every act will be limited to 6 minutes. Registration is required.",
+    ],
+    [
+      "De martes a sábado. Por cita únicamente. Por favor contactar a Marlene Sanchez por correo, marlene.sanchez@sjlibrary.org o telefono, 408.808.3033 para agendar su cita.",
+      "De martes a sábado. Por cita únicamente. Por favor contactar a Marlene Sanchez por correo, marlene.sanchez@sjlibrary.org o teléfono, 408.808.3033 para agendar su cita.",
+    ],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishAttendanceNote(source), expected);
+    assert.equal(polishAttendanceNote(expected), expected);
+  }
+});
+
+test("attendance cleanup retains registration state, eligibility, contacts and exact URLs", () => {
+  for (const source of [
+    "Register in advance for faster check-in. No registration required. Walk-ins subject to availability.",
+    "Registration is now closed. This class session is for beginner and intermediate ESL students (must have basic conversational skills). Check back in January.",
+    "We're sorry, this event is full. Contact Charlie Roos: charlie.roos@lib.sccgov.org",
+    "For ages 9-12. Register here: https://example.org/4pm/first-come-first-serve?code=singing-up&name=MacArthur. Email singing-up@example.org or call 408.808.3033.",
+    "Details: www.example.org/4pm and example.org/4pm. Magik*Magik performs at 4 PM.",
+  ]) {
+    assert.equal(polishAttendanceNote(source), source);
+  }
+});
+
+test("description cleanup preserves the source's MacArthur foundation name on repeat passes", () => {
+  const source = "Funding was provided by the I. Roderick MacArthur Foundation. Bring a friend.";
+  assert.equal(polishDescription(source), source);
+  assert.equal(polishDescription(polishDescription(source)), source);
+});
 
 test("garden lessons and band presentations outrank incidental arts words", () => {
   assert.equal(inferCategory("Growing Great Garlic and Shallots",
