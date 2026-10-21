@@ -3524,6 +3524,14 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Picnics are community/social gatherings — descriptions mention "games"
   // (lawn games, raffles, activities) that would otherwise hit the sports branch.
   if (/\bpicnic\b/.test(titleLower)) return "community";
+  // Family Halloween celebrations describe costume parades, crafts and games;
+  // those games do not establish an athletic event. Keep the earlier arts and
+  // music rules, and explicitly named sports in the title, authoritative.
+  const isFamilyHalloween = /\bhalloween\b/.test(titleLower)
+    && /\bfamily[-\s]friendly\b/.test(cleanDesc.toLowerCase())
+    && /\b(celebration|crafts|costume parade)\b/.test(cleanDesc.toLowerCase())
+    && !/\b(sports?|athletics?|soccer|basketball|baseball|softball|volleyball|football|hockey|rugby|lacrosse|golf|tennis|swim(?:ming)?|race|marathon)\b/.test(titleLower);
+  if (!titleSaysAdult && !sourceSaysAdult && isFamilyHalloween) return "family";
   // NOTE: `titleHasVs` is computed near the top of this function — "vs." and
   // "vs " are sports indicators only in the TITLE, never in descriptions, which
   // use "vs." for technical comparisons ("DataFrames vs. Series").

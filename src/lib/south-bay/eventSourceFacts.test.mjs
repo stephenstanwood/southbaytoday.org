@@ -15,6 +15,55 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("speed puzzling preserves paid competition signup and its separate free walk-in corner", async () => {
+  const raw = {
+    id: "meetup-52f12c160d54c2c9", date: "2026-11-07", title: "11/7 Team Speed Puzzling!",
+    url: "https://www.meetup.com/social-speed-puzzling/events/315893663/",
+    venue: "Empire Armadillo BBQ & Deli", time: "1:00 PM", endTime: "4:00 PM",
+    cost: null, registration: "none",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.equal(actual.cost, "paid");
+  assert.equal(actual.registration, "required");
+  assert.equal(requiresAdvanceRegistration(actual), true);
+  assert.match(actual.costNote, /\$15.*casual puzzling is free/);
+  assert.match(actual.attendanceNote, /\$15 per person and requires registration/);
+  assert.match(actual.attendanceNote, /1:15 PM.*1:30 PM/);
+  assert.match(actual.attendanceNote, /casual puzzling corner welcomes walk-ins without registration/);
+  assert.equal(actual.time, raw.time);
+  assert.equal(actual.endTime, raw.endTime);
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  assert.deepEqual(raw, original);
+  for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-11-07" }).registration, "none");
+  assert.equal(applyVerifiedEventFacts({ ...raw, url: "https://www.meetup.com/social-speed-puzzling/events/another-session/" }).registration, "none");
+});
+
+test("Danny the Dragon breakfast retains the organizer's all-ages welcome and ticket price", async () => {
+  const raw = {
+    date: "2026-12-06", title: "Holiday Breakfast with Danny the Dragon",
+    url: "https://e.givesmart.com/events/P0d/i/_All/AS7u/?search=",
+    venue: "Happy Hollow Park & Zoo", time: "9:00 AM", cost: null, kidFriendly: false,
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.equal(actual.kidFriendly, true);
+  assert.equal(actual.cost, "paid");
+  assert.match(actual.costNote, /\$50.*all-day park admission/);
+  assert.match(actual.attendanceNote, /All ages welcome/);
+  assert.match(actual.attendanceNote, /\$50 ticket includes breakfast/);
+  assert.equal(actual.time, raw.time);
+  assert.equal(actual.registration, undefined, "a ticket-platform account is not an advance-registration requirement");
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2027-12-06" }), { ...raw, date: "2027-12-06" });
+});
+
 test("Solar Sunday's optional Meetup RSVP cannot become a public-admission gate", async () => {
   const raw = {
     id: "meetup-6b6657a0f25625c8", date: "2026-11-01", title: "Solar Sunday – See Our Sun Up Close",

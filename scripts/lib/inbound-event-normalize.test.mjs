@@ -135,6 +135,23 @@ test("newsletter college-admissions Zoom presentations retain their online-only 
 
 test("newsletter Halloween festivals and housing help do not become sports or outdoor events", () => {
   assert.equal(inferCategory("Monster Bash Halloween Festival", "Family-friendly Halloween festival with carnival games and inflatable slides.", "", "Rengstorff Park"), "family");
+  for (const description of [
+    "A family-friendly, eco-conscious Halloween celebration included with general admission featuring a costume parade, critter shows, crafts, games and animal enrichment.",
+    "A family-friendly Halloween celebration featuring shows, costume parades, crafts, games, and animal encounters, included with general admission.",
+  ]) {
+    const [event] = fetchInboundEvents({ today: "2026-10-21", events: [{
+      id: "green-halloween", cityKey: "san-jose", title: "Green Halloween at Happy Hollow",
+      startsAt: "2026-10-31T11:00:00-07:00", endsAt: "2026-10-31T14:00:00-07:00",
+      location: "Happy Hollow Park & Zoo, 1300 Senter Road, San Jose, CA 95112",
+      sourceUrl: "https://happyhollow.org/green-halloween/", description,
+    }] });
+    assert.equal(event.category, "family");
+    assert.equal(event.time, "11:00 AM");
+    assert.equal(event.kidFriendly, true);
+  }
+  assert.equal(inferCategory("Halloween Hockey Game", "A family-friendly celebration with crafts and games.", "", "Ice rink"), "sports");
+  assert.equal(inferCategory("Halloween: Sharks vs Penguins", "A family-friendly celebration with crafts and games.", "", "SAP Center"), "sports");
+  assert.equal(inferCategory("JTown Skate Day and Halloween in Japantown", "A family-friendly Halloween celebration with crafts and the opening of Judi Oyama's art exhibition at JAMsj.", "", "San Jose Japantown"), "arts");
   assert.equal(inferCategory("Paulson Park I Housing Application Help Session", "Help completing a senior housing waitlist application.", "", "Rent Stabilization Division Office"), "community");
   assert.equal(inferCategory("Sharks vs Penguins", "Military appreciation game.", "", "SAP Center"), "sports");
 });

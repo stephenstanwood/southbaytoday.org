@@ -7,6 +7,30 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // The organizer separates paid competition entry from a free walk-in corner.
+  // Preserve both terms instead of presenting the timed competition as drop-in.
+  // https://www.meetup.com/social-speed-puzzling/events/315893663/
+  // Evidence: docs/qa/2026-10-21-0807-fact-check.md.
+  {
+    date: "2026-11-07", url: "https://www.meetup.com/social-speed-puzzling/events/315893663/",
+    facts: {
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+      costNote: "$15 per competition entry; casual puzzling is free.",
+      attendanceNote: "Competition entry is $15 per person and requires registration. Check-in opens at 1 PM; arrive by 1:15 PM for the 1:30 PM competition. The free casual puzzling corner welcomes walk-ins without registration.",
+    },
+  },
+  // The foundation's own ticket page welcomes all ages and lists $50 tickets,
+  // including breakfast activities and all-day park admission.
+  // https://e.givesmart.com/events/P0d/i/_All/AS7u/?search=
+  // Evidence: docs/qa/2026-10-21-0807-fact-check.md.
+  {
+    date: "2026-12-06", url: "https://e.givesmart.com/events/P0d/i/_All/AS7u/?search=",
+    facts: {
+      kidFriendly: true, cost: "paid",
+      costNote: "$50 per ticket, including breakfast activities and all-day park admission.",
+      attendanceNote: "All ages welcome. The $50 ticket includes breakfast, activities, and all-day park admission. Buy tickets through Happy Hollow Foundation.",
+    },
+  },
   // SJAA explicitly welcomes walk-ins; a Meetup group-approval requirement
   // applies to that site's RSVP, not admission to this public observing event.
   // https://www.sjaa.net/events/solar-observing/
