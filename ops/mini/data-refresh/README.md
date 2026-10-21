@@ -35,3 +35,27 @@ against the installed mutex using its existing `SBT_REPO_LOCK` and
 `SBT_REPO_LOCK_LOG` overrides pointing to a private temporary directory. Verify
 real contention, delayed release, timeout retention, and an old live owner
 without touching the production lock.
+
+## Los Gatos meeting source
+
+Los Gatos's MuniCode transport fails, and its calendar/feed access is restricted.
+The upcoming-meetings adapter instead reads the town's permitted
+[public meetings information page](https://www.losgatosca.gov/3044/Town-Council-Public-Meetings-Information)
+and follows its official meeting-schedule PDF. It respects the town's ten-second
+crawl delay and keeps the aggregator identity. No MuniCode, calendar, RSS or
+iCalendar request is used by this adapter.
+
+Dates come from explicit regular-council rows, including moved dates and
+cancellations. The 2026 document, for example, lists Monday November 2 and
+cancels Tuesday November 3. This confirms scheduled dates, not agenda retrieval,
+special-meeting coverage or per-meeting start times. The confirmation cites the
+PDF; the reader link opens the town's meeting information page. Missing links,
+non-PDF responses, unknown row formats, stale years and exhausted schedules
+remain source errors. No recurring date or time is projected.
+
+Deploy through the existing source PR/main path, then fast-forward the Mini's
+clean checkout under its existing repo mutex. Run `npm run test:civic-refresh`
+and the installed `generate-upcoming-meetings.mjs`, check the resulting Los Gatos
+confirmation, and publish only the meetings artifact. A scoped repair must
+preserve a pending full-refresh request owned by an unrelated failure; do not
+call `data-refresh-recovery.mjs complete` to clear that request.
