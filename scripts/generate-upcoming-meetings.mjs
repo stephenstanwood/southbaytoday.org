@@ -29,6 +29,7 @@ import {
   resolvePublicStart,
 } from "./lib/civic-meetings.mjs";
 import { overlayPaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
+import { fetchLosGatosMeeting, LOS_GATOS_PROVIDER } from "./lib/los-gatos-meetings.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-meetings.json");
@@ -708,85 +709,6 @@ const CIVICCLERK_CITIES = [
   },
 ];
 
-// ── Los Gatos (MuniCode) ────────────────────────────────────────────────────
-
-async function fetchLosGatosMeeting() {
-  // Los Gatos uses MuniCode Meetings, and losgatosca.gov links to it as the
-  // town's only agenda source — there is no Legistar/CivicClerk/PrimeGov/
-  // Granicus tenant to switch to. (losgatos.legistar.com resolves but serves no
-  // Los Gatos content — don't mistake it for a migration target.)
-  //
-  // Historical requests failed at this provider. Report only what this run
-  // observes: a transport error alone cannot establish its cause, current
-  // robots policy, or whether another supported access path is available.
-  const url = "https://losgatos-ca.municodemeetings.com/";
-  let res;
-  try {
-    res = await fetch(url, {
-      headers: { "User-Agent": UA },
-      signal: AbortSignal.timeout(30_000),
-    });
-  } catch (err) {
-    throw new Error(
-      `MuniCode request failed (${err?.cause?.code || err.message}): ${url}`,
-    );
-  }
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const html = await res.text();
-
-  const today = ptDateISO();
-
-  // MuniCode pages have dates in various formats — look for ISO or US format
-  const dates = [];
-  // US date format
-  const usPattern = /(\d{1,2})\/(\d{1,2})\/(\d{4})/g;
-  let match;
-  while ((match = usPattern.exec(html)) !== null) {
-    const [, month, day, year] = match;
-    const iso = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    if (iso >= today) dates.push(iso);
-  }
-  // Also check for "Month DD, YYYY" format
-  const longPattern = /(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/gi;
-  const monthMap = { january: "01", february: "02", march: "03", april: "04", may: "05", june: "06",
-    july: "07", august: "08", september: "09", october: "10", november: "11", december: "12" };
-  while ((match = longPattern.exec(html)) !== null) {
-    const [, monthName, day, year] = match;
-    const mm = monthMap[monthName.toLowerCase()];
-    const iso = `${year}-${mm}-${day.padStart(2, "0")}`;
-    if (iso >= today) dates.push(iso);
-  }
-
-  const unique = [...new Set(dates)].sort();
-
-  const nextDate = unique[0];
-  if (!nextDate) return null;
-
-  const d = new Date(nextDate + "T12:00:00");
-  const daysOut = (d.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-  if (daysOut > 60) return null;
-
-  const meeting = {
-    date: nextDate,
-    displayDate: d.toLocaleDateString("en-US", {
-      weekday: "short", month: "short", day: "numeric",
-      timeZone: "America/Los_Angeles",
-    }),
-    // Scraped from a date list; MuniCode posts no machine-readable start time.
-    startTime: null,
-    bodyName: "Town Council",
-    location: null,
-    closedSession: false,
-    url: "https://losgatos-ca.municodemeetings.com/",
-    agendaItems: [],
-  };
-  return confirmMeeting(meeting, {
-    provider: "municode",
-    sourceUrl: url,
-    observedDate: nextDate,
-  });
-}
-
 // ── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -837,7 +759,7 @@ async function main() {
     await runSource(city, "CivicClerk", () => fetchCivicClerkMeeting(config));
   }
 
-  await runSource("los-gatos", "MuniCode", () => fetchLosGatosMeeting());
+  await runSource("los-gatos", LOS_GATOS_PROVIDER, () => fetchLosGatosMeeting());
 
   const meetings = onlyConfirmedMeetings(candidates);
   const rejected = Object.keys(candidates).length - Object.keys(meetings).length;
