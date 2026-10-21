@@ -346,7 +346,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: false,
     description:
-      "Free Saturday morning yoga and Pilates in Santana Row Park with lululemon. Check-in at 8:30am, class at 9am. Bring your own mat.",
+      "Free Saturday morning yoga and Pilates in Santana Row Park with lululemon. Check-in at 8:30 AM, class at 9 AM. Bring your own mat.",
     url: "https://santanarow.com/events/",
     emoji: "🧘",
   },
@@ -367,7 +367,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Included with museum admission",
     kidFriendly: true,
     description:
-      "Drop-in storytime for toddlers in the Wonder Cabinet, Wednesday through Sunday at 11:30am.",
+      "Drop-in storytime for toddlers in the Wonder Cabinet, Wednesday through Sunday at 11:30 AM.",
     url: "https://www.cdm.org/calendar/",
     emoji: "📖",
   },
@@ -385,7 +385,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Included with museum admission",
     kidFriendly: true,
     description:
-      "All-ages storytime in the Theatre every Tuesday at 11:30am.",
+      "All-ages storytime in the Theatre every Tuesday at 11:30 AM.",
     url: "https://www.cdm.org/calendar/",
     emoji: "📚",
   },
