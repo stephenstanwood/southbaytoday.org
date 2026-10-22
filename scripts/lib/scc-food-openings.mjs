@@ -93,6 +93,41 @@ export function isVerifiedOpeningRecord(record) {
     && record.openingEvidence.source.trim().length > 0;
 }
 
+export function foodPhotoCacheKey(item) {
+  return item.sourceId || `${item.name}|${item.address || ""}|${item.cityId || ""}`;
+}
+
+/**
+ * A Places photo belongs to the place ID in its resource name, not to a brand.
+ * One place cannot be in two cities. Suppress every conflicting assignment:
+ * the opaque photo reference cannot establish which business actually owns it.
+ * Cache nulls so the next refresh does not restore the unverified photos.
+ * Call once across openings, inspections and coming-soon records together.
+ */
+export function discardConflictingFoodPhotos(items, photoCacheByKey = {}) {
+  const byPlace = new Map();
+  for (const item of items) {
+    const placeId = /^places\/([^/]+)\/photos\//.exec(item.photoRef || "")?.[1];
+    if (!placeId) continue;
+    if (!byPlace.has(placeId)) byPlace.set(placeId, []);
+    byPlace.get(placeId).push(item);
+  }
+
+  const conflicts = [];
+  for (const [placeId, records] of byPlace) {
+    const cities = new Set(records
+      .map((item) => words(item.cityId || item.cityName).join(" "))
+      .filter(Boolean));
+    if (cities.size < 2) continue;
+    for (const item of records) {
+      delete item.photoRef;
+      photoCacheByKey[foodPhotoCacheKey(item)] = null;
+    }
+    conflicts.push({ placeId, cities: [...cities], sourceIds: records.map((item) => item.sourceId) });
+  }
+  return conflicts;
+}
+
 // First-party coming-soon facts checked October 4, 2026. A Reddit post is a
 // discovery lead; its date and model-written blurb are not opening evidence.
 const VERIFIED_COMING_SOON_DISCOVERIES = new Map([

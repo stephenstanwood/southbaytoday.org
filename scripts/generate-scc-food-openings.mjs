@@ -20,6 +20,8 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import {
   classifyFinalInspection,
+  discardConflictingFoodPhotos,
+  foodPhotoCacheKey,
   isAddressDerivedBusinessName,
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
@@ -821,7 +823,7 @@ async function searchPlacesPhotoRef(name, address, cityId, apiKey) {
 async function enrichWithPhotos(items) {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const cache = loadPhotoCache();
-  let venueHits = 0, cacheHits = 0, apiHits = 0, missing = 0;
+  let venueHits = 0, cacheHits = 0, apiHits = 0;
 
   for (const item of items) {
     // Tier 1: places.json by name (free, instant).
@@ -829,11 +831,10 @@ async function enrichWithPhotos(items) {
     if (venueRef) { item.photoRef = venueRef; venueHits++; continue; }
 
     // Tier 2: scc-food-photo-cache.json keyed by sourceId.
-    const key = item.sourceId || `${item.name}|${item.address || ""}|${item.cityId || ""}`;
+    const key = foodPhotoCacheKey(item);
     if (Object.prototype.hasOwnProperty.call(cache.byKey, key)) {
       const cached = cache.byKey[key];
       if (cached) { item.photoRef = cached; cacheHits++; }
-      else missing++;
       continue;
     }
 
@@ -841,11 +842,15 @@ async function enrichWithPhotos(items) {
     const ref = await searchPlacesPhotoRef(item.name, item.address, item.cityId, apiKey);
     cache.byKey[key] = ref;
     if (ref) { item.photoRef = ref; apiHits++; }
-    else missing++;
     await new Promise((r) => setTimeout(r, 250));
   }
 
+  const conflicts = discardConflictingFoodPhotos(items, cache.byKey);
+  for (const conflict of conflicts) {
+    console.warn(`  Suppressed unverified photos for ${conflict.sourceIds.join(", ")}: place ${conflict.placeId} was assigned across ${conflict.cities.join(" / ")}.`);
+  }
   savePhotoCache(cache);
+  const missing = items.filter((item) => !item.photoRef).length;
   console.log(`  Photos: ${venueHits} from places.json, ${cacheHits} cached, ${apiHits} new lookups, ${missing} no photo`);
 }
 
@@ -1121,9 +1126,7 @@ async function main() {
 
   // Attach Google Places photoRef so /#food can render real-photo tiles.
   console.log("Looking up Google Places photos…");
-  await enrichWithPhotos(openedWithBlurbs);
-  await enrichWithPhotos(inspectionsWithBlurbs);
-  await enrichWithPhotos(comingSoonWithBlurbs);
+  await enrichWithPhotos([...openedWithBlurbs, ...inspectionsWithBlurbs, ...comingSoonWithBlurbs]);
 
   // Generate Recraft food illustrations for items that didn't get a Places photo.
   console.log("Recraft fallback for items without Places photo…");

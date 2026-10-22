@@ -4,12 +4,63 @@ import test from "node:test";
 
 import {
   classifyFinalInspection,
+  discardConflictingFoodPhotos,
   isAddressDerivedBusinessName,
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
   normalizeComingSoonDiscovery,
 } from "./scc-food-openings.mjs";
 import { shouldSkip } from "../generate-scc-food-openings.mjs";
+
+test("food photos shared across different cities are suppressed across feed groups and cached as missing", () => {
+  const inspection = {
+    sourceId: "SR0884734", name: "Bonbon Matcha", cityId: "palo-alto",
+    photoRef: "places/shared-place/photos/inspection-photo",
+  };
+  const comingSoon = {
+    sourceId: "SR0885773", name: "More Yogurt", cityId: "cupertino",
+    photoRef: "places/shared-place/photos/another-photo",
+  };
+  const unrelated = {
+    sourceId: "other", name: "Another Cafe", cityId: "cupertino",
+    photoRef: "places/another-place/photos/photo", image: "https://example.com/fallback.webp",
+  };
+  const cache = Object.fromEntries([inspection, comingSoon, unrelated].map((item) => [item.sourceId, item.photoRef]));
+
+  const conflicts = discardConflictingFoodPhotos([inspection, comingSoon, unrelated], cache);
+
+  assert.equal(conflicts.length, 1);
+  assert.equal(conflicts[0].placeId, "shared-place");
+  assert.equal(inspection.photoRef, undefined);
+  assert.equal(comingSoon.photoRef, undefined);
+  assert.equal(cache.SR0884734, null);
+  assert.equal(cache.SR0885773, null);
+  assert.equal(unrelated.photoRef, "places/another-place/photos/photo");
+  assert.equal(unrelated.image, "https://example.com/fallback.webp");
+  assert.equal(cache.other, unrelated.photoRef);
+  assert.deepEqual(discardConflictingFoodPhotos([inspection, comingSoon, unrelated], cache), []);
+});
+
+test("food photos shared at one locality and records without a known locality remain unchanged", () => {
+  const items = [
+    { cityId: "palo-alto", photoRef: "places/same-place/photos/a" },
+    { cityName: "PALO ALTO", photoRef: "places/same-place/photos/b" },
+    { photoRef: "places/same-place/photos/c" },
+    { cityId: "cupertino", image: "https://example.com/illustration.webp" },
+  ];
+  const before = structuredClone(items);
+  assert.deepEqual(discardConflictingFoodPhotos(items), []);
+  assert.deepEqual(items, before);
+});
+
+test("canonical food data never assigns one Google place's photos across different cities", () => {
+  const data = JSON.parse(readFileSync(
+    new URL("../../src/data/south-bay/scc-food-openings.json", import.meta.url), "utf8",
+  ));
+  assert.deepEqual(discardConflictingFoodPhotos([
+    ...(data.opened || []), ...(data.inspections || []), ...(data.comingSoon || []),
+  ]), []);
+});
 
 test("the verified operating Holger Way Target does not reappear as coming soon", () => {
   assert.equal(shouldSkip({
