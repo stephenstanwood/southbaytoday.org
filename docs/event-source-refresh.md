@@ -214,21 +214,24 @@ alone would miss that ordering regression.
   `networkidle` timeouts; the generator had already recorded four future
   Hicklebee's rows through its HTTP adapter that morning. No publication or
   carry-forward guard was relaxed.
-  **Current access blocker (2026-10-22):** a normal Mini request for
+  **Current access policy (2026-10-22):** a normal Mini request for
   `https://hicklebees.com/robots.txt` returned 200, but its named-agent group now
   disallows GPTBot, ChatGPT, Claude and several other crawlers. The wildcard
   group also requests `crawl-delay: 10`. This differs from the August policy
   recorded here previously. Agent-driven live verification stopped after this
   robots read: do not change identity, headers, hosts, or tools to evade those
-  exclusions. An approved feed or source-owner permission is required before
-  this repair can claim live source recovery. Prior generated rows and passing
-  offline tests do not establish that permission.
+  exclusions. Any future live ingestion requires an approved source channel
+  and a new decision to restore it. Prior generated rows and passing offline
+  tests do not establish source permission.
   With no approved channel available, the HTTP adapter is also retired from
   the scheduled generator. Its request code and registration were removed, so
   the next refresh cannot treat this access gap as fresh Hicklebee's coverage.
   The four previously published rows may leave the feed at that refresh; this
   is an explicit source retirement, not a successful empty season. The pure
-  parser and fixtures remain offline for a future approved channel.
+  parser and fixtures remain offline. Stephen accepted permanent retirement
+  on 2026-10-22; no source-permission or replacement-feed follow-up remains for
+  this incident. Close the scraper alert on verified retirement without
+  claiming that the venue's live crawl recovered.
 
 ## October 22 Playwright zero-source review
 
@@ -241,7 +244,7 @@ only date-backed records count as coverage.
 | --- | --- |
 | City of Mountain View, Sunnyvale, San Jose | Existing blocked CivicPlus paths; direct adapters were already disabled. Browser zeros do not prove a quiet calendar or restored city coverage. Do not bypass the restrictions. |
 | The Tech Interactive (legacy) | The Tech Upcoming supplied 11 events in the same snapshot. |
-| Hicklebee's | Both live adapters retired pending an approved source channel. HTTP output previously had four future rows; their prior collection is not permission to continue. The raw repair alert remains pending. |
+| Hicklebee's | Both live adapters remain retired at Stephen's instruction. This is the accepted incident outcome; no replacement-feed follow-up remains. Four prior future rows may leave the feed on refresh. |
 | SCCCFD (Eventbrite) | The generator's structured organizer adapter supplied six rows; this browser parser is redundant coverage. |
 | Hammer Theatre | The generator's first-party adapter supplied 61 rows; the legacy browser zero is not a venue outage. |
 | Palo Alto Art Center | The configured cityofpaloalto.org host denied a normal robots request with HTTP 403. Treat as an access gap, not an off-season. Do not probe alternate hosts to sidestep it. |
