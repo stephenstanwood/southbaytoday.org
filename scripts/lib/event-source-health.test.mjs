@@ -135,6 +135,23 @@ test("keeps meetings inside the briefing week and rejects agenda-only tense upgr
   assert.equal(hasProspectiveCityHallUpgrade("The September 30 zoning agenda listed a worship-space permit.", permit), false);
 });
 
+test("dated meeting announcements cannot establish completed city hall actions", () => {
+  const announcement = [{
+    headline: "Peery Park plan may add offices, R&D space, housing",
+    summary: "A Planning Commission special study session was scheduled for October 12 to review a proposed amendment to the Peery Park Specific Plan.",
+  }];
+  assert.equal(hasProspectiveCityHallUpgrade("The Planning Commission's October 12 session eyed expanding Peery Park's offices, R&D and housing.", announcement), true);
+  assert.equal(hasProspectiveCityHallUpgrade("The October 12 Planning Commission agenda listed a proposed Peery Park amendment.", announcement), false);
+  for (const framing of ["set", "expected", "slated"]) {
+    assert.equal(hasProspectiveCityHallUpgrade("The council approved the amendment.", [{
+      summary: `The council was ${framing} for October 12 to consider the amendment.`,
+    }]), true);
+  }
+  assert.equal(hasProspectiveCityHallUpgrade("The council approved the amendment.", [{
+    summary: "The council met on October 12 and approved the amendment.",
+  }]), false);
+});
+
 test("a limited briefing selection cannot establish event totals", () => {
   assert.equal(hasEventSelectionCount("Heritage Theatre hosts three Durga Puja events including a fashion show."), true);
   assert.equal(hasEventSelectionCount("The library offers 2 watercolor workshops Saturday."), true);

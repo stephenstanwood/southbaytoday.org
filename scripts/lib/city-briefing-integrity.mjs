@@ -48,8 +48,10 @@ export function refreshBriefingAvailability(path, events) {
   return removed;
 }
 
+// A date between "scheduled" and "to review" still describes an announcement.
+// Keep that optional clause within one sentence so later outcomes stay distinct.
 const PROSPECTIVE_SOURCE =
-  /\b(?:scheduled|set|expected|slated)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\b(?:council|commission|committee|board|panel)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\bagenda\s+(?:listed|lists|included|includes)\b|\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
+  /\b(?:scheduled|set|expected|slated)\s+(?:for\s+[^.!?;\n]{1,60}?\s+)?to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\b(?:council|commission|committee|board|panel)\s+to\s+(?:hear|consider|review|weigh|vote|decide|approve|adopt|reject|deny)\b|\bagenda\s+(?:listed|lists|included|includes)\b|\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/i;
 const CONFIRMED_ACTION =
   /\b(?:heard|considered|reviewed|weighed|eyed|voted|decided|approved|adopted|rejected|denied)\b/i;
 const COMPLETED_MEETING =
