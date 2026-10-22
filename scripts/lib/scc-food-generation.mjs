@@ -147,3 +147,18 @@ export async function fetchSccFoodPage(url, { fetchImpl = fetch } = {}) {
 export function isNeutralInspectionBlurb(blurb) {
   return typeof blurb === "string" && !/\b(?:new|open(?:ed|ing|s)?|recently|now\s+(?:operating|serving))\b/i.test(blurb);
 }
+
+/** Check the type description before its location/status phrase against the
+ * actual permit name. Familiar brands still do not supply menu/type evidence.
+ * Uncertain descriptions use the same null fallback as a city mismatch.
+ */
+export function hasSourceBackedFoodType(blurb, businessName) {
+  if (typeof blurb !== "string") return false;
+  const words = value => String(value).normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase().match(/[a-z0-9]+/g)?.map(word => word.length > 3 ? word.replace(/s$/, "") : word) ?? [];
+  const allowed = new Set([...words(businessName), "food", "busines", "a", "an", "the", "and", "shop", "focused", "themed", "related"]);
+  if (allowed.has("juice")) allowed.add("bar");
+  const description = blurb.replace(/^(?:planned|coming soon)\s+/i, "")
+    .split(/\b(?:on|at|in|planned|opening|coming)\b/i)[0];
+  return words(description).every(word => allowed.has(word));
+}

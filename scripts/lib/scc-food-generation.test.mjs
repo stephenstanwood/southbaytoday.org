@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { assessFoodSourceFreshness, fetchSccFoodPage, generateFoodBlurbMap,
-  isNeutralInspectionBlurb } from "./scc-food-generation.mjs";
+  isNeutralInspectionBlurb, hasSourceBackedFoodType } from "./scc-food-generation.mjs";
 
 const items = [{ id: "inspection-a", name: "Same Cafe" }, { id: "inspection-b", name: "Same Cafe" }];
 const rows = [{ id: items[0].id, blurb: "Cafe on Ellis Street in Mountain View." },
@@ -197,4 +197,20 @@ test("inspection blurbs cannot turn inspections into opening or operating claims
   }
   assert.equal(isNeutralInspectionBlurb("Cafe on Main Street in San Jose."), true);
   assert.equal(isNeutralInspectionBlurb(null), false);
+});
+
+test("unstated brand/type modifiers fall back instead of becoming permit facts", () => {
+  for (const [name, blurb] of [["Flora", "Flower shop on Santana Row."],
+    ["More Yogurt", "Frozen yogurt shop planned on Vallco Parkway."],
+    ["Blendid #5 City Sports", "Vending-style food business planned on Saratoga Avenue."],
+    ["IHOP Restaurant", "IHOP pancake restaurant planned on Story Road."],
+    ["Hashtag India", "Indian restaurant planned on Serra Way."]]) {
+    assert.equal(hasSourceBackedFoodType(blurb, name), false);
+  }
+  for (const [name, blurb] of [["Flora", "Food business planned at Santana Row."],
+    ["Golden Pin Donuts", "Donut shop on South Winchester Boulevard."],
+    ["Xom Cafe -Coffee Bar", "Coffee bar on East Santa Clara Street."],
+    ["More Yogurt", "Yogurt shop planned on Vallco Parkway."]]) {
+    assert.equal(hasSourceBackedFoodType(blurb, name), true);
+  }
 });

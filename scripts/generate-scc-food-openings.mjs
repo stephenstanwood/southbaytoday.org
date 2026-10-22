@@ -22,6 +22,7 @@ import {
   assessFoodSourceFreshness,
   fetchSccFoodPage,
   generateFoodBlurbMap,
+  hasSourceBackedFoodType,
   isNeutralInspectionBlurb,
 } from "./lib/scc-food-generation.mjs";
 import {
@@ -1077,6 +1078,10 @@ async function main() {
     const override = !inspection && item.sourceId && BLURB_OVERRIDES[item.sourceId];
     if (override) return override;
     const aiBlurb = aiBlurbMap[item.id] ?? null;
+    if (aiBlurb && !hasSourceBackedFoodType(aiBlurb, item.name)) {
+      console.warn(`[blurb-source-type] Dropped unsupported business-type detail for ${item.id}`);
+      return null;
+    }
     const mismatch = blurbCityMismatch(aiBlurb, item.cityName);
     if (mismatch) {
       console.warn(`[blurb-city-mismatch] "${item.name}" (${item.cityName}) blurb names "${mismatch}": ${JSON.stringify(aiBlurb)}`);
