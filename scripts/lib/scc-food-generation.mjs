@@ -80,7 +80,8 @@ export async function generateFoodBlurbMap({ items, prompt, label, createMessage
       for (const row of parsed.blurbs) {
         const valid = row && Object.keys(row).length === 2 && ids.has(row.id) && counts.get(row.id) === 1
           && (row.blurb === null || (typeof row.blurb === "string" && row.blurb.trim().length > 0
-            && row.blurb.length <= 200 && row.blurb.trim().split(/\s+/).length <= 12));
+            && row.blurb.length <= 200 && row.blurb.trim().split(/\s+/).length <= 12
+            && !/\b(?:or|perhaps|possibly|maybe|likely|appears?|seems?|might|could)\b/i.test(row.blurb)));
         if (!valid) { rejected.push(row?.id ?? null); continue; }
         if (!accepted.has(row.id)) accepted.set(row.id, typeof row.blurb === "string" ? row.blurb.trim() : null);
       }

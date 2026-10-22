@@ -659,7 +659,7 @@ export function shouldSkip(item) {
 // the name and stating it as fact: "Anne Doan" became "Vietnamese restaurant"
 // — a cuisine guessed from a person's surname. Name + address + city is all we
 // actually know; when the name isn't a chain we recognize, say only that.
-const CUISINE_INFERENCE_RULE = `Only name a cuisine when the source supports it. The name may be a person, a holding company, or a code — it is NOT evidence of a cuisine, and a person's name is never evidence of their food's ethnicity. State a cuisine ONLY when (a) the name explicitly says it ("Gelato Scoping Store" → gelato, "Latin & Asian Hospitality Group" → Latin and Asian), or (b) it's a chain you genuinely recognize ("Jersey Mike's Subs" → sub sandwiches). Otherwise write a location-only line — "Food business on Lafayette St in Santa Clara." — and do not guess at the food. Never infer cuisine or nationality from a personal or surname-like name. Do not invent menu items, history, dates, or operating status. Use null if no useful factual sentence is supported.`;
+const CUISINE_INFERENCE_RULE = `Use only the supplied business name, address and CITY as factual evidence. The name may be a person, a holding company, a code, or an opaque brand; never guess its business type, cuisine or nationality from that. State a business type or cuisine only when the name explicitly says it ("Golden Pin Donuts" → donut shop, "Xom Cafe -Coffee Bar" → coffee bar). Do not add unstated modifiers: "yogurt" does not establish frozen yogurt, and "Flora" does not establish a flower shop. Do not use remembered chain details, menus, history, dates or operating status that are absent from the input. Otherwise use a location-only line, such as "Food business on Lafayette St in Santa Clara." Never offer alternative guesses with "or", "perhaps", "possibly" or similar hedges. Use null if no useful factual sentence is supported.`;
 
 /**
  * Generate one-line blurbs for a list of recently opened restaurants using Claude Sonnet.
@@ -716,16 +716,16 @@ async function generateBlurbMap(items, prompt, label) {
 async function generateBlurbs(items) {
   const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
 
-For each newly opened restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it offers. Focus on cuisine type, chain background, or what makes it distinctive. No exclamation points, no hype. Don't start with the restaurant name.
+For each newly opened restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it offers. Use a business type explicit in its name or the supplied location. No exclamation points, no hype. Don't start with the restaurant name.
 
 The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
 
 ${CUISINE_INFERENCE_RULE}
 
 Examples of good blurbs:
-- "Filipino chain known for Chickenjoy fried chicken, now in South San Jose."
-- "Korean braised pork knuckle specialist on El Camino Real."
-- "Robotic smoothie kiosk at Grant Rd and El Camino Real."
+- "Cafe on El Camino Real in Mountain View."
+- "Donut shop on Bascom Avenue in Campbell."
+- "Food business on Lafayette Street in Santa Clara."
 
 Restaurants:
 ${blurbList(items)}
@@ -741,16 +741,16 @@ Respond with a JSON object containing "blurbs": an array of objects with the exa
 async function generateComingSoonBlurbs(items) {
   const prompt = `You are a local journalist writing one-line descriptions for a South Bay residents' news site.
 
-For each "coming soon" restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it will offer. Focus on cuisine type, chain background, or location context. No exclamation points, no hype. Don't start with the restaurant name.
+For each "coming soon" restaurant below, write one concise factual sentence (max 12 words) describing what kind of food or experience it will offer. Use a business type explicit in its name or the supplied location. No exclamation points, no hype. Don't start with the restaurant name.
 
 The "CITY:" field after each address is the authoritative city — always trust it over the street address. Shopping centers are sometimes named after a different city than the one they're actually in (e.g. "El Paseo de Saratoga" is a plaza in San Jose, not Saratoga) — you may mention the plaza's name, but never claim the restaurant is "in" or "at" a city other than the one given in CITY:.
 
 ${CUISINE_INFERENCE_RULE}
 
 Examples of good blurbs:
-- "BBQ chain with smoked ribs and wings, opening on Curtner Ave."
-- "Breakfast and brunch spot coming to San Antonio Rd in Mountain View."
-- "Sushi restaurant opening on Los Gatos Blvd."
+- "BBQ business planned on Curtner Avenue in San Jose."
+- "Cafe planned on San Antonio Road in Mountain View."
+- "Food business planned on Los Gatos Boulevard."
 
 Restaurants:
 ${blurbList(items)}
