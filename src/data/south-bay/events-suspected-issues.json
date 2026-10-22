@@ -1,56 +1,20 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-21T22:57:48.297Z"
+    "auditedAt": "2026-10-22T03:07:32.706Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1853,
+    "total": 1850,
     "totals": {
-      "hard": 2,
+      "hard": 0,
       "soft": 2,
       "info": 0
     },
     "byReason": {
       "virtual-not-flagged": 1,
-      "unknown-slug": 1,
-      "out-of-area": 2,
-      "slug-mismatch": 1
+      "unknown-slug": 1
     },
-    "hard": [
-      {
-        "id": "keplersbooks-c709accb98f5f655",
-        "title": "Kepler's Annual Holiday Party",
-        "city": "palo-alto",
-        "date": "2026-12-06",
-        "location": "1010 El Camino Real #100, Menlo Park",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"menlo park\" with no in-area city token"
-          }
-        ]
-      },
-      {
-        "id": "scu-962b10cc78611feb",
-        "title": "Encore! Markey Center on the Road with Fr. Bill O'Neill Giving an Account of Our Hope: Catholic Social Teaching Today",
-        "city": "santa-clara",
-        "date": "2026-10-25",
-        "location": "Villa Maria Del Mar 21918 E Cliff Dr. Santa Cruz, CA 95062",
-        "findings": [
-          {
-            "severity": "hard",
-            "reason": "out-of-area",
-            "detail": "location mentions \"santa cruz\" with no in-area city token"
-          },
-          {
-            "severity": "hard",
-            "reason": "slug-mismatch",
-            "detail": "city=\"santa-clara\" but location references \"santa-cruz\""
-          }
-        ]
-      }
-    ],
+    "hard": [],
     "soft": [
       {
         "id": "sjpl-6920dd8fb864f02900259300",
@@ -71,7 +35,7 @@
         "title": "Hands-Only CPR/AED & Choking Relief Training",
         "city": "monte-sereno",
         "date": "2026-10-22",
-        "location": "Monte Sereno City Hall",
+        "location": "18041 Saratoga-Los Gatos Road, Monte Sereno, CA 95030",
         "findings": [
           {
             "severity": "soft",
@@ -84,7 +48,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 246,
+    "total": 252,
     "totals": {
       "hard": 0,
       "soft": 2,

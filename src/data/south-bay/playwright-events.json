@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-21T22:50:32.686Z",
+    "generatedAt": "2026-10-22T03:00:10.616Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 455,
+    "eventCount": 451,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (118)",
-      "Los Gatos Library (107)",
+      "Mountain View Public Library (117)",
+      "Los Gatos Library (104)",
       "San Jose Jazz (14)",
       "Linden Tree Books (11)",
       "History San Jose (8)",
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 123,
+        "count": 122,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -75,7 +75,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 107,
+        "count": 104,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -350,49 +350,6 @@
     ]
   },
   "events": [
-    {
-      "id": "2a41430bac32",
-      "title": "ESL Conversation Club - IN PERSON",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Seats are limited. Please only register if you plan on attending. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. We will meet in person at the first floor program room. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/15895395",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "a7d37c4f16a8",
-      "title": "ESL Conversation Club - ONLINE",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "mountain-view",
-      "virtual": true,
-      "registration": "required",
-      "category": "community",
-      "cost": "free",
-      "description": "Registration is required. Are you learning or improving your spoken English? Come practice with us! Each week we discuss a different topic with related vocabulary, idioms, and conversation questions. This program is held over Zoom and we will also provide a Zoom link. Casual conversation and friendly company. Everyone is welcome. This class is intended for adults, ages 18 and up only.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://mountainview.libcal.com/event/17249782",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "4826d64a31ed",
       "title": "Friends of the Library Board Meeting",
@@ -1358,6 +1315,23 @@
       "kidFriendly": false
     },
     {
+      "id": "922628ae55f4",
+      "title": "Classical Guitar Performance with Peter Fletcher",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "7:15 PM",
+      "endTime": "8:15 PM",
+      "venue": "Mountain View Public Library",
+      "address": "585 Franklin St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": "free",
+      "description": "Registration is recommended. Seating is limited. Walk-ins are also welcome. Join us for an evening of classical guitar music with critically acclaimed recording artist and performer Peter Fletcher. Peter Fletcher is an American classical guitarist based in Detroit and New York City. His recordings on the Centaur Records and Towerhill Recordings labels have been critically acclaimed. He is a graduate of the Eastman School of Music. Peter offers an audience friendly, solo recital including repertoire that runs the gamut from the Renaissance Period through the 20th Century. About the Performer: Peter Fletcher began guitar study at the age of seven and was the youngest student to perform in a 1980 master class led by maestro José Tomás, Andrés Segovia’s teaching assistant in Spain. He furthered his studies in master classes with David Leisner, David Russell, Oscar Ghiglia and Pepe Romero, and received his Master of Music degree from the Eastman School of Music in 1995. In demand as a performer at cultural venues throughout the country, Fletcher made his New York debut at Weill Recital Hall at Carnegie Hall in 2007 and returned for performances in 2008, 2009, 2010, 2013 and 2017. His many radio and television appearances have included National Public Radio (NPR) and WABE in Atlanta. Fletcher’s recordings include an all-Grieg album featuring his own guitar transcriptions, released on Centaur Records in 2014, On Tour (2016), and In Concert (2025), featuring music by Sor, Villa-Lobos, Tárrega, Scarlatti, Albéniz and other composers. He continues to perform solo recitals throughout the country. This event is generously sponsored by the Friends of the Mountain View Library.",
+      "url": "https://mountainview.libcal.com/event/17117546",
+      "source": "Mountain View Public Library",
+      "kidFriendly": false
+    },
+    {
       "id": "adae29dcf8f9",
       "title": "Coloring for Adults",
       "date": "2026-11-15",
@@ -1449,7 +1423,7 @@
       "venue": "Mountain View Public Library",
       "address": "585 Franklin St, Mountain View, CA 94041",
       "city": "mountain-view",
-      "registration": "required",
+      "registration": "full",
       "category": "community",
       "cost": "free",
       "description": "Registration is required. Seats and materials are limited. Please only register if you plan on attending. Join us in creating owl doorstops (one per person) using upcycled fabric. Please note that some hand sewing will be required with this project. This craft project will be led by FabMo volunteer, Bhanu Gomatam. This class is intended for adults, ages 18 and up. This event is generously sponsored by the Friends of the Mountain View Library. Fabrics and notions for this event are provided by the Bay Area creative reuse non-profit FabMo.",
@@ -2847,66 +2821,6 @@
       "url": "https://mountainview.libcal.com/event/17200176",
       "source": "Mountain View Public Library",
       "kidFriendly": false
-    },
-    {
-      "id": "d813316fa78e",
-      "title": "Kids Knitting (Ages 7+)",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "100 Villa Ave, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "For ages 7+ only: Join Librarian Robert in the Children's Room and learn to knit! Learn the basic skills to get started on a simple project and practice your stitching.",
-      "sourceAudiences": [
-        "Children"
-      ],
-      "url": "https://losgatosca.libcal.com/event/16887025",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "0986eb41779f",
-      "title": "STEAM Wednesdays in the Teen Room",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "3:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Los Gatos Library",
-      "address": "100 Villa Ave, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for a STEAM activity in the teen room each Wednesday after school. With new hands-on activities each week, there is something fun for everyone. Please note that this is for ages12+",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17261937",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
-      "id": "6775ac768d37",
-      "title": "Seed Library Tabling",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "4:00 PM",
-      "endTime": "5:30 PM",
-      "venue": "Los Gatos Library",
-      "address": "100 Villa Ave, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us for a fun-filled craft in the lobby that promotes the Los Gatos Seed Library. Learn more about community stewardship and how to collect and donate seeds, along with why native plants are so important to our community health and wellbeing.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17682466",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
     },
     {
       "id": "29dadc52f551",
@@ -6521,7 +6435,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-21T22:49:13.110Z"
+        "checkedAt": "2026-10-22T02:58:51.171Z"
       }
     },
     {
@@ -6544,7 +6458,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-21T22:49:13.110Z"
+        "checkedAt": "2026-10-22T02:58:51.171Z"
       }
     },
     {
@@ -6567,7 +6481,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-21T22:49:13.110Z"
+        "checkedAt": "2026-10-22T02:58:51.172Z"
       }
     },
     {
@@ -6590,7 +6504,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-21T22:49:13.112Z"
+        "checkedAt": "2026-10-22T02:58:51.174Z"
       }
     },
     {
@@ -6613,7 +6527,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-21T22:49:13.113Z"
+        "checkedAt": "2026-10-22T02:58:51.175Z"
       }
     },
     {
@@ -6636,7 +6550,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-21T22:49:13.116Z"
+        "checkedAt": "2026-10-22T02:58:51.178Z"
       }
     },
     {
@@ -6659,7 +6573,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-21T22:49:13.116Z"
+        "checkedAt": "2026-10-22T02:58:51.178Z"
       }
     },
     {
@@ -6682,7 +6596,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-21T22:49:13.116Z"
+        "checkedAt": "2026-10-22T02:58:51.178Z"
       }
     },
     {
