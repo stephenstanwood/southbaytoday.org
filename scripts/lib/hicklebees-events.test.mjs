@@ -3,8 +3,6 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { fetchHicklebeesEvents } from "../generate-events.mjs";
-import { todayPT } from "./dates.mjs";
 
 import {
   decodeHicklebeesText,
@@ -125,52 +123,11 @@ test("month paths walk forward across a year boundary", () => {
   ]);
 });
 
-test("the registered HTTP adapter reads future months with default headers", async (t) => {
-  const today = todayPT();
-  const [year, month, day] = today.split("-").map(Number);
-  const row = LIST_ROW.replace("Sat, 8/22/2026", `${month}/${day}/${year}`);
-  const paths = hicklebeesMonthPaths(today, 4);
-  const requests = [];
-  t.mock.method(globalThis, "fetch", async (url, options) => {
-    requests.push(String(url));
-    assert.equal(options.headers, undefined, "use Node's default headers");
-    return new Response(requests.length === 2 ? row + FOOTER_WIDGET : FOOTER_WIDGET);
-  });
-
-  const events = await fetchHicklebeesEvents();
-  assert.deepEqual(requests, paths.map((path) => `https://hicklebees.com${path}`));
-  assert.equal(events.length, 1);
-  assert.equal(events[0].date, today);
-  assert.equal(events[0].time, "11:00 AM");
-  assert.equal(events[0].source, "Hicklebee's");
-});
-
-test("Hicklebee's has one owner: the generator HTTP adapter", () => {
+// The live adapters are retired under the source's current access policy.
+// Preserve offline parsing while preventing an unreviewed network fallback.
+test("Hicklebee's live ingestion stays retired pending an approved source channel", () => {
   const generator = readFileSync(join(ROOT, "scripts", "generate-events.mjs"), "utf8");
-  assert.match(generator, /source\(fetchHicklebeesEvents\)/);
+  assert.doesNotMatch(generator, /fetchHicklebeesEvents|hicklebees\.com/);
   const browser = readFileSync(join(ROOT, "scripts", "playwright-scrapers.mjs"), "utf8");
   assert.doesNotMatch(browser, /scrapeHicklebees|hicklebees\.com|name:\s*["']Hicklebee/);
-});
-
-// ---------------------------------------------------------------------------
-// The bug that paged #tasks for three weeks was a spoofed User-Agent, not a
-// parsing mistake. Cloudflare 403s a Node client claiming to be Safari because
-// the TLS/HTTP2 fingerprint contradicts the header; the default headers get a
-// 200. Keep the next well-meaning "add a browser UA" edit from re-breaking it.
-// ---------------------------------------------------------------------------
-test("the Hicklebee's adapter sends no spoofed browser User-Agent", () => {
-  const src = readFileSync(join(ROOT, "scripts", "generate-events.mjs"), "utf8");
-  const start = src.indexOf("// Hicklebee's (IndieCommerce");
-  const end = src.indexOf("// ── Time backfill");
-  assert.ok(start > 0 && end > start, "could not locate the Hicklebee's adapter");
-  const section = src.slice(start, end);
-
-  const fetchCalls = section.match(/fetch\([\s\S]*?\}\);/g) || [];
-  assert.ok(fetchCalls.length > 0, "expected the adapter to fetch something");
-  for (const call of fetchCalls) {
-    assert.ok(
-      !/user-agent/i.test(call),
-      "hicklebees.com 403s a spoofed browser User-Agent — send Node's default headers",
-    );
-  }
 });

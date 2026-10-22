@@ -158,10 +158,6 @@ import {
   strictRefreshInputHealth,
 } from "./lib/event-source-health.mjs";
 import {
-  hicklebeesMonthPaths,
-  parseHicklebeesListPage,
-} from "./lib/hicklebees-events.mjs";
-import {
   SAN_JOSE_THEATERS_LISTINGS_URL,
   SAN_JOSE_THEATER_ADDRESSES,
   listingOverlapsWindow,
@@ -8000,89 +7996,10 @@ async function fetchMuseumOfAmericanHeritageEvents() {
   );
 }
 
-// Hicklebee's (IndieCommerce / Drupal) — HTML parse
-//
-// DO NOT send a spoofed browser User-Agent here. Counterintuitively, that is
-// exactly what breaks this adapter. hicklebees.com sits behind Cloudflare bot
-// management, which compares a claimed UA against the client's TLS/HTTP2
-// fingerprint. Node's fetch claiming to be Safari is a contradiction, so
-// Cloudflare answers 403 with a "Just a moment..." interstitial; with Node's
-// own default headers the request is served 200. Measured 2026-08-29:
-//   default headers        → 200 (60KB of real event HTML)
-//   spoofed Safari UA      → 403 Cloudflare challenge
-//   spoofed UA + Accept/Sec-Fetch headers → 403 Cloudflare challenge
-// The spoofed-UA version paged #tasks daily from 2026-08-07 until this fix.
-//
-// This describes the August recovery, not permanent source authorization.
-// The 2026-10-22 robots.txt now excludes named AI crawlers and asks for a
-// 10-second crawl delay. See docs/event-source-refresh.md: agent-driven live
-// validation is blocked pending an approved channel; do not spoof an identity
-// or treat a previous 200 as permission to override the current exclusions.
-//
-// Parsing lives in ./lib/hicklebees-events.mjs so it can be tested offline.
-const HICKLEBEES_MONTHS_AHEAD = 4;
-
-async function fetchHicklebeesEvents() {
-  console.log("  ⏳ Hicklebee's...");
-  try {
-    const today = todayPT();
-    const seen = new Set();
-    const rows = [];
-    let articleCount = 0;
-
-    for (const path of hicklebeesMonthPaths(today, HICKLEBEES_MONTHS_AHEAD)) {
-      // No custom headers on purpose — see the note above this function.
-      const res = await fetch(`https://hicklebees.com${path}`, {
-        signal: AbortSignal.timeout(15_000),
-      });
-      if (!res.ok) throw new Error(`${res.status} on ${path}`);
-      const parsed = parseHicklebeesListPage(await res.text());
-      articleCount += parsed.articleCount;
-      for (const row of parsed.rows) {
-        const key = `${row.date}|${row.title}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        rows.push(row);
-      }
-    }
-
-    // Guard against silent parser drift. The venue is genuinely quiet some
-    // months, so returning 0 events is legitimate — but parsing 0 rows out of
-    // pages that DID contain event-list articles means the markup moved under
-    // us. Fail loudly rather than publish an empty source that looks healthy.
-    if (articleCount > 0 && rows.length === 0) {
-      throw new Error(`parser drift: ${articleCount} event-list article(s) but 0 parsed`);
-    }
-
-    const events = rows
-      .filter((row) => row.date >= today)
-      .map((row) => ({
-        id: h("hicklebees", row.title, row.date),
-        title: row.title,
-        date: row.date,
-        displayDate: displayDate(new Date(`${row.date}T12:00:00`)),
-        time: row.time,
-        endTime: row.endTime,
-        venue: "Hicklebee's",
-        address: "1378 Lincoln Ave, San Jose, CA 95125",
-        city: "san-jose",
-        category: inferCategory(row.title, "", ""),
-        cost: "free",
-        description: "",
-        url: row.url,
-        source: "Hicklebee's",
-        kidFriendly: true,
-      }));
-
-    const withTime = events.filter((e) => e.time).length;
-    console.log(`  ✅ Hicklebee's: ${events.length} events (${withTime} with time)`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  Hicklebee's: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
-  }
-}
+// Hicklebee's live adapter retired 2026-10-22. Its current robots policy
+// excludes named AI crawlers and no approved feed or source permission is
+// configured. Keep the pure parser offline; restore live ingestion only with
+// an approved source channel. See docs/event-source-refresh.md.
 
 // ── Time backfill ──────────────────────────────────────────────────────────
 // For events with no `time` but a `url`, fetch the canonical page and try to
@@ -10221,7 +10138,8 @@ async function main() {
     source(fetchMeetupEvents, { label: "Meetup", critical: true }),
     source(fetchEastWestBookshopEvents),
     source(fetchKeplersEvents),
-    source(fetchHicklebeesEvents),
+    // Hicklebee's — live ingestion retired; current access restrictions and
+    // lack of an approved feed are recorded in docs/event-source-refresh.md.
     // fetchSjdaEvents — retired 2026-08-24. sjdowntown.com began answering 403
     // on its Tribe Events REST API that day, and its robots.txt is now
     // Cloudflare-managed with ai-train=no plus explicit Disallow rules for
@@ -11249,7 +11167,6 @@ export {
   fetchHappyHollowEvents,
   fetchGambleGardenEvents,
   fetchInboundEvents,
-  fetchHicklebeesEvents,
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
   parseHeritageTheatreEvent,
