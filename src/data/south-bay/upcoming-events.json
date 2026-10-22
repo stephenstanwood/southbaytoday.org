@@ -6692,7 +6692,7 @@
       "address": "",
       "city": "santa-clara",
       "virtual": true,
-      "category": "family",
+      "category": "education",
       "cost": "",
       "description": "Most of us take a few simple steps to protect ourselves from scams and cybercrime, but are we doing enough? It's easy to think we can deal with the consequences if something ever happens.",
       "url": "https://events.scu.edu/information-technology/event/511717-scam-baby-scam-how-fraud-can-impact-all-of-us-at",
@@ -26969,7 +26969,7 @@
       "venue": "In person at Stanford",
       "address": "",
       "city": "palo-alto",
-      "category": "family",
+      "category": "education",
       "cost": "free",
       "description": "",
       "url": "https://events.stanford.edu/event/bani-adam-universal-human-psychology-and-our-omnicultural-future",
@@ -26978,7 +26978,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53745828444695/huge/c3110a8309be82c311a3986a819eddb13d26cddd.jpg",
       "blurb": "Attend this Thursday evening talk at Stanford on universal human psychology and our shared future.",
-      "firstSeenAt": "2026-10-22T03:07:31.429Z"
+      "firstSeenAt": "2026-10-22T03:07:31.429Z",
+      "registration": "required",
+      "attendanceNote": "Free and open to the public. RSVP to receive the location."
     },
     {
       "id": "sjpl-6a7e0aa9d4b10d0030064606",
@@ -32320,15 +32322,17 @@
       "address": "580 Lomita Dr, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "arts",
-      "cost": null,
+      "cost": "free",
       "description": "Join a free tour of Denning House and explore its treehouse-inspired architecture and art collection.",
       "url": "https://events.stanford.edu/event/copy-of-tour-denning-house-home-to-knight-hennessy-scholars-8021",
       "source": "Stanford Events",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/52206222867240/huge/65b52a585c2251fa0377410ae8e605bb418bb5a6.jpg",
-      "blurb": "Tour Denning House Thursday afternoon and see its treehouse-inspired architecture and art collection.",
-      "firstSeenAt": "2026-10-22T03:07:31.429Z"
+      "blurb": "The October 22 Denning House tour is full; check Knight-Hennessy Scholars for upcoming tours.",
+      "firstSeenAt": "2026-10-22T03:07:31.429Z",
+      "registration": "full",
+      "attendanceNote": "This tour is at full capacity. Registration is required; check the organizer for other tour dates."
     },
     {
       "id": "svlg-61dc527943cecb5c",
@@ -39007,7 +39011,7 @@
       "venue": "Music Recital Hall",
       "address": "",
       "city": "santa-clara",
-      "category": "music",
+      "category": "education",
       "cost": "",
       "description": "A public conversation on Black reproduction, social life, and the enduring legacies of anti-blackness, and what they mean for our present and future.",
       "url": "https://events.scu.edu/arts-and-sciences/event/516788-the-black-womb-ontological-absence-and-social-death-a",

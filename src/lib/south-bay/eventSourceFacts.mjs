@@ -7,6 +7,26 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // Stanford's October 22 tour page explicitly says full capacity; a free
+  // tour still requires a reservation. The psychology talk requires an RSVP
+  // to receive its location. Evidence: docs/qa/2026-10-21-2107-fact-check.md.
+  {
+    date: "2026-10-22",
+    url: "https://events.stanford.edu/event/copy-of-tour-denning-house-home-to-knight-hennessy-scholars-8021",
+    facts: {
+      cost: "free", registration: REGISTRATION_FULL,
+      attendanceNote: "This tour is at full capacity. Registration is required; check the organizer for other tour dates.",
+      blurb: "The October 22 Denning House tour is full; check Knight-Hennessy Scholars for upcoming tours.",
+    },
+  },
+  {
+    date: "2026-10-22",
+    url: "https://events.stanford.edu/event/bani-adam-universal-human-psychology-and-our-omnicultural-future",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free and open to the public. RSVP to receive the location.",
+    },
+  },
   // "Adults, children, and infants" describes the CPR techniques, not the
   // audience. The dated organizer page limits participants to 13+, and its
   // ticket widget confirms Sold out / Join Waitlist on October 21.

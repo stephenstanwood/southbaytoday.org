@@ -3662,7 +3662,12 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   if (/\b(guest speaker|speaker series|lecture|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
   if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
 
-  return inferCategory(title, cleanDesc, type, venue);
+  const inferredCategory = inferCategory(title, cleanDesc, type, venue);
+  // A fireside chat can use a recital hall or mention "baby" in its title.
+  // Preserve arts topics, but do not infer a concert or children's audience
+  // from incidental venue/topic words in these academic conversations.
+  return /\bfireside chat\b/.test(haystack) && ["family", "music"].includes(inferredCategory)
+    ? "education" : inferredCategory;
 }
 
 // ── RSS Parser (regex-based, no dependencies) ──
@@ -3967,6 +3972,13 @@ async function fetchStanfordEvents() {
       } else {
         return null; // this occurrence is over and nothing is still running
       }
+      const inferredCategory = inferUniversityCategory(ev.title, description, "", venue);
+      // A declared lecture is not children's programming just because its
+      // subject mentions children. Preserve arts and other topic categories.
+      const sourceSaysLecture = (ev.filters?.event_types || [])
+        .some((type) => /^Lecture\/Presentation\/Talk$/i.test(type.name || ""));
+      const category = inferredCategory === "family" && sourceSaysLecture
+        ? "education" : inferredCategory;
       return {
         // A series shares one Localist id across every occurrence, so scope the
         // id to the day — otherwise Tuesday's session and Wednesday's collapse
@@ -3984,7 +3996,7 @@ async function fetchStanfordEvents() {
         address: ev.address || "",
         city: "palo-alto",
         ...(isVirtual ? { virtual: true } : {}),
-        category: inferUniversityCategory(ev.title, description, "", venue),
+        category,
         // Localist's `free` flag is opt-in and most Stanford posters never set
         // it, so "not free" used to publish as "paid": a PhD dissertation
         // defense and an NSO library tour both carried a paid badge on

@@ -15,6 +15,42 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Stanford's full tour and location-by-RSVP talk retain their dated attendance terms", async () => {
+  const rows = [
+    {
+      date: "2026-10-22", title: "Full—Tour Denning House, home to Knight-Hennessy Scholars",
+      url: "https://events.stanford.edu/event/copy-of-tour-denning-house-home-to-knight-hennessy-scholars-8021",
+      cost: null, blurb: "Tour Denning House Thursday afternoon.",
+      expected: { registration: "full", cost: "free" },
+    },
+    {
+      date: "2026-10-22", title: 'Universal Human Psychology, "Bani Adam," and Our Omnicultural Future',
+      url: "https://events.stanford.edu/event/bani-adam-universal-human-psychology-and-our-omnicultural-future",
+      expected: { registration: "required" },
+    },
+  ];
+  for (const { expected, ...raw } of rows) {
+    const original = structuredClone(raw);
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    const corrected = events[0];
+    for (const [key, value] of Object.entries(expected)) assert.equal(corrected[key], value);
+    assert.match(corrected.attendanceNote, /[Rr]egistration|RSVP/);
+    assert.equal(requiresAdvanceRegistration(corrected), true);
+    if (expected.registration === "full") {
+      assert.match(corrected.blurb, /tour is full/);
+      assert.match(corrected.attendanceNote, /full capacity/);
+    } else {
+      assert.match(corrected.attendanceNote, /RSVP to receive the location/);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.deepEqual(raw, original);
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration: "closed" }).registration, "closed");
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-11-22" }), { ...raw, date: "2026-11-22" });
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, url: "https://events.stanford.edu/event/another-event" }), { ...raw, url: "https://events.stanford.edu/event/another-event" });
+  }
+});
+
 test("the sold-out Monte Sereno CPR class retains its age limit and ticket terms through refresh", async () => {
   const urls = [
     "https://Oct2026handsonlycprmontesereno.eventbrite.com",

@@ -1065,6 +1065,28 @@ test("SCU's public Music@Noon concert stays music despite its class boilerplate"
   }
 });
 
+test("SCU fireside chats remain educational despite a music venue or baby in the title", async () => {
+  const origin = "https://events.scu.edu";
+  const rows = [
+    ["The Black Womb, Ontological Absence, and Social Death: A Fireside Chat with Patrice D. Douglass", "A public conversation on Black reproduction, social life, and the enduring legacies of anti-blackness.", "Music Recital Hall"],
+    ["Scam, Baby, Scam: How Fraud Can Impact All of Us at Any Age", "Protect yourself from scams and cybercrime. In this fireside chat, hear a story of a life altered by fraud.", ""],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, description, venue], i) => `<item><title>${title}</title><link>${origin}/arts-and-sciences/event/${i + 1}-chat</link><description>${description}</description><pubDate>Tue, 27 Oct 2026 18:00:00 -0700</pubDate><georss:featurename>${venue}</georss:featurename></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(url), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: [] });
+  };
+  try {
+    const events = await fetchScuEvents();
+    assert.deepEqual(events.map((event) => event.category), ["education", "education"]);
+    assert.ok(events.every((event) => event.kidFriendly === false));
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("internal SCU training and new-major welcomes do not exclude public faculty art", () => {
   assert.equal(isStudentOnlyEvent({ title: "AIM Faculty Portal Training" }), true);
   assert.equal(isStudentOnlyEvent({ title: "SCU COMM New Major Welcome" }), true);

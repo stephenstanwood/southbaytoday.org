@@ -54,6 +54,36 @@ async function runWith(events) {
   }
 }
 
+test("Stanford's declared lecture format outranks children mentioned in the topic", async () => {
+  const tomorrow = dayPT(1);
+  const [event] = await runWith([
+    localistEvent({
+      id: 53745818123158,
+      title: 'Universal Human Psychology, "Bani Adam," and Our Omnicultural Future',
+      description_text: "Bani Adam literally means the children of Adam. The poem describes the interconnected nature of humankind.",
+      location_name: "In person at Stanford",
+      filters: { event_types: [{ name: "Lecture/Presentation/Talk" }] },
+      instances: [{ start: `${tomorrow}T18:30:00-07:00`, end: `${tomorrow}T20:00:00-07:00` }],
+    }),
+  ]);
+  assert.equal(event.category, "education");
+  assert.equal(event.kidFriendly, false);
+});
+
+test("Stanford lectures retain arts topics and an untyped storytime retains its audience", async () => {
+  const tomorrow = dayPT(1);
+  const instances = [{ start: `${tomorrow}T13:00:00-07:00` }];
+  const events = await runWith([
+    localistEvent({
+      id: 1, title: "Tangling the Digital: Weaving, Printmaking, Computing",
+      location_name: "McMurtry Building", description_text: "A fireside chat exploring printmaking and visual art.",
+      filters: { event_types: [{ name: "Lecture/Presentation/Talk" }] }, instances,
+    }),
+    localistEvent({ id: 2, title: "Family Storytime", location_name: "Library", instances }),
+  ]);
+  assert.deepEqual(events.map((event) => event.category), ["arts", "family"]);
+});
+
 test("a dated event takes its day and clock from the occurrence, not first_date", async () => {
   const tomorrow = dayPT(1);
   const [event] = await runWith([
