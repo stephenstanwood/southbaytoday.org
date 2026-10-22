@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T15:44:19.165Z",
+    "generatedAt": "2026-10-22T19:53:27.604Z",
     "generator": "playwright-scrapers",
-    "scrapersRun": 34,
-    "eventCount": 448,
-    "sourceCount": 21,
+    "scrapersRun": 32,
+    "eventCount": 453,
+    "sourceCount": 22,
     "sources": [
       "Mountain View Public Library (116)",
-      "Los Gatos Library (104)",
+      "Los Gatos Library (103)",
       "San Jose Jazz (14)",
       "Linden Tree Books (10)",
       "History San Jose (8)",
@@ -25,6 +25,7 @@
       "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (11)",
+      "Books Inc (6)",
       "Peninsula Open Space Trust (2)",
       "San Jose Museum of Art (6)"
     ],
@@ -75,7 +76,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 104,
+        "count": 103,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -112,14 +113,6 @@
         "sources": [
           "Linden Tree Books"
         ]
-      },
-      {
-        "id": "hicklebee-s",
-        "label": "Hicklebee's",
-        "status": "error",
-        "count": 0,
-        "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n  - navigating to \"https://hicklebees.com/events\", waiting until \"networkidle\"\n",
-        "sources": []
       },
       {
         "id": "history-san-jose",
@@ -236,14 +229,6 @@
         ]
       },
       {
-        "id": "downtown-mountain-view",
-        "label": "Downtown Mountain View",
-        "status": "empty",
-        "count": 0,
-        "error": null,
-        "sources": []
-      },
-      {
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
@@ -314,10 +299,12 @@
       {
         "id": "books-inc",
         "label": "Books Inc",
-        "status": "empty",
-        "count": 0,
+        "status": "ok",
+        "count": 6,
         "error": null,
-        "sources": []
+        "sources": [
+          "Books Inc"
+        ]
       },
       {
         "id": "barnes-noble",
@@ -2801,26 +2788,6 @@
       ],
       "url": "https://mountainview.libcal.com/event/17200176",
       "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "29dadc52f551",
-      "title": "Park-It Market",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "10:00 AM",
-      "endTime": "11:15 AM",
-      "venue": "Los Gatos Library",
-      "address": "100 Villa Ave, Los Gatos, CA 95030",
-      "city": "los-gatos",
-      "category": "community",
-      "cost": "free",
-      "description": "Join the team from West Valley Community Services for their twice monthly Park-It Market. On the second and fourth Thursday of each month, WVCS offers free access to food inlcluding fresh produce, meat, dairy products, dry goods and canned food.",
-      "sourceAudiences": [
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/15783369",
-      "source": "Los Gatos Library",
       "kidFriendly": false
     },
     {
@@ -6394,7 +6361,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-22T15:43:05.640Z"
+        "checkedAt": "2026-10-22T19:52:17.253Z"
       }
     },
     {
@@ -6417,7 +6384,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-22T15:43:05.640Z"
+        "checkedAt": "2026-10-22T19:52:17.253Z"
       }
     },
     {
@@ -6440,7 +6407,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-22T15:43:05.640Z"
+        "checkedAt": "2026-10-22T19:52:17.253Z"
       }
     },
     {
@@ -6463,7 +6430,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-22T15:43:05.642Z"
+        "checkedAt": "2026-10-22T19:52:17.254Z"
       }
     },
     {
@@ -6486,7 +6453,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-22T15:43:05.643Z"
+        "checkedAt": "2026-10-22T19:52:17.255Z"
       }
     },
     {
@@ -6509,7 +6476,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T15:43:05.646Z"
+        "checkedAt": "2026-10-22T19:52:17.258Z"
       }
     },
     {
@@ -6532,7 +6499,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T15:43:05.646Z"
+        "checkedAt": "2026-10-22T19:52:17.258Z"
       }
     },
     {
@@ -6555,7 +6522,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-22T15:43:05.646Z"
+        "checkedAt": "2026-10-22T19:52:17.259Z"
       }
     },
     {
@@ -6978,7 +6945,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -8818,6 +8785,108 @@
       "url": "https://www.thetech.org/explore/upcoming-events/",
       "source": "The Tech Interactive",
       "kidFriendly": true
+    },
+    {
+      "id": "13966e2bd4a7",
+      "title": "JUDE BERMAN: THE LIE",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "a3ffdc625223",
+      "title": "HAPPY BOOKERS BOOK CLUB: THE EYES ARE THE BEST PART",
+      "date": "2026-10-26",
+      "displayDate": "Mon, Oct 26",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "5e83510f4a28",
+      "title": "BEST LITERARY TRANSLATIONS: WENDY CALL, DMITRI MANIN, IIZE DUARTE",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Pruneyard",
+      "address": "1875 S Bascom Ave, Campbell, CA 95008",
+      "city": "campbell",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "a2ddeabb8612",
+      "title": "MARK SHAW at Books Inc. Palo Alto",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "ca1692c60392",
+      "title": "ANN LIANG: TO DREAM IN DARKNESS",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "a8e85bd12064",
+      "title": "FRISH BRANDT: UNFINISHED BUSINESS",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
     },
     {
       "id": "7cc888f61ff1",
