@@ -171,6 +171,20 @@ test("newsletter Halloween festivals and housing help do not become sports or ou
   assert.equal(inferCategory("Sharks vs Penguins", "Military appreciation game.", "", "SAP Center"), "sports");
 });
 
+test("a Halloween celebration for the whole family is not classified by its carnival games", () => {
+  const description = "Mountain View's annual Halloween celebration featuring a Treat Trail, carnival games, live entertainment, animal encounters, and food vendors for the whole family.";
+  const [event] = fetchInboundEvents({ today: "2026-10-22", events: [{
+    id: "monster-bash-celebration", cityKey: "mountain-view",
+    title: "Monster Bash Halloween Celebration",
+    startsAt: "2026-10-24T10:00:00-07:00", endsAt: "2026-10-24T14:00:00-07:00",
+    location: "Rengstorff Park, Mountain View, CA",
+    sourceUrl: "https://www.mountainview.gov/our-city/departments/community-services/special-events/monster-bash",
+    description,
+  }] });
+  assert.equal(event.category, "family");
+  assert.equal(inferCategory("Halloween Hockey Game", description, "", "Ice rink"), "sports");
+});
+
 test("Bruno Mars newsletter ingest keeps the verified show and gate times distinct", () => {
   const raw = {
     id: "fixture-bruno", cityKey: "santa-clara", title: "Bruno Mars: The Romantic Tour",

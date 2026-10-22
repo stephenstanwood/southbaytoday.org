@@ -3535,8 +3535,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Family Halloween celebrations describe costume parades, crafts and games;
   // those games do not establish an athletic event. Keep the earlier arts and
   // music rules, and explicitly named sports in the title, authoritative.
+  // Newsletters also describe family programming as "for the whole family".
   const isFamilyHalloween = /\bhalloween\b/.test(titleLower)
-    && /\bfamily[-\s]friendly\b/.test(cleanDesc.toLowerCase())
+    && /\b(?:family[-\s]friendly|for the whole family)\b/.test(cleanDesc.toLowerCase())
     && /\b(celebration|crafts|costume parade)\b/.test(cleanDesc.toLowerCase())
     && !/\b(sports?|athletics?|soccer|basketball|baseball|softball|volleyball|football|hockey|rugby|lacrosse|golf|tennis|swim(?:ming)?|race|marathon)\b/.test(titleLower);
   if (!titleSaysAdult && !sourceSaysAdult && isFamilyHalloween) return "family";
