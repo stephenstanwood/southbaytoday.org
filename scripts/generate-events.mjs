@@ -1012,6 +1012,10 @@ const SOURCE_EVENT_ACRONYMS = [
   // social-work credential, and Center for Medieval and Early Modern Studies.
   // Preserve uppercase source forms across titles and both prose passes.
   "STAR", "SJ", "LCSW", "CMEMS",
+  // Reviewed tech/library listings name AI, SWOT analysis and autonomous
+  // vehicle types. Protect the same source tokens in titles and both prose
+  // passes so a refresh cannot undo the reviewed uppercase spellings.
+  "AI", "SWOT", "UAV", "USV", "UUV",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1049,6 +1053,9 @@ function fixProperNouns(text) {
   // separates OpenAI at n/A; restore the source spelling after that pass.
   // https://sjpl.bibliocommons.com/events/6ab4117c101eb7003f3262d9
   t = t.replace(/\bOpen ?AI\b/g, "OpenAI");
+  // The youth robotics program is a proper name; ordinary "first" prose
+  // should still use the normal casing rules.
+  t = t.replace(/\bFirst Robotics Competition\b/g, "FIRST Robotics Competition");
   // SCCL inserts empty inline markup inside Día; HTML cleanup adds a space.
   // Restore only the holiday name from this occurrence's source description.
   // https://sccl.bibliocommons.com/v2/events/6abf0b7a11bbf300684abd55
@@ -1909,10 +1916,10 @@ function maskDomainAndDecimalDots(text) {
   // selection"); their dots do not end a sentence. Keep the source's case.
   t = t.replace(/\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\./g,
     `$1${DOT_PLACEHOLDER}`);
-  // A name abbreviation before a lowercase English/Spanish conjunction
-  // continues a list ("Super Smash Bros. y más"), rather than starting a new
-  // sentence. Leave other following words available for sentence casing.
-  t = t.replace(/\b(Bros|Jr|Sr)\.(?=\s+(?:and|or|y|e|o|u)\b)/g,
+  // A name abbreviation or initial before a lowercase English/Spanish
+  // conjunction continues a list ("Emily W. and Emily L."), rather than
+  // starting a new sentence. Leave other following words for sentence casing.
+  t = t.replace(/\b(Bros|Jr|Sr|[A-Z])\.(?=\s+(?:and|or|y|e|o|u)\b)/g,
     `$1${DOT_PLACEHOLDER}`);
   // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
   // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
@@ -2025,7 +2032,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing)\b/g,
+  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
