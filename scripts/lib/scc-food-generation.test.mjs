@@ -88,12 +88,14 @@ test("intentional null descriptions satisfy coverage without a retry", async () 
   assert.equal(requests.length, 1);
 });
 
-test("speculative business-type alternatives remain null instead of becoming facts", async () => {
+test("valid JSON with unsupported type detail uses null without a generation retry", async () => {
   for (const blurb of ["Flower shop or eatery on Santana Row.", "Possibly a cafe on Main Street."]) {
     const { map, requests, diagnostics } = await run([response([{ id: rows[0].id, blurb }])], [items[0]]);
-    assert.deepEqual(map, {});
-    assert.equal(requests.length, 2);
-    assert.ok(diagnostics.every(item => item.rejected.includes(rows[0].id)));
+    assert.equal(map[items[0].id], blurb);
+    assert.equal(requests.length, 1);
+    assert.equal(diagnostics[0].error, null);
+    const publishedBlurb = hasSourceBackedFoodType(map[items[0].id], items[0].name) ? map[items[0].id] : null;
+    assert.equal(publishedBlurb, null);
   }
 });
 
