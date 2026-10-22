@@ -168,6 +168,16 @@ test("preserves Stanford's MASLD initials through title and description cleanup"
   assert.equal(cleanTitle("ANNUAL Clinical Seminar"), "Annual Clinical Seminar");
 });
 
+test("preserves WABE's source-published station initials in event copy", () => {
+  // Mountain View's Peter Fletcher biography supplies the station's uppercase
+  // name, also confirmed by https://www.wabe.org/about/.
+  const description = "His radio appearances have included National Public Radio (NPR) and WABE in Atlanta.";
+  assert.equal(polishDescription(description), description);
+  assert.equal(polishDescription(polishDescription(description)), description);
+  assert.equal(cleanTitle("WABE presents Peter Fletcher"), "WABE presents Peter Fletcher");
+  assert.equal(polishDescription("The Wabe is a word from a poem."), "The Wabe is a word from a poem.");
+});
+
 test("keeps league and artist initialisms uppercase in titles and body copy", () => {
   assert.equal(cleanTitle("Sharks x PWHL San Jose"), "Sharks x PWHL San Jose");
   assert.equal(cleanTitle("A Tribute to ABBA"), "A Tribute to ABBA");

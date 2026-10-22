@@ -1021,6 +1021,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // Stanford Medicine's published liver-disease initialism, in seminar titles
   // and descriptions. Preserve uppercase source tokens without guessing case.
   "MASLD",
+  // Mountain View's Peter Fletcher biography names Atlanta's radio station.
+  // Preserve the source's uppercase spelling: https://www.wabe.org/about/.
+  "WABE",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
