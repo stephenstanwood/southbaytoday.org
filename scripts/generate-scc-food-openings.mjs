@@ -287,7 +287,7 @@ const NAME_TYPO_FIXES = [
   [/\bKfc\b/g, "KFC"],
 ];
 
-function cleanName(raw) {
+export function cleanName(raw) {
   if (!raw) return null;
   let s = raw.trim();
 
@@ -381,8 +381,9 @@ function cleanName(raw) {
   // LLC/Inc/Corp, so this is safe; leave "Co." alone (real names like "Brewing Co.").
   s = s.replace(/\s+(LLC|L\.L\.C\.|Inc\.?|Incorporated|Corp\.?|Corporation)\s*$/i, "").trim();
 
-  // Strip trailing address-like suffixes ("4120" at end)
-  s = s.replace(/\s+\d+\s*$/, "").trim();
+  // A bare trailing number can be part of the business name, not an address
+  // or permit code: SCC's "FIESTA DEL MAR-DUMPLING 101" is at 735 Villa St.
+  // Preserve it; only the explicitly identified filing suffixes above are noise.
 
   // Strip trailing punctuation left behind by an empty or truncated permit
   // field — a hanging dash ("B250 Cityline Databricks -") or a dangling comma

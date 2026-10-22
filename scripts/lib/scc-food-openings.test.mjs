@@ -10,7 +10,20 @@ import {
   normalizeSouthBayAddress,
   normalizeComingSoonDiscovery,
 } from "./scc-food-openings.mjs";
-import { shouldSkip } from "../generate-scc-food-openings.mjs";
+import { cleanName, shouldSkip } from "../generate-scc-food-openings.mjs";
+
+test("county business names retain meaningful trailing numbers", () => {
+  // SCC record SR0881159, 735 Villa St, Mountain View. The name's 101 is
+  // not the street number or a permit code.
+  assert.equal(cleanName("FIESTA DEL MAR-DUMPLING 101"), "Fiesta Del Mar-Dumpling 101");
+  assert.equal(cleanName("PHO 54"), "Pho 54");
+});
+
+test("numeric business names still lose explicit permit and entity suffixes", () => {
+  assert.equal(cleanName("E-DUMPLING 101 - RESTAURANT T.I."), "Dumpling 101");
+  assert.equal(cleanName("RTI DUMPLING 101 LLC"), "Dumpling 101");
+  assert.equal(cleanName("DUMPLING 101 PC03"), "Dumpling 101");
+});
 
 test("newer school, mobile-food and vending finals remain intentional exclusions", () => {
   for (const record of [
