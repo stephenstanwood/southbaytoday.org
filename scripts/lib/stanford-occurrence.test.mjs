@@ -208,6 +208,60 @@ test("a multi-day series that is not an exhibit stays a set of dated sessions", 
   assert.equal(events[0].time, "8:30 AM");
 });
 
+test("museum drawing sessions and public tours keep their published occurrences and clocks", async () => {
+  // Both current Stanford listings have year-long series bounds and mention
+  // galleries/collections. Their actual programs are timed, not daily exhibits.
+  const tomorrow = dayPT(1);
+  const events = await runWith([
+    localistEvent({
+      id: 50967994153103,
+      title: "Drop-In Drawing @ The Anderson",
+      description_text: "Drop-In Drawing happens every 2nd and 4th Friday. Sketch your way through the galleries.",
+      location_name: "Anderson Collection",
+      first_date: dayPT(-30), last_date: dayPT(300),
+      instances: [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:00:00-07:00` }],
+    }),
+    localistEvent({
+      id: 53694822395653,
+      title: "Public Tour | Auguste Rodin",
+      description_text: "Join us for a tour of our indoor and outdoor Rodin Sculptures! Our collection spans three galleries.",
+      first_date: dayPT(-30), last_date: dayPT(300),
+      instances: [{ start: `${tomorrow}T11:30:00-07:00`, end: `${tomorrow}T12:30:00-07:00` }],
+    }),
+  ]);
+  assert.deepEqual(events.map(({ id, date, time, endTime, ongoing }) => ({ id, date, time, endTime, ongoing })), [
+    { id: `stanford-50967994153103-${tomorrow}`, date: tomorrow, time: "12:00 PM", endTime: "1:00 PM", ongoing: false },
+    { id: `stanford-53694822395653-${tomorrow}`, date: tomorrow, time: "11:30 AM", endTime: "12:30 PM", ongoing: false },
+  ]);
+});
+
+test("a gallery program with only a past occurrence is not kept alive by its series bounds", async () => {
+  const events = await runWith([
+    localistEvent({
+      title: "Public Tour | Auguste Rodin",
+      description_text: "Explore the sculpture collection with a guide.",
+      first_date: dayPT(-30), last_date: dayPT(300),
+      instances: [{ start: `${dayPT(-1)}T11:30:00-07:00`, end: `${dayPT(-1)}T12:30:00-07:00` }],
+    }),
+  ]);
+  assert.deepEqual(events, []);
+});
+
+test("an exhibition using tour figuratively in its name remains an ongoing exhibit", async () => {
+  const [event] = await runWith([
+    localistEvent({
+      title: "Something Sensational to Read: A Tour of Silicon Valley LGBTQ+ Publications, 1950 to Today",
+      description_text: "An exhibit of newspapers, magazines, and other community publications.",
+      location_name: "Library",
+      first_date: dayPT(-30), last_date: dayPT(30),
+      instances: [{ start: `${dayPT(0)}T00:00:00-07:00` }],
+    }),
+  ]);
+  assert.equal(event.ongoing, true);
+  assert.equal(event.date, dayPT(0));
+  assert.equal(event.time, null);
+});
+
 test("an occurrence that has already happened is dropped", async () => {
   const events = await runWith([
     localistEvent({
