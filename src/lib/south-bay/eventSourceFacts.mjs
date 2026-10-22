@@ -6,7 +6,21 @@
 import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
+const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const CORRECTIONS = [
+  // The October 25 organizer page still contradicts itself. Preserve its
+  // overall window and disclose the conflict rather than copying October 18's
+  // inferred meridiem repair onto a different occurrence. A newer corrected
+  // source body or changed header clocks must keep its own reviewed content.
+  // Evidence: docs/qa/2026-10-22-hillview-halloween-timing.md.
+  {
+    date: "2026-10-25",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6aa860334ea230006f3407bf\/?$/.test(event.url || "")
+      && event.time === "12:30 PM" && event.endTime === "1:30 PM"
+      && /\bStorytime:?\s+12:30\s*[-–—]\s*1:00\s+am\b/i.test(event.description || ""),
+    facts: { attendanceStatus: "needs-confirmation", attendanceNote: HILLVIEW_HALLOWEEN_TIMING },
+    copyReplacements: [[/\bStorytime:?\s+12:30\s*[-–—]\s*1:00\s+am\b(?:[;.\s]+Stay\s*&\s*Play:?\s+1:00\s*[-–—]\s*1:30\s+pm\b)?\.?/gi, HILLVIEW_HALLOWEEN_TIMING]],
+  },
   // Stanford's October 22 tour page explicitly says full capacity; a free
   // tour still requires a reservation. The psychology talk requires an RSVP
   // to receive its location. Evidence: docs/qa/2026-10-21-2107-fact-check.md.
