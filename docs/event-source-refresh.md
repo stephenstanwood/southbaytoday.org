@@ -203,20 +203,53 @@ alone would miss that ordering regression.
   reach us through the sanctioned channel: sjda@sjdowntown.com mails events to
   the inbound intake address, at a couple of events rather than hundreds. If
   downtown coverage needs restoring, ask SJDA for a feed — do not re-scrape.
-- Hicklebee's is the opposite of the SJMA/SJDA cases and must not be "fixed"
-  the way they were. It answered 403 from 2026-08-07 to 2026-08-29 **because**
-  the adapter sent a spoofed Safari User-Agent: hicklebees.com uses Cloudflare
-  bot management, which compares the claimed UA against the client's TLS/HTTP2
-  fingerprint, so a Node client claiming to be Safari is a contradiction and
-  gets the "Just a moment..." interstitial. Node's default headers are served
-  200, and robots.txt (stock Drupal) allows `/events` with no bot rules, so
-  nothing here is a host refusing automated access. Do not add a browser
-  User-Agent, Accept, or Sec-Fetch headers to that adapter — adding them is what
-  breaks it, and `scripts/lib/hicklebees-events.test.mjs` fails the suite if a
-  User-Agent reappears in its fetch calls. Note also that `/events` renders the
-  current month only, so the adapter walks `/events/YYYY/MM` forward; the page
-  footer's "Upcoming Event" widget uses `event-block__*` classes and is not the
-  event list, which uses `event-list__*`.
+- Hicklebee's HTTP adapter recovered on 2026-08-29 by removing spoofed
+  Safari headers. At that time Node's default headers returned event HTML
+  while browser headers triggered a Cloudflare challenge. Keep that historical
+  diagnosis distinct from current access permission: do not add a browser
+  User-Agent, Accept, or Sec-Fetch headers. `/events` is current-month-only;
+  the HTTP implementation walks `/events/YYYY/MM` and parses `event-list__*`,
+  rather than the footer's single `event-block__*` widget.
+  The obsolete Playwright duplicate was removed on 2026-10-22 after repeated
+  `networkidle` timeouts; the generator had already recorded four future
+  Hicklebee's rows through its HTTP adapter that morning. No publication or
+  carry-forward guard was relaxed.
+  **Current access blocker (2026-10-22):** a normal Mini request for
+  `https://hicklebees.com/robots.txt` returned 200, but its named-agent group now
+  disallows GPTBot, ChatGPT, Claude and several other crawlers. The wildcard
+  group also requests `crawl-delay: 10`. This differs from the August policy
+  recorded here previously. Agent-driven live verification stopped after this
+  robots read: do not change identity, headers, hosts, or tools to evade those
+  exclusions. An approved feed or source-owner permission is required before
+  this repair can claim live source recovery. Prior generated rows and passing
+  offline tests do not establish that permission.
+
+## October 22 Playwright zero-source review
+
+The repeated zeros belonged to one health incident, not thirteen independent
+outages. These are source dispositions, not an empty-season allowlist. Counts
+below come from the same morning's committed output or the scoped live checks;
+only date-backed records count as coverage.
+
+| Task(s) | Verified disposition |
+| --- | --- |
+| City of Mountain View, Sunnyvale, San Jose | Existing blocked CivicPlus paths; direct adapters were already disabled. Browser zeros do not prove a quiet calendar or restored city coverage. Do not bypass the restrictions. |
+| The Tech Interactive (legacy) | The Tech Upcoming supplied 11 events in the same snapshot. |
+| Hicklebee's | Duplicate browser task removed. HTTP output had four future rows; the current robots exclusions above block new agent-driven source verification. |
+| SCCCFD (Eventbrite) | The generator's structured organizer adapter supplied six rows; this browser parser is redundant coverage. |
+| Hammer Theatre | The generator's first-party adapter supplied 61 rows; the legacy browser zero is not a venue outage. |
+| Palo Alto Art Center | The configured cityofpaloalto.org host denied a normal robots request with HTTP 403. Treat as an access gap, not an off-season. Do not probe alternate hosts to sidestep it. |
+| Downtown Mountain View | `/events` returned 404; the domain's homepage redirected to a real-estate page at galliteam.com. Retired the obsolete task without claiming replacement coverage. |
+| California's Great America | Live event index showed only “More Days & More Fun Through 11/1” and “Select Dates thru Nov. 1,” with no enumerated occurrence dates. Do not turn a park-opening promotion into invented calendar entries. |
+| Books Inc | Genuine parser drift: the rendered cards dropped the regional-label line required by the old regex. The current calendar's Event JSON-LD carries explicit years, Pacific offsets, clocks and addresses. The repaired adapter recovered six South Bay listings from the live first page; Pruneyard maps to Campbell. Missing prices remain unknown. |
+| Barnes & Noble, Half Price Books | Normal robots requests returned HTTP 403 (Akamai / Cloudflare). No alternate endpoint, browser identity, or challenge attempt was used. These zeros are not verified quiet seasons. |
+
+POST separately recovered two events on its existing sequential retry. SJMA's
+known 403 retained six still-future listings through the unchanged error guard;
+its retired direct HTTP adapter remains retired.
+
+## Other refresh safeguards
+
 - Inbound events arrive as one Vercel Blob shard per intake email (866 as of
   2026-08). Shard reads are bounded to 24 at a time and retry transient
   failures. What still fails is weighed, not simply counted: a subset (up to 5%,

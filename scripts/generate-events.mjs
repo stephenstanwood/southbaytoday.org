@@ -8013,10 +8013,11 @@ async function fetchMuseumOfAmericanHeritageEvents() {
 //   spoofed UA + Accept/Sec-Fetch headers → 403 Cloudflare challenge
 // The spoofed-UA version paged #tasks daily from 2026-08-07 until this fix.
 //
-// robots.txt (stock Drupal, fetched fine on the honest path) allows /events
-// with no bot rules at all, so this is a fingerprint mismatch, not a host
-// refusing automated access — unlike the SJDA case below, which was retired
-// on purpose because its robots.txt named and blocked crawlers.
+// This describes the August recovery, not permanent source authorization.
+// The 2026-10-22 robots.txt now excludes named AI crawlers and asks for a
+// 10-second crawl delay. See docs/event-source-refresh.md: agent-driven live
+// validation is blocked pending an approved channel; do not spoof an identity
+// or treat a previous 200 as permission to override the current exclusions.
 //
 // Parsing lives in ./lib/hicklebees-events.mjs so it can be tested offline.
 const HICKLEBEES_MONTHS_AHEAD = 4;
@@ -11248,6 +11249,7 @@ export {
   fetchHappyHollowEvents,
   fetchGambleGardenEvents,
   fetchInboundEvents,
+  fetchHicklebeesEvents,
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
   parseHeritageTheatreEvent,
