@@ -88,6 +88,15 @@ test("intentional null descriptions satisfy coverage without a retry", async () 
   assert.equal(requests.length, 1);
 });
 
+test("speculative business-type alternatives remain null instead of becoming facts", async () => {
+  for (const blurb of ["Flower shop or eatery on Santana Row.", "Possibly a cafe on Main Street."]) {
+    const { map, requests, diagnostics } = await run([response([{ id: rows[0].id, blurb }])], [items[0]]);
+    assert.deepEqual(map, {});
+    assert.equal(requests.length, 2);
+    assert.ok(diagnostics.every(item => item.rejected.includes(rows[0].id)));
+  }
+});
+
 test("request failures are bounded and auth errors/refusals do not repeat", async () => {
   assert.equal((await run([new Error("timeout")])).requests.length, 2);
   for (const status of [400, 401, 403, 404]) {

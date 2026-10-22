@@ -21,7 +21,9 @@ a 3,072-token budget. One retry has a 4,608-token ceiling; SDK retries are
 disabled and each request times out after 60 seconds. Only `end_turn` responses
 are parsed. Valid rows survive a retry; invalid/missing descriptions remain
 null. City guards apply to all groups, and inspection descriptions cannot make
-opening or operating claims. The prompts retain the source-backed cuisine rule.
+opening or operating claims. Prompts use only the supplied name, address and
+city; unstated brand/menu details and speculative business-type alternatives
+are excluded. Hedged alternatives are rejected rather than published as facts.
 
 The October 21 repair probe reproduced the previous 1,024-token request ending
 with `stop_reason: max_tokens`: 760 tokens went to thinking and its JSON text
