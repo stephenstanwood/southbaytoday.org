@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-21T04:46:48.667Z",
+      "generatedAt": "2026-10-22T03:37:23.569Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 13 – Oct 20",
+      "dateRange": "Oct 14 – Oct 21",
       "stats": {
-        "total": 510,
-        "notable": 44,
-        "newUnits": 21,
-        "totalValuation": 59322167
+        "total": 475,
+        "notable": 43,
+        "newUnits": 19,
+        "totalValuation": 88768090
       },
       "permits": [
         {
@@ -137,31 +137,19 @@
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-21T04:46:50.985Z",
+      "generatedAt": "2026-10-22T03:37:25.817Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 13 – Oct 20",
+      "dateRange": "Oct 14 – Oct 21",
       "stats": {
-        "total": 144,
-        "notable": 8,
+        "total": 132,
+        "notable": 6,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
-        {
-          "id": "26BLD-02994",
-          "address": "3593 Arbutus Av",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-19",
-          "subtype": "Permit Issued"
-        },
         {
           "id": "26BLD-02962",
           "address": "618 Wildwood Ln",
@@ -175,15 +163,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02926",
-          "address": "640 Kendall Av",
+          "id": "26BLD-02994",
+          "address": "3593 Arbutus Av",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-14",
+          "issueDate": "2026-10-19",
           "subtype": "Permit Issued"
         },
         {
@@ -211,15 +199,15 @@
           "subtype": "Over the Counter Approved"
         },
         {
-          "id": "26PLN-00293",
-          "address": "1870 Embarcadero Rd",
+          "id": "26PLN-00298",
+          "address": "844 E Charleston Rd",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to modify an existing parking lot to accommodate a total of 10 EV parking stalls. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "description": "Request for an Over the Counter Architectural Review to repaint the existing building to Sherwin Williams Extra White (SW 7006) and Iron Ore (SW 7069). The changes to the project will not affect the nature of the historic resource. Zone District: General Manufacturing. CEQA Status: Not a project. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-14",
+          "issueDate": "2026-10-19",
           "subtype": "Over the Counter Approved"
         },
         {
@@ -229,18 +217,6 @@
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
           "description": "Request for an Over the Counter Architectural Review to allow for the installation of a non-illuminated wall sign. The sign will be constructed of acrylic letters and will be 13.5 inches tall by 81 inches long. Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-19",
-          "subtype": "Over the Counter Approved"
-        },
-        {
-          "id": "26PLN-00298",
-          "address": "844 E Charleston Rd",
-          "category": "entitlement",
-          "categoryLabel": "Entitlement / Zoning",
-          "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to repaint the existing building to Sherwin Williams Extra White (SW 7006) and Iron Ore (SW 7069). The changes to the project will not affect the nature of the historic resource. Zone District: General Manufacturing. CEQA Status: Not a project. For more information contact the project planner Garrett Sauls at Garrett.Sauls@PaloAlto.gov.",
           "valuation": 0,
           "units": 0,
           "issueDate": "2026-10-19",
