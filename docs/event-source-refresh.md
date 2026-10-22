@@ -208,7 +208,7 @@ alone would miss that ordering regression.
   while browser headers triggered a Cloudflare challenge. Keep that historical
   diagnosis distinct from current access permission: do not add a browser
   User-Agent, Accept, or Sec-Fetch headers. `/events` is current-month-only;
-  the HTTP implementation walks `/events/YYYY/MM` and parses `event-list__*`,
+  the old HTTP implementation walked `/events/YYYY/MM` and parsed `event-list__*`,
   rather than the footer's single `event-block__*` widget.
   The obsolete Playwright duplicate was removed on 2026-10-22 after repeated
   `networkidle` timeouts; the generator had already recorded four future
@@ -223,6 +223,12 @@ alone would miss that ordering regression.
   exclusions. An approved feed or source-owner permission is required before
   this repair can claim live source recovery. Prior generated rows and passing
   offline tests do not establish that permission.
+  With no approved channel available, the HTTP adapter is also retired from
+  the scheduled generator. Its request code and registration were removed, so
+  the next refresh cannot treat this access gap as fresh Hicklebee's coverage.
+  The four previously published rows may leave the feed at that refresh; this
+  is an explicit source retirement, not a successful empty season. The pure
+  parser and fixtures remain offline for a future approved channel.
 
 ## October 22 Playwright zero-source review
 
@@ -235,7 +241,7 @@ only date-backed records count as coverage.
 | --- | --- |
 | City of Mountain View, Sunnyvale, San Jose | Existing blocked CivicPlus paths; direct adapters were already disabled. Browser zeros do not prove a quiet calendar or restored city coverage. Do not bypass the restrictions. |
 | The Tech Interactive (legacy) | The Tech Upcoming supplied 11 events in the same snapshot. |
-| Hicklebee's | Duplicate browser task removed. HTTP output had four future rows; the current robots exclusions above block new agent-driven source verification. |
+| Hicklebee's | Both live adapters retired pending an approved source channel. HTTP output previously had four future rows; their prior collection is not permission to continue. The raw repair alert remains pending. |
 | SCCCFD (Eventbrite) | The generator's structured organizer adapter supplied six rows; this browser parser is redundant coverage. |
 | Hammer Theatre | The generator's first-party adapter supplied 61 rows; the legacy browser zero is not a venue outage. |
 | Palo Alto Art Center | The configured cityofpaloalto.org host denied a normal robots request with HTTP 403. Treat as an access gap, not an off-season. Do not probe alternate hosts to sidestep it. |

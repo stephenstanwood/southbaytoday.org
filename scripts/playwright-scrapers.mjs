@@ -2517,10 +2517,9 @@ async function main() {
   tasks.push({ name: "San Jose Jazz", fn: (b) => runScraper(b, "San Jose Jazz", scrapeSJJazz) });
   tasks.push({ name: "SJ Museum of Art", fn: (b) => runScraper(b, "SJ Museum of Art", scrapeSJMuseumOfArt) });
   tasks.push({ name: "Linden Tree Books", fn: (b) => runScraper(b, "Linden Tree Books", scrapeLindenTree) });
-  // Hicklebee's is owned by fetchHicklebeesEvents in generate-events.mjs.
-  // That HTTP implementation walks future months; do not add a duplicate
-  // browser adapter. Current access restrictions are documented in
-  // docs/event-source-refresh.md and still require source-owner clearance.
+  // Hicklebee's live ingestion is retired in both producers until an
+  // approved feed or source permission is available. See
+  // docs/event-source-refresh.md; do not restore a browser fallback.
   tasks.push({ name: "History San Jose", fn: (b) => runScraper(b, "History San Jose", scrapeHistorySJ) });
   tasks.push({ name: "Montalvo Arts Center", fn: (b) => runScraper(b, "Montalvo Arts Center", scrapeMontalvo) });
 
