@@ -145,6 +145,62 @@ test("shared acronym guards preserve published credentials, programs and place i
   assert.equal(polishDescription("Meet Star and Sj at the library."), "Meet Star and Sj at the library.");
 });
 
+test("reviewed AI, analysis and vehicle initials survive all casing passes", () => {
+  for (const acronym of ["AI", "SWOT", "UAV", "USV", "UUV"]) {
+    const title = `Discuss ${acronym} with Anne`;
+    const description = `Join ${acronym} Volunteers. Ask about ${acronym}!`;
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+  const title = "Silicon Valley Physical AI Meetup: Drones, UAV, USV, UUV & Supply Chains";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  for (const description of [
+    "Meetup event by Silicon Valley Physical AI Builders.",
+    "Spotting AI Scams and Fake Messages.",
+    "Teens will review: SWOT Analysis.",
+  ]) {
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+  assert.equal(polishDescription("Meet Ai and Swot. bring a friend."),
+    "Meet Ai and Swot. Bring a friend.");
+  assert.equal(cleanTitle("A BRIGHT Idea about AI"), "A Bright Idea about AI");
+});
+
+test("keeps ChatGPT, SketchUp and the FIRST Robotics Competition intact on refresh", () => {
+  for (const title of ["Using ChatGPT", "Design with SketchUp", "FIRST Robotics Competition"]) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+  }
+  for (const [source, expected] of [
+    ["Using ChatGPT to summarize.", "Using ChatGPT to summarize."],
+    ["Tinkercad or SketchUp. Students will learn.", "Tinkercad or SketchUp. Students will learn."],
+    ["in the FIRST Robotics Competition", "In the FIRST Robotics Competition"],
+    ["ChatGPT and SketchUp are tools. bring your first robotics project.",
+      "ChatGPT and SketchUp are tools. Bring your first robotics project."],
+    ["Tools: https://example.org/ChatGPT/SketchUp/FIRST?name=Emily-W.&topic=SWOT.",
+      "Tools: https://example.org/ChatGPT/SketchUp/FIRST?name=Emily-W.&topic=SWOT."],
+  ]) {
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  assert.equal(cleanTitle("Our FIRST robotics project"), "Our First robotics project");
+});
+
+test("volunteer initials continue lists without suppressing real sentence boundaries", () => {
+  for (const continuation of ["and Emily L.", "or Emily L.", "y Emilia L.", "e historias", "o más juegos", "u otras opciones"]) {
+    const source = `Led by volunteers Emily W. ${continuation}! bring a friend.`;
+    const expected = `Led by volunteers Emily W. ${continuation}! Bring a friend.`;
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+  assert.equal(polishDescription("Meet Emily W. bring a friend."), "Meet Emily W. Bring a friend.");
+  assert.equal(polishDescription("Meet Emily W. You can bring a friend."), "Meet Emily W. You can bring a friend.");
+});
+
 test("name abbreviations preserve English and Spanish list continuations, then capitalize new sentences", () => {
   for (const continuation of ["and Mario Kart", "or Mario Kart", "y Super Mario", "e historias", "o más juegos", "u otras opciones"]) {
     const source = `Play Super Smash Bros. ${continuation}. bring a friend.`;
