@@ -247,6 +247,30 @@ test("a gallery program with only a past occurrence is not kept alive by its ser
   assert.deepEqual(events, []);
 });
 
+test("gallery conversations keep each scheduled session rather than the exhibition's run", async () => {
+  // Stanford's JANE! page lists 2–3 PM conversations on specific dates. Its
+  // October–January series bounds and exhibition copy do not make it on view.
+  const tomorrow = dayPT(1);
+  const nextDay = dayPT(2);
+  const program = {
+    id: 53818764048938,
+    title: "Gallery Conversations | JANE!",
+    description_text: "Join us for casual in-gallery conversations in our special exhibition, JANE!, facilitated by our Museum Engagement Guides.",
+    first_date: dayPT(-20), last_date: dayPT(73),
+    filters: { event_types: [{ name: "Tour" }] },
+  };
+  const events = await runWith([dayPT(-1), tomorrow, nextDay].map((date) =>
+    localistEvent({
+      ...program,
+      instances: [{ start: `${date}T14:00:00-07:00`, end: `${date}T15:00:00-07:00` }],
+    }),
+  ));
+  assert.deepEqual(events.map(({ id, date, time, endTime, ongoing }) => ({ id, date, time, endTime, ongoing })), [
+    { id: `stanford-53818764048938-${tomorrow}`, date: tomorrow, time: "2:00 PM", endTime: "3:00 PM", ongoing: false },
+    { id: `stanford-53818764048938-${nextDay}`, date: nextDay, time: "2:00 PM", endTime: "3:00 PM", ongoing: false },
+  ]);
+});
+
 test("an exhibition using tour figuratively in its name remains an ongoing exhibit", async () => {
   const [event] = await runWith([
     localistEvent({

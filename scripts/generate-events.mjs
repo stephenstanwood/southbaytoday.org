@@ -3616,10 +3616,10 @@ function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
 
-  // A public tour or drawing session keeps its occurrence date and clock,
-  // even when its series spans a year and its venue is a gallery/collection.
+  // Museum tours, drawing sessions, and gallery conversations keep their
+  // occurrence dates and clocks even when their series spans an exhibition.
   // Match activity names, not a figurative "A Tour of ..." exhibition title.
-  if (/\b(?:(?:public|guided|docent[ -]led)\s+tours?|drop[ -]in\s+drawing)\b/i.test(title || "")) {
+  if (/\b(?:(?:public|guided|docent[ -]led)\s+tours?|drop[ -]in\s+drawing|gallery\s+conversations?)\b/i.test(title || "")) {
     return false;
   }
 
