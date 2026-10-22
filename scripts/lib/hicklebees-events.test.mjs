@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchHicklebeesEvents } from "../generate-events.mjs";
+import { todayPT } from "./dates.mjs";
 
 import {
   decodeHicklebeesText,
@@ -121,6 +123,33 @@ test("month paths walk forward across a year boundary", () => {
     "/events/2027/01",
     "/events/2027/02",
   ]);
+});
+
+test("the registered HTTP adapter reads future months with default headers", async (t) => {
+  const today = todayPT();
+  const [year, month, day] = today.split("-").map(Number);
+  const row = LIST_ROW.replace("Sat, 8/22/2026", `${month}/${day}/${year}`);
+  const paths = hicklebeesMonthPaths(today, 4);
+  const requests = [];
+  t.mock.method(globalThis, "fetch", async (url, options) => {
+    requests.push(String(url));
+    assert.equal(options.headers, undefined, "use Node's default headers");
+    return new Response(requests.length === 2 ? row + FOOTER_WIDGET : FOOTER_WIDGET);
+  });
+
+  const events = await fetchHicklebeesEvents();
+  assert.deepEqual(requests, paths.map((path) => `https://hicklebees.com${path}`));
+  assert.equal(events.length, 1);
+  assert.equal(events[0].date, today);
+  assert.equal(events[0].time, "11:00 AM");
+  assert.equal(events[0].source, "Hicklebee's");
+});
+
+test("Hicklebee's has one owner: the generator HTTP adapter", () => {
+  const generator = readFileSync(join(ROOT, "scripts", "generate-events.mjs"), "utf8");
+  assert.match(generator, /source\(fetchHicklebeesEvents\)/);
+  const browser = readFileSync(join(ROOT, "scripts", "playwright-scrapers.mjs"), "utf8");
+  assert.doesNotMatch(browser, /scrapeHicklebees|hicklebees\.com|name:\s*["']Hicklebee/);
 });
 
 // ---------------------------------------------------------------------------

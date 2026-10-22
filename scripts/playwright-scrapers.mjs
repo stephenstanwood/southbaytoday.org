@@ -27,6 +27,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
 import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
+import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
   REGISTRATION_NONE,
   registrationFromLibCal,
@@ -938,67 +939,6 @@ async function scrapeLindenTree(page) {
     .filter(Boolean);
 }
 
-// ── Hicklebee's ──
-
-async function scrapeHicklebees(page) {
-  await page.goto("https://hicklebees.com/events", {
-    waitUntil: "networkidle", timeout: 25_000,
-  });
-
-  const raw = await page.evaluate(() => {
-    const events = [];
-    const seen = new Set();
-
-    // Hicklebee's IndieCommerce: events in .views-row with links like /event/YYYY-MM-DD/slug
-    const rows = document.querySelectorAll(".views-row");
-    for (const row of rows) {
-      const link = row.querySelector("a[href*='/event/']");
-      if (!link) continue;
-      const title = link.textContent?.trim();
-      if (!title || title.length < 5 || seen.has(title) || /view event|more|about/i.test(title)) continue;
-      seen.add(title);
-      // Extract date from URL: /event/2026-04-25/slug
-      const dateMatch = link.href?.match(/\/event\/(\d{4}-\d{2}-\d{2})\//);
-      events.push({ title, date: dateMatch?.[1] || null, link: link.href });
-    }
-
-    // Fallback: grab all unique /event/ links
-    if (events.length === 0) {
-      const links = document.querySelectorAll("a[href*='/event/']");
-      for (const a of links) {
-        const title = a.textContent?.trim();
-        const dateMatch = a.href?.match(/\/event\/(\d{4}-\d{2}-\d{2})\//);
-        if (!title || title.length < 5 || seen.has(title) || /view|more|about|log|register/i.test(title)) continue;
-        seen.add(title);
-        events.push({ title, date: dateMatch?.[1] || null, link: a.href });
-      }
-    }
-
-    return events;
-  });
-
-  return raw
-    .map((r) => {
-      const date = tryParseDate(r.date);
-      if (!date || date < TODAY) return null;
-      return {
-        title: r.title,
-        date,
-        time: null,
-        endTime: null,
-        venue: "Hicklebee's",
-        address: "1378 Lincoln Ave, San Jose, CA 95125",
-        city: "san-jose",
-        url: r.link || "https://hicklebees.com/events",
-        source: "Hicklebee's",
-        category: "arts",
-        cost: "free",
-        kidFriendly: true, // children's bookstore
-      };
-    })
-    .filter(Boolean);
-}
-
 // ── History San Jose ──
 
 async function scrapeHistorySJ(page) {
@@ -1363,92 +1303,18 @@ async function scrapeSCCCFD(page) {
 // BOOKSTORES — Consolidated from generate-bookstore-events.mjs
 // ═══════════════════════════════════════════════════════════════════════════
 
-const BOOKS_INC_SB_STORES = new Map([
-  ["mountain view", "mountain-view"],
-  ["palo alto", "palo-alto"],
-  ["town & country", "palo-alto"],
-  ["campbell", "campbell"],
-  ["saratoga", "saratoga"],
-]);
-
-async function scrapeBooksInc(page) {
-  // Domain moved from booksinc.net to booksinc.com; events at /pages/events.
-  // Books Inc uses an Elfsight calendar widget. The widget's JSON-LD only
-  // contains date (no time), but the rendered DOM has time as visible text
-  // ("6:30 PM" or "11:15 AM - 12:15 PM"). We parse the rendered text instead.
-  await page.goto("https://www.booksinc.com/pages/events", { waitUntil: "networkidle", timeout: 30_000 });
-  await page.waitForTimeout(7000); // Elfsight needs extra hydration time
-
-  const raw = await page.evaluate(() => {
-    const events = [];
-    // Card pattern: each event renders as a block of lines like:
-    //   APR
-    //   28
-    //   TUE
-    //   AUTHOR EVENT
-    //   EAST BAY EVENTS
-    //   THE INVENTION OF SOLITUDE BOOK CLUB: MURDER BIMBO
-    //   6:30 PM
-    //   Books Inc. Alameda
-    const CARD_RE = /^(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)\s*\n\s*(\d{1,2})\s*\n\s*(SUN|MON|TUE|WED|THU|FRI|SAT)\s*\n\s*(BOOK CLUB|AUTHOR EVENT|EVENT|STORYTIME|KIDS EVENT)\s*\n\s*[^\n]+\s*\n\s*([^\n]+)\s*\n\s*(\d{1,2}:\d{2}\s*(?:AM|PM))(\s*-\s*(\d{1,2}:\d{2}\s*(?:AM|PM)))?\s*\n?\s*([^\n]+)?/;
-    const all = document.querySelectorAll("div, article, li");
-    const seen = new Set();
-    for (const el of all) {
-      const txt = (el.innerText || "").trim();
-      if (!txt || txt.length > 600) continue;
-      const m = txt.match(CARD_RE);
-      if (!m) continue;
-      const key = `${m[1]}-${m[2]}|${m[5]}|${m[6]}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      events.push({
-        month: m[1],
-        day: parseInt(m[2], 10),
-        title: m[5].trim(),
-        time: m[6].trim(),
-        endTime: m[8] ? m[8].trim() : null,
-        venue: m[9] ? m[9].trim() : "",
-      });
-    }
-    return events;
+export async function scrapeBooksInc(page, { today = TODAY } = {}) {
+  const response = await page.goto("https://www.booksinc.com/pages/events", {
+    waitUntil: "domcontentloaded", timeout: 30_000,
   });
-
-  const events = [];
-  const now = new Date();
-  const monthIdx = { JAN: 0, FEB: 1, MAR: 2, APR: 3, MAY: 4, JUN: 5, JUL: 6, AUG: 7, SEP: 8, OCT: 9, NOV: 10, DEC: 11 };
-  for (const r of raw) {
-    const mIdx = monthIdx[r.month];
-    if (mIdx === undefined) continue;
-    let year = now.getFullYear();
-    const candidate = new Date(year, mIdx, r.day);
-    if (candidate < new Date(now.getTime() - 30 * 86400000)) year++;
-    const dateObj = new Date(year, mIdx, r.day);
-    const date = isoDate(dateObj);
-    if (date < TODAY) continue;
-
-    const venueLower = (r.venue || r.title).toLowerCase();
-    let city = null;
-    for (const [kw, cid] of BOOKS_INC_SB_STORES) {
-      if (venueLower.includes(kw)) { city = cid; break; }
-    }
-    if (!city) continue;
-
-    events.push({
-      title: r.title,
-      date,
-      time: normalizeTime(r.time),
-      endTime: normalizeTime(r.endTime),
-      venue: r.venue || "Books Inc",
-      address: "",
-      city,
-      url: "https://www.booksinc.com/pages/events",
-      source: "Books Inc",
-      category: "arts",
-      cost: "free",
-      kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(r.title),
-    });
-  }
-  return events;
+  if (!response?.ok()) throw new Error(`Books Inc calendar returned HTTP ${response?.status()}`);
+  // The old text pattern expected a regional label between type and title.
+  // The current cards omit it and now publish complete, offset-bearing Event
+  // JSON-LD. Read that first-party calendar data after the widget hydrates.
+  await page.waitForFunction(() => [...document.querySelectorAll('script[type="application/ld+json"]')]
+    .some((script) => /"startDate"\s*:/.test(script.textContent || "")), null, { timeout: 15_000 });
+  const scripts = await page.locator('script[type="application/ld+json"]').allTextContents();
+  return parseBooksIncEvents(scripts, { today });
 }
 
 const BN_STORES = [
@@ -2176,17 +2042,6 @@ export async function scrapeSantanaRow(page) {
   });
 }
 
-async function scrapeDowntownMountainView(page) {
-  return scrapeEventListPage(page, {
-    url: "https://www.downtownmountainview.com/events",
-    source: "Downtown Mountain View",
-    venue: "Downtown Mountain View",
-    address: "Castro Street, Mountain View, CA",
-    city: "mountain-view",
-    category: "community",
-  });
-}
-
 export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
   const directoryUrl = "https://www.cupertino.gov/Events-directory";
   await page.goto(directoryUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
@@ -2662,7 +2517,10 @@ async function main() {
   tasks.push({ name: "San Jose Jazz", fn: (b) => runScraper(b, "San Jose Jazz", scrapeSJJazz) });
   tasks.push({ name: "SJ Museum of Art", fn: (b) => runScraper(b, "SJ Museum of Art", scrapeSJMuseumOfArt) });
   tasks.push({ name: "Linden Tree Books", fn: (b) => runScraper(b, "Linden Tree Books", scrapeLindenTree) });
-  tasks.push({ name: "Hicklebee's", fn: (b) => runScraper(b, "Hicklebee's", scrapeHicklebees) });
+  // Hicklebee's is owned by fetchHicklebeesEvents in generate-events.mjs.
+  // That HTTP implementation walks future months; do not add a duplicate
+  // browser adapter. Current access restrictions are documented in
+  // docs/event-source-refresh.md and still require source-owner clearance.
   tasks.push({ name: "History San Jose", fn: (b) => runScraper(b, "History San Jose", scrapeHistorySJ) });
   tasks.push({ name: "Montalvo Arts Center", fn: (b) => runScraper(b, "Montalvo Arts Center", scrapeMontalvo) });
 
@@ -2689,7 +2547,8 @@ async function main() {
   // source is how duplicate records get made.
   tasks.push({ name: "Guadalupe River Park", fn: (b) => runScraper(b, "Guadalupe River Park", scrapeGuadalupeRiverPark) });
   tasks.push({ name: "Santana Row", fn: (b) => runScraper(b, "Santana Row", scrapeSantanaRow) });
-  tasks.push({ name: "Downtown Mountain View", fn: (b) => runScraper(b, "Downtown Mountain View", scrapeDowntownMountainView) });
+  // Downtown Mountain View retired 2026-10-22: /events is 404 and the
+  // domain now redirects to a real-estate page, not an organizer calendar.
   tasks.push({ name: "City of Cupertino", fn: (b) => runScraper(b, "City of Cupertino", scrapeCupertinoOpenCities) });
   tasks.push({ name: "Opera San José", fn: (b) => runScraper(b, "Opera San José", scrapeOperaSanJose) });
   tasks.push({ name: "TheatreWorks Silicon Valley", fn: (b) => runScraper(b, "TheatreWorks Silicon Valley", scrapeTheatreWorks) });
