@@ -19,6 +19,12 @@ import Anthropic from "@anthropic-ai/sdk";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import {
+  assessFoodSourceFreshness,
+  fetchSccFoodPage,
+  generateFoodBlurbMap,
+  isNeutralInspectionBlurb,
+} from "./lib/scc-food-generation.mjs";
+import {
   classifyFinalInspection,
   discardConflictingFoodPhotos,
   foodPhotoCacheKey,
@@ -653,14 +659,14 @@ export function shouldSkip(item) {
 // the name and stating it as fact: "Anne Doan" became "Vietnamese restaurant"
 // — a cuisine guessed from a person's surname. Name + address + city is all we
 // actually know; when the name isn't a chain we recognize, say only that.
-const CUISINE_INFERENCE_RULE = `Only name a cuisine when the source supports it. The name may be a person, a holding company, or a code — it is NOT evidence of a cuisine, and a person's name is never evidence of their food's ethnicity. State a cuisine ONLY when (a) the name explicitly says it ("Gelato Scoping Store" → gelato, "Latin & Asian Hospitality Group" → Latin and Asian), or (b) it's a chain you genuinely recognize ("Jersey Mike's Subs" → sub sandwiches). Otherwise write a location-only line — "Restaurant opening on Lafayette St in Santa Clara." — and do not guess at the food. Never infer cuisine or nationality from a personal or surname-like name.`;
+const CUISINE_INFERENCE_RULE = `Only name a cuisine when the source supports it. The name may be a person, a holding company, or a code — it is NOT evidence of a cuisine, and a person's name is never evidence of their food's ethnicity. State a cuisine ONLY when (a) the name explicitly says it ("Gelato Scoping Store" → gelato, "Latin & Asian Hospitality Group" → Latin and Asian), or (b) it's a chain you genuinely recognize ("Jersey Mike's Subs" → sub sandwiches). Otherwise write a location-only line — "Food business on Lafayette St in Santa Clara." — and do not guess at the food. Never infer cuisine or nationality from a personal or surname-like name. Do not invent menu items, history, dates, or operating status. Use null if no useful factual sentence is supported.`;
 
 /**
  * Generate one-line blurbs for a list of recently opened restaurants using Claude Sonnet.
  * Returns a map of item id → blurb string.
  */
 function blurbList(items) {
-  return items.map((i) => `- ${i.name} at ${i.address ?? "unknown address"} — CITY: ${i.cityName}`).join("\n");
+  return items.map((i) => `- ID: ${i.id} | ${i.name} at ${i.address ?? "unknown address"} — CITY: ${i.cityName}`).join("\n");
 }
 
 // Title-case a SCC-record city name ("SAN JOSE" -> "San Jose") for the
@@ -691,33 +697,20 @@ function blurbCityMismatch(blurb, cityName) {
 }
 
 /**
- * Shared Sonnet call: runs `prompt`, parses the returned [{name, blurb}] array,
- * and maps it back onto item ids. The blurb generators below differ only in
- * their prompt + log label.
+ * Shared bounded Sonnet call. IDs bind structured responses to exact records,
+ * including different branches with the same business name.
  */
 async function generateBlurbMap(items, prompt, label) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey || items.length === 0) return {};
-  const client = new Anthropic({ apiKey });
-  try {
-    const msg = await client.messages.create({
-      model: "claude-sonnet-5",
-      max_tokens: 1024,
-      messages: [{ role: "user", content: prompt }],
-    });
-    let text = msg.content.find((b) => b?.type === "text")?.text ?? "[]";
-    text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/, "").trim();
-    const parsed = JSON.parse(text);
-    const map = {};
-    for (const entry of parsed) {
-      const match = items.find((i) => i.name === entry.name);
-      if (match) map[match.id] = entry.blurb;
-    }
-    return map;
-  } catch (err) {
-    console.warn(`${label} failed:`, err.message);
-    return {};
+  const client = new Anthropic({ apiKey, maxRetries: 0, timeout: 60_000 });
+  const map = await generateFoodBlurbMap({
+    items, prompt, label, createMessage: (request) => client.messages.create(request),
+  });
+  if (Object.keys(map).length < items.length) {
+    console.warn(`${label} failed to cover ${items.length - Object.keys(map).length} records; optional blurbs remain null. See [food-blurbs] diagnostics.`);
   }
+  return map;
 }
 
 async function generateBlurbs(items) {
@@ -737,7 +730,7 @@ Examples of good blurbs:
 Restaurants:
 ${blurbList(items)}
 
-Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
+Respond with a JSON object containing "blurbs": an array of objects with the exact "id" and a "blurb" string or null for every record. No markdown, no explanation.`;
   return generateBlurbMap(items, prompt, "Blurb generation");
 }
 
@@ -762,7 +755,7 @@ Examples of good blurbs:
 Restaurants:
 ${blurbList(items)}
 
-Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
+Respond with a JSON object containing "blurbs": an array of objects with the exact "id" and a "blurb" string or null for every record. No markdown, no explanation.`;
   return generateBlurbMap(items, prompt, "Coming-soon blurb generation");
 }
 
@@ -777,7 +770,7 @@ The "CITY:" field after each address is authoritative. ${CUISINE_INFERENCE_RULE}
 Businesses:
 ${blurbList(items)}
 
-Respond with a JSON array of objects with "name" and "blurb" fields only. No markdown, no explanation.`;
+Respond with a JSON object containing "blurbs": an array of objects with the exact "id" and a "blurb" string or null for every record. No markdown, no explanation.`;
   return generateBlurbMap(items, prompt, "Inspection blurb generation");
 }
 
@@ -992,18 +985,14 @@ async function fetchPage(whereClause, orderField, limit = 50) {
     $limit: limit.toString(),
   });
   const url = `${API_BASE}?${params}`;
-  const res = await fetch(url, {
-    headers: { "Accept": "application/json", "User-Agent": "southbaytoday.org/data-pipeline" },
-  });
-  if (!res.ok) throw new Error(`SCC API ${res.status}: ${await res.text()}`);
-  return res.json();
+  return fetchSccFoodPage(url);
 }
 
 async function main() {
   console.log("Fetching SCC restaurant permit data…\n");
 
   // --- Recent county final inspections ---
-  const finalizedRaw = await fetchPage(
+  const { rows: finalizedRaw, updatedAt: finalizedUpdatedAt } = await fetchPage(
     `final_inspection > '${LOOKBACK_DATE}T00:00:00.000'`,
     "final_inspection",
     100,
@@ -1044,7 +1033,7 @@ async function main() {
     .filter((item) => item.status === "inspection-complete");
 
   // --- Coming soon: plan approved but no final inspection yet ---
-  const comingSoonRaw = await fetchPage(
+  const { rows: comingSoonRaw, updatedAt: comingSoonUpdatedAt } = await fetchPage(
     `date_plan_approved > '${LOOKBACK_DATE}T00:00:00.000' AND final_inspection IS NULL`,
     "date_plan_approved",
     100,
@@ -1084,13 +1073,17 @@ async function main() {
   // different city (El Paseo de Saratoga, in San Jose) can fool the model
   // into writing "opening in Saratoga" for a San Jose address. Drop rather
   // than ship a wrong city — falls back to null, same as a failed generation.
-  function resolveBlurb(item, aiBlurbMap) {
-    const override = item.sourceId && BLURB_OVERRIDES[item.sourceId];
+  function resolveBlurb(item, aiBlurbMap, { inspection = false } = {}) {
+    const override = !inspection && item.sourceId && BLURB_OVERRIDES[item.sourceId];
     if (override) return override;
     const aiBlurb = aiBlurbMap[item.id] ?? null;
     const mismatch = blurbCityMismatch(aiBlurb, item.cityName);
     if (mismatch) {
       console.warn(`[blurb-city-mismatch] "${item.name}" (${item.cityName}) blurb names "${mismatch}": ${JSON.stringify(aiBlurb)}`);
+      return null;
+    }
+    if (inspection && aiBlurb && !isNeutralInspectionBlurb(aiBlurb)) {
+      console.warn(`[inspection-blurb-claim] Dropped opening/operating claim for ${item.id}`);
       return null;
     }
     return aiBlurb;
@@ -1111,7 +1104,7 @@ async function main() {
   const inspectionBlurbs = await generateInspectionBlurbs(topInspections);
   const inspectionsWithBlurbs = topInspections.map((i) => ({
     ...i,
-    blurb: inspectionBlurbs[i.id] ?? null,
+    blurb: resolveBlurb(i, inspectionBlurbs, { inspection: true }),
   }));
 
   // Generate anticipation blurbs for top coming-soon restaurants
@@ -1132,10 +1125,15 @@ async function main() {
   console.log("Recraft fallback for items without Places photo…");
   await generateFallbackImages([...openedWithBlurbs, ...inspectionsWithBlurbs, ...comingSoonWithBlurbs]);
 
+  const sourceHealth = assessFoodSourceFreshness({
+    updatedAt: finalizedUpdatedAt ?? comingSoonUpdatedAt,
+    rawInspections: finalizedRaw, inspections: inspectionsDeduped,
+  });
   const output = {
     generatedAt: new Date().toISOString(),
     lookbackDays: LOOKBACK_DAYS,
     sourceUrl: "https://data.sccgov.org/resource/skd7-7ix3",
+    sourceHealth,
     opened: openedWithBlurbs,
     inspections: inspectionsWithBlurbs,
     comingSoon: comingSoonWithBlurbs,
@@ -1151,36 +1149,33 @@ async function main() {
   console.log("\nComing soon:");
   comingSoonFinal.slice(0, 8).forEach((i) => console.log(`  [${i.date}] ${i.name} — ${i.address}, ${i.cityName}`));
 
-  // Content-freshness alarm: final-inspection dates test whether the SCC feed is
-  // still moving. They must not be relabeled as opening dates in the alert.
-  // The file mtime won't catch this — reddit-pulse appends keep bumping generatedAt
-  // even when the SCC source has stopped producing new entries.
-  const FRESHNESS_THRESHOLD_DAYS = 14;
-  const dates = inspectionsWithBlurbs
-    .map((i) => i.inspectionDate)
-    .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
-    .sort();
-  const newest = dates[dates.length - 1] ?? null;
-  if (newest) {
-    const ageDays = (Date.now() - new Date(newest + "T12:00:00").getTime()) / 86400000;
-    if (ageDays > FRESHNESS_THRESHOLD_DAYS) {
-      const msg =
-        `Newest SCC final inspection is **${Math.round(ageDays)} days old** (${newest}). ` +
-        `Either the upstream API stopped returning new South Bay records or our filter is dropping valid inspections. ` +
-        `Check scripts/generate-scc-food-openings.mjs run logs.`;
-      console.warn(`⚠️  Freshness alert: ${msg}`);
-      await catSignal({
-        key: "scc-food-openings-stale",
-        title: "SBT food permits — data going stale",
-        body: msg,
-      });
-    }
+  // Source modification time, request success, and eligible restaurant activity
+  // are separate observations. Schools/MFF/vending can be newer than every
+  // eligible inspection without indicating a request or filtering failure.
+  console.log(`[food-source] ${JSON.stringify(sourceHealth)}`);
+  if (sourceHealth.status === "stale") {
+    await catSignal({
+      key: "scc-food-source-stale",
+      title: "SBT food permits — county dataset has not updated",
+      body: `County requests succeeded, but SCC last updated the dataset ${sourceHealth.ageDays} days ago (${sourceHealth.updatedAt}). `
+        + `Newest raw final inspection: ${sourceHealth.newestRawInspection ?? "none"}; newest eligible inspection: ${sourceHealth.newestEligibleInspection ?? "none"}. `
+        + "This measures the county dataset, not restaurant openings or a filtering failure.",
+    });
+  } else if (sourceHealth.status === "unknown") {
+    await catSignal({
+      key: "scc-food-source-age-unknown",
+      title: "SBT food permits — county update time unavailable",
+      body: "County record requests succeeded but provided no valid source modification timestamp. Source age is unknown; the eligible restaurant list may be quiet. Check the response headers.",
+    });
   }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((err) => {
+  main().catch(async (err) => {
     console.error("ERROR:", err.message);
+    if (err.code === "SCC_SOURCE_REQUEST_FAILED") {
+      await catSignal({ key: "scc-food-source-request", title: "SBT food permits — county request failed", body: err.message });
+    }
     process.exit(1);
   });
 }

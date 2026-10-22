@@ -12,6 +12,15 @@ import {
 } from "./scc-food-openings.mjs";
 import { shouldSkip } from "../generate-scc-food-openings.mjs";
 
+test("newer school, mobile-food and vending finals remain intentional exclusions", () => {
+  for (const record of [
+    { record_id: "SR0880433", business_name: "E-SANTA CLARA HIGH SCHOOL POOL UPGRADE", city: "SANTA CLARA" },
+    { record_id: "SR0879270", business_name: "E-EL BOMBERO 408 INC MFF", site_location: "MFF" },
+    { record_id: "SR0882279", business_name: "E-HILTON SANTA CLARA VENDING", city: "SANTA CLARA" },
+  ]) assert.equal(shouldSkip(record), true);
+  assert.equal(shouldSkip({ business_name: "CAFE BISTRO", city: "MOUNTAIN VIEW" }), false);
+});
+
 test("food photos shared across different cities are suppressed across feed groups and cached as missing", () => {
   const inspection = {
     sourceId: "SR0884734", name: "Bonbon Matcha", cityId: "palo-alto",
