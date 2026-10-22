@@ -1739,6 +1739,26 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // The Oct 20 company-issued release explicitly names Mountain View HQ.
+  // Its $115M extension includes a $25M SVB term loan: only $90M is equity.
+  // Keep the April $160M entry; the $275M headline is the combined Series D,
+  // not another $275M of new equity. FAA certification is still in progress.
+  // https://www.businesswire.com/news/home/20261020103258/en/
+  // Same issuer release, accessible in full:
+  // https://www.streetinsider.com/Business+Wire/Reliable+Robotics+Secures+%24115M+in+New+Capital/27207622.html
+  {
+    id: "reliable-robotics-series-d-extension",
+    name: "Reliable Robotics",
+    city: "Mountain View",
+    category: "robotics",
+    round: "Series D extension",
+    amount: "$90M",
+    date: "2026-10-20",
+    tagline:
+      "Mountain View's Reliable Robotics is developing systems that let existing aircraft taxi, take off, fly, and land automatically. Nimble Partners led its $90M equity extension, alongside a separate $25M loan from Silicon Valley Bank. The money will expand its aircraft fleet, production facilities, and engineering team. The company has more than 250 employees across its offices and is still pursuing FAA certification for commercial use on the Cessna 208B Grand Caravan.",
+    color: "#2563eb",
+    url: "https://reliable.co",
+  },
   // Vinci's Oct 6 Series B was missed by the earlier Oct 6-7 sweep. The CEO's
   // announcement confirms $250M of new funding at a $1.5B valuation, separate
   // from the 2025 seed + Series A entry below. Its own hiring pages explicitly

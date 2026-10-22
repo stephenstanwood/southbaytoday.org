@@ -173,6 +173,7 @@ export const TECH_LOGO_MANIFEST: Record<string, string> = {
   "radixark": "/logos/radixark.png",
   "raven-io": "/logos/raven-io.png",
   "reliable-robotics": "/logos/reliable-robotics.png",
+  "reliable-robotics-series-d-extension": "/logos/reliable-robotics.png",
   "rhoda-ai": "/logos/rhoda-ai.png",
   "ricursive-intelligence": "/logos/ricursive-intelligence.png",
   "river-ai": "/logos/river-ai.png",

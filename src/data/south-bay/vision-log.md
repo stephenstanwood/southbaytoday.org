@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-10-22 — Cycle 236: Mountain View's Reliable Robotics Returns to Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Reliable Robotics now leads the existing Tech funding list.** Its October 20
+[company-issued release, syndicated by StreetInsider](https://www.streetinsider.com/Business+Wire/Reliable+Robotics+Secures+%24115M+in+New+Capital/27207622.html)
+explicitly confirms Mountain View headquarters. The card explains its aircraft
+automation work, planned engineering expansion, and pending FAA certification.
+
+**Only the $90M equity extension enters the funding total.** The release's
+$115M headline includes a separate $25M Silicon Valley Bank loan. April's
+$160M entry stays; the combined $275M Series D headline is not another new
+round. The new entry reuses the existing local company logo, with both IDs
+registered as the same company in the logo audit.
+
+Verification: the production build and both prebuild gates passed; all 32
+existing funding-date and logo-audit tests passed. Astro check reported 0
+errors and 0 warnings (98 hints). Before/after company-link audits checked
+196/197 links with no dead or relocated links; corporate bot blocks were left
+alone. Chromium checks of the built Tech page at 1280px and 390px confirmed
+eight funding rows, Reliable Robotics first and present once, correct labels
+and link, the loaded local logo, working expansion and collapse, no horizontal
+overflow, and no browser runtime errors. External requests were blocked during
+these local checks.
+
+---
+
 ## 2026-10-14 — Cycle 235: Hark Card Reflects Its Launch
 
 The tightening roadmap remains fully shipped (6/6).
