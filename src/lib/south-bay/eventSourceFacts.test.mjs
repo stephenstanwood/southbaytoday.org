@@ -15,6 +15,36 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Hillview's Halloween conflict stays explicit through refresh without inventing a storytime meridiem", async () => {
+  const raw = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/hillview-halloween-storytime-2026.json", import.meta.url)));
+  const original = structuredClone(raw);
+  for (const url of [raw.url, raw.url.replace("/events/", "/v2/events/")]) {
+    for (const description of [raw.description, "Storytime 12:30 - 1:00 am Stay & Play 1:00 - 1:30 pm. Free. No registration required."]) {
+      const events = [{ ...raw, url, description }];
+      await resolveEventBlurbs(events, { enabled: false });
+      const corrected = events[0];
+      assert.match(corrected.description, /12:30–1:30 PM.*conflicting AM label/);
+      assert.match(corrected.description, /Confirm the session timing with Hillview Library/);
+      assert.doesNotMatch(corrected.description, /Storytime:?\s+12:30\s*[-–—]\s*1:00\s+[ap]m/i);
+      assert.match(corrected.description, /Free\. No registration required\./);
+      assert.equal(requiresAttendanceConfirmation(corrected), true);
+      const { description: _description, attendanceNote, attendanceStatus, ...facts } = corrected;
+      const { description: _sourceDescription, ...sourceFacts } = { ...raw, url };
+      assert.deepEqual(facts, sourceFacts, "all other current event content and facts survive");
+      assert.match(attendanceNote, /conflicting AM label/);
+      assert.deepEqual(applyVerifiedEventFacts(corrected), corrected, "repeated refreshes do not duplicate the note");
+    }
+  }
+  for (const other of [
+    { ...raw, date: "2026-11-01" },
+    { ...raw, url: "https://sjpl.bibliocommons.com/events/another-storytime" },
+    { ...raw, time: "2:30 PM", endTime: "3:30 PM" },
+    { ...raw, description: "New reviewed source copy. Storytime: 12:30 - 1:00 pm; Stay & Play: 1:00 - 1:30 pm. Free." },
+    { ...raw, description: "New shorter reviewed source description. Free. No registration required." },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "newer source content and other occurrences remain unchanged");
+  assert.deepEqual(raw, original);
+});
+
 test("Stanford's full tour and location-by-RSVP talk retain their dated attendance terms", async () => {
   const rows = [
     {
