@@ -985,6 +985,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // seminar, the ST Lee Lecture, and Long Island University's team initials.
   // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
   "ESE", "ISA", "ST", "LIU",
+  // Stanford's Rethinking European Development and Security seminar series.
+  // Preserve its published REDS initials in titles and descriptions.
+  "REDS",
   // Stanford's Department of African and African American Studies, and
   // Caitlin Burke's published law degree. Preserve the source's initials.
   // Evidence: docs/qa/2026-10-18-0507-fact-check.md.

@@ -69,6 +69,9 @@ test("refresh preserves university seminar, donor and opponent initials", () => 
   for (const title of [
     "ESE Seminar - Inês Azevedo",
     "ISA Research Seminar: Vahid Akbari (University of Nottingham)",
+    // Stanford's /event/reds-seminar-europe-in-the-face-of-war source title.
+    "REDS Seminar- Milada Vachudova: Europe in the Face of War",
+    "REDS Seminar - Milada Vachudova: Europe in the Face of War",
     "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
     "Santa Clara University Men's Water Polo vs LIU",
     "An Intimate Evening with Dr. Samuel Waymon at DAAAS",
@@ -79,6 +82,7 @@ test("refresh preserves university seminar, donor and opponent initials", () => 
     assert.equal(polishDescription(`Hear the ${title} presentation.`), `Hear the ${title} presentation.`);
   }
   assert.equal(cleanTitle("Isa and Liu read together"), "Isa and Liu read together");
+  assert.equal(cleanTitle("Reds fans meet at the library"), "Reds fans meet at the library");
   assert.equal(polishDescription("Meet Isa and Liu at Main St."), "Meet Isa and Liu at Main St.");
 });
 
