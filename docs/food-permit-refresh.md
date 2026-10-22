@@ -26,6 +26,8 @@ city; unstated brand/menu details and speculative business-type alternatives
 are excluded. Hedged alternatives are rejected rather than published as facts.
 The final type-description check also drops modifiers absent from the permit
 name; unsupported brand knowledge cannot become a published permit fact.
+These intentional nulls are content guards, not JSON-generation failures, and
+do not consume a generation retry.
 
 The October 21 repair probe reproduced the previous 1,024-token request ending
 with `stop_reason: max_tokens`: 760 tokens went to thinking and its JSON text
