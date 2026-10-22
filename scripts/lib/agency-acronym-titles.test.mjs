@@ -157,6 +157,17 @@ test("keeps clinical and post-nominal acronyms uppercase in titles", () => {
   assert.equal(cleanTitle("Bird ID and Guided Hike"), "Bird ID and Guided Hike");
 });
 
+test("preserves Stanford's MASLD initials through title and description cleanup", () => {
+  // Stanford's October 23, 2026 clinical seminar uses the disease initialism.
+  const title = "The Skinny on MASLD: From Nomenclature to Novel Therapies";
+  const description = "A practical framework for metabolic dysfunction-associated steatotic liver disease (MASLD).";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription(description), description);
+  assert.equal(polishDescription(polishDescription(description)), description);
+  assert.equal(cleanTitle("ANNUAL Clinical Seminar"), "Annual Clinical Seminar");
+});
+
 test("keeps league and artist initialisms uppercase in titles and body copy", () => {
   assert.equal(cleanTitle("Sharks x PWHL San Jose"), "Sharks x PWHL San Jose");
   assert.equal(cleanTitle("A Tribute to ABBA"), "A Tribute to ABBA");

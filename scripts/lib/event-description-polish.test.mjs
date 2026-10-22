@@ -13,6 +13,17 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("corrects Books Inc's Ilze Duarte typo in raw titles and cached copy", () => {
+  // The organizer's event heading says IIZE, but its guest bio and the
+  // translator's own website identify her as Ilze Duarte.
+  const title = "Best Literary Translations: Wendy Call, Dmitri Manin, Ilze Duarte";
+  assert.equal(cleanTitle(title.toUpperCase().replace("ILZE", "IIZE")), title);
+  assert.equal(cleanTitle(title.replace("Ilze", "Iize")), title);
+  const body = "Hear Wendy Call, Dmitri Manin, and Ilze Duarte discuss literary translations.";
+  assert.equal(polishDescription(body.replace("Ilze", "Iize")), body);
+  assert.equal(polishDescription(body), body);
+});
+
 test("Hammer Images copy is repaired on the first raw-source pass", () => {
   const expected = "SJSU Dance presents Images, the annual fall showcase of student choreography and performance.";
   // The first two source sentences precede a clipped preview in Hammer's

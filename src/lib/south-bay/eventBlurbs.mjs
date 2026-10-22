@@ -690,6 +690,7 @@ Strict rules:
 - If a description is given, rewrite its substance in planner voice — don't copy marketing prose.
 - An event marked "attendance: online only" has no physical destination. Describe joining online; its venue may otherwise name the organizing institution.
 - A description marked [NONE] means we have no description. Write only what the title, venue, and category state plainly, and stay general. Do not invent difficulty, distance, duration, terrain, skill level, age suitability, price, or what is provided.
+- A description saying only "Meetup event by [group]" is a group credit, not event details. Do not infer coffee, drinks, or live drawing models from a venue or activity name.
 - Never invent a musical genre, lineup, or whether performers are cover/tribute acts or original members. Those identities must be stated in the source title or description; a decade-themed tour title proves none of them.
 - A description marked [TRUNCATED] is cut off mid-sentence. Write only from the text you can actually see. NEVER complete or guess the missing part, and never state what attendees should bring, what is provided or included, whether registration is needed, or what anything costs unless that fact appears in full in the visible text. Getting this backwards sends readers to an event unprepared.
 - Name a book, film, or other work only when its complete title is visible in the source. Never complete or rename a partial title; omit the name instead.

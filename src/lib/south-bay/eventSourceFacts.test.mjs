@@ -2382,6 +2382,21 @@ test("editorial voice is not mistaken for a session-activity claim", () => {
   assert.equal(eventCopyFactConflict("This week's highlight is a trip to the coast.", playdate), null);
 });
 
+test("sparse Meetup listings cannot acquire unsourced refreshments or live models", () => {
+  const sparse = {
+    source: "Meetup", title: "Property, Construction and Technology Mixer",
+    description: "Meetup event by Bay Area Real Estate & Tech Talk.",
+  };
+  assert.ok(eventCopyFactConflict("Network with professionals over drinks at State Street Market.", sparse));
+  assert.ok(eventCopyFactConflict("Swap ideas over coffee at Panera Bread.", { ...sparse, title: "Generative AI Social" }));
+  assert.ok(eventCopyFactConflict("Draw from a live model.", { ...sparse, title: "Wednesday Morning Figure Drawing" }));
+  assert.equal(eventCopyFactConflict("Network with professionals at State Street Market.", sparse), null);
+  assert.equal(eventCopyFactConflict("Swap ideas over coffee.", { ...sparse, title: "Coffee and AI" }), null);
+  assert.ok(eventCopyFactConflict("Swap ideas over coffee.", { ...sparse, title: "Beer and AI" }));
+  assert.equal(eventCopyFactConflict("Draw from a live model.", { ...sparse, title: "Figure Drawing with a Live Model" }), null);
+  assert.equal(eventCopyFactConflict("Draw from a live model.", { ...sparse, description: "The organizer provides a live model." }), null);
+});
+
 test("no blurb in the live feed trips the new guards", () => {
   // A false positive blanks legitimate copy, so the whole feed is the fixture.
   const feed = JSON.parse(readFileSync(new URL("../../data/south-bay/upcoming-events.json", import.meta.url)));

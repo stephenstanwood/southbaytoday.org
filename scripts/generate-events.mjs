@@ -931,6 +931,9 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // Books Inc's heading says IIZE; its guest bio and the translator's own
+  // https://www.ilzeduarteliterarytranslator.com/blank-1 use Ilze Duarte.
+  "Iize Duarte": "Ilze Duarte",
   // Meetup misspells the orchestra; its own paphil.org season page uses this name.
   "Palo Alto Philarmonic": "Palo Alto Philharmonic",
   // SCCL's Milpitas book-group listings spell the Newbery medalist's name two
@@ -1015,6 +1018,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // vehicle types. Protect the same source tokens in titles and both prose
   // passes so a refresh cannot undo the reviewed uppercase spellings.
   "AI", "SWOT", "UAV", "USV", "UUV",
+  // Stanford Medicine's published liver-disease initialism, in seminar titles
+  // and descriptions. Preserve uppercase source tokens without guessing case.
+  "MASLD",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.

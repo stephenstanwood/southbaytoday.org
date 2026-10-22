@@ -1827,6 +1827,20 @@ const ACTIVITY_TAIL = /\s+\b(?:for|at|on|in|with|from|starting|beginning)\b.*$/i
 export function eventCopyFactConflict(text, event) {
   const copy = String(text || "");
   const source = sourceText(event);
+  // The Meetup integration supplies a group credit instead of an event
+  // description. A cafe/pub venue or figure-drawing title cannot establish
+  // refreshments or a live model; reject those additions in carried, cached
+  // and newly generated copy unless the source actually names them.
+  if (event?.source === "Meetup" && /^Meetup event by [^\n]+\.?$/.test(String(event.description || "").trim())) {
+    if ((/\b(?:over|with)\s+(?:a\s+)?coffee\b/i.test(copy) && !/\bcoffee\b/i.test(source))
+        || (/\b(?:over|with)\s+(?:a\s+)?drinks?\b/i.test(copy)
+          && !/\b(?:coffee|drinks?|beverages?|beer|wine|cocktails?)\b/i.test(source))) {
+      return "unsupported refreshments in sparse Meetup listing";
+    }
+    if (/\blive\s+models?\b/i.test(copy) && !/\blive\s+models?\b/i.test(source)) {
+      return "unsupported live model in sparse Meetup listing";
+    }
+  }
   // A virtual event may name its organizing library as the venue. That is not
   // a physical destination; check carried/cached copy as well as new blurbs.
   if (event?.virtual === true
