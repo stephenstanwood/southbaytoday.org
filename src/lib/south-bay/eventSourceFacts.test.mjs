@@ -15,6 +15,51 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the sold-out Monte Sereno CPR class retains its age limit and ticket terms through refresh", async () => {
+  const urls = [
+    "https://Oct2026handsonlycprmontesereno.eventbrite.com",
+    "https://oct2026handsonlycprmontesereno.eventbrite.com",
+    "https://www.eventbrite.com/e/hands-only-cpr-and-aed-class-15-monte-sereno-15-hrs-2026-tickets-1998436176400",
+  ];
+  for (const url of urls) {
+    const raw = {
+      date: "2026-10-22", url, title: "Hands-Only CPR/AED & Choking Relief Training",
+      venue: "Monte Sereno City Hall", address: "Monte Sereno City Hall",
+      city: "monte-sereno", time: "10:00 AM", endTime: "11:30 AM",
+      category: "family", kidFriendly: true, cost: null,
+      description: "CPR techniques for adults, children, and infants.",
+      blurb: "Learn CPR for all ages at Monte Sereno City Hall.",
+    };
+    const original = structuredClone(raw);
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    const corrected = events[0];
+    assert.equal(corrected.registration, "full");
+    assert.equal(requiresAdvanceRegistration(corrected), true);
+    assert.equal(corrected.kidFriendly, false);
+    assert.equal(corrected.category, "education");
+    assert.equal(corrected.cost, "low");
+    assert.equal(corrected.costNote, "From $17.85");
+    assert.equal(corrected.address, "18041 Saratoga-Los Gatos Road, Monte Sereno, CA 95030");
+    assert.match(corrected.description, /age 13 and older/);
+    assert.match(corrected.description, /does not provide certification/);
+    assert.match(corrected.blurb, /ages 13\+/);
+    assert.doesNotMatch(corrected.blurb, /all ages/);
+    assert.match(corrected.attendanceNote, /Sold out;.*waitlist/);
+    assert.match(corrected.attendanceNote, /under 18.*waiver/);
+    for (const field of ["date", "url", "title", "venue", "city", "time", "endTime"]) {
+      assert.equal(corrected[field], raw[field], field);
+    }
+    assert.deepEqual(raw, original);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration: "closed" }).registration, "closed");
+    for (const other of [
+      { ...raw, date: "2026-11-22" },
+      { ...raw, url: "https://www.eventbrite.com/e/a-different-cpr-class" },
+    ]) assert.equal(applyVerifiedEventFacts(other), other, "other CPR occurrences keep their own terms");
+  }
+});
+
 test("dated festival, off-site workshop and admission repairs survive sparse blurb resolution", async () => {
   const rows = [
     { date: "2026-10-31", url: "https://www.aztecadancers.com/dia-de-muertos", time: "10:00 PM", expected: { time: "2:00 PM", endTime: "10:00 PM", cost: "free", kidFriendly: true } },

@@ -7,6 +7,27 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const CORRECTIONS = [
+  // "Adults, children, and infants" describes the CPR techniques, not the
+  // audience. The dated organizer page limits participants to 13+, and its
+  // ticket widget confirms Sold out / Join Waitlist on October 21.
+  // Evidence: docs/qa/2026-10-21-1907-fact-check.md.
+  {
+    id: "inbound-9542c24070ff7e38", date: "2026-10-22",
+    url: "https://Oct2026handsonlycprmontesereno.eventbrite.com",
+    aliasUrls: [
+      "https://oct2026handsonlycprmontesereno.eventbrite.com",
+      "https://www.eventbrite.com/e/hands-only-cpr-and-aed-class-15-monte-sereno-15-hrs-2026-tickets-1998436176400",
+    ],
+    facts: {
+      address: "18041 Saratoga-Los Gatos Road, Monte Sereno, CA 95030",
+      category: "education", kidFriendly: false,
+      cost: "low", costNote: "From $17.85",
+      registration: REGISTRATION_FULL,
+      description: "A 90-minute informational workshop for participants age 13 and older, taught by Santa Clara County Fire Department staff. Learn hands-only CPR, AED use, and choking-relief techniques for adults, children, and infants. The class fee is $15 ($17.85 with Eventbrite fees), including a pocket mask and travel first aid kit. This class does not provide certification.",
+      blurb: "For ages 13+: learn hands-only CPR, AED use, and choking relief with county fire staff at Monte Sereno City Hall.",
+      attendanceNote: "Sold out; the organizer offers a waitlist. Participants under 18 need a signed parent or guardian waiver. Open to people who live or work in County Fire's service area.",
+    },
+  },
   // First-party October 21 refresh review. Keep these occurrence-specific
   // repairs ahead of sparse feeds, retained snapshots and cached blurbs.
   // Evidence: docs/qa/2026-10-21-1607-fact-check.md.
