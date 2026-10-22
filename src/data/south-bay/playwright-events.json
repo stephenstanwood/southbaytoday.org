@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T03:00:10.616Z",
+    "generatedAt": "2026-10-22T07:19:54.619Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 34,
-    "eventCount": 451,
+    "eventCount": 448,
     "sourceCount": 21,
     "sources": [
-      "Mountain View Public Library (117)",
+      "Mountain View Public Library (116)",
       "Los Gatos Library (104)",
       "San Jose Jazz (14)",
-      "Linden Tree Books (11)",
+      "Linden Tree Books (10)",
       "History San Jose (8)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
@@ -21,12 +21,12 @@
       "Santana Row (8)",
       "City of Cupertino (24)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (75)",
+      "TheatreWorks Silicon Valley (74)",
       "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (11)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (2)"
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -65,7 +65,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 122,
+        "count": 121,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -107,7 +107,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 11,
+        "count": 10,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -267,7 +267,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 75,
+        "count": 74,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -338,35 +338,16 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
   "events": [
-    {
-      "id": "4826d64a31ed",
-      "title": "Friends of the Library Board Meeting",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "7:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "The Friends of the Library Board Meeting is open to the public. More information for the Friends of the Mountain View Library can be found here: http://www.mvlibraryfriends.org/",
-      "url": "https://mountainview.libcal.com/event/15668064",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
     {
       "id": "ececf9138cfa",
       "title": "CANCELED -- Let's Create",
@@ -5210,28 +5191,6 @@
       "kidFriendly": false
     },
     {
-      "id": "af55e79f6fda",
-      "title": "Book Launch with Wendelin Van Draanen — In conversation with Mark Parsons",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-21"
-      }
-    },
-    {
       "id": "b6f22ae50db0",
       "title": "Storytime with Oliver Chin",
       "date": "2026-10-25",
@@ -5758,10 +5717,10 @@
       "kidFriendly": false
     },
     {
-      "id": "02a5ca2a76a7",
+      "id": "fb25b2546cee",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5778,10 +5737,10 @@
       "kidFriendly": false
     },
     {
-      "id": "e8136efa12b2",
+      "id": "d9ac27775c22",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5798,10 +5757,10 @@
       "kidFriendly": false
     },
     {
-      "id": "272a6f1e30b0",
+      "id": "ebfd118dc61c",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -5883,23 +5842,6 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
       "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "feee73927455",
-      "title": "Engelbert Humperdinck",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "7:30pm",
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -6226,10 +6168,27 @@
       "kidFriendly": false
     },
     {
-      "id": "ab448b9e4ddb",
+      "id": "ff746328b758",
+      "title": "The Who’s Tommy – Broadway San Jose",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": null,
+      "endTime": null,
+      "venue": "Center for the Performing Arts",
+      "address": "255 S Almaden Blvd, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "149424dcb857",
       "title": "Toddler Storytime",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
+      "date": "2026-10-22",
+      "displayDate": "Thu, Oct 22",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -6435,7 +6394,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-22T02:58:51.171Z"
+        "checkedAt": "2026-10-22T07:18:38.826Z"
       }
     },
     {
@@ -6458,7 +6417,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-22T02:58:51.171Z"
+        "checkedAt": "2026-10-22T07:18:38.826Z"
       }
     },
     {
@@ -6481,7 +6440,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-22T02:58:51.172Z"
+        "checkedAt": "2026-10-22T07:18:38.827Z"
       }
     },
     {
@@ -6504,7 +6463,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-22T02:58:51.174Z"
+        "checkedAt": "2026-10-22T07:18:38.828Z"
       }
     },
     {
@@ -6527,7 +6486,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-22T02:58:51.175Z"
+        "checkedAt": "2026-10-22T07:18:38.829Z"
       }
     },
     {
@@ -6550,7 +6509,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T02:58:51.178Z"
+        "checkedAt": "2026-10-22T07:18:38.833Z"
       }
     },
     {
@@ -6573,7 +6532,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T02:58:51.178Z"
+        "checkedAt": "2026-10-22T07:18:38.833Z"
       }
     },
     {
@@ -6596,7 +6555,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-22T02:58:51.178Z"
+        "checkedAt": "2026-10-22T07:18:38.833Z"
       }
     },
     {
@@ -7019,7 +6978,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7036,7 +6995,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7053,7 +7012,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -7090,23 +7049,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "0f5435ff4247",
-      "title": "Dracula",
-      "date": "2026-10-21",
-      "displayDate": "Wed, Oct 21",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7511",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -8878,6 +8820,41 @@
       "kidFriendly": true
     },
     {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -8995,41 +8972,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
