@@ -229,7 +229,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: "claude-sonnet-5",
+      model: "claude-sonnet-5-5",
       max_tokens: 2048,
       messages: [{ role: "user", content: prompt }],
     }),

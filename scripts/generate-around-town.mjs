@@ -33,7 +33,7 @@ if (!ANTHROPIC_API_KEY) {
   process.exit(1);
 }
 
-const CLAUDE_SONNET = "claude-sonnet-5";
+const CLAUDE_SONNET = "claude-sonnet-5-5";
 
 // ── City config ──
 
