@@ -149,6 +149,32 @@ test("exact (title,url) dedup requires both title and url to match", () => {
   assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
 });
 
+test("preserves separately sourced showtimes on a shared organizer page", () => {
+  const url = "https://www.sapcenter.com/events/detail/disney-on-ice-4";
+  const show = (id, time) => ev({
+    id, title: "Disney on Ice", date: "2026-10-24", time,
+    venue: "SAP Center", source: "SAP Center", url,
+    occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: url, date: "2026-10-24", time },
+  });
+  const morning = show("morning", "11:00 AM");
+  const afternoon = show("afternoon", "3:00 PM");
+  const evening = show("evening", "7:00 PM");
+  for (const events of [[morning, afternoon, evening], [evening, afternoon, morning]]) {
+    assert.equal(fuzzyDedupEvents(events).droppedCount, 0);
+    const duplicate = { ...afternoon, id: "duplicate" };
+    assert.equal(fuzzyDedupEvents([...events, duplicate]).kept.length, 3);
+  }
+  // A mismatched or missing evidence clock cannot establish another showtime.
+  for (const evidence of [
+    undefined,
+    { ...afternoon.occurrenceEvidence, time: "7:00 PM" },
+    { ...afternoon.occurrenceEvidence, date: "2026-10-25" },
+    { ...afternoon.occurrenceEvidence, sourceUrl: "https://www.sapcenter.com/events/" },
+  ]) {
+    assert.equal(fuzzyDedupEvents([morning, { ...afternoon, occurrenceEvidence: evidence }]).kept.length, 1);
+  }
+});
+
 test("first-party occurrence time wins over a richer aggregator duplicate", () => {
   const officialUrl = "https://my.montalvoarts.org/3230/3231";
   const events = [

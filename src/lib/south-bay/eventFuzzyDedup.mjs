@@ -278,7 +278,19 @@ export function fuzzyDedupEvents(events) {
         const e2 = candidates[j];
         if (dropIds.has(e2.id)) continue;
 
-        // Exact (title, url) match is a certain duplicate — two ingest paths
+        const tm2 = parseTimeMin(e2.time);
+        // A production page can name several showtimes. A clock in dated
+        // first-party evidence must match its row; an inferred/default clock
+        // cannot establish a separate performance (the SJMA noon fallback).
+        if (e1.url && e1.url === e2.url && tm1 != null && tm2 != null && tm1 !== tm2
+          && [e1, e2].every((event) => firstPartyAuthorityScore(event) > 0
+            && event.occurrenceEvidence.sourceUrl === event.url
+            && parseTimeMin(event.occurrenceEvidence.time) === parseTimeMin(event.time))) {
+          continue;
+        }
+
+        // Without separate sourced showtimes, exact (title, url) matches are
+        // duplicates — two ingest paths
         // scraping the same organizer feed (e.g. SJMA's direct scraper +
         // the Playwright mirror) can disagree on id shape or time (one
         // resolves a detail-page time, the other defaults to noon), but
@@ -321,7 +333,6 @@ export function fuzzyDedupEvents(events) {
         }
         if (!titleMatch) continue;
 
-        const tm2 = parseTimeMin(e2.time);
         if (e1.source && e1.source === e2.source && tm1 != null && tm2 != null && Math.abs(tm1 - tm2) > 30) {
           continue;
         }

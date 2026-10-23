@@ -2348,7 +2348,7 @@ async function scrapeLevisStadium(page) {
   }).filter(Boolean);
 }
 
-async function scrapeSapCenter(page) {
+export async function scrapeSapCenter(page, { today = TODAY } = {}) {
   const calendarUrl = "https://www.sapcenter.com/events/";
   await page.goto(calendarUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
@@ -2380,24 +2380,36 @@ async function scrapeSapCenter(page) {
           return idx >= 0 ? lines[idx + 1] : null;
         };
         const venue = lines.some((line) => /^at\s+Tech CU Arena$/i.test(line)) ? "Tech CU Arena" : "SAP Center";
-        const dateLine = lineAfter("Date");
+        const dateLine = lineAfter("Date")
+          || document.querySelector(".sidebar_date")?.textContent?.replace(/\s+/g, " ").trim();
         const eventStarts = lineAfter("Event Starts");
         const year = dateLine?.match(/\b(20\d{2})\b/)?.[1] || new Date().getFullYear();
         const schedules = [];
-        for (let i = 0; i < lines.length - 1; i++) {
-          const date = lines[i].match(/^(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),\s+([A-Z]+)\s+(\d{1,2})$/i);
-          if (!date) continue;
-          const time = lines[i + 1];
-          if (!/\b\d{1,2}(?::\d{2})?\s*(am|pm)\b/i.test(time)) continue;
-          schedules.push({ dateText: `${date[2]} ${date[3]}, ${year}`, time });
+        // Read the actual showing rows before the layout-dependent innerText
+        // fallback; responsive CSS can split their weekday/month/day across lines.
+        for (const showing of document.querySelectorAll(".event_showings li")) {
+          const date = showing.querySelector(".showings_date")?.textContent?.replace(/\s+/g, " ").trim()
+            .match(/^(?:MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),\s+([A-Z]+)\s+(\d{1,2})$/i);
+          const time = showing.querySelector(".time")?.textContent?.match(/\b\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/i)?.[0];
+          if (date && time) schedules.push({ dateText: `${date[1]} ${date[2]}, ${year}`, time });
+        }
+        if (!schedules.length) {
+          for (let i = 0; i < lines.length - 1; i++) {
+            const date = lines[i].match(/^(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),\s+([A-Z]+)\s+(\d{1,2})$/i);
+            if (!date) continue;
+            const time = lines[i + 1];
+            if (!/\b\d{1,2}(?::\d{2})?\s*(am|pm)\b/i.test(time)) continue;
+            schedules.push({ dateText: `${date[2]} ${date[3]}, ${year}`, time });
+          }
         }
         const detailsStart = lines.findIndex((line) => /^Event Details$/i.test(line));
         const detailsEnd = detailsStart >= 0
           ? lines.findIndex((line, idx) => idx > detailsStart && /^(May|June|July|August|September|October|November|December)\s+20\d{2}$|^EVENTS & TICKETS$|^View all events/i.test(line))
           : -1;
-        const description = detailsStart >= 0
-          ? lines.slice(detailsStart + 1, detailsEnd > detailsStart ? detailsEnd : detailsStart + 8).join(" ").replace(/\s+/g, " ").trim()
-          : "";
+        const description = document.querySelector(".event_description")?.textContent?.replace(/\s+/g, " ").trim()
+          || (detailsStart >= 0
+            ? lines.slice(detailsStart + 1, detailsEnd > detailsStart ? detailsEnd : detailsStart + 8).join(" ").replace(/\s+/g, " ").trim()
+            : "");
         return { title, subtitle, venue, dateLine, eventStarts, schedules, description };
       });
 
@@ -2417,7 +2429,7 @@ async function scrapeSapCenter(page) {
     const title = normalizeSapCenterTitle(r);
     const date = yearAwareDate(r.dateText);
     const time = clockFromText(r.time);
-    if (!date || date < TODAY || !time || !isUsefulTitle(title)) return null;
+    if (!date || date < today || !time || !isUsefulTitle(title)) return null;
     const key = `${date}|${time}|${title}|${r.venue}`;
     if (seen.has(key)) return null;
     seen.add(key);
@@ -2431,6 +2443,12 @@ async function scrapeSapCenter(page) {
       city: "san-jose",
       url: r.url || calendarUrl,
       source: r.venue === "Tech CU Arena" ? "Tech CU Arena" : "SAP Center",
+      // A shared production URL can list several performances on the same day.
+      // Preserve the clock observed in its schedule so dedup can distinguish them.
+      ...(r.schedules.length ? { occurrenceEvidence: {
+        kind: "first-party-occurrence-page", sourceUrl: r.url, date, time,
+        checkedAt: new Date().toISOString(),
+      } } : {}),
       category: inferCategory(title),
       cost: "paid",
       description: r.description || "",

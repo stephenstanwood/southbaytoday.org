@@ -4,6 +4,14 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves Stanford's source-supplied SLE program initials", () => {
+  const title = "SLE Salon: Haleh Gafori";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription("Meet in the SLE Main Lounge."), "Meet in the SLE Main Lounge.");
+  assert.equal(cleanTitle("ANNUAL Salon"), "Annual Salon");
+});
+
 // ---------------------------------------------------------------------------
 // Local agency acronyms in event titles
 // ---------------------------------------------------------------------------

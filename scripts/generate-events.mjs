@@ -815,6 +815,8 @@ function isPublicEvent(title, source, description, venue) {
 // Known recurring scraper typos — keyed by the bad string, value is the fix.
 // Add entries here when a source consistently sends bad data.
 const TITLE_FIXES = {
+  // SJPL's recurring resume-review heading carries this spelling on refresh.
+  "Interview Prepration": "Interview Preparation",
   "Environmental Humanties Project": "Environmental Humanities Project",
   "Fun Runa": "Fun Run",
   // Source copy that otherwise regresses on each library/Meetup refresh.
@@ -931,6 +933,8 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // A library computer-basics description splits the city's own name.
+  "S an José": "San José",
   // Books Inc's heading says IIZE; its guest bio and the translator's own
   // https://www.ilzeduarteliterarytranslator.com/blank-1 use Ilze Duarte.
   "Iize Duarte": "Ilze Duarte",
@@ -1026,6 +1030,8 @@ const SOURCE_EVENT_ACRONYMS = [
   "WABE",
   // Organizer-supplied AI Night titles name AWS alongside Anthropic and Temporal.
   "AWS",
+  // Stanford's Structured Liberal Education program publishes "SLE Salon".
+  "SLE",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -3033,6 +3039,9 @@ function cleanVenue(raw) {
   v = v.replace(/\s{2,}[A-Za-z][A-Za-z\s]+[A-Z]{2}\s+\d{5}.*$/, "");
   // Remove inline address blob: "Name  123 Street..." or "Name 123 Street..." with double-space
   v = v.replace(/\s{2,}\d+\s+.*$/, "");
+  // SCU appends its numbered El Camino Real street address after a room name.
+  // "Real" is part of this street name, rather than a conventional suffix.
+  v = v.replace(/,\s*\d+\s+El Camino Real\b(?:,\s*Santa Clara(?:,\s*CA(?:\s+\d{5})?)?)?\s*$/i, "");
   // Remove single-space inline address blob: "Vasona Park 233 Blossom Hill Rd." → "Vasona Park"
   // Trigger only when the trailing chunk starts with a number and ends with a street suffix
   // so we don't chop legitimate venue names that contain numbers (e.g. "Building 5").

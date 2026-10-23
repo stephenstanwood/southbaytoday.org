@@ -36,6 +36,14 @@ test("cleanVenue keeps stripping the street address ahead of the city tail", () 
   assert.equal(cleanVenue("Vasona Park 233 Blossom Hill Rd."), "Vasona Park");
 });
 
+test("cleanVenue separates a numbered El Camino Real address from the room name", () => {
+  const venue = "Lucas Hall 126 (Leavey School of Business), Santa Clara University";
+  assert.equal(cleanVenue(`${venue}, 500 El Camino Real`), venue);
+  assert.equal(cleanVenue(`${venue}, 500 El Camino Real, Santa Clara, CA 95053`), venue);
+  assert.equal(cleanVenue(venue), venue);
+  assert.equal(cleanVenue("El Camino Real Conference Room 500"), "El Camino Real Conference Room 500");
+});
+
 test("cleanVenue still drops a bare city suffix with no address", () => {
   assert.equal(cleanVenue("West Valley College, Saratoga"), "West Valley College");
   assert.equal(

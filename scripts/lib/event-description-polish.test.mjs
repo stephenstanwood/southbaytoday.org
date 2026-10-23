@@ -13,6 +13,18 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("corrects the recurring library interview-preparation title typo", () => {
+  const title = "Resume Review & Interview Preparation";
+  assert.equal(cleanTitle("Resume Review & Interview Prepration"), title);
+  assert.equal(cleanTitle(title), title);
+});
+
+test("restores San José when library source copy splits its city name", () => {
+  const expected = "Build digital skills at your local San José Public Library.";
+  assert.equal(polishDescription(expected.replace("San José", "S an José")), expected);
+  assert.equal(polishDescription(expected), expected);
+});
+
 test("corrects Books Inc's Ilze Duarte typo in raw titles and cached copy", () => {
   // The organizer's event heading says IIZE, but its guest bio and the
   // translator's own website identify her as Ilze Duarte.

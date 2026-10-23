@@ -84,6 +84,39 @@ import {
   parseSantanaRowOccurrences,
 } from "./official-event-sources.mjs";
 import { parseHistorySjDateRange } from "./history-sj.mjs";
+import { scrapeSapCenter, normalizePlaywrightEvent } from "../playwright-scrapers.mjs";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+
+test("SAP Center's listed same-day performances survive normalization and deduplication", async () => {
+  // Dates and clocks from the venue's Disney on Ice page, October 22, 2026.
+  const url = "https://www.sapcenter.com/events/detail/disney-on-ice-4";
+  let currentUrl;
+  const page = {
+    goto: async (value) => { currentUrl = value; },
+    waitForTimeout: async () => {},
+    evaluate: async () => currentUrl.endsWith("/events/") ? [url] : {
+      title: "Disney On Ice", subtitle: "Find Your Hero", venue: "SAP Center",
+      dateLine: "Oct 22 - 25, 2026", eventStarts: null, description: "Disney on Ice presents Find Your Hero.",
+      schedules: [
+        { dateText: "October 23, 2026", time: "7:00 PM" },
+        { dateText: "October 24, 2026", time: "11:00 AM" },
+        { dateText: "October 24, 2026", time: "3:00 PM" },
+        { dateText: "October 24, 2026", time: "7:00 PM" },
+        { dateText: "October 25, 2026", time: "1:00 PM" },
+        { dateText: "October 25, 2026", time: "5:00 PM" },
+      ],
+    },
+  };
+  const events = (await scrapeSapCenter(page, { today: "2026-10-22" })).map(normalizePlaywrightEvent);
+  assert.equal(events.length, 6);
+  assert.equal(new Set(events.map((event) => event.id)).size, 6);
+  for (const event of events) {
+    assert.equal(event.occurrenceEvidence.sourceUrl, url);
+    assert.equal(event.occurrenceEvidence.date, event.date);
+    assert.equal(event.occurrenceEvidence.time, event.time);
+  }
+  assert.equal(fuzzyDedupEvents(events).kept.length, 6);
+});
 
 test("History San Jose date paragraphs preserve ranges and reject impossible dates", () => {
   const card = (date) => `<div class="event-content"><p>${date}</p><h2>Event</h2></div>`;

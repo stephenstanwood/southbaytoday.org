@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-23T04:43:59.386Z",
-  "eventCount": 1839,
+  "eventCount": 1842,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2333,12 +2333,12 @@
       "label": "Playwright source snapshot",
       "critical": true,
       "status": "ok",
-      "count": 448,
+      "count": 449,
       "dateCounts": {
         "2026-10-22": 8,
         "2026-10-23": 9,
         "2026-10-24": 17,
-        "2026-10-25": 9,
+        "2026-10-25": 10,
         "2026-10-26": 4,
         "2026-10-27": 12,
         "2026-10-28": 17,
@@ -2542,7 +2542,7 @@
     {
       "name": "playwright-events",
       "status": "ok",
-      "count": 448,
+      "count": 449,
       "timestamp": "2026-10-23T04:18:55.091Z",
       "ageHours": 0.31,
       "reason": null
@@ -6942,7 +6942,7 @@
       "displayDate": "Wed, Oct 28",
       "time": "11:45 AM",
       "endTime": null,
-      "venue": "Lucas Hall 126 (Leavey School of Business), Santa Clara University, 500 El Camino Real",
+      "venue": "Lucas Hall 126 (Leavey School of Business), Santa Clara University",
       "address": "",
       "city": "santa-clara",
       "category": "community",
@@ -8631,7 +8631,14 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
       "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
-      "firstSeenAt": "2026-09-25T02:21:48.149Z"
+      "firstSeenAt": "2026-09-25T02:21:48.149Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-23",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-23T05:17:26.802Z"
+      }
     },
     {
       "id": "1164b892d861",
@@ -8652,7 +8659,14 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
       "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
-      "firstSeenAt": "2026-09-25T02:21:48.149Z"
+      "firstSeenAt": "2026-09-25T02:21:48.149Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-24",
+        "time": "11:00 AM",
+        "checkedAt": "2026-10-23T05:17:26.804Z"
+      }
     },
     {
       "id": "37008b3a76f1",
@@ -8673,7 +8687,14 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
       "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
-      "firstSeenAt": "2026-10-23T04:25:58.192Z"
+      "firstSeenAt": "2026-10-23T04:25:58.192Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-25",
+        "time": "1:00 PM",
+        "checkedAt": "2026-10-23T05:17:26.804Z"
+      }
     },
     {
       "id": "3d2ddac93b55",
@@ -14922,7 +14943,7 @@
       "city": "san-jose",
       "category": "education",
       "cost": "free",
-      "description": "Free. Register for reminders. Drop-ins welcome. Build up your knowledge and boost your confidence with technology! Learn the essentials for your work and personal life. Lesson Overview: Understand how computers work; Basic terms and vocabulary; Common computer tasks; Working with files. Use your own device or borrow one of ours during the program! With SJPL's Digital Skill Building Pathways, you can practice the skills essential to living and working in the digital world. Learning paths include free lessons, resources, and library events like computer classes. Practice your digital skills at your own pace at sjpl.org/digital-skills or find a program at your local S an José Public Library location. #digitalskillbuildingpathways #dsb Digital Skills",
+      "description": "Free. Register for reminders. Drop-ins welcome. Build up your knowledge and boost your confidence with technology! Learn the essentials for your work and personal life. Lesson Overview: Understand how computers work; Basic terms and vocabulary; Common computer tasks; Working with files. Use your own device or borrow one of ours during the program! With SJPL's Digital Skill Building Pathways, you can practice the skills essential to living and working in the digital world. Learning paths include free lessons, resources, and library events like computer classes. Practice your digital skills at your own pace at sjpl.org/digital-skills or find a program at your local San José Public Library location. #digitalskillbuildingpathways #dsb Digital Skills",
       "sourceAudiences": [
         "Adults, ages 18+",
         "Seniors, ages 65+"
@@ -23939,7 +23960,7 @@
     },
     {
       "id": "sjpl-69e2697afca21471b7ef7ec2",
-      "title": "Resume Review & Interview Prepration",
+      "title": "Resume Review & Interview Preparation",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
       "time": "3:30 PM",
@@ -31882,7 +31903,7 @@
     },
     {
       "id": "stanford-54162072231092-2026-10-23",
-      "title": "Sle Salon: Haleh Gafori, an American poet of Persian descent, will recite and discuss her translations of a vibrant selection of poems by the great Persian mystic Rumi",
+      "title": "SLE Salon: Haleh Gafori, an American poet of Persian descent, will recite and discuss her translations of a vibrant selection of poems by the great Persian mystic Rumi",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
       "time": "12:15 PM",
@@ -46376,6 +46397,87 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/rent-stabilization-101-workshop-senior-center-social-hall-mountain-view-1792122707894-280.webp",
       "blurb": "Learn the key points of Mountain View's rent stabilization rules and tenant protections at this in-person workshop.",
       "firstSeenAt": "2026-10-16T03:52:48.712Z"
+    },
+    {
+      "id": "82353fdd0db5",
+      "title": "Disney on Ice",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "3:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel's family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch's hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
+      "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-24",
+        "time": "3:00 PM",
+        "checkedAt": "2026-10-23T05:17:26.804Z"
+      }
+    },
+    {
+      "id": "810b88595385",
+      "title": "Disney on Ice",
+      "date": "2026-10-24",
+      "displayDate": "Sat, Oct 24",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel's family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch's hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
+      "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-24",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-23T05:17:26.804Z"
+      }
+    },
+    {
+      "id": "e00fa2a3f7ef",
+      "title": "Disney on Ice",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "5:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel's family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch's hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/Aa-ngMbDsoW45suU5PxpNTfpVQC5CjDvN3l-_1vZNWMMAZU2UTr8CC2rsKCDwBBw5n8qNfq7BivRAsWBTibAqNf8Qx_eZpVR7maTyEUOQo__rAhfOpYoYYtFIbdGMzJrbtDnJJTWBmglKSvTTLiE1q1ixVdG1vPy1loxXF9LvWqf7dIjjQbU8cSxPUbhjwiUYSQF4TO2K3WtsixnvqZG8elz8X2TMLZkK3M7NG-qbHZX6WYWJbDI6K6kmvEiWckDuPb_4xUL7J1DaUtH9rJGqKzYeDN1Cpf-GBXUtGYKQlp4l9tv5lcaOUtq1Y3UA7zpB8mY7KI-8XaR0oSnMVEysaly2eetshey6oOJN0PLFVKO9sWos-HnsZRJbfa49JgrcCNtievuIo0u4Gq8dyWISrYLNuqaKLlGFU1Kr4eNZojYya2Z4kf4",
+      "blurb": "Watch Disney characters skate through favorite stories including Moana, Frozen, and Encanto on the SAP Center ice.",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-25",
+        "time": "5:00 PM",
+        "checkedAt": "2026-10-23T05:17:26.804Z"
+      }
     }
   ]
 }
