@@ -1,19 +1,43 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-22T03:37:23.569Z",
+      "generatedAt": "2026-10-23T04:37:35.040Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 14 – Oct 21",
+      "dateRange": "Oct 15 – Oct 22",
       "stats": {
-        "total": 475,
-        "notable": 43,
-        "newUnits": 19,
-        "totalValuation": 88768090
+        "total": 484,
+        "notable": 46,
+        "newUnits": 22,
+        "totalValuation": 114477464
       },
       "permits": [
+        {
+          "id": "2026-136846-MF",
+          "address": "477 S 1st St",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "Gateway New Construction",
+          "valuation": 33113559,
+          "units": 1,
+          "issueDate": "2026-10-20",
+          "subtype": "Apartment"
+        },
+        {
+          "id": "2026-142306-MF",
+          "address": "0 Seely Av",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "Trimble Summerhill a New Three Story 4-Plex New Construction (Bldg 22)",
+          "valuation": 1492176,
+          "units": 4,
+          "issueDate": "2026-10-20",
+          "subtype": "Apt/Condo/Townhouse"
+        },
         {
           "id": "2026-137775-RS",
           "address": "8 Aldeia Dr",
@@ -109,57 +133,33 @@
           "units": 1,
           "issueDate": "2026-10-15",
           "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-137827-RS",
-          "address": "5 Aldeia Dr",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Plan 2ar - 'Lot 14' New Construction",
-          "valuation": 430555,
-          "units": 2,
-          "issueDate": "2026-10-15",
-          "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-137004-RS",
-          "address": "11 Aldeia Dr",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Plan 2b - 'Lot 17' New Construction",
-          "valuation": 424925,
-          "units": 1,
-          "issueDate": "2026-10-15",
-          "subtype": "Single-Family"
         }
       ]
     },
     "palo-alto": {
-      "generatedAt": "2026-10-22T03:37:25.817Z",
+      "generatedAt": "2026-10-23T04:37:37.766Z",
       "city": "Palo Alto",
       "source": "gis.cityofpaloalto.org",
       "sourceUrl": "https://gis.cityofpaloalto.org/PermitView/",
       "windowDays": 7,
-      "dateRange": "Oct 14 – Oct 21",
+      "dateRange": "Oct 15 – Oct 22",
       "stats": {
-        "total": 132,
-        "notable": 6,
+        "total": 106,
+        "notable": 5,
         "newUnits": 0,
         "totalValuation": 0
       },
       "permits": [
         {
-          "id": "26BLD-02962",
-          "address": "618 Wildwood Ln",
+          "id": "26BLD-02970",
+          "address": "3423 Ashton Ct",
           "category": "residential-remodel",
           "categoryLabel": "Home Remodel",
           "workType": "Web - Kitchen or Bath Remodel",
           "description": "Instant permit for a residential single-family kitchen or bath remodel.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-15",
+          "issueDate": "2026-10-16",
           "subtype": "Permit Issued"
         },
         {
@@ -175,27 +175,15 @@
           "subtype": "Permit Issued"
         },
         {
-          "id": "26BLD-02970",
-          "address": "3423 Ashton Ct",
-          "category": "residential-remodel",
-          "categoryLabel": "Home Remodel",
-          "workType": "Web - Kitchen or Bath Remodel",
-          "description": "Instant permit for a residential single-family kitchen or bath remodel.",
-          "valuation": 0,
-          "units": 0,
-          "issueDate": "2026-10-16",
-          "subtype": "Permit Issued"
-        },
-        {
-          "id": "26PLN-00295",
-          "address": "471 Emerson St",
+          "id": "26PLN-00303",
+          "address": "2875 El Camino Real",
           "category": "entitlement",
           "categoryLabel": "Entitlement / Zoning",
           "workType": "Entitlement",
-          "description": "Request for an Over the Counter Architectural Review to allow for the installation of one non-illuminated wall sign. The sign is proposed to be 12 feet by 2.5 feet constructed from acrylic lettering reading, \"AKOOL\". Environmental Assessment: Exempt from the provisions of CEQA per Section 15301 (existing Facilities). For more information, contact Bryan Boozari at bryan.boozari@paloalto.gov.",
+          "description": "Request for Architectural Review for Exterior paint color change to existing commercial office building.",
           "valuation": 0,
           "units": 0,
-          "issueDate": "2026-10-15",
+          "issueDate": "2026-10-21",
           "subtype": "Over the Counter Approved"
         },
         {

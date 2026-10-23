@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T03:37:23.147Z",
+  "generatedAt": "2026-10-23T04:37:34.813Z",
   "meetings": {
     "san-jose": {
       "date": "2026-10-27",
@@ -36,7 +36,84 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-10-27",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-21T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-22T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "mountain-view": {
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "startTime": "17:15",
+      "bodyName": "City Council",
+      "location": "Council Chambers and Video Conference",
+      "closedSession": false,
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3367&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3367,
+      "agendaItems": [
+        {
+          "title": "Breast Cancer Awareness Month Proclamation",
+          "sequence": 11
+        },
+        {
+          "title": "Midpeninsula Regional Open Space District Presentation",
+          "sequence": 12
+        },
+        {
+          "title": "Simon Kensky, Elementary School Mayor for a Day Certificate of Recognition",
+          "sequence": 9
+        },
+        {
+          "title": "Yichen Yang, Middle School Mayor for a Day Certificate of Recognition",
+          "sequence": 10
+        },
+        {
+          "title": "LinkedIn Development Agreement Amendment at 700-810 East Middlefield Road and 1100-1200 Maude Avenue (Second Reading)",
+          "sequence": 14
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-10-27",
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-22T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "startTime": "19:00",
+      "closedSessionStart": "18:00",
+      "bodyName": "City Council",
+      "location": "Online and Council Chambers, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4526&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4526,
+      "agendaItems": [
+        {
+          "title": "World Town Planning Day",
+          "sequence": 15
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of September 29, 2026",
+          "sequence": 18
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of October 6, 2026",
+          "sequence": 19
+        },
+        {
+          "title": "Authorize the Issuance of a Purchase Order to Golden State Fire Apparatus, Inc. in the Amount of $7,372,642.10 for Three Pierce Manufacturing, Inc. 100-foot Velocity Mid-Mount Ascendant Tower Fire Apparatuses (F27-088)",
+          "sequence": 22
+        },
+        {
+          "title": "Adopt a Resolution Amending the FY 2026/27 Fee Schedule to Clarify the Applicable Permit Fee for Downtown Outdoor Dining with no Change in Amount",
+          "sequence": 23
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-10-27",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-22T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -46,13 +123,13 @@
       "bodyName": "City Council Special Meeting ",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21806",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21862",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-10-26",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21806"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21862"
       }
     },
     "milpitas": {
@@ -69,7 +146,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-21T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-22T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -86,7 +163,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-10-27",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-21T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-22T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -113,11 +190,11 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "cupertino": {
       "provider": "Legistar",
