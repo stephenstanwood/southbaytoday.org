@@ -125,7 +125,7 @@ test("a dated in-person class publishes with its venue, city, and checkout price
   assert.equal(cls.source, "SC County Fire Dept");
   // The title's own "$15" is the class fee; checkout starts at $17.85 with the
   // Eventbrite fee. Publishing both would put two different prices on one card.
-  assert.equal(cls.title, "Hands Only CPR and AED Class");
+  assert.equal(cls.title, "Hands-Only CPR and AED Class");
   assert.equal(cls.cost, "low");
   assert.equal(cls.costNote, "From $17.85");
 });
@@ -207,7 +207,7 @@ test("Monte Sereno files under Los Gatos without misstating the address", async 
   assert.equal(events[0].city, "los-gatos");
   assert.equal(events[0].venue, "Monte Sereno City Hall");
   assert.match(events[0].address, /Monte Sereno, CA 95030$/);
-  assert.equal(events[0].title, "Hands Only CPR and AED Class");
+  assert.equal(events[0].title, "Hands-Only CPR and AED Class");
 });
 
 test("a non-Pacific listing drops rather than publishing a shifted clock time", async () => {

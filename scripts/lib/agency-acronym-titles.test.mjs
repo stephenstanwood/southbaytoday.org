@@ -82,6 +82,7 @@ test("refresh preserves university seminar, donor and opponent initials", () => 
     "REDS Seminar - Milada Vachudova: Europe in the Face of War",
     "ST Lee Lecture featuring Former Congressman and Ambassador to Turkey Jeff Flake",
     "Santa Clara University Men's Water Polo vs LIU",
+    "Women's Volleyball - San Jose State vs. UTEP",
     "An Intimate Evening with Dr. Samuel Waymon at DAAAS",
     "Designing for Safety with Caitlin Burke, PhD, JD",
   ]) {

@@ -988,6 +988,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // seminar, the ST Lee Lecture, and Long Island University's team initials.
   // Evidence: docs/qa/2026-10-17-2007-fact-check.md.
   "ESE", "ISA", "ST", "LIU",
+  // SJSU's volleyball calendar supplies the University of Texas at El Paso's
+  // opponent initials; preserve them in both titles and source prose.
+  "UTEP",
   // Stanford's Rethinking European Development and Security seminar series.
   // Preserve its published REDS initials in titles and descriptions.
   "REDS",
@@ -6698,6 +6701,13 @@ async function fetchHappyHollowEvents() {
 // ── MACLA (Movimiento de Arte y Cultura Latino Americana) ──
 // San Jose arts center — uses MEC WordPress plugin with mec:startDate in RSS
 
+function maclaClockInstant(date, clock) {
+  const match = /^(\d{1,2}):([0-5]\d) (AM|PM)$/.exec(clock || "");
+  if (!date || !match || Number(match[1]) < 1 || Number(match[1]) > 12) return null;
+  const hour = Number(match[1]) % 12 + (match[3] === "PM" ? 12 : 0);
+  return parseDatePT(`${date}T${String(hour).padStart(2, "0")}:${match[2]}:00`);
+}
+
 async function fetchMaclaEvents() {
   console.log("  ⏳ MACLA...");
   try {
@@ -6712,8 +6722,6 @@ async function fetchMaclaEvents() {
         // day early: the Diana Gameros concert MACLA dates Friday Oct 23 was
         // published here as Oct 22. parseDatePT anchors calendar dates at
         // Pacific midnight, which is exactly what it exists for.
-        const start = parseDatePT(item.mecStartDate) || parseDate(item.startDate || item.pubDate);
-        const end = item.mecEndDate ? parseDatePT(item.mecEndDate) : null;
         const description = stripHtml(item.description || item.content || "");
         // RSS excerpts can cut off the ticket tiers; use the complete item
         // body already in this feed. Gallery admission does not establish a
@@ -6727,6 +6735,21 @@ async function fetchMaclaEvents() {
         // MEC's clock can be doors. A labeled show clock in the same source
         // body is the performance start, without an extra detail-page fetch.
         const showTime = fullText.match(/\bshow\s*:\s*((?:1[0-2]|0?[1-9])(?::[0-5]\d)?\s*[ap]m)\b/i)?.[1];
+        // Prefer mec:startHour ("7:30 pm") over mec:startTime ("19:30:00").
+        const startTime = showTime ? formatHourClock(showTime) : item.mecStartHour
+          ? formatHourClock(item.mecStartHour)
+          : (item.mecStartTime ? displayTime(parseDatePT(`${item.mecStartDate}T${item.mecStartTime}`)) : null);
+        const endTime = item.mecEndHour
+          ? formatHourClock(item.mecEndHour)
+          : ((item.mecEndTime && item.mecEndDate) ? displayTime(parseDatePT(`${item.mecEndDate}T${item.mecEndTime}`)) : null);
+        // resolveRunWindow compares instants. A date-only midnight would drop
+        // tonight's concert on its morning and an exhibit on its closing day.
+        // Use each source clock, including the labeled show time, before that
+        // comparison; parseDatePT resolves the offset for each calendar date.
+        const start = maclaClockInstant(item.mecStartDate, startTime)
+          || parseDatePT(item.mecStartDate) || parseDate(item.startDate || item.pubDate);
+        const end = maclaClockInstant(item.mecEndDate, endTime)
+          || (item.mecEndDate ? parseDatePT(item.mecEndDate) : null);
         // MACLA's gallery shows run for months. Keep them while they're open.
         const run = resolveRunWindow(start, end, now, {
           title: item.title,
@@ -6734,19 +6757,12 @@ async function fetchMaclaEvents() {
           venue: "MACLA",
         });
         if (!run) return null;
-        // Prefer mec:startHour ("7:30 pm" — already in clock format) over mec:startTime ("19:30:00")
-        const startTime = item.mecStartHour
-          ? formatHourClock(item.mecStartHour)
-          : (item.mecStartTime ? displayTime(parseDatePT(`${item.mecStartDate}T${item.mecStartTime}`)) : null);
-        const endTime = item.mecEndHour
-          ? formatHourClock(item.mecEndHour)
-          : ((item.mecEndTime && item.mecEndDate) ? displayTime(parseDatePT(`${item.mecEndDate}T${item.mecEndTime}`)) : null);
         return {
           id: h("macla", item.link || item.title, item.mecStartDate || item.pubDate),
           title: item.title,
           date: isoDate(run.date),
           displayDate: displayDate(run.date),
-          time: run.ongoing ? null : (showTime ? formatHourClock(showTime) : startTime),
+          time: run.ongoing ? null : startTime,
           endTime: run.ongoing ? null : endTime,
           ...(run.ongoing ? { ongoing: true } : {}),
           venue: "MACLA",
