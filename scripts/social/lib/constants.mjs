@@ -19,7 +19,7 @@ export const CONFIG = {
 };
 
 // Sonnet for cheap bulk work: classifier, fact-check, editorial filter, reply triage.
-export const CLAUDE_MODEL = "claude-sonnet-5";
+export const CLAUDE_MODEL = "claude-sonnet-5-5";
 
 // Opus for user-facing copy generation (day-plan social posts, tonight picks,
 // wildcards, restaurant opening blurbs, daily-email blurbs). Each daily run

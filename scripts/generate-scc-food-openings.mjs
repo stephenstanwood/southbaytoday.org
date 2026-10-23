@@ -886,7 +886,7 @@ Respond with JSON: array of objects with "sourceId" and "prompt" fields only. No
 
   try {
     const msg = await client.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-sonnet-5-5",
       max_tokens: 1500,
       messages: [{ role: "user", content: prompt }],
     });

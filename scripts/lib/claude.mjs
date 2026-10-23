@@ -38,7 +38,7 @@
 const API_URL = "https://api.anthropic.com/v1/messages";
 const API_VERSION = "2023-06-01";
 
-export const CLAUDE_SONNET = "claude-sonnet-5";
+export const CLAUDE_SONNET = "claude-sonnet-5-5";
 
 /**
  * Returns the text of the first `text` block in a Messages API content array,
@@ -78,7 +78,7 @@ function retryAfterMs(response, now = Date.now()) {
  * @param {string} prompt
  * @param {object} [opts]
  * @param {string} [opts.apiKey]     defaults to process.env.ANTHROPIC_API_KEY
- * @param {string} [opts.model]      defaults to claude-sonnet-5
+ * @param {string} [opts.model]      defaults to claude-sonnet-5-5
  * @param {number} [opts.maxTokens]  defaults to 2048
  * @param {boolean} [opts.thinking]  extended thinking; defaults to false
  * @param {string} [opts.label]      names this call in error messages

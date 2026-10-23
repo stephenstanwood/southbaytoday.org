@@ -1,6 +1,6 @@
 /** Centralized Claude model ID constants */
 
-export const CLAUDE_SONNET = "claude-sonnet-5";
+export const CLAUDE_SONNET = "claude-sonnet-5-5";
 export const CLAUDE_OPUS = "claude-opus-5-5";
 
 /**

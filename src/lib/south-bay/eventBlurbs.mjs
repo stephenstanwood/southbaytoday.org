@@ -31,7 +31,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(__dirname, "..", "..", "..");
 const CACHE_PATH = join(REPO_ROOT, "src", "data", "south-bay", "event-blurb-cache.json");
 
-const MODEL = "claude-sonnet-5";
+const MODEL = "claude-sonnet-5-5";
 const BATCH_SIZE = 30;
 const MAX_TOKENS = 3000;
 
