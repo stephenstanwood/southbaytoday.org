@@ -62,7 +62,7 @@ export async function generateFoodBlurbMap({ items, prompt, label, createMessage
     const rejected = [];
     try {
       response = await createMessage({
-        model: "claude-sonnet-5",
+        model: "claude-sonnet-5-5",
         max_tokens: maxTokens,
         output_config: { effort: "low", format: { type: "json_schema", schema: BLURB_SCHEMA } },
         messages: [{ role: "user", content: prompt }],
