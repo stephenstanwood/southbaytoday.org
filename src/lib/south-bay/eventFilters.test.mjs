@@ -1067,6 +1067,37 @@ function biblioWindowEvent(registrationEnd, provider = "BIBLIO_EVENTS") {
   return { definition: { registrationInfo: { provider, registrationEnd } } };
 }
 
+test("SCCL's clockless relative deadline closes Teen Burton at midnight", () => {
+  // October 23, 2026 live gateway + registration_windows response for
+  // sccl/6ab49e3e65abe8002a7bb34f: flags still false, but window_end is
+  // 2026-10-23T00:00:00 and status ENDED. The old calculation said 4 PM.
+  const raw = {
+    ...biblioWindowEvent({ ordinal: 1, unit: "days", time: null, date: null, windowType: "RELATIVE" }),
+    isFull: false, registrationClosed: false,
+  };
+  const original = structuredClone(raw);
+  const start = new Date("2026-10-24T16:00:00-07:00");
+  const end = new Date("2026-10-24T17:00:00-07:00");
+  const closes = resolveRegistrationClosesBy(raw, start, end);
+  assert.equal(registrationFromBiblioCommons(raw), "required", "provider flags still lag the window");
+  assert.equal(closes.toISOString(), "2026-10-23T07:00:00.000Z");
+  assert.ok(closes < new Date("2026-10-23T01:00:00-07:00"));
+  assert.ok(closes > new Date("2026-10-22T23:59:00-07:00"));
+  assert.deepEqual(raw, original);
+});
+
+test("relative day deadlines follow Pacific calendar days across DST", () => {
+  for (const [start, expected] of [
+    ["2026-03-09T00:30:00-07:00", "2026-03-08T08:00:00.000Z"],
+    ["2026-11-01T23:30:00-08:00", "2026-10-31T07:00:00.000Z"],
+  ]) {
+    assert.equal(resolveRegistrationClosesBy(
+      biblioWindowEvent({ ordinal: 1, unit: "days", time: null, windowType: "RELATIVE" }),
+      new Date(start), null,
+    ).toISOString(), expected);
+  }
+});
+
 test("EVENT_START windows close relative to the start, hours units included", () => {
   const start = new Date("2026-09-02T16:00:00-07:00");
   const atStart = resolveRegistrationClosesBy(

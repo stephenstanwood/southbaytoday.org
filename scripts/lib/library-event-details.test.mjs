@@ -4,6 +4,41 @@ import { readFileSync } from "node:fs";
 import { biblioEventOccurrence, libraryEventDetails } from "./library-event-details.mjs";
 
 const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
+const midnightWindowFixture = JSON.parse(readFileSync(new URL("./fixtures/sccl-teen-burton-2026-10-23.json", import.meta.url)));
+
+test("both library adapters honor the captured midnight registration deadline", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-22T23:59:00-07:00") });
+  const { fetchBiblioEvents, fetchScclEvents } = await import("../generate-events.mjs");
+  const event = structuredClone(midnightWindowFixture.event);
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const request = new URL(url);
+    assert.equal(request.hostname, "gateway.bibliocommons.com");
+    return Response.json({ entities: { events: request.searchParams.get("page") === "1"
+      ? { [event.id]: event } : {} } });
+  });
+  for (const [now, expected] of [
+    ["2026-10-22T23:59:00-07:00", "required"],
+    [midnightWindowFixture.fetchedAt, "closed"],
+  ]) {
+    t.mock.timers.setTime(new Date(now).getTime());
+    for (const adapter of [
+      () => fetchBiblioEvents("sccl", "Santa Clara County Library", () => "campbell"),
+      fetchScclEvents,
+    ]) {
+      const rows = await adapter();
+      assert.equal(rows.length, 1);
+      const [actual] = rows;
+      assert.equal(actual.registration, expected);
+      assert.equal(actual.registrationClosesBy, "2026-10-23T07:00:00.000Z");
+      assert.equal(actual.date, "2026-10-24");
+      assert.equal(actual.time, "4:00 PM");
+      assert.equal(actual.endTime, "5:00 PM");
+    }
+  }
+  assert.equal(midnightWindowFixture.window.window_end, "2026-10-23T00:00:00");
+  assert.equal(midnightWindowFixture.window.status, "ENDED");
+  assert.deepEqual(event, midnightWindowFixture.event);
+});
 
 test("the captured Halloween display survives both library adapters after its midnight opening", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-21T12:00:00Z") });

@@ -719,7 +719,9 @@ function parsePtDateTime(isoDate, time) {
  *                (ordinal 0 = at start; SJPL teen meetings use hours).
  *   EVENT_END    same, anchored to the instance end. Both ignore a leftover
  *                `time` clock; only STATIC and RELATIVE use that field.
- *   RELATIVE     `ordinal` × `unit` before the start, at the `time` clock —
+ *   RELATIVE     `ordinal` × `unit` before the start, at the `time` clock
+ *                (day-based rules without a clock use midnight, not the
+ *                event's start time; verified against SCCL's live window) —
  *                BiblioCommons resolves this against the SERIES' first
  *                session, which the instance record doesn't carry, so this
  *                computes against the INSTANCE start instead. That makes the
@@ -756,7 +758,8 @@ export function resolveRegistrationClosesBy(ev, start, end) {
   if (windowType !== "EVENT_START" && windowType !== "EVENT_END" && windowType !== "RELATIVE") return null;
 
   const ordinal = Number.isFinite(rule.ordinal) ? rule.ordinal : 0;
-  const unitMs = String(rule.unit || "days").toLowerCase().startsWith("hour")
+  const unit = String(rule.unit || "days").toLowerCase();
+  const unitMs = unit.startsWith("hour")
     ? 60 * 60 * 1000
     : 24 * 60 * 60 * 1000;
   const shifted = new Date(anchor.getTime() - ordinal * unitMs);
@@ -765,9 +768,23 @@ export function resolveRegistrationClosesBy(ev, start, end) {
   // SJPL's October 20 art workshop has EVENT_START / ordinal 0 / T09:45,
   // but its actual window closes at the 5 PM start. Applying that old clock
   // falsely closed registration more than seven hours early.
-  if (windowType === "RELATIVE" && /^\d{2}:\d{2}(:\d{2})?$/.test(clock)) {
-    const atClock = parsePtDateTime(ptCalendarDate(shifted), clock);
-    if (atClock) return atClock;
+  if (windowType === "RELATIVE") {
+    let date = ptCalendarDate(shifted);
+    let relativeClock = clock;
+    if (unit.startsWith("day") && Number.isInteger(ordinal)) {
+      // These are calendar days. Subtracting 24 hours can land on the wrong
+      // Pacific date across DST. SCCL's October 24 Teen Burton window ends
+      // October 23 at midnight when its RELATIVE/day rule has time:null.
+      // Evidence: docs/qa/2026-10-23-0107-fact-check.md.
+      const calendarDay = new Date(`${ptCalendarDate(anchor)}T12:00:00Z`);
+      calendarDay.setUTCDate(calendarDay.getUTCDate() - ordinal);
+      date = calendarDay.toISOString().slice(0, 10);
+      relativeClock ||= "00:00";
+    }
+    if (/^\d{2}:\d{2}(:\d{2})?$/.test(relativeClock)) {
+      const atClock = parsePtDateTime(date, relativeClock);
+      if (atClock) return atClock;
+    }
   }
   return shifted;
 }

@@ -1,0 +1,52 @@
+{
+  "fetchedAt": "2026-10-23T08:14:21Z",
+  "sourceUrl": "https://gateway.bibliocommons.com/v2/libraries/sccl/events?ids=6ab49e3e65abe8002a7bb34f",
+  "windowUrl": "https://sccl.bibliocommons.com/events/events/6ab49e3e65abe8002a7bb34f/registration_windows?client_scope=events",
+  "event": {
+    "id": "6ab49e3e65abe8002a7bb34f",
+    "isFull": false,
+    "registrationClosed": false,
+    "numberRegistered": 3,
+    "definition": {
+      "title": "Teen Burton: Halloween Self Portraits",
+      "start": "2026-10-24T16:00",
+      "end": "2026-10-24T17:00",
+      "branchLocationId": "CA",
+      "registrationInfo": {
+        "provider": "BIBLIO_EVENTS",
+        "registrationStart": {
+          "unit": "weeks",
+          "date": null,
+          "time": null,
+          "ordinal": 2,
+          "windowType": "RELATIVE"
+        },
+        "registrationEnd": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 1,
+          "windowType": "RELATIVE"
+        },
+        "enabledMethods": [],
+        "cap": 20,
+        "maxSeats": 1,
+        "scope": null,
+        "isFull": false,
+        "instructions": null,
+        "onlineInstructions": null,
+        "instructionsToAttend": null,
+        "loginToRegister": false,
+        "waitlistEnabled": true,
+        "waitlistAutoPromote": true
+      }
+    }
+  },
+  "window": {
+    "_id": "6ab49e3e65abe8002a7bb34f",
+    "library_id": "sccl",
+    "window_start": "2026-10-10T00:00:00",
+    "window_end": "2026-10-23T00:00:00",
+    "status": "ENDED"
+  }
+}
