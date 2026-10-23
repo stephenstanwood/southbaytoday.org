@@ -420,7 +420,7 @@ test("Squarespace family admission survives excerpts and truncated descriptions 
   };
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (url) => {
-    assert.equal(String(url), "https://mhplaza.org/allevents?format=json");
+    assert.equal(String(url), "https://example.org/events?format=json");
     return Response.json({ upcoming: [item, {
       ...item, title: "Community Festival", fullUrl: "/allevents/community-festival", excerpt: "",
       body: `<p>${excerpt}</p><p>${"Local artists share their work. ".repeat(12)}</p>${item.body}`,
@@ -429,11 +429,13 @@ test("Squarespace family admission survives excerpts and truncated descriptions 
     }] });
   };
   try {
-    const [family, fromBody, adult] = await fetchMexicanHeritagePlazaEvents();
+    const [family, fromBody, adult] = await fetchSquarespaceEvents(
+      "https://example.org/events", "Arts Calendar Fixture", "san-jose", "Arts Center", "1700 Alum Rock Ave, San Jose",
+    );
     assert.equal(family.kidFriendly, true);
     assert.equal(family.description, excerpt);
     assert.equal(family.cost, "paid");
-    assert.equal(family.url, "https://mhplaza.org/allevents/festival-por-la-paz");
+    assert.equal(family.url, "https://example.org/allevents/festival-por-la-paz");
     assert.equal(fromBody.kidFriendly, true);
     assert.doesNotMatch(fromBody.description, /family|kids/i);
     assert.equal(fromBody.cost, "paid");
@@ -854,6 +856,15 @@ function ticketmasterEvent(overrides = {}) {
 
 test("keeps credible Ticketmaster zero-price events free", () => {
   assert.equal(mapTicketmasterEvent(ticketmasterEvent()).cost, "free");
+});
+
+test("Ticketmaster ice shows are performances despite Tech CU Arena's sponsor name", () => {
+  const event = mapTicketmasterEvent(ticketmasterEvent({
+    name: "Holly Jolly Holiday Ice Premier (featuring Alyssa Liu)",
+    classifications: [{ segment: { name: "Miscellaneous" }, genre: { name: "Ice Shows" } }],
+    _embedded: { venues: [{ name: "Tech CU Arena", city: { name: "San Jose" } }] },
+  }));
+  assert.equal(event.category, "arts");
 });
 
 test("TicketWeb's explicit sold-out title reaches the existing attendance gate", () => {

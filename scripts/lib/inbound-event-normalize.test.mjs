@@ -5,6 +5,28 @@ import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
 
+test("Stanford's soccer ticket pages supply real starts and Cagan Stadium before backfill", () => {
+  for (const [date, slug, title, time] of [
+    ["2026-11-01", "womens-soccer-vs-notre-dame-aqbvne", "Stanford Women's Soccer Home Finale vs. Notre Dame", "1:00 PM"],
+    ["2026-10-29", "womens-soccer-vs-nc-state-fgrxdx", "Stanford Women's Soccer vs. NC State", "7:00 PM"],
+  ]) {
+    const raw = {
+      id: slug, cityKey: "palo-alto", title, location: "The Farm, Stanford University",
+      startsAt: `${date}T00:00:00-07:00`, endsAt: null,
+      sourceUrl: `https://tickets.gostanford.com/events/${slug}`,
+      description: "The start time is not given in the email.",
+    };
+    const [event] = fetchInboundEvents({ today: "2026-10-23", events: [raw] });
+    assert.equal(event.time, time);
+    assert.equal(event.venue, "Cagan Stadium");
+    const published = applyVerifiedEventFacts(event);
+    assert.equal(published.address, "641 Nelson Road, Stanford, CA 94305");
+    assert.equal(published.cost, "paid");
+    assert.equal(published.photoRef, null);
+    assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: raw.startsAt.replace("2026-", "2027-") }).time, null);
+  }
+});
+
 import {
   inboundClock,
   JEREMY_FREY_EXHIBITION_URL,

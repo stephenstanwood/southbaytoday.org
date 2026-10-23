@@ -9,6 +9,42 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The film's subject is journalist Amy Goodman; Tia Lessin co-directed it.
+  // Stanford's two Jasper Ridge pages require registration and give a campus
+  // shuttle meeting point, with no children under 14. Same audit evidence below.
+  {
+    date: "2026-10-23",
+    url: "https://events.stanford.edu/event/steal-this-story-please-documentary-screening-wamy-goodman-tia-lessin-3663",
+    facts: {
+      blurb: "Watch Steal This Story, Please! and join a Q&A with journalist Amy Goodman and filmmaker Tia Lessin.",
+    },
+  },
+  ...[
+    "https://events.stanford.edu/event/copy-of-cbd-2026-afternoon-jasper-ridge-biological-preserve-ootchamin-ooyakma-contemplative-hikes-in-nature",
+    "https://events.stanford.edu/event/copy-of-cbd-2026-jasper-ridge-biological-preserve-ootchamin-ooyakma-contemplative-hikes-in-nature",
+  ].map((url) => ({
+    date: "2026-10-24", url,
+    facts: {
+      venue: "Searsville Parking Lot", cost: "free", registration: REGISTRATION_REQUIRED,
+      kidFriendly: false,
+      attendanceNote: "Register for your hike's time slot. Meet at the Searsville Parking Lot near the Central Energy Facility at 140 Searsville Road for the shuttle to Jasper Ridge. Ages 14 and older; pets, including service/support animals, are not allowed on the trails.",
+      blurb: "Meet at Stanford's Searsville Parking Lot for a shuttle to a contemplative hike at Jasper Ridge. Registration required; ages 14+.",
+    },
+  })),
+  // The ticket pages confirm Cagan Stadium, paid admission, and Pacific
+  // starts. Notre Dame's 21:00Z is 1 PM after the Nov 1 DST change, not 9 PM.
+  // Evidence: docs/qa/2026-10-23-1307-fact-check.md.
+  ...[
+    ["2026-11-01", "womens-soccer-vs-notre-dame-aqbvne", "1:00 PM", "Notre Dame"],
+    ["2026-10-29", "womens-soccer-vs-nc-state-fgrxdx", "7:00 PM", "NC State"],
+  ].map(([date, slug, time, opponent]) => ({
+    date, url: `https://tickets.gostanford.com/events/${slug}`,
+    facts: {
+      time, venue: "Cagan Stadium", address: "641 Nelson Road, Stanford, CA 94305",
+      cost: "paid", photoRef: null,
+      blurb: `Watch Stanford women's soccer host ${opponent} at Cagan Stadium.`,
+    },
+  })),
   // The authenticated organizer record names LinkedIn HQ, not the organizing
   // group's name, as the destination. Samza occurs only in the group credit.
   // Its structured date says Tuesday while its body says Thursday; preserve

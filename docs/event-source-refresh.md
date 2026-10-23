@@ -166,6 +166,12 @@ alone would miss that ordering regression.
   moved to Divi production pages (404 on 2026-09-11). Tribe iCal/REST exports
   are not published; the adapter reads the `26-27-season` lander for current
   `/productions/*` slugs and each page's server-rendered performance rows.
+- Mexican Heritage Plaza reads its public `/allevents` HTML calendar and each
+  dated detail page. Its robots policy excludes `?format=json`. Preserve the
+  detail page's program text and admission terms: the October 2026 calendar
+  preview for Fiesta Navideña incorrectly repeated Avenida de Altares. An
+  image-only detail keeps empty copy; never substitute another event's preview.
+  Missing dates, mismatched details and HTTP/parser failures remain failures.
 - San Jose Theaters (California Theatre, San Jose Civic, Center for the
   Performing Arts, Montgomery Theater) moved from sanjosetheaters.org to Visit
   San Jose in September 2026. The old All-in-One Event Calendar iCal export

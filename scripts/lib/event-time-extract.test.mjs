@@ -29,6 +29,26 @@ test("JSON-LD start time wins over anything in the body copy", () => {
   assert.equal(extractTimeFromHtml(html, "2026-09-17"), "7:30 PM");
 });
 
+test("structured event instants use the occurrence's Pacific clock and calendar date", () => {
+  // Stanford's Nov 1 Notre Dame ticket page prints 1 PM; its JSON-LD is UTC.
+  // NC State's Oct 29 evening match has an Oct 30 UTC date.
+  for (const [start, date, expected] of [
+    ["2026-11-01T21:00:00.000Z", "2026-11-01", "1:00 PM"],
+    ["2026-10-30T02:00:00.000Z", "2026-10-29", "7:00 PM"],
+    ["2026-10-30T02:00:00.000Z", "2026-10-30", null],
+    ["2026-10-29T19:00:00-07:00", "2026-10-29", "7:00 PM"],
+    ["2026-11-01T13:00:00-0800", "2026-11-01", "1:00 PM"],
+    ["2026-11-01T13:00:00", "2026-11-01", "1:00 PM"],
+    ["2026-11-01", "2026-11-01", null],
+  ]) {
+    for (const markup of [
+      `<script type="application/ld+json">${JSON.stringify({ "@type": "Event", startDate: start })}</script>`,
+      `<time datetime="${start}"></time>`,
+      `<meta property="event:start_time" content="${start}">`,
+    ]) assert.equal(extractTimeFromHtml(page(markup), date), expected, markup);
+  }
+});
+
 test("city hall footer hours do not become an event start time", () => {
   // The real shape of Monte Sereno's CivicPlus page, which turned an eight-week
   // police academy into a 9:00 AM event.

@@ -69,6 +69,7 @@ import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-location.mjs";
 import { biblioEventOccurrence, libraryEventDetails } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
+import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
 import { join, dirname } from "path";
@@ -5949,7 +5950,9 @@ function mapTicketmasterEvent(e) {
     venue: cleanVenue(venueName),
     address: venue?.address?.line1 || "",
     city,
-    category: inferCategory(e.name, genre, segment, venueName),
+    // Ice Shows is the seller's performance genre. Tech CU Arena's sponsor
+    // name must not turn an ice show into a technology lesson.
+    category: genre === "Ice Shows" ? "arts" : inferCategory(e.name, genre, segment, venueName),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
     ...(soldOut ? {
@@ -7920,23 +7923,26 @@ function squarespaceCost(title, copy) {
   // A complimentary perk or a children's discount does not waive admission.
   if (/\b(?:admission(?:\s+fee)?|tickets?|entry(?:\s+fee)?|registration(?:\s+fee)?)\s*(?:(?:is|are|costs?|from|at|starts? at)\s*)?[:–-]?\s*\$\s*[1-9]\d*/i.test(text)) return "paid";
   return /^free\b/i.test(title.trim())
-    || /\bfree\s+(?:admission|event|concert|workshop|family\s+fun|community\s+crafting|food\s+distribution|with\s+(?:RSVP|registration))\b/i.test(text)
+    || /\bfree\s+(?:admission|event|(?:live\s+)?concert|workshop|family\s+fun|community\s+crafting|food\s+distribution|with\s+(?:RSVP|registration))\b/i.test(text)
     || /\badmission\s+is\s+free\b/i.test(text)
     ? "free"
     // A ticket/RSVP link or complimentary refreshments does not establish a fee.
     : null;
 }
 
-// Shared Squarespace event fetcher — works for any site that exposes ?format=json
-async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue, defaultAddress) {
+// Shared Squarespace mapping; MHP reads its permitted public HTML pages.
+async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue, defaultAddress, { now = new Date() } = {}) {
   console.log(`  ⏳ ${source}...`);
   try {
-    const url = `${pageUrl}?format=json`;
-    const res = await fetch(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) });
-    if (!res.ok) throw new Error(`${res.status}`);
-    const data = await res.json();
-    const items = data.upcoming || data.items || [];
-    const now = new Date();
+    let items;
+    if (pageUrl === MHP_CALENDAR_URL) {
+      items = await fetchMhpItems({ now, headers: { "User-Agent": UA } });
+    } else {
+      const res = await fetch(`${pageUrl}?format=json`, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) });
+      if (!res.ok) throw new Error(`${res.status}`);
+      const data = await res.json();
+      items = data.upcoming || data.items || [];
+    }
 
     const events = items
       .map((item) => {
@@ -8023,13 +8029,14 @@ async function fetchKeplersEvents() {
   );
 }
 
-async function fetchMexicanHeritagePlazaEvents() {
+async function fetchMexicanHeritagePlazaEvents(options) {
   return fetchSquarespaceEvents(
     "https://mhplaza.org/allevents",
     "Mexican Heritage Plaza",
     "san-jose",
     "Mexican Heritage Plaza",
     "1700 Alum Rock Ave, San Jose, CA 95116",
+    options,
   );
 }
 
@@ -8125,9 +8132,7 @@ function extractTimeFromHtml(html, eventDate) {
         if (!isEvent) continue;
         const start = item.startDate;
         if (typeof start !== "string") continue;
-        // Skip if the JSON-LD date doesn't match the event date (avoids picking up the wrong show in a series)
-        if (eventDate && !start.startsWith(eventDate)) continue;
-        const time = isoTimeToClockLocal(start);
+        const time = isoTimeToClockPT(start, eventDate);
         if (time) return time;
       }
     } catch { /* ignore */ }
@@ -8139,8 +8144,7 @@ function extractTimeFromHtml(html, eventDate) {
     const m = tag.match(/datetime=["']([^"']+)["']/i);
     if (!m) continue;
     const dt = m[1];
-    if (eventDate && !dt.startsWith(eventDate)) continue;
-    const time = isoTimeToClockLocal(dt);
+    const time = isoTimeToClockPT(dt, eventDate);
     if (time) return time;
   }
 
@@ -8152,7 +8156,7 @@ function extractTimeFromHtml(html, eventDate) {
   for (const re of metaPatterns) {
     const m = html.match(re);
     if (m) {
-      const time = isoTimeToClockLocal(m[1]);
+      const time = isoTimeToClockPT(m[1], eventDate);
       if (time) return time;
     }
   }
@@ -8284,17 +8288,14 @@ function formatHourClock(s) {
   return null;
 }
 
-/** Convert an ISO datetime to "H:MM AM/PM". Treats the embedded clock as wall time. */
-function isoTimeToClockLocal(iso) {
-  if (!iso || typeof iso !== "string") return null;
-  const m = iso.match(/T(\d{2}):(\d{2})/);
-  if (!m) return null;
-  const h24 = parseInt(m[1], 10);
-  const min = parseInt(m[2], 10);
-  if (h24 === 0 && min === 0) return null;
-  const ampm = h24 >= 12 ? "PM" : "AM";
-  const h12 = h24 === 0 ? 12 : (h24 > 12 ? h24 - 12 : h24);
-  return min === 0 ? `${h12}:00 ${ampm}` : `${h12}:${String(min).padStart(2, "0")} ${ampm}`;
+/** Offset-bearing datetimes are instants; only naive clocks are Pacific wall time. */
+function isoTimeToClockPT(iso, eventDate) {
+  if (typeof iso !== "string" || !/T\d{2}:\d{2}/.test(iso)) return null;
+  const instant = parseDatePT(iso);
+  // Match the Pacific occurrence date after conversion. A Thursday evening
+  // game can have a Friday UTC date; a same-UTC-date game can be Wednesday.
+  if (!instant || (eventDate && isoDate(instant) !== eventDate)) return null;
+  return displayTime(instant);
 }
 
 // Linden Tree Books (Los Altos) — handled by playwright-scrapers.mjs
