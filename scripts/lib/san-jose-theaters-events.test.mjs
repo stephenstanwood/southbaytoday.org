@@ -421,6 +421,43 @@ test("upcoming shows publish in the event shape the refresh expects", async () =
   assert.equal(new Set(events.map((e) => e.id)).size, events.length);
 });
 
+test("specific theater source categories survive generic stage tags and incidental prose", async () => {
+  const night = dayPT(5);
+  const cases = [
+    { title: "Marisela: Eterna Tour 2026", categories: "Music, Music: Latin, Stage &amp; Theater", copy: "Her latest tour visits the Civic.", expected: "music" },
+    { title: "Álvaro Díaz – Omakase Tour", categories: "Music, Music: Latin, Sports: 2026, Stage &amp; Theater", copy: "A rapper and artist performs on stage.", expected: "music" },
+    { title: "Candlelight: Tribute to Adele", categories: "Music, Stage &amp; Theater", copy: "A performance at the California Theatre.", expected: "music" },
+    { title: "Professor Brian Cox – Emergence", categories: "Educational, Lecture, Music, Stage &amp; Theater, Visual Arts", copy: "A presentation about the universe.", expected: "education" },
+    { title: "Dan and Phil: Hard Launch World Tour", categories: "Comedy, Stage &amp; Theater", copy: "Two friends visit the Civic.", expected: "arts" },
+    { title: "Be Like Blippi", categories: "Kids &amp; Family, Stage &amp; Theater", copy: "Blippi visits the Civic.", expected: "family" },
+    { title: "Dog Man: The Musical", categories: "Sports: 2026, Stage &amp; Theater, Stage &amp; Theater: Musicals", copy: "A musical production with a live orchestra.", expected: "arts" },
+    { title: "Love Actually in Concert", categories: "Broadway San Jose, Music, Stage &amp; Theater: Musicals", copy: "A film-score concert.", expected: "music" },
+    { title: "The Legend of Korra in Concert - Broadway San Jose", categories: "Broadway San Jose, Stage &amp; Theater: Musicals", copy: "An orchestra concert.", expected: "music" },
+    { title: "Matilda The Musical", categories: "Children&#039;s Musical Theater (CMT), Kids &amp; Family, Stage &amp; Theater", copy: "A musical for families.", expected: "family" },
+    { title: "The San Jose Nutcracker", categories: "Music, Stage &amp; Theater", copy: "A ballet production.", expected: "arts" },
+    { title: "The Nutcracker in Concert", categories: "Music, Music: Classical, Stage &amp; Theater", copy: "An orchestra concert.", expected: "music" },
+    { title: "My Very First Nutcracker – New Ballet & Symphony San Jose", categories: "Kids &amp; Family, Stage &amp; Theater", copy: "A ballet production.", expected: "arts" },
+    { title: "Dance for the Holidays", categories: "Dance, Kids &amp; Family, Music, Stage &amp; Theater", copy: "A dance performance.", expected: "arts" },
+    { title: "My Very First Symphony – Symphony San Jose", categories: "Kids &amp; Family", copy: "An orchestra concert for families.", expected: "music" },
+    { title: "A Community Gathering", categories: "Stage &amp; Theater, Sports: 2026", copy: "Neighbors gather at the Civic.", expected: "community" },
+  ];
+  const routes = {};
+  const listings = cases.map((item, i) => {
+    const slug = `category-${i}`;
+    routes[`https://www.sanjose.org/theaters/events/${slug}`] = detailPage({
+      focus: longDate(night), time: "08:00 PM", venue: "San Jose Civic",
+      street: "135 West San Carlos Street", copy: `<p>${item.copy}</p>`,
+    });
+    return listing({ ...item, slug, start: night, venue: "San Jose Civic" });
+  });
+  routes[SAN_JOSE_THEATERS_LISTINGS_URL] = JSON.stringify(listings);
+  const { events } = await runWith(routes);
+  assert.equal(events.length, cases.length);
+  for (const item of cases) {
+    assert.equal(events.find((event) => event.title === item.title)?.category, item.expected, item.title);
+  }
+});
+
 test("a site change that breaks most detail pages is an error, not a short season", async () => {
   const listings = [1, 2, 3, 4, 5].map((n) =>
     listing({ title: `Show ${n}`, slug: `show-${n}`, start: dayPT(n + 3), venue: "San Jose Civic" }));

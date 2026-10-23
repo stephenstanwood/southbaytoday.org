@@ -182,6 +182,27 @@ export function isPresenterOwnedRun(item) {
   return PRESENTER_OWNED_RUN.some((re) => re.test(haystack));
 }
 
+/** Specific booking labels outrank prose; generic stage/season tags do not. */
+export function theaterCategoryFromSource({ title, categories, fallback }) {
+  const tags = new Set(stripHtml(categories || "").toLowerCase().split(",").map((tag) => tag.trim()));
+  if (tags.has("educational") || tags.has("lecture")) return "education";
+  if (tags.has("comedy") || tags.has("dance")) return "arts";
+  if (tags.has("children's musical theater (cmt)")) return "family";
+  // Broadway also uses its musical tag for film-score concerts.
+  if (tags.has("stage & theater: musicals") && !/\bconcert\b/i.test(title)) {
+    return tags.has("kids & family") ? "family" : "arts";
+  }
+  // Ballet can carry Music or name its accompanying orchestra. A concert
+  // explicitly billed "in concert" keeps its musical classification.
+  if (/\bballet\b/i.test(title)
+    || (/\bnutcracker\b/i.test(title) && !/\bin concert\b/i.test(title))) return "arts";
+  if ([...tags].some((tag) => tag === "music" || tag.startsWith("music:"))) return "music";
+  // An audience label alone does not turn a symphony concert into a family
+  // category; it does resolve otherwise unclassified children's bookings.
+  if (tags.has("kids & family") && fallback === "community") return "family";
+  return fallback;
+}
+
 /** Why a listing is skipped before its detail page is fetched, or null. */
 export function listingSkipReason(item) {
   const { start, end } = listingDateRange(item);

@@ -166,6 +166,7 @@ import {
   parseTheaterEventPage,
   parseTheaterListings,
   resolveTheaterVenue,
+  theaterCategoryFromSource,
   theaterPerformances,
 } from "./lib/san-jose-theaters-events.mjs";
 
@@ -9112,11 +9113,9 @@ async function fetchSanJoseTheatersEvents() {
             venue,
             address: SAN_JOSE_THEATER_ADDRESSES[venue],
             city: "san-jose",
-            // Not Visit San Jose's category list: nearly every row carries
-            // "Stage & Theater", which files Juanes and Bronco under arts —
-            // the misfiling inferCategory's own title/venue rules exist to
-            // prevent. Those tags only feed kidFriendly below.
-            category: inferCategory(title, description, "", venue),
+            category: theaterCategoryFromSource({
+              title, categories, fallback: inferCategory(title, description, "", venue),
+            }),
             cost: "paid",
             description,
             url,
