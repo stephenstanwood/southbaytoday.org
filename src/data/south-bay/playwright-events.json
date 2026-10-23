@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-22T19:53:27.604Z",
+    "generatedAt": "2026-10-23T00:02:53.307Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 32,
-    "eventCount": 453,
+    "eventCount": 450,
     "sourceCount": 22,
     "sources": [
-      "Mountain View Public Library (116)",
-      "Los Gatos Library (103)",
+      "Mountain View Public Library (115)",
+      "Los Gatos Library (102)",
       "San Jose Jazz (14)",
       "Linden Tree Books (10)",
       "History San Jose (8)",
@@ -19,15 +19,15 @@
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (4)",
       "Santana Row (8)",
-      "City of Cupertino (24)",
+      "City of Cupertino (23)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (74)",
       "Levi's Stadium (3)",
       "SAP Center (16)",
       "The Tech Interactive (11)",
       "Books Inc (6)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -66,7 +66,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 121,
+        "count": 120,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -76,7 +76,7 @@
         "id": "los-gatos-library",
         "label": "Los Gatos Library",
         "status": "ok",
-        "count": 103,
+        "count": 102,
         "error": null,
         "sources": [
           "Los Gatos Library"
@@ -232,7 +232,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 24,
+        "count": 23,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -325,37 +325,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "ececf9138cfa",
-      "title": "CANCELED -- Let's Create",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "3:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "community",
-      "cost": "free",
-      "description": "This program has been canceled. We apologize for any inconvenience.",
-      "sourceAudiences": [
-        "Tweens",
-        "Children"
-      ],
-      "url": "https://mountainview.libcal.com/event/17329171",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "9bc5932a5427",
       "title": "Community Preservation Lab Scanning Service",
@@ -2791,29 +2772,6 @@
       "kidFriendly": false
     },
     {
-      "id": "6679227814e7",
-      "title": "Online Author Talk : Cherie Dimaline",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "4:00 PM",
-      "endTime": "5:00 PM",
-      "venue": "Online",
-      "address": "",
-      "city": "los-gatos",
-      "virtual": true,
-      "registration": "required",
-      "category": "arts",
-      "cost": "free",
-      "description": "Register here and submit your questions for the author before the event begins. Step into the atmospheric and deeply moving world of storytelling with acclaimed Métis author Cherie Dimaline as we discuss her captivating body of work and her haunting Young Adult novel, Funeral Songs for Dying Girls. Set in a cemetery shed where sixteen-year-old Winifred lives with her dad, Funeral Songs for Dying Girls follows a teen whose attempt to save her father's job leads to a fake ghost rumor—and accidentally summons a very real, opinionated spirit named Phil. Through this eerie yet heartwarming story, Dimaline crafts a haunting masterpiece about grief, survival, identity, and unexpected connections across the boundary of life and death. Beyond her graveyard-set YA novel, we will explore Dimaline’s expansive literary career—from the groundbreaking dystopian survival narrative of The Marrow Thieves and its sequel Hunting by Stars, to the dark, magic-infused folklore of her adult novels like Empire of Wild and VenCo. Register today to participate in this spellbinding conversation! About the Author: Cherie Dimaline is an internationally bestselling author. Her book The Marrow Thieves was named by TIME magazine, one of the Best YA Books of All Time and won the Governor General’s Award and the Kirkus Prize. Her novel Empire of Wild was an instant Canadian bestseller and is being adapted into a full opera for the Canadian Opera Company. Hunting By Stars was a 2022 American Indian Library Association Honor Book and her novel VENCO debuted at #1 on Canadian bestseller lists. Other titles include Funeral Songs for Dying Girls (AILA Honor Book, AURA Award winner, CRIME WRITERS Best Book, Bram Stoker Finalist) and Into the Bright Open (2024 Governor General’s Award Finalist). Cherie lives in her Georgian Bay Métis Community and has written and produced for MARVEL, FX, HBO, Disney, and is currently adapting two major projects for AMC.",
-      "sourceAudiences": [
-        "Teens",
-        "Adults"
-      ],
-      "url": "https://losgatosca.libcal.com/event/17371425",
-      "source": "Los Gatos Library",
-      "kidFriendly": true
-    },
-    {
       "id": "bda05f3ec00a",
       "title": "Girls Who Code",
       "date": "2026-10-24",
@@ -3544,6 +3502,7 @@
       "venue": "Los Gatos Library",
       "address": "100 Villa Ave, Los Gatos, CA 95030",
       "city": "los-gatos",
+      "registration": "full",
       "category": "arts",
       "cost": "free",
       "description": "Always wanted to learn how to play Mahjong? Well now you can! Come on down to the library and learn with us! You will learn American Mahjong. This class is for BEGINNERS.",
@@ -5514,23 +5473,6 @@
       "kidFriendly": false
     },
     {
-      "id": "a34ae09c5db3",
-      "title": "Mariachi Viajero y Angeles Danzantes (Grades K-8)",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3065",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
-    },
-    {
       "id": "e1685c8f5e8f",
       "title": "An Intimate Evening with Kalani Pe’a",
       "date": "2026-10-23",
@@ -5597,6 +5539,23 @@
       "url": "https://my.montalvoarts.org/3248/3250",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
+    },
+    {
+      "id": "771739615a30",
+      "title": "Mosaic America (Grade K-8)",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3066",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": true
     },
     {
       "id": "7b4b9e03681f",
@@ -6361,7 +6320,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-22T19:52:17.253Z"
+        "checkedAt": "2026-10-23T00:01:39.298Z"
       }
     },
     {
@@ -6384,7 +6343,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-22T19:52:17.253Z"
+        "checkedAt": "2026-10-23T00:01:39.298Z"
       }
     },
     {
@@ -6407,7 +6366,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-22T19:52:17.253Z"
+        "checkedAt": "2026-10-23T00:01:39.299Z"
       }
     },
     {
@@ -6430,7 +6389,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-22T19:52:17.254Z"
+        "checkedAt": "2026-10-23T00:01:39.300Z"
       }
     },
     {
@@ -6453,7 +6412,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-22T19:52:17.255Z"
+        "checkedAt": "2026-10-23T00:01:39.301Z"
       }
     },
     {
@@ -6476,7 +6435,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T19:52:17.258Z"
+        "checkedAt": "2026-10-23T00:01:39.302Z"
       }
     },
     {
@@ -6499,7 +6458,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-22T19:52:17.258Z"
+        "checkedAt": "2026-10-23T00:01:39.303Z"
       }
     },
     {
@@ -6522,25 +6481,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-22T19:52:17.259Z"
+        "checkedAt": "2026-10-23T00:01:39.303Z"
       }
-    },
-    {
-      "id": "5d51f3e5dad5",
-      "title": "Hidden Treasures",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "09:00 AM",
-      "endTime": "02:00 PM",
-      "venue": "Cupertino Senior Center",
-      "address": "Cupertino Senior Center, 21251 Stevens Creek Boulevard, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "Join us at the Senior Center for Hidden Treasures! With hundreds of items to choose from, this event is the perfect opportunity to discover unique antiques, artwork, handknits, toys, glassware, housewares, jewelry, and more. For more information, please visit the Hidden Treasures event page.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Hidden-Treasures/Hidden-Treasures-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "4cfc27fb7479",
@@ -8889,41 +8831,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "703687c2511a",
       "title": "Community Day: Día de Los Muertos",
       "date": "2026-10-24",
@@ -9041,6 +8948,41 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }

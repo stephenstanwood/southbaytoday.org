@@ -1,35 +1,42 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-22T20:00:45.646Z"
+    "auditedAt": "2026-10-23T00:09:52.474Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
     "total": 1842,
     "totals": {
-      "hard": 0,
-      "soft": 2,
+      "hard": 1,
+      "soft": 1,
       "info": 0
     },
     "byReason": {
-      "virtual-not-flagged": 1,
+      "out-of-area": 1,
+      "slug-mismatch": 1,
       "unknown-slug": 1
     },
-    "hard": [],
-    "soft": [
+    "hard": [
       {
-        "id": "sjpl-6920dd8fb864f02900259300",
-        "title": "Full Bloom Book Club (Hybrid)",
-        "city": "san-jose",
-        "date": "2026-10-22",
-        "location": "1580 Naglee Ave. San Jose",
+        "id": "scu-be73d32cce6fd170",
+        "title": "UC Santa Cruz Grad Fair",
+        "city": "los-gatos",
+        "date": "2026-10-28",
+        "location": "University of California Santa Cruz",
         "findings": [
           {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"santa cruz\" with no in-area city token"
+          },
+          {
+            "severity": "hard",
+            "reason": "slug-mismatch",
+            "detail": "city=\"los-gatos\" but location references \"santa-cruz\""
           }
         ]
-      },
+      }
+    ],
+    "soft": [
       {
         "id": "inbound-9542c24070ff7e38",
         "title": "Hands-Only CPR/AED & Choking Relief Training",
@@ -48,7 +55,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 245,
+    "total": 246,
     "totals": {
       "hard": 0,
       "soft": 1,
