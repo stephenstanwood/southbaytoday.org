@@ -7765,7 +7765,7 @@ async function fetchMeetupEvents() {
         ) {
           edges {
             node {
-              id title dateTime endTime eventUrl eventType status
+              id title description dateTime endTime eventUrl eventType status
               venue { name address city lat lon }
               group { name urlname isPrivate joinMode stats { memberCounts { all } } }
               rsvps { totalCount yesCount }
@@ -7807,6 +7807,13 @@ async function fetchMeetupEvents() {
   for (const node of rawEvents) {
     if (node.status !== "ACTIVE") continue;
     if (node.eventType !== "PHYSICAL") continue;
+    // PHYSICAL is organizer-entered. Sketch Hour advertises park meetups but
+    // its linked product is a prerecorded broadcast joined via a web dashboard.
+    // Verified October 23, 2026:
+    // https://www.meetup.com/the-sunday-morning-sketch-and-social/events/317093772/
+    // https://sketchhour.vercel.app/product/SketchStillLife
+    // Exclude these product links, preserving genuine local drawing events.
+    if (/https?:\/\/sketchhour\.vercel\.app\/product\//i.test(node.description || "")) continue;
 
     const groupUrlname = node.group?.urlname ?? "";
     if (BLOCKED_MEETUP_GROUPS.has(groupUrlname)) continue;
@@ -11221,6 +11228,7 @@ export {
   fetchLosAltosVillageEvents,
   fetchLosAltosHistoryEvents,
   fetchMaclaEvents,
+  fetchMeetupEvents,
   fetchHistorySanJoseEvents,
   fetchMexicanHeritagePlazaEvents,
   fetchStanfordEvents,
