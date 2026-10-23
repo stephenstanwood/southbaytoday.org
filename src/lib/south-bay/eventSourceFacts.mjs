@@ -7,7 +7,29 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
+const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The authenticated organizer record names LinkedIn HQ, not the organizing
+  // group's name, as the destination. Samza occurs only in the group credit.
+  // Its structured date says Tuesday while its body says Thursday; preserve
+  // that conflict instead of guessing another date. Apply only to the sparse
+  // listing and these clocks so a revised source body or schedule can prevail.
+  // https://www.meetup.com/stream-processing-meetup-linkedin/events/317066673/
+  // Evidence: docs/qa/2026-10-23-0007-fact-check.md.
+  {
+    date: "2026-12-08",
+    matches: (event) => event.url === "https://www.meetup.com/stream-processing-meetup-linkedin/events/317066673/"
+      && event.time === "5:00 PM" && event.endTime === "8:00 PM"
+      && ["Meetup event by Stream Processing with Apache Kafka, Samza, and Flink.", LINKEDIN_STREAM_DESCRIPTION]
+        .includes(event.description),
+    facts: {
+      venue: "LinkedIn HQ",
+      description: LINKEDIN_STREAM_DESCRIPTION,
+      blurb: "Learn about Apache Kafka, Apache Flink, and Change Data Capture at a meetup hosted by LinkedIn.",
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The listing's date fields say Tuesday, December 8, but its description says Thursday. Confirm the date with the organizer.",
+    },
+  },
   // The October 25 organizer page still contradicts itself. Preserve its
   // overall window and disclose the conflict rather than copying October 18's
   // inferred meridiem repair onto a different occurrence. A newer corrected

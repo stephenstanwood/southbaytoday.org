@@ -15,6 +15,39 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the LinkedIn meetup keeps its sourced venue and date conflict through sparse refreshes", async () => {
+  const raw = {
+    id: "meetup-07326879c22c127a", date: "2026-12-08",
+    title: "[In-Person + Online] Stream Processing with Apache Kafka and Flink",
+    url: "https://www.meetup.com/stream-processing-meetup-linkedin/events/317066673/",
+    time: "5:00 PM", endTime: "8:00 PM", source: "Meetup", city: "sunnyvale",
+    venue: "Stream Processing with Apache Kafka, Samza, and Flink",
+    address: "950 W Maude Ave, Sunnyvale, CA 94085, USA", cost: null,
+    description: "Meetup event by Stream Processing with Apache Kafka, Samza, and Flink.",
+    blurb: "Join this Sunnyvale meetup to hear discussion on stream processing with Apache Kafka, Samza, and Flink.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const corrected = events[0];
+  assert.equal(corrected.venue, "LinkedIn HQ");
+  assert.match(corrected.description, /Apache Kafka, Apache Flink, and Change Data Capture/);
+  assert.doesNotMatch(corrected.description + corrected.blurb, /Samza/);
+  assert.match(corrected.attendanceNote, /Tuesday, December 8.*Thursday/);
+  assert.equal(requiresAttendanceConfirmation(corrected), true);
+  for (const field of ["id", "date", "title", "url", "time", "endTime", "city", "address", "cost"]) {
+    assert.deepEqual(corrected[field], raw[field], field);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.deepEqual(raw, original, "the source record is preserved");
+  for (const updated of [
+    { ...raw, date: "2026-12-10" },
+    { ...raw, time: "5:30 PM" },
+    { ...raw, description: "Revised organizer details confirm Tuesday, December 8." },
+    { ...raw, url: raw.url.replace("317066673", "317066674") },
+  ]) assert.equal(applyVerifiedEventFacts(updated), updated, "new source evidence keeps its own facts");
+});
+
 test("Hillview's Halloween conflict stays explicit through refresh without inventing a storytime meridiem", async () => {
   const raw = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/hillview-halloween-storytime-2026.json", import.meta.url)));
   const original = structuredClone(raw);
