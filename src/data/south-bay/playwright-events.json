@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-23T04:18:55.091Z",
+    "generatedAt": "2026-10-23T06:48:01.846Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 32,
-    "eventCount": 449,
+    "eventCount": 448,
     "sourceCount": 22,
     "sources": [
       "Mountain View Public Library (113)",
@@ -14,7 +14,7 @@
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Mountain Winery (4)",
+      "Mountain Winery (3)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (4)",
@@ -166,7 +166,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 4,
+        "count": 3,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -5662,23 +5662,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7d9b2b24887b",
-      "title": "Switchfoot with Anberlin",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1383144",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
       "id": "9e790f24d971",
       "title": "UB40 with CRSB",
       "date": "2026-10-23",
@@ -6279,7 +6262,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-23T04:17:46.006Z"
+        "checkedAt": "2026-10-23T06:46:52.659Z"
       }
     },
     {
@@ -6302,7 +6285,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-23T04:17:46.006Z"
+        "checkedAt": "2026-10-23T06:46:52.659Z"
       }
     },
     {
@@ -6325,7 +6308,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-23T04:17:46.006Z"
+        "checkedAt": "2026-10-23T06:46:52.659Z"
       }
     },
     {
@@ -6348,7 +6331,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-23T04:17:46.008Z"
+        "checkedAt": "2026-10-23T06:46:52.660Z"
       }
     },
     {
@@ -6371,7 +6354,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-23T04:17:46.009Z"
+        "checkedAt": "2026-10-23T06:46:52.660Z"
       }
     },
     {
@@ -6394,7 +6377,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-23T04:17:46.012Z"
+        "checkedAt": "2026-10-23T06:46:52.662Z"
       }
     },
     {
@@ -6417,7 +6400,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-23T04:17:46.012Z"
+        "checkedAt": "2026-10-23T06:46:52.662Z"
       }
     },
     {
@@ -6440,7 +6423,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-23T04:17:46.013Z"
+        "checkedAt": "2026-10-23T06:46:52.662Z"
       }
     },
     {
@@ -8229,11 +8212,11 @@
       "kidFriendly": false
     },
     {
-      "id": "2d78e1eda264",
+      "id": "aff2cf62d4f4",
       "title": "Disney On Ice",
       "date": "2026-10-23",
       "displayDate": "Fri, Oct 23",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8249,15 +8232,15 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-23T05:17:26.802Z"
+        "checkedAt": "2026-10-23T06:47:22.631Z"
       }
     },
     {
-      "id": "1164b892d861",
+      "id": "efad956870b3",
       "title": "Disney On Ice",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
-      "time": "11:00 am",
+      "time": "11:00 AM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8273,15 +8256,15 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "11:00 AM",
-        "checkedAt": "2026-10-23T05:17:26.804Z"
+        "checkedAt": "2026-10-23T06:47:22.631Z"
       }
     },
     {
-      "id": "82353fdd0db5",
+      "id": "cab5d916a1aa",
       "title": "Disney On Ice",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
-      "time": "3:00 pm",
+      "time": "3:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8297,15 +8280,15 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "3:00 PM",
-        "checkedAt": "2026-10-23T05:17:26.804Z"
+        "checkedAt": "2026-10-23T06:47:22.631Z"
       }
     },
     {
-      "id": "810b88595385",
+      "id": "f16b922b9456",
       "title": "Disney On Ice",
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8321,15 +8304,15 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-23T05:17:26.804Z"
+        "checkedAt": "2026-10-23T06:47:22.632Z"
       }
     },
     {
-      "id": "37008b3a76f1",
+      "id": "723777b43995",
       "title": "Disney On Ice",
       "date": "2026-10-25",
       "displayDate": "Sun, Oct 25",
-      "time": "1:00 pm",
+      "time": "1:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8345,15 +8328,39 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-23T05:17:26.804Z"
+        "checkedAt": "2026-10-23T06:47:22.632Z"
       }
     },
     {
-      "id": "b364783afedf",
+      "id": "e00fa2a3f7ef",
+      "title": "Disney On Ice",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "5:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+        "date": "2026-10-25",
+        "time": "5:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
+    },
+    {
+      "id": "b003d10f0620",
       "title": "Sharks vs Sabres",
       "date": "2026-10-27",
       "displayDate": "Tue, Oct 27",
-      "time": "7:30 pm",
+      "time": "7:30 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8363,14 +8370,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
+        "date": "2026-10-27",
+        "time": "7:30 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "7f2fb9f9d28c",
+      "id": "5b14cbaecf84",
       "title": "Sharks vs Canucks",
       "date": "2026-10-29",
       "displayDate": "Thu, Oct 29",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8380,14 +8394,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
+        "date": "2026-10-29",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "9b7c1b291b81",
+      "id": "a4f6500bf23a",
       "title": "Sharks vs Senators — Los Tiburones",
       "date": "2026-10-31",
       "displayDate": "Sat, Oct 31",
-      "time": "1:00 pm",
+      "time": "1:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8397,14 +8418,21 @@
       "description": "Mini Sharks Sugar Skull Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
+        "date": "2026-10-31",
+        "time": "1:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "50e822e9eaca",
+      "id": "c42d7fad77d3",
       "title": "Sharks vs Flames",
       "date": "2026-11-02",
       "displayDate": "Mon, Nov 2",
-      "time": "6:00 pm",
+      "time": "6:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8414,14 +8442,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
+        "date": "2026-11-02",
+        "time": "6:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "776a7391ea30",
+      "id": "c8355a89c779",
       "title": "Don Omar",
       "date": "2026-11-05",
       "displayDate": "Thu, Nov 5",
-      "time": "8:00 pm",
+      "time": "8:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8431,14 +8466,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/don-omar",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
+        "date": "2026-11-05",
+        "time": "8:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "21aad6fa7c4f",
+      "id": "62466a6932a3",
       "title": "Mon Laferte",
       "date": "2026-11-06",
       "displayDate": "Fri, Nov 6",
-      "time": "8:00 pm",
+      "time": "8:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8448,14 +8490,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/mon-laferte",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
+        "date": "2026-11-06",
+        "time": "8:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "ec77b08f420e",
+      "id": "30d457c29ec8",
       "title": "The Smashing Pumpkins",
       "date": "2026-11-08",
       "displayDate": "Sun, Nov 8",
-      "time": "8:00 pm",
+      "time": "8:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8465,14 +8514,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
+        "date": "2026-11-08",
+        "time": "8:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "923f1c768558",
+      "id": "b3498ea951cb",
       "title": "Sharks vs Islanders — Native American Heritage Celebration",
       "date": "2026-11-09",
       "displayDate": "Mon, Nov 9",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8482,14 +8538,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
+        "date": "2026-11-09",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "3f13a60acaca",
+      "id": "5c12f7b4fa6b",
       "title": "Sharks vs Penguins — Military Appreciation",
       "date": "2026-11-11",
       "displayDate": "Wed, Nov 11",
-      "time": "7:00 pm",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8499,14 +8562,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
+        "date": "2026-11-11",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "74e4cfbc37e3",
+      "id": "87013391a337",
       "title": "Life Surge San Jose",
       "date": "2026-11-14",
       "displayDate": "Sat, Nov 14",
-      "time": "8:30 am",
+      "time": "8:30 AM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8516,14 +8586,21 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
+        "date": "2026-11-14",
+        "time": "8:30 AM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
-      "id": "0e196a885af9",
+      "id": "e3e03eafd591",
       "title": "Sharks vs Predators — Hockey Fights Cancer",
       "date": "2026-11-15",
       "displayDate": "Sun, Nov 15",
-      "time": "6:00 pm",
+      "time": "6:00 PM",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8533,7 +8610,14 @@
       "description": "Hockey Fights Cancer Scarf Giveaway",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
       "source": "SAP Center",
-      "kidFriendly": false
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
+        "date": "2026-11-15",
+        "time": "6:00 PM",
+        "checkedAt": "2026-10-23T06:47:22.632Z"
+      }
     },
     {
       "id": "882cb6cb1591",
@@ -8977,30 +9061,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "e00fa2a3f7ef",
-      "title": "Disney On Ice",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "5:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
-      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-      "source": "SAP Center",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-        "date": "2026-10-25",
-        "time": "5:00 PM",
-        "checkedAt": "2026-10-23T05:17:26.804Z"
-      }
     }
   ]
 }
