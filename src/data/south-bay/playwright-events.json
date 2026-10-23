@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-23T00:02:53.307Z",
+    "generatedAt": "2026-10-23T04:18:55.091Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 32,
-    "eventCount": 450,
+    "eventCount": 448,
     "sourceCount": 22,
     "sources": [
-      "Mountain View Public Library (115)",
+      "Mountain View Public Library (113)",
       "Los Gatos Library (102)",
       "San Jose Jazz (14)",
       "Linden Tree Books (10)",
@@ -26,8 +26,8 @@
       "SAP Center (16)",
       "The Tech Interactive (11)",
       "Books Inc (6)",
-      "San Jose Museum of Art (6)",
-      "Peninsula Open Space Trust (2)"
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (6)"
     ],
     "sourceHealth": [
       {
@@ -66,7 +66,7 @@
         "id": "mountain-view-public-library",
         "label": "Mountain View Public Library",
         "status": "ok",
-        "count": 120,
+        "count": 118,
         "error": null,
         "sources": [
           "Mountain View Public Library"
@@ -325,57 +325,16 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Peninsula Open Space Trust",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
   "events": [
-    {
-      "id": "9bc5932a5427",
-      "title": "Community Preservation Lab Scanning Service",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "4:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "appointment-only",
-      "category": "community",
-      "cost": "free",
-      "description": "The Community Preservation Lab is a service provided at the Mountain View History Center. It allows library users to digitize their personal photos and documents with the assistance of library staff. Registration is required to use this service. Please read this document to learn more about the scanning service before making an appointment. Appointments are limited to one per household per week. Register below for a 90-minute session for scanning services in the History Center. Click Here to Register for 4:00pm to 5:30pm Click Here to Register for 6:00pm to 7:30pm",
-      "url": "https://mountainview.libcal.com/event/17686493",
-      "source": "Mountain View Public Library",
-      "kidFriendly": false
-    },
-    {
-      "id": "bd9d2bd2fdea",
-      "title": "Murder Mystery Theater",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "6:30 PM",
-      "endTime": "8:30 PM",
-      "venue": "Mountain View Public Library",
-      "address": "585 Franklin St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "registration": "full",
-      "category": "arts",
-      "cost": "free",
-      "description": "Step into the world of a mysterious mansion where one fateful evening takes a deadly turn. You’ll be given a character to play, complete with secrets, suspicions, and motives of your own. As the story unfolds, clues will be revealed and everyone becomes a suspect. Work with your fellow guests to uncover hidden secrets, piece together the evidence, and determine who committed the murder before the mystery is solved. Will you crack the case, or will the murderer get away with it? No acting experience is necessary—just bring your imagination and your detective skills! Whether you’re a seasoned sleuth or simply looking for a fun and theatrical evening, everyone has a role to play in this interactive murder mystery. For Grades 9-12. Registration required.",
-      "sourceAudiences": [
-        "Teens"
-      ],
-      "url": "https://mountainview.libcal.com/event/17713814",
-      "source": "Mountain View Public Library",
-      "kidFriendly": true
-    },
     {
       "id": "7cf978b75c20",
       "title": "Baby Storytime: Rerun",
@@ -6320,7 +6279,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-23T00:01:39.298Z"
+        "checkedAt": "2026-10-23T04:17:46.006Z"
       }
     },
     {
@@ -6343,7 +6302,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-23T00:01:39.298Z"
+        "checkedAt": "2026-10-23T04:17:46.006Z"
       }
     },
     {
@@ -6366,7 +6325,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-23T00:01:39.299Z"
+        "checkedAt": "2026-10-23T04:17:46.006Z"
       }
     },
     {
@@ -6389,7 +6348,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-23T00:01:39.300Z"
+        "checkedAt": "2026-10-23T04:17:46.008Z"
       }
     },
     {
@@ -6412,7 +6371,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-23T00:01:39.301Z"
+        "checkedAt": "2026-10-23T04:17:46.009Z"
       }
     },
     {
@@ -6435,7 +6394,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-23T00:01:39.302Z"
+        "checkedAt": "2026-10-23T04:17:46.012Z"
       }
     },
     {
@@ -6458,7 +6417,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-23T00:01:39.303Z"
+        "checkedAt": "2026-10-23T04:17:46.012Z"
       }
     },
     {
@@ -6481,7 +6440,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-23T00:01:39.303Z"
+        "checkedAt": "2026-10-23T04:17:46.013Z"
       }
     },
     {
@@ -8270,23 +8229,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f72698716119",
-      "title": "Disney On Ice",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "7:00 pm",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
-      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-      "source": "SAP Center",
-      "kidFriendly": true
-    },
-    {
       "id": "2d78e1eda264",
       "title": "Disney On Ice",
       "date": "2026-10-23",
@@ -8343,6 +8285,23 @@
       "date": "2026-10-24",
       "displayDate": "Sat, Oct 24",
       "time": "7:00 pm",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
+      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
+      "source": "SAP Center",
+      "kidFriendly": true
+    },
+    {
+      "id": "37008b3a76f1",
+      "title": "Disney On Ice",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": "1:00 pm",
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
@@ -8729,23 +8688,6 @@
       "kidFriendly": true
     },
     {
-      "id": "13966e2bd4a7",
-      "title": "JUDE BERMAN: THE LIE",
-      "date": "2026-10-22",
-      "displayDate": "Thu, Oct 22",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Palo Alto",
-      "address": "855 El Camino Real, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
-    },
-    {
       "id": "a3ffdc625223",
       "title": "HAPPY BOOKERS BOOK CLUB: THE EYES ARE THE BEST PART",
       "date": "2026-10-26",
@@ -8828,6 +8770,58 @@
       "description": "",
       "url": "https://www.booksinc.com/pages/events",
       "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "9834fb2a0e0c",
+      "title": "RPG MEET UP",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "6:30 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
       "kidFriendly": false
     },
     {
@@ -8948,41 +8942,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
