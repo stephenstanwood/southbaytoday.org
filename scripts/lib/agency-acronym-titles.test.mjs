@@ -178,6 +178,15 @@ test("preserves WABE's source-published station initials in event copy", () => {
   assert.equal(polishDescription("The Wabe is a word from a poem."), "The Wabe is a word from a poem.");
 });
 
+test("preserves source-published AWS initials in event titles and blurbs", () => {
+  const title = "AI Night with AWS, Anthropic, Temporal";
+  const copy = "Join an AI night with AWS, Anthropic, and Temporal.";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(polishDescription(copy), copy);
+  assert.equal(polishDescription(polishDescription(copy)), copy);
+  assert.equal(polishDescription("Aws is a source-spelled name."), "Aws is a source-spelled name.");
+});
+
 test("keeps league and artist initialisms uppercase in titles and body copy", () => {
   assert.equal(cleanTitle("Sharks x PWHL San Jose"), "Sharks x PWHL San Jose");
   assert.equal(cleanTitle("A Tribute to ABBA"), "A Tribute to ABBA");

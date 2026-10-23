@@ -2382,6 +2382,50 @@ test("editorial voice is not mistaken for a session-activity claim", () => {
   assert.equal(eventCopyFactConflict("This week's highlight is a trip to the coast.", playdate), null);
 });
 
+test("the online SCU grad fair retains its actual organizer through cached blurbs", async () => {
+  const raw = {
+    date: "2026-10-28", title: "UC Santa Cruz Grad Fair",
+    url: "https://events.scu.edu/school-of-education-and-counseling/event/517795-uc-santa-cruz-grad-fair",
+    time: "11:00 AM", endTime: null, city: "los-gatos", venue: "University of California Santa Cruz",
+    virtual: true, description: "Curious to learn more about the School of Education and Counseling Psychology? Come meet our Admissions team!",
+    blurb: "Meet UC Santa Cruz's Education admissions team online and learn about the School of Education and Counseling Psychology.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].venue, "Online");
+  assert.equal(events[0].city, "santa-clara");
+  assert.equal(events[0].virtual, true);
+  assert.match(events[0].blurb, /Santa Clara University's School of Education and Counseling Psychology admissions team/);
+  assert.equal(events[0].time, raw.time);
+  assert.equal(events[0].description, raw.description);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2026-11-28" }, { ...raw, url: "https://events.scu.edu/event/another-fair" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Stanford's Big Swap remains a community giveaway despite incidental music", () => {
+  const raw = {
+    date: "2026-10-23", title: "Big Swap: Game Day Edition",
+    url: "https://events.stanford.edu/event/big-swap-game-day-edition-177",
+    category: "music", description: "Sustainable Stanford will be giving away new Stanford gear at the football game on 10/23!",
+  };
+  assert.equal(applyVerifiedEventFacts(raw).category, "community");
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-11-23" }), { ...raw, date: "2026-11-23" });
+});
+
+test("sparse Meetup blurbs cannot invent attendee roles or a performance format", () => {
+  const sparse = { source: "Meetup", title: "AI Night with AWS, Anthropic, Temporal", description: "Meetup event by Silicon Valley Startup Incubation And Acceleration." };
+  assert.ok(eventCopyFactConflict("Meet founders and engineers from AWS, Anthropic, and Temporal.", sparse));
+  assert.ok(eventCopyFactConflict("Hear engineers explain Meta's AI infrastructure.", { ...sparse, title: "A Priority Queue Became the Backbone of Meta's AI Infrastructure" }));
+  assert.ok(eventCopyFactConflict("Watch local improvisers build scenes from audience suggestions.", { ...sparse, title: "South Bay Improv" }));
+  assert.ok(eventCopyFactConflict("Watch local improvisers perform.", { ...sparse, title: "South Bay Improv" }));
+  assert.equal(eventCopyFactConflict("Join an AI night with AWS, Anthropic, and Temporal.", sparse), null);
+  assert.equal(eventCopyFactConflict("Meet founders and engineers.", { ...sparse, title: "Founders and Engineers Meetup" }), null);
+  assert.equal(eventCopyFactConflict("Watch improvisers perform using audience suggestions.", { ...sparse, title: "Improv performance with audience suggestions" }), null);
+  assert.equal(eventCopyFactConflict("Watch improvisers perform using audience suggestions.", { ...sparse, description: "Watch our improvisers perform using audience suggestions." }), null);
+});
+
 test("sparse Meetup listings cannot acquire unsourced refreshments or live models", () => {
   const sparse = {
     source: "Meetup", title: "Property, Construction and Technology Mixer",

@@ -1024,6 +1024,8 @@ const SOURCE_EVENT_ACRONYMS = [
   // Mountain View's Peter Fletcher biography names Atlanta's radio station.
   // Preserve the source's uppercase spelling: https://www.wabe.org/about/.
   "WABE",
+  // Organizer-supplied AI Night titles name AWS alongside Anthropic and Temporal.
+  "AWS",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -4371,12 +4373,16 @@ async function fetchScuEvents() {
       if (isStudentOnlyEvent({ ...item, link: metadata?.url || item.link })) { skippedScu++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
-      const geoCity = item.georssPoint ? nearestSouthBayCityFromGeoPoint(item.georssPoint) : null;
-      if (item.georssPoint && !geoCity) {
+      // Online attendance outranks an RSS venue/geocode. The UC Santa Cruz
+      // Grad Fair names a physical university in RSS but is online-only in
+      // LiveWhale; its geocode otherwise snaps to nearby Los Gatos.
+      const isVirtual = virtualFromSourceSignal(metadata?.onlineType) === true;
+      const geoCity = !isVirtual && item.georssPoint ? nearestSouthBayCityFromGeoPoint(item.georssPoint) : null;
+      if (!isVirtual && item.georssPoint && !geoCity) {
         skippedScu++;
         return null;
       }
-      if (namesUncoveredCaPostalCity(item.location || item.georssFeatureName)) {
+      if (!isVirtual && namesUncoveredCaPostalCity(item.location || item.georssFeatureName)) {
         skippedScu++;
         return null;
       }
@@ -4400,11 +4406,9 @@ async function fetchScuEvents() {
       );
       const namesCampus = /\b(santa clara university|scu)\b/i.test(scuLocation);
       const isRoomOnly = /\b(?:lab|room|rm|suite|ste)\.?\s*\d+/i.test(scuLocation);
-      const venue = !scuLocation
+      const venue = isVirtual ? "Online" : !scuLocation
         ? "Santa Clara University"
         : (isRoomOnly && !namesCampus ? `Santa Clara University — ${scuLocation}` : scuLocation);
-      const isVirtual =
-        virtualFromSourceSignal(metadata?.onlineType) === true;
       if (isVirtual) virtualFromSourceScu++;
       return {
         id: h("scu", item.link || item.title, item.pubDate),
@@ -4415,7 +4419,7 @@ async function fetchScuEvents() {
         endTime: null,
         venue,
         address: "",
-        city: geoCity || "santa-clara",
+        city: isVirtual ? "santa-clara" : geoCity || "santa-clara",
         ...(isVirtual ? { virtual: true } : {}),
         category: inferUniversityCategory(item.title, item.description, "", venue),
         cost: inferScuCost(item),

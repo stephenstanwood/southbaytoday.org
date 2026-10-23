@@ -1037,6 +1037,37 @@ test("SCU aliases retain canonical department filtering and online attendance", 
   }
 });
 
+test("SCU online events ignore physical RSS venues and geocodes", async () => {
+  const origin = "https://events.scu.edu";
+  const rows = [
+    ["UC Santa Cruz Grad Fair", "517795", "University of California Santa Cruz", "37.0000 -122.0500", "Online only"],
+    ["Public faculty recital", "recital", "Music Recital Hall", "37.3541 -121.9552", null],
+  ];
+  const xml = `<rss><channel>${rows.map(([title, id, venue, point]) => `<item><title>${title}</title><link>${origin}/arts-and-sciences/event/${id}-program</link><description>Public program.</description><pubDate>2026-10-28T11:00:00-07:00</pubDate><georss:featurename>${venue}</georss:featurename><georss:point>${point}</georss:point></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(url), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: rows.map(([, id, , , online_type]) => ({ id, online_type })) });
+  };
+  try {
+    const events = await fetchScuEvents();
+    assert.equal(events.length, 2);
+    assert.deepEqual(
+      events.map(({ venue, address, city, virtual }) => ({ venue, address, city, virtual })),
+      [
+        { venue: "Online", address: "", city: "santa-clara", virtual: true },
+        { venue: "Music Recital Hall", address: "", city: "santa-clara", virtual: undefined },
+      ],
+    );
+    assert.equal(requested.length, 2, "reuse the source attendance field without per-event requests");
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("SCU's public Music@Noon concert stays music despite its class boilerplate", async () => {
   // https://events.scu.edu/arts-and-sciences/event/510144-musicnoon-all-that-jazz
   const origin = "https://events.scu.edu";

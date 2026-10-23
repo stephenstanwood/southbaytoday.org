@@ -1092,6 +1092,26 @@ const CORRECTIONS = [
     url: "https://events.scu.edu/arts-and-sciences/event/517594-whats-on-silicon-valleys-ballot-a-roundtable-on",
     copyReplacements: [[/elections will close on November 2nd/gi, "Election Day is November 3, 2026"]],
   },
+  // This online fair's organizer is SCU's School of Education and Counseling,
+  // not its RSS venue, UC Santa Cruz. The source explicitly uses a
+  // VirtualLocation and OnlineEventAttendanceMode. Keep the publisher's city
+  // as metadata; online events have no physical destination.
+  // Evidence: docs/qa/2026-10-22-1807-fact-check.md.
+  {
+    date: "2026-10-28",
+    url: "https://events.scu.edu/school-of-education-and-counseling/event/517795-uc-santa-cruz-grad-fair",
+    facts: {
+      venue: "Online", address: "", city: "santa-clara", virtual: true,
+      blurb: "Meet Santa Clara University's School of Education and Counseling Psychology admissions team online.",
+    },
+  },
+  // Stanford describes a giveaway/swap with incidental music, not a concert.
+  // Evidence: docs/qa/2026-10-22-1807-fact-check.md.
+  {
+    date: "2026-10-23",
+    url: "https://events.stanford.edu/event/big-swap-game-day-edition-177",
+    facts: { category: "community" },
+  },
   // SCU's full Event JSON-LD says this session is via Zoom, with registration
   // required for its link. Its online_type field is empty and RSS has no body.
   // https://events.scu.edu/leavey-school-of-business/event/509849-job-search-series-2-resume-linkedin-and-practical
@@ -1839,6 +1859,22 @@ export function eventCopyFactConflict(text, event) {
     }
     if (/\blive\s+models?\b/i.test(copy) && !/\blive\s+models?\b/i.test(source)) {
       return "unsupported live model in sparse Meetup listing";
+    }
+    // A company in the title does not establish the jobs or affiliations of
+    // people attending. A group credit is not an attendee/speaker biography.
+    const title = [event.rawTitle, event.title].filter(Boolean).join(" ");
+    for (const role of copy.matchAll(/\b(founder|engineer|employee|representative)s?\b/gi)) {
+      if (!new RegExp(`\\b${role[1]}s?\\b`, "i").test(title)) {
+        return "unsupported attendee role in sparse Meetup listing";
+      }
+    }
+    if (/\baudience\s+(?:suggestions|prompts)\b/i.test(copy)
+        && !/\baudience\s+(?:suggestions|prompts)\b/i.test(title)) {
+      return "unsupported performance format in sparse Meetup listing";
+    }
+    if (/\bwatch\b[^.!?]*\bimprovis(?:ers?|ation)\b/i.test(copy)
+        && !/\b(?:watch|performance|show)\b/i.test(title)) {
+      return "unsupported spectator format in sparse Meetup listing";
     }
   }
   // A virtual event may name its organizing library as the venue. That is not
