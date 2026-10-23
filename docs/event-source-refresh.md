@@ -209,6 +209,17 @@ alone would miss that ordering regression.
   reach us through the sanctioned channel: sjda@sjdowntown.com mails events to
   the inbound intake address, at a couple of events rather than hundreds. If
   downtown coverage needs restoring, ask SJDA for a feed — do not re-scrape.
+- Japanese American Museum of San Jose (JAMsj) live collection was retired on
+  2026-10-23. A normal request to `https://www.jamsj.org/robots.txt` returned
+  HTTP 200 with `Disallow: /` for GPTBot, ClaudeBot and other named AI agents.
+  The generator still registered a Squarespace adapter for that host. Remove
+  its request code and registration; do not substitute another export, host,
+  header or browser. No content page was fetched after the exclusion was
+  observed. The six previously published future listings are not confirmed
+  cancellations and are left unchanged; the next ordinary refresh may retire
+  their URLs through the existing slug ledger. Historical source-health rows
+  describe the earlier run, not restored collection. Any future ingestion
+  requires an approved source channel.
 - Hicklebee's HTTP adapter recovered on 2026-08-29 by removing spoofed
   Safari headers. At that time Node's default headers returned event HTML
   while browser headers triggered a Cloudflare challenge. Keep that historical

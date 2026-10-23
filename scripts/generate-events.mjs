@@ -8577,17 +8577,9 @@ async function fetchSjMuseumOfArtEvents() {
   }
 }
 
-// ── Japanese American Museum of San Jose (Squarespace) ──
-
-async function fetchJamsjEvents() {
-  return fetchSquarespaceEvents(
-    "https://www.jamsj.org/upcoming-events",
-    "Japanese American Museum SJ",
-    "san-jose",
-    "Japanese American Museum of San Jose",
-    "535 N 5th St, San Jose, CA 95112",
-  );
-}
+// JAMsj live collection retired 2026-10-23: its robots policy explicitly
+// excludes GPTBot and ClaudeBot. Keep request code and source registration
+// absent; another host, header, export, or browser is not source permission.
 
 // ── The Pear Theatre (VBO Tickets HTML) ──
 
@@ -10207,7 +10199,7 @@ async function main() {
     // fetchSjMuseumOfArtEvents — retired 2026-08-13 after Cloudflare began
     // challenging every direct HTTP request. SJMA remains covered by the
     // Playwright snapshot, which carries its last healthy rows on browser errors.
-    source(fetchJamsjEvents),
+    // JAMsj — live collection retired; see docs/event-source-refresh.md.
     source(fetchHistorySanJoseEvents),
     source(fetchPearTheatreEvents, { label: "The Pear Theatre" }),
     source(fetchSunnyvalePlayersEvents, { label: "Sunnyvale Community Players" }),
