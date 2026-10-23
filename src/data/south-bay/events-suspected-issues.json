@@ -1,63 +1,29 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-23T06:54:38.181Z"
+    "auditedAt": "2026-10-23T11:03:20.285Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1842,
+    "total": 1830,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 0
     },
-    "byReason": {
-      "unknown-slug": 1
-    },
+    "byReason": {},
     "hard": [],
-    "soft": [
-      {
-        "id": "inbound-9542c24070ff7e38",
-        "title": "Hands-Only CPR/AED & Choking Relief Training",
-        "city": "monte-sereno",
-        "date": "2026-10-22",
-        "location": "18041 Saratoga-Los Gatos Road, Monte Sereno, CA 95030",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
-          }
-        ]
-      }
-    ]
+    "soft": []
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 246,
+    "total": 235,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 0
     },
-    "byReason": {
-      "unknown-slug": 1
-    },
+    "byReason": {},
     "hard": [],
-    "soft": [
-      {
-        "id": "inbound_muq4luqh_jbui2x",
-        "title": "Hands Only CPR/AED & Choking Relief Training",
-        "city": "monte-sereno",
-        "date": "2026-10-22T10:00:00-07:00",
-        "location": "Monte Sereno City Hall",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "unknown-slug",
-            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
-          }
-        ]
-      }
-    ]
+    "soft": []
   }
 }
