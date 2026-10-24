@@ -41,6 +41,29 @@ test("Cupertino drops past dated slots instead of republishing them next year", 
   assert.ok(events.every((event) => event.time === "11:00 AM" && event.endTime === "03:00 PM"));
 });
 
+test("Cupertino preserves all resident pricing and the required attendee registration", async () => {
+  const url = "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event";
+  const pricing = "Resident Rate: $5 Non-Resident Rate: $6 Pre-registration is required and all attending children and adults must be registered.";
+  let evaluations = 0;
+  const page = {
+    goto: async () => {},
+    waitForTimeout: async () => {},
+    evaluate: async () => evaluations++ === 0 ? [{ href: url }] : {
+      title: "Signing Santa", slots: ["Saturday, December 12, 2026 | 10:00 AM - 12:00 PM"],
+      description: "Meet a Santa who understands sign language.",
+      location: "Quinlan Community Center, 10185 North Stelling Road, 95014",
+      cost: pricing,
+    },
+    locator: () => ({ first: () => ({ count: async () => 0 }) }),
+  };
+  const events = (await scrapeCupertinoOpenCities(page, { today: "2026-10-24" }))
+    .map(normalizePlaywrightEvent);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].cost, "low");
+  assert.equal(events[0].costNote, pricing, "preserve both prices and their eligibility");
+  assert.equal(events[0].registration, "required");
+});
+
 import {
   isStudentOnlyEvent,
   isPublicEvent,

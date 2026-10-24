@@ -9,6 +9,21 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Cupertino's dated occurrence puts both residency rates and mandatory
+  // registration for every child/adult in a Pricing sidebar. Older browser
+  // snapshots only read Cost and omit those terms. Keep this edition correct
+  // through refresh without imposing its prices on another year's event.
+  // https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event
+  // Evidence: docs/qa/2026-10-24-2307-fact-check.md.
+  {
+    date: "2026-12-12",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
+    facts: {
+      cost: "low", costNote: "$5 residents; $6 nonresidents.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "$5 residents; $6 nonresidents. Preregistration is required for every attending child and adult.",
+    },
+  },
   // The organizer's poster confirms the title, History Park, October 24 and
   // 2–6:30 PM, but supplies no program description. Its linked ticket page is
   // excluded by robots.txt. Keep copy within those verified facts rather

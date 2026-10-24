@@ -30,6 +30,7 @@ import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
 import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
   REGISTRATION_NONE,
+  REGISTRATION_REQUIRED,
   registrationFromLibCal,
 } from "../src/lib/south-bay/eventFilters.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost } from "./lib/history-sj.mjs";
@@ -42,6 +43,7 @@ import {
   normalizeMountainWineryCard,
   normalizeSapCenterTitle,
   parseIcaExhibitionWindow,
+  parseCivicPlusEventCost,
   parseSantanaRowOccurrences,
 } from "./lib/official-event-sources.mjs";
 import {
@@ -1972,8 +1974,14 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
           : "";
         const locationIdx = lines.findIndex((line) => /^Location$/i.test(line));
         const location = locationIdx >= 0 ? lines[locationIdx + 1] || "" : "";
-        const costIdx = lines.findIndex((line) => /^Cost$/i.test(line));
-        const cost = costIdx >= 0 ? lines[costIdx + 1] || "" : "";
+        // OpenCities also uses a Pricing sidebar, outside the description.
+        // Read the whole box: its later lines can carry nonresident prices
+        // and registration requirements that the first price alone loses.
+        const costBox = [...document.querySelectorAll(".side-box")].find((box) =>
+          /^(?:Cost|Pricing)$/i.test(box.querySelector(".side-box-title")?.textContent?.trim() || ""));
+        const costIdx = lines.findIndex((line) => /^(?:Cost|Pricing)$/i.test(line));
+        const cost = costBox?.querySelector(".side-box-content")?.textContent?.replace(/\s+/g, " ").trim()
+          || (costIdx >= 0 ? lines[costIdx + 1] || "" : "");
         const taggedIdx = lines.findIndex((line) => /^Tagged as:$/i.test(line));
         const tags = taggedIdx >= 0 ? lines.slice(taggedIdx + 1, taggedIdx + 8).join(" ") : "";
         return { title, slots, description, location, cost, tags };
@@ -1994,6 +2002,8 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
     const key = `${date}|${time}|${r.title}|${venue}`;
     if (seen.has(key)) return null;
     seen.add(key);
+    const { cost } = parseCivicPlusEventCost(r.cost);
+    const registrationRequired = /\b(?:pre[-\s]?)?registration\s+(?:is\s+)?(?:required|mandatory)\b/i.test(r.cost || "");
     return {
       title: r.title,
       date,
@@ -2005,7 +2015,9 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
       url: r.url,
       source: "City of Cupertino",
       category: /\b(concert|music|disco|movie)\b/i.test(r.title) ? "music" : inferCategory(`${r.title} ${r.tags || ""}`),
-      cost: /^free$/i.test(r.cost || "") ? "free" : null,
+      cost,
+      ...(cost && cost !== "free" ? { costNote: r.cost } : {}),
+      ...(registrationRequired ? { registration: REGISTRATION_REQUIRED } : {}),
       description: r.description,
       kidFriendly: KID_RE.test(`${r.title} ${r.tags || ""}`),
     };

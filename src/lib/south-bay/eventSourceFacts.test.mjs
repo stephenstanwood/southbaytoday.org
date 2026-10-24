@@ -15,6 +15,34 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Cupertino's Signing Santa retains resident pricing and registration for every attendee", async () => {
+  const raw = {
+    id: "a2b447b7251a", date: "2026-12-12", title: "Signing Santa",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
+    venue: "Quinlan Community Center", time: "10:00 AM", endTime: "12:00 PM", cost: null,
+    description: "Meet a Santa who understands sign language. Registration opens in late July.",
+    blurb: "Meet a sign-language-fluent Santa with an on-site interpreter.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "low");
+  assert.equal(events[0].costNote, "$5 residents; $6 nonresidents.");
+  assert.equal(events[0].registration, "required");
+  assert.match(events[0].attendanceNote, /\$5 residents; \$6 nonresidents/);
+  assert.match(events[0].attendanceNote, /every attending child and adult/i);
+  for (const field of ["id", "title", "date", "time", "endTime", "venue", "url", "description", "blurb"]) {
+    assert.equal(events[0][field], raw[field]);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-12-12" },
+    { ...raw, url: "https://www.cupertino.gov/Parks-Recreation/Events/another-event" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("History Park's Halloween Haunt cannot acquire unverified program details from cached copy", async () => {
   const raw = {
     id: "cd1a5ce49cb4", date: "2026-10-24", title: "Children's Halloween Haunt 2026",
