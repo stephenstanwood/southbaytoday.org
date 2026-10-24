@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { runScraper } from "../playwright-scrapers.mjs";
@@ -70,4 +71,10 @@ test("the scraper's own specific failure remains authoritative", async () => {
   });
   assert.equal(result.error, "SJMA calendar returned HTTP 403");
   assert.equal(page.closed, true);
+});
+
+test("the excluded Palo Alto Art Center collector cannot be requested", () => {
+  const source = readFileSync(new URL("../playwright-scrapers.mjs", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /scrapePaloAltoArtCenter/);
+  assert.doesNotMatch(source, /cityofpaloalto\.org\/Departments\/[^"\n]*Palo-Alto-Art-Center/);
 });

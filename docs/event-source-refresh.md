@@ -330,7 +330,8 @@ October 22 counts and Hammer disposition above:
 - Palo Alto's robots file now returns 200, but excludes the Art Center's
   `Events/*` and `Our-Calendar` paths under its published department paths.
   Do not use a bare path, another department spelling or another host to avoid
-  those exclusions. This remains an access gap, not a quiet season.
+  those exclusions. The browser collector is retired; restoration requires an
+  approved source channel. This remains an access gap, not a quiet season.
 - Hammer's VBO collector was retired on October 24; the October 22 report of
   61 direct-source rows is historical. A normal request to
   `https://hammertheatre.com/robots.txt` now returns HTTP 403 (error 1010).
