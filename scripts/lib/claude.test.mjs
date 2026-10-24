@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { callClaude, extractText } from "./claude.mjs";
+import { CLAUDE_SONNET, callClaude, extractText } from "./claude.mjs";
 
 const OK = { apiKey: "test-key", sleep: async () => {}, onRetry: () => {} };
 
@@ -26,13 +26,14 @@ test("extractText reads past a thinking block", () => {
   assert.equal(extractText(null), "");
 });
 
-test("callClaude disables extended thinking so the budget goes to the answer", async () => {
+test("callClaude uses Sonnet 5.5 between-tools mode so the budget goes to the answer", async () => {
   let sent;
   await callClaude("hi", {
     ...OK,
     fetchImpl: async (_url, req) => { sent = JSON.parse(req.body); return reply(200, text("{}")); },
   });
-  assert.deepEqual(sent.thinking, { type: "disabled" });
+  assert.equal(sent.model, CLAUDE_SONNET);
+  assert.deepEqual(sent.thinking, { type: "between_tools" });
 
   await callClaude("hi", {
     ...OK,
@@ -185,4 +186,23 @@ test("callClaude refuses to run without a key", async () => {
     callClaude("hi", { apiKey: "", label: "digests", fetchImpl: async () => reply(200, text("x")) }),
     /digests: ANTHROPIC_API_KEY not set/,
   );
+});
+
+// Sonnet 5.5 rejects the old disabled setting with HTTP 400. Other model
+// generations reject between_tools, so keep the compatibility choice scoped.
+test("thinking-off mode follows the requested model without changing opt-in behavior", async () => {
+  for (const [model, mode] of [["claude-sonnet-5-5", "between_tools"],
+    ["claude-sonnet-5-5-20261022", "between_tools"], ["claude-sonnet-5", "disabled"]]) {
+    for (const thinking of [false, true]) {
+      const answer = await callClaude("hi", { ...OK, model, thinking,
+        fetchImpl: async (_url, req) => {
+          const sent = JSON.parse(req.body);
+          assert.equal(sent.model, model);
+          assert.deepEqual(sent.thinking, thinking ? undefined : { type: mode });
+          return reply(200, text("answer"));
+        },
+      });
+      assert.equal(answer, "answer");
+    }
+  }
 });

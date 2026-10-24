@@ -134,3 +134,16 @@ test("real CLI exits nonzero and preserves bytes for the rejected baseline and l
     assert.equal(readFileSync(output, "utf8"), before);
   }
 });
+
+// The archive uses a curly apostrophe; the dated article uses &#039;.
+// Both refer to the same October 24 image, so typographic quotes may differ.
+test("NASA archive and article titles accept typographic apostrophes but reject other content", () => {
+  const entry = { date: "2026-10-24", title: "Rosetta’s Selfie",
+    sourceUrl: "https://science.nasa.gov/image-article/apod-2026-october-24-rosettas-selfie/" };
+  const html = fixture("selfie.html");
+  const item = parseApodArticle(html, entry);
+  assert.equal(item.date, entry.date);
+  assert.equal(item.title, "Rosetta's Selfie");
+  assert.throws(() => parseApodArticle(html, { ...entry, title: "Rosetta’s Other Selfie" }), /date\/title/);
+  assert.throws(() => parseApodArticle(html.replace("October 24, 2026", "October 23, 2026"), entry), /date\/title/);
+});

@@ -63,6 +63,11 @@ export function parseApodArchive(html, { startDate, endDate } = {}) {
   return [...entries.values()].sort((a, b) => b.date.localeCompare(a.date));
 }
 
+// NASA smartens quotes in archive labels independently of article headings.
+// Normalize only typographic quotes; dates, words and canonical URLs still
+// have to match exactly, and the article supplies the displayed title.
+const titleKey = value => value.normalize("NFC").replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+
 export function parseApodArticle(html, entry) {
   articleUrl(entry.sourceUrl);
   const canonical = [...html.matchAll(/<link\b[^>]*>/gi)].find(tag => attr(tag[0], "rel") === "canonical");
@@ -74,7 +79,7 @@ export function parseApodArticle(html, entry) {
   const metadata = new Map([...hero.matchAll(/<tr\b[^>]*>[\s\S]*?<th\b[^>]*>([\s\S]*?)<\/th>\s*<td\b[^>]*>([\s\S]*?)<\/td>[\s\S]*?<\/tr>/gi)]
     .map(row => [text(row[1]).replace(/:$/, ""), text(row[2])]));
   const dateParts = metadata.get("Date")?.match(/^(\w+)\s+(\d{1,2}),\s+(\d{4})$/);
-  if (!dateParts || isoDate(dateParts[3], dateParts[1], dateParts[2]) !== entry.date || title !== entry.title) {
+  if (!dateParts || isoDate(dateParts[3], dateParts[1], dateParts[2]) !== entry.date || titleKey(title) !== titleKey(entry.title)) {
     throw Error(`NASA APOD article date/title mismatch: ${entry.date}`);
   }
   const media = moduleByClass(hero, "media-detail-hero__media");

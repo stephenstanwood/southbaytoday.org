@@ -31,8 +31,10 @@
 // So: read the first TEXT block wherever it sits, and raise a loud, specific
 // error when there isn't one or when the response was truncated. These are
 // structured-extraction prompts that don't benefit from extended thinking, so
-// callers get it disabled by default and keep their whole token budget for the
-// answer.
+// callers turn off up-front thinking by default and keep their whole token
+// budget for the answer. Sonnet 5.5 calls that setting between_tools; older
+// models still use disabled. See the per-model table:
+// https://platform.claude.com/docs/en/build-with-claude/thinking
 // ---------------------------------------------------------------------------
 
 const API_URL = "https://api.anthropic.com/v1/messages";
@@ -114,7 +116,9 @@ export async function callClaude(prompt, opts = {}) {
     body: JSON.stringify({
       model,
       max_tokens: maxTokens,
-      ...(thinking ? {} : { thinking: { type: "disabled" } }),
+      ...(thinking ? {} : { thinking: {
+        type: /^claude-sonnet-5-5(?:-\d{8})?$/.test(model) ? "between_tools" : "disabled",
+      } }),
       messages: [{ role: "user", content: prompt }],
     }),
   };
