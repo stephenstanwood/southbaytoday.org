@@ -1169,6 +1169,15 @@ test("internal SCU training and new-major welcomes do not exclude public faculty
   assert.equal(isStudentOnlyEvent({ title: "Faculty Recital Series", link: "https://events.scu.edu/arts-and-sciences/event/1-recital" }), false);
 });
 
+test("SCU new-major group advising is internal while public community workshops remain eligible", () => {
+  assert.equal(isStudentOnlyEvent({
+    title: "New Major: Winter Group Advising - Comm Department",
+    link: "https://events.scu.edu/arts-and-sciences/event/521795-new-major-winter-group-advising-comm-department",
+    description: "Join us for an interactive group advising session designed specifically for first-year and new transfer students.",
+  }), true);
+  assert.equal(isStudentOnlyEvent({ title: "Community STEM Workshop", description: "All ages welcome." }), false);
+});
+
 test("drops SCU technology training and Handshake registration listings", () => {
   assert.equal(isStudentOnlyEvent({
     link: "https://events.scu.edu/technology-training/event/453288-excel-essentials-training",

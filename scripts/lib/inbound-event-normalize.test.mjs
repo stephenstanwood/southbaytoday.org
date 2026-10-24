@@ -5,6 +5,43 @@ import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
 
+test("the two SMASH newsletter names resolve to one free family maker fair before dedup", () => {
+  const raw = [
+    {
+      id: "city-smash", cityKey: "saratoga", title: "SMASH Maker Fair",
+      startsAt: "2026-11-01T14:00:00-08:00", endsAt: "2026-11-01T17:00:00-08:00",
+      location: "Saratoga High School, Saratoga, CA", sourceUrl: "https://saratogasmash.web.app/?s=c",
+      description: "Free maker fair run by Saratoga High's robotics team, with hands-on science for all ages.",
+    },
+    {
+      id: "district-smash", cityKey: "saratoga", title: "5th Annual SMASH Post-Halloween STEM Festival",
+      startsAt: "2026-11-01T14:00:00-08:00", endsAt: "2026-11-01T17:00:00-08:00",
+      location: "Saratoga High School Quad, 20300 Herriman Ave, Saratoga, CA 95070", sourceUrl: "http://saratogasmash.web.app",
+      description: "Free, family-friendly STEM festival hosted by the MSET Cuttlefish Robotics Team with pumpkin smashing, robot demos, science experiments, and a maker fair.",
+    },
+  ];
+  const original = structuredClone(raw);
+  const events = fetchInboundEvents({ today: "2026-10-23", events: raw }).map(applyVerifiedEventFacts);
+  const { kept, droppedCount } = fuzzyDedupEvents(events);
+  assert.equal(droppedCount, 1);
+  assert.equal(kept.length, 1);
+  for (const event of events) {
+    assert.equal(event.title, "SMASH Maker Fair");
+    assert.equal(event.url, "https://saratogasmash.web.app/");
+    assert.equal(event.time, "2:00 PM");
+    assert.equal(event.endTime, "5:00 PM");
+    assert.equal(event.venue, "Saratoga High School courtyard");
+    assert.equal(event.cost, "free");
+    assert.equal(event.category, "community");
+    assert.equal(event.kidFriendly, true);
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+    assert.equal(applyVerifiedEventFacts({ ...event, date: "2027-11-01" }).date, "2027-11-01");
+  }
+  const other = { title: "SMASH Maker Fair", date: "2027-11-01", url: raw[0].sourceUrl, cost: null };
+  assert.equal(applyVerifiedEventFacts(other), other, "a later edition needs its own source evidence");
+  assert.deepEqual(raw, original);
+});
+
 test("Stanford's soccer ticket pages supply real starts and Cagan Stadium before backfill", () => {
   for (const [date, slug, title, time] of [
     ["2026-11-01", "womens-soccer-vs-notre-dame-aqbvne", "Stanford Women's Soccer Home Finale vs. Notre Dame", "1:00 PM"],

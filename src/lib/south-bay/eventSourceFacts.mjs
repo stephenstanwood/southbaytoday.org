@@ -9,6 +9,24 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The city and school-district newsletters name the same occurrence
+  // differently. Canonicalize before dedup; neither the marketing query nor
+  // the alternative title establishes another event. The organizer's dated
+  // Event JSON-LD confirms these clocks, free admission and the courtyard.
+  // https://saratogasmash.web.app/
+  // Evidence: docs/qa/2026-10-24-0007-fact-check.md.
+  {
+    date: "2026-11-01",
+    matches: (event) => /^https?:\/\/saratogasmash\.web\.app\/?(?:\?.*)?$/i.test(event.url || "")
+      && /^(?:smash maker fair|5th annual smash post-halloween stem festival)$/i.test(event.title || ""),
+    facts: {
+      title: "SMASH Maker Fair", url: "https://saratogasmash.web.app/",
+      time: "2:00 PM", endTime: "5:00 PM",
+      venue: "Saratoga High School courtyard",
+      address: "20300 Herriman Avenue, Saratoga, CA 95070",
+      category: "community", cost: "free", kidFriendly: true, audienceAge: "all",
+    },
+  },
   // The film's subject is journalist Amy Goodman; Tia Lessin co-directed it.
   // Stanford's two Jasper Ridge pages require registration and give a campus
   // shuttle meeting point, with no children under 14. Same audit evidence below.

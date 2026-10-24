@@ -4,6 +4,16 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves source-published SMASH, MSET and SJYS initials in titles and prose", () => {
+  for (const title of ["SMASH Maker Fair", "MSET Cuttlefish Robotics Team", "SJYS presents Philharmonic Orchestra's 26-27 Season Opener"]) {
+    assert.equal(cleanTitle(title), title);
+    assert.equal(cleanTitle(cleanTitle(title)), title);
+  }
+  assert.equal(polishDescription("Hosted by the MSET Cuttlefish Robotics Team."), "Hosted by the MSET Cuttlefish Robotics Team.");
+  assert.equal(polishDescription("Hear the SJYS Philharmonic Orchestra."), "Hear the SJYS Philharmonic Orchestra.");
+  assert.equal(cleanTitle("Smash some pumpkins"), "Smash some pumpkins");
+});
+
 test("preserves Stanford's source-supplied SLE program initials", () => {
   const title = "SLE Salon: Haleh Gafori";
   assert.equal(cleanTitle(title), title);

@@ -985,6 +985,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Source-published names: STEM Madness at Saratoga High, its MSET robotics
+  // hosts, and San Jose Youth Symphony. Preserve these in titles and prose.
+  "SMASH", "MSET", "SJYS",
   "CERT", "CLA", "LWV", "ACM", "CI", "CD", "ROS", "WGSS", "JS", "TTRPG",
   // University source headings: Energy Science & Engineering, SCU's ISA
   // seminar, the ST Lee Lecture, and Long Island University's team initials.
@@ -4110,7 +4113,9 @@ const STUDENT_ONLY_AUDIENCE = /\b(?:students?[\s-]only|for\s+(?:scu\s+|sjsu\s+|s
 function isStudentOnlyEvent(item) {
   // Faculty portal training and a department's new-major welcome are internal
   // programs, unlike a public faculty recital or student art exhibition.
-  if (/\bfaculty\s+portal\s+training\b|\bnew\s+major\s+welcome\b/i.test(item.title || "")) return true;
+  // Group advising likewise serves enrolled students, even when its department
+  // URL looks public and its audience says "first-year and new transfer".
+  if (/\bfaculty\s+portal\s+training\b|\bnew\s+major\s+welcome\b|\bgroup\s+advising\b/i.test(item.title || "")) return true;
   // SCU's RSS can use a /live/events/ alias that hides /career-center/.
   // The source category still identifies the internal recruiting program.
   if (/\bCareer\s*&(?:amp;)?\s*Employer\s+Events\b/i.test(item.livewhaleCategories || "")) return true;
