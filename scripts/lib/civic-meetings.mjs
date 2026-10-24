@@ -340,7 +340,12 @@ export function relabelIfOtherBodyMatches(others, recordText) {
     const { score, ...winner } = top;
     return winner;
   }
-  return { body: null, sourceUrl: null, councilMet: true };
+  // An advisory record asking for a recommendation TO council cannot inherit
+  // the council label just because a council meeting shares its date. Without
+  // a matching body or that body's own agenda items, leave it unpublished.
+  // Source review: docs/qa/2026-10-24-0507-fact-check.md.
+  const advisory = /\bpossible\s+recommendation\s+to\s+the\s+(?:city|town)\s+council\b/i.test(recordText);
+  return { body: null, sourceUrl: null, councilMet: !advisory };
 }
 
 // Choose which same-day body actually produced the record we summarized.
@@ -545,7 +550,7 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
           eventId,
         }))
         .filter((c) => c.body);
-      if (others.length === 0) return { body: null, sourceUrl: null, councilMet: true };
+      if (others.length === 0) return relabelIfOtherBodyMatches([], recordText);
       // Name tokens first, then the agenda-item match for records that never
       // name their body; both must beat every rival outright or the council
       // label stands.
@@ -666,7 +671,7 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
     const isCouncil = (m) => /^city council\b/i.test(String(m.title).trim());
     if (named.some(isCouncil)) {
       const others = named.filter((m) => !isCouncil(m)).map(toCandidate).filter((c) => c.body);
-      if (others.length === 0) return { body: null, sourceUrl: null, councilMet: true }; // label is correct
+      if (others.length === 0) return relabelIfOtherBodyMatches([], recordText);
       // Content first: match the record against each same-day agenda's own
       // numbered items, the council's included. Name tokens alone fail both
       // ways. On 2026-09-22 Palo Alto's Council held a 5:45pm special meeting

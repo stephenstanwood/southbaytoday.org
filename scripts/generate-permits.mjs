@@ -1,8 +1,9 @@
 /**
  * generate-permits.mjs
  * Fetches building permits issued in the last 7 days from:
- *   - San Jose (data.sanjoseca.gov CKAN API)
- *   - Palo Alto (gis.cityofpaloalto.org PermitView API)
+ *   - San Jose (the city's published CC0 CSV download)
+ * Palo Alto Permit View collection is retired: its user agreement prohibits
+ * republication without written permission. See docs/qa/2026-10-24-0507-fact-check.md.
  * Outputs permit-pulse.json for the PermitPulseCard component.
  *
  * Cities investigated but blocked (as of April 2026):
@@ -17,19 +18,11 @@
 
 import { readFileSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
-import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { fetchSanJosePermitRecords } from "./lib/san-jose-permits.mjs";
+import { ARTIFACTS } from "./lib/paths.mjs";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const OUTPUT_PATH = ARTIFACTS.permits;
 
-const OUTPUT_PATH = join(
-  __dirname,
-  "../src/data/south-bay/permit-pulse.json"
-);
-
-const RESOURCE_ID = "045b3678-e923-4002-b696-300955bc6d06"; // Last 30 days permits
-const API_BASE = "https://data.sanjoseca.gov/api/3/action/datastore_search";
 const WINDOW_DAYS = 7;
 
 function parseDate(str) {
@@ -168,29 +161,6 @@ const CATEGORY_LABELS = {
   commercial: "Commercial",
 };
 
-async function fetchAllPermits() {
-  const limit = 500;
-  let offset = 0;
-  let all = [];
-
-  while (true) {
-    const url = `${API_BASE}?resource_id=${RESOURCE_ID}&limit=${limit}&offset=${offset}`;
-    const res = await fetch(url, {
-      headers: { "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)" },
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status} from permits API`);
-    const body = await res.json();
-    const records = body.result?.records ?? [];
-    all = all.concat(records);
-    if (records.length < limit) break;
-    offset += limit;
-    // Respect rate limits
-    await new Promise((r) => setTimeout(r, 200));
-  }
-
-  return all;
-}
-
 function formatDateRange(cutoff, now) {
   const opts = { month: "short", day: "numeric", timeZone: "America/Los_Angeles" };
   const start = cutoff.toLocaleDateString("en-US", opts);
@@ -198,10 +168,9 @@ function formatDateRange(cutoff, now) {
   return `${start} – ${end}`;
 }
 
-async function main() {
+export async function generatePermitPulse({ fetchImpl = fetch, sleep, outputPath = OUTPUT_PATH, now = new Date() } = {}) {
   console.log("🏗️  Fetching San Jose building permits...");
 
-  const now = new Date();
   const cutoffRaw = new Date(now);
   cutoffRaw.setDate(cutoffRaw.getDate() - WINDOW_DAYS);
   // Floor to the start of that Pacific day, in the same -08:00 frame parseDate
@@ -213,10 +182,10 @@ async function main() {
 
   let records;
   try {
-    records = await fetchAllPermits();
+    records = await fetchSanJosePermitRecords({ fetchImpl, sleep });
   } catch (err) {
     console.error("  ❌ Failed to fetch permits:", err.message);
-    process.exit(1);
+    throw err;
   }
 
   console.log(`  📋 Fetched ${records.length} total records from last-30-days dataset`);
@@ -297,14 +266,16 @@ async function main() {
     permits: top,
   };
 
-  // Load existing data to preserve other cities, then upsert san-jose
+  // Preserve other cities, but never carry the retired Permit View rows forward.
   let existing = { cities: {} };
   try {
-    existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8"));
+    existing = JSON.parse(readFileSync(outputPath, "utf-8"));
   } catch {}
-  const output = { cities: { ...existing.cities, "san-jose": cityEntry } };
+  const cities = { ...existing.cities };
+  delete cities["palo-alto"];
+  const output = { cities: { ...cities, "san-jose": cityEntry } };
 
-  writeFileAtomic(OUTPUT_PATH, JSON.stringify(output, null, 2));
+  writeFileAtomic(outputPath, JSON.stringify(output, null, 2));
   console.log(
     `  ✅ Done — ${recent.length} permits this week, ${notable.length} notable, ${newUnits} new units → permit-pulse.json`
   );
@@ -318,225 +289,8 @@ async function main() {
   }
 }
 
-// ── Palo Alto ──────────────────────────────────────────────────────────────
-
-const PA_PERMIT_VIEW = "https://gis.cityofpaloalto.org/PermitView";
-
-// Categories we surface (Palo Alto has no valuation data, so we focus on type)
-const PA_INTERESTING_CATEGORIES = new Set([
-  "Building Permit",
-  "Building",
-  "Entitlement",
-  "Zoning",
-  "Web - Kitchen or Bath Remodel",
-]);
-
-function parsePaDate(str) {
-  if (!str) return null;
-  // "2026-03-25 00:00:00.0000000"
-  const m = str.match(/^(\d{4}-\d{2}-\d{2})/);
-  return m ? m[1] : null;
-}
-
-function formatPaAddress(raw) {
-  if (!raw) return "";
-  // "3173 SOUTH CT, PALO ALTO, CA 94306" — strip city/state/zip
-  const parts = raw.split(",");
-  const street = (parts[0] ?? raw).trim();
-  return street
-    .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase())
-    .replace(/\s+/g, " ");
-}
-
-function categorizePa(record) {
-  const cat = record.RECORD_TYPE_CATEGORY ?? "";
-  const desc = (record.DESCRIPTION ?? "").toLowerCase();
-
-  // Residential signal — covers "RES:" / "Res:" prefix, "Residential -", "single family",
-  // "single-family", "ADU", "duplex". PermitView descriptions lead with these consistently.
-  const isResidential =
-    /^\s*res(?:idential)?\s*[-:]/.test(desc) ||
-    desc.includes("single family") ||
-    desc.includes("single-family") ||
-    desc.includes("\badu\b") ||
-    /\badu\b/.test(desc) ||
-    desc.includes("duplex");
-
-  // Mirror San Jose: skip boring residential maintenance so the card highlights real changes.
-  const isRoutineMaintenance =
-    desc.includes("heat pump") ||
-    desc.includes("water heater") ||
-    desc.includes("hvac") ||
-    desc.includes("furnace") ||
-    desc.includes("ev charger") ||
-    desc.includes("electrical panel") ||
-    desc.includes("main panel") ||
-    desc.includes("sub panel") ||
-    desc.includes("subpanel") ||
-    desc.includes("solar panel") ||
-    desc.includes("solar pv") ||
-    desc.includes("re-roof") ||
-    desc.includes("reroof") ||
-    /\broof\w*\b/.test(desc) ||
-    desc.includes("sewer") ||
-    desc.includes("plumbing") ||
-    desc.includes("window replacement") ||
-    desc.includes("water service");
-  if (isResidential && isRoutineMaintenance) return null;
-
-  const isNew =
-    desc.includes("new") && (desc.includes("construction") || desc.includes("dwelling") || desc.includes("adu") || desc.includes("sfr") || desc.includes("multi"));
-  const isCommercial =
-    desc.includes("ti:") || desc.includes("tenant improvement") || desc.includes("commercial") || desc.includes("office");
-  const isRemodel = desc.includes("remodel") || desc.includes("kitchen") || desc.includes("bath");
-  const isAddition = desc.includes("addition");
-  const isEntitlement = cat === "Entitlement" || cat === "Zoning";
-
-  if (isEntitlement) return "entitlement";
-  if (isNew) return "new-construction";
-  if (isCommercial && !isResidential) return "commercial";
-  if (isResidential && isAddition) return "residential-large";
-  if (isResidential && isRemodel) return "residential-remodel";
-  // Drop everything else — generic residential maintenance shouldn't take a slot.
-  return null;
-}
-
-const PA_CATEGORY_LABELS = {
-  "new-construction": "New Construction",
-  commercial: "Commercial Project",
-  "residential-large": "Addition",
-  "residential-remodel": "Home Remodel",
-  entitlement: "Entitlement / Zoning",
-};
-
-async function fetchPaloAltoPermits(cutoffStr) {
-  // 1. Get session + CSRF token
-  const page = await fetch(`${PA_PERMIT_VIEW}/`, {
-    headers: { "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)" },
-  });
-  if (!page.ok) throw new Error(`PermitView page HTTP ${page.status}`);
-
-  const allCookies = page.headers.getSetCookie
-    ? page.headers.getSetCookie()
-    : [page.headers.get("set-cookie")].filter(Boolean);
-  const cookieParts = allCookies.map((c) => c.split(";")[0]).join("; ");
-  const xsrfMatch = cookieParts.match(/XSRF-TOKEN=([^;]+)/);
-  const xsrfDecoded = xsrfMatch ? decodeURIComponent(xsrfMatch[1]) : "";
-
-  const html = await page.text();
-  const csrf = html.match(/<meta name="csrf-token" content="([^"]+)"/)?.[1] ?? "";
-
-  // 2. Query permits opened since cutoff
-  const formData = new URLSearchParams();
-  formData.append("where", `p.DATE_OPENED >= '${cutoffStr}' AND p.ADDR_FULL_LINE != 'NULL'`);
-
-  const res = await fetch(`${PA_PERMIT_VIEW}/get-remote-data`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "X-CSRF-TOKEN": csrf,
-      "X-XSRF-TOKEN": xsrfDecoded,
-      "X-Requested-With": "XMLHttpRequest",
-      Cookie: cookieParts,
-      Referer: `${PA_PERMIT_VIEW}/`,
-      "User-Agent": "southbaytoday.org/permits-bot (+https://southbaytoday.org)",
-    },
-    body: formData.toString(),
-  });
-  if (!res.ok) throw new Error(`PermitView data HTTP ${res.status}`);
-  const body = await res.json();
-  return body.data ?? [];
-}
-
-async function mainPaloAlto() {
-  console.log("\n🏗️  Fetching Palo Alto building permits...");
-
-  const now = new Date();
-  const cutoff = new Date(now);
-  cutoff.setDate(cutoff.getDate() - WINDOW_DAYS);
-  const cutoffStr = cutoff.toISOString().split("T")[0];
-
-  let records;
-  try {
-    records = await fetchPaloAltoPermits(cutoffStr);
-  } catch (err) {
-    console.error("  ❌ Palo Alto fetch failed:", err.message);
-    return null;
-  }
-
-  console.log(`  📋 ${records.length} permits opened since ${cutoffStr}`);
-
-  // Only show "Issued" or "Over the Counter Approved" permits as confirmed issued
-  const issued = records.filter((r) =>
-    ["Permit Issued", "Over the Counter Approved", "Finaled"].includes(r.RECORD_STATUS)
-  );
-  console.log(`  📅 ${issued.length} permits with issued/approved status`);
-
-  const notable = [];
-  for (const r of issued) {
-    const cat = categorizePa(r);
-    if (!cat) continue;
-    notable.push({
-      id: r.RECORD_ID,
-      address: formatPaAddress(r.ADDR_FULL_LINE),
-      category: cat,
-      categoryLabel: PA_CATEGORY_LABELS[cat] ?? cat,
-      workType: r.RECORD_TYPE_CATEGORY ?? "",
-      description: (r.DESCRIPTION ?? "").replace(/\s*\n\s*/g, " ").trim(),
-      valuation: 0, // not available from PermitView
-      units: 0,
-      issueDate: parsePaDate(r.DATE_OPENED),
-      subtype: r.RECORD_STATUS ?? "",
-    });
-  }
-
-  const PA_CAT_PRIORITY = { "new-construction": 0, commercial: 1, "residential-large": 2, "residential-remodel": 3, entitlement: 4 };
-  notable.sort((a, b) => (PA_CAT_PRIORITY[a.category] ?? 9) - (PA_CAT_PRIORITY[b.category] ?? 9));
-  const top = notable.slice(0, 10);
-
-  const opts = { month: "short", day: "numeric", timeZone: "America/Los_Angeles" };
-  const dateRange = `${cutoff.toLocaleDateString("en-US", opts)} – ${now.toLocaleDateString("en-US", opts)}`;
-
-  console.log(`  ✅ Done — ${issued.length} issued, ${notable.length} notable`);
-  if (top.length > 0) {
-    for (const p of top.slice(0, 5)) {
-      console.log(`    [${p.categoryLabel}] ${p.address} — ${p.description.slice(0, 60)}`);
-    }
-  }
-
-  return {
-    generatedAt: now.toISOString(),
-    city: "Palo Alto",
-    source: "gis.cityofpaloalto.org",
-    sourceUrl: "https://gis.cityofpaloalto.org/PermitView/",
-    windowDays: WINDOW_DAYS,
-    dateRange,
-    stats: {
-      total: records.length,
-      notable: notable.length,
-      newUnits: 0,
-      totalValuation: 0,
-    },
-    permits: top,
-  };
-}
-
-async function mainAll() {
-  await main();
-
-  const paEntry = await mainPaloAlto();
-  if (paEntry) {
-    let existing = { cities: {} };
-    try { existing = JSON.parse(readFileSync(OUTPUT_PATH, "utf-8")); } catch {}
-    const output = { cities: { ...existing.cities, "palo-alto": paEntry } };
-    writeFileAtomic(OUTPUT_PATH, JSON.stringify(output, null, 2));
-    console.log("  ✅ Palo Alto written to permit-pulse.json");
-  }
-}
-
 if (import.meta.url === `file://${process.argv[1]}`) {
-  mainAll().catch((err) => {
+  generatePermitPulse().catch((err) => {
     console.error("Fatal:", err);
     process.exit(1);
   });

@@ -996,6 +996,34 @@ test("relabelIfOtherBodyMatches: same-day non-council body wins only with a hit 
   assert.deepEqual(relabelIfOtherBodyMatches([], "anything"), { body: null, sourceUrl: null, councilMet: true });
 });
 
+test("a recommendation TO council cannot earn council attribution from its date alone", () => {
+  const text = "Discussion and Possible Recommendation to the City Council Regarding Implementation of Housing Element Program 3.9A";
+  assert.deepEqual(relabelIfOtherBodyMatches([], text), {
+    body: null, sourceUrl: null, councilMet: false,
+  });
+  const ptc = { body: "Planning & Transportation Commission", sourceUrl: "https://example.test/ptc" };
+  assert.deepEqual(relabelIfOtherBodyMatches([ptc], text), {
+    body: null, sourceUrl: null, councilMet: false,
+  });
+  assert.deepEqual(relabelIfOtherBodyMatches([ptc], `Planning & Transportation Commission: ${text}`), ptc);
+});
+
+test("both civic providers withhold date-only Council attribution for an advisory recommendation", async () => {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => jsonResponse(String(url).includes("ListArchivedMeetings")
+    ? [{ title: "City Council Regular Meeting", dateTime: "2026-10-13T17:00:00" }]
+    : [{ EventId: 1, EventBodyName: "City Council", EventDate: "2026-10-13T00:00:00", EventAgendaStatusName: "Final" }]);
+  try {
+    for (const verify of [
+      (text) => verifyPrimeGovBodyOnDate("cityofpaloalto.primegov.com", "2026-10-13", text),
+      (text) => verifyLegistarBodyOnDate("sanjose", "2026-10-13", text),
+    ]) {
+      assert.equal((await verify("Discussion and Possible Recommendation to the City Council Regarding Implementation of Housing Element Program 3.9A")).councilMet, false);
+      assert.equal((await verify("Council agenda: approval of minutes and financial reports")).councilMet, true);
+    }
+  } finally { globalThis.fetch = originalFetch; }
+});
+
 // Santa Clara 2026-09-17: Legistar listed the Civil Service Commission
 // (CANCELLED) alongside the Station Area Task Force (Final). The commission
 // matched the committee/commission preference, the task force did not, and a

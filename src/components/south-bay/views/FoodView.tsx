@@ -376,7 +376,7 @@ function PermitPulse() {
         {visibleItems.map((item) => <PermitPulseRow key={item.id} item={item} />)}
       </div>
       <p className="food-note">
-        Sourced from San José &amp; Palo Alto building permits{SEP}Tap a row to find it on Google Maps
+        Sourced from San José building permits{SEP}Tap a row to find it on Google Maps
       </p>
     </section>
   );

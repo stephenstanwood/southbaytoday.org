@@ -3,18 +3,17 @@
  * generate-restaurant-radar.mjs
  *
  * Fetches recent restaurant-related building permits from:
- *   - San Jose (data.sanjoseca.gov CKAN API)
- *   - Palo Alto (gis.cityofpaloalto.org PermitView)
+ *   - San Jose (the city's published CC0 CSV download)
+ * Palo Alto Permit View collection is retired: republication needs written
+ * permission. See docs/qa/2026-10-24-0507-fact-check.md.
  * to surface new buildouts, openings, and closures.
  *
  * Run: node scripts/generate-restaurant-radar.mjs
  */
 
 import { writeFileAtomic } from "./lib/io.mjs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
-
-const PA_PERMIT_VIEW = "https://gis.cityofpaloalto.org/PermitView";
+import { fetchSanJosePermitRecords } from "./lib/san-jose-permits.mjs";
+import { ARTIFACTS } from "./lib/paths.mjs";
 
 const GOOGLE_PLACES_API_KEY = process.env.GOOGLE_PLACES_API_KEY ?? "";
 
@@ -55,15 +54,11 @@ const MANUAL_OVERRIDES = {
   "san-jose:3243 S White Rd": { blurb: "Round Table Pizza franchise fitting out a new location on South White Road in East San Jose" },
 };
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "restaurant-radar.json");
+const OUT_PATH = ARTIFACTS.restaurantRadar;
 
-const API_BASE = "https://data.sanjoseca.gov/api/3/action/datastore_search";
-// "Last 30 days building permits" dataset
-const RESOURCE_ID = "045b3678-e923-4002-b696-300955bc6d06";
-
-// Food service subtypes to search for
-const FOOD_TERMS = ["restaurant", "café", "cafe", "bakery", "food service", "bar", "brewery", "winery", "kitchen"];
+// Match the permit's own work and business fields, rather than an unrelated
+// owner/applicant name. Reading the full download also avoids API result caps.
+const FOOD_TERMS = /\b(?:restaurant|caf[eé]|bakery|food\s+service|bar|brewery|winery|kitchen)\b/i;
 
 // Work types that signal new/opening activity
 const OPENING_WORK_TYPES = new Set([
@@ -225,207 +220,17 @@ function labelFromSignal(signal, workType, valuation, folderName = "") {
   return "Permit Activity";
 }
 
-// ── Palo Alto PermitView helpers ──────────────────────────────────────────────
-
-const PA_FOOD_KEYWORDS = ["restaurant", "cafe", "café", "bakery", "food", "kitchen", "dining", "bistro", "brew", "bar ", "brewery", "winery", "eatery", "pizza", "sushi", "taco", "boba"];
-
-function isPaResidential(record) {
-  const desc = (record.DESCRIPTION ?? "").trim();
-  const cat = record.RECORD_TYPE_CATEGORY ?? "";
-  if (cat === "Web - Kitchen or Bath Remodel") return true;
-  // Descriptions that start with residential prefixes
-  if (/^(RES:|Res:|C1-[A-Z\-\/]+\s*[-\s]+Res:|C1-[A-Z]+\s+Res:)/i.test(desc)) return true;
-  if (/\bsingle.family\b|\bSFR\b|\bADU\b|\bsingle family\b/i.test(desc)) return true;
-  // "Instant permit for a residential..." pattern
-  if (/^Instant permit for a residential/i.test(desc)) return true;
-  return false;
-}
-
-function extractPaName(desc) {
-  if (!desc) return null;
-  // "COM: Standalone U&O for 'Bistro Demiya'" or "COM: TI for 'Name'"
-  const uoMatch = desc.match(/U&O for ['"]([^'"]+)['"]/i) ||
-                  desc.match(/for ['"]([^'"]+)['"]/i);
-  if (uoMatch) return uoMatch[1].trim();
-  // '"ARSICAULT BAKERY" Tenant improvement...' — quoted name at start of description
-  const quotedLeadMatch = desc.match(/^"([^"]{3,40})"\s/);
-  if (quotedLeadMatch) {
-    return quotedLeadMatch[1].trim().toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-  }
-  // "FRONT PORCH: ..." — all-caps name before colon
-  const colonMatch = desc.match(/^([A-Z][A-Z\s'&]+):/);
-  if (colonMatch) {
-    const name = colonMatch[1].trim();
-    // Skip generic codes
-    if (!/^(RES|COM|C1|REV|MEP|OTC|MFR|SFR)$/i.test(name) && name.length > 3 && name.length < 40) {
-      return name.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-    }
-  }
-  // "BON BROTH SF Tenant Improvement ..." — all-caps name before noise keywords
-  const allCapsLeadMatch = desc.match(/^([A-Z][A-Z\s'&]{2,39}?)\s+(Tenant|TI|Restaurant|Kitchen|Cafe|Bakery|Bar|Brew)/);
-  if (allCapsLeadMatch) {
-    const name = allCapsLeadMatch[1].trim();
-    if (!/^(RES|COM|C1|REV|MEP|OTC|REQUEST)/i.test(name) && name.length > 3) {
-      return name.toLowerCase()
-        .replace(/\b\w/g, (c) => c.toUpperCase())
-        .replace(/\bSf\b/g, "SF")
-        .replace(/\bNyc\b/g, "NYC")
-        .replace(/\bBbq\b/g, "BBQ");
-    }
-  }
-  return null;
-}
-
-function labelPaPermit(record) {
-  const desc = (record.DESCRIPTION ?? "").toLowerCase();
-  const cat = record.RECORD_TYPE_CATEGORY ?? "";
-  if (/u&o|use.and.occupancy|standalone u/i.test(desc) || /^new construction/i.test(desc)) return "New Opening";
-  if (cat === "Entitlement" || /conditional use permit|cup to amend/i.test(desc)) return "Conditional Use";
-  if (/tenant improvement|TI:/i.test(desc)) return "Renovation";
-  if (/kitchen equipment|add.*equipment|new equipment/i.test(desc)) return "New Buildout";
-  return "Permit Activity";
-}
-
-async function fetchPaloAltoFoodPermits() {
-  console.log("\nFetching restaurant permit activity from Palo Alto PermitView…");
-
-  let page;
-  try {
-    page = await fetch(`${PA_PERMIT_VIEW}/`, {
-      headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; permits research)" },
-      signal: AbortSignal.timeout(15_000),
-    });
-  } catch (err) {
-    console.warn(`  ⚠️ PA PermitView unavailable: ${err.message}`);
-    return [];
-  }
-  if (!page.ok) {
-    console.warn(`  ⚠️ PA PermitView HTTP ${page.status}`);
-    return [];
-  }
-
-  const allCookies = page.headers.getSetCookie
-    ? page.headers.getSetCookie()
-    : [page.headers.get("set-cookie")].filter(Boolean);
-  const cookieParts = allCookies.map((c) => c.split(";")[0]).join("; ");
-  const xsrfMatch = cookieParts.match(/XSRF-TOKEN=([^;]+)/);
-  const xsrfDecoded = xsrfMatch ? decodeURIComponent(xsrfMatch[1]) : "";
-  const html = await page.text();
-  const csrfMatch = html.match(/<meta name="csrf-token" content="([^"]+)"/);
-  const csrf = csrfMatch ? csrfMatch[1] : "";
-
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - 60);
-  const cutoffStr = cutoff.toISOString().split("T")[0];
-
-  // Build SQL-style filter for food keywords in DESCRIPTION
-  const foodLikes = PA_FOOD_KEYWORDS.map((k) => `LOWER(p.DESCRIPTION) LIKE '%${k}%'`).join(" OR ");
-  const formData = new URLSearchParams();
-  formData.append("where", `p.DATE_OPENED >= '${cutoffStr}' AND (${foodLikes})`);
-
-  let res;
-  try {
-    res = await fetch(`${PA_PERMIT_VIEW}/get-remote-data`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "X-CSRF-TOKEN": csrf,
-        "X-XSRF-TOKEN": xsrfDecoded,
-        "X-Requested-With": "XMLHttpRequest",
-        Cookie: cookieParts,
-        Referer: `${PA_PERMIT_VIEW}/`,
-        "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; permits research)",
-      },
-      body: formData.toString(),
-      signal: AbortSignal.timeout(20_000),
-    });
-  } catch (err) {
-    console.warn(`  ⚠️ PA PermitView data error: ${err.message}`);
-    return [];
-  }
-  if (!res.ok) {
-    console.warn(`  ⚠️ PA PermitView data HTTP ${res.status}`);
-    return [];
-  }
-
-  const body = await res.json();
-  const records = body.data ?? [];
-  console.log(`  ${records.length} raw PA food permits`);
-
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const items = records
-    .filter((r) => !isPaResidential(r))
-    .map((r) => {
-      const desc = (r.DESCRIPTION ?? "").trim();
-      const cat = r.RECORD_TYPE_CATEGORY ?? "";
-      const rawAddr = (r.ADDR_FULL_LINE ?? "").split(",")[0].trim();
-      const address = rawAddr
-        .toLowerCase()
-        .replace(/\b\w/g, (c) => c.toUpperCase())
-        .replace(/\s+/g, " ");
-      const date = (r.DATE_OPENED ?? todayStr).slice(0, 10);
-      const label = labelPaPermit(r);
-
-      // Skip pure signage or MEP-only scopes with no food narrative
-      if (label === "Permit Activity" && /^(OTC Architectural review for|RES MEP:|Res: Temporary|Res: Voluntary)/i.test(desc)) return null;
-
-      const name = extractPaName(desc);
-      return {
-        id: `pa-${r.RECORD_NUMBER ?? address}-${date}`,
-        city: "palo-alto",
-        address,
-        name,
-        description: desc.length > 80 ? desc.slice(0, 77) + "…" : desc,
-        workType: cat,
-        signal: label === "Possible Closure" ? "closing" : label === "New Opening" ? "opening" : "activity",
-        label,
-        valuation: 0,
-        date,
-      };
-    })
-    .filter(Boolean);
-
-  // Deduplicate by address+date (PA sometimes has multiple permit records per project)
-  const seen = new Set();
-  const unique = items.filter((it) => {
-    const key = `${it.address}|${it.date}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
-  // Skip unnamed items (confusing in UI); only show items with a known name
-  const notable = unique.filter((it) => it.name);
-  console.log(`  ${notable.length} notable PA food permits`);
-  notable.forEach((it) => console.log(`    [${it.label}] ${it.address}${it.name ? ` — ${it.name}` : ""}`));
-  return notable;
-}
-
-async function main() {
+export async function generateRestaurantRadar({ fetchImpl = fetch, sleep, outputPath = OUT_PATH, placesApiKey = GOOGLE_PLACES_API_KEY, now = new Date() } = {}) {
   console.log("Fetching restaurant permit activity from San Jose open data…");
 
-  const allRecords = [];
-
-  for (const term of FOOD_TERMS) {
-    const url = `${API_BASE}?resource_id=${RESOURCE_ID}&q=${encodeURIComponent(term)}&limit=200`;
-    const res = await fetch(url, {
-      headers: { "User-Agent": "SouthBayToday/1.0 (southbaytoday.org; public data)" },
-      signal: AbortSignal.timeout(20_000),
-    });
-    if (!res.ok) {
-      console.warn(`  HTTP ${res.status} for "${term}"`);
-      continue;
-    }
-    const data = await res.json();
-    const records = data.result?.records ?? [];
-    allRecords.push(...records);
-    console.log(`  "${term}": ${records.length} permits`);
-  }
+  const allRecords = (await fetchSanJosePermitRecords({ fetchImpl, sleep })).filter((record) =>
+    FOOD_TERMS.test([record.FOLDERNAME, record.FOLDERDESC, record.SUBTYPEDESCRIPTION, record.WORKDESCRIPTION].join(" ")),
+  );
 
   // Deduplicate by permit folder number
   const seen = new Set();
   const unique = allRecords.filter((r) => {
-    const key = r.FOLDERNUMBER ?? r._id;
+    const key = r.FOLDERNUMBER || r.FOLDERRSN;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -434,7 +239,7 @@ async function main() {
   console.log(`  ${unique.length} unique permits after dedup`);
 
   // Filter + enrich
-  const cutoffDate = new Date();
+  const cutoffDate = new Date(now);
   cutoffDate.setDate(cutoffDate.getDate() - 45);
 
   const items = unique
@@ -494,7 +299,7 @@ async function main() {
       const name = extractName(rawName);
 
       return {
-        id: r.FOLDERNUMBER ?? String(r._id),
+        id: r.FOLDERNUMBER || r.FOLDERRSN,
         city: "san-jose",
         address: formatAddress(r.gx_location),
         name: name ?? null,
@@ -523,15 +328,15 @@ async function main() {
 
   // Enrich SJ items missing names using Google Places (best-effort)
   const topSjItems = items.slice(0, 15);
-  if (GOOGLE_PLACES_API_KEY) {
+  if (placesApiKey) {
     const unnamed = topSjItems.filter((it) => !it.name);
     if (unnamed.length > 0) {
       console.log(`\n  🔍 Looking up ${unnamed.length} unnamed SJ permit locations via Google Places…`);
       for (const item of unnamed) {
         try {
           const query = `restaurant ${item.address}, San Jose, CA`;
-          const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=name,formatted_address,business_status&key=${GOOGLE_PLACES_API_KEY}`;
-          const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+          const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=name,formatted_address,business_status&key=${placesApiKey}`;
+          const res = await fetchImpl(url, { signal: AbortSignal.timeout(5000) });
           if (!res.ok) continue;
           const data = await res.json();
           const candidate = data.candidates?.[0];
@@ -552,11 +357,8 @@ async function main() {
     }
   }
 
-  // Fetch Palo Alto permits
-  const paItems = await fetchPaloAltoFoodPermits();
-
   // Combine and sort: opening/closure signals first, then by date desc
-  const allItems = [...topSjItems, ...paItems];
+  const allItems = [...topSjItems];
   allItems.sort((a, b) => {
     if (a.signal === "closing" && b.signal !== "closing") return -1;
     if (b.signal === "closing" && a.signal !== "closing") return 1;
@@ -585,14 +387,14 @@ async function main() {
   const allItems_final = filtered;
 
   const output = {
-    generatedAt: new Date().toISOString(),
-    cities: ["San Jose", "Palo Alto"],
+    generatedAt: now.toISOString(),
+    cities: ["San Jose"],
     windowDays: 60,
     items: allItems_final,
   };
 
-  writeFileAtomic(OUT_PATH, JSON.stringify(output, null, 2) + "\n");
-  console.log(`\n✅ ${allItems.length} restaurant permit signals (SJ: ${topSjItems.length}, PA: ${paItems.length}) → restaurant-radar.json`);
+  writeFileAtomic(outputPath, JSON.stringify(output, null, 2) + "\n");
+  console.log(`\n✅ ${allItems.length} restaurant permit signals (San José: ${topSjItems.length}) → restaurant-radar.json`);
   allItems.forEach((it) =>
     console.log(`  [${it.city}][${it.label}] ${it.address}${it.name ? ` — ${it.name}` : ""}${it.valuation ? ` ($${it.valuation.toLocaleString()})` : ""}`)
   );
@@ -601,7 +403,7 @@ async function main() {
 // Only run the scrape when invoked directly — importing this module for tests
 // must not fire network requests (same guard as generate-events.mjs).
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((err) => {
+  generateRestaurantRadar().catch((err) => {
     console.error("Error:", err.message);
     process.exit(1);
   });

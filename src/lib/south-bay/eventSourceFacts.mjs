@@ -9,6 +9,20 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The independently published chamber occurrence confirms free admission
+  // and Big Basin Way. Newsletter extraction omitted its link and price.
+  // https://members.saratogachamber.org/events/details/witchy-walk-a-bout-10852
+  // Evidence: docs/qa/2026-10-24-0507-fact-check.md.
+  {
+    date: "2026-10-31",
+    matches: (event) => event.city === "saratoga"
+      && /^Witchy Walk-A-Bout$/i.test(event.title || "")
+      && /^(?:Historic Saratoga Village|Saratoga Historic Village)$/i.test(event.venue || ""),
+    facts: {
+      url: "https://members.saratogachamber.org/events/details/witchy-walk-a-bout-10852",
+      address: "Big Basin Way, Saratoga, CA", cost: "free",
+    },
+  },
   // Newsletters and the city calendar name the same occurrence differently.
   // Canonicalize every known source before dedup, including the sparse city
   // survivor; "maker fair" alone does not establish handmade-goods shopping.

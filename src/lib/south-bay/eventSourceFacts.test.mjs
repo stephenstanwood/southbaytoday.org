@@ -15,6 +15,26 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Witchy Walk-A-Bout keeps the chamber's dated source and explicit free admission", () => {
+  const raw = {
+    id: "inbound-7183ea81af4fa0f4", date: "2026-10-31", title: "Witchy Walk-A-Bout",
+    venue: "Saratoga Historic Village", city: "saratoga", url: "", cost: null,
+    address: "Saratoga Historic Village, Saratoga, CA", time: "2:00 PM", endTime: "4:00 PM",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.url, "https://members.saratogachamber.org/events/details/witchy-walk-a-bout-10852");
+  assert.equal(fixed.cost, "free");
+  assert.equal(fixed.address, "Big Basin Way, Saratoga, CA");
+  assert.equal(fixed.id, raw.id);
+  assert.equal(fixed.time, raw.time);
+  assert.equal(fixed.endTime, raw.endTime);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [{ ...raw, date: "2027-10-31" }, { ...raw, city: "san-jose" },
+    { ...raw, title: "Another Halloween Event" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("SMASH's city-calendar survivor retains the organizer's STEM program through cached copy", async () => {
   const raw = {
     date: "2026-11-01", title: "SMASH Maker Fair 2026",
