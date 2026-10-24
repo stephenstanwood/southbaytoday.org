@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-24T15:42:51.552Z",
+    "generatedAt": "2026-10-24T15:52:20.314Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 30,
     "eventCount": 224,
@@ -9,7 +9,6 @@
       "San Jose Jazz (13)",
       "Linden Tree Books (10)",
       "History San Jose (7)",
-      "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (2)",
@@ -25,7 +24,8 @@
       "The Tech Interactive (10)",
       "Books Inc (6)",
       "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (6)"
+      "San Jose Museum of Art (6)",
+      "Montalvo Arts Center (4)"
     ],
     "sourceHealth": [
       {
@@ -105,12 +105,14 @@
       {
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
-        "status": "ok",
-        "count": 5,
-        "error": null,
+        "status": "error",
+        "count": 4,
+        "error": "page.goto: Timeout 20000ms exceeded.\nCall log:\n  - navigating to \"https://montalvoarts.org/experience/events-calendar/\", waiting until \"domcontentloaded\"\n",
         "sources": [
           "Montalvo Arts Center"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       },
       {
         "id": "city-lights-theater",
@@ -874,74 +876,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b7122b02d4a7",
-      "title": "Goblins in the Garden",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3257/3258",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "461bcf36220e",
-      "title": "Direct from Sweden: The Music of ABBA",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/direct-from-sweden/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "cb8470ec8a27",
-      "title": "4th Lowrider Art Showcase – Celebrating Dia de los Muertos",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3248/3250",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "771739615a30",
-      "title": "Mosaic America (Grade K-8)",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3066",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
-    },
-    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -1648,7 +1582,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-24",
-        "checkedAt": "2026-10-24T15:41:43.973Z"
+        "checkedAt": "2026-10-24T15:51:11.778Z"
       }
     },
     {
@@ -1671,7 +1605,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-25",
-        "checkedAt": "2026-10-24T15:41:43.973Z"
+        "checkedAt": "2026-10-24T15:51:11.778Z"
       }
     },
     {
@@ -1694,7 +1628,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-24T15:41:43.974Z"
+        "checkedAt": "2026-10-24T15:51:11.778Z"
       }
     },
     {
@@ -1717,7 +1651,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-24T15:41:43.974Z"
+        "checkedAt": "2026-10-24T15:51:11.780Z"
       }
     },
     {
@@ -1740,7 +1674,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-24T15:41:43.975Z"
+        "checkedAt": "2026-10-24T15:51:11.781Z"
       }
     },
     {
@@ -1763,7 +1697,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-24T15:41:43.976Z"
+        "checkedAt": "2026-10-24T15:51:11.784Z"
       }
     },
     {
@@ -1786,7 +1720,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-24T15:41:43.976Z"
+        "checkedAt": "2026-10-24T15:51:11.784Z"
       }
     },
     {
@@ -1809,7 +1743,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-24T15:41:43.976Z"
+        "checkedAt": "2026-10-24T15:51:11.784Z"
       }
     },
     {
@@ -3584,7 +3518,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "11:00 AM",
-        "checkedAt": "2026-10-24T15:42:30.266Z"
+        "checkedAt": "2026-10-24T15:51:40.574Z"
       }
     },
     {
@@ -3608,7 +3542,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "3:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.266Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3632,7 +3566,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-24",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.266Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3656,7 +3590,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.266Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3680,7 +3614,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "5:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.266Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3704,7 +3638,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3728,7 +3662,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3752,7 +3686,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3776,7 +3710,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3800,7 +3734,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3824,7 +3758,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3848,7 +3782,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.575Z"
       }
     },
     {
@@ -3872,7 +3806,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.576Z"
       }
     },
     {
@@ -3896,7 +3830,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.576Z"
       }
     },
     {
@@ -3920,7 +3854,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.576Z"
       }
     },
     {
@@ -3944,7 +3878,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-24T15:42:30.267Z"
+        "checkedAt": "2026-10-24T15:51:40.576Z"
       }
     },
     {
@@ -4372,6 +4306,74 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "b7122b02d4a7",
+      "title": "Goblins in the Garden",
+      "date": "2026-10-25",
+      "displayDate": "Sun, Oct 25",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3257/3258",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "461bcf36220e",
+      "title": "Direct from Sweden: The Music of ABBA",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/direct-from-sweden/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "cb8470ec8a27",
+      "title": "4th Lowrider Art Showcase – Celebrating Dia de los Muertos",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3248/3250",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "771739615a30",
+      "title": "Mosaic America (Grade K-8)",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3066",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": true
     }
   ]
 }
