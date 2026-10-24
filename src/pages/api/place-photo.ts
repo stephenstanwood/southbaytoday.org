@@ -10,65 +10,43 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
+import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest } from "../../lib/placePhoto.mjs";
+
+const loadPhoto = createPhotoLoader();
 
 export const GET: APIRoute = async ({ request, clientAddress }) => {
   if (!rateLimit(clientAddress, 60)) return rateLimitResponse();
 
   const url = new URL(request.url);
-  const photoRef = url.searchParams.get("ref");
-  // Clamp to a positive range: a negative w/h (e.g. ?w=-100) otherwise passed
-  // straight through Math.min into the upstream Google request.
-  const maxW = Math.max(1, Math.min(Number(url.searchParams.get("w")) || 400, 800));
-  const maxH = Math.max(1, Math.min(Number(url.searchParams.get("h")) || 300, 600));
-
-  // photoRef is interpolated into the Google URL path — reject anything that
-  // looks like a full URL or path-traversal attempt (defense-in-depth SSRF).
-  if (!photoRef || photoRef.includes("://") || photoRef.includes("..") || /\s/.test(photoRef)) {
+  const photo = parsePhotoRequest(url);
+  if (!photo) {
     return new Response("Missing or invalid ref param", { status: 400 });
   }
-
-  const apiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
-  if (!apiKey) {
-    return new Response("Server config error", { status: 500 });
+  // Strip tracking/cache-busting parameters and equivalent out-of-range sizes
+  // before reaching Google. Every caller of a photo/size shares one CDN key.
+  const search = canonicalPhotoSearch(photo);
+  if (url.search.slice(1) !== search) {
+    return new Response(null, {
+      status: 308,
+      headers: { Location: `${url.pathname}?${search}`, "Cache-Control": "public, max-age=86400" },
+    });
   }
 
   try {
-    const photoUrl = `https://places.googleapis.com/v1/${photoRef}/media?maxWidthPx=${maxW}&maxHeightPx=${maxH}&key=${apiKey}`;
-    let res: Response | undefined;
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        res = await fetch(photoUrl, {
-          signal: AbortSignal.timeout(8000),
-          redirect: "follow",
-        });
-      } catch (error) {
-        if (attempt === 1) throw error;
-        await new Promise((resolve) => setTimeout(resolve, 150));
-        continue;
-      }
-
-      if (res.ok) break;
-      const retryable = res.status === 429 || res.status >= 500;
-      if (!retryable || attempt === 1) break;
-      await res.body?.cancel();
-      await new Promise((resolve) => setTimeout(resolve, 150));
-    }
-
-    if (!res?.ok) {
-      return new Response("Photo not found", { status: 404 });
-    }
-
-    const contentType = res.headers.get("content-type") || "image/jpeg";
-    const body = await res.arrayBuffer();
-
-    return new Response(body, {
+    const image = await loadPhoto(photo, import.meta.env.GOOGLE_PLACES_API_KEY);
+    const headers: Record<string, string> = {
+      "Content-Type": image.contentType,
+      "Cache-Control": "public, max-age=86400, s-maxage=604800",
+      "X-SBT-Photo-Source": image.source,
+    };
+    if (image.sourcePage) headers.Link = `<${image.sourcePage}>; rel="describedby"`;
+    return new Response(image.body, {
       status: 200,
-      headers: {
-        "Content-Type": contentType,
-        "Cache-Control": "public, max-age=86400, s-maxage=604800",
-      },
+      headers,
     });
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && error.message === "Photo not found") return new Response("Photo not found", { status: 404 });
+    if (error instanceof Error && error.message === "Server config error") return new Response("Server config error", { status: 500 });
     return new Response("Photo fetch failed", { status: 502 });
   }
 };
