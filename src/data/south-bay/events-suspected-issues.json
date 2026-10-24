@@ -1,22 +1,39 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-23T23:33:08.864Z"
+    "auditedAt": "2026-10-24T03:44:21.816Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1829,
+    "total": 1835,
     "totals": {
-      "hard": 0,
+      "hard": 1,
       "soft": 0,
       "info": 0
     },
-    "byReason": {},
-    "hard": [],
+    "byReason": {
+      "out-of-area": 1
+    },
+    "hard": [
+      {
+        "id": "keplersbooks-36681ecd94063f61",
+        "title": "Kepler's Annual Holiday Party",
+        "city": "palo-alto",
+        "date": "2026-12-13",
+        "location": "1010 El Camino Real #100, Menlo Park",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"menlo park\" with no in-area city token"
+          }
+        ]
+      }
+    ],
     "soft": []
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 256,
+    "total": 279,
     "totals": {
       "hard": 0,
       "soft": 0,
