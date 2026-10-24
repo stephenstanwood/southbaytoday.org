@@ -15,6 +15,47 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the sugar-skull workshop keeps making and decorating on their separate dates", async () => {
+  const raw = {
+    date: "2026-10-25", title: "Make & Decorate Sugar Skulls",
+    url: "https://sjpl.bibliocommons.com/events/6ad39fc229c3d60033309963",
+    venue: "Biblioteca Latinoamericana Library", time: "11:00 AM", endTime: "12:30 PM",
+    cost: "free",
+    description: "Participants will not be able to finish their skulls in one session and should plan to return for the second session to decorate skulls. Session 1: Sunday, October 25, 11:00 AM - 12:30 PM; Session 2: Sunday, November 1, 11:00 AM - 12:30 PM.",
+    blurb: "Make and decorate your own sugar skull for Dia de los Muertos Sunday morning.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /Begin making a sugar skull.*return November 1 to decorate it/);
+  for (const field of ["date", "time", "endTime", "venue", "cost", "description"]) {
+    assert.equal(events[0][field], raw[field]);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2026-11-01" },
+    { ...raw, url: "https://sjpl.bibliocommons.com/events/another-workshop" },
+    { ...raw, description: "Make and decorate a sugar skull in this single-session workshop." },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
+test("SJSU's November mariachi celebration retains its published admission and end time", async () => {
+  const raw = {
+    date: "2026-11-01", title: "SJSU CommUniverCity Community Event: Día de los Muertos Celebration",
+    url: "https://events.sjsu.edu/event/mariachi-band-performance-dia-de-los-angelitos",
+    venue: "Student Union Theater", time: "3:00 PM", endTime: null, category: "arts", cost: null,
+    blurb: "Learn about the history, culture and art form of Mariachi music at SJSU's Día de los Muertos celebration in the Student Union Theater.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].category, "music");
+  assert.equal(events[0].endTime, "5:00 PM");
+  assert.equal(events[0].cost, "free");
+  for (const field of ["date", "time", "venue", "blurb"]) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  const anotherDate = { ...raw, date: "2027-11-01" };
+  assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+});
+
 test("SJSU's dated Candlelight concert retains its music category and published end", async () => {
   const raw = {
     date: "2026-10-30", title: "Candlelight - A Haunted Evening of Halloween Classics",

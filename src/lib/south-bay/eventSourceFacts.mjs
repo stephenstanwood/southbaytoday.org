@@ -9,6 +9,30 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The first workshop makes skulls; decorating requires returning November 1.
+  // Keep the phases separate even when a cached blurb summarizes the series.
+  // Only apply while the source still publishes this two-session schedule.
+  // https://sjpl.bibliocommons.com/events/6ad39fc229c3d60033309963
+  // Evidence: docs/qa/2026-10-24-1407-fact-check.md.
+  {
+    date: "2026-10-25",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/6ad39fc229c3d60033309963"
+      && /Participants will not be able to finish their skulls in one session/i.test(event.description || "")
+      && /Session 1:\s*Sunday,\s*October 25\b/i.test(event.description || "")
+      && /Session 2:\s*Sunday,\s*November 1\b/i.test(event.description || ""),
+    facts: {
+      blurb: "Begin making a sugar skull for Día de los Muertos; return November 1 to decorate it.",
+    },
+  },
+  // SJSU labels this Musical Performance, explicitly says free and open to
+  // all, and publishes 3–5 PM PST. RSS loses the end and admission details.
+  // https://events.sjsu.edu/event/mariachi-band-performance-dia-de-los-angelitos
+  // Evidence: docs/qa/2026-10-24-1407-fact-check.md.
+  {
+    date: "2026-11-01",
+    url: "https://events.sjsu.edu/event/mariachi-band-performance-dia-de-los-angelitos",
+    facts: { category: "music", endTime: "5:00 PM", cost: "free" },
+  },
   // SJSU's occurrence page identifies Musical Performance and publishes
   // 6:30–7:30 PM. Its RSS importer loses the end and chooses general arts.
   // https://events.sjsu.edu/event/candlelight-a-haunted-evening-of-halloween-classics
