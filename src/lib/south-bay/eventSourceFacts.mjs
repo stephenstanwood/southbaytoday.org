@@ -9,6 +9,31 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The organizer's poster confirms the title, History Park, October 24 and
+  // 2–6:30 PM, but supplies no program description. Its linked ticket page is
+  // excluded by robots.txt. Keep copy within those verified facts rather
+  // than restoring cached trick-or-treat, character, or interactive-scare claims.
+  // https://historysanjose.org/event/childrens-halloween-haunt/
+  // Evidence: docs/qa/2026-10-24-2207-fact-check.md.
+  {
+    date: "2026-10-24",
+    url: "https://historysanjose.org/event/childrens-halloween-haunt/",
+    aliasUrls: ["https://fareharbor.com/embeds/book/historysanjose/items/314582/?full-items=yes&flow=583745"],
+    facts: { blurb: "Visit History Park for Children's Halloween Haunt." },
+  },
+  // NUMU's dated page explicitly says "Free with registration". Newsletter
+  // intake omits both admission and signup; do not carry that omission into
+  // the published occurrence or extend these terms to another edition.
+  // https://www.numulosgatos.org/events/reawakening
+  // Evidence: docs/qa/2026-10-24-2207-fact-check.md.
+  {
+    date: "2026-11-07",
+    url: "https://www.numulosgatos.org/events/reawakening",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free with registration through NUMU's event page.",
+    },
+  },
   // The dated library record gives 3–4 PM but describes a 1.5-hour festival.
   // Preserve the header and disclose the conflict only while both remain;
   // revised clocks or a corrected duration must not acquire this warning.

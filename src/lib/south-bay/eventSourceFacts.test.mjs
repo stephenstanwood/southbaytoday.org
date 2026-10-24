@@ -15,6 +15,56 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("History Park's Halloween Haunt cannot acquire unverified program details from cached copy", async () => {
+  const raw = {
+    id: "cd1a5ce49cb4", date: "2026-10-24", title: "Children's Halloween Haunt 2026",
+    url: "https://historysanjose.org/event/childrens-halloween-haunt/",
+    venue: "History Park", time: "2:00 PM", endTime: "6:30 PM", cost: null, description: "",
+    blurb: "Trick-or-treat through a kid-friendly haunted experience with costumed characters and interactive scares.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].blurb, "Visit History Park for Children's Halloween Haunt.");
+  for (const field of ["id", "title", "date", "time", "endTime", "venue", "url", "description", "cost"]) {
+    assert.equal(events[0][field], raw[field]);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  assert.equal(applyVerifiedEventFacts({
+    ...raw, url: "https://fareharbor.com/embeds/book/historysanjose/items/314582/?full-items=yes&flow=583745",
+  }).blurb, events[0].blurb);
+  for (const other of [
+    { ...raw, date: "2027-10-24" },
+    { ...raw, url: "https://historysanjose.org/event/another-haunt/" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("NUMU's Reawakening Community Day retains free admission and required registration after refresh", async () => {
+  const raw = {
+    id: "inbound-ca3dae2b2f8933c8", date: "2026-11-07",
+    title: "Reawakening Community Day at NUMU", venue: "New Museum Los Gatos",
+    url: "https://www.numulosgatos.org/events/reawakening",
+    time: "12:00 PM", endTime: "4:00 PM", cost: null,
+    description: "Family-friendly celebration of the museum's Reawakening exhibitions on Muwekma Ohlone culture.",
+    blurb: "Join families at NUMU for activities inspired by the Reawakening exhibitions.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "free");
+  assert.equal(events[0].registration, "required");
+  assert.match(events[0].attendanceNote, /free with registration/i);
+  for (const field of ["id", "title", "date", "time", "endTime", "venue", "url", "description", "blurb"]) {
+    assert.equal(events[0][field], raw[field]);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-11-07" },
+    { ...raw, url: "https://www.numulosgatos.org/events/another-community-day" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Alviso's Math Festival discloses the source's conflicting duration until it is resolved", async () => {
   const raw = {
     date: "2026-10-25", title: "Math Festival", venue: "Alviso Library",
