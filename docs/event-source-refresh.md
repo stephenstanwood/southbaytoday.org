@@ -317,6 +317,55 @@ POST separately recovered two events on its existing sequential retry. SJMA's
 known 403 retained six still-future listings through the unchanged error guard;
 its retired direct HTTP adapter remains retired.
 
+### October 24 follow-up: classify repeated zeros before alerting
+
+The same ten empty tasks recurred in the 15:52 and 16:08 UTC snapshots, which
+both retained 224 events from 20 sources. Repetition alone did not establish a
+selector regression or a cancellation. The current review supersedes the
+October 22 counts and Hammer disposition above:
+
+- Mountain View, Sunnyvale and San Jose still refused normal robots requests
+  with HTTP 403. Half Price Books did too. No calendar content or alternate
+  identity was requested after those refusals.
+- Palo Alto's robots file now returns 200, but excludes the Art Center's
+  `Events/*` and `Our-Calendar` paths under its published department paths.
+  Do not use a bare path, another department spelling or another host to avoid
+  those exclusions. This remains an access gap, not a quiet season.
+- Hammer's VBO collector was retired on October 24; the October 22 report of
+  61 direct-source rows is historical. A normal request to
+  `https://hammertheatre.com/robots.txt` now returns HTTP 403 (error 1010).
+  No event page, VBO control or alternate channel was requested in this review.
+- The Tech Upcoming supplied ten dated browser rows. The fire department's
+  structured organizer adapter supplied four dated rows, two of which were
+  published inside the feed's horizon. Their legacy browser zeros are not
+  evidence that the corresponding organizations have no events.
+- Great America's allowed [event index](https://www.sixflags.com/cagreatamerica/events)
+  and its [linked promotion](https://www.sixflags.com/cagreatamerica/events/more-days-more-fun) still offer
+  only “More Days & More Fun Through 11/1” / “Select Dates thru Nov. 1”.
+  Neither establishes individual event occurrences. Do not invent dates or
+  fetch the `/api/` paths excluded by its robots policy.
+- Barnes & Noble's store-host robots request now returns 404. Ordinary HTTP
+  requests return store-page shells without dated events, while the default
+  browser receives 403 from both configured store pages. Stop at that refusal;
+  the shells do not establish a successful calendar crawl or a quiet season.
+- SJMA still reports its actual HTTP 403 and retains six prior future rows.
+  Retention is not a successful live crawl and does not restore its retired
+  direct adapter.
+
+The browser wrapper now records main-frame HTTP 401, 403 and 429 responses as
+access errors even when an adapter swallows the failure or returns partial
+rows. Unrelated resource/iframe refusals do not turn a valid empty calendar
+into an error. Existing specific errors, bounded future-row retention,
+coverage thresholds and freshness checks remain unchanged.
+
+The Mini's `sbs-playwright-scrape` recipe must classify fresh source health
+against the latest review and current date-backed alternate coverage before
+notifying MILO. Already reviewed, unchanged gaps and undated promotions stay
+visible in source evidence without creating another repair request. New parser
+errors, unknown persistent zeros, failed alternate coverage or unexpected loss
+of retained future rows still require an exact actionable alert. A source name
+in this document is never an empty-season allowlist.
+
 ## Other refresh safeguards
 
 - Inbound events arrive as one Vercel Blob shard per intake email (866 as of

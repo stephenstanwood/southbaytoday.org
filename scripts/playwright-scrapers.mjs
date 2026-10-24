@@ -93,19 +93,31 @@ async function pool(fns, concurrency = 4) {
 }
 
 /** Standard wrapper for each scraper */
-async function runScraper(browser, name, fn) {
+export async function runScraper(browser, name, fn) {
   const page = await browser.newPage();
+  const refused = new Set();
+  // A navigation can return a refusal without page.goto throwing. Legacy
+  // adapters then parse the error page as an empty calendar. Preserve the
+  // actual access failure so source health and future-row retention stay honest.
+  page.on("response", (response) => {
+    if (!response.request().isNavigationRequest()
+      || response.frame() !== page.mainFrame()
+      || ![401, 403, 429].includes(response.status())) return;
+    const url = new URL(response.url());
+    refused.add(`HTTP ${response.status()} at ${url.origin}${url.pathname}`);
+  });
   let events = [];
   let error = null;
   try {
     events = await fn(page);
+    if (refused.size) throw new Error(`calendar access returned ${[...refused].join("; ")}`);
   } catch (err) {
     error = err.message;
     console.log(`  ⚠️  ${name}: ${err.message}`);
   } finally {
     await page.close();
   }
-  console.log(`  ${events.length > 0 ? "✅" : "⚠️ "} ${name}: ${events.length} events`);
+  console.log(`  ${!error && events.length > 0 ? "✅" : "⚠️ "} ${name}: ${events.length} events`);
   return { events, error };
 }
 
