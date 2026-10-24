@@ -9,22 +9,78 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
-  // The city and school-district newsletters name the same occurrence
-  // differently. Canonicalize before dedup; neither the marketing query nor
-  // the alternative title establishes another event. The organizer's dated
-  // Event JSON-LD confirms these clocks, free admission and the courtyard.
+  // Newsletters and the city calendar name the same occurrence differently.
+  // Canonicalize every known source before dedup, including the sparse city
+  // survivor; "maker fair" alone does not establish handmade-goods shopping.
+  // The organizer's dated Event JSON-LD confirms the STEM program and clocks.
   // https://saratogasmash.web.app/
-  // Evidence: docs/qa/2026-10-24-0007-fact-check.md.
+  // Evidence: docs/qa/2026-10-24-0007-fact-check.md and 2026-10-24-0407-fact-check.md.
   {
     date: "2026-11-01",
-    matches: (event) => /^https?:\/\/saratogasmash\.web\.app\/?(?:\?.*)?$/i.test(event.url || "")
-      && /^(?:smash maker fair|5th annual smash post-halloween stem festival)$/i.test(event.title || ""),
+    matches: (event) => (
+      /^https?:\/\/saratogasmash\.web\.app\/?(?:\?.*)?$/i.test(event.url || "")
+      && /^(?:smash maker fair(?: 2026)?|5th annual smash post-halloween stem festival)$/i.test(event.title || "")
+    ) || (
+      /^https:\/\/(?:www\.)?saratoga\.ca\.us\/calendar\.aspx\?EID=2690$/i.test(event.url || "")
+      && /^smash maker fair(?: 2026)?$/i.test(event.title || "")
+    ),
     facts: {
       title: "SMASH Maker Fair", url: "https://saratogasmash.web.app/",
       time: "2:00 PM", endTime: "5:00 PM",
       venue: "Saratoga High School courtyard",
       address: "20300 Herriman Avenue, Saratoga, CA 95070",
       category: "community", cost: "free", kidFriendly: true, audienceAge: "all",
+      registration: REGISTRATION_NONE,
+      description: "Free community STEM festival hosted by MSET Cuttlefish, with pumpkin smashing and composting, robot demonstrations, maker exhibits, science activities and school club booths. All ages welcome; no registration required.",
+      blurb: "Watch pumpkins get smashed and composted, and explore robot demonstrations, science activities and maker booths at Saratoga High School.",
+    },
+  },
+  // The same party URL moved from December 6 to December 13. Keep this dated
+  // correction separate from the old occurrence, and preserve its approved
+  // Palo Alto coverage bucket while displaying the real Menlo Park locality.
+  // https://www.keplers.org/upcoming-events-internal/holiday-party-2026
+  // https://my.montalvoarts.org/3107/3150
+  // Evidence: docs/qa/2026-10-24-0407-fact-check.md.
+  {
+    date: "2026-12-13", url: "https://www.keplers.org/upcoming-events-internal/holiday-party-2026",
+    facts: {
+      venue: "Kepler's Books", locality: "Menlo Park", cost: null,
+      description: "Celebrate Kepler's annual holiday party at the bookstore with festive drinks, sweets and gift wrapping. Active members receive an additional 10% off purchases that day; shipping and memberships are excluded.",
+      blurb: "Visit Kepler's Books for its annual holiday party, with festive drinks, sweets and gift wrapping.",
+    },
+  },
+  {
+    date: "2026-11-06", url: "https://my.montalvoarts.org/3107/3150",
+    facts: {
+      category: "music",
+      blurb: "Hear Irish traditional and Celtic folk music from Solas at Montalvo Arts Center.",
+    },
+  },
+  // The occurrence's description says 60 minutes, but its registrationInfo
+  // instructions say 30. Neither source field establishes the right pickup
+  // time. Stop applying this warning if a fresh source resolves the conflict.
+  // https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4
+  // Evidence: docs/qa/2026-10-24-0407-fact-check.md (retained gateway response).
+  {
+    date: "2026-10-27",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4"
+      && /\b60 minutes\b/i.test(event.description || "")
+      && /\b30 minutes\b/i.test(event.attendanceNote || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library's description says ticket pickup starts 60 minutes before storytime, while its signup instructions say 30 minutes. Confirm pickup timing with Willow Glen Library.",
+    },
+    copyReplacements: [[/A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime\./gi,
+      "The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime); confirm pickup timing with Willow Glen Library."]],
+  },
+  // "Reading to Children" is not evidence that children read to the volunteer.
+  // Keep the source's small-group format without inventing a participant role.
+  // https://sjpl.bibliocommons.com/events/6a5e86410e562e28009b31f5
+  // Evidence: docs/qa/2026-10-24-0407-fact-check.md.
+  {
+    date: "2026-10-28", url: "https://sjpl.bibliocommons.com/events/6a5e86410e562e28009b31f5",
+    facts: {
+      blurb: "Join a volunteer for a small-group reading session in Berryessa Library's Children's Area.",
     },
   },
   // The film's subject is journalist Amy Goodman; Tia Lessin co-directed it.

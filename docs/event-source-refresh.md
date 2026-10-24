@@ -209,6 +209,17 @@ alone would miss that ordering regression.
   reach us through the sanctioned channel: sjda@sjdowntown.com mails events to
   the inbound intake address, at a couple of events rather than hundreds. If
   downtown coverage needs restoring, ask SJDA for a feed — do not re-scrape.
+- Saratoga's direct city-calendar adapter was retired on 2026-10-23 after a
+  fresh robots review. Its policy excludes calendar, RSS and iCalendar
+  collection paths for named AI crawlers. Do not rely on the configured
+  iCalendar URL's mixed casing to escape the lowercase exclusion, or substitute
+  another export, host, header or browser. No city calendar content was fetched
+  during this review. Preserve the captured winter-clock parser regression
+  offline with an example.test feed URL. The nine previously published city
+  listings are not established cancellations: correct SMASH against its own
+  organizer, leave the others intact, and let the ordinary refresh maintain
+  their retired URLs. Newsletter intake and independent organizers remain
+  separate source channels; the old source-health row is historical.
 - Japanese American Museum of San Jose (JAMsj) live collection was retired on
   2026-10-23. A normal request to `https://www.jamsj.org/robots.txt` returned
   HTTP 200 with `Disallow: /` for GPTBot, ClaudeBot and other named AI agents.

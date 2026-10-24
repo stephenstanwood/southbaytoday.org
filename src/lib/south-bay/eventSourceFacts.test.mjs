@@ -15,6 +15,107 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("SMASH's city-calendar survivor retains the organizer's STEM program through cached copy", async () => {
+  const raw = {
+    date: "2026-11-01", title: "SMASH Maker Fair 2026",
+    url: "https://www.saratoga.ca.us/calendar.aspx?EID=2690",
+    venue: "Saratoga High School courtyard", address: "", city: "saratoga",
+    time: "2:00 PM", endTime: "5:00 PM", category: "market", cost: "free",
+    description: "", blurb: "Browse maker booths and handmade goods at the Smash Maker Fair.",
+  };
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const fixed = events[0];
+  assert.equal(fixed.title, "SMASH Maker Fair");
+  assert.equal(fixed.url, "https://saratogasmash.web.app/");
+  assert.equal(fixed.category, "community");
+  assert.equal(fixed.address, "20300 Herriman Avenue, Saratoga, CA 95070");
+  assert.equal(fixed.kidFriendly, true);
+  assert.match(fixed.blurb, /pumpkin.*smash|smash.*pumpkin/i);
+  assert.doesNotMatch(fixed.blurb, /handmade goods/i);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.deepEqual(raw, original);
+  for (const other of [
+    { ...raw, date: "2027-11-01" },
+    { ...raw, url: "https://www.saratoga.ca.us/calendar.aspx?EID=2691" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Kepler's rescheduled holiday party retains its actual locality and current program", async () => {
+  const raw = {
+    date: "2026-12-13", title: "Kepler's Annual Holiday Party",
+    url: "https://www.keplers.org/upcoming-events-internal/holiday-party-2026",
+    venue: "Kepler's", city: "palo-alto", address: "1010 El Camino Real #100, Menlo Park",
+    time: "2:00 PM", endTime: "5:00 PM", cost: null,
+    description: "Enjoy cookies and a cocktail. Literary Circle members receive 10% off.",
+    blurb: "Sip a cocktail and nibble cookies at Kepler's annual holiday party.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const fixed = events[0];
+  assert.equal(fixed.venue, "Kepler's Books");
+  assert.equal(fixed.locality, "Menlo Park");
+  assert.equal(fixed.city, "palo-alto", "retain the approved border coverage bucket");
+  assert.equal(fixed.date, "2026-12-13");
+  assert.equal(fixed.cost, null, "RSVP alone does not establish admission cost");
+  assert.match(fixed.description, /active members/i);
+  assert.doesNotMatch(fixed.description + fixed.blurb, /Literary Circle|cocktail|cookies/i);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const other = { ...raw, date: "2027-12-13" };
+  assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Montalvo's Solas concert is music despite its sparse booking record", async () => {
+  const raw = {
+    date: "2026-11-06", title: "Solas", time: "7:30 PM",
+    url: "https://my.montalvoarts.org/3107/3150", venue: "Montalvo Arts Center",
+    category: "arts", description: "", blurb: "Catch Solas for an arts performance.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].category, "music");
+  assert.match(events[0].blurb, /Irish traditional and Celtic folk music/);
+  assert.equal(events[0].time, raw.time);
+  const other = { ...raw, date: "2027-11-06" };
+  assert.equal(applyVerifiedEventFacts(other), other);
+});
+
+test("Willow Glen's conflicting pickup instructions require confirmation instead of a guessed time", async () => {
+  const raw = {
+    date: "2026-10-27", title: "Family Storytime", venue: "Willow Glen Library",
+    url: "https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4",
+    description: "A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime.",
+    attendanceNote: "A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  assert.match(events[0].attendanceNote, /60 minutes.*30 minutes.*Confirm/i);
+  assert.doesNotMatch(events[0].description, /will be distributed at.*60 minutes/);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [
+    { ...raw, date: "2027-10-27" },
+    { ...raw, attendanceNote: raw.attendanceNote.replace("30 minutes", "60 minutes") },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "a consistent revised source keeps its own terms");
+});
+
+test("Berryessa's read-to-children program cannot reverse the volunteer's role", async () => {
+  const raw = {
+    date: "2026-10-28", title: "Reading to Children", venue: "Berryessa Library",
+    url: "https://sjpl.bibliocommons.com/events/6a5e86410e562e28009b31f5",
+    description: "Children will enjoy a small group interaction with our volunteer in the Children's Area.",
+    blurb: "Watch kids read to a volunteer in a small group under the Read to Children sign at Berryessa Library.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.doesNotMatch(events[0].blurb, /kids read to a volunteer/i);
+  assert.match(events[0].blurb, /small-group reading session.*Children's Area/);
+  assert.equal(events[0].description, raw.description);
+  const other = { ...raw, date: "2027-10-28" };
+  assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("the LinkedIn meetup keeps its sourced venue and date conflict through sparse refreshes", async () => {
   const raw = {
     id: "meetup-07326879c22c127a", date: "2026-12-08",

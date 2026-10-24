@@ -11,7 +11,6 @@
  *   - Santa Clara University Events (RSS)
  *   - Campbell Community Calendar (CivicPlus RSS)
  *   - Los Gatos Town Calendar (CivicPlus iCal)
- *   - Saratoga Community Events (CivicPlus iCal)
  *   - Los Altos Village Association (public event feed)
  *   - City of Mountain View (CivicPlus iCal) — 403 blocked as of 2026-03
  *   - City of Sunnyvale (CivicPlus iCal) — 403 blocked as of 2026-03
@@ -5135,14 +5134,6 @@ async function fetchJazzOnThePlazzEvents() {
   }
 }
 
-async function fetchSaratogaEvents() {
-  return fetchCivicPlusIcal(
-    "City of Saratoga",
-    "https://www.saratoga.ca.us/common/modules/iCalendar/iCalendar.aspx?catID=35&feed=calendar",
-    "saratoga",
-  );
-}
-
 async function fetchLosAltosVillageEvents() {
   console.log("  ⏳ Los Altos Village Association...");
   // This public REST feed is advertised by the association's calendar HTML.
@@ -10139,7 +10130,8 @@ async function main() {
     source(fetchLosGatosEvents),
     source(fetchMusicInParkEvents, { label: "Los Gatos Music in the Park" }),
     source(fetchJazzOnThePlazzEvents, { label: "Jazz on the Plazz" }),
-    source(fetchSaratogaEvents),
+    // Saratoga's calendar collection is excluded by its robots policy.
+    // Retired 2026-10-23; do not rely on iCalendar path casing or another export.
     source(fetchLosAltosVillageEvents, { label: "Los Altos Village Association" }),
     source(fetchLosAltosHistoryEvents),
     source(fetchOperaSanJoseEvents),
@@ -11202,7 +11194,7 @@ export {
   mapTicketmasterEvent,
   resolveBiblioLocationFields,
   fetchCampbellEvents,
-  fetchSaratogaEvents,
+  fetchCivicPlusIcal,
   fetchBiblioEvents,
   fetchScclEvents,
   fetchFarmersMarketEvents,

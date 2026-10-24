@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 
 import {
   fetchCampbellEvents,
-  fetchSaratogaEvents,
+  fetchCivicPlusIcal,
   fetchLosAltosHistoryEvents,
 } from "../generate-events.mjs";
 
@@ -37,11 +37,12 @@ async function withFetchRoutes(routes, callback) {
   }
 }
 
-test("Saratoga's captured winter occurrences keep their published wall clocks", async (t) => {
+test("captured winter iCal occurrences keep their published wall clocks offline", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-21T19:00:00Z") });
-  const url = "https://www.saratoga.ca.us/common/modules/iCalendar/iCalendar.aspx?catID=35&feed=calendar";
+  // Preserve the parser regression without restoring the retired live adapter.
+  const url = "https://calendar-fixture.example.test/winter.ics";
   const { body: feed } = JSON.parse(readFileSync(new URL("./fixtures/saratoga-2026-10-21/calendar.ics.json", import.meta.url), "utf8"));
-  const events = await withFetchRoutes({ [url]: feed }, () => fetchSaratogaEvents());
+  const events = await withFetchRoutes({ [url]: feed }, () => fetchCivicPlusIcal("Captured civic calendar", url, "saratoga"));
   for (const [sourceId, date, time, endTime] of [
     ["2690", "2026-11-01", "2:00 PM", "5:00 PM"],
     ["2686", "2026-11-27", "3:00 PM", "5:00 PM"],
