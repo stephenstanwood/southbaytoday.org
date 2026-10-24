@@ -9,6 +9,21 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The dated library record gives 3–4 PM but describes a 1.5-hour festival.
+  // Preserve the header and disclose the conflict only while both remain;
+  // revised clocks or a corrected duration must not acquire this warning.
+  // https://sjpl.bibliocommons.com/events/69c19013e2a2952aed0a154b
+  // Evidence: docs/qa/2026-10-24-1807-fact-check.md (exact gateway record).
+  {
+    date: "2026-10-25",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/69c19013e2a2952aed0a154b"
+      && event.time === "3:00 PM" && event.endTime === "4:00 PM"
+      && /\bthe festival will be open for 1\.5 hours\b/i.test(event.description || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library lists 3–4 PM, but its description says the festival lasts 1.5 hours. Confirm the end time with Alviso Library before going.",
+    },
+  },
   // The dated Stanford pages publish Free Event. Only the panel explicitly
   // asks attendees to register; the lecture's Register link alone does not
   // establish a requirement. Preserve that distinction.

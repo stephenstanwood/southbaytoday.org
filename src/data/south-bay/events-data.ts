@@ -39,8 +39,9 @@ export interface SBEvent {
   recurrence: RecurrenceType;
   days?: DayOfWeek[];
   time?: string;
-  // 1=Jan, 12=Dec; omit only for year-round programs. Use the operator's
-  // current published season rather than carrying forward an older schedule.
+  // 1=Jan, 12=Dec; omit when no seasonal restriction is published. Use the
+  // operator's current published season rather than carrying forward an
+  // older schedule.
   months?: number[];
   // Admission only: free=$0, low=verified under $15, paid=$15+ or price unknown.
   // Free parking, free activities, and age-based exemptions do not make admission free.
@@ -244,17 +245,19 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     id: "sj-downtown-market",
     title: "Downtown San Jose Farmers Market",
     city: "san-jose",
-    venue: "San Pedro Street",
-    address: "San Pedro St between Santa Clara & St John, San Jose",
+    // SJDA and its linked operator agree on this weekly schedule (Oct 24, 2026):
+    // https://www.regfarmar.com/event-details/downtown-farmers-market
+    // Neither publishes a seasonal range; do not restore the old June–December claim.
+    venue: "Paseo de San Antonio",
+    address: "101 Paseo de San Antonio, San Jose",
     category: "market",
     recurrence: "weekly",
-    days: ["friday"],
-    time: "10am – 2pm",
-    months: [6, 7, 8, 9, 10, 11, 12],
+    days: ["wednesday"],
+    time: "9am – 1:30pm",
     cost: "free",
     kidFriendly: true,
     description:
-      "Friday lunchtime market on San Pedro Street, early summer through mid-December. Fresh food, produce, and prepared meals for the downtown crowd.",
+      "Wednesday morning market on Paseo de San Antonio with produce, packaged foods, and prepared meals. Check the organizer for date-specific closures.",
     url: "https://sjdowntown.com/downtown-farmers-market/",
     emoji: "🏙️",
   },

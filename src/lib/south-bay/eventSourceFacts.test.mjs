@@ -15,6 +15,29 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Alviso's Math Festival discloses the source's conflicting duration until it is resolved", async () => {
+  const raw = {
+    date: "2026-10-25", title: "Math Festival", venue: "Alviso Library",
+    url: "https://sjpl.bibliocommons.com/events/69c19013e2a2952aed0a154b",
+    time: "3:00 PM", endTime: "4:00 PM", cost: "free",
+    description: "The festival will be open for 1.5 hours, during which time kids can explore at their own pace.",
+    blurb: "Solve hands-on math puzzles and games at the Julia Robinson Math Festival.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  assert.match(events[0].attendanceNote, /3–4 PM.*1\.5 hours.*Confirm the end time/i);
+  for (const field of Object.keys(raw)) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const revised of [
+    { ...raw, date: "2026-11-01" },
+    { ...raw, url: "https://sjpl.bibliocommons.com/events/another-festival" },
+    { ...raw, endTime: "4:30 PM" },
+    { ...raw, time: "2:30 PM" },
+    { ...raw, description: "The festival will be open for 1 hour." },
+  ]) assert.deepEqual(applyVerifiedEventFacts(revised), revised);
+});
+
 test("Stanford's Muslim on Campus panel retains free admission and required signup", async () => {
   const raw = {
     date: "2026-10-26", title: "Being Muslim on Campus", venue: "Raikes Building",
