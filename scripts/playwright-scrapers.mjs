@@ -47,6 +47,7 @@ import {
 import {
   finalizeUnexpectedEmptyRetry,
   findUnexpectedEmptyRetries,
+  inspectPlaywrightCoverage,
   sourceTaskId,
 } from "./lib/playwright-source-resilience.mjs";
 import { describeRefreshFailureContext } from "./lib/host-load.mjs";
@@ -2574,14 +2575,12 @@ async function main() {
   for (const e of events) bySrc[e.source] = (bySrc[e.source] || 0) + 1;
 
   if (process.env.SBT_STRICT_EVENT_REFRESH === "1" && previous) {
-    const previousEvents = Number(previous?._meta?.eventCount || previous?.events?.length || 0);
-    const previousSources = Number(previous?._meta?.sources?.length || 0);
-    const nextSources = Object.keys(bySrc).length;
-    const lostSources = previousSources - nextSources;
-    if (
-      previousSources >= 10
-      && (lostSources >= 4 || events.length < previousEvents * 0.6)
-    ) {
+    const coverage = inspectPlaywrightCoverage({ previous, events, tasks });
+    const { previousEvents, previousSources, nextSources } = coverage;
+    if (coverage.excludedRows) {
+      console.log(`   Coverage baseline excludes ${coverage.excludedRows} historical rows from retired sources: ${coverage.excludedSources.join(", ")}`);
+    }
+    if (coverage.regressed) {
       // Append the host's own state. A saturated machine produces exactly
       // this regression while every source is actually healthy, and the bare
       // counts sent the 2026-08-29 reader into the adapters for an hour.

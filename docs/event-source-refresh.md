@@ -246,6 +246,12 @@ alone would miss that ordering regression.
   feed. Historical health rows describe earlier collection. Restoring either
   tenant requires an approved source channel; BiblioCommons and independent
   newsletter/organizer records remain separate channels.
+  The Playwright coverage baseline explicitly excludes these two retired
+  sources only while their tasks are absent. Their 217 historical rows in the
+  October 24 snapshot otherwise made every fresh run fail the 60% guard
+  (441 to 224 events). Unknown task removals and losses among remaining sources
+  retain the same thresholds. Old snapshot bytes are not rewritten or restamped;
+  the next complete guarded refresh and slug ledger handle the transition.
 - Japanese American Museum of San Jose (JAMsj) live collection was retired on
   2026-10-23. A normal request to `https://www.jamsj.org/robots.txt` returned
   HTTP 200 with `Disallow: /` for GPTBot, ClaudeBot and other named AI agents.
