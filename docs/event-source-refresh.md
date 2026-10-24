@@ -234,6 +234,18 @@ alone would miss that ordering regression.
   they leave the feed. Historical source-health rows describe their earlier
   collection. Independent organizer/newsletter records remain separate channels.
   Restoring direct collection requires an approved source channel.
+- Mountain View and Los Gatos Library LibCal collection was retired on
+  2026-10-24. Normal requests to each tenant's `/robots.txt` returned HTTP 200
+  with `User-agent: GPTBot` and `Disallow: /`. No calendar, occurrence or list
+  endpoint was requested after reviewing those exclusions. Remove both source
+  registrations and all LibCal request code, including the optional live venue
+  verifier. Do not substitute an endpoint, host, header or browser. Retain the
+  pure captured-row parser and location/attendance fixtures offline. Existing
+  published library rows are not established cancellations; leave their facts
+  intact and let ordinary refresh maintain retired URLs when they leave the
+  feed. Historical health rows describe earlier collection. Restoring either
+  tenant requires an approved source channel; BiblioCommons and independent
+  newsletter/organizer records remain separate channels.
 - Japanese American Museum of San Jose (JAMsj) live collection was retired on
   2026-10-23. A normal request to `https://www.jamsj.org/robots.txt` returned
   HTTP 200 with `Disallow: /` for GPTBot, ClaudeBot and other named AI agents.

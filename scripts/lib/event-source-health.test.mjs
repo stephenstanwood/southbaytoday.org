@@ -190,6 +190,11 @@ test("a limited briefing selection cannot establish event totals", () => {
 test("city highlights exclude full and closed programs without excluding available reservations", () => {
   assert.equal(isBriefingEventAvailable({ registration: "full" }), false);
   assert.equal(isBriefingEventAvailable({ registration: "closed" }), false);
+  assert.equal(isBriefingEventAvailable({ registration: "none", attendanceStatus: "needs-confirmation" }), false);
+  assert.equal(isBriefingEventAvailable({ registration: "required", attendanceStatus: "needs-confirmation" }), false);
+  assert.equal(isBriefingEventAvailable({
+    date: "2026-10-31", url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/",
+  }), false, "sparse retained records must honor the verified schedule conflict");
   assert.equal(isBriefingEventAvailable({ registration: "required" }), true);
   assert.equal(isBriefingEventAvailable({}), true);
 });
@@ -223,21 +228,23 @@ test("event refresh removes newly unavailable briefing occurrences without rewri
   const otherUrl = { ...highlight, url: "https://library.example/events/other" };
   const fullEvent = { ...event, title: "Book Club", registration: "full" };
   const fullHighlight = { ...highlight, title: fullEvent.title };
+  const unconfirmedEvent = { ...event, title: "Drum Circle", registration: "none", attendanceStatus: "needs-confirmation" };
+  const unconfirmedHighlight = { ...highlight, title: unconfirmedEvent.title };
   const council = { ...highlight, type: "council" };
   const input = {
     generatedAt: "2026-10-20T03:00:00Z", weekStart: "2026-10-19", weekEnd: "2026-10-26",
     cities: {
-      cupertino: { summary: "Tuesday's council agenda lists a second reading.", highlights: [highlight, fullHighlight, nextDay, otherTime, otherUrl, council] },
+      cupertino: { summary: "Tuesday's council agenda lists a second reading.", highlights: [highlight, fullHighlight, unconfirmedHighlight, nextDay, otherTime, otherUrl, council] },
       campbell: { summary: "Another city.", highlights: [highlight] },
     },
   };
   writeFileSync(path, JSON.stringify(input));
-  assert.equal(refreshBriefingAvailability(path, [event, fullEvent]), 2);
+  assert.equal(refreshBriefingAvailability(path, [event, fullEvent, unconfirmedEvent]), 3);
   const expected = structuredClone(input);
   expected.cities.cupertino.highlights = [nextDay, otherTime, otherUrl, council];
   assert.deepEqual(JSON.parse(readFileSync(path, "utf8")), expected);
   const bytes = readFileSync(path, "utf8");
-  assert.equal(refreshBriefingAvailability(path, [event, fullEvent]), 0);
+  assert.equal(refreshBriefingAvailability(path, [event, fullEvent, unconfirmedEvent]), 0);
   assert.equal(readFileSync(path, "utf8"), bytes);
 });
 

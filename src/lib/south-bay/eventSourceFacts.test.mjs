@@ -15,6 +15,62 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("SJSU's dated Candlelight concert retains its music category and published end", async () => {
+  const raw = {
+    date: "2026-10-30", title: "Candlelight - A Haunted Evening of Halloween Classics",
+    url: "https://events.sjsu.edu/event/candlelight-a-haunted-evening-of-halloween-classics",
+    venue: "Hammer Theatre Center", time: "6:30 PM", endTime: null, category: "arts",
+    blurb: "Hear Halloween classics at the Hammer Theatre Center.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].category, "music");
+  assert.equal(events[0].endTime, "7:30 PM");
+  for (const field of ["date", "time", "venue", "blurb"]) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  const anotherDate = { ...raw, date: "2027-10-30" };
+  assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+});
+
+test("the Halloween meal volunteer occurrence discloses its conflicting source schedules", async () => {
+  const raw = {
+    date: "2026-10-31", title: "Halloween: Cook & Share a Vegan Meal with Someone in Need",
+    url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/",
+    venue: "Mantra Room", time: "3:00 PM", endTime: "7:00 PM", registration: "none",
+    blurb: "Cook and share a vegan meal at the Mantra Room on a Saturday afternoon.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  assert.match(events[0].attendanceNote, /3–7 PM.*5 PM.*6:30–8 PM/);
+  assert.match(events[0].blurb, /confirm the volunteer schedule/i);
+  for (const field of ["date", "time", "endTime", "venue", "registration"]) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  const anotherDate = { ...raw, date: "2026-11-07" };
+  assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+});
+
+test("a warned drum-circle occurrence cannot regain a definite park through cached copy", async () => {
+  const raw = {
+    date: "2026-11-14", title: "Community Drum Circle",
+    url: "https://www.meetup.com/connected-through-music/events/317105031/",
+    venue: "John D. Morgan Park", address: "540 West Rincon Avenue, Campbell",
+    time: "3:30 PM", endTime: "5:00 PM", attendanceStatus: "needs-confirmation",
+    attendanceNote: "The organizer's venue field lists John D. Morgan Park in Campbell, while its description refers to Baylands Park. Confirm the meeting location with the organizer before going.",
+    blurb: "Join a community drum circle at John D. Morgan Park on a Saturday afternoon.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /confirm the meeting location/i);
+  assert.doesNotMatch(events[0].blurb, /John D\. Morgan|Baylands/);
+  for (const field of ["venue", "address", "time", "endTime", "attendanceNote"]) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  const consistent = { ...raw };
+  delete consistent.attendanceStatus;
+  delete consistent.attendanceNote;
+  assert.deepEqual(applyVerifiedEventFacts(consistent), consistent);
+});
+
 test("the running group's Alameda meeting point uses Voyager's current branch name", async () => {
   const raw = {
     date: "2026-10-31", title: "Run+Walk Meet-up - All Speeds Welcome!",

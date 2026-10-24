@@ -19,9 +19,8 @@
  *   - The Tech Interactive (RSS) — 404 as of 2026-03 (no /feed/ endpoint)
  *   - San Jose Public Library (BiblioCommons API)
  *   - Santa Clara County Library (BiblioCommons API)
- *   - Mountain View Public Library (LibCal, via playwright-scrapers.mjs) — NOT
- *     BiblioCommons; the "librarypoint" site ID is a Virginia library. See
- *     fetchMvplEvents() below.
+ *   - Mountain View Public Library — LibCal collection retired after robots
+ *     review on 2026-10-24; "librarypoint" is a Virginia library, not a fallback.
  *   - Sunnyvale Public Library (BiblioCommons API) — Events feature disabled (403)
  *   - Palo Alto City Library (BiblioCommons API)
  *   - Computer History Museum Events (RSS + title-based date extraction)
@@ -43,10 +42,8 @@
  *   - Museum of American Heritage (Squarespace events)
  *   - Silicon Valley Leadership Group (RSS)
  *   - Happy Hollow Park & Zoo (RSS)
- *   - LibCal (Mountain View, Los Gatos) — via playwright-scrapers.mjs, using
- *     Springshare's public calendar list endpoint. The authenticated LibCal
- *     API v1/v2 still needs OAuth; the calendar page's own listing does not.
- *     Milpitas has no LibCal instance — it's covered by SCCL BiblioCommons.
+ *   - LibCal (Mountain View, Los Gatos) — collection retired after robots
+ *     review on 2026-10-24. Milpitas is covered by SCCL BiblioCommons.
  *   - Santa Clara County Fire Department (Eventbrite — hardcoded; /v3/events/search/ removed)
  *
  * NOTE: Mountain View/Sunnyvale/SJ city/Cupertino CivicPlus iCal feeds return 403/404.
@@ -6607,9 +6604,8 @@ async function fetchBayFCSchedule() {
 async function fetchMvplEvents() {
   // Mountain View Public Library uses LibCal, not BiblioCommons.
   // The "librarypoint" site is Central Rappahannock Regional Library in Virginia
-  // — NOT Mountain View. Previous mapping was wrong. The library is now ingested
-  // through scrapeLibCal in playwright-scrapers.mjs; this stays a no-op so the
-  // wrong BiblioCommons site ID can't be reintroduced here.
+  // — NOT Mountain View. Previous mapping was wrong. Its LibCal collection
+  // was also retired on 2026-10-24 after robots review; keep this a no-op.
   return [];
 }
 
@@ -6644,8 +6640,8 @@ async function fetchPaloAltoLibraryEvents() {
 
 // NOTE: LibCal (Springshare) API v1/v2 still require OAuth tokens. The calendar
 // page's own list endpoint does not, and returns the same public listing as
-// JSON, so Mountain View and Los Gatos are ingested through scrapeLibCal in
-// playwright-scrapers.mjs rather than through this file. Milpitas has no LibCal
+// JSON, but Mountain View and Los Gatos collection is retired after the
+// 2026-10-24 robots review. Retain only offline parser fixtures. Milpitas has no LibCal
 // instance (milpitas.libcal.com 404s); its branch programming comes from SCCL
 // BiblioCommons. Don't add a second LibCal path here — it would double-count.
 
@@ -9515,7 +9511,7 @@ async function fetchMidpenEvents() {
 }
 
 // ── Playwright-scraped events (pre-scraped by playwright-scrapers.mjs on Mini) ──
-// Covers: CivicPlus cities, LibCal libraries, The Tech, bookstores,
+// Covers: permitted CivicPlus cities, The Tech, bookstores,
 // and robust replacements for fragile HTML scrapers (SJ Jazz, SJMA, etc.)
 
 function fetchPlaywrightEvents() {
@@ -9914,8 +9910,8 @@ async function main() {
     source(fetchSharksSchedule),
     source(fetchSantaCruzWarriorsSchedule),
     source(fetchSantaCruzPicks),
-    // fetchMvplEvents, — hardcoded `return []`; Mountain View Public Library is
-    //   ingested by scrapeLibCal in playwright-scrapers.mjs (150 events/run).
+    // fetchMvplEvents, — hardcoded `return []`; Mountain View's LibCal
+    //   collection is also retired after the 2026-10-24 robots review.
     //   Registering the stub made it report `status: "empty"` on every single
     //   refresh, which is indistinguishable in sourceHealth from an adapter that
     //   broke. The function stays put as a tombstone so the wrong BiblioCommons

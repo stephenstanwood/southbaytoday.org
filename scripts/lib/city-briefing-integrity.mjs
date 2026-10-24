@@ -1,14 +1,16 @@
 import { readFileSync } from "node:fs";
 import { writeFileAtomic } from "./io.mjs";
-import { REGISTRATION_CLOSED, REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
+import { REGISTRATION_CLOSED, REGISTRATION_FULL, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
-/** Highlights have no availability badge; don't invite readers to full events. */
+/** Highlights have no attendance badge; require confirmed, available events. */
 export function isBriefingEventAvailable(event) {
   // Older snapshots may predate a verified closure; apply the same dated facts
   // used by event publication before treating missing signup state as available.
   const verified = applyVerifiedEventFacts(event);
-  return verified?.registration !== REGISTRATION_FULL && verified?.registration !== REGISTRATION_CLOSED;
+  return verified?.registration !== REGISTRATION_FULL
+    && verified?.registration !== REGISTRATION_CLOSED
+    && !requiresAttendanceConfirmation(verified);
 }
 
 export function briefingEventWhen(event) {

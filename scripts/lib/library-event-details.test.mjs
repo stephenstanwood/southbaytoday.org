@@ -6,6 +6,18 @@ import { biblioEventOccurrence, libraryEventDetails } from "./library-event-deta
 const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
 const midnightWindowFixture = JSON.parse(readFileSync(new URL("./fixtures/sccl-teen-burton-2026-10-23.json", import.meta.url)));
 
+const capturedLosGatosLibrary = {
+  name: "Los Gatos Library", city: "los-gatos", urls: ["https://library.example.test/calendar"],
+  address: "100 Villa Ave, Los Gatos, CA 95030", onsiteLocations: [],
+};
+
+test("excluded LibCal tenants have no live collection or verification path", () => {
+  for (const path of ["../playwright-scrapers.mjs", "../verify-event-venues.mjs"]) {
+    const source = readFileSync(new URL(path, import.meta.url), "utf8");
+    assert.doesNotMatch(source, /ajax\/calendar\/list|scrapeLibCal|LIBCAL_LIBRARIES/);
+  }
+});
+
 test("both library adapters honor the captured midnight registration deadline", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-22T23:59:00-07:00") });
   const { fetchBiblioEvents, fetchScclEvents } = await import("../generate-events.mjs");
@@ -179,7 +191,7 @@ test("list extraction handles novel, nested and sentence items without changing 
 test("normal library adapters preserve late attendance paragraphs and structured audiences", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-09-06T12:00:00Z") });
   const { fetchBiblioEvents } = await import("../generate-events.mjs");
-  const { scrapeLibCal, normalizePlaywrightEvent, LIBCAL_LIBRARIES } = await import("../playwright-scrapers.mjs");
+  const { parseLibCalEvents, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
   t.mock.method(globalThis, "fetch", async (url) => {
     const data = String(url).includes("bibliocommons") ? fixture.bibliocommons : fixture.libcal;
     return new Response(JSON.stringify(data), { headers: { "content-type": "application/json" } });
@@ -196,7 +208,7 @@ test("normal library adapters preserve late attendance paragraphs and structured
   assert.match(derby.attendanceNote, /confirm pickup timing/);
   assert.doesNotMatch(derby.description + derby.attendanceNote, /12:30|1:30/);
 
-  const [scrapedNarcan] = await scrapeLibCal(null, LIBCAL_LIBRARIES.find((library) => library.city === "los-gatos"));
+  const [scrapedNarcan] = parseLibCalEvents(fixture.libcal.results, capturedLosGatosLibrary, { today: "2026-09-06" });
   const narcan = normalizePlaywrightEvent(scrapedNarcan);
   assert.equal(narcan.address, "100 Villa Ave, Los Gatos, CA 95030", "use the library entrance rather than the civic center");
   assert.equal(narcan.id, "cbdd438d7fbe", "the occurrence ID must remain stable");
@@ -210,17 +222,18 @@ test("normal library adapters preserve late attendance paragraphs and structured
   assert.equal(classifyAudienceAge({ ...narcan, id: "next-occurrence", date: "2026-10-04" }), "adult");
 });
 
-test("LibCal's unopened required-registration category reaches the planner through the scraper", async (t) => {
-  const { scrapeLibCal, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
+test("LibCal's unopened required-registration category reaches the planner through the retained parser", async (t) => {
+  const { parseLibCalEvents, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
   const date = new Date(Date.now() + 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-  t.mock.method(globalThis, "fetch", async () => Response.json({ total_results: 1, results: [{
+  const rows = [{
     id: 17286098, title: "Still Life Drawing @ NUMU", startdt: `${date} 12:00:00`, start: "12:00pm", end: "1:30pm",
     url: "https://losgatosca.libcal.com/event/17286098", location: "NUMU - 106 E. Main St",
     description: "Join our self-guided still life drawing sessions in NUMU's Flick Studio.",
     registration_enabled: false, in_person_registration: true,
     categories: "Adult, Class or Workshop, Registration Required", categories_arr: [{ name: "Registration Required" }],
-  }] }));
-  const [raw] = await scrapeLibCal(null, { name: "Los Gatos Library", city: "los-gatos", urls: ["https://losgatosca.libcal.com"] });
+  }];
+  t.mock.method(globalThis, "fetch", () => { throw new Error("offline LibCal parser attempted a request"); });
+  const [raw] = parseLibCalEvents(rows, capturedLosGatosLibrary, { today: date });
   const event = normalizePlaywrightEvent(raw);
   assert.equal(event.registration, "required");
   assert.equal(requiresAdvanceRegistration(event), true);
@@ -335,9 +348,17 @@ test("inline email fragments retain visible contact text through ingestion", asy
 
 test("LibCal ingestion preserves a real exhausted occurrence through normalization", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-15T14:00:00Z") });
-  const { scrapeLibCal, normalizePlaywrightEvent, LIBCAL_LIBRARIES } = await import("../playwright-scrapers.mjs");
+  const { parseLibCalEvents, normalizePlaywrightEvent } = await import("../playwright-scrapers.mjs");
   // Public Mountain View list row captured October 15; the occurrence page
   // independently confirms the date, farm location, and open waiting list.
+  // Live collection is retired. Preserve this regression using mocked fetch
+  // and a fixture host. No live LibCal source is registered.
+  const capturedLibrary = {
+    name: "Mountain View Public Library", city: "mountain-view",
+    urls: ["https://library.example.test/calendar"],
+    address: "585 Franklin St, Mountain View, CA 94041", onsiteLocations: [],
+    offsiteAddresses: { "Deer Hollow Farm": "22500 Cristo Rey Dr, Cupertino, CA" },
+  };
   const occurrence = {
     id: 16984474, title: "Deer Hollow Spooky Storytime",
     startdt: "2026-10-16 11:00:00", start: "11:00 am", end: "12:00 pm",
@@ -348,10 +369,8 @@ test("LibCal ingestion preserves a real exhausted occurrence through normalizati
     seats: 15, seatsleft: 0, seatsleft_multiple: false, waitlist: "Wait list",
     audiences: [{ name: "Preschoolers" }],
   };
-  t.mock.method(globalThis, "fetch", async () => new Response(JSON.stringify({
-    total_results: 1, results: [occurrence],
-  }), { headers: { "content-type": "application/json" } }));
-  const [scraped] = await scrapeLibCal(null, LIBCAL_LIBRARIES[0]);
+  t.mock.method(globalThis, "fetch", () => { throw new Error("offline LibCal parser attempted a request"); });
+  const [scraped] = parseLibCalEvents([occurrence], capturedLibrary, { today: "2026-10-15" });
   const event = normalizePlaywrightEvent(scraped);
   assert.equal(event.registration, "full");
   assert.equal(event.date, "2026-10-16");

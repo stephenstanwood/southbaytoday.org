@@ -4,7 +4,7 @@
  *
  * Unified Playwright-based scraper for all event sources that need a real browser:
  *   - Sites returning 403/404 on bot requests (CivicPlus cities, Cloudflare)
- *   - JavaScript SPAs that don't render without a browser (Shopify, LibCal)
+ *   - JavaScript SPAs that don't render without a browser (Shopify)
  *   - Fragile HTML scrapes that are more robust with DOM APIs
  *   - Venues with own calendars not covered by aggregator APIs
  *
@@ -423,7 +423,7 @@ async function scrapeTheTech(page) {
   return [];
 }
 
-// ── LibCal Libraries (MV Public Library, Los Gatos, Milpitas) ──
+// ── Retained LibCal parser (live collection retired) ──
 
 // Bookmobile stops are labeled as such by LibCal itself — the listing card
 // carries "Categories: Mobile Library Stop" / "Location: Mobile Library Stop".
@@ -456,90 +456,9 @@ function isBookmobileStopTitle(title) {
   return BOOKMOBILE_STOP_PATTERNS.some((p) => p.test(title.trim()));
 }
 
-// `onsiteLocations` lists in-building spaces whose names the generic room-suffix
-// rule in libcal-location.mjs can't recognise. Mountain View's History Center is
-// on the library's 2nd floor (library.mountainview.gov/learn/mountain-view-history),
-// so its events really are at 585 Franklin St. Anything not listed here and not
-// room-shaped is treated as off-site — see the header of libcal-location.mjs for
-// why that asymmetry is deliberate.
-// `urls[0]` is both the origin scrapeLibCal queries and the link an event falls
-// back to when LibCal omits its own. It is no longer a list of layouts to try in
-// turn — the list endpoint is the same on every instance.
-export const LIBCAL_LIBRARIES = [
-  {
-    name: "Mountain View Public Library",
-    urls: [
-      "https://mountainview.libcal.com/calendar",
-    ],
-    city: "mountain-view",
-    address: "585 Franklin St, Mountain View, CA 94041",
-    onsiteLocations: ["History Center"],
-    // Verified against the City of Mountain View facility directory, or against
-    // the address the library itself publishes in the event description (the
-    // bookmobile storytimes below each print theirs). Anything not listed ships
-    // with an empty address, never a guess.
-    //
-    // These also back the "Offsite" resolution in lib/libcal-location.mjs: MVPL
-    // files its outreach storytimes under the literal Location "Offsite", so
-    // the place name only exists in the event's title and description. Longest
-    // key wins, which is why the Magical Bridge Playground entry sits alongside
-    // the Rengstorff Park it is inside.
-    offsiteAddresses: {
-      "Pioneer Park": "1146 Church St, Mountain View, CA 94041",
-      // event/17295774 — "Find us at 615 Cuesta Drive, Mountain View, CA 94040"
-      "Cuesta Park": "615 Cuesta Dr, Mountain View, CA 94040",
-      // event/17290230 — "Find us at 201 S. Rengstorff Ave, Mountain View, CA 94040"
-      "Magical Bridge Playground": "201 S Rengstorff Ave, Mountain View, CA 94040",
-      "Rengstorff Park": "201 S Rengstorff Ave, Mountain View, CA 94040",
-      // event/16984474 — "Meet us there: Deer Hollow Farm, 22500 Cristo Rey Dr.,
-      // Cupertino". The library publishes no ZIP, so none is invented here.
-      "Deer Hollow Farm": "22500 Cristo Rey Dr, Cupertino, CA",
-    },
-  },
-  {
-    name: "Los Gatos Library",
-    urls: [
-      "https://losgatosca.libcal.com/calendar",
-    ],
-    city: "los-gatos",
-    // Library visitor entrance; 110 E Main St is the neighboring civic center.
-    // https://www.losgatosca.gov/2828/Los-Gatos-Public-Library
-    address: "100 Villa Ave, Los Gatos, CA 95030",
-    onsiteLocations: [],
-  },
-  // Milpitas: SCCL LibCal returns 404; covered by SCCL BiblioCommons in generate-events.mjs
-  //
-  // Santa Clara City Library is NOT here on purpose. sclibrary.libcal.com
-  // resolves and looks like the obvious match, but it belongs to Strathcona
-  // County Library in Alberta, Canada — adding it would file a Canadian
-  // library's storytimes as Santa Clara events, the same trap the "librarypoint"
-  // mapping fell into for Mountain View. The city's own www.sclibrary.org
-  // answers 403 to curl and to a real headless browser (checked 2026-08-28), so
-  // there is nothing to ingest yet. Verify the tenant actually names the right
-  // city before adding any *.libcal.com host here.
-];
-
-// LibCal renders its calendar client-side and the default view is a single day,
-// so scraping the rendered DOM returned roughly a tenth of what these libraries
-// actually publish — 23 of 227 upcoming events in Los Gatos, 9 of 198 in
-// Mountain View — and the title-level dedup dropped every repeat of a recurring
-// program, so a reader looking at next Tuesday never saw Storytime at all.
-//
-// Springshare's calendar page calls its own list endpoint for the same public
-// listing, and that JSON carries what the DOM only implied: the canonical event
-// URL, the room, an end time, and the audience tags. robots.txt on *.libcal.com
-// allows `*` everywhere except /process_, with Crawl-delay: 10 — honored below.
-// An empty `date` selects the calendar's "Upcoming Events" mode.
-const LIBCAL_CRAWL_DELAY_MS = 10_000;
-const LIBCAL_PAGE_SIZE = 100;
-const LIBCAL_MAX_PAGES = 8;
-const LIBCAL_HORIZON_DAYS = 90;
-
-function libcalHorizonISO() {
-  const d = new Date();
-  d.setDate(d.getDate() + LIBCAL_HORIZON_DAYS);
-  return isoDate(d);
-}
+// Mountain View and Los Gatos LibCal collection retired on 2026-10-24:
+// both tenants' robots.txt exclude GPTBot from /. Keep only the captured-row
+// parser below; restoring live collection requires an approved source channel.
 
 // LibCal's audience tags are more reliable than guessing from the title: a
 // "Social Stitching" session tagged Children is a kids' event, and "Baby Bash"
@@ -557,63 +476,20 @@ function libcalTime(raw) {
   return `${Number(m[1])}:${m[2] ?? "00"} ${m[3].toUpperCase()}M`;
 }
 
-// `_page` is the Playwright page every scraper in this file is handed. LibCal
-// no longer needs a browser — the list endpoint is plain JSON — but the shared
-// runScraper wrapper still supplies one.
-export async function scrapeLibCal(_page, config) {
-  const origin = new URL(config.urls[0]).origin;
-  const horizon = libcalHorizonISO();
-  const raw = [];
+// Pure parser for retained LibCal fixtures. This has no live request path.
+// Preserve occurrence, location, audience and registration regressions offline.
+export function parseLibCalEvents(results, config, { today = TODAY } = {}) {
+  const horizon = new Date(`${today}T12:00:00Z`);
+  horizon.setUTCDate(horizon.getUTCDate() + 90);
+  const through = horizon.toISOString().slice(0, 10);
   const seenIds = new Set();
-
-  for (let pageNum = 1; pageNum <= LIBCAL_MAX_PAGES; pageNum++) {
-    if (pageNum > 1) await new Promise((r) => setTimeout(r, LIBCAL_CRAWL_DELAY_MS));
-
-    const url = `${origin}/ajax/calendar/list?c=-1&date=&perpage=${LIBCAL_PAGE_SIZE}`
-      + `&page=${pageNum}&audience=&cats=&camps=&inc=0`;
-
-    let data;
-    try {
-      const res = await fetch(url, {
-        headers: {
-          "User-Agent": "SouthBaySignal/1.0 (southbaytoday.org; public event calendar aggregator)",
-          "Accept": "application/json",
-        },
-        signal: AbortSignal.timeout(30_000),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      data = await res.json();
-    } catch (err) {
-      // A mid-pagination failure keeps whatever pages already succeeded rather
-      // than throwing the whole library away; page 1 failing is a real outage
-      // and surfaces as a zero-event source in runScraper's log.
-      if (pageNum === 1) throw new Error(`${config.name} LibCal list endpoint: ${err.message}`);
-      break;
-    }
-
-    const results = Array.isArray(data?.results) ? data.results : [];
-    if (results.length === 0) break;
-
-    let pastHorizon = false;
-    for (const ev of results) {
-      const id = ev?.id;
-      if (id != null) {
-        if (seenIds.has(id)) continue;
-        seenIds.add(id);
-      }
-      const date = typeof ev?.startdt === "string" ? ev.startdt.slice(0, 10) : null;
-      if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
-      if (date < TODAY) continue;
-      // Results come back in date order, so the first event past the horizon
-      // means every remaining page is too.
-      if (date > horizon) { pastHorizon = true; break; }
-      raw.push({ ev, date });
-    }
-    if (pastHorizon) break;
-
-    const total = Number(data?.total_results);
-    if (Number.isFinite(total) && seenIds.size >= total) break;
-    if (results.length < LIBCAL_PAGE_SIZE) break;
+  const raw = [];
+  for (const ev of results) {
+    const date = typeof ev?.startdt === "string" ? ev.startdt.slice(0, 10) : null;
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date) || date < today || date > through) continue;
+    if (ev.id != null && seenIds.has(ev.id)) continue;
+    if (ev.id != null) seenIds.add(ev.id);
+    raw.push({ ev, date });
   }
 
   return raw
@@ -2523,13 +2399,8 @@ async function main() {
   // Tier 1: The Tech
   tasks.push({ name: "The Tech Interactive", fn: (b) => runScraper(b, "The Tech Interactive", scrapeTheTech) });
 
-  // Tier 1: LibCal libraries
-  for (const lib of LIBCAL_LIBRARIES) {
-    tasks.push({
-      name: lib.name,
-      fn: (b) => runScraper(b, lib.name, (page) => scrapeLibCal(page, lib)),
-    });
-  }
+  // Mountain View and Los Gatos LibCal collection is retired after robots
+  // review. No LibCal task or alternate request path is registered.
 
   // Tier 2: Fragile HTML scrapes
   tasks.push({ name: "San Jose Jazz", fn: (b) => runScraper(b, "San Jose Jazz", scrapeSJJazz) });
@@ -2763,8 +2634,8 @@ export function normalizePlaywrightEvent(e) {
     city: e.city,
     // Both of these are FIRST-PARTY source signals a scraper resolved, and
     // this normalizer is an allow-list — a field it does not name is dropped
-    // before the event ever reaches playwright-events.json. scrapeLibCal has
-    // been setting `virtual` from LibCal's own online_event flag since it was
+    // before the event ever reaches playwright-events.json. The retained
+    // LibCal parser has set `virtual` from its online_event flag since it was
     // written, and every one of those flags was discarded here; the events
     // stayed out of plans only because their titles happen to say "Online".
     // Same position as the BiblioCommons events in upcoming-events.json.

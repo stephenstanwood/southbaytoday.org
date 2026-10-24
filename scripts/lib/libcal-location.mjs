@@ -125,7 +125,7 @@ function tidy(raw) {
  *
  * @param {string} rawLocation  the event page's Location text ("Online",
  *   "Pioneer Park", "1st Floor Program Room", "Zoom (Online)", "").
- * @param {object} library      a LIBCAL_LIBRARIES entry: { name, address,
+ * @param {object} library      retained library config: { name, address,
  *   city, onsiteLocations? }. `onsiteLocations` names in-building spaces that
  *   the generic suffix rule can't know about — Mountain View's "History
  *   Center" is on the library's 2nd floor, for instance.

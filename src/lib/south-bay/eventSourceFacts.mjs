@@ -9,6 +9,44 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // SJSU's occurrence page identifies Musical Performance and publishes
+  // 6:30–7:30 PM. Its RSS importer loses the end and chooses general arts.
+  // https://events.sjsu.edu/event/candlelight-a-haunted-evening-of-halloween-classics
+  // Evidence: docs/qa/2026-10-24-1107-fact-check.md.
+  {
+    date: "2026-10-30",
+    url: "https://events.sjsu.edu/event/candlelight-a-haunted-evening-of-halloween-classics",
+    facts: { category: "music", endTime: "7:30 PM" },
+  },
+  // This separate Halloween occurrence repeats the verified source conflict:
+  // header 3–7 PM, body cooking at 5 PM and distribution 6:30–8 PM. Keep the
+  // header fields and flag the conflict; do not select a replacement schedule.
+  // https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/
+  // Evidence: docs/qa/2026-10-24-1107-fact-check.md (authenticated API record).
+  {
+    date: "2026-10-31",
+    url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's event header lists 3–7 PM, but the description says cooking begins at 5 PM and meal distribution runs 6:30–8 PM. Confirm the volunteer schedule with Mantra Room before going.",
+      blurb: "Help prepare and share vegan meals at Mantra Room; confirm the volunteer schedule with the organizer before going.",
+    },
+  },
+  // Intake already warns about the two parks. Regenerated or cached copy
+  // must not turn the disputed venue field into an unqualified location.
+  // Guard on the intake warning so revised, consistent source terms survive.
+  // https://www.meetup.com/connected-through-music/events/317105031/
+  // Evidence: docs/qa/2026-10-24-1107-fact-check.md (authenticated API record).
+  {
+    date: "2026-11-14",
+    matches: (event) => event.url === "https://www.meetup.com/connected-through-music/events/317105031/"
+      && event.attendanceStatus === "needs-confirmation"
+      && /John D\. Morgan Park/i.test(event.attendanceNote || "")
+      && /Baylands Park/i.test(event.attendanceNote || ""),
+    facts: {
+      blurb: "Join the community drum circle; confirm the meeting location with the organizer before going.",
+    },
+  },
   // The organizer's body names Voyager, whose own location page confirms
   // 2221 The Alameda. The Meetup venue field retains the café's old name.
   // https://voyagercraftcoffee.com/locations

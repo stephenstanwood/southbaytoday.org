@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { classifyLibCalLocation, extractPublishedAddress } from "./libcal-location.mjs";
 
-// Mirrors the real LIBCAL_LIBRARIES entries in playwright-scrapers.mjs.
+// Retained configurations from the retired LibCal collectors; offline only.
 const MV = {
   name: "Mountain View Public Library",
   city: "mountain-view",
