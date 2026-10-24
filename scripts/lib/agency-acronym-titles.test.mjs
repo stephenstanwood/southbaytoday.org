@@ -32,6 +32,14 @@ test("preserves Stanford's source-supplied SLE program initials", () => {
 // Gatos-Monte Sereno Police Department) and it published as "Lgmspd Community
 // Police Academy" until LGMSPD was added to the list.
 
+test("refresh preserves PASCA's source-published organizer initials", () => {
+  const title = "All-Hands Community Meeting for the Future of PASCA";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription("Hear from PASCA Volunteers."), "Hear from PASCA Volunteers.");
+  assert.equal(cleanTitle("Pasca reads at the library"), "Pasca reads at the library");
+});
+
 test("keeps South Bay public-safety agency acronyms uppercase in titles", () => {
   assert.equal(
     cleanTitle("LGMSPD Community Police Academy"),

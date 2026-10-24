@@ -15,6 +15,44 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Stanford's Muslim on Campus panel retains free admission and required signup", async () => {
+  const raw = {
+    date: "2026-10-26", title: "Being Muslim on Campus", venue: "Raikes Building",
+    url: "https://events.stanford.edu/event/being-muslim-on-campus",
+    time: "4:00 PM", endTime: "6:00 PM", cost: null, blurb: "Hear a panel discuss Abiya Ahmed's book.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "free");
+  assert.equal(requiresAdvanceRegistration(events[0].registration), true);
+  assert.match(events[0].attendanceNote, /register.*Stanford/i);
+  for (const field of ["date", "time", "endTime", "venue", "blurb"]) assert.equal(events[0][field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2026-11-02" }, { ...raw, url: "https://example.test/other" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("the dated Matthieu Rey lecture preserves free admission without inferring a signup requirement", () => {
+  const raw = {
+    date: "2026-10-26", title: "The Golden Age | Matthieu Rey", cost: null,
+    url: "https://events.stanford.edu/event/the-golden-age-or-the-dark-time-of-the-plots",
+    time: "4:00 PM", endTime: "5:30 PM", venue: "Encina Commons",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(raw), { ...raw, cost: "free" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-11-02" }), { ...raw, date: "2026-11-02" });
+});
+
+test("SCU's Child Studies summit keeps its source-published 5 PM end and family category", () => {
+  const raw = {
+    date: "2026-10-24", title: "Child Studies Legislative Summit", category: "family", kidFriendly: true,
+    url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",
+    time: "2:00 PM", endTime: null, venue: "Alumni Science Hall", cost: "",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(raw), { ...raw, endTime: "5:00 PM" });
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-10-25" }), { ...raw, date: "2026-10-25" });
+});
+
 test("the sugar-skull workshop keeps making and decorating on their separate dates", async () => {
   const raw = {
     date: "2026-10-25", title: "Make & Decorate Sugar Skulls",

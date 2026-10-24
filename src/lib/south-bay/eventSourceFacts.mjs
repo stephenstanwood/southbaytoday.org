@@ -9,6 +9,23 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The dated Stanford pages publish Free Event. Only the panel explicitly
+  // asks attendees to register; the lecture's Register link alone does not
+  // establish a requirement. Preserve that distinction.
+  // Evidence: docs/qa/2026-10-24-1707-fact-check.md (retained first-party pages).
+  {
+    date: "2026-10-26",
+    url: "https://events.stanford.edu/event/being-muslim-on-campus",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free admission; register through Stanford's event page before attending.",
+    },
+  },
+  {
+    date: "2026-10-26",
+    url: "https://events.stanford.edu/event/the-golden-age-or-the-dark-time-of-the-plots",
+    facts: { cost: "free" },
+  },
   // The first workshop makes skulls; decorating requires returning November 1.
   // Keep the phases separate even when a cached blurb summarizes the series.
   // Only apply while the source still publishes this two-session schedule.
@@ -474,10 +491,12 @@ const CORRECTIONS = [
   // one-sentence feed preview omits the hands-on family activities.
   // https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit
   // Evidence: docs/qa/2026-10-20-1807-fact-check.md.
+  // Event JSON-LD also confirms 21:00Z–00:00Z, or 2–5 PM Pacific.
+  // End-time evidence: docs/qa/2026-10-24-1707-fact-check.md.
   {
     date: "2026-10-24",
     url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",
-    facts: { category: "family", kidFriendly: true },
+    facts: { category: "family", kidFriendly: true, endTime: "5:00 PM" },
   },
   // October 24 is a Saturday. The dated library occurrence is authoritative;
   // its copied first-Thursday boilerplate must not move the meeting.

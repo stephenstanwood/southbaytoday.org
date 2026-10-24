@@ -7,6 +7,31 @@ const MACINTALKERS_PROFILE_URL =
 // club site also gives the 7 PM end. Keep Meetup as the date-specific
 // occurrence source, but normalize these durable club facts.
 export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "", sourceDescription = "" } = {}) {
+  // The structured occurrence says October 26, but its body says October 19.
+  // Keep the source's header and disclose the disagreement. A fresh, corrected
+  // body must stop triggering this warning.
+  // https://www.meetup.com/san-jose-friends-roommate-finder/events/316998975/
+  // Evidence: docs/qa/2026-10-24-1707-fact-check.md (authenticated API record).
+  if (event?.date === "2026-10-26"
+    && /\/events\/316998975\/?(?:\?|$)/.test(String(event?.url || ""))
+    && /\bMon(?:day)?\s+Oct(?:ober)?\.?\s+19\b/i.test(sourceDescription)) {
+    return {
+      ...event,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's event header says Monday, October 26, but its description says Monday, October 19. Confirm the date with the organizer before going.",
+    };
+  }
+
+  // The venue field contains only a street address; the same occurrence's
+  // body explicitly supplies the business name. Preserve revised source venues.
+  // https://www.meetup.com/nvst-capital-real-estate-meetup/events/316660427/
+  if (event?.date === "2026-11-10"
+    && /\/events\/316660427\/?(?:\?|$)/.test(String(event?.url || ""))
+    && !event.venue
+    && /\bAlphaX RE Capital,\s*10275 N De Anza Blvd\b/i.test(sourceDescription)) {
+    return { ...event, venue: "AlphaX RE Capital" };
+  }
+
   // The organizer's occurrence venue is John D. Morgan Park, but its body
   // refers to Baylands Park. Do not choose a park for the reader. Test the
   // fresh source body so consistent revised instructions retain their terms.

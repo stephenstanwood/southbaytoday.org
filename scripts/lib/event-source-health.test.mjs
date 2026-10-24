@@ -29,6 +29,39 @@ import {
 
 const NOW = new Date("2026-07-20T03:00:00.000Z");
 
+test("the October 26 roommate meetup discloses the source's conflicting October 19 date", () => {
+  const event = {
+    date: "2026-10-26", title: "Friends & Roommates Finder", venue: "Starbucks",
+    url: "https://www.meetup.com/san-jose-friends-roommate-finder/events/316998975/",
+    time: "7:00 PM", endTime: "8:30 PM", address: "4190 N First St, San Jose",
+  };
+  const fixed = applyVerifiedMeetupEventOverride(event, { sourceDescription: "Details: Mon Oct 19 · 7:00–8:30 PM" });
+  assert.equal(fixed.attendanceStatus, "needs-confirmation");
+  assert.match(fixed.attendanceNote, /October 26.*October 19/);
+  assert.equal(isBriefingEventAvailable(fixed), false);
+  for (const field of ["date", "time", "endTime", "venue", "address"]) assert.equal(fixed[field], event[field]);
+  assert.equal(applyVerifiedMeetupEventOverride(event, { sourceDescription: "Details: Mon Oct 26 · 7:00–8:30 PM" }), event);
+  for (const other of [{ ...event, date: "2026-11-02" }, { ...event, url: "https://example.test/other" }]) {
+    assert.equal(applyVerifiedMeetupEventOverride(other, { sourceDescription: "Mon Oct 19" }), other);
+  }
+  assert.equal(event.attendanceStatus, undefined);
+});
+
+test("the November real-estate meetup uses the venue explicitly named in its body", () => {
+  const event = {
+    date: "2026-11-10", title: "Mega Meet Up: The Ultimate Business & Real Estate Monthly Mixer",
+    url: "https://www.meetup.com/nvst-capital-real-estate-meetup/events/316660427/",
+    venue: "", address: "10275 N De Anza Blvd, Cupertino, CA 95014, USA", time: "5:30 PM",
+  };
+  const sourceDescription = "**Where:** AlphaX RE Capital, 10275 N De Anza Blvd, Cupertino, CA";
+  assert.deepEqual(applyVerifiedMeetupEventOverride(event, { sourceDescription }), { ...event, venue: "AlphaX RE Capital" });
+  for (const other of [
+    { ...event, date: "2026-11-11" }, { ...event, url: "https://example.test/other" },
+    { ...event, venue: "A revised meeting place" },
+  ]) assert.equal(applyVerifiedMeetupEventOverride(other, { sourceDescription }), other);
+  assert.equal(applyVerifiedMeetupEventOverride(event, { sourceDescription: "Meet at another venue." }), event);
+});
+
 test("the drum circle discloses conflicting source parks without choosing one", () => {
   const event = {
     date: "2026-11-14", title: "Community Drum Circle", venue: "John D. Morgan Park",

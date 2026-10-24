@@ -981,6 +981,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Plant & Soul California's organizer record publishes PASCA, not Pasca.
+  // https://www.meetup.com/pasca-volunteers/events/317111867/
+  "PASCA",
   // Source-published names: STEM Madness at Saratoga High, its MSET robotics
   // hosts, and San Jose Youth Symphony. Preserve these in titles and prose.
   "SMASH", "MSET", "SJYS",
