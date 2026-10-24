@@ -6,7 +6,23 @@ const MACINTALKERS_PROFILE_URL =
 // site and Toastmasters profile both publish the meeting start as 5:40 PM; the
 // club site also gives the 7 PM end. Keep Meetup as the date-specific
 // occurrence source, but normalize these durable club facts.
-export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "" } = {}) {
+export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "", sourceDescription = "" } = {}) {
+  // The organizer's occurrence venue is John D. Morgan Park, but its body
+  // refers to Baylands Park. Do not choose a park for the reader. Test the
+  // fresh source body so consistent revised instructions retain their terms.
+  // https://www.meetup.com/connected-through-music/events/317105031/
+  // Evidence: docs/qa/2026-10-24-1007-fact-check.md.
+  if (event?.date === "2026-11-14"
+    && /\/events\/317105031\/?(?:\?|$)/.test(String(event?.url || ""))
+    && /^John D\. Morgan Park$/i.test(event?.venue || "")
+    && /\bBaylands\s+park\b/i.test(sourceDescription)) {
+    return {
+      ...event,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's venue field lists John D. Morgan Park in Campbell, while its description refers to Baylands Park. Confirm the meeting location with the organizer before going.",
+    };
+  }
+
   // The source calls this a Vasona Lake walk but explicitly meets at Oak Meadow
   // Park's entrance parking lot by the airplane. The generic "Parking lot"
   // venue was discarded at ingest and replaced with the organizing club.

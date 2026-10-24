@@ -4,6 +4,24 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^San Jose 7 Claude Techniques You['’]ll Use Tomorrow$/i,
+    venue: /^Walsh\s*(?:&|and)\s*Northwestern$/i,
+    date: "2026-10-25",
+    reviewOn: "2026-10-25",
+    reason:
+      "The organizer's linked ClaudeVibeCode product explicitly runs live on Zoom. Meetup's PHYSICAL flag does not establish an event at this street intersection.",
+    source: "https://www.aiventurelab.org/product/ClaudeVibeCode",
+  }),
+  Object.freeze({
+    title: /^EH&S:\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i,
+    venue: /^(?:Stanford University|484 Oak Road(?:, Stanford(?:, CA 94305)?)?)$/i,
+    date: "2026-10-26",
+    reviewOn: "2026-10-26",
+    reason:
+      "The occurrence's eligibility section lists Stanford students, faculty, staff, postdocs, retirees and campus affiliates, despite its generic Everyone tag. Public eligibility is not established.",
+    source: "https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic",
+  }),
+  Object.freeze({
     title: /\bengelbert humperdinck\b/i,
     venue: /^california theatre$/i,
     date: "2026-10-21",

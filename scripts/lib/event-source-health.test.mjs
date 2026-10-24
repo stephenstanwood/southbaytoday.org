@@ -29,6 +29,25 @@ import {
 
 const NOW = new Date("2026-07-20T03:00:00.000Z");
 
+test("the drum circle discloses conflicting source parks without choosing one", () => {
+  const event = {
+    date: "2026-11-14", title: "Community Drum Circle", venue: "John D. Morgan Park",
+    url: "https://www.meetup.com/connected-through-music/events/317105031/",
+    time: "3:30 PM", address: "540 West Rincon Avenue, Campbell",
+  };
+  const fixed = applyVerifiedMeetupEventOverride(event, { sourceDescription: "There is sometimes a parking fee at Baylands park." });
+  assert.equal(fixed.attendanceStatus, "needs-confirmation");
+  assert.match(fixed.attendanceNote, /John D\. Morgan Park.*Baylands Park/);
+  assert.equal(fixed.venue, event.venue);
+  assert.equal(fixed.address, event.address);
+  assert.equal(fixed.time, event.time);
+  assert.equal(applyVerifiedMeetupEventOverride(event, { sourceDescription: "Meet at John D. Morgan Park." }), event);
+  for (const other of [{ ...event, date: "2026-11-15" }, { ...event, url: "https://example.test/other" }]) {
+    assert.equal(applyVerifiedMeetupEventOverride(other, { sourceDescription: "Parking fee at Baylands park." }), other);
+  }
+  assert.equal(event.attendanceStatus, undefined);
+});
+
 test("SJSU's verified Savannah conference stays excluded without location metadata", () => {
   const url = "https://events.sjsu.edu/event/ischool-at-arma-infocon-2026";
   for (const date of ["2026-10-25", "2026-10-26", "2026-10-27", "2026-10-28"]) {

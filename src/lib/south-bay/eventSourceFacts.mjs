@@ -9,6 +9,20 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The organizer's body names Voyager, whose own location page confirms
+  // 2221 The Alameda. The Meetup venue field retains the café's old name.
+  // https://voyagercraftcoffee.com/locations
+  // Evidence: docs/qa/2026-10-24-1007-fact-check.md.
+  {
+    date: "2026-10-31",
+    matches: (event) => event.url === "https://www.meetup.com/santa-clara-running-group/events/316904074/"
+      && /^(?:Mission City Coffee Roasting Co|Voyager Craft Coffee)$/i.test(event.venue || "")
+      && /^2221 The Alameda, Santa Clara(?:, CA(?: 95050)?)?$/i.test(event.address || ""),
+    facts: {
+      venue: "Voyager Craft Coffee",
+      blurb: "Run or walk with the Santa Clara-San Jose Running Group, meeting at Voyager Craft Coffee on The Alameda.",
+    },
+  },
   // The independently published chamber occurrence confirms free admission
   // and Big Basin Way. Newsletter extraction omitted its link and price.
   // https://members.saratogachamber.org/events/details/witchy-walk-a-bout-10852
@@ -692,6 +706,9 @@ const CORRECTIONS = [
     venue: /^(?:The )?Carriage House(?: Theatre)?$/i,
     url: "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/",
     facts: {
+      // The organizer identifies a pop/rock concert, rather than general arts.
+      // Evidence: docs/qa/2026-10-24-1007-fact-check.md.
+      category: "music",
       time: "7:30 PM",
       url: "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/",
     },
@@ -718,7 +735,9 @@ const CORRECTIONS = [
     id: "inbound-46189d1f46f2ac9d",
     title: /^Jack West: Guitars on Life$/i,
     venue: /^The Studio$/i,
-    facts: { url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/" },
+    // Stanford Live confirms a guitar concert. Keep sparse newsletter rows
+    // out of the community catch-all. Evidence: 2026-10-24-1007-fact-check.md.
+    facts: { category: "music", url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/" },
   },
   // The library's title spells saranggola correctly; its body misspells it.
   // Keep the carried attendance note and cached blurb consistent too.

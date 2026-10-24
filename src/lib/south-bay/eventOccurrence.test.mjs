@@ -188,6 +188,28 @@ test("unconfirmed 2026-08-19 library rows stay unpublished until first-party con
   }), false);
 });
 
+test("withholds the Stanford-affiliate vaccination clinic without hiding public clinics", () => {
+  const clinic = {
+    id: "stanford-54310688843389-2026-10-26",
+    title: "EH&S: Flu & COVID-19 Vaccination Clinic", date: "2026-10-26",
+    time: "9:00 AM", venue: "Stanford University", source: "Stanford Events",
+  };
+  assert.equal(isEventPublishable(clinic), false);
+  assert.equal(isEventEditoriallySuppressed({ ...clinic, title: "Community Vaccination Clinic" }), false);
+  assert.equal(isEventEditoriallySuppressed({ ...clinic, venue: "Public Health Center" }), false);
+  assert.equal(isEventEditoriallySuppressed({ ...clinic, date: "2026-10-27" }), false);
+});
+
+test("withholds the Zoom workshop's false San Jose street occurrence", () => {
+  const workshop = {
+    title: "San Jose 7 Claude Techniques You'll Use Tomorrow", date: "2026-10-25",
+    time: "8:15 PM", venue: "Walsh & Northwestern", source: "Meetup",
+  };
+  assert.equal(isEventPublishable(workshop), false);
+  assert.equal(isEventEditoriallySuppressed({ ...workshop, title: "Community Coding Workshop" }), false);
+  assert.equal(isEventEditoriallySuppressed({ ...workshop, date: "2026-10-26" }), false);
+});
+
 test("suppresses Ticketmaster-only Dru Hill at Mountain Winery", () => {
   const druHill = {
     id: "tm-Z7r9jZ1A7x78p",

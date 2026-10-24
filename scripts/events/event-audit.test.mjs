@@ -22,7 +22,7 @@ test("Campbell Recital Hall uses the shared Stanford landmark evidence", () => {
   assert.deepEqual(classify({ ...event, venue: "Campbell Community Center", city: "campbell" }), []);
 });
 
-test("Meetup excludes Sketch Hour's online course advertised at a local park, while keeping local drawing groups", async (t) => {
+test("Meetup excludes verified online products advertised at local venues, while keeping local workshops", async (t) => {
   // October 23 source: https://www.meetup.com/the-sunday-morning-sketch-and-social/events/317093772/
   // Its linked Sketch Hour product says lessons are prerecorded broadcasts,
   // joined through a web dashboard, despite Meetup labeling it PHYSICAL.
@@ -51,6 +51,17 @@ test("Meetup excludes Sketch Hour's online course advertised at a local park, wh
     description: "Meet in person at the park. Bring a pencil and paper.",
     eventUrl: "https://www.meetup.com/local-drawing-control/events/local-drawing-control/",
   };
+  const zoomCourse = {
+    ...course, id: "317111365", title: "San Jose 7 Claude Techniques You'll Use Tomorrow",
+    description: "Register at https://aspen-32278.aiventurelab.org/product/ClaudeVibeCode?city=San%20Jose",
+    venue: { name: "Walsh & Northwestern", address: "Walsh & Northwestern", city: "San Jose" },
+    eventUrl: "https://www.meetup.com/francophones-and-friends-social-club-gatherings/events/317111365/",
+  };
+  const localTech = {
+    ...local, id: "local-tech-control", title: "Community Coding Workshop with Claude",
+    description: "Meet in person at the library to build a small app together.",
+    eventUrl: "https://www.meetup.com/local-tech-control/events/local-tech-control/",
+  };
   const { privateKey } = generateKeyPairSync("rsa", {
     modulusLength: 2048,
     privateKeyEncoding: { type: "pkcs8", format: "pem" },
@@ -76,9 +87,9 @@ test("Meetup excludes Sketch Hour's online course advertised at a local park, wh
     }
     assert.equal(String(url), "https://api.meetup.com/gql-ext");
     assert.match(JSON.parse(options.body).query, /\bdescription\b/, "request the source description needed to verify attendance");
-    return Response.json({ data: { eventSearch: { edges: [course, local].map((node) => ({ node })) } } });
+    return Response.json({ data: { eventSearch: { edges: [course, zoomCourse, local, localTech].map((node) => ({ node })) } } });
   });
   const events = await fetchMeetupEvents();
-  assert.deepEqual(events.map((event) => event.url), [local.eventUrl]);
+  assert.deepEqual(events.map((event) => event.url), [local.eventUrl, localTech.eventUrl]);
   assert.equal(events[0].venue, "Alum Rock Park");
 });

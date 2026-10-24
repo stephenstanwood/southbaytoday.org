@@ -14,7 +14,6 @@ const REQUIRED = [
   "fetchLosAltosVillageEvents",
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
-  "fetchPearTheatreEvents",
   "fetchTicketmasterEvents",
   "fetchMeetupEvents",
   "fetchPlaywrightEvents",

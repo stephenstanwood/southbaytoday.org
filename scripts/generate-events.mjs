@@ -4014,11 +4014,12 @@ async function fetchStanfordEvents() {
         return null; // this occurrence is over and nothing is still running
       }
       const inferredCategory = inferUniversityCategory(ev.title, description, "", venue);
-      // A declared lecture is not children's programming just because its
-      // subject mentions children. Preserve arts and other topic categories.
+      // A declared lecture or seminar is not children's programming or an
+      // outdoor visit because its subject mentions children or an industrial
+      // park. Preserve arts and the other established topic categories.
       const sourceSaysLecture = (ev.filters?.event_types || [])
-        .some((type) => /^Lecture\/Presentation\/Talk$/i.test(type.name || ""));
-      const category = inferredCategory === "family" && sourceSaysLecture
+        .some((type) => /^(?:Lecture\/Presentation\/Talk|Class\/Seminar)$/i.test(type.name || ""));
+      const category = ["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture
         ? "education" : inferredCategory;
       return {
         // A series shares one Localist id across every occurrence, so scope the
@@ -6632,7 +6633,7 @@ async function fetchSunnyvaleLibraryEvents() {
   // around. Sunnyvale's 24 events over the next two weeks come from Meetup, the
   // City Newsletter intake, and our own listings; closing the gap needs either a
   // published feed or a human-scale arrangement with the city, not a scraper.
-  // Sunnyvale Community Players (fetchSunnyvalePlayersEvents, added 2026-10-09)
+  // Sunnyvale Community Players (VBO collection retired 2026-10-24)
   // is the one first-party Sunnyvale calendar that is open and structured.
   return fetchBiblioEvents("sunnyvale", "Sunnyvale Public Library", () => "sunnyvale");
 }
@@ -7814,6 +7815,11 @@ async function fetchMeetupEvents() {
     // https://sketchhour.vercel.app/product/SketchStillLife
     // Exclude these product links, preserving genuine local drawing events.
     if (/https?:\/\/sketchhour\.vercel\.app\/product\//i.test(node.description || "")) continue;
+    // The linked ClaudeVibeCode product explicitly runs live on Zoom, despite
+    // this Meetup's PHYSICAL flag and San Jose street-intersection venue.
+    // https://www.meetup.com/francophones-and-friends-social-club-gatherings/events/317111365/
+    // Evidence: docs/qa/2026-10-24-1007-fact-check.md. Keep real local workshops.
+    if (/https?:\/\/(?:[a-z0-9-]+\.)?aiventurelab\.org\/product\/ClaudeVibeCode(?:[/?#]|$)/i.test(node.description || "")) continue;
 
     const groupUrlname = node.group?.urlname ?? "";
     if (BLOCKED_MEETUP_GROUPS.has(groupUrlname)) continue;
@@ -7883,7 +7889,7 @@ async function fetchMeetupEvents() {
       source: "Meetup",
       kidFriendly: false,
       ...deriveMeetupRegistration(node, new Date()),
-    }, { groupUrlname }));
+    }, { groupUrlname, sourceDescription: node.description || "" }));
   }
 
   console.log(`  ✅ Meetup: ${events.length} events (from ${rawEvents.length} raw across ${QUERIES.length} queries)`);
@@ -8577,7 +8583,7 @@ async function fetchSjMuseumOfArtEvents() {
 // excludes GPTBot and ClaudeBot. Keep request code and source registration
 // absent; another host, header, export, or browser is not source permission.
 
-// ── The Pear Theatre (VBO Tickets HTML) ──
+// ── Historical VBO parsers (offline fixtures only) ──
 
 function decodePearText(value = "") {
   return value
@@ -8655,91 +8661,11 @@ function parsePearOccurrences(sliderHtml, rangeText) {
   return occurrences;
 }
 
-async function fetchPearTheatreEvents() {
-  console.log("  ⏳ The Pear Theatre...");
-  try {
-    const siteId = "42AED627-D621-4B8F-960F-B0AA83FB1469";
-    const orgId = "7928";
-    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&o=${orgId}&eid=0&edid=0&PluginType=Embed`;
-    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
-    const session = extractVboSession(pluginHtml);
-    if (!session) throw new Error("missing VBO session");
+// Live VBO occurrence collection retired 2026-10-24; its /v*/ paths are
+// excluded by robots.txt. See docs/event-source-refresh.md. Parsers stay offline.
 
-    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
-    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
-    const today = todayPT();
-    const events = [];
-
-    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
-    for (const block of blocks) {
-      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
-      const eid = block.match(/\bEID(\d+)\b/)?.[1];
-      const title = decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
-        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? "");
-      if (!edid || !eid || !title) continue;
-
-      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "");
-      const venue = cleanPearHtml(block.match(/TextVenueName[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "") || "The Pear Theatre";
-      const address = cleanPearHtml(block.match(/TextVenueAddress[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "")
-        || "1110 La Avenida Street Suite A, Mountain View, CA 94043";
-      const description = truncate(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""));
-      const priceText = cleanPearHtml(block.match(/EventListPrice[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "")
-        .replace(/^price\s*:?\s*/i, "")
-        .replace(/\.00\b/g, "");
-      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
-      const url = `https://thepear.vbotickets.com/events?eid=${eid}`;
-      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
-
-      let occurrences = [];
-      try {
-        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
-        occurrences = parsePearOccurrences(sliderHtml, rangeText);
-      } catch (err) {
-        console.log(`  ↳ The Pear Theatre date fetch failed for ${title}: ${err.message}`);
-        if (STRICT_EVENT_REFRESH) throw err;
-      }
-
-      for (const occurrence of occurrences) {
-        if (occurrence.date < today) continue;
-        const start = parseDatePT(`${occurrence.date}T12:00:00`);
-        events.push({
-          id: h("peartheatre", eid, occurrence.date, occurrence.time),
-          title,
-          date: occurrence.date,
-          displayDate: displayDate(start),
-          time: occurrence.time,
-          endTime: null,
-          venue,
-          address,
-          city: "mountain-view",
-          category: "arts",
-          cost: /\bfree\b/i.test(priceText) ? "free" : (priceText ? "paid" : null),
-          ...(priceText ? { costNote: priceText } : {}),
-          description,
-          url,
-          source: "The Pear Theatre",
-          ...(image ? { image } : {}),
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + description),
-        });
-      }
-
-      await new Promise((r) => setTimeout(r, 200));
-    }
-
-    console.log(`  ✅ The Pear Theatre: ${events.length} events`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  The Pear Theatre: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
-  }
-}
-
-// ── Sunnyvale Community Players (VBO Tickets HTML) ──
-// Sunnyvale is our thinnest big city: its library and city calendars are shut
-// to automation (see fetchSunnyvaleLibraryEvents). SCP's season sells through
-// the same VBO plugin as the Pear, one record per performance. The plugin
-// needs only the site id from sunnyvaleplayers.org/season-calendar.
+// ── Sunnyvale Community Players historical parser fixtures ──
+// Live collection is retired with the other VBO occurrence adapters above.
 
 const SCP_SITE_URL = "https://www.sunnyvaleplayers.org/";
 const SCP_CALENDAR_URL = "https://www.sunnyvaleplayers.org/season-calendar/";
@@ -8790,89 +8716,8 @@ function parseScpIntro(text, title) {
   return { description: `${synopsis}${runLine}`.trim(), rating, production };
 }
 
-async function fetchSunnyvalePlayersEvents() {
-  console.log("  ⏳ Sunnyvale Community Players...");
-  try {
-    const siteId = "22884B75-BA13-4D03-B269-ED2C4D1FCB47";
-    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&eid=0&edid=0&PluginType=Embed`;
-    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
-    const session = extractVboSession(pluginHtml);
-    if (!session) throw new Error("missing VBO session");
-
-    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
-    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
-    let siteHtml = "";
-    try { siteHtml = await fetchText(SCP_SITE_URL, { timeout: 20_000 }); } catch { /* links fall back to the season calendar */ }
-    const today = todayPT();
-    const events = [];
-
-    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
-    for (const block of blocks) {
-      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
-      const eid = block.match(/\bEID(\d+)\b/)?.[1];
-      const title = decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
-        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? "");
-      if (!edid || !eid || !title) continue;
-
-      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "");
-      const intro = parseScpIntro(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""), title);
-      const description = truncate(intro.description);
-      // The plugin shows "FREE" for a show whose tickets aren't on sale yet
-      // (Mean Girls, Oct 2026, while its show page lists $44–$53 seats), so
-      // only a dollar range counts as a price.
-      const priceText = cleanPearHtml(block.match(/EventListPrice[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "")
-        .replace(/^price\s*:?\s*/i, "")
-        .replace(/\.00\b/g, "");
-      const hasPrice = /\$\d/.test(priceText);
-      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
-      const url = scpShowPageUrl(title, siteHtml) ?? SCP_CALENDAR_URL;
-      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
-
-      let occurrences = [];
-      try {
-        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
-        occurrences = parsePearOccurrences(sliderHtml, rangeText);
-      } catch (err) {
-        console.log(`  ↳ Sunnyvale Community Players date fetch failed for ${title}: ${err.message}`);
-        if (STRICT_EVENT_REFRESH) throw err;
-      }
-
-      for (const occurrence of occurrences) {
-        if (occurrence.date < today) continue;
-        const start = parseDatePT(`${occurrence.date}T12:00:00`);
-        events.push({
-          id: h("sunnyvaleplayers", eid, occurrence.date, occurrence.time),
-          title,
-          date: occurrence.date,
-          displayDate: displayDate(start),
-          time: occurrence.time,
-          endTime: null,
-          venue: "Sunnyvale Community Theatre",
-          address: "550 E Remington Dr, Sunnyvale, CA 94087",
-          city: "sunnyvale",
-          category: "arts",
-          cost: hasPrice ? "paid" : null,
-          ...(hasPrice ? { costNote: priceText } : {}),
-          description,
-          url,
-          source: "Sunnyvale Community Players",
-          ...(image ? { image } : {}),
-          // Jr. productions are the youth company's family shows.
-          kidFriendly: intro.rating === "G" || /^Jr\.?\s/i.test(intro.production),
-        });
-      }
-
-      await new Promise((r) => setTimeout(r, 200));
-    }
-
-    console.log(`  ✅ Sunnyvale Community Players: ${events.length} events`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  Sunnyvale Community Players: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
-  }
-}
+// Live VBO occurrence collection retired 2026-10-24; its /v*/ paths are
+// excluded by robots.txt. See docs/event-source-refresh.md. Parsers stay offline.
 
 // ── Performing arts calendars ──
 
@@ -9409,93 +9254,8 @@ async function fetchPaloAltoPlayersEvents() {
   }
 }
 
-async function fetchHammerTheatreEvents() {
-  console.log("  ⏳ Hammer Theatre...");
-  try {
-    const siteId = "8B177AF0-B39C-408B-B5CB-47CD99E2BC9D";
-    const orgId = "7239";
-    const pluginUrl = `https://plugin.vbotickets.com/plugin/loadplugin?siteid=${siteId}&page=ListEvents&o=${orgId}&eid=0&edid=0&PluginType=Embed`;
-    const pluginHtml = await fetchText(pluginUrl, { timeout: 20_000 });
-    const session = pluginHtml.match(/events\?s=([0-9a-f-]{36})/i)?.[1];
-    if (!session) throw new Error("missing VBO session");
-
-    const listUrl = `https://plugin.vbotickets.com/Plugin/events/showevents?ViewType=list&EventType=current&day=&s=${session}`;
-    const listHtml = await fetchText(listUrl, { timeout: 20_000 });
-    const today = todayPT();
-    const events = [];
-
-    const blocks = listHtml.split(/<div id="EDID/).slice(1).map((block) => `<div id="EDID${block}`);
-    for (const block of blocks) {
-      const edid = block.match(/id="EDID(\d+)"/i)?.[1];
-      const eid = block.match(/\bEID(\d+)\b/)?.[1];
-      const title = cleanHammerTitle(
-        decodePearText(block.match(/data-event-name="([^"]+)"/i)?.[1] ?? "")
-        || cleanPearHtml(block.match(/HeaderEventName[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/i)?.[1] ?? ""),
-      );
-      if (!edid || !eid || !title || isBlockedEvent(title)) continue;
-
-      const rangeText = cleanPearHtml(block.match(/TextEventDate[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? "");
-      const venue = cleanPearHtml(block.match(/TextVenueName[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "") || "Hammer Theatre Center";
-      const address = cleanPearHtml(block.match(/TextVenueAddress[^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? "")
-        || "101 Paseo De San Antonio, San Jose, CA 95113";
-      const description = truncate(cleanPearHtml(block.match(/EventIntroText[^>]*>([\s\S]*?)<\/div>/i)?.[1] ?? ""));
-      const image = decodePearText(block.match(/<img[^>]+src="([^"]+)"/i)?.[1] ?? "");
-      const url = decodePearText(block.match(/<a[^>]+href="(https?:\/\/[^"]+)"/i)?.[1] ?? "")
-        || `https://hammertheatre.vbotickets.com/event/details/${eid}`;
-      const sliderUrl = `https://plugin.vbotickets.com/v5.0/controls/events.asp?a=load_eventdate_slider&page=seatmap.asp&eid=${eid}&edid=${edid}&req=1&s=${session}`;
-
-      let occurrences = [];
-      try {
-        const sliderHtml = await fetchText(sliderUrl, { timeout: 20_000 });
-        occurrences = parsePearOccurrences(sliderHtml, rangeText);
-      } catch (err) {
-        console.log(`  ↳ Hammer Theatre date fetch failed for ${title}: ${err.message}`);
-        if (STRICT_EVENT_REFRESH) throw err;
-      }
-
-      if (occurrences.length === 0) {
-        const fallback = rangeText.match(/(?:[A-Za-z]{3},\s*)?(\d{1,2})\/(\d{1,2})\/(20\d{2})\s*@\s*(\d{1,2}:\d{2}\s*[AP]M)/i);
-        if (fallback) {
-          const date = `${fallback[3]}-${fallback[1].padStart(2, "0")}-${fallback[2].padStart(2, "0")}`;
-          const time = fallback[4].replace(/\s+/g, " ").replace(/\s*(am|pm)$/i, (_, suffix) => ` ${suffix.toUpperCase()}`);
-          occurrences = [{ date, time }];
-        }
-      }
-
-      for (const occurrence of occurrences) {
-        if (occurrence.date < today) continue;
-        const start = parseDatePT(`${occurrence.date}T12:00:00`);
-        events.push({
-          id: h("hammertheatre", eid, occurrence.date, occurrence.time),
-          title,
-          date: occurrence.date,
-          displayDate: displayDate(start),
-          time: occurrence.time,
-          endTime: null,
-          venue,
-          address,
-          city: "san-jose",
-          category: inferCategory(title, description, "", venue),
-          cost: /\b(free admission|admission is free|pay what you can|donations? (?:are )?welcome)\b/i.test(title + " " + description) ? "free" : "paid",
-          description,
-          url,
-          source: "Hammer Theatre",
-          ...(image ? { image } : {}),
-          kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|alice in wonderland)\b/i.test(title + " " + description),
-        });
-      }
-
-      await new Promise((r) => setTimeout(r, 150));
-    }
-
-    console.log(`  ✅ Hammer Theatre: ${events.length} events`);
-    return events;
-  } catch (err) {
-    console.log(`  ⚠️  Hammer Theatre: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
-  }
-}
+// Live VBO occurrence collection retired 2026-10-24; its /v*/ paths are
+// excluded by robots.txt. See docs/event-source-refresh.md. Parsers stay offline.
 
 function cleanHammerTitle(title) {
   return String(title || "")
@@ -10198,13 +9958,11 @@ async function main() {
     // Playwright snapshot, which carries its last healthy rows on browser errors.
     // JAMsj — live collection retired; see docs/event-source-refresh.md.
     source(fetchHistorySanJoseEvents),
-    source(fetchPearTheatreEvents, { label: "The Pear Theatre" }),
-    source(fetchSunnyvalePlayersEvents, { label: "Sunnyvale Community Players" }),
+    // VBO theater adapters retired: excluded occurrence-calendar controls.
     source(fetchSanJoseTheatersEvents),
     source(fetchSouthBayMusicalTheatreEvents),
     source(fetchLosAltosStageEvents),
     source(fetchPaloAltoPlayersEvents),
-    source(fetchHammerTheatreEvents),
     source(fetchGambleGardenEvents),
     source(fetchMidpenEvents, { label: "Midpen Open Space" }),
     source(fetchMexicanHeritagePlazaEvents),
@@ -11226,8 +10984,6 @@ export {
   fetchMontalvoEvents,
   fetchMusicInParkEvents,
   fetchPaloAltoPlayersEvents,
-  fetchPearTheatreEvents,
-  fetchSunnyvalePlayersEvents,
   parseScpIntro,
   scpShowPageUrl,
   fetchSanJoseTheatersEvents,

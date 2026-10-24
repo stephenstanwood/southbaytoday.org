@@ -15,6 +15,47 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the running group's Alameda meeting point uses Voyager's current branch name", async () => {
+  const raw = {
+    date: "2026-10-31", title: "Run+Walk Meet-up - All Speeds Welcome!",
+    venue: "Mission City Coffee Roasting Co", address: "2221 The Alameda, Santa Clara",
+    url: "https://www.meetup.com/santa-clara-running-group/events/316904074/",
+    time: "9:00 AM", blurb: "Meet other runners and walkers at Mission City Coffee Roasting Co.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].venue, "Voyager Craft Coffee");
+  assert.match(events[0].blurb, /Voyager Craft Coffee/);
+  assert.doesNotMatch(events[0].blurb, /Mission City/);
+  assert.equal(events[0].address, raw.address);
+  assert.equal(events[0].time, raw.time);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2026-11-07" }, { ...raw, address: "Another branch" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+for (const occurrence of [
+  { date: "2027-04-03", title: "Jack West: Guitars on Life", venue: "The Studio", time: "7:00 PM",
+    url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/", category: "community" },
+  { date: "2027-04-16", title: "Peter Asher: Songs and Stories", venue: "Carriage House", time: "7:30 PM",
+    url: "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/", category: "arts" },
+]) {
+  test(`${occurrence.title} retains its organizer-verified concert category`, async () => {
+    const raw = { ...occurrence, description: "", blurb: "See the performance." };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].category, "music");
+    assert.equal(events[0].date, raw.date);
+    assert.equal(events[0].time, raw.time);
+    assert.equal(events[0].blurb, raw.blurb);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2028-04-03" }), { ...raw, date: "2028-04-03" });
+    const other = { ...raw, title: "An unrelated concert", venue: "Another theatre", url: "https://example.test/other" };
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  });
+}
+
 test("Witchy Walk-A-Bout keeps the chamber's dated source and explicit free admission", () => {
   const raw = {
     id: "inbound-7183ea81af4fa0f4", date: "2026-10-31", title: "Witchy Walk-A-Bout",
@@ -1107,7 +1148,8 @@ test("verified concert times and links survive newsletter refreshes and changed 
     };
     const events = [{ ...raw }];
     const stats = await resolveEventBlurbs(events, { enabled: false });
-    assert.deepEqual(events[0], { ...raw, time: expectedTime, url: expectedUrl });
+    const category = /^(?:Peter Asher|Jack West)/.test(title) ? { category: "music" } : {};
+    assert.deepEqual(events[0], { ...raw, time: expectedTime, url: expectedUrl, ...category });
     assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
     assert.equal(stats.generated, 0);
     assert.equal(raw.time, time);

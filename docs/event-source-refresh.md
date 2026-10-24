@@ -205,7 +205,7 @@ alone would miss that ordering regression.
   went; every one of those is the sidestep the host has asked us not to make.
   The coverage cost is real — roughly 332 upcoming downtown records, and no other
   adapter covers that beat, though downtown venues with their own adapters (SAP
-  Center, San Jose Theaters, Hammer, City Lights) are unaffected. SJDA does still
+  Center, San Jose Theaters, City Lights) are unaffected. SJDA does still
   reach us through the sanctioned channel: sjda@sjdowntown.com mails events to
   the inbound intake address, at a couple of events rather than hundreds. If
   downtown coverage needs restoring, ask SJDA for a feed — do not re-scrape.
@@ -220,6 +220,20 @@ alone would miss that ordering regression.
   organizer, leave the others intact, and let the ordinary refresh maintain
   their retired URLs. Newsletter intake and independent organizers remain
   separate source channels; the old source-health row is historical.
+- VBO's Pear Theatre, Sunnyvale Community Players and Hammer Theatre adapters
+  were retired on 2026-10-24. A normal request to
+  `https://plugin.vbotickets.com/robots.txt` returned HTTP 200 with
+  `Disallow: /v*/`; all three adapters requested occurrence dates from
+  `/v5.0/controls/events.asp`. Remove those request implementations and source
+  registrations. Do not substitute another version, host, identity or browser
+  for the excluded calendar controls. The separately allowed ticket landing
+  pages do not establish every performance's dates; no excluded control was
+  requested during review. Keep the pure parsers and their offline fixtures.
+  The 103 existing rows from these adapters are not confirmed cancellations;
+  leave their facts intact and let ordinary refresh maintain retired URLs when
+  they leave the feed. Historical source-health rows describe their earlier
+  collection. Independent organizer/newsletter records remain separate channels.
+  Restoring direct collection requires an approved source channel.
 - Japanese American Museum of San Jose (JAMsj) live collection was retired on
   2026-10-23. A normal request to `https://www.jamsj.org/robots.txt` returned
   HTTP 200 with `Disallow: /` for GPTBot, ClaudeBot and other named AI agents.

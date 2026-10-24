@@ -53,6 +53,7 @@ for (const strict of [undefined, "0", "1"]) {
       if (String(url).includes("losaltosca.gov")) console.error("fixture: retired city source requested");
       if (new URL(String(url)).hostname === "www.jamsj.org") console.error("fixture: retired JAMsj source requested");
       if (new URL(String(url)).hostname === "www.saratoga.ca.us") console.error("fixture: retired Saratoga calendar requested");
+      if (new URL(String(url)).hostname === "plugin.vbotickets.com") console.error("fixture: excluded VBO source requested");
       if (String(url).includes("app.ticketmaster.com")) console.log("fixture: Ticketmaster 403");
       return new Response("Access denied", { status: 403 });
     };\n`);
@@ -77,6 +78,7 @@ for (const strict of [undefined, "0", "1"]) {
     assert.doesNotMatch(output, /fixture: retired city source requested/);
     assert.doesNotMatch(output, /fixture: retired JAMsj source requested/);
     assert.doesNotMatch(output, /fixture: retired Saratoga calendar requested/);
+    assert.doesNotMatch(output, /fixture: excluded VBO source requested/);
     assert.equal(result.status, 1, output);
     assert.match(output, /critical event sources failed:.*Ticketmaster is (?:empty|error: 403)/, output);
     const notifications = readdirSync(notificationDirectory).filter((name) => name.endsWith(".json"))

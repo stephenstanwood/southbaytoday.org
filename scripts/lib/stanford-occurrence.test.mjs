@@ -54,6 +54,24 @@ async function runWith(events) {
   }
 }
 
+test("Stanford's Class/Seminar format outranks an industrial park in the subject", async () => {
+  // The October 26 Constructing Utopias listing declares Class/Seminar.
+  // Its reference to Suzhou Industrial Park does not make it an outdoor trip.
+  const tomorrow = dayPT(1);
+  const [event] = await runWith([
+    localistEvent({
+      title: "Constructing Utopias: China's New Town Movement in the 21st Century",
+      location_name: "Encina Hall",
+      description_text: "This talk examines four decades of Chinese urbanization. Case studies include the Suzhou Industrial Park and prototypical eco-cities.",
+      filters: { event_types: [{ name: "Class/Seminar" }] },
+      instances: [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:30:00-07:00` }],
+    }),
+  ]);
+  assert.equal(event.category, "education");
+  assert.equal(event.time, "12:00 PM");
+  assert.equal(event.endTime, "1:30 PM");
+});
+
 test("Stanford's declared lecture format outranks children mentioned in the topic", async () => {
   const tomorrow = dayPT(1);
   const [event] = await runWith([

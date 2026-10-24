@@ -14,13 +14,13 @@ export const MINI_REQUIRED_SNAPSHOT_NAMES = Object.freeze([
   "official-event-sources",
 ]);
 
+// Active adapters only; the VBO date-control adapters were retired 2026-10-24.
 export const REQUIRED_SOURCE_IDS = Object.freeze([
   "fetchMusicInParkEvents",
   "fetchJazzOnThePlazzEvents",
   "fetchLosAltosVillageEvents",
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
-  "fetchPearTheatreEvents",
   "fetchTicketmasterEvents",
   "fetchMeetupEvents",
   "fetchPlaywrightEvents",
