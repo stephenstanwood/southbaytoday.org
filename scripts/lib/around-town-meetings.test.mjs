@@ -181,6 +181,23 @@ test("a study-session agenda cannot establish what the session covered", () => {
   assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
 });
 
+test("a planned scoping meeting does not establish that the meeting served that role", () => {
+  const agenda = {
+    fullAgendaText: "October 12, 2026 Planning Commission agenda. Proposed Project: Peery Park Specific Plan Amendment, and Scoping Meeting to receive public comments on a Supplemental EIR.",
+  };
+  const summary = "The meeting also served as a scoping session for public comment on a Supplemental EIR to the 2016 Peery Park plan's environmental report.";
+  assert.equal(hasUnsupportedMeetingAction({ summary }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ headline: "The meeting served as a scoping meeting" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({
+    summary: "The agenda also listed a scoping session for public comment on a Supplemental EIR.",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { fullAgendaText: summary }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, {
+    fullAgendaText: "The meeting served as a study session.",
+  }), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
+});
+
 test("proposed agenda actions cannot become a list of notable decisions", () => {
   const agenda = { fullAgendaText: "Hakone Gardens Koi Pond Renovation Project – Budget Amendment. Recommended Action: Adopt the Resolution amending the budget for $2,500,000." };
   const summary = "The agenda listed several notable decisions: a $2.5 million budget amendment and a new no-parking zone.";

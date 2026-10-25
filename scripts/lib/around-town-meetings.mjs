@@ -63,6 +63,8 @@ const COMPLETED_SESSION_ACTION = /\b(?:study|scoping)\s+session(?:\s+on\s+(?:[A-
 // "Council members were interviewing" also asserts an actual activity; an
 // agenda's "Applicant Interviews" heading establishes only the planned item.
 const PROGRESSIVE_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}(?:\s+members?)?\s+(?:was|were)\s+(interviewing|hearing|discussing|considering|reviewing|weighing|approving|adopting|voting|deciding|denying|rejecting)\b`, "gi");
+// A planned agenda role does not confirm that the meeting took place.
+const COMPLETED_MEETING_ROLE = /\b(?:meeting|session)\s+(?:also\s+)?served\s+as\s+(?:a\s+)?(study|scoping)\s+(?:meeting|session)\b/gi;
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 const DECISION_LIST = /\b(?:notable|major|key|significant)\s+decisions\s*:/i;
@@ -73,15 +75,18 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   const bodyActions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
   const sessionActions = [...claim.matchAll(COMPLETED_SESSION_ACTION)].map((match) => match[1]);
   const progressiveActions = [...claim.matchAll(PROGRESSIVE_BODY_ACTION)].map((match) => match[1]);
+  const meetingRoles = [...claim.matchAll(COMPLETED_MEETING_ROLE)].map((match) => match[1].toLowerCase());
   const actions = [...bodyActions, ...sessionActions];
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
   const talksClaimed = ONGOING_BODY_TALKS.test(claim);
   const decisionsClaimed = DECISION_LIST.test(claim);
-  if (!actions.length && !progressiveActions.length && !commentsClaimed && !talksClaimed && !decisionsClaimed) return false;
+  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
   const sourcedProgressiveActions = new Set([...evidence.matchAll(PROGRESSIVE_BODY_ACTION)].map((match) => match[1].toLowerCase()));
   if (progressiveActions.some((action) => !sourcedProgressiveActions.has(action.toLowerCase()))) return true;
+  const sourcedMeetingRoles = new Set([...evidence.matchAll(COMPLETED_MEETING_ROLE)].map((match) => match[1].toLowerCase()));
+  if (meetingRoles.some((role) => !sourcedMeetingRoles.has(role))) return true;
   if (commentsClaimed && !RECEIVED_PUBLIC_COMMENTS.test(evidence)) return true;
   if (talksClaimed && !ONGOING_BODY_TALKS.test(evidence)) return true;
   // A list of proposed resolutions is not a list of decisions already made.
