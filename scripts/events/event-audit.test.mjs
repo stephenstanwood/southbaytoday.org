@@ -160,3 +160,51 @@ test("Meetup keeps imminent events inside the requested window across Pacific da
     }
   }
 });
+
+test("Meetup resolves the source address before appending conflicting city metadata", async (t) => {
+  // The November 9 Guadalupe Trail walk's source address names San Jose,
+  // while venue.city incorrectly says Santa Clara. Appending that field first
+  // makes the usable address ambiguous to the shared city resolver.
+  const locations = [
+    { city: "Santa Clara", address: "River View Apartments Building 5, 100 Riverview Pkwy, San Jose, CA 95134" },
+    { city: "Santa Clara", address: "200 E. Santa Clara St., San José" },
+    { city: "Santa Clara", address: "1600 N Santa Clara St, Santa Clara, CA" },
+    { city: "Santa Clara", address: "Joint venue, Santa Clara and San Jose" },
+  ];
+  const nodes = locations.map((location, index) => ({
+    id: `address-control-${index}`, title: "Community Walk",
+    dateTime: "2026-11-09T17:30:00-08:00",
+    eventUrl: `https://www.meetup.com/offline-control/events/address-control-${index}/`,
+    eventType: "PHYSICAL", status: "ACTIVE",
+    venue: { name: index === 0 ? "Riverview Park" : "Community Center", ...location },
+    group: { name: "Local Community", urlname: "offline-control", stats: { memberCounts: { all: 100 } } },
+    rsvps: { yesCount: 5 },
+  }));
+  const { privateKey } = generateKeyPairSync("rsa", {
+    modulusLength: 2048,
+    privateKeyEncoding: { type: "pkcs8", format: "pem" },
+    publicKeyEncoding: { type: "spki", format: "pem" },
+  });
+  const credentials = {
+    MEETUP_CLIENT_ID: "offline-test-client", MEETUP_MEMBER_ID: "offline-test-member",
+    MEETUP_KID: "offline-test-key", MEETUP_PRIVATE_KEY: privateKey,
+  };
+  const previous = Object.fromEntries(Object.keys(credentials).map((key) => [key, process.env[key]]));
+  t.after(() => {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+  Object.assign(process.env, credentials);
+  t.mock.method(globalThis, "fetch", async (url) => {
+    if (String(url) === "https://secure.meetup.com/oauth2/access") {
+      return Response.json({ access_token: "offline-test-token" });
+    }
+    assert.equal(String(url), "https://api.meetup.com/gql-ext");
+    return Response.json({ data: { eventSearch: { edges: nodes.map((node) => ({ node })) } } });
+  });
+  const events = await fetchMeetupEvents({ now: new Date("2026-10-25T23:00:00Z") });
+  assert.deepEqual(events.map((event) => event.city), ["san-jose", "san-jose", "santa-clara", "santa-clara"]);
+  assert.deepEqual(events.map((event) => event.address), locations.map((location) => location.address));
+});

@@ -22,6 +22,15 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic",
   }),
   Object.freeze({
+    title: /^EH&S:\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i,
+    venue: /^(?:Stanford University|484 Oak Road(?:, Stanford(?:, CA 94305)?)?)$/i,
+    date: "2026-10-27",
+    reviewOn: "2026-10-27",
+    reason:
+      "This occurrence repeats the campus-affiliate eligibility restriction despite its Everyone tag. Keep shortened or stale copies out until public eligibility is confirmed.",
+    source: "https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640",
+  }),
+  Object.freeze({
     title: /\bengelbert humperdinck\b/i,
     venue: /^california theatre$/i,
     date: "2026-10-21",

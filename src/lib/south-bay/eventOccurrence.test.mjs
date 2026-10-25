@@ -212,9 +212,12 @@ test("withholds the Stanford-affiliate vaccination clinic without hiding public 
     time: "9:00 AM", venue: "Stanford University", source: "Stanford Events",
   };
   assert.equal(isEventPublishable(clinic), false);
+  assert.equal(isEventPublishable({
+    ...clinic, id: "stanford-54310717422431-2026-10-27", date: "2026-10-27",
+  }), false);
   assert.equal(isEventEditoriallySuppressed({ ...clinic, title: "Community Vaccination Clinic" }), false);
   assert.equal(isEventEditoriallySuppressed({ ...clinic, venue: "Public Health Center" }), false);
-  assert.equal(isEventEditoriallySuppressed({ ...clinic, date: "2026-10-27" }), false);
+  assert.equal(isEventEditoriallySuppressed({ ...clinic, date: "2026-10-28" }), false);
 });
 
 test("withholds the Zoom workshop's false San Jose street occurrence", () => {

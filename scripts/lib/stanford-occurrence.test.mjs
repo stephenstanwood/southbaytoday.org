@@ -102,6 +102,27 @@ test("Stanford lectures retain arts topics and an untyped storytime retains its 
   assert.deepEqual(events.map((event) => event.category), ["arts", "family"]);
 });
 
+test("Stanford clinic eligibility outranks Everyone metadata before description truncation", async () => {
+  const tomorrow = dayPT(1);
+  const clinic = {
+    title: "EH&S: Flu & COVID-19 Vaccination Clinic",
+    location_name: "484 Oak Road, Stanford, CA 94305",
+    address: "484 Oak Road, Stanford, CA 94305",
+    filters: { event_audience: [{ name: "Everyone" }] },
+    instances: [{ start: `${tomorrow}T09:00:00-07:00`, end: `${tomorrow}T14:00:00-07:00` }],
+  };
+  // The October 27 page puts its eligibility section after the introductory
+  // paragraph. Checking the shortened display description loses that evidence.
+  const introduction = "Join an upcoming campus vaccination clinic this autumn. ".repeat(8);
+  const restricted = introduction + "Who is Eligible? All students, faculty, staff, postdocs, retirees, and campus affiliates are welcome to participate.";
+  const events = await runWith([
+    localistEvent({ ...clinic, id: 1, description_text: restricted }),
+    localistEvent({ ...clinic, id: 2, description_text: introduction + "Who is Eligible? Everyone in the general public is welcome." }),
+    localistEvent({ ...clinic, id: 3, title: "Community Immunization Research Lecture", description_text: restricted }),
+  ]);
+  assert.deepEqual(events.map((event) => event.id), [2, 3].map((id) => `stanford-${id}-${tomorrow}`));
+});
+
 test("a dated event takes its day and clock from the occurrence, not first_date", async () => {
   const tomorrow = dayPT(1);
   const [event] = await runWith([

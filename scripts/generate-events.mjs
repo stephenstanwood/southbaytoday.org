@@ -3990,6 +3990,11 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // The clinic's Everyone tag conflicts with its explicit campus-only
+      // eligibility section. Read the full body before display truncation.
+      // https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640
+      if (/^EH&S:\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i.test(ev.title || "")
+        && /\bwho is eligible\?\s*all students,\s*faculty,\s*staff,\s*postdocs,\s*retirees,\s*and campus affiliates are welcome to participate\b/i.test(description)) return null;
       // Localist publishes the attendance mode outright — no need to guess it
       // from the copy. "hybrid" stays a physical destination.
       const isVirtual = virtualFromSourceSignal(ev.experience) === true;
@@ -7847,7 +7852,11 @@ async function fetchMeetupEvents({ now = new Date() } = {}) {
     if (MEETUP_JUNK.some((p) => p.test(qualityText))) continue;
 
     const city = node.venue?.city;
-    const citySlug = meetupCitySlug(city);
+    const sourceCitySlug = meetupCitySlug(city);
+    // Resolve the source address before normalization appends venue.city.
+    // Otherwise a wrong metadata city makes an unambiguous address ambiguous
+    // (November 9 Guadalupe Trail walk: San Jose address, Santa Clara metadata).
+    const citySlug = resolveEventCity(sourceCitySlug, node.venue?.address || "", title);
     if (!citySlug || !MEETUP_ACCEPTED_CITIES.has(citySlug)) continue;
 
     const start = parseDate(node.dateTime);
@@ -7856,7 +7865,7 @@ async function fetchMeetupEvents({ now = new Date() } = {}) {
     // Run through cleanVenue so Meetup organizers who type a raw street address
     // into the venue-name field ("22500 Cristo Rey Dr") fall back to the group
     // name rather than rendering a bare address as the venue.
-    const address = normalizeMeetupAddress(node.venue?.address, city);
+    const address = normalizeMeetupAddress(node.venue?.address, citySlug === sourceCitySlug ? city : null);
     let venue = cleanVenue(node.venue?.name?.trim() || "");
     if (isIntersectionVenue(venue) || isBareStreetVenue(venue) || isMeetingSpotNote(venue)) {
       venue = meetupVenueFromTitle(title) || "";
