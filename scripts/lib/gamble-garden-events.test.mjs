@@ -88,6 +88,40 @@ test("Gamble reads current availability before truncation without borrowing hist
   }
 });
 
+test("Gamble preserves required reservations beyond the displayed opening sentence", async (t) => {
+  const { events } = await scrape(t, { rows: [{ ...row, title: "Holiday Luncheon (Tuesday)" }], html: `
+    <div class="tribe-events-single-event-description">
+      <p>One of Gamble Garden's traditions, our Holiday Luncheons celebrate the holidays.</p>
+      <p>Enjoy a festive menu prepared and served by our volunteer committee.</p>
+      <h3>Reservations:</h3><p>Reservations are required for all Holiday Luncheons.</p>
+      <p>Book your table online or by calling the garden.</p>
+    </div>` });
+  assert.equal(events[0].registration, "required");
+  assert.doesNotMatch(events[0].description, /reservations/i);
+  assert.equal(events[0].cost, null, "reservations do not establish an admission price");
+});
+
+test("Gamble requires affirmative current booking instructions and preserves closures", async (t) => {
+  for (const [name, description, expected] of [
+    ["requirement after API excerpt", `<p>${"Explore the garden. ".repeat(25)}Registration is required.</p>`, "required"],
+    ["advance reservation", "<p>Advance reservations are required.</p>", "required"],
+    ["explicit RSVP", "<p>RSVP is required.</p>", "required"],
+    ["closed registration", "<p>Registration is required. Registration is now closed.</p>", "closed"],
+    ["sold out", "<p>Reservations are required. This event is sold out.</p>", "full"],
+    ["optional RSVP", "<p>Join us in the garden. RSVP here.</p>", undefined],
+    ["recommended booking", "<p>Reservations are recommended.</p>", undefined],
+    ["no reservations", "<p>No reservations are required.</p>", undefined],
+    ["registration not required", "<p>Registration is not required.</p>", undefined],
+    ["historical requirement", "<p>Last year, reservations were required.</p>", undefined],
+    ["conditional requirement", "<p>If reservations are required, contact the organizer.</p>", undefined],
+  ]) {
+    await t.test(name, async (t) => {
+      const { events } = await scrape(t, { rows: [{ ...row, description }] });
+      assert.equal(events[0].registration, expected);
+    });
+  }
+});
+
 test("Gamble does not borrow family navigation or body text from another event", async (t) => {
   const { events } = await scrape(t, { html: `<nav>Kids, children and families</nav>
     <div class="tribe-events-single-event-description"><p>Learn rose pruning techniques.</p></div>

@@ -79,6 +79,7 @@ import {
   REGISTRATION_CLOSED,
   REGISTRATION_FULL,
   REGISTRATION_NONE,
+  REGISTRATION_REQUIRED,
   VIRTUAL_EVENT_PATTERNS,
   declaredRegistrationAvailability,
   hasOutOfAreaDestination,
@@ -9353,9 +9354,12 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           ? apiExcerpt
           : (stripBareUrls(sourceDescription).match(/^.*?[.!?](?=\s|$)/)?.[0]
             || truncate(stripBareUrls(sourceDescription)));
-        // A current first-party availability notice governs attendance even
-        // when it falls beyond the displayed excerpt. Do not infer a price.
-        const availability = declaredRegistrationAvailability(sourceDescription);
+        // Read attendance terms before truncation. Only an affirmative current
+        // requirement establishes a booking gate; optional RSVP links and
+        // "no reservations are required" do not. Closures take precedence.
+        const registration = declaredRegistrationAvailability(sourceDescription)
+          || (/(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription)
+            ? REGISTRATION_REQUIRED : null);
         const image = ev.image?.url || "";
 
         events.push({
@@ -9375,7 +9379,7 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",
           source: "Gamble Garden",
-          ...(availability ? { registration: availability } : {}),
+          ...(registration ? { registration } : {}),
           ...(image ? { image } : {}),
           // Use the complete first-party audience text before truncation.
           // A renamed title can drop "Family Night" while its body still
