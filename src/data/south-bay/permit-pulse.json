@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-24T04:37:34.711Z",
+      "generatedAt": "2026-10-25T04:37:04.892Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 16 – Oct 23",
+      "dateRange": "Oct 17 – Oct 24",
       "stats": {
-        "total": 468,
-        "notable": 32,
-        "newUnits": 7,
-        "totalValuation": 101864924
+        "total": 475,
+        "notable": 40,
+        "newUnits": 10,
+        "totalValuation": 90935865
       },
       "permits": [
         {
@@ -39,16 +39,16 @@
           "subtype": "Apt/Condo/Townhouse"
         },
         {
-          "id": "2026-107949-RS",
-          "address": "1134 Danbury Dr #2",
+          "id": "2025-098535-RS",
+          "address": "6138 Mancuso St",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 175920,
+          "description": "New Single Family Residence",
+          "valuation": 638046,
           "units": 1,
-          "issueDate": "2026-10-16",
-          "subtype": "ADU   Accessory Dwelling Unit"
+          "issueDate": "2026-10-22",
+          "subtype": "Single-Family"
         },
         {
           "id": "2026-101382-RS",
@@ -60,6 +60,42 @@
           "valuation": 154634,
           "units": 1,
           "issueDate": "2026-10-21",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-128193-RS",
+          "address": "1356 Via De Los Reyes #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 87960,
+          "units": 1,
+          "issueDate": "2026-10-22",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-123180-RS",
+          "address": "2148 E San Antonio St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Preapproved ADU Site Specific Ca2homes 499 Sq Ft",
+          "valuation": 87784,
+          "units": 1,
+          "issueDate": "2026-10-22",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-111640-RS",
+          "address": "2595 Britt Wy #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Partial Garage Conversion to JADU & New Storage",
+          "valuation": 37823,
+          "units": 1,
+          "issueDate": "2026-10-22",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -87,18 +123,6 @@
           "subtype": "Data Center"
         },
         {
-          "id": "2026-141003-CI",
-          "address": "123 Great Oaks Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Sv12x-F2.3 Fit Out Data Hall (I & J)",
-          "valuation": 14499471,
-          "units": 0,
-          "issueDate": "2026-10-16",
-          "subtype": "Data Center"
-        },
-        {
           "id": "2026-140557-CI",
           "address": "3030 Orchard Py",
           "category": "commercial-large",
@@ -106,30 +130,6 @@
           "workType": "Tenant Improvement",
           "description": "Rosendin Electric TI",
           "valuation": 12574415,
-          "units": 0,
-          "issueDate": "2026-10-19",
-          "subtype": "Office"
-        },
-        {
-          "id": "2025-118427-CI",
-          "address": "650 Piercy Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Finish Interior",
-          "description": "Spec Space Finish Interior for Market Ready Office TI",
-          "valuation": 2686653,
-          "units": 0,
-          "issueDate": "2026-10-21",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-140416-CI",
-          "address": "2731 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Rooftop Unit Replacements",
-          "valuation": 1500000,
           "units": 0,
           "issueDate": "2026-10-19",
           "subtype": "Office"
