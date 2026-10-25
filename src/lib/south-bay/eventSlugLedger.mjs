@@ -28,6 +28,7 @@
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
+import { hasUnconfirmedStartTime } from "./eventOccurrence.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -56,6 +57,11 @@ export function snapshotEvent(e) {
   const out = {};
   for (const f of SNAPSHOT_FIELDS) {
     if (e[f] !== undefined && e[f] !== null && e[f] !== "") out[f] = e[f];
+  }
+  // Retaining an old URL must not retain a kickoff the source says is TBA.
+  if (hasUnconfirmedStartTime(e)) {
+    delete out.time;
+    delete out.endTime;
   }
   if (typeof out.description === "string" && out.description.length > 600) {
     out.description = `${out.description.slice(0, 597).trimEnd()}…`;
@@ -212,7 +218,8 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
   for (const entry of ledger?.entries ?? []) {
     // A verified date correction also belongs on the published old URL.
     // Keep findSuccessor's same-day guard for reused recurring-event IDs.
-    const event = applyVerifiedEventFacts(entry?.event);
+    const verified = applyVerifiedEventFacts(entry?.event);
+    const event = hasUnconfirmedStartTime(verified) ? snapshotEvent(verified) : verified;
     if (!entry?.slug || !isDated(event) || event.date < cutoff) continue;
     if (live.has(entry.slug)) continue;
     const successor = findSuccessor(event, live, { rolled: entry.rolled === true });

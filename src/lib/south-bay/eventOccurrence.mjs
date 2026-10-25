@@ -87,9 +87,18 @@ export function hasRequiredOccurrenceEvidence(event) {
   }
 }
 
+export function hasUnconfirmedStartTime(event) {
+  // Newsletter extraction can invent a valid clock beside an explicit TBA
+  // notice. A syntactically valid time cannot override the source's notice.
+  // Match the start/kickoff itself, not undecided parking or other details.
+  const pendingStart = /\b(?:kick[-\s]?off(?:\s+time)?|start\s+time)\s*(?:(?:is|remains?)\s+)?(?:still\s+)?(?:TBA|TBD|to\s+be\s+(?:announced|determined|confirmed))\b/i;
+  return [event?.title, event?.description].some((text) => pendingStart.test(String(text || "")));
+}
+
 export function isEventPublishable(event) {
   return !isPlaceTemporarilyUnavailable(event)
     && !isEventEditoriallySuppressed(event)
     && !isEventExplicitlyInactive(event)
+    && !hasUnconfirmedStartTime(event)
     && hasRequiredOccurrenceEvidence(event);
 }

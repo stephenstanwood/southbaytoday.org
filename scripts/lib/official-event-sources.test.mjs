@@ -41,6 +41,28 @@ test("Cupertino drops past dated slots instead of republishing them next year", 
   assert.ok(events.every((event) => event.time === "11:00 AM" && event.endTime === "03:00 PM"));
 });
 
+test("Cupertino recognizes mandatory child signup without registering accompanying adults", async () => {
+  const url = "https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event";
+  for (const [instructions, required] of [
+    ["Children must register and be accompanied by an adult. Adults do not need to register.", true],
+    ["Children must be registered and accompanied by an adult. Adults do not need to register separately.", true],
+    ["Registration is not required. Children can register online.", false],
+  ]) {
+    let evaluations = 0;
+    const page = {
+      goto: async () => {}, waitForTimeout: async () => {},
+      evaluate: async () => evaluations++ === 0 ? [{ href: url }] : {
+        title: "Monster Mash", slots: ["Saturday, October 24, 2026 | 05:00 PM - 08:00 PM"],
+        description: "A Halloween party.", location: "Quinlan Community Center, Cupertino",
+        cost: `$22 residents; $26 nonresidents. ${instructions}`,
+      },
+      locator: () => ({ first: () => ({ count: async () => 0 }) }),
+    };
+    const [event] = await scrapeCupertinoOpenCities(page, { today: "2026-10-24" });
+    assert.equal(event.registration, required ? "required" : undefined, instructions);
+  }
+});
+
 test("Cupertino preserves all resident pricing and the required attendee registration", async () => {
   const url = "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event";
   const pricing = "Resident Rate: $5 Non-Resident Rate: $6 Pre-registration is required and all attending children and adults must be registered.";

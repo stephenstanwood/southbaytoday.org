@@ -15,6 +15,30 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Monster Mash discloses conflicting city prices and retains mandatory child registration", () => {
+  const event = {
+    date: "2026-10-24", title: "Monster Mash", venue: "Quinlan Community Center",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event",
+    time: "5:00 PM", endTime: "8:00 PM", cost: "low", costNote: "From $17",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.registration, "required");
+  assert.equal(corrected.attendanceStatus, "needs-confirmation");
+  assert.doesNotMatch(corrected.costNote, /\$\s*\d/, "conflicting figures cannot become a JSON-LD price floor");
+  assert.match(corrected.attendanceNote, /\$22.*\$26.*\$23.*\$28/);
+  assert.match(corrected.attendanceNote, /confirm.*pricing/i);
+  assert.match(corrected.attendanceNote, /children must register/i);
+  assert.match(corrected.attendanceNote, /adults do not.*register/i);
+  for (const field of ["date", "title", "venue", "url", "time", "endTime", "cost"]) {
+    assert.equal(corrected[field], event[field]);
+  }
+  assert.equal(applyVerifiedEventFacts({ ...event, date: "2027-10-24" }).costNote, "From $17");
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...event, registration }).registration, registration);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+});
+
 test("Cupertino's Signing Santa retains resident pricing and registration for every attendee", async () => {
   const raw = {
     id: "a2b447b7251a", date: "2026-12-12", title: "Signing Santa",

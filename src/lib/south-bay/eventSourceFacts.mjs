@@ -9,6 +9,24 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Both dated city pages require child registration, but their post-Oct 19
+  // prices disagree. Preserve the conflict rather than choosing a new price.
+  // https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event
+  // https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash
+  // Evidence: docs/qa/2026-10-25-0207-fact-check.md.
+  {
+    date: "2026-10-24",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event",
+    aliasUrls: ["https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash"],
+    facts: {
+      // Numeric costNote values become JSON-LD offer floors. Keep the
+      // conflicting figures in the visible attendance note instead.
+      costNote: "Paid registration; Cupertino's event pages list different current rates. Confirm pricing with the city.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "After October 19, Cupertino's city calendar lists $22 residents / $26 nonresidents; its main event page lists $23 / $28. Confirm current pricing with the city. Children must register and attend with an adult; adults do not need to register separately.",
+    },
+  },
   // Cupertino's dated occurrence puts both residency rates and mandatory
   // registration for every child/adult in a Pricing sidebar. Older browser
   // snapshots only read Cost and omit those terms. Keep this edition correct

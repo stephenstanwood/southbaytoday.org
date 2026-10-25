@@ -2003,7 +2003,9 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
     if (seen.has(key)) return null;
     seen.add(key);
     const { cost } = parseCivicPlusEventCost(r.cost);
-    const registrationRequired = /\b(?:pre[-\s]?)?registration\s+(?:is\s+)?(?:required|mandatory)\b/i.test(r.cost || "");
+    // A child-only requirement still gates family admission, even when the
+    // next sentence explicitly exempts accompanying adults from registration.
+    const registrationRequired = /\b(?:pre[-\s]?)?registration\s+(?:is\s+)?(?:required|mandatory)\b|\bchildren\s+must\s+(?:be\s+)?register(?:ed)?\b/i.test(r.cost || "");
     return {
       title: r.title,
       date,

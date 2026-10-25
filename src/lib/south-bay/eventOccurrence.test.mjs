@@ -97,6 +97,23 @@ test("structured inactive statuses and explicit cancellation titles are rejected
   }), false);
 });
 
+test("an explicitly undecided kickoff cannot publish an extracted clock time", () => {
+  const event = {
+    source: "City Newsletter", date: "2026-11-28",
+    title: "Stanford Football vs. SMU – Fan Appreciation Night",
+    venue: "Stanford Stadium", time: "7:00 PM",
+    description: "Stanford's home finale against SMU. Kickoff time is still to be determined.",
+  };
+  for (const notice of [
+    event.description, "Kickoff TBA.", "Kick-off time remains TBD.",
+    "Start time is to be announced.",
+  ]) assert.equal(isEventPublishable({ ...event, description: notice }), false, notice);
+  for (const description of [
+    "Kickoff is at 7 PM.", "Parking details are still to be determined.",
+    "Kickoff time was previously TBD; kickoff is now at 7 PM.",
+  ]) assert.equal(isEventPublishable({ ...event, description }), true, description);
+});
+
 test("publishability combines occurrence evidence with editorial place availability", () => {
   assert.equal(isEventPublishable({
     ...grpgEvent,

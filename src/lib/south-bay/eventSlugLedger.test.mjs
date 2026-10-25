@@ -29,6 +29,24 @@ test("the phantom December 10 tea URL redirects to the organizer's December 5 oc
   assert.equal(orphans.length, 0);
 });
 
+test("a retired TBA game cannot keep advertising the extractor's invented kickoff", () => {
+  const game = ev({
+    id: "inbound-smu", title: "Stanford Football vs. SMU", date: "2026-11-28",
+    time: "7:00 PM", endTime: "10:00 PM", venue: "Stanford Stadium",
+    description: "Kickoff time is still to be determined.",
+  });
+  const next = retireSlugs({ entries: [] }, [game], [], "2026-10-24");
+  assert.equal(next.count, 1, "retain the old URL without fabricating a kickoff");
+  assert.equal(next.entries[0].event.time, undefined);
+  assert.equal(next.entries[0].event.endTime, undefined);
+  const oldLedger = { entries: [{ ...next.entries[0], event: game }] };
+  const { orphans } = resolveRetired(oldLedger, [], [], "2026-10-24");
+  assert.equal(orphans.length, 1);
+  assert.equal(orphans[0].event.time, undefined, "sanitize an already committed retired snapshot too");
+  assert.equal(orphans[0].event.endTime, undefined);
+  assert.equal(oldLedger.entries[0].event.time, "7:00 PM", "do not mutate the input ledger");
+});
+
 test("retireSlugs records a future slug that the new run stopped publishing", () => {
   const gone = ev({ id: "a", title: "44th Annual Art & Wine Festival" });
   const kept = ev({ id: "b", title: "Book Club" });
