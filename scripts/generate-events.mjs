@@ -7683,7 +7683,7 @@ function deriveMeetupRegistration(node, now) {
   };
 }
 
-async function fetchMeetupEvents() {
+async function fetchMeetupEvents({ now = new Date() } = {}) {
   const CLIENT_ID = process.env.MEETUP_CLIENT_ID?.trim();
   const MEMBER_ID = process.env.MEETUP_MEMBER_ID?.replace(/\\n/g, "").trim();
   const KID = process.env.MEETUP_KID?.trim();
@@ -7700,11 +7700,11 @@ async function fetchMeetupEvents() {
     return Buffer.from(str).toString("base64")
       .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   }
-  const now = Math.floor(Date.now() / 1000);
+  const issuedAt = Math.floor(now.getTime() / 1000);
   const jwtHeader = base64url(JSON.stringify({ alg: "RS256", typ: "JWT", kid: KID }));
   const jwtPayload = base64url(JSON.stringify({
     iss: CLIENT_ID, sub: MEMBER_ID, aud: "api.meetup.com",
-    iat: now, exp: now + 3600,
+    iat: issuedAt, exp: issuedAt + 3600,
   }));
   const signer = createSign("RSA-SHA256");
   signer.update(`${jwtHeader}.${jwtPayload}`);
@@ -7746,10 +7746,12 @@ async function fetchMeetupEvents() {
     return data;
   }
 
-  const today = new Date();
-  const endDate = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
-  const startStr = today.toISOString().replace("Z", "") + "-07:00";
-  const endStr = endDate.toISOString().replace("Z", "") + "-07:00";
+  const endDate = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
+  // toISOString already describes a UTC instant. Relabeling its clock as
+  // Pacific advances the cutoff by seven hours and drops imminent events;
+  // retaining Z also keeps both bounds correct through daylight saving changes.
+  const startStr = now.toISOString();
+  const endStr = endDate.toISOString();
 
   // Run multiple keyword queries to get broad coverage; deduplicate by event ID
   const QUERIES = ["tech", "community", "startup", "arts", "music", "food", "outdoor", "networking"];
@@ -7893,7 +7895,7 @@ async function fetchMeetupEvents() {
       url: node.eventUrl,
       source: "Meetup",
       kidFriendly: false,
-      ...deriveMeetupRegistration(node, new Date()),
+      ...deriveMeetupRegistration(node, now),
     }, { groupUrlname, sourceDescription: node.description || "" }));
   }
 

@@ -93,3 +93,70 @@ test("Meetup excludes verified online products advertised at local venues, while
   assert.deepEqual(events.map((event) => event.url), [local.eventUrl, localTech.eventUrl]);
   assert.equal(events[0].venue, "Alum Rock Park");
 });
+
+test("Meetup keeps imminent events inside the requested window across Pacific daylight saving changes", async (t) => {
+  const { privateKey } = generateKeyPairSync("rsa", {
+    modulusLength: 2048,
+    privateKeyEncoding: { type: "pkcs8", format: "pem" },
+    publicKeyEncoding: { type: "spki", format: "pem" },
+  });
+  const credentials = {
+    MEETUP_CLIENT_ID: "offline-test-client",
+    MEETUP_MEMBER_ID: "offline-test-member",
+    MEETUP_KID: "offline-test-key",
+    MEETUP_PRIVATE_KEY: privateKey,
+  };
+  const previous = Object.fromEntries(Object.keys(credentials).map((key) => [key, process.env[key]]));
+  t.after(() => {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+  Object.assign(process.env, credentials);
+
+  // The October refresh lost same-day events by labeling a UTC wall clock
+  // as -07:00. Exercise the source's date filtering, including winter time
+  // and a 60-day horizon spanning a daylight saving transition.
+  for (const instant of ["2026-10-25T07:32:00-07:00", "2026-11-01T01:32:00-08:00", "2027-03-14T01:32:00-08:00"]) {
+    const now = new Date(instant);
+    const horizon = new Date(now.getTime() + 60 * 864e5);
+    const nodes = [
+      { id: "imminent", dateTime: new Date(now.getTime() + 36e5).toISOString() },
+      { id: "past", dateTime: new Date(now.getTime() - 36e5).toISOString() },
+      { id: "beyond-horizon", dateTime: new Date(horizon.getTime() + 36e5).toISOString() },
+    ].map((occurrence) => ({
+      ...occurrence,
+      title: "Community Workshop at the Library",
+      eventUrl: `https://www.meetup.com/offline-control/events/${occurrence.id}/`,
+      eventType: "PHYSICAL", status: "ACTIVE",
+      venue: { name: "Almaden Library", address: "6445 Camden Ave", city: "San Jose" },
+      group: { name: "Local Community", urlname: "offline-control", stats: { memberCounts: { all: 100 } } },
+      rsvps: { yesCount: 5 },
+    }));
+    const ranges = [];
+    const mock = t.mock.method(globalThis, "fetch", async (url, options) => {
+      if (String(url) === "https://secure.meetup.com/oauth2/access") {
+        return Response.json({ access_token: "offline-test-token" });
+      }
+      assert.equal(String(url), "https://api.meetup.com/gql-ext");
+      const query = JSON.parse(options.body).query;
+      const start = new Date(query.match(/startDateRange: "([^"]+)"/)[1]);
+      const end = new Date(query.match(/endDateRange: "([^"]+)"/)[1]);
+      ranges.push({ start, end });
+      const matches = nodes.filter((node) => new Date(node.dateTime) >= start && new Date(node.dateTime) <= end);
+      return Response.json({ data: { eventSearch: { edges: matches.map((node) => ({ node })) } } });
+    });
+    try {
+      const events = await fetchMeetupEvents({ now });
+      assert.equal(ranges.length, 8);
+      for (const range of ranges) {
+        assert.equal(range.start.getTime(), now.getTime(), `start instant: ${instant}`);
+        assert.equal(range.end.getTime(), horizon.getTime(), `end instant: ${instant}`);
+      }
+      assert.deepEqual(events.map((event) => event.url), [nodes[0].eventUrl]);
+    } finally {
+      mock.mock.restore();
+    }
+  }
+});
