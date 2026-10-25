@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-25T18:33:59.959Z",
+    "generatedAt": "2026-10-25T22:48:19.345Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 211,
+    "eventCount": 210,
     "sourceCount": 20,
     "sources": [
       "San Jose Jazz (12)",
@@ -14,18 +14,18 @@
       "ICA San José (3)",
       "Mountain Winery (2)",
       "San Jose Theaters (19)",
-      "Children's Discovery Museum (4)",
+      "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
       "City of Cupertino (22)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (71)",
       "Levi's Stadium (3)",
-      "SAP Center (13)",
+      "SAP Center (12)",
       "The Tech Interactive (10)",
-      "Books Inc (6)",
-      "San Jose Museum of Art (5)",
-      "Peninsula Open Space Trust (2)"
+      "Books Inc (7)",
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (5)"
     ],
     "sourceHealth": [
       {
@@ -172,7 +172,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 4,
+        "count": 3,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -250,7 +250,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
+        "count": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -270,7 +270,7 @@
         "id": "books-inc",
         "label": "Books Inc",
         "status": "ok",
-        "count": 6,
+        "count": 7,
         "error": null,
         "sources": [
           "Books Inc"
@@ -295,14 +295,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -1404,23 +1402,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c74a4850d931",
-      "title": "Gatorbotics",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "10:00 am",
-      "endTime": "12:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "953b496ad1fe",
       "title": "Toddler Storytime",
       "date": "2026-10-25",
@@ -1557,7 +1538,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-25T18:32:50.634Z"
+        "checkedAt": "2026-10-25T22:47:11.526Z"
       }
     },
     {
@@ -1580,7 +1561,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-25T18:32:50.637Z"
+        "checkedAt": "2026-10-25T22:47:11.528Z"
       }
     },
     {
@@ -1603,7 +1584,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-25T18:32:50.638Z"
+        "checkedAt": "2026-10-25T22:47:11.529Z"
       }
     },
     {
@@ -1626,7 +1607,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T18:32:50.642Z"
+        "checkedAt": "2026-10-25T22:47:11.532Z"
       }
     },
     {
@@ -1649,7 +1630,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T18:32:50.642Z"
+        "checkedAt": "2026-10-25T22:47:11.532Z"
       }
     },
     {
@@ -1672,7 +1653,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-25T18:32:50.642Z"
+        "checkedAt": "2026-10-25T22:47:11.533Z"
       }
     },
     {
@@ -3395,30 +3376,6 @@
       "kidFriendly": false
     },
     {
-      "id": "723777b43995",
-      "title": "Disney On Ice",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
-      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-      "source": "SAP Center",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-        "date": "2026-10-25",
-        "time": "1:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
-      }
-    },
-    {
       "id": "e00fa2a3f7ef",
       "title": "Disney On Ice",
       "date": "2026-10-25",
@@ -3439,7 +3396,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "5:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
+        "checkedAt": "2026-10-25T22:47:43.741Z"
       }
     },
     {
@@ -3463,7 +3420,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
+        "checkedAt": "2026-10-25T22:47:43.741Z"
       }
     },
     {
@@ -3487,7 +3444,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
+        "checkedAt": "2026-10-25T22:47:43.741Z"
       }
     },
     {
@@ -3511,7 +3468,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
+        "checkedAt": "2026-10-25T22:47:43.741Z"
       }
     },
     {
@@ -3535,7 +3492,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.751Z"
+        "checkedAt": "2026-10-25T22:47:43.741Z"
       }
     },
     {
@@ -3559,7 +3516,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3583,7 +3540,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3607,7 +3564,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3631,7 +3588,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3655,7 +3612,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3679,7 +3636,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3703,7 +3660,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T18:33:20.752Z"
+        "checkedAt": "2026-10-25T22:47:43.742Z"
       }
     },
     {
@@ -3979,6 +3936,58 @@
       "kidFriendly": false
     },
     {
+      "id": "7639bf0ba2b1",
+      "title": "SCOTT LAMBRIDIS: ST. ULPHIA'S DEAD",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Pruneyard",
+      "address": "1875 S Bascom Ave, Campbell, CA 95008",
+      "city": "campbell",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "91accca935ec",
       "title": "SJSU Art Galleries Tuesday Night Lecture: Lua Vollaard",
       "date": "2026-10-27",
@@ -4076,41 +4085,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
