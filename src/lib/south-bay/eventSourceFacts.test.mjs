@@ -15,6 +15,43 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Pumpkin, Pasta & Prosecco retains its dated advance-payment requirement", async () => {
+  const raw = {
+    id: "meetup-343d8f816cdc482b", date: "2026-10-25",
+    title: "Pumpkin, Pasta & Prosecco", source: "Meetup",
+    url: "https://www.meetup.com/silicon-valley-women-social-circle-45/events/316877918/",
+    time: "2:00 PM", endTime: "5:00 PM", venue: "Santa Teresa & Lean",
+    address: "San Jose, CA 95123, USA", city: "san-jose",
+    cost: null, registration: "none",
+    blurb: "Meet fellow Silicon Valley Women's Social Club members for pasta, pumpkin treats, and prosecco.",
+  };
+  const original = structuredClone(raw);
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.cost, "paid");
+  assert.equal(corrected.costNote, "$45 per person");
+  assert.equal(corrected.registration, "required");
+  assert.match(corrected.attendanceNote, /payment.*confirm.*spot/i);
+  assert.match(corrected.attendanceNote, /\$45 per person/);
+  assert.match(corrected.attendanceNote, /exact location/i);
+  assert.equal(requiresAdvanceRegistration(corrected), true);
+  for (const field of ["date", "time", "endTime", "venue", "address", "city", "url", "blurb"]) {
+    assert.equal(corrected[field], raw[field], field);
+  }
+  assert.deepEqual(raw, original, "do not mutate source records");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-10-25" },
+    { ...raw, url: raw.url.replace("316877918", "316877919") },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "terms belong only to this occurrence");
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required", "publication retains the payment gate");
+  assert.equal(events[0].costNote, "$45 per person");
+});
+
 test("Sunnyvale pub listings retain the operator's Fibbar MaGees spelling and attendance facts", () => {
   const raw = {
     date: "2026-10-26", title: "Bate Papo at Fibbar Magee's",

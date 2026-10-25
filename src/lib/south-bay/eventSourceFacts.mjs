@@ -9,6 +9,21 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // JOIN_OPEN describes Meetup membership, but this occurrence's organizer
+  // explicitly requires $45 per person before a spot is confirmed. Its body
+  // gives only the Santa Teresa/Snell area, so do not invent a street address.
+  // Verified through the existing authenticated Meetup integration.
+  // https://www.meetup.com/silicon-valley-women-social-circle-45/events/316877918/
+  // Evidence: docs/qa/2026-10-25-2207-fact-check.md.
+  {
+    date: "2026-10-25",
+    url: "https://www.meetup.com/silicon-valley-women-social-circle-45/events/316877918/",
+    facts: {
+      cost: "paid", costNote: "$45 per person",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Advance payment of $45 per person is required to confirm your spot. Contact the organizer for the exact location.",
+    },
+  },
   // The city's dated winter slots say noon–4 PM, while the same page's
   // program still says every Saturday 11 AM–3 PM. Keep the published slots
   // and disclose the conflict only while both claims remain. These are the

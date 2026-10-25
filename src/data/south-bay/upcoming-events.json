@@ -28850,16 +28850,18 @@
       "address": "San Jose, CA 95123, USA",
       "city": "san-jose",
       "category": "community",
-      "cost": null,
+      "cost": "paid",
       "description": "Meetup event by Silicon Valley Women's Social Club, hosted by Maria.",
       "url": "https://www.meetup.com/silicon-valley-women-social-circle-45/events/316877918/",
       "source": "Meetup",
       "kidFriendly": false,
-      "registration": "none",
+      "registration": "required",
       "audienceAge": "all",
       "image": "https://secure.meetupstatic.com/photos/event/7/2/1/4/600_536489204.jpeg",
       "blurb": "Meet fellow Silicon Valley Women's Social Club members for pasta, pumpkin treats, and prosecco.",
-      "firstSeenAt": "2026-10-08T02:21:25.963Z"
+      "firstSeenAt": "2026-10-08T02:21:25.963Z",
+      "costNote": "$45 per person",
+      "attendanceNote": "Advance payment of $45 per person is required to confirm your spot. Contact the organizer for the exact location."
     },
     {
       "id": "tm-rZ7HnEZ1Af1Kf7",
