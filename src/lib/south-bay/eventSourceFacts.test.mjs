@@ -15,6 +15,55 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Sunnyvale pub listings retain the operator's Fibbar MaGees spelling and attendance facts", () => {
+  const raw = {
+    date: "2026-10-26", title: "Bate Papo at Fibbar Magee's",
+    venue: "Fibbar Magee's", city: "sunnyvale", address: "156 S Murphy Ave, Sunnyvale",
+    url: "https://www.meetup.com/example/events/317000000/",
+    time: "6:00 PM", endTime: "9:00 PM", cost: null, registration: "full",
+    description: "Meet for conversation at Fibbar Magee’s.",
+    blurb: "Practice Brazilian Portuguese conversation at Fibbar Magee's.",
+  };
+  const original = structuredClone(raw);
+  const expected = {
+    ...raw, title: "Bate Papo at Fibbar MaGees", venue: "Fibbar MaGees",
+    description: "Meet for conversation at Fibbar MaGees.",
+    blurb: "Practice Brazilian Portuguese conversation at Fibbar MaGees.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(raw), expected);
+  assert.deepEqual(raw, original, "the source object remains untouched");
+  assert.equal(applyVerifiedEventFacts(expected), expected, "the canonical spelling is stable");
+  for (const other of [
+    { ...raw, city: "san-jose" },
+    { ...raw, address: "157 S Murphy Ave, Sunnyvale" },
+    { ...raw, address: "" },
+    { ...raw, venue: "Another Pub" },
+    { ...raw, venue: "Fibbar Magee's Annex" },
+    { ...raw, virtual: true },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "a venue name alone cannot establish the business identity");
+});
+
+test("a cached pub blurb cannot restore the misspelled venue name after publication", async (t) => {
+  const raw = {
+    id: "fibbar-cache-regression", date: "2026-10-26", title: "Language Conversation",
+    venue: "Fibbar MaGees", city: "sunnyvale", address: "156 S Murphy Ave, Sunnyvale",
+    time: "6:00 PM", endTime: "9:00 PM", cost: null, registration: "required",
+    description: "Meet for language conversation.", url: "https://example.org/conversation",
+  };
+  const key = eventBlurbCacheKey(raw);
+  const cache = { byKey: { [key]: { blurb: "Practice conversation at Fibbar Magee's." } } };
+  const originalRead = fs.readFileSync;
+  t.mock.method(fs, "readFileSync", (path, ...args) =>
+    String(path).endsWith("event-blurb-cache.json") ? JSON.stringify(cache) : originalRead(path, ...args));
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const events = [{ ...raw }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(stats.cache_hits, 1);
+  assert.equal(stats.generated, 0);
+  assert.deepEqual(events[0], { ...raw, blurb: "Practice conversation at Fibbar MaGees." });
+});
+
 test("Cupertino open-house occurrences disclose the city's conflicting winter hours", async () => {
   const raw = {
     title: "Environmental Education Center Open House", venue: "McClellan Ranch Preserve",
@@ -2949,9 +2998,16 @@ test("sparse Meetup listings cannot acquire unsourced refreshments or live model
   assert.equal(eventCopyFactConflict("Draw from a live model.", { ...sparse, description: "The organizer provides a live model." }), null);
 });
 
-test("no blurb in the live feed trips the new guards", () => {
+test("the live feed retains verified source facts and passes the copy guards", () => {
   // A false positive blanks legitimate copy, so the whole feed is the fixture.
   const feed = JSON.parse(readFileSync(new URL("../../data/south-bay/upcoming-events.json", import.meta.url)));
+  const drift = feed.events.flatMap((event) => {
+    const corrected = applyVerifiedEventFacts(event);
+    const fields = Object.keys(corrected).filter((field) =>
+      JSON.stringify(corrected[field]) !== JSON.stringify(event[field]));
+    return fields.length ? [`${event.id}: ${fields.join(", ")}`] : [];
+  });
+  assert.deepEqual(drift, [], "direct data edits must preserve verified source corrections");
   const flagged = feed.events
     .filter((event) => event.blurb && eventCopyFactConflict(event.blurb, event))
     .map((event) => `${event.id} ${event.title}: ${eventCopyFactConflict(event.blurb, event)}`);

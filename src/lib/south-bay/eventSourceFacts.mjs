@@ -1914,6 +1914,24 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // The operator brands this Sunnyvale pub "Fibbar MaGees", without an
+  // apostrophe. Copy editing must not respell the proper name. Require its
+  // actual street address and venue identity before repairing prose; a name
+  // mentioned at another location is not enough. This does not confirm an
+  // organizer's occurrence, clocks, admission, or registration state.
+  // https://fibbars.com/
+  // Evidence: docs/qa/2026-10-25-1207-fact-check.md.
+  if (!event?.virtual && event?.city === "sunnyvale"
+      && /^Fibbar Magee['’]?s$/i.test(event?.venue || "")
+      && /^156 S\.? Murphy Ave(?:nue)?\.?, Sunnyvale(?:, CA(?: 94086)?)?$/i.test(event?.address || "")) {
+    const names = {};
+    for (const field of ["title", "venue", "description", "blurb", "attendanceNote"]) {
+      if (typeof event[field] !== "string") continue;
+      const corrected = event[field].replace(/\bFibbar Magee['’]?s\b/gi, "Fibbar MaGees");
+      if (corrected !== event[field]) names[field] = corrected;
+    }
+    if (Object.keys(names).length) event = { ...event, ...names };
+  }
   // Older LibCal snapshots inherited the civic center address from our config.
   // Repair only that known error at the library itself; off-site programs,
   // online events and the civic center's own events keep their locations.
