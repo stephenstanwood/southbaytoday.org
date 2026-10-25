@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-25T01:19:14.843Z",
+    "generatedAt": "2026-10-25T05:28:07.001Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 218,
+    "eventCount": 215,
     "sourceCount": 20,
     "sources": [
       "San Jose Jazz (13)",
       "Linden Tree Books (10)",
-      "History San Jose (7)",
+      "History San Jose (6)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
@@ -17,11 +17,11 @@
       "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
-      "City of Cupertino (23)",
+      "City of Cupertino (22)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (72)",
       "Levi's Stadium (3)",
-      "SAP Center (14)",
+      "SAP Center (13)",
       "The Tech Interactive (10)",
       "Books Inc (6)",
       "San Jose Museum of Art (6)",
@@ -96,7 +96,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 14,
+        "count": 12,
         "error": null,
         "sources": [
           "History San Jose"
@@ -202,7 +202,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 23,
+        "count": 22,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -250,7 +250,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 14,
+        "count": 13,
         "error": null,
         "sources": [
           "SAP Center"
@@ -747,23 +747,6 @@
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-11-19"
       }
-    },
-    {
-      "id": "cd1a5ce49cb4",
-      "title": "Children’s Halloween Haunt 2026",
-      "date": "2026-10-24",
-      "displayDate": "Sat, Oct 24",
-      "time": "2:00 pm",
-      "endTime": "6:30 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "family",
-      "cost": null,
-      "description": "",
-      "url": "https://historysanjose.org/event/childrens-halloween-haunt/",
-      "source": "History San Jose",
-      "kidFriendly": true
     },
     {
       "id": "7226fbdf5705",
@@ -1608,7 +1591,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-25T01:18:04.399Z"
+        "checkedAt": "2026-10-25T05:26:57.703Z"
       }
     },
     {
@@ -1631,7 +1614,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-25T01:18:04.400Z"
+        "checkedAt": "2026-10-25T05:26:57.707Z"
       }
     },
     {
@@ -1654,7 +1637,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-25T01:18:04.401Z"
+        "checkedAt": "2026-10-25T05:26:57.708Z"
       }
     },
     {
@@ -1677,7 +1660,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T01:18:04.403Z"
+        "checkedAt": "2026-10-25T05:26:57.712Z"
       }
     },
     {
@@ -1700,7 +1683,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T01:18:04.403Z"
+        "checkedAt": "2026-10-25T05:26:57.712Z"
       }
     },
     {
@@ -1723,26 +1706,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-25T01:18:04.403Z"
+        "checkedAt": "2026-10-25T05:26:57.712Z"
       }
-    },
-    {
-      "id": "dcbd516b2a4a",
-      "title": "Monster Mash",
-      "date": "2026-10-24",
-      "displayDate": "Sat, Oct 24",
-      "time": "05:00 PM",
-      "endTime": "08:00 PM",
-      "venue": "Quinlan Community Center",
-      "address": "Quinlan Community Center, 10185 North Stelling Road, Cupertino, CA, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "low",
-      "costNote": "Register Early Registration before October 19 Resident: $17 Non-Resident: $21 Registration after October 19 Resident: $22 Non-Resident: $26 Registration includes one child two years and older and two adults. Children must register and be accompanied by an adult. Adults do not need to register. This event is held outdoors, rain or shine.",
-      "description": "Get ready for a fang-tastic good time at Cupertino Parks and Recreation’s annual Monster Mash Halloween event at the Quinlan Community Center. Put on your favorite costume and enjoy an evening of games, trick-or-treating, spooky crafts, and pumpkin decorating. It’s a fun-filled night of Halloween activities for the whole family. Register For more information, please visit the Monster Mash event page.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "54242884e953",
@@ -3481,30 +3446,6 @@
       "kidFriendly": false
     },
     {
-      "id": "f16b922b9456",
-      "title": "Disney On Ice",
-      "date": "2026-10-24",
-      "displayDate": "Sat, Oct 24",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
-      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-      "source": "SAP Center",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-        "date": "2026-10-24",
-        "time": "7:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.693Z"
-      }
-    },
-    {
       "id": "723777b43995",
       "title": "Disney On Ice",
       "date": "2026-10-25",
@@ -3525,7 +3466,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.893Z"
       }
     },
     {
@@ -3549,7 +3490,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
         "date": "2026-10-25",
         "time": "5:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3573,7 +3514,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3597,7 +3538,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3621,7 +3562,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3645,7 +3586,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3669,7 +3610,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.694Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3693,7 +3634,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3717,7 +3658,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3741,7 +3682,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3765,7 +3706,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3789,7 +3730,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.894Z"
       }
     },
     {
@@ -3813,7 +3754,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T01:18:35.695Z"
+        "checkedAt": "2026-10-25T05:27:28.895Z"
       }
     },
     {
