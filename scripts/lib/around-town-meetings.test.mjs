@@ -151,6 +151,27 @@ test("a dated agenda does not establish a completed council discussion or hearin
   }), false);
 });
 
+test("an applicant-interview agenda does not establish interviews took place", () => {
+  const agenda = { fullAgendaText: "October 20, 2026 City Council agenda. Study Session: Environmental Planning Commission Applicant Interviews." };
+  const summary = "The agenda shows council members were interviewing candidates for seats on that commission.";
+  assert.equal(hasUnsupportedMeetingAction({ summary }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The council was reviewing the applicants." }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The October 20 agenda listed applicant interviews." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { fullAgendaText: summary }), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
+});
+
+test("a past study-session agenda cannot be advertised as newly set for interviews", () => {
+  const item = { date: "2026-10-20", headline: "Council study session set for Environmental Planning Commission applicant interviews" };
+  assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-10-24"), true);
+  assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-10-20"), false);
+  assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-10-19"), false);
+  assert.equal(hasPastAgendaFutureFraming(item, { source: "youtube-transcript" }, "2026-10-24"), false);
+  assert.equal(hasPastAgendaFutureFraming({
+    date: item.date, summary: "The October 20 agenda listed a study session set for applicant interviews.",
+  }, {}, "2026-10-24"), false);
+});
+
 test("a study-session agenda cannot establish what the session covered", () => {
   const agenda = { fullAgendaText: "6 P.M. SPECIAL PLANNING COMMISSION MEETING (Study Session). Proposed Project: Peery Park Specific Plan Amendment." };
   const summary = "A special Planning Commission study session on October 12 covered a proposed amendment to the Peery Park Specific Plan.";
