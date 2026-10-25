@@ -946,14 +946,16 @@ const CORRECTIONS = [
     },
     copyReplacements: [[/\s*This class will take place in the Technology Lab on the 2nd floor\./gi, ""]],
   },
-  // These two Bascom occurrence pages explicitly say registration is
+  // These Bascom occurrence pages explicitly say registration is
   // recommended but not required. The presence/deadline of their signup form
   // does not establish an admission requirement. Keep this exception dated;
   // do not relax the conservative provider rule for other library programs.
-  // Evidence: docs/qa/2026-10-17-2107-fact-check.md (fresh occurrence HTML).
+  // Evidence: docs/qa/2026-10-17-2107-fact-check.md (fresh occurrence HTML)
+  // and docs/qa/2026-10-25-1407-fact-check.md (the October 27 source record).
   ...[
     ["2026-10-18", "6a85eaec69166f088b934e2d"],
     ["2026-10-20", "6a83713669166f088b92df77"],
+    ["2026-10-27", "6a83713669166f088b92df78"],
   ].map(([date, sourceId]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
     facts: {

@@ -1772,6 +1772,7 @@ test("Bascom's optional craft signups do not become admission gates on refresh",
   for (const [date, sourceId, title, time] of [
     ["2026-10-18", "6a85eaec69166f088b934e2d", "LEGO Fun!", "2:00 PM"],
     ["2026-10-20", "6a83713669166f088b92df77", "Origami for Kids", "3:15 PM"],
+    ["2026-10-27", "6a83713669166f088b92df78", "Origami for Kids", "3:15 PM"],
   ]) {
     for (const registration of ["required", "full", "closed"]) {
       const raw = {
