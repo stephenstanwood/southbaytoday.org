@@ -80,6 +80,7 @@ import {
   REGISTRATION_FULL,
   REGISTRATION_NONE,
   VIRTUAL_EVENT_PATTERNS,
+  declaredRegistrationAvailability,
   hasOutOfAreaDestination,
   registrationFromBiblioCommons,
   registrationFromMeetup,
@@ -9352,6 +9353,9 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           ? apiExcerpt
           : (stripBareUrls(sourceDescription).match(/^.*?[.!?](?=\s|$)/)?.[0]
             || truncate(stripBareUrls(sourceDescription)));
+        // A current first-party availability notice governs attendance even
+        // when it falls beyond the displayed excerpt. Do not infer a price.
+        const availability = declaredRegistrationAvailability(sourceDescription);
         const image = ev.image?.url || "";
 
         events.push({
@@ -9371,6 +9375,7 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",
           source: "Gamble Garden",
+          ...(availability ? { registration: availability } : {}),
           ...(image ? { image } : {}),
           // Use the complete first-party audience text before truncation.
           // A renamed title can drop "Family Night" while its body still

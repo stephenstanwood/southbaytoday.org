@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { writeFileAtomic } from "./io.mjs";
-import { REGISTRATION_CLOSED, REGISTRATION_FULL, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
+import { REGISTRATION_CLOSED, REGISTRATION_FULL, declaredRegistrationAvailability, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 /** Highlights have no attendance badge; require confirmed, available events. */
@@ -8,8 +8,12 @@ export function isBriefingEventAvailable(event) {
   // Older snapshots may predate a verified closure; apply the same dated facts
   // used by event publication before treating missing signup state as available.
   const verified = applyVerifiedEventFacts(event);
+  const statedAvailability = verified?.source === "Gamble Garden"
+    ? declaredRegistrationAvailability(verified.description) : null;
   return verified?.registration !== REGISTRATION_FULL
     && verified?.registration !== REGISTRATION_CLOSED
+    && statedAvailability !== REGISTRATION_FULL
+    && statedAvailability !== REGISTRATION_CLOSED
     && !requiresAttendanceConfirmation(verified);
 }
 

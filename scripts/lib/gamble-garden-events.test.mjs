@@ -62,6 +62,32 @@ test("Gamble family signals after the displayed excerpt still determine the audi
   assert.deepEqual(waits, []);
 });
 
+test("Gamble's sold-out detail heading becomes an attendance state", async (t) => {
+  const { events } = await scrape(t, { html: `
+    <div class="tribe-events-single-event-description">
+      <h3>SOLD OUT</h3><p>Don't miss our annual Halloween event for families.</p>
+    </div>` });
+  assert.equal(events[0].registration, "full");
+  assert.equal(events[0].cost, null, "a sold-out notice does not establish a price");
+  assert.equal(events[0].date, "2026-12-04");
+  assert.equal(events[0].time, "5:00 PM");
+});
+
+test("Gamble reads current availability before truncation without borrowing historical sellouts", async (t) => {
+  for (const [name, description, expected] of [
+    ["standalone notice", "<p>Sold out.</p><p>Join us in the garden.</p>", "full"],
+    ["notice beyond excerpt", `<p>${"Explore the garden. ".repeat(25)}This event is sold out.</p>`, "full"],
+    ["historical sellout", "<p>Last year's event sold out. Join this year's garden tour.</p>", undefined],
+    ["artist biography", "<p>Sold-out shows around the world made this performer famous.</p>", undefined],
+    ["conditional notice", "<p>If this event is sold out, check back for cancellations.</p>", undefined],
+  ]) {
+    await t.test(name, async (t) => {
+      const { events } = await scrape(t, { rows: [{ ...row, description }] });
+      assert.equal(events[0].registration, expected);
+    });
+  }
+});
+
 test("Gamble does not borrow family navigation or body text from another event", async (t) => {
   const { events } = await scrape(t, { html: `<nav>Kids, children and families</nav>
     <div class="tribe-events-single-event-description"><p>Learn rose pruning techniques.</p></div>

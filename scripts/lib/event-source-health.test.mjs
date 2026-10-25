@@ -232,6 +232,22 @@ test("city highlights exclude full and closed programs without excluding availab
   assert.equal(isBriefingEventAvailable({}), true);
 });
 
+test("city highlights honor Gamble's explicit sold-out notice before signup fields are refreshed", () => {
+  const event = {
+    source: "Gamble Garden", title: "Halloween Magic", date: "2026-10-24",
+    description: "Sold out. Don't miss Gamble Garden's annual Halloween event.",
+  };
+  for (const registration of [undefined, "none", "required"]) {
+    assert.equal(isBriefingEventAvailable({ ...event, registration }), false);
+  }
+  assert.equal(isBriefingEventAvailable({
+    ...event, description: "Last year's Halloween event sold out. Join us this year.",
+  }), true);
+  assert.equal(isBriefingEventAvailable({
+    ...event, description: "Join us in the garden.",
+  }), true, "a source reopening must not inherit a frozen closure");
+});
+
 test("city highlights honor verified closures even when an older snapshot has no signup state", () => {
   const older = {
     title: "Multi-Level ESL Class Session", date: "2026-10-14",

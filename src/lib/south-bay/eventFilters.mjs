@@ -224,9 +224,15 @@ export function registrationFromInstructions(instructions) {
 // in its instructions; Saratoga's ESL body says enrollment is closed despite
 // having no registrar. Match direct statements, not hypothetical conditions
 // or a description of a full session's curriculum.
-function declaredRegistrationAvailability(html) {
+export function declaredRegistrationAvailability(html) {
   const text = stripInstructionMarkup(String(html || "")
     .replace(/&lt;/gi, "<").replace(/&gt;/gi, ">"));
+  // Gamble Garden prefixes its own program with a standalone SOLD OUT
+  // heading, followed by "Don't miss...". Flattened HTML loses that boundary.
+  // Require a notice, not a biography's "sold-out shows" or a past sellout.
+  if (/^sold[-\s]+out(?:\s*[.!:]|$|\s+(?=don['’]t\b))/i.test(text)) {
+    return REGISTRATION_FULL;
+  }
   for (const sentence of text.split(/[.!?]+[)"'’”]*\s*/)) {
     const statement = sentence.trim();
     if (/^(?:registration|enrollment)\s+(?:(?:is|has)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
