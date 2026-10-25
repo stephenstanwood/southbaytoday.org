@@ -196,7 +196,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "under-construction",
     description:
-      "SummerHill Homes is redeveloping the former Los Gatos Lodge site — a historic 8.9-acre motor inn at 50 Los Gatos-Saratoga Road that closed in September 2025 — into 155 townhome-style condominiums called Solana. The project was approved unanimously by the Los Gatos Town Council in March 2025 (the town's first SB 330 streamlined application) and SummerHill closed on the $78M property in October 2025. Groundbreaking followed in November 2025. The three-story Spanish Revival buildings include 26 affordable units (16 low-income, 10 moderate-income) priced around $400K–$600K; market-rate units are expected to list around $1.5M–$2M. Each home will include solar panels and the site includes a pedestrian path to Los Gatos High School.",
+      "SummerHill Homes is redeveloping the former Los Gatos Lodge site — a historic 8.9-acre motor inn at 50 Los Gatos-Saratoga Road that closed in September 2025 — into 155 townhome-style condominiums called Solana. The project was approved unanimously by the Los Gatos Town Council in March 2025 (the town's first SB 330 streamlined application) and SummerHill closed on the $78M property in October 2025. Groundbreaking followed in November 2025. The three-story Spanish Revival buildings include 26 affordable units (16 low-income, 10 moderate-income) priced around $400K–$600K; market-rate units are expected to list around $1.5M–$2M. Each home will include solar panels, and the site includes a pedestrian path to Los Gatos High School.",
     scale: "155 townhome condos (26 affordable), 8.9 acres",
     developer: "SummerHill Homes",
     timeline: "Groundbreaking Nov 2025; move-ins expected 2027",
