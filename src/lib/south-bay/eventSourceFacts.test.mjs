@@ -15,6 +15,58 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Cupertino open-house occurrences disclose the city's conflicting winter hours", async () => {
+  const raw = {
+    title: "Environmental Education Center Open House", venue: "McClellan Ranch Preserve",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+    time: "12:00 PM", endTime: "4:00 PM", cost: "free",
+    description: "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery.",
+    blurb: "Meet animal ambassadors and try nature-focused hands-on activities alongside park rangers.",
+  };
+  for (const date of ["2026-11-07", "2026-11-14", "2026-11-21", "2026-11-28", "2026-12-05", "2026-12-12", "2026-12-19"]) {
+    const input = { ...raw, date };
+    const corrected = applyVerifiedEventFacts(input);
+    assert.equal(corrected.attendanceStatus, "needs-confirmation");
+    assert.match(corrected.attendanceNote, /noon–4 PM/);
+    assert.match(corrected.attendanceNote, /11 AM–3 PM/);
+    assert.match(corrected.attendanceNote, /confirm.*hours/i);
+    assert.equal(requiresAttendanceConfirmation(corrected), true);
+    for (const field of Object.keys(input)) assert.deepEqual(corrected[field], input[field], field);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const events = [{ ...input }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].attendanceStatus, "needs-confirmation", "the publication path retains the conflict");
+  }
+  for (const other of [
+    { ...raw, date: "2026-10-31" },
+    { ...raw, date: "2027-11-07" },
+    { ...raw, date: "2026-11-08" },
+    { ...raw, date: "2026-11-07", url: "https://www.cupertino.gov/another-event" },
+    { ...raw, date: "2026-11-07", time: "11:00 AM", endTime: "3:00 PM" },
+    { ...raw, date: "2026-11-07", description: "Drop by every Saturday from noon to 4 p.m." },
+    { ...raw, date: "2026-11-07", description: "Drop by every Saturday for family fun and discovery." },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "resolved or unrelated records do not acquire a warning");
+});
+
+test("the Saratoga dinner title uses its verified La Fondue venue name without reopening attendance", () => {
+  const raw = {
+    date: "2026-11-13", title: "Fine Dining & Conversation in La Foundue, Saratoga",
+    venue: "La Fondue", registration: "full", time: "6:00 PM", endTime: "8:00 PM",
+    url: "https://www.meetup.com/i-wanna-do-it-but-not-alone/events/316965375/",
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.title, "Fine Dining & Conversation in La Fondue, Saratoga");
+  assert.equal(corrected.registration, "full");
+  for (const field of ["date", "venue", "registration", "time", "endTime", "url"]) assert.equal(corrected[field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const other of [
+    { ...raw, date: "2027-11-13" },
+    { ...raw, venue: "Another Restaurant" },
+    { ...raw, url: "https://www.meetup.com/another-event/" },
+    { ...raw, title: "An unrelated event in Saratoga" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+});
+
 test("Monster Mash discloses conflicting city prices and retains mandatory child registration", () => {
   const event = {
     date: "2026-10-24", title: "Monster Mash", venue: "Quinlan Community Center",

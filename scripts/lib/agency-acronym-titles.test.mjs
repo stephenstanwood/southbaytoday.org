@@ -272,3 +272,12 @@ test("keeps college-program abbreviations uppercase in schedule titles", () => {
   // The guard: adding these must not keep every two-letter shouted run.
   assert.equal(cleanTitle("Stanford football vs. OH State"), "Stanford football vs. Oh State");
 });
+
+// SJSU's dated November 2 basketball listing names its opponent UTSA.
+test("preserves SJSU's source-published UTSA opponent initials", () => {
+  const title = "Men's Basketball - San Jose State vs. UTSA";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription("Watch San Jose State face UTSA."), "Watch San Jose State face UTSA.");
+  assert.equal(cleanTitle("Utsa is a source-spelled name"), "Utsa is a source-spelled name");
+});

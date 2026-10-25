@@ -9,6 +9,34 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The city's dated winter slots say noon–4 PM, while the same page's
+  // program still says every Saturday 11 AM–3 PM. Keep the published slots
+  // and disclose the conflict only while both claims remain. These are the
+  // dates on the current page, not a projected recurrence or a clock repair.
+  // https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House
+  // Evidence: docs/qa/2026-10-25-1007-fact-check.md.
+  ...["2026-11-07", "2026-11-14", "2026-11-21", "2026-11-28", "2026-12-05", "2026-12-12", "2026-12-19"].map((date) => ({
+    date,
+    matches: (event) => event.url === "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House"
+      && event.time === "12:00 PM" && event.endTime === "4:00 PM"
+      && /\bevery Saturday from 11 a\.m\. to 3 p\.m\./i.test(event.description || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The city's dated calendar lists noon–4 PM, but its description says every Saturday 11 AM–3 PM. Confirm the open-house hours with Cupertino Parks and Recreation before going.",
+    },
+  })),
+  // The restaurant identifies itself as La Fondue at the same Saratoga
+  // address as the listing's venue. Repair only this title typo, preserving
+  // its full attendance state and all organizer-supplied occurrence fields.
+  // https://www.lafondue.com/about-us/
+  // Evidence: docs/qa/2026-10-25-1007-fact-check.md.
+  {
+    date: "2026-11-13",
+    matches: (event) => event.url === "https://www.meetup.com/i-wanna-do-it-but-not-alone/events/316965375/"
+      && event.title === "Fine Dining & Conversation in La Foundue, Saratoga"
+      && event.venue === "La Fondue",
+    facts: { title: "Fine Dining & Conversation in La Fondue, Saratoga" },
+  },
   // Both dated city pages require child registration, but their post-Oct 19
   // prices disagree. Preserve the conflict rather than choosing a new price.
   // https://www.cupertino.gov/Parks-Recreation/Events/Monster-Mash/Monster-Mash-Event

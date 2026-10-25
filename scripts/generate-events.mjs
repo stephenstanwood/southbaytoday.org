@@ -997,6 +997,10 @@ const SOURCE_EVENT_ACRONYMS = [
   // SJSU's volleyball calendar supplies the University of Texas at El Paso's
   // opponent initials; preserve them in both titles and source prose.
   "UTEP",
+  // SJSU's November 2 basketball page names its opponent UTSA. Preserve
+  // those source initials in titles and prose rather than publishing Utsa.
+  // https://events.sjsu.edu/event/mens-basketball-san-jose-state-vs-utsa
+  "UTSA",
   // Stanford's Rethinking European Development and Security seminar series.
   // Preserve its published REDS initials in titles and descriptions.
   "REDS",
