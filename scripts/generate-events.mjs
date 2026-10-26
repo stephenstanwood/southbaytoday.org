@@ -2339,13 +2339,13 @@ function polishDescription(text) {
   // lost. Restore only these supplied item labels, preserving every service,
   // contact, and appointment condition in the surrounding copy.
   t = t.replace(
-    /Basic smartphone, tablet, and computer help Setting up and using Email Downloading and using apps Making video calls \(Zoom, FaceTime, Google Meet, etc\.\) Browsing the internet \(search engine basics, making simple searches, etc\.\) Navigating the SJPL website and digital resources(?: How to use 311 app)?(?= \*Please note:)/g,
+    /Basic smartphone, tablet, and computer help;? Setting up and using Email;? Downloading and using apps;? Making video calls \(Zoom, FaceTime, Google Meet, etc\.\);? Browsing the internet \(search engine basics, making simple searches, etc\.\);? Navigating the SJPL website and digital resources(?:;? How to use (?:the )?311 app)?\.?(?= \*?Please note:)/g,
     (list) => "basic smartphone, tablet, and computer help; setting up and using email; downloading and using apps; making video calls (Zoom, FaceTime, Google Meet, etc.); browsing the internet (search engine basics, making simple searches, etc.); navigating the SJPL website and digital resources"
-      + (list.endsWith("How to use 311 app") ? "; how to use the 311 app." : "."),
+      + (/How to use (?:the )?311 app\.?$/.test(list) ? "; how to use the 311 app." : "."),
   );
   t = t.replace(/\. \*Please note: Tech Mentor/g, ". Please note: Tech Mentor");
   t = t.replace(
-    /Ayuda básica con teléfonos inteligentes, tabletas y computadoras Configurar y usar el correo electrónico Descargar y usar aplicaciones Hacer videollamadas \(Zoom, FaceTime, Google Meet, etc\.\) Navegar por internet \(conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc\.\) Navegar el sitio web y los recursos digitales de SJPL Cómo usar la aplicación 311 \* Ten en cuenta:/g,
+    /Ayuda básica con teléfonos inteligentes, tabletas y computadoras;? Configurar y usar el correo electrónico;? Descargar y usar aplicaciones;? Hacer videollamadas \(Zoom, FaceTime, Google Meet, etc\.\);? Navegar por internet \(conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc\.\);? Navegar el sitio web y los recursos digitales de SJPL;? Cómo usar la aplicación 311\.? \* Ten en cuenta:/g,
     "ayuda básica con teléfonos inteligentes, tabletas y computadoras; configurar y usar el correo electrónico; descargar y usar aplicaciones; hacer videollamadas (Zoom, FaceTime, Google Meet, etc.); navegar por internet (conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc.); navegar el sitio web y los recursos digitales de SJPL; cómo usar la aplicación 311. Ten en cuenta:",
   );
   t = t.replace(
@@ -2410,7 +2410,7 @@ function polishDescription(text) {
   // the schedule into one run-on. Keep every supplied fact while restoring a
   // readable sentence boundary and parallel structure.
   t = t.replace(
-    /Relieve Stress and anxiety Increase energy and vitality Improve physical health Friday afternoons, 1-3 PM In the Auditorium/gi,
+    /Relieve Stress and anxiety;? Increase energy and vitality;? Improve physical health\.? Friday afternoons, 1-3 PM In the Auditorium\.?/gi,
     "Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium.",
   );
 
@@ -3009,6 +3009,42 @@ function polishDescription(text) {
     .replace(/^YOU MAY BE Photographed, Videotaped AND\/OR Recorded Please be advised/g,
       "You may be photographed, videotaped and/or recorded. Please be advised")
     .replace(/\bRock En Espanol NIGHT\b/g, "Rock En Espanol Night")
+    // Some sources retain partial list punctuation or merge a heading into
+    // its first sentence. Finish these repairs after casing, with source URLs
+    // and names still protected; keep schedules and attendance terms intact.
+    .replace(/\bGoogle docs\b/g, "Google Docs")
+    .replace(/\bBrief Bio of Arlene Samsel Arlene Samsel\b/g, "Brief bio of Arlene Samsel: Arlene Samsel")
+    .replace(/\bFall Fest at the Farmers' Market Extra special\b/g, "Fall Fest at the Farmers' Market. Extra special")
+    .replace(/\bBooker Prize – shortlisted\b/g, "Booker Prize–shortlisted")
+    .replace(/\band performance by 2025 International Klein Competition Winner\b/g,
+      "and a performance by 2025 International Klein Competition Winner")
+    .replace(/\bThis event is Free to attend\b/g, "This event is free to attend")
+    .replace(/\ba Halloween fun filled day\b/g, "a fun-filled Halloween day")
+    .replace(/\bfashion forward rapper\b/g, "fashion-forward rapper")
+    .replace(/\bcoming of age novels\b/g, "coming-of-age novels")
+    .replace(/\bin the conference room, there are always extra seats!/g,
+      "in the conference room; there are always extra seats!")
+    .replace(/\bWe supply you the character type and short script, you supply\b/g,
+      "We supply you the character type and short script; you supply")
+    .replace(/\bSeating is limited, registration required\./g, "Seating is limited; registration required.")
+    .replace(/\bParticipants are encouraged to pre-register, however drop-ins are also considered\./g,
+      "Participants are encouraged to pre-register; however, drop-ins are also considered.")
+    .replace(/\bfor a poetry reading and in conversation\b/g, "for a poetry reading and conversation")
+    .replace(/\banother heartwarming entertainment\b/g, "more heartwarming entertainment")
+    .replace(/\bNo Registration Required, Materials Will Be Provided\b/g,
+      "No registration required. Materials will be provided.")
+    .replace(/\bfor IN Library Use Only\b/g, "for in-library use only")
+    .replace(/\bthe fourth and Last Tuesdays\b/g, "the fourth and last Tuesdays")
+    .replace(/^¨ /, "")
+    .replace(/\bspeaking and listening skills ¨ No registration required\./g,
+      "speaking and listening skills. No registration required.")
+    .replace(/\bcorreo electronico\b/g, "correo electrónico")
+    .replace(/\buna targeta de la biblioteca\b/g, "una tarjeta de la biblioteca")
+    .replace(/\bSan Jose Open Mic -When\b/g, "San Jose Open Mic: When")
+    .replace(/\s+What time is the Open Mic\?\s*$/g, "")
+    .replace(/(\(|\[)\s+/g, "$1")
+    .replace(/\s+(\)|\])/g, "$1")
+    .replace(/…\./g, "…")
     // Narrow source-copy typos and fused headings, rather than guessing names
     // or completing a sentence whose missing words may carry factual details.
     .replace(/\bH ow\b/g, "How")

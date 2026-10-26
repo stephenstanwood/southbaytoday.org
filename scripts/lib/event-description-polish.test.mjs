@@ -1426,7 +1426,49 @@ test("completes clipped attendance and schedule clauses before trimming previews
   assert.equal(polishDescription("Doors: 7:30 PM | Show: 8:00 PM Run Time: 90 minutes with no…"),
     "Doors: 7:30 PM | Show: 8:00 PM Run Time: 90 minutes.");
   assert.equal(polishDescription("San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM with sign-ups starting…"),
-    "San Jose Open Mic -When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM.");
+    "San Jose Open Mic: When is the Open Mic? Second Wednesday of the month with a few exceptions. What time is the Open Mic? 8:00 PM to 9:30 PM.");
+});
+
+test("partial source-list punctuation retains service items and distinct booking rules", () => {
+  const list = "Basic smartphone, tablet, and computer help; Setting up and using Email; Downloading and using apps; Making video calls (Zoom, FaceTime, Google Meet, etc.) Browsing the internet (search engine basics, making simple searches, etc.) Navigating the SJPL website and digital resources";
+  for (const [extra, condition] of [
+    ["; How to use 311 app", "Appointments are recommended. Call (408) 808-3033 or email marlene.sanchez@sjlibrary.org."],
+    ["", "Appointments are required. Call 408-808-3073 or email caitlin.bosworth@sjlibrary.org."],
+  ]) {
+    const source = `Our Tech Mentor can help you with: ${list}${extra}. Please note: Tech Mentor support is limited to basic technology questions. ${condition}`;
+    const actual = polishDescription(source);
+    assert.match(actual, /Google Meet, etc\.\); browsing the internet/);
+    assert.match(actual, /simple searches, etc\.\); navigating the SJPL website/);
+    assert.equal(actual.split("; ").length, extra ? 7 : 6);
+    assert.ok(actual.endsWith(condition));
+    assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+  const bilingual = "Ayuda básica con teléfonos inteligentes, tabletas y computadoras; Configurar y usar el correo electrónico; Descargar y usar aplicaciones; Hacer videollamadas (Zoom, FaceTime, Google Meet, etc.) Navegar por internet (conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc.) Navegar el sitio web y los recursos digitales de SJPL; Cómo usar la aplicación 311. * Ten en cuenta: Se recomienda hacer una cita.";
+  const translated = polishDescription(bilingual);
+  assert.match(translated, /Google Meet, etc\.\); navegar por internet/);
+  assert.match(translated, /recursos digitales de SJPL; cómo usar la aplicación 311\. Ten en cuenta:/);
+  assert.ok(translated.endsWith("Se recomienda hacer una cita."));
+  const words = (value) => value.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  assert.equal(words(translated), words(bilingual));
+  assert.equal(polishDescription(translated), translated);
+});
+
+test("final copy repairs keep supplied schedules, protected identifiers and complete answers", () => {
+  const source = "Relieve Stress and anxiety; Increase energy and vitality; Improve physical health. Friday afternoons, 1-3 PM In the Auditorium Please note that there is no class on November 28. Registration is required. Details: https://example.org/Google%20docs?label=(%20Diary%20)&time=1-3";
+  const actual = polishDescription(source);
+  assert.match(actual, /improve physical health\. Classes meet Friday afternoons from 1 to 3 PM in the auditorium\. Please note/);
+  assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+  assert.ok(actual.includes("no class on November 28. Registration is required."));
+  assert.equal(actual.match(/https:\/\/\S+/)[0], source.match(/https:\/\/\S+/)[0]);
+  assert.equal(polishDescription(actual), actual);
+
+  assert.equal(polishDescription("San Jose Open Mic -When is the Open Mic? Second Wednesday. What time is the Open Mic?"),
+    "San Jose Open Mic: When is the Open Mic? Second Wednesday.");
+  const complete = "What time is the Open Mic? 8:00 PM. Registration is required.";
+  assert.equal(polishDescription(complete), complete);
+  const literal = 'Google Docs discussion with JJJJJerome Ellis. What time is the Open Mic? Read the poem "What time is the Open Mic?"';
+  assert.equal(polishDescription(literal), literal);
 });
 
 test("restores Santana Row schedule boundaries without changing clocks or venues", () => {
