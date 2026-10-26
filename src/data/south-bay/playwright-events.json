@@ -1,25 +1,25 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-26T05:05:34.337Z",
+    "generatedAt": "2026-10-26T09:13:51.116Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 210,
+    "eventCount": 206,
     "sourceCount": 20,
     "sources": [
       "San Jose Jazz (12)",
-      "Linden Tree Books (10)",
+      "Linden Tree Books (8)",
       "History San Jose (6)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Mountain Winery (2)",
-      "San Jose Theaters (19)",
-      "Children's Discovery Museum (3)",
+      "Mountain Winery (1)",
+      "San Jose Theaters (20)",
+      "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
       "City of Cupertino (22)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (71)",
+      "TheatreWorks Silicon Valley (70)",
       "Levi's Stadium (3)",
       "SAP Center (12)",
       "The Tech Interactive (10)",
@@ -86,7 +86,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 10,
+        "count": 8,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -144,7 +144,7 @@
         "id": "mountain-winery",
         "label": "Mountain Winery",
         "status": "ok",
-        "count": 2,
+        "count": 1,
         "error": null,
         "sources": [
           "Mountain Winery"
@@ -154,7 +154,7 @@
         "id": "san-jose-theaters",
         "label": "San Jose Theaters",
         "status": "ok",
-        "count": 19,
+        "count": 20,
         "error": null,
         "sources": [
           "San Jose Theaters"
@@ -172,7 +172,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 3,
+        "count": 2,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -222,7 +222,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 71,
+        "count": 70,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -510,50 +510,6 @@
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "b6f22ae50db0",
-      "title": "Storytime with Oliver Chin",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-25"
-      }
-    },
-    {
-      "id": "0c59efa1dc9a",
-      "title": "Middle Grade Book Club: Brittle Magic",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-10-25"
-      }
     },
     {
       "id": "9834003f949a",
@@ -987,10 +943,10 @@
       "kidFriendly": false
     },
     {
-      "id": "8efda76cae7a",
+      "id": "5f48bbd300b4",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
+      "date": "2026-10-26",
+      "displayDate": "Mon, Oct 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1007,10 +963,10 @@
       "kidFriendly": false
     },
     {
-      "id": "26f33174386b",
+      "id": "bd81c801d03d",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
+      "date": "2026-10-26",
+      "displayDate": "Mon, Oct 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1027,10 +983,10 @@
       "kidFriendly": false
     },
     {
-      "id": "420d95dda0a5",
+      "id": "f0f7fe8d7dbf",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
+      "date": "2026-10-26",
+      "displayDate": "Mon, Oct 26",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1044,23 +1000,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "423185edeb5d",
-      "title": "Everclear with American Hi-Fi",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1339432",
-      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -1404,21 +1343,21 @@
       "kidFriendly": false
     },
     {
-      "id": "953b496ad1fe",
-      "title": "Toddler Storytime",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "11:30 am",
+      "id": "45902e404d74",
+      "title": "Mariachazo Tour 2026",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
+      "time": "8:00pm",
       "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
+      "venue": "San Jose Civic",
+      "address": "135 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "family",
+      "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
     },
     {
       "id": "8d909d6d0e1a",
@@ -1540,7 +1479,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-26T05:04:25.569Z"
+        "checkedAt": "2026-10-26T09:12:38.002Z"
       }
     },
     {
@@ -1563,7 +1502,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-26T05:04:25.572Z"
+        "checkedAt": "2026-10-26T09:12:38.003Z"
       }
     },
     {
@@ -1586,7 +1525,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-26T05:04:25.573Z"
+        "checkedAt": "2026-10-26T09:12:38.004Z"
       }
     },
     {
@@ -1609,7 +1548,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-26T05:04:25.576Z"
+        "checkedAt": "2026-10-26T09:12:38.005Z"
       }
     },
     {
@@ -1632,7 +1571,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-26T05:04:25.576Z"
+        "checkedAt": "2026-10-26T09:12:38.006Z"
       }
     },
     {
@@ -1655,7 +1594,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-26T05:04:25.576Z"
+        "checkedAt": "2026-10-26T09:12:38.006Z"
       }
     },
     {
@@ -2046,7 +1985,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2063,7 +2002,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2080,7 +2019,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2097,7 +2036,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2114,26 +2053,9 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "018e00dce8ae",
-      "title": "Dracula",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7516",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -3398,7 +3320,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-26T05:04:57.157Z"
+        "checkedAt": "2026-10-26T09:13:13.829Z"
       }
     },
     {
@@ -3422,7 +3344,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.157Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3446,7 +3368,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.157Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3470,7 +3392,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3494,7 +3416,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3518,7 +3440,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3542,7 +3464,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3566,7 +3488,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3590,7 +3512,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3614,7 +3536,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3638,7 +3560,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
@@ -3662,7 +3584,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-26T05:04:57.158Z"
+        "checkedAt": "2026-10-26T09:13:13.830Z"
       }
     },
     {
