@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-26T17:53:38.375Z"
+    "auditedAt": "2026-10-26T22:03:31.034Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1506,
+    "total": 1509,
     "totals": {
       "hard": 0,
       "soft": 0,
@@ -16,14 +16,31 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 227,
+    "total": 238,
     "totals": {
-      "hard": 0,
+      "hard": 1,
       "soft": 0,
       "info": 0
     },
-    "byReason": {},
-    "hard": [],
+    "byReason": {
+      "out-of-area": 1
+    },
+    "hard": [
+      {
+        "id": "inbound_mvpo2y2i_3eg26q",
+        "title": "Trunk or Treat at Rebekah Children's Services",
+        "city": null,
+        "date": "2026-10-28T15:00:00-07:00",
+        "location": "Rebekah Children's Services, 290 Ioof Ave, Gilroy",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"gilroy\" with no in-area city token"
+          }
+        ]
+      }
+    ],
     "soft": []
   }
 }
