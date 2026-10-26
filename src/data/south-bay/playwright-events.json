@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-25T22:48:19.345Z",
+    "generatedAt": "2026-10-26T02:56:53.893Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
     "eventCount": 210,
@@ -24,8 +24,8 @@
       "SAP Center (12)",
       "The Tech Interactive (10)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (5)"
+      "San Jose Museum of Art (5)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -295,12 +295,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -832,23 +834,6 @@
       "kidFriendly": false
     },
     {
-      "id": "b7122b02d4a7",
-      "title": "Goblins in the Garden",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3257/3258",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "461bcf36220e",
       "title": "Direct from Sweden: The Music of ABBA",
       "date": "2026-10-28",
@@ -898,6 +883,23 @@
       "url": "https://my.montalvoarts.org/overview/3066",
       "source": "Montalvo Arts Center",
       "kidFriendly": true
+    },
+    {
+      "id": "c7d359f9503c",
+      "title": "The Smithereens",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-smithereens/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
     },
     {
       "id": "7b4b9e03681f",
@@ -1538,7 +1540,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-25T22:47:11.526Z"
+        "checkedAt": "2026-10-26T02:55:46.027Z"
       }
     },
     {
@@ -1561,7 +1563,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-25T22:47:11.528Z"
+        "checkedAt": "2026-10-26T02:55:46.030Z"
       }
     },
     {
@@ -1584,7 +1586,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-25T22:47:11.529Z"
+        "checkedAt": "2026-10-26T02:55:46.032Z"
       }
     },
     {
@@ -1607,7 +1609,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T22:47:11.532Z"
+        "checkedAt": "2026-10-26T02:55:46.035Z"
       }
     },
     {
@@ -1630,7 +1632,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-25T22:47:11.532Z"
+        "checkedAt": "2026-10-26T02:55:46.035Z"
       }
     },
     {
@@ -1653,7 +1655,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-25T22:47:11.533Z"
+        "checkedAt": "2026-10-26T02:55:46.036Z"
       }
     },
     {
@@ -3376,30 +3378,6 @@
       "kidFriendly": false
     },
     {
-      "id": "e00fa2a3f7ef",
-      "title": "Disney On Ice",
-      "date": "2026-10-25",
-      "displayDate": "Sun, Oct 25",
-      "time": "5:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Unlock your inner hero when Disney On Ice brings your favorite stories to the ice! Sail away with Moana on her epic voyage. Feel the chill with Anna, Elsa, and Olaf as they restore summer. Move to the rhythms of Encanto as Mirabel’s family celebrates their unique gifts. Be inspired to chase your dreams with the Disney Princesses and watch out for Stitch’s hilarious mischief. Hosted by Mickey and Friends, Disney On Ice presents Find Your Hero is a celebration of courage and togetherness!",
-      "url": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-      "source": "SAP Center",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/disney-on-ice-4",
-        "date": "2026-10-25",
-        "time": "5:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.741Z"
-      }
-    },
-    {
       "id": "b003d10f0620",
       "title": "Sharks vs Sabres",
       "date": "2026-10-27",
@@ -3420,7 +3398,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-25T22:47:43.741Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3444,7 +3422,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.741Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3468,7 +3446,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.741Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3492,7 +3470,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.741Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3516,7 +3494,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3540,7 +3518,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3564,7 +3542,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.406Z"
       }
     },
     {
@@ -3588,7 +3566,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.407Z"
       }
     },
     {
@@ -3612,7 +3590,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.407Z"
       }
     },
     {
@@ -3636,7 +3614,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.407Z"
       }
     },
     {
@@ -3660,7 +3638,31 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-25T22:47:43.742Z"
+        "checkedAt": "2026-10-26T02:56:17.407Z"
+      }
+    },
+    {
+      "id": "0af32bada49a",
+      "title": "Sharks vs Flames",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
+        "date": "2026-11-17",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-26T02:56:17.407Z"
       }
     },
     {
@@ -3953,41 +3955,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "91accca935ec",
       "title": "SJSU Art Galleries Tuesday Night Lecture: Lua Vollaard",
       "date": "2026-10-27",
@@ -4085,6 +4052,41 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
