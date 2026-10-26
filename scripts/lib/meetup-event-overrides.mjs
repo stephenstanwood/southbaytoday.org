@@ -7,6 +7,19 @@ const MACINTALKERS_PROFILE_URL =
 // club site also gives the 7 PM end. Keep Meetup as the date-specific
 // occurrence source, but normalize these durable club facts.
 export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "", sourceDescription = "" } = {}) {
+  // The November 3 header says 6–7:15 PM; the organizer's body says
+  // 7–8:30 PM. Preserve the clocks and disclose the disagreement only while
+  // the fresh source still conflicts. Evidence: docs/qa/2026-10-26-0707-fact-check.md.
+  if (event?.date === "2026-11-03"
+    && /\/events\/316989193\/?(?:\?|$)/.test(String(event?.url || ""))
+    && event.time === "6:00 PM" && event.endTime === "7:15 PM"
+    && /7:00\s*[-–—]\s*8:30\s*PM/i.test(sourceDescription)) {
+    return {
+      ...event,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's event header lists 6–7:15 PM, but its description says 7–8:30 PM. Confirm the session time with Mantra Room before going.",
+    };
+  }
   // The structured occurrence says October 26, but its body says October 19.
   // Keep the source's header and disclose the disagreement. A fresh, corrected
   // body must stop triggering this warning.

@@ -9,6 +9,47 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The October 23 Sunnyvale Library newsletter explicitly requires booking
+  // for these three occurrences. Its separate reminder signup for the
+  // November 1 dance program does not establish an attendance requirement.
+  // Evidence: docs/qa/2026-10-26-0707-fact-check.md.
+  ...[["2026-10-26", "17153875"], ["2026-10-27", "17731808"], ["2026-10-28", "17178520"]].map(([date, sourceId]) => ({
+    date, url: `https://sunnyvale.libcal.com/event/${sourceId}`,
+    facts: { registration: REGISTRATION_REQUIRED, attendanceNote: "Registration is required through Sunnyvale Public Library." },
+  })),
+  // Dated authenticated Meetup records, not inferred group-wide terms.
+  // Evidence: docs/qa/2026-10-26-0707-fact-check.md.
+  {
+    date: "2026-11-03",
+    matches: (event) => event.url === "https://www.meetup.com/san-jose-diet-meetup-group/events/316989193/"
+      && event.attendanceStatus === "needs-confirmation"
+      && /6–7:15 PM.*7–8:30 PM/.test(event.attendanceNote || ""),
+    facts: { blurb: "Join Mantra Room for kirtan, meditation and a plant-based dinner; confirm the conflicting session times with the organizer before going." },
+  },
+  {
+    date: "2026-10-29", url: "https://www.meetup.com/downtowners20-40s/events/317104221/",
+    facts: { cost: "low", costNote: "$5 cover for dancing.", attendanceNote: "The organizer lists a $5 cover for dancing." },
+  },
+  {
+    date: "2026-10-27", url: "https://www.meetup.com/southbayimprovfun/events/317056442/",
+    facts: {
+      costNote: "Free to watch. Participation costs $12 in advance or $15 at the door; nobody is turned away for lack of funds.",
+      attendanceNote: "Watching is free. To participate, use the organizer's ticket link: $12 before the event day or $15 at the door. Nobody is turned away for lack of funds. The restaurant kitchen will be closed.",
+    },
+  },
+  {
+    date: "2026-11-07", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316788593/",
+    facts: {
+      cost: "paid", costNote: "Organizer contribution requested; confirm the amount before joining.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "RSVP and organizer approval are required; do not walk in. The organizer requests a $5–$20 contribution at check-in and reserves the right to ask non-contributors to leave.",
+    },
+  },
+  {
+    date: "2026-10-28", url: "https://www.meetup.com/south-bay-50-social-hikers/events/317096095/",
+    // DAR is the restaurant in the organizer's post-hike lunch plans.
+    facts: { title: "St. Joseph's Hill (from Vasona) with DAR" },
+  },
   // The organizer explicitly calls the cinema and 3 PM start tentative and
   // requires RSVPs plus payment for a group ticket purchase. JOIN_OPEN does
   // not establish a confirmed screening or permission to walk in.

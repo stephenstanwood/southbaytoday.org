@@ -24,7 +24,7 @@ import {
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
-import { agendaTextForMeeting, recoverLegistarDigestSource } from "./lib/digest-source.mjs";
+import { agendaTextForMeeting, recoverLegistarDigestSource, recoverUnattributedMeetingAgenda } from "./lib/digest-source.mjs";
 import { hasUnsupportedMeetingAction, hasUnscopedMeetingCancellation } from "./lib/around-town-meetings.mjs";
 import {
   fetchCivicClerkPastMeeting,
@@ -436,6 +436,21 @@ async function main() {
 
   for (const config of CITIES) {
     let meeting = byCity[config.stoaCity];
+
+    if (config.escribe && meeting) {
+      try {
+        meeting = await recoverUnattributedMeetingAgenda(meeting, {
+          fetchAgenda: (date) => fetchEscribePastMeeting({ ...config.escribe, today: date }),
+        });
+      } catch (error) {
+        console.warn(`  ⚠️  ${config.cityName}: agenda verification failed: ${error.message}`);
+        meeting = null;
+      }
+      if (!meeting) {
+        carryForward(config, "source-unverified");
+        continue;
+      }
+    }
 
     const publishedIso = previousDigests[config.city]?.meetingDateIso;
     const stoaStale = !meeting || meeting.date < stoaStaleCutoff;

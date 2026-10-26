@@ -17,7 +17,8 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./lib/around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming } from "./lib/around-town-meetings.mjs";
+import { agendaTextForMeeting } from "./lib/digest-source.mjs";
 import { isAroundTownPermitCandidate, permitValuationForPrompt, hasUnsupportedZeroPermitValuation } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
 
@@ -38,7 +39,10 @@ const CLAUDE_SONNET = "claude-sonnet-5-5";
 // ── City config ──
 
 const CITIES = [
-  { stoaCity: "Campbell",      cityId: "campbell",      cityName: "Campbell",      agendaUrl: "https://www.campbellca.gov/AgendaCenter/City-Council-10",              permitUrl: null },
+  { stoaCity: "Campbell", cityId: "campbell", cityName: "Campbell", agendaUrl: "https://pub-campbell.escribemeetings.com/", permitUrl: null,
+    escribe: { host: "pub-campbell.escribemeetings.com", meetingTypes: [
+      "City Council Regular Session Meeting", "City Council Special Meeting", "City Council Study Session",
+    ] } },
   // Saratoga + Los Altos: the *-ca.municodemeetings.com hosts now serve a cert
   // for *.teammunicode.com, so they fail TLS verification in a browser. Point at
   // the cities' own agenda portals (same URLs generate-digests.mjs uses).
@@ -151,7 +155,7 @@ async function fetchStoaMeetings(meetingType) {
 
 async function findInterestingItems(config, meetings, bodyType, bodies = new Map()) {
   const content = meetings.map((m) => {
-    const excerpt = (m.excerpt || "")
+    const excerpt = agendaTextForMeeting(m)
       .replace(/^Kind:\s*captions\s+Language:\s*\w+\s*/i, "")
       .trim();
     const body = bodies.get(String(m.id))?.body || bodyType;
@@ -357,10 +361,11 @@ async function gatherMeetingItems(meetingType) {
       // Upstream planning records can be Zoning Administrator hearings. Verify
       // their body and agenda exactly as on the council path; an ingest type
       // does not establish which body considered an item.
-      const bodies = await resolveAroundTownMeetingSources(config, cityMeetings, {
+      const sourcedMeetings = await recoverAroundTownMeetingAgendas(config, cityMeetings);
+      const bodies = await resolveAroundTownMeetingSources(config, sourcedMeetings, {
         fallbackBody: sourceTag === "planning" ? "City hearing" : undefined,
       });
-      const verifiedMeetings = cityMeetings.filter((m) => bodies.has(String(m.id)));
+      const verifiedMeetings = sourcedMeetings.filter((m) => bodies.has(String(m.id)));
       if (!verifiedMeetings.length) continue;
       const found = await findInterestingItems(config, verifiedMeetings, label, bodies);
       for (const item of found) {

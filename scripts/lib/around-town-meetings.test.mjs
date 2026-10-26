@@ -1,6 +1,37 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveAroundTownMeetingSources, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
+import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
+
+test("Around Town replaces unattributed Council text before assigning provenance", async () => {
+  const config = { escribe: { host: "pub-campbell.escribemeetings.com" } };
+  const meeting = { id: 7324, city: "Campbell", date: "2026-10-20", meetingType: "City Council", source: "ingest", excerpt: "military trailer and VTA" };
+  const agenda = { id: "official-agenda", date: meeting.date, meetingType: "City Council", source: "escribe-direct",
+    sourceUrl: "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=official-agenda",
+    fullAgendaText: "Thermoplastic Melter Trailer. Pruneyard Master Use Permit extension." };
+  const calls = [];
+  const recovered = await recoverAroundTownMeetingAgendas(config, [meeting, { ...meeting, id: 7325 }], {
+    fetchEscribe: async (options) => { calls.push(options); return agenda; },
+  });
+  assert.equal(calls.length, 1, "records on the same date share one archive lookup");
+  assert.equal(calls[0].today, meeting.date);
+  assert.deepEqual(recovered, [{ ...agenda, city: meeting.city }]);
+  const sources = await resolveAroundTownMeetingSources(config, recovered);
+  assert.equal(sources.has("7324"), false);
+  assert.equal(sources.get("official-agenda").sourceUrl, agenda.sourceUrl);
+});
+
+test("Around Town withholds failed or mismatched recovery without relabeling other bodies", async () => {
+  const config = { escribe: { host: "pub-campbell.escribemeetings.com" } };
+  const meeting = { id: 7324, date: "2026-10-20", meetingType: "City Council", source: "ingest" };
+  for (const fetchEscribe of [async () => null, async () => { throw new Error("HTTP 503"); },
+    async () => ({ date: "2026-10-06", sourceUrl: "https://example.gov/agenda", fullAgendaText: "Other meeting" })]) {
+    assert.deepEqual(await recoverAroundTownMeetingAgendas(config, [meeting], { fetchEscribe }), []);
+  }
+  const planning = { ...meeting, meetingType: "Planning Commission" };
+  assert.deepEqual(await recoverAroundTownMeetingAgendas(config, [planning], {
+    fetchEscribe: async () => { throw new Error("must not look up Council for a Commission"); },
+  }), [planning]);
+});
 
 test("a regular-meeting cancellation cannot hide a separate joint special meeting", () => {
   const meeting = {

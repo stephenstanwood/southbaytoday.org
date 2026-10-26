@@ -999,8 +999,8 @@ export async function fetchEscribePastMeeting({
       } catch {
         continue;
       }
-      const items = extractEscribeAgendaItems(html)
-        .filter((item) => isSubstantiveAgendaTitle(item.title));
+      const agendaItems = extractEscribeAgendaItems(html);
+      const items = agendaItems.filter((item) => isSubstantiveAgendaTitle(item.title));
       // One line is a procedural stub, not an agenda worth summarizing — same
       // floor the Legistar past-meeting fallback uses.
       if (items.length < 2) continue;
@@ -1013,6 +1013,12 @@ export async function fetchEscribePastMeeting({
         title: `City Council — ${date}`,
         excerpt: items
           .slice(0, MAX_AGENDA_ITEMS)
+          .map((item) => (item.action ? `${item.title} — ${item.action}` : item.title))
+          .join("\n"),
+        // The preview's 300-character title ceiling drops real public hearings
+        // such as Campbell's October 20 Pruneyard amendment. Summarize the
+        // complete posted outline, keeping each item's recommended action.
+        fullAgendaText: agendaItems
           .map((item) => (item.action ? `${item.title} — ${item.action}` : item.title))
           .join("\n"),
         keywords: items.slice(0, 5).map((item) => item.title),

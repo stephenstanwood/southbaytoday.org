@@ -15,6 +15,53 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Sunnyvale's October newsletter retains three explicit registration requirements", () => {
+  for (const [date, sourceId] of [["2026-10-26", "17153875"], ["2026-10-27", "17731808"], ["2026-10-28", "17178520"]]) {
+    const raw = { date, url: `https://sunnyvale.libcal.com/event/${sourceId}`, time: "6:30 PM" };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(requiresAdvanceRegistration(corrected), true);
+    assert.equal(corrected.time, raw.time);
+    assert.match(corrected.attendanceNote, /Registration is required/);
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration: "full" }).registration, "full");
+    const otherDate = { ...raw, date: "2027-10-26" };
+    assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+  }
+  const dropIn = { date: "2026-11-01", url: "https://sunnyvale.libcal.com/event/17715593" };
+  assert.equal(applyVerifiedEventFacts(dropIn), dropIn);
+});
+
+test("dated Meetup fees preserve availability and distinguish watching from participating", async () => {
+  const cases = [
+    { date: "2026-10-29", url: "https://www.meetup.com/downtowners20-40s/events/317104221/", note: /\$5 cover for dancing/, cost: "low" },
+    { date: "2026-10-27", url: "https://www.meetup.com/southbayimprovfun/events/317056442/", note: /Watching is free.*\$12.*\$15.*Nobody is turned away/ },
+    { date: "2026-11-07", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316788593/", note: /approval.*do not walk in.*\$5–\$20.*non-contributors/, cost: "paid" },
+  ];
+  for (const fixture of cases) {
+    const raw = { date: fixture.date, url: fixture.url, title: "Source title", registration: "full", cost: null, time: "6:00 PM" };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(corrected.registration, "full", "fees never reopen a full occurrence");
+    assert.equal(corrected.time, raw.time);
+    assert.match(corrected.attendanceNote, fixture.note);
+    if (fixture.cost) assert.equal(corrected.cost, fixture.cost);
+    else assert.equal(corrected.cost, null, "mixed watching/participation terms do not establish one ticket price");
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-11-07" }).attendanceNote, undefined);
+  }
+});
+
+test("Mantra Room cached copy retains the verified timing uncertainty", async () => {
+  const event = { date: "2026-11-03", url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316989193/",
+    title: "Yoga of Sound", venue: "Mantra Room", time: "6:00 PM", endTime: "7:15 PM",
+    attendanceStatus: "needs-confirmation", attendanceNote: "Header: 6–7:15 PM; description: 7–8:30 PM.",
+    blurb: "Join a confirmed Tuesday session." };
+  const events = [event];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /confirm the conflicting session times/i);
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  const resolved = { ...event, attendanceStatus: undefined, attendanceNote: undefined };
+  assert.equal(applyVerifiedEventFacts(resolved), resolved);
+});
+
 test("Klara movie outing keeps its tentative screening and ticket requirement through publication", async () => {
   const raw = {
     id: "meetup-a0a5d96a2e845f6d", date: "2026-11-08",

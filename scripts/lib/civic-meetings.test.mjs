@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
-import { agendaTextForMeeting, recoverLegistarDigestSource } from "./digest-source.mjs";
+import { agendaTextForMeeting, recoverLegistarDigestSource, recoverUnattributedMeetingAgenda } from "./digest-source.mjs";
 
 import {
   confirmMeeting,
@@ -12,6 +12,7 @@ import {
   extractEscribeAgendaTitles,
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
+  fetchEscribePastMeeting,
   fetchLegistarPastMeeting,
   isSubstantiveAgendaTitle,
   parseCivicEngageAgendaLinks,
@@ -330,6 +331,67 @@ test("escribeRowDateISO returns null for rows with no usable start", () => {
   assert.equal(escribeRowDateISO({ Start: "2026-08-18" }), null);
   assert.equal(escribeRowDateISO({ Start: "/Date(nope)/" }), null);
   assert.equal(escribeRowDateISO(null), null);
+});
+
+const campbellUnattributed = {
+  id: 7324, city: "Campbell", date: "2026-10-20", source: "ingest",
+  excerpt: "procure the thermoplastic military trailer [clears throat] strategic plan for VTA",
+};
+const campbellVerifiedAgenda = {
+  id: "escribe-campbell-october-20", date: "2026-10-20", source: "escribe-direct",
+  sourceUrl: "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=e1c38040-6364-4852-b54c-255525e508ef&Agenda=Agenda&lang=English",
+  fullAgendaText: "Thermoplastic Melter Trailer TPM-1500. Pruneyard Master Use Permit extension.",
+};
+
+test("unattributed ingest reads the same-date official agenda before summarizing", async () => {
+  const dates = [];
+  const recovered = await recoverUnattributedMeetingAgenda(campbellUnattributed, {
+    fetchAgenda: async (date) => { dates.push(date); return campbellVerifiedAgenda; },
+  });
+  assert.deepEqual(dates, ["2026-10-20"]);
+  assert.equal(recovered.sourceUrl, campbellVerifiedAgenda.sourceUrl);
+  assert.equal(recovered.city, "Campbell");
+  assert.match(agendaTextForMeeting(recovered), /Thermoplastic Melter Trailer/);
+  assert.doesNotMatch(agendaTextForMeeting(recovered), /military|VTA/);
+});
+
+test("unattributed recovery cannot substitute another date or a thin agenda", async () => {
+  for (const agenda of [null, { ...campbellVerifiedAgenda, date: "2026-10-06" },
+    { ...campbellVerifiedAgenda, date: "2026-11-03" },
+    { ...campbellVerifiedAgenda, fullAgendaText: "" },
+    { ...campbellVerifiedAgenda, sourceUrl: null }]) {
+    assert.equal(await recoverUnattributedMeetingAgenda(campbellUnattributed, {
+      fetchAgenda: async () => agenda,
+    }), null);
+  }
+});
+
+test("verified agendas and explicitly identified transcripts retain their provenance", async () => {
+  for (const meeting of [campbellVerifiedAgenda,
+    { ...campbellUnattributed, source: "youtube-transcript" },
+    { ...campbellUnattributed, sourceUrl: "https://example.gov/agenda" },
+    { ...campbellUnattributed, fullAgendaText: "Published full agenda" }]) {
+    assert.equal(await recoverUnattributedMeetingAgenda(meeting, {
+      fetchAgenda: async () => { throw new Error("unnecessary collection"); },
+    }), meeting);
+  }
+});
+
+test("eScribe preserves long business titles in the full agenda used by summaries", async (t) => {
+  const longTitle = "Public Hearing to consider the application of the Pruneyard Center Association for an Amendment to the Pruneyard Master Use Permit to extend the approved phasing deadlines for Phases 3 and 4, which provide for construction of a five-story office building, expansions of the existing parking structure, additional commercial buildings, and related site improvements";
+  const titles = ["Approving Payment of Bills and Claims", "Approving a Five Year Lease for a Thermoplastic Melter Trailer", longTitle];
+  t.mock.method(globalThis, "fetch", async (input) => {
+    if (String(input).includes("/PastMeetings")) return Response.json({ d: { Meetings: [{
+      Id: "e1c38040-6364-4852-b54c-255525e508ef", HasAgenda: true,
+      Start: `/Date(${Date.parse("2026-10-21T02:30:00Z")})/`,
+    }] } });
+    return new Response(titles.map((title) => `<div class="AgendaItemTitle"><a>${title}</a></div>`).join("\n"));
+  });
+  const meeting = await fetchEscribePastMeeting({ host: "pub-campbell.escribemeetings.com",
+    meetingTypes: ["City Council Regular Session Meeting"], today: "2026-10-25" });
+  assert.equal(meeting.date, "2026-10-20");
+  assert.ok(meeting.fullAgendaText.includes(longTitle));
+  assert.equal(agendaTextForMeeting(meeting), meeting.fullAgendaText);
 });
 
 // The U+200B in the Measure O title is verbatim from the city's own page.

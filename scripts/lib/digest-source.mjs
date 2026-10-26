@@ -6,6 +6,18 @@ export function agendaTextForMeeting(meeting) {
   return meeting.fullAgendaText?.trim() || meeting.excerpt || "";
 }
 
+// Some upstream records contain auto-caption fragments but are labeled only
+// "ingest". Without an attributable source, those words cannot establish an
+// agenda item. Call only for a city with a configured first-party archive;
+// an explicitly sourced transcript keeps its own provenance and limitations.
+export async function recoverUnattributedMeetingAgenda(meeting, { fetchAgenda } = {}) {
+  if (!meeting || meeting.source !== "ingest" || meeting.sourceUrl
+      || meeting.fullAgendaText?.trim()) return meeting;
+  const agenda = await fetchAgenda(meeting.date);
+  if (agenda?.date !== meeting.date || !agenda.sourceUrl || !agenda.fullAgendaText?.trim()) return null;
+  return { ...agenda, city: meeting.city };
+}
+
 // A recent, mislabeled Stoa record can fail attribution before its date ever
 // triggers the stale-source fallback. Read the city's own council agenda and
 // verify it through the same body guard; never replace a published date with

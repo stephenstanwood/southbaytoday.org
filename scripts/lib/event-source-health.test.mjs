@@ -16,6 +16,22 @@ import {
 } from "./event-source-health.mjs";
 import { applyVerifiedSjsuEventOverride } from "./sjsu-event-overrides.mjs";
 import { applyVerifiedMeetupEventOverride } from "./meetup-event-overrides.mjs";
+
+test("Mantra Room timing conflict preserves source clocks and clears when resolved", () => {
+  const event = { date: "2026-11-03", time: "6:00 PM", endTime: "7:15 PM", registration: "full",
+    url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316989193/" };
+  const original = structuredClone(event);
+  const corrected = applyVerifiedMeetupEventOverride(event, { sourceDescription: "Every Tuesday | 7:00–8:30 PM" });
+  assert.equal(corrected.attendanceStatus, "needs-confirmation");
+  assert.match(corrected.attendanceNote, /6–7:15 PM.*7–8:30 PM/);
+  for (const field of ["date", "time", "endTime", "registration", "url"]) assert.equal(corrected[field], event[field]);
+  assert.deepEqual(event, original);
+  assert.equal(applyVerifiedMeetupEventOverride(event, { sourceDescription: "Every Tuesday | 6:00–7:15 PM" }), event);
+  for (const other of [{ ...event, date: "2026-11-10" }, { ...event, time: "7:00 PM", endTime: "8:30 PM" },
+    { ...event, url: event.url.replace("316989193", "316989194") }]) {
+    assert.equal(applyVerifiedMeetupEventOverride(other, { sourceDescription: "Every Tuesday | 7:00–8:30 PM" }), other);
+  }
+});
 import {
   hasProspectiveCityHallUpgrade,
   hasEventSelectionCount,

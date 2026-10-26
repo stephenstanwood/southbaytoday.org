@@ -1,9 +1,38 @@
 import {
   legistarMeetingUrl,
+  fetchEscribePastMeeting,
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./civic-meetings.mjs";
-import { agendaTextForMeeting } from "./digest-source.mjs";
+import { agendaTextForMeeting, recoverUnattributedMeetingAgenda } from "./digest-source.mjs";
+
+/** Verify unattributed council text before it reaches either AI or provenance. */
+export async function recoverAroundTownMeetingAgendas(config, meetings, {
+  fetchEscribe = fetchEscribePastMeeting,
+} = {}) {
+  if (!config.escribe) return meetings;
+  const byDate = new Map();
+  const recovered = [];
+  for (const meeting of meetings) {
+    // This archive verifies Council records, never planning or other bodies.
+    if (!/^(?:city|town) council$/i.test(meeting.meetingType || "")) {
+      recovered.push(meeting);
+      continue;
+    }
+    try {
+      const verified = await recoverUnattributedMeetingAgenda(meeting, {
+        fetchAgenda: (date) => {
+          if (!byDate.has(date)) byDate.set(date, fetchEscribe({ ...config.escribe, today: date }));
+          return byDate.get(date);
+        },
+      });
+      if (verified && !recovered.some((record) => String(record.id) === String(verified.id))) recovered.push(verified);
+    } catch {
+      // Missing official evidence cannot license the unverified ingest text.
+    }
+  }
+  return recovered;
+}
 
 /** Keep provenance per upstream record: several bodies can meet on one date. */
 export async function resolveAroundTownMeetingSources(config, meetings, {
