@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { fetchStanfordEvents } from "../generate-events.mjs";
+import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
 
 // Stanford's Localist API returns ONE ROW PER OCCURRENCE. `first_date` and
 // `last_date` bound the series; `event_instances[].event_instance.start` is the
@@ -121,6 +122,39 @@ test("Stanford clinic eligibility outranks Everyone metadata before description 
     localistEvent({ ...clinic, id: 3, title: "Community Immunization Research Lecture", description_text: restricted }),
   ]);
   assert.deepEqual(events.map((event) => event.id), [2, 3].map((id) => `stanford-${id}-${tomorrow}`));
+});
+
+test("Stanford room entry instructions outrank Everyone for a physical destination", async () => {
+  const tomorrow = dayPT(1);
+  const common = {
+    title: "Public Seminar", location_name: "Building 120, McClatchy Hall, Main Quad",
+    filters: { event_audience: [{ name: "Everyone" }] },
+    description_text: "A public seminar with lunch for Stanford affiliates beforehand.",
+    instances: [{ start: `${tomorrow}T12:00:00-07:00` }],
+  };
+  const room = "Studio S40 - bring your Stanford ID card/mobile ID to enter the building";
+  const events = await runWith([
+    localistEvent({ ...common, id: 1, room_number: room }),
+    localistEvent({ ...common, id: 2, room_number: room, experience: "hybrid" }),
+    localistEvent({ ...common, id: 3, room_number: room, experience: "virtual" }),
+    localistEvent({ ...common, id: 4, room_number: "Studio S40; no Stanford ID required" }),
+    localistEvent({ ...common, id: 5, room_number: "Studio S40" }),
+  ]);
+  assert.deepEqual(events.map((event) => event.id), [3, 4, 5].map((id) => `stanford-${id}-${tomorrow}`));
+  assert.equal(events[0].virtual, true, "online access does not require building entry");
+});
+
+test("the dated Stanford ID restriction also withholds stale physical copies", () => {
+  const stale = {
+    title: "Australia's new social media legislation: the world is watching",
+    venue: "Building 120, McClatchy Hall, Main Quad", date: "2026-10-27",
+    description: "A public seminar.",
+  };
+  assert.equal(isEventEditoriallySuppressed(stale), true);
+  for (const other of [
+    { ...stale, virtual: true }, { ...stale, date: "2027-10-27" },
+    { ...stale, title: "Another seminar" }, { ...stale, venue: "Another venue" },
+  ]) assert.equal(isEventEditoriallySuppressed(other), false);
 });
 
 test("a dated event takes its day and clock from the occurrence, not first_date", async () => {

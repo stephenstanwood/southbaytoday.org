@@ -4,6 +4,16 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Australia['’]s new social media legislation: the world is watching$/i,
+    venue: /^(?:Building 120, McClatchy Hall, Main Quad|Stanford University)$/i,
+    date: "2026-10-27",
+    reviewOn: "2026-10-27",
+    physicalOnly: true,
+    reason:
+      "The room instructions require a Stanford ID card/mobile ID to enter the building. Keep sparse physical copies withheld; the organizer separately offers online access.",
+    source: "https://events.stanford.edu/event/australias-new-social-media-legislation-the-world-is-watching",
+  }),
+  Object.freeze({
     title: /^San Jose 7 Claude Techniques You['’]ll Use Tomorrow$/i,
     venue: /^Walsh\s*(?:&|and)\s*Northwestern$/i,
     date: "2026-10-25",
@@ -95,6 +105,8 @@ export function isEventEditoriallySuppressed(event) {
   const url = String(event.url || "");
 
   return EVENT_EDITORIAL_SUPPRESSIONS.some((rule) => {
+    // A building-entry restriction does not disqualify online-only access.
+    if (rule.physicalOnly && event.virtual === true) return false;
     if (rule.ids?.some((candidate) => candidate === id || url.includes(candidate.replace(/^[a-z]+-/, "")))) {
       return true;
     }

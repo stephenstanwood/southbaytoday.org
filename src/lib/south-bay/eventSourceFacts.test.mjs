@@ -15,6 +15,44 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Klara movie outing keeps its tentative screening and ticket requirement through publication", async () => {
+  const raw = {
+    id: "meetup-a0a5d96a2e845f6d", date: "2026-11-08",
+    title: "Book & Movie: Klara and the Sun - Nov 8, 2026", source: "Meetup",
+    url: "https://www.meetup.com/interrobang/events/316773298/",
+    time: "3:00 PM", endTime: "4:30 PM", venue: "AMC Mercado 20",
+    address: "3111 Mission College Blvd, Santa Clara, CA 95054, USA", city: "santa-clara",
+    cost: null, registration: "none",
+    blurb: "Meet the book club at AMC Mercado 20 on Sunday afternoon.",
+  };
+  const original = structuredClone(raw);
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.equal(corrected.cost, "paid");
+  assert.equal(corrected.registration, "required");
+  assert.equal(requiresAttendanceConfirmation(corrected), true);
+  assert.match(corrected.attendanceNote, /time and cinema are tentative/i);
+  assert.match(corrected.attendanceNote, /RSVP.*pay.*ticket/i);
+  assert.match(corrected.costNote, /price.*not published/i);
+  assert.match(corrected.blurb, /tentative/i);
+  for (const field of ["date", "time", "endTime", "venue", "address", "city", "url"]) {
+    assert.equal(corrected[field], raw[field], field);
+  }
+  assert.deepEqual(raw, original);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-11-08" },
+    { ...raw, url: raw.url.replace("316773298", "316773299") },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  assert.match(events[0].blurb, /tentative/i);
+});
+
 test("Pumpkin, Pasta & Prosecco retains its dated advance-payment requirement", async () => {
   const raw = {
     id: "meetup-343d8f816cdc482b", date: "2026-10-25",
@@ -50,6 +88,40 @@ test("Pumpkin, Pasta & Prosecco retains its dated advance-payment requirement", 
   await resolveEventBlurbs(events, { enabled: false });
   assert.equal(events[0].registration, "required", "publication retains the payment gate");
   assert.equal(events[0].costNote, "$45 per person");
+});
+
+test("Picchetti spelling requires the verified venue identity and survives cached copy", async (t) => {
+  const raw = {
+    id: "meetup-2da20825a6089915", date: "2026-10-31",
+    title: "Pichetti Ranch with Dish N Dash & Ice cream @ Icicles",
+    venue: "Pichetti Ranch & Winery", address: "13100 Montebello Road, Cupertino",
+    city: "cupertino", time: "9:30 AM", endTime: "12:00 PM",
+    registration: "full", cost: null, description: "Meetup event by South Bay 50+ Social Hikers.",
+    blurb: "Hike at Pichetti Ranch & Winery.",
+  };
+  const original = structuredClone(raw);
+  const corrected = applyVerifiedEventFacts(raw);
+  assert.deepEqual(corrected, {
+    ...raw, title: raw.title.replace("Pichetti", "Picchetti"),
+    venue: "Picchetti Ranch & Winery", blurb: "Hike at Picchetti Ranch & Winery.",
+  });
+  assert.deepEqual(raw, original);
+  assert.equal(applyVerifiedEventFacts(corrected), corrected);
+  for (const other of [
+    { ...raw, city: "san-jose" }, { ...raw, address: "13101 Montebello Road, Cupertino" },
+    { ...raw, address: "" }, { ...raw, venue: "Another Ranch" }, { ...raw, virtual: true },
+  ]) assert.equal(applyVerifiedEventFacts(other), other);
+  const cache = { byKey: { [eventBlurbCacheKey(corrected)]: { blurb: raw.blurb } } };
+  const originalRead = fs.readFileSync;
+  t.mock.method(fs, "readFileSync", (path, ...args) =>
+    String(path).endsWith("event-blurb-cache.json") ? JSON.stringify(cache) : originalRead(path, ...args));
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const events = [{ ...corrected, blurb: undefined }];
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(stats.cache_hits, 1);
+  assert.equal(events[0].blurb, "Hike at Picchetti Ranch & Winery.");
+  assert.equal(events[0].registration, "full");
 });
 
 test("Sunnyvale pub listings retain the operator's Fibbar MaGees spelling and attendance facts", () => {

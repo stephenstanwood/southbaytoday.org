@@ -9,6 +9,22 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The organizer explicitly calls the cinema and 3 PM start tentative and
+  // requires RSVPs plus payment for a group ticket purchase. JOIN_OPEN does
+  // not establish a confirmed screening or permission to walk in.
+  // https://www.meetup.com/interrobang/events/316773298/
+  // Evidence: docs/qa/2026-10-26-0307-fact-check.md (authenticated API record).
+  {
+    date: "2026-11-08",
+    url: "https://www.meetup.com/interrobang/events/316773298/",
+    facts: {
+      cost: "paid", costNote: "Movie ticket purchase required; price not published.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer says the time and cinema are tentative and may change. RSVP ahead, pay for your movie ticket, and confirm the final screening with the organizer.",
+      blurb: "Interrobang is planning a Klara and the Sun movie outing; the screening time and cinema are tentative.",
+    },
+  },
   // JOIN_OPEN describes Meetup membership, but this occurrence's organizer
   // explicitly requires $45 per person before a spot is confirmed. Its body
   // gives only the Santa Teresa/Snell area, so do not invent a street address.
@@ -1931,6 +1947,22 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // The operator's Directions page confirms Picchetti at this exact address.
+  // Repair the organizer's missing c in names and cached prose, without
+  // inferring any occurrence, admission, or availability facts from the venue.
+  // https://www.picchetti.com/Directions
+  // Evidence: docs/qa/2026-10-26-0307-fact-check.md.
+  if (!event?.virtual && event?.city === "cupertino"
+      && /^Pic{1,2}hetti Ranch & Winery$/i.test(event?.venue || "")
+      && /^13100 Montebello (?:Road|Rd)\.?, Cupertino(?:,? CA\.? ?(?:95014)?)?$/i.test(event?.address || "")) {
+    const names = {};
+    for (const field of ["title", "venue", "description", "blurb", "attendanceNote"]) {
+      if (typeof event[field] !== "string") continue;
+      const corrected = event[field].replace(/\bPichetti\b/gi, "Picchetti");
+      if (corrected !== event[field]) names[field] = corrected;
+    }
+    if (Object.keys(names).length) event = { ...event, ...names };
+  }
   // The operator brands this Sunnyvale pub "Fibbar MaGees", without an
   // apostrophe. Copy editing must not respell the proper name. Require its
   // actual street address and venue identity before repairing prose; a name

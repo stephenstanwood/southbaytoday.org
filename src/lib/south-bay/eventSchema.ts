@@ -47,6 +47,9 @@ export interface SchemaEventRecord {
   // ingest from the source's published deadline rule. Only present on gated
   // events whose source publishes a window. See resolveRegistrationClosesBy.
   registrationClosesBy?: string | null;
+  // Tentative/conflicting time or venue: keep the reader-facing confirmation
+  // note, but emit no scheduled Event until the source confirms attendance.
+  attendanceStatus?: string | null;
 }
 
 /** UTC offset suffix ("-07:00") for America/Los_Angeles on a given date. */
@@ -103,6 +106,7 @@ function parseLowPrice(note: string | null | undefined): number | null {
 /** One event record → schema.org Event object, or null if it can't be honest. */
 export function eventToSchema(e: SchemaEventRecord): Record<string, unknown> | null {
   if (!e.title || !e.date || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return null;
+  if (e.attendanceStatus === "needs-confirmation") return null;
 
   const offset = ptOffsetForDate(e.date);
   const start = parseClockTime(e.time);

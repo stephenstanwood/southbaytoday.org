@@ -4034,6 +4034,12 @@ async function fetchStanfordEvents() {
       // Localist publishes the attendance mode outright — no need to guess it
       // from the copy. "hybrid" stays a physical destination.
       const isVirtual = virtualFromSourceSignal(ev.experience) === true;
+      // Room metadata can carry building-entry restrictions that the body and
+      // generic Everyone audience omit. This verified Stanford instruction
+      // requires a campus ID; it does not restrict an online-only occurrence.
+      // Evidence: docs/qa/2026-10-26-0307-fact-check.md.
+      if (!isVirtual && /\bbring your Stanford ID card\/mobile ID to enter the building\b/i
+        .test(stripHtml(ev.room_number || ""))) return null;
       // University ownership does not place a satellite campus in Palo Alto.
       // Filter before the source cap so off-site rows cannot displace local
       // programs. Keep online-only events and locally organized field trips.

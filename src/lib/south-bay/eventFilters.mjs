@@ -377,7 +377,7 @@ function enumValue(value) {
  * `rsvpState` is the load-bearing field, the way `provider` is for
  * BiblioCommons. It is exactly what Meetup renders in the listing's sticky
  * CTA bar, so it is the same string the reader will see:
- *   JOIN_OPEN           "Attend"          -> anyone can RSVP, walk-up stands
+ *   JOIN_OPEN           "Attend"          -> anyone can RSVP
  *   JOIN_APPROVAL       "Request to join" -> an organizer must approve first
  *   JOIN_DUES_APPROVAL  approval + dues
  *   FULL / WAITLIST     out of seats
@@ -417,6 +417,11 @@ function enumValue(value) {
  * Desi Social & Network Group runs joinMode OPEN with rsvpState
  * JOIN_DUES_APPROVAL — dues plus approval on an "open" group. Both signals
  * are needed, with the CTA state first.
+ *
+ * An open RSVP is not proof of walk-up admission or a confirmed time/venue.
+ * The full organizer description can still require advance signup or payment,
+ * or call the screening tentative. Preserve verified occurrence-specific terms
+ * in eventSourceFacts.mjs before publication; this classifier reads metadata.
  */
 export function registrationFromMeetup(node) {
   if (!node) return REGISTRATION_NONE;

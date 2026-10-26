@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { eventToSchema, isPastEventDate } from "./eventSchema";
+import { eventListJsonLd, eventToSchema, isPastEventDate } from "./eventSchema";
 
 test("isPastEventDate compares ISO dates in Pacific time", () => {
   const ref = new Date("2026-08-07T20:00:00Z"); // Aug 7 afternoon PT
@@ -69,6 +69,22 @@ test("eventToSchema falls back to the primary source when no leaf page is known"
   assert.ok(schema);
   assert.equal(schema.url, sourceUrl);
   assert.equal(schema.sameAs, undefined);
+});
+
+test("tentative or conflicting attendance never becomes a scheduled Event object", () => {
+  const event = {
+    title: "Book & Movie: Klara and the Sun", date: "2026-11-08", time: "3:00 PM",
+    venue: "AMC Mercado 20", attendanceStatus: "needs-confirmation",
+  };
+  assert.equal(eventToSchema(event), null);
+  assert.equal(eventListJsonLd([event], { name: "Upcoming", url: "https://southbaytoday.org/events" }), null);
+  const json = eventListJsonLd([event, { ...event, title: "Confirmed screening", attendanceStatus: null }], {
+    name: "Upcoming", url: "https://southbaytoday.org/events",
+  });
+  assert.ok(json);
+  const list = JSON.parse(json);
+  assert.equal(list.numberOfItems, 1);
+  assert.equal(list.itemListElement[0].item.name, "Confirmed screening");
 });
 
 test("eventToSchema uses a border venue's actual locality instead of its coverage bucket", () => {
