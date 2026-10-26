@@ -15,6 +15,33 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("dated Lowrider and SJSU celebrations retain RSVP notices without inventing mandatory registration", async () => {
+  const cases = [
+    { url: "https://my.montalvoarts.org/3248/3250", title: "4th Lowrider Art Showcase", venue: "Montalvo Arts Center", time: "1:00 PM", endTime: null },
+    { url: "https://events.sjsu.edu/event/mariachi-band-performance-dia-de-los-angelitos", title: "SJSU CommUniverCity Community Event: Día de los Muertos Celebration", venue: "Student Union Theater", time: "3:00 PM", endTime: "5:00 PM" },
+  ];
+  for (const example of cases) {
+    const raw = { ...example, date: "2026-11-01", cost: "free", description: "", blurb: "Join the community celebration." };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.match(fixed.attendanceNote, /RSVP/);
+    assert.doesNotMatch(fixed.attendanceNote, /required|must register|no walk-ins/i);
+    assert.equal(fixed.registration, undefined, "an RSVP invitation does not establish a mandatory gate");
+    if (example.venue === "Montalvo Arts Center") assert.match(fixed.attendanceNote, /No parking at Montalvo.*West Valley College/);
+    for (const field of ["date", "url", "title", "venue", "time", "endTime", "cost"]) assert.equal(fixed[field], raw[field], field);
+    for (const registration of ["full", "closed", "appointment-only"]) {
+      assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    for (const other of [{ ...raw, date: "2027-11-01" }, { ...raw, url: "https://example.com/unrelated" }]) {
+      assert.equal(applyVerifiedEventFacts(other), other);
+    }
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].attendanceNote, /RSVP/);
+    assert.equal(events[0].registration, undefined);
+  }
+});
+
 test("Campbell's dated newsletter events retain organizer fees, RSVP requests and corrected catering name", async () => {
   const luncheon = {
     date: "2026-11-18", url: "https://business.campbellchamber.net/events/details/monthly-luncheon-16558",

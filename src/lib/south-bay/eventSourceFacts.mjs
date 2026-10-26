@@ -133,7 +133,11 @@ const CORRECTIONS = [
     date: "2026-11-01", url: "https://my.montalvoarts.org/3248/3250",
     facts: {
       cost: "free", kidFriendly: true,
-      attendanceNote: "No parking at Montalvo. Use free parking and shuttle service from West Valley College.",
+      // The dated ticket page offers $0 adult/child RSVP tiers. Retain that
+      // option without claiming registration is mandatory or sold out from
+      // the checkout template's hidden "Sold Out!" heading.
+      // Evidence: docs/qa/2026-10-26-2307-fact-check.md.
+      attendanceNote: "The organizer offers free adult and child RSVPs through its ticket page. No parking at Montalvo. Use free parking and shuttle service from West Valley College.",
     },
   },
   {
@@ -381,7 +385,13 @@ const CORRECTIONS = [
   {
     date: "2026-11-01",
     url: "https://events.sjsu.edu/event/mariachi-band-performance-dia-de-los-angelitos",
-    facts: { category: "music", endTime: "5:00 PM", cost: "free" },
+    facts: {
+      category: "music", endTime: "5:00 PM", cost: "free",
+      // The complete occurrence requests an RSVP after the retained RSS
+      // paragraph. "RSVP here" establishes an invitation, not a mandatory
+      // registration gate. Evidence: docs/qa/2026-10-26-2307-fact-check.md.
+      attendanceNote: "Free and open to all. The organizer requests an RSVP using the form linked on its event page.",
+    },
   },
   // SJSU's occurrence page identifies Musical Performance and publishes
   // 6:30–7:30 PM. Its RSS importer loses the end and chooses general arts.
