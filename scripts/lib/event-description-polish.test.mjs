@@ -13,6 +13,48 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("library grammar repairs retain participation details and are stable on refresh", () => {
+  const cases = [
+    ["Join a friendly needle works stitch-in from 10 am to 2 pm in the conference room.",
+      "Join a friendly needlework stitch-in from 10 am to 2 pm in the conference room."],
+    ["On Dec 1, participants will build parachutes of different shapes, sizes and material. For ages 5 and up.",
+      "On Dec 1, participants will build parachutes of different shapes, sizes and materials. For ages 5 and up."],
+    ["All materials included. You may take home or have fun making it in the library. For children 0-10 while supplies last.",
+      "All materials included. You may take it home or have fun making it in the library. For children 0-10 while supplies last."],
+    ["You might see a Red-Shoulder Hawk or Screech Owl. All attendees must register. $10 Resident | $13 Non-resident",
+      "You might see a Red-Shouldered Hawk or Screech Owl. All attendees must register. $10 Resident | $13 Non-resident"],
+  ];
+  for (const [source, expected] of cases) {
+    const actual = polishDescription(source);
+    assert.equal(actual, expected);
+    assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+});
+
+test("biography pronoun repair requires the third-person context", () => {
+  const sentence = "Interacting with people deciding what they wanted, or might not want, to know about their future seared these issues into my heart.";
+  const thirdPerson = `Dr. Peyser saw first-hand how genetic knowledge alters a person's relationship to their future. ${sentence}`;
+  const expected = "Dr. Peyser saw first-hand how genetic knowledge alters a person's relationship to their future. Interacting with people deciding what they wanted, or might not want, to know about their future seared these issues into her heart.";
+  assert.equal(polishDescription(thirdPerson), expected);
+  assert.equal(polishDescription(expected), expected);
+  const firstPerson = `I saw first-hand how genetic knowledge alters a person's relationship to their future. ${sentence}`;
+  assert.equal(polishDescription(firstPerson), firstPerson);
+  const quoted = `Dr. Peyser saw first-hand how genetic knowledge affects families. She wrote: "${sentence}"`;
+  assert.equal(polishDescription(quoted), quoted);
+});
+
+test("Short Story Social reading-list punctuation preserves dates, titles and URLs", () => {
+  const source = 'Join our Short Story Social, a relaxed book club. 2026 Reading List June 25th- "The Shroud" in Heart Lamp by Banu Mushtaq July 23rd- "Mall of America" by Suzanne Wang August 27th- "A Sunny Place for Shady People" by Mariana Enriquez September 24th- "Dominion" by Lauren Acampora. Also available in New England Review, Vol 45, No. 2-available through Gale Academic Onefile. October 29th - "A Fur Coat" and "Boots" by Jeanette Winterson. Details: https://example.org/ReadingList?date=June25th';
+  const expected = 'Join our Short Story Social, a relaxed book club. 2026 Reading List: June 25th - "The Shroud" in Heart Lamp by Banu Mushtaq; July 23rd - "Mall of America" by Suzanne Wang; August 27th - "A Sunny Place for Shady People" by Mariana Enriquez; September 24th - "Dominion" by Lauren Acampora. Also available in New England Review, Vol 45, No. 2 - available through Gale Academic Onefile. October 29th - "A Fur Coat" and "Boots" by Jeanette Winterson. Details: https://example.org/ReadingList?date=June25th';
+  const actual = polishDescription(source);
+  assert.equal(actual, expected);
+  assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+  assert.equal(polishDescription(actual), actual);
+  const unrelated = '2026 Reading List June 25th- "A Title" July 23rd- "Another Title"';
+  assert.equal(polishDescription(unrelated), unrelated);
+});
+
 test("refresh preserves RPG initials and the source's JJJJ Jerome Ellis spelling", () => {
   assert.equal(cleanTitle("RPG Meetup"), "RPG Meetup");
   assert.equal(cleanTitle("Rpg Meetup"), "Rpg Meetup");

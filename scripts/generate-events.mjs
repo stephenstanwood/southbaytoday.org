@@ -2151,6 +2151,12 @@ function polishDescription(text) {
     .replace(/\bputting it altogether\b/g, "putting it all together")
     .replace(/\bgrades K to3\b/g, "grades K to 3")
     .replace(/\bwill be able explore\b/g, "will be able to explore")
+    .replace(/\bneedle works stitch-in\b/g, "needlework stitch-in")
+    .replace(/\bparachutes of different shapes, sizes and material\b/g,
+      "parachutes of different shapes, sizes and materials")
+    .replace(/\bYou may take home or have fun making it in the library\./g,
+      "You may take it home or have fun making it in the library.")
+    .replace(/\bRed-Shoulder Hawk\b/g, "Red-Shouldered Hawk")
     .replace(/\bWe'll provide the supplies and brief slime making demo, you bring\b/g,
       "We'll provide the supplies and a brief slime-making demo; you bring")
     .replace(/\bwhile supplies and time lasts\b/g, "while supplies and time last")
@@ -2193,6 +2199,24 @@ function polishDescription(text) {
     .replace(/\bNutracker\b/g, "Nutcracker")
     .replace(/\bAny student looking to explore recovery, sobriety, or a life without substance use looks like\b/g,
       "Any student looking to explore what recovery, sobriety, or a life without substance use looks like");
+
+  // This biography switches to first person inside otherwise third-person
+  // prose. Require that context so a first-person author statement stays intact.
+  if (t.includes("Dr. Peyser saw first-hand")) {
+    t = t.replace(/(^|[.!?]\s+)(Interacting with people deciding what they wanted, or might not want, to know about their future seared these issues into) my heart\./g,
+      "$1$2 her heart.");
+  }
+
+  // Short Story Social's flattened reading list loses the punctuation between
+  // dated entries. Restore separators without changing dates or book titles.
+  if (t.includes("Join our Short Story Social,") && /\b\d{4} Reading List\b/.test(t)) {
+    const readingDate = "(?:January|February|March|April|May|June|July|August|September|October|November|December) \\d{1,2}(?:st|nd|rd|th)?";
+    t = t
+      .replace(new RegExp(`(\\b\\d{4} Reading List) (?=${readingDate})`, "g"), "$1: ")
+      .replace(new RegExp(`([^\\s.;:!?])\\s+(${readingDate})\\s*-\\s*(?=")`, "g"), "$1; $2 - ")
+      .replace(new RegExp(`\\b(${readingDate})-\\s*(?=")`, "g"), "$1 - ")
+      .replace(/\bNo\. (\d+)-available\b/g, "No. $1 - available");
+  }
 
   // Copy-desk repairs for recurring source prose. Keep these specific to the
   // supplied wording; URLs are masked, and no schedule or eligibility changes.
