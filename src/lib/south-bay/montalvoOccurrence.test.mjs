@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { parseMontalvoOccurrencePage } from "./montalvoOccurrence.mjs";
+import { findMontalvoPerformanceUrl, parseMontalvoOccurrencePage } from "./montalvoOccurrence.mjs";
 
 test("paid admission outranks a zero calendar price and a free child tier", () => {
   const parsed = parseMontalvoOccurrencePage(`
@@ -60,6 +60,48 @@ test("explicit zero-price admission remains free without paid tickets", () => {
     <h1 id="tn-page-heading">Community Festival</h1>
     <div data-tn-price-amount="0.0000"></div>`);
   assert.equal(parsed.cost, "free");
+});
+
+test("reserved-seat admission reads the current performance's ticket prices", () => {
+  const page = (config) => `
+    <link rel="canonical" href="https://my.montalvoarts.org/3107/3150">
+    <h1 id="tn-page-heading">SOLAS</h1>
+    <p class="tn-event-detail__display-time">Friday, Nov 6, 2026 7:30PM</p>
+    <script>window.tnew.page.initialize(${JSON.stringify(config)});</script>`;
+  const config = {
+    syosConfig: {
+      bestAvailablePath: "/3107/3150", performanceId: 3150,
+      feeDisclaimers: { "1-36": "$61.00 ticket + $8.00 fees", "1-38": "$56.00 ticket + $8.00 fees" },
+    },
+  };
+  assert.equal(parseMontalvoOccurrencePage(page(config)).cost, "paid");
+  assert.equal(parseMontalvoOccurrencePage(page({
+    syosConfig: { ...config.syosConfig, performanceId: 3151, bestAvailablePath: "/3108/3151" },
+  })).cost, null, "another performance's prices do not establish this admission");
+  assert.equal(parseMontalvoOccurrencePage(page({
+    syosConfig: { ...config.syosConfig, feeDisclaimers: { donation: "Please donate $50.00" } },
+  })).cost, null, "donations and generic checkout amounts are not ticket prices");
+  assert.equal(parseMontalvoOccurrencePage(page({
+    syosConfig: { ...config.syosConfig, feeDisclaimers: { "1-36": "$0.00 ticket + $0.00 fees" } },
+  })).cost, "free");
+  assert.equal(parseMontalvoOccurrencePage(page({
+    syosConfig: { ...config.syosConfig, feeDisclaimers: { "1-36": "$61.00 ticket + $8.00 fees", child: "$0.00 ticket" } },
+  })).cost, "paid", "a free-child tier cannot erase paid admission");
+});
+
+test("overview ticket selection rejects another clock, production, host, or ambiguous slot", () => {
+  const page = (href, time = "7:30PM") => `
+    <link href="https://my.montalvoarts.org/overview/3105" rel="canonical">
+    <li class="tn-prod-list-item__perf-list-item"><a href="${href}">
+      <span class="tn-prod-list-item__perf-date">Wednesday, Oct 28, 2026</span>
+      <span class="tn-prod-list-item__perf-time">${time}</span></a></li>`;
+  const event = { date: "2026-10-28", time: "7:30 PM" };
+  assert.equal(findMontalvoPerformanceUrl(page("/3105/3148"), event), "https://my.montalvoarts.org/3105/3148");
+  assert.equal(findMontalvoPerformanceUrl(page("/3105/3148", "9:30PM"), event), null);
+  assert.equal(findMontalvoPerformanceUrl(page("/3107/3150"), event), null);
+  assert.equal(findMontalvoPerformanceUrl(page("https://elsewhere.example/3105/3148"), event), null);
+  assert.equal(findMontalvoPerformanceUrl(page("/3105/3148"), { ...event, date: "2026-10-29" }), null);
+  assert.equal(findMontalvoPerformanceUrl(page("/3105/3148") + page("/3105/3149"), event), null);
 });
 
 test("visible Montalvo occurrence details outrank stale head metadata", () => {

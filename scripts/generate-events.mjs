@@ -123,7 +123,7 @@ import {
   marketOccurrenceEvidence,
   verifyMarketScheduleSource,
 } from "../src/lib/south-bay/marketOccurrence.mjs";
-import { parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
+import { findMontalvoPerformanceUrl, parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 import { mergePaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
 import { mergeCampbellOktoberfest } from "./lib/campbell-oktoberfest-2026.mjs";
@@ -4937,13 +4937,24 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
     const enriched = await Promise.all(unique.map(async (event) => {
       try {
         const detailHtml = await fetchText(event.url);
-        const detail = parseMontalvoOccurrencePage(detailHtml);
+        let detail = parseMontalvoOccurrencePage(detailHtml);
         if (!detail) return retainedAdmission(event);
         if (detail.date && detail.date !== event.date) return event;
         // An ongoing run is anchored to today and deliberately clock-free; the
         // occurrence page still carries the opening night's curtain time, and
         // stamping that back on would say the exhibition starts at 7:30 PM.
         if (event.ongoing) return { ...event, title: detail.title || event.title };
+        let admissionSourceUrl;
+        const performanceUrl = findMontalvoPerformanceUrl(detailHtml, event);
+        if (performanceUrl) {
+          try {
+            const performance = parseMontalvoOccurrencePage(await fetchText(performanceUrl));
+            if (performance?.date === event.date && performance.time === event.time) {
+              detail = { ...detail, ...performance, cost: performance.cost || detail.cost };
+              if (performance.cost) admissionSourceUrl = performanceUrl;
+            }
+          } catch { /* Keep overview facts when its linked occurrence is unavailable. */ }
+        }
         return {
           ...event,
           title: detail.title || event.title,
@@ -4956,6 +4967,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
             sourceUrl: event.url,
             date: event.date,
             checkedAt: new Date().toISOString(),
+            ...(admissionSourceUrl ? { admissionSourceUrl } : {}),
           },
         };
       } catch {

@@ -496,6 +496,38 @@ test("failed Montalvo detail reads retain verified admission and audience only f
   }
 });
 
+test("Montalvo overview admission follows only the exact dated performance", async (t) => {
+  const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const nextDate = new Date(Date.now() + 15 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const label = (day) => new Date(`${day}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  const url = "https://my.montalvoarts.org/overview/3105";
+  const graph = { "@type": "Event", name: "Direct from Sweden: The Music of ABBA", startDate: `${date}T19:30:00+00:00`, url };
+  const requested = [];
+  t.mock.method(globalThis, "fetch", async (target) => {
+    requested.push(String(target));
+    if (String(target).endsWith("/events-calendar/")) return new Response(`<script type="application/ld+json">${JSON.stringify(graph)}</script>`);
+    if (String(target) === url) return new Response(`
+      <link rel="canonical" href="${url}"><h1 id="tn-page-heading">${graph.name}</h1>
+      <li class="tn-prod-list-item__perf-list-item"><a href="https://my.montalvoarts.org/3105/3149">
+        <span class="tn-prod-list-item__perf-date">${label(nextDate)}</span><span class="tn-prod-list-item__perf-time">7:30PM</span></a></li>
+      <li class="tn-prod-list-item__perf-list-item"><a href="https://my.montalvoarts.org/3105/3148">
+        <span class="tn-prod-list-item__perf-date">${label(date)}</span><span class="tn-prod-list-item__perf-time">7:30PM</span></a></li>`);
+    assert.equal(String(target), "https://my.montalvoarts.org/3105/3148", "never borrow the next night's price");
+    return new Response(`<link rel="canonical" href="${target}"><h1 id="tn-page-heading">${graph.name}</h1>
+      <p class="tn-event-detail__display-time">${label(date)} 7:30PM</p>
+      <script>window.tnew.page.initialize(${JSON.stringify({ syosConfig: {
+        performanceId: 3148, bestAvailablePath: "/3105/3148", feeDisclaimers: { adult: "$78.00 ticket + $8.00 fees" },
+      } })});</script>`);
+  });
+  const [event] = await fetchMontalvoEvents({ previousEvents: [] });
+  assert.equal(event.cost, "paid");
+  assert.equal(event.date, date);
+  assert.equal(event.time, "7:30 PM");
+  assert.equal(event.url, url);
+  assert.equal(event.occurrenceEvidence.admissionSourceUrl, "https://my.montalvoarts.org/3105/3148");
+  assert.equal(requested.length, 3);
+});
+
 test("Squarespace family admission survives excerpts and truncated descriptions without making paid admission free", async () => {
   const excerpt = "A community celebration of art and culture.";
   const startDate = Date.now() + 7 * 86400000;

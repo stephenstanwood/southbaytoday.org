@@ -53,6 +53,61 @@ function isoDateFromDetail(value) {
   return month ? `${match[3]}-${month}-${String(Number(match[2])).padStart(2, "0")}` : null;
 }
 
+function canonicalTicketUrl(source) {
+  for (const link of source.matchAll(/<link\b[^>]*>/gi)) {
+    if (!/\brel=["']canonical["']/i.test(link[0])) continue;
+    const href = link[0].match(/\bhref=["']([^"']+)["']/i)?.[1];
+    try {
+      const url = new URL(decodeHtml(href));
+      if (url.origin === "https://my.montalvoarts.org") return url;
+    } catch { /* A malformed canonical URL establishes no occurrence. */ }
+  }
+  return null;
+}
+
+/** Follow an overview only when its own list identifies one exact occurrence. */
+export function findMontalvoPerformanceUrl(html, { date, time } = {}) {
+  const source = String(html || "");
+  const overview = canonicalTicketUrl(source);
+  const production = overview?.pathname.match(/^\/overview\/(\d+)\/?$/)?.[1];
+  if (!production || !date || !time) return null;
+  const matches = new Set();
+  for (const item of source.matchAll(/<li\b[^>]*class=["'][^"']*\btn-prod-list-item__perf-list-item\b[^"']*["'][^>]*>([\s\S]*?)<\/li>/gi)) {
+    const body = item[1];
+    if (isoDateFromDetail(textContent(contentForClass(body, "tn-prod-list-item__perf-date"))) !== date
+      || clock(textContent(contentForClass(body, "tn-prod-list-item__perf-time"))) !== time) continue;
+    const href = body.match(/<a\b[^>]*\bhref=["']([^"']+)["']/i)?.[1];
+    if (!href) continue;
+    try {
+      const url = new URL(decodeHtml(href), overview);
+      if (url.origin === overview.origin && new RegExp(`^/${production}/\\d+$`).test(url.pathname)
+        && !url.search && !url.hash) matches.add(url.href);
+    } catch { /* Never guess a ticket URL from a missing or malformed link. */ }
+  }
+  return matches.size === 1 ? [...matches][0] : null;
+}
+
+function reservedSeatPrices(source) {
+  const canonical = canonicalTicketUrl(source);
+  const performance = canonical?.pathname.match(/^\/\d+\/(\d+)$/)?.[1];
+  if (!performance) return [];
+  for (const script of source.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)) {
+    const json = script[1].match(/\bwindow\.tnew\.page\.initialize\(\s*(\{[\s\S]*\})\s*\);/)?.[1];
+    if (!json) continue;
+    try {
+      // Parse data, never execute the source script. Only the current seat map's
+      // explicit ticket amounts count; donation/checkout templates do not.
+      const config = JSON.parse(json).syosConfig;
+      if (String(config?.performanceId) !== performance || config.bestAvailablePath !== canonical.pathname) continue;
+      return Object.values(config.feeDisclaimers || {}).flatMap((value) => {
+        const amount = String(value).match(/\$(\d+(?:,\d{3})*(?:\.\d+)?)\s+ticket\b/i)?.[1];
+        return amount === undefined ? [] : [Number(amount.replaceAll(",", ""))];
+      });
+    } catch { /* Missing usable ticket data leaves admission unknown. */ }
+  }
+  return [];
+}
+
 /**
  * Parse Montalvo's first-party ticket/occurrence page. Visible occurrence
  * details deliberately outrank head metadata: the Marcus Festival page's
@@ -78,7 +133,7 @@ export function parseMontalvoOccurrencePage(html) {
   const rangeStart = range ? clock(range[1]) : null;
   const endTime = range ? clock(range[2]) : null;
   const prices = [...body.matchAll(/\bdata-tn-price-amount=["'](\d+(?:\.\d+)?)["']/gi)]
-    .map((match) => Number(match[1]));
+    .map((match) => Number(match[1])).concat(reservedSeatPrices(source));
   // A paid adult ticket outranks a free-child tier or a zero in calendar JSON-LD.
   const hasPaidTickets = prices.some((price) => price > 0);
   const isFree = prices.includes(0) || /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText);
