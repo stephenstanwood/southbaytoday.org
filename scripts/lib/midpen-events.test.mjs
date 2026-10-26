@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import {
   MIDPEN_PRESERVE_CITY,
   midpenClockTime,
+  midpenDetailConfirmsEvent,
   midpenIsoDate,
   midpenPreserveCity,
   midpenText,
@@ -138,6 +139,27 @@ test("parseMidpenDetail pulls the write-up, trailhead and end time", () => {
   assert.doesNotMatch(detail.meetingPlace, /Link to Google Map/);
   assert.equal(detail.startTime, "9:30 AM");
   assert.equal(detail.endTime, "12:30 PM");
+});
+
+test("guided activity detail preserves a required reservation", () => {
+  const html = DETAIL.replace("</body>", "<p>Reservations are required and open two weeks before the activity.</p></body>");
+  assert.equal(parseMidpenDetail(html).registration, "required");
+  assert.equal(parseMidpenDetail(DETAIL).registration, null);
+});
+
+test("a missing listing row survives only when its own detail page confirms the same future occurrence", () => {
+  const prior = {
+    source: "Midpen Open Space",
+    title: "Earthquake Country",
+    date: "2026-09-06",
+    time: "9:30 AM",
+  };
+  assert.equal(midpenDetailConfirmsEvent(DETAIL, prior, "2026-09-04"), true);
+  assert.equal(midpenDetailConfirmsEvent(DETAIL, { ...prior, title: "Different hike" }, "2026-09-04"), false);
+  assert.equal(midpenDetailConfirmsEvent(DETAIL, { ...prior, date: "2026-09-07" }, "2026-09-04"), false);
+  assert.equal(midpenDetailConfirmsEvent(DETAIL, { ...prior, time: "10:30 AM" }, "2026-09-04"), false);
+  assert.equal(midpenDetailConfirmsEvent(DETAIL, prior, "2026-09-07"), false);
+  assert.equal(midpenDetailConfirmsEvent("<html>Unavailable</html>", prior, "2026-09-04"), false);
 });
 
 test("parseMidpenDetail returns nulls rather than throwing on an empty page", () => {

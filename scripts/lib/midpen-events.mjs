@@ -228,13 +228,31 @@ export function parseMidpenDetail(html) {
     .filter((line) => !meetingHaystack.includes(line.slice(0, 60).toLowerCase()))
     .sort((a, b) => b.length - a.length)[0] || null;
 
+  const dateMarkup = String(html || "").match(/event-page__event-date--start[^>]*>([^<]+)</i);
+  const titleMarkup = String(html || "").match(/<h1\b[^>]*class="[^"]*card__title[^"]*"[^>]*>([\s\S]*?)<\/h1>/i);
   return {
+    title: titleMarkup ? midpenText(titleMarkup[1]) : null,
+    date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1])) : null,
     description: paragraph?.replace(/\s+([.,;!?])/g, "$1") || null,
     meetingPlace,
     startTime: rangeMatch ? midpenClockTime(rangeMatch[1]) : null,
     endTime: rangeMatch ? midpenClockTime(rangeMatch[2]) : null,
-    registration: parseMidpenVolunteerAvailability(html),
+    registration: parseMidpenVolunteerAvailability(html)
+      ?? (/\breservations? (?:are|is) required\b/i.test(body) ? "required" : null),
   };
+}
+
+/**
+ * A paged listing can mix cached page versions and omit one row at a boundary.
+ * Retain a previously published occurrence only when its own first-party detail
+ * page still names the same future activity, date and start time.
+ */
+export function midpenDetailConfirmsEvent(html, event, today) {
+  if (event?.source !== "Midpen Open Space" || !event?.date || event.date < today) return false;
+  const detail = parseMidpenDetail(html);
+  return detail.title === event.title
+    && detail.date === event.date
+    && detail.startTime === event.time;
 }
 
 /**

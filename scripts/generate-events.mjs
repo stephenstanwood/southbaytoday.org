@@ -100,6 +100,7 @@ import { officialSnapshotEvents, readOfficialEventSnapshot } from "./lib/officia
 import {
   midpenPreserveCity,
   midpenTrailhead,
+  midpenDetailConfirmsEvent,
   parseMidpenDetail,
   midpenVolunteerRegistration,
   parseMidpenListPage,
@@ -9710,15 +9711,45 @@ async function fetchMidpenEvents() {
         // The district's volunteer portal reports remaining spots separately
         // from its generic signup instructions. Missing capacity still keeps
         // the required-registration gate; it never turns a project into a walk-up.
-        ...(isVolunteer ? { registration: midpenVolunteerRegistration(detail, previous.get(id)) } : {}),
+        ...(detail.registration || isVolunteer
+          ? { registration: isVolunteer ? midpenVolunteerRegistration(detail, previous.get(id)) : detail.registration }
+          : {}),
         kidFriendly: /\b(kid|child|family|families|youth|teen|all ages|junior)\b/i.test(
           `${title} ${description}`,
         ),
       });
     }
 
+    // CDN pages can be from different snapshots. A row at a page boundary
+    // disappeared on Oct 26 even though its detail page still confirmed the
+    // Dec 13 activity. Recheck only a small set of omitted prior occurrences;
+    // a missing, changed or unreachable detail page never retains stale data.
+    const listedIds = new Set(events.map((event) => event.id));
+    const omitted = [...previous.values()].filter((event) =>
+      event.source === "Midpen Open Space"
+      && event.date >= today
+      && !listedIds.has(event.id)
+      && normalizeMidpenOccurrenceUrl(event.url),
+    );
+    if (omitted.length <= 10) {
+      for (const event of omitted) {
+        try {
+          const detailHtml = await fetchText(normalizeMidpenOccurrenceUrl(event.url), { timeout: 25_000 });
+          if (midpenDetailConfirmsEvent(detailHtml, event, today)) {
+            events.push(event);
+            console.log(`  ↩️  Midpen: retained confirmed omitted occurrence ${event.id}`);
+          }
+        } catch {
+          // The page must answer for itself; a failed recheck is not proof.
+        }
+        await new Promise((r) => setTimeout(r, 200));
+      }
+    } else {
+      console.log(`  ⚠️  Midpen: ${omitted.length} prior occurrences omitted; skipping bounded detail recheck`);
+    }
+
     console.log(
-      `  ✅ Midpen Open Space: ${events.length} events (${rows.size - events.length} outside coverage)`,
+      `  ✅ Midpen Open Space: ${events.length} events from ${rows.size} listed rows`,
     );
     return events;
   } catch (err) {
