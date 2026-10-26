@@ -13,6 +13,38 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("finishes raw-source casing and camel-case repairs on the first pass", () => {
+  const source = "Need help accessing SJPL eResources and eBooks? BY APPOINTMENT ONLY One appointment per week per person. Registration IS REQUIRED. Details: https://example.org/eResources?ID=SCARFS";
+  const expected = "Need help accessing SJPL e-resources and e-books? By appointment only. One appointment per week per person. Registration is required. Details: https://example.org/eResources?ID=SCARFS";
+  assert.equal(polishDescription(source), expected);
+  assert.equal(polishDescription(expected), expected);
+
+  const raw = "Join us for stories. For children and their caretakers.;;;, Thank you for your support.";
+  const cleaned = "Join us for stories. For children and their caretakers. Thank you for your support.";
+  assert.equal(polishDescription(raw), cleaned);
+  assert.equal(polishDescription(cleaned), cleaned);
+
+  const group = "Meetup event by BayPiggies.";
+  assert.equal(polishDescription(group), group);
+  assert.equal(polishDescription("Meetup event by BAy Pi Ggies."), group);
+});
+
+test("source-copy typo repairs retain occurrence and attendance information", () => {
+  const source = "Dr, Carol Peyser presents a two-hour concer t on November 7, 2026 at 3:30 PM. Offered i n-person. $10. Registration is required. Details: https://example.org/concer%20t?Time=3:30PM";
+  const actual = polishDescription(source);
+  assert.equal(actual, "Dr. Carol Peyser presents a two-hour concert on November 7, 2026 at 3:30 PM. Offered in-person. $10. Registration is required. Details: https://example.org/concer%20t?Time=3:30PM");
+  assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+  assert.equal(polishDescription(actual), actual);
+  assert.equal(cleanTitle("RPG Meet UP"), "RPG Meet Up");
+  assert.equal(cleanTitle("Scott Lambridis: ST. Ulphia's Dead"), "Scott Lambridis: St. Ulphia's Dead");
+});
+
+test("drops a university preview cut off within a co-host's name", () => {
+  assert.equal(polishDescription("As we celebrate the Jesuit tradition of cura personalis (care for the whole person), we invite you to join Santa Clara School of Law and the St."), "");
+  const complete = "Join us at St. Joseph's Hill. Registration is required.";
+  assert.equal(polishDescription(complete), complete);
+});
+
 test("library grammar repairs retain participation details and are stable on refresh", () => {
   const cases = [
     ["Join a friendly needle works stitch-in from 10 am to 2 pm in the conference room.",

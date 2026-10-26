@@ -832,6 +832,9 @@ const TITLE_FIXES = {
     "Agentic AI doesn't have an intelligence problem; it has a governance problem!",
   "Almaden Quicksilver (Webb Canyon) with Country Inn.":
     "Almaden Quicksilver (Webb Canyon) with Country Inn",
+  "RPG Meet UP": "RPG Meet Up",
+  "ST. Ulphia's Dead": "St. Ulphia's Dead",
+  "Green Exercise Walk/Hike": "Green Exercise Walk / Hike",
   "Korean Indigenous Futures: The Art of Kim Bong-Jun: - K":
     "Korean Indigenous Futures: The Art of Kim Bong-Jun",
   // These source-copy errors have reappeared after earlier manual corrections.
@@ -2067,7 +2070,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
+  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|BayPiggies|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
@@ -2982,7 +2985,78 @@ function polishDescription(text) {
   // becomes De Spain again. URLs are still masked so their bytes stay intact.
   t = fixProperNouns(t);
 
-  return cleanDisplayCopy(t)
+  // Casing, camel-case splitting and English-display cleanup can expose copy
+  // errors only after the earlier repairs have run (eResources → e Resources,
+  // REGISTRATION IS REQUIRED → Registration Is Required, CJK → stray commas).
+  // Finish those repairs on the first source pass. Identifiers and protected
+  // names are still masked; schedules and attendance terms remain intact.
+  t = cleanDisplayCopy(t)
+    .replace(/\be (Resources|Books)\b/g, (_, word) => `e-${word.toLowerCase()}`)
+    .replace(/\bBY Appointment Only One appointment\b/g, "By appointment only. One appointment")
+    .replace(/\bRegistration Is Required\./g, "Registration is required.")
+    .replace(/\bFree, No Registration Required\b/g, "Free. No registration required.")
+    .replace(/\bWe have tutors for you to receive Free homework help with a trained tutor every\b/g,
+      "Trained tutors offer free homework help every")
+    .replace(/\ba Free hands-on Vermicomposting workshop\b/g, "a free hands-on vermicomposting workshop")
+    .replace(/\bCrochet Club's current project: Scarfs\s*$/g, "Crochet Club's current project: scarves.")
+    .replace(/\b(\d{4}) (?=(?:Join us|Join the festivities|Santana Row|Beginning November|Get in the Spirit)\b)/g, "$1. ")
+    .replace(/\.;+[,.]?/g, ".")
+    .replace(/,{2,}/g, ",")
+    .replace(/\s+bolg:,+\s*\(Overdrive\)\.\s*Overdirve:,+\s*Hoopla:\s*\(ADA\)\s*$/i, "")
+    .replace(/^YOU MAY BE Photographed, Videotaped AND\/OR Recorded Please be advised/g,
+      "You may be photographed, videotaped and/or recorded. Please be advised")
+    .replace(/\bRock En Espanol NIGHT\b/g, "Rock En Espanol Night")
+    // Narrow source-copy typos and fused headings, rather than guessing names
+    // or completing a sentence whose missing words may carry factual details.
+    .replace(/\bH ow\b/g, "How")
+    .replace(/\bconcer t\b/g, "concert")
+    .replace(/\bi n-person\b/g, "in-person")
+    .replace(/\bIntrdouction\b/g, "Introduction")
+    .replace(/\bwonderous\b/g, "wondrous")
+    .replace(/\bshakey eggs\b/g, "shaky eggs")
+    .replace(/\bto be by signed by\b/g, "to be signed by")
+    .replace(/\bDr, Carol Peyser\b/g, "Dr. Carol Peyser")
+    .replace(/\bJoin as at the Village Square Homework Club\./g, "Join us at the Village Square Homework Club.")
+    .replace(/\bThis program supported by Friends of Village Square Branch Library\./g,
+      "This program is supported by Friends of Village Square Branch Library.")
+    .replace(/\bWe will be painting mini canvases, enjoy some snacks and watch\b/g,
+      "We will paint mini canvases, enjoy some snacks and watch")
+    .replace(/\bWe will countdown to noon\b/g, "We will count down to noon")
+    .replace(/\bOutta Pocket tour Outta Pocket Tour\b/g, "Outta Pocket Tour")
+    .replace(/\bnot having a computer, /g, "not having a computer; ")
+    .replace(/\bPlease note, that\b/g, "Please note that")
+    .replace(/\bon Monday and Wednesdays\b/g, "on Mondays and Wednesdays")
+    .replace(/\btheir parent and caregivers\b/g, "their parents and caregivers")
+    .replace(/\bRegistration is required a Talleres\b/g, "Registration is required. Talleres")
+    .replace(/\bour volunteer, Kids\b/g, "our volunteer. Kids")
+    .replace(/\bNo dance experience is needed just bring\b/g, "No dance experience is needed; just bring")
+    .replace(/\bwe will be discussing, The Berry Pickers\b/g, "we will be discussing The Berry Pickers")
+    .replace(/\bNo registration required, just drop in\./g, "No registration required; just drop in.")
+    .replace(/\bMarch Free\. No registration required\./g, "March. Free. No registration required.")
+    .replace(/\bcomedic relief May 20:/g, "comedic relief. May 20:")
+    .replace(/\bFree This program is developed\b/g, "Free. This program is developed")
+    .replace(/\b5:00 pm the Storytime librarian\b/g, "5:00 pm. The Storytime librarian")
+    .replace(/\bhas given many meditation workshops and retreats which has enabled\b/g,
+      "has given many meditation workshops and retreats which have enabled")
+    .replace(/\bRecommended for ages 7 and up caregivers are welcomed to join;/g,
+      "Recommended for ages 7 and up. Caregivers are welcome to join;")
+    .replace(/\bSchool 's competitive robotics team\b/g, "School's competitive robotics team")
+    .replace(/\bPhilosophy for Life A friendly reading and discussion group\b/g,
+      "Philosophy for Life: A friendly reading and discussion group")
+    .replace(/\bInstructor: Sang-ah Choi Materials:/g, "Instructor: Sang-ah Choi. Materials:")
+    .replace(/\bShenshen Zhang, pipa Wildly\b/g, "Shenshen Zhang, pipa. Wildly")
+    .replace(/^Abstract Understanding reservoir evolution\b/g, "Abstract: Understanding reservoir evolution")
+    .replace(/\b(\d+:\d+ AM)\. -(\d+:\d+ PM)\b/g, "$1 - $2")
+    .replace(/\bplaying with LEGO's supports\b/g, "playing with LEGOs supports")
+    .replace(/\bMeetup event by BAy Pi Ggies\./g, "Meetup event by BayPiggies.")
+    .replace(/\bResearch & Brew– a showcase\b/g, "Research & Brew – a showcase");
+
+  // This university preview ends inside an organization's name and contains
+  // no complete sentence. Leave the description empty rather than inventing
+  // the missing co-host or an invitation.
+  if (/^As we celebrate the Jesuit tradition of cura personalis\b.*and the St\.$/.test(t)) t = "";
+
+  return t
     .replace(/\uE003(\d+)\uE004/g, (_, index) => sourceNames[Number(index)])
     .replace(/\uE001(\d+)\uE002/g, (_, index) => urls[Number(index)]);
 }
