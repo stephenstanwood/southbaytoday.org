@@ -13,6 +13,49 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("refresh preserves RPG initials and the source's JJJJ Jerome Ellis spelling", () => {
+  assert.equal(cleanTitle("RPG Meetup"), "RPG Meetup");
+  assert.equal(cleanTitle("Rpg Meetup"), "Rpg Meetup");
+  const title = "CLA Presents: JJJJJerome Ellis & heidi andrea restrepo rhodes";
+  assert.equal(cleanTitle(title), title);
+  for (const name of ["JJJJ Jerome Ellis", "JJJJJerome Ellis"]) {
+    const description = `The Center for Literary Arts is pleased to present ${name} and heidi andrea restrepo rhodes for a poetry reading and conversation.`;
+    assert.equal(polishDescription(description), description);
+    assert.equal(polishDescription(polishDescription(description)), description);
+  }
+});
+
+test("company suffixes before a continuing verb do not start a new sentence", () => {
+  for (const source of [
+    "This month, Puppet Art Theater Co. presents Super Tommy! Tickets are not required.",
+    "Acme Inc. hosts a workshop. Bring a friend.",
+    "Acme Ltd. offers classes. No registration required.",
+    "Acme Corp. invites you to a workshop.",
+  ]) {
+    assert.equal(polishDescription(source), source);
+    assert.equal(polishDescription(polishDescription(source)), source);
+  }
+  assert.equal(polishDescription("Visit the Theater Co. bring a friend."),
+    "Visit the Theater Co. Bring a friend.");
+});
+
+test("separates library comma splices while retaining supplied wording and details", () => {
+  const cases = [
+    ["So you want to plant fruit trees, excellent! Join us on November 15 at 1:30 PM.",
+      "So you want to plant fruit trees? Excellent! Join us on November 15 at 1:30 PM."],
+    ["Trurl and Klapaucius are 'constructors', they travel around the universe creating machines.",
+      "Trurl and Klapaucius are 'constructors'; they travel around the universe creating machines."],
+    ["Read a book that has been adapted into a movie, pick an old favorite, or a book with a movie coming to theatres soon.",
+      "Read a book that has been adapted into a movie. Pick an old favorite or a book with a movie coming to theatres soon."],
+  ];
+  for (const [source, expected] of cases) {
+    const actual = polishDescription(source);
+    assert.equal(actual, expected);
+    assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+});
+
 test("corrects the recurring library interview-preparation title typo", () => {
   const title = "Resume Review & Interview Preparation";
   assert.equal(cleanTitle("Resume Review & Interview Prepration"), title);

@@ -1045,6 +1045,8 @@ const SOURCE_EVENT_ACRONYMS = [
   "AWS",
   // Stanford's Structured Liberal Education program publishes "SLE Salon".
   "SLE",
+  // Role-playing game meetups supply these uppercase genre initials.
+  "RPG",
 ];
 
 // Roman numerals in wars, sequels and personal names are not shouted words.
@@ -1950,6 +1952,10 @@ function maskDomainAndDecimalDots(text) {
   // starting a new sentence. Leave other following words for sentence casing.
   t = t.replace(/\b(Bros|Jr|Sr|[A-Z])\.(?=\s+(?:and|or|y|e|o|u)\b)/g,
     `$1${DOT_PLACEHOLDER}`);
+  // A company suffix followed by a continuing verb is part of the subject,
+  // not a sentence boundary ("Puppet Art Theater Co. presents Super Tommy").
+  t = t.replace(/\b(Co|Inc|Ltd|Corp)\.(?=\s+(?:presents|performs|hosts|offers|provides|invites|brings)\b)/g,
+    `$1${DOT_PLACEHOLDER}`);
   // Hostnames ending in a known TLD ("sccld.org", "svlg.org", "TICKETWEB.COM").
   // Case-insensitive so SHOUTY-CASE source text ("TICKETWEB.COM Ticket Resale")
   // gets masked the same as the polite form. Without `i` the dot survives,
@@ -2061,7 +2067,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing)\b/g,
+  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
@@ -2163,6 +2169,12 @@ function polishDescription(text) {
       "A casual beginner-friendly introduction to crocheting.")
     .replace(/\bCrochet Club's current project: Scarfs\s*$/g,
       "Crochet Club's current project: scarves.")
+    .replace(/\bSo you want to plant fruit trees, excellent!/g,
+      "So you want to plant fruit trees? Excellent!")
+    .replace(/\bare 'constructors', they travel\b/g,
+      "are 'constructors'; they travel")
+    .replace(/\bRead a book that has been adapted into a movie, pick an old favorite, or a book with a movie coming to theatres soon\./g,
+      "Read a book that has been adapted into a movie. Pick an old favorite or a book with a movie coming to theatres soon.")
     .replace(/\bDream labs is an art integrated education program\b/g,
       "Dream Labs is an art-integrated education program")
     .replace(/\bCounty of Santa Clara- Office of the District Attorney\s*$/g,
