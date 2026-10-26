@@ -15,6 +15,46 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the dated Linden Tree book club preserves its age and email RSVP without inventing a price", async () => {
+  const raw = { date: "2026-11-29", title: "Middle Grade Book Club: The Wish Ring Cipher", venue: "Linden Tree Books",
+    url: "https://www.lindentreebooks.com/events-calendar/", cost: "free", kidFriendly: false, audienceAge: "all", time: "4:00 PM" };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.cost, null);
+  assert.equal(fixed.registration, "required");
+  assert.equal(fixed.kidFriendly, true);
+  assert.equal(fixed.audienceAge, "kids");
+  assert.match(fixed.attendanceNote, /ages 9.*Email.*RSVP/);
+  assert.equal(fixed.time, raw.time);
+  for (const registration of ["full", "closed"]) assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  for (const other of [{ ...raw, date: "2027-11-29" }, { ...raw, title: "Another book club" }, { ...raw, venue: "Another bookstore" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.equal(events[0].audienceAge, "kids");
+});
+
+test("four dated Triton events retain ticket or RSVP gates and their distinct admission", () => {
+  const cases = [
+    ["2026-10-29", "Impressionism: The Beautiful Revolution – Lecture 4", "paid"],
+    ["2026-11-07", "Harry Clewans Artist Talk", "free"],
+    ["2026-11-08", "The Monuments Men: Reception and Art History Presentation", "free"],
+    ["2026-12-05", "Rose Sellery Artist Talk and Gallery Tour", "free"],
+  ];
+  for (const [date, title, cost] of cases) {
+    const raw = { date, title, venue: "Triton Museum of Art", cost: null, time: "1:00 PM" };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.equal(fixed.cost, cost);
+    assert.equal(fixed.registration, "required");
+    assert.equal(fixed.time, raw.time);
+    if (cost === "paid") assert.match(fixed.costNote, /\$25.*individual lecture/);
+    for (const registration of ["full", "closed"]) assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+    for (const other of [{ ...raw, date: date.replace("2026", "2027") }, { ...raw, venue: "Another museum" }]) assert.equal(applyVerifiedEventFacts(other), other);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  }
+});
+
 test("ICA exhibition blurbs describe the displayed work without inventing newness or inherited objects", async () => {
   const cases = [
     { url: "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/", end: "2026-11-14", pattern: /sculptures by Wanxin Zhang.*Diane Ding/, bad: /new work/i },

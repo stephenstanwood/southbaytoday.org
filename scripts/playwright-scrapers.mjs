@@ -37,7 +37,7 @@ import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost } from "./l
 import {
   parseLindenTreeHeadingLines,
   resolveLindenTreeOffsiteVenue,
-  lindenTreeIsTicketed,
+  lindenTreeEventFacts,
 } from "./lib/linden-tree-heading.mjs";
 import {
   normalizeMountainWineryCard,
@@ -742,7 +742,15 @@ async function scrapeLindenTree(page) {
       const dateStr = `${month} ${day}, ${currentYear}`;
 
       const link = h.querySelector("a")?.href || h.parentElement?.querySelector("a")?.href;
-      events.push({ headLines, headingText: text, date: dateStr, time, link });
+      // Admission, audience and email RSVPs live below the heading. Stop at
+      // the next event boundary so another listing cannot supply these facts.
+      const paragraphs = [];
+      for (let sibling = h.nextElementSibling; sibling; sibling = sibling.nextElementSibling) {
+        if (sibling.matches("h1,h2,h3,hr") || sibling.querySelector("h1,h2,h3")) break;
+        const copy = (sibling.innerText || sibling.textContent || "").trim();
+        if (copy) paragraphs.push(copy);
+      }
+      events.push({ headLines, headingText: text, date: dateStr, time, link, description: paragraphs.join(" ") });
     }
 
     // Also check the text-based listing before the h3s
@@ -807,6 +815,7 @@ async function scrapeLindenTree(page) {
           .includes(candidate.hostname.toLowerCase());
         if (isFirstParty && !/\.html(\?|$)/i.test(candidate.pathname)) eventLink = candidate.href;
       } catch { /* use the organizer calendar below */ }
+      const facts = lindenTreeEventFacts(r.headingText, r.description);
       return {
         title,
         date,
@@ -816,10 +825,9 @@ async function scrapeLindenTree(page) {
         url: eventLink || occurrenceSourceUrl,
         source: "Linden Tree Books",
         category: "arts",
-        // Store events are free; the calendar flags the ticketed ones with a
-        // "Buy Tickets" link, which is the only price evidence on the page.
-        cost: lindenTreeIsTicketed(r.headingText) ? "paid" : "free",
         kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|picture\s+book)/i.test(title),
+        description: r.description || "",
+        ...facts,
         occurrenceEvidence: {
           kind: "first-party-occurrence-page",
           sourceUrl: occurrenceSourceUrl,

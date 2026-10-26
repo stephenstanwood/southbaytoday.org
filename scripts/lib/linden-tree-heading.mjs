@@ -19,6 +19,8 @@
 //
 // Pure string functions, no I/O — see linden-tree-heading.test.mjs.
 
+import { assertsWalkUp, declaredRegistrationAvailability, registrationFromInstructions } from "../../src/lib/south-bay/eventFilters.mjs";
+
 /** Off-site venues Linden Tree actually books, with hand-verified location
  *  data. The store hardcodes its own address on every event it scrapes, so an
  *  off-site event with no entry here would be published at "Linden Tree Books,
@@ -83,11 +85,25 @@ export function resolveLindenTreeOffsiteVenue(offsiteVenueText) {
   return null;
 }
 
-/** The store's calendar links free events as "RSVP Now »" and ticketed ones as
- *  "Buy Tickets Now »". Only the latter is evidence of a price — everything
- *  else keeps the free default rather than guessing. */
+/** "Buy Tickets Now »" establishes paid admission; its absence supplies no price. */
 export function lindenTreeIsTicketed(headingText) {
   return /\b(buy\s+tickets|purchase\s+tickets|tickets\s+on\s+sale)\b/i.test(
     String(headingText || ""),
   );
+}
+
+/** Read only the paragraphs belonging to this heading, never the whole calendar. */
+export function lindenTreeEventFacts(headingText, description = "") {
+  const text = String(description || "").replace(/\s+/g, " ").trim();
+  const cost = lindenTreeIsTicketed(headingText) ? "paid"
+    : /\b(?:this event is free|these free meet-ups|free admission)\b/i.test(text) ? "free" : null;
+  const registration = declaredRegistrationAvailability(text)
+    || (assertsWalkUp(text) ? null : registrationFromInstructions(text));
+  const age = text.match(/\b(?:book club|workshops?)\s+for\s+(?:readers\s+)?ages?\s+(\d{1,2})(?:\+|\s+(?:and|&)\s+(?:up|older))(?=\s|[.!?,]|$)/i);
+  const forKids = age && Number(age[1]) <= 12;
+  return {
+    cost,
+    ...(registration ? { registration } : {}),
+    ...(forKids ? { kidFriendly: true, audienceAge: "kids" } : {}),
+  };
 }

@@ -55,6 +55,23 @@ async function runWith(events) {
   }
 }
 
+test("Stanford retains a current full-capacity notice before display truncation", async () => {
+  const tomorrow = dayPT(1);
+  const instances = [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:15:00-07:00` }];
+  const introduction = "A public talk about international affairs. ".repeat(12);
+  const rows = await runWith([
+    localistEvent({ id: 1, title: "After Fission", instances,
+      description_text: introduction + "Registration is at full capacity. Check the organizer for updates." }),
+    localistEvent({ id: 2, instances,
+      description_text: "If registration is at full capacity, check another session." }),
+  ]);
+  assert.equal(rows[0].registration, "full");
+  assert.equal(rows[0].time, "12:00 PM");
+  assert.equal(rows[0].endTime, "1:15 PM");
+  assert.equal(rows[0].cost, null, "capacity does not establish admission price");
+  assert.equal(rows[1].registration, undefined);
+});
+
 test("Stanford's Class/Seminar format outranks an industrial park in the subject", async () => {
   // The October 26 Constructing Utopias listing declares Class/Seminar.
   // Its reference to Suzhou Industrial Park does not make it an outdoor trip.

@@ -5,7 +5,24 @@ import {
   parseLindenTreeHeadingLines,
   resolveLindenTreeOffsiteVenue,
   lindenTreeIsTicketed,
+  lindenTreeEventFacts,
 } from "./linden-tree-heading.mjs";
+
+test("Linden Tree's book-club body retains email RSVP and its advertised age without inventing free admission", () => {
+  const facts = lindenTreeEventFacts("Middle Grade Book Club: The Wish Ring Cipher\nSunday, November 29 at 4pm",
+    "It's the next meeting of our middle grade book club for ages 9+! This month's book is The Wish Ring Cipher. Please email the bookseller to RSVP.");
+  assert.deepEqual(facts, { cost: null, registration: "required", kidFriendly: true, audienceAge: "kids" });
+  assert.deepEqual(lindenTreeEventFacts("Author Talk"), { cost: null });
+});
+
+test("Linden Tree keeps explicit free admission separate from paid tickets and optional reminders", () => {
+  assert.equal(lindenTreeEventFacts("Author Talk", "This event is free, but purchase a book to enter the signing line.").cost, "free");
+  assert.equal(lindenTreeEventFacts("Book Launch\nBuy Tickets Now »", "Free parking.").cost, "paid");
+  assert.equal(lindenTreeEventFacts("Author Talk", "Free parking and free refreshments.").cost, null);
+  assert.equal(lindenTreeEventFacts("Author Talk", "No RSVP required. Sign up for a reminder.").registration, undefined);
+  assert.equal(lindenTreeEventFacts("Author Talk", "Registration is at full capacity.").registration, "full");
+  assert.equal(lindenTreeEventFacts("Workshop", "A workshop for ages 50+.").audienceAge, undefined);
+});
 
 // ---------------------------------------------------------------------------
 // parseLindenTreeHeadingLines

@@ -20,7 +20,22 @@ import {
   seriesStartedBeforeEvent,
   virtualFromSourceSignal,
   walkUpSupportedByEventText,
+  declaredRegistrationAvailability,
 } from "./eventFilters.mjs";
+
+test("explicit capacity notices close registration without treating conditions or history as current", () => {
+  for (const text of [
+    "Registration is at full capacity\n\nAbout the event: a public talk.",
+    "Enrollment is now at capacity. Check for another session.",
+    "Registration is full.",
+  ]) assert.equal(declaredRegistrationAvailability(text), "full", text);
+  for (const text of [
+    "If registration is at full capacity, check another date.",
+    "Last year's registration is at full capacity in this historical example.",
+    "Registration is not at full capacity.",
+    "Registration is open. The full program covers nuclear history.",
+  ]) assert.equal(declaredRegistrationAvailability(text), null, text);
+});
 
 test("LibCal's required-registration category survives a signup window that has not opened", () => {
   // Los Gatos 17286098 (Jan 13, 2027): its form is not enabled until Dec 23,

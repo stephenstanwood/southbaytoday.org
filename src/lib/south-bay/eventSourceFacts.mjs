@@ -9,6 +9,49 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The heading-only snapshot lost the club's email RSVP and ages 9+ copy,
+  // and the calendar never states a price for this occurrence. Keep these
+  // facts until the repaired scraper supplies its own scoped body.
+  // https://www.lindentreebooks.com/events-calendar/
+  // Evidence: docs/qa/2026-10-26-1807-fact-check.md.
+  {
+    date: "2026-11-29",
+    title: /^Middle Grade Book Club: The Wish Ring Cipher$/i,
+    venue: /^Linden Tree Books$/i,
+    facts: {
+      cost: null,
+      registration: REGISTRATION_REQUIRED,
+      kidFriendly: true,
+      audienceAge: "kids",
+      attendanceNote: "For readers ages 9 and older. Email the bookstore to RSVP using its events calendar.",
+    },
+  },
+  // These newly received Triton occurrences explicitly request Eventbrite
+  // RSVPs. The original museum newsletter and its calendar establish the
+  // individual lecture fee and distinguish it from the free artist talks.
+  // https://www.tritonmuseum.org/events
+  // Evidence: docs/qa/2026-10-26-1807-fact-check.md.
+  {
+    date: "2026-10-29",
+    title: /^Impressionism: The Beautiful Revolution [–—-] Lecture 4$/i,
+    venue: /^Triton Museum of Art$/i,
+    facts: {
+      cost: "paid", costNote: "$25 for an individual lecture.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Purchase tickets through the organizer's Eventbrite page.",
+    },
+  },
+  ...[
+    ["2026-11-07", /^Harry Clewans Artist Talk$/i],
+    ["2026-11-08", /^The Monuments Men: Reception and Art History Presentation$/i],
+    ["2026-12-05", /^Rose Sellery Artist Talk and Gallery Tour$/i],
+  ].map(([date, title]) => ({
+    date, title, venue: /^Triton Museum of Art$/i,
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free admission. RSVP through the organizer's Eventbrite page.",
+    },
+  })),
   // The exhibition pages describe selected studio work and an exploration
   // of inheritance, not newly created work by both artists or inherited
   // physical objects. Keep cached blurbs within those verified claims.

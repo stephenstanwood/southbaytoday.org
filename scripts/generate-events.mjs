@@ -4140,6 +4140,9 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // Read attendance notices before truncation. The October 27 After
+      // Fission listing says registration is at full capacity in its body.
+      const registration = declaredRegistrationAvailability(description);
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.
       // https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640
@@ -4213,6 +4216,7 @@ async function fetchStanfordEvents() {
         // a ticket price. Only a stated price is evidence of a charge; a bare
         // ticket URL is often free registration, so it stays unknown (null).
         cost: localistCost(ev),
+        ...(registration ? { registration } : {}),
         description: truncate(description),
         url: ev.localist_url || `https://events.stanford.edu/event/${ev.id}`,
         source: "Stanford Events",

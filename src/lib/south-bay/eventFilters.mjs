@@ -235,6 +235,9 @@ export function declaredRegistrationAvailability(html) {
   }
   for (const sentence of text.split(/[.!?]+[)"'’”]*\s*/)) {
     const statement = sentence.trim();
+    if (/^(?:registration|enrollment)\s+is\s+(?:now\s+)?(?:full|at\s+(?:full\s+)?capacity)\b/i.test(statement)) {
+      return REGISTRATION_FULL;
+    }
     if (/^(?:registration|enrollment)\s+(?:(?:is|has)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
       return REGISTRATION_CLOSED;
     }
