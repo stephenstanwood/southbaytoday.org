@@ -987,6 +987,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // American Educational Research Association, as published in Stanford's
+  // Maisha Winn article title. Preserve AERA without changing the Aera brand.
+  "AERA",
   // Stanford's sleep/circadian community series publishes these initials.
   // https://events.stanford.edu/event/cscs-community-series-parsing-perplexion-studying-the-role-of-sleep-dysfunction-in-postoperative-delirium-with-miles-berger-md-phd
   "CSCS",

@@ -9,6 +9,65 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The organizer's occurrence page corrects its newsletter's caterer typo
+  // and explicitly prices members, guests and walk-ins separately.
+  // https://business.campbellchamber.net/events/details/monthly-luncheon-16558
+  // Evidence: docs/qa/2026-10-26-2207-fact-check.md.
+  {
+    date: "2026-11-18",
+    url: "https://business.campbellchamber.net/events/details/monthly-luncheon-16558",
+    facts: {
+      cost: "paid", costNote: "$35 for Chamber members; $40 for guests and all walk-ins.",
+      attendanceNote: "$35 for Chamber members; $40 for guests and all walk-ins.",
+    },
+    copyReplacements: [[/\bTable & Terrance\b/g, "Table & Terrace"]],
+  },
+  // Free workshop, with a requested RSVP and a bring-your-own-lunch notice.
+  // https://business.campbellchamber.net/events/details/lunch-learn-communicating-for-results-16553
+  // Evidence: docs/qa/2026-10-26-2207-fact-check.md.
+  {
+    date: "2026-10-30",
+    url: "https://business.campbellchamber.net/events/details/lunch-learn-communicating-for-results-16553",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "The organizer requests an RSVP. Bring your own lunch and a guest.",
+    },
+  },
+  // The original Chamber newsletter supplies a ticket link, date and clocks.
+  // It does not establish the price; preserve unknown admission rather than
+  // borrowing a fee from another brunch or claiming checkout was accessible.
+  // Evidence: docs/qa/2026-10-26-2207-fact-check.md.
+  {
+    date: "2026-11-14", url: "https://buy.stripe.com/cNi6oH5XSbIJ4ECarc3oA08",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Reserve tickets through the organizer before attending.",
+    },
+  },
+  // These three official ticket pages give 655 Campus Drive, not the 641
+  // copied into newsletter intake. Keep their 7 PM clocks and ticket gates.
+  // Evidence: docs/qa/2026-10-26-2207-fact-check.md.
+  ...[
+    ["2026-11-02", "eastern-washington-0jbp1f"],
+    ["2026-11-06", "oakland-6av258"],
+    ["2026-11-09", "rice-vtjdko"],
+  ].map(([date, opponent]) => ({
+    date, url: `https://tickets.gostanford.com/events/mens-basketball-vs-${opponent}`,
+    facts: {
+      address: "655 Campus Drive, Stanford, CA 94305",
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Tickets are required; purchase through Stanford's official ticket page.",
+    },
+  })),
+  // Restore the source's research-association initials in this article title.
+  // Its Localist record leaves price unset despite the page's zero-price
+  // schema offer. Keep admission unknown while that evidence conflicts.
+  // Evidence: docs/qa/2026-10-26-2207-fact-check.md.
+  {
+    date: "2026-10-27",
+    url: "https://events.stanford.edu/event/maisha-winn-futuring-black-lives-independent-black-institutions-and-the-literary-imagination",
+    copyReplacements: [[/\bAera Presidential Address\b/g, "AERA Presidential Address"]],
+  },
   // The heading-only snapshot lost the club's email RSVP and ages 9+ copy,
   // and the calendar never states a price for this occurrence. Keep these
   // facts until the repaired scraper supplies its own scoped body.

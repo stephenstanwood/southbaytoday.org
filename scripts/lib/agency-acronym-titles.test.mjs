@@ -4,6 +4,13 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves the source's AERA research-association initials without respelling the Aera brand", () => {
+  assert.equal(cleanTitle("AERA Presidential Address 2026"), "AERA Presidential Address 2026");
+  assert.equal(polishDescription('Read "AERA Presidential Address 2026 The Future Is Here."'),
+    'Read "AERA Presidential Address 2026 The Future Is Here."');
+  assert.equal(cleanTitle("Aera Technology talk"), "Aera Technology talk");
+});
+
 test("preserves source-published SMASH, MSET and SJYS initials in titles and prose", () => {
   for (const title of ["SMASH Maker Fair", "MSET Cuttlefish Robotics Team", "SJYS presents Philharmonic Orchestra's 26-27 Season Opener"]) {
     assert.equal(cleanTitle(title), title);

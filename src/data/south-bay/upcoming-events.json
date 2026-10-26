@@ -19928,7 +19928,9 @@
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Attend a ticketed brunch honoring local veterans at the Orchard City Banquet Hall.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "registration": "required",
+      "attendanceNote": "Reserve tickets through the organizer before attending."
     },
     {
       "id": "stanford-53954322982011-2026-10-26",
@@ -23525,7 +23527,7 @@
       "city": "palo-alto",
       "category": "education",
       "cost": null,
-      "description": "Learn more about Professor Winn's work in this May 2026 article, \"Aera Presidential Address 2026 The Future Is Here: Historical Signals in Education Research.\"",
+      "description": "Learn more about Professor Winn's work in this May 2026 article, \"AERA Presidential Address 2026 The Future Is Here: Historical Signals in Education Research.\"",
       "url": "https://events.stanford.edu/event/maisha-winn-futuring-black-lives-independent-black-institutions-and-the-literary-imagination",
       "source": "Stanford Events",
       "kidFriendly": false,
@@ -23805,15 +23807,17 @@
       "address": "Nordahl Hall, 580 Parr Ave, Los Gatos",
       "city": "los-gatos",
       "category": "food",
-      "cost": null,
-      "description": "Campbell City Manager Brian Loventhal gives a Campbell city update at the Campbell Chamber's final luncheon of 2026, with lunch by Table & Terrance.",
+      "cost": "paid",
+      "description": "Campbell City Manager Brian Loventhal gives a Campbell city update at the Campbell Chamber's final luncheon of 2026, with lunch by Table & Terrace.",
       "url": "https://business.campbellchamber.net/events/details/monthly-luncheon-16558",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1766977752227-4131b0033b47?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwbWVhbCUyMGNhbGlmb3JuaWF8ZW58MHwyfHx8MTc3NzE5NTgyOHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Hear Campbell City Manager Brian Loventhal give a city update over lunch by Table & Terrance at the Chamber's final luncheon of 2026.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "blurb": "Hear Campbell City Manager Brian Loventhal give a city update over lunch by Table & Terrace at the Chamber's final luncheon of 2026.",
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "costNote": "$35 for Chamber members; $40 for guests and all walk-ins.",
+      "attendanceNote": "$35 for Chamber members; $40 for guests and all walk-ins."
     },
     {
       "id": "midpen-92a3ac3386de9988",
@@ -23997,10 +24001,10 @@
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "Stanford tips off its season at home against Eastern Washington in a student-appreciation night. The Stanford Counterpoint a cappella group sings the national anthem, and the DV8 hip-hop dance group performs at halftime. Tickets required.",
       "url": "https://tickets.gostanford.com/events/mens-basketball-vs-eastern-washington-0jbp1f",
       "source": "City Newsletter",
@@ -24008,7 +24012,9 @@
       "audienceAge": "all",
       "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2F5e3edba6-f92c-41ba-aec7-4abb638da7d2.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
       "blurb": "Watch Stanford open its home season against Eastern Washington, with a cappella anthem singers and a hip-hop halftime show.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "registration": "required",
+      "attendanceNote": "Tickets are required; purchase through Stanford's official ticket page."
     },
     {
       "id": "inbound-9bdb4ac9633050ad",
@@ -24214,7 +24220,7 @@
       "address": "Courtyard by Marriott",
       "city": "campbell",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "Ken Johnson leads a free discussion on communication tools for getting better results with and through others. Open to all.",
       "url": "https://business.campbellchamber.net/events/details/lunch-learn-communicating-for-results-16553",
       "source": "City Newsletter",
@@ -24222,7 +24228,9 @@
       "audienceAge": "all",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/lunch-learn-communicating-for-results-courtyard-by-marriott-campbell-1793052197055-280.webp",
       "blurb": "Learn communication tools for getting better results with and through others in a free lunchtime discussion led by Ken Johnson.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "registration": "required",
+      "attendanceNote": "The organizer requests an RSVP. Bring your own lunch and a guest."
     },
     {
       "id": "stanford-54294023290378-2026-10-27",
@@ -32683,10 +32691,10 @@
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "Stanford plays Rice at Maples Pavilion to close out the homestand before its first road trip of the season. Tickets required.",
       "url": "https://tickets.gostanford.com/events/mens-basketball-vs-rice-vtjdko",
       "source": "City Newsletter",
@@ -32694,7 +32702,9 @@
       "audienceAge": "all",
       "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2Fef23f37e-1b1e-4741-ba51-48b950b88789.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
       "blurb": "Watch Stanford take on Rice at Maples Pavilion in the final game of the homestand.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "registration": "required",
+      "attendanceNote": "Tickets are required; purchase through Stanford's official ticket page."
     },
     {
       "id": "southbaymt-ce05524cc4e0fe72",
@@ -33146,10 +33156,10 @@
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "Stanford hosts Oakland at Maples Pavilion on a Friday night, the second game of the homestand. Tickets required.",
       "url": "https://tickets.gostanford.com/events/mens-basketball-vs-oakland-6av258",
       "source": "City Newsletter",
@@ -33157,7 +33167,9 @@
       "audienceAge": "all",
       "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2F2f71f176-1b0f-4c92-9b8b-f5b09ef660cd.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
       "blurb": "Watch Stanford host Oakland at Maples Pavilion on a Friday night, the second game of the homestand.",
-      "firstSeenAt": "2026-10-26T22:03:29.769Z"
+      "firstSeenAt": "2026-10-26T22:03:29.769Z",
+      "registration": "required",
+      "attendanceNote": "Tickets are required; purchase through Stanford's official ticket page."
     },
     {
       "id": "tm-rZ7HnEZ1AfFw00",

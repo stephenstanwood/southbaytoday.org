@@ -15,6 +15,76 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Campbell's dated newsletter events retain organizer fees, RSVP requests and corrected catering name", async () => {
+  const luncheon = {
+    date: "2026-11-18", url: "https://business.campbellchamber.net/events/details/monthly-luncheon-16558",
+    time: "11:30 AM", endTime: "1:00 PM", venue: "Nordahl Hall", cost: null,
+    description: "Lunch by Table & Terrance.", blurb: "Hear a city update over lunch by Table & Terrance.",
+  };
+  const fixed = applyVerifiedEventFacts(luncheon);
+  assert.equal(fixed.cost, "paid");
+  assert.match(fixed.costNote, /\$35.*members.*\$40.*guests.*walk-ins/i);
+  assert.match(fixed.attendanceNote, /\$35.*members.*\$40.*guests.*walk-ins/i);
+  assert.match(fixed.description, /Table & Terrace/);
+  assert.match(fixed.blurb, /Table & Terrace/);
+  assert.equal(fixed.registration, undefined, "the organizer explicitly allows walk-ins");
+  const workshop = {
+    date: "2026-10-30", url: "https://business.campbellchamber.net/events/details/lunch-learn-communicating-for-results-16553",
+    time: "12:00 PM", endTime: "1:00 PM", cost: null, registration: "closed",
+  };
+  const reserved = applyVerifiedEventFacts(workshop);
+  assert.equal(reserved.cost, "free");
+  assert.equal(reserved.registration, "closed", "a sourced RSVP request cannot reopen signup");
+  assert.equal(applyVerifiedEventFacts({ ...workshop, registration: undefined }).registration, "required");
+  assert.match(reserved.attendanceNote, /RSVP.*Bring your own lunch/);
+  const gala = {
+    date: "2026-11-14", url: "https://buy.stripe.com/cNi6oH5XSbIJ4ECarc3oA08", cost: null,
+    time: "10:30 AM", endTime: "1:00 PM",
+  };
+  const ticketed = applyVerifiedEventFacts(gala);
+  assert.equal(ticketed.registration, "required");
+  assert.equal(ticketed.cost, null, "the original newsletter does not establish a ticket price");
+  assert.equal(ticketed.costNote, undefined);
+  for (const raw of [luncheon, workshop, gala]) {
+    const corrected = applyVerifiedEventFacts(raw);
+    for (const field of ["date", "url", "time", "endTime", "venue"]) assert.equal(corrected[field], raw[field]);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const anotherYear = { ...raw, date: raw.date.replace("2026", "2027") };
+    assert.equal(applyVerifiedEventFacts(anotherYear), anotherYear);
+    const anotherUrl = { ...raw, url: "https://example.com/unrelated" };
+    assert.equal(applyVerifiedEventFacts(anotherUrl), anotherUrl);
+  }
+  const events = [{ ...luncheon }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /Table & Terrace/);
+});
+
+test("three dated Stanford basketball ticket pages retain their actual Maples address and ticket gate", () => {
+  const games = [
+    ["2026-11-02", "eastern-washington-0jbp1f"],
+    ["2026-11-06", "oakland-6av258"],
+    ["2026-11-09", "rice-vtjdko"],
+  ];
+  for (const [date, opponent] of games) {
+    const raw = { date, url: `https://tickets.gostanford.com/events/mens-basketball-vs-${opponent}`,
+      address: "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+      venue: "Maples Pavilion", time: "7:00 PM", endTime: null, cost: null };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.equal(fixed.address, "655 Campus Drive, Stanford, CA 94305");
+    assert.equal(fixed.cost, "paid");
+    assert.equal(fixed.registration, "required");
+    for (const status of ["full", "closed"]) {
+      assert.equal(applyVerifiedEventFacts({ ...raw, registration: status }).registration, status);
+    }
+    for (const field of ["date", "url", "venue", "time", "endTime"]) assert.equal(fixed[field], raw[field]);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const anotherYear = { ...raw, date: date.replace("2026", "2027") };
+    assert.equal(applyVerifiedEventFacts(anotherYear), anotherYear);
+    const anotherUrl = { ...raw, url: "https://tickets.gostanford.com/events/unrelated" };
+    assert.equal(applyVerifiedEventFacts(anotherUrl), anotherUrl);
+  }
+});
+
 test("the dated Linden Tree book club preserves its age and email RSVP without inventing a price", async () => {
   const raw = { date: "2026-11-29", title: "Middle Grade Book Club: The Wish Ring Cipher", venue: "Linden Tree Books",
     url: "https://www.lindentreebooks.com/events-calendar/", cost: "free", kidFriendly: false, audienceAge: "all", time: "4:00 PM" };
