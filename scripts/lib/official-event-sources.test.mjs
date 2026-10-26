@@ -444,12 +444,55 @@ test("Montalvo uses ticket-page admission and audience while null and blank cale
     const events = await fetchMontalvoEvents();
     assert.equal(events.length, 5);
     assert.equal(requested.length, 6);
-    assert.deepEqual(events.map((event) => event.cost), ["paid", "paid", "paid", "paid", "free"]);
+    assert.deepEqual(events.map((event) => event.cost), ["paid", null, null, null, "free"]);
     assert.equal(events[0].kidFriendly, true);
     assert.equal(events[1].kidFriendly, false);
     assert.ok(events.every((event) => event.date === date && event.time === "11:00 AM"));
   } finally {
     globalThis.fetch = originalFetch;
+  }
+});
+
+test("failed Montalvo detail reads retain verified admission and audience only for the same occurrence", async (t) => {
+  const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  const url = "https://my.montalvoarts.org/verified-community-showcase";
+  const graph = { "@type": "Event", name: "Community Showcase", startDate: `${date}T13:00:00+00:00`, url };
+  let unavailable = false;
+  t.mock.method(globalThis, "fetch", async (target) => {
+    if (String(target).endsWith("/events-calendar/")) {
+      return new Response(`<script type="application/ld+json">${JSON.stringify(graph)}</script>`);
+    }
+    assert.equal(String(target), url);
+    return unavailable ? new Response("Unavailable", { status: 403 }) : new Response(`
+      <h1 id="tn-page-heading">Community Showcase</h1>
+      <p class="tn-event-detail__description">A free, family-friendly afternoon.</p>
+      <div data-tn-price-amount="0.0000"></div>`);
+  });
+  const [verified] = await fetchMontalvoEvents({ previousEvents: [] });
+  assert.equal(verified.cost, "free");
+  assert.equal(verified.kidFriendly, true);
+  verified.registration = "full";
+  verified.blurb = "Cached copy must not be carried into source ingestion.";
+  unavailable = true;
+  const [retained] = await fetchMontalvoEvents({ previousEvents: [verified] });
+  assert.equal(retained.cost, "free");
+  assert.equal(retained.kidFriendly, true);
+  assert.deepEqual(retained.occurrenceEvidence, verified.occurrenceEvidence, "retain the original verification timestamp");
+  assert.equal(retained.registration, undefined, "do not copy old availability");
+  assert.equal(retained.blurb, undefined);
+  assert.equal(retained.date, date);
+  assert.equal(retained.time, "1:00 PM");
+  for (const prior of [
+    { ...verified, id: "another-occurrence" },
+    { ...verified, url: `${url}-different` },
+    { ...verified, date: "2025-01-01" },
+    { ...verified, occurrenceEvidence: undefined },
+    { ...verified, occurrenceEvidence: { ...verified.occurrenceEvidence, sourceUrl: `${url}-different` } },
+  ]) {
+    const [unverified] = await fetchMontalvoEvents({ previousEvents: [prior] });
+    assert.equal(unverified.cost, null, "an unverified price cannot default to paid");
+    assert.equal(unverified.kidFriendly, false);
+    assert.equal(unverified.occurrenceEvidence, undefined);
   }
 });
 

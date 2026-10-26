@@ -87,7 +87,7 @@ export function parseMontalvoOccurrencePage(html) {
     "tn-production-season-detail-page__description",
     "tn-prod-season-header__description-text-content",
   ].map((className) => textContent(contentForClass(body, className))).join(" ");
-  const familyAudience = /\b(?:whole family|family event|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
+  const familyAudience = /\b(?:whole family|family event|family[- ]friendly|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {

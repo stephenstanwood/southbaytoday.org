@@ -986,6 +986,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Stanford's sleep/circadian community series publishes these initials.
+  // https://events.stanford.edu/event/cscs-community-series-parsing-perplexion-studying-the-role-of-sleep-dysfunction-in-postoperative-delirium-with-miles-berger-md-phd
+  "CSCS",
   // Plant & Soul California's organizer record publishes PASCA, not Pasca.
   // https://www.meetup.com/pasca-volunteers/events/317111867/
   "PASCA",
@@ -4809,7 +4812,7 @@ function stripBogusUtcOffset(str) {
   return typeof str === "string" ? str.replace(/(?:Z|\+00:00)$/, "") : str;
 }
 
-async function fetchMontalvoEvents() {
+async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.events ?? [] } = {}) {
   console.log("  ⏳ Montalvo Arts Center...");
   try {
     const html = await fetchText("https://montalvoarts.org/experience/events-calendar/");
@@ -4839,6 +4842,11 @@ async function fetchMontalvoEvents() {
           venue: "Montalvo Arts Center",
         });
         if (!run) continue;
+        // null means unverified. A missing offer is not evidence of either
+        // free or paid admission; a verified ticket page can supply it below.
+        const rawPrice = item.offers?.price;
+        const price = rawPrice != null && String(rawPrice).trim() !== ""
+          ? Number(rawPrice) : NaN;
         events.push({
           id: h("montalvo", url, startDate),
           title: name,
@@ -4853,9 +4861,7 @@ async function fetchMontalvoEvents() {
           address: "15400 Montalvo Rd, Saratoga",
           city: "saratoga",
           category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
-          // Missing/null/blank offer prices do not establish free admission.
-          cost: item.offers?.price != null && String(item.offers.price).trim() !== ""
-            && Number(item.offers.price) === 0 ? "free" : "paid",
+          cost: Number.isFinite(price) && price >= 0 ? (price === 0 ? "free" : "paid") : null,
           description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
           url,
           source: "Montalvo Arts Center",
@@ -4872,11 +4878,32 @@ async function fetchMontalvoEvents() {
       return true;
     });
 
+    // A partial detail-page failure must not replace known admission or
+    // audience facts with sparse calendar defaults. The exact ID includes
+    // the source start timestamp; require matching date, URL and provenance
+    // too. Keep the original check time, never old availability or cached copy.
+    function retainedAdmission(event) {
+      const previous = previousEvents.find((row) => row.id === event.id
+        && row.url === event.url && row.date === event.date
+        && row.occurrenceEvidence?.kind === "first-party-occurrence-page"
+        && row.occurrenceEvidence.sourceUrl === event.url
+        && row.occurrenceEvidence.date === event.date
+        && Number.isFinite(Date.parse(row.occurrenceEvidence.checkedAt)));
+      if (!previous) return event;
+      return {
+        ...event,
+        cost: previous.cost ?? event.cost,
+        kidFriendly: previous.kidFriendly ?? event.kidFriendly,
+        occurrenceEvidence: previous.occurrenceEvidence,
+      };
+    }
+
     const enriched = await Promise.all(unique.map(async (event) => {
       try {
         const detailHtml = await fetchText(event.url);
         const detail = parseMontalvoOccurrencePage(detailHtml);
-        if (!detail || (detail.date && detail.date !== event.date)) return event;
+        if (!detail) return retainedAdmission(event);
+        if (detail.date && detail.date !== event.date) return event;
         // An ongoing run is anchored to today and deliberately clock-free; the
         // occurrence page still carries the opening night's curtain time, and
         // stamping that back on would say the exhibition starts at 7:30 PM.
@@ -4896,7 +4923,7 @@ async function fetchMontalvoEvents() {
           },
         };
       } catch {
-        return event;
+        return retainedAdmission(event);
       }
     }));
 

@@ -22,6 +22,13 @@ test("preserves Stanford's source-supplied SLE program initials", () => {
   assert.equal(cleanTitle("ANNUAL Salon"), "Annual Salon");
 });
 
+test("preserves Stanford's published CSCS series initials in titles and prose", () => {
+  const title = 'CSCS Community Series: "Parsing Perplexion"';
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription("Join the CSCS Community Series."), "Join the CSCS Community Series.");
+});
+
 // ---------------------------------------------------------------------------
 // Local agency acronyms in event titles
 // ---------------------------------------------------------------------------

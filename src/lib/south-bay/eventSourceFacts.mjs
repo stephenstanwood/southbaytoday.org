@@ -9,6 +9,64 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The exhibition pages describe selected studio work and an exploration
+  // of inheritance, not newly created work by both artists or inherited
+  // physical objects. Keep cached blurbs within those verified claims.
+  // Evidence: docs/qa/2026-10-26-1007-fact-check.md.
+  {
+    dateFrom: "2026-10-16", dateThrough: "2026-11-14",
+    url: "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/",
+    facts: { blurb: "See sculptures by Wanxin Zhang alongside work by Diane Ding at ICA San José." },
+  },
+  {
+    dateFrom: "2026-09-18", dateThrough: "2027-02-21",
+    url: "https://www.icasanjose.org/current-exhibitions/gregito-togiveandtake/",
+    facts: { blurb: "Explore Greg Ito's paintings, sculptures and video installation about family, sacrifice and inheritance at ICA San José." },
+  },
+  // First-party ticket pages distinguish the free community showcase from
+  // the paid student performance. Sparse calendar/booking responses must not
+  // restore a fee or turn the performing ensemble into a craft activity.
+  // Evidence: docs/qa/2026-10-26-1007-fact-check.md.
+  {
+    date: "2026-11-01", url: "https://my.montalvoarts.org/3248/3250",
+    facts: {
+      cost: "free", kidFriendly: true,
+      attendanceNote: "No parking at Montalvo. Use free parking and shuttle service from West Valley College.",
+    },
+  },
+  {
+    date: "2026-11-04", url: "https://my.montalvoarts.org/overview/3066",
+    facts: {
+      cost: "paid", kidFriendly: true,
+      description: "Mosaic America presents music, dance and storytelling celebrating Diwali and other festivals in Montalvo's performing arts series for students in grades K–8.",
+      blurb: "See Mosaic America perform music, dance and storytelling in Montalvo's student series for grades K–8.",
+    },
+  },
+  // JOIN_OPEN does not override an occurrence's explicit RSVP instructions.
+  // Preserve the source's deadline and any current full/closed state below.
+  // Evidence: docs/qa/2026-10-26-1007-fact-check.md (authenticated records).
+  {
+    date: "2026-11-13", url: "https://www.meetup.com/bhajanclubbingjamming/events/316961984/",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Confirm attendance on the organizer's Meetup event before joining.",
+    },
+  },
+  {
+    date: "2026-12-03", url: "https://www.meetup.com/baypiggies/events/317138013/",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "RSVP on Meetup by Wednesday, December 2, the night before the event.",
+    },
+  },
+  {
+    date: "2026-10-31", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316656187/",
+    facts: {
+      cost: "paid", costNote: "Organizer contribution requested; confirm the amount before joining.",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "RSVP and organizer approval are required; do not walk in. The organizer requests a $5–$20 contribution at check-in and reserves the right to ask non-contributors to leave.",
+    },
+  },
   // The October 23 Sunnyvale Library newsletter explicitly requires booking
   // for these three occurrences. Its separate reminder signup for the
   // November 1 dance program does not establish an attendance requirement.
@@ -1447,19 +1505,22 @@ const CORRECTIONS = [
     ],
   },
   // SJPL's translated ticket-pickup sentence repeats "30 minutes" in Chinese.
-  // Earlier English-only cleanup left its 30 attached to the next sentence;
-  // the organizer requires ALL first-time participants to sign the waiver.
+  // English-only cleanup leaves the translated pickup clock's 30 attached
+  // to the next sentence. ALL first-time participants must sign the waiver;
+  // this is not a headcount. Protect the published fall series through its
+  // final December 17 session, rather than repairing each Thursday anew.
   // https://sjpl.bibliocommons.com/events/6aa49028101eb7003f2f6dfd
   // Evidence: docs/qa/2026-10-15-0407-fact-check.md and
-  // docs/qa/2026-10-21-1607-fact-check.md (October 22 occurrence).
-  ...[
-    ["2026-10-15", "6aa49028101eb7003f2f6dfd"],
-    ["2026-10-22", "6aa49028101eb7003f2f6dfe"],
-  ].map(([date, sourceId]) => ({
-    date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
-    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],
-    copyReplacements: [[/\b30\s+first-time participants will need to sign a waiver form\b/gi, "First-time participants will need to sign a waiver form"]],
-  })),
+  // docs/qa/2026-10-21-1607-fact-check.md and
+  // docs/qa/2026-10-26-1007-fact-check.md (October 29 source HTML).
+  {
+    dateFrom: "2026-10-15", dateThrough: "2026-12-17",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\//.test(event.url || "")
+      && /^Line Dancing for Beginners\s*\/\s*Improvers$/i.test(event.title || "")
+      && event.venue === "Calabazas Library"
+      && /\btickets will be available(?: at the desk)? 30 minutes in advance\b/i.test(event.description || ""),
+    copyReplacements: [[/(advance\.|ticket\.)\s+30\s+(First-time participants will need to sign a waiver form\b)/gi, "$1 $2"]],
+  },
   // The library's Frida screening body misspells Kahlo's husband's surname.
   // Museo Frida Kahlo's biography identifies Diego Rivera; keep the screening
   // date and the rest of the organizer's description.

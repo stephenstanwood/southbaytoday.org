@@ -15,6 +15,96 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("ICA exhibition blurbs describe the displayed work without inventing newness or inherited objects", async () => {
+  const cases = [
+    { url: "https://www.icasanjose.org/current-exhibitions/wearecaliforniaartists/", end: "2026-11-14", pattern: /sculptures by Wanxin Zhang.*Diane Ding/, bad: /new work/i },
+    { url: "https://www.icasanjose.org/current-exhibitions/gregito-togiveandtake/", end: "2027-02-21", pattern: /paintings, sculptures and video installation.*inheritance/, bad: /inherited objects/i },
+  ];
+  for (const example of cases) {
+    for (const date of ["2026-10-26", example.end]) {
+      const raw = { date, url: example.url, ongoing: true, time: null, cost: "free", blurb: "See new work and inherited objects." };
+      const corrected = applyVerifiedEventFacts(raw);
+      assert.match(corrected.blurb, example.pattern);
+      assert.doesNotMatch(corrected.blurb, example.bad);
+      for (const field of ["date", "url", "ongoing", "time", "cost"]) assert.equal(corrected[field], raw[field], field);
+      assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+      const events = [{ ...raw }];
+      await resolveEventBlurbs(events, { enabled: false });
+      assert.match(events[0].blurb, example.pattern);
+    }
+    const expired = { date: "2027-02-22", url: example.url, blurb: "A different exhibition." };
+    assert.equal(applyVerifiedEventFacts(expired), expired);
+  }
+});
+
+test("Montalvo's dated free showcase and student performance survive sparse refreshes and cached copy", async () => {
+  const showcase = {
+    date: "2026-11-01", url: "https://my.montalvoarts.org/3248/3250",
+    title: "4th Lowrider Art Showcase", cost: "paid", kidFriendly: false,
+    time: "1:00 PM", endTime: null, registration: "full",
+  };
+  const free = applyVerifiedEventFacts(showcase);
+  assert.equal(free.cost, "free");
+  assert.equal(free.kidFriendly, true);
+  assert.match(free.attendanceNote, /No parking at Montalvo.*West Valley College/);
+  assert.equal(free.registration, "full");
+  assert.equal(free.time, showcase.time);
+  const performance = {
+    date: "2026-11-04", url: "https://my.montalvoarts.org/overview/3066",
+    title: "Mosaic America (Grade K-8)", description: "Mosaic America",
+    blurb: "Make mosaic art at Montalvo.", kidFriendly: false,
+    time: "9:30 AM", endTime: null, cost: null, registration: "closed",
+  };
+  const corrected = applyVerifiedEventFacts(performance);
+  assert.equal(corrected.cost, "paid", "the exact student ticket page charges admission");
+  assert.equal(corrected.kidFriendly, true);
+  assert.match(corrected.description, /music, dance and storytelling/);
+  assert.match(corrected.blurb, /Mosaic America perform/);
+  assert.doesNotMatch(corrected.blurb, /make mosaic/i);
+  for (const field of ["date", "url", "time", "endTime", "registration"]) {
+    assert.equal(corrected[field], performance[field], field);
+  }
+  for (const raw of [showcase, performance]) {
+    const otherYear = { ...raw, date: raw.date.replace("2026", "2027") };
+    assert.equal(applyVerifiedEventFacts(otherYear), otherYear);
+    const otherUrl = { ...raw, url: "https://my.montalvoarts.org/overview/other" };
+    assert.equal(applyVerifiedEventFacts(otherUrl), otherUrl);
+    assert.deepEqual(applyVerifiedEventFacts(applyVerifiedEventFacts(raw)), applyVerifiedEventFacts(raw));
+  }
+  const events = [{ ...performance }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /Mosaic America perform/);
+  assert.equal(events[0].registration, "closed");
+});
+
+test("dated Meetup attendance terms retain RSVPs, deadlines, contributions and full states", async () => {
+  const cases = [
+    { date: "2026-11-13", url: "https://www.meetup.com/bhajanclubbingjamming/events/316961984/", note: /Confirm attendance.*Meetup/ },
+    { date: "2026-12-03", url: "https://www.meetup.com/baypiggies/events/317138013/", note: /RSVP.*Wednesday, December 2/ },
+    { date: "2026-10-31", url: "https://www.meetup.com/bay-area-hiking-walking-wellness-club/events/316656187/", note: /\$5–\$20.*non-contributors/ },
+  ];
+  for (const example of cases) {
+    const raw = { date: example.date, url: example.url, time: "7:00 PM", cost: null, registration: "none", registrationClosesBy: "2026-12-03T07:59:00.000Z" };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(requiresAdvanceRegistration(corrected), true);
+    assert.match(corrected.attendanceNote, example.note);
+    assert.equal(corrected.time, raw.time);
+    assert.equal(corrected.registrationClosesBy, raw.registrationClosesBy);
+    if (example.date === "2026-10-31") assert.equal(corrected.cost, "paid");
+    else assert.equal(corrected.cost, null);
+    for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+      assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+    }
+    const other = { ...raw, date: raw.date.replace("2026", "2027") };
+    assert.equal(applyVerifiedEventFacts(other), other);
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].registration, "required");
+    assert.match(events[0].attendanceNote, example.note);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  }
+});
+
 test("Sunnyvale's October newsletter retains three explicit registration requirements", () => {
   for (const [date, sourceId] of [["2026-10-26", "17153875"], ["2026-10-27", "17731808"], ["2026-10-28", "17178520"]]) {
     const raw = { date, url: `https://sunnyvale.libcal.com/event/${sourceId}`, time: "6:30 PM" };
@@ -2625,9 +2715,10 @@ test("interview workshop copy omits an unsupported hiring percentage and disclos
 });
 
 test("line dancing's translated pickup clock does not become a waiver headcount", () => {
-  for (const [date, sourceId] of [["2026-10-15", "6aa49028101eb7003f2f6dfd"], ["2026-10-22", "6aa49028101eb7003f2f6dfe"]]) {
+  for (const [date, sourceId] of [["2026-10-15", "6aa49028101eb7003f2f6dfd"], ["2026-10-22", "6aa49028101eb7003f2f6dfe"], ["2026-10-29", "6aa49028101eb7003f2f6dff"], ["2026-12-17", "future-series-occurrence"]]) {
     const raw = {
       date, time: "1:30 PM", url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
+      title: "Line Dancing for Beginners / Improvers", venue: "Calabazas Library",
       description: "Tickets will be available 30 minutes in advance. 30 First-time participants will need to sign a waiver form.",
     };
     const corrected = applyVerifiedEventFacts(raw);
@@ -2636,6 +2727,10 @@ test("line dancing's translated pickup clock does not become a waiver headcount"
     assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
     assert.equal(applyVerifiedEventFacts({ ...raw, url: raw.url.replace("/events/", "/v2/events/") }).description, corrected.description);
     assert.equal(applyVerifiedEventFacts({ ...raw, date: "2027-10-15" }).description, raw.description);
+    const otherVenue = { ...raw, venue: "Another Library" };
+    assert.equal(applyVerifiedEventFacts(otherVenue), otherVenue);
+    const actualLimit = { ...raw, description: raw.description.replace(". 30 First-time", ". Only 30 first-time") };
+    assert.deepEqual(applyVerifiedEventFacts(actualLimit), actualLimit, "preserve an explicitly stated participant limit");
   }
 });
 

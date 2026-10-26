@@ -41,6 +41,20 @@ test("an unrelated family-workshop promotion never changes a concert's audience"
   assert.equal(parsed.cost, null);
 });
 
+test("a free family-friendly showcase is distinct from checkout template text", () => {
+  const parsed = parseMontalvoOccurrencePage(`
+    <h1 id="tn-page-heading">4th Lowrider Art Showcase</h1>
+    <p class="tn-event-detail__display-time">Sunday, Nov 1, 2026 1:00PM</p>
+    <p class="tn-event-detail__description"><p>This free, family-friendly
+      afternoon celebrates the lowrider community.</p></p>
+    <div data-tn-price-amount="0.0000"></div>
+    <aside>The amount must be greater than $10.00.</aside>`);
+  assert.equal(parsed.cost, "free");
+  assert.equal(parsed.kidFriendly, true);
+  assert.equal(parsed.date, "2026-11-01");
+  assert.equal(parsed.time, "1:00 PM");
+});
+
 test("explicit zero-price admission remains free without paid tickets", () => {
   const parsed = parseMontalvoOccurrencePage(`
     <h1 id="tn-page-heading">Community Festival</h1>
