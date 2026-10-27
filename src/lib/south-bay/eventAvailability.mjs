@@ -4,6 +4,16 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    ids: Object.freeze(["sjpl-69c41db41e64afd01e64a8d9"]),
+    title: /^Halloween Interactive Activity$/i,
+    venue: /^Mt\.? Pleasant(?: Neighborhood)?(?: Library)?$/i,
+    date: "2026-10-27",
+    reviewOn: "2026-10-31",
+    reason:
+      "The live SJPL occurrence page and exact API record identify a past March 25–April 6, 2026 run. The cached October 21–31 run is no longer confirmed; withhold it until the library reconfirms those dates.",
+    source: "https://sjpl.bibliocommons.com/v2/events/69c41db41e64afd01e64a8d9",
+  }),
+  Object.freeze({
     title: /^Learn to Ride Class$/i,
     venue: /^(?:Galvez Parking Lot|Stanford University)$/i,
     date: "2026-10-27",

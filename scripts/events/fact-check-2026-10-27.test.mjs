@@ -1,10 +1,35 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { fetchStanfordEvents, fetchScuEvents } from "../generate-events.mjs";
+import { fetchBiblioEvents, fetchStanfordEvents, fetchScuEvents } from "../generate-events.mjs";
 import { applyVerifiedMeetupEventOverride } from "../lib/meetup-event-overrides.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
+
+test("the expired SJPL display stays out of ingest and cached publication without hiding other Halloween programs", async (t) => {
+  // The live page and exact API agree on these past dates, while the indexed
+  // page still advertises October 21–31. Evidence: docs/qa/2026-10-27-2007-fact-check.md.
+  const id = "69c41db41e64afd01e64a8d9";
+  const past = { id, definition: { title: "Halloween Interactive Activity", start: "2026-03-25", end: "2026-04-06" } };
+  const OriginalDate = globalThis.Date;
+  t.mock.method(globalThis, "Date", class extends OriginalDate {
+    constructor(...args) { super(...(args.length ? args : ["2026-10-27T20:00:00Z"])); }
+    static now() { return new OriginalDate("2026-10-27T20:00:00Z").getTime(); }
+  });
+  t.mock.method(globalThis, "fetch", async (url) => Response.json({
+    entities: { events: new URL(url).searchParams.get("page") === "1" ? { [id]: past } : {} },
+  }));
+  assert.deepEqual(await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose"), []);
+  const stale = { id: `sjpl-${id}`, title: "Halloween Interactive Activity", date: "2026-10-27",
+    ongoing: true, startDate: "2026-10-21", endDate: "2026-10-31", venue: "Mt. Pleasant Library",
+    url: `https://sjpl.bibliocommons.com/events/${id}` };
+  assert.equal(isEventPublishable(stale), false);
+  assert.equal(isEventPublishable({ ...stale, date: "2026-10-31" }), false, "a rolling cached copy stays withheld");
+  assert.equal(isEventPublishable({ ...stale, id: "cached-copy", title: "Display", venue: "Library" }), false, "the source URL identifies sparse copies");
+  assert.equal(isEventPublishable({ ...stale, id: "sjpl-other", title: "Halloween Storytime", url: "https://sjpl.bibliocommons.com/events/other" }), true);
+  assert.equal(isEventPublishable({ ...stale, id: "sjpl-next-year", date: "2027-10-27", url: "https://sjpl.bibliocommons.com/events/next-year" }), true);
+});
 
 test("the public GSB panel retains free admission and its registration option through cached copy", async () => {
   const raw = { date: "2026-10-28", cost: null, time: "9:00 AM", endTime: "10:00 AM", virtual: true,
