@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-26T04:37:19.477Z",
+      "generatedAt": "2026-10-27T03:27:39.919Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 18 – Oct 25",
+      "dateRange": "Oct 19 – Oct 26",
       "stats": {
-        "total": 468,
-        "notable": 40,
-        "newUnits": 10,
-        "totalValuation": 90913793
+        "total": 562,
+        "notable": 43,
+        "newUnits": 18,
+        "totalValuation": 94111429
       },
       "permits": [
         {
@@ -25,6 +25,18 @@
           "units": 1,
           "issueDate": "2026-10-20",
           "subtype": "Apartment"
+        },
+        {
+          "id": "2026-141995-MF",
+          "address": "1141 W San Carlos St",
+          "category": "multi-family-new",
+          "categoryLabel": "New Multi-Family",
+          "workType": "New Construction",
+          "description": "(Bldg 3) New Condo Foundry",
+          "valuation": 2116142,
+          "units": 7,
+          "issueDate": "2026-10-23",
+          "subtype": "Condo"
         },
         {
           "id": "2026-142306-MF",
@@ -87,6 +99,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2025-105506-RS",
+          "address": "441 Atlanta Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached Garage Conversion to Attached ADU",
+          "valuation": 70368,
+          "units": 1,
+          "issueDate": "2026-10-23",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-111640-RS",
           "address": "2595 Britt Wy #2",
           "category": "residential-new",
@@ -109,30 +133,6 @@
           "units": 0,
           "issueDate": "2026-10-20",
           "subtype": "Closed Public Parking Garage"
-        },
-        {
-          "id": "2026-140996-CI",
-          "address": "123 Great Oaks Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Sv12x-F2.4 Fit Out (K & L)",
-          "valuation": 18000000,
-          "units": 0,
-          "issueDate": "2026-10-19",
-          "subtype": "Data Center"
-        },
-        {
-          "id": "2026-140557-CI",
-          "address": "3030 Orchard Py",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Rosendin Electric TI",
-          "valuation": 12574415,
-          "units": 0,
-          "issueDate": "2026-10-19",
-          "subtype": "Office"
         }
       ]
     }
