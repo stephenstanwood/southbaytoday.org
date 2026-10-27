@@ -6,7 +6,9 @@ description: Weekly combined Search Console, product, editorial, source, traffic
 # South Bay Today weekly SEO and growth review
 
 Runs Tuesday 01:15 Pacific as the native `sbt-seo-sweep` Codex automation on
-Stephen's Mac Mini, in `/Users/stephenstanwood/Projects/southbaytoday.org`.
+Stephen's Mac Mini. The scheduled source checkout is
+`/Users/stephenstanwood/Projects/southbaytoday.org`; source edits and builds run
+in a prepared isolated worktree, never in that shared scheduled checkout.
 Inspect Google Search Console in the browser, ship high-confidence technical
 and editorial fixes directly to `main`, and report anything genuinely blocked.
 
@@ -22,13 +24,23 @@ The separate Friday growth schedule is retired.
 
 0. Node lives at `/opt/homebrew/bin`. Non-interactive SSH does not put it on
    PATH — use a login shell (`zsh -lic`) or export it explicitly.
-1. Acquire the shared repository lock before any git operation:
-   `bash ~/.claude/scheduled-tasks/lib/repo-lock.sh acquire sbt-seo-sweep`.
-   Several SBT tasks mutate this working tree concurrently. If the lock is
-   busy, stop cleanly and report who holds it. Release it in a trap AND
-   explicitly at the end.
+1. Prepare an isolated source checkout with
+   `/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/seo/workspace.mjs prepare`.
+   Use the returned `path` for every source edit, build, test, and receipt in
+   this run. The command acquires the existing shared repo lock for its bounded
+   Git operation and releases it before returning. A busy lock means defer.
+   Never keep a terminal read loop or an agent-turn-spanning lock holder alive;
+   do not hold the shared lock while browsing, researching, editing, or testing.
+   An interrupted run's branch, tracked edits, untracked files and private
+   `workspace.json` remain in that worktree for recovery. Never reuse or remove
+   another run's worktree automatically. Do not repair a dirty scheduled tree
+   by restoring files, stashing unknown work, or bypassing its preflight.
 2. Read `AGENTS.md` and `CLAUDE.md`, inspect `git status`, and preserve unrelated work. Fetch
-   and pull safely before editing. The repo pushes directly to `main`.
+   and merge safely in the isolated worktree before editing. Install its own
+   dependencies with `npm ci`. Preparation links the same existing ignored
+   `.env.local` into the private worktree without copying or printing keys.
+   Keep secrets out of commits and receipts.
+   The repo publishes directly to `main` through the guarded command below.
 3. Never expose admin routes, never add a paid service, and never invent a
    fact, a source URL, an event, or a quote.
 4. Never print tokens, environment variables, or the service-account key.
@@ -244,8 +256,14 @@ require Stephen. Stage only files necessary for the verified improvement.
 1. Run `npm run check`, `npx astro check`, `npm run build`,
    `npm run audit:discovery`, and `git diff --check`, plus focused tests for
    every source or ranking change. Render each changed page type.
-2. Push only this task's changes to `main` while holding the shared repo lock,
-   then release it. Wait for a healthy Git-connected production deployment
+2. Commit only this run's changes in its isolated worktree. Publish with
+   `/opt/homebrew/bin/node /Users/stephenstanwood/Projects/southbaytoday.org/scripts/seo/workspace.mjs publish /absolute/returned/worktree/path`.
+   This bounded command holds and releases the shared lock itself, verifies the
+   registered branch and clean checkouts, and refuses publication if `main`
+   advanced. In that case merge `origin/main` into the isolated worktree,
+   resolve overlaps while preserving source work, repeat affected validation,
+   and retry. Never merge, reset, switch, or edit the scheduled checkout.
+   Wait for a healthy Git-connected production deployment
    and verify the changed public surfaces live.
 3. Only after live verification, use Search Console **Validate fix** or
    **Request indexing** where warranted; send one changed-URL IndexNow batch.

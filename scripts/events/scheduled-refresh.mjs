@@ -66,11 +66,9 @@ function recentlySucceeded(path) {
   return hasRecentSuccessfulRefresh({ lastSuccessAt: readState(path).lastSuccessAt });
 }
 
-// Set when this run took the lock away from a crashed prior holder. That job
-// may have left its half-written generated data behind, which is what the
-// preflight then refuses. The 2026-08-17 alert listed 20 modified files and
-// never named the crash that made them, so the dirty tree read as an events
-// bug for an hour. Remember the holder and say so instead.
+// The lock's age is evidence of an expired lease, not proof of a crash or of
+// who wrote the current edits. Name the prior holder without recommending
+// deletion of source code or data that another task may still own.
 let stolenLockHolder = null;
 
 function runRepoLock(script, action, { allowBusy = false } = {}) {
@@ -85,13 +83,13 @@ function runRepoLock(script, action, { allowBusy = false } = {}) {
   return true;
 }
 
-/** Name the crashed prior lock holder on the guard it actually tripped. */
+/** Retain the prior lease context without treating edits as disposable. */
 function annotateDirtyCheckout(message) {
   if (!stolenLockHolder || !/tracked changes/.test(message)) return message;
-  return `${message}\n\n(prior lock holder '${stolenLockHolder}' crashed and its stale`
-    + " lock was stolen by this run; the changes above are most likely its"
-    + " abandoned output. Confirm they are generated data, then restore them"
-    + " in the scheduled checkout.)";
+  return `${message}\n\n(Prior lock holder '${stolenLockHolder}' exceeded the lock age limit.`
+    + " Verify its process and lease ownership, then preserve complete diffs,"
+    + " staged and untracked files before recovery. These changes may include"
+    + " source code and must not be discarded as generated output.)";
 }
 
 function refreshLock(script) {
