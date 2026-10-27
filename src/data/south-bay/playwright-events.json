@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-27T15:04:27.552Z",
+    "generatedAt": "2026-10-27T18:45:43.781Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 208,
+    "eventCount": 209,
     "sourceCount": 20,
     "sources": [
       "San Jose Jazz (12)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
-      "Montalvo Arts Center (4)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
@@ -24,8 +24,8 @@
       "SAP Center (12)",
       "The Tech Interactive (10)",
       "Books Inc (6)",
-      "San Jose Museum of Art (5)",
-      "Peninsula Open Space Trust (2)"
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (5)"
     ],
     "sourceHealth": [
       {
@@ -106,7 +106,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 5,
+        "count": 6,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -295,14 +295,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -835,6 +833,23 @@
       "description": "",
       "url": "https://fareharbor.com/embeds/book/historysanjose/items/314585/calendar/2024/12/?full-items=yes",
       "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "7f4c65910e1c",
+      "title": "Events Calendar",
+      "date": "2026-10-28",
+      "displayDate": "Wed, Oct 28",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/",
+      "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
     {
@@ -1544,7 +1559,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-27T15:03:21.483Z"
+        "checkedAt": "2026-10-27T18:44:35.160Z"
       }
     },
     {
@@ -1567,7 +1582,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-27T15:03:21.484Z"
+        "checkedAt": "2026-10-27T18:44:35.162Z"
       }
     },
     {
@@ -1590,7 +1605,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-27T15:03:21.484Z"
+        "checkedAt": "2026-10-27T18:44:35.163Z"
       }
     },
     {
@@ -1613,7 +1628,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-27T15:03:21.486Z"
+        "checkedAt": "2026-10-27T18:44:35.166Z"
       }
     },
     {
@@ -1636,7 +1651,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-27T15:03:21.486Z"
+        "checkedAt": "2026-10-27T18:44:35.167Z"
       }
     },
     {
@@ -1659,7 +1674,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-27T15:03:21.486Z"
+        "checkedAt": "2026-10-27T18:44:35.167Z"
       }
     },
     {
@@ -2050,7 +2065,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2067,7 +2082,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2084,7 +2099,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2101,7 +2116,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2118,7 +2133,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3385,7 +3400,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-27T15:03:50.070Z"
+        "checkedAt": "2026-10-27T18:45:07.179Z"
       }
     },
     {
@@ -3409,7 +3424,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.070Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3433,7 +3448,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.070Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3457,7 +3472,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.070Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3481,7 +3496,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3505,7 +3520,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3529,7 +3544,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3553,7 +3568,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3577,7 +3592,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.180Z"
       }
     },
     {
@@ -3601,7 +3616,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.181Z"
       }
     },
     {
@@ -3625,7 +3640,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.181Z"
       }
     },
     {
@@ -3649,7 +3664,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T15:03:50.071Z"
+        "checkedAt": "2026-10-27T18:45:07.181Z"
       }
     },
     {
@@ -3925,6 +3940,41 @@
       "kidFriendly": false
     },
     {
+      "id": "7cc888f61ff1",
+      "title": "Bug’s Eye View (Online Event)",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
+      "time": "7:00 PM",
+      "endTime": "8:15 PM",
+      "venue": "Online (POST Webinar)",
+      "address": "",
+      "city": "santa-clara-county",
+      "virtual": true,
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "91accca935ec",
       "title": "SJSU Art Galleries Tuesday Night Lecture: Lua Vollaard",
       "date": "2026-10-27",
@@ -4022,41 +4072,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "7cc888f61ff1",
-      "title": "Bug’s Eye View (Online Event)",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "7:00 PM",
-      "endTime": "8:15 PM",
-      "venue": "Online (POST Webinar)",
-      "address": "",
-      "city": "santa-clara-county",
-      "virtual": true,
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bugs-eye-view-online-event/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
