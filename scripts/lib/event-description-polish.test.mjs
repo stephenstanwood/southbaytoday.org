@@ -271,6 +271,20 @@ test("preserves LinkedIn spelling in prose and identifiers without joining ordin
   }
 });
 
+test("library inline emphasis and source casing preserve LEGO and Scratch names", () => {
+  const { description } = libraryEventDetails({
+    description: "<p>Children under 5 must be accompanied by their parents as small LEG<strong>O</strong>® pieces can be choking hazards.</p>",
+  });
+  assert.equal(polishDescription(description),
+    "Children under 5 must be accompanied by their parents as small LEGO pieces can be choking hazards.");
+  const source = "Participants will learn the basics of scratch coding to make their own short game.";
+  const expected = "Participants will learn the basics of Scratch coding to make their own short game.";
+  assert.equal(polishDescription(source), expected);
+  assert.equal(polishDescription(expected), expected);
+  const ordinary = "Start from scratch. Rest your leg on a chair. Details: https://example.org/LEG%20O?name=scratch%20coding";
+  assert.equal(polishDescription(ordinary), ordinary);
+});
+
 test("shared acronym guards preserve published credentials, programs and place initials", () => {
   for (const acronym of ["STAR", "SJ", "LCSW", "CMEMS"]) {
     const title = `Discuss ${acronym} with Anne`;

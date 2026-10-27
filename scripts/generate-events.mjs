@@ -1097,6 +1097,14 @@ function fixProperNouns(text) {
   // The youth robotics program is a proper name; ordinary "first" prose
   // should still use the normal casing rules.
   t = t.replace(/\bFirst Robotics Competition\b/g, "FIRST Robotics Competition");
+  // SJPL splits LEGO with inline <strong> markup; library HTML cleanup
+  // preserves that boundary as a space. Palo Alto's robotics workshop names
+  // the Scratch programming platform in its title but lowercases the body.
+  // Keep these repairs narrow so ordinary leg/scratch prose stays intact.
+  // https://sjpl.bibliocommons.com/events/6a8e20c04cb69d003e2363e5
+  // https://paloalto.bibliocommons.com/events/6ad963ab96ec3a003adc21d9
+  t = t.replace(/\bLEG O\b/g, "LEGO");
+  t = t.replace(/\bscratch(?= coding\b)/g, "Scratch");
   // SCCL inserts empty inline markup inside Día; HTML cleanup adds a space.
   // Restore only the holiday name from this occurrence's source description.
   // https://sccl.bibliocommons.com/v2/events/6abf0b7a11bbf300684abd55
@@ -4144,6 +4152,15 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // Cantor's exhibition body carries visiting hours and explicit free
+      // admission after the display excerpt. Preserve the current source's
+      // hours before shortening; do not freeze them in a dated override.
+      // https://events.stanford.edu/api/2/events/52880326677126
+      const cantorAlwaysFree = venue === "Cantor Arts Center"
+        && /\bWe['’]re always free!/i.test(description);
+      const cantorHours = venue === "Cantor Arts Center"
+        ? description.match(/\bMUSEUM HOURS\s+(.+?)(?=\s+We['’]re always free!|$)/i)?.[1]?.trim()
+        : null;
       // This transport class is limited to Stanford students and employees,
       // despite having no audience tags. Read eligibility before shortening.
       // Evidence: docs/qa/2026-10-27-0307-fact-check.md.
@@ -4224,7 +4241,8 @@ async function fetchStanfordEvents() {
         // 2026-09-14, and three-quarters of the feed has neither the flag nor
         // a ticket price. Only a stated price is evidence of a charge; a bare
         // ticket URL is often free registration, so it stays unknown (null).
-        cost: localistCost(ev),
+        cost: localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
+        ...(cantorHours ? { attendanceNote: `Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.` } : {}),
         ...(registration ? { registration } : {}),
         description: truncate(description),
         url: ev.localist_url || `https://events.stanford.edu/event/${ev.id}`,

@@ -6,6 +6,49 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
+test("Cantor exhibition hours and explicit free admission survive excerpting and follow source updates", async () => {
+  const day = (offset) => new Date(Date.now() + offset * 86_400_000)
+    .toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
+  // Captured from the full JANE! Localist body on October 27. The admission
+  // and closure instructions appear well beyond the published excerpt.
+  const hours = "Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed";
+  let body = "Curated by Associate Curator of European Art, Patrick R. Crowley, JANE! celebrates Jane Stanford. ".repeat(10)
+    + `MUSEUM HOURS ${hours} We're always free! Come visit us, https://museum.stanford.edu/visit`;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({ events: [
+    { id: 1, location_name: "Cantor Arts Center", ticket_cost: "" },
+    { id: 2, location_name: "Cantor Arts Center", ticket_cost: "$25" },
+    { id: 3, location_name: "Another Gallery", ticket_cost: "" },
+  ].map((row) => ({ event: { ...row, title: "JANE! exhibition", description_text: body,
+    first_date: day(-1), last_date: day(14), free: false,
+    event_instances: [{ event_instance: { start: `${day(0)}T00:00:00-07:00` } }] } })) });
+  try {
+    const events = await fetchStanfordEvents();
+    const exhibition = events.find((e) => e.id === "stanford-1");
+    assert.equal(exhibition.cost, "free");
+    assert.equal(exhibition.attendanceNote, `Museum hours: ${hours}.`);
+    assert.equal(exhibition.ongoing, true);
+    assert.equal(exhibition.time, null);
+    assert.equal(exhibition.registration, undefined);
+    assert.doesNotMatch(exhibition.description, /MUSEUM HOURS|always free/);
+    assert.equal(events.find((e) => e.id === "stanford-2").cost, "paid", "an explicit charge still wins");
+    assert.equal(events.find((e) => e.id === "stanford-3").cost, null);
+    assert.equal(events.find((e) => e.id === "stanford-3").attendanceNote, undefined);
+    await resolveEventBlurbs([exhibition], { enabled: false });
+    assert.equal(exhibition.cost, "free");
+    assert.equal(exhibition.attendanceNote, `Museum hours: ${hours}.`);
+
+    body = "An exhibition. MUSEUM HOURS Friday: 12 PM–4 PM CLOSED: Monday We're always free!";
+    const changed = (await fetchStanfordEvents()).find((e) => e.id === "stanford-1");
+    assert.equal(changed.attendanceNote, "Museum hours: Friday: 12 PM–4 PM CLOSED: Monday.");
+
+    body = "An exhibition with free refreshments.";
+    const sparse = (await fetchStanfordEvents()).find((e) => e.id === "stanford-1");
+    assert.equal(sparse.cost, null, "free extras do not establish admission");
+    assert.equal(sparse.attendanceNote, undefined, "removed hours must not persist");
+  } finally { globalThis.fetch = originalFetch; }
+});
+
 test("solidarity and Morph-A-Thon retain source signup instructions without invented mandatory gates", async () => {
   for (const raw of [
     { date: "2026-10-27", url: "https://events.stanford.edu/event/organizing-in-solidarity-at-stanford-past-present", cost: null },
