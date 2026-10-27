@@ -108,7 +108,7 @@ for (const staleOverlap of [false, true]) {
     git(seed, "push");
     const result = spawnSync(process.execPath, [fileURLToPath(new URL("./scheduled-refresh.mjs", import.meta.url)), "--force"], {
       cwd: checkout, encoding: "utf8", timeout: 30_000,
-      env: { PATH: process.env.PATH, NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
+      env: { PATH: process.env.PATH, HOME: root, NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
         SBT_NOTIFICATION_TEST_DIR: join(root, "notifications"), SBT_SKIP_AGENT_ENSURE: "1",
         SBT_EVENTS_REPO_ROOT: checkout, SBT_REPO_LOCK_SCRIPT: lockPath, SBT_EVENTS_REFRESH_STATE: statePath },
     });
@@ -156,6 +156,40 @@ test("publication retries the rejected push and preserves the competing fact-che
   assert.equal(git(remote, "show", `main:${SNAPSHOT}`), git(seed, "show", `HEAD:${SNAPSHOT}`));
   assert.equal(git(remote, "show", "main:src/data/south-bay/tech-companies.ts"), "export const companies = [];");
   assert.equal(git(remote, "show", "main:docs/qa/fact-check.md"), "Source-verified correction");
+});
+
+test("an expired lease with dirty code preserves every edit and reports safe recovery guidance", (t) => {
+  const { checkout } = setup(t), root = dirname(checkout);
+  put(checkout, "source.mjs", "export const valuable = 1;\n");
+  commit(checkout, "source baseline");
+  put(checkout, "source.mjs", "export const valuable = 2;\n");
+  git(checkout, "add", "source.mjs");
+  put(checkout, "source.mjs", "export const valuable = 3;\n");
+  put(checkout, "untracked-test.mjs", "unfinished test\n");
+  const before = git(checkout, "status", "--porcelain=v1");
+  const lock = join(root, "repo-lock.sh");
+  put(root, "repo-lock.sh", `#!/bin/sh
+if [ "$1" = acquire ]; then
+  echo "repo-lock: stealing stale lock from 'sbt-seo-sweep' (age 80m >= 45m)" >&2
+fi
+exit 0
+`);
+  chmodSync(lock, 0o755);
+  const result = spawnSync(process.execPath, [fileURLToPath(new URL("./scheduled-refresh.mjs", import.meta.url)), "--force"], {
+    encoding: "utf8", timeout: 10_000,
+    env: { PATH: process.env.PATH, HOME: root, NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
+      SBT_NOTIFICATION_TEST_DIR: join(root, "notifications"), SBT_SKIP_AGENT_ENSURE: "1",
+      SBT_EVENTS_REPO_ROOT: checkout, SBT_REPO_LOCK_SCRIPT: lock,
+      SBT_EVENTS_REFRESH_STATE: join(root, "heartbeat.json") },
+  });
+  assert.equal(result.status, 1, result.stderr);
+  assert.match(result.stderr, /Verify its process and lease ownership/);
+  assert.doesNotMatch(result.stderr, /most likely its abandoned output|then restore them/);
+  assert.equal(git(checkout, "status", "--porcelain=v1"), before);
+  assert.equal(git(checkout, "show", ":source.mjs"), "export const valuable = 2;");
+  assert.equal(readFileSync(join(checkout, "source.mjs"), "utf8"), "export const valuable = 3;\n");
+  assert.equal(readFileSync(join(checkout, "untracked-test.mjs"), "utf8"), "unfinished test\n");
+  assert.equal(existsSync(join(root, "heartbeat.json")), false);
 });
 
 test("overlapping event output takes the healthy remote correction", (t) => {

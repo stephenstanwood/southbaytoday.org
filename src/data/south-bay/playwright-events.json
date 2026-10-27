@@ -1,20 +1,20 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-27T04:27:28.008Z",
+    "generatedAt": "2026-10-27T10:28:28.664Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 206,
+    "eventCount": 208,
     "sourceCount": 20,
     "sources": [
       "San Jose Jazz (12)",
-      "Linden Tree Books (9)",
+      "Linden Tree Books (10)",
       "History San Jose (6)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
       "San Jose Theaters (20)",
-      "Children's Discovery Museum (2)",
+      "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (6)",
       "City of Cupertino (22)",
@@ -86,7 +86,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 9,
+        "count": 10,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -172,7 +172,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 2,
+        "count": 3,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -691,6 +691,28 @@
       }
     },
     {
+      "id": "a908f552b53a",
+      "title": "Storytime with Kanya Sesser and Nisha Lamsam Ligon",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": null,
+      "description": "Join us as we welcome Kanya Sesser and Nisha Lamsam Lion to celebrate their empowering new picture book, No Legs, No Limits, inspired by Kanya’s childhood and her journey to finding her voice, independence, and freedom on a skateboard. Kanya Sesser was born without legs, but that doesn't mean she has limits! Sometimes I still fall.\nBut I never give up.\nI make things work for me.\nBecause I'm strong.\nBecause I'm free.\nBecause I have NO limits. Kanya Sesser has spent her life sharing the message that no matter what life deals you, you can do anything. In this picture book based on her childhood, she tells the story of how she first learned to stand up for herself, both on a skateboard and in life. When people grab her wheelchair, to push her to class or onto the bus after school, she's too shocked and too sad to say no. The people around her don't understand that she moves herself. But when she rides a skateboard for the first time, she experiences a new sense of freedom and joy, and she finally finds her voice.",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-11-22"
+      }
+    },
+    {
       "id": "9038118f4459",
       "title": "Middle Grade Book Club: The Wish Ring Cipher",
       "date": "2026-11-29",
@@ -969,10 +991,10 @@
       "kidFriendly": false
     },
     {
-      "id": "5f48bbd300b4",
+      "id": "56e8df862c38",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-26",
-      "displayDate": "Mon, Oct 26",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -989,10 +1011,10 @@
       "kidFriendly": false
     },
     {
-      "id": "bd81c801d03d",
+      "id": "54169f05390c",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-26",
-      "displayDate": "Mon, Oct 26",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1009,10 +1031,10 @@
       "kidFriendly": false
     },
     {
-      "id": "f0f7fe8d7dbf",
+      "id": "ebf0097bcad3",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-26",
-      "displayDate": "Mon, Oct 26",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1386,6 +1408,23 @@
       "kidFriendly": false
     },
     {
+      "id": "5c9ff57d723d",
+      "title": "All Ages Storytime",
+      "date": "2026-10-27",
+      "displayDate": "Tue, Oct 27",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
       "id": "8d909d6d0e1a",
       "title": "Halloween at the Purple Museum",
       "date": "2026-10-31",
@@ -1505,7 +1544,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-10-27",
-        "checkedAt": "2026-10-27T04:26:19.545Z"
+        "checkedAt": "2026-10-27T10:27:20.206Z"
       }
     },
     {
@@ -1528,7 +1567,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-27T04:26:19.548Z"
+        "checkedAt": "2026-10-27T10:27:20.208Z"
       }
     },
     {
@@ -1551,7 +1590,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-27T04:26:19.549Z"
+        "checkedAt": "2026-10-27T10:27:20.209Z"
       }
     },
     {
@@ -1574,7 +1613,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-27T04:26:19.553Z"
+        "checkedAt": "2026-10-27T10:27:20.212Z"
       }
     },
     {
@@ -1597,7 +1636,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-27T04:26:19.554Z"
+        "checkedAt": "2026-10-27T10:27:20.212Z"
       }
     },
     {
@@ -1620,7 +1659,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-27T04:26:19.554Z"
+        "checkedAt": "2026-10-27T10:27:20.212Z"
       }
     },
     {
@@ -2011,7 +2050,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2028,7 +2067,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2045,7 +2084,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3346,7 +3385,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-15",
         "date": "2026-10-27",
         "time": "7:30 PM",
-        "checkedAt": "2026-10-27T04:26:50.608Z"
+        "checkedAt": "2026-10-27T10:27:52.147Z"
       }
     },
     {
@@ -3370,7 +3409,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.608Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3394,7 +3433,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3418,7 +3457,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3442,7 +3481,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3466,7 +3505,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3490,7 +3529,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3514,7 +3553,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3538,7 +3577,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3562,7 +3601,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3586,7 +3625,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {
@@ -3610,7 +3649,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-27T04:26:50.609Z"
+        "checkedAt": "2026-10-27T10:27:52.148Z"
       }
     },
     {

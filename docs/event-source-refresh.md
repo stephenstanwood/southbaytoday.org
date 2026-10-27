@@ -4,6 +4,25 @@ The event database is refreshed by a guarded Mini job and independently checked
 by GitHub Actions. Source adapters must fail closed: an unknown fetch or parser
 failure must never be represented as a successful empty season.
 
+### Interrupted source work and the shared checkout
+
+The weekly SEO review prepares and publishes through
+`node scripts/seo/workspace.mjs prepare` and `publish <returned-path>`.
+These commands use the existing mutex only for bounded Git operations; all
+editing, tests and browser work happen in an isolated worktree. A stopped agent
+therefore retains its work without blocking the scheduled event, plan or
+newsletter checkout. Publication refuses a moved remote until the review
+merges and revalidates it; the scheduled checkout's dirty guard stays intact.
+
+On October 27 the SEO agent stopped on a model-capacity error, and its terminal
+lock holder later ended without releasing the age-only lease. At 80 minutes
+the event runner correctly reclaimed a dead holder's expired lock, then
+refused six tracked edits, including code and tests. Recovery preserved all
+nine changed or untracked files, the index, binary diffs and independent file
+hashes before moving the exact work to a private recovery worktree. An expired
+lease alone does not establish a crash, authorship or disposable output;
+inspect the actual process and preserve all work before any recovery.
+
 ## Production path
 
 1. `org.southbaytoday.events-refresh` runs on the Mini at 7:15 PM PT, with an
