@@ -118,3 +118,60 @@ test("the November roommate occurrence discloses the copied October date only wh
   }
   assert.equal(applyVerifiedMeetupEventOverride({ ...raw, date: "2027-11-09" }, { sourceDescription: "Mon Oct 19" }).attendanceStatus, undefined);
 });
+
+test("new Stanford invitations and exhibition entry instructions survive sparse cached copy without advance gates", async () => {
+  const cases = [
+    ["2026-10-27", "the-offline-dream-program-three-takes-on-film-the-internet-and-instanternity", /requests an RSVP/],
+    ["2026-10-27", "public-lecture-gravitational-wave-detection", /livestream link.*registration confirmation email/],
+    ["2026-10-28", "electric-contrasts-the-art-of-the-detail-7315", /650-723-3408.*building and elevator access/],
+    ["2026-10-28", "a-vision-of-paris-the-roxane-debuisson-collection-at-stanford", /government ID.*at the entrance/],
+  ];
+  for (const [date, slug, note] of cases) {
+    const raw = { date, url: `https://events.stanford.edu/event/${slug}`, cost: null, description: "", blurb: "Visit the event." };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].attendanceNote, note);
+    assert.equal(events[0].registration, undefined, "a visitor-entry condition or invitation is not advance registration");
+    assert.equal(events[0].cost, null);
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    for (const other of [{ ...raw, date: "2027-10-27" }, { ...raw, url: "https://example.com/unrelated" }]) {
+      assert.equal(applyVerifiedEventFacts(other), other);
+    }
+  }
+});
+
+test("source corrections retain explicit free admission, the author's verified name and the hike's admission requirement", async () => {
+  const rows = [
+    { date: "2026-10-28", url: "https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition", cost: null },
+    { date: "2026-11-03", url: "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-common-ground", cost: null },
+    { date: "2026-11-22", url: "https://www.lindentreebooks.com/events-calendar/", description: "Meet Nisha Lamsam Lion.", blurb: "Meet Nisha Lamsam Ligor." },
+    { date: "2026-10-28", url: "https://www.meetup.com/south-bay-50-social-hikers/events/317096095/", registration: "none", cost: null },
+  ];
+  await resolveEventBlurbs(rows, { enabled: false });
+  assert.deepEqual(rows.slice(0, 2).map((e) => e.cost), ["free", "free"]);
+  assert.match(rows[2].description, /Nisha Lamsam Ligon/);
+  assert.match(rows[2].blurb, /Nisha Lamsam Ligon/);
+  assert.equal(rows[3].registration, "required");
+  assert.equal(rows[3].cost, null);
+  assert.match(rows[3].attendanceNote, /listed as going.*does not allow walk-ins/);
+  for (const state of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...rows[3], registration: state }).registration, state);
+  }
+});
+
+test("AI Tinkerers' conflicting end times remain disclosed through publication only while the fresh body conflicts", async () => {
+  const raw = { date: "2026-11-10", time: "6:00 PM", endTime: "9:00 PM", registration: "full", cost: null,
+    url: "https://www.meetup.com/sf-mcp-devs/events/316977267/", blurb: "Meet fellow AI builders." };
+  const fixed = applyVerifiedMeetupEventOverride(raw, { sourceDescription: "Tuesday • 10 Nov 2026 • 6:00–8:30 PM • Downtown San Jose" });
+  const events = [fixed];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].attendanceStatus, "needs-confirmation");
+  assert.match(events[0].attendanceNote, /6–9 PM.*6–8:30 PM/);
+  for (const key of ["date", "time", "endTime", "registration", "cost", "url"]) assert.equal(events[0][key], raw[key]);
+  for (const sourceDescription of ["Tuesday • 10 Nov 2026 • 6:00–9:00 PM", "Meet fellow builders."]) {
+    assert.equal(applyVerifiedMeetupEventOverride(raw, { sourceDescription }), raw);
+  }
+  for (const other of [{ ...raw, date: "2027-11-10" }, { ...raw, url: "https://example.com/unrelated" }]) {
+    assert.equal(applyVerifiedMeetupEventOverride(other, { sourceDescription: "6:00–8:30 PM" }), other);
+  }
+});

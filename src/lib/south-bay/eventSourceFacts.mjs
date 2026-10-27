@@ -9,6 +9,61 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Keep the full first-party attendance instructions when the feed excerpt
+  // ends before them. An RSVP invitation alone does not establish a gate.
+  // Evidence: docs/qa/2026-10-27-1107-fact-check.md (page and exact Localist API).
+  {
+    date: "2026-10-27",
+    url: "https://events.stanford.edu/event/the-offline-dream-program-three-takes-on-film-the-internet-and-instanternity",
+    facts: {
+      attendanceNote: "The organizer requests an RSVP using the form linked on Stanford's event page.",
+    },
+  },
+  {
+    date: "2026-10-27",
+    url: "https://events.stanford.edu/event/public-lecture-gravitational-wave-detection",
+    facts: {
+      attendanceNote: "The organizer offers registration through its event page. The livestream link is included in the registration confirmation email.",
+    },
+  },
+  // These are visitor-entry instructions for the published exhibition runs,
+  // not advance reservations or a campus-only audience restriction.
+  // Evidence: docs/qa/2026-10-27-1107-fact-check.md (exact Localist records).
+  {
+    dateFrom: "2026-09-21", dateThrough: "2026-12-18",
+    url: "https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
+    facts: {
+      attendanceNote: "Visitors are asked to call 650-723-3408 for building and elevator access to Bowes Art & Architecture Library.",
+    },
+  },
+  {
+    dateFrom: "2026-09-22", dateThrough: "2027-01-24",
+    url: "https://events.stanford.edu/event/a-vision-of-paris-the-roxane-debuisson-collection-at-stanford",
+    facts: {
+      attendanceNote: "Bring a valid government ID and register at the entrance to Green Library to view the exhibition.",
+    },
+  },
+  // Explicit free admission in the full body outranks an unset price flag.
+  // Evidence: docs/qa/2026-10-27-1107-fact-check.md.
+  {
+    dateFrom: "2026-10-07", dateThrough: "2026-12-04",
+    url: "https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
+    facts: { cost: "free" },
+  },
+  {
+    date: "2026-11-03",
+    url: "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-common-ground",
+    facts: { cost: "free" },
+  },
+  // The bookstore's title and the publisher agree on Ligon. Its calendar
+  // body drops the g, and its product page independently mistypes Ligor.
+  // Repair source and cached prose before publication, scoped to this date.
+  // https://www.simonandschuster.com/books/No-Legs-No-Limits-%28An-Empowering-Picture-Book-for-Kids%29/Kanya-Sesser/9781499818086
+  // Evidence: docs/qa/2026-10-27-1107-fact-check.md.
+  {
+    date: "2026-11-22", url: "https://www.lindentreebooks.com/events-calendar/",
+    copyReplacements: [[/\bNisha Lamsam (?:Lion|Ligor)\b/g, "Nisha Lamsam Ligon"]],
+  },
   // The full occurrence and its banner request an October 23 RSVP. Preserve
   // the elapsed deadline without inferring that admission or signup is closed.
   // Evidence: docs/qa/2026-10-27-0407-fact-check.md (fresh page and exact API).
@@ -252,7 +307,14 @@ const CORRECTIONS = [
   {
     date: "2026-10-28", url: "https://www.meetup.com/south-bay-50-social-hikers/events/317096095/",
     // DAR is the restaurant in the organizer's post-hike lunch plans.
-    facts: { title: "St. Joseph's Hill (from Vasona) with DAR" },
+    // The full body forbids joining without being on the going list. JOIN_OPEN
+    // does not grant walk-in admission. Preserve a current full/closed state.
+    // Evidence: docs/qa/2026-10-27-1107-fact-check.md (authenticated exact ID).
+    facts: {
+      title: "St. Joseph's Hill (from Vasona) with DAR",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "RSVP on Meetup and be listed as going before joining the hike; the organizer does not allow walk-ins.",
+    },
   },
   // The organizer explicitly calls the cinema and 3 PM start tentative and
   // requires RSVPs plus payment for a group ticket purchase. JOIN_OPEN does
