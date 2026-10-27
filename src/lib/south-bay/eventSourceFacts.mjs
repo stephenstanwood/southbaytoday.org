@@ -9,6 +9,19 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The city's original October 27 teen newsletter asks people to register
+  // early but does not state a mandatory booking gate. Preserve that request
+  // instead of the extractor's stronger "registration is required" claim.
+  // Evidence: docs/qa/2026-10-27-2307-fact-check.md (original received email).
+  {
+    date: "2026-11-07",
+    url: "https://anc.apm.activecommunities.com/mountainviewrecreation/activity/search/detail/19449?onlineSiteId=0&from_original_cui=true",
+    facts: {
+      description: "Bus trip to UC Santa Cruz for Mountain View and Los Altos students in 11th and 12th grade to explore campus and learn about college life. Light breakfast is served on the bus and lunch is provided on campus. Space is limited; the city asks participants to register early.",
+      blurb: "Tour UC Santa Cruz with The View Teen Center for Mountain View and Los Altos students in grades 11–12; breakfast and lunch are provided.",
+      attendanceNote: "Space is limited. The city asks participants to register early using its activity page.",
+    },
+  },
   // The public page explicitly labels this Free Event, although Localist's
   // opt-in free flag is unset. Its audience includes General Public, and its
   // registration link is an invitation, not an established mandatory gate.

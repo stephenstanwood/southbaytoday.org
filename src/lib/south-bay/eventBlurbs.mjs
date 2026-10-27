@@ -594,14 +594,34 @@ export function blurbDayOfWeekConflict(blurb, events) {
   if (!weekdays.length) return null;
 
   const ctx = list
-    .map((e) => `${e?.title || ""} ${e?.venue || ""} ${e?.description || ""}`)
+    .map((e) => `${e?.title || ""} ${e?.venue || ""}`)
     .join(" ")
     .toLowerCase();
 
-  for (const m of String(blurb).matchAll(WEEKDAY_RE)) {
+  // A description can list a whole weekly schedule. That does not make a
+  // Thursday-only blurb true on Saturday. Keep a quoted multi-day schedule
+  // only when it covers every occurrence, including days inside a range.
+  const description = list.map((e) => e?.description || "").join(" ").toLowerCase();
+  const mentions = [...String(blurb).matchAll(WEEKDAY_RE)];
+  const namedDays = new Set(mentions.map((m) => m[1].toLowerCase()).filter((d) => DAY_NAMES.includes(d)));
+  const dayRange = new RegExp(`\\b(${DAY_NAMES.join("|")})s?\\s*(?:through|to|[–—-])\\s*(${DAY_NAMES.join("|")})s?\\b`, "gi");
+  for (const range of String(blurb).matchAll(dayRange)) {
+    const first = DAY_NAMES.indexOf(range[1].toLowerCase());
+    const last = DAY_NAMES.indexOf(range[2].toLowerCase());
+    for (let day = first; ; day = (day + 1) % 7) {
+      namedDays.add(DAY_NAMES[day]);
+      if (day === last) break;
+    }
+  }
+  const supportedSchedule = namedDays.size > 1
+    && weekdays.every((day) => namedDays.has(day))
+    && mentions.every((m) => description.includes(m[1].toLowerCase()));
+
+  for (const m of mentions) {
     const matched = m[0].toLowerCase();
     const word = m[1].toLowerCase();
     if (ctx.includes(matched) || ctx.includes(word)) continue;
+    if (supportedSchedule) continue;
     if (dayWordFits(word, weekdays)) continue;
     return matched;
   }

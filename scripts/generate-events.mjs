@@ -6147,7 +6147,16 @@ function mapTicketmasterEvent(e) {
   // Do not surface those shows as free; keep the ordinary $0 behavior for
   // every other Ticketmaster event.
   const isTicketWebImprov = /ticketweb\.com/i.test(e.url || "") && /\bimprov\b/i.test(venueName);
-  const cost = minPrice === 0 && !isTicketWebImprov
+  // Sold-out TicketWeb offers can become $0–$0 placeholders. They do not
+  // establish free admission: use explicit event-copy evidence, or unknown.
+  // Tauren Wells, November 12: docs/qa/2026-10-27-2307-fact-check.md.
+  const soldOutZeroOffer = soldOut && /ticketweb\.com/i.test(e.url || "")
+    && minPrice === 0 && priceRange?.max === 0;
+  const sourceSaysFree = /\bfree\s+(?:admission|entry|event)\b|\badmission\s+is\s+free\b/i.test(e.info || "");
+  const sourceSaysPaid = /\bticket prices?\s+(?:are|is)\b|\b(?:purchasing|purchase|buy)\s+(?:a|your|the)\s+ticket\b/i.test(e.info || "");
+  const cost = soldOutZeroOffer
+    ? sourceSaysFree ? "free" : sourceSaysPaid ? "paid" : null
+    : minPrice === 0 && !isTicketWebImprov
     ? "free"
     : minPrice && minPrice < 25
       ? "low"

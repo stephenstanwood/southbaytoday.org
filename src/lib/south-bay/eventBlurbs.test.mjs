@@ -805,6 +805,30 @@ test("the corrected copy passes", () => {
   );
 });
 
+test("a full source schedule cannot excuse the wrong weekday for an occurrence", () => {
+  const events = ["2026-10-29", "2026-10-31"].map((date) => ({
+    title: "1 on 1 Tech Assistance", venue: "Willow Glen Library", date,
+    description: "Current Weekly Schedule: Wednesdays at 4 PM; Thursdays at 11 AM; Saturdays at 10 AM.",
+  }));
+  assert.equal(blurbDayOfWeekConflict("Get tech help on a Thursday morning.", events), "thursday");
+  assert.equal(blurbDayOfWeekConflict("Get tech help on a Thursday morning.", [events[1]]), "thursday");
+  assert.equal(blurbDayOfWeekConflict("Get tech help at Willow Glen Library.", events), null);
+  assert.equal(blurbDayOfWeekConflict("Get tech help on Thursday and Saturday mornings.", events), null);
+  assert.equal(blurbDayOfWeekConflict("Get tech help on Wednesday and Thursday.", events), "wednesday");
+});
+
+test("source-supported weekly schedules and ranges remain accurate", () => {
+  const events = ["2026-10-28", "2026-11-02"].map((date) => ({
+    title: "Adult ESL Class", venue: "Milpitas Library", date,
+    description: "Classes meet Monday and Wednesday evenings.",
+  }));
+  assert.equal(blurbDayOfWeekConflict("Practice English on Monday and Wednesday evenings.", events), null);
+  const rooftop = [{ title: "Rooftop Holiday Experience", venue: "Hotel Valencia", date: "2026-11-27",
+    description: "Open Tuesday through Saturday from 5 to 9 PM." }];
+  assert.equal(blurbDayOfWeekConflict("Visit Tuesday through Saturday from 5 to 9 PM.", rooftop), null);
+  assert.equal(blurbDayOfWeekConflict("Visit Tuesday through Thursday from 5 to 9 PM.", rooftop), "tuesday");
+});
+
 test("a weekly series still gets to name its day", () => {
   const everyTuesday = ["2026-09-01", "2026-09-08", "2026-09-15"].map((date) => ({
     title: "Toddler Storytime", venue: "Rinconada Library", date,

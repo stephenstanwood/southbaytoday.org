@@ -1,11 +1,47 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { fetchBiblioEvents, fetchStanfordEvents, fetchScuEvents } from "../generate-events.mjs";
+import { fetchBiblioEvents, fetchStanfordEvents, fetchScuEvents, mapTicketmasterEvent } from "../generate-events.mjs";
 import { applyVerifiedMeetupEventOverride } from "../lib/meetup-event-overrides.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
+
+test("a sold-out TicketWeb zero offer does not turn a paid concert free", async () => {
+  const source = { id: "rZ7HnEZ1AfFw00", name: "SOLD OUT Tauren Wells: Air1 Worship Now Tour - San Jose, CA",
+    url: "https://www.ticketweb.com/event/sold-out-tauren-wells-air1-cathedral-of-faith-tickets/14232924",
+    dates: { start: { localDate: "2026-11-12", localTime: "19:00:00" }, status: { code: "onsale" } },
+    priceRanges: [{ type: "standard", currency: "USD", min: 0, max: 0 }],
+    info: "Ticket prices are subject to change based on demand and/or when purchased at the door. By purchasing a ticket and voluntarily entering the event...",
+    _embedded: { venues: [{ name: "Cathedral of Faith", city: { name: "San Jose" }, address: { line1: "2315 Canoas Garden Ave" } }] },
+  };
+  const event = mapTicketmasterEvent(source);
+  assert.equal(event.cost, "paid");
+  assert.equal(event.costNote, undefined, "do not restore an old numeric price");
+  assert.equal(event.registration, "full");
+  assert.equal(event.time, "7:00 PM");
+  await resolveEventBlurbs([event], { enabled: false });
+  assert.equal(event.cost, "paid");
+  assert.equal(event.registration, "full");
+  assert.equal(mapTicketmasterEvent({ ...source, info: "A concert." }).cost, null);
+  assert.equal(mapTicketmasterEvent({ ...source, info: "Free admission." }).cost, "free");
+  assert.equal(mapTicketmasterEvent({ ...source, name: "Free community concert", info: "", url: "https://www.ticketmaster.com/event/example" }).cost, "free");
+  assert.equal(mapTicketmasterEvent({ ...source, priceRanges: [{ min: 34, max: 34 }] }).cost, "paid");
+});
+
+test("the teen college tour retains the city's registration request without inventing a gate", async () => {
+  const raw = { date: "2026-11-07", time: "9:00 AM", endTime: "3:00 PM", cost: null,
+    url: "https://anc.apm.activecommunities.com/mountainviewrecreation/activity/search/detail/19449?onlineSiteId=0&from_original_cui=true",
+    description: "Space is limited and registration is required.", blurb: "Tour campus, with registration required for 11th and 12th graders." };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].attendanceNote, /asks participants to register early/);
+  assert.doesNotMatch(events[0].description + events[0].blurb, /registration (?:is )?required/);
+  assert.equal(events[0].registration, undefined);
+  for (const key of ["time", "endTime", "cost"]) assert.equal(events[0][key], raw[key]);
+  for (const state of ["full", "closed", "appointment-only"]) assert.equal(applyVerifiedEventFacts({ ...raw, registration: state }).registration, state);
+  for (const other of [{ ...raw, date: "2027-11-07" }, { ...raw, url: "https://example.com/unrelated" }]) assert.equal(applyVerifiedEventFacts(other), other);
+});
 
 test("the expired SJPL display stays out of ingest and cached publication without hiding other Halloween programs", async (t) => {
   // The live page and exact API agree on these past dates, while the indexed
