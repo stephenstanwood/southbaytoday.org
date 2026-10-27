@@ -9,6 +9,26 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The full occurrence and its banner request an October 23 RSVP. Preserve
+  // the elapsed deadline without inferring that admission or signup is closed.
+  // Evidence: docs/qa/2026-10-27-0407-fact-check.md (fresh page and exact API).
+  {
+    date: "2026-10-27",
+    url: "https://events.stanford.edu/event/organizing-in-solidarity-at-stanford-past-present",
+    facts: {
+      attendanceNote: "The organizer requested RSVPs by October 23. Check with the organizer about attending after that deadline.",
+    },
+  },
+  // JOIN_OPEN describes Meetup availability, not the organizer's attendance
+  // instructions. Retain this invitation without inventing a required gate.
+  // Evidence: docs/qa/2026-10-27-0407-fact-check.md (authenticated exact-ID API).
+  {
+    date: "2026-10-29",
+    url: "https://www.meetup.com/autonomous-application-development-meetup-group/events/317097934/",
+    facts: {
+      attendanceNote: "The organizer asks attendees to sign up in advance; spaces are limited.",
+    },
+  },
   // The full occurrence explicitly says free, public and advance registration
   // required, despite Localist's unset free flag and shortened display copy.
   // Evidence: docs/qa/2026-10-27-0307-fact-check.md (fresh page and exact API).

@@ -6,6 +6,33 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
+test("solidarity and Morph-A-Thon retain source signup instructions without invented mandatory gates", async () => {
+  for (const raw of [
+    { date: "2026-10-27", url: "https://events.stanford.edu/event/organizing-in-solidarity-at-stanford-past-present", cost: null },
+    { date: "2026-10-29", url: "https://www.meetup.com/autonomous-application-development-meetup-group/events/317097934/", cost: null, registration: "none" },
+  ]) {
+    const expected = raw.date === "2026-10-27" ? /RSVPs by October 23.*after that deadline/ : /sign up in advance.*spaces are limited/;
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.match(fixed.attendanceNote, expected);
+    assert.equal(fixed.registration, raw.registration);
+    assert.equal(fixed.cost, null);
+    assert.equal(fixed.registrationClosesBy, undefined);
+    assert.equal(fixed.attendanceStatus, undefined);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    for (const state of ["full", "closed", "appointment-only"]) {
+      assert.equal(applyVerifiedEventFacts({ ...raw, registration: state }).registration, state);
+    }
+    for (const other of [{ ...raw, date: "2027-10-27" }, { ...raw, url: "https://example.com/unrelated" }]) {
+      assert.equal(applyVerifiedEventFacts(other), other);
+    }
+    const events = [{ ...raw, description: "", blurb: "Attend the event." }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.match(events[0].attendanceNote, expected);
+    assert.equal(events[0].registration, raw.registration);
+    assert.equal(events[0].cost, null);
+  }
+});
+
 test("Stanford bike-class eligibility survives missing audience tags and display truncation", async () => {
   const tomorrow = new Date(Date.now() + 86_400_000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const restricted = "This is a free class for Stanford Students, Faculty and Staff who have either not yet learned how to ride a bike, or want a refresher.";
