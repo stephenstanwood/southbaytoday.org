@@ -9,6 +9,26 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The full occurrence explicitly says free, public and advance registration
+  // required, despite Localist's unset free flag and shortened display copy.
+  // Evidence: docs/qa/2026-10-27-0307-fact-check.md (fresh page and exact API).
+  {
+    date: "2026-10-27",
+    url: "https://events.stanford.edu/event/the-illicit-finance-hydra-crypto-sanctions-evasion-and-the-new-financial-battlefield",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free and open to the public. Advance registration is required using the RSVP form linked on Stanford's event page.",
+    },
+  },
+  // These occurrences ask readers to RSVP. An invitation alone does not
+  // establish mandatory registration; preserve it without inventing a gate.
+  // Evidence: docs/qa/2026-10-27-0307-fact-check.md (fresh pages and exact APIs).
+  ...["an-evening-of-poetry-with-fady-joudah", "the-unbroken-sky"].map((slug) => ({
+    date: "2026-10-27", url: `https://events.stanford.edu/event/${slug}`,
+    facts: {
+      attendanceNote: "The organizer requests an RSVP using the form linked on Stanford's event page.",
+    },
+  })),
   // The organizer's occurrence page corrects its newsletter's caterer typo
   // and explicitly prices members, guests and walk-ins separately.
   // https://business.campbellchamber.net/events/details/monthly-luncheon-16558

@@ -4061,7 +4061,8 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
  * Keep the canonical URL even when online_type is absent. RSS aliases under
  * /live/events/ omit the owning department (Career Center, Accounting, etc.)
  * and must not bypass the campus-program filter.
- * Returns Map<numericId, { onlineType, url }>.
+ * Keep the explicit admission cost too; RSS often omits it entirely.
+ * Returns Map<numericId, { onlineType, url, cost }>.
  */
 async function fetchLiveWhaleMetadataMap(origin, { maxPages = 14 } = {}) {
   const map = new Map();
@@ -4074,7 +4075,7 @@ async function fetchLiveWhaleMetadataMap(origin, { maxPages = 14 } = {}) {
       // online_type is the descriptive field ("Online only" / "Hybrid");
       // is_online alone can't distinguish those two.
       const signal = ev.online_type ?? (ev.is_online ? "Online only" : null);
-      const metadata = { onlineType: signal, url: ev.url };
+      const metadata = { onlineType: signal, url: ev.url, cost: ev.cost };
       map.set(String(ev.id), metadata);
       // Shared LiveWhale copies have their own id but link to the parent's
       // /live/events/<id> URL. RSS may identify either record.
@@ -4143,6 +4144,11 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // This transport class is limited to Stanford students and employees,
+      // despite having no audience tags. Read eligibility before shortening.
+      // Evidence: docs/qa/2026-10-27-0307-fact-check.md.
+      if (/^Learn to Ride Class$/i.test(ev.title || "")
+        && /\bThis is a free class for Stanford Students,\s*Faculty and Staff\b/i.test(description)) return null;
       // Read attendance notices before truncation. The October 27 After
       // Fission listing says registration is at full capacity in its body.
       const registration = declaredRegistrationAvailability(description);
@@ -4540,7 +4546,13 @@ function nearestSouthBayCityFromGeoPoint(point) {
   return best && best.km <= 35 ? best.city : null;
 }
 
-function inferScuCost(item) {
+function inferScuCost(item, sourceCost) {
+  // LiveWhale's dedicated cost field describes admission, while an RSS
+  // excerpt can end before it or mention unrelated free refreshments.
+  const price = String(sourceCost ?? "").trim();
+  if (/^(?:free|\$?0(?:\.00)?)$/i.test(price)) return "free";
+  if (/\$\s*[1-9]\d*(?:\.\d{1,2})?\b/.test(price)) return "paid";
+  if (price) return "";
   const haystack = [
     item.livewhaleCategories,
     item.livewhaleTags,
@@ -4615,7 +4627,7 @@ async function fetchScuEvents() {
         city: isVirtual ? "santa-clara" : geoCity || "santa-clara",
         ...(isVirtual ? { virtual: true } : {}),
         category: inferUniversityCategory(item.title, item.description, "", venue),
-        cost: inferScuCost(item),
+        cost: inferScuCost(item, metadata?.cost),
         description: truncate(stripHtml(item.description)),
         url: item.link,
         source: "Santa Clara University",

@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Learn to Ride Class$/i,
+    venue: /^(?:Galvez Parking Lot|Stanford University)$/i,
+    date: "2026-10-27",
+    reviewOn: "2026-10-27",
+    reason:
+      "The organizer explicitly limits this free class to Stanford students, faculty and staff. Keep shortened copies out of the public feed until public eligibility is confirmed.",
+    source: "https://events.stanford.edu/event/learn-to-ride-class",
+  }),
+  Object.freeze({
     title: /^Australia['’]s new social media legislation: the world is watching$/i,
     venue: /^(?:Building 120, McClatchy Hall, Main Quad|Stanford University)$/i,
     date: "2026-10-27",

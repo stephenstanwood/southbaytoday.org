@@ -20,18 +20,23 @@ export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "", sou
       attendanceNote: "The organizer's event header lists 6–7:15 PM, but its description says 7–8:30 PM. Confirm the session time with Mantra Room before going.",
     };
   }
-  // The structured occurrence says October 26, but its body says October 19.
+  // Both verified occurrences repeat an October 19 date in their bodies.
   // Keep the source's header and disclose the disagreement. A fresh, corrected
   // body must stop triggering this warning.
   // https://www.meetup.com/san-jose-friends-roommate-finder/events/316998975/
-  // Evidence: docs/qa/2026-10-24-1707-fact-check.md (authenticated API record).
-  if (event?.date === "2026-10-26"
-    && /\/events\/316998975\/?(?:\?|$)/.test(String(event?.url || ""))
+  // Evidence: docs/qa/2026-10-24-1707-fact-check.md and
+  // docs/qa/2026-10-27-0307-fact-check.md (authenticated exact-ID API records).
+  const roommateOccurrence = [
+    ["2026-10-26", "316998975", "October 26"],
+    ["2026-11-09", "316998965", "November 9"],
+  ].find(([date, id]) => event?.date === date
+    && String(event?.url || "").match(/\/events\/(\d+)\/?(?:\?|$)/)?.[1] === id);
+  if (roommateOccurrence
     && /\bMon(?:day)?\s+Oct(?:ober)?\.?\s+19\b/i.test(sourceDescription)) {
     return {
       ...event,
       attendanceStatus: "needs-confirmation",
-      attendanceNote: "The organizer's event header says Monday, October 26, but its description says Monday, October 19. Confirm the date with the organizer before going.",
+      attendanceNote: `The organizer's event header says Monday, ${roommateOccurrence[2]}, but its description says Monday, October 19. Confirm the date with the organizer before going.`,
     };
   }
 
