@@ -6,6 +6,71 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
+test("the public GSB panel retains free admission and its registration option through cached copy", async () => {
+  const raw = { date: "2026-10-28", cost: null, time: "9:00 AM", endTime: "10:00 AM", virtual: true,
+    url: "https://events.stanford.edu/event/GSB-Alumni-Innovating-for-American-Safety-Net",
+    description: "", blurb: "Join this online session for Stanford GSB alumni on innovating for America's safety net." };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "free");
+  assert.match(events[0].attendanceNote, /open to the public.*Registration is offered/);
+  assert.match(events[0].blurb, /panel featuring Stanford GSB alumni/);
+  assert.equal(events[0].registration, undefined, "a linked form alone does not establish mandatory signup");
+  for (const key of ["date", "time", "endTime", "virtual", "url"]) assert.equal(events[0][key], raw[key]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2027-10-28" }, { ...raw, url: "https://example.com/unrelated" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("the lantern-festival meetup distinguishes its gathering from paid festival admission", async () => {
+  const raw = { date: "2026-11-14", time: "4:00 PM", endTime: "6:00 PM", cost: null, registration: "none",
+    url: "https://www.meetup.com/townflame/events/315756596/", description: "Meetup event by Growth Social Volunteering Professionals.",
+    blurb: "Meet up with a volunteering group for the Water Lantern Festival at Almaden Lake on a Saturday afternoon." };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].cost, "paid");
+  assert.match(events[0].costNote, /ages 8 and older.*under 8 enter free/);
+  assert.match(events[0].attendanceNote, /meetup is 4–6 PM.*festival runs 2:30–6:30 PM.*separate from a Meetup RSVP/);
+  assert.match(events[0].blurb, /ticketed Water Lantern Festival/);
+  for (const key of ["time", "endTime", "registration", "url"]) assert.equal(events[0][key], raw[key]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2027-11-14" }, { ...raw, url: "https://example.com/unrelated" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("pickleball attendance instructions cannot reopen a full, closed or appointment-only occurrence", async () => {
+  const raw = { date: "2026-11-01", time: "8:00 AM", endTime: "10:00 AM", registration: "none", cost: null,
+    url: "https://www.meetup.com/south-bay-over-50-social-pickleballers/events/317153210/", blurb: "Play pickleball at Doerr Park." };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.match(events[0].attendanceNote, /listed as going.*8 AM.*7:30 AM.*Waitlisted players/);
+  assert.equal(events[0].cost, null);
+  for (const state of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration: state }).registration, state);
+  }
+  for (const other of [{ ...raw, date: "2027-11-01" }, { ...raw, url: "https://example.com/unrelated" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("the Halloween storytime clears the invented morning finish without guessing a replacement", async () => {
+  const raw = { date: "2026-10-29", time: "10:30 AM", endTime: "11:30 AM", cost: null,
+    venue: "Central Park Library", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114667/",
+    blurb: "Hear an outdoor Halloween storytime, weather permitting, then go trick or treating through the library." };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].endTime, null);
+  assert.match(events[0].attendanceNote, /10:30 AM start.*11:30 PM finish.*Confirm the end time/);
+  for (const key of ["date", "time", "cost", "venue", "url", "blurb"]) assert.equal(events[0][key], raw[key]);
+  assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+  for (const other of [{ ...raw, date: "2027-10-29" }, { ...raw, url: "https://example.com/unrelated" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Cantor exhibition hours and explicit free admission survive excerpting and follow source updates", async () => {
   const day = (offset) => new Date(Date.now() + offset * 86_400_000)
     .toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });

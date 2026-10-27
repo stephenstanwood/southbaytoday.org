@@ -993,6 +993,10 @@ const SOURCE_EVENT_ACRONYMS = [
   // Stanford's sleep/circadian community series publishes these initials.
   // https://events.stanford.edu/event/cscs-community-series-parsing-perplexion-studying-the-role-of-sleep-dysfunction-in-postoperative-delirium-with-miles-berger-md-phd
   "CSCS",
+  // Stanford Graduate School of Business; preserve its source-published
+  // initials in the October 28 public online panel and in body copy.
+  // https://events.stanford.edu/event/GSB-Alumni-Innovating-for-American-Safety-Net
+  "GSB",
   // Plant & Soul California's organizer record publishes PASCA, not Pasca.
   // https://www.meetup.com/pasca-volunteers/events/317111867/
   "PASCA",

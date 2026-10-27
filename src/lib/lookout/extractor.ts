@@ -106,6 +106,7 @@ Other rules:
 - Skip events past today's date.
 - Deduplicate within one email.
 - Do NOT invent fields. If a field is missing, use null (or empty string for description).
+- Preserve the source's AM/PM labels; never change PM to AM (or AM to PM) because another time seems more plausible. If source clocks conflict, keep an unambiguous start, set endsAt to null, and describe the conflict rather than inventing a corrected finish.
 - Prefer the event's own page URL over the newsletter's main URL.
   - NEVER use a mailto: link as sourceUrl. If the only contact is an email address, set sourceUrl to null.
   - In multi-event newsletters (JAMsj, chamber roundups, etc.), bind each sourceUrl to the link nearest that event's title/block — never reuse a neighboring event's ticket link.

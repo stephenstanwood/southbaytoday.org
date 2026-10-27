@@ -9,6 +9,57 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The public page explicitly labels this Free Event, although Localist's
+  // opt-in free flag is unset. Its audience includes General Public, and its
+  // registration link is an invitation, not an established mandatory gate.
+  // Evidence: docs/qa/2026-10-27-1907-fact-check.md (indexed page and exact API).
+  {
+    date: "2026-10-28",
+    url: "https://events.stanford.edu/event/GSB-Alumni-Innovating-for-American-Safety-Net",
+    facts: {
+      cost: "free",
+      attendanceNote: "Free and open to the public. Registration is offered through the form linked on Stanford's event page.",
+    },
+    copyReplacements: [[/\bsession for Stanford GSB alumni\b/g, "panel featuring Stanford GSB alumni"]],
+  },
+  // The exact Meetup occurrence is a 4–6 PM group gathering. Festival hours
+  // and admission come from its operator, whose age-8 ticket requirement
+  // supersedes the Meetup body's unsupported free-spectator claim.
+  // https://www.waterlanternfestival.com/events/san-jose
+  // Evidence: docs/qa/2026-10-27-1907-fact-check.md.
+  {
+    date: "2026-11-14",
+    url: "https://www.meetup.com/townflame/events/315756596/",
+    facts: {
+      cost: "paid",
+      costNote: "Festival tickets are required for ages 8 and older; children under 8 enter free.",
+      attendanceNote: "The group meetup is 4–6 PM; the festival runs 2:30–6:30 PM. Festival admission is separate from a Meetup RSVP, and tickets are required for ages 8 and older.",
+    },
+    copyReplacements: [[/\bfor the Water Lantern Festival\b/g, "at the ticketed Water Lantern Festival"]],
+  },
+  // JOIN_OPEN is not permission to attend without being listed as going.
+  // Keep source full/closed states; the shared guard below preserves them.
+  // Evidence: docs/qa/2026-10-27-1907-fact-check.md (authenticated exact ID).
+  {
+    date: "2026-11-01",
+    url: "https://www.meetup.com/south-bay-over-50-social-pickleballers/events/317153210/",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "The organizer requires attendees to be listed as going. Play starts at 8 AM; arriving at 7:30 AM is encouraged to help claim courts. Waitlisted players must check in with the host and follow the organizer's no-show substitution rules.",
+    },
+  },
+  // The source newsletter writes 11:30 PM. The extractor silently substituted
+  // 11:30 AM, which no retained primary source confirms. Clear the invented
+  // finish while retaining the city's explicit 10:30 AM storytime start.
+  // Evidence: docs/qa/2026-10-27-1907-fact-check.md (original received email).
+  {
+    date: "2026-10-29",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114667/",
+    facts: {
+      endTime: null,
+      attendanceNote: "The city newsletter confirms a 10:30 AM start but lists an 11:30 PM finish. Confirm the end time with Central Park Library.",
+    },
+  },
   // Keep the full first-party attendance instructions when the feed excerpt
   // ends before them. An RSVP invitation alone does not establish a gate.
   // Evidence: docs/qa/2026-10-27-1107-fact-check.md (page and exact Localist API).

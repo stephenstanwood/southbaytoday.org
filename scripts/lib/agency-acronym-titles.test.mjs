@@ -4,6 +4,14 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves Stanford's source-published GSB initials without respelling mixed-case names", () => {
+  const title = "GSB Alumni Innovating for America's Safety Net";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription("Stanford GSB Alumni join the panel."), "Stanford GSB Alumni join the panel.");
+  assert.equal(cleanTitle("Gsb is a source-spelled name"), "Gsb is a source-spelled name");
+});
+
 test("preserves the source's AERA research-association initials without respelling the Aera brand", () => {
   assert.equal(cleanTitle("AERA Presidential Address 2026"), "AERA Presidential Address 2026");
   assert.equal(polishDescription('Read "AERA Presidential Address 2026 The Future Is Here."'),
