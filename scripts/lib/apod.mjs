@@ -1,6 +1,8 @@
 import { decodeHTML } from "entities";
 
 export const APOD_ARCHIVE = "https://science.nasa.gov/apod/archive/";
+// NASA's archive uses both apod-YYYY-... and apod/YYYY-... permalinks.
+const ARTICLE_PATH = /^\/image-article\/apod[-/](\d{4})-([a-z]+)-(\d{1,2})-.+\/$/;
 const MONTHS = "January February March April May June July August September October November December".split(" ");
 const text = html => decodeHTML(html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, "")
   .replace(/<br\b[^>]*>|<\/(?:p|div|li)>/gi, " ").replace(/<[^>]*>/g, ""))
@@ -21,10 +23,14 @@ function validDate(date) {
 function articleUrl(value) {
   const url = new URL(value);
   if (url.origin !== "https://science.nasa.gov" || url.search || url.hash
-    || !/^\/image-article\/apod-\d{4}-[a-z]+-\d{1,2}-.+\/$/.test(url.pathname)) {
+    || !ARTICLE_PATH.test(url.pathname)) {
     throw Error("Expected a dated NASA Science APOD permalink");
   }
   return url.href;
+}
+function articleDate(value) {
+  const [, year, month, day] = new URL(articleUrl(value)).pathname.match(ARTICLE_PATH);
+  return isoDate(year, month, day);
 }
 // Extract a balanced module, so footer logos and related-story media cannot be
 // mistaken for the featured image. Nested divs are common in NASA's new layout.
@@ -51,7 +57,7 @@ export function parseApodArchive(html, { startDate, endDate } = {}) {
     const [, year, month, day, title] = label;
     const date = isoDate(year, month, day);
     const sourceUrl = articleUrl(new URL(attr(anchor[1], "href"), APOD_ARCHIVE).href);
-    if (!new URL(sourceUrl).pathname.startsWith(`/image-article/apod-${year}-${month.toLowerCase()}-${Number(day)}-`)) {
+    if (articleDate(sourceUrl) !== date) {
       throw Error("NASA APOD archive label/permalink date mismatch");
     }
     if ((startDate && date < startDate) || (endDate && date > endDate)) continue;
@@ -125,8 +131,7 @@ export function validateApodItems(items, { startDate, endDate } = {}) {
     const assets = new Set([imageKey(item.url), imageKey(item.hdurl)]);
     if ([...assets].some(asset => images.has(asset))) throw Error("Repeated NASA APOD image");
     if (item.sourceUrl) {
-      const source = new URL(articleUrl(item.sourceUrl)).pathname.match(/^\/image-article\/apod-(\d{4})-([a-z]+)-(\d{1,2})-/);
-      if (isoDate(source[1], source[2], source[3]) !== item.date) throw Error("NASA APOD source/date mismatch");
+      if (articleDate(item.sourceUrl) !== item.date) throw Error("NASA APOD source/date mismatch");
     }
     titles.add(title); explanations.add(explanation); assets.forEach(asset => images.add(asset));
   }

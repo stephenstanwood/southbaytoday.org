@@ -4,6 +4,9 @@
 [APOD archive](https://science.nasa.gov/apod/archive/). It keeps up to 12 images
 from the last 15 calendar dates, newest first. Videos are skipped. Each output
 row retains its NASA article permalink and the article's credit text.
+The dated permalink may use either `/image-article/apod-YYYY-month-D-slug/`
+or `/image-article/apod/YYYY-month-D-slug/`; both retain their exact canonical
+URL and must match the archive label and article date.
 
 On October 21, 2026 the legacy `api.nasa.gov/planetary/apod` endpoint returned
 HTTP 200 with 15 different dates, all titled `NASA Science`, all pointing at
