@@ -9,6 +9,16 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The library's heading and Disney's film page agree on The Nightmare
+  // Before Christmas; the source body and cached blurb use the wrong article.
+  // https://movies.disney.com/the-nightmare-before-christmas
+  // Evidence: docs/qa/2026-10-28-0007-fact-check.md (exact library record).
+  {
+    date: "2026-10-30",
+    url: "https://sjpl.bibliocommons.com/events/6ab41251da318a10e63638c7",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6ab41251da318a10e63638c7"],
+    copyReplacements: [[/\bA Nightmare Before Christmas\b/g, "The Nightmare Before Christmas"]],
+  },
   // The city's original October 27 teen newsletter asks people to register
   // early but does not state a mandatory booking gate. Preserve that request
   // instead of the extractor's stronger "registration is required" claim.
