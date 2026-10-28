@@ -302,23 +302,34 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/maisha-winn-futuring-black-lives-independent-black-institutions-and-the-literary-imagination",
     copyReplacements: [[/\bAera Presidential Address\b/g, "AERA Presidential Address"]],
   },
-  // The heading-only snapshot lost the club's email RSVP and ages 9+ copy,
-  // and the calendar never states a price for this occurrence. Keep these
-  // facts until the repaired scraper supplies its own scoped body.
+  // The organizer moved this book club from November 29 to December 6 at
+  // 4 PM; both its calendar summary and scoped heading agree. Correct the
+  // stale snapshot before occurrence filtering, including its dated proof.
+  // Preserve the ages 9+ / email RSVP terms without inventing admission.
   // https://www.lindentreebooks.com/events-calendar/
-  // Evidence: docs/qa/2026-10-26-1807-fact-check.md.
-  {
-    date: "2026-11-29",
-    title: /^Middle Grade Book Club: The Wish Ring Cipher$/i,
-    venue: /^Linden Tree Books$/i,
+  // Evidence: docs/qa/2026-10-26-1807-fact-check.md and
+  // docs/qa/2026-10-28-2307-fact-check.md.
+  ...["2026-11-29", "2026-12-06"].map((date) => ({
+    date,
+    matches: (event) => event.url === "https://www.lindentreebooks.com/events-calendar/"
+      && /^Middle Grade Book Club: The Wish Ring Cipher$/i.test(event.title || "")
+      && /^Linden Tree Books$/i.test(event.venue || ""),
     facts: {
+      ...(date === "2026-11-29" ? {
+        date: "2026-12-06", displayDate: "Sun, Dec 6",
+        occurrenceEvidence: {
+          kind: "first-party-occurrence-page",
+          sourceUrl: "https://www.lindentreebooks.com/events-calendar/",
+          date: "2026-12-06",
+        },
+      } : {}),
       cost: null,
       registration: REGISTRATION_REQUIRED,
       kidFriendly: true,
       audienceAge: "kids",
       attendanceNote: "For readers ages 9 and older. Email the bookstore to RSVP using its events calendar.",
     },
-  },
+  })),
   // These newly received Triton occurrences explicitly request Eventbrite
   // RSVPs. The original museum newsletter and its calendar establish the
   // individual lecture fee and distinguish it from the free artist talks.

@@ -10,6 +10,7 @@ import {
   rotationActivityForOccurrence,
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
+import { isEventPublishable } from "./eventOccurrence.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
@@ -130,6 +131,48 @@ test("the dated Linden Tree book club preserves its age and email RSVP without i
   await resolveEventBlurbs(events, { enabled: false });
   assert.equal(events[0].registration, "required");
   assert.equal(events[0].audienceAge, "kids");
+});
+
+test("Linden Tree's moved book club survives a stale snapshot with matching occurrence evidence", async () => {
+  // Both the organizer's summary and event heading now say Sunday, December 6
+  // at 4pm. Evidence: docs/qa/2026-10-28-2307-fact-check.md.
+  const raw = {
+    id: "9038118f4459", title: "Middle Grade Book Club: The Wish Ring Cipher",
+    date: "2026-11-29", displayDate: "Sun, Nov 29", time: "4:00 PM", endTime: null,
+    venue: "Linden Tree Books", city: "los-altos", source: "Linden Tree Books",
+    url: "https://www.lindentreebooks.com/events-calendar/", cost: null,
+    registration: "required", description: "A book club for ages 9+. Email the bookstore to RSVP.",
+    blurb: "Discuss The Wish Ring Cipher with fellow readers ages 9 and up.",
+    occurrenceEvidence: { kind: "first-party-occurrence-page", date: "2026-11-29",
+      sourceUrl: "https://www.lindentreebooks.com/events-calendar/" },
+  };
+  const before = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [fixed] = events;
+  assert.equal(fixed.date, "2026-12-06");
+  assert.equal(fixed.displayDate, "Sun, Dec 6");
+  assert.equal(fixed.occurrenceEvidence.date, fixed.date);
+  assert.equal(isEventPublishable(fixed), true, "moving the date must retain valid first-party proof");
+  assert.equal(fixed.registration, "required");
+  assert.equal(fixed.audienceAge, "kids");
+  assert.equal(fixed.cost, null);
+  for (const field of ["id", "title", "time", "endTime", "venue", "city", "url", "description", "blurb"]) {
+    assert.equal(fixed[field], raw[field], field);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.deepEqual(raw, before);
+  const fresh = applyVerifiedEventFacts({ ...raw, date: "2026-12-06", displayDate: "Sun, Dec 6",
+    occurrenceEvidence: { ...raw.occurrenceEvidence, date: "2026-12-06", checkedAt: "2026-10-29T08:00:00Z" } });
+  assert.equal(fresh.occurrenceEvidence.checkedAt, "2026-10-29T08:00:00Z", "fresh provider evidence keeps its own timestamp");
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [
+    { ...raw, date: "2027-11-29" }, { ...raw, date: "2027-12-06" },
+    { ...raw, date: "2026-12-13" }, { ...raw, title: "Another book club" },
+    { ...raw, venue: "Another bookstore" }, { ...raw, url: "https://example.com/another-calendar" },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "unrelated occurrences retain their own facts");
 });
 
 test("four dated Triton events retain ticket or RSVP gates and their distinct admission", () => {

@@ -158,6 +158,18 @@ test("verified garage-sale date correction redirects the old date without relaxi
   assert.equal(findSuccessor({ ...unrelated, date: "2026-10-04" }, liveSlugs([unrelated], [], "2026-10-04")), null);
 });
 
+test("the book club's old dated URL redirects to its verified December occurrence", () => {
+  const old = ev({ id: "9038118f4459", title: "Middle Grade Book Club: The Wish Ring Cipher",
+    date: "2026-11-29", city: "los-altos", venue: "Linden Tree Books",
+    url: "https://www.lindentreebooks.com/events-calendar/", time: "4:00 PM" });
+  const current = { ...old, date: "2026-12-06" };
+  const oldSlug = "2026-11-29-middle-grade-book-club-the-wish-ring-cipher";
+  const { redirects, orphans } = resolveRetired({ entries: [{ slug: oldSlug, event: old }] },
+    [current], [], "2026-10-28");
+  assert.equal(redirects.get(oldSlug), "2026-12-06-middle-grade-book-club-the-wish-ring-cipher");
+  assert.deepEqual(orphans, []);
+});
+
 test("a rolling run's passed night is retired and 301s to the same record's later date", () => {
   // Palo Alto Players lists a production as "today" for its whole run.
   const show = { id: "pap-1", title: "A Gentleman's Guide to Love and Murder", venue: "Lucie Stern Theatre", city: "palo-alto", time: "7:30 PM" };
