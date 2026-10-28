@@ -5,6 +5,55 @@ import { resolveEventBlurbs, eventBlurbCacheKey } from "../../src/lib/south-bay/
 import { requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
 import { fetchScuEvents, cleanTitle } from "../generate-events.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { applyVerifiedMeetupEventOverride } from "../lib/meetup-event-overrides.mjs";
+
+test("the two dated Song of the Week sessions retain their verified music category", async () => {
+  for (const [date, id, title] of [
+    ["2026-11-21", "317153723", "Song of the Week - Cherub Rock by Smashing Pumpkins"],
+    ["2026-11-28", "317153732", "Song of the Week - Choosin' Texas by Ella Langley"],
+  ]) {
+    const raw = { date, title, url: `https://www.meetup.com/bay-area-musicians-meetup/events/${id}/`,
+      category: "community", time: "3:00 PM", endTime: "5:00 PM", venue: "", description: "Meetup event by Bay Area Musicians Meetup.",
+      blurb: "Join fellow musicians for the weekly song session." };
+    const events = [{ ...raw }];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.deepEqual(events[0], { ...raw, category: "music" });
+    assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
+    const otherDate = { ...raw, date: "2027-11-21" };
+    const otherUrl = { ...raw, url: "https://www.meetup.com/bay-area-musicians-meetup/events/another/" };
+    assert.deepEqual(applyVerifiedEventFacts(otherDate), otherDate);
+    assert.deepEqual(applyVerifiedEventFacts(otherUrl), otherUrl);
+  }
+});
+
+test("Almaden Quicksilver keeps the source title and discloses its conflicting route lengths and required waiver", async () => {
+  const raw = { date: "2026-11-14", title: "Almaden Quicksilver: 7.3 Mile Moderate Hike",
+    url: "https://www.meetup.com/sleeplateandhike/events/317099274/", category: "community",
+    time: "12:00 PM", endTime: "4:00 PM", venue: "Almaden Quicksilver - Hacienda", registration: "none",
+    description: "Meetup event by Sleep Late and Hike.",
+    blurb: "Hike a 7.3-mile route at Almaden Quicksilver starting from the Hacienda area with the Sleep Late and Hike group." };
+  const before = structuredClone(raw);
+  const sourceDescription = "Please sign this waiver for each event. Please do so online prior to arriving (works on mobile)\n**Total Distance:** 7.6 miles, loop";
+  const fixed = applyVerifiedMeetupEventOverride(raw, { sourceDescription });
+  const events = [fixed];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(fixed.category, "outdoor");
+  assert.match(fixed.attendanceNote, /title says 7\.3 miles.*description says 7\.6 miles/);
+  assert.match(fixed.attendanceNote, /waiver online before arriving/);
+  assert.doesNotMatch(fixed.blurb, /7\.[36]/);
+  for (const field of ["title", "date", "time", "endTime", "url", "venue", "registration"]) assert.equal(fixed[field], raw[field]);
+  assert.deepEqual(raw, before);
+});
+
+test("the hike warning follows the fresh source body without carrying a resolved disagreement forward", () => {
+  const raw = { date: "2026-11-14", title: "Almaden Quicksilver: 7.3 Mile Moderate Hike",
+    url: "https://www.meetup.com/sleeplateandhike/events/317099274/", category: "community" };
+  const revised = applyVerifiedMeetupEventOverride(raw, { sourceDescription: "**Total Distance:** 7.3 miles, loop" });
+  assert.deepEqual(revised, { ...raw, category: "outdoor" });
+  for (const other of [{ ...raw, date: "2027-11-14" }, { ...raw, url: "https://www.meetup.com/sleeplateandhike/events/another/" }]) {
+    assert.deepEqual(applyVerifiedMeetupEventOverride(other, { sourceDescription: "**Total Distance:** 7.6 miles, loop" }), other);
+  }
+});
 
 test("Stanford's ETL series acronym survives the first source title-cleaning pass", () => {
   const title = "Carina Hong @ Entrepreneurial Thought Leaders Speaker Series (ETL)";

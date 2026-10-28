@@ -7,6 +7,27 @@ const MACINTALKERS_PROFILE_URL =
 // club site also gives the 7 PM end. Keep Meetup as the date-specific
 // occurrence source, but normalize these durable club facts.
 export function applyVerifiedMeetupEventOverride(event, { groupUrlname = "", sourceDescription = "" } = {}) {
+  // The title and route details disagree on mileage. Preserve the organizer's
+  // title, disclose both figures, and avoid repeating either as a verified
+  // distance in generated copy. Recheck the fresh body so a resolved conflict
+  // does not leave a stale warning. Evidence: docs/qa/2026-10-28-1007-fact-check.md.
+  if (event?.date === "2026-11-14"
+    && /\/events\/317099274\/?(?:\?|$)/.test(String(event?.url || ""))) {
+    const distanceConflict = /\b7\.3\s+Mile\b/i.test(event.title || "")
+      && /Total Distance:\*{0,2}\s*7\.6\s+miles\b/i.test(sourceDescription);
+    const waiverRequired = /please sign this waiver\b/i.test(sourceDescription)
+      && /online prior to arriving\b/i.test(sourceDescription);
+    const notes = [
+      distanceConflict && "The organizer's title says 7.3 miles, but its route description says 7.6 miles. Confirm the route length before going.",
+      waiverRequired && "Sign the organizer's event waiver online before arriving.",
+    ].filter(Boolean);
+    return {
+      ...event,
+      category: "outdoor",
+      ...(notes.length ? { attendanceNote: notes.join(" ") } : {}),
+      ...(distanceConflict ? { blurb: "Join Sleep Late and Hike for a moderate hike at Almaden Quicksilver, starting from the Hacienda entrance." } : {}),
+    };
+  }
   // The header ends at 9 PM while the organizer's body says 8:30 PM. Keep
   // the source clocks and disclose the disagreement only while it persists.
   // https://www.meetup.com/sf-mcp-devs/events/316977267/

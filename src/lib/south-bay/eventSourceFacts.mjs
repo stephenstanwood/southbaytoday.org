@@ -9,6 +9,20 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Both exact organizer records describe musicians working on the named
+  // song. Meetup's adapter supplies a generic community category instead.
+  // Keep the verified music genre through cached blurb resolution.
+  // Evidence: docs/qa/2026-10-28-1007-fact-check.md (authenticated exact IDs).
+  {
+    date: "2026-11-21",
+    url: "https://www.meetup.com/bay-area-musicians-meetup/events/317153723/",
+    facts: { category: "music" },
+  },
+  {
+    date: "2026-11-28",
+    url: "https://www.meetup.com/bay-area-musicians-meetup/events/317153732/",
+    facts: { category: "music" },
+  },
   // The venue's sparse replacement omits the concert genre. Ticketmaster's
   // exact occurrence G5vYZbU3R_nwH identifies Music / Rock and agrees on the
   // date, start and venue. Preserve that category after source deduplication.
