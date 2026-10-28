@@ -31,6 +31,40 @@ test("NASA's archive supplies 15 real dates, permalinks and titles, ordered newe
   assert.throws(() => parseApodArchive(archive.replace("https://science.nasa.gov/image-article/", "https://example.com/image-article/")), /permalink/);
 });
 
+test("NASA's mixed hyphen and slash permalinks keep their exact URLs and archive dates", () => {
+  const mixed = fixture("archive-mixed-permalinks.html");
+  const parsed = parseApodArchive(mixed);
+  assert.deepEqual(parsed.map(({ date, sourceUrl }) => ({ date, sourceUrl })), [
+    { date: "2026-10-27", sourceUrl: "https://science.nasa.gov/image-article/apod-2026-october-27-noctilucent-clouds-over-sweden/" },
+    { date: "2026-10-26", sourceUrl: "https://science.nasa.gov/image-article/apod/2026-october-26-m42-the-great-nebula-in-orion/" },
+  ]);
+  for (const day of ["27", "26"]) {
+    assert.throws(() => parseApodArchive(mixed.replace(`APOD: 2026 October ${day}`, "APOD: 2026 October 25")), /label\/permalink/);
+  }
+});
+
+for (const separator of ["-", "/"]) {
+  test(`APOD ${separator} permalinks preserve canonical, origin, query/hash and date guards`, () => {
+    const entry = { ...entries[0], sourceUrl: entries[0].sourceUrl.replace("/apod-", `/apod${separator}`) };
+    const html = rollover.replaceAll(entries[0].sourceUrl, entry.sourceUrl);
+    const item = parseApodArticle(html, entry);
+    assert.equal(item.sourceUrl, entry.sourceUrl);
+    assert.deepEqual(validateApodItems([item]), [item]);
+    assert.throws(() => validateApodItems([{ ...item, date: "2026-10-20" }]), /source\/date/);
+    assert.throws(() => parseApodArticle(html.replace("October 21, 2026", "October 20, 2026"), entry), /date\/title/);
+    const otherShape = entry.sourceUrl.replace(`/apod${separator}`, `/apod${separator === "-" ? "/" : "-"}`);
+    assert.throws(() => parseApodArticle(html.replaceAll(entry.sourceUrl, otherShape), entry), /canonical/);
+    for (const invalid of [entry.sourceUrl + "?ref=archive", entry.sourceUrl + "#image",
+      entry.sourceUrl.replace("https:", "http:"), entry.sourceUrl.replace("science.nasa.gov", "example.com")]) {
+      assert.throws(() => parseApodArticle(html, { ...entry, sourceUrl: invalid }), /permalink/);
+      assert.throws(() => validateApodItems([{ ...item, sourceUrl: invalid }]), /permalink/);
+    }
+    for (const invalid of ["2026-notamonth-21", "2026-february-30"]) {
+      assert.throws(() => validateApodItems([{ ...item, sourceUrl: entry.sourceUrl.replace("2026-october-21", invalid) }]), /month|date/);
+    }
+  });
+}
+
 test("real NASA rollover and ordinary image modules preserve media and attribution", () => {
   assert.match(latest.url, /IC63\.png\?w=2622&h=1751&/);
   assert.doesNotMatch(latest.url, /annoted|logo|&amp;/);
@@ -96,6 +130,28 @@ test("the generator writes only verified images, uses Eastern dates, and keeps s
   assert.deepEqual(JSON.parse(readFileSync(outPath, "utf8")), result);
   assert.equal(result.items[0].sourceUrl, entries[0].sourceUrl);
   assert.equal(requests.length, 4);
+});
+
+test("the generator fetches mixed permalink shapes verbatim and validates slash article dates", async t => {
+  const dir = mkdtempSync(join(tmpdir(), "sbt-apod-mixed-"));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const outPath = join(dir, "apod.json");
+  const original = byDate("2026-10-17").sourceUrl;
+  const slash = original.replace("/apod-", "/apod/");
+  const pages = new Map(responses);
+  pages.set(APOD_ARCHIVE, selected.replace(original, slash));
+  pages.delete(original);
+  pages.set(slash, image.replaceAll(original, slash));
+  const requests = [];
+  const options = { outPath, now: new Date("2026-10-21T12:00:00Z"), report() {}, pause: async () => {},
+    fetchImpl: async url => { requests.push(url); assert(pages.has(url)); return htmlResponse(pages.get(url)); } };
+  const result = await generateApod(options);
+  assert.deepEqual(result.items.map(item => item.sourceUrl), [entries[0].sourceUrl, slash]);
+  assert(requests.includes(slash));
+  const before = readFileSync(outPath, "utf8");
+  pages.set(slash, pages.get(slash).replace("October 17, 2026", "October 16, 2026"));
+  await assert.rejects(generateApod(options), /date\/title/);
+  assert.equal(readFileSync(outPath, "utf8"), before);
 });
 
 test("failed acquisition, stale sources and malformed content leave exact previous bytes intact", async t => {
