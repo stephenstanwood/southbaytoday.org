@@ -9,6 +9,16 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Stanford's occurrence page explicitly labels this Free Event and offers
+  // registration. The exact Localist record leaves its opt-in free flag
+  // false and ticket_cost blank; neither establishes paid admission.
+  // https://events.stanford.edu/event/film-screening-american-solitaire
+  // Evidence: docs/qa/2026-10-28-1807-fact-check.md (page and exact API).
+  {
+    date: "2026-10-28",
+    url: "https://events.stanford.edu/event/film-screening-american-solitaire",
+    facts: { cost: "free" },
+  },
   // The event body waives tickets, while registrationInfo still describes
   // ticket distribution. Neither field establishes which instruction wins.
   // Keep this occurrence listed with a confirmation note, out of day plans,
