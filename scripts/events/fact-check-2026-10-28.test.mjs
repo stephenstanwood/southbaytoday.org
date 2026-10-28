@@ -1,11 +1,46 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs, eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
-import { requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
+import { requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
 import { fetchScuEvents, cleanTitle } from "../generate-events.mjs";
+import { libraryEventDetails } from "../lib/library-event-details.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { applyVerifiedMeetupEventOverride } from "../lib/meetup-event-overrides.mjs";
+
+test("Cambrian's Halloween listing discloses conflicting ticket instructions through blurb resolution", async () => {
+  const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/cambrian-halloween-2026-10-29.json", import.meta.url)));
+  const raw = {
+    id: `sjpl-${fixture.event.id}`, title: fixture.event.definition.title,
+    date: "2026-10-29", time: "11:00 AM", endTime: "12:00 PM",
+    venue: "Cambrian Library", cost: "free",
+    url: `https://sjpl.bibliocommons.com/events/${fixture.event.id}`,
+    ...libraryEventDetails(fixture.event, fixture.entities),
+    blurb: "Join a library Halloween festival for families, sponsored by the Friends of the Cambrian Branch Library.",
+  };
+  assert.match(raw.description, /tickets are not required/i);
+  assert.match(raw.attendanceNote, /tickets will be distributed.*30 minutes/i);
+  const original = structuredClone(raw);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.equal(requiresAttendanceConfirmation(actual), true);
+  assert.equal(requiresAdvanceRegistration(actual), false, "a source conflict does not establish a reservation requirement");
+  assert.match(actual.attendanceNote, /description says tickets are not required.*signup instructions.*30 minutes.*Confirm.*Cambrian/i);
+  assert.match(actual.description, /description and signup instructions disagree/i);
+  assert.doesNotMatch(actual.description, /tickets are not required/i, "do not independently assert one side of an unresolved conflict");
+  for (const field of ["id", "title", "date", "time", "endTime", "venue", "url", "cost", "blurb"]) assert.equal(actual[field], raw[field]);
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  assert.deepEqual(raw, original);
+
+  for (const other of [
+    { ...raw, date: "2027-10-29" },
+    { ...raw, url: "https://sjpl.bibliocommons.com/events/another" },
+    { ...raw, attendanceNote: "Storytime tickets are not required for this storytime." },
+    { ...raw, description: "Tickets will be distributed 30 minutes before storytime." },
+  ]) assert.equal(applyVerifiedEventFacts(other), other, "different occurrences and resolved source copy keep their own terms");
+});
 
 test("the two dated Song of the Week sessions retain their verified music category", async () => {
   for (const [date, id, title] of [

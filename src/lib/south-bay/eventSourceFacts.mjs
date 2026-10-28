@@ -9,6 +9,24 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The event body waives tickets, while registrationInfo still describes
+  // ticket distribution. Neither field establishes which instruction wins.
+  // Keep this occurrence listed with a confirmation note, out of day plans,
+  // and stop applying the warning when fresh source copy resolves the issue.
+  // https://sjpl.bibliocommons.com/events/6ab41205129d8e0031f486b2
+  // Evidence: docs/qa/2026-10-28-1507-fact-check.md and the captured fixture.
+  {
+    date: "2026-10-29",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/6ab41205129d8e0031f486b2"
+      && /\bstorytime tickets are not required\b/i.test(event.description || "")
+      && /\btickets will be distributed\b[^.!?]*\b30 minutes\b/i.test(event.attendanceNote || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library's description says tickets are not required, but its signup instructions describe ticket pickup 30 minutes before storytime. Confirm ticket requirements with Cambrian Library before going.",
+    },
+    copyReplacements: [[/Storytime tickets are not required for this storytime\./gi,
+      "Confirm storytime ticket requirements with Cambrian Library; the event description and signup instructions disagree."]],
+  },
   // Both exact organizer records describe musicians working on the named
   // song. Meetup's adapter supplies a generic community category instead.
   // Keep the verified music genre through cached blurb resolution.

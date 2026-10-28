@@ -1,0 +1,32 @@
+{
+  "sourceUrl": "https://gateway.bibliocommons.com/v2/libraries/sjpl/events?ids=6ad665f5035faf0033ddb087,6941d7666f926136000b4824,6ab41205129d8e0031f486b2,69e2697afca21471b7ef7ec3,6a50271ecca66c2f00a26761,6a751bec3f18b57d5233feb6,6ac02c85e06996003a80e8d0",
+  "fetchedAt": "2026-10-28T15:09:57.443700+00:00",
+  "sourceSha256": "aeeea843d15f16b5190c08df174ec0213d396988d99aa35190e441304961e17c",
+  "event": {
+    "id": "6ab41205129d8e0031f486b2",
+    "key": "2026-10-29T11:00:00",
+    "definition": {
+      "start": "2026-10-29T11:00",
+      "end": "2026-10-29T12:00",
+      "title": "Halloween Festival",
+      "description": "<p>This program was generously sponsored by the Friends of the Cambrian Branch Library.</p>\n<p>Calling all boos, ghouls, and fiends! Put on your scariest, your sparkliest, or your silliest costumes and come join us for a spooktacular Halloween storytime, followed by a costume parade and trick-or-treating throughout the library!</p>\n<p>Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages. This program is geared for children of all ages and their parents/caregivers!</p>\n<p><strong><em>Storytime Tickets are not required for this storytime.</em></strong></p>\n<p><strong>Free</strong></p>\n<p><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" id=\"LPlnk\" title=\"https://www.sjpl.org/ada-event-accommodation/\" data-linkindex=\"0\">ADA Accommodation Requests</a></p>",
+      "audienceIds": [
+        "5d5f09306bb98139001cffcc"
+      ],
+      "branchLocationId": "04",
+      "locationDetails": "2nd Floor Picture Book Area",
+      "registrationInfo": {
+        "instructions": "<p><em>Seating for Storytime is available on a first-come, first-served basis. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime.</em></p>"
+      }
+    }
+  },
+  "entities": {
+    "eventAudiences": {
+      "5d5f09306bb98139001cffcc": {
+        "id": "5d5f09306bb98139001cffcc",
+        "name": "Young Children, ages 0-5",
+        "imageId": null
+      }
+    }
+  }
+}
