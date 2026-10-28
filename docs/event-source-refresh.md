@@ -146,15 +146,26 @@ alone would miss that ordering regression.
   to GitHub-hosted runners on October 18, including for robots.txt; the Mini
   received their normal public calendar and lineup with the existing honest
   aggregator User-Agent. Do not solve the CAPTCHA, spoof a browser, or probe
-  alternate endpoints after a challenge. The scheduled Mini refresh and GitHub
-  set `SBT_USE_OFFICIAL_EVENT_SNAPSHOT=1` to read the committed
-  `official-event-sources.json` instead. The writer calls the real adapters,
+  alternate endpoints after a challenge. Every generator invocation reads the
+  committed `official-event-sources.json`, including the general data-refresh
+  caller and manual runs without strict mode or an environment opt-in. Only
+  the snapshot writer requests the live adapters explicitly with `live: true`.
+  The writer calls the real adapters,
   rejects unrecognized content even without strict mode, and atomically replaces
   the snapshot only after both succeed. A parsed past festival can contribute
   zero future rows; a parser failure cannot. Consumers validate each source,
   its timestamp, and the envelope against the unchanged two-hour Mini/eight-hour
   GitHub ceiling. Missing, failed, or stale snapshots block before publication;
   every consumed snapshot remains visible in `inputSnapshots` and output health.
+
+  The October 28 recurrence came from the existing general evening refresh:
+  its published receipt identifies `1dfa88b7`, whose output dropped the official
+  snapshot row at 03:17 UTC after the guarded refresh had recorded all three at
+  03:10 UTC. Earlier general-refresh commits show the same transition. Requiring
+  snapshot consumption and measurement in the generator closes that caller gap;
+  adding a flag only to one recipe would leave other publishers able to repeat it.
+  Missing, invalid, failed, or stale official snapshots abort before modifying
+  the event database, archive, or retired-slug ledger, even in non-strict mode.
 - San Jose Museum of Art is owned by the Playwright snapshot. Its redundant
   direct HTTP adapter was retired after Cloudflare began returning a managed
   403 challenge; browser failures retain that source's last healthy future rows.

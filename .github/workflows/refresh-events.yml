@@ -41,9 +41,6 @@ jobs:
           # Mini checks inputs hourly and refreshes them after four hours.
           # Keep rejecting stale inputs when the producer or publication fails.
           SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"
-          # These two public hosts challenge cloud IPs. Mini parses them live;
-          # this runner verifies its fresh, fail-closed snapshot instead.
-          SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1"
           TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
           MEETUP_CLIENT_ID: ${{ secrets.MEETUP_CLIENT_ID }}
           MEETUP_MEMBER_ID: ${{ secrets.MEETUP_MEMBER_ID }}
