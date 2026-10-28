@@ -108,7 +108,7 @@ test("the snapshot writer validates live results before atomically publishing", 
   assert.deepEqual(JSON.parse(readFileSync(outputPath)), data);
 });
 
-test("cloud adapters consume the canonical snapshot without contacting challenged hosts", (t) => {
+test("every caller consumes official snapshots without an opt-in flag and preserves output on invalid inputs", (t) => {
   const repo = fileURLToPath(new URL("../../", import.meta.url));
   const sandbox = scratch(t);
   for (const path of ["scripts", "src/lib", "src/data/south-bay"]) {
@@ -116,32 +116,43 @@ test("cloud adapters consume the canonical snapshot without contacting challenge
   }
   symlinkSync(join(repo, "node_modules"), join(sandbox, "node_modules"), "dir");
   const path = join(sandbox, "src/data/south-bay/official-event-sources.json");
-  const run = () => spawnSync(process.execPath, ["--input-type=module", "-e", `
+  const run = (env) => spawnSync(process.execPath, ["--input-type=module", "-e", `
     globalThis.fetch = async () => { throw new Error("challenged host must not be requested"); };
     const {fetchLosAltosHistoryEvents,fetchSjJazzEvents} = await import("./scripts/generate-events.mjs");
     console.log(JSON.stringify(await Promise.all([fetchLosAltosHistoryEvents(),fetchSjJazzEvents()])));
-  `], { cwd: sandbox, env: { PATH: process.env.PATH, SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1", SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8" }, encoding: "utf8", timeout: 15_000 });
+  `], { cwd: sandbox, env, encoding: "utf8", timeout: 15_000 });
   const fresh = snapshot(new Date().toISOString());
   const futureEvent = { ...museumEvent, date: new Date(Date.now() + 3 * 86_400_000).toISOString().slice(0, 10) };
   fresh.sources.fetchLosAltosHistoryEvents.events = [futureEvent];
-  writeFileSync(path, JSON.stringify(fresh));
-  const result = run();
-  assert.ifError(result.error);
-  assert.equal(result.status, 0, result.stdout + result.stderr);
-  assert.deepEqual(JSON.parse(result.stdout.trim()), [[futureEvent], []]);
-  writeFileSync(path, JSON.stringify(snapshot(new Date(Date.now() - 9 * 3_600_000).toISOString())));
-  assert.match(run().stderr, /stale/);
-
-  // Exercise the real generator's early abort, rather than just the reader.
   const published = ["upcoming-events.json", "events-archive.json", "events-retired.json"];
   const before = published.map((name) => readFileSync(join(sandbox, "src/data/south-bay", name)));
-  const cli = spawnSync(process.execPath, ["scripts/generate-events.mjs"], {
-    cwd: sandbox, env: { PATH: process.env.PATH, SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1", SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8" },
-    encoding: "utf8", timeout: 15_000,
-  });
-  assert.equal(cli.status, 1, cli.stdout + cli.stderr);
-  assert.match(cli.stderr, /official event snapshot:.*stale/);
-  published.forEach((name, index) => assert.deepEqual(readFileSync(join(sandbox, "src/data/south-bay", name)), before[index]));
-  rmSync(path);
-  assert.notEqual(run().status, 0, "missing snapshot must not fall through to a cloud fetch");
+  for (const flag of [undefined, "0", "1"]) {
+    const env = { PATH: process.env.PATH, SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8" };
+    if (flag !== undefined) env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT = flag;
+    writeFileSync(path, JSON.stringify(fresh));
+    const result = run(env);
+    assert.ifError(result.error);
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    assert.deepEqual(JSON.parse(result.stdout.trim()), [[futureEvent], []]);
+
+    for (const invalid of ["stale", "failed", "missing"]) {
+      const data = invalid === "stale"
+        ? snapshot(new Date(Date.now() - 9 * 3_600_000).toISOString()) : structuredClone(fresh);
+      if (invalid === "failed") data.sources.fetchSjJazzEvents.status = "error";
+      if (invalid === "missing") rmSync(path);
+      else writeFileSync(path, JSON.stringify(data));
+      assert.notEqual(run(env).status, 0, `${invalid} snapshot must not fall through to a live fetch (flag ${flag})`);
+
+      // Exercise the real generator's early abort, rather than just the reader.
+      const cli = spawnSync(process.execPath, ["scripts/generate-events.mjs"], {
+        cwd: sandbox, env, encoding: "utf8", timeout: 15_000,
+      });
+      assert.ifError(cli.error);
+      assert.equal(cli.status, 1, cli.stdout + cli.stderr);
+      assert.match(cli.stderr, /official event snapshot:|ENOENT/);
+      published.forEach((name, index) => assert.deepEqual(
+        readFileSync(join(sandbox, "src/data/south-bay", name)), before[index], `${invalid}, flag ${flag}: ${name}`,
+      ));
+    }
+  }
 });

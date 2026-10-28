@@ -129,7 +129,7 @@ URL:https://www.losaltoshistory.org/event/closed-tour/
 END:VEVENT
 END:VCALENDAR`;
 
-  const events = await withFetchRoutes({ [feedUrl]: feed }, () => fetchLosAltosHistoryEvents());
+  const events = await withFetchRoutes({ [feedUrl]: feed }, () => fetchLosAltosHistoryEvents({ live: true }));
   assert.equal(events.length, 1);
   assert.equal(events[0].date, openDate);
   assert.equal(events[0].cost, "low");

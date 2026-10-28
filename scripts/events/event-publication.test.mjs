@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { OFFICIAL_SNAPSHOT_SOURCES } from "../lib/official-event-snapshot.mjs";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 
@@ -47,6 +48,12 @@ for (const strict of [undefined, "0", "1"]) {
     writeFileSync(join(dataDir, "inbound-events.json"), JSON.stringify({
       _meta: { pulledAt: now }, events: [{ ...event, id: "fixture-inbound", source: "Fixture newsletter" }],
     }));
+    writeFileSync(join(dataDir, "official-event-sources.json"), JSON.stringify({
+      version: 1, generatedAt: now,
+      sources: Object.fromEntries(Object.entries(OFFICIAL_SNAPSHOT_SOURCES).map(([id, { url }]) => [id, {
+        status: "ok", sourceUrl: url, observedAt: now, events: [],
+      }])),
+    }));
     const before = Object.fromEntries(Object.keys(files).map((name) => [name, readFileSync(join(dataDir, name))]));
     const preload = join(sandbox, "offline.mjs");
     writeFileSync(preload, `globalThis.fetch = async (url) => {
@@ -74,6 +81,7 @@ for (const strict of [undefined, "0", "1"]) {
     });
     const output = result.stdout + result.stderr;
     assert.ifError(result.error);
+    assert.match(output, /official-event-sources=0/, "unconfigured callers must measure the third input before contacting sources");
     assert.match(output, /fixture: Ticketmaster 403/, output);
     assert.doesNotMatch(output, /fixture: retired city source requested/);
     assert.doesNotMatch(output, /fixture: retired JAMsj source requested/);

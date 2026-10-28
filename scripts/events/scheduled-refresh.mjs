@@ -104,7 +104,6 @@ function runNode(repoRoot, relativePath, lockScript, timeout) {
       ...process.env,
       SBT_STRICT_EVENT_REFRESH: "1",
       SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "2",
-      SBT_USE_OFFICIAL_EVENT_SNAPSHOT: "1",
     },
     timeout,
   });

@@ -4908,7 +4908,7 @@ async function fetchChmEvents() {
 }
 
 async function fetchSjJazzEvents({ live = false } = {}) {
-  if (!live && process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
+  if (!live) {
     return officialSnapshotEvents("fetchSjJazzEvents", { maxAgeHours: strictSnapshotMaxAgeHours() });
   }
   console.log("  ⏳ San Jose Jazz Summer Fest...");
@@ -5767,7 +5767,7 @@ async function fetchOperaSanJoseEvents() {
 }
 
 async function fetchLosAltosHistoryEvents({ live = false } = {}) {
-  if (!live && process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
+  if (!live) {
     return officialSnapshotEvents("fetchLosAltosHistoryEvents", { maxAgeHours: strictSnapshotMaxAgeHours() });
   }
   return fetchCivicPlusIcal(
@@ -10239,11 +10239,12 @@ async function main() {
     inbound: readJsonFile(INBOUND_EVENTS_PATH),
     maxAgeHours: strictSnapshotMaxAgeHours(),
   });
-  if (process.env.SBT_USE_OFFICIAL_EVENT_SNAPSHOT === "1") {
-    // This read fails before any output write, including non-strict runs.
-    const { health } = readOfficialEventSnapshot({ maxAgeHours: strictSnapshotMaxAgeHours() });
-    inputHealth.snapshots.push(health);
-  }
+  // Every publisher consumes and records the verified official snapshot. The
+  // general data-refresh caller has no opt-in flag; letting it fetch live and
+  // omit this row repeatedly stripped required metadata after healthy runs.
+  // Invalid snapshots fail before any output write, including non-strict runs.
+  const { health } = readOfficialEventSnapshot({ maxAgeHours: strictSnapshotMaxAgeHours() });
+  inputHealth.snapshots.push(health);
   if (STRICT_EVENT_REFRESH) {
     if (!inputHealth.ok) {
       const detail = inputHealth.problems.join("; ");
