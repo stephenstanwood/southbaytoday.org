@@ -3388,6 +3388,56 @@ test("sparse Meetup listings cannot acquire unsourced refreshments or live model
   assert.equal(eventCopyFactConflict("Draw from a live model.", { ...sparse, description: "The organizer provides a live model." }), null);
 });
 
+test("course level claims cannot choose between conflicting English and Spanish source levels", () => {
+  // Fresh exact library record: its heading says Nivel 1; the body says cero.
+  // https://sjpl.bibliocommons.com/events/6a8e2033b204780029958a7b
+  const event = {
+    title: "Clases de inglés para Hispanos - Nivel 1",
+    description: "Te invitamos a una clase de Inglés nivel cero con una voluntaria.",
+  };
+  for (const claim of ["Practice English in a level-one class.", "Join a level 0 English class.",
+    "Practica inglés en una clase de nivel uno.", "Clase de nivel cero."]) {
+    assert.equal(eventCopyFactConflict(claim, event), "conflicting source course levels");
+  }
+  assert.equal(eventCopyFactConflict("Practice English vocabulary and grammar with a volunteer.", event), null);
+  assert.equal(eventCopyFactConflict("An English class meets today. A different level-one class meets tomorrow.", event), null);
+});
+
+test("course level checks preserve consistent sources, ranges and unrelated uses of level", () => {
+  const event = { title: "English Class - Level 1", description: "Practice English in a level one class." };
+  assert.equal(eventCopyFactConflict("Practice English in a level-one class.", event), null);
+  for (const description of ["English classes at levels 0–1.", "English classes at levels zero through one.",
+    "English classes at level 0 and level 1.", "English classes for levels 0/1."]) {
+    assert.equal(eventCopyFactConflict("Practice English in a level-one class.", { ...event, description }), null);
+  }
+  assert.equal(eventCopyFactConflict("Meet on level one.", { title: "Building Tour - Level 1", description: "Start on level zero." }), null);
+  assert.equal(eventCopyFactConflict("Join a level-one class.", { ...event, description: "Practice English with a volunteer." }), null);
+});
+
+test("course level conflicts reject both carried and cached blurbs before generation", async (t) => {
+  const event = {
+    title: "Clases de inglés para Hispanos - Nivel 1", venue: "Library",
+    description: "Clase de Inglés nivel cero con una voluntaria.",
+  };
+  const misleading = "Practice English in a level-one class.";
+  const cachePath = fileURLToPath(new URL("../../data/south-bay/event-blurb-cache.json", import.meta.url));
+  const originalRead = fs.readFileSync;
+  const cache = { byKey: { [eventBlurbCacheKey(event)]: { blurb: misleading } } };
+  t.mock.method(fs, "readFileSync", (path, ...args) =>
+    String(path) === cachePath ? JSON.stringify(cache) : originalRead(path, ...args));
+  syncBuiltinESMExports();
+  t.after(() => { t.mock.restoreAll(); syncBuiltinESMExports(); });
+  const events = [{ ...event, blurb: misleading }, { ...event }];
+  const before = structuredClone(events);
+  const stats = await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(stats.cache_hits, 0);
+  assert.equal(stats.skipped, 2);
+  for (const [index, actual] of events.entries()) {
+    assert.equal(actual.blurb, undefined);
+    assert.deepEqual(actual, Object.fromEntries(Object.entries(before[index]).filter(([key]) => key !== "blurb")));
+  }
+});
+
 test("the live feed retains verified source facts and passes the copy guards", () => {
   // A false positive blanks legitimate copy, so the whole feed is the fixture.
   const feed = JSON.parse(readFileSync(new URL("../../data/south-bay/upcoming-events.json", import.meta.url)));

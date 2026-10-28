@@ -2573,6 +2573,28 @@ function claimAppliesToEvent(copy, index, event) {
   return !sentence || copyMentionsEvent(copy.slice(sentence.start, sentence.end), event);
 }
 
+const COURSE_LEVEL_WORDS = {
+  zero: 0, cero: 0, one: 1, uno: 1, two: 2, dos: 2, three: 3, tres: 3,
+  four: 4, cuatro: 4, five: 5, cinco: 5, six: 6, seis: 6,
+  seven: 7, siete: 7, eight: 8, ocho: 8, nine: 9, nueve: 9, ten: 10, diez: 10,
+};
+const COURSE_LEVEL_VALUE = String.raw`(?:\d{1,2}|${Object.keys(COURSE_LEVEL_WORDS).join("|")})`;
+const COURSE_LEVEL_LABEL = String.raw`(?:levels?|nivel(?:es)?)`;
+const COURSE_LEVEL_RE = new RegExp(String.raw`\b${COURSE_LEVEL_LABEL}[\s-]*(${COURSE_LEVEL_VALUE})\b`, "gi");
+const COURSE_LEVEL_RANGE_RE = new RegExp(
+  String.raw`^\s*(?:[-–—/]|to|through|and|or|a|al|y|o|&)\s*(?:${COURSE_LEVEL_LABEL}\s*)?${COURSE_LEVEL_VALUE}\b`, "i",
+);
+
+function singleCourseLevel(text) {
+  const levels = new Set();
+  for (const claim of String(text || "").matchAll(COURSE_LEVEL_RE)) {
+    // Ranges and descriptions of several classes do not establish one level.
+    if (COURSE_LEVEL_RANGE_RE.test(text.slice(claim.index + claim[0].length))) return null;
+    levels.add(COURSE_LEVEL_WORDS[claim[1].toLowerCase()] ?? Number(claim[1]));
+  }
+  return levels.size === 1 ? [...levels][0] : null;
+}
+
 const AGE_CLAIM_PATTERNS = [
   { re: /\bages?\s+(\d{1,2})\s*(?:[-–—]|to|through|thru)\s*(\d{1,2})\b/gi, open: false },
   { re: /\bages?\s+(\d{1,2})\s*\+/gi, open: true },
@@ -2690,6 +2712,19 @@ const ACTIVITY_TAIL = /\s+\b(?:for|at|on|in|with|from|starting|beginning)\b.*$/i
 export function eventCopyFactConflict(text, event) {
   const copy = String(text || "");
   const source = sourceText(event);
+  // A language class's heading and body can disagree (SJPL's Nivel 1 / nivel
+  // cero listing). Neither alone establishes a definite course level. Check
+  // fresh source text so a resolved disagreement stops blocking level claims.
+  const title = [event?.rawTitle, event?.title].filter(Boolean).join(" ");
+  if (/\b(?:english|esl|ell|ingl[eé]s)\b/i.test(title)) {
+    const titleLevel = singleCourseLevel(title);
+    const descriptionLevel = singleCourseLevel(event?.description);
+    if (titleLevel !== null && descriptionLevel !== null && titleLevel !== descriptionLevel) {
+      for (const claim of copy.matchAll(COURSE_LEVEL_RE)) {
+        if (claimAppliesToEvent(copy, claim.index, event)) return "conflicting source course levels";
+      }
+    }
+  }
   // The Meetup integration supplies a group credit instead of an event
   // description. A cafe/pub venue or figure-drawing title cannot establish
   // refreshments or a live model; reject those additions in carried, cached
