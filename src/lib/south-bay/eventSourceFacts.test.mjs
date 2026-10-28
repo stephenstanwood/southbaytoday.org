@@ -724,13 +724,14 @@ test("the Halloween meal volunteer occurrence discloses its conflicting source s
   const raw = {
     date: "2026-10-31", title: "Halloween: Cook & Share a Vegan Meal with Someone in Need",
     url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/",
-    venue: "Mantra Room", time: "3:00 PM", endTime: "7:00 PM", registration: "none",
+    venue: "Mantra Room", time: "3:00 PM", endTime: "6:30 PM", registration: "none",
     blurb: "Cook and share a vegan meal at the Mantra Room on a Saturday afternoon.",
   };
   const events = [{ ...raw }];
   await resolveEventBlurbs(events, { enabled: false });
   assert.equal(requiresAttendanceConfirmation(events[0]), true);
-  assert.match(events[0].attendanceNote, /3–7 PM.*5 PM.*6:30–8 PM/);
+  assert.match(events[0].attendanceNote, /cooking begins at 5 PM.*6:30–8 PM.*conflicts with the event header/);
+  assert.doesNotMatch(events[0].attendanceNote, /header lists 3–7 PM/);
   assert.match(events[0].blurb, /confirm the volunteer schedule/i);
   for (const field of ["date", "time", "endTime", "venue", "registration"]) assert.equal(events[0][field], raw[field]);
   assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);

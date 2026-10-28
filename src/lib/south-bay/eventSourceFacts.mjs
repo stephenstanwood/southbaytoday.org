@@ -601,17 +601,18 @@ const CORRECTIONS = [
     url: "https://events.sjsu.edu/event/candlelight-a-haunted-evening-of-halloween-classics",
     facts: { category: "music", endTime: "7:30 PM" },
   },
-  // This separate Halloween occurrence repeats the verified source conflict:
-  // header 3–7 PM, body cooking at 5 PM and distribution 6:30–8 PM. Keep the
-  // header fields and flag the conflict; do not select a replacement schedule.
+  // The Halloween occurrence's body starts cooking at 5 PM and distribution
+  // at 6:30–8 PM, conflicting with its header. The header end changed from
+  // 7 PM to 6:30 PM; avoid freezing a second copy of those mutable clocks in
+  // the warning. Preserve the current source fields and disclose the conflict.
   // https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/
-  // Evidence: docs/qa/2026-10-24-1107-fact-check.md (authenticated API record).
+  // Evidence: docs/qa/2026-10-28-0807-fact-check.md (authenticated API record).
   {
     date: "2026-10-31",
     url: "https://www.meetup.com/san-jose-diet-meetup-group/events/316878539/",
     facts: {
       attendanceStatus: "needs-confirmation",
-      attendanceNote: "The organizer's event header lists 3–7 PM, but the description says cooking begins at 5 PM and meal distribution runs 6:30–8 PM. Confirm the volunteer schedule with Mantra Room before going.",
+      attendanceNote: "The organizer's description says cooking begins at 5 PM and meal distribution runs 6:30–8 PM, which conflicts with the event header. Confirm the volunteer schedule with Mantra Room before going.",
       blurb: "Help prepare and share vegan meals at Mantra Room; confirm the volunteer schedule with the organizer before going.",
     },
   },
