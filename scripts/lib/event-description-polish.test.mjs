@@ -1587,3 +1587,71 @@ test("keeps supplied library dates and clock values when fixing prose range conn
     assert.equal(polishDescription(expected), expected);
   }
 });
+
+test("October library title repairs retain bilingual wording and stabilize on refresh", () => {
+  for (const [source, expected] of [
+    ["Hazlo tu mismo (DIY) para adultos | Adult DIY", "Hazlo tú mismo (DIY) para adultos | Adult DIY"],
+    ["1 on 1 Tech Assistance / Asistencia Tecnología", "1 on 1 Tech Assistance / Asistencia tecnológica"],
+    ["1-on-1 Tech Help-Trợ Giúp Kỹ Năng Máy Tính Bằng Tiếng Việt", "1-on-1 Tech Help - Trợ Giúp Kỹ Năng Máy Tính Bằng Tiếng Việt"],
+    ["Drop in Tech Help", "Drop-in Tech Help"],
+  ]) {
+    assert.equal(cleanTitle(source), expected);
+    assert.equal(cleanTitle(expected), expected);
+  }
+});
+
+test("October source grammar repairs preserve eligibility, contacts and identifiers", () => {
+  const cases = [
+    ["Programs is designed for adults and teens.", "This program is designed for adults and teens."],
+    ["The library is not liable for damage of loss of game pieces.", "The library is not liable for damage or loss of game pieces."],
+    ["For kids ages 10 and up and their adult caregiver are welcome to attend.", "Kids ages 10 and up and their adult caregivers are welcome to attend."],
+    ["This event offered in Vietnamese. Drop-ins are accepted.", "This event is offered in Vietnamese. Drop-ins are accepted."],
+    ["Whether you need assistance putting together a Word document, Excel spreadsheet, or PowerPoint presentation, or receiving help submitting an online job application or other government document to learning a new online tool, our dedicated tech tutor can help!", "Whether you need assistance putting together a Word document, Excel spreadsheet, or PowerPoint presentation, submitting an online job application or other government document, or learning a new online tool, our dedicated tech tutor can help!"],
+    ["Drop-ins can be taken on a first come-first-serve basis if times are available.", "Drop-ins can be taken on a first-come, first-served basis if times are available."],
+    ["Create henna designs on a LED candle.", "Create henna designs on an LED candle."],
+    ["Workshops led by a talented, published illustrators. Ages 10-13; $75.", "Workshops led by talented, published illustrators. Ages 10-13; $75."],
+    ["There are airplanes, and now there's new breakthroughs.", "There are airplanes, and now there are new breakthroughs."],
+    ["Please arrive early, registrants' spots are guaranteed only until the start of the program.", "Please arrive early; registrants' spots are guaranteed only until the start of the program."],
+    ["Free. Billingual ¡Aprende a usar la computadora!", "Free. Bilingual. ¡Aprende a usar la computadora!"],
+    ["Esta serie será enseñado únicamente en Inglés.", "Esta serie será enseñada únicamente en inglés."],
+    ["Leer textos sencillos y escribirás oraciones básicas.", "Leer textos sencillos y escribir oraciones básicas."],
+    ["Buscas apoyo para avanzar en tu carrera?", "¿Buscas apoyo para avanzar en tu carrera?"],
+  ];
+  const contact = " Registration is required. Call (408) 808-3060 or email rebecca.quan@sjlibrary.org. Details: https://example.org/Billingual?text=Programs-is-designed&room=10";
+  for (const [source, expected] of cases) {
+    const actual = polishDescription(source + contact);
+    assert.equal(actual, expected + contact);
+    assert.deepEqual(actual.match(/\d+/g), (source + contact).match(/\d+/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+  assert.equal(polishAttendanceNote("Appointments are encouraged; drop-ins are first come-first-serve."),
+    "Appointments are encouraged; drop-ins are first-come, first-served.");
+});
+
+test("flattened library schedules keep every word, date and clock through punctuation repair", () => {
+  const cases = [
+    "Join us every Wednesday afternoon for a new STEAM adventure, from robots to engineering to science to making. October 28 - Robot Trick-or-Treat November 4 - Punkin' Chuckin' November 11 - Canceled for Veterans' Day November 18 - Sphero Parade November 25 - Canceled for Thanksgiving Appropriate for ages 8 to 12. Tickets available at the desk 30 minutes before the program starts.",
+    "Conduct a new experiment each Sunday! November 1st: The Lost Key – Magnets and Magnetism November 8th: The Redwoods – Redwood Trees and their Roots November 15th: A House for Bear – Building Materials and their Properties November 22nd: The Wilted Plant – Plants and Capillary Action November 29th: Sound – Vibrations and Sound Registration is required for each program.",
+    "10:30-11:00 AM Storytime: 11:00-12:00 PM Stay & Play Thank you to the Los Altos Friends of the Library.",
+    "Schedule: Thursdays, 1:30 PM - 2:30 PM September: 3, 10, 17, 24 October: 1, 8, 15, 22, 29 November: 5,12, 19 December: 3, 10, 17 More information coming... More Details: Free! Space is limited - tickets will be available at the desk 30 minutes in advance of the program. All individuals attending must be present to receive their ticket. First-time participants will need to sign a waiver form.",
+    "This program is for teens (13-18). Runtime: 1 hour 15 minutes Rating: PG This program is sponsored by the San José Public Library Foundation.",
+  ];
+  const words = (value) => value.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  for (const source of cases) {
+    const actual = polishDescription(source);
+    assert.notEqual(actual, source);
+    assert.equal(words(actual), words(source));
+    assert.deepEqual(actual.match(/\d+(?::\d+)?|\b[AP]M\b/g), source.match(/\d+(?::\d+)?|\b[AP]M\b/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+  const unrelated = "An art installation: October 28 - Robot Trick-or-Treat November 4 - Punkin' Chuckin'.";
+  assert.equal(polishDescription(unrelated), unrelated);
+});
+
+test("orphaned ELL labels are removed only before the complete conversation-club lead", () => {
+  const lead = "Join us for an in-person adult English Language Learner (ELL) Conversation Club. All levels are welcome. Free. No registration required.";
+  assert.equal(polishDescription(`（ELL） （ELL） (ADA) ${lead}`), lead);
+  assert.equal(polishDescription(lead), lead);
+  const other = "(ELL) and (ADA) are abbreviations discussed in this workshop.";
+  assert.equal(polishDescription(other), other);
+});

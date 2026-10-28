@@ -142,7 +142,7 @@ test("preserves SJPL partner AACI YTI in titles and workshop descriptions", () =
   assert.equal(cleanTitle(cleanTitle(title)), title);
   assert.equal(
     polishDescription("Join AACI YTI for a Halloween themed crafts workshop."),
-    "Join AACI YTI for a Halloween themed crafts workshop.",
+    "Join AACI YTI for a Halloween-themed crafts workshop.",
   );
   assert.equal(polishDescription("Join YTI Volunteers for crafts."), "Join YTI Volunteers for crafts.");
 });

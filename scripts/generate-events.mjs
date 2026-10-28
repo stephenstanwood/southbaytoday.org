@@ -818,6 +818,10 @@ function isPublicEvent(title, source, description, venue) {
 const TITLE_FIXES = {
   // SJPL's recurring resume-review heading carries this spelling on refresh.
   "Interview Prepration": "Interview Preparation",
+  "Hazlo tu mismo": "Hazlo tú mismo",
+  "Asistencia Tecnología": "Asistencia tecnológica",
+  "Tech Help-Trợ Giúp": "Tech Help - Trợ Giúp",
+  "Drop in Tech Help": "Drop-in Tech Help",
   "Environmental Humanties Project": "Environmental Humanities Project",
   "Fun Runa": "Fun Run",
   // Source copy that otherwise regresses on each library/Meetup refresh.
@@ -2040,7 +2044,7 @@ function polishAttendanceNote(text) {
   const identifiers = [];
   t = t.replace(/\b(?:https?:\/\/|www\.)[^\s<>]+|\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|\b(?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s<>]*)?/gi,
     (value) => `__SBT_ATTENDANCE_IDENTIFIER_${identifiers.push(value) - 1}__`);
-  t = t.replace(/\bfirst[ -]come,?\s+first[ -]served?\b/gi, (phrase) =>
+  t = t.replace(/\bfirst[ -]come(?:,\s*|[ -]+)first[ -]served?\b/gi, (phrase) =>
     phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served");
   t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
   const fixes = [
@@ -2286,11 +2290,85 @@ function polishDescription(text) {
     .replace(/\b(The Department of Surgery invited Dr\. Herb Chen, Chair of the Department of Surgery at University of Alabama at Birmingham,) will present\b/g,
       "$1 to present");
 
+  // Source-copy errors found by the October 28 copy pass. Match supplied
+  // phrases rather than guessing at grammar in arbitrary names or quotes.
+  // URLs are still masked, and all attendance details remain unchanged.
+  t = t
+    .replace(/\bnow there's new breakthroughs\b/g, "now there are new breakthroughs")
+    .replace(/\bled by a talented, published illustrators\b/g,
+      "led by talented, published illustrators")
+    .replace(/\band True stories of the second World War\b/g,
+      "and true stories of the Second World War")
+    .replace(/\bbetween (\d{1,2}:\d{2})-(\d{1,2}:\d{2} [AP]M)\b/g,
+      "between $1 and $2")
+    .replace(/\blibrary staff who speaks Spanish and English\b/g,
+      "library staff who speak Spanish and English")
+    .replace(/\bThis event offered in Vietnamese\b/g, "This event is offered in Vietnamese")
+    .replace(/, or receiving help submitting an online job application or other government document to learning a new online tool,/g,
+      ", submitting an online job application or other government document, or learning a new online tool,")
+    .replace(/\bPrograms is designed for adults and teens\b/g,
+      "This program is designed for adults and teens")
+    .replace(/\bdamage of loss of game pieces\b/g, "damage or loss of game pieces")
+    .replace(/\bFor kids ages (\d+ and up) and their adult caregiver are welcome to attend\./g,
+      "Kids ages $1 and their adult caregivers are welcome to attend.")
+    .replace(/\ba LED candle\b/g, "an LED candle")
+    .replace(/\bBillingual(?= ¡)/g, "Bilingual.")
+    .replace(/\bUse this e Resource\b/g, "Use this e-resource")
+    .replace(/\ball ages, Please wear your costumes\b/g,
+      "all ages. Please wear your costumes")
+    .replace(/\bPlease arrive early, registrants' spots\b/g,
+      "Please arrive early; registrants' spots")
+    .replace(/\bAcademy Award -winning\b/g, "Academy Award-winning")
+    .replace(/\bDiwali, a festival of lights by making\b/g,
+      "Diwali, a festival of lights, by making")
+    .replace(/\bteen oriented book club\b/g, "teen-oriented book club")
+    .replace(/\b(\d+) Registrants will receive\b/g, "$1 registrants will receive")
+    .replace(/\b(\d+-\d+) year olds\b/g, "$1-year-olds")
+    .replace(/\bvolunteer run organization\b/g, "volunteer-run organization")
+    .replace(/\bHalloween themed\b/g, "Halloween-themed")
+    .replace(/\bOpen to Teens and Pre-Teens\b/g, "Open to teens and pre-teens")
+    .replace(/\bNo Registration Required\b/g, "No registration required")
+    .replace(/\bwriting in real world applications\b/g, "writing in real-world applications")
+    .replace(/\bhacerlo to mismo\b/g, "hacerlo tú mismo")
+    .replace(/¡No es necesario que traiga nada excepto usted mismo y tal vez un amigo o dos\./g,
+      "¡No es necesario que traiga nada excepto usted mismo y tal vez un amigo o dos!")
+    .replace(/\bEsta serie será enseñado únicamente en Inglés\./g,
+      "Esta serie será enseñada únicamente en inglés.")
+    .replace(/\bhabla español y ingles\./g, "habla español e inglés.")
+    .replace(/¡Inscríbete ahora, espacio es limitado!/g,
+      "¡Inscríbete ahora! ¡El espacio es limitado!")
+    .replace(/\bLeer textos sencillos y escribirás oraciones básicas\./g,
+      "Leer textos sencillos y escribir oraciones básicas.")
+    .replace(/(^|[.!?]\s+)Buscas apoyo para avanzar en tu carrera\?/g,
+      "$1¿Buscas apoyo para avanzar en tu carrera?")
+    .replace(/^（ELL） （ELL） \(ADA\) (?=Join us for an in-person adult English Language Learner)/,
+      "");
+
   // Restore the boundaries of flattened library headings and item lists.
   // Every supplied item, clock, age restriction, and contact remains present.
   t = t
     .replace(/\bLEGOs will be supplied Join the building fun\b/g,
       "LEGOs will be supplied. Join the building fun")
+    .replace(/\bCars 2nd Wednesday: Superhero Obstacle Course \(ages 3-8\) 3rd Wednesday: LEGO Duplo Blocks 4th Wednesday: Cars 5th Wednesday: LEGO Duplo Blocks Recommended/g,
+      "Cars; 2nd Wednesday: Superhero Obstacle Course (ages 3-8); 3rd Wednesday: LEGO Duplo Blocks; 4th Wednesday: Cars; 5th Wednesday: LEGO Duplo Blocks. Recommended")
+    .replace(/\bThursdays, (1:30 PM - 2:30 PM) September: (3, 10, 17, 24) October: (1, 8, 15, 22, 29) November: (5),12, 19 December: (3, 10, 17) More information/g,
+      "Thursdays, $1. September: $2; October: $3; November: $4, 12, 19; December: $5. More information")
+    .replace(/\b(The Basics|Grammar and Vocabulary Club|Conversation Club)- (?=An? (?:beginner|intermediate|advanced) program)/g,
+      "$1 - ")
+    .replace(/\*?Please note, This is mostly a social group\b/g,
+      "Please note: This is mostly a social group")
+    .replace(/\blearn basic Arithmetic\. Including addition\b/g,
+      "learn basic arithmetic, including addition")
+    .replace(/\bRegistration and Data Privacy Registration is required\./g,
+      "Registration and data privacy: Registration is required.")
+    .replace(/\bOctober 3rd October 10th\./g, "October 3rd and October 10th.")
+    .replace(/\b(10:30-11:00 AM) Storytime: (11:00-12:00 PM) Stay & Play Thank you/g,
+      "$1: Storytime; $2: Stay & Play. Thank you")
+    .replace(/\b(MPA Rating: PG-13) (104 minutes\.)/g, "$1. $2")
+    .replace(/\bconsumer rights and the latest frauds Materials and assistance\b/g,
+      "consumer rights and the latest frauds. Materials and assistance")
+    .replace(/\b(Runtime: 1 hour 15 minutes) Rating: PG This program/g,
+      "$1. Rating: PG. This program")
     .replace(/\bWednesday, August 26 Wednesday, September 30 Wednesday, October 28 This event\b/g,
       "Wednesday, August 26; Wednesday, September 30; Wednesday, October 28. This event")
     .replace(/\bHow to Access Check\b/g, "How to access: Check")
@@ -2327,6 +2405,19 @@ function polishDescription(text) {
     .replace(/\bfor roller skating Many thanks\b/g, "for roller skating. Many thanks")
     .replace(/^(?:Summiting in Search of Manzanitas|Winter Ramble at Rancho) \| Midpeninsula Regional Open Space District Skip to main content Show Mobile Menu (Approximately \d+(?:\.\d+)? miles\.)$/,
       "$1");
+
+  // STEAM and Science Sundays feeds flatten their dated lists into one line.
+  // Limit separators to these series and retain every supplied date and topic.
+  if (/\bSTEAM adventure\b/.test(t) && /\bOctober \d+ - Robot Trick-or-Treat\b/.test(t)) {
+    t = t.replace(/([^\s.!?;]) (?=(?:October|November) \d{1,2} - )/g, "$1; ")
+      .replace(/\bCanceled for Thanksgiving (?=(?:Appropriate|Recommended) for ages)/g,
+        "Canceled for Thanksgiving. ");
+  }
+  if (t.includes("Conduct a new experiment each Sunday!") && t.includes("November 1st: The Lost Key")) {
+    t = t.replace(/([^\s.!?;]) (?=November \d{1,2}(?:st|nd|rd|th):)/g, "$1; ")
+      .replace(/\bVibrations and Sound Registration is required/g,
+        "Vibrations and Sound. Registration is required");
+  }
 
   // Scraped horizontal rules and translated link labels carry no event copy.
   t = t.replace(/_{5,}\.?/g, " ").replace(/\.;+[,.]?/g, ".");
@@ -2375,7 +2466,7 @@ function polishDescription(text) {
     /Setting up an email account, composing & sending emails, using email attachments Web searches and basic data entry Learning the basics of Microsoft Word and Excel and web-based productivity software such as Google docs Using the library's pay-for-print and photocopy machines Downloading apps on your phone or tablet And much more!/g,
     "setting up an email account, composing & sending emails, using email attachments; web searches and basic data entry; learning the basics of Microsoft Word and Excel and web-based productivity software such as Google Docs; using the library's pay-for-print and photocopy machines; downloading apps on your phone or tablet; and much more!",
   );
-  t = t.replace(/\bFree, No Registration Required\s*$/g, "Free. No registration required.");
+  t = t.replace(/\bFree, No [Rr]egistration [Rr]equired\s*$/g, "Free. No registration required.");
   // Santana Row's schedule loses every list boundary in its HTML excerpt.
   // Restore separators without changing its supplied clocks or place names.
   if (/Entertainment Schedule: 10:30 AM – 10 PM: Brunch at Zazil\b/.test(t)) {
@@ -2511,7 +2602,7 @@ function polishDescription(text) {
   // the missing space and does not alter the represented time.
   t = t.replace(/([A-Za-z\u00C0-\u024F]),(?=[A-Za-z\u00C0-\u024F])/g, "$1, ");
   t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
-  t = t.replace(/\bfirst[ -]come,?\s+first[ -]served?\b/gi, (phrase) =>
+  t = t.replace(/\bfirst[ -]come(?:,\s*|[ -]+)first[ -]served?\b/gi, (phrase) =>
     phrase[0] === "F" ? "First-come, first-served" : "first-come, first-served",
   );
   t = t.replace(/\b([Ff])or Ages\b/g, (_, initial) => `${initial}or ages`);
