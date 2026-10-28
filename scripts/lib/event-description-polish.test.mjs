@@ -878,6 +878,17 @@ test("keeps email local-part dots intact through sentence splitting", () => {
   );
 });
 
+test("preserves RSVP email identifiers through prose casing and camel-case cleanup", () => {
+  // Linden Tree's Nov. 1 Story Write-athon supplies this mixed-case address.
+  // The prose splitter inserted spaces and made the published contact invalid.
+  for (const address of ["ShuHsienHo@gmail.com", "First.Last+ArtClub@Library.Example.org", "ArtClub(@)Example.org"]) {
+    const source = `To RSVP, contact ${address}. MeetTheArtist afterward.`;
+    const expected = `To RSVP, contact ${address}. Meet The Artist afterward.`;
+    assert.equal(polishDescription(source), expected);
+    assert.equal(polishDescription(expected), expected);
+  }
+});
+
 test("preserves case-sensitive signup URLs through prose cleanup", () => {
   // SCCLD's Teen Coffeehouse page supplies this exact shortlink. The camel-case
   // splitter used to insert a space into its path: tinyurl.com/TA Bcoffeehouse.

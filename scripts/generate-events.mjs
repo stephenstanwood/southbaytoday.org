@@ -1870,7 +1870,6 @@ const DESC_TYPO_FIXES = [
   [/\bfairytale\b/gi, "fairy tale"],
   [/\bbe be\b/gi, "be"],
   [/\b(?:singing|signing)-up\b/gi, "signing up"],
-  [/\bc aitlin(?=\.bosworth@)/gi, "caitlin"],
   [/\bFree homework\b/g, "free homework"],
   [/\bSccld\b/g, "SCCLD"],
   [/\be Resources\b/g, "e-resources"],
@@ -2078,12 +2077,15 @@ function polishDescription(text) {
   // Preserve it as "Chinese" before English-display cleanup removes CJK text;
   // a dangling "English or." alone cannot establish the missing language.
   text = text.replace(/\b(in English (?:or|and))\s+中文(?=[\s.,;:!?]|$)/g, "$1 Chinese");
-  // URLs are identifiers: prose casing, camel-case spacing, and sentence
-  // splitting must never rewrite their paths, queries, or fragments. SCCLD's
-  // tinyurl.com/TABcoffeehouse became tinyurl.com/TA Bcoffeehouse here.
+  // Repair this known source-side contact typo before shielding email bytes.
+  text = text.replace(/\bc aitlin(?=\.bosworth@)/gi, "caitlin");
+  // URLs and email addresses are identifiers: prose casing, camel-case spacing,
+  // and sentence splitting must preserve their bytes. Match complete emails
+  // before bare hostnames, including the source's optional "(@)" spelling.
+  // Linden Tree's ShuHsienHo@gmail.com otherwise became Shu Hsien Ho@gmail.com.
   const urls = [];
   const urlPattern = new RegExp(
-    `\\b(?:https?:\\/\\/|www\\.)[^\\s<>"')\\]}]+|\\b(?:[a-z0-9-]+\\.)+(?:${KNOWN_TLDS})\\b(?:\\/[^\\s<>"')\\]}]*)?`,
+    `\\b(?:https?:\\/\\/|www\\.)[^\\s<>"')\\]}]+|\\b[a-z0-9._%+-]+(?:@|\\(@\\))[a-z0-9.-]+\\.[a-z]{2,}\\b|\\b(?:[a-z0-9-]+\\.)+(?:${KNOWN_TLDS})\\b(?:\\/[^\\s<>"')\\]}]*)?`,
     "gi",
   );
   let t = text.replace(urlPattern, (match) => {
