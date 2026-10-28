@@ -9,6 +9,20 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The October 27 downtown newsletter incorrectly ends this run on Nov. 18.
+  // Broadway San Jose's own schedule confirms Oct. 30–Nov. 1 and a 6 PM
+  // opening performance. Every attendee needs a ticket, including children.
+  // Evidence: docs/qa/2026-10-28-0407-fact-check.md.
+  {
+    date: "2026-10-30",
+    url: "https://broadwaysanjose.com/shows/blueys-big-play/",
+    aliasUrls: ["https://www.ticketmaster.com/blueys-big-play-tickets/artist/2726558?venueId=229426&list_view=1"],
+    facts: {
+      url: "https://broadwaysanjose.com/shows/blueys-big-play/",
+      cost: "paid",
+      description: "Live puppet theater adaptation of Bluey, running October 30 through November 1 at San Jose Center for the Performing Arts. Every attendee needs a ticket, including children.",
+    },
+  },
   // The library's heading and Disney's film page agree on The Nightmare
   // Before Christmas; the source body and cached blurb use the wrong article.
   // https://movies.disney.com/the-nightmare-before-christmas
@@ -989,15 +1003,16 @@ const CORRECTIONS = [
   // SJAA explicitly welcomes walk-ins; a Meetup group-approval requirement
   // applies to that site's RSVP, not admission to this public observing event.
   // https://www.sjaa.net/events/solar-observing/
-  // The dated Meetup occurrence confirms November 1, 1:30–3:30 PM, Houge Park.
-  // Evidence: docs/qa/2026-10-21-0507-fact-check.md.
-  {
-    date: "2026-11-01", url: "https://www.meetup.com/sj-astronomy/events/312677419/",
+  // The same dated Meetup occurrence moved from Nov. 1 to Nov. 8, retaining
+  // 1:30–3:30 PM at Houge Park. These corrections never create an occurrence.
+  // Evidence: docs/qa/2026-10-21-0507-fact-check.md and 2026-10-28-0407-fact-check.md.
+  ...["2026-11-01", "2026-11-08"].map((date) => ({
+    date, url: "https://www.meetup.com/sj-astronomy/events/312677419/",
     facts: {
       registration: REGISTRATION_NONE, registrationClosesBy: null, cost: "free",
       attendanceNote: "Open to the public. Walk-ins welcome; a Meetup RSVP is optional.",
     },
-  },
+  })),
   // The museum's full Halloween event body advertises FREE family fun;
   // its Squarespace excerpt omits admission.
   // Keep sparse intake and retired-page snapshots from restoring paid badges.
