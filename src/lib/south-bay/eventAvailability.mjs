@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^(?:Hysterical:\s*)?Zavior Phillips(?:\s*\((?:7|9):00 PM show\))?$/i,
+    venue: /^The Studio(?: at Bing Concert Hall)?$/i,
+    date: "2027-04-02",
+    reviewOn: "2026-11-03",
+    reason:
+      "Only a July 24 newsletter extraction attributes these showtimes. The original message is outside available mailbox history, and current organizer evidence does not independently confirm the times. Withhold them until first-party confirmation is recovered; this is not a cancellation.",
+    source: "https://live.stanford.edu/events/26-27season/studio/hysterical-zavior-phillips",
+  }),
+  Object.freeze({
     ids: Object.freeze(["sjpl-69c41db41e64afd01e64a8d9"]),
     title: /^Halloween Interactive Activity$/i,
     venue: /^Mt\.? Pleasant(?: Neighborhood)?(?: Library)?$/i,

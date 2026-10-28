@@ -987,6 +987,8 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Stanford's Entrepreneurial Thought Leaders speaker series.
+  "ETL",
   // American Educational Research Association, as published in Stanford's
   // Maisha Winn article title. Preserve AERA without changing the Aera brand.
   "AERA",
@@ -3871,7 +3873,7 @@ function inferUniversityCategory(title, desc, type, venue = "") {
 
   if (isOngoingExhibitLike(title, desc, venue)) return "arts";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
-  if (/\b(guest speaker|speaker series|lecture|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
+  if (/\b(guest speaker|speaker series|lectures?|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
   if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
 
   const inferredCategory = inferCategory(title, cleanDesc, type, venue);
@@ -4636,6 +4638,10 @@ async function fetchScuEvents() {
       const venue = isVirtual ? "Online" : !scuLocation
         ? "Santa Clara University"
         : (isRoomOnly && !namesCampus ? `Santa Clara University — ${scuLocation}` : scuLocation);
+      // College and audience tags are administrative, not content genres.
+      // Keep only the explicit lecture format when RSS contains just an image.
+      const scuFormat = (item.livewhaleCategories || "").split(",")
+        .find((label) => /^lectures?$/i.test(label.trim())) || "";
       if (isVirtual) virtualFromSourceScu++;
       return {
         id: h("scu", item.link || item.title, item.pubDate),
@@ -4648,7 +4654,7 @@ async function fetchScuEvents() {
         address: "",
         city: isVirtual ? "santa-clara" : geoCity || "santa-clara",
         ...(isVirtual ? { virtual: true } : {}),
-        category: inferUniversityCategory(item.title, item.description, "", venue),
+        category: inferUniversityCategory(item.title, item.description, scuFormat, venue),
         cost: inferScuCost(item, metadata?.cost),
         description: truncate(stripHtml(item.description)),
         url: item.link,

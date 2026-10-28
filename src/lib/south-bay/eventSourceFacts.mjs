@@ -9,6 +9,15 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The venue's sparse replacement omits the concert genre. Ticketmaster's
+  // exact occurrence G5vYZbU3R_nwH identifies Music / Rock and agrees on the
+  // date, start and venue. Preserve that category after source deduplication.
+  // Evidence: docs/qa/2026-10-28-0607-fact-check.md.
+  {
+    date: "2026-11-18",
+    url: "https://www.sapcenter.com/events/detail/three-days-grace",
+    facts: { category: "music" },
+  },
   // The October 27 downtown newsletter incorrectly ends this run on Nov. 18.
   // Broadway San Jose's own schedule confirms Oct. 30–Nov. 1 and a 6 PM
   // opening performance. Every attendee needs a ticket, including children.
