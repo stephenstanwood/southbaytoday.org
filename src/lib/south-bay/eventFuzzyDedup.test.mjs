@@ -23,6 +23,25 @@ const ev = (over = {}) => ({
   ...over,
 });
 
+test("a Meetup outing and its destination festival retain their separate meeting points", () => {
+  const festival = ev({ title: "Avenida de Altares", date: "2026-10-31", time: "5:30 PM",
+    venue: "School of Arts and Culture at MHP", address: "1700 Alum Rock Ave, San Jose, CA 95116",
+    url: "https://mhplaza.org/allevents/avenida26", source: "Mexican Heritage Plaza" });
+  const walk = ev({ title: "Halloween Evening at the Altars: Avenida de Altares Walk + Aztec Dance",
+    date: festival.date, time: "5:00 PM", venue: "Mexico Bakery",
+    address: "1560 Alum Rock Ave, San Jose, CA 95116, USA",
+    url: "https://www.meetup.com/bay-area-active-social-20s-30s/events/317151087/", source: "Meetup" });
+  for (const pair of [[festival, walk], [walk, festival]]) {
+    assert.equal(fuzzyDedupEvents(pair).droppedCount, 0, "a shared destination in the title does not merge separate gatherings");
+  }
+  const sameVenue = { ...walk, venue: festival.venue, address: festival.address };
+  assert.equal(fuzzyDedupEvents([festival, sameVenue]).droppedCount, 1, "the existing same-venue duplicate rule remains active");
+  const sameAddress = { ...walk, venue: "Mexican Heritage Plaza", address: `${festival.address}, USA` };
+  assert.equal(fuzzyDedupEvents([festival, sameAddress]).droppedCount, 1, "address formatting alone does not establish a separate meeting point");
+  const copiedListing = { ...walk, title: festival.title, url: festival.url };
+  assert.equal(fuzzyDedupEvents([festival, copiedListing]).droppedCount, 1, "an exact canonical occurrence is still one event");
+});
+
 test("collapses subset-title duplicates that share a venue, keeping the richer", () => {
   const events = [
     ev({ id: "bare", title: "Big Truck Day", venue: "City Park" }),

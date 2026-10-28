@@ -5,9 +5,63 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { resolveEventBlurbs, eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
 import { fetchScuEvents, cleanTitle } from "../generate-events.mjs";
+import { fetchMeetupEvents } from "../generate-events.mjs";
+import { generateKeyPairSync } from "node:crypto";
 import { libraryEventDetails } from "../lib/library-event-details.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { applyVerifiedMeetupEventOverride } from "../lib/meetup-event-overrides.mjs";
+
+test("Meetup retains a named trailhead or parking destination while discarding wayfinding notes", async (t) => {
+  // The October 29 TNGR occurrence names Saratoga Gap Parking at this address.
+  // The old parking-note guard discarded it and substituted the biking club.
+  const source = {
+    id: "317147539", title: "Thursday Night Gap Ride (TNGR) potluck (B–/INT/10mi/1.4k ft)",
+    dateTime: "2026-10-29T16:30:00-07:00", endTime: "2026-10-29T18:30:00-07:00",
+    eventUrl: "https://www.meetup.com/westcoastmtb/events/317147539/",
+    eventType: "PHYSICAL", status: "ACTIVE",
+    venue: { name: "Saratoga Gap Parking", address: "17301 Skyline Blvd", city: "Saratoga" },
+    group: { name: "West Coast Mountain Bikers", urlname: "westcoastmtb", stats: { memberCounts: { all: 3484 } } },
+    rsvps: { yesCount: 6 },
+  };
+  const { privateKey } = generateKeyPairSync("rsa", {
+    modulusLength: 2048, privateKeyEncoding: { type: "pkcs8", format: "pem" },
+    publicKeyEncoding: { type: "spki", format: "pem" },
+  });
+  const credentials = { MEETUP_CLIENT_ID: "offline-client", MEETUP_MEMBER_ID: "offline-member",
+    MEETUP_KID: "offline-key", MEETUP_PRIVATE_KEY: privateKey };
+  const previous = Object.fromEntries(Object.keys(credentials).map((key) => [key, process.env[key]]));
+  t.after(() => {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+  Object.assign(process.env, credentials);
+  const names = ["Saratoga Gap Parking", "Hacienda Trailhead", "Saratoga Gap Parking Area",
+    "Rustic Lands Parking Free lot and bathrooms", "Parking lot", "Free Parking", "Meet at the trailhead"];
+  const nodes = names.map((name, index) => ({ ...source, id: index ? `control-${index}` : source.id,
+    venue: { ...source.venue, name } }));
+  t.mock.method(globalThis, "fetch", async (url) => {
+    if (String(url) === "https://secure.meetup.com/oauth2/access") return Response.json({ access_token: "offline-token" });
+    assert.equal(String(url), "https://api.meetup.com/gql-ext");
+    return Response.json({ data: { eventSearch: { edges: nodes.map((node) => ({ node })) } } });
+  });
+  const events = await fetchMeetupEvents({ now: new Date("2026-10-28T20:15:45Z") });
+  assert.equal(events.length, names.length);
+  assert.deepEqual(events.slice(0, 3).map((event) => event.venue), names.slice(0, 3));
+  assert(events.slice(3).every((event) => !/parking|bathrooms?|trailhead|meet at/i.test(event.venue)));
+  assert.equal(events[0].address, "17301 Skyline Blvd, Saratoga");
+  assert.equal(events[0].time, "4:30 PM");
+  assert.equal(events[0].endTime, "6:30 PM");
+  assert.equal(events[0].url, source.eventUrl);
+});
+
+test("Stanford's KEDO organization acronym survives title normalization", () => {
+  const title = "Korea's Nuclear Odyssey Beyond Borders: From KEDO to the Age of AI";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(cleanTitle("Kedo, a fictional character"), "Kedo, a fictional character");
+});
 
 test("Cambrian's Halloween listing discloses conflicting ticket instructions through blurb resolution", async () => {
   const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/cambrian-halloween-2026-10-29.json", import.meta.url)));

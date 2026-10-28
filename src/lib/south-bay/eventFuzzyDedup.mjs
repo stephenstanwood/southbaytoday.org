@@ -307,6 +307,16 @@ export function fuzzyDedupEvents(events) {
         const t2 = tokenize(e2.title);
         const v2 = tokenize(e2.venue);
         const venueClose = jaccard(v1, v2) >= 0.4;
+        // An organizer's walk to a festival is its own gathering when it
+        // names a different meeting point. Similar titles and a start within
+        // 30 minutes do not make Mexico Bakery and Mexican Heritage Plaza
+        // interchangeable. Preserve exact canonical copies handled above.
+        const meetupOuting = [e1, e2].some((event) => event.source === "Meetup"
+          && /\b(?:walk|hike|ride|outing|meetup|meet-up)\b/i.test(event.title));
+        const streetNumber1 = String(e1.address || "").match(/^\s*(\d+)\b/)?.[1];
+        const streetNumber2 = String(e2.address || "").match(/^\s*(\d+)\b/)?.[1];
+        if (meetupOuting && !venueClose && v1.size > 0 && v2.size > 0
+          && streetNumber1 && streetNumber2 && streetNumber1 !== streetNumber2) continue;
         const hasFirstParty = firstPartyAuthorityScore(e1) > 0 || firstPartyAuthorityScore(e2) > 0;
         let titleMatch = isSubsetOf(t1, t2)
           || isSubsetOf(t2, t1)

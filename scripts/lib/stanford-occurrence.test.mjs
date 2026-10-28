@@ -137,8 +137,14 @@ test("Stanford clinic eligibility outranks Everyone metadata before description 
     localistEvent({ ...clinic, id: 1, description_text: restricted }),
     localistEvent({ ...clinic, id: 2, description_text: introduction + "Who is Eligible? Everyone in the general public is welcome." }),
     localistEvent({ ...clinic, id: 3, title: "Community Immunization Research Lecture", description_text: restricted }),
+    // The October 29 Page Mill clinic has the same eligibility section,
+    // without any audience metadata. Its location prefix must not bypass it.
+    localistEvent({ ...clinic, id: 4, title: "Page Mill: Flu & COVID-19 Vaccination Clinic",
+      filters: {}, description_text: restricted }),
+    localistEvent({ ...clinic, id: 5, title: "Page Mill: Flu & COVID-19 Vaccination Clinic",
+      description_text: introduction + "Who is Eligible? Everyone in the general public is welcome." }),
   ]);
-  assert.deepEqual(events.map((event) => event.id), [2, 3].map((id) => `stanford-${id}-${tomorrow}`));
+  assert.deepEqual(events.map((event) => event.id), [2, 3, 5].map((id) => `stanford-${id}-${tomorrow}`));
 });
 
 test("Stanford room entry instructions outrank Everyone for a physical destination", async () => {

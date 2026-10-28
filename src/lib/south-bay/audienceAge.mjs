@@ -69,8 +69,9 @@ const ADULT_SIGNALS = [
   // (space/punct/EOL) in real copy, so \b\+\b would silently miss every "21+".
   /\b21\s*\+/,
   /\b18\s*\+/,
-  /\b21\s*(?:and|&)\s*over\b/i,
-  /\b18\s*(?:and|&)\s*over\b/i,
+  // Newsletter extraction can spell "21+" as "ages 21 and up". These
+  // explicit minimum ages exclude children just as the symbol form does.
+  /\b(?:18|21)\s*(?:and|&|or)\s*(?:over|up|older)\b/i,
   /\badults?(?:\s+|\s*[-‐‑]\s*)only\b/i,
   /\bno\s+minors\b/i,
   /\bspeakeas(?:y|ies)\b/i,

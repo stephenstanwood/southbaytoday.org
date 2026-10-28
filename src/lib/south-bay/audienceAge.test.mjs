@@ -40,6 +40,16 @@ test("21 and over / adults only still classify as adult", () => {
   assert.equal(classifyAudienceAge(ev("Speakeasy Night", "Adults only.")), "adult");
 });
 
+test("written adult age gates retain the same restriction as 18+ and 21+", () => {
+  // The October 28 PCLG newsletter says 21+; its extracted description
+  // spells that out as "Ages 21 and up." Both describe the same age gate.
+  for (const restriction of ["Ages 21 and up.", "Ages 21 and older.", "18 or older.", "18 & up."]) {
+    assert.equal(classifyAudienceAge(ev("Theology on Tap", restriction)), "adult", restriction);
+  }
+  assert.equal(classifyAudienceAge(ev("Community discussion", "Ages 13 and up.")), "all");
+  assert.equal(classifyAudienceAge(ev("Community discussion", "Ages 18 and under.")), "all");
+});
+
 test("hyphenated adult-only restrictions exclude an event from family plans", () => {
   for (const restriction of ["adult-only", "adults-only", "adults‐only", "adults‑only"]) {
     assert.equal(classifyAudienceAge(ev("Art After Dark", `An ${restriction} arts and crafts evening.`)), "adult", restriction);

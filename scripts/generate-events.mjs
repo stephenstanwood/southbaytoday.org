@@ -993,6 +993,9 @@ const PROPER_NOUN_FIXES = {
 const SOURCE_EVENT_ACRONYMS = [
   // Stanford's Entrepreneurial Thought Leaders speaker series.
   "ETL",
+  // Korean Peninsula Energy Development Organization, as published in
+  // Stanford's Korea's Nuclear Odyssey title (October 29, 2026).
+  "KEDO",
   // American Educational Research Association, as published in Stanford's
   // Maisha Winn article title. Preserve AERA without changing the Aera brand.
   "AERA",
@@ -4271,7 +4274,9 @@ async function fetchStanfordEvents() {
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.
       // https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640
-      if (/^EH&S:\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i.test(ev.title || "")
+      // The Page Mill occurrence repeats the same restriction without tags.
+      // https://events.stanford.edu/event/page-mill-flu-covid-19-vaccination-clinic
+      if (/^(?:EH&S|Page Mill):\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i.test(ev.title || "")
         && /\bwho is eligible\?\s*all students,\s*faculty,\s*staff,\s*postdocs,\s*retirees,\s*and campus affiliates are welcome to participate\b/i.test(description)) return null;
       // Localist publishes the attendance mode outright — no need to guess it
       // from the copy. "hybrid" stays a physical destination.
@@ -7965,8 +7970,14 @@ function isBareStreetVenue(value) {
 // Organizer wayfinding typed into the venue-name field — "Rustic Lands Parking
 // Free lot and bathrooms" shipped as the venue of an Alum Rock hike on
 // 2026-09-16. A parking lot, trailhead or restroom note is a meeting spot, not
-// a venue a reader can look up.
+// a venue a reader can look up. Named access points such as Saratoga Gap
+// Parking and Hacienda Trailhead are destinations supplied by the source.
 function isMeetingSpotNote(value) {
+  const namedAccessPoint = String(value || "").trim()
+    .match(/^(.+?)\s+(?:parking(?:\s+(?:lot|area))?|trailhead)$/i);
+  if (namedAccessPoint
+    && /^[A-Z][\p{L}'’.-]*(?:\s+[\p{L}'’.-]+){0,5}$/u.test(namedAccessPoint[1])
+    && !/\b(?:free|street|bathrooms?|restrooms?|meet|meeting)\b/i.test(namedAccessPoint[1])) return false;
   return /\b(?:parking|bathrooms?|restrooms?|trailhead|meet(?:ing)?\s+(?:point|spot)|free\s+lot)\b/i
     .test(String(value || ""));
 }
