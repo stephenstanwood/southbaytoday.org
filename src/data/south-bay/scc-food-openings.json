@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-28T03:20:15.672Z",
+  "generatedAt": "2026-10-29T03:24:17.493Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "stale",
-    "checkedAt": "2026-10-28T03:20:15.672Z",
+    "checkedAt": "2026-10-29T03:24:17.493Z",
     "updatedAt": "2026-10-12T13:35:45.000Z",
-    "ageDays": 15,
+    "ageDays": 16,
     "newestRawInspection": "2026-10-12",
     "newestEligibleInspection": "2026-10-07",
     "eligibleStatus": "quiet"
@@ -22,7 +22,7 @@
       "inspectionDate": "2026-10-07",
       "sourceId": "SR0877887",
       "status": "inspection-complete",
-      "blurb": "Cafe bistro on Ellis St in Mountain View.",
+      "blurb": null,
       "photoRef": "places/ChIJ82GUaRK3j4ARDkf5zm1XdVY/photos/Aa-ngMZkjaoXgvX2yE_i2nxSEuxZk6KqdlcHAreXbFqDIaVWxcMx09ZvgtK5Dhpxonw0B9l-SQdmTH9RV6Q-KioqnKWNtX2zC0apE7_3mlZUPB4lxitWiEpmxLCW3BBhvb-J1uFxAY8pw-csPiLVG3ENyuwVNfxBFm84z7b0W9dW3Mz8txvAmSz6zu6ircEOnoc8QlkmxsLsSBmwhbpIRxYgkliXFtlliJBoD420UbyIrsy57SL0VqKBVKQcUDpfKInLd40uKR6PCR1owEGvZpt3wtcM0KUAs_Urzk1V92qMdiw8ycc2jyzl1lSfwRU1IdcDQU_gBaoSKVAuBqCb90IuUaKPqASQw4mLAcjqKMdYrDGrCCe5eIjeZ8Z5paZkXB99QqTG3pTQXHXER9T8U1ZBa1DlmjU"
     },
     {
@@ -34,7 +34,7 @@
       "inspectionDate": "2026-09-30",
       "sourceId": "SR0884734",
       "status": "inspection-complete",
-      "blurb": "Matcha-focused food business on Waverley Street in Palo Alto.",
+      "blurb": "Matcha-focused business on Waverley Street in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884734-450.webp"
     },
     {
@@ -70,7 +70,7 @@
       "inspectionDate": "2026-09-22",
       "sourceId": "SR0885604",
       "status": "inspection-complete",
-      "blurb": "City bakery on Berryessa Rd in San Jose.",
+      "blurb": "Bakery on Berryessa Rd in San Jose.",
       "photoRef": "places/ChIJASDhhTXMj4ARPkxzyqPvpo8/photos/AWCwydi3-gjnlJDfpElNjSPZwA1Pn77A1dmlDpTi_1l0Y92gP9iyegY2HsjL1Xxu3EpxlrpuhfrCYv2bIN0bj7apy86s76DCpzYR6lJ6GzszFTckeXq7LLCwZHnK8UokzEU2Mk0_0Dk9Eg-7IfEkGAP7CicpWDs9CXk85qF0PhYtTnCXwqkVs4uzvw3HP3UnRDfs3WHArTQO_NVast-kXMBqRuqKjELxmaSWswG8asATvB60U0B9JND3sqTQv6hvXe2KjSs-Mo_sZHDufmE3iwfTVGx_VVL2WboXig0EwG4zTP2YiCQdxWrWmFZzZyqUf3rNgxOcFNaCwsfxYD2OPWMJuHqtsPv_dvXBTTiC5RgrvDRc4-kcGw_QLEqdtv6SjO5riLMK1wKbO33gi6hBuEt-gypJxVhSAF4KlcGTQgrolOsVykjSYGoG40faBvYNtOBs"
     },
     {
@@ -130,7 +130,7 @@
       "inspectionDate": "2026-09-15",
       "sourceId": "SR0882113",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Food business on S Bascom Ave in Campbell.",
       "photoRef": "places/ChIJ0ZvBZ8I0joARoBnTu6e1Hbw/photos/AVoNoXTBNkHd9gRJXnnc-LfpDeeZ5b1ADktOVYv-d617Ssih_yzsNvrF5O6f4buubr1d7o9hAi0f-2cZQyB4CpWmcHNxXEx3Gk-lZlhCeyJUggs5IbIHMwMBGDivpsmJWKofyVSEPD3IMlNDJR10bpeeLC-MTLZgKtgho4rt_aJ58iW1hzvcUognqYf4md-zsWSCcSTSQSUwaJdpHnL83Rf_w8hR7l1TYDBB6eqqlc1BukB0hRksHstJkoMSlqzBi2BoXhJZrRLShlB39JSDgPHQjSoV0CVg6SdKtBG2LGcAuJzWS30zCCLgr8-5Wa8FU3MhX7UwbjutozmBggR_1R3auugU_Oqk8rqBy6gd512ubuCHBdYNRPgJa-YfDgdPDQAHDQA_B_y29kOMEbu9kmjKcWyslKE7MyhbywkbLTh21Rc"
     },
     {
@@ -144,18 +144,6 @@
       "status": "inspection-complete",
       "blurb": "Bakery on Great Mall Dr in Milpitas.",
       "photoRef": "places/ChIJn2iFY8zOj4ARjwruQwf-qY8/photos/AVoNoXSVehrDYdWaLI8fOaKHw3QFuRUwOnYdphSuwe4u4N0giy1IgAv_V6Se-8dwjO9vIyfPn2SCr6SpbCROYHxY5p2Aedfz7JqNkLjYzuIdHwVOjH-qKzyTxIuwlR2BhIZzKwvLCQ7KlK17RlsVtmAXhaidqgL6495qaYvm1jAW7JTqS5mielesnec2i_eKpPq4rY-3cWXUiRP23BA9DuYOyCiZTCD2X5NJdKdSJB-piVq351dePh7VB7tkgPoSB-Kb8kMPiQxqD87FQPK_n-KKsYGf0P1IhplgnXMecgC8ZV87cA7IQ1-eSx98KqfIddvDJ1nrBNMn2TyekTy0NCwtm3hhE2q2lse8cCUlUqNpdzPAP0yKbw9tYIfErYUMFC6pMhv6H8tuuqHcf3mboyUxuG5u3ZRp4JfrG9WEmrDL_hU"
-    },
-    {
-      "id": "inspection-SR0884833",
-      "name": "Fresh Produce And Seafood Store",
-      "address": "156 S Jackson Ave",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-09-14",
-      "sourceId": "SR0884833",
-      "status": "inspection-complete",
-      "blurb": "Fresh produce and seafood store on S Jackson Ave in San Jose.",
-      "photoRef": "places/ChIJV7S7Nb3Nj4ARoJYJix2Yi4E/photos/AWCwydjNFbqRxWTSiEB7SN5o__QsaMJSq31RcWuwTFVNsk6YsnbTIukIMFQf8hQHAh7uF8PSJRgKvmNhoU9kDSDpJjJglrqo-2IXtLc7Cueacv4tSpGvyhM31UMu2W5uFW3eQ9W85t-MxlAWYr57mLzSZdFgPhWqDFLhJmKe1BDytmqJ0aiIIYUtAcvvb8WxgKfrZy9JvUEBa60yGr_xsQD_Zyj11CKaufaBQb7zNEA2lsSUEmMBSlmi6MT4nKe-UU9laeRUBiQHDjyQ3bnKbkHSilE0yBlNcEBTYdr376Q3uUEP9Kqq21l4E8QatmbAwCJk7rEb4vEpE-Kvt8KJwqMjiYUR0SiX1BwH5AbR5x_w6ZLwth5cVvEWO6Qamv3cniqQycPe6HvD6swqE3WodKmbMqATgblA9Q465nGjtBxnuB6k2A"
     }
   ],
   "comingSoon": [
@@ -276,7 +264,7 @@
       "date": "2026-10-01",
       "status": "coming-soon",
       "sourceId": "SR0885214",
-      "blurb": null,
+      "blurb": "Food business planned on Serra Way in Milpitas.",
       "photoRef": "places/ChIJG8YccgDJj4AR_rZ9Bai_21Q/photos/Aa-ngMbft__ocFaF7FRf9ulEND9meWbbIKkNBCr1mfXqBSVTOfkrxljkHTCqpmw1BlNr7d3L_of2djzr9VEgjNMXY2OnKi0_3oKHkKAgH00E12PSVSpBLyX7RyOIXErNRFR4RXQhRqtHqXQ8cAj8ETPh0bmrnAbgB9wunpTcTc1BbPIDaBqwXWgVs-smakH9iBQtF8HRZoBLC4Xe5gLpKEwlpMnQPZuAKDkP7kg6cSUVZJQc_o46cdrriavdJmZNN_Q02IVe4qtrlykO47m_cK10pmBvOTBPS0SQRKyRYXnd4E5W6o27ehtNQ4-EAkzOWsm7K1A6avu-aa2mOoOJqtZWe1GEM7wdVxSh0WQdMWKnthQr7vnAIj-TEr-ehXA80kWx_tTs1PD_oPx3Opwh9LiJqp2fjsQMIOoM0_TFibgkt55mT8cjftoiHsBL9c0mac8n"
     },
     {

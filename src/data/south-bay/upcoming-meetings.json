@@ -1,119 +1,80 @@
 {
-  "generatedAt": "2026-10-28T03:11:35.842Z",
+  "generatedAt": "2026-10-29T03:14:54.226Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-10-27",
-      "displayDate": "Tue, Oct 27",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8108&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8108,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8122&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8122,
       "agendaItems": [
         {
-          "title": "Labor Negotiations Update.",
-          "sequence": 50
+          "title": "First Amendment to the Master Consultant with SCI Consulting Group.",
+          "sequence": 44
         },
         {
-          "title": "Land Use on Consent Calendar",
-          "sequence": 66
+          "title": "Torch Relay Agreement with Los Angeles Organizing Committee for the Olympic and Paralympic Games 2028.",
+          "sequence": 45
         },
         {
-          "title": "Presentation of a proclamation declaring October 29, 2026, as National Cat Day, recognizing the importance of cat welfare, responsible pet ownership, and the efforts of individuals and organizations dedicated to protecting and caring for cats in our community. (Ortiz)",
-          "sequence": 30
+          "title": "Boards and Commissions Appointment.",
+          "sequence": 54
         },
         {
-          "title": "Amendment to the Concession Agreement with ALCLEAR, LLC.",
-          "sequence": 41
+          "title": "Retirement Board Public Member Interviews.",
+          "sequence": 55
         },
         {
-          "title": "Amendment to the Agreement with Universal Protection Security Systems, LP for Internet Protocol Television Support and Maintenance Services.",
-          "sequence": 42
+          "title": "Acceptance of Retirement Plans’ Comprehensive Annual Investment Fee Reports for Calendar Year 2025.",
+          "sequence": 52
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-27",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-27T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-03",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-28T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
-    "mountain-view": {
-      "date": "2026-10-27",
-      "displayDate": "Tue, Oct 27",
-      "startTime": "17:15",
+    "cupertino": {
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
+      "startTime": "18:45",
       "bodyName": "City Council",
-      "location": "Council Chambers and Video Conference",
+      "location": "Council Chamber",
       "closedSession": false,
-      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3367&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
-      "legistarEventId": 3367,
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5310&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5310,
       "agendaItems": [
         {
-          "title": "Breast Cancer Awareness Month Proclamation",
-          "sequence": 11
+          "title": "Study session on proposed updates to the 2019 Cupertino Emergency Operations Plan (EOP).",
+          "sequence": 28
         },
         {
-          "title": "Midpeninsula Regional Open Space District Presentation",
-          "sequence": 12
+          "title": "Presentation from Toyokawa Sister City regarding recent student exchange.",
+          "sequence": 8
         },
         {
-          "title": "Simon Kensky, Elementary School Mayor for a Day Certificate of Recognition",
+          "title": "Presentation from Hsinchu Sister City regarding recent student exchange.",
           "sequence": 9
         },
         {
-          "title": "Yichen Yang, Middle School Mayor for a Day Certificate of Recognition",
-          "sequence": 10
-        },
-        {
-          "title": "LinkedIn Development Agreement Amendment at 700-810 East Middlefield Road and 1100-1200 Maude Avenue (Second Reading)",
-          "sequence": 14
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-10-27",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-27T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-10-27",
-      "displayDate": "Tue, Oct 27",
-      "startTime": "19:00",
-      "closedSessionStart": "18:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4526&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4526,
-      "agendaItems": [
-        {
-          "title": "World Town Planning Day",
-          "sequence": 15
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of September 29, 2026",
-          "sequence": 18
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of October 6, 2026",
-          "sequence": 19
-        },
-        {
-          "title": "Authorize the Issuance of a Purchase Order to Golden State Fire Apparatus, Inc. in the Amount of $7,372,642.10 for Three Pierce Manufacturing, Inc. 100-foot Velocity Mid-Mount Ascendant Tower Fire Apparatuses (F27-088)",
+          "title": "Approval of the Annual Mitigation Fee Report and Five-Year Report for Fiscal Year (FY) 2025-2026.",
           "sequence": 22
         },
         {
-          "title": "Adopt a Resolution Amending the FY 2026/27 Fee Schedule to Clarify the Applicable Permit Fee for Downtown Outdoor Dining with no Change in Amount",
+          "title": "Vista Village Community Development Block Grant (CDBG) agreement amendment to increase the award by $114,546 and extend the agreement term through December 31, 2027.",
           "sequence": 23
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-10-27",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-27T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-02",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-10-28T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -132,6 +93,22 @@
         "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21856"
       }
     },
+    "campbell": {
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Session Meeting",
+      "location": "City Hall Council Chamber",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0&Agenda=Agenda&lang=English",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
+        "observedDate": "2026-11-02",
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
+      }
+    },
     "milpitas": {
       "date": "2026-11-10",
       "displayDate": "Tue, Nov 10",
@@ -146,24 +123,24 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-27T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-28T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
-      "date": "2026-10-27",
-      "displayDate": "Tue, Oct 27",
-      "startTime": "18:30",
-      "bodyName": "City Council Closed Session Meeting",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Meeting",
       "location": null,
-      "closedSession": true,
-      "url": "https://losaltosca.portal.civicclerk.com/event/5526/overview",
-      "civicClerkEventId": 5526,
+      "closedSession": false,
+      "url": "https://losaltosca.portal.civicclerk.com/event/2111/overview",
+      "civicClerkEventId": 2111,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-10-27",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-27T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-11-10",
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-10-28T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -190,15 +167,15 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "santa-clara": {
       "provider": "Legistar",
@@ -214,7 +191,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "milpitas": {
       "provider": "CivicClerk",

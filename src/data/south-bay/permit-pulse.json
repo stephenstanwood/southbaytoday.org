@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-28T03:11:35.949Z",
+      "generatedAt": "2026-10-29T03:14:57.485Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 20 – Oct 27",
+      "dateRange": "Oct 21 – Oct 28",
       "stats": {
-        "total": 477,
-        "notable": 37,
-        "newUnits": 18,
-        "totalValuation": 61818468
+        "total": 463,
+        "notable": 27,
+        "newUnits": 13,
+        "totalValuation": 25254045
       },
       "permits": [
-        {
-          "id": "2026-136846-MF",
-          "address": "477 S 1st St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "Gateway New Construction",
-          "valuation": 33113559,
-          "units": 1,
-          "issueDate": "2026-10-20",
-          "subtype": "Apartment"
-        },
         {
           "id": "2026-141995-MF",
           "address": "1141 W San Carlos St",
@@ -37,18 +25,6 @@
           "units": 7,
           "issueDate": "2026-10-23",
           "subtype": "Condo"
-        },
-        {
-          "id": "2026-142306-MF",
-          "address": "0 Seely Av",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "Trimble Summerhill a New Three Story 4-Plex New Construction (Bldg 22)",
-          "valuation": 1492176,
-          "units": 4,
-          "issueDate": "2026-10-20",
-          "subtype": "Apt/Condo/Townhouse"
         },
         {
           "id": "2025-098535-RS",
@@ -123,16 +99,40 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-136860-CI",
-          "address": "477 S 1st St",
-          "category": "new-construction",
-          "categoryLabel": "New Construction",
-          "workType": "New Construction",
-          "description": "Gateway (Bep 100%) New Garage",
-          "valuation": 0,
+          "id": "2026-144344-CI",
+          "address": "90 Headquarters Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Teradyne R&D Tenant Improvement",
+          "valuation": 3150000,
           "units": 0,
-          "issueDate": "2026-10-20",
-          "subtype": "Closed Public Parking Garage"
+          "issueDate": "2026-10-26",
+          "subtype": "R & D Lab"
+        },
+        {
+          "id": "2025-118427-CI",
+          "address": "650 Piercy Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Finish Interior",
+          "description": "Spec Space Finish Interior for Market Ready Office TI",
+          "valuation": 2686653,
+          "units": 0,
+          "issueDate": "2026-10-21",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-142000-CI",
+          "address": "3090 Stevens Creek Bl",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Lifetime Fitness Center TI",
+          "valuation": 2617129,
+          "units": 0,
+          "issueDate": "2026-10-22",
+          "subtype": "Health Club"
         }
       ]
     }

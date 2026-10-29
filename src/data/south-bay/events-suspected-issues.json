@@ -1,18 +1,35 @@
 {
   "_meta": {
-    "auditedAt": "2026-10-29T01:00:30.043Z"
+    "auditedAt": "2026-10-29T03:24:55.350Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1439,
+    "total": 1440,
     "totals": {
       "hard": 0,
       "soft": 0,
-      "info": 0
+      "info": 1
     },
-    "byReason": {},
+    "byReason": {
+      "local-departure-trip": 1
+    },
     "hard": [],
-    "soft": []
+    "soft": [
+      {
+        "id": "scu-779c5b7711f0dc3c",
+        "title": "Startup World Cup Grand Finale (SCU day trip)",
+        "city": "santa-clara",
+        "date": "2026-11-06",
+        "location": "333 O'Farrell Street, San Francisco, CA 94102",
+        "findings": [
+          {
+            "severity": "info",
+            "reason": "local-departure-trip",
+            "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
+          }
+        ]
+      }
+    ]
   },
   "inbound": {
     "label": "inbound-events.json",
