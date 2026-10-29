@@ -34,6 +34,7 @@ const CORRECTIONS = [
     date: "2026-10-29",
     url: "https://events.stanford.edu/event/bff-matchmaking",
     facts: {
+      category: "community",
       cost: "free",
       attendanceStatus: "needs-confirmation",
       attendanceNote: "The organizer asked participants to complete the personality matching form by October 26 at noon. Confirm attendance with the organizer if you missed that deadline.",

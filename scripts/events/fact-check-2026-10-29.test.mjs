@@ -34,12 +34,13 @@ test("BFF Matchmaking discloses the elapsed matching-form deadline without inven
   const raw = {
     title: "BFF Matchmaking!", date: "2026-10-29", time: "5:00 PM", endTime: "7:00 PM",
     venue: "Fire Truck House", url: "https://events.stanford.edu/event/bff-matchmaking",
-    cost: null, description: "Are you looking for more friends?", blurb: "Meet your platonic soulmate.",
+    category: "food", cost: null, description: "Are you looking for more friends?", blurb: "Meet your platonic soulmate.",
   };
   const events = [{ ...raw }];
   await resolveEventBlurbs(events, { enabled: false });
   const [actual] = events;
   assert.equal(actual.cost, "free");
+  assert.equal(actual.category, "community", "refreshments do not make friend matching a food event");
   assert.match(actual.attendanceNote, /October 26 at noon/);
   assert.match(actual.attendanceNote, /confirm.*organizer/i);
   assert.equal(requiresAttendanceConfirmation(actual), true);
