@@ -951,6 +951,9 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // Stanford's CBPA event heading misplaces the accent; its own body and
+  // IDA staff page agree on Sánchez. https://ida.stanford.edu/about-us/
+  "Benjamin Lundberg Torres Sanchéz": "Benjamin Lundberg Torres Sánchez",
   // A library computer-basics description splits the city's own name.
   "S an José": "San José",
   // Books Inc's heading says IIZE; its guest bio and the translator's own
