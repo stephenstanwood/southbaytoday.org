@@ -110,3 +110,16 @@ entered and no account settings changed. The successful October 27 GSC audit
 and identity proof remain dated October 27. Fresh post-publication inspection
 under `stanwoodventures@gmail.com` requires that account's Mini-local login;
 no GSC mutation has been performed.
+
+The restored source shipped as `98b3c785e4f08400a5a1a37a715f38c3a72ff1c7`.
+GitHub CI passed. Git-connected production deployment
+`dpl_FHDjecYkunhupzxEg8QH2cLL8Rv3` reached READY and acquired the public
+`southbaytoday.org` alias. Both corrected leaves were verified live with their
+exact organizer links, visible participation facts, original canonicals and
+valid Event/Breadcrumb markup. A current unconfirmed ESL leaf kept its visible
+source-conflict explanation, zero Event objects and existing indexability.
+Desktop/mobile renders and production images passed. The Events/date hubs,
+RSS and sitemap index returned HTTP 200. IndexNow accepted one batch containing
+only the two materially corrected event leaves (HTTP 200). No GSC submission,
+validation or indexing request was made; fresh exact-account inspection remains
+blocked by the Mini-local login described above.

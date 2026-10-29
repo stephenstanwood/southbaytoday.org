@@ -1277,7 +1277,7 @@
   },
   "recovery": {
     "date": "2026-10-29",
-    "status": "source-validated-publication-pending",
+    "status": "source-published-live-verified-fresh-gsc-login-required",
     "baseCommit": "0b939964420502117a192c1c80d4b7b74ee15b0f",
     "currentEventSnapshot": {
       "generatedAt": "2026-10-29T22:13:58.306Z",
@@ -1334,9 +1334,52 @@
       "finding": "Expanded picker listed only the visible account; exact property denied access; Add another account opened Google sign-in. Original completed audit retained with October27 dates.",
       "mutations": []
     },
-    "publication": null,
-    "liveProof": null,
-    "indexNow": null,
-    "gscMutations": []
+    "publication": {
+      "sourceCommit": "98b3c785e4f08400a5a1a37a715f38c3a72ff1c7",
+      "gitBranch": "main",
+      "method": "guarded registered-worktree publish",
+      "gitHubCi": "passed",
+      "deployment": {
+        "id": "dpl_FHDjecYkunhupzxEg8QH2cLL8Rv3",
+        "url": "https://southbaytoday-3z807i9p0-stephenstanwoods-projects.vercel.app",
+        "source": "git",
+        "target": "production",
+        "readyState": "READY",
+        "productionAlias": "southbaytoday.org",
+        "observedAt": "2026-10-29T22:33:10.067298+00:00"
+      }
+    },
+    "liveProof": {
+      "checkedAt": "2026-10-29T22:33:25.971Z",
+      "allHttp200": [
+        "/event/2026-10-30-afterhours-witches-and-warlocks",
+        "/event/2026-11-05-evacuation-planning-community-listening-session",
+        "/event/2026-11-02-free-adult-esl-class",
+        "/events",
+        "/events/2026-10-30",
+        "/events/2026-11-05",
+        "/rss.xml",
+        "/sitemap-index.xml"
+      ],
+      "eventLeaves": "Both exact organizer URLs and eligibility/registration notes visible; one H1 and Event, unchanged canonicals, no noindex",
+      "needsConfirmationLeaf": "Visible source-conflict note; zero Event, one Breadcrumb; canonical retained, remains indexable",
+      "render": "Desktop 1280 and mobile 390 checks passed; production images loaded; no horizontal overflow or console errors",
+      "localPreviewLimitsResolved": "Production image proxy and Vercel analytics loaded normally"
+    },
+    "indexNow": {
+      "submittedAt": "2026-10-29T22:34:01.705Z",
+      "status": 200,
+      "urlList": [
+        "https://southbaytoday.org/event/2026-10-30-afterhours-witches-and-warlocks",
+        "https://southbaytoday.org/event/2026-11-05-evacuation-planning-community-listening-session"
+      ],
+      "meaning": "Accepted for re-crawl; does not prove indexing",
+      "batches": 1
+    },
+    "gscMutations": [],
+    "gscActionsReason": "No sitemap submission: original index/children successful. No Validate fix: no relevant invalid Google enhancement reported. No Request indexing: fresh exact-account access unavailable; do not manufacture action or infer index status.",
+    "remainingWork": [
+      "Mini-local sign-in as stanwoodventures@gmail.com; exact https://southbaytoday.org/ property and narrow post-fix URL Inspection. Use Request indexing only if fresh inspection and current criteria warrant it."
+    ]
   }
 }
