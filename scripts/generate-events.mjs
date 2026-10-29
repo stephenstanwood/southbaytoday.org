@@ -11343,6 +11343,13 @@ async function main() {
   const blurbed = blurbStats.preexisting + blurbStats.cache_hits + blurbStats.generated;
   console.log(`   Total blurbed: ${blurbed} / ${collapsedEvents.length} (${((blurbed / collapsedEvents.length) * 100).toFixed(0)}%)`);
 
+  // Reviewed phrase repairs belong after source normalization and blurb
+  // selection: raw casing can hide them earlier, and a cache hit can restore
+  // old grammar later. Keep the cache fingerprint tied to the source wording
+  // so punctuation alone never triggers a wholesale blurb regeneration.
+  const { polishReviewedEventCopy } = await import("../src/lib/south-bay/eventCopyEdits.mjs");
+  for (const event of collapsedEvents) Object.assign(event, polishReviewedEventCopy(event));
+
   // Final guard: remap any non-canonical categories that slipped through from
   // upstream scrapers (e.g. stale playwright-events.json from before a fix).
   // EventCategory in src/data/south-bay/events-data.ts is the source of truth.
