@@ -319,3 +319,39 @@ test("a task-force agenda cannot establish that the task force reviewed a plan",
   }), false);
   assert.equal(hasUnsupportedMeetingAction({ headline }, { ...agenda, source: "youtube-transcript" }), false);
 });
+
+test("an old planning agenda cannot advertise its planners' review as upcoming", () => {
+  // https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4414&GID=270
+  const agenda = { fullAgendaText: "October 26, 2026 Planning Commission agenda. Proposed Project: three townhome style condominiums at 536 Hawthorn Avenue." };
+  const item = {
+    date: "2026-10-26",
+    headline: "Sunnyvale planners to review duplex-to-townhome swap at 536 Hawthorn",
+    summary: "The Planning Commission's October 26 agenda listed a study session on the proposal.",
+  };
+  assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-28"), true);
+  assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-26"), false);
+  assert.equal(hasPastAgendaFutureFraming(item, agenda, "2026-10-25"), false);
+  assert.equal(hasPastAgendaFutureFraming(item, { ...agenda, source: "youtube-transcript" }, "2026-10-28"), false);
+  assert.equal(hasPastAgendaFutureFraming({
+    ...item, headline: "October 26 agenda listed three-townhome proposal at 536 Hawthorn Avenue",
+  }, agenda, "2026-10-28"), false);
+});
+
+test("an agenda-listed continuance does not establish a completed postponement", () => {
+  // https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4815&GID=693
+  const agenda = { fullAgendaText: "Continuance of the Architectural Review (PLN25-00536) for the Demolition of the Existing Structures and Construction of a Three-Story, 692,634 Square-Foot Office Building located at 2300 and 2350 Walsh Avenue to the November 18, 2026, Development Review Hearing" };
+  const item = {
+    headline: "692,634-square-foot Walsh Avenue office project pushed to November 18",
+    summary: "The October 14 agenda listed a continuance to November 18, 2026, for architectural review.",
+  };
+  assert.equal(hasUnsupportedMeetingAction(item, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "Walsh Avenue office review was postponed to November 18" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "Walsh Avenue hearing continued to November 18" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({
+    ...item, headline: "692,634-square-foot Walsh Avenue proposal: November 18 continuance listed on agenda",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The agenda listed a request for the hearing to be postponed to November 18." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({ summary: "The agenda listed a hearing continued to November 18." }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { excerpt: item.headline }), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { ...agenda, source: "youtube-transcript" }), false);
+});

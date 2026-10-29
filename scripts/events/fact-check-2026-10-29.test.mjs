@@ -4,6 +4,8 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { classify } from "../audit-events.mjs";
 import { hasOutOfAreaDestination, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "../../src/lib/south-bay/eventFilters.mjs";
+import { mapTicketmasterEvent } from "../generate-events.mjs";
+import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 
 // Source evidence and access limits: docs/qa/2026-10-29-0207-fact-check.md.
 test("the sparse Blippi theater listing retains its verified children's audience through blurb resolution", async () => {
@@ -83,5 +85,44 @@ test("SCU's World Cup listing identifies its local departure trip and cannot bec
   }
   for (const other of [{ ...raw, date: "2027-11-06" }, { ...raw, url: "https://events.scu.edu/event/another" }]) {
     assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Ticketmaster age restrictions survive policy cleanup and cached blurbs", async () => {
+  // Exact Discovery records: docs/qa/2026-10-29-0407-fact-check.md.
+  const raw = {
+    id: "rZ7HnEZ1AfGgj0", name: "Trevor Wallace",
+    dates: { start: { localDate: "2026-12-31", localTime: "19:00:00" }, status: { code: "onsale" } },
+    url: "https://www.ticketweb.com/event/trevor-wallace-san-jose-improv-tickets/14335724",
+    priceRanges: [{ min: 49.22, max: 101.65 }],
+    info: "There is a ticket delivery delay in place until two days prior to the event. Tickets will not be emailed until then.",
+    pleaseNote: "This event is 21 and over. Any ticket holder unable to present valid identification will not be admitted.",
+    _embedded: { venues: [{ name: "San Jose Improv", city: { name: "San Jose" }, address: { line1: "62 S Second St" } }] },
+  };
+  const mapped = mapTicketmasterEvent(raw);
+  assert.equal(classifyAudienceAge(mapped), "adult");
+  assert.deepEqual(mapped.sourceAudiences, ["Adults, ages 21+"]);
+  assert.equal(mapped.kidFriendly, false);
+  assert.match(mapped.attendanceNote, /Ages 21\+/);
+  const events = [mapped];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(classifyAudienceAge(events[0]), "adult");
+  assert.equal(events[0].time, "7:00 PM");
+  assert.equal(events[0].costNote, "From $49");
+  assert.match(events[0].attendanceNote, /Ages 21\+/);
+
+  const soldOut = mapTicketmasterEvent({ ...raw, name: "SOLD OUT Trevor Wallace" });
+  assert.equal(soldOut.registration, "full");
+  assert.match(soldOut.attendanceNote, /sold out/);
+  assert.match(soldOut.attendanceNote, /Ages 21\+/);
+  assert.equal(classifyAudienceAge(mapTicketmasterEvent({ ...raw, name: "Family Comedy", pleaseNote: raw.pleaseNote })), "adult");
+  for (const pleaseNote of ["This event is 18 and over.", "Ages 18+ only."]) {
+    assert.deepEqual(mapTicketmasterEvent({ ...raw, pleaseNote }).sourceAudiences, ["Adults, ages 18+"]);
+  }
+  for (const pleaseNote of ["", "Children age 3 and older require a ticket.", "All ages welcome."]) {
+    const unrestricted = mapTicketmasterEvent({ ...raw, pleaseNote, ageRestrictions: { legalAgeEnforced: true } });
+    assert.equal(unrestricted.sourceAudiences, undefined, "neither a venue nor an age-check boolean establishes a minimum age");
+    assert.equal(classifyAudienceAge(unrestricted), "all");
+    assert.equal(unrestricted.attendanceNote, undefined);
   }
 });

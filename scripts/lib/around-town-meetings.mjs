@@ -85,8 +85,8 @@ export function hasUnsupportedNonDisclosureClaim(item, meeting) {
   return !NONDISCLOSURE_CLAIM.test(evidence);
 }
 
-// Task forces publish agendas too; their names need the same outcome guard.
-const CIVIC_BODY = String.raw`(?:council|commission|committee|board|panel|task\s+force|hearing|city|zoning\s+administrator)`;
+// Task forces and planners need the same agenda/outcome guard as councils.
+const CIVIC_BODY = String.raw`(?:council|commission|committee|board|panel|planners?|task\s+force|hearing|city|zoning\s+administrator)`;
 const COMPLETED_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:also\s+)?(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b`, "gi");
 const COMPLETED_SESSION_ACTION = /\b(?:study|scoping)\s+session(?:\s+on\s+(?:[A-Za-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{4}-\d{2}-\d{2}))?\s+(held|met|heard|covered|discussed|considered|reviewed|weighed|approved|adopted|voted|decided|denied|rejected)\b/gi;
 // "Council members were interviewing" also asserts an actual activity; an
@@ -97,6 +97,10 @@ const COMPLETED_MEETING_ROLE = /\b(?:meeting|session)\s+(?:also\s+)?served\s+as\
 const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+(?:heard|received)\b/i;
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 const DECISION_LIST = /\b(?:notable|major|key|significant)\s+decisions\s*:/i;
+const AGENDA_PLAN_CONTEXT = /\bagenda\s+(?:listed|included|scheduled)\b[^.!?;]*$/i;
+// An agenda item titled "Continuance ... to November 18" proposes the change;
+// it does not establish that the hearing or project was actually postponed.
+const COMPLETED_CONTINUANCE = /\b(?:project|proposal|application|item|hearing|review)\s+(?:(?:was|were|is|has\s+been|had\s+been)\s+)?(pushed(?:\s+back)?|postponed|continued|rescheduled)\s+(?:to|until|for)\b/gi;
 
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {
@@ -109,9 +113,20 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
   const talksClaimed = ONGOING_BODY_TALKS.test(claim);
   const decisionsClaimed = DECISION_LIST.test(claim);
-  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed) return false;
+  // Check each field separately: a qualified summary cannot excuse an
+  // unqualified headline, while "the agenda listed a hearing continued to..."
+  // remains an attributed description of the agenda.
+  const continuanceActions = [item?.headline, item?.summary].flatMap((value) => {
+    const text = String(value || "");
+    return [...text.matchAll(COMPLETED_CONTINUANCE)]
+      .filter((match) => !AGENDA_PLAN_CONTEXT.test(text.slice(0, match.index)))
+      .map((match) => match[1].toLowerCase());
+  });
+  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed && !continuanceActions.length) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
+  const sourcedContinuances = new Set([...evidence.matchAll(COMPLETED_CONTINUANCE)].map((match) => match[1].toLowerCase()));
+  if (continuanceActions.some((action) => !sourcedContinuances.has(action))) return true;
   const sourcedProgressiveActions = new Set([...evidence.matchAll(PROGRESSIVE_BODY_ACTION)].map((match) => match[1].toLowerCase()));
   if (progressiveActions.some((action) => !sourcedProgressiveActions.has(action.toLowerCase()))) return true;
   const sourcedMeetingRoles = new Set([...evidence.matchAll(COMPLETED_MEETING_ROLE)].map((match) => match[1].toLowerCase()));
@@ -129,7 +144,6 @@ export function hasUnsupportedMeetingAction(item, meeting) {
 const CURRENT_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny|address|hold|interview)\b|(?:weighs|considers|holds|meets|reviews|addresses|interviews)\b)`, "gi");
 const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/gi;
 const CURRENT_SESSION_PLAN = /\b(?:study|scoping)\s+session\s+(?:is\s+)?(?:scheduled|set|expected|slated)\s+(?:for|to)\b/gi;
-const AGENDA_PLAN_CONTEXT = /\bagenda\s+(?:listed|included|scheduled)\b[^.!?;]*$/i;
 
 /** A canceled regular meeting must not obscure a separate special meeting. */
 export function hasUnscopedMeetingCancellation(item, meeting) {

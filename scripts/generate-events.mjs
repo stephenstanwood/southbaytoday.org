@@ -6320,6 +6320,16 @@ function mapTicketmasterEvent(e) {
   // pleaseNote is bag-policy text that has nothing to do with the show.
   const rawInfo = (e.info || "").trim();
   const rawNote = (e.pleaseNote || "").trim();
+  // Admission age gates are facts even when the surrounding venue policy is
+  // unsuitable for a description. Preserve only an explicit 18+/21+ rule;
+  // a comedy venue or legalAgeEnforced boolean does not establish that age.
+  const minimumAge = `${rawInfo}\n${rawNote}`.match(
+    /\b(?:this\s+(?:event|show)\s+is\s+|must\s+be\s+|ages?\s+)(18|21)\s*(?:\+|(?:and|or|&)\s+(?:over|up|older))(?=\s|[.!:;,)]|$)/i,
+  )?.[1];
+  const attendanceNotes = [
+    soldOut && "Tickets are sold out according to the ticket seller.",
+    minimumAge && `Ages ${minimumAge}+.`,
+  ].filter(Boolean);
   let descCandidate = "";
   if (rawInfo && !looksLikeVenuePolicy(rawInfo)) {
     descCandidate = rawInfo;
@@ -6342,14 +6352,13 @@ function mapTicketmasterEvent(e) {
     category: genre === "Ice Shows" ? "arts" : inferCategory(e.name, genre, segment, venueName),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
-    ...(soldOut ? {
-      registration: REGISTRATION_FULL,
-      attendanceNote: "Tickets are sold out according to the ticket seller.",
-    } : {}),
+    ...(soldOut ? { registration: REGISTRATION_FULL } : {}),
+    ...(attendanceNotes.length ? { attendanceNote: attendanceNotes.join(" ") } : {}),
+    ...(minimumAge ? { sourceAudiences: [`Adults, ages ${minimumAge}+`] } : {}),
     description: truncate(descCandidate),
     url: fixTicketmasterUrl(e.url, e.name, city, dateStr),
     source: "Ticketmaster",
-    kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
+    kidFriendly: !minimumAge && /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|disney|cirque)/i.test(e.name + " " + genre),
   };
 }
 
