@@ -61,6 +61,7 @@ for (const strict of [undefined, "0", "1"]) {
       if (new URL(String(url)).hostname === "www.jamsj.org") console.error("fixture: retired JAMsj source requested");
       if (new URL(String(url)).hostname === "www.saratoga.ca.us") console.error("fixture: retired Saratoga calendar requested");
       if (new URL(String(url)).hostname === "plugin.vbotickets.com") console.error("fixture: excluded VBO source requested");
+      if (["api.meetup.com", "secure.meetup.com"].includes(new URL(String(url)).hostname)) console.error("fixture: retired Meetup source requested");
       if (String(url).includes("app.ticketmaster.com")) console.log("fixture: Ticketmaster 403");
       return new Response("Access denied", { status: 403 });
     };\n`);
@@ -72,8 +73,6 @@ for (const strict of [undefined, "0", "1"]) {
       NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT,
       SBT_NOTIFICATION_TEST_DIR: notificationDirectory,
       TICKETMASTER_API_KEY: "fixture",
-      MEETUP_CLIENT_ID: "fixture", MEETUP_MEMBER_ID: "fixture",
-      MEETUP_KID: "fixture", MEETUP_PRIVATE_KEY: "fixture",
     };
     if (strict !== undefined) env.SBT_STRICT_EVENT_REFRESH = strict;
     const result = spawnSync(process.execPath, ["--import", preload, join(sandbox, "scripts/generate-events.mjs")], {
@@ -84,6 +83,7 @@ for (const strict of [undefined, "0", "1"]) {
     assert.match(output, /official-event-sources=0/, "unconfigured callers must measure the third input before contacting sources");
     assert.match(output, /fixture: Ticketmaster 403/, output);
     assert.doesNotMatch(output, /fixture: retired city source requested/);
+    assert.doesNotMatch(output, /fixture: retired Meetup source requested/);
     assert.doesNotMatch(output, /fixture: retired JAMsj source requested/);
     assert.doesNotMatch(output, /fixture: retired Saratoga calendar requested/);
     assert.doesNotMatch(output, /fixture: excluded VBO source requested/);

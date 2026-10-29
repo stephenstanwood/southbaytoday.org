@@ -42,10 +42,6 @@ jobs:
           # Keep rejecting stale inputs when the producer or publication fails.
           SBT_EVENT_SNAPSHOT_MAX_AGE_HOURS: "8"
           TICKETMASTER_API_KEY: ${{ secrets.TICKETMASTER_API_KEY }}
-          MEETUP_CLIENT_ID: ${{ secrets.MEETUP_CLIENT_ID }}
-          MEETUP_MEMBER_ID: ${{ secrets.MEETUP_MEMBER_ID }}
-          MEETUP_KID: ${{ secrets.MEETUP_KID }}
-          MEETUP_PRIVATE_KEY: ${{ secrets.MEETUP_PRIVATE_KEY }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: node scripts/generate-events.mjs
 

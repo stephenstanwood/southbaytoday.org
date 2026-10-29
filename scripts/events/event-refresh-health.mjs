@@ -22,7 +22,6 @@ export const REQUIRED_SOURCE_IDS = Object.freeze([
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
   "fetchTicketmasterEvents",
-  "fetchMeetupEvents",
   "fetchPlaywrightEvents",
   "fetchInboundEvents",
 ]);

@@ -399,14 +399,8 @@ test("rejects stale and timestamp-less snapshots", () => {
   }).status, "invalid");
 });
 
-test("strict input health requires credentials and both fresh snapshots", () => {
-  const env = Object.fromEntries([
-    "TICKETMASTER_API_KEY",
-    "MEETUP_CLIENT_ID",
-    "MEETUP_MEMBER_ID",
-    "MEETUP_KID",
-    "MEETUP_PRIVATE_KEY",
-  ].map((key) => [key, "present"]));
+test("strict input health accepts retired Meetup credentials being absent", () => {
+  const env = { TICKETMASTER_API_KEY: "present" };
   const result = strictRefreshInputHealth({
     env,
     playwright: { _meta: { generatedAt: "2026-07-20T02:00:00.000Z" }, events: [{}] },

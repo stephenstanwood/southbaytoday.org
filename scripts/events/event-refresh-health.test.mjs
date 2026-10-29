@@ -15,7 +15,6 @@ const REQUIRED = [
   "fetchSjJazzEvents",
   "fetchHappyHollowEvents",
   "fetchTicketmasterEvents",
-  "fetchMeetupEvents",
   "fetchPlaywrightEvents",
   "fetchInboundEvents",
 ];
@@ -28,7 +27,7 @@ function healthyOutput() {
     sourceHealth: REQUIRED.map((id) => ({
       id,
       label: id,
-      critical: ["fetchTicketmasterEvents", "fetchMeetupEvents", "fetchPlaywrightEvents", "fetchInboundEvents"].includes(id),
+      critical: ["fetchTicketmasterEvents", "fetchPlaywrightEvents", "fetchInboundEvents"].includes(id),
       status: "ok",
       count: 2,
       dateCounts: { "2026-08-01": 2 },
@@ -42,7 +41,7 @@ function healthyOutput() {
   };
 }
 
-test("accepts a fresh complete refresh output", () => {
+test("accepts a fresh complete refresh output without retired Meetup health", () => {
   const health = inspectEventRefreshOutput({ data: healthyOutput(), now: NOW });
   assert.equal(health.ok, true);
   assert.equal(health.eventCount, 2);
