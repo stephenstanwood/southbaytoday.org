@@ -991,6 +991,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Los Gatos-Saratoga chapter, as published in SCCLD program credits.
+  // https://sccl.bibliocommons.com/events/6a3d7eee0e851028002d3169
+  "AAUW",
   // Stanford's Entrepreneurial Thought Leaders speaker series.
   "ETL",
   // Korean Peninsula Energy Development Organization, as published in
@@ -3047,8 +3050,9 @@ function polishDescription(text) {
 
   t = kept.join(" ").replace(/\s+/g, " ").trim();
 
-  // Capitalize first letter of each sentence
-  t = t.replace(/(^|[.!?]\s+)([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+  // Ellipses continue the source sentence; their final dot is not a full
+  // stop. Still capitalize after single/doubled stops (deduped below), ! or ?.
+  t = t.replace(/(^|[!?]\s+|(?<!\.)\.{1,2}\s+)([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
   // Hammer supplies "IMAGES" and lowercase "and performance". Match after
   // ALL CAPS and sentence casing, so the existing repair works on the first
   // source pass as well as on already-rendered copy.

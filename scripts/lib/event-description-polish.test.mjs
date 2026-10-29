@@ -1666,3 +1666,57 @@ test("orphaned ELL labels are removed only before the complete conversation-club
   const other = "(ELL) and (ADA) are abbreviations discussed in this workshop.";
   assert.equal(polishDescription(other), other);
 });
+
+test("preserves the source-published AAUW chapter initials in titles and descriptions", () => {
+  const source = "Program co-sponsored by the Los Gatos-Saratoga AAUW.";
+  assert.equal(polishDescription(source), source);
+  assert.equal(polishDescription(polishDescription(source)), source);
+  const title = "Los Gatos-Saratoga AAUW Presents Ukrainian Culture";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+});
+
+test("preserves continuation case after ellipses while capitalizing real sentences", () => {
+  const cases = [
+    ["He's popular and funny and... loves codes, too.", "He's popular and funny and... loves codes, too."],
+    ["wait... keep listening. the story continues!", "Wait... keep listening. The story continues!"],
+    ["We paused… and continued. a new sentence starts.", "We paused… and continued. A new sentence starts."],
+    ["We paused.... and continued.", "We paused.... and continued."],
+    ["We paused... Another thought followed.", "We paused... Another thought followed."],
+    ["Stop! wait? yes. go.", "Stop! Wait? Yes. Go."],
+    ["It ends.. next begins.", "It ends. Next begins."],
+    ["Use 1.5 cups. add more.", "Use 1.5 cups. Add more."],
+  ];
+  for (const [source, expected] of cases) {
+    let actual = polishDescription(source);
+    assert.equal(actual, expected, source);
+    for (let pass = 0; pass < 4; pass++) {
+      actual = polishDescription(actual);
+      assert.equal(actual, expected, `${source} (refresh ${pass + 1})`);
+    }
+  }
+});
+
+test("retains complete reviewed AAUW and Wish Ring Cipher descriptions across refreshes", () => {
+  // SCCLD occurrence and Linden Tree's /events-calendar/ source copy, reviewed
+  // in the October 28 feed audit. Keep the full context, contact and facts.
+  const fixtures = [
+    {
+      id: "4f86bef9787c",
+      // https://www.lindentreebooks.com/events-calendar/
+      description: "It's the next meeting of our middle grade book club for ages 9+! Led by bookseller extraordinaire Lorilee, we hope to introduce interested readers to amazing new books and the opportunity to talk about them in a fun, relaxed group setting. This month's book is The Wish Ring Cipher by Alexandra Ott, a fast-paced adventure novel filled with puzzle solving, a hint of magic, and new school fears. Please email lorilee@lindentreebooks.com to RSVP. Emma Avery has always loved solving puzzles and codes, and now that she's processing a recent autism diagnosis and facing down seventh grade at a new school, they're even more important to her. Then Emma meets Nate Lin. He's popular and funny and... loves codes, too. He introduces Emma to the Codebreakers, a group of his friends dedicated to cracking codes that have been discovered in the ruins of a nearby ghost town, which are believed to lead to magical objects. But they're not the only ones on the hunt, and when their sinister rivals close in on an object that grants unlimited wishes, the Codebreakers must race to beat them to it before they use it for dark magic.",
+    },
+    {
+      id: "sccl-6a3d7eee0e851028002d3169",
+      // https://sccl.bibliocommons.com/events/6a3d7eee0e851028002d3169
+      description: "Nora Mason, a native-born Ukrainian and long-time Saratoga resident, will present a program on the culture of Ukraine and how its geography has contributed to tragic invasions over time. She will share her family's WWII story and how they ultimately immigrated to the United States. She will also touch on inspiring efforts to help the people of Ukraine today. Program co-sponsored by the Los Gatos-Saratoga AAUW.",
+    }
+  ];
+  for (const { id, description } of fixtures) {
+    let actual = description;
+    for (let pass = 0; pass < 5; pass++) {
+      actual = polishDescription(actual);
+      assert.equal(actual, description, `${id} (pass ${pass + 1})`);
+    }
+  }
+});
