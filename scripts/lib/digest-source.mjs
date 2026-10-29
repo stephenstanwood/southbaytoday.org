@@ -1,4 +1,4 @@
-import { fetchLegistarPastMeeting, verifyLegistarBodyOnDate } from "./civic-meetings.mjs";
+import { fetchLegistarPastMeeting, fetchPrimeGovPastMeeting, verifyLegistarBodyOnDate, verifyPrimeGovBodyOnDate } from "./civic-meetings.mjs";
 
 // Stoa's excerpt is a 500-character search-card preview. Prefer the ingested
 // agenda for BOTH attribution and summarization so they read the same source.
@@ -32,6 +32,24 @@ export async function recoverLegistarDigestSource({ client, bodyNames, published
   if (!meeting || (publishedDate && meeting.date < publishedDate)) return null;
   const actual = await verifyLegistarBodyOnDate(
     client, meeting.date, `${meeting.title} ${agendaTextForMeeting(meeting)}`,
+  );
+  if (!actual || actual.councilMet !== true || actual.body) return null;
+  return { meeting, actual };
+}
+
+// A fresh upstream date can belong to a committee even when tagged Council.
+// Recover the Council's own agenda, then pass it through the same body guard.
+// The published-date floor applies before either regeneration or relabeling.
+export async function recoverPrimeGovDigestSource({ domain, committeeId, publishedDate, today } = {}) {
+  let meeting;
+  try {
+    meeting = await fetchPrimeGovPastMeeting({ domain, committeeId, today });
+  } catch {
+    return null;
+  }
+  if (!meeting || (publishedDate && meeting.date < publishedDate)) return null;
+  const actual = await verifyPrimeGovBodyOnDate(
+    domain, meeting.date, `${meeting.title} ${agendaTextForMeeting(meeting)}`,
   );
   if (!actual || actual.councilMet !== true || actual.body) return null;
   return { meeting, actual };

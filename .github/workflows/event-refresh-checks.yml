@@ -31,6 +31,9 @@ jobs:
       - name: Check APOD source integrity and failure preservation
         run: node --test scripts/generate-apod.test.mjs
 
+      - name: Check council sources and digest recovery (offline)
+        run: node --test scripts/lib/civic-meetings.test.mjs scripts/lib/primegov-digest.test.mjs scripts/lib/digest-staleness.test.mjs scripts/generate-digests.test.mjs
+
       - name: Check food permit source health and bounded blurbs
         run: node --test scripts/lib/scc-food-generation.test.mjs scripts/lib/scc-food-openings.test.mjs
 
