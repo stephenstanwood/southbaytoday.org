@@ -123,6 +123,6 @@ test("the real digest rerun verifies sources but avoids a second unchanged-input
   const { digests, requestCounts, log } = run({ runs: 2 });
   assert.deepEqual(requestCounts, [1, 0]);
   assert.equal(digests["palo-alto"].body, "City Council");
-  assert.match(log, /recovered verified City Council agenda/);
+  assert.match(log, /trying PrimeGov.*got 2026-10-26/);
   assert.match(log, /unchanged verified source\/prompt\/model; reused result/);
 });
