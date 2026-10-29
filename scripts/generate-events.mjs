@@ -1822,6 +1822,18 @@ const LIBRARY_COPY_FIXES = [
   [/\bAdvanced registration required, drop-ins not available\./g, "Advance registration required; drop-ins not available."],
 ];
 
+// Apply these with standard String.replace semantics in both prose paths;
+// the typo loop below reserves capture groups for plural spelling variants.
+const PROSE_HYPHENATION_FIXES = [
+  [/\b(\d+) person maximum\b/g, "$1-person maximum"],
+  [/\b(meets?) in-person at\b/g, "$1 in person at"],
+  [/\bregister for this program in-person at\b/g, "register for this program in person at"],
+  [/\bpurchased with an event ticket, in-person at\b/g, "purchased with an event ticket, in person at"],
+  [/\bfamily friendly Halloween story time\b/g, "family-friendly Halloween story time"],
+  [/\bfrom one digit to four-digit numbers\b/g, "from one- to four-digit numbers"],
+  [/\b([Mm]oderately|[Ll]eisurely)-paced\b/g, "$1 paced"],
+];
+
 // Common scraper-introduced typos. Replacement preserves the original case of
 // the matched word (lowercase → lowercase, Capitalized → Capitalized).
 const DESC_TYPO_FIXES = [
@@ -2067,13 +2079,13 @@ function polishAttendanceNote(text) {
   t = t.replace(/(\d)([ap]m)\b/gi, (_, digit, meridiem) => `${digit} ${meridiem.toUpperCase()}`);
   const fixes = [
     ...LIBRARY_COPY_FIXES,
+    ...PROSE_HYPHENATION_FIXES,
     [/\b([Bb])e be\b/gi, "$1e"],
     [/\b([Ss])(?:inging|igning)-up\b/gi, "$1igning up"],
     [/No appointment is needed, we help patrons/g, "No appointment is needed; we help patrons"],
     [/\b([Ss])ign ups\b/g, "$1ign-ups"],
     [/first-come, first-served and every act/g, "first-come, first-served; every act"],
     [/\b(\d+)-minutes before\b/g, "$1 minutes before"],
-    [/\b(\d+) person maximum\b/g, "$1-person maximum"],
     [/\b(\d+(?:st|nd|rd|th)) floor (?=Tech Lab|reference desk)/g, "$1-floor "],
     [/A second event, Infant and Toddler Storytime B will start/g, "A second event, Infant and Toddler Storytime B, will start"],
     [/Another event, Music and Movement B will start/g, "Another event, Music and Movement B, will start"],
@@ -3220,6 +3232,10 @@ function polishDescription(text) {
     .replace(/\bplaying with LEGO's supports\b/g, "playing with LEGOs supports")
     .replace(/\bMeetup event by BAy Pi Ggies\./g, "Meetup event by BayPiggies.")
     .replace(/\bResearch & Brew– a showcase\b/g, "Research & Brew – a showcase");
+
+  for (const [pattern, replacement] of PROSE_HYPHENATION_FIXES) {
+    t = t.replace(pattern, replacement);
+  }
 
   // This university preview ends inside an organization's name and contains
   // no complete sentence. Leave the description empty rather than inventing

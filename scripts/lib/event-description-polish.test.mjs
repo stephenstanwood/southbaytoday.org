@@ -64,6 +64,39 @@ test("library grammar repairs retain participation details and are stable on ref
   }
 });
 
+test("source hyphenation repairs preserve attendance facts and identifier bytes", () => {
+  const cases = [
+    ["Free, 50 person maximum. Story Time tickets required.",
+      "Free, 50-person maximum. Story Time tickets required."],
+    ["This class meets in-person at Hillview Branch Library. Starts: August 15, 2026. Free.",
+      "This class meets in person at Hillview Branch Library. Starts: August 15, 2026. Free."],
+    ["Children must register for this program in-person at the Children's Reference Desk.",
+      "Children must register for this program in person at the Children's Reference Desk."],
+    ["Books can be purchased with an event ticket, in-person at Linden Tree, or on our website.",
+      "Books can be purchased with an event ticket, in person at Linden Tree, or on our website."],
+    ["Campbell Library is having a family friendly Halloween story time with a parade and treats!",
+      "Campbell Library is having a family-friendly Halloween story time with a parade and treats!"],
+    ["Learn addition, subtraction, multiplication, and division from one digit to four-digit numbers.",
+      "Learn addition, subtraction, multiplication, and division from one- to four-digit numbers."],
+    ["Join a moderately-paced, exercise-focused hike or a leisurely-paced walk. Registration required. Details: https://example.org/moderately-paced?class=in-person",
+      "Join a moderately paced, exercise-focused hike or a leisurely paced walk. Registration required. Details: https://example.org/moderately-paced?class=in-person"],
+  ];
+  for (const [source, expected] of cases) {
+    let actual = source;
+    for (let pass = 0; pass < 3; pass++) {
+      actual = polishDescription(actual);
+      assert.equal(actual, expected);
+      assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+    }
+  }
+  const attendance = "Free, 50 person maximum. Register for reminders: https://example.org/50-person";
+  const expectedAttendance = attendance.replace("50 person maximum", "50-person maximum");
+  assert.equal(polishAttendanceNote(attendance), expectedAttendance);
+  assert.equal(polishAttendanceNote(expectedAttendance), expectedAttendance);
+  const adjective = "Join an in-person ESL class. Meet in-person participants. The exercise-focused hike is self-paced.";
+  assert.equal(polishDescription(adjective), adjective);
+});
+
 test("biography pronoun repair requires the third-person context", () => {
   const sentence = "Interacting with people deciding what they wanted, or might not want, to know about their future seared these issues into my heart.";
   const thirdPerson = `Dr. Peyser saw first-hand how genetic knowledge alters a person's relationship to their future. ${sentence}`;
