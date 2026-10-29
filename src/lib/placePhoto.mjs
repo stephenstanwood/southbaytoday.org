@@ -35,7 +35,9 @@ async function resizeVenuePhoto(body, photo) {
     throw new Error("Official photo no longer meets the requested resolution");
   }
   return image
-    .resize({ width: photo.width, height: photo.height, fit: "inside", withoutEnlargement: true })
+    // Cards already crop with object-fit: cover. Crop before downsampling so
+    // a wide/portrait source is not reduced on one axis then enlarged in CSS.
+    .resize({ width: photo.width, height: photo.height, fit: "cover", withoutEnlargement: true })
     .jpeg({ quality: 88, mozjpeg: true })
     .toBuffer();
 }
@@ -56,6 +58,7 @@ export function createPhotoLoader({ fetchImpl = fetch, resize = resizeVenuePhoto
         log(JSON.stringify({ event: "place-photo-upstream", source: "venue", placeId: photo.placeId, width: photo.width, height: photo.height }));
         return { body, contentType: "image/jpeg", source: "venue", sourcePage: venue.sourcePage };
       } catch {
+        log(JSON.stringify({ event: "place-photo-venue-fallback", placeId: photo.placeId, width: photo.width, height: photo.height }));
         // A changed source, HTML response, broken image, or transient outage
         // must not remove a photo that the current Google route can still serve.
       }
@@ -66,6 +69,9 @@ export function createPhotoLoader({ fetchImpl = fetch, resize = resizeVenuePhoto
     url.search = new URLSearchParams({ maxWidthPx: String(photo.width), maxHeightPx: String(photo.height), key: apiKey }).toString();
     let response;
     for (let attempt = 0; attempt < 2; attempt++) {
+      // Count actual provider attempts, including retries and failed calls.
+      // The success-only upstream event below cannot measure those costs.
+      log(JSON.stringify({ event: "place-photo-google-request", placeId: photo.placeId, width: photo.width, height: photo.height, attempt: attempt + 1 }));
       try {
         response = await fetchImpl(url.href, { signal: AbortSignal.timeout(8000), redirect: "follow" });
       } catch (error) {
