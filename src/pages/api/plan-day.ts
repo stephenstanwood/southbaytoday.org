@@ -20,7 +20,7 @@ import type { APIRoute } from "astro";
 import Anthropic from "@anthropic-ai/sdk";
 import { errJson, okJson } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
-import { CLAUDE_OPUS, extractText, stripFences } from "../../lib/models";
+import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
 import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
@@ -68,6 +68,9 @@ import {
   type PillarBucket,
 } from "../../lib/south-bay/dayPlanPairs";
 import type { City } from "../../lib/south-bay/types";
+
+import { recordModelUsage } from "../../lib/modelUsage.mjs";
+import { planResultCache, planResultKey, PLAN_PROMPT_VERSION } from "../../lib/south-bay/planResultCache";
 
 import placesData from "../../data/south-bay/places.json";
 import eventsData from "../../data/south-bay/upcoming-events.json";
@@ -396,8 +399,16 @@ const PLACE_BLURBS: Map<string, string> = (() => {
 })();
 
 // In-memory plan cache: city:kids:date → { data, ts }
-const planCache = new Map<string, { data: any; ts: number }>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const PLAN_SOURCE_VERSION = planResultKey([placesData, eventsData, placeBlurbCache, foodOpeningsData]);
+
+export interface PlanEditorial {
+  provider: string;
+  model: string;
+  select: (prompt: string) => Promise<string>;
+  strict?: boolean;
+}
+
+const anthropicKey = () => process.env.ANTHROPIC_API_KEY || import.meta.env?.ANTHROPIC_API_KEY;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -672,6 +683,7 @@ export function scoreCandidates(
   prefs?: UserPreferences,
   recent?: RecentPenaltyInput,
   targetDate?: string,
+  jitter: (candidate: Candidate) => number = () => Math.random() * 2,
 ): Candidate[] {
   // Holiday-themed event boost — when the plan date lands on a named
   // holiday (Mother's Day, Cinco de Mayo, July 4th, …), events whose
@@ -768,7 +780,7 @@ export function scoreCandidates(
 
     // Reshuffles can move among excellent options, but randomness no longer
     // has enough weight to make a merely adequate candidate look exceptional.
-    score += Math.random() * 2;
+    score += jitter(c);
 
     c.score = score;
   }
@@ -1425,8 +1437,8 @@ async function pickPillarPairsWithClaude(
   targetDate: string | undefined,
   weekContext: PlanRequest["weekContext"],
   dayKey: DayKey,
-): Promise<DayCard[]> {
-  const client = new Anthropic({ apiKey: import.meta.env.ANTHROPIC_API_KEY });
+  editorial?: PlanEditorial,
+): Promise<{ cards: DayCard[]; editorialSucceeded: boolean }> {
   const planDateObj = targetDate ? new Date(`${targetDate}T12:00:00`) : new Date();
   const todayLabel = planDateObj.toLocaleDateString("en-US", {
     timeZone: "America/Los_Angeles",
@@ -1535,14 +1547,26 @@ OUTPUT — JSON array only:
 
   let modelPicks: PillarPairPick[] = [];
   try {
-    const response = await client.messages.create({
-      model: CLAUDE_OPUS,
-      max_tokens: 1800,
-      messages: [{ role: "user", content: prompt }],
-    });
-    const parsed = JSON.parse(stripFences(extractText(response.content)));
-    if (Array.isArray(parsed)) modelPicks = parsed;
+    let raw: string;
+    if (editorial) raw = await editorial.select(prompt);
+    else {
+      const started = Date.now();
+      const response = await new Anthropic({ apiKey: anthropicKey() }).messages.create({
+        model: CLAUDE_SONNET,
+        max_tokens: 1800,
+        thinking: { type: "between_tools" } as any,
+        messages: [{ role: "user", content: prompt }],
+      });
+      recordModelUsage({ feature: "visitor-plan", model: response.model, usage: response.usage,
+        elapsedMs: Date.now() - started, requestId: response.id, stopReason: response.stop_reason });
+      if (response.stop_reason === "max_tokens") throw new Error("Plan editorial response was truncated");
+      raw = extractText(response.content);
+    }
+    const parsed = JSON.parse(stripFences(raw));
+    if (!Array.isArray(parsed) || parsed.length !== 3) throw new Error("Expected three editorial pillar pairs");
+    modelPicks = parsed;
   } catch (error) {
+    if (editorial?.strict) throw error;
     console.warn(`[plan-day] editorial selection failed; using ranked pairs: ${String((error as Error)?.message || error).slice(0, 180)}`);
   }
 
@@ -1695,7 +1719,7 @@ OUTPUT — JSON array only:
   cards.sort((a, b) => bucketOrderIndex(a.bucket) - bucketOrderIndex(b.bucket));
   const issues = dayPlanPairingIssues(cards);
   if (issues.length) throw new Error(`Invalid pillar-pairs plan: ${issues.join("; ")}`);
-  return cards;
+  return { cards, editorialSucceeded: modelPicks.length === 3 };
 }
 
 // ---------------------------------------------------------------------------
@@ -1712,6 +1736,12 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson("Invalid JSON body", 400);
   }
 
+  return generateDayPlan(body);
+};
+
+// Shared pipeline: scheduled defaults inject a local subscription selector.
+// The public route never accepts a provider/model from the request body.
+export async function generateDayPlan(body: PlanRequest, editorial?: PlanEditorial): Promise<Response> {
   const {
     city,
     kids = false,
@@ -1720,7 +1750,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     lockedCards = [],
     dismissedIds = [],
     dismissedNames = [],
-    planDate,
+    planDate = todayStr(),
     preferences,
     blockedNames = [],
     weekContext,
@@ -1761,7 +1791,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     return errJson('Invalid scope. Must be "regional" or "city"', 400);
   }
 
-  if (!import.meta.env.ANTHROPIC_API_KEY) {
+  if (!editorial && !anthropicKey()) {
     return errJson("Server configuration error", 500);
   }
 
@@ -1778,23 +1808,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   const dayKey = dayKeyForDate(planDate);
 
-  // Cache hit for default requests.
-  const prefsHash = preferences
-    ? Math.round((preferences.outdoorBias || 0) * 10 + (preferences.costBias || 0) * 10)
-    : 0;
-  const cacheRegion = scope === "city" ? city : "south-bay";
-  const cacheKey = `${scope}:${cacheRegion}:${kids}:${prefsHash}:${planDate || ""}`;
-  const isCacheableRequest = !noCache && !weekContext &&
+  const isCacheableRequest = !editorial && !noCache && !weekContext &&
     lockedIds.length === 0 && dismissedIds.length === 0 &&
     dismissedNameSet.size === 0 && blockedSet.size === 0 && recentlyShown.length === 0;
-  if (isCacheableRequest) {
-    const cached = planCache.get(cacheKey);
-    if (cached && Date.now() - cached.ts < CACHE_TTL) {
-      return okJson(cached.data, { "Cache-Control": "private, no-store" });
-    }
-  }
+  const cacheKey = planResultKey({ version: PLAN_PROMPT_VERSION, sources: PLAN_SOURCE_VERSION,
+    model: CLAUDE_SONNET, scope, city: scope === "city" ? city : "south-bay", kids, preferences, planDate });
 
   try {
+    const generate = async () => {
     const weatherCity = scope === "regional" ? REGIONAL_WEATHER_CITY : city;
     const weatherData = await fetchWeather(weatherCity, planDate);
     const weatherContext: WeatherContext | null = weatherData.forecast?.[0] ?? null;
@@ -1828,7 +1849,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
     const recent: RecentPenaltyInput = { byId: recentById, byName: recentByName };
-    const scored = scoreCandidates(allCandidates, weatherContext, kids, preferences, recent, planDate);
+    const scored = scoreCandidates(allCandidates, weatherContext, kids, preferences, recent, planDate,
+      editorial ? candidate => parseInt(planResultKey([planDate, kids, candidate.id]).slice(0, 8), 16) / 0xffffffff * 2 : undefined);
 
     // Extract locked candidates (and report any locked ids that are stale).
     const lockedRaw = scored.filter((c) => lockedSet.has(c.id));
@@ -1871,7 +1893,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     }
     planningPool.push(...eventGroups.values());
 
-    const cards = await pickPillarPairsWithClaude(
+    const { cards, editorialSucceeded } = await pickPillarPairsWithClaude(
       planningPool,
       lockedWithBucket,
       weatherData.weather,
@@ -1882,6 +1904,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       planDate,
       weekContext,
       dayKey,
+      editorial,
     );
 
     const responseData = {
@@ -1890,24 +1913,22 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       city: scope === "city" ? city : dominantPillarCity(cards, REGIONAL_WEATHER_CITY),
       scope,
       selectionModel: DAY_PLAN_SELECTION_MODEL,
+      editorialModel: editorialSucceeded ? (editorial?.model || CLAUDE_SONNET) : null,
+      editorialProvider: editorialSucceeded ? (editorial?.provider || "anthropic-api") : "ranked-fallback",
       mealPairMaxMiles: MEAL_PAIR_MAX_MILES,
       kids,
+      planDate,
       generatedAt: new Date().toISOString(),
       poolSize: allCandidates.length,
       invalidLockedIds: invalidLockedIds.length > 0 ? invalidLockedIds : undefined,
     };
 
-    if (isCacheableRequest) {
-      planCache.set(cacheKey, { data: responseData, ts: Date.now() });
-      if (planCache.size > 100) {
-        const oldest = planCache.keys().next().value!;
-        planCache.delete(oldest);
-      }
-    }
-
+    return responseData;
+    };
+    const responseData = isCacheableRequest ? await planResultCache(cacheKey, generate) : await generate();
     return okJson(responseData, { "Cache-Control": "private, no-store" });
   } catch (err) {
     console.error("[plan-day] error:", err);
     return errJson(err instanceof Error ? err.message : "Plan generation failed", 500);
   }
-};
+}

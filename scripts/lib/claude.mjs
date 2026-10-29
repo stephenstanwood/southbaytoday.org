@@ -1,3 +1,4 @@
+import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
 // ---------------------------------------------------------------------------
 // Shared Anthropic Messages API client for the generate-* scripts
 // ---------------------------------------------------------------------------
@@ -161,6 +162,9 @@ export async function callClaude(prompt, opts = {}) {
     const detail = data?.error?.message ? ` — ${data.error.message}` : "";
     throw new Error(`${label}: Claude API error ${res.status}${detail}`);
   }
+
+  recordModelUsage({ feature: label, model: data.model || model, usage: data.usage,
+    stopReason: data.stop_reason, requestId: data.id });
 
   // A response that stopped at the token ceiling is truncated mid-sentence even
   // when a text block is present, and every caller here parses the result as

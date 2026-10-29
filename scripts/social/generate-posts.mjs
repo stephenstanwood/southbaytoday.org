@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { assertSocialGenerationEnabled } from "./lib/generation-policy.mjs";
+assertSocialGenerationEnabled();
 // ---------------------------------------------------------------------------
 // South Bay Signal — Single-Item Post Generator
 // Replaces daily-pulse, tonight, weekend-roundup, civic-signal

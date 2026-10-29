@@ -18,7 +18,8 @@
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { assertSocialGenerationEnabled } from "./lib/generation-policy.mjs";
 import crypto from "node:crypto";
 import { execSync } from "node:child_process";
 import { loadAllCandidates, upcomingCandidates } from "./lib/data-loader.mjs";
@@ -353,7 +354,7 @@ function mealIntegrityIssues(cards, dateStr) {
 }
 
 /** Check whether a generated pillar-pairs plan qualifies. */
-function planPassesQuality(plan, usedNames, dateStr = plan?.planDate) {
+export function planPassesQuality(plan, usedNames, dateStr = plan?.planDate) {
   if (!plan?.cards?.length) return { ok: false, reason: "empty" };
   const cards = plan.cards;
   if (plan.selectionModel !== DAY_PLAN_SELECTION_MODEL) {
@@ -1026,35 +1027,13 @@ async function main() {
   // Hero-only fast path: skip the 10-day social batch and just refresh
   // default-plans.json for the homepage. Runs daily on the Mini.
   if (heroOnly) {
-    console.log(`\n🏠 Hero-only refresh — ${today}`);
-    const schedule = loadSchedule();
-    const plansData = loadDefaultPlans();
-    const { adults: yesterdayAdultsNames, kids: yesterdayKidsNames } = extractPreviousPlanNames(plansData);
-    if (dryRun) {
-      console.log(`\n🏜️  Dry run (hero-only)`);
-      return;
-    }
-    await writeHomepageDefaultPlans(schedule, today, yesterdayAdultsNames, yesterdayKidsNames);
-    try {
-      const repoRoot = join(__dirname, "..", "..");
-      const dirty = execSync("git diff --name-only -- src/data/south-bay/default-plans.json", { cwd: repoRoot, encoding: "utf8" }).trim();
-      if (dirty) {
-        execSync("git add src/data/south-bay/default-plans.json", { cwd: repoRoot, stdio: "pipe" });
-        execSync('git commit -m "data: refresh homepage default plans"', { cwd: repoRoot, stdio: "pipe" });
-        if (localOnly) {
-          console.log("   📎 default-plans.json committed locally");
-        } else {
-          execSync("git push", { cwd: repoRoot, stdio: "pipe" });
-          console.log("   📎 default-plans.json committed and pushed");
-        }
-      } else {
-        console.log("   (default-plans.json unchanged)");
-      }
-    } catch (e) {
-      console.warn("   ⚠️  Failed to auto-save default-plans.json:", e.message);
-    }
+    const { spawnSync } = await import("node:child_process");
+    const script = join(__dirname, "..", "generate-default-plans.ts");
+    const result = spawnSync(process.execPath, ["--import", "tsx", script, "--local-only", ...(dryRun ? ["--dry-run"] : [])], { stdio: "inherit" });
+    if (result.status !== 0) throw new Error("Codex default-plan generation failed");
     return;
   }
+  assertSocialGenerationEnabled();
 
   console.log(`\n📅 Schedule generator — ${today} (${daysAhead} days ahead)`);
 
@@ -1194,7 +1173,7 @@ async function main() {
     // ── Homepage hero plans ──────────────────────────────────────────────
     // The homepage's SouthBayTodayView and the daily email read
     // default-plans.json for instant first-paint / morning digest content.
-    await writeHomepageDefaultPlans(schedule, today, yesterdayAdultsNames, yesterdayKidsNames);
+    // Default plans have a separate subscription-backed entry point.
 
     // Auto-commit schedule + plan JSONs. social-schedule.json is included here
     // so the uncommitted-changes window can't be wiped by another process doing
@@ -1222,226 +1201,16 @@ async function main() {
   }
 }
 
-const DEFAULT_PLANS_FILE = join(__dirname, "..", "..", "src", "data", "south-bay", "default-plans.json");
-
-async function writeHomepageDefaultPlans(schedule, todayStr, yesterdayAdultsNames = [], yesterdayKidsNames = []) {
-  console.log(`\n📋 Generating today's adults plan (${REGIONAL_PLAN_LABEL}) for homepage/newsletter...`);
-  let todayAdultsPlan = null;
-  try {
-    const recentlyShown = yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 1 }));
-    todayAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: false, recentlyShown });
-    const quality = planPassesQuality(todayAdultsPlan, new Set(), todayStr);
-    if (!quality.ok) {
-      console.warn(`   ⚠️  Adults plan rejected: ${quality.reason}`);
-      todayAdultsPlan = null;
-    }
-    if (todayAdultsPlan?.cards?.length) {
-      deriveMissingEventTimes(todayAdultsPlan.cards);
-      await enrichCardPhotos(todayAdultsPlan.cards);
-      await enrichMissingImages(todayAdultsPlan.cards);
-    }
-  } catch (err) {
-    console.warn(`   ⚠️  Adults plan fetch failed: ${err.message}`);
-  }
-
-  // Carry-forward fallbacks keep the site from going blank if the API is
-  // briefly down, but only a complete v1 pair plan is eligible. Legacy social
-  // schedule data must not quietly reintroduce the old six-bucket logic.
-  const previousPlans = loadDefaultPlans()?.plans || {};
-  const scheduledTodayAdults = schedule.days?.[todayStr]?.["day-plan"];
-  const scheduledFallbackQuality = scheduledTodayAdults?.plan?.cards?.length
-    ? planPassesQuality(scheduledTodayAdults.plan, new Set(), todayStr)
-    : { ok: false };
-  const fallbackAdultsEntry = scheduledFallbackQuality.ok
-    ? {
-        cards: scheduledTodayAdults.plan.cards,
-        weather: scheduledTodayAdults.plan.weather || null,
-        city: scheduledTodayAdults.city,
-        kids: false,
-        selectionModel: scheduledTodayAdults.plan.selectionModel || null,
-        mealPairMaxMiles: scheduledTodayAdults.plan.mealPairMaxMiles || null,
-        planDate: todayStr,
-        carriedForward: true,
-        generatedAt: new Date().toISOString(),
-      }
-    : carryForwardPlan(previousPlans, todayStr, "adults", "adults:tomorrow");
-  if (!todayAdultsPlan?.cards?.length && !fallbackAdultsEntry?.cards?.length) {
-    console.warn("   ⚠️  Today's adults plan unavailable — skipping default-plans.json update");
-    return;
-  }
-
-  console.log(`\n📋 Generating today's kids plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
-  let kidsPlan = null;
-  try {
-    // Penalize yesterday's kids picks so the homepage doesn't serve
-    // Bill's Cafe + Vasona Lake + Smoking Pig every day in a row.
-    // daysAgo: 1 → -25 points in plan-day's scoreCandidates.
-    const recentlyShown = yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 1 }));
-    kidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, todayStr, { kids: true, recentlyShown });
-    const quality = planPassesQuality(kidsPlan, new Set(), todayStr);
-    if (!quality.ok) {
-      console.warn(`   ⚠️  Kids plan rejected: ${quality.reason}`);
-      kidsPlan = null;
-    }
-    if (kidsPlan?.cards?.length) {
-      deriveMissingEventTimes(kidsPlan.cards);
-      await enrichCardPhotos(kidsPlan.cards);
-      await enrichMissingImages(kidsPlan.cards);
-    }
-  } catch (err) {
-    console.warn(`   ⚠️  Kids plan fetch failed: ${err.message}`);
-  }
-
-  // ── Tomorrow's hero plans ────────────────────────────────────────────────
-  // The homepage flips into tomorrow mode after 6 PM (kids) / 8 PM (adults).
-  // Without dedicated tomorrow heroes, today's cache leaks today-only events
-  // into tomorrow's view.
-  const tomorrowStr = isoOffset(todayStr, 1);
-  let tomorrowAdultsEntry = null;
-  let tomorrowKidsEntry = null;
-  console.log(`\n📋 Generating tomorrow's adults plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
-  try {
-    const todayAdultNames = (todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
-    const recentlyShown = [
-      ...yesterdayAdultsNames.map((n) => ({ name: n, daysAgo: 2 })),
-      ...todayAdultNames.map((n) => ({ name: n, daysAgo: 1 })),
-    ];
-    const tomorrowAdultsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: false, recentlyShown });
-    const quality = planPassesQuality(tomorrowAdultsPlan, new Set(), tomorrowStr);
-    if (!quality.ok) console.warn(`   ⚠️  Tomorrow adults plan rejected: ${quality.reason}`);
-    if (quality.ok && tomorrowAdultsPlan?.cards?.length) {
-      deriveMissingEventTimes(tomorrowAdultsPlan.cards);
-      await enrichCardPhotos(tomorrowAdultsPlan.cards);
-      await enrichMissingImages(tomorrowAdultsPlan.cards);
-      tomorrowAdultsEntry = {
-        cards: tomorrowAdultsPlan.cards,
-        weather: tomorrowAdultsPlan.weather || null,
-        city: tomorrowAdultsPlan.city || REGIONAL_PLAN_CITY,
-        kids: false,
-        planDate: tomorrowStr,
-        selectionModel: tomorrowAdultsPlan.selectionModel,
-        mealPairMaxMiles: tomorrowAdultsPlan.mealPairMaxMiles,
-        generatedAt: new Date().toISOString(),
-      };
-    }
-  } catch (err) {
-    console.warn(`   ⚠️  Tomorrow adults plan fetch failed: ${err.message}`);
-  }
-
-  console.log(`\n📋 Generating tomorrow's kids plan (${REGIONAL_PLAN_LABEL}) for homepage...`);
-  try {
-    const todayNames = (kidsPlan?.cards || todayAdultsPlan?.cards || fallbackAdultsEntry?.cards || []).map((c) => c.name).filter(Boolean);
-    const recentlyShown = [
-      ...yesterdayKidsNames.map((n) => ({ name: n, daysAgo: 2 })),
-      ...todayNames.map((n) => ({ name: n, daysAgo: 1 })),
-    ];
-    const tomorrowKidsPlan = await fetchPlanFromApi(REGIONAL_PLAN_CITY, tomorrowStr, { kids: true, recentlyShown });
-    const quality = planPassesQuality(tomorrowKidsPlan, new Set(), tomorrowStr);
-    if (!quality.ok) console.warn(`   ⚠️  Tomorrow kids plan rejected: ${quality.reason}`);
-    if (quality.ok && tomorrowKidsPlan?.cards?.length) {
-      deriveMissingEventTimes(tomorrowKidsPlan.cards);
-      await enrichCardPhotos(tomorrowKidsPlan.cards);
-      await enrichMissingImages(tomorrowKidsPlan.cards);
-      tomorrowKidsEntry = {
-        cards: tomorrowKidsPlan.cards,
-        weather: tomorrowKidsPlan.weather || null,
-        city: tomorrowKidsPlan.city || REGIONAL_PLAN_CITY,
-        kids: true,
-        planDate: tomorrowStr,
-        selectionModel: tomorrowKidsPlan.selectionModel,
-        mealPairMaxMiles: tomorrowKidsPlan.mealPairMaxMiles,
-        generatedAt: new Date().toISOString(),
-      };
-    }
-  } catch (err) {
-    console.warn(`   ⚠️  Tomorrow kids plan fetch failed: ${err.message}`);
-  }
-
-  const adultsEntry = todayAdultsPlan?.cards?.length ? {
-    cards: todayAdultsPlan.cards,
-    weather: todayAdultsPlan.weather || null,
-    city: todayAdultsPlan.city || REGIONAL_PLAN_CITY,
-    kids: false,
-    planDate: todayStr,
-    selectionModel: todayAdultsPlan.selectionModel,
-    mealPairMaxMiles: todayAdultsPlan.mealPairMaxMiles,
-    generatedAt: new Date().toISOString(),
-  } : fallbackAdultsEntry;
-  const kidsEntry = kidsPlan ? {
-    cards: kidsPlan.cards,
-    weather: kidsPlan.weather || null,
-    city: kidsPlan.city || REGIONAL_PLAN_CITY,
-    kids: true,
-    planDate: todayStr,
-    selectionModel: kidsPlan.selectionModel,
-    mealPairMaxMiles: kidsPlan.mealPairMaxMiles,
-    generatedAt: new Date().toISOString(),
-  } : null;
-
-  // Carry-forward fallback: if today's or tomorrow's kids fetch returned
-  // empty, reuse only a complete place-only v1 plan. We never strip events in
-  // isolation because that would leave their meals orphaned.
-  const carryForwardKids = (targetDate, ...keys) => {
-    for (const key of keys) {
-      const prev = carryForwardPlan(previousPlans, targetDate, key);
-      if (prev) return prev;
-    }
-    return null;
-  };
-
-  // Look at both new keys ("kids") and legacy ":h9" keys for forward-compat
-  // during the cutover from old default-plans.json to bucket-shaped data.
-  const finalKidsEntry = kidsEntry || carryForwardKids(todayStr, "kids", "kids:h9");
-  const finalTomorrowKidsEntry = tomorrowKidsEntry || carryForwardKids(tomorrowStr, "kids:tomorrow", "kids:h9:tomorrow");
-
-  const plans = { "adults": adultsEntry };
-  if (finalKidsEntry) plans["kids"] = finalKidsEntry;
-  if (tomorrowAdultsEntry) plans["adults:tomorrow"] = tomorrowAdultsEntry;
-  if (finalTomorrowKidsEntry) plans["kids:tomorrow"] = finalTomorrowKidsEntry;
-
-  const output = {
-    _meta: {
-      generatedAt: new Date().toISOString(),
-      generator: "generate-schedule (homepage hero, pillar-pairs-v1)",
-      selectionModel: DAY_PLAN_SELECTION_MODEL,
-      planCount: Object.keys(plans).length,
-    },
-    plans,
-  };
-  writeFileSync(DEFAULT_PLANS_FILE, JSON.stringify(output, null, 2));
-  const fmtKids = (entry, fresh) => {
-    if (!entry) return "(no kids plan — fetch failed)";
-    return fresh ? `+ ${entry.cards.length} kids` : `+ ${entry.cards.length} kids (carried forward, places-only)`;
-  };
-  const kidsMsg = fmtKids(finalKidsEntry, !!kidsEntry);
-  const tomMsg = tomorrowAdultsEntry
-    ? ` | tomorrow ${tomorrowAdultsEntry.cards.length} adults ${fmtKids(finalTomorrowKidsEntry, !!tomorrowKidsEntry)}`
-    : "";
-  console.log(`   🏠 default-plans.json: ${adultsEntry.cards.length} adults ${kidsMsg}${tomMsg}`);
+// Shared card enrichment remains in its existing owner; default generation
+// reuses it without entering the retired social scheduling/copy pipeline.
+export async function enrichDefaultPlanCards(cards) {
+  deriveMissingEventTimes(cards);
+  await enrichCardPhotos(cards);
+  await enrichMissingImages(cards);
 }
 
-function carryForwardPlan(plans, targetDate, ...keys) {
-  for (const key of keys) {
-    const prev = plans[key];
-    if (!prev?.cards?.length) continue;
-    // Never surgically remove an expired event: doing so severs its meal pair.
-    // A carry-forward is safe only when the complete six-card plan is already
-    // place-only and still satisfies the pillar-pairs contract.
-    if (prev.cards.some((c) => c.source === "event")) continue;
-    if (!planPassesQuality(prev, new Set(), targetDate).ok) continue;
-    return { ...prev, planDate: targetDate, carriedForward: true, generatedAt: new Date().toISOString() };
-  }
-  return null;
-}
 
-/** Add `n` days to a YYYY-MM-DD string and return a new YYYY-MM-DD. */
-function isoOffset(isoStr, n) {
-  const [y, m, d] = isoStr.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d + n));
-  return dt.toISOString().slice(0, 10);
-}
-
-main().catch((err) => {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main().catch((err) => {
   console.error("Schedule generation failed:", err);
   process.exit(1);
 });

@@ -1,3 +1,4 @@
+import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
 import { queueNotification } from "../lib/notification-intake.mjs";
 // ---------------------------------------------------------------------------
 // South Bay Today — Daily Newsletter
@@ -1517,6 +1518,13 @@ export async function callClaudeNewsletterEditor(instructions) {
   }
 }
 
+export function claudeSubscriptionEnvironment(source = process.env) {
+  const env = { ...source };
+  for (const key of ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_BASE_URL",
+    "CLAUDE_CODE_USE_BEDROCK", "CLAUDE_CODE_USE_VERTEX", "CLAUDE_CODE_USE_FOUNDRY"]) delete env[key];
+  return env;
+}
+
 async function runClaudeCliEditor(instructions) {
   // Fable default since 2026-07-14 — the editorial pass is pure taste work,
   // so it gets the best model on the Max plan. Measured ~7-8 min on the full
@@ -1540,13 +1548,14 @@ async function runClaudeCliEditor(instructions) {
       "--model", model,
       "--output-format", "text",
       "--no-session-persistence",
-    ], { cwd: "/tmp", timeout: timeoutMs });
+    ], { cwd: "/tmp", timeout: timeoutMs, env: claudeSubscriptionEnvironment() });
     proc.stdout.on("data", (d) => { stdout += d.toString(); });
     proc.stderr.on("data", (d) => { stderr += d.toString(); });
     proc.on("error", (err) => finish(new Error(`claude spawn failed: ${err.message}`)));
     proc.on("close", (code, signal) => {
       if (signal) return finish(new Error(`claude killed by ${signal}: ${(stderr || stdout).slice(0, 500)}`));
       if (code !== 0) return finish(new Error(`claude exit ${code}: ${(stderr || stdout).slice(0, 500)}`));
+      recordModelUsage({ feature: "newsletter-editorial", provider: "claude-subscription", model, tokenCountsAvailable: false });
       finish(null, stdout);
     });
     proc.stdin.end(instructions);
@@ -1577,6 +1586,7 @@ async function runAnthropicApiEditor(instructions) {
   });
 
   const message = await stream.finalMessage();
+  recordModelUsage({ feature: "newsletter-editorial-fallback", model: message.model || model, usage: message.usage, stopReason: message.stop_reason });
   if (message.stop_reason === "refusal") {
     throw new Error(`editorial request refused (${message.stop_details?.category ?? "unknown"})`);
   }
@@ -1941,6 +1951,7 @@ Return ONLY the rewritten blurb, no quotes, no preamble.`;
   });
   if (!res.ok) throw new Error(`anthropic ${res.status}: ${await res.text()}`);
   const data = await res.json();
+  recordModelUsage({ feature: "newsletter-blurb", model: data.model || "claude-sonnet-5-5", usage: data.usage, stopReason: data.stop_reason });
   return (data.content?.find((b) => b?.type === "text")?.text || "").trim().replace(/^["']|["']$/g, "");
 }
 

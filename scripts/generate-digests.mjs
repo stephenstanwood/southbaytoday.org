@@ -15,7 +15,8 @@
 import { readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { callClaude } from "./lib/claude.mjs";
+import { cachedGeneration } from "./lib/generation-cache.mjs";
+import { CLAUDE_SONNET, callClaude } from "./lib/claude.mjs";
 import {
   auditDigestFreshness,
   formatFreshnessAlert,
@@ -298,16 +299,27 @@ Match the agenda's exact CEQA determination. "Not a Project" and "Exempt" are di
   // truncated at 512, 0/12 at the current settings). The truncated JSON had no
   // closing brace, the regex below found nothing, and the throw was swallowed
   // by carryForward("summarize-failed") — seven weeks of a stale digest.
-  const text = await callClaude(prompt, {
-    apiKey: ANTHROPIC_API_KEY,
-    maxTokens: 1500,
-    label: `digest:${config.city}`,
-  });
+  return cachedGeneration({
+    namespace: "council-digest",
+    input: { prompt, model: CLAUDE_SONNET, maxTokens: 1500, contract: "digest-v1" },
+    onHit: () => console.log(`[digest-cache] ${config.city}: unchanged verified source/prompt/model; reused result`),
+    validate: value => typeof value?.summary === "string" && value.summary.length > 0
+      && Array.isArray(value.keyTopics)
+      && !hasUnsupportedMeetingAction(value, meeting)
+      && !hasUnscopedMeetingCancellation(value, meeting),
+    generate: async () => {
+      const text = await callClaude(prompt, {
+        apiKey: ANTHROPIC_API_KEY,
+        maxTokens: 1500,
+        label: `digest:${config.city}`,
+      });
 
-  // Extract the first JSON object from the response (handles trailing text/preamble)
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error(`No JSON in Claude response: ${text.substring(0, 100)}`);
-  return JSON.parse(jsonMatch[0]);
+      // Extract the first JSON object from the response (handles trailing text/preamble)
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error(`No JSON in Claude response: ${text.substring(0, 100)}`);
+      return JSON.parse(jsonMatch[0]);
+    },
+  });
 }
 
 // ── Main ──

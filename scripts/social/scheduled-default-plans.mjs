@@ -53,10 +53,10 @@ function runRepoLock(script, action) {
 }
 
 function runPlanRefresh(repoRoot) {
-  const script = join(repoRoot, "scripts", "social", "generate-schedule.mjs");
+  const script = join(repoRoot, "scripts", "generate-default-plans.ts");
   const result = spawnSync(
     process.execPath,
-    [script, "--hero-only", "--local-only"],
+    ["--import", "tsx", script, "--local-only"],
     { cwd: repoRoot, env: process.env, stdio: "inherit" },
   );
   if (result.error) {

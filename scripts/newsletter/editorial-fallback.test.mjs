@@ -22,6 +22,13 @@ function stubCli(script) {
 const FAILING_CLI = stubCli("#!/bin/sh\ncat >/dev/null\necho 'Claude usage limit reached' >&2\nexit 1\n");
 const WORKING_CLI = stubCli('#!/bin/sh\ncat >/dev/null\nprintf \'{"from":"cli"}\'\n');
 
+test("newsletter CLI receives subscription auth without inheriting API-key billing", async () => {
+  const { claudeSubscriptionEnvironment } = await import("./lib.mjs");
+  assert.deepEqual(claudeSubscriptionEnvironment({ HOME: "/saved-login", ANTHROPIC_API_KEY: "metered",
+    ANTHROPIC_AUTH_TOKEN: "metered", ANTHROPIC_BASE_URL: "override", CLAUDE_CODE_USE_BEDROCK: "1" }),
+  { HOME: "/saved-login" });
+});
+
 /** Minimal Anthropic Messages streaming response — enough for the SDK to parse. */
 function startMockAnthropic(text) {
   const server = createServer((_req, res) => {

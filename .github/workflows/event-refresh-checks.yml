@@ -48,3 +48,6 @@ jobs:
 
       - name: Check newsletter signup and confirmation tracking
         run: npm run test:newsletter-signup
+
+      - name: Check subscription defaults, visitor routing and duplicate generation (offline)
+        run: npm run test:ai-routing
