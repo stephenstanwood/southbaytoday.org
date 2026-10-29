@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-29T00:54:32.517Z",
+    "generatedAt": "2026-10-29T05:26:09.472Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
     "eventCount": 208,
@@ -17,13 +17,13 @@
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (5)",
-      "City of Cupertino (22)",
+      "City of Cupertino (21)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (70)",
       "Levi's Stadium (3)",
       "SAP Center (12)",
       "The Tech Interactive (10)",
-      "Books Inc (6)",
+      "Books Inc (7)",
       "Peninsula Open Space Trust (4)",
       "San Jose Museum of Art (4)"
     ],
@@ -202,7 +202,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 22,
+        "count": 21,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -270,7 +270,7 @@
         "id": "books-inc",
         "label": "Books Inc",
         "status": "ok",
-        "count": 6,
+        "count": 7,
         "error": null,
         "sources": [
           "Books Inc"
@@ -1541,7 +1541,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-29T00:53:26.587Z"
+        "checkedAt": "2026-10-29T05:25:00.305Z"
       }
     },
     {
@@ -1564,7 +1564,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-29T00:53:26.588Z"
+        "checkedAt": "2026-10-29T05:25:00.307Z"
       }
     },
     {
@@ -1587,7 +1587,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T00:53:26.589Z"
+        "checkedAt": "2026-10-29T05:25:00.310Z"
       }
     },
     {
@@ -1610,7 +1610,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T00:53:26.589Z"
+        "checkedAt": "2026-10-29T05:25:00.310Z"
       }
     },
     {
@@ -1633,25 +1633,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-29T00:53:26.589Z"
+        "checkedAt": "2026-10-29T05:25:00.311Z"
       }
-    },
-    {
-      "id": "54242884e953",
-      "title": "2026 Cupertino Community Service Awards",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "05:30 PM",
-      "endTime": "08:00 PM",
-      "venue": "Quinlan Community Center",
-      "address": "Quinlan Community Center, 10185 N. Stelling Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "The third annual Cupertino Community Service Awards will take place on Wednesday, October 28. This ceremony will recognize the 2026 CREST Awards (Cupertino Recognizes Extra Steps Taken), and Commissioners who served on a City Commission. Doors open at 5:30 p.m., program starts at 6 p.m. RSVP is required, registration will open for the public on Monday, September 21. For more information and to submit a nomination for the CREST Awards, visit cupertino.gov/crest.",
-      "url": "https://www.cupertino.gov/Events-directory/2026-Cupertino-Community-Service-Awards",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "8efa6fba6a03",
@@ -2024,7 +2007,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3359,7 +3342,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.483Z"
       }
     },
     {
@@ -3383,7 +3366,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.483Z"
       }
     },
     {
@@ -3407,7 +3390,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.483Z"
       }
     },
     {
@@ -3431,7 +3414,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3455,7 +3438,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3479,7 +3462,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.703Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3503,7 +3486,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3527,7 +3510,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3551,7 +3534,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3575,7 +3558,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3599,7 +3582,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3623,7 +3606,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T00:53:55.704Z"
+        "checkedAt": "2026-10-29T05:25:33.484Z"
       }
     },
     {
@@ -3797,23 +3780,6 @@
       "kidFriendly": true
     },
     {
-      "id": "ca1692c60392",
-      "title": "ANN LIANG: TO DREAM IN DARKNESS",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Mountain View",
-      "address": "317 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
-    },
-    {
       "id": "a8e85bd12064",
       "title": "FRISH BRANDT: UNFINISHED BUSINESS",
       "date": "2026-11-03",
@@ -3891,6 +3857,40 @@
       "venue": "Books Inc. Palo Alto",
       "address": "855 El Camino Real, Palo Alto, CA 94301",
       "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "45a989c15cb1",
+      "title": "MATT O'HARA: THE FLYING DEATH",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "ab93b431d010",
+      "title": "ALL THINGS ROMANCE BOOK CLUB: HOLLY JOLLY DIWALI & SET THE RECORD STRAIGHT",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
       "category": "arts",
       "cost": null,
       "description": "",
