@@ -2468,6 +2468,20 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // The sparse SJSU RSS body omits the card needed to use this public lab.
+  // Its indexed occurrence page lists these dates; the library's access guide
+  // independently confirms the condition. A library card is not a reservation.
+  // https://events.sjsu.edu/event/open-lab-ai-center
+  // https://sjlibrary.org/aicenter
+  // Evidence and HTTP rate limit: docs/qa/2026-10-29-1007-fact-check.md.
+  if (["2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30",
+    "2026-11-02", "2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06"].includes(event?.date)
+      && /^https:\/\/events\.sjsu\.edu\/event\/open-lab-ai-center\/?$/.test(event?.url || "")) {
+    const accessNote = "Bring a valid SJSU Tower Card or SJPL library card to use the AI Center.";
+    if (!(event.attendanceNote || "").includes(accessNote)) {
+      event = { ...event, attendanceNote: [event.attendanceNote, accessNote].filter(Boolean).join(" ") };
+    }
+  }
   // The operator's Directions page confirms Picchetti at this exact address.
   // Repair the organizer's missing c in names and cached prose, without
   // inferring any occurrence, admission, or availability facts from the venue.

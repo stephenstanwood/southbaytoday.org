@@ -7,6 +7,41 @@ import { hasOutOfAreaDestination, requiresAttendanceConfirmation, REGISTRATION_A
 import { mapTicketmasterEvent } from "../generate-events.mjs";
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 
+// Source and access limits: docs/qa/2026-10-29-1007-fact-check.md.
+test("AI Center open labs retain the library-card access condition through sparse source refreshes", async () => {
+  const raw = {
+    title: "Open Lab Hours at AI Center for Civic and Social Good",
+    date: "2026-11-04", time: "2:00 PM", endTime: null,
+    venue: "King Library", city: "san-jose", cost: null,
+    url: "https://events.sjsu.edu/event/open-lab-ai-center",
+    description: "Drop in, explore, and create!",
+    blurb: "Drop into King Library's open lab to explore AI tools and work on your own projects.",
+  };
+  const dates = ["2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04"];
+  const events = dates.map((date) => ({ ...raw, date }));
+  await resolveEventBlurbs(events, { enabled: false });
+  for (const event of events) {
+    assert.match(event.attendanceNote, /valid SJSU Tower Card or SJPL library card/);
+    assert.equal(event.registration, undefined, "a library card is not an event reservation");
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+    for (const field of ["title", "time", "endTime", "venue", "city", "url", "cost", "description", "blurb"]) {
+      assert.equal(event[field], raw[field]);
+    }
+  }
+  for (const registration of ["full", "closed", REGISTRATION_APPOINTMENT]) {
+    const event = applyVerifiedEventFacts({ ...raw, registration, attendanceNote: "Contact the organizer about availability." });
+    assert.equal(event.registration, registration);
+    assert.match(event.attendanceNote, /^Contact the organizer about availability\./);
+    assert.match(event.attendanceNote, /valid SJSU Tower Card or SJPL library card/);
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+  }
+  for (const other of [
+    { ...raw, date: "2027-11-04" },
+    { ...raw, date: "2026-11-07" },
+    { ...raw, url: "https://events.sjsu.edu/event/another-open-lab" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
 // Source evidence and access limits: docs/qa/2026-10-29-0207-fact-check.md.
 test("the sparse Blippi theater listing retains its verified children's audience through blurb resolution", async () => {
   const raw = {
