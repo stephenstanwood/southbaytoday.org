@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import sharp from "sharp";
+import venuePhotos from "../data/south-bay/venue-photos.json" with { type: "json" };
 import { canonicalPhotoSearch, createPhotoLoader, parsePhotoRequest } from "./placePhoto.mjs";
 
 const rinconada = "places/ChIJ44hkHAW7j4ARgHyd2BdSyN8/photos/opaque-token";
@@ -9,6 +10,67 @@ const request = (ref = rinconada, w = 200, h = 200) =>
   parsePhotoRequest(new URL(`https://southbaytoday.org/api/place-photo?${new URLSearchParams({ ref, w, h })}`));
 const image = () => new Response(new Uint8Array([1, 2, 3]), { headers: { "Content-Type": "image/jpeg" } });
 const quiet = () => {};
+
+test("registered official venues serve thumbnails without a Google key or paid call", async () => {
+  for (const venue of venuePhotos.photos) {
+    const calls = [];
+    const load = createPhotoLoader({
+      fetchImpl: async (url) => { calls.push(url); return image(); },
+      resize: async (body) => body,
+      log: quiet,
+    });
+    const result = await load(request(`places/${venue.placeId}/photos/current-ref`, 200, 200), undefined);
+    assert.equal(result.source, "venue", venue.name);
+    assert.equal(result.sourcePage, venue.sourcePage);
+    assert.deepEqual(calls, [venue.imageUrl]);
+  }
+});
+
+test("large official photos cover metadata and heroes; small theatre images keep Google for larger placements", async () => {
+  for (const venue of venuePhotos.photos) {
+    for (const [w, h] of [[640, 480], [760, 420]]) {
+      const calls = [];
+      const load = createPhotoLoader({
+        fetchImpl: async (url) => { calls.push(url); return image(); },
+        resize: async (body) => body,
+        log: quiet,
+      });
+      const result = await load(request(`places/${venue.placeId}/photos/current-ref`, w, h), "test-key");
+      const fits = venue.width >= w && venue.height >= h;
+      assert.equal(result.source, fits ? "venue" : "google-places", `${venue.name} ${w}x${h}`);
+      assert.equal(calls.length, 1);
+      assert.equal(new URL(calls[0]).hostname === "places.googleapis.com", !fits);
+    }
+  }
+});
+
+test("official portrait images are cropped before downsampling to avoid browser enlargement", async () => {
+  const original = await sharp({ create: { width: 400, height: 570, channels: 3, background: "white" } }).jpeg().toBuffer();
+  const load = createPhotoLoader({
+    fetchImpl: async () => new Response(original, { headers: { "Content-Type": "image/jpeg" } }),
+    log: quiet,
+  });
+  const result = await load(request(rinconada, 400, 300), undefined);
+  const metadata = await sharp(result.body).metadata();
+  assert.equal(result.source, "venue");
+  assert.equal(metadata.width, 400);
+  assert.equal(metadata.height, 300);
+});
+
+test("provider accounting counts failed attempts and retries without retaining URLs or credentials", async () => {
+  const events = [];
+  let calls = 0;
+  const load = createPhotoLoader({
+    fetchImpl: async () => ++calls === 1 ? new Response(null, { status: 503 }) : image(),
+    log: (value) => events.push(JSON.parse(value)),
+  });
+  await load(request(other), "private-test-key");
+  const attempts = events.filter((event) => event.event === "place-photo-google-request");
+  assert.equal(attempts.length, calls);
+  assert.deepEqual(attempts.map((event) => event.attempt), [1, 2]);
+  assert.equal(JSON.stringify(events).includes("private-test-key"), false);
+  assert.equal(JSON.stringify(events).includes("opaque-token"), false);
+});
 
 test("official library images avoid Google and preserve the requested size", async () => {
   const calls = [];
