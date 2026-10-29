@@ -8,7 +8,21 @@ import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGIS
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
+const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // The Localist ticket label says Free-$390, but free in-person admission
+  // requires Stanford affiliation. Preserve the actual attendance conditions.
+  // Evidence: docs/qa/2026-10-29-2307-fact-check.md (fresh first-party page).
+  {
+    date: "2026-10-30",
+    url: "https://events.stanford.edu/event/electrophysiology-in-the-west-2026",
+    facts: {
+      cost: "paid",
+      costNote: STANFORD_EP_ADMISSION,
+      attendanceNote: `Registration is required. ${STANFORD_EP_ADMISSION}`,
+      registration: REGISTRATION_REQUIRED,
+    },
+  },
   // Restore primary participation links lost by newsletter extraction.
   // The exact City registration page also limits AfterHours to local teens
   // with a free membership; it showed full with a waiting list on October 27.

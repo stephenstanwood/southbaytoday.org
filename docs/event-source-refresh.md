@@ -409,6 +409,22 @@ errors, unknown persistent zeros, failed alternate coverage or unexpected loss
 of retained future rows still require an exact actionable alert. A source name
 in this document is never an empty-season allowlist.
 
+## October 29: retire the Timely theater mirror
+
+The browser's legacy Timely stream supplied nine November theater listings
+one hour earlier than the existing Team San Jose occurrence-page adapter.
+Both copies survived because their shared source label and different clocks
+could represent separate performances. Eight fresh dated organizer pages
+confirm the later clocks; the ninth authoritative record retains its previously
+reviewed facts after a fresh page request returned HTTP 403.
+
+Remove the Timely browser task and reject its generic
+`https://www.sanjose.org/theaters` snapshot rows at ingestion. The existing
+direct adapter remains the theater source. Preserve the raw historical browser
+snapshot rather than relabeling it as a fresh collection. Do not restore the
+mirror as fallback coverage. Evidence and exact corrections:
+[`2026-10-29-2307-fact-check.md`](qa/2026-10-29-2307-fact-check.md).
+
 ## Other refresh safeguards
 
 - Inbound events arrive as one Vercel Blob shard per intake email (866 as of

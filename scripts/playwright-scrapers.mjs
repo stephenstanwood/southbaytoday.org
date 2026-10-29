@@ -1748,58 +1748,6 @@ async function scrapeEventListPage(page, config) {
   }).filter(Boolean);
 }
 
-async function scrapeSanJoseTheaters(page) {
-  const url = "https://events.timely.fun/jc0x91t0/stream?tags=677512582&notoolbar=1&nofilters=1&timely_id=timely-iframe-embed-0";
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30_000 });
-  await page.waitForTimeout(3500);
-
-  const raw = await page.evaluate(() => {
-    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
-    const out = [];
-    const venues = ["California Theatre", "Montgomery Theater", "San Jose Civic", "Center for the Performing Arts"];
-    const dayHeader = /^(MONDAY|TUESDAY|WEDNESDAY|THURSDAY|FRIDAY|SATURDAY|SUNDAY),/;
-    for (let i = 1; i < lines.length; i++) {
-      const detail = lines[i];
-      if (!/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s+\d{4}/i.test(detail)) continue;
-      const title = lines[i - 1];
-      if (!title || dayHeader.test(title)) continue;
-      const venue = venues.find((v) => detail.includes(v)) || "San Jose Theaters";
-      const time = detail.match(/@\s*([^@]+?)\s+(?:California Theatre|Montgomery Theater|San Jose Civic|Center for the Performing Arts)/)?.[1] || null;
-      out.push({ title, date: detail, time, venue });
-    }
-    return out;
-  });
-
-  const addressByVenue = {
-    "California Theatre": "345 S 1st St, San Jose, CA 95113",
-    "Montgomery Theater": "271 S Market St, San Jose, CA 95113",
-    "San Jose Civic": "135 W San Carlos St, San Jose, CA 95113",
-    "Center for the Performing Arts": "255 S Almaden Blvd, San Jose, CA 95113",
-  };
-
-  return raw.map((r) => {
-    const date = yearAwareDate(r.date);
-    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
-    return {
-      title: r.title,
-      date,
-      time: clockFromText(r.time),
-      endTime: null,
-      venue: r.venue,
-      address: addressByVenue[r.venue] || "Downtown San Jose",
-      city: "san-jose",
-      // sanjosetheaters.org now 301s to www.sanjosetheaters.org, whose TLS
-      // certificate doesn't cover that host — link the theaters' live listing
-      // on sanjose.org instead of a page readers can't open.
-      url: "https://www.sanjose.org/theaters",
-      source: "San Jose Theaters",
-      category: inferCategory(r.title),
-      cost: "paid",
-      kidFriendly: KID_RE.test(r.title),
-    };
-  }).filter(Boolean);
-}
-
 async function scrapeHammerTheatre(page) {
   const events = await scrapeEventListPage(page, HAMMER_THEATRE_LIST);
   return events.filter((e) => !/\bthere are no upcoming events\b|events search/i.test(e.title));
@@ -2440,7 +2388,9 @@ async function main() {
   tasks.push({ name: "ICA San Jose", fn: (b) => runScraper(b, "ICA San Jose", scrapeICASanJose) });
   tasks.push({ name: "SCCCFD (Eventbrite)", fn: (b) => runScraper(b, "SCCCFD (Eventbrite)", scrapeSCCCFD) });
   tasks.push({ name: "Mountain Winery", fn: (b) => runScraper(b, "Mountain Winery", scrapeMountainWinery) });
-  tasks.push({ name: "San Jose Theaters", fn: (b) => runScraper(b, "San Jose Theaters", scrapeSanJoseTheaters) });
+  // San Jose Theaters: the direct Team San Jose occurrence-page adapter in
+  // generate-events owns coverage. The retired Timely mirror supplied
+  // November 2026 clocks one hour early; do not restore that duplicate.
   tasks.push({ name: "Hammer Theatre", fn: (b) => runScraper(b, "Hammer Theatre", scrapeHammerTheatre) });
   tasks.push({ name: "Children's Discovery Museum", fn: (b) => runScraper(b, "Children's Discovery Museum", scrapeChildrensDiscoveryMuseum) });
   // Palo Alto Art Center collection retired 2026-10-24: the city's robots

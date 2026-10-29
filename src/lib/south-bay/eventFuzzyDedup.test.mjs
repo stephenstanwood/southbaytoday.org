@@ -23,6 +23,26 @@ const ev = (over = {}) => ({
   ...over,
 });
 
+test("same-named holiday celebrations at different street addresses remain separate", () => {
+  const museum = ev({ id: "museum", title: "Día de los Muertos Celebration",
+    date: "2026-11-01", time: "10:00 AM", venue: "Children's Discovery Museum of San Jose",
+    address: "180 Woz Way, San Jose, CA 95110", source: "City Newsletter",
+    url: "https://www.cdm.org/event/dia-de-los-muertos/" });
+  const row = ev({ id: "row", title: "Día de Los Muertos Celebration",
+    date: museum.date, time: "10:30 AM", venue: "Santana Row",
+    address: "377 Santana Row, San Jose, CA 95128", source: "Santana Row",
+    url: "https://santanarow.com/event/dia-de-los-muertos-celebration/",
+    occurrenceEvidence: { kind: "first-party-calendar", date: museum.date,
+      sourceUrl: "https://www.santanarow.com/events/" } });
+  for (const pair of [[museum, row], [row, museum]]) {
+    assert.equal(fuzzyDedupEvents(pair).droppedCount, 0);
+  }
+  assert.equal(fuzzyDedupEvents([museum, { ...row, address: museum.address }]).droppedCount, 1,
+    "a different venue label at the same address still permits duplicate detection");
+  assert.equal(fuzzyDedupEvents([museum, { ...row, url: museum.url }]).droppedCount, 1,
+    "copies of the same canonical occurrence retain the existing authority rule");
+});
+
 test("a Meetup outing and its destination festival retain their separate meeting points", () => {
   const festival = ev({ title: "Avenida de Altares", date: "2026-10-31", time: "5:30 PM",
     venue: "School of Arts and Culture at MHP", address: "1700 Alum Rock Ave, San Jose, CA 95116",

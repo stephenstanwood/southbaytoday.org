@@ -4026,6 +4026,12 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
 // Stanford ingest for why "not flagged free" must not mean "paid".
 function localistCost(ev) {
   const price = String(ev?.ticket_cost ?? "").trim();
+  // "Free-$390" and "free for affiliates" describe conditional admission.
+  // A published positive ticket tier outranks the opt-in free flag. Do not
+  // mistake an age such as "Free; ages 18+" for a price.
+  const amounts = [...price.matchAll(/(?:^|[$€£]\s*)(\d+(?:\.\d+)?)/g)];
+  if (amounts.some((match) => Number(match[1]) > 0)) return "paid";
+  if (/^(?:\$\s*)?0(?:\.0+)?$/.test(price)) return "free";
   if (ev?.free || /\bfree\b/i.test(price) || /\balcoholics anonymous\b/i.test(ev?.title ?? "")) return "free";
   if (/\d/.test(price)) return "paid";
   return null;
@@ -4394,6 +4400,7 @@ async function fetchStanfordEvents() {
       // Read attendance notices before truncation. The October 27 After
       // Fission listing says registration is at full capacity in its body.
       const registration = declaredRegistrationAvailability(description);
+      const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.
       // https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640
@@ -4444,6 +4451,10 @@ async function fetchStanfordEvents() {
         .some((type) => /^(?:Lecture\/Presentation\/Talk|Class\/Seminar)$/i.test(type.name || ""));
       const category = ["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture
         ? "education" : inferredCategory;
+      const attendanceNotes = [
+        ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
+        ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
+      ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
         // id to the day — otherwise Tuesday's session and Wednesday's collapse
@@ -4469,7 +4480,7 @@ async function fetchStanfordEvents() {
         // a ticket price. Only a stated price is evidence of a charge; a bare
         // ticket URL is often free registration, so it stays unknown (null).
         cost: localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
-        ...(cantorHours ? { attendanceNote: `Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.` } : {}),
+        ...(attendanceNotes.length ? { attendanceNote: attendanceNotes.join(" ") } : {}),
         ...(registration ? { registration } : {}),
         description: truncate(description),
         url: ev.localist_url || `https://events.stanford.edu/event/${ev.id}`,
@@ -10056,18 +10067,29 @@ async function fetchMidpenEvents() {
 // Covers: permitted CivicPlus cities, The Tech, bookstores,
 // and robust replacements for fragile HTML scrapers (SJ Jazz, SJMA, etc.)
 
-function fetchPlaywrightEvents() {
+function fetchPlaywrightEvents({ events: suppliedEvents, today = todayPT() } = {}) {
   console.log("  ⏳ Playwright-scraped events...");
   try {
-    if (!existsSync(PLAYWRIGHT_EVENTS_PATH)) {
+    if (!suppliedEvents && !existsSync(PLAYWRIGHT_EVENTS_PATH)) {
       console.log("  ⚠️  Playwright events: no data file (run playwright-scrapers.mjs on Mini)");
       return [];
     }
-    const { events } = JSON.parse(readFileSync(PLAYWRIGHT_EVENTS_PATH, "utf8"));
-    const today = todayPT();
+    const events = suppliedEvents ?? JSON.parse(readFileSync(PLAYWRIGHT_EVENTS_PATH, "utf8")).events;
+    // The retired Timely mirror supplied nine November shows one hour early
+    // on October 29. The direct Team San Jose adapter already reads dated
+    // occurrence pages. Old snapshots must not reintroduce the mirror while
+    // waiting for the next browser collection; keep their raw evidence intact.
+    let retiredCount = 0;
     const filtered = (events || [])
       .filter((e) => e.date >= today)
+      .filter((e) => {
+        const retired = e.source === "San Jose Theaters"
+          && String(e.url || "").replace(/\/+$/, "") === "https://www.sanjose.org/theaters";
+        if (retired) retiredCount++;
+        return !retired;
+      })
       .map((e) => e.time ? { ...e, time: e.time.toUpperCase() } : e);
+    if (retiredCount) console.log(`  🗑️  Retired Timely theater snapshot: excluded ${retiredCount} rows; using direct occurrence pages`);
     console.log(`  ✅ Playwright events: ${filtered.length} events`);
     return filtered;
   } catch (err) {
@@ -11510,6 +11532,7 @@ export {
   fetchHappyHollowEvents,
   fetchGambleGardenEvents,
   fetchInboundEvents,
+  fetchPlaywrightEvents,
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
   parseHeritageTheatreEvent,

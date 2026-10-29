@@ -55,6 +55,34 @@ async function runWith(events) {
   }
 }
 
+test("conditional free admission never masks published paid Localist ticket tiers", async () => {
+  const tomorrow = dayPT(1);
+  const instances = [{ start: `${tomorrow}T07:30:00-07:00` }];
+  const costs = [
+    { ticket_cost: "Free-$390", free: true },
+    { ticket_cost: "$90-$390; free for Stanford affiliates", free: false },
+    { ticket_cost: "Free (registration required)", free: false },
+    { ticket_cost: "$0", free: false },
+    { ticket_cost: "$15", free: false },
+    { ticket_cost: "", free: false },
+    { ticket_cost: "Free; ages 18+", free: false },
+  ];
+  const rows = await runWith(costs.map((cost, id) => localistEvent({ id: id + 1, instances, ...cost })));
+  assert.deepEqual(rows.map((row) => row.cost), ["paid", "paid", "free", "free", "paid", null, "free"]);
+});
+
+test("Stanford visitor ID requirements survive a short display excerpt", async () => {
+  const tomorrow = dayPT(1);
+  const [event] = await runWith([localistEvent({
+    title: "Branner Library Book & Map Exhibit - Water in the West",
+    location_name: "Mitchell Earth Sciences", instances: [{ start: `${tomorrow}T10:00:00-07:00` }],
+    description_text: "Explore water resources in California. ".repeat(15)
+      + "A current Stanford ID is needed to enter the library, visitors must present a valid, physical government-issued photo ID to sign-in at the front desk.",
+  })]);
+  assert.match(event.attendanceNote, /physical government-issued photo ID/);
+  assert.doesNotMatch(event.description, /photo ID/, "the note is read before truncation");
+});
+
 test("Stanford retains a current full-capacity notice before display truncation", async () => {
   const tomorrow = dayPT(1);
   const instances = [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:15:00-07:00` }];
