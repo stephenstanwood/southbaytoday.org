@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { acquireRefreshLock } from "../events/refresh-lock.mjs";
 
 import {
   DEFAULT_REPO_ROOT,
@@ -24,17 +25,19 @@ function log(message) {
   console.log(`${PREFIX} ${new Date().toISOString()} ${message}`);
 }
 
-function runRepoLock(script, action) {
+function runRepoLock(script, action, { allowBusy = false } = {}) {
   const result = spawnSync(script, [action, LOCK_TASK], { stdio: "inherit" });
   if (result.error) {
     throw new Error(`repo lock ${action} failed: ${result.error.message}`);
   }
+  if (allowBusy && result.status === 1) return false;
   if (result.status !== 0) {
     throw new Error(`repo lock ${action} failed with exit ${result.status}`);
   }
+  return true;
 }
 
-function acquireRepoLock() {
+async function acquireRepoLock() {
   const script = process.env.SBT_REPO_LOCK_SCRIPT || DEFAULT_LOCK_SCRIPT;
   if (!existsSync(script)) {
     if (process.env.SBT_NEWSLETTER_REPO_LOCK_REQUIRED === "0") {
@@ -43,7 +46,20 @@ function acquireRepoLock() {
     }
     throw new Error(`required SBT repo lock is missing: ${script}`);
   }
-  runRepoLock(script, "acquire");
+  // A daily issue should not disappear because another cooperative writer
+  // briefly overlaps its only send slot. Wait through the existing mutex;
+  // preflight still runs only after acquisition, and a persistent holder or
+  // lock-helper failure still blocks the send without releasing its lock.
+  const configuredWait = Number(process.env.SBT_NEWSLETTER_LOCK_WAIT_MS ?? 20 * 60_000);
+  if (!Number.isFinite(configuredWait) || configuredWait < 0 || configuredWait > 20 * 60_000) {
+    throw new Error("SBT_NEWSLETTER_LOCK_WAIT_MS must be between 0 and 1200000");
+  }
+  const acquired = await acquireRefreshLock({
+    tryAcquire: () => runRepoLock(script, "acquire", { allowBusy: true }),
+    maxWaitMs: configuredWait,
+    onWait: (ms) => log(`repo lock busy; retrying in ${Math.ceil(ms / 1000)}s before fresh preflight`),
+  });
+  if (!acquired) throw new Error(`repo lock remained busy for ${configuredWait}ms; no newsletter built or sent`);
   log(`acquired shared repo lock (${LOCK_TASK})`);
   return script;
 }
@@ -84,7 +100,7 @@ const repoRoot = process.env.SBT_NEWSLETTER_REPO_ROOT || DEFAULT_REPO_ROOT;
 let lockScript = null;
 let primaryError = null;
 try {
-  lockScript = acquireRepoLock();
+  lockScript = await acquireRepoLock();
   const verified = preflightNewsletterCheckout({ repoRoot, log: console.log });
 
   if (preflightOnly) {

@@ -336,7 +336,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
     </p>
   )}
 
-  <h1 class="evx-title">{event.title}</h1>
+  <h1 class="evx-title" data-attendance-status={event.attendanceStatus}>{event.title}</h1>
   <p class="cal-sub evx-meta">
     <span class="evx-meta-text">
       {timeLabel && <strong class="evx-meta-time">{timeLabel}</strong>}
@@ -372,9 +372,14 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
   )}
 
   {blurb && <p class="cal-detail-copy">{blurb}</p>}
-  {showDesc && <p class="cal-detail-copy cal-detail-copy--secondary">{longDesc}</p>}
+  {showDesc && (
+    <p
+      class="cal-detail-copy cal-detail-copy--secondary"
+      data-attendance-note={event.attendanceNote && longDesc.includes(event.attendanceNote) ? event.attendanceStatus : undefined}
+    >{longDesc}</p>
+  )}
   {event.attendanceNote && !longDesc.includes(event.attendanceNote) && (
-    <p class="cal-detail-copy cal-detail-copy--secondary">{event.attendanceNote}</p>
+    <p class="cal-detail-copy cal-detail-copy--secondary" data-attendance-note={event.attendanceStatus}>{event.attendanceNote}</p>
   )}
 
   <dl class="cal-detail-facts">

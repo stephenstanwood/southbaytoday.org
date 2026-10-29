@@ -9,6 +9,27 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // Restore primary participation links lost by newsletter extraction.
+  // The exact City registration page also limits AfterHours to local teens
+  // with a free membership; it showed full with a waiting list on October 27.
+  // Evidence: docs/seo-2026-10-27-source-links.md (live organizer pages).
+  {
+    id: "inbound-c805739341b0e8c8", date: "2026-10-30",
+    facts: {
+      url: "https://anc.apm.activecommunities.com/mountainviewrecreation/activity/search/detail/19451?onlineSiteId=0&from_original_cui=true",
+      cost: "free", kidFriendly: true, audienceAge: "kids",
+      registration: REGISTRATION_FULL,
+      attendanceNote: "For Mountain View and Los Altos students in grades 6–12 with a free Teen Center membership. As of October 27, the session was full with waiting-list registration open. Check the organizer's registration page for current availability.",
+    },
+  },
+  {
+    id: "inbound-dade0890a796356b", date: "2026-11-05",
+    facts: {
+      url: "https://losgatosca.gov/2026/Emergency-Preparedness#evacuation-listening-session",
+      registration: REGISTRATION_NONE,
+      attendanceNote: "No registration is required. The Town's event information includes a link to attend remotely via Zoom.",
+    },
+  },
   // The October 29 museum newsletter substituted opening hours for missing
   // event clocks. These two first-party occurrence pages publish real times;
   // the other four dates are confirmed only by the original received email.

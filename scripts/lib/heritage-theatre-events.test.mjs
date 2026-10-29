@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { parseDatePT } from "./dates.mjs";
 import {
   fetchHeritageTheatreEvents,
   heritageTheatreEventUrls,
@@ -24,6 +25,11 @@ const dayPT = (offsetDays) =>
   new Date(Date.now() + offsetDays * 86_400_000).toLocaleDateString("en-CA", {
     timeZone: "America/Los_Angeles",
   });
+
+// Relative fixture dates can cross the DST boundary. Encode the intended
+// Pacific wall clock with the shared converter instead of pinning summer's
+// -07:00 offset to a November show (which correctly renders one hour earlier).
+const ptStamp = (date, clock) => parseDatePT(`${date}T${clock}`).toISOString();
 
 function sitemap(paths) {
   const locs = paths
@@ -105,8 +111,8 @@ test("scheduled upcoming shows publish with their real Pacific clock time", asyn
       name: "NEIL DIAMOND SUPERSTAR",
       description:
         "Authentic. Captivating. Unforgettable. NEIL DIAMOND SUPERSTAR is the tribute show you'll feel and remember.",
-      startDate: `${soon}T19:30:00-07:00`,
-      endDate: `${soon}T22:30:00-07:00`,
+      startDate: ptStamp(soon, "19:30:00"),
+      endDate: ptStamp(soon, "22:30:00"),
       eventStatus: "https://schema.org/EventScheduled",
       image: {
         "@type": "ImageObject",
@@ -147,12 +153,12 @@ test("cancelled and past listings never publish", async () => {
     // Wix marks retired drafts and scrapped shows alike.
     "https://www.heritagetheatre.org/events/testing-event": eventPage({
       name: "Testing Event",
-      startDate: `${dayPT(30)}T19:00:00-07:00`,
+      startDate: ptStamp(dayPT(30), "19:00:00"),
       eventStatus: "https://schema.org/EventCancelled",
     }),
     "https://www.heritagetheatre.org/events/tower-of-power": eventPage({
       name: "Tower of Power",
-      startDate: `${dayPT(-40)}T20:00:00-07:00`,
+      startDate: ptStamp(dayPT(-40), "20:00:00"),
       eventStatus: "https://schema.org/EventScheduled",
     }),
     // A 2035 placeholder date sits past the 180-day window.
@@ -175,7 +181,7 @@ test("a published AggregateOffer becomes the price floor", async () => {
       eventPage({
         name: "South Bay Dance Center presents The Nutcracker",
         description: "A holiday classic for the whole family.",
-        startDate: `${dayPT(60)}T12:30:00-08:00`,
+        startDate: ptStamp(dayPT(60), "12:30:00"),
         eventStatus: "https://schema.org/EventScheduled",
         offers: {
           "@type": "AggregateOffer",
@@ -205,7 +211,7 @@ test("a band bio does not make a night concert kid-friendly", async () => {
       // tribute concert in the kids pool.
       description:
         "With a vocalist who sang for Steve Perry during his solo career and former members of Great White and The Babys, Journey USA delivers the hits of Journey like no other!",
-      startDate: `${dayPT(120)}T20:00:00-08:00`,
+      startDate: ptStamp(dayPT(120), "20:00:00"),
       eventStatus: "https://schema.org/EventScheduled",
     }),
   });
@@ -232,7 +238,7 @@ test("one unreachable page is tolerated; a site-wide break is not", async () => 
         `https://www.heritagetheatre.org${p}`,
         eventPage({
           name: `Show ${from + i}`,
-          startDate: `${dayPT(10 + i)}T19:00:00-07:00`,
+          startDate: ptStamp(dayPT(10 + i), "19:00:00"),
           eventStatus: "https://schema.org/EventScheduled",
         }),
       ]),
@@ -259,7 +265,7 @@ test("today's PT date is the cutoff, not the machine's local date", async () => 
     "https://www.heritagetheatre.org/event-pages-sitemap.xml": sitemap(["/events/tonight"]),
     "https://www.heritagetheatre.org/events/tonight": eventPage({
       name: "Tonight at the Heritage",
-      startDate: `${PT_TODAY}T19:30:00-07:00`,
+      startDate: ptStamp(PT_TODAY, "19:30:00"),
       eventStatus: "https://schema.org/EventScheduled",
     }),
   });

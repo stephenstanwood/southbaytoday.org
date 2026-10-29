@@ -1,0 +1,1342 @@
+{
+  "site": "https://southbaytoday.org",
+  "generatedAt": "2026-10-27T08:16:40.564Z",
+  "crawl": {
+    "sitemapUrlCount": 1905,
+    "crawled": 250,
+    "surfaces": {
+      "/robots.txt": {
+        "status": 200,
+        "bytes": 353,
+        "body": "User-agent: *\nAllow: /\n\n# Search and user-requested retrieval. These explicit groups document the\n# site's intent; the wildcard above already permits them.\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\nSitemap: https://southbaytoday.org/sitemap-index.xml\n"
+      },
+      "/llms.txt": {
+        "status": 200,
+        "bytes": 2440
+      },
+      "/rss.xml": {
+        "status": 200,
+        "bytes": 10084
+      }
+    },
+    "findings": [
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-10-puppet-art-theater-presents-super-tommy",
+        "title": "Puppet Art Theater Presents Super Tommy — Tuesday, November 10 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-10-scott-lambridis-st-ulphia-s-dead",
+        "title": "Scott Lambridis: St. Ulphia&#39;s Dead — Tuesday, November 10 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-10-sv-ai-night-with-aws-anthropic-temporal",
+        "title": "[SV] AI Night with AWS, Anthropic, Temporal — Tuesday, November 10 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-11-10-woodland-adult-book-discussion",
+        "title": "Woodland Adult Book Discussion — Tuesday, November 10 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-11-11-bob-marley-how-reggae-changed-the-world-featuring-duane-forrest",
+        "title": "Bob Marley: How Reggae Changed the World featuring Duane Forrest — Wednesday, November 11"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-11-11-sharks-vs-penguins-military-appreciation",
+        "title": "Sharks vs Penguins — Military Appreciation — Wednesday, November 11 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-bing-gordon-and-chloe-gordon-with-paul-saffo",
+        "title": "Bing Gordon and Chloe Gordon with Paul Saffo — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 90 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-handcrafted-yarn-and-fabric-winter-birds-craft",
+        "title": "Handcrafted Yarn &amp; Fabric Winter Birds Craft — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-homework-help-for-grades-k-6",
+        "title": "Homework Help for Grades K-6 — 3:00 PM — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-homework-help-for-grades-k-6-2",
+        "title": "Homework Help for Grades K-6 — 4:00 PM — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-homework-help-for-grades-k-6-3",
+        "title": "Homework Help for Grades K-6 — 4:30 PM — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-pageturners-what-we-can-know-by-ian-mcewan",
+        "title": "Pageturners: What We Can Know by Ian McEwan — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-preschool-storytime-for-ages-3-5",
+        "title": "Preschool Storytime for Ages 3-5 — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 100 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-silicon-valley-physical-ai-meetup-drones-uav-usv-uuv-and-supply-chains",
+        "title": "Silicon Valley Physical AI Meetup: Drones, UAV, USV, UUV &amp; Supply Chains — Thursday, November 12"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-sold-out-tauren-wells-air1-worship-now-tour-san-jose-ca",
+        "title": "Sold Out Tauren Wells: Air1 Worship Now Tour - San Jose, CA — Thursday, November 12"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-12-teen-dungeons-and-dragons-social-club",
+        "title": "Teen Dungeons and Dragons Social Club — Thursday, November 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-10-laws-of-finance-for-business-owners",
+        "title": "10 Laws of Finance for Business Owners — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-bhajan-clubbing-jamming-monthly",
+        "title": "Bhajan Clubbing Jamming - Monthly — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-brunch-ethics-feminism-and-structural-patriarchy",
+        "title": "Brunch ethics: Feminism &amp; Structural Patriarchy — Friday, November 13"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-fine-dining-and-conversation-in-la-fondue-saratoga",
+        "title": "Fine Dining &amp; Conversation in La Fondue, Saratoga — Friday, November 13"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 93 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-friday-night-hike-rancho-san-antonio-in-cupertino-and-optional-dinner",
+        "title": "Friday Night Hike @ Rancho San Antonio in Cupertino and optional dinner — Friday, November 13"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~148 words",
+        "url": "https://southbaytoday.org/event/2026-11-13-friday-night-hike-rancho-san-antonio-in-cupertino-and-optional-dinner"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-join-a-ranger-night-hike-and-flashlight-tour",
+        "title": "Join-A-Ranger: Night Hike and Flashlight Tour — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-jubin-nautiyal-live-in-concert-bay-area",
+        "title": "Jubin Nautiyal Live in Concert – Bay Area — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-santa-cruz-warriors-vs-san-diego-clippers",
+        "title": "Santa Cruz Warriors vs. San Diego Clippers — Friday, November 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 104 chars",
+        "url": "https://southbaytoday.org/event/2026-11-13-stanford-cardinal-women-s-volleyball-vs-clemson-tigers-women-s-volleyball",
+        "title": "Stanford Cardinal Women&#39;s Volleyball vs. Clemson Tigers Women&#39;s Volleyball — Friday, November 13"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 88 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-andre-cruz-and-the-black-diamond-rhythm-band",
+        "title": "Andre Cruz &amp; the Black Diamond Rhythm Band — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-celebrate-native-american-heritage-month-story-and-craft",
+        "title": "Celebrate Native American Heritage Month! Story and Craft — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-congressional-gold-medal-dedication-and-community-gathering",
+        "title": "Congressional Gold Medal Dedication and Community Gathering — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-environmental-education-center-open-house",
+        "title": "Environmental Education Center Open House — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-facing-reality-without-losing-your-peace-of-mind",
+        "title": "Facing Reality Without Losing Your Peace of Mind — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-friendsgiving-potluck-best-side-dish-wins",
+        "title": "Friendsgiving Potluck: Best Side Dish Wins — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-girl-scout-program-amusement-innovator-juniors",
+        "title": "Girl Scout Program: Amusement Innovator (Juniors) — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-girl-scout-program-tech-detective-juniors-and-cadettes",
+        "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes) — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-nutcracker-magical-christmas-ballet",
+        "title": "Nutcracker! Magical Christmas Ballet — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-paper-shredding-and-environmental-recycling",
+        "title": "Paper Shredding and Environmental Recycling — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-saluting-our-veterans-gala-brunch",
+        "title": "Saluting Our Veterans Gala Brunch — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-san-jose-barracuda-vs-san-diego-gulls",
+        "title": "San Jose Barracuda vs. San Diego Gulls — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 102 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-santa-clara-broncos-women-s-volleyball-vs-usf-dons-women-s-volleyball",
+        "title": "Santa Clara Broncos Women&#39;s Volleyball vs. USF Dons Women&#39;s Volleyball — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-santa-cruz-warriors-vs-san-diego-clippers",
+        "title": "Santa Cruz Warriors vs. San Diego Clippers — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-sketching-together-november-2026",
+        "title": "Sketching Together November 2026 — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-song-of-the-week-burn-by-deep-purple",
+        "title": "Song of the Week - Burn by Deep Purple — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~140 words",
+        "url": "https://southbaytoday.org/event/2026-11-14-song-of-the-week-burn-by-deep-purple"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-south-bay-dance-center-coppelia",
+        "title": "South Bay Dance Center: Coppélia — Saturday, November 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 108 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-south-bay-flashback-farewell-tour-meet-and-greet-with-bill-guardino-and-brian-co",
+        "title": "South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 119 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-stanford-cardinal-women-s-volleyball-vs-georgia-tech-yellow-jackets-women-s-voll",
+        "title": "Stanford Cardinal Women&#39;s Volleyball vs. Georgia Tech Yellow Jackets Women&#39;s Volleyball — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-11-14-trsh-adjust-the-sails-dear-maryanne-dear-cincinnati",
+        "title": "Trsh, Adjust the Sails, Dear Maryanne, Dear Cincinnati — Saturday, November 14"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-ethics-as-intelligence-the-missing-operating-system-for-ai",
+        "title": "Ethics as Intelligence: The Missing Operating System for AI — Sunday, November 15"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-i-am-human-storytime-creative-writing-workshop",
+        "title": "I Am Human: Storytime + Creative Writing Workshop — Sunday, November 15"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-master-gardeners-planning-and-planting-a-little-fruit-orchard",
+        "title": "Master Gardeners: Planning and Planting a Little Fruit Orchard — Sunday, November 15"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-neurosphere-neuroscience-and-more",
+        "title": "NeuroSphere: Neuroscience and More! — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-sharks-vs-predators-hockey-fights-cancer",
+        "title": "Sharks vs Predators — Hockey Fights Cancer — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-south-bay-dance-center-coppelia",
+        "title": "South Bay Dance Center: Coppélia — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-wild-foraged-wreath-making-workshop",
+        "title": "Wild-Foraged Wreath-Making Workshop — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-wreathmaking-workshop-3pm-session",
+        "title": "Wreathmaking Workshop (3pm session) — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-15-wreathmaking-workshop-10am-session",
+        "title": "Wreathmaking Workshop (10am session) — Sunday, November 15 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 95 chars",
+        "url": "https://southbaytoday.org/event/2026-11-16-kepler-s-annual-benefit-an-evening-with-abraham-verghese-and-friends",
+        "title": "Kepler&#39;s Annual Benefit: An Evening with Abraham Verghese and Friends — Monday, November 16"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-16-ramble-from-rancho-to-black-mountain",
+        "title": "Ramble from Rancho to Black Mountain — Monday, November 16 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-17-daniel-duane-with-james-workman",
+        "title": "Daniel Duane with James Workman — Tuesday, November 17 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-alice-cooper-alice-s-attic-tour",
+        "title": "Alice Cooper: Alice&#39;s Attic Tour — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-building-the-production-infrastructure-your-agents-actually-need",
+        "title": "Building the Production Infrastructure Your Agents Actually Need — Wednesday, November 18"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-chamber-monthly-luncheon-with-city-manager-brian-loventhal",
+        "title": "Chamber Monthly Luncheon with City Manager Brian Loventhal — Wednesday, November 18"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-coffee-and-conversation-otto-lee",
+        "title": "Coffee &amp; Conversation: Otto Lee — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-don-t-get-scammed-this-holiday-season",
+        "title": "Don&#39;t Get Scammed This Holiday Season — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-explorer-hike-annual-turkey-trot",
+        "title": "Explorer Hike: Annual Turkey Trot — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-leanna-firestone-sydney-sprague",
+        "title": "Leanna Firestone, Sydney Sprague — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-rachel-willis-s-rensen-vocal-recital",
+        "title": "Rachel Willis-Sørensen Vocal Recital — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-the-who-s-tommy-closed-caption-performance",
+        "title": "The Who&#39;s Tommy Closed Caption Performance — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-three-days-grace-alienation-tour",
+        "title": "Three Days Grace - Alienation Tour — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-18-walk-with-a-naturalist-november-2026",
+        "title": "Walk with a Naturalist: November 2026 — Wednesday, November 18 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-author-event-with-dr-carol-peyser",
+        "title": "Author Event with Dr. Carol Peyser — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 93 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-book-launch-with-lily-berlin-dodd-in-conversation-with-misa-sugiura",
+        "title": "Book Launch with Lily Berlin Dodd — In conversation with Misa Sugiura — Thursday, November 19"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-family-craft-bean-and-lentil-mosaics",
+        "title": "Family Craft: Bean and Lentil Mosaics — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-jen-murphy-parker-with-irena-smith",
+        "title": "Jen Murphy Parker with Irena Smith — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 97 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-laughter-yoga-dynamic-fascia-movement-and-sound-meditation-experience",
+        "title": "Laughter Yoga, Dynamic Fascia Movement, &amp; Sound Meditation Experience — Thursday, November 19"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-sawmills-to-seminary-to-open-space",
+        "title": "Sawmills to Seminary to Open Space — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 91 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-sierra-azul-preserve-trail-maintenance-mt-umunhum-trail-pt-6",
+        "title": "Sierra Azul Preserve - Trail Maintenance: Mt. Umunhum Trail (Pt. 6) — Thursday, November 19"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 88 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-talk-of-the-town-neal-cassady-and-the-beats",
+        "title": "Talk of the Town: Neal Cassady &amp; the Beats — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-the-who-s-tommy-touring",
+        "title": "The Who&#39;s Tommy (Touring) — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2026-11-19-world-ballet-company-swan-lake",
+        "title": "World Ballet Company: Swan Lake — Thursday, November 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 93 chars",
+        "url": "https://southbaytoday.org/event/2026-11-20-friday-night-hike-rancho-san-antonio-in-cupertino-and-optional-dinner",
+        "title": "Friday Night Hike @ Rancho San Antonio in Cupertino and optional dinner — Friday, November 20"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~148 words",
+        "url": "https://southbaytoday.org/event/2026-11-20-friday-night-hike-rancho-san-antonio-in-cupertino-and-optional-dinner"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-20-harriet-trying-to-get-the-feeling-again",
+        "title": "Harriet: Trying to Get the Feeling Again — Friday, November 20 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-20-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, November 20 — South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~144 words",
+        "url": "https://southbaytoday.org/event/2026-11-20-mountain-view-makers-market"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 109 chars",
+        "url": "https://southbaytoday.org/event/2026-11-20-stanford-cardinal-women-s-volleyball-vs-syracuse-university-women-s-volleyball",
+        "title": "Stanford Cardinal Women&#39;s Volleyball vs. Syracuse University Women&#39;s Volleyball — Friday, November 20"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-20-yuletide-pop-up-holiday-boutique",
+        "title": "Yuletide Pop-Up Holiday Boutique — Friday, November 20 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-arcangel-la-8va-maravilla-world-tour",
+        "title": "Arcángel – La 8va Maravilla World Tour — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-concert-palo-alto-school-of-chamber-music",
+        "title": "Concert: Palo Alto School of Chamber Music — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-environmental-education-center-open-house",
+        "title": "Environmental Education Center Open House — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-learn-about-the-muwekma-ohlone-tribe",
+        "title": "Learn About the Muwekma Ohlone Tribe — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-sandra-and-katrina-pacheco-music-of-amalia-rodrigues",
+        "title": "Sandra &amp; Katrina Pacheco: Music of Amalia Rodrigues — Saturday, November 21"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-the-rhinoceros-project-sewing-circles",
+        "title": "The Rhinoceros Project Sewing Circles — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-the-who-s-tommy-asl-performance",
+        "title": "The Who&#39;s Tommy ASL Performance — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2026-11-21-the-who-s-tommy-touring",
+        "title": "The Who&#39;s Tommy (Touring) — Saturday, November 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-22-5-4-3-2-1-drawing-with-time-and-rhythm",
+        "title": "5, 4, 3, 2, 1: Drawing with Time and Rhythm — Sunday, November 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2026-11-22-festival-of-lights-a-diwali-celebration",
+        "title": "Festival of Lights: A Diwali Celebration — Sunday, November 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 111 chars",
+        "url": "https://southbaytoday.org/event/2026-11-22-stanford-cardinal-women-s-volleyball-vs-boston-college-eagles-women-s-volleyball",
+        "title": "Stanford Cardinal Women&#39;s Volleyball vs. Boston College Eagles Women&#39;s Volleyball — Sunday, November 22"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2026-11-22-the-who-s-tommy-audio-description-performance",
+        "title": "The Who&#39;s Tommy Audio Description Performance — Sunday, November 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-22-the-who-s-tommy-open-caption-performance",
+        "title": "The Who&#39;s Tommy Open Caption Performance — Sunday, November 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 109 chars",
+        "url": "https://southbaytoday.org/event/2026-11-23-santa-clara-broncos-women-s-volleyball-vs-san-diego-toreros-women-s-volleyball",
+        "title": "Santa Clara Broncos Women&#39;s Volleyball vs. San Diego Toreros Women&#39;s Volleyball — Monday, November 23"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2026-11-24-psycroptic-inferi-cognitive-summoning-the-lich",
+        "title": "Psycroptic, Inferi, Cognitive, Summoning the Lich — Tuesday, November 24"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 110 chars",
+        "url": "https://southbaytoday.org/event/2026-11-24-stanford-cardinal-women-s-volleyball-vs-pittsburgh-panthers-women-s-volleyball",
+        "title": "Stanford Cardinal Women&#39;s Volleyball vs. Pittsburgh Panthers Women&#39;s Volleyball — Tuesday, November 24"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2026-11-25-los-gemelos-de-sinaloa-the-gemeliza-tour",
+        "title": "Los Gemelos De Sinaloa: The Gemeliza Tour — Wednesday, November 25 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-11-25-san-jose-barracuda-vs-coachella-valley-firebirds",
+        "title": "San Jose Barracuda vs. Coachella Valley Firebirds — Wednesday, November 25"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2026-11-27-santa-cruz-warriors-vs-valley-suns",
+        "title": "Santa Cruz Warriors vs. Valley Suns — Friday, November 27 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 99 chars",
+        "url": "https://southbaytoday.org/event/2026-11-27-satori-vs-cyb3r-goth-industrial-darkwave-cybergoth-cyberpunk-dance-night",
+        "title": "Satori vs Cyb3r: Goth, Industrial, Darkwave, Cybergoth, Cyberpunk Dance Night — Friday, November 27"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-27-the-carpenters-songbook-a-live-celebration",
+        "title": "The Carpenters Songbook: A Live Celebration — Friday, November 27 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-11-28-baer-blacksmith-shop-demonstrations",
+        "title": "Baer Blacksmith Shop Demonstrations — Saturday, November 28 — South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~148 words",
+        "url": "https://southbaytoday.org/event/2026-11-28-community-drum-circle"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2026-11-28-environmental-education-center-open-house",
+        "title": "Environmental Education Center Open House — Saturday, November 28 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2026-11-28-ferns-and-other-ancient-plants",
+        "title": "Ferns &amp; Other Ancient Plants — Saturday, November 28 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2026-11-28-santa-cruz-warriors-vs-valley-suns",
+        "title": "Santa Cruz Warriors vs. Valley Suns — Saturday, November 28 — South Bay Today"
+      }
+    ]
+  },
+  "searchConsole": {
+    "available": false,
+    "reason": "no Search Console credentials — set GSC_SERVICE_ACCOUNT_JSON (raw or base64) or GSC_SERVICE_ACCOUNT_FILE",
+    "findings": []
+  },
+  "browserSearchConsole": {
+    "visibleAccount": "stanwoodventures@gmail.com",
+    "verifiedUrlPrefixProperty": "https://southbaytoday.org/",
+    "performance": {
+      "status": "covered",
+      "window": {
+        "since": "2026-09-28",
+        "until": "2026-10-25"
+      },
+      "previousWindow": {
+        "since": "2026-08-31",
+        "until": "2026-09-27"
+      },
+      "current": {
+        "clicks": 712,
+        "impressions": 27721,
+        "ctrPercent": 2.6,
+        "position": 7
+      },
+      "previous": {
+        "clicks": 940,
+        "impressions": 36085,
+        "ctrPercent": 2.6,
+        "position": 7.3
+      },
+      "queriesPagesAndDeclines": "retained tables plus original raw tool receipts"
+    },
+    "pageIndexing": {
+      "status": "covered",
+      "reportDate": "2026-10-22",
+      "indexed": 8998,
+      "notIndexed": 2634,
+      "reasons": {
+        "404": 1658,
+        "noindex": 274,
+        "redirect": 25,
+        "alternateCanonical": 19,
+        "robots": 1,
+        "discoveredNotIndexed": 387,
+        "crawledNotIndexed": 269,
+        "differentCanonical": 1
+      },
+      "sampleFinding": "noindex samples were expired event leaves; no deindexing or removal action warranted"
+    },
+    "sitemaps": {
+      "status": "covered",
+      "indexStatus": "Success",
+      "lastRead": "2026-10-18",
+      "discovered": 1907,
+      "children": [
+        {
+          "path": "sitemap-0.xml",
+          "status": "Success",
+          "lastRead": "2026-10-25",
+          "urls": 1673
+        },
+        {
+          "path": "sitemap-newsletters.xml",
+          "status": "Success",
+          "lastRead": "2026-10-26",
+          "urls": 126
+        },
+        {
+          "path": "sitemap-plans.xml",
+          "status": "Success",
+          "lastRead": "2026-10-26",
+          "urls": 108
+        }
+      ]
+    },
+    "coreWebVitals": {
+      "status": "covered",
+      "finding": "insufficient field data for mobile and desktop"
+    },
+    "https": {
+      "status": "covered",
+      "valid": 426,
+      "invalid": 0
+    },
+    "breadcrumbs": {
+      "status": "covered",
+      "valid": 398,
+      "invalid": 0
+    },
+    "eventsEnhancement": {
+      "status": "covered",
+      "valid": 697,
+      "invalid": 0,
+      "finding": "optional-field warnings; do not fabricate missing facts"
+    },
+    "manualActions": {
+      "status": "covered",
+      "finding": "No issues detected"
+    },
+    "securityIssues": {
+      "status": "covered",
+      "finding": "No issues detected"
+    },
+    "urlInspection": {
+      "status": "covered",
+      "urls": [
+        {
+          "url": "https://southbaytoday.org/event/2026-10-31-halloween-night-at-the-museum",
+          "finding": "indexed with valid HTTPS, Breadcrumb and Event results"
+        },
+        {
+          "url": "https://southbaytoday.org/newsletters/2026-10-25",
+          "finding": "discovered, not indexed; live availability test passed; no indexing request made"
+        }
+      ]
+    },
+    "mutations": [],
+    "observationDate": "2026-10-27"
+  },
+  "traffic": {
+    "status": "covered",
+    "generatedAt": "2026-10-27T08:16:33.897Z",
+    "completeThrough": "2026-10-26",
+    "windows": {
+      "last7": {
+        "since": "2026-10-20",
+        "until": "2026-10-26",
+        "days": 7
+      },
+      "prior7": {
+        "since": "2026-10-13",
+        "until": "2026-10-19",
+        "days": 7
+      },
+      "last30": {
+        "since": "2026-09-27",
+        "until": "2026-10-26",
+        "days": 30
+      },
+      "prior30": {
+        "since": "2026-08-28",
+        "until": "2026-09-26",
+        "days": 30
+      }
+    },
+    "traffic": {
+      "last7Days": {
+        "visitors": 2140,
+        "pageviews": 2550,
+        "previous": {
+          "visitors": 3443,
+          "pageviews": 3707
+        },
+        "changePercent": {
+          "visitors": -37.8,
+          "pageviews": -31.2
+        }
+      },
+      "last30Days": {
+        "visitors": 8940,
+        "pageviews": 11233,
+        "previous": {
+          "visitors": 4393,
+          "pageviews": 7243
+        },
+        "changePercent": {
+          "visitors": 103.5,
+          "pageviews": 55.1
+        }
+      }
+    },
+    "topPages": [
+      {
+        "requestPath": "/",
+        "visitors": 517,
+        "pageviews": 572
+      },
+      {
+        "requestPath": "/events",
+        "visitors": 455,
+        "pageviews": 561
+      },
+      {
+        "requestPath": "/events/2026-09-21",
+        "visitors": 127,
+        "pageviews": 127
+      },
+      {
+        "requestPath": "/events/2026-09-23",
+        "visitors": 127,
+        "pageviews": 127
+      },
+      {
+        "requestPath": "/events/2026-09-27",
+        "visitors": 100,
+        "pageviews": 100
+      },
+      {
+        "requestPath": "/events/2026-09-16",
+        "visitors": 80,
+        "pageviews": 80
+      },
+      {
+        "requestPath": "/event/2026-10-17-day-on-the-bay-2026",
+        "visitors": 78,
+        "pageviews": 92
+      },
+      {
+        "requestPath": "/events/2026-10-17",
+        "visitors": 73,
+        "pageviews": 73
+      },
+      {
+        "requestPath": "/events/2026-09-29",
+        "visitors": 72,
+        "pageviews": 72
+      },
+      {
+        "requestPath": "/events/2026-10-02",
+        "visitors": 65,
+        "pageviews": 65
+      },
+      {
+        "requestPath": "/events/2026-10-05",
+        "visitors": 57,
+        "pageviews": 57
+      },
+      {
+        "requestPath": "/events/2026-10-07",
+        "visitors": 57,
+        "pageviews": 57
+      }
+    ],
+    "topReferrers": [
+      {
+        "referrerHostname": "(direct / unknown)",
+        "visitors": 7400,
+        "pageviews": 9206
+      },
+      {
+        "referrerHostname": "google.com",
+        "visitors": 976,
+        "pageviews": 1079
+      },
+      {
+        "referrerHostname": "duckduckgo.com",
+        "visitors": 183,
+        "pageviews": 199
+      },
+      {
+        "referrerHostname": "bing.com",
+        "visitors": 104,
+        "pageviews": 117
+      },
+      {
+        "referrerHostname": "search.yahoo.com",
+        "visitors": 47,
+        "pageviews": 59
+      },
+      {
+        "referrerHostname": "ecosia.org",
+        "visitors": 14,
+        "pageviews": 15
+      },
+      {
+        "referrerHostname": "reddit.com",
+        "visitors": 8,
+        "pageviews": 11
+      },
+      {
+        "referrerHostname": "lasmadres.metafox.app",
+        "visitors": 7,
+        "pageviews": 8
+      },
+      {
+        "referrerHostname": "facebook.com",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "referrerHostname": "m.facebook.com",
+        "visitors": 4,
+        "pageviews": 5
+      },
+      {
+        "referrerHostname": "l.facebook.com",
+        "visitors": 3,
+        "pageviews": 4
+      },
+      {
+        "referrerHostname": "noai.duckduckgo.com",
+        "visitors": 3,
+        "pageviews": 4
+      }
+    ],
+    "aiReferrers": [
+      {
+        "referrerHostname": "chatgpt.com",
+        "visitors": 2,
+        "pageviews": 2
+      },
+      {
+        "referrerHostname": "gemini.google.com",
+        "visitors": 2,
+        "pageviews": 2
+      },
+      {
+        "referrerHostname": "perplexity.ai",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "topCountries": [
+      {
+        "country": "US",
+        "visitors": 3920,
+        "pageviews": 5924
+      },
+      {
+        "country": "CN",
+        "visitors": 720,
+        "pageviews": 734
+      },
+      {
+        "country": "BR",
+        "visitors": 385,
+        "pageviews": 385
+      },
+      {
+        "country": "SG",
+        "visitors": 336,
+        "pageviews": 344
+      },
+      {
+        "country": "GB",
+        "visitors": 278,
+        "pageviews": 282
+      },
+      {
+        "country": "HK",
+        "visitors": 273,
+        "pageviews": 276
+      },
+      {
+        "country": "IN",
+        "visitors": 241,
+        "pageviews": 243
+      },
+      {
+        "country": "BD",
+        "visitors": 173,
+        "pageviews": 173
+      }
+    ],
+    "notFoundPages": [
+      {
+        "requestPath": "/event/2026-09-14-vintage-media-lab",
+        "visitors": 11,
+        "pageviews": 11
+      },
+      {
+        "requestPath": "/events/2026-07-02",
+        "visitors": 9,
+        "pageviews": 9
+      },
+      {
+        "requestPath": "/events/2026-07-16",
+        "visitors": 8,
+        "pageviews": 8
+      },
+      {
+        "requestPath": "/events/2026-07-27",
+        "visitors": 6,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/event/2026-07-06-summer-camp-ceramics-wheel-throwing-2",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "requestPath": "/event/2026-07-04-4th-of-july-event-america-s-250th-anniversary",
+        "visitors": 3,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/event/2026-08-08-pasca-monthly-volunteer-orientation-and-training",
+        "visitors": 3,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/events/2026-06-16",
+        "visitors": 3,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/event/2026-07-30-educator-connections-series-summer-edition",
+        "visitors": 2,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/event/2026-08-19-hiking-the-bear-creek-redwoods-in-los-gatos",
+        "visitors": 2,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/event/2026-08-21-baby-storytime-rerun",
+        "visitors": 2,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/event/2026-08-22-green-exercise-3-8-miles-villa-montalvo",
+        "visitors": 2,
+        "pageviews": 5
+      }
+    ],
+    "observationDate": "2026-10-27"
+  },
+  "health": {
+    "status": "covered",
+    "summary": {
+      "total": 14,
+      "stale": 1,
+      "warnings": 3,
+      "missing": 0
+    },
+    "finding": "active daily artifacts fresh; off-season Spring Break picks stale; no raw source adapter failures observed",
+    "observationDate": "2026-10-27"
+  },
+  "product": {
+    "status": "covered",
+    "surfaces": [
+      "events",
+      "losGatosPrimary",
+      "home",
+      "food",
+      "gov",
+      "camps",
+      "tech",
+      "city",
+      "newsletters",
+      "latestIssue"
+    ],
+    "findings": [
+      "Home and city plans retained pillar-pair behavior; no new banners or sections warranted",
+      "Halloween search/free-weekend filtering worked; targeted missing organizer links and teen eligibility were actionable",
+      "Food distinguished permit/final-inspection signals from verified openings",
+      "Government had eleven current digests and agenda provenance",
+      "Camps retained explicit 2026 historical prices and next-year framing",
+      "Newsletter archive retained all published editions; October26 issue absent because sender encountered copy-edit lock",
+      "Thirteen intentionally needs-confirmation event leaves exposed a discovery-audit false positive"
+    ],
+    "observationDate": "2026-10-27"
+  },
+  "crawlerSurfaces": {
+    "status": "covered",
+    "checks": 24,
+    "passed": 24,
+    "observationDate": "2026-10-27"
+  },
+  "recovery": {
+    "date": "2026-10-29",
+    "status": "source-validated-publication-pending",
+    "baseCommit": "0b939964420502117a192c1c80d4b7b74ee15b0f",
+    "currentEventSnapshot": {
+      "generatedAt": "2026-10-29T22:13:58.306Z",
+      "events": 1444,
+      "modifiedOccurrences": [
+        "inbound-c805739341b0e8c8",
+        "inbound-dade0890a796356b"
+      ],
+      "otherEventsAndRawSourceSnapshots": "preserved"
+    },
+    "changes": [
+      "Two exact-occurrence organizer links and participation facts; persist corrections across refreshes",
+      "Discovery audit recognizes intentionally unconfirmed events only with visible explanation and no Event schema",
+      "Newsletter waits up to 20 minutes for the cooperative mutex, then performs unchanged fresh preflight; no replay/send",
+      "Newsletter CLI fixture allows real subprocess startup; deadline/refusal checks remain deterministic",
+      "Moving theatre test fixtures now use Pacific wall-clock conversion across daylight-saving transitions"
+    ],
+    "checks": {
+      "npmCi": "passed",
+      "npmCheck": "passed",
+      "astroCheck": {
+        "errors": 0,
+        "warnings": 0,
+        "existingHints": 104
+      },
+      "build": "passed",
+      "discovery": {
+        "htmlPages": 1608,
+        "eventLeaves": 1420,
+        "errors": 0,
+        "warnings": 17
+      },
+      "focusedRecoveryTests": 29,
+      "sourceFactsAudienceAndPlansTests": 164,
+      "realInstalledMutex": "passed using private fixture; other owner preserved, then fresh preflight after release; sender never invoked",
+      "diffCheck": "passed",
+      "render": {
+        "eventLeaf": "passed at desktop 1280px and mobile 390px; both corrected facts/source links visible",
+        "needsConfirmation": "visible source-conflict note; zero Event schema; Breadcrumb and canonical retained; active leaf remains indexable",
+        "retiredExample": "existing noindex archive behavior retained",
+        "localServerLimit": "Static preview omits Vercel analytics and API place-photo; those were 404s locally and require production checks"
+      }
+    },
+    "freshOrganizerRechecks": {
+      "observedAt": "2026-10-29",
+      "afterHours": "same exact City activity; full with waiting list; local grades 6-12 with free membership",
+      "evacuation": "Town confirms November 5 at 6pm, Council Chambers and Zoom, no registration"
+    },
+    "freshSearchConsole": {
+      "status": "GSC_BROWSER_LOGIN_REQUIRED",
+      "requiredAccount": "stanwoodventures@gmail.com",
+      "requiredUrlPrefixProperty": "https://southbaytoday.org/",
+      "visibleAccount": "stephen@stoa.works",
+      "finding": "Expanded picker listed only the visible account; exact property denied access; Add another account opened Google sign-in. Original completed audit retained with October27 dates.",
+      "mutations": []
+    },
+    "publication": null,
+    "liveProof": null,
+    "indexNow": null,
+    "gscMutations": []
+  }
+}

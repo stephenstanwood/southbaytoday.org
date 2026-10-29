@@ -196,11 +196,20 @@ if (!outputDir) {
       if (parsed.pathname.startsWith("/event/")) {
         metrics.eventLeafPages += 1;
         const passed = /class=["']cal-passed["']/.test(html);
+        const needsConfirmation = /<h1\b[^>]*\bdata-attendance-status=["']needs-confirmation["']/i.test(html);
         const events = parsedBlocks.flatMap((block) => collectTypedObjects(block, "Event"));
         if (passed) {
           if (events.length !== 0) {
             fail(`${url} is a passed archive page but still exposes ${events.length} Event object(s).`);
           }
+        } else if (needsConfirmation) {
+          // eventToSchema intentionally refuses to claim a scheduled Event
+          // when source dates, clocks or venues conflict. Require the matching
+          // reader-facing explanation rather than undoing that source guard.
+          const notice = /<p\b[^>]*\bdata-attendance-note=["']needs-confirmation["'][^>]*>([\s\S]*?)<\/p>/i.exec(html)?.[1];
+          if (events.length !== 0) fail(`${url} needs organizer confirmation but still exposes ${events.length} Event object(s).`);
+          if (!notice?.replace(/<[^>]+>/g, "").trim()) fail(`${url} needs organizer confirmation but has no visible attendance note.`);
+          warn(`${url} awaits organizer confirmation; Event markup is intentionally omitted.`);
         } else {
           if (events.length !== 1) fail(`${url} must expose exactly one Event object; found ${events.length}.`);
           const event = events[0];

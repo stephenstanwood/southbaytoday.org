@@ -3,6 +3,7 @@ import { chmodSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync 
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import test from "node:test";
 
 import {
@@ -53,6 +54,71 @@ function setupRepo(t) {
   git(checkout, "config", "user.name", "SBT Tests");
   return { root, remote, seed, checkout };
 }
+
+function scheduledLockFixture(root, mode) {
+  const script = join(root, "repo-lock.sh");
+  const calls = join(root, "lock-calls");
+  writeFileSync(script, `#!/bin/sh
+printf '%s\\n' "$1" >> '${calls}'
+if [ "$1" = acquire ]; then
+  ${mode === "error" ? "exit 2" : mode === "busy" ? "exit 1" : `if [ ! -f '${root}/lock-released' ]; then
+    touch '${root}/lock-released'
+    exit 1
+  fi`}
+fi
+exit 0
+`);
+  chmodSync(script, 0o755);
+  return { script, calls };
+}
+
+function runScheduledPreflight(checkout, script, waitMs = "5000") {
+  // CLI startup and spawning the shell lock helper are real OS work. Do not
+  // make successful recovery depend on completing them inside 10ms. The
+  // shared waiter's fake-clock suite verifies the full 20-minute deadline;
+  // zero-budget cases below verify immediate refusal deterministically.
+  return spawnSync(process.execPath, [fileURLToPath(new URL("./scheduled-send.mjs", import.meta.url)), "--preflight-only"], {
+    encoding: "utf8", timeout: 15_000,
+    env: {
+      ...process.env, SBT_NEWSLETTER_REPO_ROOT: checkout,
+      SBT_REPO_LOCK_SCRIPT: script, SBT_NEWSLETTER_LOCK_WAIT_MS: waitMs,
+    },
+  });
+}
+
+test("scheduled sender waits for a released lock, then preflights the fresh checkout without sending", (t) => {
+  const { root, seed, checkout } = setupRepo(t);
+  put(seed, "README.md", "fresh remote after competing writer\n");
+  commitAll(seed, "new source");
+  git(seed, "push");
+  const { script, calls } = scheduledLockFixture(root, "released");
+
+  const result = runScheduledPreflight(checkout, script);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /repo lock busy; retrying/);
+  assert.match(result.stdout, /preflight-only complete; no newsletter built or sent/);
+  assert.equal(git(checkout, "rev-parse", "HEAD"), git(seed, "rev-parse", "HEAD"));
+  assert.equal(readFileSync(calls, "utf8"), "acquire\nacquire\nrelease\n");
+});
+
+test("scheduled sender times out behind a persistent holder without preflight, send, or release", (t) => {
+  const { root, checkout } = setupRepo(t);
+  const { script, calls } = scheduledLockFixture(root, "busy");
+  const result = runScheduledPreflight(checkout, script, "0");
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /repo lock remained busy for 0ms; no newsletter built or sent/);
+  assert.equal(/newsletter-preflight|starting no-stale sender/.test(result.stdout), false);
+  assert.equal(readFileSync(calls, "utf8").includes("release"), false);
+});
+
+test("scheduled sender does not retry a lock-helper failure as contention", (t) => {
+  const { root, checkout } = setupRepo(t);
+  const { script, calls } = scheduledLockFixture(root, "error");
+  const result = runScheduledPreflight(checkout, script, "0");
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /repo lock acquire failed with exit 2/);
+  assert.equal(readFileSync(calls, "utf8"), "acquire\n");
+});
 
 test("preflight fast-forwards a clean checkout that is behind origin/main", (t) => {
   const { seed, checkout } = setupRepo(t);
