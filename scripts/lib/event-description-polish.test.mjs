@@ -286,7 +286,7 @@ test("library inline emphasis and source casing preserve LEGO and Scratch names"
 });
 
 test("shared acronym guards preserve published credentials, programs and place initials", () => {
-  for (const acronym of ["STAR", "SJ", "LCSW", "CMEMS"]) {
+  for (const acronym of ["STAR", "SJ", "LCSW", "CMEMS", "BFF", "CBPA", "PCLG"]) {
     const title = `Discuss ${acronym} with Anne`;
     const description = `Join ${acronym} Volunteers. Ask about ${acronym}!`;
     assert.equal(cleanTitle(title), title);
@@ -1375,6 +1375,17 @@ test("repairs library follow-up and supply sentences while preserving attendance
 
 test("keeps refreshed community titles readable without changing identifiers or acronyms", () => {
   const cases = [
+    ["Bff Matchmaking!", "BFF Matchmaking!"],
+    ["Cbpa Artist Cricle | Week 6", "CBPA Artist Circle | Week 6"],
+    ["CBPA Artist Cricle | Week 6", "CBPA Artist Circle | Week 6"],
+    ["Pclg Christmas Tea", "PCLG Christmas Tea"],
+    ["Archivos, Guerra Fria Y Revolucion", "Archivos, Guerra Fría y Revolución"],
+    ["Growing Readers: Help Your Aspiring Writer / Apoyo para jovenes escritores",
+      "Growing Readers: Help Your Aspiring Writer / Apoyo para jóvenes escritores"],
+    ["ELL / ELL Conversation Club for Mandarin Speakers",
+      "ELL Conversation Club for Mandarin Speakers"],
+    ["English Language Learner (ELL) for Beginners/Inglés Para Principiantes (ELL)",
+      "English Language Learner (ELL) for Beginners / Inglés Para Principiantes (ELL)"],
     ["1-on-1 Tech Help/ Asistencia Tecnológica", "1-on-1 Tech Help / Asistencia Tecnológica"],
     ["Asistencia tecnologica y ayuda personalizada", "Asistencia tecnológica y ayuda personalizada"],
     ["For New memebers Fine Dining&Conversation in Roger B&R, Mountain View",

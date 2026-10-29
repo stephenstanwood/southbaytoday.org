@@ -887,6 +887,16 @@ const TITLE_FIXES = {
   "Ac/Dc": "AC/DC",     // City Newsletter sentence-cases the band name ("Ac/Dc concert")
   "Cert Academy": "CERT Academy",
   "Su Wellness Fair": "SU Wellness Fair", // Stanford Events title-cases its "SU" (Stanford University) prefix  // Community Emergency Response Team — city calendars title-case it
+  // Source titles can arrive already title-cased; preserve the published
+  // initials and repair these recurring spelling/flattening errors as well.
+  "Bff Matchmaking": "BFF Matchmaking",
+  "Cbpa Artist": "CBPA Artist",
+  "Pclg Christmas Tea": "PCLG Christmas Tea",
+  "Artist Cricle": "Artist Circle",
+  "Archivos, Guerra Fria Y Revolucion": "Archivos, Guerra Fría y Revolución",
+  "Apoyo para jovenes escritores": "Apoyo para jóvenes escritores",
+  "ELL / ELL Conversation Club": "ELL Conversation Club",
+  "Beginners/Inglés": "Beginners / Inglés",
   // UC campus names arrive title-cased from university athletics + UC Master
   // Gardener program listings ("Uc Davis", "Uc Master Gardeners").
   "Uc Master Gardener": "UC Master Gardener",
@@ -991,6 +1001,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Initials in the published BFF Matchmaking, CBPA Artist Circle and
+  // PCLG Christmas Tea titles. Shared guards keep body copy consistent.
+  "BFF", "CBPA", "PCLG",
   // Los Gatos-Saratoga chapter, as published in SCCLD program credits.
   // https://sccl.bibliocommons.com/events/6a3d7eee0e851028002d3169
   "AAUW",
