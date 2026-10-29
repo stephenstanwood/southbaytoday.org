@@ -32,7 +32,7 @@ export function recordModelUsage(fields) {
   const entry = usageEvidence(fields);
   console.log("[model-usage]", JSON.stringify(entry));
   try {
-    if (!process.env.VERCEL) {
+    if (!process.env.VERCEL && !process.env.NODE_TEST_CONTEXT) {
       const path = process.env.SBT_MODEL_USAGE_LOG || join(homedir(), "Library/Logs/sbt-model-usage.jsonl");
       mkdirSync(dirname(path), { recursive: true });
       appendFileSync(path, JSON.stringify(entry) + "\n", { mode: 0o600 });

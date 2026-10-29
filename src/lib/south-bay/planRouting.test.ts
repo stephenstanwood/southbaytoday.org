@@ -13,7 +13,10 @@ test("public planner always requests Sonnet 5.5; identical input makes one paid 
     requests++;
     const body = JSON.parse(init.body);
     assert.equal(body.model, "claude-sonnet-5-5");
+    assert.equal(body.max_tokens, 4096);
     assert.deepEqual(body.thinking, { type: "between_tools" });
+    assert.equal(body.output_config.format.type, "json_schema");
+    assert.deepEqual(body.output_config.format.schema.required, ["pairs"]);
     const prompt = body.messages[0].content;
     const pairs = ["morning", "afternoon", "evening"].map(bucket => {
       const section = prompt.split(`${bucket.toUpperCase()} PILLAR CANDIDATES\n`)[1];
@@ -21,7 +24,7 @@ test("public planner always requests Sonnet 5.5; identical input makes one paid 
       return { pillarBucket: bucket, pillarId: ids[0][1], mealId: ids[1][1], pillarBlurb: "Supplied source fact.", mealBlurb: "Supplied source fact." };
     });
     return new Response(JSON.stringify({ id: "test-message", model: body.model, type: "message", role: "assistant", stop_reason: "end_turn",
-      content: [{ type: "text", text: JSON.stringify(pairs) }], usage: { input_tokens: 20, output_tokens: 10 } }), { headers: { "content-type": "application/json" } });
+      content: [{ type: "text", text: JSON.stringify({ pairs }) }], usage: { input_tokens: 20, output_tokens: 10 } }), { headers: { "content-type": "application/json" } });
   }) as typeof fetch;
   t.after(() => { globalThis.fetch = original; if (oldKey === undefined) delete process.env.ANTHROPIC_API_KEY; else process.env.ANTHROPIC_API_KEY = oldKey; });
   const request: any = { city: "campbell", scope: "regional", kids: false, planDate: "2026-10-29", model: "claude-opus-5-5" };

@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { sql } from "../lookout/db";
 
-export const PLAN_PROMPT_VERSION = "pillar-pairs-sonnet-2026-10-29-v1";
+export const PLAN_PROMPT_VERSION = "pillar-pairs-sonnet-2026-10-29-v2";
 const TTL_MS = 5 * 60_000;
 const LEASE_MS = 90_000;
 const local = new Map<string, { at: number; value: any }>();
@@ -33,10 +33,19 @@ export async function planResultCache(key: string, generate: () => Promise<any>,
         tableReady ||= db`CREATE TABLE IF NOT EXISTS sbt_plan_result_cache (
           key text PRIMARY KEY, value jsonb, expires_at timestamptz NOT NULL,
           owner text, lease_until timestamptz
-        )`.catch(error => { tableReady = undefined; throw error; });
+        )`.catch(async error => {
+          // Two cold instances can race in Postgres's catalog even with
+          // IF NOT EXISTS. Confirm the winner's table instead of generating
+          // duplicate paid work outside the shared lease.
+          if (["23505", "42P07"].includes(error?.code)) {
+            const rows = await db!`SELECT to_regclass('sbt_plan_result_cache') IS NOT NULL AS present`;
+            if (rows[0]?.present) return;
+          }
+          tableReady = undefined; throw error;
+        });
         await tableReady;
         owner = randomUUID();
-      } catch { db = undefined; log("persistent-unavailable"); }
+      } catch (error: any) { db = undefined; log(`persistent-unavailable:${error?.code || error?.name || "unknown"}`); }
     }
     let leased = false;
     if (db && owner) {
@@ -55,7 +64,7 @@ export async function planResultCache(key: string, generate: () => Promise<any>,
           if (leased) break;
           const hit = await db`SELECT value FROM sbt_plan_result_cache WHERE key = ${key} AND expires_at > now()`;
           if (hit[0]?.value) { log("persistent-hit"); return hit[0].value; }
-        } catch { db = undefined; log("persistent-unavailable"); break; }
+        } catch (error: any) { db = undefined; log(`persistent-unavailable:${error?.code || error?.name || "unknown"}`); break; }
         if (Date.now() > deadline) throw new Error("An identical plan is still generating; please retry shortly");
         await new Promise(resolve => setTimeout(resolve, 1_500));
       }
