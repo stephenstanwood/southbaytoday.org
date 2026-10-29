@@ -32,7 +32,7 @@ if (!args.has("--preflight-only")) {
   if (args.has("--dry-run")) console.log(JSON.stringify(output));
   else {
     writeFileAtomic(path, JSON.stringify(output, null, 2) + "\n");
-    for (const gitArgs of [["add", "--", path], ["commit", "-m", "data: refresh homepage default plans via Codex"]]) {
+    for (const gitArgs of [["add", "--", path], ["commit", "--only", "-m", "data: refresh homepage default plans via Codex", "--", path]]) {
       const result = spawnSync("git", gitArgs, { cwd: repo, stdio: "inherit" });
       if (result.status !== 0) throw new Error(`Default plans ${gitArgs[0]} failed`);
     }
