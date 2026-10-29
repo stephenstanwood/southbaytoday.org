@@ -698,10 +698,86 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
     // disproves the "City Council" label, and the caller has to be able to see
     // that rather than reading a bare null as "nothing to change".
     return pickBodyForRecord(candidates, recordText)
+      ?? await pickBodyByPrimeGovItems(domain, named, recordText, toCandidate)
       ?? { body: null, sourceUrl: null, councilMet: false };
   } catch {
     return null;
   }
+}
+
+/** Latest usable Council agenda, selected from PrimeGov's own committee records. */
+export async function fetchPrimeGovPastMeeting({
+  domain,
+  committeeId,
+  today = ptDateISO(),
+  maxCandidates = 3,
+} = {}) {
+  domain = String(domain || "").toLowerCase();
+  if (!Number.isInteger(committeeId) || !ISO_DATE.test(today)
+      || !/^[a-z0-9-]+(?:\.[a-z0-9-]+)*\.primegov\.com$/.test(domain)) return null;
+  const options = (accept) => ({
+    headers: { "User-Agent": LEGISTAR_UA, Accept: accept },
+    signal: AbortSignal.timeout(15_000),
+  });
+  const year = Number(today.slice(0, 4));
+  for (const archiveYear of [year, year - 1]) {
+    const response = await fetch(
+      `https://${domain}/api/v2/PublicPortal/ListArchivedMeetings?year=${archiveYear}`,
+      options("application/json"),
+    );
+    if (!response.ok) return null;
+    const meetings = await response.json();
+    if (!Array.isArray(meetings)) return null;
+    // The archive ignores a committeeId query parameter. Filter the returned
+    // records ourselves, before limiting candidates or reading any documents.
+    const candidates = meetings
+      .filter((m) => m.committeeId === committeeId && /^city council\b/i.test(String(m.title || "").trim()))
+      .filter((m) => !/cancel(?:led|ed)|postponed/i.test(m.title || ""))
+      .filter((m) => !isClosedSessionMeeting({ bodyName: m.title }))
+      .map((meeting) => ({ meeting, date: String(meeting.dateTime || "").slice(0, 10) }))
+      .filter(({ date }) => ISO_DATE.test(date) && date <= today)
+      .sort((a, b) => b.date.localeCompare(a.date));
+    for (const { meeting, date } of candidates.slice(0, maxCandidates)) {
+      // A template can be reused across meetings; only the compiled document
+      // id addresses the exact published agenda attached to this record.
+      const sourceUrl = primeGovAgendaUrl(domain, meeting);
+      if (!sourceUrl) continue;
+      const agenda = await fetch(sourceUrl, options("text/html"));
+      if (!agenda.ok) continue;
+      const html = await agenda.text();
+      const content = html.match(/<div\b[^>]*\bid=["']MeetingContents["'][^>]*>([\s\S]*)/i)?.[1];
+      if (!content) continue;
+      const header = content.split(/<td\b[^>]*class=["']number-cell["']/i)[0];
+      const title = decodeAgendaText(header.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1])
+        .replace(/\s+-\s+\d{1,2}\/\d{1,2}\/\d{4}\b.*$/, "").trim();
+      const printedDate = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+        timeZone: "UTC", month: "long", day: "numeric", year: "numeric",
+      });
+      // PrimeGov's HTML <title> timestamp is UTC; the printed agenda date and
+      // the archive's naive Pacific date must agree instead.
+      if (normalizeAgendaText(title) !== normalizeAgendaText(meeting.title)
+          || !decodeAgendaText(header.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")).includes(printedDate)) continue;
+      const items = extractPrimeGovAgendaItems(content);
+      const substantive = substantiveAgendaTitles(items.map((item) => item.title));
+      if (substantive.length < 2) continue;
+      return {
+        id: `primegov-${meeting.id}`,
+        city: null,
+        date,
+        meetingType: "City Council",
+        title: `${decodeAgendaText(meeting.title)} — ${date}`,
+        excerpt: substantive.slice(0, 12).join(". "),
+        // Keep long business items that the preview's length quota excludes;
+        // participation notices cannot establish discussion or public comment.
+        fullAgendaText: items.filter((item) => !/^public comments?\b/i.test(item.title))
+          .map((item) => `${item.agendaNumber}. ${item.title}`).join("\n\n"),
+        keywords: substantive.slice(0, 5),
+        source: "primegov-direct",
+        sourceUrl,
+      };
+    }
+  }
+  return null;
 }
 
 // ── eScribe archive (Campbell) ──────────────────────────────────────────────
