@@ -3236,6 +3236,47 @@ function polishDescription(text) {
     .replace(/\bMeetup event by BAy Pi Ggies\./g, "Meetup event by BayPiggies.")
     .replace(/\bResearch & Brew– a showcase\b/g, "Research & Brew – a showcase");
 
+  // Follow-up copy-desk repairs: retain source facts and identifiers while
+  // restoring missing words, date commas, and flattened schedule boundaries.
+  t = t
+    .replace(/\bHave fun and enjoy music performing\b/g,
+      "Have fun and enjoy music while performing")
+    .replace(/\b((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(?:st|nd|rd|th)?, \d{4}) from\b/g,
+      "$1, from")
+    .replace(/\blibrary opens to the public, participants will enter\b/g,
+      "library opens to the public; participants will enter")
+    .replace(/\bNo registration required, drop in\b/g,
+      "No registration required; drop in")
+    .replace(/\bbeautiful art work\b/g, "beautiful artwork")
+    .replace(/\blos Jueves\b/g, "los jueves")
+    .replace(/\bvocabulario en Inglés\b/g, "vocabulario en inglés")
+    .replace(/\bclase de Inglés nivel cero\b/g, "clase de inglés nivel cero")
+    .replace(/\bidioma es el Español\b/g, "idioma es el español")
+    .replace(/Tư Vấn\/ Thông Tin\/ Giới Thiệu/g,
+      "Tư Vấn / Thông Tin / Giới Thiệu");
+
+  if (t.includes("The theme of all five classes in November is Thanksgiving/Fall")) {
+    t = t
+      .replace(/Thanksgiving\/Fall November 1 Introduction to Stop-Motion Animation Children/g,
+        "Thanksgiving/Fall. November 1: Introduction to Stop-Motion Animation. Children")
+      .replace(/November 8 Creating the Halloween Story Children/g,
+        "November 8: Creating the Halloween Story. Children")
+      .replace(/November 15 and 22 Filming the Movie Children/g,
+        "November 15 and 22: Filming the Movie. Children")
+      .replace(/November 29 Finishing the Movie Children/g,
+        "November 29: Finishing the Movie. Children");
+  }
+  if (/^Saratoga Library presents [Cc]lassical dances from India\b/.test(t)) {
+    t = t
+      .replace("presents Classical dances from India by accomplished Bay area classical dancers.",
+        "presents classical dances from India by accomplished Bay Area classical dancers.")
+      .replace("by Nivedha Balan 1.00 PM", "by Nivedha Balan; 1.00 PM")
+      .replace("Saraswathy Lakshmivaraham 2.00 PM", "Saraswathy Lakshmivaraham; 2.00 PM")
+      .replace("Jaanya Annapureddy 3.00 PM", "Jaanya Annapureddy; 3.00 PM")
+      .replace("Aishwarya Venkat 4.00 PM", "Aishwarya Venkat; 4.00 PM")
+      .replace("by Vatsal Dave All are welcome.", "by Vatsal Dave. All are welcome.");
+  }
+
   for (const [pattern, replacement] of PROSE_HYPHENATION_FIXES) {
     t = t.replace(pattern, replacement);
   }

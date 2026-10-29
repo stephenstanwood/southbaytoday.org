@@ -64,6 +64,30 @@ test("library grammar repairs retain participation details and are stable on ref
   }
 });
 
+test("flattened schedule repairs preserve facts, names, and identifiers across refreshes", () => {
+  const animation = "The theme of all five classes in November is Thanksgiving/Fall November 1 Introduction to Stop-Motion Animation Children will learn stop-motion animation. November 8 Creating the Halloween Story Children will plan scenes. November 15 and 22 Filming the Movie Children will film. November 29 Finishing the Movie Children will add details. For ages 6-12. Registration required. Details: https://example.org/November1?time=3:00PM";
+  const dance = "Saratoga Library presents Classical dances from India by accomplished Bay area classical dancers. 12.50 PM - Innovation Song by Nivedha Balan 1.00 PM - 1.45 PM: Mohiniyattam Dance by Smt. Saraswathy Lakshmivaraham 2.00 PM - 2.45 PM: Kuchipudi Dance by Jaanya Annapureddy 3.00 PM - 3.45 PM: Bharatanatyam Dance by Smt. Aishwarya Venkat 4.00 PM - 4.45 PM: Bharatnatyam Dance by Vatsal Dave All are welcome.";
+  for (const source of [animation, dance]) {
+    const actual = polishDescription(source);
+    assert.deepEqual(actual.match(/\d+/g), source.match(/\d+/g));
+    assert.deepEqual(actual.match(/https?:\/\/\S+/g), source.match(/https?:\/\/\S+/g));
+    assert.equal(polishDescription(actual), actual);
+  }
+  const animated = polishDescription(animation);
+  for (const heading of [
+    "November 1: Introduction to Stop-Motion Animation.",
+    "November 8: Creating the Halloween Story.",
+    "November 15 and 22: Filming the Movie.",
+    "November 29: Finishing the Movie.",
+    "For ages 6-12. Registration required.",
+  ]) assert.ok(animated.includes(heading), heading);
+  const danced = polishDescription(dance);
+  for (const name of ["Nivedha Balan", "Saraswathy Lakshmivaraham", "Jaanya Annapureddy", "Aishwarya Venkat", "Vatsal Dave"])
+    assert.ok(danced.includes(name), name);
+  assert.ok(danced.includes("Nivedha Balan; 1.00 PM"));
+  assert.ok(danced.includes("Vatsal Dave. All are welcome."));
+});
+
 test("source hyphenation repairs preserve attendance facts and identifier bytes", () => {
   const cases = [
     ["Free, 50 person maximum. Story Time tickets required.",
