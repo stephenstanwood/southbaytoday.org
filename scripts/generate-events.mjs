@@ -2157,6 +2157,12 @@ function polishDescription(text) {
   // into a final Register token after the substantive price/copy.
   t = t.replace(/\s+Register(?: Now)?\.?\s*$/, "").trim();
 
+  // Bookshop and museum excerpts flatten signup buttons into body copy.
+  // Remove only arrow-marked labels or a standalone trailing RSVP prompt;
+  // keep purchase requirements, deadlines, contacts, and surrounding prose.
+  t = t.replace(/\b(?:RSVP Now|Buy tickets now)\s*»\s*/g, "")
+    .replace(/(^|[.!?])\s*Click to RSVP\s*$/, "$1").trim();
+
   // Straighten curly quotes. Source HTML and BiblioCommons feeds serve smart
   // quotes (U+2018/19/1A/1B for singles, U+201C/1D/1E/1F for doubles); the
   // recurring copy-edit commits straightening these are the visible symptom.
@@ -2171,6 +2177,8 @@ function polishDescription(text) {
       "Tutors are available to help with homework on ")
     .replace(/\bWe have tutors for you to receive homework help on /g,
       "Tutors are available to help with homework on ")
+    .replace(/(^|[.!?]\s+)Homework Coach can work\b/g,
+      "$1The homework coach can work")
     .replace(/\bHigh and Middle Students welcome\./g,
       "High school and middle school students welcome.")
     .replace(/\bThis is a baby and caregivers program with\b/g,
@@ -2441,6 +2449,13 @@ function polishDescription(text) {
     .replace(/\bfor roller skating Many thanks\b/g, "for roller skating. Many thanks")
     .replace(/^(?:Summiting in Search of Manzanitas|Winter Ramble at Rancho) \| Midpeninsula Regional Open Space District Skip to main content Show Mobile Menu (Approximately \d+(?:\.\d+)? miles\.)$/,
       "$1");
+
+  // Restore boundaries between flattened library sessions and activities,
+  // retaining the supplied clocks, room names, and participation conditions.
+  t = t.replace(/\b(AM|PM)\s+(?=Sesión\s+\d+\s*:)/g, "$1; ")
+    .replace(/(\(Adobe Room; henna line closes at [^)]+\))\s+(?=Rangoli\b)/g, "$1; ")
+    .replace(/You'll learn how to: Start the game; What the tiles mean; The rules of the game and how to win; How to create sets and play\./g,
+      "You'll learn: how to start the game; what the tiles mean; the rules of the game and how to win; and how to create sets and play.");
 
   // STEAM and Science Sundays feeds flatten their dated lists into one line.
   // Limit separators to these series and retain every supplied date and topic.

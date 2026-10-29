@@ -13,6 +13,58 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("removes scraped signup labels while preserving purchase and RSVP conditions", () => {
+  const cases = [
+    [
+      "Meet the author. RSVP Now » This event is free, but you must purchase a book to enter the signing line.",
+      "Meet the author. This event is free, but you must purchase a book to enter the signing line.",
+    ],
+    ["Each workshop costs $75. Buy tickets now »", "Each workshop costs $75."],
+    ["Join the museum for Halloween! Click to RSVP", "Join the museum for Halloween!"],
+    ["Click to RSVP", ""],
+    ["Click to RSVP by November 1.", "Click to RSVP by November 1."],
+    ["Call the museum or Click to RSVP", "Call the museum or Click to RSVP"],
+    [
+      "To RSVP, email ShuHsienHo@gmail.com. Details: https://example.org/RSVPNow?price=75",
+      "To RSVP, email ShuHsienHo@gmail.com. Details: https://example.org/RSVPNow?price=75",
+    ],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishDescription(source), expected, source);
+    assert.equal(polishDescription(expected), expected, "refresh must preserve the edit");
+  }
+});
+
+test("adds the missing article before a generic homework coach without changing limits", () => {
+  const source = "Free, with limited capacity. Homework Coach can work with up to 2 students at a time but can take new students if others finish their work early.";
+  const expected = "Free, with limited capacity. The homework coach can work with up to 2 students at a time but can take new students if others finish their work early.";
+  assert.equal(polishDescription(source), expected);
+  assert.equal(polishDescription(expected), expected);
+  const namedCoach = "Homework Coach Lejla helps students. The Homework Coach can work with 2 students.";
+  assert.equal(polishDescription(namedCoach), namedCoach);
+});
+
+test("separates flattened library sessions and activities without changing their facts", () => {
+  const cases = [
+    [
+      "Sesión 1: Domingo, 1 de noviembre, 11:00 - 12:30 PM Sesión 2: Martes, 3 de noviembre, 3:30 - 5:30 PM",
+      "Sesión 1: Domingo, 1 de noviembre, 11:00 - 12:30 PM; Sesión 2: Martes, 3 de noviembre, 3:30 - 5:30 PM",
+    ],
+    [
+      "Henna (Adobe Room; henna line closes at 3:30 PM!) Rangoli (chalk coloring craft outside in the Courtyard); Crafts (in Adobe Room); All activities available while supplies last!",
+      "Henna (Adobe Room; henna line closes at 3:30 PM!); Rangoli (chalk coloring craft outside in the Courtyard); Crafts (in Adobe Room); All activities available while supplies last!",
+    ],
+    [
+      "You'll learn how to: Start the game; What the tiles mean; The rules of the game and how to win; How to create sets and play. Registration required. Drop-ins welcome depending on space.",
+      "You'll learn: how to start the game; what the tiles mean; the rules of the game and how to win; and how to create sets and play. Registration required. Drop-ins welcome depending on space.",
+    ],
+  ];
+  for (const [source, expected] of cases) {
+    assert.equal(polishDescription(source), expected, source);
+    assert.equal(polishDescription(expected), expected, "refresh must preserve the edit");
+  }
+});
+
 test("finishes raw-source casing and camel-case repairs on the first pass", () => {
   const source = "Need help accessing SJPL eResources and eBooks? BY APPOINTMENT ONLY One appointment per week per person. Registration IS REQUIRED. Details: https://example.org/eResources?ID=SCARFS";
   const expected = "Need help accessing SJPL e-resources and e-books? By appointment only. One appointment per week per person. Registration is required. Details: https://example.org/eResources?ID=SCARFS";
