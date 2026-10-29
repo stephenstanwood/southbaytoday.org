@@ -3296,6 +3296,37 @@ function polishDescription(text) {
     t = t.replace(pattern, replacement);
   }
 
+  // Recurring source copy mixes verb/noun hyphenation and flattens sentence
+  // boundaries. Keep these repairs narrow and preserve schedules and names.
+  t = t
+    .replace(/\bThis is a Free program\./g, "This is a free program.")
+    .replace(/\bEnglish language Learners\b/g, "English language learners")
+    .replace(/\bto sign-up(?=[.!?;]|$)/g, "to sign up")
+    .replace(/\b(welcome|invited|encouraged) to drop-in\b/g, "$1 to drop in")
+    .replace(/\bor jump-in with others\b/g, "or jump in with others")
+    .replace(/\bWe welcome drop ins!/g, "We welcome drop-ins!")
+    .replace(/\bNo registration or sign up required\./g, "No registration or sign-up required.")
+    .replace(/\bchild can Read to a volunteer\b/g, "child can read to a volunteer")
+    .replace(/\bMaterials will be provided\. While supplies last\./g,
+      "Materials will be provided while supplies last.")
+    .replace(/\badded on a waitlist\b/g, "added to a waitlist")
+    .replace(/\bprovide instructions, and offer advice\b/g, "provide instructions and offer advice")
+    .replace(/\bFollow provided directions, to make your bouquet\./g,
+      "Follow provided directions to make your bouquet.")
+    .replace(/\bbetween (\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2} [AP]M)\b/g,
+      "between $1 and $2")
+    .replace(/\bbetween the ages of (\d+)\s*[-–]\s*(\d+)\b/g,
+      "between the ages of $1 and $2")
+    .replace(/\bIn person registration required\b/g, "In-person registration required")
+    .replace(/\b(Runtime: \d+ hours?(?: \d+ minutes?)?) Rating: (G|PG(?:-13)?|R) (?=This program\b)/g,
+      "$1. Rating: $2. ")
+    .replace(/^Book Talk with ([^"]+) "([^"]+[.!?])$/,
+      'Book talk with $1. "$2"');
+
+  // Localist can cut an excerpt at the first initial of a sponsor's name.
+  // An isolated attribution fragment has no usable description to preserve.
+  if (/^Made possible by the [A-Z]\.$/.test(t)) t = "";
+
   // This university preview ends inside an organization's name and contains
   // no complete sentence. Leave the description empty rather than inventing
   // the missing co-host or an invitation.
