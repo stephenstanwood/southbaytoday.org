@@ -317,7 +317,7 @@ Match the agenda's exact CEQA determination. "Not a Project" and "Exempt" are di
       // Extract the first JSON object from the response (handles trailing text/preamble)
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error(`No JSON in Claude response: ${text.substring(0, 100)}`);
-      return JSON.parse(jsonMatch[0]);
+      return { ...JSON.parse(jsonMatch[0]), generationTimestamp: new Date().toISOString() };
     },
   });
 }
@@ -630,7 +630,7 @@ async function main() {
           bodySourceUrl
           ?? meeting.sourceUrl
           ?? (config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl),
-        generatedAt: new Date().toISOString(),
+        generatedAt: parsed.generationTimestamp || new Date().toISOString(),
       };
 
       console.log(`  ✅ ${config.cityName}: ${meetingDateFormatted}`);

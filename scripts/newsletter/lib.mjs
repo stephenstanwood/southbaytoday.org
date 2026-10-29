@@ -1,4 +1,6 @@
 import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
+import { claudeSubscriptionEnvironment } from "../lib/claude-subscription.mjs";
+export { claudeSubscriptionEnvironment } from "../lib/claude-subscription.mjs";
 import { queueNotification } from "../lib/notification-intake.mjs";
 // ---------------------------------------------------------------------------
 // South Bay Today — Daily Newsletter
@@ -1516,13 +1518,6 @@ export async function callClaudeNewsletterEditor(instructions) {
       throw new Error(`CLI: ${detail} | API: ${String(apiError?.message || apiError).slice(0, 200)}`);
     }
   }
-}
-
-export function claudeSubscriptionEnvironment(source = process.env) {
-  const env = { ...source };
-  for (const key of ["ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_BASE_URL",
-    "CLAUDE_CODE_USE_BEDROCK", "CLAUDE_CODE_USE_VERTEX", "CLAUDE_CODE_USE_FOUNDRY"]) delete env[key];
-  return env;
 }
 
 async function runClaudeCliEditor(instructions) {

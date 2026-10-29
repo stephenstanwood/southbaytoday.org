@@ -17,6 +17,8 @@
 // ---------------------------------------------------------------------------
 
 import { spawn } from "node:child_process";
+import { claudeSubscriptionEnvironment } from "../lib/claude-subscription.mjs";
+import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -546,13 +548,14 @@ async function runClaudeCliQa(prompt) {
       "--model", model,
       "--output-format", "text",
       "--no-session-persistence",
-    ], { cwd: "/tmp", timeout: timeoutMs });
+    ], { cwd: "/tmp", timeout: timeoutMs, env: claudeSubscriptionEnvironment() });
     proc.stdout.on("data", (chunk) => { stdout += chunk.toString(); });
     proc.stderr.on("data", (chunk) => { stderr += chunk.toString(); });
     proc.on("error", (error) => finish(new Error(`claude spawn failed: ${error.message}`)));
     proc.on("close", (code, signal) => {
       if (signal) return finish(new Error(`claude killed by ${signal}: ${(stderr || stdout).slice(0, 400)}`));
       if (code !== 0) return finish(new Error(`claude exit ${code}: ${(stderr || stdout).slice(0, 400)}`));
+      recordModelUsage({ feature: "newsletter-qa", provider: "claude-subscription", model, tokenCountsAvailable: false });
       finish(null, stdout);
     });
     proc.stdin.end(prompt);
