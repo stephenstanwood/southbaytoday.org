@@ -519,10 +519,14 @@ copy still replaces older wording; the pipeline does not restore historical
 descriptions by event ID.
 
 The exported title/body normalizers also keep source-supplied LinkedIn, STAR,
-SJ, LCSW and CMEMS spellings. Name abbreviations before English or Spanish
+SJ, LCSW, CMEMS and AAUW spellings. Name abbreviations before English or Spanish
 conjunctions (for example, "Super Smash Bros. y más") keep their continuation
 case, while genuine following sentences still capitalize. Full reviewed-copy
 fixtures cover all six October 20 regressions and repeated normalization.
+Internal ellipses preserve the source's continuation case, while full stops,
+question marks and exclamation marks still capitalize following sentences.
+Full reviewed SCCLD/AAUW and Linden Tree Wish Ring Cipher descriptions are
+checked through repeated refresh passes without changing their facts or contact.
 
 Offline publication fixtures intentionally produce source failures and must
 never reach personal MILO intake. `notification-intake.mjs` rejects uninjected
