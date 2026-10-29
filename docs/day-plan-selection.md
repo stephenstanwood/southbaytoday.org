@@ -179,8 +179,10 @@ partner too, or rejects/regenerates the whole plan at generation boundaries.
   routine-event and audience-breadth signals.
 - `src/lib/south-bay/eventFilters.mjs`: virtual and registration normalization,
   shared by the ingest and the runtime safety net.
-- `scripts/social/generate-schedule.mjs`: nightly adults/kids today/tomorrow
-  hero generation; never rotates an anchor city.
+- `scripts/generate-default-plans.ts`: Mini-owned adults/kids today/tomorrow
+  generation through the authenticated Codex subscription; never rotates an anchor city.
+- `scripts/social/generate-schedule.mjs`: retired social batch; `--hero-only`
+  delegates to the standalone default generator for older callers.
 - `scripts/newsletter/lib.mjs`: atomic validation and pillar-first rendering.
 - `scripts/social/lib/poster-styles.mjs`: three paired graphic modules with
   activity-first hierarchy.
@@ -191,3 +193,37 @@ Run `npm run test:plan-day`, the newsletter/post-generation/poster tests, and
 `npm run build`. For a live check, POST to `/api/plan-day` in both regional and
 city scopes and confirm all three reciprocal pairs, meal distances at or below
 5 miles, and exact-city output for city scope.
+
+## Model routing and generation costs
+
+Visitor requests to `/api/plan-day` use `claude-sonnet-5-5` (including city
+pages and reshuffles). The Mini's existing default-plan LaunchAgent uses the
+same scoring and validation pipeline with a local Codex selector. It discovers
+the latest stable Sol with max effort, verifies ChatGPT login, strips API-key
+and endpoint environment overrides, and forces the OpenAI provider with
+ChatGPT auth. A missing login or usage cap fails closed; the prior published
+plans remain intact and the three guarded retry slots remain unchanged.
+
+Default publication is atomic across adults/kids and today/tomorrow. Successful
+source-identical editorial results survive a failed publication retry in the
+Mini's private generation cache. Social copy generation is retired and guarded
+before network calls. No social schedule or historical content is deleted.
+
+Visitor results retain a five-minute lifetime. Their canonical key includes the
+complete preferences, date, model, prompt contract and source fingerprint.
+Identical requests share work within a function and, when the existing database
+is configured, across instances through `sbt_plan_result_cache` leases. Locks,
+dismissals, recent-history requests and explicit reshuffles bypass result reuse.
+Database failure falls back to the bounded local cache. Failed or emergency
+ranked results are never cached. Prompt caching is not enabled speculatively:
+measure repeated stable-prefix hits before paying for new cache writes.
+
+`[model-usage]` records feature, provider/model, input/output/cache token counts,
+stop reason and a dated list-price estimate. The Mini also keeps these records
+in `~/Library/Logs/sbt-model-usage.jsonl`; serving functions emit them to runtime
+logs. They contain no prompts, reader inputs or credentials. Subscription cost
+is recorded as zero incremental API dollars, with subscription usage limits
+still applying. Estimates are not invoices. Council digests reuse only fully
+validated outputs for an identical complete prompt, model and output contract;
+source fetches and body/freshness verification still run. Newsletter CLI auth
+cannot inherit the API key; its existing metered Fable fallback remains explicit.

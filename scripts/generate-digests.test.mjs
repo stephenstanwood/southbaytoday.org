@@ -8,7 +8,7 @@ import test from "node:test";
 
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
-function run({ publishedDate = "2026-10-15", unavailable = false } = {}) {
+function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1 } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
   try {
     mkdirSync(join(root, "scripts"));
@@ -62,15 +62,21 @@ function run({ publishedDate = "2026-10-15", unavailable = false } = {}) {
         return new Response('unavailable in offline fixture', {status: 503});
       };
     `);
-    const log = execFileSync(process.execPath, ["--import", join(root, "source-mocks.mjs"), join(root, "scripts/generate-digests.mjs")], {
+    let log = "";
+    const requestCounts = [];
+    for (let attempt = 0; attempt < runs; attempt++) {
+    rmSync(capture, { force: true });
+    log = execFileSync(process.execPath, ["--import", join(root, "source-mocks.mjs"), join(root, "scripts/generate-digests.mjs")], {
       cwd: root, encoding: "utf8", timeout: 30_000,
-      env: { ...process.env, ANTHROPIC_API_KEY: "offline-fixture", SBT_NOTIFICATION_TEST_DIR: join(root, "notifications") },
+      env: { ...process.env, ANTHROPIC_API_KEY: "offline-fixture", SBT_NOTIFICATION_TEST_DIR: join(root, "notifications"), SBT_GENERATION_CACHE_DIR: join(root, "cache") },
       stdio: ["ignore", "pipe", "pipe"],
     });
+    try { requestCounts.push(JSON.parse(readFileSync(capture)).length); } catch { requestCounts.push(0); }
+    }
     const digests = JSON.parse(readFileSync(output));
     let prompts = [];
     try { prompts = JSON.parse(readFileSync(capture)); } catch {}
-    return { previous, digests, prompts, log };
+    return { previous, digests, prompts, log, requestCounts };
   } finally { rmSync(root, { recursive: true, force: true }); }
 }
 
@@ -110,4 +116,13 @@ test("unavailable sources and older recovered agendas preserve the published dig
     assert.equal(card.carriedForward, true);
     assert.equal(prompts.length, 0);
   }
+});
+
+
+test("the real digest rerun verifies sources but avoids a second unchanged-input API call", () => {
+  const { digests, requestCounts, log } = run({ runs: 2 });
+  assert.deepEqual(requestCounts, [1, 0]);
+  assert.equal(digests["palo-alto"].body, "City Council");
+  assert.match(log, /trying PrimeGov.*got 2026-10-26/);
+  assert.match(log, /unchanged verified source\/prompt\/model; reused result/);
 });

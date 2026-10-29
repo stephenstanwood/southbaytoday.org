@@ -14,6 +14,7 @@ import {
 } from "../newsletter/scheduled-preflight.mjs";
 import { nowHHMM_PT, todayPT } from "./lib/slot-scheduler.mjs";
 import { publishedDefaultPlans } from "./lib/published-default-plans.mjs";
+import { dayPlanPairingIssues } from "../../src/lib/south-bay/dayPlanPairs.ts";
 
 const PREFIX = "[default-plans-scheduled]";
 const LOCK_TASK = "default-plans-refresh";
@@ -53,10 +54,10 @@ function runRepoLock(script, action) {
 }
 
 function runPlanRefresh(repoRoot) {
-  const script = join(repoRoot, "scripts", "social", "generate-schedule.mjs");
+  const script = join(repoRoot, "scripts", "generate-default-plans.ts");
   const result = spawnSync(
     process.execPath,
-    [script, "--hero-only", "--local-only"],
+    ["--import", "tsx", script, "--local-only"],
     { cwd: repoRoot, env: process.env, stdio: "inherit" },
   );
   if (result.error) {
@@ -78,7 +79,19 @@ function committedPlanDate(repoRoot) {
   });
   if (result.status !== 0) return null;
   try {
-    return JSON.parse(result.stdout)?.plans?.adults?.planDate || null;
+    const data = JSON.parse(result.stdout);
+    const today = data.plans?.adults?.planDate;
+    if (!today) return null;
+    const tomorrow = new Date(`${today}T12:00:00Z`);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+    for (const [key, date] of Object.entries({ adults: today, kids: today,
+      "adults:tomorrow": tomorrow.toISOString().slice(0, 10), "kids:tomorrow": tomorrow.toISOString().slice(0, 10) })) {
+      const plan = data.plans?.[key];
+      if (plan?.planDate !== date || plan.editorialProvider !== "codex-subscription"
+        || plan.selectionModel !== "pillar-pairs-v1" || plan.cards?.length !== 6
+        || dayPlanPairingIssues(plan.cards).length) return null;
+    }
+    return today;
   } catch {
     return null;
   }

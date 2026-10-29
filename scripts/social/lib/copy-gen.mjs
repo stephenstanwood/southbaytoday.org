@@ -7,6 +7,7 @@
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertSocialGenerationEnabled } from "./generation-policy.mjs";
 import { CLAUDE_COPY_MODEL, CONFIG } from "./constants.mjs";
 import { mentionInstructions, applyTagSubstitutions, recordUntaggedItem, resolveItemHandles } from "./handle-lookup.mjs";
 
@@ -103,6 +104,7 @@ THINGS TO NEVER DO:
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string}>}
  */
 export async function generateSingleItemCopy(item, timeOfDay = "morning") {
+  assertSocialGenerationEnabled();
   loadEnv();
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -272,6 +274,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string}>}
  */
 export async function generateSvHistoryCopy(milestone, ptTime) {
+  assertSocialGenerationEnabled();
   loadEnv();
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -523,6 +526,7 @@ export function trimToLimit(text, limit) {
 
 // Keep the old function for backward compat during transition
 export async function generateCopy(format, items, url) {
+  assertSocialGenerationEnabled();
   if (items.length === 1) {
     return generateSingleItemCopy(items[0]);
   }
@@ -542,6 +546,7 @@ const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frid
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
  */
 export async function generateDayPlanCopy(plan, dateStr, planUrl) {
+  assertSocialGenerationEnabled();
   loadEnv();
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
@@ -691,6 +696,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
  */
 export async function generateTonightPickCopy(item) {
+  assertSocialGenerationEnabled();
   loadEnv();
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error("ANTHROPIC_API_KEY not set");
@@ -811,6 +817,7 @@ Return ONLY a JSON object with keys "x", "threads", "bluesky", "facebook", "inst
  * @returns {Promise<{x: string, threads: string, bluesky: string, facebook: string, instagram: string, mastodon: string}>}
  */
 export async function generateWildcardCopy(item, subtype = "general", postDateStr = null) {
+  assertSocialGenerationEnabled();
   // SV History has its own generator
   if (subtype === "sv-history" && item.foundedYear) {
     const ptTime = postDateStr

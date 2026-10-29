@@ -2,6 +2,9 @@
 // South Bay Today — Social Posting Configuration
 // ---------------------------------------------------------------------------
 
+// Source-controlled retirement; no environment switch can restart social copy.
+export const SOCIAL_COPY_ENABLED = false;
+
 export const CONFIG = {
   DRY_RUN: false,
   PLATFORMS: { x: true, threads: true, bluesky: true, facebook: true, mastodon: true, instagram: true, pinterest: false },
@@ -21,10 +24,7 @@ export const CONFIG = {
 // Sonnet for cheap bulk work: classifier, fact-check, editorial filter, reply triage.
 export const CLAUDE_MODEL = "claude-sonnet-5-5";
 
-// Opus for user-facing copy generation (day-plan social posts, tonight picks,
-// wildcards, restaurant opening blurbs, daily-email blurbs). Each daily run
-// produces all platform variants in one call, so the cost delta over Sonnet
-// is negligible (a few cents/day) and the quality is what people see.
+// Historical social-copy model. Generation is blocked while retired.
 export const CLAUDE_COPY_MODEL = "claude-opus-5-5";
 
 // Scoring weights

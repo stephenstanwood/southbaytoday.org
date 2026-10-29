@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { assertSocialGenerationEnabled } from "./lib/generation-policy.mjs";
+assertSocialGenerationEnabled();
 // ---------------------------------------------------------------------------
 // South Bay Signal — SV History Post Generator
 // Generates "On This Day in Silicon Valley" social posts for milestones

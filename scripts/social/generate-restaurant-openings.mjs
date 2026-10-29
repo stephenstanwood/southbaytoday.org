@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { assertSocialGenerationEnabled } from "./lib/generation-policy.mjs";
+assertSocialGenerationEnabled();
 // ---------------------------------------------------------------------------
 // South Bay Signal — Restaurant Opening Post Generator
 // Generates social posts for newly opened restaurants from SCC food openings.
