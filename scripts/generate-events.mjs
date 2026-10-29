@@ -9893,8 +9893,9 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
     return events;
   } catch (err) {
     console.log(`  ⚠️  Gamble Garden: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    // Every caller publishes to the same feed. Let the shared source policy
+    // retain rows on a transient failure, including outside strict mode.
+    throw err;
   }
 }
 
@@ -10411,10 +10412,11 @@ async function main() {
     console.log(`📎 Inputs: ${summary}\n`);
   }
 
-  const source = (fn, { id = fn.name, label = fn.name, critical = false } = {}) => ({
+  const source = (fn, { id = fn.name, label = fn.name, critical = false, preserveOnTransientFailure = false } = {}) => ({
     id,
     label,
     critical,
+    preserveOnTransientFailure,
     fn,
   });
 
@@ -10502,7 +10504,9 @@ async function main() {
     source(fetchSouthBayMusicalTheatreEvents),
     source(fetchLosAltosStageEvents),
     source(fetchPaloAltoPlayersEvents),
-    source(fetchGambleGardenEvents),
+    // An interrupted response is not an empty calendar. Retain its previously
+    // verified rows and disclose the failed fetch in carry-forward metadata.
+    source(fetchGambleGardenEvents, { label: "Gamble Garden", preserveOnTransientFailure: true }),
     source(fetchMidpenEvents, { label: "Midpen Open Space" }),
     source(fetchMexicanHeritagePlazaEvents),
     source(fetchMuseumOfAmericanHeritageEvents),

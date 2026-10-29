@@ -106,6 +106,7 @@ Other rules:
 - Skip events past today's date.
 - Deduplicate within one email.
 - Do NOT invent fields. If a field is missing, use null (or empty string for description).
+- A venue's opening hours do not establish an activity's start or end. For a confirmed event date with no event time in its own text or flyer, use T00:00:00 with the correct Pacific offset in startsAt and null for endsAt; this sentinel displays as an unknown time. Never substitute museum hours or a neighboring event's clocks.
 - Preserve the source's AM/PM labels; never change PM to AM (or AM to PM) because another time seems more plausible. If source clocks conflict, keep an unambiguous start, set endsAt to null, and describe the conflict rather than inventing a corrected finish.
 - Prefer the event's own page URL over the newsletter's main URL.
   - NEVER use a mailto: link as sourceUrl. If the only contact is an email address, set sourceUrl to null.

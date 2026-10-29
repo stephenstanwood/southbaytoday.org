@@ -189,8 +189,19 @@ test("Gamble fetches a repeated detail URL only once per refresh", async (t) => 
 });
 
 test("an unrecognized Gamble detail page cannot silently publish a guessed audience", async (t) => {
-  const { events } = await scrape(t, { html: "<html><body><nav>Kids and families</nav>Temporarily unavailable</body></html>" });
-  assert.deepEqual(events, []);
+  await assert.rejects(
+    scrape(t, { html: "<html><body><nav>Kids and families</nav>Temporarily unavailable</body></html>" }),
+    /Gamble Garden detail page has no event description body/,
+  );
+});
+
+test("an interrupted Gamble response remains a source failure outside strict mode", async (t) => {
+  // The October 29 refresh received headers, then lost the response body.
+  // Returning [] here erased 31 future listings before source policy ran.
+  t.mock.method(globalThis, "fetch", async () => new Response(new ReadableStream({
+    start(controller) { controller.error(new TypeError("terminated")); },
+  })));
+  await assert.rejects(fetchGambleGardenEvents({ wait: async () => {} }), /terminated/);
 });
 
 test("source-published OSF initials survive title and body cleanup", () => {

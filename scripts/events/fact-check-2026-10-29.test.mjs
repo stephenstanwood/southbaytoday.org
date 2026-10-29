@@ -6,6 +6,65 @@ import { classify } from "../audit-events.mjs";
 import { hasOutOfAreaDestination, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "../../src/lib/south-bay/eventFilters.mjs";
 import { mapTicketmasterEvent } from "../generate-events.mjs";
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
+import { normalizeInboundEventPresentation } from "../lib/inbound-event-normalize.mjs";
+import { fetchInboundEvents } from "../generate-events.mjs";
+
+// Original museum newsletter and first-party occurrence pages:
+// docs/qa/2026-10-29-1807-fact-check.md.
+test("museum event clocks come from their own schedules and unknown clocks survive ingestion and cached blurbs", async () => {
+  const venue = "Children's Discovery Museum of San Jose";
+  const rows = [
+    ["2026-11-01", "Día de los Muertos Celebration", "10:00 AM", "3:30 PM", "https://www.cdm.org/event/dia-de-los-muertos/"],
+    ["2026-12-06", "Menorahs & Miracles Hanukkah Celebration", "10:00 AM", "2:00 PM", "https://www.cdm.org/event/menorahs-miracles/"],
+    ["2026-11-08", "Orbital Escape Robotics Demonstration", null, null],
+    ["2026-11-11", "Deck the Tree ornament-making", null, null],
+    ["2026-11-15", "Drone Programming with Python", null, null],
+    ["2026-11-21", "Daisy Day: Design with Nature", null, null],
+  ];
+  for (const [date, title, time, endTime, url] of rows) {
+    const raw = {
+      id: title, cityKey: "san-jose", title,
+      startsAt: `${date}T09:30:00-08:00`,
+      endsAt: title.startsWith("Deck") ? `${date}T16:30:00-08:00` : null,
+      location: `${title.startsWith("Deck") ? "Art Studio, " : ""}${venue}, 180 Woz Way, San Jose, CA 95110`,
+      sourceUrl: "https://secure2.convio.net/cdm/site/R?i=source-email-link",
+      description: "A museum activity. The newsletter gives no event time, so the start is the museum's weekend opening time.",
+    };
+    const original = structuredClone(raw);
+    const presented = normalizeInboundEventPresentation(raw);
+    assert.equal(presented.time, time);
+    assert.equal(presented.endTime, endTime);
+    const [ingested] = fetchInboundEvents({ today: "2026-10-29", events: [raw] });
+    const events = [{ ...ingested, blurb: "Join the museum activity." }];
+    await resolveEventBlurbs(events, { enabled: false });
+    const [actual] = events;
+    assert.equal(actual.time, time);
+    assert.equal(actual.endTime, endTime);
+    assert.equal(actual.date, date);
+    assert.equal(actual.cost, null, "opening hours do not establish admission");
+    assert.doesNotMatch(actual.description, /start is the museum's weekend opening time/);
+    if (url) assert.equal(actual.url, url);
+    else {
+      assert.equal(actual.attendanceStatus, "needs-confirmation");
+      assert.match(actual.attendanceNote, /gives no activity time/);
+      assert.equal(requiresAttendanceConfirmation(actual), true);
+    }
+    assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+    assert.deepEqual(raw, original);
+    for (const other of [
+      { ...actual, date: date.replace("2026", "2027") },
+      { ...actual, title: "Another activity", url: "https://example.org/event", venue: "Another museum" },
+    ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+  const [halloween] = fetchInboundEvents({ today: "2026-10-29", events: [{
+    id: "halloween", cityKey: "san-jose", title: "Halloween at the Purple Museum",
+    startsAt: "2026-10-31T09:30:00-07:00", endsAt: "2026-10-31T16:30:00-07:00",
+    location: venue, description: "Costume party during regular museum hours.",
+    sourceUrl: "https://www.cdm.org/event/halloween-at-the-purple-museum/",
+  }] });
+  assert.equal(halloween.time, "9:30 AM", "explicit all-day activity hours remain valid");
+  assert.equal(halloween.endTime, "4:30 PM");
+});
 
 // Source and access limits: docs/qa/2026-10-29-1007-fact-check.md.
 test("AI Center open labs retain the library-card access condition through sparse source refreshes", async () => {

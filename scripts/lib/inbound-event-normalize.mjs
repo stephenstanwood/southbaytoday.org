@@ -250,13 +250,15 @@ export function normalizeInboundEventPresentation(event) {
     ...officialOverride(event),
     ...(verified !== source ? {
       ...(verified.date !== source.date ? { date: verified.date } : {}),
-      ...(verified.time ? { time: verified.time } : {}),
+      ...(Object.hasOwn(verified, "time") ? { time: verified.time } : {}),
       ...(Object.hasOwn(verified, "endTime") ? { endTime: verified.endTime } : {}),
       ...(verified.url !== source.url ? { url: verified.url } : {}),
       ...(verified.venue !== source.venue ? { venue: verified.venue } : {}),
     } : {}),
   };
-  const time = override?.time || inboundClock(event?.startsAt);
+  // A verified null means the source supplies no event clock. Do not fall
+  // back to the extractor's guessed opening time in that case.
+  const time = Object.hasOwn(override, "time") ? override.time : inboundClock(event?.startsAt);
   const parsedEndTime = endsAtLooksLikeAClosingTime(event?.startsAt, event?.endsAt)
     ? inboundClock(event?.endsAt)
     : null;

@@ -34,7 +34,7 @@ export interface InboundEvent {
 
   // ── Extracted event fields ──
   title: string;
-  /** ISO 8601 with America/Los_Angeles offset. */
+  /** ISO 8601 with America/Los_Angeles offset. Midnight means a known date with no supplied event time; never substitute venue opening hours. */
   startsAt: string;
   /** ISO 8601 or null if not specified. */
   endsAt: string | null;

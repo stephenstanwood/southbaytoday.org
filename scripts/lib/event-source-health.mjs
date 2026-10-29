@@ -138,11 +138,12 @@ export function buildSourceHealth(sourceDefinitions, settledResults) {
 export function isTransientSourceError(error) {
   const msg = String(error?.message || error || "");
   if (/\b(408|425|429|5\d\d)\b/.test(msg)) return true;
-  return /timeout|AbortError|ECONNRESET|ENOTFOUND|EAI_AGAIN|network|fetch failed|socket/i.test(msg);
+  return /timeout|AbortError|ECONNRESET|ENOTFOUND|EAI_AGAIN|network|fetch failed|socket|\bterminated\b/i.test(msg);
 }
 
 /**
- * When a critical adapter dies on a transient upstream failure after retries,
+ * When a critical adapter (or an explicitly opted-in optional adapter) dies
+ * on a transient upstream failure after retries,
  * reuse last night's rows for that source label so the refresh can still publish
  * instead of paging on a brief Ticketmaster 429.
  */
@@ -155,7 +156,7 @@ export function carryForwardTransientCriticalSources(
   const carried = [];
   const results = (Array.isArray(settledResults) ? settledResults : []).map((result, index) => {
     const source = sourceDefinitions[index];
-    if (!source?.critical || result?.status !== "rejected") return result;
+    if (!(source?.critical || source?.preserveOnTransientFailure) || result?.status !== "rejected") return result;
     if (!isTransientSourceError(result.reason)) return result;
 
     const cached = prev.filter((event) => event?.source === source.label);

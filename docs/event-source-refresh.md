@@ -131,6 +131,12 @@ alone would miss that ordering regression.
   without paging. Optional adapters that 429 are absorbed unless many fail at
   once; the heartbeat matches that tolerance so a single Heritage Theatre rate
   limit cannot keep Discord red.
+- Gamble Garden explicitly opts into the same carry-forward policy. Its
+  October 29 response body terminated after headers arrived, dropping 31
+  future listings. Keep errors visible to source policy in every caller,
+  retain the prior rows on transient failures, and disclose `carriedForward`
+  and `carryForwardReason`; permanent errors and successful empty calendars
+  do not trigger this fallback.
 - Missing credentials, stale/empty snapshots, critical empty sources, and
   aggregate event/source regressions block the output write.
 - A Playwright task that returns an empty array after previously contributing

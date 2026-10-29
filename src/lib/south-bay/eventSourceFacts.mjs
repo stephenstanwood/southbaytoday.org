@@ -9,6 +9,47 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The October 29 museum newsletter substituted opening hours for missing
+  // event clocks. These two first-party occurrence pages publish real times;
+  // the other four dates are confirmed only by the original received email.
+  // Evidence: docs/qa/2026-10-29-1807-fact-check.md.
+  {
+    date: "2026-11-01",
+    title: /^Día de los Muertos Celebration$/i,
+    venue: /^Children's Discovery Museum of San Jose(?:,|$)/i,
+    url: "https://www.cdm.org/event/dia-de-los-muertos/",
+    facts: {
+      time: "10:00 AM", endTime: "3:30 PM",
+      url: "https://www.cdm.org/event/dia-de-los-muertos/",
+    },
+    copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
+  },
+  {
+    date: "2026-12-06",
+    title: /^Menorahs & Miracles(?: Hanukkah Celebration)?$/i,
+    venue: /^Children's Discovery Museum of San Jose(?:,|$)/i,
+    url: "https://www.cdm.org/event/menorahs-miracles/",
+    facts: {
+      time: "10:00 AM", endTime: "2:00 PM",
+      url: "https://www.cdm.org/event/menorahs-miracles/",
+    },
+    copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
+  },
+  ...[
+    ["2026-11-08", /^Orbital Escape Robotics Demonstration$/i],
+    ["2026-11-11", /^Deck the Tree ornament-making$/i],
+    ["2026-11-15", /^Drone Programming with Python$/i],
+    ["2026-11-21", /^Daisy Day: Design with Nature$/i],
+  ].map(([date, title]) => ({
+    date, title,
+    venue: /^(?:Children's Discovery Museum of San Jose(?:,|$)|Art Studio(?:, Children's Discovery Museum of San Jose|$))/i,
+    facts: {
+      time: null, endTime: null,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The museum's October 29 newsletter confirms this date but gives no activity time. Confirm the activity schedule with Children's Discovery Museum before going.",
+    },
+    copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
+  })),
   // The sparse theater snapshot loses the promoter's children ages 2–7
   // audience and supplies a generic community blurb. Match this booking,
   // not every event sharing the theaters landing page, before cache lookup.
