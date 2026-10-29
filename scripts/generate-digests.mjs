@@ -24,13 +24,14 @@ import {
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { catSignal } from "./lib/notify.mjs";
-import { agendaTextForMeeting, recoverLegistarDigestSource, recoverUnattributedMeetingAgenda } from "./lib/digest-source.mjs";
+import { agendaTextForMeeting, recoverLegistarDigestSource, recoverPrimeGovDigestSource, recoverUnattributedMeetingAgenda } from "./lib/digest-source.mjs";
 import { hasUnsupportedMeetingAction, hasUnscopedMeetingCancellation } from "./lib/around-town-meetings.mjs";
 import {
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
   fetchEscribePastMeeting,
   fetchLegistarPastMeeting,
+  fetchPrimeGovPastMeeting,
   legistarMeetingUrl,
   ptDateISO,
   verifyLegistarBodyOnDate,
@@ -90,9 +91,9 @@ const CITIES = [
   // Milpitas + Palo Alto digests stall when Stoa lacks full agenda text: recent
   // Milpitas records are CivicClerk stubs ("Meeting record available on...") that
   // fail hasRealContent, and recent Palo Alto records are commission/item-level
-  // rather than City Council. The real fix is upstream in Stoa ingestion;
-  // Milpitas now has a first-party fallback for when it stalls, Palo Alto does
-  // not (PrimeGov is read only to verify which body met, not for agenda text).
+  // rather than City Council.
+  // Both now have first-party agenda fallbacks when Stoa stalls or mislabels
+  // another body's business. Every recovered source still passes attribution.
   // Palo Alto has no legistarApi: webapi.legistar.com/v1/paloalto is not a
   // provisioned client (500 "connection string not set up") even though the
   // public paloalto.legistar.com calendar exists for source links.
@@ -101,7 +102,7 @@ const CITIES = [
   // Palo Alto left Legistar — paloalto.legistar.com answers "Invalid parameters!"
   // for every request, so `legistar:` here only produced dead source links and a
   // body check that silently no-opped. PrimeGov is the live system of record.
-  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.paloalto.gov/City-Hall/City-Council/Council-Agendas-Minutes", primegov: "cityofpaloalto.primegov.com" },
+  { city: "palo-alto",     stoaCity: "Palo Alto",     cityName: "Palo Alto",     schedule: "1st and 3rd Monday",    agendaUrl: "https://www.paloalto.gov/City-Hall/City-Council/Council-Agendas-Minutes", primegov: "cityofpaloalto.primegov.com", primegovCommitteeId: 9 },
 ];
 
 // If Stoa's most recent record for a city is older than this many days, we try
@@ -174,6 +175,11 @@ function pastMeetingFallback(config) {
   }
   if (config.civicengage) {
     return { provider: "CivicEngage", fetch: () => fetchCivicEngagePastMeeting(config.civicengage) };
+  }
+  if (config.primegov) {
+    return { provider: "PrimeGov", fetch: () => fetchPrimeGovPastMeeting({
+      domain: config.primegov, committeeId: config.primegovCommitteeId,
+    }) };
   }
   return null;
 }
@@ -529,6 +535,20 @@ async function main() {
             actual = recovered.actual;
             bodyLabel = meeting.meetingType;
             console.log(`  ↻ ${config.cityName}: recovered verified ${bodyLabel} agenda (${meeting.date}) from Legistar`);
+          }
+        }
+        if (config.primegov && (!actual || actual.body || actual.councilMet === false)) {
+          const recovered = await recoverPrimeGovDigestSource({
+            domain: config.primegov,
+            committeeId: config.primegovCommitteeId,
+            publishedDate: publishedIso,
+            today,
+          });
+          if (recovered) {
+            meeting = recovered.meeting;
+            actual = recovered.actual;
+            bodyLabel = meeting.meetingType;
+            console.log(`  ↻ ${config.cityName}: recovered verified ${bodyLabel} agenda (${meeting.date}) from PrimeGov`);
           }
         }
         if (actual?.councilMet === true) bodySourceUrl = actual.sourceUrl;
