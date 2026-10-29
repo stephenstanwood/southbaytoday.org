@@ -3,6 +3,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { cachedGeneration } from "./generation-cache.mjs";
+import { PILLAR_PAIR_SCHEMA as PAIR_SCHEMA } from "../../src/lib/south-bay/planEditorialSchema.mjs";
 import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
 
 export function subscriptionEnvironment(source = process.env) {
@@ -20,16 +21,6 @@ export function latestStableSol(catalog) {
   return models[0].slug;
 }
 
-const PAIR_SCHEMA = {
-  type: "object", additionalProperties: false, required: ["pairs"], properties: {
-    pairs: { type: "array", minItems: 3, maxItems: 3, items: {
-      type: "object", additionalProperties: false,
-      required: ["pillarBucket", "pillarId", "pillarBlurb", "mealId", "mealBlurb"],
-      properties: { pillarBucket: { type: "string", enum: ["morning", "afternoon", "evening"] },
-        pillarId: { type: "string" }, pillarBlurb: { type: "string" }, mealId: { type: "string" }, mealBlurb: { type: "string" } },
-    } },
-  },
-};
 
 export function createCodexPlanEditorial({ run = spawnSync, env = process.env,
   cli = env.SBT_CODEX_CLI || "/opt/homebrew/bin/codex", cacheRoot } = {}) {
