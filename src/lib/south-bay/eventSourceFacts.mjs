@@ -9,6 +9,58 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const CORRECTIONS = [
+  // The sparse theater snapshot loses the promoter's children ages 2–7
+  // audience and supplies a generic community blurb. Match this booking,
+  // not every event sharing the theaters landing page, before cache lookup.
+  // https://www.nederlanderconcerts.com/event/be-like-blippi-tour-2
+  // Evidence: docs/qa/2026-10-29-0207-fact-check.md.
+  {
+    date: "2026-10-28",
+    matches: (event) => /^Be Like Blippi(?: Tour!?)?$/i.test(event.title || "")
+      && event.venue === "San Jose Civic"
+      && ["https://www.sanjose.org/theaters", "https://www.nederlanderconcerts.com/event/be-like-blippi-tour-2"].includes(event.url),
+    facts: {
+      category: "family", kidFriendly: true, audienceAge: "kids",
+      url: "https://www.nederlanderconcerts.com/event/be-like-blippi-tour-2",
+      description: "Live stage show featuring Blippi and Meekah, designed especially for children ages 2–7.",
+      blurb: "See Blippi and Meekah in a live show designed for children ages 2–7.",
+    },
+  },
+  // The public page explicitly labels admission Free Event and asks for the
+  // matching form by October 26 at noon. That elapsed form deadline does not
+  // prove the gathering itself is closed; confirm attendance before going.
+  // Evidence: docs/qa/2026-10-29-0207-fact-check.md (fresh organizer page).
+  {
+    date: "2026-10-29",
+    url: "https://events.stanford.edu/event/bff-matchmaking",
+    facts: {
+      cost: "free",
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer asked participants to complete the personality matching form by October 26 at noon. Confirm attendance with the organizer if you missed that deadline.",
+    },
+  },
+  // This is SCU's organized trip, not an 8:30 AM event at a Santa Clara hotel.
+  // SCU's indexed full listing gives the transport schedule and October 5
+  // signup deadline; fresh occurrence JSON-LD confirms its date and destination.
+  // Keep the local-departure trip, identify its out-of-area destination, and
+  // require confirmation of late signup rather than infer current closure.
+  // https://events.scu.edu/campus-calendar/event/517331-startup-world-cup-grand-finale
+  // https://www.startupworldcup.io/grand-finale
+  // Evidence and browser access limit: docs/qa/2026-10-29-0207-fact-check.md.
+  {
+    date: "2026-11-06",
+    url: "https://events.scu.edu/ciocca-center/event/517331-startup-world-cup-grand-finale",
+    aliasUrls: ["https://events.scu.edu/event/517331-startup-world-cup-grand-finale", "https://events.scu.edu/campus-calendar/event/517331-startup-world-cup-grand-finale"],
+    facts: {
+      title: "Startup World Cup Grand Finale (SCU day trip)",
+      address: "333 O'Farrell Street, San Francisco, CA 94102",
+      registration: REGISTRATION_REQUIRED,
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "SCU's calendar requested registration by October 5. Transportation leaves SCU at 8:30 AM for Hilton Union Square in San Francisco, with a planned 7:30 PM return. Confirm late signup availability and the departure point with SCU before going.",
+      description: "SCU-organized day trip to the Startup World Cup Grand Finale in San Francisco. Provided transportation departs SCU at 8:30 AM, with a planned return at 7:30 PM.",
+      blurb: "Take SCU's organized day trip to the Startup World Cup in San Francisco; confirm late signup availability with the organizer.",
+    },
+  },
   // Stanford's occurrence page explicitly labels this Free Event and offers
   // registration. The exact Localist record leaves its opt-in free flag
   // false and ticket_cost blank; neither establishes paid admission.
