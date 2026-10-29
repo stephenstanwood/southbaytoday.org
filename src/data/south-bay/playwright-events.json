@@ -1,18 +1,17 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-29T22:07:08.913Z",
+    "generatedAt": "2026-10-29T23:34:08.650Z",
     "generator": "playwright-scrapers",
-    "scrapersRun": 29,
-    "eventCount": 204,
-    "sourceCount": 19,
+    "scrapersRun": 28,
+    "eventCount": 186,
+    "sourceCount": 18,
     "sources": [
-      "San Jose Jazz (11)",
+      "San Jose Jazz (12)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "San Jose Theaters (20)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (5)",
@@ -21,7 +20,7 @@
       "TheatreWorks Silicon Valley (69)",
       "Levi's Stadium (3)",
       "SAP Center (12)",
-      "The Tech Interactive (10)",
+      "The Tech Interactive (11)",
       "Books Inc (7)",
       "Peninsula Open Space Trust (4)",
       "San Jose Museum of Art (3)"
@@ -63,7 +62,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 11,
+        "count": 12,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -146,16 +145,6 @@
         "count": 0,
         "error": null,
         "sources": []
-      },
-      {
-        "id": "san-jose-theaters",
-        "label": "San Jose Theaters",
-        "status": "ok",
-        "count": 20,
-        "error": null,
-        "sources": [
-          "San Jose Theaters"
-        ]
       },
       {
         "id": "hammer-theatre",
@@ -257,7 +246,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 10,
+        "count": 11,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -486,6 +475,23 @@
       "cost": null,
       "description": "",
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "f0aa791fe596",
+      "title": "HSAS Big Band at Christmas in the Park",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "San Jose Jazz Venue",
+      "address": "",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -1028,346 +1034,6 @@
       "kidFriendly": false
     },
     {
-      "id": "fb588d45d3c3",
-      "title": "Caifanes",
-      "date": "2026-10-29",
-      "displayDate": "Thu, Oct 29",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "71972c7d74d4",
-      "title": "Bluey’s Big Play",
-      "date": "2026-10-30",
-      "displayDate": "Fri, Oct 30",
-      "time": null,
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "f4eedc329f62",
-      "title": "Maria Jose & Moenia – U.S. Tour 2026",
-      "date": "2026-10-30",
-      "displayDate": "Fri, Oct 30",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "812e755bc0b8",
-      "title": "Jorge Medina",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "8:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "e71b2b803a35",
-      "title": "Dog Man: The Musical",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "2:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "af84b2496152",
-      "title": "How to Train Your Dragon The Musical Jr.",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
-      "time": null,
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "e047d8788e34",
-      "title": "Álvaro Díaz – Omakase Tour",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "84095872b705",
-      "title": "Koyote",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "5:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "a1e766764524",
-      "title": "Matilda The Musical",
-      "date": "2026-11-12",
-      "displayDate": "Thu, Nov 12",
-      "time": null,
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "43b8950429f3",
-      "title": "Nutcracker! Magical Christmas Ballet",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": "2:00pm",
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "9bd6fcbfd47d",
-      "title": "Rodrigo y Gabriela",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": "7:15pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "69c6e8eef9c9",
-      "title": "Fiddler on the Roof – Opera San José",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": null,
-      "endTime": null,
-      "venue": "California Theatre",
-      "address": "345 S 1st St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "a0fb7bf1e856",
-      "title": "Marisela: Eterna Tour 2026",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "6:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "034e9ea48f24",
-      "title": "The Who’s Tommy – Broadway San Jose",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
-      "time": null,
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "20ef86c82e07",
-      "title": "Alice Cooper: Alice's Attic Tour",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "21e8afbea4a6",
-      "title": "Arcángel – La 8va Maravilla World Tour",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "32c2d50fcb85",
-      "title": "The Carpenters Songbook: A Live Celebration",
-      "date": "2026-11-27",
-      "displayDate": "Fri, Nov 27",
-      "time": "6:00pm",
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "9be866b659d6",
-      "title": "Mariachazo Tour 2026",
-      "date": "2026-11-27",
-      "displayDate": "Fri, Nov 27",
-      "time": "7:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "5e9e5a10a534",
-      "title": "Hip Hop Nutcracker - Broadway San Jose",
-      "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Center for the Performing Arts",
-      "address": "255 S Almaden Blvd, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
-      "id": "a38abc0c1973",
-      "title": "Come From Away",
-      "date": "2026-12-03",
-      "displayDate": "Thu, Dec 3",
-      "time": null,
-      "endTime": null,
-      "venue": "Montgomery Theater",
-      "address": "271 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
-      "kidFriendly": false
-    },
-    {
       "id": "1263ddeb0607",
       "title": "Toddler Storytime",
       "date": "2026-10-29",
@@ -1504,7 +1170,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-29T22:06:00.792Z"
+        "checkedAt": "2026-10-29T23:32:52.599Z"
       }
     },
     {
@@ -1527,7 +1193,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-29T22:06:00.793Z"
+        "checkedAt": "2026-10-29T23:32:52.600Z"
       }
     },
     {
@@ -1550,7 +1216,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T22:06:00.795Z"
+        "checkedAt": "2026-10-29T23:32:52.602Z"
       }
     },
     {
@@ -1573,7 +1239,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T22:06:00.795Z"
+        "checkedAt": "2026-10-29T23:32:52.602Z"
       }
     },
     {
@@ -1596,7 +1262,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-29T22:06:00.795Z"
+        "checkedAt": "2026-10-29T23:32:52.602Z"
       }
     },
     {
@@ -3288,7 +2954,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.721Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3312,7 +2978,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.721Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3336,7 +3002,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.721Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3360,7 +3026,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3384,7 +3050,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3408,7 +3074,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3432,7 +3098,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3456,7 +3122,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3480,7 +3146,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3504,7 +3170,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3528,7 +3194,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3552,7 +3218,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T22:06:32.722Z"
+        "checkedAt": "2026-10-29T23:33:26.287Z"
       }
     },
     {
@@ -3663,6 +3329,23 @@
       "date": "2026-11-14",
       "displayDate": "Sat, Nov 14",
       "time": "12:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "0d7b8aac6ccd",
+      "title": "Hunger Games: Sunrise on the Reaping",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": "5:00PM",
       "endTime": null,
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
