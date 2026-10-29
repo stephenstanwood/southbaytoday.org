@@ -70,6 +70,7 @@ import {
 import type { City } from "../../lib/south-bay/types";
 
 import { recordModelUsage } from "../../lib/modelUsage.mjs";
+import { PILLAR_PAIR_SCHEMA } from "../../lib/south-bay/planEditorialSchema.mjs";
 import { planResultCache, planResultKey, PLAN_PROMPT_VERSION } from "../../lib/south-bay/planResultCache";
 
 import placesData from "../../data/south-bay/places.json";
@@ -1553,17 +1554,21 @@ OUTPUT — JSON array only:
       const started = Date.now();
       const response = await new Anthropic({ apiKey: anthropicKey() }).messages.create({
         model: CLAUDE_SONNET,
-        max_tokens: 1800,
+        max_tokens: 4096,
         thinking: { type: "between_tools" } as any,
-        messages: [{ role: "user", content: prompt }],
+        output_config: { format: { type: "json_schema", schema: PILLAR_PAIR_SCHEMA } },
+        messages: [{ role: "user", content: `${prompt}\n\nReturn the three pair objects in the schema's pairs field.` }],
       });
       recordModelUsage({ feature: "visitor-plan", model: response.model, usage: response.usage,
         elapsedMs: Date.now() - started, requestId: response.id, stopReason: response.stop_reason });
       if (response.stop_reason === "max_tokens") throw new Error("Plan editorial response was truncated");
       raw = extractText(response.content);
     }
-    const parsed = JSON.parse(stripFences(raw));
-    if (!Array.isArray(parsed) || parsed.length !== 3) throw new Error("Expected three editorial pillar pairs");
+    const decoded = JSON.parse(stripFences(raw));
+    const parsed = Array.isArray(decoded) ? decoded : decoded.pairs;
+    if (!Array.isArray(parsed) || parsed.length !== 3 || new Set(parsed.map(p => p.pillarBucket)).size !== 3) {
+      throw new Error("Expected three editorial pillar pairs");
+    }
     modelPicks = parsed;
   } catch (error) {
     if (editorial?.strict) throw error;
