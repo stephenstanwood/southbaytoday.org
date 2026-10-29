@@ -10336,7 +10336,8 @@ async function main() {
     source(fetchLgChamberEvents),
     source(fetchFarmersMarketEvents),
     source(fetchMiscHardcodedEvents),
-    source(fetchMeetupEvents, { label: "Meetup", critical: true }),
+    // Meetup live ingestion retired 2026-10-28; no paid API requests.
+    // Keep the adapter export only for historical normalization fixtures.
     source(fetchEastWestBookshopEvents),
     source(fetchKeplersEvents),
     // Hicklebee's — live ingestion retired; current access restrictions and

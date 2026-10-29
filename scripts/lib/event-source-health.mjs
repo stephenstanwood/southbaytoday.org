@@ -2,10 +2,6 @@ export const DEFAULT_SNAPSHOT_MAX_AGE_HOURS = 30;
 
 const REQUIRED_REFRESH_ENV = Object.freeze([
   "TICKETMASTER_API_KEY",
-  "MEETUP_CLIENT_ID",
-  "MEETUP_MEMBER_ID",
-  "MEETUP_KID",
-  "MEETUP_PRIVATE_KEY",
 ]);
 
 function ageHours(timestamp, now) {

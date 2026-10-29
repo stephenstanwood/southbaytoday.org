@@ -104,6 +104,12 @@ alone would miss that ordering regression.
 
 ## Fail-closed contract
 
+- Meetup live API ingestion was retired on 2026-10-28. The production source
+  registry, strict credential preflight, output health requirements and GitHub
+  environment no longer depend on Meetup. Do not restore token or GraphQL
+  requests during a refresh. Historical adapter fixtures and archived event
+  records remain available; other sources keep their existing health gates.
+
 - Projected farmers markets are verified only when their configured season,
   start/end dates, weekday, and closures leave an eligible occurrence within
   the 90-day publication horizon. Expired or out-of-window schedules neither
