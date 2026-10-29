@@ -1,31 +1,30 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-29T05:26:09.472Z",
+    "generatedAt": "2026-10-29T09:34:32.537Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 29,
-    "eventCount": 208,
-    "sourceCount": 20,
+    "eventCount": 203,
+    "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (12)",
+      "San Jose Jazz (11)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
-      "Montalvo Arts Center (4)",
+      "Montalvo Arts Center (3)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Mountain Winery (1)",
       "San Jose Theaters (20)",
       "Children's Discovery Museum (3)",
       "Guadalupe River Park Conservancy (3)",
       "Santana Row (5)",
       "City of Cupertino (21)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (70)",
+      "TheatreWorks Silicon Valley (69)",
       "Levi's Stadium (3)",
       "SAP Center (12)",
       "The Tech Interactive (10)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (4)",
-      "San Jose Museum of Art (4)"
+      "San Jose Museum of Art (3)",
+      "Peninsula Open Space Trust (4)"
     ],
     "sourceHealth": [
       {
@@ -64,7 +63,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 12,
+        "count": 11,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -74,7 +73,7 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 4,
+        "count": 3,
         "error": "SJMA calendar returned HTTP 403",
         "sources": [
           "San Jose Museum of Art"
@@ -106,7 +105,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 5,
+        "count": 3,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -143,12 +142,10 @@
       {
         "id": "mountain-winery",
         "label": "Mountain Winery",
-        "status": "ok",
-        "count": 1,
+        "status": "empty",
+        "count": 0,
         "error": null,
-        "sources": [
-          "Mountain Winery"
-        ]
+        "sources": []
       },
       {
         "id": "san-jose-theaters",
@@ -222,7 +219,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 70,
+        "count": 69,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -295,33 +292,18 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 4,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
   "events": [
-    {
-      "id": "a2f4a85b983f",
-      "title": "Laura Anglade",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "San Jose Jazz Venue",
-      "address": "",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://sanjosejazz.org/events/laura-anglade/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "685a1ddfd17a",
       "title": "Top Chefs",
@@ -835,23 +817,6 @@
       "kidFriendly": false
     },
     {
-      "id": "461bcf36220e",
-      "title": "Direct from Sweden: The Music of ABBA",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/direct-from-sweden/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "cb8470ec8a27",
       "title": "4th Lowrider Art Showcase – Celebrating Dia de los Muertos",
       "date": "2026-11-01",
@@ -988,10 +953,10 @@
       "kidFriendly": false
     },
     {
-      "id": "8958766dbc07",
+      "id": "4c0e516a3014",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1008,10 +973,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b3a95ba6ba1c",
+      "id": "3751b09fd825",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1028,10 +993,10 @@
       "kidFriendly": false
     },
     {
-      "id": "72010b180a58",
+      "id": "061b223f1039",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1045,40 +1010,6 @@
       "description": "",
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "9a2f287fd257",
-      "title": "Foreigner with Alex & Justina Lucero",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "The Mountain Winery",
-      "address": "14831 Pierce Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.mountainwinery.com/events/detail?event_id=1390753",
-      "source": "Mountain Winery",
-      "kidFriendly": false
-    },
-    {
-      "id": "c0c9ee3bbaab",
-      "title": "Be Like Blippi",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "6:00pm",
-      "endTime": null,
-      "venue": "San Jose Civic",
-      "address": "135 W San Carlos St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sanjose.org/theaters",
-      "source": "San Jose Theaters",
       "kidFriendly": false
     },
     {
@@ -1405,10 +1336,27 @@
       "kidFriendly": false
     },
     {
-      "id": "6713c9d2d342",
+      "id": "2448a402b294",
+      "title": "Come From Away",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": null,
+      "endTime": null,
+      "venue": "Montgomery Theater",
+      "address": "271 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sanjose.org/theaters",
+      "source": "San Jose Theaters",
+      "kidFriendly": false
+    },
+    {
+      "id": "1263ddeb0607",
       "title": "Toddler Storytime",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
+      "date": "2026-10-29",
+      "displayDate": "Thu, Oct 29",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1541,7 +1489,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-29T05:25:00.305Z"
+        "checkedAt": "2026-10-29T09:33:24.769Z"
       }
     },
     {
@@ -1564,7 +1512,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-29T05:25:00.307Z"
+        "checkedAt": "2026-10-29T09:33:24.773Z"
       }
     },
     {
@@ -1587,7 +1535,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T05:25:00.310Z"
+        "checkedAt": "2026-10-29T09:33:24.776Z"
       }
     },
     {
@@ -1610,7 +1558,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-29T05:25:00.310Z"
+        "checkedAt": "2026-10-29T09:33:24.776Z"
       }
     },
     {
@@ -1633,7 +1581,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-29T05:25:00.311Z"
+        "checkedAt": "2026-10-29T09:33:24.777Z"
       }
     },
     {
@@ -2007,7 +1955,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2078,23 +2026,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "e16dc29ec6e4",
-      "title": "Dracula",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7520",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -3342,7 +3273,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-16",
         "date": "2026-10-29",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.483Z"
+        "checkedAt": "2026-10-29T09:33:58.311Z"
       }
     },
     {
@@ -3366,7 +3297,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.483Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3390,7 +3321,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.483Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3414,7 +3345,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3438,7 +3369,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3462,7 +3393,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3486,7 +3417,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3510,7 +3441,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3534,7 +3465,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3558,7 +3489,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3582,7 +3513,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3606,7 +3537,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-29T05:25:33.484Z"
+        "checkedAt": "2026-10-29T09:33:58.312Z"
       }
     },
     {
@@ -3899,6 +3830,65 @@
       "kidFriendly": false
     },
     {
+      "id": "8f7697d5027c",
+      "title": "First Fridays: November 2026",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": "6:00 PM",
+      "endTime": "9:00 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
+      "url": "https://sjmusart.org/event/first-fridays-november-2026",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": false,
+      "blurb": "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
+      "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "fe4a7a23e4bd",
+      "title": "Walk with a Naturalist: November 2026",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "12:30 PM",
+      "endTime": "1:30 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
+      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": true,
+      "costNote": "Tour included with museum admission",
+      "audienceAge": "all",
+      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
+      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
+    },
+    {
+      "id": "a322ab0c474f",
+      "title": "First Fridays: Celebrate the Holidays with Pride",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "6:00 PM",
+      "endTime": "9:00 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "Celebrate San Jose's LGBTQIA+ community with live music, storytelling, and drag performances. Museum admission is free after 6 PM.",
+      "url": "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": false,
+      "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
+      "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
       "id": "7cc888f61ff1",
       "title": "Bug’s Eye View (Online Event)",
       "date": "2026-10-29",
@@ -3966,86 +3956,6 @@
       "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
       "source": "Peninsula Open Space Trust",
       "kidFriendly": false
-    },
-    {
-      "id": "e9db5308794a",
-      "title": "Walk with a Naturalist: October 2026",
-      "date": "2026-10-28",
-      "displayDate": "Wed, Oct 28",
-      "time": "12:30 PM",
-      "endTime": "1:30 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
-      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": true,
-      "costNote": "Tour included with museum admission",
-      "audienceAge": "all",
-      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
-      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
-    },
-    {
-      "id": "8f7697d5027c",
-      "title": "First Fridays: November 2026",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
-      "url": "https://sjmusart.org/event/first-fridays-november-2026",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
-      "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "fe4a7a23e4bd",
-      "title": "Walk with a Naturalist: November 2026",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "12:30 PM",
-      "endTime": "1:30 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
-      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": true,
-      "costNote": "Tour included with museum admission",
-      "audienceAge": "all",
-      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
-      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
-    },
-    {
-      "id": "a322ab0c474f",
-      "title": "First Fridays: Celebrate the Holidays with Pride",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Celebrate San Jose's LGBTQIA+ community with live music, storytelling, and drag performances. Museum admission is free after 6 PM.",
-      "url": "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
-      "attendanceNote": "Register in advance for faster check-in."
     }
   ]
 }
