@@ -9,15 +9,29 @@ import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
-// from the repair table. The original audit and incremental evening review
+// from the repair table. The original audit and incremental evening/night reviews
 // retain complete source copy, attendance conditions, numbers and identifiers.
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29.json", import.meta.url)));
 const eveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29-evening.json", import.meta.url)));
+const nightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29-night.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
 
-for (const row of [...fixture.cases, ...eveningFixture.cases]) {
+const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
+  // A later audit can refine the same complete text. Follow only its captured
+  // before/after pair, preserving the earlier audit's original evidence.
+  let reviewed = row.reviewed;
+  for (const later of audits.slice(auditIndex + 1)) {
+    const revision = later.cases.find(candidate => candidate.source === row.source
+      && candidate.field === row.field && candidate.refreshed === reviewed);
+    if (revision) reviewed = revision.reviewed;
+  }
+  return { ...row, reviewed };
+}));
+
+for (const row of reviewedCases) {
   for (const occurrence of row.events) {
     test(`refresh retains reviewed ${row.field}: ${occurrence.id}`, () => {
       const original = {
@@ -120,4 +134,31 @@ test("complete accommodation directions survive the truncated-suffix repair", ()
   assert.deepEqual(polishReviewedEventCopy(event), event);
   const otherPublisher = { source: "Different publisher", description: "Library storytime. To request an accommodation under the Americans with Disabilities Act for library-sponsored events, please visit" };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
+test("contact punctuation repairs preserve later source instructions and address changes", () => {
+  for (const [source, description] of [
+    ["Santa Clara County Library", "For assistance, email us at ask@lib.sccgov.org or call (408) 540-3945. Register 7 days ahead."],
+    ["Santa Clara County Library", "For assistance, email us at ask@sccl.org. New accessibility directions follow here."],
+    ["Santa Clara County Library", "For assistance, email us at new.contact@example.org"],
+    ["Santa Clara County Library", "Si necesita ayuda, envíenos un correo electrónico a nueva@example.org."],
+    ["San Jose Public Library", "For questions, send an email to ab.sjpl@sjlibrary.org or call (408) 808-3040."],
+    ["Palo Alto City Library", "Questions? Email neurosphereyouth@gmail.com or register online."],
+  ]) {
+    const event = { source, description };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("theatre byline punctuation leaves revised dates and ticket instructions intact", () => {
+  const event = {
+    source: "Santa Clara University",
+    description: "By Oscar Wilde Directed by Kimberly Mohne Hill November 20 - 22 (Fri-Sat 7 PM, Sun 1 PM). Tickets $30; ages 8+.",
+  };
+  const reviewed = {
+    ...event,
+    description: "By Oscar Wilde. Directed by Kimberly Mohne Hill. November 20 - 22 (Fri-Sat 7 PM, Sun 1 PM). Tickets $30; ages 8+.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
 });

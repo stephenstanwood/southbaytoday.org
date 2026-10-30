@@ -115,6 +115,18 @@ const EDITS = {
       ["and write basic sentences Free. Registration requested,", "and write basic sentences. Free. Registration requested,"],
       ["grammar, and dialogue. Program is drop in and free. No registration needed.", "grammar, and dialogue. The program is free and offered on a drop-in basis. No registration needed."],
       ["Free. Offered in-person, in English or", "Free. Offered in person, in English or"],
+      ["Community Service webpage or more information", "Community Service webpage for more information"],
+      ["Sessions take place every 1st and 3rd (& 5th, if applicable) Tuesdays.", "Sessions take place on the 1st and 3rd (& 5th, if applicable) Tuesdays."],
+      ["Topics may include creating simple sentence structures, some basic grammar, and build up to writing a simple paragraph.", "Topics may include creating simple sentence structures, learning some basic grammar, and building up to writing a simple paragraph."],
+      ["want to learn more/complex English", "want to learn more complex English"],
+      ["Young writers, 2nd Grade to 5th Grade (ages 7-11) are invited", "Young writers in 2nd through 5th grade (ages 7-11) are invited"],
+      [/generously sponsored by the Pearl Avenue Friends of the Library$/g, "generously sponsored by the Pearl Avenue Friends of the Library."],
+      [/send an email to ab\.sjpl@sjlibrary\.org$/g, "send an email to ab.sjpl@sjlibrary.org."],
+      ["Students in Kindergarten through 5th grade", "Students in kindergarten through 5th grade"],
+      [/Gratis\. Bilingüe$/g, "Gratis. Bilingüe."],
+      [/Para mayor información escribe a marcela\.guevara@sjlibrary\.org$/g, "Para mayor información, escribe a marcela.guevara@sjlibrary.org."],
+      ["to Grab a Pumpkin Craft. All materials", "to grab a pumpkin craft. All materials"],
+      ["For Children 0-10 while supplies last.", "For children 0-10 while supplies last."],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -207,6 +219,13 @@ const EDITS = {
       ["film is rated PG we recommend ages", "film is rated PG, we recommend ages"],
       ["In this class local maker Bea", "In this class, local maker Bea"],
       ["Each participant will leave with 3 individual soaps and the know-how to make your own at home!", "Each participant will leave with 3 individual soaps and the know-how to make their own at home!"],
+      ["body rhymes, songs, very short and simple picture books.", "body rhymes, songs, and very short and simple picture books."],
+      ["At our book club meeting we will discuss", "At our book club meeting, we will discuss"],
+      ["at Woodland Library for check out.", "at Woodland Library to check out."],
+      // End-of-field anchors add sentence punctuation without altering an
+      // address, extending a link, or cutting off later source instructions.
+      [/email us at (ask@lib\.sccgov\.org|ask@sccl\.org)$/g, "email us at $1."],
+      [/envíenos un correo electrónico ask@lib\.sccgov\.org$/g, "envíenos un correo electrónico a ask@lib.sccgov.org."],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
@@ -222,6 +241,9 @@ const EDITS = {
       ["con movimiento en Español e Inglés. Jueves de 10:30-11", "con movimiento en español e inglés. Jueves de 10:30-11"],
       ["In this workshop folks will learn", "In this workshop, folks will learn"],
       ["Writers resumes for their fourth year on", "Writers resumes for its fourth year on"],
+      ["performance with musician and storyteller, Kirk Waller!", "performance with musician and storyteller Kirk Waller!"],
+      ["Come join teen-led group NeuroSphere!", "Come join the teen-led group NeuroSphere!"],
+      [/Questions\? Email neurosphereyouth@gmail\.com$/g, "Questions? Email neurosphereyouth@gmail.com."],
     ],
     blurb: [
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
@@ -297,6 +319,8 @@ const EDITS = {
   "Santa Clara University": {
     description: [
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
+      ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
+      [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],
     ],
   },
 };
