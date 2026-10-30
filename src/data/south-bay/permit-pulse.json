@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-29T03:14:57.485Z",
+      "generatedAt": "2026-10-30T03:11:09.275Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 21 – Oct 28",
+      "dateRange": "Oct 22 – Oct 29",
       "stats": {
-        "total": 463,
+        "total": 457,
         "notable": 27,
-        "newUnits": 13,
-        "totalValuation": 25254045
+        "newUnits": 14,
+        "totalValuation": 23595673
       },
       "permits": [
         {
@@ -37,18 +37,6 @@
           "units": 1,
           "issueDate": "2026-10-22",
           "subtype": "Single-Family"
-        },
-        {
-          "id": "2026-101382-RS",
-          "address": "1088 O'Brien Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage Conversion to ADU",
-          "valuation": 154634,
-          "units": 1,
-          "issueDate": "2026-10-21",
-          "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
           "id": "2026-128193-RS",
@@ -87,6 +75,30 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2022-702414-RS",
+          "address": "1185 Sierra Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Code Case One - Detached Garage and ADU",
+          "valuation": 58137,
+          "units": 1,
+          "issueDate": "2026-10-27",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-120519-RS",
+          "address": "1849 Potrero Dr #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "JADU Garage Conversion",
+          "valuation": 51017,
+          "units": 1,
+          "issueDate": "2026-10-27",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-111640-RS",
           "address": "2595 Britt Wy #2",
           "category": "residential-new",
@@ -99,6 +111,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-144579-CI",
+          "address": "141 Innovation Dr",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Altera Tenant Improvement",
+          "valuation": 3400000,
+          "units": 0,
+          "issueDate": "2026-10-27",
+          "subtype": "Office"
+        },
+        {
           "id": "2026-144344-CI",
           "address": "90 Headquarters Dr",
           "category": "commercial-large",
@@ -109,30 +133,6 @@
           "units": 0,
           "issueDate": "2026-10-26",
           "subtype": "R & D Lab"
-        },
-        {
-          "id": "2025-118427-CI",
-          "address": "650 Piercy Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Finish Interior",
-          "description": "Spec Space Finish Interior for Market Ready Office TI",
-          "valuation": 2686653,
-          "units": 0,
-          "issueDate": "2026-10-21",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-142000-CI",
-          "address": "3090 Stevens Creek Bl",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Lifetime Fitness Center TI",
-          "valuation": 2617129,
-          "units": 0,
-          "issueDate": "2026-10-22",
-          "subtype": "Health Club"
         }
       ]
     }
