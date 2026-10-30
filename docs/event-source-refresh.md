@@ -436,6 +436,45 @@ snapshot rather than relabeling it as a fresh collection. Do not restore the
 mirror as fallback coverage. Evidence and exact corrections:
 [`2026-10-29-2307-fact-check.md`](qa/2026-10-29-2307-fact-check.md).
 
+## October 30: Mountain Winery upstream empty calendar
+
+The persistent zero is a **verified upstream empty concert calendar**,
+consistent with the end of the published concert schedule. It is not evidence
+of parser drift or a reason to retire the source.
+
+The official [concert series page](https://www.mountainwinery.com/concert-series/)
+publishes its calendar file in the event container's `data-file` attribute:
+[`events/35/events.json`](https://aegwebprod.blob.core.windows.net/json/events/35/events.json).
+At 08:19 PT on October 30, a normal Mini request received HTTP 200 and
+`{"meta":{"total":0,"locale":"en-US","page":1,"rows":100},"events":[]}`.
+The response's `Last-Modified` was October 30 at 08:15:10 PT. This is a fresh
+empty upstream payload, not a failed selector applied to populated cards.
+
+A scoped Mini browser run at 08:38 PT confirmed HTTP 200 for both the page and
+that same empty calendar payload. The calendar initialized its month-list and
+event containers but displayed no dated cards or detail links, including after
+an additional seven-second settle. The existing `scrapeMountainWinery` and
+`runScraper` wrapper returned zero events with `error: null`. This check left
+the source code and generated snapshots byte-for-byte unchanged. All 66
+official-source and Playwright resilience tests passed on the Mini.
+
+The last retained source row was **Foreigner with Alex & Justina Lucero** on
+October 28, 2026 at 7:30 PM. The official
+[AXS event page](https://www.axs.com/events/1390753/foreigner-tickets) confirms
+that date, venue and supporting act. The row aged out after its date in
+`a68ecdbc`; both the October 30 Playwright snapshot and generated event database
+contain zero Mountain Winery rows. There were no still-future Mountain Winery
+rows to retain. The venue's older detail URL now renders from the same empty
+calendar file, so it is not independent evidence of a later show.
+
+This review establishes the currently published empty calendar. It does not
+establish that the venue will add no further concerts, that its next season is
+announced, or that ordinary wine-tasting hours are dated concert occurrences.
+Keep the source enabled and its zero/error health visible. Apply the normal
+freshness, access-error and still-future-row guards on every run; a later
+populated calendar, parser error or lost future coverage requires a fresh
+source check. This dated disposition is not an empty-season allowlist.
+
 ## Other refresh safeguards
 
 - Inbound events arrive as one Vercel Blob shard per intake email (866 as of
