@@ -2654,6 +2654,20 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // This dated Calabazas occurrence gives two incompatible print limits.
+  // Preserve the source text and disclose the ambiguity without selecting a
+  // limit. Stop adding the note when either conflicting clause is corrected.
+  // https://sjpl.bibliocommons.com/events/6ad7b5ac377296003a4d47e1
+  // Evidence: docs/qa/2026-10-30-2007-fact-check.md (fresh exact-ID response).
+  if (event?.date === "2026-11-03"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ad7b5ac377296003a4d47e1(?:[/?#]|$)/.test(event?.url || "")
+      && /\bDesigns must print in 1 hour 45 minutes\b/i.test(event.description || "")
+      && /\bhave a print time of under 45 minutes\b/i.test(event.description || "")) {
+    const printLimitNote = "The library lists conflicting print-time limits (45 minutes and 1 hour 45 minutes). Confirm your design's limit with Calabazas Library at cz.sjpl@sjlibrary.org.";
+    if (!(event.attendanceNote || "").includes(printLimitNote)) {
+      event = { ...event, attendanceNote: [event.attendanceNote, printLimitNote].filter(Boolean).join(" ") };
+    }
+  }
   // The sparse SJSU RSS body omits the card needed to use this public lab.
   // Its indexed occurrence page lists these dates; the library's access guide
   // independently confirms the condition. A library card is not a reservation.
