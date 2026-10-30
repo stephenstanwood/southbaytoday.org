@@ -3394,8 +3394,13 @@ function cleanVenue(raw) {
   // "Santa Clara, Calif., Stevens Stadium - Buck Shaw Field". Strip a leading
   // "<City>, Calif.," / "<City>, CA," block only when a real venue name follows
   // (the required comma after the state token protects names like "Palo Alto,
-  // California Avenue Station"); a bare "Santa Clara, Calif." is left for the caller.
+  // California Avenue Station"); a bare city/state is handled below.
   v = v.replace(/^[A-Z][A-Za-z.'\- ]+,\s*(?:Calif\.?|California|CA)\.?,\s*(?=\S)/, "");
+  // Localist also publishes bare "San Jose, Calif." locations. Normalize the
+  // trailing state token before the address/city passes so those placeholders
+  // get the same treatment as "San Jose, CA", without touching venue names
+  // such as California Theatre or California Avenue Station.
+  v = v.replace(/,\s*(?:Calif\.?|California)\s*$/i, ", CA");
   // If the string is meeting directions ("Meet at...", "Check in at..."), not a venue name
   if (/^(meet|check\s+in)\s+(at|in)\s+/i.test(v)) return "";
   // Localist (SJSU Events) gates the location behind a campus login and puts the

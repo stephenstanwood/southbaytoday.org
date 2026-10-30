@@ -52,6 +52,19 @@ test("cleanVenue still drops a bare city suffix with no address", () => {
   );
 });
 
+test("cleanVenue treats spelled-out state suffixes like CA in Localist locations", () => {
+  for (const state of ["CA", "Calif.", "Calif", "California"]) {
+    assert.equal(cleanVenue(`San Jose, ${state}`), "");
+    const venue = cleanVenue(`CEFCU Stadium, San Jose, ${state}`);
+    assert.equal(venue, "CEFCU Stadium");
+    assert.equal(cleanVenue(venue), venue, "refresh preserves the cleaned venue");
+    assert.equal(cleanVenue(`History Park, 635 Phelan Ave, San Jose, ${state}`), "History Park");
+  }
+  for (const venue of ["California Theatre", "California Avenue", "Palo Alto, California Avenue Station"]) {
+    assert.equal(cleanVenue(venue), venue);
+  }
+});
+
 test("cleanVenue leaves a plain venue name alone", () => {
   assert.equal(cleanVenue("Cupertino Library"), "Cupertino Library");
   assert.equal(cleanVenue("Computer History Museum"), "Computer History Museum");
