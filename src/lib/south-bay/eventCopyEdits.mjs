@@ -127,6 +127,8 @@ const EDITS = {
       [/Para mayor información escribe a marcela\.guevara@sjlibrary\.org$/g, "Para mayor información, escribe a marcela.guevara@sjlibrary.org."],
       ["to Grab a Pumpkin Craft. All materials", "to grab a pumpkin craft. All materials"],
       ["For Children 0-10 while supplies last.", "For children 0-10 while supplies last."],
+      ["This session is idea for beginners seeking", "This session is ideal for beginners seeking"],
+      ["a free design from Thingiverse or similar site.", "a free design from Thingiverse or a similar site."],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -249,6 +251,7 @@ const EDITS = {
       ["performance with musician and storyteller, Kirk Waller!", "performance with musician and storyteller Kirk Waller!"],
       ["Come join teen-led group NeuroSphere!", "Come join the teen-led group NeuroSphere!"],
       [/Questions\? Email neurosphereyouth@gmail\.com$/g, "Questions? Email neurosphereyouth@gmail.com."],
+      ["the consequences of which continues to reverberate today.", "the consequences of which continue to reverberate today."],
     ],
     blurb: [
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
