@@ -8,6 +8,7 @@ const EDITS = {
     title: [
       ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
+      [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
     ],
     description: [
       ["before program starts", "before the program starts"],
@@ -129,11 +130,19 @@ const EDITS = {
       ["For Children 0-10 while supplies last.", "For children 0-10 while supplies last."],
       ["This session is idea for beginners seeking", "This session is ideal for beginners seeking"],
       ["a free design from Thingiverse or similar site.", "a free design from Thingiverse or a similar site."],
+      ["Tiempo de Cuentos & Stay and Play Tiempo de Cuentos está", "Tiempo de Cuentos & Stay and Play: Tiempo de Cuentos está"],
+      ["11:30 a.m. - 12:00 pm; Stay & Play:", "11:30 a.m. - 12:00 p.m.; Stay & Play:"],
+      ["English in-person at the Biblioteca Latinoamericana!", "English in person at the Biblioteca Latinoamericana!"],
+      ["with other intermediate level adult learners", "with other intermediate-level adult learners"],
+      ["This program is in-person at Santa Teresa Branch Library.", "This program is held in person at Santa Teresa Branch Library."],
+      [/No registration required, Materials Will Be Provided$/g, "No registration required. Materials will be provided."],
+      [/Free\. No registration required$/g, "Free. No registration required."],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
+      ["club at Almaden Library, no registration required.", "club at Almaden Library. No registration required."],
     ],
   },
   "Linden Tree Books": {
@@ -233,6 +242,7 @@ const EDITS = {
       // address, extending a link, or cutting off later source instructions.
       [/email us at (ask@lib\.sccgov\.org|ask@sccl\.org)$/g, "email us at $1."],
       [/envíenos un correo electrónico ask@lib\.sccgov\.org$/g, "envíenos un correo electrónico a ask@lib.sccgov.org."],
+      ["Eric's three week journey begins in Milan and then on to lakes", "Eric's three-week journey begins in Milan and continues to lakes"],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
@@ -270,17 +280,20 @@ const EDITS = {
   "City Newsletter": {
     title: [
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
+      [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
     ],
     blurb: [
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["similar to Bingo,", "similar to bingo,"],
       ["this drop-in social group, no registration required.", "this drop-in social group. No registration required."],
       ["Dance to line dancing and", "Enjoy line dancing and"],
+      ["Senior Center lobby, no registration needed.", "Senior Center lobby. No registration needed."],
     ],
     description: [
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["similar to Bingo.", "similar to bingo."],
       ["Drone programming program using Python at the", "Drone programming with Python at the"],
+      ["personal readiness, employee vs. Owner trade-offs", "personal readiness, employee vs. owner trade-offs"],
     ],
   },
   "SJSU Events": {
@@ -311,6 +324,7 @@ const EDITS = {
       ["and outdoor Rodin Sculptures!", "and outdoor Rodin sculptures!"],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
+      ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
     ],
     blurb: [
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
