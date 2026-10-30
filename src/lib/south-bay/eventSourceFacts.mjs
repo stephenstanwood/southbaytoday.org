@@ -10,6 +10,25 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // The library's documentary copy gives an unsupported national death
+  // fraction. HURI's demographic research reports 13.3%, not one-quarter;
+  // omit the disputed precision without changing the event or its synopsis.
+  // https://www.gis.huri.harvard.edu/demographic-research
+  // Evidence: docs/qa/2026-10-30-1907-fact-check.md.
+  {
+    date: "2026-11-14",
+    matches: (event) => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6ae4c93a901b02002cc63238(?:[/?#]|$)/.test(event.url || ""),
+    copyReplacements: [[/\bthe one-quarter of Ukraine['’]s population who\b/gi, "those who"]],
+  },
+  // The ticket page confirms a soul/blues/R&B concert. Sparse Montalvo
+  // calendar rows omit that context and otherwise fall back to arts.
+  // Evidence: docs/qa/2026-10-30-1907-fact-check.md (fresh ticket page).
+  {
+    date: "2026-11-13",
+    matches: (event) => /^https:\/\/my\.montalvoarts\.org\/3232\/3246(?:[/?#]|$)/.test(event.url || "")
+      || /^https:\/\/montalvoarts\.org\/experience\/carriage-house-concerts\/marc-broussard(?:[/?#]|$)/.test(event.url || ""),
+    facts: { category: "music" },
+  },
   // Prefer the organizer's dated registration page to its sparse calendar
   // card: Otto Lee's room is SVLG's, and Larry Klein's sales have ended.
   // Scope by occurrence and Eventbrite ID; tracking queries are not identity.

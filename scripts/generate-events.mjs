@@ -3669,6 +3669,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // held in a theater is not an arts event, and a campus tour that mentions
   // lunch is not food programming.
   if (/\b(public input|public-input).*\b(town hall|meeting|session)\b|\btown hall\b.*\bpublic input\b/.test(titleLower)) return "community";
+  // A park renovation input meeting can take place indoors at City Hall.
+  // Its project subject must not turn a community open house into an outing.
+  if (/\b(?:community|public)\s+open\s+house\b/.test(titleLower)
+    && /\b(?:renovation|planning|infrastructure)\b/.test(titleLower)) return "community";
   if (/\bstate of the (?:city|town)\b/.test(titleLower)) return "community";
   // "Park" can be a housing property's name; carnival games are not sports.
   if (/\bhousing\s+application\s+(?:help\s+)?session\b/.test(titleLower)) return "community";
