@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-30T14:27:29.829Z",
+    "generatedAt": "2026-10-30T15:03:54.302Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 182,
+    "eventCount": 183,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (12)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
-      "Montalvo Arts Center (3)",
+      "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Children's Discovery Museum (3)",
@@ -104,7 +104,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 3,
+        "count": 5,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -874,6 +874,23 @@
       "kidFriendly": false
     },
     {
+      "id": "ffa006fa203c",
+      "title": "Marc Broussard",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -1133,7 +1150,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-30T14:26:24.570Z"
+        "checkedAt": "2026-10-30T15:02:47.558Z"
       }
     },
     {
@@ -1156,7 +1173,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-30T14:26:24.571Z"
+        "checkedAt": "2026-10-30T15:02:47.559Z"
       }
     },
     {
@@ -1179,7 +1196,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-30T14:26:24.571Z"
+        "checkedAt": "2026-10-30T15:02:47.559Z"
       }
     },
     {
@@ -1202,7 +1219,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-30T14:26:24.571Z"
+        "checkedAt": "2026-10-30T15:02:47.560Z"
       }
     },
     {
@@ -1225,7 +1242,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-30T14:26:24.572Z"
+        "checkedAt": "2026-10-30T15:02:47.560Z"
       }
     },
     {
@@ -2900,7 +2917,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
         "date": "2026-10-31",
         "time": "1:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.770Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -2924,7 +2941,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -2948,7 +2965,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -2972,7 +2989,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -2996,7 +3013,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3020,7 +3037,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3044,7 +3061,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3068,7 +3085,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3092,7 +3109,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3116,7 +3133,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.764Z"
       }
     },
     {
@@ -3140,7 +3157,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.765Z"
       }
     },
     {
@@ -3164,7 +3181,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-30T14:26:53.771Z"
+        "checkedAt": "2026-10-30T15:03:18.765Z"
       }
     },
     {
