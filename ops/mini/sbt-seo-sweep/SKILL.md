@@ -50,17 +50,22 @@ The separate Friday growth schedule is retired.
 This is a browser-first Codex task. A crawl is useful evidence, but it is not a
 substitute for Search Console.
 
-1. Use the Browser or Chrome control plugin, following its skill. Start with
-   the runtime-selected browser for the Search Console URL. A single connected
-   browser instance can contain several already-signed-in Google accounts. If
-   Search Console shows the wrong account, open Google's visible account picker
-   in that same instance and select `stanwoodventures@gmail.com` when it is
-   already listed; do not enter credentials or inspect cookies, storage,
-   passwords, or browser profiles. The Mini can also expose more than one
-   connected extension instance, with different Google sessions. After
-   exhausting the visible signed-in accounts in the current instance, enumerate
-   `agent.browsers.list()` and try every distinct untried `extension` and `iab`
-   instance before declaring an auth block.
+1. Use `mini_native_cua` on the Mini to control normal signed-in Brave. Call
+   `prepare_brave` before the first `js` call, then pass its exact returned
+   `appPath` to `cua.getApp()` and follow the returned native Computer Use
+   instructions. macOS may run Brave from an App Translocation path that differs
+   from the installed-app name. Open a task-owned tab; close only this run's
+   tabs and preserve the user's app and other tabs. Honor the shared browser
+   lease: defer if another task or human login owns it. Preserve required
+   script reviews. A lease, controller or review failure does not establish a
+   Google login failure. Never use a MacBook browser or execution fallback.
+   A single browser can contain several already-signed-in Google accounts. If
+   Search Console shows the wrong account, use Google's visible account picker
+   and select `stanwoodventures@gmail.com` when already listed. Do not enter
+   credentials or inspect cookies, storage, passwords, or browser profiles.
+   A signed-out dedicated automation profile is not evidence that normal
+   Brave is signed out. Check normal Brave first, then any distinct, already
+   connected Mini-local browser instance before declaring an auth block.
 2. Open the verified URL-prefix property `https://southbaytoday.org/` under
    `stanwoodventures@gmail.com`. Google `authuser` ordinals are
    browser-profile-relative: this account has appeared as `authuser=0`, but the
@@ -86,9 +91,8 @@ substitute for Search Console.
 5. Never remove a property or user, change ownership, or use the Indexing API
    for ordinary pages.
 
-Only after every visible signed-in account in every connected Mini browser
-instance has failed the account-and-property check, release the repo lock,
-stop, and report
+Only after normal Mini Brave and every distinct connected Mini-local browser
+instance have failed the visible account-and-property check, stop and report
 `GSC_BROWSER_LOGIN_REQUIRED` with the exact account and property. Do not call
 the run complete, and do not downgrade it to a crawl-only success.
 
