@@ -121,8 +121,9 @@ alone would miss that ordering regression.
   mode adds credential and input-snapshot preflight; it is not permission to
   publish incomplete output when omitted. A rejected refresh leaves the event
   database, archive, and retired-slug ledger unchanged.
-- Every adapter exception blocks a strict refresh, including errors that legacy
-  adapters used to swallow and return as an empty array.
+- Adapter exceptions reach source-health policy rather than masquerading as
+  empty calendars. Critical failures block; optional failures remain visible
+  and count toward the systemic-outage threshold even when rows are retained.
 - Shared HTTP fetches (including Ticketmaster Discovery) retry temporary
   network failures, rate limits, and 5xx responses with bounded backoff before
   strict mode fails. Permanent 4xx responses fail immediately.
@@ -137,6 +138,16 @@ alone would miss that ordering regression.
   retain the prior rows on transient failures, and disclose `carriedForward`
   and `carryForwardReason`; permanent errors and successful empty calendars
   do not trigger this fallback.
+- Los Altos Village Association and SVLG retain their previously published
+  future occurrences when the live adapter fails, including an access refusal
+  or an unrecognized calendar. No alternate endpoint, browser identity or
+  access bypass is attempted. Their source-health rows remain `error`, with
+  `count: 0`, the original error, `retainedCount`, `retainedDateCounts` and
+  `retainedFrom`. Repeated failures preserve the original provenance timestamp
+  and age out expired occurrences. Retention does not turn the source healthy
+  or remove it from the systemic failure threshold. A successful response
+  replaces the prior rows; ordinary cancellation and expiry filters still run.
+  SVLG exposes failures in every caller, including non-strict refreshes.
 - Missing credentials, stale/empty snapshots, critical empty sources, and
   aggregate event/source regressions block the output write.
 - A Playwright task that returns an empty array after previously contributing
