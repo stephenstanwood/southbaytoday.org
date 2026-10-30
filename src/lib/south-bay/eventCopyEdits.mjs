@@ -162,6 +162,11 @@ const EDITS = {
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
     ],
   },
+  "Los Altos Village Association": {
+    description: [
+      ["Join us Friday, October 30th for", "Join us Friday, October 30th, for"],
+    ],
+  },
   "Heritage Theatre": {
     description: [
       ["in De Ridder, Louisiana and raised in", "in De Ridder, Louisiana, and raised in"],
@@ -281,6 +286,7 @@ const EDITS = {
     ],
     blurb: [
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
+      ["Catch San Jose State's men's basketball team take on", "Watch San Jose State's men's basketball team take on"],
     ],
   },
   "Ticketmaster": {
