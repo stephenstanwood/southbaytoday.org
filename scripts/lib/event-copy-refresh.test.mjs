@@ -14,7 +14,8 @@ import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29.json", import.meta.url)));
 const eveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29-evening.json", import.meta.url)));
 const nightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29-night.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture];
+const morningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -34,8 +35,14 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
 for (const row of reviewedCases) {
   for (const occurrence of row.events) {
     test(`refresh retains reviewed ${row.field}: ${occurrence.id}`, () => {
+      // Replay each field with its other copy already reviewed. Historical
+      // description/blurb evidence keeps the old title; the title's own case
+      // separately replays that original spelling from source.
+      const reviewedTitle = reviewedCases.find(candidate => candidate.field === "title"
+        && candidate.source === row.source && candidate.refreshed === occurrence.title)?.reviewed
+        ?? occurrence.title;
       const original = {
-        ...occurrence, source: row.source, [row.field]: row.refreshed,
+        ...occurrence, title: reviewedTitle, source: row.source, [row.field]: row.refreshed,
         date: "2026-11-01", time: "3:30 PM", endTime: "5:00 PM",
         cost: "low", costNote: "$75", attendanceNote: "Registration required; 30 tickets.",
       };
@@ -113,6 +120,16 @@ test("new source facts and copy replace old wording without an event-ID restore"
 test("a substantive replacement description mentioning a former title echo survives", () => {
   for (const description of ["The Music of ABBA returns with a new ensemble. Tickets $55.", "RSVP Lowrider Art Showcase opens at 10 AM."]) {
     const event = { source: "Montalvo Arts Center", description };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("the diya title repair preserves new titles and other publishers", () => {
+  for (const event of [
+    { source: "City Newsletter", title: "Celebrate Diwali by Painting Diyas" },
+    { source: "City Newsletter", title: "Celebrate Diwali by Painting Diya Designs" },
+    { source: "Different publisher", title: "Celebrate Diwali by Painting Diya" },
+  ]) {
     assert.deepEqual(polishReviewedEventCopy(event), event);
   }
 });

@@ -260,6 +260,9 @@ const EDITS = {
     ],
   },
   "City Newsletter": {
+    title: [
+      [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
+    ],
     blurb: [
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["similar to Bingo,", "similar to bingo,"],
