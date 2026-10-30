@@ -10,6 +10,34 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // The browser index omits the venue and supporting combo. The organizer's
+  // exact occurrence page confirms the outdoor venue and free admission.
+  // Evidence: docs/qa/2026-10-30-0007-fact-check.md (fresh first-party page).
+  {
+    date: "2026-12-21",
+    url: "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
+    facts: {
+      title: "HSAS Big Band / U19s at Christmas in the Park",
+      venue: "Plaza de César Chávez", address: "310 South First St, San Jose",
+      cost: "free",
+      description: "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",
+      blurb: "Hear the HSAS Big Band and SJZ U19s play holiday music at Plaza de César Chávez; admission is free.",
+    },
+  },
+  // This exact BiblioCommons record says 3–3:30 PM in its date fields but AM
+  // in both language versions of its body. Preserve the source conflict and
+  // stop qualifying it once the body or structured clocks change.
+  // Evidence: docs/qa/2026-10-30-0007-fact-check.md (fresh exact-ID response).
+  {
+    date: "2026-11-01",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a7b58523f18f80030ba659d\/?$/.test(event.url || "")
+      && event.time === "3:00 PM" && event.endTime === "3:30 PM"
+      && /\bStorytime:?\s+3:00\s*[-–—]\s*3:30\s+am\b/i.test(event.description || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library calendar lists 3–3:30 PM, but its description uses a conflicting AM label. Confirm the storytime and Stay & Play timing with Edenvale Library.",
+    },
+  },
   // The Localist ticket label says Free-$390, but free in-person admission
   // requires Stanford affiliation. Preserve the actual attendance conditions.
   // Evidence: docs/qa/2026-10-29-2307-fact-check.md (fresh first-party page).

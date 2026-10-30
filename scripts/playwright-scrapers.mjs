@@ -577,10 +577,6 @@ export function parseLibCalEvents(results, config, { today = TODAY } = {}) {
 // ── San Jose Jazz ──
 
 async function scrapeSJJazz(page) {
-  // SJ Jazz returns 403 to headless browsers — evade detection
-  await page.addInitScript(() => {
-    Object.defineProperty(navigator, "webdriver", { get: () => false });
-  });
   const allEvents = [];
   for (let p = 1; p <= 6; p++) {
     const url = p === 1

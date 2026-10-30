@@ -868,6 +868,7 @@ const TITLE_FIXES = {
   " Coe Q": " CoE Q",
   " Coe Meeting": " CoE Meeting",
   "Sjz ": "SJZ ",
+  "Hsas Big Band": "HSAS Big Band", // San Jose Jazz High School All Stars
   "Bayfc": "Bay FC",
   "Crossfit": "CrossFit",  // Ticketmaster's CrossFit Games event titles arrive title-cased
   "Rock EN ": "Rock en ",
