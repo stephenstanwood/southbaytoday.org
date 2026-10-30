@@ -280,6 +280,7 @@ const EDITS = {
     ],
     blurb: [
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
+      ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
     ],
   },
   "NHL": {

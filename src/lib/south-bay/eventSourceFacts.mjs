@@ -10,6 +10,17 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // The farm's October 30 occurrence promises music, without specifying a
+  // live performance. Remove that cached embellishment only while the source
+  // retains this wording; a later explicit live-music announcement survives.
+  // Evidence: docs/qa/2026-10-30-0107-fact-check.md (first-party occurrence).
+  {
+    date: "2026-10-30",
+    matches: (event) => event.url === "https://events.stanford.edu/event/farm-autumn-festival-the-odonohue-family-stanford-educational-farm"
+      && /\bThere will be music,\s+activ(?:i)?ties and light bites\./i.test(event.description || "")
+      && !/\blive\b/i.test(event.description || ""),
+    copyReplacements: [[/\blive music\b/gi, "music"]],
+  },
   // The browser index omits the venue and supporting combo. The organizer's
   // exact occurrence page confirms the outdoor venue and free admission.
   // Evidence: docs/qa/2026-10-30-0007-fact-check.md (fresh first-party page).
