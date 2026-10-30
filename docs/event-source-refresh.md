@@ -450,6 +450,14 @@ At 08:19 PT on October 30, a normal Mini request received HTTP 200 and
 The response's `Last-Modified` was October 30 at 08:15:10 PT. This is a fresh
 empty upstream payload, not a failed selector applied to populated cards.
 
+A scoped Mini browser run at 08:38 PT confirmed HTTP 200 for both the page and
+that same empty calendar payload. The calendar initialized its month-list and
+event containers but displayed no dated cards or detail links, including after
+an additional seven-second settle. The existing `scrapeMountainWinery` and
+`runScraper` wrapper returned zero events with `error: null`. This check left
+the source code and generated snapshots byte-for-byte unchanged. All 66
+official-source and Playwright resilience tests passed on the Mini.
+
 The last retained source row was **Foreigner with Alex & Justina Lucero** on
 October 28, 2026 at 7:30 PM. The official
 [AXS event page](https://www.axs.com/events/1390753/foreigner-tickets) confirms
