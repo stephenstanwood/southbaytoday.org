@@ -98,9 +98,9 @@ const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 const DECISION_LIST = /\b(?:notable|major|key|significant)\s+decisions\s*:/i;
 const AGENDA_PLAN_CONTEXT = /\bagenda\s+(?:listed|included|scheduled)\b[^.!?;]*$/i;
-// An agenda item titled "Continuance ... to November 18" proposes the change;
-// it does not establish that the hearing or project was actually postponed.
-const COMPLETED_CONTINUANCE = /\b(?:project|proposal|application|item|hearing|review)\s+(?:(?:was|were|is|has\s+been|had\s+been)\s+)?(pushed(?:\s+back)?|postponed|continued|rescheduled)\s+(?:to|until|for)\b/gi;
+// A requested continuance proposes a change; it does not establish that a
+// hearing, ordinance or rules rewrite was actually postponed or delayed.
+const COMPLETED_CONTINUANCE = /\b(?:project|proposal|application|item|hearing|review|ordinance|rules|rewrite)\s+(?:(?:was|were|is|has\s+been|had\s+been)\s+)?(pushed(?:\s+back)?|postponed|continued|rescheduled|delayed|deferred)\s+(?:to|until|for)\b/gi;
 
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {

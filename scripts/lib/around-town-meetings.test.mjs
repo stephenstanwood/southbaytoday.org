@@ -355,3 +355,28 @@ test("an agenda-listed continuance does not establish a completed postponement",
   assert.equal(hasUnsupportedMeetingAction(item, { excerpt: item.headline }), false);
   assert.equal(hasUnsupportedMeetingAction(item, { ...agenda, source: "youtube-transcript" }), false);
 });
+
+test("a parking ordinance continuance request does not establish a delayed rewrite", () => {
+  // Sunnyvale Planning Commission, October 26, 2026: minutes and action
+  // results were unavailable; the published agenda only requested a continuance.
+  const agenda = {
+    fullAgendaText: "REQUEST FOR CONTINUANCE TO NOVEMBER 9, 2026 Proposed Project: Forward a recommendation to the City Council on related items associated with residential off-street parking requirements. Introduce an ordinance to repeal and replace Chapter 19.46 Parking.",
+  };
+  const item = {
+    headline: "Citywide residential parking rules rewrite delayed to November 9",
+    summary: "The October 26 Planning Commission agenda carried a request to continue to November 9 a recommendation to the City Council on a proposed ordinance.",
+  };
+  assert.equal(hasUnsupportedMeetingAction(item, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "Parking ordinance was deferred until November 9" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "Parking rules were delayed to November 9" }, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({
+    ...item, headline: "Citywide residential parking rules rewrite: continuance to November 9 requested",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction({
+    summary: "The agenda listed a request for the parking rewrite to be delayed until November 9.",
+  }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction(item, {
+    fullAgendaText: "The citywide residential parking rules rewrite was delayed to November 9.",
+  }), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { ...agenda, source: "youtube-transcript" }), false);
+});

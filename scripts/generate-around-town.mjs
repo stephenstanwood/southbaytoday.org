@@ -193,6 +193,8 @@ DO NOT ASSERT APPROVAL FOR FUTURE OR SAME-DAY MEETINGS: today is ${todayPT()} (P
 
 PAST AGENDAS ARE STILL AGENDAS: a date in the past does not prove an item was heard or a meeting took place. Unless the supplied source explicitly reports the discussion or action, write "the September 22 agenda listed…" or "a hearing was scheduled for…", never "the council held", "met", "heard", "discussed", or "weighed". Do not infer that approval is still pending.
 
+A request for a continuance does not establish a completed delay or postponement. In both headline and summary, describe the requested date unless the source confirms the action.
+
 This rule applies to BOTH the headline and summary. An older agenda cannot establish that council currently "weighs" an item or "will discuss" it, or that a hearing "is scheduled" now. Give the original date and describe what its agenda listed.
 
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
