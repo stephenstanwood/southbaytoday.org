@@ -10243,7 +10243,7 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
       const venueParts = venueLocation.split(",").map((s) => s.trim());
       if (
         venueParts.length > 1 &&
-        /^(?:[\w'’.&-]+\s+){0,3}(?:Room|Rm)(?:\s+\w+)?$|^(?:Room|Rm)\s+\w+$/i.test(venueParts[0]) &&
+        /^(?:[\w'’.&-]+\s+){0,3}(?:Room|Rm)(?:\s+\w+)?$|^(?:Room|Rm)\s+\w+$|^(?:Lobby|Social Hall)$/i.test(venueParts[0]) &&
         /\b(Library|Center|Centre|Hall|Museum|Park|Church|Theatre|Theater|School|College|Building)\b/i.test(venueParts[1])
       ) {
         venueName = venueParts[1];
@@ -11338,8 +11338,11 @@ async function main() {
   const audienceCounts = { kids: 0, adult: 0, all: 0 };
   for (const e of collapsedEvents) {
     Object.assign(e, applyVerifiedEventFacts(e));
-    const tag = classifyAudienceAge(e);
-    e.audienceAge = tag;
+    e.audienceAge = classifyAudienceAge(e);
+    // Keep verified eligibility after the text fallback. A volunteer notice
+    // can mention ages 10–14 without restricting participation to children.
+    Object.assign(e, applyVerifiedEventFacts(e));
+    const tag = e.audienceAge;
     if (e.sourceAudiences?.length && tag !== "all") e.kidFriendly = tag === "kids";
     audienceCounts[tag]++;
   }

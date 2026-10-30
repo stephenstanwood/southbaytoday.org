@@ -95,10 +95,29 @@ export function hasUnconfirmedStartTime(event) {
   return [event?.title, event?.description].some((text) => pendingStart.test(String(text || "")));
 }
 
+export function hasUnconfirmedOccurrenceDate(event) {
+  // A valid calendar timestamp cannot resolve an explicit pending move. The
+  // January 31 writing-workshop row still says its replacement day is TBD.
+  // Confirmed moves and conditional rescheduling policies remain publishable.
+  const text = String(event?.description || "").replace(/<[^>]*>/g, " ");
+  return /(?:^|[.!?])\s*this\s+(?:event|workshop|program|session)\s+(?:will\s+be|is\s+being)\s+rescheduled\s+to\s+(?:another|a\s+different)\s+(?:day|date)\b/i.test(text)
+    && /\b(?:TBD|TBA|to\s+be\s+(?:announced|determined|confirmed))\b/i.test(text);
+}
+
+export function isNonEventOffer(event) {
+  // The Tech's event index also carries membership-sales promotions. This
+  // offer grants vouchers for a separate December activity; its October
+  // timestamp is not a public cookie-cutter session. Keep the actual activity.
+  return event?.source === "The Tech Interactive"
+    && /^Buy or Renew In-Person\b/i.test(String(event?.title || ""));
+}
+
 export function isEventPublishable(event) {
   return !isPlaceTemporarilyUnavailable(event)
     && !isEventEditoriallySuppressed(event)
     && !isEventExplicitlyInactive(event)
     && !hasUnconfirmedStartTime(event)
+    && !hasUnconfirmedOccurrenceDate(event)
+    && !isNonEventOffer(event)
     && hasRequiredOccurrenceEvidence(event);
 }

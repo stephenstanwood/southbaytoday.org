@@ -9,7 +9,94 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
+// Dated organizer pages confirm these Break Room performances, including the
+// two separate December 5 shows. Never infer another occurrence from this list.
+// Evidence: docs/qa/2026-10-30-2307-fact-check.md.
+const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
+  ["2026-10-30", "top-chefs", "paid"],
+  ["2026-10-31", "legally-blue-2", "paid"],
+  ["2026-11-06", "sjz-break-room-jazz-jam-2", "free"],
+  ["2026-11-13", "emily-day-cosmo-alleycats", "paid"],
+  ["2026-11-14", "andre-cruz-black-diamond-rhythm-band", "paid"],
+  ["2026-11-20", "black-nile", "paid"],
+  ["2026-11-21", "sandra-katrina-pacheco-music-of-amalia-rodrigues", "paid"],
+  ["2026-11-25", "noah-the-arkiteks", "paid"],
+  ["2026-12-04", "sjz-break-room-jazz-jam-3", "free"],
+  ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan", "paid"],
+  ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
+];
 const CORRECTIONS = [
+  ...SJZ_BREAK_ROOM_2026_OCCURRENCES.map(([date, slug, cost]) => ({
+    date, url: `https://sanjosejazz.org/events/${slug}/`,
+    facts: { venue: "SJZ Break Room", category: "music", cost },
+    copyReplacements: [
+      [/\bSan Jose Jazz Venue['’]s Break Room\b/g, "SJZ Break Room"],
+      [/\b(?:San Jose )?Jazz Venue\b/g, "SJZ Break Room"],
+      ...(slug === "legally-blue-2" ? [[/\bblues and soul standards\b/g, "blues"]] : []),
+    ],
+  })),
+  // Exact original city newsletters supply the attendance conditions that
+  // the extracted descriptions omitted. Keep later closed/full metadata.
+  // Evidence: docs/qa/2026-10-30-2307-fact-check.md (receiving-account originals).
+  ...[
+    ["2026-11-05", "Advance Care Planning Workshop"],
+    ["2026-11-12", "Google Translate and Digital Emergency Prep Workshop"],
+    ["2026-11-19", "Medicare Annual Enrollment and Updates 2027 Workshop"],
+  ].map(([date, title]) => ({
+    date,
+    matches: (event) => event.title === title
+      && /^(?:Social Hall|Mountain View Senior Center)(?:,|$)/i.test(event.venue || ""),
+    facts: {
+      venue: "Mountain View Senior Center", registration: REGISTRATION_REQUIRED,
+      audienceAge: "adult",
+      attendanceNote: "Ages 55+. Sign up in advance at senior.center@mountainview.gov, by calling 650-903-6330, or at the Senior Center front desk. Held in the Social Hall.",
+    },
+  })),
+  {
+    date: "2026-11-10",
+    matches: (event) => event.title === "Puzzle Swap"
+      && /^(?:Lobby|Mountain View Senior Center)(?:,|$)/i.test(event.venue || ""),
+    facts: {
+      venue: "Mountain View Senior Center", cost: "free",
+      url: "https://content.govdelivery.com/attachments/CAMOUNTAINVIEW/2026/10/20/file_attachments/3824125/November%20PS%202026.pdf",
+    },
+  },
+  {
+    date: "2026-11-21",
+    title: /^Holiday Bazaar$/i, venue: /^Mountain View Senior Center(?:,|$)/i,
+    facts: { cost: "free" },
+  },
+  {
+    date: "2026-11-13",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114852/",
+    facts: {
+      category: "education", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Advance registration is required through SCORE Silicon Valley.",
+    },
+  },
+  {
+    date: "2026-11-21",
+    title: /^Let's Work! Quarry Park Clean-Up$/i, venue: /^Quarry Park(?:,|$)/i,
+    facts: {
+      registration: REGISTRATION_REQUIRED, audienceAge: "all",
+      url: "https://saratoga.volunteerlocal.com/volunteer/?id=53322",
+      attendanceNote: "Volunteers must be at least 15 to participate independently; ages 10–14 need an accompanying adult volunteer. Registration closes three days before the workday or when full.",
+    },
+  },
+  // The original October 30 newsletter verifies this market occurrence and
+  // Gaby Castro's set. Its unlabelled Halloween artwork could not be read
+  // through an allowed source channel; withhold the unverified extra claims.
+  {
+    date: "2026-10-31",
+    title: /^Halloween Trick-or-Treat at the Downtown Palo Alto Farmers' Market$/i,
+    venue: /^Gilman Street between Hamilton and Forest(?:,|$)/i,
+    facts: {
+      title: "Downtown Palo Alto Farmers' Market", category: "food",
+      url: "https://www.pafarmersmarket.org/",
+      description: "The Downtown Palo Alto Farmers' Market runs Saturday, October 31, from 8 AM to noon on Gilman Street between Hamilton and Forest. Gaby Castro's music set starts at 9:30 AM.",
+      blurb: "Browse the Downtown Palo Alto Farmers' Market and hear music by Gaby Castro.",
+    },
+  },
   // The library's documentary copy gives an unsupported national death
   // fraction. HURI's demographic research reports 13.3%, not one-quarter;
   // omit the disputed precision without changing the event or its synopsis.
@@ -100,6 +187,7 @@ const CORRECTIONS = [
     url: "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
     facts: {
       title: "HSAS Big Band / U19s at Christmas in the Park",
+      category: "music",
       venue: "Plaza de César Chávez", address: "310 South First St, San Jose",
       cost: "free",
       description: "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",

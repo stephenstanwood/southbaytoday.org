@@ -28,7 +28,7 @@
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
-import { hasUnconfirmedStartTime } from "./eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isNonEventOffer } from "./eventOccurrence.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -59,9 +59,20 @@ export function snapshotEvent(e) {
     if (e[f] !== undefined && e[f] !== null && e[f] !== "") out[f] = e[f];
   }
   // Retaining an old URL must not retain a kickoff the source says is TBA.
-  if (hasUnconfirmedStartTime(e)) {
+  if (hasUnconfirmedStartTime(e) || hasUnconfirmedOccurrenceDate(e) || isNonEventOffer(e)) {
     delete out.time;
     delete out.endTime;
+  }
+  // Preserve the decisive notice even when the original body exceeds the
+  // snapshot limit. Otherwise an old URL loses the TBD clause at its end.
+  if (hasUnconfirmedOccurrenceDate(e)) {
+    out.description = "This event will be rescheduled to another day; the replacement date is still to be determined.";
+    out.blurb = out.description;
+  } else if (isNonEventOffer(e)) {
+    out.description = "This is a membership promotion offering vouchers for a separate activity, not a scheduled event.";
+    out.blurb = out.description;
+    delete out.cost;
+    delete out.kidFriendly;
   }
   if (typeof out.description === "string" && out.description.length > 600) {
     out.description = `${out.description.slice(0, 597).trimEnd()}…`;
@@ -219,10 +230,14 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
     // A verified date correction also belongs on the published old URL.
     // Keep findSuccessor's same-day guard for reused recurring-event IDs.
     const verified = applyVerifiedEventFacts(entry?.event);
-    const event = hasUnconfirmedStartTime(verified) ? snapshotEvent(verified) : verified;
+    const event = hasUnconfirmedStartTime(verified) || hasUnconfirmedOccurrenceDate(verified) || isNonEventOffer(verified)
+      ? snapshotEvent(verified) : verified;
     if (!entry?.slug || !isDated(event) || event.date < cutoff) continue;
     if (live.has(entry.slug)) continue;
-    const successor = findSuccessor(event, live, { rolled: entry.rolled === true });
+    // A shared index URL cannot turn a withdrawn sales offer into another
+    // activity, or resolve a replacement date the organizer still calls TBD.
+    const successor = isNonEventOffer(event) || hasUnconfirmedOccurrenceDate(event)
+      ? null : findSuccessor(event, live, { rolled: entry.rolled === true });
     if (successor) redirects.set(entry.slug, successor);
     else orphans.push({ slug: entry.slug, event, retiredAt: entry.retiredAt });
   }

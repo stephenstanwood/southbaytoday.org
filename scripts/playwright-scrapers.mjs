@@ -54,6 +54,7 @@ import {
 } from "./lib/playwright-source-resilience.mjs";
 import { describeRefreshFailureContext } from "./lib/host-load.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
+import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -576,7 +577,7 @@ export function parseLibCalEvents(results, config, { today = TODAY } = {}) {
 
 // ── San Jose Jazz ──
 
-async function scrapeSJJazz(page) {
+export async function scrapeSJJazz(page, { today = TODAY } = {}) {
   const allEvents = [];
   for (let p = 1; p <= 6; p++) {
     const url = p === 1
@@ -594,35 +595,39 @@ async function scrapeSJJazz(page) {
           const name = card.querySelector(".sjz-event-name")?.textContent?.trim();
           const date = card.querySelector(".sjz-event-date")?.textContent?.trim(); // "Sat, Apr 18"
           const hour = card.querySelector(".sjz-event-hour")?.textContent?.trim()?.replace(/\s+/g, " "); // "8pm Pacific / ..."
-          const venue = card.querySelector(".sjz-event-venue")?.textContent?.trim();
+          // Current cards put the venue inside the clock line. Read the
+          // source's label instead of publishing the invented fallback venue.
+          const venue = card.querySelector(".sjz-event-venue, .event-place")?.textContent?.trim();
+          const description = card.querySelector(".sjz-event-excerpt")?.textContent?.trim();
           const link = card.querySelector("a")?.href;
           // Minutes are optional but MUST be part of the match: the old
           // /\d+\s*[ap]m/ had no ":\d{2}" branch, so "7:30pm" failed at the
           // "7" (followed by a colon, not am/pm) and matched the "30pm"
           // fragment instead — the hour was silently dropped and readers saw
           // "30:00 PM" on the card. Anchor on the hour, take minutes with it.
-          if (name && name.length > 3) events.push({ title: name, date, venue, link, time: hour?.match(/\d{1,2}(?::\d{2})?\s*[ap]m/i)?.[0] });
+          if (name && name.length > 3) events.push({ title: name, date, venue, description, link, time: hour?.match(/\d{1,2}(?::\d{2})?\s*[ap]m/i)?.[0] });
         }
         return events;
       });
 
       for (const r of raw) {
         // SJ Jazz dates are like "Sat, Apr 18" — append current year
-        const dateStr = r.date ? `${r.date}, ${new Date().getFullYear()}` : null;
+        const dateStr = r.date ? `${r.date}, ${today.slice(0, 4)}` : null;
         const date = tryParseDate(dateStr);
-        if (!date || date < TODAY) continue;
+        if (!date || date < today) continue;
         allEvents.push({
           title: r.title,
           date,
           time: normalizeTime(r.time),
           endTime: null,
-          venue: r.venue || "San Jose Jazz Venue",
+          venue: r.venue || null,
           address: "",
           city: "san-jose",
           url: r.link || "https://www.sanjosejazz.org/events/",
           source: "San Jose Jazz",
-          category: "arts",
+          category: "music",
           cost: null,
+          description: r.description || "",
           kidFriendly: false,
         });
       }
@@ -2300,7 +2305,7 @@ export async function scrapeSapCenter(page, { today = TODAY } = {}) {
   }).filter(Boolean);
 }
 
-async function scrapeTheTechUpcoming(page) {
+export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
   await page.goto("https://www.thetech.org/explore/upcoming-events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
@@ -2317,7 +2322,7 @@ async function scrapeTheTechUpcoming(page) {
   });
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
-    if (!date || date < TODAY || !isUsefulTitle(r.title)) return null;
+    if (!date || date < today || !isUsefulTitle(r.title)) return null;
     return {
       title: r.title,
       date,
@@ -2332,7 +2337,7 @@ async function scrapeTheTechUpcoming(page) {
       cost: "paid",
       kidFriendly: true,
     };
-  }).filter(Boolean);
+  }).filter(Boolean).filter(isEventPublishable);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
