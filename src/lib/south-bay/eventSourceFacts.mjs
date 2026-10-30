@@ -33,11 +33,17 @@ const CORRECTIONS = [
   },
   // Stanford Live describes a multimedia performance with harp, violin and
   // original compositions. Its technology theme does not make it a class.
-  // Evidence: docs/qa/2026-10-30-0907-fact-check.md (organizer occurrence).
+  // Corrections use the first match: keep the organizer's title here too,
+  // so this category rule cannot shadow the older spelling correction below.
+  // Evidence: docs/qa/2026-10-30-0907-fact-check.md and
+  // docs/qa/2026-10-30-1207-fact-check.md (organizer occurrence).
   {
     date: "2027-02-04",
     url: "https://live.stanford.edu/events/26-27season/studio/renee-qin-and-ania-filochowska-the-world-we-speak-into-being/",
-    facts: { category: "music" },
+    facts: {
+      category: "music",
+      title: "Renée Qin and Ania Filochowska: The World We Speak Into Being",
+    },
   },
   // The farm's October 30 occurrence promises music, without specifying a
   // live performance. Remove that cached embellishment only while the source

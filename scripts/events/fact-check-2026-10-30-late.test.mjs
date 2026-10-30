@@ -102,3 +102,14 @@ test("verified concert categories survive sparse snapshot normalization and repe
   assert.doesNotMatch(corrected.blurb, /community (?:event|category)/i);
   assert.equal(applyVerifiedEventFacts(qin).blurb, qin.blurb, "accurate performance copy stays intact");
 });
+
+test("the dated Stanford occurrence preserves Filochowska's source spelling across refreshes", () => {
+  const typo = { ...qin, category: "music", title: qin.title.replace("Filochowska", "Filochowka") };
+  const corrected = applyVerifiedEventFacts(typo);
+  assert.deepEqual(corrected, { ...typo, title: qin.title });
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  for (const unrelated of [
+    { ...typo, date: "2028-02-04" },
+    { ...typo, title: "Another performance", url: "https://example.org/another-performance" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(unrelated), unrelated);
+});
