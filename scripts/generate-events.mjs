@@ -3651,6 +3651,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // arts). Trivia and live music are unambiguous when present in the title.
   if (/\btrivia\b/.test(titleLower)) return "community";
   if (/\blive\s+music\b/.test(titleLower)) return "music";
+  // Los Altos' Holiday Market is a vendor market; incidental live music and
+  // Santa visits in its description do not make it a concert or kids' program.
+  // Match the market title itself so a separately titled concert stays music.
+  if (/^holiday\s+market$/.test(titleLower.trim())) return "market";
   // A ballet company's production remains performing arts even when its
   // title or score contains "symphony" (Nutcracker: Symphony of Lights).
   if (/\bballet\s+(?:presents|performs)\b/.test(titleLower)) return "arts";

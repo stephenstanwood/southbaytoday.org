@@ -10,6 +10,23 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // Prefer the organizer's dated registration page to its sparse calendar
+  // card: Otto Lee's room is SVLG's, and Larry Klein's sales have ended.
+  // Scope by occurrence and Eventbrite ID; tracking queries are not identity.
+  // Evidence: docs/qa/2026-10-30-1307-fact-check.md (fresh ticket pages).
+  {
+    date: "2026-11-18",
+    matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/coffee-conversation-otto-lee-tickets-2002235621643(?:[/?#]|$)/.test(event.url || ""),
+    facts: { venue: "SVLG Conference Room" },
+  },
+  {
+    date: "2026-12-10",
+    matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/coffee-conversation-larry-klein-tickets-1998017392807(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      registration: REGISTRATION_CLOSED,
+      attendanceNote: "Eventbrite ticket sales were closed when checked October 30. Confirm availability with SVLG before going.",
+    },
+  },
   // This road match is in Phoenix, with no street address in Localist.
   // Clear the inherited campus city/photo even on its retained old URL;
   // the normal geography gate excludes it from local event recommendations.
