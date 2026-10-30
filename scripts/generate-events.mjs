@@ -4264,9 +4264,10 @@ function parseIcalDate(dtStr) {
  * field `event_target_audience`, while Stanford uses `event_audience`.
  * Admission comes from `free` / `ticket_cost`; an unset price is unknown,
  * and a ticket URL alone may be free registration.
- * Keep the source address too: a university calendar can list an out-of-state
- * conference. The publishing university does not establish the event's city.
- * Returns Map<localist_url, { experience, filters, free, ticket_cost, address }>.
+ * Keep the source location name and address too: away games may publish only
+ * a city/state location with an empty address. Neither the publishing campus
+ * nor an absent street address establishes a local destination.
+ * Returns Map<localist_url, { experience, filters, free, ticket_cost, locationName, address }>.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -4282,6 +4283,7 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
       map.set(ev.localist_url.replace(/\/+$/, ""), {
         experience: ev.experience, filters: ev.filters,
         free: ev.free, ticket_cost: ev.ticket_cost,
+        locationName: typeof ev.location_name === "string" ? ev.location_name : "",
         address: typeof ev.address === "string" ? ev.address : "",
       });
     }
@@ -4678,7 +4680,8 @@ async function fetchSjsuEvents() {
       // ships the prompt itself in the location field ("Sign in to download the
       // location"). Treat that as no location at all so the fallback chain runs;
       // twelve events published the prompt as their venue on 2026-08-25.
-      const rawSjsuLocation = LOGIN_WALLED_LOCATION.test(item.location || "") ? "" : item.location;
+      const rawSjsuLocation = [metadata?.locationName, item.location]
+        .find((value) => typeof value === "string" && value.trim() && !LOGIN_WALLED_LOCATION.test(value)) || "";
       const venue = rawSjsuLocation || extractVenueFromTitle(item.title) || "San Jose State University";
       const city = inferSjsuCity(venue);
       if (city !== "san-jose") {

@@ -889,6 +889,12 @@ export const COVERED_LOCATION =
 const NON_CA_POSTAL_LOCATION =
   /\b(?:AK|AL|AR|AZ|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NC|ND|NE|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY)\.?\s+\d{5}(?:-\d{4})?\b/;
 
+// Athletics calendars often give only "Phoenix, Ariz." with no ZIP or street.
+// Read this comma-separated state suffix from an actual location field only.
+// Accept USPS codes, full names and the common abbreviated calendar forms.
+const NON_CA_CITY_STATE_LOCATION =
+  /,\s*(?:AK|AL|AR|AZ|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NC|ND|NE|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY|Alabama|Alaska|Arizona|Arkansas|Colorado|Connecticut|Delaware|District of Columbia|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming|Ala|Ariz|Ark|Colo|Conn|Fla|Ill|Ind|Kan|Kans|Ky|La|Mass|Mich|Minn|Miss|Mo|Mont|Neb|Nebr|Nev|Okla|Ore|Penn|Pa|Tenn|Tex|Vt|Va|Wash|Wis|Wisc|Wyo)\.?(?:\s+\d{5}(?:-\d{4})?)?(?:,\s*(?:USA|United States))?\s*$/i;
+
 /**
  * True when a location string carries a full "<...City>, CA 9xxxx" postal tail
  * for a place outside the coverage area. Campus feeds list off-site recruiting
@@ -917,7 +923,7 @@ export const LOCAL_DEPARTURE_TRIP =
 
 /**
  * Returns true if the event's own address/venue names an out-of-area city and
- * names no covered city, or publishes an out-of-state postal address — i.e.
+ * names no covered city, or publishes an out-of-state city/state or postal address — i.e.
  * the thing physically happens outside coverage. Virtual-only programs have
  * no physical destination.
  *
@@ -943,6 +949,8 @@ export function hasOutOfAreaDestination(event) {
   if (!hay) return false;
   const address = typeof event === "string" ? event : event.address || event.location || "";
   return NON_CA_POSTAL_LOCATION.test(hay)
+    || (typeof event === "string" ? [event] : [event.address, event.location, event.venue])
+      .some((value) => NON_CA_CITY_STATE_LOCATION.test(value || ""))
     // Stanford's Hopkins Marine Station is in Pacific Grove. A source's full
     // off-site postal address outranks an inherited "Stanford University" venue.
     // Limit this to named exclusions so approved border venues remain eligible.

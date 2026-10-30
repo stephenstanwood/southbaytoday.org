@@ -10,6 +10,35 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const CORRECTIONS = [
+  // This road match is in Phoenix, with no street address in Localist.
+  // Clear the inherited campus city/photo even on its retained old URL;
+  // the normal geography gate excludes it from local event recommendations.
+  // Evidence: docs/qa/2026-10-30-0907-fact-check.md (page and source metadata).
+  {
+    date: "2026-11-05",
+    url: "https://events.sjsu.edu/event/womens-volleyball-san-jose-state-vs-grand-canyon",
+    facts: { venue: "Phoenix, Ariz.", address: "", city: null, photoRef: null, image: null },
+  },
+  // The venue bills this dated booking under Concerts & Shows and lists
+  // Shoreline Mafia in its subtitle. The title-only scraper loses that context.
+  // Evidence: docs/qa/2026-10-30-0907-fact-check.md (fresh venue pages).
+  {
+    date: "2026-11-20",
+    url: "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
+    facts: {
+      category: "music",
+      description: "Concert featuring Shoreline Mafia and other performers at SAP Center.",
+      blurb: "Hear Shoreline Mafia and other performers in Who Want the Smoke 2026 at SAP Center.",
+    },
+  },
+  // Stanford Live describes a multimedia performance with harp, violin and
+  // original compositions. Its technology theme does not make it a class.
+  // Evidence: docs/qa/2026-10-30-0907-fact-check.md (organizer occurrence).
+  {
+    date: "2027-02-04",
+    url: "https://live.stanford.edu/events/26-27season/studio/renee-qin-and-ania-filochowska-the-world-we-speak-into-being/",
+    facts: { category: "music" },
+  },
   // The farm's October 30 occurrence promises music, without specifying a
   // live performance. Remove that cached embellishment only while the source
   // retains this wording; a later explicit live-music announcement survives.
