@@ -4,18 +4,20 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import test from "node:test";
-import { polishDescription } from "../generate-events.mjs";
+import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
-// from the repair table. Includes all 117 descriptions and 32 reviewed blurbs.
+// from the repair table. The original audit and incremental evening review
+// retain complete source copy, attendance conditions, numbers and identifiers.
 const fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29.json", import.meta.url)));
+const eveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-29-evening.json", import.meta.url)));
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
 
-for (const row of fixture.cases) {
+for (const row of [...fixture.cases, ...eveningFixture.cases]) {
   for (const occurrence of row.events) {
     test(`refresh retains reviewed ${row.field}: ${occurrence.id}`, () => {
       const original = {
@@ -26,7 +28,8 @@ for (const row of fixture.cases) {
       const untouched = structuredClone(original);
       const refresh = () => polishReviewedEventCopy({
         ...original,
-        [row.field]: row.field === "description" ? polishDescription(row.refreshed) : row.refreshed,
+        [row.field]: row.field === "description" ? polishDescription(row.refreshed)
+          : row.field === "title" ? cleanTitle(row.refreshed) : row.refreshed,
       });
       for (let pass = 0; pass < 3; pass++) {
         // Each refresh starts from source/cached copy again, not its output.
@@ -109,4 +112,12 @@ test("a revised grammatical subject does not inherit a previous pronoun repair",
     const event = { source, description };
     assert.deepEqual(polishReviewedEventCopy(event), event);
   }
+});
+
+test("complete accommodation directions survive the truncated-suffix repair", () => {
+  const description = "Library storytime. To request an accommodation under the Americans with Disabilities Act for library-sponsored events, please visit https://www.sjpl.org/accessibility.";
+  const event = { source: "San Jose Public Library", description };
+  assert.deepEqual(polishReviewedEventCopy(event), event);
+  const otherPublisher = { source: "Different publisher", description: "Library storytime. To request an accommodation under the Americans with Disabilities Act for library-sponsored events, please visit" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
 });

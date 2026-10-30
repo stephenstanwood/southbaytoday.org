@@ -1,11 +1,58 @@
-// Literal copy-desk repairs verified in 167cec15 (2026-10-29). Match only the
+// Copy-desk repairs reviewed on 2026-10-29 (initial audit: 167cec15). Match only the
 // supplying source and the affected phrase; new source facts outside it flow
 // through unchanged. No event-ID lookup or historical description restore.
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
 const EDITS = {
   "San Jose Public Library": {
+    title: [
+      ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
+      ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
+    ],
     description: [
+      ["before program starts", "before the program starts"],
+      ["Bilingual Family storytime is geared", "Bilingual family storytime is geared"],
+      ["invita a todo la familia para participar en actividades de alfabetazión temprana", "invita a toda la familia a participar en actividades de alfabetización temprana"],
+      ["juguetes especiales y apropiados para la edad disponible para", "juguetes especiales y apropiados para la edad disponibles para"],
+      // Strip only an unfinished suffix. Complete accommodation directions
+      // supplied in a later source revision must survive.
+      [/\. To request an accommodation under the Americans with Disabilities Act for library-sponsored events, please visit$/g, "."],
+      ["Topic list is subject to change", "The topic list is subject to change"],
+      ["Floating Drawing & Pepper Experiment Participants", "Floating Drawing & Pepper Experiment. Participants"],
+      ["Logic Games Work individually", "Logic Games. Work individually"],
+      ["has been Rescheduled for", "has been rescheduled for"],
+      ["moved accordingly Sept 1", "moved accordingly. Sept 1"],
+      ["Marble Run Fun Harness the", "Marble Run Fun. Harness the"],
+      ["Engineering Challenge (please note topic change) In this", "Engineering Challenge (please note topic change). In this"],
+      ["Volcanoes (will be rescheduled at a later time) Learn", "Volcanoes (will be rescheduled at a later time). Learn"],
+      ["Spike Robotics Code Quest Learn to", "Spike Robotics Code Quest. Learn to"],
+      ["Mental Math: Multiplication Children have", "Mental Math: Multiplication. Children have"],
+      ["Wind Turbine Engineering In this", "Wind Turbine Engineering. In this"],
+      ["Properties of Water (Science from Scientists) Participants", "Properties of Water (Science from Scientists). Participants"],
+      ["Oct 27 - TBA Nov 3", "Oct 27 - TBA; Nov 3"],
+      ["Aerodynamics Through Paper Planes In this", "Aerodynamics Through Paper Planes. In this"],
+      ["concepts of aerodynamics and impact of plane design", "concepts of aerodynamics and the impact of plane design"],
+      ["Ozobot Maze Runner Teach your", "Ozobot Maze Runner. Teach your"],
+      ["Nov 24 - TBA Dec 1", "Nov 24 - TBA; Dec 1"],
+      ["Let's Build Parachutes In this", "Let's Build Parachutes. In this"],
+      ["Lego Engineering Challenge In this", "Lego Engineering Challenge. In this"],
+      ["cómo: Crea o actualiza tu resumen", "cómo: Crear o actualizar tu resumen"],
+      ["; Obtenga ayuda para registrarse en Serv Safe", "; Obtener ayuda para registrarse en Serv Safe"],
+      ["formularios de impuestos, etc.) Este es", "formularios de impuestos, etc.). Este es"],
+      ["Advice | Information | Referral Social Workers", "Advice | Information | Referral. Social Workers"],
+      ["Información | Referencia Este programa", "Información | Referencia. Este programa"],
+      ["No Registracion Requerida *Aviso:", "No se requiere registro. *Aviso:"],
+      ["recurso que conozcamos y que puede satisfacer", "recurso que conozcamos y que pueda satisfacer"],
+      ["an individual, 15-20 minute tutoring session", "an individual, 15-20-minute tutoring session"],
+      ["reaches maximum capacity of 50 participants", "reaches the maximum capacity of 50 participants"],
+      ["for kindergarten to 3rd grade students", "for students in kindergarten through 3rd grade"],
+      ["and division from one- to four-digit numbers", "and division using one- to four-digit numbers"],
+      ["confidence and love for Math in young students", "confidence and a love for math in young students"],
+      ["For registration information please visit: oneinmath.com This program", "For registration information, please visit oneinmath.com. This program"],
+      ["suitable for children K-3rd grade", "suitable for children in K-3rd grade"],
+      ["Held in children's area.", "Held in the children's area."],
+      ["but if you need advice there are", "but if you need advice, there are"],
+      ["an elementary-school age audience", "an elementary-school-age audience"],
       ["a.m. - 12:00 pm. Test your English", "a.m. - 12:00 p.m. Test your English"],
       ["- Canceled for Thanksgiving Appropriate for ages", "- Canceled for Thanksgiving. Appropriate for ages"],
       ["Students in Grades 1–3 Recommended for students", "Students in Grades 1–3. Recommended for students"],
@@ -70,6 +117,7 @@ const EDITS = {
       ["Free. Offered in-person, in English or", "Free. Offered in person, in English or"],
     ],
     blurb: [
+      ["a 15-20 minute session", "a 15-20-minute session"],
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
     ],
@@ -133,6 +181,9 @@ const EDITS = {
   },
   "Santa Clara County Library": {
     description: [
+      ["Time Required The time needed", "Time Required: The time needed"],
+      ["About Sourcewise Since 1973", "About Sourcewise: Since 1973"],
+      ["Siblings are welcomed. September 15 October 20 November 17 December 8.", "Siblings are welcome. September 15; October 20; November 17; December 8."],
       ["A long running game of Dungeons", "A long-running game of Dungeons"],
       ["and sometimes shorter oneshots. Teen drop ins to watch the", "and sometimes shorter one-shots. Teen drop-ins to watch the"],
       ["Arts Foundation. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health. Friday afternoons, 1-3 PM In the Auditorium Please note that", "Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium. Please note that"],
@@ -188,10 +239,14 @@ const EDITS = {
   },
   "City Newsletter": {
     blurb: [
+      ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
+      ["similar to Bingo,", "similar to bingo,"],
       ["this drop-in social group, no registration required.", "this drop-in social group. No registration required."],
       ["Dance to line dancing and", "Enjoy line dancing and"],
     ],
     description: [
+      ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
+      ["similar to Bingo.", "similar to bingo."],
       ["Drone programming program using Python at the", "Drone programming with Python at the"],
     ],
   },
@@ -217,9 +272,14 @@ const EDITS = {
   },
   "Stanford Events": {
     description: [
+      ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
+      ["music, activties and light bites", "music, activities and light bites"],
       ["and outdoor Rodin Sculptures!", "and outdoor Rodin sculptures!"],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
+    ],
+    blurb: [
+      ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
     ],
   },
   "NHL": {
@@ -240,7 +300,7 @@ const EDITS = {
   },
 };
 
-/** Return an event with only its reviewed description/blurb phrases repaired.
+/** Return an event with only its reviewed title/description/blurb phrases repaired.
  * The source-text cache fingerprint must be computed before this display pass:
  * punctuation repairs do not warrant regenerating already source-bound blurbs. */
 export function polishReviewedEventCopy(event) {

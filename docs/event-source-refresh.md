@@ -553,12 +553,14 @@ checked through repeated refresh passes without changing their facts or contact.
 ### Reviewed copy survives source refreshes
 
 The generator applies `eventCopyEdits.mjs` after description normalization and
-blurb resolution. Its literal, publisher-specific phrase repairs cover the
-October 29 copy-desk audit (117 descriptions and 32 blurbs). Raw source spacing
+blurb resolution. Its publisher-specific phrase repairs cover the
+October 29 copy-desk audits, including title spacing and grammar. Raw source spacing
 can hide a repair before normalization; cached blurbs can restore old grammar
 afterward. Both paths therefore pass through the same final publication step.
 
-The table edits only matched phrases in `description` and `blurb`. It does not
+The table edits only matched phrases in `title`, `description`, and `blurb`. An
+anchored suffix repair removes an unfinished accessibility instruction only
+while it ends at "please visit"; complete directions remain intact. It does not
 look up old text by event ID, restore an older feed, or change structured fields.
 New source wording and facts flow through; a removed redundant title echo is
 cleared only when it is the whole description. Source-text blurb fingerprints
@@ -568,7 +570,7 @@ otherwise valid blurbs. A changed source description still gets a different key.
 When copy-editing generated event text, persist a narrow source-aware repair
 here or in the original normalizer, and capture its complete before/after text
 in a regression fixture. A generated-JSON edit alone will be lost on refresh.
-`event-copy-refresh.test.mjs` replays the complete reviewed audit, the captured
+`event-copy-refresh.test.mjs` replays both complete reviewed audits, the captured
 raw Linden Tree snapshot, and an isolated real cache hit. Every pass starts
 from the source again and checks facts, identifiers, and repeated stability.
 
