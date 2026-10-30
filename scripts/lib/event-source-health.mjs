@@ -117,6 +117,11 @@ export function buildSourceHealth(sourceDefinitions, settledResults) {
         count: 0,
         dateCounts: {},
         error: result?.reason?.message || String(result?.reason || "source did not run"),
+        ...(result?.retained ? {
+          retainedCount: result.retained.events.length,
+          retainedDateCounts: datedEventCounts(result.retained.events),
+          retainedFrom: result.retained.from,
+        } : {}),
       };
     }
 
@@ -176,6 +181,37 @@ export function carryForwardTransientCriticalSources(
   });
 
   return { results, carried };
+}
+
+/**
+ * A failed optional calendar is not a cancellation. Explicitly selected sources
+ * may keep their previously published, still-upcoming occurrences while the
+ * failed request stays rejected for alerts and the systemic-outage gate.
+ * Successful responses always replace the old rows, including an empty season.
+ */
+export function retainFailedOptionalSources(sourceDefinitions, settledResults, previous, { today } = {}) {
+  if (!/^20\d{2}-\d{2}-\d{2}$/.test(String(today || ""))) throw new Error("retention requires today's Pacific date");
+  const previousHealth = new Map((previous?.sourceHealth || []).map((item) => [item.id, item]));
+  return settledResults.map((result, index) => {
+    const source = sourceDefinitions[index];
+    if (!source?.preserveOnFailure || source.critical || result?.status !== "rejected") return result;
+    const events = (previous?.events || []).filter((event) => {
+      if (event?.source !== source.label || !/^20\d{2}-\d{2}-\d{2}$/.test(String(event.date || ""))) return false;
+      const end = /^20\d{2}-\d{2}-\d{2}$/.test(String(event.endDate || "")) && event.endDate >= event.date
+        ? event.endDate : event.date;
+      return end >= today;
+    });
+    if (!events.length) return result;
+    const from = previousHealth.get(source.id)?.retainedFrom || previous?.generatedAt;
+    // Do not invent a verification date for an untraceable cache.
+    if (!Number.isFinite(Date.parse(from))) return result;
+    return { ...result, retained: { events: events.map((event) => ({ ...event })), from } };
+  });
+}
+
+export function eventsForSourceResult(result) {
+  return result?.status === "fulfilled" && Array.isArray(result.value)
+    ? result.value : result?.retained?.events || [];
 }
 
 // How many non-critical adapters may fail before we treat the run as unsafe.

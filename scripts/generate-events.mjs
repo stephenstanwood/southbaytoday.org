@@ -151,6 +151,8 @@ import {
   DEFAULT_SNAPSHOT_MAX_AGE_HOURS,
   buildSourceHealth,
   carryForwardTransientCriticalSources,
+  retainFailedOptionalSources,
+  eventsForSourceResult,
   isTransientSourceError,
   sourceProblems,
   eventRegressionProblem,
@@ -5317,8 +5319,8 @@ async function fetchSvlgEvents({ today = todayPT() } = {}) {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SVLG: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    // Every caller must distinguish a failed calendar from a valid empty one.
+    throw err;
   }
 }
 
@@ -10447,11 +10449,12 @@ async function main() {
     console.log(`📎 Inputs: ${summary}\n`);
   }
 
-  const source = (fn, { id = fn.name, label = fn.name, critical = false, preserveOnTransientFailure = false } = {}) => ({
+  const source = (fn, { id = fn.name, label = fn.name, critical = false, preserveOnTransientFailure = false, preserveOnFailure = false } = {}) => ({
     id,
     label,
     critical,
     preserveOnTransientFailure,
+    preserveOnFailure,
     fn,
   });
 
@@ -10467,7 +10470,7 @@ async function main() {
     source(fetchJazzOnThePlazzEvents, { label: "Jazz on the Plazz" }),
     // Saratoga's calendar collection is excluded by its robots policy.
     // Retired 2026-10-23; do not rely on iCalendar path casing or another export.
-    source(fetchLosAltosVillageEvents, { label: "Los Altos Village Association" }),
+    source(fetchLosAltosVillageEvents, { label: "Los Altos Village Association", preserveOnFailure: true }),
     source(fetchLosAltosHistoryEvents),
     source(fetchOperaSanJoseEvents),
     // fetchMountainViewEvents,  — 403 blocked since 2026-03
@@ -10477,7 +10480,7 @@ async function main() {
     // fetchTheTechEvents,       — no /feed/ endpoint as of 2026-03
     source(fetchSjplEvents),
     source(fetchScclEvents),
-    source(fetchSvlgEvents),
+    source(fetchSvlgEvents, { label: "SVLG", preserveOnFailure: true }),
     source(fetchSjJazzEvents, { label: "San Jose Jazz" }),
     source(fetchMontalvoEvents),
     // fetchEventbriteEvents, — deprecated: /v3/events/search/ removed by Eventbrite
@@ -10581,7 +10584,12 @@ async function main() {
     results,
     prevRun?.events,
   );
-  results = carriedForward.results;
+  results = retainFailedOptionalSources(sources, carriedForward.results, prevRun, { today: todayPT() });
+  for (const [index, result] of results.entries()) {
+    if (result.retained) console.warn(
+      `⚠️  ${sources[index].label}: retained ${result.retained.events.length} future events from ${result.retained.from}; live source is still failed`,
+    );
+  }
   if (carriedForward.carried.length > 0) {
     for (const item of carriedForward.carried) {
       console.warn(
@@ -10599,11 +10607,11 @@ async function main() {
   }
   const { blocking, tolerated, toleranceExceeded } = sourceProblems(sourceHealth);
 
-  // Degraded-but-publishable: these adapters contribute nothing today, and the
-  // rest of the refresh proceeds without them. Page only when something looks
+  // Degraded-but-publishable: selected adapters may retain prior future rows,
+  // but the live failures still count toward tolerance. Page when something looks
   // permanently broken — transient rate limits are retried on the next slot.
   if (tolerated.length > 0) {
-    console.warn(`⚠️  events: continuing without ${tolerated.length} failed non-critical source(s)`);
+    console.warn(`⚠️  events: continuing with ${tolerated.length} failed non-critical source(s)`);
     for (const problem of tolerated) console.warn(`   • ${problem}`);
     const transientOnly = tolerated.every((problem) => isTransientSourceError(problem));
     if (!transientOnly) {
@@ -10612,7 +10620,7 @@ async function main() {
         title: `Event refresh degraded — ${tolerated.length} source(s) down`,
         body:
           `${tolerated.join("\n")}\n\n` +
-          `The refresh continued without them. Fix or retire these adapters if it persists.`,
+          `The refresh continued. Previously verified future listings are retained where source policy allows; retained rows do not establish a successful live fetch. Investigate these adapters if it persists.`,
       });
     } else {
       console.warn("   (transient upstream errors only — not paging)");
@@ -10651,9 +10659,10 @@ async function main() {
   const allEvents = [];
   const sourceNames = [];
   for (const result of results) {
-    if (result.status === "fulfilled" && result.value.length > 0) {
-      allEvents.push(...result.value);
-      for (const event of result.value) {
+    const events = eventsForSourceResult(result);
+    if (events.length > 0) {
+      allEvents.push(...events);
+      for (const event of events) {
         if (event.source && !sourceNames.includes(event.source)) sourceNames.push(event.source);
       }
     }
