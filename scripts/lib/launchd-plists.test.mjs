@@ -53,6 +53,14 @@ test("covers the Mini's active node agents", () => {
   }
 });
 
+test("default-plan refresh gives Node-shebang children the Homebrew runtime PATH", () => {
+  const xml = readFileSync(join(SCRIPTS_DIR, "social/default-plans-refresh.plist"), "utf8");
+  const environment = xml.match(/<key>EnvironmentVariables<\/key>\s*<dict>([\s\S]*?)<\/dict>/)?.[1] || "";
+  const path = environment.match(/<key>PATH<\/key>\s*<string>([^<]+)<\/string>/)?.[1] || "";
+  assert.ok(path.split(":").includes("/opt/homebrew/bin"), "Codex's /usr/bin/env node must find Homebrew node");
+  assert.ok(path.split(":").includes("/usr/bin"), "keep the scheduler's system tools available");
+});
+
 for (const { path, name } of active) {
   test(`${name} starts a platform shell and runs node only as its child`, () => {
     const args = programArguments(readFileSync(path, "utf8"));

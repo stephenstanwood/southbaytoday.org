@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { delimiter, dirname, join } from "node:path";
 import { cachedGeneration } from "./generation-cache.mjs";
 import { PILLAR_PAIR_SCHEMA as PAIR_SCHEMA } from "../../src/lib/south-bay/planEditorialSchema.mjs";
 import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
@@ -9,8 +9,13 @@ import { recordModelUsage } from "../../src/lib/modelUsage.mjs";
 export function subscriptionEnvironment(source = process.env) {
   // Allowlist instead of trusting a scheduler's sourced .env.local. Auth stays
   // in the user's normal Codex store; no copied credentials or API-key fallback.
-  return Object.fromEntries(["HOME", "PATH", "TMPDIR", "LANG", "LC_ALL", "CODEX_HOME", "SSL_CERT_FILE", "CODEX_CA_CERTIFICATE"]
+  const env = Object.fromEntries(["HOME", "PATH", "TMPDIR", "LANG", "LC_ALL", "CODEX_HOME", "SSL_CERT_FILE", "CODEX_CA_CERTIFICATE"]
     .filter(key => source[key]).map(key => [key, source[key]]));
+  // The npm Codex launcher uses /usr/bin/env node. launchd's default PATH
+  // omits Homebrew even when the parent was started with an absolute node path.
+  // Use that already-running runtime for the child, including after upgrades.
+  env.PATH = [dirname(process.execPath), source.PATH || "/usr/bin:/bin"].join(delimiter);
+  return env;
 }
 
 export function latestStableSol(catalog) {
