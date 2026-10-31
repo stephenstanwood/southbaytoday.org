@@ -19,7 +19,8 @@ const refreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-even
 const middayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-midday.json", import.meta.url)));
 const eveningRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-evening.json", import.meta.url)));
 const nightRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-night.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture];
+const postRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-post-refresh.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -182,4 +183,26 @@ test("theatre byline punctuation leaves revised dates and ticket instructions in
   };
   assert.deepEqual(polishReviewedEventCopy(event), reviewed);
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+});
+
+test("post-refresh library and jazz repairs stay within their supplying source", () => {
+  for (const row of postRefreshFixture.cases) {
+    const event = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("citizenship course punctuation follows changed dates without restoring an old schedule", () => {
+  const event = {
+    source: "San Jose Public Library",
+    description: "Course information: Every Wednesday 6:00-7:00 PM 1/6/27-2/17/27 Each week we will cover a different portion of the application process and practice new skills No class 1/20/27",
+    date: "2027-01-06", time: "6:00 PM", endTime: "7:00 PM", registration: "optional",
+  };
+  const reviewed = {
+    ...event,
+    description: "Course information: Every Wednesday, 6:00-7:00 PM, 1/6/27-2/17/27. Each week we will cover a different portion of the application process and practice new skills. No class 1/20/27.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  assert.deepEqual(numbers(reviewed.description), numbers(event.description));
 });

@@ -145,6 +145,16 @@ const EDITS = {
       ["the flow of the game; making sets during the game; how to win.", "the flow of the game; how to make sets during the game; how to win."],
       [/No registration required, Materials Will Be Provided$/g, "No registration required. Materials will be provided."],
       [/Free\. No registration required$/g, "Free. No registration required."],
+      [/Free, No registration required$/g, "Free. No registration required."],
+      ["between 3 p.m. and 4:30 pm.", "between 3 p.m. and 4:30 p.m."],
+      ["Until 12 PM the Storytime librarian", "Until 12 PM, the Storytime librarian"],
+      ["first [or 2nd if lands on closure] Wednesday", "first [or 2nd if it falls on a closure] Wednesday"],
+      ["For more information go to www.sjpl.org/teensreach Registration not necessary, it is used as a headcount for room preparation.", "For more information, go to www.sjpl.org/teensreach. Registration is not necessary; it is used as a headcount for room preparation."],
+      ["Join us in this monthly workshop to learn operate 3D printing and Cricut machine.", "Join us in this monthly workshop to learn to operate a 3D printer and a Cricut machine."],
+      [/Course information: Every Wednesday (\d{1,2}:\d{2}-\d{1,2}:\d{2} [AP]M) (\d{1,2}\/\d{1,2}\/\d{2,4}-\d{1,2}\/\d{1,2}\/\d{2,4}) Each week/g, "Course information: Every Wednesday, $1, $2. Each week"],
+      ["application process and practice new skills No class ", "application process and practice new skills. No class "],
+      [/No class (\d{1,2}\/\d{1,2}\/\d{2,4})$/g, "No class $1."],
+      ["Students in Kindergarten through 6th grade", "Students in kindergarten through 6th grade"],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -172,6 +182,9 @@ const EDITS = {
     ],
   },
   "San Jose Jazz": {
+    description: [
+      ["the group endears audiences with", "the group endears itself to audiences with"],
+    ],
     blurb: [
       ["Catch Noah & the", "Watch Noah & the"],
     ],
@@ -255,6 +268,7 @@ const EDITS = {
       ["educate people of the songs, dances, art, food, and ways of life", "educate people about the songs, dances, art, food, and ways of life"],
       ["Join us at the Cupertino Library 3:30-4:30 PM!", "Join us at the Cupertino Library from 3:30 to 4:30 PM!"],
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
+      ["We will be painting mini canvases, enjoy some snacks and have Gilmore Girls on in the background.", "We will paint mini canvases, enjoy some snacks and have Gilmore Girls on in the background."],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
