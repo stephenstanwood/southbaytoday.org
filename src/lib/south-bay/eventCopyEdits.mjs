@@ -156,6 +156,7 @@ const EDITS = {
       [/No class (\d{1,2}\/\d{1,2}\/\d{2,4})$/g, "No class $1."],
       ["Students in Kindergarten through 6th grade", "Students in kindergarten through 6th grade"],
       ["Join us at Evergreen library for LEGO fun.", "Join us at Evergreen Library for LEGO fun."],
+      ["your child will develop imagination and love of books and reading.", "your child will develop their imagination and a love of books and reading."],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -272,6 +273,7 @@ const EDITS = {
       ["We will be painting mini canvases, enjoy some snacks and have Gilmore Girls on in the background.", "We will paint mini canvases, enjoy some snacks and have Gilmore Girls on in the background."],
       ["book club focusing on Manga!", "book club focusing on manga!"],
       ["(Available on Libby, and in library)", "(available on Libby and in the library)."],
+      ["(408)866-1991", "(408) 866-1991"],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
@@ -293,6 +295,8 @@ const EDITS = {
       ["Come join teen-led group NeuroSphere!", "Come join the teen-led group NeuroSphere!"],
       [/Questions\? Email neurosphereyouth@gmail\.com$/g, "Questions? Email neurosphereyouth@gmail.com."],
       ["the consequences of which continues to reverberate today.", "the consequences of which continue to reverberate today."],
+      ["Many local affiliates of PBS have broadcast the film but national PBS, however, has refused", "Many local affiliates of PBS have broadcast the film, but national PBS has refused"],
+      ["Charles Rangel (D-NY.),", "Charles Rangel (D-NY),"],
     ],
     blurb: [
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
