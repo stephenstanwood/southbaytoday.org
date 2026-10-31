@@ -4,12 +4,35 @@ import { readFileSync } from "node:fs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
+import { requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
 import { snapshotEvent, resolveRetired } from "../../src/lib/south-bay/eventSlugLedger.mjs";
 import { fetchInboundEvents } from "../generate-events.mjs";
 import { scrapeSJJazz, scrapeTheTechUpcoming } from "../playwright-scrapers.mjs";
 
 const { events } = JSON.parse(readFileSync(new URL("../lib/fixtures/fact-check-2026-10-30-evening.json", import.meta.url)));
 const row = (id) => structuredClone(events.find((event) => event.id === id));
+
+test("all three Zoe Caron newsletter copies keep required tickets after venue extraction", () => {
+  const copies = [
+    ["Artist Reception & Gallery Talk with Zoe Caron", "MVCPA SecondStage, 500 Castro St, Mountain View, CA 94041"],
+    ["Zoe Caron Artist Reception & Gallery Talk", "MVCPA SecondStage, 500 Castro St, Mountain View, CA 94041"],
+    ["Artist Reception & Gallery Talk featuring Zoe Caron", "Mountain View Center for the Performing Arts, SecondStage, 500 Castro Street, Mountain View, CA"],
+  ].map(([title, location], i) => ({
+    id: `zoe-newsletter-${i}`, title, location, cityKey: "mountain-view",
+    startsAt: "2026-11-04T17:30:00-08:00", endsAt: "2026-11-04T19:30:00-08:00",
+    description: "Artist reception and gallery talk.", sourceUrl: null,
+  }));
+  const actual = fetchInboundEvents({ events: copies, today: "2026-10-30" }).map(applyVerifiedEventFacts);
+  assert.equal(actual.length, 3);
+  for (const event of actual) {
+    assert.equal(event.venue, "MVCPA SecondStage");
+    assert.equal(event.registration, "required");
+    assert.equal(event.cost, "free");
+    assert.equal(event.url, "https://tickets.mvcpa.com/eventperformances.asp?evt=802");
+    assert.equal(requiresAdvanceRegistration(event), true);
+    assert.equal(event.time, "5:30 PM"); assert.equal(event.endTime, "7:30 PM");
+  }
+});
 
 test("membership vouchers do not become an October outing or a replacement December session", async () => {
   const offer = row("f8a1a9940e42");

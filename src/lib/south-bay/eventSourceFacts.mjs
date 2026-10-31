@@ -29,9 +29,12 @@ const CORRECTIONS = [
   // The October 29 city notice supersedes an earlier no-registration excerpt:
   // this reception is free but requires RSVP at the linked organizer page.
   // Match all three retained newsletter titles before and after venue cleanup.
+  // Preserve SecondStage before comma-based extraction shortens the facility;
+  // the exact ticket URL also identifies the occurrence after normalization.
   // Evidence: docs/qa/2026-10-31-0207-fact-check.md (receiving-account original).
   {
     date: "2026-11-04",
+    url: "https://tickets.mvcpa.com/eventperformances.asp?evt=802",
     matches: (event) => [
       "Artist Reception & Gallery Talk with Zoe Caron",
       "Artist Reception & Gallery Talk featuring Zoe Caron",
@@ -40,6 +43,7 @@ const CORRECTIONS = [
       && /^(?:MVCPA SecondStage|Mountain View Center for the Performing Arts,? SecondStage)(?:,|$)/i.test(event.venue || ""),
     facts: {
       url: "https://tickets.mvcpa.com/eventperformances.asp?evt=802",
+      venue: "MVCPA SecondStage",
       cost: "free", registration: REGISTRATION_REQUIRED,
       attendanceNote: "Free; advance RSVP is required. Doors open at 5:00 PM; the artist talk begins at 6:00 PM.",
     },
