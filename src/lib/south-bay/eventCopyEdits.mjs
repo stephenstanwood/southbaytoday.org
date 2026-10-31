@@ -12,6 +12,8 @@ const EDITS = {
     ],
     description: [
       ["before program starts", "before the program starts"],
+      ["In fact some of these crafts", "In fact, some of these crafts"],
+      ["All materials included in each set with instructions.", "All materials are included in each set with instructions."],
       ["Bilingual Family storytime is geared", "Bilingual family storytime is geared"],
       ["invita a todo la familia para participar en actividades de alfabetazión temprana", "invita a toda la familia a participar en actividades de alfabetización temprana"],
       ["juguetes especiales y apropiados para la edad disponible para", "juguetes especiales y apropiados para la edad disponibles para"],
@@ -166,6 +168,9 @@ const EDITS = {
       ["E-newsletter signup Get the inside", "E-newsletter Signup: Get the inside"],
       ["pause and reflect about how", "pause and reflect on how"],
       ["This programs is immediately", "This program is immediately"],
+      // The companion STAR-method workshop ends at 12:45 PM, when this session
+      // begins (SJPL's November 4 listings, reviewed 2026-10-31).
+      ["This program is immediately proceeded by:", "This program is immediately preceded by"],
       ["STAR method In partnership with SJSU Department of Communication Studies Free.", "STAR method. In partnership with the SJSU Department of Communication Studies. Free."],
       ["Other accommodations can be made available with request.", "Other accommodations can be made available upon request."],
       ["3D print quality and time needed to complete prints is not guaranteed.", "3D print quality and the time needed to complete prints are not guaranteed."],
@@ -226,6 +231,7 @@ const EDITS = {
   },
   "Heritage Theatre": {
     description: [
+      [/^Featuring Assistant Principal Cello of the Seattle Symphony Nathan Chan$/g, "Featuring Nathan Chan, Assistant Principal Cello of the Seattle Symphony."],
       ["in De Ridder, Louisiana and raised in", "in De Ridder, Louisiana, and raised in"],
       ["never experienced a Winter quite like this!", "never experienced a winter quite like this!"],
     ],
@@ -310,6 +316,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [/Duration: (60|90) minutes$/g, "Duration: $1 minutes."],
       ["Note: Teens and Adults only. Use of", "Note: Teens and adults only. Use of"],
       ["and beyond. Keep on hand all", "and beyond. Keep them on hand all"],
       ["کتاب‌های کودک، آناهیتا تمدن ، به ما بپیوندیددر این برنامه با", "کتاب‌های کودک، آناهیتا تمدن، به ما بپیوندید. در این برنامه با"],
