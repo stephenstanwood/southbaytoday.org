@@ -349,6 +349,11 @@ const EDITS = {
     ],
   },
   "Stanford Events": {
+    title: [
+      ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
+      ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
+      ['to Study Human Biology."', 'to Study Human Biology"'],
+    ],
     description: [
       ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
       ["music, activties and light bites", "music, activities and light bites"],
@@ -356,6 +361,10 @@ const EDITS = {
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
       ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
+      ["Phil Deutch is one the most experienced energy technology investors", "Phil Deutch is one of the most experienced energy technology investors"],
+      ["energy technology investors in the United States having begun", "energy technology investors in the United States, having begun"],
+      ["Day of the Dead Celebrations | Intimate Conversation w/ Rubí Tsanda Huerta.", ""],
+      ["Biology Seminar Series", ""],
     ],
     blurb: [
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],

@@ -20,7 +20,8 @@ const middayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event
 const eveningRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-evening.json", import.meta.url)));
 const nightRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-night.json", import.meta.url)));
 const postRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-30-post-refresh.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture];
+const october31Fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -188,6 +189,21 @@ test("theatre byline punctuation leaves revised dates and ticket instructions in
 test("post-refresh library and jazz repairs stay within their supplying source", () => {
   for (const row of postRefreshFixture.cases) {
     const event = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("Stanford seminar repairs preserve other publishers and substantive replacement copy", () => {
+  for (const row of october31Fixture.cases) {
+    const event = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+  for (const description of [
+    "Biology Seminar Series returns with a new speaker. Tickets $15; register by 11/5/26.",
+    "Day of the Dead Celebrations | Intimate Conversation w/ Rubí Tsanda Huerta. Registration required; ages 12+.",
+    "New energy seminar. The investors have changed their strategy since 2025.",
+  ]) {
+    const event = { source: "Stanford Events", description };
     assert.deepEqual(polishReviewedEventCopy(event), event);
   }
 });
