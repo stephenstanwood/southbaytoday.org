@@ -5,6 +5,14 @@
 // 2026-09-08-newsletter.md.
 import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
+const ART_MAKING_ACTIVITY = /\b(?:(?:make|making|create|creating)\s+(?:your\s+own\s+)?art|art[\s-]making|hands[\s-]on\s+art|(?:paint|draw)\s+(?:a|an|your|with)|(?:painting|drawing)\s+(?:activity|workshop|class))\b/i;
+
+function museumMinisWithoutArtMaking(event) {
+  return event?.date === "2026-11-16"
+    && event?.url === "https://events.stanford.edu/event/November-museum-minis-storytime-at-the-anderson"
+    && !ART_MAKING_ACTIVITY.test(sourceText(event));
+}
+
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
@@ -26,6 +34,16 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The organizer's page and authenticated museum newsletter describe
+  // storytime and looking at artworks, without a hands-on art activity.
+  // Repair the known cached claim; preserve later explicit organizer updates.
+  // Evidence: docs/qa/2026-10-31-1907-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: museumMinisWithoutArtMaking,
+    facts: {},
+    copyReplacements: [[/,\s*then make art with\b/gi, " and explore artworks with"]],
+  },
   // The city's event body excerpt omits the separate admission panel. That
   // panel requires preregistration and prices residents/nonresidents, with
   // an explicit exemption for children under two. Do not invent a deadline.
@@ -3227,6 +3245,13 @@ const ACTIVITY_TAIL = /\s+\b(?:for|at|on|in|with|from|starting|beginning)\b.*$/i
 export function eventCopyFactConflict(text, event) {
   const copy = String(text || "");
   const source = sourceText(event);
+  // "Art and storytime" establishes an art-viewing program, not making art.
+  // Check newly generated variants as well as the known cached sentence.
+  if (museumMinisWithoutArtMaking(event)) {
+    for (const claim of copy.matchAll(new RegExp(ART_MAKING_ACTIVITY.source, "gi"))) {
+      if (claimAppliesToEvent(copy, claim.index, event)) return "unsupported art-making activity";
+    }
+  }
   // A language class's heading and body can disagree (SJPL's Nivel 1 / nivel
   // cero listing). Neither alone establishes a definite course level. Check
   // fresh source text so a resolved disagreement stops blocking level claims.
