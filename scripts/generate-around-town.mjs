@@ -21,6 +21,7 @@ import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroun
 import { agendaTextForMeeting } from "./lib/digest-source.mjs";
 import { isAroundTownPermitCandidate, permitValuationForPrompt, hasUnsupportedZeroPermitValuation } from "./lib/around-town-permits.mjs";
 import { todayPT } from "./lib/dates.mjs";
+import { polishCivicCopy } from "./lib/civic-copy.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "around-town.json");
@@ -624,7 +625,10 @@ async function main() {
     return true;
   });
 
-  const topItems = deduped.slice(0, 8);
+  const topItems = deduped.slice(0, 8).map((item) => ({
+    ...item,
+    summary: polishCivicCopy(item.summary),
+  }));
 
   const output = {
     items: topItems,

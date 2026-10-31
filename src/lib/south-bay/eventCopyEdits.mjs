@@ -147,7 +147,7 @@ const EDITS = {
       [/Free\. No registration required$/g, "Free. No registration required."],
       [/Free, No registration required$/g, "Free. No registration required."],
       ["between 3 p.m. and 4:30 pm.", "between 3 p.m. and 4:30 p.m."],
-      ["Until 12 PM the Storytime librarian", "Until 12 PM, the Storytime librarian"],
+      [/Until (\d{1,2}(?::\d{2})? [APap][Mm]) the Storytime librarian/g, "Until $1, the Storytime librarian"],
       ["first [or 2nd if lands on closure] Wednesday", "first [or 2nd if it falls on a closure] Wednesday"],
       ["For more information go to www.sjpl.org/teensreach Registration not necessary, it is used as a headcount for room preparation.", "For more information, go to www.sjpl.org/teensreach. Registration is not necessary; it is used as a headcount for room preparation."],
       ["Join us in this monthly workshop to learn operate 3D printing and Cricut machine.", "Join us in this monthly workshop to learn to operate a 3D printer and a Cricut machine."],

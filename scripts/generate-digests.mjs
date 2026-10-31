@@ -24,6 +24,7 @@ import {
 } from "./lib/digest-staleness.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { writeFileAtomic } from "./lib/io.mjs";
+import { polishCivicCopy } from "./lib/civic-copy.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { agendaTextForMeeting, recoverLegistarDigestSource, recoverPrimeGovDigestSource, recoverUnattributedMeetingAgenda } from "./lib/digest-source.mjs";
 import { hasUnsupportedMeetingAction, hasUnscopedMeetingCancellation } from "./lib/around-town-meetings.mjs";
@@ -650,6 +651,13 @@ async function main() {
     return;
   }
 
+  // Include carried-forward cards and cached summaries in the copy pass.
+  for (const digest of Object.values(digests)) {
+    digest.summary = polishCivicCopy(digest.summary);
+    if (Array.isArray(digest.keyTopics)) {
+      digest.keyTopics = digest.keyTopics.map(polishCivicCopy);
+    }
+  }
   writeFileAtomic(OUT_PATH, JSON.stringify(digests, null, 2) + "\n");
   console.log(`\nDone — ${Object.keys(digests).length} digests written to ${OUT_PATH}`);
 
