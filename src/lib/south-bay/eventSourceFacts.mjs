@@ -1774,11 +1774,13 @@ const CORRECTIONS = [
   // does not establish an admission requirement. Keep this exception dated;
   // do not relax the conservative provider rule for other library programs.
   // Evidence: docs/qa/2026-10-17-2107-fact-check.md (fresh occurrence HTML)
-  // and docs/qa/2026-10-25-1407-fact-check.md (the October 27 source record).
+  // and docs/qa/2026-10-25-1407-fact-check.md (the October 27 source record),
+  // docs/qa/2026-10-31-0107-fact-check.md (the November 3 source record).
   ...[
     ["2026-10-18", "6a85eaec69166f088b934e2d"],
     ["2026-10-20", "6a83713669166f088b92df77"],
     ["2026-10-27", "6a83713669166f088b92df78"],
+    ["2026-11-03", "6a83713669166f088b92df79"],
   ].map(([date, sourceId]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
     facts: {
