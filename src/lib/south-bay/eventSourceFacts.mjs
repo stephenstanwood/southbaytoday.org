@@ -26,6 +26,53 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // Fresh organizer pages and RSS records, not the publisher's campus or a
+  // keyword in an excerpt, establish these dated facts. Keep cached copies
+  // and retired event pages consistent with the same evidence.
+  // Evidence: docs/qa/2026-10-31-0307-fact-check.md.
+  {
+    date: "2026-10-30",
+    url: "https://www.eastwestbooks.org/events/2026/psychic-readings-janis-manacsa",
+    facts: {
+      ongoing: false, time: "6:30 PM", endTime: "9:00 PM", cost: "paid",
+      costNote: "General entry $75.", audienceAge: "adult", kidFriendly: false,
+      attendanceNote: "Ages 18+. Doors close at 7:00 PM; no entry is permitted afterward.",
+    },
+  },
+  {
+    date: "2026-11-07",
+    matches: (event) => !event.virtual
+      && /^https:\/\/events\.scu\.edu\/(?:alumni-association\/)?event\/517852-santa-clara-sips-nyc\/?$/.test(event.url || ""),
+    facts: { venue: "Gottino Enoteca e Salumeria, New York, NY", city: null, photoRef: null, image: null },
+  },
+  {
+    date: "2026-11-14",
+    url: "https://www.numulosgatos.org/events/plain-sight",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free with registration through the organizer's event page. Attend at NUMU or online via Zoom.",
+    },
+  },
+  {
+    date: "2026-10-31",
+    url: "https://www.thetech.org/explore/upcoming-events/tech-or-treat/",
+    facts: {
+      cost: "paid", costNote: "Adults $38; children, seniors and students $28.",
+      attendanceNote: "Workshops and laser shows cost extra and require additional tickets.",
+    },
+  },
+  {
+    date: "2026-11-04",
+    url: "https://events.sjsu.edu/event/faculty-design-thinking-workshop",
+    copyReplacements: [[/\bCfeti\b/g, "CFETI"]],
+  },
+  // The original SJDA newsletter explicitly confirms free admission; its
+  // social link need not be scraped or treated as a source of instructions.
+  {
+    date: "2026-10-31",
+    matches: (event) => /^https:\/\/(?:www\.)?instagram\.com\/p\/DeZtKbOmta2\/(?:[?#]|$)/.test(event.url || ""),
+    facts: { cost: "free" },
+  },
   // The October 29 city notice supersedes an earlier no-registration excerpt:
   // this reception is free but requires RSVP at the linked organizer page.
   // Match all three retained newsletter titles before and after venue cleanup.

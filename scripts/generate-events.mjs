@@ -4060,9 +4060,12 @@ function isOngoingExhibitLike(title, desc = "", venue = "") {
   // Museum tours, drawing sessions, and gallery conversations keep their
   // occurrence dates and clocks even when their series spans an exhibition.
   // Match activity names, not a figurative "A Tour of ..." exhibition title.
-  if (/\b(?:(?:public|guided|docent[ -]led)\s+tours?|drop[ -]in\s+drawing|gallery\s+conversations?)\b/i.test(title || "")) {
+  if (/\b(?:(?:public|guided|docent[ -]led)\s+tours?|drop[ -]in\s+drawing|gallery\s+conversations?|(?:psychic|gallery)\s+readings?)\b/i.test(title || "")) {
     return false;
   }
+  // A gallery-style psychic reading is a timed performance, not an art
+  // display. Squarespace excerpts can leave only the shorter title Readings.
+  if (/\b(?:gallery\s+(?:psychic\s+)?readings?|psychic\s+readings?)\b/i.test(cleanDesc)) return false;
 
   // These are recurring programs, talks, trainings, or services that Localist
   // can model as long-running series. They are not "on view" listings.
@@ -4149,6 +4152,8 @@ function parseRssItems(xml) {
       eventTimes: get("calendarEvent:EventTimes") || get("calendarEvent:eventTimes") || "",
       location: get("calendarEvent:location") || get("calendarEvent:Location") || get("location"),
       livewhaleId: get("livewhale:id"),
+      // Source IANA zone; never infer a physical destination from it alone.
+      livewhaleTimezone: get("livewhale:timezone"),
       livewhaleCategories: get("livewhale:categories"),
       livewhaleTags: get("livewhale:tags"),
       georssPoint: get("georss:point"),
@@ -4863,6 +4868,17 @@ async function fetchScuEvents() {
         return null;
       }
       if (!isVirtual && namesUncoveredCaPostalCity(item.location || item.georssFeatureName)) {
+        skippedScu++;
+        return null;
+      }
+      // The publishing university does not locate a regional alumni event.
+      // Sips NYC has no geocode or street address, but its title, explicit
+      // invitation to alumni "in NYC", and source timezone agree. Require
+      // all three; a speaker's New York biography or timezone alone cannot
+      // relocate a campus event. Online attendance remains eligible.
+      if (!isVirtual && item.livewhaleTimezone === "America/New_York"
+        && /\b(?:NYC|New York(?: City)?)\s*$/i.test(item.title || "")
+        && /\b(?:alumni|friends)\s+in\s+(?:NYC|New York(?: City)?)\b/i.test(stripHtml(item.description || ""))) {
         skippedScu++;
         return null;
       }
