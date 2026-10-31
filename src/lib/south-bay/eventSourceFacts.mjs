@@ -26,6 +26,19 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The city's event body excerpt omits the separate admission panel. That
+  // panel requires preregistration and prices residents/nonresidents, with
+  // an explicit exemption for children under two. Do not invent a deadline.
+  // Evidence: docs/qa/2026-10-31-1807-fact-check.md (fresh organizer page).
+  {
+    date: "2026-12-05",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Breakfast-with-Santa/Breakfast-with-Santa-Event",
+    facts: {
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+      costNote: "$18 for residents; $22 for nonresidents. Children under 2 are free.",
+      attendanceNote: "Preregistration is required for attendees ages 2 and older: $18 for residents, $22 for nonresidents. Children under 2 are free and do not need to register.",
+    },
+  },
   // The newsletter excerpt omitted the Chinese tour's advance-registration
   // requirement. Its dated Stanford occurrence explicitly requires an RSVP;
   // the separate Spanish tour remains a free walk-in program.
@@ -1680,6 +1693,14 @@ const CORRECTIONS = [
       url: "https://historysanjose.org/event/san-jose-roots/",
       cost: "free",
     },
+    // The program names the Adobe and Fallon House, rather than multiple
+    // adobe homes, and does not substantiate the extracted anniversary claim.
+    // Evidence: docs/qa/2026-10-31-1807-fact-check.md (fresh organizer page).
+    copyReplacements: [
+      [/\bhistoric adobe homes\b/gi, "historic homes"],
+      [/,\s+kicking off the city['’]s 250th anniversary with\b/gi, ", with"],
+      [/\s+marking San Jos[ée]['’]s 250th\b/gi, ""],
+    ],
   },
   // A newsletter copy displaced the city's linked occurrence during dedupe.
   // Match its date/title/venue so a new intake ID cannot restore a blank link.
