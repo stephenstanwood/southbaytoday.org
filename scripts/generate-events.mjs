@@ -4721,7 +4721,9 @@ async function fetchSjsuEvents() {
         virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;
       const address = metadata?.address || "";
-      if (!isVirtual && (namesUncoveredCaPostalCity(address) || hasOutOfAreaDestination({ venue, address }))) {
+      // Check the original athletics title before venue-suffix cleanup can
+      // erase "at UC Irvine" / "at UC Davis" and conceal an away game.
+      if (!isVirtual && (isAwayGame(item.title) || namesUncoveredCaPostalCity(address) || hasOutOfAreaDestination({ venue, address }))) {
         locationSkipped++;
         return null;
       }

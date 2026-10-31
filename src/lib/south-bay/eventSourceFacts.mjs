@@ -26,6 +26,34 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The newsletter excerpt omitted the Chinese tour's advance-registration
+  // requirement. Its dated Stanford occurrence explicitly requires an RSVP;
+  // the separate Spanish tour remains a free walk-in program.
+  // Evidence: docs/qa/2026-10-31-0807-fact-check.md.
+  {
+    date: "2026-11-15",
+    url: "https://events.stanford.edu/event/copy-of-public-tour-cantor-highlights-in-chinese-4381",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free tour; advance registration is required. Use the November 15 RSVP link on the organizer's event page.",
+    },
+  },
+  // These two SJSU games are on the road. The original occurrence pages name
+  // Irvine and Davis; a San Jose publisher never establishes a local venue.
+  // Protect archived/retired copies as well as the current ingestion path.
+  // Evidence: docs/qa/2026-10-31-0807-fact-check.md.
+  {
+    date: "2026-11-07",
+    matches: (event) => !event.virtual
+      && event.url === "https://events.sjsu.edu/event/mens-basketball-san-jose-state-at-uc-irvine",
+    facts: { venue: "Irvine, Calif.", address: "", city: null, photoRef: null, image: null },
+  },
+  {
+    date: "2026-11-06",
+    matches: (event) => !event.virtual
+      && event.url === "https://events.sjsu.edu/event/mens-soccer-san-jose-state-at-uc-davis-5703",
+    facts: { venue: "Davis, Calif.", address: "", city: null, photoRef: null, image: null },
+  },
   // Fresh organizer pages and RSS records, not the publisher's campus or a
   // keyword in an excerpt, establish these dated facts. Keep cached copies
   // and retired event pages consistent with the same evidence.

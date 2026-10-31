@@ -1,11 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { fetchScuEvents, resolveRunWindow } from "../generate-events.mjs";
+import { fetchScuEvents, fetchSjsuEvents, resolveRunWindow } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { hasOutOfAreaDestination, requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
-import { snapshotEvent } from "../../src/lib/south-bay/eventSlugLedger.mjs";
+import { snapshotEvent, resolveRetired } from "../../src/lib/south-bay/eventSlugLedger.mjs";
 
 const { events } = JSON.parse(readFileSync(new URL("../lib/fixtures/fact-check-2026-10-31.json", import.meta.url)));
 const row = (id) => structuredClone(events.find((event) => event.id === id));
@@ -94,6 +94,86 @@ test("the original downtown newsletter's free admission survives tracked social 
     assert.deepEqual(applyVerifiedEventFacts(actual), actual);
   }
   for (const other of [{ ...input, date: "2027-10-31" }, { ...input, url: "https://www.instagram.com/p/unrelated/" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("SJSU away games are excluded before title cleanup can remove the destination", async () => {
+  const origin = "https://events.sjsu.edu";
+  const rows = [
+    ["irvine", "Men's Basketball - San Jose State at UC Irvine", "Irvine, Calif.", "inperson"],
+    ["davis", "Men's Soccer - San Jose State at UC Davis", "Davis, Calif.", "inperson"],
+    ["missing-location", "Men's Basketball - San Jose State at Another University", "", "inperson"],
+    ["home", "Men's Basketball - San Jose State vs UC Irvine", "San Jose, Calif.", "inperson"],
+    ["campus", "Public recital at Music Building", "Music Building", "inperson"],
+    ["virtual", "Remote discussion", "Davis, Calif.", "virtual"],
+  ];
+  const xml = `<rss><channel>${rows.map(([slug, title]) => `<item><title>${title}</title><link>${origin}/event/${slug}</link><description>Public program.</description><pubDate>2026-11-07T19:00:00-08:00</pubDate></item>`).join("")}</channel></rss>`;
+  const originalFetch = globalThis.fetch, requested = [];
+  globalThis.fetch = async (url) => {
+    requested.push(String(url));
+    if (String(url) === `${origin}/calendar.xml`) return new Response(xml);
+    assert.match(String(url), /^https:\/\/events\.sjsu\.edu\/api\/2\/events\?/);
+    return Response.json({ page: { total: 1 }, events: rows.map(([slug, , location_name, experience]) => ({ event: {
+      localist_url: `${origin}/event/${slug}`, location_name, experience, address: "",
+    } })) });
+  };
+  try {
+    const events = await fetchSjsuEvents();
+    assert.deepEqual(events.map((event) => event.url.split("/").at(-1)), ["home", "campus", "virtual"]);
+    assert.equal(events.at(-1).virtual, true);
+    assert.equal(requested.length, 2, "reuse the existing source requests");
+  } finally { globalThis.fetch = originalFetch; }
+});
+
+test("retained SJSU road-game URLs identify the actual destination without a campus photo", () => {
+  const cases = [
+    ["2026-11-07", "mens-basketball-san-jose-state-at-uc-irvine", "Irvine, Calif."],
+    ["2026-11-06", "mens-soccer-san-jose-state-at-uc-davis-5703", "Davis, Calif."],
+  ];
+  for (const [date, slug, venue] of cases) {
+    const event = {
+      title: "San Jose State away game", date, time: "7:00 PM", city: "san-jose",
+      venue: venue.split(",")[0], address: "", photoRef: "campus-photo", image: "campus-image",
+      url: `https://events.sjsu.edu/event/${slug}`,
+    };
+    const { orphans } = resolveRetired({ entries: [{ slug: `retained-${slug}`, event }] }, [], [], "2026-10-31");
+    const corrected = orphans[0].event;
+    assert.equal(corrected.venue, venue);
+    assert.equal(corrected.city, null);
+    assert.equal(corrected.photoRef, null);
+    assert.equal(corrected.image, null);
+    assert.equal(hasOutOfAreaDestination(corrected), true);
+    assert.equal(hasOutOfAreaDestination({ venue: venue.split(",")[0] }), true, "the normalized city-only venue is also out of coverage");
+    assert.equal(hasOutOfAreaDestination({ ...corrected, virtual: true }), false);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    for (const unrelated of [{ ...event, date: "2027-11-07" }, { ...event, url: "https://example.org/another-game" }, { ...event, virtual: true }]) {
+      assert.deepEqual(applyVerifiedEventFacts(unrelated), unrelated);
+    }
+  }
+  assert.equal(hasOutOfAreaDestination({ venue: "Music Building", description: "Guest from Irvine and Davis." }), false);
+});
+
+test("Cantor's November Chinese tour retains its required advance registration", async () => {
+  const event = {
+    id: "inbound-95d1bb9de8e82cc0", title: "Chinese Language Tour", date: "2026-11-15",
+    time: "2:00 PM", endTime: null, venue: "Cantor Arts Center", city: "palo-alto",
+    url: "https://events.stanford.edu/event/copy-of-public-tour-cantor-highlights-in-chinese-4381",
+    cost: null, description: "A tour of the Cantor's collection offered in Chinese.",
+    blurb: "Tour the Cantor's collection with a guide leading the walk-through in Chinese.",
+  };
+  const actual = structuredClone(event);
+  await resolveEventBlurbs([actual], { enabled: false });
+  assert.equal(actual.cost, "free");
+  assert.equal(actual.registration, "required");
+  assert.equal(requiresAdvanceRegistration(actual), true);
+  assert.match(actual.attendanceNote, /advance registration is required/i);
+  for (const field of ["title", "date", "time", "endTime", "venue", "url", "description", "blurb"]) assert.equal(actual[field], event[field], field);
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...event, registration }).registration, registration);
+  }
+  for (const other of [{ ...event, date: "2027-11-15" }, { ...event, url: "https://events.stanford.edu/event/public-tour-cantor-highlights-spanish-language-7060" }]) {
     assert.deepEqual(applyVerifiedEventFacts(other), other);
   }
 });

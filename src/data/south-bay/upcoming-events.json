@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-31T07:09:48.567Z",
-  "eventCount": 1439,
+  "eventCount": 1437,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -32798,7 +32798,7 @@
       "address": "Cantor Arts Center, Stanford University",
       "city": "palo-alto",
       "category": "arts",
-      "cost": null,
+      "cost": "free",
       "description": "A tour of the Cantor's collection offered in Chinese.",
       "url": "https://events.stanford.edu/event/copy-of-public-tour-cantor-highlights-in-chinese-4381",
       "source": "City Newsletter",
@@ -32806,7 +32806,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53695161315145/huge/a04d5a884b40c05e4ace455aa3bf15a839776d62.jpg",
       "blurb": "Tour the Cantor's collection with a guide leading the walk-through in Chinese.",
-      "firstSeenAt": "2026-10-31T07:09:48.538Z"
+      "firstSeenAt": "2026-10-31T07:09:48.538Z",
+      "registration": "required",
+      "attendanceNote": "Free tour; advance registration is required. Use the November 15 RSVP link on the organizer's event page."
     },
     {
       "id": "inbound-17c030e53dfb3c75",
@@ -32830,27 +32832,6 @@
       "firstSeenAt": "2026-10-31T07:09:48.538Z"
     },
     {
-      "id": "sjsu-5bbdd5c4d6aa16e1",
-      "title": "Men's Basketball - San Jose State",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "Irvine",
-      "address": "",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": null,
-      "description": "Men's Basketball - San Jose State at UC Irvine",
-      "url": "https://events.sjsu.edu/event/mens-basketball-san-jose-state-at-uc-irvine",
-      "source": "SJSU Events",
-      "image": "https://images.unsplash.com/photo-1767584413129-2ad2941b7e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBzdGFkaXVtJTIwZ2FtZXxlbnwwfDJ8fHwxNzc3MjMwNjE4fDA&ixlib=rb-4.1.0&q=80&w=400",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "blurb": "Watch San Jose State take on UC Irvine in men's basketball, with a Saturday night tip-off.",
-      "firstSeenAt": "2026-10-31T07:09:48.538Z"
-    },
-    {
       "id": "sjsu-644cf4c1031d77b1",
       "title": "ModLark (Laptop Orchestra) Concert",
       "date": "2026-11-05",
@@ -32870,27 +32851,6 @@
       "audienceAge": "all",
       "blurb": "Hear ModLark, a laptop orchestra, perform in a free concert open to the public at the Music Building.",
       "firstSeenAt": "2026-10-30T08:39:23.401Z"
-    },
-    {
-      "id": "sjsu-0a09412fe3f45651",
-      "title": "Men's Soccer - San Jose State",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "Davis",
-      "address": "",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": null,
-      "description": "Men's Soccer - San Jose State at UC Davis",
-      "url": "https://events.sjsu.edu/event/mens-soccer-san-jose-state-at-uc-davis-5703",
-      "source": "SJSU Events",
-      "image": "https://images.unsplash.com/photo-1767584413129-2ad2941b7e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBzdGFkaXVtJTIwZ2FtZXxlbnwwfDJ8fHwxNzc3MjMwNjE4fDA&ixlib=rb-4.1.0&q=80&w=400",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "blurb": "Watch San Jose State face UC Davis in a Friday evening men's soccer match.",
-      "firstSeenAt": "2026-10-31T07:09:48.538Z"
     },
     {
       "id": "inbound-f6eadd0378e1499b",
