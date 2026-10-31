@@ -155,6 +155,7 @@ const EDITS = {
       ["application process and practice new skills No class ", "application process and practice new skills. No class "],
       [/No class (\d{1,2}\/\d{1,2}\/\d{2,4})$/g, "No class $1."],
       ["Students in Kindergarten through 6th grade", "Students in kindergarten through 6th grade"],
+      ["Join us at Evergreen library for LEGO fun.", "Join us at Evergreen Library for LEGO fun."],
     ],
     blurb: [
       ["a 15-20 minute session", "a 15-20-minute session"],
@@ -269,6 +270,8 @@ const EDITS = {
       ["Join us at the Cupertino Library 3:30-4:30 PM!", "Join us at the Cupertino Library from 3:30 to 4:30 PM!"],
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
       ["We will be painting mini canvases, enjoy some snacks and have Gilmore Girls on in the background.", "We will paint mini canvases, enjoy some snacks and have Gilmore Girls on in the background."],
+      ["book club focusing on Manga!", "book club focusing on manga!"],
+      ["(Available on Libby, and in library)", "(available on Libby and in the library)."],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
