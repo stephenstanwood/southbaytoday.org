@@ -2856,13 +2856,14 @@ export function applyVerifiedEventFacts(event) {
     }
   }
   // The sparse SJSU RSS body omits the card needed to use this public lab.
-  // Its indexed occurrence page lists these dates; the library's access guide
-  // independently confirms the condition. A library card is not a reservation.
+  // The library's access guide sets this condition for the program, rather
+  // than individual dates. Apply it to existing occurrences of the exact
+  // program URL so a new RSS date cannot lose it; never create occurrences.
+  // A library card is not an event reservation or a virtual access condition.
   // https://events.sjsu.edu/event/open-lab-ai-center
   // https://sjlibrary.org/aicenter
-  // Evidence and HTTP rate limit: docs/qa/2026-10-29-1007-fact-check.md.
-  if (["2026-10-27", "2026-10-28", "2026-10-29", "2026-10-30",
-    "2026-11-02", "2026-11-03", "2026-11-04", "2026-11-05", "2026-11-06"].includes(event?.date)
+  // Evidence: docs/qa/2026-10-31-1107-fact-check.md.
+  if (!event?.virtual
       && /^https:\/\/events\.sjsu\.edu\/event\/open-lab-ai-center\/?$/.test(event?.url || "")) {
     const accessNote = "Bring a valid SJSU Tower Card or SJPL library card to use the AI Center.";
     if (!(event.attendanceNote || "").includes(accessNote)) {

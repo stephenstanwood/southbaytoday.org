@@ -66,7 +66,8 @@ test("museum event clocks come from their own schedules and unknown clocks survi
   assert.equal(halloween.endTime, "4:30 PM");
 });
 
-// Source and access limits: docs/qa/2026-10-29-1007-fact-check.md.
+// Sources: docs/qa/2026-10-29-1007-fact-check.md and
+// docs/qa/2026-10-31-1107-fact-check.md (standing library access policy).
 test("AI Center open labs retain the library-card access condition through sparse source refreshes", async () => {
   const raw = {
     title: "Open Lab Hours at AI Center for Civic and Social Good",
@@ -76,7 +77,8 @@ test("AI Center open labs retain the library-card access condition through spars
     description: "Drop in, explore, and create!",
     blurb: "Drop into King Library's open lab to explore AI tools and work on your own projects.",
   };
-  const dates = ["2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04"];
+  const dates = ["2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04",
+    "2026-11-09", "2026-11-10", "2026-11-12", "2026-11-13"];
   const events = dates.map((date) => ({ ...raw, date }));
   await resolveEventBlurbs(events, { enabled: false });
   for (const event of events) {
@@ -95,8 +97,7 @@ test("AI Center open labs retain the library-card access condition through spars
     assert.deepEqual(applyVerifiedEventFacts(event), event);
   }
   for (const other of [
-    { ...raw, date: "2027-11-04" },
-    { ...raw, date: "2026-11-07" },
+    { ...raw, virtual: true },
     { ...raw, url: "https://events.sjsu.edu/event/another-open-lab" },
   ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
 });
