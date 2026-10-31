@@ -157,6 +157,25 @@ const EDITS = {
       ["Students in Kindergarten through 6th grade", "Students in kindergarten through 6th grade"],
       ["Join us at Evergreen library for LEGO fun.", "Join us at Evergreen Library for LEGO fun."],
       ["your child will develop imagination and love of books and reading.", "your child will develop their imagination and a love of books and reading."],
+      ["Music and Movement is a high energy Storytime", "Music and Movement is a high-energy storytime"],
+      ["1st Wednesday: Cars 2nd Wednesday: Superhero Obstacle Course (ages 3-8) 3rd Wednesday: LEGO Duplo Blocks 4th Wednesday: Cars 5th Wednesday: LEGO Duplo Blocks Recommended", "1st Wednesday: Cars; 2nd Wednesday: Superhero Obstacle Course (ages 3-8); 3rd Wednesday: LEGO Duplo Blocks; 4th Wednesday: Cars; 5th Wednesday: LEGO Duplo Blocks. Recommended"],
+      ["*Additional titles to be selected in November Free.", "Additional titles to be selected in November. Free."],
+      ["Have your resume reviewed by a SJPL Works", "Have your resume reviewed by an SJPL Works"],
+      ["Parking validation for garage at", "Parking validation for the garage at"],
+      ["E Newsletter Signup Get the inside", "E-newsletter Signup: Get the inside"],
+      ["E-newsletter signup Get the inside", "E-newsletter Signup: Get the inside"],
+      ["pause and reflect about how", "pause and reflect on how"],
+      ["This programs is immediately", "This program is immediately"],
+      ["STAR method In partnership with SJSU Department of Communication Studies Free.", "STAR method. In partnership with the SJSU Department of Communication Studies. Free."],
+      ["Other accommodations can be made available with request.", "Other accommodations can be made available upon request."],
+      ["3D print quality and time needed to complete prints is not guaranteed.", "3D print quality and the time needed to complete prints are not guaranteed."],
+      ["printed as a. Png.", "printed as a PNG file."],
+      ["There are scrap material and thread available but", "Scrap material and thread are available, but"],
+      ["An iron and ironing board is also available.", "An iron and ironing board are also available."],
+      ["If your bring your own printout", "If you bring your own printout"],
+      ["All measurements below are diameter length in inches.", "All measurements below are diameters in inches."],
+      ["Suitable for Intermediate English learners.", "Suitable for intermediate English learners."],
+      ["Each session is conducted in-person by", "Each session is conducted in person by"],
     ],
     blurb: [
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
@@ -166,6 +185,7 @@ const EDITS = {
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
       ["club at Almaden Library, no registration required.", "club at Almaden Library. No registration required."],
+      ["Bring assigned homework to the Children's Room and work through it with volunteer coach Delaney, open to kindergarten through 5th grade.", "Students in kindergarten through 5th grade can bring assigned homework to the Children's Room and work through it with volunteer coach Delaney."],
     ],
   },
   "Linden Tree Books": {
@@ -216,6 +236,10 @@ const EDITS = {
   "Gamble Garden": {
     description: [
       ["One of Gamble Garden's most beloved traditions, our Holiday Luncheons are", "Among Gamble Garden's most beloved traditions, our Holiday Luncheons are"],
+    ],
+    blurb: [
+      ["Taste a Wednesday midday holiday luncheon among Gamble Garden's grounds in Palo Alto.", "Enjoy a Wednesday midday holiday luncheon on Gamble Garden's grounds in Palo Alto."],
+      ["a Saturday midday holiday luncheon among the garden grounds.", "a Saturday midday holiday luncheon on the garden grounds."],
     ],
   },
   "Books Inc": {
@@ -302,12 +326,14 @@ const EDITS = {
       ["the consequences of which continues to reverberate today.", "the consequences of which continue to reverberate today."],
       ["Many local affiliates of PBS have broadcast the film but national PBS, however, has refused", "Many local affiliates of PBS have broadcast the film, but national PBS has refused"],
       ["Charles Rangel (D-NY.),", "Charles Rangel (D-NY),"],
+      ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
     ],
     blurb: [
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
       ["and join movement activities in", "and join in movement activities in"],
       ["Join friendly trivia competition run by", "Join a friendly trivia competition run by"],
       ["Kent to international music, no partner or", "Kent to international music; no partner or"],
+      ["Watch dry ice turn solid to gas", "Watch dry ice turn from solid to gas"],
     ],
   },
   "City of Cupertino": {
@@ -334,6 +360,7 @@ const EDITS = {
       ["this drop-in social group, no registration required.", "this drop-in social group. No registration required."],
       ["Dance to line dancing and", "Enjoy line dancing and"],
       ["Senior Center lobby, no registration needed.", "Senior Center lobby. No registration needed."],
+      ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
@@ -361,6 +388,7 @@ const EDITS = {
       ["Greedo, Kamaiyah and more, lineup subject to", "Greedo, Kamaiyah and more; lineup subject to"],
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
       ["Catch Suicide Silence, Emmure,", "Watch Suicide Silence, Emmure,"],
+      ["Hear classic Rock En Espanol artists' music and visuals at The Ritz, 21 and up.", "Enjoy music and visuals from classic Rock En Espanol artists at The Ritz, for ages 21 and up."],
     ],
   },
   "Stanford Events": {

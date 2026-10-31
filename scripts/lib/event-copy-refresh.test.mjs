@@ -23,7 +23,8 @@ const postRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-
 const october31Fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31.json", import.meta.url)));
 const storytimeFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-storytime.json", import.meta.url)));
 const activitiesFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-activities.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture];
+const afternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-afternoon.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -43,6 +44,13 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
 test("activity blurb repairs leave other publishers' wording unchanged", () => {
   for (const row of activitiesFixture.cases) {
     const event = { source: "Different publisher", blurb: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("afternoon copy repairs leave other publishers' wording unchanged", () => {
+  for (const row of afternoonFixture.cases) {
+    const event = { source: "Different publisher", [row.field]: row.refreshed };
     assert.deepEqual(polishReviewedEventCopy(event), event);
   }
 });
