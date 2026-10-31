@@ -16,6 +16,45 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Zoe Caron's November reception retains the city's required RSVP across newsletter copies", async () => {
+  // October 29 city newsletter: free to all, RSVP required; the linked ticket
+  // page is https://tickets.mvcpa.com/eventperformances.asp?evt=802.
+  const raw = {
+    title: "Artist Reception & Gallery Talk with Zoe Caron", date: "2026-11-04",
+    venue: "MVCPA SecondStage", url: "", cost: null,
+    time: "5:30 PM", endTime: "7:30 PM",
+    description: "A free artist reception and gallery talk featuring Zoe Caron.",
+    blurb: "Meet artist Zoe Caron at the gallery talk.",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.registration, "required");
+  assert.equal(fixed.cost, "free");
+  assert.equal(fixed.url, "https://tickets.mvcpa.com/eventperformances.asp?evt=802");
+  assert.match(fixed.attendanceNote, /RSVP is required/);
+  assert.match(fixed.attendanceNote, /Doors open at 5:00 PM.*talk begins at 6:00 PM/);
+  assert.equal(fixed.registrationClosesBy, undefined, "the city supplies no booking deadline");
+  assert.equal(requiresAdvanceRegistration(fixed), true);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const field of ["title", "date", "time", "endTime", "venue", "description", "blurb"]) {
+    assert.equal(fixed[field], raw[field], field);
+  }
+  for (const title of ["Zoe Caron Artist Reception & Gallery Talk", "Artist Reception & Gallery Talk featuring Zoe Caron"]) {
+    const copy = applyVerifiedEventFacts({ ...raw, title, venue: "Mountain View Center for the Performing Arts, SecondStage, 500 Castro Street, Mountain View, CA" });
+    assert.equal(copy.registration, "required", title);
+    assert.equal(copy.url, fixed.url, title);
+  }
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    assert.equal(applyVerifiedEventFacts({ ...raw, registration }).registration, registration);
+  }
+  for (const other of [{ ...raw, date: "2027-11-04" }, { ...raw, venue: "Another gallery" }, { ...raw, title: "Another artist reception" }]) {
+    assert.equal(applyVerifiedEventFacts(other), other);
+  }
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].registration, "required");
+  assert.equal(events[0].url, fixed.url);
+});
+
 test("dated Lowrider and SJSU celebrations retain RSVP notices without inventing mandatory registration", async () => {
   const cases = [
     { url: "https://my.montalvoarts.org/3248/3250", title: "4th Lowrider Art Showcase", venue: "Montalvo Arts Center", time: "1:00 PM", endTime: null },
