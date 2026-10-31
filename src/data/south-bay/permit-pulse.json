@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-30T03:11:09.275Z",
+      "generatedAt": "2026-10-31T03:24:39.912Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 22 – Oct 29",
+      "dateRange": "Oct 23 – Oct 30",
       "stats": {
-        "total": 457,
-        "notable": 27,
-        "newUnits": 14,
-        "totalValuation": 23595673
+        "total": 447,
+        "notable": 22,
+        "newUnits": 17,
+        "totalValuation": 19222710
       },
       "permits": [
         {
@@ -27,39 +27,87 @@
           "subtype": "Condo"
         },
         {
-          "id": "2025-098535-RS",
-          "address": "6138 Mancuso St",
+          "id": "2025-119589-RS",
+          "address": "119 Scharff Av",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Single Family Residence",
-          "valuation": 638046,
+          "description": "Sb9 Construct New Sb9 Duplex #2",
+          "valuation": 417986,
           "units": 1,
-          "issueDate": "2026-10-22",
-          "subtype": "Single-Family"
+          "issueDate": "2026-10-28",
+          "subtype": "Duplex"
         },
         {
-          "id": "2026-128193-RS",
-          "address": "1356 Via De Los Reyes #2",
+          "id": "2025-112981-RS",
+          "address": "117 Scharff Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Sb9 New ADU #117 Unit 2 for New Duplex Unit #1",
+          "valuation": 140208,
+          "units": 1,
+          "issueDate": "2026-10-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-119592-RS",
+          "address": "119 Scharff Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Sb9 New ADU Unit #2 for New Duplex Unit #2",
+          "valuation": 140208,
+          "units": 1,
+          "issueDate": "2026-10-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-108953-RS",
+          "address": "13612 Emilie Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 100274,
+          "units": 1,
+          "issueDate": "2026-10-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-112507-RS",
+          "address": "2496 Glen Angus Wy #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Detached ADU",
-          "valuation": 87960,
+          "valuation": 87080,
           "units": 1,
-          "issueDate": "2026-10-22",
+          "issueDate": "2026-10-28",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-123180-RS",
-          "address": "2148 E San Antonio St #2",
+          "id": "2025-139608-RS",
+          "address": "6162 Valley Glen Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Epr Preapproved ADU Site Specific Ca2homes 499 Sq Ft",
-          "valuation": 87784,
+          "description": "Garage Conversion to JADU",
+          "valuation": 78460,
           "units": 1,
-          "issueDate": "2026-10-22",
+          "issueDate": "2026-10-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-131602-RS",
+          "address": "7108 Avenida Rotella #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to JADU",
+          "valuation": 74928,
+          "units": 1,
+          "issueDate": "2026-10-28",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -85,54 +133,6 @@
           "units": 1,
           "issueDate": "2026-10-27",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-120519-RS",
-          "address": "1849 Potrero Dr #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "JADU Garage Conversion",
-          "valuation": 51017,
-          "units": 1,
-          "issueDate": "2026-10-27",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-111640-RS",
-          "address": "2595 Britt Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Partial Garage Conversion to JADU & New Storage",
-          "valuation": 37823,
-          "units": 1,
-          "issueDate": "2026-10-22",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-144579-CI",
-          "address": "141 Innovation Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Altera Tenant Improvement",
-          "valuation": 3400000,
-          "units": 0,
-          "issueDate": "2026-10-27",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-144344-CI",
-          "address": "90 Headquarters Dr",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Teradyne R&D Tenant Improvement",
-          "valuation": 3150000,
-          "units": 0,
-          "issueDate": "2026-10-26",
-          "subtype": "R & D Lab"
         }
       ]
     }

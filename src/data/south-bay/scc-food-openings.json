@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-30T03:20:20.987Z",
+  "generatedAt": "2026-10-31T03:32:20.903Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "stale",
-    "checkedAt": "2026-10-30T03:20:20.987Z",
+    "checkedAt": "2026-10-31T03:32:20.903Z",
     "updatedAt": "2026-10-12T13:35:45.000Z",
-    "ageDays": 17,
+    "ageDays": 18,
     "newestRawInspection": "2026-10-12",
     "newestEligibleInspection": "2026-10-07",
     "eligibleStatus": "quiet"
@@ -34,7 +34,7 @@
       "inspectionDate": "2026-09-30",
       "sourceId": "SR0884734",
       "status": "inspection-complete",
-      "blurb": "Matcha-focused food business on Waverley Street in Palo Alto.",
+      "blurb": "Food business on Waverley Street in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884734-450.webp"
     },
     {
@@ -46,7 +46,7 @@
       "inspectionDate": "2026-09-28",
       "sourceId": "SR0884438",
       "status": "inspection-complete",
-      "blurb": "Donut shop on S Winchester Blvd in Campbell.",
+      "blurb": null,
       "photoRef": "places/ChIJGbPipR81joARUJS6ON0AGZQ/photos/AWCwydidh_svkUBDinnqcYczPuHEkMa9S8o5bKYe0JJmeNR_08S6Kye9SyIbMHDVSL0Qk8Nmzqp6R3a4-05lX2xRMp5sO0D46xE-AVlRIyXZuY1LWAYy_qTVRpBM9s8kalPo4S73Y3m4POPzUTitrhSoURbKcjOUoYETVlTHOYsRMIULDr-guDrYktY3r8E53IC-lBowJgZlCNK7Zn-toqJYzUD4V2z6FJW3IfGKC9zQquStrABG68agSjhJi9XGhzP9XjIo-FryZ8a2LwEXOr4AASDhnRSpHBkARYMt8jHoX5zi8z5wtAxqYFHoKQTyxbD3La0hH9XKqPwhk_t_yNiD_DNYAcS8z7pquI8CE6QdI8fG5R2l5GtLSw7YDko562dTBJbxOOjFxwj0mEdN9X-9wYsPoVGsdCXAyUUEzMQiLo-FVz8_"
     },
     {
@@ -70,7 +70,7 @@
       "inspectionDate": "2026-09-22",
       "sourceId": "SR0885604",
       "status": "inspection-complete",
-      "blurb": "Bakery on Berryessa Rd in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJASDhhTXMj4ARPkxzyqPvpo8/photos/AWCwydi3-gjnlJDfpElNjSPZwA1Pn77A1dmlDpTi_1l0Y92gP9iyegY2HsjL1Xxu3EpxlrpuhfrCYv2bIN0bj7apy86s76DCpzYR6lJ6GzszFTckeXq7LLCwZHnK8UokzEU2Mk0_0Dk9Eg-7IfEkGAP7CicpWDs9CXk85qF0PhYtTnCXwqkVs4uzvw3HP3UnRDfs3WHArTQO_NVast-kXMBqRuqKjELxmaSWswG8asATvB60U0B9JND3sqTQv6hvXe2KjSs-Mo_sZHDufmE3iwfTVGx_VVL2WboXig0EwG4zTP2YiCQdxWrWmFZzZyqUf3rNgxOcFNaCwsfxYD2OPWMJuHqtsPv_dvXBTTiC5RgrvDRc4-kcGw_QLEqdtv6SjO5riLMK1wKbO33gi6hBuEt-gypJxVhSAF4KlcGTQgrolOsVykjSYGoG40faBvYNtOBs"
     },
     {
@@ -94,7 +94,7 @@
       "inspectionDate": "2026-09-17",
       "sourceId": "SR0885849",
       "status": "inspection-complete",
-      "blurb": "Coffee bar on E Santa Clara St in San Jose.",
+      "blurb": "Coffee bar at E Santa Clara St in San Jose.",
       "photoRef": "places/ChIJbf0gXwDJj4AReIHrbkaMAkE/photos/AVoNoXQNs38QoL9PCNN0jfdM-TvOglSeDJtrUp5qvjFkyiUN0a-mIS7CXV52ac0xAaRcRpUAwgY2fvURAoZQ1f7035_eY19KsUKQ3dvKUfClmZT-ZuRgaFHyRkdwfc55oZJ5PjZY9-Ymq5lAxbbvJwwcxfJW2XTAksfcvUyc6FcCp_N_WIucAzzO3W_khTSSxIeD9DTHe2FQ94jfKVicAD7y_1R2fKz3HzHiwAL3QGMHTDIrytUuD4rbxKKvTdG2lWkbgjcFRAhNWCN31x17nY-X2U19q5jg1OVjmlgPKIUKCwL3ED2tWFckiEQj6qXALJav4sFN109mZDp4Xfitxi6_0AT0XRaB11VnmZI11S937tLUcwi8oMdtn8a4mK0k9GU2yRpbqZHpFWADGpfvkdUdLzu6mn6137EuRCYQaXLo3uPocWc-yVpy1163piuHaP5v"
     },
     {
@@ -106,20 +106,8 @@
       "inspectionDate": "2026-09-17",
       "sourceId": "SR0876677",
       "status": "inspection-complete",
-      "blurb": "Cafe and refresh station on Agnew Rd in Santa Clara.",
+      "blurb": null,
       "photoRef": "places/ChIJS1P3IMfJj4ARyYfto6rO7tk/photos/Aa-ngMbRpihZ6eW8WAjkV10CS6zh9l6MpVh1dRjm3FYVFUUhXJ8viXMOWg3dQV2YG8RvPp2VXhNqwAqz1RX9mOWmIEKKzh_aczXyNEOJ_7rtYkCxmEDewSr95PY8RVBkxVSBPwHt96KL3qJ2dBeolcBo2aB9sjwqj20MUgGOiYVjQNIrH9r8SanlAg-mC08flr41LiSyPwqqhDWtK5FRRTwyD-HGvDWCjLUkDbCKswWY4s29GXDXAYpCm-9KVvVQ8zGeoveQmek8fnSB-285ap4imgkkYdSyFgtxP_khY8D8rnpltssR9u9O8TwsFN2K2R8OA1qXSCVPW_ztwYUe5ouZPj9rAoCpaajwfqAfzisxoRxFtFr2ov3pJhzJq5wpBQ-X7eekAhFYP54JgOt2FhG9b6Ly-E5_6-rDxbUVfFz0OV-4TgzP"
-    },
-    {
-      "id": "inspection-SR0883600",
-      "name": "Pure Water Ice Cream Shop",
-      "address": "1435 Foxworthy Ave",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-09-16",
-      "sourceId": "SR0883600",
-      "status": "inspection-complete",
-      "blurb": "Ice cream shop on Foxworthy Ave in San Jose.",
-      "photoRef": "places/ChIJbYeM6WwzjoARq67e_bSA3hY/photos/AVoNoXTAoq0CrlaciyR1UbquVVJKVTZmQoQRXe-Uk6V7li9s80tuQWgRk6mJFPRP31ff7cpupjOYYwR_wHyoZyBOGjdwemrft1uQcOi8CWJLNUhFzRGanC9KGtpOwJjTnRSIglUFdbzWB52s9xrSTIxm0p4r8OXvDrLx4-NFnVfNo1WpkkqtFTx896aCY9rL7wCWd9EO7JLLVUMDlJNnZyoWY6g1e1Pp2sibt8zwDVYKYoqGiaHQJZ4XotWG7cFpoe_3yNQEo60Ux9xk9bUr2NO5tq_-vx5ibXjp8S0eVzlASGRcP34GZdHG9dB9RBrEqTelho7kIW1lljTEWcCmbM1Fbk9f_X3ChpCM5ndGYyFpV62vz-aA2HV5bybxqZwgyLRB4O8ngBfRbw-1jT8fAnmJmk7G7aTydG-KonjZuDMmr5ASek7r0txttdgfyUwU5A"
     }
   ],
   "comingSoon": [
@@ -240,7 +228,7 @@
       "date": "2026-10-01",
       "status": "coming-soon",
       "sourceId": "SR0885214",
-      "blurb": null,
+      "blurb": "Food business planned on Serra Way in Milpitas.",
       "photoRef": "places/ChIJG8YccgDJj4AR_rZ9Bai_21Q/photos/Aa-ngMbft__ocFaF7FRf9ulEND9meWbbIKkNBCr1mfXqBSVTOfkrxljkHTCqpmw1BlNr7d3L_of2djzr9VEgjNMXY2OnKi0_3oKHkKAgH00E12PSVSpBLyX7RyOIXErNRFR4RXQhRqtHqXQ8cAj8ETPh0bmrnAbgB9wunpTcTc1BbPIDaBqwXWgVs-smakH9iBQtF8HRZoBLC4Xe5gLpKEwlpMnQPZuAKDkP7kg6cSUVZJQc_o46cdrriavdJmZNN_Q02IVe4qtrlykO47m_cK10pmBvOTBPS0SQRKyRYXnd4E5W6o27ehtNQ4-EAkzOWsm7K1A6avu-aa2mOoOJqtZWe1GEM7wdVxSh0WQdMWKnthQr7vnAIj-TEr-ehXA80kWx_tTs1PD_oPx3Opwh9LiJqp2fjsQMIOoM0_TFibgkt55mT8cjftoiHsBL9c0mac8n"
     },
     {
