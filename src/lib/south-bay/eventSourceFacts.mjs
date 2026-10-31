@@ -34,6 +34,38 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The occurrence's body says tickets are distributed when the branch
+  // opens (10 AM Wednesday); registrationInfo says 30 minutes before its
+  // 11 AM start. Keep both instructions qualified, never choose a clock.
+  // Stop applying the warning if a fresh source resolves either statement.
+  // Evidence: docs/qa/2026-10-31-2007-fact-check.md (exact gateway record).
+  {
+    date: "2026-11-04",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/695477f8cba30d92b60b3b7c"
+      && /\bwhen the library opens\b/i.test(event.description || "")
+      && /\b30 minutes prior to the start of storytime\b/i.test(event.attendanceNote || ""),
+    facts: { attendanceStatus: "needs-confirmation" },
+    copyReplacements: [
+      [/A limited number of tickets will be distributed at the Information Desk when the Library opens\./gi,
+        "The library publishes conflicting ticket pickup instructions: its description says pickup starts when it opens, while its signup instructions say 30 minutes before storytime. Confirm pickup timing with Pearl Avenue Library."],
+      [/ ?A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./gi, ""],
+    ],
+  },
+  // The authenticated newsletter invites reservations. The dated 11:30 AM
+  // booking page confirms a paid reserved seating: $70 meal + $5 fees.
+  // Do not infer availability from hidden "Sold Out!" template text, a
+  // booking deadline, or the price of the separate 2:30 PM seating.
+  // Evidence: docs/qa/2026-10-31-2007-fact-check.md.
+  {
+    date: "2026-11-22",
+    matches: (event) => /^https:\/\/my\.montalvoarts\.org\/(?:overview\/3253|3253\/3254)(?:[/?#]|$)/.test(event.url || "")
+      && (!event.time || event.time === "11:30 AM"),
+    facts: {
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+      costNote: "$75 per person ($70 meal + $5 fees).",
+      attendanceNote: "Reserve your 11:30 AM seating through the organizer's booking page.",
+    },
+  },
   // The organizer's page and authenticated museum newsletter describe
   // storytime and looking at artworks, without a hands-on art activity.
   // Repair the known cached claim; preserve later explicit organizer updates.
