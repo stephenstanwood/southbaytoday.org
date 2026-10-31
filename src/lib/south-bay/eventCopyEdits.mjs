@@ -159,6 +159,7 @@ const EDITS = {
       ["your child will develop imagination and love of books and reading.", "your child will develop their imagination and a love of books and reading."],
     ],
     blurb: [
+      [/^Join stories, songs\b/g, "Join us for stories, songs"],
       ["a 15-20 minute session", "a 15-20-minute session"],
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
