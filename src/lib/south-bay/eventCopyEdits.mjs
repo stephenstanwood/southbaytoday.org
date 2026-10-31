@@ -160,6 +160,8 @@ const EDITS = {
     ],
     blurb: [
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
+      ["Listen to stories and join activities honoring", "Listen to stories and join in activities honoring"],
+      ["Dress up in costume and join crafts, treats, and a parade at Berryessa Library's free Halloween party, no registration needed.", "Dress up in costume for crafts, treats, and a parade at Berryessa Library's free Halloween party. No registration needed."],
       ["a 15-20 minute session", "a 15-20-minute session"],
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
@@ -278,6 +280,8 @@ const EDITS = {
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
+      ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
+      ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
     ],
   },
   "Palo Alto City Library": {
@@ -301,6 +305,8 @@ const EDITS = {
     ],
     blurb: [
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
+      ["and join movement activities in", "and join in movement activities in"],
+      ["Join friendly trivia competition run by", "Join a friendly trivia competition run by"],
       ["Kent to international music, no partner or", "Kent to international music; no partner or"],
     ],
   },
@@ -311,6 +317,7 @@ const EDITS = {
     ],
     blurb: [
       ["for deaf and hard of hearing families.", "for deaf and hard-of-hearing families."],
+      ["and join holiday crafts with your family.", "and make holiday crafts with your family."],
     ],
   },
   "City Newsletter": {
@@ -320,6 +327,9 @@ const EDITS = {
     ],
     blurb: [
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
+      ["join storytime and crafts,", "take part in storytime and crafts,"],
+      ["join hands-on activities,", "join in hands-on activities,"],
+      ["Join the costume parade, critter shows, crafts, and animal enrichment at", "Enjoy the costume parade, critter shows, crafts, and animal enrichment at"],
       ["similar to Bingo,", "similar to bingo,"],
       ["this drop-in social group, no registration required.", "this drop-in social group. No registration required."],
       ["Dance to line dancing and", "Enjoy line dancing and"],
