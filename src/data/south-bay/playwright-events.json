@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-31T19:35:25.685Z",
+    "generatedAt": "2026-10-31T23:44:45.516Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 179,
+    "eventCount": 180,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (11)",
@@ -19,7 +19,7 @@
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (67)",
       "Levi's Stadium (3)",
-      "SAP Center (12)",
+      "SAP Center (13)",
       "The Tech Interactive (10)",
       "Books Inc (7)",
       "San Jose Museum of Art (3)",
@@ -236,7 +236,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 12,
+        "count": 13,
         "error": null,
         "sources": [
           "SAP Center"
@@ -1116,7 +1116,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-31T19:34:13.945Z"
+        "checkedAt": "2026-10-31T23:43:37.645Z"
       }
     },
     {
@@ -1139,7 +1139,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-31T19:34:13.947Z"
+        "checkedAt": "2026-10-31T23:43:37.647Z"
       }
     },
     {
@@ -1162,7 +1162,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-31T19:34:13.950Z"
+        "checkedAt": "2026-10-31T23:43:37.650Z"
       }
     },
     {
@@ -1185,7 +1185,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-31T19:34:13.950Z"
+        "checkedAt": "2026-10-31T23:43:37.650Z"
       }
     },
     {
@@ -1208,7 +1208,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-31T19:34:13.951Z"
+        "checkedAt": "2026-10-31T23:43:37.651Z"
       }
     },
     {
@@ -1229,53 +1229,53 @@
       "kidFriendly": false
     },
     {
-      "id": "aef4a717b055",
-      "title": "Baer Blacksmith Shop Demonstrations",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
+      "id": "b25bfa3d500d",
+      "title": "Watershed Habitat of the Steelhead Nature Walk",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
       "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
       "city": "cupertino",
       "category": "family",
-      "cost": "free",
-      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "cost": null,
+      "description": "Join a Naturalist and learn about the Steelhead life cycle, riparian habitat and challenges faced in Stevens Creek. We will walk through history and view our ecosystem through the lens of this phenomenal species. You and your child will identify aquatic insects as a measure of water quality. The hike is approximately one mile on a combination of dirt trails and paved paths. All attendees must register and children must be accompanied by an adult. $25 Resident | $32 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
     {
-      "id": "46499ae29bb7",
-      "title": "Baer Blacksmith Shop Demonstrations",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "id": "55c1e46ce876",
+      "title": "Women in Business Symposium Luncheon",
+      "date": "2026-11-03",
+      "displayDate": "Tue, Nov 3",
+      "time": "11:30 AM",
+      "endTime": "01:00 PM",
+      "venue": "Cupertino Community Hall",
+      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
       "city": "cupertino",
-      "category": "family",
+      "category": "community",
       "cost": "free",
-      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "description": "",
+      "url": "https://www.cupertino.gov/Meetings/November-3-2026-Womens-Networking-Luncheon",
       "source": "City of Cupertino",
-      "kidFriendly": true
+      "kidFriendly": false
     },
     {
-      "id": "67eed7ae1ff2",
-      "title": "Baer Blacksmith Shop Demonstrations",
-      "date": "2026-12-26",
-      "displayDate": "Sat, Dec 26",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
+      "id": "2ffc83c70291",
+      "title": "Join-A-Ranger: Bird ID and Guided Hike",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "08:00 AM",
+      "endTime": "10:00 AM",
       "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
       "city": "cupertino",
       "category": "family",
-      "cost": "free",
-      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "cost": null,
+      "description": "The Park Rangers invite you to learn about the birds living in our riparian habitat and how to ID them! Walk the trails to see the environment they live in and maybe catch a glimpse of a Red-Shoulder Hawk, Screech Owl, or more! All attendees must register and an adult must accompany children. The hike is approximately one-quarter mile on a combination of dirt trails and paved paths. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -1361,57 +1361,6 @@
       "cost": "free",
       "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "b25bfa3d500d",
-      "title": "Watershed Habitat of the Steelhead Nature Walk",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Join a Naturalist and learn about the Steelhead life cycle, riparian habitat and challenges faced in Stevens Creek. We will walk through history and view our ecosystem through the lens of this phenomenal species. You and your child will identify aquatic insects as a measure of water quality. The hike is approximately one mile on a combination of dirt trails and paved paths. All attendees must register and children must be accompanied by an adult. $25 Resident | $32 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "55c1e46ce876",
-      "title": "Women in Business Symposium Luncheon",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
-      "time": "11:30 AM",
-      "endTime": "01:00 PM",
-      "venue": "Cupertino Community Hall",
-      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.cupertino.gov/Meetings/November-3-2026-Womens-Networking-Luncheon",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "2ffc83c70291",
-      "title": "Join-A-Ranger: Bird ID and Guided Hike",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "08:00 AM",
-      "endTime": "10:00 AM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "The Park Rangers invite you to learn about the birds living in our riparian habitat and how to ID them! Walk the trails to see the environment they live in and maybe catch a glimpse of a Red-Shoulder Hawk, Screech Owl, or more! All attendees must register and an adult must accompany children. The hike is approximately one-quarter mile on a combination of dirt trails and paved paths. $10 Resident | $13 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -1516,6 +1465,57 @@
       "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
       "source": "City of Cupertino",
       "kidFriendly": false
+    },
+    {
+      "id": "aef4a717b055",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "46499ae29bb7",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "67eed7ae1ff2",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2026-12-26",
+      "displayDate": "Sat, Dec 26",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
     },
     {
       "id": "743b061a5272",
@@ -2846,30 +2846,6 @@
       "kidFriendly": false
     },
     {
-      "id": "a4f6500bf23a",
-      "title": "Sharks vs Senators — Los Tiburones",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "Mini Sharks Sugar Skull Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
-      "source": "SAP Center",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
-        "date": "2026-10-31",
-        "time": "1:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.127Z"
-      }
-    },
-    {
       "id": "c42d7fad77d3",
       "title": "Sharks vs Flames",
       "date": "2026-11-02",
@@ -2890,7 +2866,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.880Z"
       }
     },
     {
@@ -2914,7 +2890,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.880Z"
       }
     },
     {
@@ -2938,7 +2914,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.881Z"
       }
     },
     {
@@ -2962,7 +2938,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.881Z"
       }
     },
     {
@@ -2986,7 +2962,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.881Z"
       }
     },
     {
@@ -3010,7 +2986,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.883Z"
       }
     },
     {
@@ -3034,7 +3010,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.883Z"
       }
     },
     {
@@ -3058,7 +3034,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.883Z"
       }
     },
     {
@@ -3082,7 +3058,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.883Z"
       }
     },
     {
@@ -3106,7 +3082,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.884Z"
       }
     },
     {
@@ -3130,8 +3106,49 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T19:34:48.130Z"
+        "checkedAt": "2026-10-31T23:44:12.884Z"
       }
+    },
+    {
+      "id": "7e9225389c3e",
+      "title": "Sharks vs Kraken — Anime Game",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "Sharkie Anime Pennant Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
+        "date": "2026-11-21",
+        "time": "7:00 PM",
+        "checkedAt": "2026-10-31T23:44:12.884Z"
+      }
+    },
+    {
+      "id": "a4f6500bf23a",
+      "title": "Sharks vs Senators — Los Tiburones",
+      "date": "2026-10-31",
+      "displayDate": "Sat, Oct 31",
+      "time": "1:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "Mini Sharks Sugar Skull Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
       "id": "f3bb520bc689",
