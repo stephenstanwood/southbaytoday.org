@@ -26,7 +26,8 @@ const activitiesFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-e
 const afternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-afternoon.json", import.meta.url)));
 const lateAfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-late-afternoon.json", import.meta.url)));
 const october31EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-evening.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture];
+const stampClubFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-stamp-club.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -240,4 +241,17 @@ test("citizenship course punctuation follows changed dates without restoring an 
   assert.deepEqual(polishReviewedEventCopy(event), reviewed);
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
   assert.deepEqual(numbers(reviewed.description), numbers(event.description));
+});
+
+test("stamp club grammar follows changed schedules and stays within its supplying source", () => {
+  const description = "Meetings are free to attend and held on the 2nd Thursday at 7:15 PM of the month in a new room. Ages 18+; registration required.";
+  const event = { source: "San Jose Public Library", description, date: "2027-01-14", time: "7:15 PM", registration: "required" };
+  const reviewed = { ...event, description: "Meetings are free to attend and held on the 2nd Thursday of the month at 7:15 PM in a new room. Ages 18+; registration required." };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  assert.deepEqual(numbers(reviewed.description), numbers(description));
+  for (const row of stampClubFixture.cases) {
+    const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
 });

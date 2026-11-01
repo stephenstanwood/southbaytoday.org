@@ -190,6 +190,11 @@ const EDITS = {
       ["As an added challenge participants", "As an added challenge, participants"],
       ["a balloon popping battle", "a balloon-popping battle"],
       ["simple, beginner friendly activities", "simple, beginner-friendly activities"],
+      [/held on the (1st|2nd|3rd|4th|5th) (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) at (\d{1,2}(?::\d{2})? [AP]M) of the month in /g, "held on the $1 $2 of the month at $3 in "],
+      ["in Pearl Ave Branch Library Community Room.", "in the Pearl Ave Branch Library Community Room."],
+      ["Learn the fun of collecting stamps", "Discover the fun of collecting stamps"],
+      ["or topic exciting to you.", "or a topic that excites you."],
+      ["Meetings typically have a presentation targeted to less experienced collectors from an experienced collector.", "Meetings typically feature a presentation by an experienced collector for less experienced collectors."],
     ],
     blurb: [
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
@@ -316,6 +321,8 @@ const EDITS = {
       ["book club focusing on Manga!", "book club focusing on manga!"],
       ["(Available on Libby, and in library)", "(available on Libby and in the library)."],
       ["(408)866-1991", "(408) 866-1991"],
+      ["For children 3rd grade to 8th grade.", "For children in 3rd through 8th grade."],
+      ["This program is for children from grades K-8.", "This program is for children in grades K-8."],
     ],
     blurb: [
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
