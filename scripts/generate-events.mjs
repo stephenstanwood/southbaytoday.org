@@ -994,6 +994,10 @@ const PROPER_NOUN_FIXES = {
   "Pyet Despain": "Pyet DeSpain",
   "Pyet De Spain": "Pyet DeSpain",
   "Gordon Ramsey": "Gordon Ramsay",
+  // MVCPA and the San Francisco Brass Band credit this composer's surname
+  // without a space; the prose camel-case splitter otherwise breaks it.
+  // https://tickets.mvcpa.com/eventperformances.asp?evt=797
+  "Anthony Di Lorenzo": "Anthony DiLorenzo",
   // Palo Alto's Pageturners reading list drops the author's given-name hyphen.
   // https://us.macmillan.com/books/9781250897930/theworldsisee/
   "Fei Fei Li": "Fei-Fei Li",
@@ -1007,6 +1011,10 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // New Century Chamber Orchestra and Stanford's pediatric IBD center.
+  // Preserve their published initials in titles and both prose casing passes.
+  // Evidence: docs/qa/2026-11-01-2107z-fact-check.md.
+  "NCCO", "IBD",
   // Initials in the published BFF Matchmaking, CBPA Artist Circle and
   // PCLG Christmas Tea titles. Shared guards keep body copy consistent.
   "BFF", "CBPA", "PCLG",

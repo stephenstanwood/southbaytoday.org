@@ -34,6 +34,35 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The November MVCPA newsletter lost all six ticket links in extraction.
+  // Its linked first-party pages confirm paid admission and distinguish the
+  // concerts from dance/comedy. Bind repairs to actual dated occurrences;
+  // a blank link also needs the exact title and venue, never a guessed URL.
+  // Evidence: docs/qa/2026-11-01-2107z-fact-check.md.
+  ...[
+    ["2026-11-05", /^In Your Wildest Dreams with Seraph Brass and the San Francisco Brass Band$/i, "797", "SFBBWD", {
+      category: "music",
+    }],
+    ["2026-11-06", /^NCCO Presents Groove with Marcus Roberts Trio$/i, "788", "NCCOG", {
+      category: "music", title: "NCCO Presents Groove with Marcus Roberts Trio",
+    }],
+    ["2026-11-06", /^Best of SF Stand-Up Comedy$/i, "796", "FMMBSF1126", {
+      audienceAge: "adult", kidFriendly: false,
+      attendanceNote: "Ages 18 and up; tickets are required.",
+    }],
+    ["2026-11-07", /^Nutcracker in China$/i, "790", "NCDNC", {}],
+    ["2026-11-08", /^Nutcracker in China \(matinee\)$/i, "790", "NCDNC", {}],
+    ["2026-11-14", /^Music in-Takht$/i, "795", "DACMIT", {
+      category: "music",
+    }],
+  ].map(([date, title, id, shortCode, facts]) => ({
+    date, url: `https://tickets.mvcpa.com/eventperformances.asp?evt=${id}`,
+    aliasUrls: [`https://tickets.mvcpa.com/${shortCode}`, `http://tickets.mvcpa.com/${shortCode}`],
+    matches: (event) => !event.url && title.test(event.title || "")
+      && /^(?:Mountain View Center for the Performing Arts|MVCPA(?: MainStage| SecondStage)?)(?:,|$)/i.test(event.venue || ""),
+    facts: { url: `https://tickets.mvcpa.com/eventperformances.asp?evt=${id}`, cost: "paid", ...facts },
+    copyReplacements: id === "797" ? [[/\bAnthony Di Lorenzo\b/g, "Anthony DiLorenzo"]] : [],
+  })),
   // The city explicitly separates no advance registration from the emergency
   // card required on the child's first day. Do not describe the card as RSVP.
   // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/430030f
