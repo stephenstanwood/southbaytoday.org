@@ -36,6 +36,11 @@ const EDITS = {
       ["provided there are no other participants).", "provided there are no other participants.)"],
     ],
     description: [
+      ["Hillview library", "Hillview Library"],
+      ["Tully library", "Tully Library"],
+      ["something else tech related?", "something else tech-related?"],
+      ["#dsb Digital Skills Free.", "#dsb Digital Skills: Free."],
+      ["Only one 30-minute appointment per day please.", "Only one 30-minute appointment per day, please."],
       ["verificación de historial laboral, y otros documentos", "verificación de historial laboral y otros documentos"],
       ["celebrating Dia de los Muertos", "celebrating Día de los Muertos"],
       ["a craft where they can create their own Day of the Dead altar and they will be able to try", "a craft where participants can create their own Day of the Dead altar and try"],
@@ -326,6 +331,9 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["November 19th at 7:30 PM In Our Program Room Fiction ", "November 19th at 7:30 PM in our program room. Fiction: "],
+      ["—New York Times Library copies", "—New York Times. Library copies"],
+      ["available for check out here.", "available for checkout here."],
       ["For accessibility accommodations (ex. ASL),", "For accessibility accommodations (e.g., ASL),"],
       ["Time Required The time needed", "Time Required: The time needed"],
       ["About Sourcewise Since 1973", "About Sourcewise: Since 1973"],
