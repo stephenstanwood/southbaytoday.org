@@ -34,6 +34,8 @@ export interface SBEvent {
   title: string;
   city: City;
   venue: string;
+  // Meeting address only. Keep parking directions in the description and
+  // omit a generic source address when the organizer names another meeting point.
   address?: string;
   category: EventCategory;
   recurrence: RecurrenceType;
@@ -587,7 +589,6 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     title: "Volunteer in the Historic Orchard — Guadalupe River Park",
     city: "san-jose",
     venue: "Guadalupe Gardens Historic Orchard",
-    address: "425 Seymour St, San Jose",
     category: "community",
     recurrence: "weekly",
     days: ["wednesday"],
@@ -595,8 +596,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Help UC Master Gardeners maintain the 3.3-acre Historic Orchard through tree planting, pruning, and mulching. The fruit is donated to Second Harvest.",
-    url: "https://grpg.org",
+      "Help UC Master Gardeners maintain the 3.3-acre Historic Orchard through tree planting, pruning, and mulching. The fruit is donated to Second Harvest. Register in advance and use the organizer's form for the Historic Orchard meeting map. Parking is at 438 Coleman Ave. Chaperones are required for those age 15 and younger.",
+    url: "https://grpg.org/calendar/events/",
     emoji: "🌳",
   },
   {
@@ -604,7 +605,6 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     title: "Volunteer in the Heritage Rose Garden",
     city: "san-jose",
     venue: "Heritage Rose Garden",
-    address: "425 Seymour St, San Jose",
     category: "community",
     recurrence: "weekly",
     days: ["saturday"],
@@ -612,8 +612,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Help weed, deadhead, prune, and plant in the Heritage Rose Garden. Bring water and thick gloves.",
-    url: "https://grpg.org",
+      "Help weed, deadhead, prune, and plant in the Heritage Rose Garden. Bring water and thick gloves. Register in advance and meet at the Rose Garden Shed using the organizer's meeting map. Parking is at 438 Coleman Ave. Chaperones are required for those age 15 and younger.",
+    url: "https://grpg.org/calendar/events/",
     emoji: "🌹",
   },
   // As of 2026-11-01, the organizer's calendar and volunteer page do not

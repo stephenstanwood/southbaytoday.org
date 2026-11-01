@@ -10,6 +10,14 @@ import { classifyAudienceAge } from "./audienceAge.mjs";
 
 const ev = (title, description = "") => ({ title, description });
 
+test("a volunteer chaperone rule does not restrict the event to children", () => {
+  const supervision = "Chaperones are required for those age 15 and younger.";
+  assert.equal(classifyAudienceAge(ev("Volunteer in the Heritage Rose Garden!", supervision)), "all");
+  assert.equal(classifyAudienceAge(ev("Kids Art Club", supervision)), "kids");
+  assert.equal(classifyAudienceAge(ev("Youth gardening", `Ages 8-12. ${supervision}`)), "kids");
+  assert.equal(classifyAudienceAge({ ...ev("Garden workday", supervision), sourceAudiences: ["Children"] }), "kids");
+});
+
 test("library audience labels survive sparse or misleading descriptions", () => {
   assert.equal(classifyAudienceAge({ title: "STEM: Balloon Car Derby", sourceAudiences: ["Kids, ages 5-10"] }), "kids");
   assert.equal(classifyAudienceAge({ title: "Narcan Training at the Library", description: "Families across the country…", sourceAudiences: ["Adults"] }), "adult");

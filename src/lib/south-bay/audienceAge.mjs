@@ -95,13 +95,13 @@ const ADULT_SIGNALS = [
  *   - "adult" — adults-only (21+, drag, wine tasting)
  *   - "all"   — mixed / family-friendly / no strong signal (default)
  */
-// Phrases that mention kid ages but describe a service for the parents'
-// kids, NOT the event audience — e.g. adult community forums advertise
-// "childcare available for ages 4+". Stripped before kids classification so
-// they don't trigger the "ages X+" signal.
+// Childcare and chaperone rules mention ages without restricting the event
+// audience. Mask those clauses before testing for children's programming;
+// explicit audience labels, titles and other age requirements still apply.
 const NON_AUDIENCE_AGE_PHRASES = [
   /\bchildcare\s+(?:available|provided|offered|on[-\s]site)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
   /\bbabysit(?:ting|ter)\s+(?:available|provided)?\s*for\s+ages?\s+\d{1,2}\+?/gi,
+  /\bchaperones?\s+(?:are\s+)?required\s+for\s+(?:those|participants|volunteers|children)\s+ages?\s+\d{1,2}\s+and\s+younger\b/gi,
 ];
 
 // An academic talk can study storytime without being a children's program.

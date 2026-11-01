@@ -3,6 +3,7 @@ import fs from "node:fs";
 import test from "node:test";
 import { normalizeGuadalupeEvent } from "../lib/guadalupe-events.mjs";
 import { scrapeGuadalupeRiverPark, normalizePlaywrightEvent } from "../playwright-scrapers.mjs";
+import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 
 test("the captured Guadalupe calendar preserves occurrence locations and end times", async () => {
   const { rows } = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/guadalupe-2026-11.json", import.meta.url), "utf8"));
@@ -48,4 +49,36 @@ test("Guadalupe records require a dated occurrence and never infer an office mee
   assert.equal(normalizeGuadalupeEvent({ ...raw, description: "Free admission." }, options).cost, "free");
   assert.equal(normalizeGuadalupeEvent({ ...raw, description: "$15 per person." }, options).cost, "paid");
   assert.equal(normalizeGuadalupeEvent({ ...raw, description: "Bring a bag; volunteers receive a $15 stipend and a free water bottle." }, options).cost, null);
+});
+
+test("Guadalupe volunteer meeting instructions outrank generic address metadata and survive publication", () => {
+  const { rows } = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/guadalupe-2026-11-volunteers.json", import.meta.url), "utf8"));
+  const expectedVenues = ["Historic Orchard", "Rose Garden Shed", "Rose Garden Shed"];
+  for (const [index, raw] of rows.entries()) {
+    const event = normalizePlaywrightEvent(normalizeGuadalupeEvent(raw, { today: "2026-11-01" }));
+    assert.equal(event.venue, expectedVenues[index]);
+    assert.equal(event.address, "", "neither the calendar's generic street nor the parking address is the meeting point");
+    assert.equal(event.registration, "required");
+    assert.match(event.attendanceNote, /registration is required/i);
+    assert.match(event.attendanceNote, /registration form for the meeting map/i);
+    assert.match(event.attendanceNote, /Chaperones are required for those age 15 and younger/i);
+    assert.equal(event.attendanceStatus, undefined);
+    assert.equal(classifyAudienceAge(event), "all");
+    assert.equal(event.cost, null);
+  }
+});
+
+test("Guadalupe volunteer signup does not invent a missing trail meeting point or gate partner workouts", () => {
+  const { rows } = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/guadalupe-2026-11.json", import.meta.url), "utf8"));
+  const events = rows.map(raw => normalizeGuadalupeEvent(raw, { today: "2026-11-01" }));
+  const trail = events.find(event => event.title.startsWith("Restore"));
+  assert.equal(trail.registration, "required");
+  assert.equal(trail.venue, null);
+  assert.equal(trail.address, "");
+  assert.equal(trail.attendanceStatus, "needs-confirmation");
+  assert.match(trail.attendanceNote, /does not list a meeting location/);
+  assert.match(trail.attendanceNote, /registration is required/i);
+  for (const event of events.filter(event => !event.title.startsWith("Restore"))) {
+    assert.equal(event.registration, undefined, event.title);
+  }
 });
