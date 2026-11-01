@@ -434,6 +434,7 @@ const EDITS = {
       ["this drop-in social group, no registration required.", "this drop-in social group. No registration required."],
       ["Dance to line dancing and", "Enjoy line dancing and"],
       ["Senior Center lobby, no registration needed.", "Senior Center lobby. No registration needed."],
+      ["Columbia Neighborhood Center Gym, no registration needed.", "Columbia Neighborhood Center Gym. No registration needed."],
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
