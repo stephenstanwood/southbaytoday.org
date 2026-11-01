@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-01T16:34:44.924Z",
+    "generatedAt": "2026-11-01T17:09:54.774Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
     "eventCount": 194,
@@ -22,8 +22,8 @@
       "SAP Center (14)",
       "The Tech Interactive (9)",
       "Books Inc (7)",
-      "San Jose Museum of Art (3)",
-      "Peninsula Open Space Trust (3)"
+      "Peninsula Open Space Trust (3)",
+      "San Jose Museum of Art (3)"
     ],
     "sourceHealth": [
       {
@@ -217,9 +217,9 @@
       {
         "id": "california-s-great-america",
         "label": "California's Great America",
-        "status": "empty",
+        "status": "error",
         "count": 0,
-        "error": null,
+        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.sixflags.com/cagreatamerica/events\", waiting until \"domcontentloaded\"\u001b[22m\n",
         "sources": []
       },
       {
@@ -281,14 +281,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 3,
-        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -1498,7 +1496,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-11-01T16:33:38.097Z"
+        "checkedAt": "2026-11-01T17:08:41.386Z"
       }
     },
     {
@@ -1521,7 +1519,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-01T16:33:38.099Z"
+        "checkedAt": "2026-11-01T17:08:41.387Z"
       }
     },
     {
@@ -1544,7 +1542,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T16:33:38.101Z"
+        "checkedAt": "2026-11-01T17:08:41.388Z"
       }
     },
     {
@@ -1567,7 +1565,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T16:33:38.102Z"
+        "checkedAt": "2026-11-01T17:08:41.389Z"
       }
     },
     {
@@ -1590,7 +1588,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-01T16:33:38.102Z"
+        "checkedAt": "2026-11-01T17:08:41.389Z"
       }
     },
     {
@@ -1930,7 +1928,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1947,7 +1945,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1964,7 +1962,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1981,7 +1979,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1998,7 +1996,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3197,7 +3195,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.025Z"
+        "checkedAt": "2026-11-01T17:09:02.522Z"
       }
     },
     {
@@ -3221,7 +3219,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.025Z"
+        "checkedAt": "2026-11-01T17:09:02.522Z"
       }
     },
     {
@@ -3245,7 +3243,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.026Z"
+        "checkedAt": "2026-11-01T17:09:02.522Z"
       }
     },
     {
@@ -3269,7 +3267,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.026Z"
+        "checkedAt": "2026-11-01T17:09:02.522Z"
       }
     },
     {
@@ -3293,7 +3291,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.026Z"
+        "checkedAt": "2026-11-01T17:09:02.523Z"
       }
     },
     {
@@ -3317,7 +3315,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3341,7 +3339,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3365,7 +3363,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3389,7 +3387,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3413,7 +3411,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3437,7 +3435,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3461,7 +3459,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3485,7 +3483,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3509,7 +3507,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-01T16:34:02.028Z"
+        "checkedAt": "2026-11-01T17:09:02.524Z"
       }
     },
     {
@@ -3785,6 +3783,57 @@
       "kidFriendly": false
     },
     {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3842,57 +3891,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
