@@ -123,6 +123,24 @@ test("availability notices and Spanish appointments retain the organizer's atten
   const closure = "Registration is now closed. Please check back in January for our Spring Classes.";
   assert.equal(libraryEventDetails({ definition: { description: `<p>${closure}</p>` } }).attendanceNote, closure);
 });
+
+test("game names and museum-pass lesson topics do not become library admission instructions", () => {
+  const games = "<p>We'll have a host of modern classics:</p><ul><li>Ticket to Ride</li><li>Catan</li></ul>";
+  const museumPasses = "<ul><li>Using Discover &amp; Go to reserve free or reduced tickets to local museums and attractions</li></ul>";
+  for (const description of [games, museumPasses]) {
+    const details = libraryEventDetails({ definition: { description } });
+    assert.equal(details.attendanceNote, undefined);
+    assert.match(details.description, /Ticket to Ride|Discover & Go/);
+  }
+  const appointment = "By appointment only. One appointment per week per person.";
+  assert.equal(libraryEventDetails({ description: `${museumPasses}<p>By appointment only.</p><p>One appointment per week per person.</p>` }).attendanceNote, appointment);
+  assert.equal(libraryEventDetails({ description: "<p>One appointment per month per person.</p>" }).attendanceNote,
+    "One appointment per month per person.");
+  const tickets = "Play Ticket to Ride. Tickets available at the desk 30 minutes before the program starts.";
+  assert.equal(libraryEventDetails({ description: `<p>${tickets}</p>` }).attendanceNote, tickets);
+  assert.equal(libraryEventDetails({ description: `${games}<p>Free, with limited capacity. Tickets required.</p>` }).attendanceNote,
+    "Free, with limited capacity. Tickets required.");
+});
 import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";

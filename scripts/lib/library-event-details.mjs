@@ -59,7 +59,16 @@ export function libraryEventDetails(event, entities = {}) {
   const attendanceParagraphs = `${html}\n${instructions}`
     .split(/<\/(?:p|li|div)>|<br\s*\/?>|\n/gi)
     .map(text)
-    .filter((paragraph) => /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b|\b(?:registration|enrollment)\s+(?:is\s+)?(?:now\s+)?closed\b|\bthis\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?full\b|\bpor\s+cita\s+(?:únicamente|unicamente|previa)\b/i.test(paragraph));
+    .filter((paragraph) => {
+      // A board-game name and a lesson on booking museum passes do not
+      // establish admission instructions for the library event itself.
+      // Mask only those phrases so actual ticket rules in the same paragraph
+      // still qualify, and preserve the original paragraph when they do.
+      const attendanceText = paragraph
+        .replace(/\bTicket\s+to\s+Ride\b/gi, "")
+        .replace(/\b(?:Using\s+)?Discover\s*(?:&|and)\s*Go\s+to\s+reserve\s+(?:(?:free|reduced)(?:\s+or\s+(?:free|reduced))?\s+)?tickets\s+to\s+(?:local\s+)?museums(?:\s+and\s+attractions)?/gi, "");
+      return /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b|\b(?:registration|enrollment)\s+(?:is\s+)?(?:now\s+)?closed\b|\bthis\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?full\b|\b(?:by\s+)?appointments?\s+only\b|\b(?:one|1)\s+appointment\s+per\s+(?:week|month)\s+per\s+person\b|\bpor\s+cita\s+(?:únicamente|unicamente|previa)\b/i.test(attendanceText);
+    });
   // An optional appointment must not hide the condition on walk-up access.
   // Select only that sentence, since unused booking directions can name a
   // different branch and the source may HTML-encode its paragraph breaks.
