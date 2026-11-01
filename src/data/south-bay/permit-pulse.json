@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-10-31T03:24:39.912Z",
+      "generatedAt": "2026-11-01T03:14:19.645Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 23 – Oct 30",
+      "dateRange": "Oct 24 – Oct 31",
       "stats": {
-        "total": 447,
-        "notable": 22,
-        "newUnits": 17,
-        "totalValuation": 19222710
+        "total": 436,
+        "notable": 20,
+        "newUnits": 10,
+        "totalValuation": 18013645
       },
       "permits": [
-        {
-          "id": "2026-141995-MF",
-          "address": "1141 W San Carlos St",
-          "category": "multi-family-new",
-          "categoryLabel": "New Multi-Family",
-          "workType": "New Construction",
-          "description": "(Bldg 3) New Condo Foundry",
-          "valuation": 2116142,
-          "units": 7,
-          "issueDate": "2026-10-23",
-          "subtype": "Condo"
-        },
         {
           "id": "2025-119589-RS",
           "address": "119 Scharff Av",
@@ -60,6 +48,18 @@
           "valuation": 140208,
           "units": 1,
           "issueDate": "2026-10-28",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-123066-RS",
+          "address": "1431 Pomona Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Epr Preapproved ADU Site Specific Ca2homes 747 Sq Ft",
+          "valuation": 131412,
+          "units": 1,
+          "issueDate": "2026-10-29",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -111,18 +111,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-105506-RS",
-          "address": "441 Atlanta Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage Conversion to Attached ADU",
-          "valuation": 70368,
-          "units": 1,
-          "issueDate": "2026-10-23",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2022-702414-RS",
           "address": "1185 Sierra Av #2",
           "category": "residential-new",
@@ -130,6 +118,18 @@
           "workType": "New Construction",
           "description": "Code Case One - Detached Garage and ADU",
           "valuation": 58137,
+          "units": 1,
+          "issueDate": "2026-10-27",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-120519-RS",
+          "address": "1849 Potrero Dr #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "JADU Garage Conversion",
+          "valuation": 51017,
           "units": 1,
           "issueDate": "2026-10-27",
           "subtype": "ADU   Accessory Dwelling Unit"
