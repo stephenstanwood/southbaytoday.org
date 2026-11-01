@@ -11,6 +11,10 @@ const EDITS = {
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
     ],
     description: [
+      ["middle and high school (6-12 grade) students", "middle and high school students (grades 6-12)"],
+      ["If not all claimed registration spots have arrived by 4:30 PM, they will be given to those waiting.", "If registered participants have not arrived by 4:30 PM, their spots will be given to those waiting."],
+      ['Small Button Press: 1.25" Large Button Press: 2.25" Picture Size: 1.156" Cut Line: 1.629" Picture Size: 2.063" Cut Line: 2.625"', 'Small Button Press: 1.25"; Large Button Press: 2.25"; Picture Size: 1.156"; Cut Line: 1.629"; Picture Size: 2.063"; Cut Line: 2.625".'],
+      [/Sesión 2: Martes, 3 de noviembre, 3:30 - 5:30 PM$/g, "Sesión 2: Martes, 3 de noviembre, 3:30 - 5:30 PM."],
       ["before program starts", "before the program starts"],
       ["In fact some of these crafts", "In fact, some of these crafts"],
       ["All materials included in each set with instructions.", "All materials are included in each set with instructions."],
@@ -332,6 +336,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["children engage in problem solving, teamwork, self-confidence, and creativity!", "children practice problem solving and teamwork while developing self-confidence and creativity!"],
       [/Duration: (60|90) minutes$/g, "Duration: $1 minutes."],
       ["Note: Teens and Adults only. Use of", "Note: Teens and adults only. Use of"],
       ["and beyond. Keep on hand all", "and beyond. Keep them on hand all"],

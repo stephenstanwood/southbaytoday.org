@@ -27,7 +27,8 @@ const afternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-ev
 const lateAfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-late-afternoon.json", import.meta.url)));
 const october31EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-evening.json", import.meta.url)));
 const stampClubFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-stamp-club.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture];
+const makerStudioFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-maker-studio.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -43,6 +44,19 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("maker studio and craft repairs preserve other publishers' copy", () => {
+  for (const row of makerStudioFixture.cases) {
+    const event = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
+
+test("sugar skull punctuation does not alter an expanded source schedule", () => {
+  const row = makerStudioFixture.cases.find(candidate => candidate.refreshed.endsWith("3:30 - 5:30 PM"));
+  const event = { source: row.source, description: `${row.refreshed}; supplies are limited.` };
+  assert.deepEqual(polishReviewedEventCopy(event), event);
+});
 
 test("activity blurb repairs leave other publishers' wording unchanged", () => {
   for (const row of activitiesFixture.cases) {
