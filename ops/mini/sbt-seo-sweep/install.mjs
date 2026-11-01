@@ -35,10 +35,10 @@ const config = {
 };
 
 if (process.argv.includes("--help")) {
-  console.log("Usage: node install.mjs [--smoke | --check]");
+  console.log("Usage: node install.mjs [--smoke | --check | --refresh-prompt]");
   process.exit(0);
 }
-const unknownArguments = process.argv.slice(2).filter((argument) => !["--smoke", "--check"].includes(argument));
+const unknownArguments = process.argv.slice(2).filter((argument) => !["--smoke", "--check", "--refresh-prompt"].includes(argument));
 if (unknownArguments.length > 0) {
   console.error(`Unknown argument: ${unknownArguments.join(", ")}`);
   process.exit(64);
@@ -163,6 +163,53 @@ if (checkOnly) {
   }
   console.log(`sbt-seo-sweep: ACTIVE, ${config.model}/${config.reasoningEffort}, ${config.rrule}`);
   db.close();
+  process.exit(0);
+}
+
+// Refresh an already-installed prompt without moving its next run, enabling it,
+// changing model/schedule/target or retiring another owner. The native app tool
+// is host-local; this existing Mini installer owns these exact source records.
+if (process.argv.includes("--refresh-prompt")) {
+  if (!existing || !existsSync(automationPath)) fail("existing native automation required");
+  const previous = readFileSync(automationPath, "utf8");
+  const promptLine = `prompt = ${tomlString(existing.prompt)}`;
+  if (previous.split("\n").filter((line) => line === promptLine).length !== 1) {
+    fail("preserve unexpected native prompt encoding or divergent record");
+  }
+  if (existing.prompt === prompt) {
+    console.log(`${config.id}: existing prompt already current; schedule preserved`);
+    db.close();
+    process.exit(0);
+  }
+  const updated = Date.now();
+  const replacement = previous.replace(promptLine, `prompt = ${tomlString(prompt)}`)
+    .replace(/^updated_at = [0-9]+$/m, `updated_at = ${updated}`);
+  const backup = join(automationDir, `prompt-before-${updated}.toml`);
+  writeFileSync(backup, previous, { mode: 0o600, flag: "wx" });
+  const temp = `${automationPath}.prompt-${process.pid}`;
+  let fileReplaced = false;
+  try {
+    db.exec("BEGIN IMMEDIATE");
+    const current = db.prepare("SELECT * FROM automations WHERE id = ?").get(config.id);
+    if (JSON.stringify(current) !== JSON.stringify(existing)) throw new Error("native record changed; retry after review");
+    db.prepare("UPDATE automations SET prompt = ?, updated_at = ? WHERE id = ?").run(prompt, updated, config.id);
+    const after = db.prepare("SELECT * FROM automations WHERE id = ?").get(config.id);
+    for (const key of Object.keys(existing)) {
+      if (!["prompt", "updated_at"].includes(key) && existing[key] !== after[key]) throw new Error(`unexpected field change: ${key}`);
+    }
+    if (readFileSync(automationPath, "utf8") !== previous) throw new Error("native prompt file changed; preserve it");
+    writeFileSync(temp, replacement, { mode: 0o600 });
+    renameSync(temp, automationPath);
+    fileReplaced = true;
+    db.exec("COMMIT");
+    console.log(JSON.stringify({ id: config.id, promptRefreshed: true, scheduleModelTargetRunStatePreserved: true, backup }));
+  } catch (error) {
+    if (db.isTransaction) db.exec("ROLLBACK");
+    if (fileReplaced) writeFileSync(automationPath, previous, { mode: 0o600 });
+    throw error;
+  } finally {
+    db.close();
+  }
   process.exit(0);
 }
 

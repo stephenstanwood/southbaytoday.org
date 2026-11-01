@@ -45,6 +45,31 @@ The separate Friday growth schedule is retired.
    fact, a source URL, an event, or a quote.
 4. Never print tokens, environment variables, or the service-account key.
 
+
+## Browser recovery and source journal (November 1, 2026)
+
+Read `/Users/stephenstanwood/Projects/stoa.works/ops/mini-browser/RECOVERY.md`.
+The Mini is the independently capable primary host. Bind `recovery_context` to
+`sbt-seo-sweep` and an existing private run folder under `~/.local/state/stoa-browser-recovery/jobs/sbt-seo-sweep/` before `prepare_brave`; retain the returned recovery
+receipt with the job's evidence. The shared controller performs two bounded
+local infrastructure attempts, then at most one emergency MacBook browser
+when absolutely necessary. The model, schedule, files and journal stay on the
+Mini. Verify the visible account and exact target again after every restart
+or host change. No credential/profile copies, new timers or new action authority.
+
+For every external UI mutation, reserve its exact target/change with
+`python3 ~/.local/share/stoa-mini-browser/action_journal.py /absolute/private/run reserve
+'EXACT TARGET AND CHANGE'` BEFORE clicking; settle the returned ID with
+`verified`/`no-change` and saved source proof, or `uncertain`/`error`. Never
+clear a journal or replay a lost write. `recover_brave` is for an observed
+infrastructure/transport fault only and refuses unsettled source work. Busy
+leases, login/MFA/security/review rejection and platform throttling never
+justify a host change. Record genuine human gates once through existing MILO
+intake and continue independent work. Close task-owned tabs and call
+`release_browser` after each browser slice before independent research/build
+work or a wait; the shared lease must not span the whole model run. A recovered
+preflight does not finish the task. Routine success/unchanged retries stay quiet.
+
 ## Search Console is required
 
 This is a browser-first Codex task. A crawl is useful evidence, but it is not a
@@ -58,7 +83,8 @@ substitute for Search Console.
    tabs and preserve the user's app and other tabs. Honor the shared browser
    lease: defer if another task or human login owns it. Preserve required
    script reviews. A lease, controller or review failure does not establish a
-   Google login failure. Never use a MacBook browser or execution fallback.
+   Google login failure. Use the November 1 bounded recovery contract below; older blanket
+   fallback prohibitions are superseded only for its emergency browser case.
    A single browser can contain several already-signed-in Google accounts. If
    Search Console shows the wrong account, use Google's visible account picker
    and select `stanwoodventures@gmail.com` when already listed. Do not enter
