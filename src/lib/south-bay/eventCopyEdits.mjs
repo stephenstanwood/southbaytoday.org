@@ -18,6 +18,10 @@ const EDITS = {
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
     ],
+    attendanceNote: [
+      ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
+      ["provided there are no other participants).", "provided there are no other participants.)"],
+    ],
     description: [
       [/Hora de cuentos (?=\d{1,2}:\d{2}\b)/g, "Hora de cuentos: "],
       ["middle and high school (6-12 grade) students", "middle and high school students (grades 6-12)"],
@@ -293,6 +297,17 @@ const EDITS = {
     ],
   },
   "Santa Clara County Library": {
+    attendanceNote: [
+      ["(must have basic conversational skills.)", "(must have basic conversational skills)."],
+      ["on a LED candle", "on an LED candle"],
+      ["For children 3rd grade to 8th grade.", "For children in 3rd through 8th grade."],
+      ["Programs is designed for adults and teens.", "This program is designed for adults and teens."],
+      ["This program is for children from grades K-8.", "This program is for children in grades K-8."],
+      ["At our book club meeting we will discuss", "At our book club meeting, we will discuss"],
+      ["at Woodland Library for check out.", "at Woodland Library to check out."],
+      ["Join us at the Cupertino Library 3:30-4:30 PM!", "Join us at the Cupertino Library from 3:30 to 4:30 PM!"],
+      ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
+    ],
     description: [
       ["For accessibility accommodations (ex. ASL),", "For accessibility accommodations (e.g., ASL),"],
       ["Time Required The time needed", "Time Required: The time needed"],
@@ -478,7 +493,7 @@ const EDITS = {
   },
 };
 
-/** Return an event with only its reviewed title/description/blurb phrases repaired.
+/** Return an event with only its reviewed display-copy phrases repaired.
  * The source-text cache fingerprint must be computed before this display pass:
  * punctuation repairs do not warrant regenerating already source-bound blurbs. */
 export function polishReviewedEventCopy(event) {

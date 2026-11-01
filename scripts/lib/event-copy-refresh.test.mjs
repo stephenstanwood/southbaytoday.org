@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import test from "node:test";
-import { cleanTitle, polishDescription } from "../generate-events.mjs";
+import { cleanTitle, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
 import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
@@ -31,7 +31,8 @@ const makerStudioFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-
 const accessibilityFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-accessibility.json", import.meta.url)));
 const november1Fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-01.json", import.meta.url)));
 const november1PostFactCheckFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-01-post-fact-check.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture];
+const attendanceFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-01-attendance.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -49,7 +50,7 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
 }));
 
 test("November grammar repairs preserve other publishers and later source instructions", () => {
-  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases]) {
+  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases, ...attendanceFixture.cases]) {
     const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
     assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
     const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
@@ -115,15 +116,17 @@ for (const row of reviewedCases) {
         && candidate.source === row.source && candidate.refreshed === occurrence.title)?.reviewed
         ?? occurrence.title;
       const original = {
-        ...occurrence, title: reviewedTitle, source: row.source, [row.field]: row.refreshed,
+        ...occurrence, title: reviewedTitle, source: row.source,
         date: "2026-11-01", time: "3:30 PM", endTime: "5:00 PM",
         cost: "low", costNote: "$75", attendanceNote: "Registration required; 30 tickets.",
+        [row.field]: row.refreshed,
       };
       const untouched = structuredClone(original);
       const refresh = () => polishReviewedEventCopy({
         ...original,
         [row.field]: row.field === "description" ? polishDescription(row.refreshed)
-          : row.field === "title" ? cleanTitle(row.refreshed) : row.refreshed,
+          : row.field === "title" ? cleanTitle(row.refreshed)
+          : row.field === "attendanceNote" ? polishAttendanceNote(row.refreshed) : row.refreshed,
       });
       for (let pass = 0; pass < 3; pass++) {
         // Each refresh starts from source/cached copy again, not its output.
