@@ -31,6 +31,24 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://live.stanford.edu/events/26-27season/studio/renee-qin-and-ania-filochowska-the-world-we-speak-into-being/",
   }),
   Object.freeze({
+    title: /^Rihab Chaieb(?:[:\s]|$)/i,
+    venue: /^Bing Concert Hall$/i,
+    date: "2027-02-24",
+    reviewOn: "2026-11-03",
+    reason:
+      "The June newsletter extraction lists 7:30 PM, but its original is outside available receiving-account history. The October 3 review corrected the artist's identity, without retaining occurrence evidence for this clock, and current accessible first-party evidence does not establish it. Withhold this listing until its start time is confirmed; this is not a cancellation.",
+    source: "https://live.stanford.edu/events/26-27season/bing-concert-hall/rihab-chaieb-nomad-the-eternal-wanderer/",
+  }),
+  Object.freeze({
+    title: /^300 Paintings(?: by Sam Kissajukian)?$/i,
+    venue: /^The Studio(?: at Bing Concert Hall)?$/i,
+    date: "2027-03-03",
+    reviewOn: "2026-11-03",
+    reason:
+      "Stanford's season announcement and the artist's schedule confirm March 3–6, but do not establish the extracted 7 PM start. The June original is outside available receiving-account history; the October 3 identity correction did not retain occurrence evidence for this clock. Withhold this listing until the performance time is confirmed; this is not a cancellation.",
+    source: "https://news.stanford.edu/stories/2026/05/stanford-live-new-season",
+  }),
+  Object.freeze({
     title: /^(?:Hysterical:\s*)?Zavior Phillips(?:\s*\((?:7|9):00 PM show\))?$/i,
     venue: /^The Studio(?: at Bing Concert Hall)?$/i,
     date: "2027-04-02",
