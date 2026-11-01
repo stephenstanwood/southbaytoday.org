@@ -11,6 +11,7 @@ const EDITS = {
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
     ],
     description: [
+      [/Hora de cuentos (?=\d{1,2}:\d{2}\b)/g, "Hora de cuentos: "],
       ["middle and high school (6-12 grade) students", "middle and high school students (grades 6-12)"],
       ["If not all claimed registration spots have arrived by 4:30 PM, they will be given to those waiting.", "If registered participants have not arrived by 4:30 PM, their spots will be given to those waiting."],
       ['Small Button Press: 1.25" Large Button Press: 2.25" Picture Size: 1.156" Cut Line: 1.629" Picture Size: 2.063" Cut Line: 2.625"', 'Small Button Press: 1.25"; Large Button Press: 2.25"; Picture Size: 1.156"; Cut Line: 1.629"; Picture Size: 2.063"; Cut Line: 2.625".'],
@@ -283,6 +284,7 @@ const EDITS = {
   },
   "Santa Clara County Library": {
     description: [
+      ["For accessibility accommodations (ex. ASL),", "For accessibility accommodations (e.g., ASL),"],
       ["Time Required The time needed", "Time Required: The time needed"],
       ["About Sourcewise Since 1973", "About Sourcewise: Since 1973"],
       ["Siblings are welcomed. September 15 October 20 November 17 December 8.", "Siblings are welcome. September 15; October 20; November 17; December 8."],

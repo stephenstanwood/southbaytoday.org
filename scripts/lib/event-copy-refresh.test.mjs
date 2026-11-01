@@ -28,7 +28,8 @@ const lateAfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewe
 const october31EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-evening.json", import.meta.url)));
 const stampClubFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-stamp-club.json", import.meta.url)));
 const makerStudioFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-maker-studio.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture];
+const accessibilityFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-accessibility.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -44,6 +45,26 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("storytime and accessibility punctuation preserves publisher scope and updated instructions", () => {
+  for (const row of accessibilityFixture.cases) {
+    const event = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+  const storytime = {
+    source: "San Jose Public Library",
+    description: "Hora de cuentos 10:15 - 10:45 am; Stay & Play: 10:45 - 11:15 am. Registration required.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(storytime), {
+    ...storytime,
+    description: "Hora de cuentos: 10:15 - 10:45 am; Stay & Play: 10:45 - 11:15 am. Registration required.",
+  });
+  const updated = {
+    source: "Santa Clara County Library",
+    description: "For accessibility accommodations (ex. CART), call (408) 555-0199 at least 14 days ahead. ASL is available on request.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(updated), updated);
+});
 
 test("maker studio and craft repairs preserve other publishers' copy", () => {
   for (const row of makerStudioFixture.cases) {
