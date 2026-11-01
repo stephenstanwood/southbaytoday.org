@@ -27,6 +27,7 @@ import { loadEnvLocal } from "./lib/env.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
 import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
+import { normalizeGuadalupeEvent } from "./lib/guadalupe-events.mjs";
 import { parseBooksIncEvents } from "./lib/booksinc-events.mjs";
 import {
   REGISTRATION_NONE,
@@ -1796,17 +1797,22 @@ export async function scrapeChildrensDiscoveryMuseum(page, { today = TODAY } = {
   }).filter(Boolean);
 }
 
-async function scrapeGuadalupeRiverPark(page) {
-  const events = await scrapeEventListPage(page, {
-    url: "https://www.grpg.org/events",
-    occurrenceSourceUrl: "https://grpg.org/calendar/events/",
-    source: "Guadalupe River Park Conservancy",
-    venue: "Guadalupe River Park",
-    address: "438 Coleman Ave, San Jose, CA 95110",
-    city: "san-jose",
-    category: "outdoor",
-    cost: "free",
-  });
+export async function scrapeGuadalupeRiverPark(page, { today = TODAY } = {}) {
+  await page.goto("https://grpg.org/calendar/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  const raw = await page.evaluate(() => Array.from(document.querySelectorAll("li.simcal-event")).map(card => ({
+    title: card.querySelector(".simcal-event-title")?.textContent?.trim(),
+    startDate: card.querySelector('[itemprop="startDate"]')?.getAttribute("content"),
+    endDate: card.querySelector('[itemprop="endDate"]')?.getAttribute("content"),
+    location: card.querySelector('.simcal-event-address [itemprop="address"]')?.getAttribute("content")
+      || card.querySelector(".simcal-event-address")?.textContent?.trim(),
+    // The calendar puts occurrence details in a hidden tooltip. textContent
+    // retains those details even when the tooltip has not been opened.
+    description: card.querySelector(".simcal-event-description")?.textContent?.replace(/\s+/g, " ").trim(),
+    url: Array.from(card.querySelectorAll("a[href]")).find(link => /See more details/i.test(link.textContent))?.href,
+  })));
+  if (!raw.length) throw new Error("Guadalupe calendar has no recognizable dated event cards");
+  const events = raw.map(event => normalizeGuadalupeEvent(event, { today }))
+    .filter(event => event && isUsefulTitle(event.title));
 
   // GRPG's embedded calendar omits the location and description for this
   // event even though its registration details include both. Keep the
@@ -2621,6 +2627,7 @@ export function normalizePlaywrightEvent(e) {
     description: e.description || "",
     ...(e.sourceAudiences ? { sourceAudiences: e.sourceAudiences } : {}),
     ...(e.attendanceNote ? { attendanceNote: e.attendanceNote } : {}),
+    ...(e.attendanceStatus ? { attendanceStatus: e.attendanceStatus } : {}),
     url: e.url,
     source: e.source,
     kidFriendly: e.kidFriendly || false,

@@ -6174,8 +6174,9 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
     return results;
   } catch (err) {
     console.log(`  ⚠️  ${libraryName}: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return results; // partial pagination beats dropping the whole source
+    // A failed page does not establish an empty or complete calendar. Keep
+    // the failure visible so the source policy can retain verified prior rows.
+    throw err;
   }
 }
 
@@ -6304,8 +6305,7 @@ async function fetchScclEvents() {
     return allEvents;
   } catch (err) {
     console.log(`  ⚠️  ${libraryName}: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return allEvents; // return whatever we got before the error
+    throw err;
   }
 }
 
@@ -10421,56 +10421,7 @@ async function fetchHistorySanJoseEvents() {
 
 // ── Main ──
 
-async function main() {
-  console.log("Scraping upcoming South Bay events...\n");
-
-  // Source-level baselines have to be captured before any output write. They
-  // catch one official adapter collapsing even when large feeds keep the
-  // aggregate event count looking healthy.
-  let prevRun = null;
-  try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
-
-  // Measure the inputs on EVERY run; strict mode only decides whether bad
-  // inputs abort before the overwrite. Gating the measurement itself on
-  // SBT_STRICT_EVENT_REFRESH meant any ad-hoc `npm run generate-events` wrote
-  // an output with no `inputSnapshots` key at all — which the refresh watchdog
-  // (correctly) pages on. That is exactly what a93dbdba did on 2026-08-24:
-  // a non-strict refresh landed, two agent commits carried the field-less file
-  // forward, and the 05:08 UTC watchdog pass woke Stephen up.
-  const inputHealth = strictRefreshInputHealth({
-    playwright: readJsonFile(PLAYWRIGHT_EVENTS_PATH),
-    inbound: readJsonFile(INBOUND_EVENTS_PATH),
-    maxAgeHours: strictSnapshotMaxAgeHours(),
-  });
-  // Every publisher consumes and records the verified official snapshot. The
-  // general data-refresh caller has no opt-in flag; letting it fetch live and
-  // omit this row repeatedly stripped required metadata after healthy runs.
-  // Invalid snapshots fail before any output write, including non-strict runs.
-  const { health } = readOfficialEventSnapshot({ maxAgeHours: strictSnapshotMaxAgeHours() });
-  inputHealth.snapshots.push(health);
-  if (STRICT_EVENT_REFRESH) {
-    if (!inputHealth.ok) {
-      const detail = inputHealth.problems.join("; ");
-      await catSignal({
-        key: "events-refresh-input-health",
-        title: "Event refresh blocked before overwrite",
-        body: detail,
-      });
-      throw new Error(`strict refresh inputs failed: ${detail}`);
-    }
-    console.log(
-      `🔒 Strict inputs: ${inputHealth.snapshots.map((item) => `${item.name}=${item.count} (${item.ageHours}h old)`).join(", ")}\n`,
-    );
-  } else {
-    // Non-strict runs record the same snapshots and keep going. A stale or
-    // missing input now shows up in the output as a `stale`/`missing` snapshot
-    // the watchdog can name, instead of an absent array it can only call absent.
-    const summary = inputHealth.snapshots
-      .map((item) => `${item.name}=${item.count} (${item.status})`)
-      .join(", ");
-    console.log(`📎 Inputs: ${summary}\n`);
-  }
-
+export function eventSourceDefinitions() {
   const source = (fn, { id = fn.name, label = fn.name, critical = false, preserveOnTransientFailure = false, preserveOnFailure = false } = {}) => ({
     id,
     label,
@@ -10480,7 +10431,7 @@ async function main() {
     fn,
   });
 
-  const sources = [
+  return [
     source(fetchStanfordEvents),
     source(fetchSjsuEvents),
     source(fetchScuEvents),
@@ -10500,8 +10451,10 @@ async function main() {
     // fetchCupertinoEvents,     — 404/timeout since 2026-03; covered by SCCL BiblioCommons
     // fetchSanJoseCityEvents,   — 403 blocked since 2026-03
     // fetchTheTechEvents,       — no /feed/ endpoint as of 2026-03
-    source(fetchSjplEvents),
-    source(fetchScclEvents),
+    // A library outage is not a cancellation. Retain dated prior listings,
+    // with the original verification age and the failed live status intact.
+    source(fetchSjplEvents, { label: "San Jose Public Library", preserveOnFailure: true }),
+    source(fetchScclEvents, { label: "Santa Clara County Library", preserveOnFailure: true }),
     source(fetchSvlgEvents, { label: "SVLG", preserveOnFailure: true }),
     source(fetchSjJazzEvents, { label: "San Jose Jazz" }),
     source(fetchMontalvoEvents),
@@ -10521,7 +10474,7 @@ async function main() {
     //   broke. The function stays put as a tombstone so the wrong BiblioCommons
     //   site ID can't be reintroduced — it just isn't a source any more.
     // fetchSunnyvaleLibraryEvents, — 403 (Events feature disabled on their BiblioCommons); covered by SCCL
-    source(fetchPaloAltoLibraryEvents),
+    source(fetchPaloAltoLibraryEvents, { label: "Palo Alto City Library", preserveOnFailure: true }),
     source(fetchHappyHollowEvents, { label: "Happy Hollow Park & Zoo" }),
     source(fetchMaclaEvents),
     source(fetchHeritageTheatreEvents, { label: "Heritage Theatre" }),
@@ -10573,6 +10526,59 @@ async function main() {
     source(fetchPlaywrightEvents, { label: "Playwright source snapshot", critical: true }),
     source(fetchInboundEvents, { label: "Inbound newsletter snapshot", critical: true }),
   ];
+}
+
+async function main() {
+  console.log("Scraping upcoming South Bay events...\n");
+
+  // Source-level baselines have to be captured before any output write. They
+  // catch one official adapter collapsing even when large feeds keep the
+  // aggregate event count looking healthy.
+  let prevRun = null;
+  try { prevRun = JSON.parse(readFileSync(OUT_PATH, "utf8")); } catch { /* first run */ }
+
+  // Measure the inputs on EVERY run; strict mode only decides whether bad
+  // inputs abort before the overwrite. Gating the measurement itself on
+  // SBT_STRICT_EVENT_REFRESH meant any ad-hoc `npm run generate-events` wrote
+  // an output with no `inputSnapshots` key at all — which the refresh watchdog
+  // (correctly) pages on. That is exactly what a93dbdba did on 2026-08-24:
+  // a non-strict refresh landed, two agent commits carried the field-less file
+  // forward, and the 05:08 UTC watchdog pass woke Stephen up.
+  const inputHealth = strictRefreshInputHealth({
+    playwright: readJsonFile(PLAYWRIGHT_EVENTS_PATH),
+    inbound: readJsonFile(INBOUND_EVENTS_PATH),
+    maxAgeHours: strictSnapshotMaxAgeHours(),
+  });
+  // Every publisher consumes and records the verified official snapshot. The
+  // general data-refresh caller has no opt-in flag; letting it fetch live and
+  // omit this row repeatedly stripped required metadata after healthy runs.
+  // Invalid snapshots fail before any output write, including non-strict runs.
+  const { health } = readOfficialEventSnapshot({ maxAgeHours: strictSnapshotMaxAgeHours() });
+  inputHealth.snapshots.push(health);
+  if (STRICT_EVENT_REFRESH) {
+    if (!inputHealth.ok) {
+      const detail = inputHealth.problems.join("; ");
+      await catSignal({
+        key: "events-refresh-input-health",
+        title: "Event refresh blocked before overwrite",
+        body: detail,
+      });
+      throw new Error(`strict refresh inputs failed: ${detail}`);
+    }
+    console.log(
+      `🔒 Strict inputs: ${inputHealth.snapshots.map((item) => `${item.name}=${item.count} (${item.ageHours}h old)`).join(", ")}\n`,
+    );
+  } else {
+    // Non-strict runs record the same snapshots and keep going. A stale or
+    // missing input now shows up in the output as a `stale`/`missing` snapshot
+    // the watchdog can name, instead of an absent array it can only call absent.
+    const summary = inputHealth.snapshots
+      .map((item) => `${item.name}=${item.count} (${item.status})`)
+      .join(", ");
+    console.log(`📎 Inputs: ${summary}\n`);
+  }
+
+  const sources = eventSourceDefinitions();
 
   // All 51 adapters used to fire at once. Each one fans out further on its own
   // (day pages, detail pages, per-event enrichment), so one refresh opened

@@ -3,6 +3,33 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  ...["2026-11-20", "2026-12-18"].map(date => Object.freeze({
+    title: /^Mountain View Makers Market$/i,
+    venue: /.*/,
+    date,
+    reviewOn: "2026-11-03",
+    reason:
+      "The newsletter extraction lists 3–8 PM, while the city's 2026 vendor FAQ lists 2–8 PM. The August original is outside available receiving-account history and the current organizer page could not be fetched within its access policy. Withhold these hours until a current first-party occurrence resolves the conflict; this is not a cancellation.",
+    source: "https://econdev.mountainview.gov/home/showpublisheddocument/13299/639148679773000000",
+  })),
+  Object.freeze({
+    title: /^Njioma Grevious Violin Recital$/i,
+    venue: /^Bing Concert Hall$/i,
+    date: "2027-02-05",
+    reviewOn: "2026-11-03",
+    reason:
+      "Only June newsletter extractions establish this date and time. The original is outside available receiving-account history, and a current accessible first-party occurrence has not independently confirmed them. Withhold the listing until confirmation is recovered; this is not a cancellation.",
+    source: "https://live.stanford.edu/events/26-27season/bing-concert-hall/njioma-grevious-violin-recital/",
+  }),
+  Object.freeze({
+    title: /^Renée Qin and Ania Filochows?ka: The World We Speak Into Being$/i,
+    venue: /^The Studio(?: at Bing Concert Hall)?$/i,
+    date: "2027-02-04",
+    reviewOn: "2026-11-03",
+    reason:
+      "June newsletter extractions and a season announcement establish the artists and program, but a current accessible first-party occurrence has not independently confirmed the February 4 date and 7 PM time. The original is outside available receiving-account history. Withhold the listing until confirmation is recovered; this is not a cancellation.",
+    source: "https://live.stanford.edu/events/26-27season/studio/renee-qin-and-ania-filochowska-the-world-we-speak-into-being/",
+  }),
   Object.freeze({
     title: /^(?:Hysterical:\s*)?Zavior Phillips(?:\s*\((?:7|9):00 PM show\))?$/i,
     venue: /^The Studio(?: at Bing Concert Hall)?$/i,
