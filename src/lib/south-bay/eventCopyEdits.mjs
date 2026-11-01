@@ -4,6 +4,14 @@
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
 const EDITS = {
+  "Guadalupe River Park Conservancy": {
+    description: [
+      ["Our first program launches August 6, 2026 2026 Dates are as follows:", "Our first program launches August 6, 2026. The 2026 dates are as follows:"],
+      ["the Spring St. Cul de sac", "the Spring St. cul-de-sac"],
+      ["approximately 9:15 a.m., unhoused neighbors receive stipends, then everyone", "approximately 9:15 a.m.; unhoused neighbors receive stipends, and then everyone"],
+      ["9:00 AM - 10:00 AM Zumba 10:15 AM - 11:15 AM Yoga", "9:00 AM - 10:00 AM: Zumba; 10:15 AM - 11:15 AM: Yoga"],
+    ],
+  },
   "San Jose Public Library": {
     title: [
       ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
@@ -202,6 +210,8 @@ const EDITS = {
       ["Meetings typically have a presentation targeted to less experienced collectors from an experienced collector.", "Meetings typically feature a presentation by an experienced collector for less experienced collectors."],
     ],
     blurb: [
+      ["at Hillview Library; bring your own mat, no registration needed.", "at Hillview Library; bring your own mat. No registration needed."],
+      ["create art alongside other kids, no registration needed.", "create art alongside other kids; no registration needed."],
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
       ["Listen to stories and join activities honoring", "Listen to stories and join in activities honoring"],
       ["Dress up in costume and join crafts, treats, and a parade at Berryessa Library's free Halloween party, no registration needed.", "Dress up in costume for crafts, treats, and a parade at Berryessa Library's free Halloween party. No registration needed."],
