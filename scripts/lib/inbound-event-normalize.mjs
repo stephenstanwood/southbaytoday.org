@@ -38,6 +38,12 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // November city bulletins, recovered from their authenticated receiving
+  // originals. Evidence: docs/qa/2026-11-01-1807z-fact-check.md.
+  ["2026-11-13|Unique Boutique Holiday Craft Fair", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42e022e"],
+  ["2026-11-13|Unique Boutique Holiday Craft Fair (Day 1)", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42e022e"],
+  ["2026-11-14|Unique Boutique Holiday Craft Fair (Day 2)", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42e022e"],
+  ["2026-11-23|Thanksgiving Break: Fun on the Run", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/430030f"],
   // Original October 21 city media advisory, including its public archive URL.
   // Evidence: docs/qa/2026-10-21-1607-fact-check.md.
   ["2026-10-31|Lakewood Branch Library Grand Opening", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42ffcdb"],

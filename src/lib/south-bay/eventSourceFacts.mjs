@@ -34,6 +34,33 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The city explicitly separates no advance registration from the emergency
+  // card required on the child's first day. Do not describe the card as RSVP.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/430030f
+  // Evidence: docs/qa/2026-11-01-1807z-fact-check.md.
+  {
+    date: "2026-11-23",
+    matches: (event) => event.url === "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/430030f"
+      && event.title === "Thanksgiving Break: Fun on the Run"
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: {
+      cost: "free", registration: REGISTRATION_NONE,
+      attendanceNote: "No advance registration is required. A parent or guardian must complete an emergency card on the child's first day. Space is first-come, first-served; the program is canceled if no participants arrive during the first hour.",
+    },
+  },
+  // The November Senior Center bulletin says Free (Registration Required).
+  // Keep this condition even when the newsletter excerpt or cached blurb is
+  // sparse; later editions need their own evidence.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42e022e
+  {
+    date: "2026-11-18",
+    matches: (event) => event.title === "Cookies, Tracking and Your Digital Footprint"
+      && /^https:\/\/anc\.apm\.activecommunities\.com\/sunnyvaleactivities\/activity\/search\/detail\/2937(?:[?#]|$)/.test(event.url || ""),
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free for ages 50 and up; registration is required. Register online, at the Sunnyvale Senior Center, or by calling 408-730-7360.",
+    },
+  },
   // The occurrence's body says tickets are distributed when the branch
   // opens (10 AM Wednesday); registrationInfo says 30 minutes before its
   // 11 AM start. Keep both instructions qualified, never choose a clock.

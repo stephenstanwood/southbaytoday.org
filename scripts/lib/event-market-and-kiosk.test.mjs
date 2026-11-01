@@ -125,6 +125,15 @@ test("title-first category rules beat incidental venue and description words", (
   }
 });
 
+test("test screenings remain arts when the documentary program opens with live music", () => {
+  const title = "Test Screening: The 100th – Seeds of Aloha";
+  const description = "Free test screening of a feature documentary, starting with live music by Harold Payne and followed by a director Q&A.";
+  assert.equal(inferCategory(title, description, "", "San Jose Buddhist Church"), "arts");
+  assert.equal(inferPlaywrightCategory(title), "arts");
+  assert.equal(inferCategory("Blood Pressure Screening", "Free health checks.", "", "Senior Center"), "community");
+  assert.equal(inferCategory("Live Music with Harold Payne", "Songs from a documentary.", "", "San Jose Buddhist Church"), "music");
+});
+
 // A facility-hours notice announces that a building's schedule changed; nothing
 // happens at the listed time. Stanford's Localist feed published "Labor Day
 // Facility Hours" (9 AM, venue "Stanford University") on 2026-09-07 and the

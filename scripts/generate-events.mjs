@@ -3687,8 +3687,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\b(?:college|campus)\s+tour\b/.test(titleLower)) return "education";
   if (/\bpwhl\b/.test(titleLower)) return "sports";
   // A screening is an arts event even when a library or teen center frames it
-  // as a family/community night. Trivia remains community via the rule above.
-  if (/\b(movie|film)\s+(?:day|night|screening)\b|\bscreening\s+of\b/.test(titleLower)) return "arts";
+  // as a family/community night or the program opens with live music. Limit
+  // the added screening terms so health screenings keep their own category.
+  if (/\b(movie|film)\s+(?:day|night|screening)\b|\b(?:test|documentary)\s+screening\b|\bscreening\s+of\b/.test(titleLower)) return "arts";
   // Clinical education can name a sport injury without becoming a sports
   // event. Keep the rule anchored to explicit medical-course language.
   if (/\borthop(?:a)?edic\s+academy\b|\bsurgical\s+reconstruction\b/.test(titleLower)) return "education";

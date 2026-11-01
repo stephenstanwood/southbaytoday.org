@@ -88,6 +88,42 @@ test("Lakewood's original city advisory restores its public URL without changing
   assert.equal(raw.sourceUrl, null);
 });
 
+test("Sunnyvale's November bulletins restore the dated craft fair and holiday-program source links", () => {
+  const cases = [
+    ["2026-11-13", "Unique Boutique Holiday Craft Fair", "42e022e"],
+    ["2026-11-13", "Unique Boutique Holiday Craft Fair (Day 1)", "42e022e"],
+    ["2026-11-14", "Unique Boutique Holiday Craft Fair (Day 2)", "42e022e"],
+    ["2026-11-23", "Thanksgiving Break: Fun on the Run", "430030f"],
+  ];
+  for (const [date, title, bulletin] of cases) {
+    const raw = { title, cityKey: "sunnyvale", startsAt: `${date}T09:00:00-08:00`, sourceUrl: null };
+    assert.equal(normalizeInboundEventPresentation(raw).url,
+      `https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/${bulletin}`);
+    assert.equal(normalizeInboundEventPresentation({ ...raw, startsAt: raw.startsAt.replace("2026-", "2027-") }).url, "");
+    assert.equal(raw.sourceUrl, null, "retain the original extractor record");
+  }
+});
+
+test("Sunnyvale newsletter admission conditions survive ingestion and repeated source-fact normalization", () => {
+  const examples = [
+    { id: "fun-run", title: "Thanksgiving Break: Fun on the Run", startsAt: "2026-11-23T14:00:00-08:00", location: "Columbia Neighborhood Center Gym, Sunnyvale", sourceUrl: null, cost: "free", registration: "none", note: /parent or guardian.*emergency card.*first day/i },
+    { id: "privacy", title: "Cookies, Tracking and Your Digital Footprint", startsAt: "2026-11-18T15:30:00-08:00", location: "Sunnyvale Senior Center, Laurel Room", sourceUrl: "https://anc.apm.activecommunities.com/sunnyvaleactivities/activity/search/detail/2937?onlineSiteId=0&locale=en-US&from_original_cui=true", cost: "free", registration: "required", note: /50 and up.*registration is required/i },
+  ];
+  for (const example of examples) {
+    const raw = { ...example, cityKey: "sunnyvale", endsAt: null, description: "" };
+    const [event] = fetchInboundEvents({ today: "2026-11-01", events: [raw] }).map(applyVerifiedEventFacts);
+    assert.equal(event.cost, example.cost, example.title);
+    assert.equal(event.registration, example.registration, example.title);
+    assert.match(event.attendanceNote, example.note);
+    assert.deepEqual(applyVerifiedEventFacts(event), event);
+    for (const registration of ["full", "closed", "appointment-only"]) {
+      assert.equal(applyVerifiedEventFacts({ ...event, registration }).registration, registration);
+    }
+    const later = { ...event, date: event.date.replace("2026-", "2027-"), cost: null, registration: undefined };
+    assert.equal(applyVerifiedEventFacts(later), later, "do not invent a later edition's admission conditions");
+  }
+});
+
 test("a stale Willis newsletter date resolves before the past-date gate", () => {
   const raw = {
     id: "stale-willis-newsletter", cityKey: "palo-alto",
