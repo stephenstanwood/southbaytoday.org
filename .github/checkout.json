@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "profiles": {
+    "agent": {
+      "patterns": [
+        "/*",
+        "!/docs/**/*.png",
+        "!/docs/**/*.jpg",
+        "!/docs/**/*.jpeg",
+        "!/docs/**/*.webp",
+        "!/docs/**/*.pdf"
+      ],
+      "maxFiles": 12000,
+      "maxBytes": 268435456
+    },
+    "ci": {
+      "patterns": [
+        "/*",
+        "!/docs/**/*.png",
+        "!/docs/**/*.jpg",
+        "!/docs/**/*.jpeg",
+        "!/docs/**/*.webp",
+        "!/docs/**/*.pdf"
+      ],
+      "maxFiles": 12000,
+      "maxBytes": 268435456
+    },
+    "policy": {
+      "patterns": [
+        "/.github/",
+        "/.gitignore",
+        "/.gitattributes",
+        "/AGENTS.md",
+        "/CLAUDE.md",
+        "/README*",
+        "/package.json",
+        "/package-lock.json",
+        "/.node-version",
+        "/.nvmrc",
+        "/pyproject.toml",
+        "/uv.lock",
+        "/requirements*.txt"
+      ],
+      "maxFiles": 2000,
+      "maxBytes": 8388608
+    }
+  },
+  "jobs": {
+    "checkout-policy.yml/policy": "policy",
+    "event-refresh-checks.yml/check": "ci",
+    "refresh-events.yml/refresh": "ci"
+  },
+  "sourceVersion": 1
+}

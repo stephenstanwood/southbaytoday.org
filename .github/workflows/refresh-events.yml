@@ -5,7 +5,8 @@ on:
     # Daily at 10:17 PM PDT / 9:17 PM PST, ahead of the 3:20 AM Mini plan refresh.
     # GitHub can start this hours late; the Mini watchdog keeps inputs fresh.
     - cron: "17 5 * * *"
-  workflow_dispatch: # allow manual trigger
+  workflow_dispatch:
+    # allow manual trigger
 
 concurrency:
   group: refresh-events-main
@@ -19,10 +20,31 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
-          # The publication preflight must be able to merge competing writers.
-          fetch-depth: 0
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            /.github/
+            /.gitignore
+            /.gitattributes
+            /AGENTS.md
+            /CLAUDE.md
+            /README*
+            /package.json
+            /package-lock.json
+            /.node-version
+            /.nvmrc
+            /pyproject.toml
+            /uv.lock
+            /requirements*.txt
+          sparse-checkout-cone-mode: false
+      - name: Materialize only declared checkout inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/checkout.py materialize --profile ci
+      - name: Fetch only publication ancestry without historical blobs
+        run: python3 .github/scripts/checkout.py history --branch main
 
       - uses: actions/setup-node@v4
         with:
