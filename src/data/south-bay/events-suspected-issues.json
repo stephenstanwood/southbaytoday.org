@@ -1,20 +1,49 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-01T12:32:57.036Z"
+    "auditedAt": "2026-11-01T16:41:01.392Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1436,
+    "total": 1440,
     "totals": {
       "hard": 0,
-      "soft": 0,
-      "info": 1
+      "soft": 1,
+      "info": 2
     },
     "byReason": {
-      "local-departure-trip": 1
+      "virtual-not-flagged": 1,
+      "local-departure-trip": 2
     },
     "hard": [],
     "soft": [
+      {
+        "id": "inbound-8033706b838b2114",
+        "title": "Housing Help Center for Tenants",
+        "city": "mountain-view",
+        "date": "2026-11-05",
+        "location": "298 Escuela Ave, Mountain View, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "inbound-d1d760709f2010a5",
+        "title": "The Nutcracker: San Francisco Ballet Day Trip",
+        "city": "sunnyvale",
+        "date": "2026-12-17",
+        "location": "San Francisco Opera House",
+        "findings": [
+          {
+            "severity": "info",
+            "reason": "local-departure-trip",
+            "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
+          }
+        ]
+      },
       {
         "id": "scu-779c5b7711f0dc3c",
         "title": "Startup World Cup Grand Finale (SCU day trip)",
@@ -33,14 +62,46 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 280,
+    "total": 297,
     "totals": {
       "hard": 0,
-      "soft": 0,
-      "info": 0
+      "soft": 1,
+      "info": 1
     },
-    "byReason": {},
+    "byReason": {
+      "local-departure-trip": 1,
+      "virtual-not-flagged": 1
+    },
     "hard": [],
-    "soft": []
+    "soft": [
+      {
+        "id": "inbound_mvy0pyof_82vbsm",
+        "title": "The Nutcracker: San Francisco Ballet Day Trip",
+        "city": "sunnyvale",
+        "date": "2026-12-17T12:30:00-08:00",
+        "location": "San Francisco Opera House",
+        "findings": [
+          {
+            "severity": "info",
+            "reason": "local-departure-trip",
+            "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mvy0q783_l4bjmo",
+        "title": "Housing Help Center for Tenants",
+        "city": "mountain-view",
+        "date": "2026-11-05T18:00:00-08:00",
+        "location": "298 Escuela Ave, Mountain View, CA",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      }
+    ]
   }
 }
