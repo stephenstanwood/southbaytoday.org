@@ -1,26 +1,26 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-01T03:54:52.947Z",
+    "generatedAt": "2026-11-01T08:02:39.716Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 177,
+    "eventCount": 184,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (10)",
-      "History San Jose (6)",
+      "History San Jose (5)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Children's Discovery Museum (1)",
-      "Guadalupe River Park Conservancy (2)",
+      "Children's Discovery Museum (7)",
+      "Guadalupe River Park Conservancy (6)",
       "Santana Row (5)",
-      "City of Cupertino (20)",
+      "City of Cupertino (19)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (67)",
+      "TheatreWorks Silicon Valley (66)",
       "Levi's Stadium (3)",
-      "SAP Center (13)",
-      "The Tech Interactive (10)",
+      "SAP Center (14)",
+      "The Tech Interactive (9)",
       "Books Inc (7)",
       "San Jose Museum of Art (3)",
       "Peninsula Open Space Trust (3)"
@@ -94,7 +94,7 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 12,
+        "count": 10,
         "error": null,
         "sources": [
           "History San Jose"
@@ -158,7 +158,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 1,
+        "count": 7,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -168,7 +168,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 2,
+        "count": 6,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -188,7 +188,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 20,
+        "count": 19,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -208,7 +208,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 67,
+        "count": 66,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -236,7 +236,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
+        "count": 14,
         "error": null,
         "sources": [
           "SAP Center"
@@ -246,7 +246,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 10,
+        "count": 9,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -293,23 +293,6 @@
     ]
   },
   "events": [
-    {
-      "id": "58fe9f594c67",
-      "title": "Legally Blue",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "Legally Blue is a sophisticated blues ensemble known for original, dynamic arrangements that blur the lines between jazz elegance and blues soul. Rooted in tradition yet driven by innovation, the band crafts a sound that feels both timeless and fresh, where smoky blues textures meet rich jazz harmonies.",
-      "url": "https://sanjosejazz.org/events/legally-blue-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "6c14cd148fab",
       "title": "SJZ Break Room Jazz Jam",
@@ -460,6 +443,23 @@
       "cost": null,
       "description": "Few drummers in jazz have collaborated as fruitfully with era-defining guitarists as Berkeley's Scott Amendola, who for this trio joins forces with the endlessly inventive guitarist Jeff Parker and bassist Paul Bryan to celebrate their new album in the second of two sets.",
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "00d623750afa",
+      "title": "HSAS Big Band / U19s at Christmas in the Park",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Plaza de César Chávez",
+      "address": "",
+      "city": "san-jose",
+      "category": "music",
+      "cost": null,
+      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
+      "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -685,23 +685,6 @@
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-12-06"
       }
-    },
-    {
-      "id": "7226fbdf5705",
-      "title": "22nd Annual Micailhuitl: Día de Muertos",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": null,
-      "endTime": null,
-      "venue": "History Park",
-      "address": "635 Phelan Ave, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "",
-      "url": "https://www.aztecadancers.com/dia-de-muertos",
-      "source": "History San Jose",
-      "kidFriendly": false
     },
     {
       "id": "0b2b97a39872",
@@ -942,10 +925,10 @@
       "kidFriendly": false
     },
     {
-      "id": "e461a3d6bec2",
+      "id": "62c164200fa0",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -962,10 +945,10 @@
       "kidFriendly": false
     },
     {
-      "id": "ebcb895f5f5c",
+      "id": "467612e0909e",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -982,10 +965,10 @@
       "kidFriendly": false
     },
     {
-      "id": "adddc0532470",
+      "id": "fc3e57d47148",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1002,12 +985,12 @@
       "kidFriendly": false
     },
     {
-      "id": "8d909d6d0e1a",
-      "title": "Halloween at the Purple Museum",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": null,
-      "endTime": null,
+      "id": "0f52e815d8fb",
+      "title": "Butterfly Masks",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "10:00 am",
+      "endTime": "4:00 pm",
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -1019,10 +1002,134 @@
       "kidFriendly": true
     },
     {
-      "id": "d2992335ebb7",
+      "id": "4d994081f790",
+      "title": "Día de los Muertos",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": "10:00 am",
+      "endTime": "3:30 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "304b2b750579",
+      "title": "Diwali: Festival of Lights",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "10:00 am",
+      "endTime": "3:30 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "cca8f4848eed",
+      "title": "Make a Rangoli",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "10:00 am",
+      "endTime": "4:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "e324cf50b260",
+      "title": "Orbital Escape Robotics",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
+      "time": "10:00 am",
+      "endTime": "12:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "f95d81a46239",
+      "title": "Drone Programming with PYTHON",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "10:30 am",
+      "endTime": "12:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "5cf49f965f57",
+      "title": "Daisy Day: Design with Nature",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "1:00 pm",
+      "endTime": "2:30 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "20faa856a696",
+      "title": "Bootcamp in the River Park with GymParty",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "5:30 pm",
+      "endTime": null,
+      "venue": "Guadalupe River Park",
+      "address": "438 Coleman Ave, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.instagram.com/gymparty_/",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-05"
+      }
+    },
+    {
+      "id": "12719d2cd6de",
       "title": "Neighborhood Hands Bi-monthly Cleanup",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": "7:45 am",
       "endTime": null,
       "venue": "Guadalupe River Park",
@@ -1037,14 +1144,36 @@
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-10-31"
+        "date": "2026-11-14"
       }
     },
     {
-      "id": "50599597ae53",
-      "title": "Yoga and Zumba in the River Park",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "id": "771784350af8",
+      "title": "Bootcamp in the River Park with GymParty",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
+      "time": "6:00 pm",
+      "endTime": null,
+      "venue": "Guadalupe River Park",
+      "address": "438 Coleman Ave, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.instagram.com/gymparty_/",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-19"
+      }
+    },
+    {
+      "id": "bd7d778c9296",
+      "title": "Restore & Explore: Trail Clean Up and Trail Tour",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
       "time": "9:00 am",
       "endTime": null,
       "venue": "Guadalupe River Park",
@@ -1053,13 +1182,57 @@
       "category": "outdoor",
       "cost": "free",
       "description": "",
-      "url": "https://www.google.com/calendar/event?eid=NWhhOTA0NTlhN3U2dXJvNmc2YzQ3Y3VnM2FfMjAyNjEwMzFUMTYwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
+      "url": "https://www.google.com/calendar/event?eid=NTV0aXJsYmFyNDE0MmY2OGplYXF1Ym50YXJfMjAyNjExMjFUMTcwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
       "source": "Guadalupe River Park Conservancy",
       "kidFriendly": false,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-10-31"
+        "date": "2026-11-21"
+      }
+    },
+    {
+      "id": "d61b86e530a3",
+      "title": "Neighborhood Hands Bi-monthly Cleanup",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "7:45 am",
+      "endTime": null,
+      "venue": "Guadalupe River Park",
+      "address": "438 Coleman Ave, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.neighborhoodhands.org/current-program.html",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-28"
+      }
+    },
+    {
+      "id": "b2e5884f6b71",
+      "title": "Yoga and Zumba in the River Park",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "9:00 am",
+      "endTime": null,
+      "venue": "Guadalupe River Park",
+      "address": "438 Coleman Ave, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.google.com/calendar/event?eid=NWhhOTA0NTlhN3U2dXJvNmc2YzQ3Y3VnM2FfMjAyNjExMjhUMTcwMDAwWiBjX252amt1cGptNGxuNW50OXF0bHRiYWlrMHE4QGc&ctz=America/Los_Angeles",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-28"
       }
     },
     {
@@ -1082,7 +1255,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-11-01T03:53:45.771Z"
+        "checkedAt": "2026-11-01T08:01:30.858Z"
       }
     },
     {
@@ -1105,7 +1278,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-01T03:53:45.773Z"
+        "checkedAt": "2026-11-01T08:01:30.860Z"
       }
     },
     {
@@ -1128,7 +1301,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T03:53:45.776Z"
+        "checkedAt": "2026-11-01T08:01:30.864Z"
       }
     },
     {
@@ -1151,7 +1324,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T03:53:45.777Z"
+        "checkedAt": "2026-11-01T08:01:30.864Z"
       }
     },
     {
@@ -1174,7 +1347,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-01T03:53:45.777Z"
+        "checkedAt": "2026-11-01T08:01:30.865Z"
       }
     },
     {
@@ -1225,23 +1398,6 @@
       "cost": null,
       "description": "The Park Rangers invite you to learn about the birds living in our riparian habitat and how to ID them! Walk the trails to see the environment they live in and maybe catch a glimpse of a Red-Shoulder Hawk, Screech Owl, or more! All attendees must register and an adult must accompany children. The hike is approximately one-quarter mile on a combination of dirt trails and paved paths. $10 Resident | $13 Non-resident Register",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Bird-ID-and-Guided-Hike",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "09af533e1dae",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -1301,6 +1457,23 @@
       "title": "Environmental Education Center Open House",
       "date": "2026-11-28",
       "displayDate": "Sat, Nov 28",
+      "time": "12:00 PM",
+      "endTime": "04:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "fbdd3862393d",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
       "time": "12:00 PM",
       "endTime": "04:00 PM",
       "venue": "McClellan Ranch Preserve",
@@ -1414,23 +1587,6 @@
       "url": "https://www.cupertino.gov/Events-directory/Paper-Shredding-and-Environmental-Recycling",
       "source": "City of Cupertino",
       "kidFriendly": false
-    },
-    {
-      "id": "aef4a717b055",
-      "title": "Baer Blacksmith Shop Demonstrations",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "46499ae29bb7",
@@ -1602,23 +1758,6 @@
       "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "22fd96f02c6e",
-      "title": "Dracula",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "2:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7524",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -2815,7 +2954,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.447Z"
+        "checkedAt": "2026-11-01T08:01:55.825Z"
       }
     },
     {
@@ -2839,7 +2978,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.447Z"
+        "checkedAt": "2026-11-01T08:01:55.826Z"
       }
     },
     {
@@ -2863,7 +3002,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.448Z"
+        "checkedAt": "2026-11-01T08:01:55.826Z"
       }
     },
     {
@@ -2887,7 +3026,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.448Z"
+        "checkedAt": "2026-11-01T08:01:55.826Z"
       }
     },
     {
@@ -2911,7 +3050,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.449Z"
+        "checkedAt": "2026-11-01T08:01:55.827Z"
       }
     },
     {
@@ -2935,7 +3074,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.451Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -2959,7 +3098,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -2983,7 +3122,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -3007,7 +3146,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -3031,7 +3170,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -3055,7 +3194,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
@@ -3079,14 +3218,38 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T03:54:19.452Z"
+        "checkedAt": "2026-11-01T08:01:55.830Z"
       }
     },
     {
-      "id": "a4f6500bf23a",
-      "title": "Sharks vs Senators — Los Tiburones",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
+      "id": "8bea8765329d",
+      "title": "Sharks vs Wild",
+      "date": "2026-11-23",
+      "displayDate": "Mon, Nov 23",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
+        "date": "2026-11-23",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-01T08:01:55.830Z"
+      }
+    },
+    {
+      "id": "8b05c10c052f",
+      "title": "Sharks vs Golden Knights — Youth Hockey Appreciation",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
       "time": "1:00 PM",
       "endTime": null,
       "venue": "SAP Center",
@@ -3094,27 +3257,17 @@
       "city": "san-jose",
       "category": "sports",
       "cost": "paid",
-      "description": "Mini Sharks Sugar Skull Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-17",
+      "description": "Sharks Player Water Bottle Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
       "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "f3bb520bc689",
-      "title": "Spooky Science Slime Lab",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "11:00AM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
+        "date": "2026-11-27",
+        "time": "1:00 PM",
+        "checkedAt": "2026-11-01T08:01:55.830Z"
+      }
     },
     {
       "id": "ae6e434de9d4",
