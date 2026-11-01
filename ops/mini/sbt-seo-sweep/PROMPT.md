@@ -16,8 +16,10 @@ account is already signed in. Verify the visible account email plus exact
 property; never inspect credentials or trust an `authuser` ordinal alone.
 Preserve user tabs and close only tabs opened by this run. A busy browser lease
 means defer; a controller or required-review failure is a setup failure, not
-proof of a missing Google login. Preserve mandatory script reviews and use no
-MacBook browser or execution fallback. The optional service-account helper may
+proof of a missing Google login. Preserve mandatory script reviews. Follow the skill's November 1 bounded
+recovery and source-journal contract: the Mini remains primary, and only
+exhausted local infrastructure recovery with a safe checkpoint permits the
+emergency MacBook browser. No new timer or action authority. The optional service-account helper may
 preload data; its absence does not block the required browser pass. Do not
 report a crawl-only run as complete.
 
