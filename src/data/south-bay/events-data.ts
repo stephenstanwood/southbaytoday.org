@@ -616,23 +616,10 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     url: "https://grpg.org",
     emoji: "🌹",
   },
-  {
-    id: "grpc-horticulture-open-hours",
-    title: "Horticulture Open Hours — Guadalupe River Park",
-    city: "san-jose",
-    venue: "Guadalupe River Park",
-    address: "425 Seymour St, San Jose",
-    category: "community",
-    recurrence: "monthly",
-    days: ["friday"],
-    time: "9am – 12pm",
-    cost: "free",
-    kidFriendly: true,
-    description:
-      "First Friday of every month. Seasonal park and gardens stewardship guided by GRPC's horticulturist — pruning, irrigation, mulching, and more.",
-    url: "https://grpg.org",
-    emoji: "🪴",
-  },
+  // As of 2026-11-01, the organizer's calendar and volunteer page do not
+  // confirm the former first-Friday 9am–noon Horticulture Open Hours schedule.
+  // Historical newsletter mentions do not establish current occurrences.
+  // Recheck https://grpg.org/calendar/events/ before restoring this entry.
   {
     id: "hakone-tea-ceremony",
     title: "Public Tea Ceremony — Hakone Gardens",
