@@ -16,6 +16,41 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Tully's Thursday LEGO occurrence omits contradictory Tuesday boilerplate without inventing a cadence", async () => {
+  const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/tully-lego-2026-11-05.json", import.meta.url)));
+  const { libraryEventDetails, biblioEventOccurrence } = await import("../../../scripts/lib/library-event-details.mjs");
+  const raw = {
+    id: `sjpl-${capture.event.id}`, title: "LEGO Fun", venue: "Tully Library", cost: "free",
+    url: capture.url, ...libraryEventDetails(capture.event),
+    ...biblioEventOccurrence(capture.event, new Date("2026-11-01T12:00:00-08:00")).fields,
+  };
+  assert.equal(raw.date, "2026-11-05");
+  assert.equal(raw.time, "4:00 PM");
+  assert.match(raw.description, /every Tuesday/);
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.doesNotMatch(fixed.description, /every (?:Tuesday|Thursday)/);
+  assert.match(fixed.description, /Tully library for LEGO/);
+  assert.match(fixed.description, /Children under 5 must be accompanied by their parents/);
+  assert.match(fixed.description, /No registration required/);
+  for (const field of Object.keys(raw).filter((key) => key !== "description")) assert.deepEqual(fixed[field], raw[field], field);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].description, fixed.description, "refresh normalization keeps the verified correction");
+  assert.match(capture.event.definition.description, /every Tuesday/, "source capture stays intact");
+});
+
+test("the Tully LEGO correction is limited to the verified dated source", () => {
+  const raw = { date: "2026-11-05", url: "https://sjpl.bibliocommons.com/events/6a4bcf2d4407827f8aa9a6cb",
+    description: "Join us at Tully Library every Tuesday for LEGO fun. No registration required." };
+  assert.equal(applyVerifiedEventFacts(raw).description, "Join us at Tully Library for LEGO fun. No registration required.");
+  for (const other of [
+    { ...raw, date: "2026-11-12" },
+    { ...raw, url: "https://example.org/unrelated" },
+    { ...raw, url: "https://sjpl.bibliocommons.com/events/another-event" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
 test("Zoe Caron's November reception retains the city's required RSVP across newsletter copies", async () => {
   // October 29 city newsletter: free to all, RSVP required; the linked ticket
   // page is https://tickets.mvcpa.com/eventperformances.asp?evt=802.

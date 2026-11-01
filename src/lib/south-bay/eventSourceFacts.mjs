@@ -34,6 +34,16 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The exact Tully occurrence is Thursday, November 5, 4–5 PM, while its
+  // shared description still says every Tuesday. Omit the conflicting clause;
+  // this one occurrence does not establish a replacement Thursday cadence.
+  // Evidence: docs/qa/2026-11-01-2207z-fact-check.md (fresh exact-ID response).
+  {
+    date: "2026-11-05",
+    url: "https://sjpl.bibliocommons.com/events/6a4bcf2d4407827f8aa9a6cb",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a4bcf2d4407827f8aa9a6cb"],
+    copyReplacements: [[/\s+every Tuesday\b/gi, ""]],
+  },
   // The November MVCPA newsletter lost all six ticket links in extraction.
   // Its linked first-party pages confirm paid admission and distinguish the
   // concerts from dance/comedy. Bind repairs to actual dated occurrences;
