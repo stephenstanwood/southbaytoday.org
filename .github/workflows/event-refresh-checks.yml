@@ -3,7 +3,9 @@ name: Event Refresh Checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
+  workflow_dispatch: null
 
 permissions:
   contents: read
@@ -13,7 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            /.github/
+            /.gitignore
+            /.gitattributes
+            /AGENTS.md
+            /CLAUDE.md
+            /README*
+            /package.json
+            /package-lock.json
+            /.node-version
+            /.nvmrc
+            /pyproject.toml
+            /uv.lock
+            /requirements*.txt
+          sparse-checkout-cone-mode: false
+      - name: Materialize only declared checkout inputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/checkout.py materialize --profile ci
 
       - uses: actions/setup-node@v4
         with:
@@ -51,3 +75,6 @@ jobs:
 
       - name: Check subscription defaults, visitor routing and duplicate generation (offline)
         run: npm run test:ai-routing
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true

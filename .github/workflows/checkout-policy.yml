@@ -1,0 +1,45 @@
+name: Checkout policy
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout: |
+            /.github/
+            /.gitignore
+            /.gitattributes
+            /AGENTS.md
+            /CLAUDE.md
+            /README*
+            /package.json
+            /package-lock.json
+            /.node-version
+            /.nvmrc
+            /pyproject.toml
+            /uv.lock
+            /requirements*.txt
+          sparse-checkout-cone-mode: false
+      - name: Enforce workflow and cache boundaries
+        run: node .github/scripts/ci-policy.mjs
+      - name: Measure declared checkout inputs before fetching payloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/checkout.py materialize --profile policy
+      - name: Audit all profile budgets against the exact commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/checkout.py audit
