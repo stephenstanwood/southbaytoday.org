@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-01T17:09:54.774Z",
+    "generatedAt": "2026-11-01T20:42:54.112Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 194,
+    "eventCount": 193,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
@@ -15,15 +15,15 @@
       "Children's Discovery Museum (7)",
       "Guadalupe River Park Conservancy (16)",
       "Santana Row (5)",
-      "City of Cupertino (19)",
+      "City of Cupertino (18)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (66)",
       "Levi's Stadium (3)",
       "SAP Center (14)",
       "The Tech Interactive (9)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (3)",
-      "San Jose Museum of Art (3)"
+      "San Jose Museum of Art (3)",
+      "Peninsula Open Space Trust (3)"
     ],
     "sourceHealth": [
       {
@@ -188,7 +188,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 19,
+        "count": 18,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -217,9 +217,9 @@
       {
         "id": "california-s-great-america",
         "label": "California's Great America",
-        "status": "error",
+        "status": "empty",
         "count": 0,
-        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.sixflags.com/cagreatamerica/events\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "error": null,
         "sources": []
       },
       {
@@ -281,12 +281,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 3,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -1496,7 +1498,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-11-01T17:08:41.386Z"
+        "checkedAt": "2026-11-01T20:41:45.806Z"
       }
     },
     {
@@ -1519,7 +1521,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-01T17:08:41.387Z"
+        "checkedAt": "2026-11-01T20:41:45.809Z"
       }
     },
     {
@@ -1542,7 +1544,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T17:08:41.388Z"
+        "checkedAt": "2026-11-01T20:41:45.815Z"
       }
     },
     {
@@ -1565,7 +1567,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T17:08:41.389Z"
+        "checkedAt": "2026-11-01T20:41:45.815Z"
       }
     },
     {
@@ -1588,25 +1590,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-01T17:08:41.389Z"
+        "checkedAt": "2026-11-01T20:41:45.816Z"
       }
-    },
-    {
-      "id": "b25bfa3d500d",
-      "title": "Watershed Habitat of the Steelhead Nature Walk",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": null,
-      "description": "Join a Naturalist and learn about the Steelhead life cycle, riparian habitat and challenges faced in Stevens Creek. We will walk through history and view our ecosystem through the lens of this phenomenal species. You and your child will identify aquatic insects as a measure of water quality. The hike is approximately one mile on a combination of dirt trails and paved paths. All attendees must register and children must be accompanied by an adult. $25 Resident | $32 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Watershed-Habitat-of-the-Steelhead-Nature-Walk",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "55c1e46ce876",
@@ -3195,7 +3180,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.522Z"
+        "checkedAt": "2026-11-01T20:42:10.075Z"
       }
     },
     {
@@ -3219,7 +3204,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.522Z"
+        "checkedAt": "2026-11-01T20:42:10.075Z"
       }
     },
     {
@@ -3243,7 +3228,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.522Z"
+        "checkedAt": "2026-11-01T20:42:10.075Z"
       }
     },
     {
@@ -3267,7 +3252,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.522Z"
+        "checkedAt": "2026-11-01T20:42:10.075Z"
       }
     },
     {
@@ -3291,7 +3276,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.523Z"
+        "checkedAt": "2026-11-01T20:42:10.077Z"
       }
     },
     {
@@ -3315,7 +3300,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3339,7 +3324,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3363,7 +3348,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3387,7 +3372,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3411,7 +3396,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3435,7 +3420,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3459,7 +3444,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3483,7 +3468,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3507,7 +3492,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-01T17:09:02.524Z"
+        "checkedAt": "2026-11-01T20:42:10.080Z"
       }
     },
     {
@@ -3783,57 +3768,6 @@
       "kidFriendly": false
     },
     {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3891,6 +3825,57 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "700adeab2f91",
+      "title": "BioBlitz at Hellyer County Park",
+      "date": "2026-11-01",
+      "displayDate": "Sun, Nov 1",
+      "time": null,
+      "endTime": null,
+      "venue": "Hellyer County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
