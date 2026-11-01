@@ -338,6 +338,8 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["The Silvermans are Gotham (IFP) Documentary Lab Fellows, CNN/Film Independent Episodic Lab Fellows.", "The Silvermans are Gotham (IFP) Documentary Lab Fellows and CNN/Film Independent Episodic Lab Fellows."],
+      ["Join us at the Mitchell Park Community Center, as we celebrate Diwali! Enjoy fun activities for all ages including:", "Join us at the Mitchell Park Community Center as we celebrate Diwali! Enjoy fun activities for all ages:"],
       ["children engage in problem solving, teamwork, self-confidence, and creativity!", "children practice problem solving and teamwork while developing self-confidence and creativity!"],
       [/Duration: (60|90) minutes$/g, "Duration: $1 minutes."],
       ["Note: Teens and Adults only. Use of", "Note: Teens and adults only. Use of"],
@@ -458,6 +460,7 @@ const EDITS = {
   },
   "Santa Clara University": {
     description: [
+      ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
       [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],

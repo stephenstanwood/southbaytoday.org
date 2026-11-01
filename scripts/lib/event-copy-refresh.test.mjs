@@ -29,7 +29,8 @@ const october31EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/revi
 const stampClubFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-stamp-club.json", import.meta.url)));
 const makerStudioFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-maker-studio.json", import.meta.url)));
 const accessibilityFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-10-31-accessibility.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture];
+const november1Fixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-01.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -45,6 +46,16 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("November grammar repairs preserve other publishers and later source instructions", () => {
+  for (const row of november1Fixture.cases) {
+    const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
+    const event = { source: row.source, [row.field]: row.refreshed + suffix };
+    assert.deepEqual(polishReviewedEventCopy(event), { ...event, [row.field]: row.reviewed + suffix });
+  }
+});
 
 test("storytime and accessibility punctuation preserves publisher scope and updated instructions", () => {
   for (const row of accessibilityFixture.cases) {
