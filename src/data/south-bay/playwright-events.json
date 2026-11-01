@@ -1,21 +1,21 @@
 {
   "_meta": {
-    "generatedAt": "2026-10-31T23:44:45.516Z",
+    "generatedAt": "2026-11-01T03:46:42.004Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 180,
+    "eventCount": 177,
     "sourceCount": 18,
     "sources": [
-      "San Jose Jazz (11)",
+      "San Jose Jazz (10)",
       "Linden Tree Books (10)",
       "History San Jose (6)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Children's Discovery Museum (2)",
+      "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (2)",
       "Santana Row (5)",
-      "City of Cupertino (21)",
+      "City of Cupertino (20)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (67)",
       "Levi's Stadium (3)",
@@ -62,7 +62,7 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 11,
+        "count": 10,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -158,7 +158,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 2,
+        "count": 1,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -188,7 +188,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 21,
+        "count": 20,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -460,23 +460,6 @@
       "cost": null,
       "description": "Few drummers in jazz have collaborated as fruitfully with era-defining guitarists as Berkeley's Scott Amendola, who for this trio joins forces with the endlessly inventive guitarist Jeff Parker and bassist Paul Bryan to celebrate their new album in the second of two sets.",
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
-      "id": "00d623750afa",
-      "title": "HSAS Big Band / U19s at Christmas in the Park",
-      "date": "2026-12-21",
-      "displayDate": "Mon, Dec 21",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Plaza de César Chávez",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
-      "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -1036,23 +1019,6 @@
       "kidFriendly": true
     },
     {
-      "id": "8620529cc723",
-      "title": "Play Your Way – Halloween",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "5:00 pm",
-      "endTime": "8:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "d2992335ebb7",
       "title": "Neighborhood Hands Bi-monthly Cleanup",
       "date": "2026-10-31",
@@ -1116,7 +1082,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-01",
-        "checkedAt": "2026-10-31T23:43:37.645Z"
+        "checkedAt": "2026-11-01T03:45:33.333Z"
       }
     },
     {
@@ -1139,7 +1105,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-10-31T23:43:37.647Z"
+        "checkedAt": "2026-11-01T03:45:33.336Z"
       }
     },
     {
@@ -1162,7 +1128,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-31T23:43:37.650Z"
+        "checkedAt": "2026-11-01T03:45:33.340Z"
       }
     },
     {
@@ -1185,7 +1151,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-10-31T23:43:37.650Z"
+        "checkedAt": "2026-11-01T03:45:33.340Z"
       }
     },
     {
@@ -1208,25 +1174,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-10-31T23:43:37.651Z"
+        "checkedAt": "2026-11-01T03:45:33.340Z"
       }
-    },
-    {
-      "id": "8efa6fba6a03",
-      "title": "International Kung Fu & Taijiquan Day",
-      "date": "2026-10-31",
-      "displayDate": "Sat, Oct 31",
-      "time": "10:00 AM",
-      "endTime": "05:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "International Kung Fu & Taijiquan Day is managed by an external organization. For details, visit the event organizer's webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/International-Kung-Fu-Taijiquan-Day",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "b25bfa3d500d",
@@ -2866,7 +2815,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.880Z"
+        "checkedAt": "2026-11-01T03:46:07.669Z"
       }
     },
     {
@@ -2890,7 +2839,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.880Z"
+        "checkedAt": "2026-11-01T03:46:07.669Z"
       }
     },
     {
@@ -2914,7 +2863,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.881Z"
+        "checkedAt": "2026-11-01T03:46:07.669Z"
       }
     },
     {
@@ -2938,7 +2887,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.881Z"
+        "checkedAt": "2026-11-01T03:46:07.669Z"
       }
     },
     {
@@ -2962,7 +2911,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.881Z"
+        "checkedAt": "2026-11-01T03:46:07.671Z"
       }
     },
     {
@@ -2986,7 +2935,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.883Z"
+        "checkedAt": "2026-11-01T03:46:07.673Z"
       }
     },
     {
@@ -3010,7 +2959,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-10-31T23:44:12.883Z"
+        "checkedAt": "2026-11-01T03:46:07.673Z"
       }
     },
     {
@@ -3034,7 +2983,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.883Z"
+        "checkedAt": "2026-11-01T03:46:07.673Z"
       }
     },
     {
@@ -3058,7 +3007,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.883Z"
+        "checkedAt": "2026-11-01T03:46:07.674Z"
       }
     },
     {
@@ -3082,7 +3031,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.884Z"
+        "checkedAt": "2026-11-01T03:46:07.674Z"
       }
     },
     {
@@ -3106,7 +3055,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.884Z"
+        "checkedAt": "2026-11-01T03:46:07.674Z"
       }
     },
     {
@@ -3130,7 +3079,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-10-31T23:44:12.884Z"
+        "checkedAt": "2026-11-01T03:46:07.674Z"
       }
     },
     {
