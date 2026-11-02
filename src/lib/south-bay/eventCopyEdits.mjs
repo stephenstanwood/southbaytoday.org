@@ -5,6 +5,9 @@
 // raw capitalization and cache hits cannot undo an approved grammar repair.
 const EDITS = {
   "Guadalupe River Park Conservancy": {
+    title: [
+      ["Grpc x YogaSix", "GRPC x YogaSix"],
+    ],
     description: [
       ["Our first program launches August 6, 2026 2026 Dates are as follows:", "Our first program launches August 6, 2026. The 2026 dates are as follows:"],
       ["the Spring St. Cul de sac", "the Spring St. cul-de-sac"],
@@ -27,6 +30,7 @@ const EDITS = {
   },
   "San Jose Public Library": {
     title: [
+      ["First Thursday Robotics with Bellarmine Ftc", "First Thursday Robotics with Bellarmine FTC"],
       ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
@@ -36,6 +40,10 @@ const EDITS = {
       ["provided there are no other participants).", "provided there are no other participants.)"],
     ],
     description: [
+      ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
+      ["This program is meant for Intermediate or Advanced Level Learners, not for Beginners.", "This program is meant for intermediate or advanced-level learners, not for beginners."],
+      ["increase English Language and vocabulary skills.", "increase English language and vocabulary skills."],
+      ["assist you with: Accessing Wi-Fi; Using email; Web searches; Understanding your e-reader device; Using our library's e-resources.", "assist you with accessing Wi-Fi; using email; searching the web; understanding your e-reader device; and using our library's e-resources."],
       ["basic computer issues like: Learning the basics of Microsoft Word and Excel; Setting up an email account; Using social networking services like Facebook; Submitting an online job application; downloading an e-book from the library's web site; And much more!", "basic computer issues like learning the basics of Microsoft Word and Excel; setting up an email account; using social networking services like Facebook; submitting an online job application; downloading an e-book from the library's web site; and much more!"],
       ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
       ["Children can play in a safe environment in the Rose Garden Library Community Room and parents can connect", "Children can play in a safe environment in the Rose Garden Library Community Room, and parents can connect"],
@@ -343,6 +351,16 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["In November the Cupertino Library Adult Book Discussion Group", "In November, the Cupertino Library Adult Book Discussion Group"],
+      ["Nobel Prize winning author, Abdulrazak Gurnah.", "Nobel Prize-winning author Abdulrazak Gurnah."],
+      ["the East African Island of Zanzibar.", "the East African island of Zanzibar."],
+      ["However when she finds", "However, when she finds"],
+      ["raise her son, instead.", "raise her son instead."],
+      ["Years later when Karim is a University student", "Years later, when Karim is a university student"],
+      ["There Badar is treated as a servant although", "There, Badar is treated as a servant, although"],
+      ["Fauzia, Karim's beautiful studious girlfriend teaches", "Fauzia, Karim's beautiful, studious girlfriend, teaches"],
+      ["on the third Thursday morning at 11 am, and on the third Thursday evening", "on the third Thursday morning at 11 am and on the third Thursday evening"],
+      ["Walk-ins welcome as space allows.", "Walk-ins are welcome as space allows."],
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["children who have completed Kindergarten through", "children who have completed kindergarten through"],
       ["The adult Non-Fiction book group", "The Adult Nonfiction Book Group"],
@@ -497,6 +515,8 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      ["Applied Physics/Physics Colloquium", "Applied Physics / Physics Colloquium"],
+      ['" Wormholes and the Conformal Bootstrap"', '"Wormholes and the Conformal Bootstrap"'],
       [/^Mips Seminar\b/g, "MIPS Seminar"],
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
@@ -532,6 +552,9 @@ const EDITS = {
     ],
   },
   "Santa Clara University": {
+    title: [
+      ['"Why Don\'t They Just Come Here the Right Way?" a Day of', '"Why Don\'t They Just Come Here the Right Way?" A Day of'],
+    ],
     description: [
       ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
