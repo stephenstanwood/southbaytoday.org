@@ -2,6 +2,30 @@
 
 ---
 
+## 2026-11-02 — Cycle 237: Santa Clara's Maxinsights Joins Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**Maxinsights now leads the Tech funding list.** The Santa Clara company pays
+people to film everyday work from a first-person view and sells the footage as
+robot training data. Peak XV led its $30M seed, announced October 23. The
+[VC News Daily summary](https://vcnewsdaily.com/maxinsights/venture-capital-funding/dhvbcjhfhq)
+datelines Santa Clara, and [The AI Insider](https://theaiinsider.tech/2026/10/23/maxinsights-raises-30m-seed-round-and-launches-physical-ai-data-tools/)
+attributes Santa Clara to the company. Self-reported hours and customer counts
+vary by outlet, so the card leaves them out.
+
+**Reach Security stays out.** Its >$50M Series B (Oct 13) release datelines San
+Francisco, despite a Palo Alto office on its contact page. The Oct 21–Nov 2
+sweep otherwise resurfaced only rounds already carded or out of coverage.
+
+**Logo:** the fetcher returned a generic bracket mark, not the company's brand,
+so the card uses the favicon fallback.
+
+Verification: logo gate, 9 funding-date and 23 logo-audit tests passed; Astro
+check 0 errors; production build passed with Maxinsights in the built /tech page.
+
+---
+
 ## 2026-10-22 — Cycle 236: Mountain View's Reliable Robotics Returns to Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).

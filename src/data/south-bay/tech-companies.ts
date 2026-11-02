@@ -1739,6 +1739,35 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // Maxinsights' Oct 23 seed announcement datelines Santa Clara (VC News
+  // Daily's summary of the company release), and The AI Insider attributes
+  // "based in Santa Clara, Calif." to the company. Some databases list San
+  // Francisco; no company-issued source does. Hours, customer, and contractor
+  // counts are self-reported and vary by outlet, so the card avoids them.
+  // https://vcnewsdaily.com/maxinsights/venture-capital-funding/dhvbcjhfhq
+  // https://theaiinsider.tech/2026/10/23/maxinsights-raises-30m-seed-round-and-launches-physical-ai-data-tools/
+  {
+    id: "maxinsights-seed",
+    name: "Maxinsights",
+    city: "Santa Clara",
+    category: "robotics",
+    round: "Seed",
+    amount: "$30M",
+    date: "2026-10-23",
+    tagline:
+      "Santa Clara's Maxinsights pays people to film everyday work like cooking and cleaning from a first-person view, then sells the footage as training data for robots and physical AI models. Peak XV led the $30M seed, with Tola Capital, South Park Commons, INCE Capital, and Alumni Ventures joining. Alongside the raise it launched MaxLoop, which scores footage for quality as it's collected, and MaxGlove, a sensor glove built with Genesis AI to capture touch and force data.",
+    color: "#7c3aed",
+    url: "https://www.maxinsights.ai",
+  },
+  // Note: Reach Security (>$50M Series B led by Top Tier Capital Partners,
+  // Oct 13 2026) is NOT here. Its contact page lists a Palo Alto office (445
+  // Sherman Ave), but the Series B release datelines San Francisco and trade
+  // coverage calls it San Francisco-based. Re-add only if a company-issued
+  // source names Palo Alto as headquarters.
+  // Note on the Oct 21-Nov 2 2026 sweep: Rhoda AI, Axiom Math AI, Armadin,
+  // Vinci, Velaura AI, SiFly, MaxQ Medical, and River AI resurfaced and are
+  // already carded. DeepSeek's reported round and Rime ($24M, San Francisco)
+  // are out of coverage; Flai's $27M Series A names no city.
   // The Oct 20 company-issued release explicitly names Mountain View HQ.
   // Its $115M extension includes a $25M SVB term loan: only $90M is equity.
   // Keep the April $160M entry; the $275M headline is the combined Series D,
