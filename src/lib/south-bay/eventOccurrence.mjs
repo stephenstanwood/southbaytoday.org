@@ -59,6 +59,19 @@ export function isEventExplicitlyInactive(event) {
 export function hasRequiredOccurrenceEvidence(event) {
   if (!event || typeof event !== "object") return false;
 
+  // PAP production pages cover a whole run. Require the exact dated ticket
+  // instance and clock so a stale generic backfill cannot republish a false day.
+  if (event.source === "Palo Alto Players") {
+    const evidence = event.occurrenceEvidence;
+    if (evidence?.kind !== "first-party-occurrence-page" || evidence.date !== event.date
+        || evidence.time !== event.time || !evidence.sourceOccurrenceId) return false;
+    try {
+      const url = new URL(evidence.sourceUrl);
+      return url.protocol === "https:" && url.hostname === "app.spektrix-link.com"
+        && /^\/clients\/paloaltoplayers\/events\/\d+\.json$/.test(url.pathname);
+    } catch { return false; }
+  }
+
   if (isProjectedFarmersMarket(event)) {
     const evidence = event.occurrenceEvidence;
     if (!evidence || evidence.kind !== "first-party-market-schedule") return false;

@@ -41,6 +41,7 @@ const CLAUDE_SONNET = "claude-sonnet-5-5";
 
 const CITIES = [
   { stoaCity: "Campbell", cityId: "campbell", cityName: "Campbell", agendaUrl: "https://pub-campbell.escribemeetings.com/", permitUrl: null,
+    planningAgenda: { baseUrl: "https://www.campbellca.gov", calendarId: "Planning-Commission-6" },
     escribe: { host: "pub-campbell.escribemeetings.com", meetingTypes: [
       "City Council Regular Session Meeting", "City Council Special Meeting", "City Council Study Session",
     ] } },

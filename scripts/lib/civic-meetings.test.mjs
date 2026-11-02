@@ -683,6 +683,8 @@ test("the real Saratoga archive reaches September 16 within the existing three-d
   assert.equal(record.sourceUrl, `${saratogaSource.baseUrl}/AgendaCenter/ViewFile/Agenda/_09162026-1475`);
   assert.match(record.excerpt, /20517 Carniel Avenue/);
   assert.match(record.excerpt, /Law Enforcement Discussion/);
+  assert.match(record.fullAgendaText, /20517 Carniel Avenue/);
+  assert.ok(record.fullAgendaText.length > record.excerpt.length, "the source body retains details clipped from the search preview");
   assert.deepEqual(requested.slice(1).map(url => url.split("/").at(-1)), [
     "_09302026-1481", "_09192026-1477", "_09162026-1475",
   ]);

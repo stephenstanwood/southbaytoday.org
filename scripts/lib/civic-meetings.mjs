@@ -1,4 +1,4 @@
-import { looksLikeReadableAgenda, parseAgendaOutline } from "./agenda-outline.mjs";
+import { agendaBodyLines, looksLikeReadableAgenda, parseAgendaOutline } from "./agenda-outline.mjs";
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const CLOCK = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -1319,7 +1319,10 @@ export async function fetchCivicEngagePastMeeting({
       source: "civicengage-direct",
       sourceUrl: url,
     });
-    if (record) return record;
+    // The search preview truncates item details. Preserve the actual agenda
+    // body for source recovery and summarization, stopping at adjournment so
+    // an attached packet's older meetings cannot become this meeting's news.
+    if (record) return { ...record, fullAgendaText: agendaBodyLines(text).join("\n") };
   }
   return null;
 }

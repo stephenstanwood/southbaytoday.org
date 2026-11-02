@@ -1,0 +1,67 @@
+{
+  "sourceUrl": "https://app.spektrix-link.com/clients/paloaltoplayers/events/12801.json",
+  "productionUrl": "https://paplayers.org/show/the-addams-family/",
+  "review": "docs/qa/2026-11-02-0607z-fact-check.md",
+  "ticket": {
+    "id": "12801AHKJCDVHRVVMMTDLCVKNKBDKHMLM",
+    "name": "The Addams Family",
+    "instances": [
+      {
+        "id": "27004ASHCSPBGDLSQKGVVRBMJJQVTHRLM",
+        "event": {
+          "id": "12801AHKJCDVHRVVMMTDLCVKNKBDKHMLM"
+        },
+        "start": "2026-11-06T19:30:00",
+        "startUtc": "2026-11-07T03:30:00",
+        "cancelled": false,
+        "isOnSale": true,
+        "availability": {
+          "name": "Lucie Stern Theatre",
+          "available": 88
+        }
+      },
+      {
+        "id": "27202APJBVBLPDSRNNPSGSDVCBSGGBCDG",
+        "event": {
+          "id": "12801AHKJCDVHRVVMMTDLCVKNKBDKHMLM"
+        },
+        "start": "2026-11-07T14:00:00",
+        "startUtc": "2026-11-07T22:00:00",
+        "cancelled": false,
+        "isOnSale": true,
+        "availability": {
+          "name": "Lucie Stern Theatre",
+          "available": 82
+        }
+      },
+      {
+        "id": "27005APGJCTLSTTGDRNPQDBTSPMGCTHSV",
+        "event": {
+          "id": "12801AHKJCDVHRVVMMTDLCVKNKBDKHMLM"
+        },
+        "start": "2026-11-07T19:30:00",
+        "startUtc": "2026-11-08T03:30:00",
+        "cancelled": false,
+        "isOnSale": true,
+        "availability": {
+          "name": "Lucie Stern Theatre",
+          "available": 79
+        }
+      },
+      {
+        "id": "27203ATNPQDRDNLSDHRRGQGTNLHMKHHSV",
+        "event": {
+          "id": "12801AHKJCDVHRVVMMTDLCVKNKBDKHMLM"
+        },
+        "start": "2026-11-08T14:00:00",
+        "startUtc": "2026-11-08T22:00:00",
+        "cancelled": false,
+        "isOnSale": true,
+        "availability": {
+          "name": "Lucie Stern Theatre",
+          "available": 16
+        }
+      }
+    ]
+  }
+}

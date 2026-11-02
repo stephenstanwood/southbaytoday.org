@@ -32,7 +32,7 @@
  *     scripts/lib/san-jose-theaters-events.mjs)
  *   - South Bay Musical Theatre (show pages)
  *   - Los Altos Stage Company (WordPress events)
- *   - Palo Alto Players (Venture Event Manager AJAX, per-performance)
+ *   - Palo Alto Players (production pages + their linked Spektrix occurrences)
  *   - Hammer Theatre (VBO Tickets HTML)
  *   - Gamble Garden (The Events Calendar API)
  *   - Midpeninsula Regional Open Space District (Drupal Views table) —
@@ -65,6 +65,7 @@ import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-location.mjs";
 import { biblioEventOccurrence, libraryEventDetails } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
+import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
@@ -8773,6 +8774,9 @@ function extractTimeFromHtml(html, eventDate) {
 
 export function isEventTimeBackfillCandidate(event) {
   if (event.time || event.ongoing || !event.url) return false;
+  // A production page lists a run, weekday schedules and special performances.
+  // Its first clock (including an old cached clock) cannot date a performance.
+  if (event.source === "Palo Alto Players") return false;
   try {
     const url = new URL(event.url);
     if (!/^https?:$/.test(url.protocol)) return false;
@@ -9707,17 +9711,15 @@ async function fetchLosAltosStageEvents() {
   }
 }
 
-async function fetchPaloAltoPlayersEvents() {
+async function fetchPaloAltoPlayersEvents({ today = todayPT(), fetchImpl = fetch } = {}) {
   console.log("  ⏳ Palo Alto Players...");
   try {
     // PAP rebuilt on GenerateBlocks in 2026 and dropped the Venture Event
     // Manager plugin, so `vem_get_events` now 400s and /calendar/ renders its
-    // orphaned [vemcalendar] shortcode as literal text. Nothing publishes
-    // per-performance dates any more — the supported surface is the `show`
-    // custom post type in their WordPress REST API, which carries one entry per
-    // production plus a run range on the show page. One event per production is
-    // therefore the most granular honest read; do not synthesise performances.
-    const res = await fetch(
+    // orphaned [vemcalendar] shortcode as literal text. Production pages now
+    // link to Spektrix's public booking calendar. Keep one nearest published
+    // occurrence per production; never move a run's opening onto today's date.
+    const res = await fetchImpl(
       "https://paplayers.org/wp-json/wp/v2/show?per_page=50&_fields=id,link,title",
       { headers: { "User-Agent": UA, Accept: "application/json" }, signal: AbortSignal.timeout(20_000) },
     );
@@ -9738,10 +9740,16 @@ async function fetchPaloAltoPlayersEvents() {
         address: "1305 Middlefield Rd, Palo Alto, CA 94301",
         runStart: null,
         runEnd: null,
+        ticketSourceUrl: null,
       };
       if (pageUrl) {
         try {
-          const html = await fetchText(pageUrl, { timeout: 20_000 });
+          const response = await fetchImpl(pageUrl, {
+            headers: { "User-Agent": UA }, signal: AbortSignal.timeout(20_000),
+          });
+          if (!response.ok) throw new Error(`Palo Alto Players production HTTP ${response.status}`);
+          const html = await response.text();
+          detail.ticketSourceUrl = paloAltoPlayersTicketSource(html);
           detail.url = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1] || detail.url;
           const og = html.match(/<meta property="og:description" content="([^"]*)"/)?.[1];
           if (og) detail.description = truncate(cleanEscapedCalendarText(og));
@@ -9775,7 +9783,6 @@ async function fetchPaloAltoPlayersEvents() {
       return detail;
     }
 
-    const today = todayPT();
     const events = [];
 
     for (const production of productions) {
@@ -9784,12 +9791,17 @@ async function fetchPaloAltoPlayersEvents() {
       const detail = await productionDetail(production.link);
       // No run dates means the show page hasn't been filled in yet — skip
       // rather than guess a date for it.
-      if (!detail.runStart) continue;
-      // Keep a production visible for its whole run, not just opening night.
-      const date = detail.runEnd && detail.runEnd >= today && detail.runStart < today
-        ? today
-        : detail.runStart;
-      if (date < today) continue;
+      if (!detail.runStart || !detail.ticketSourceUrl || (detail.runEnd && detail.runEnd < today)) continue;
+      const tickets = await fetchImpl(detail.ticketSourceUrl, {
+        headers: { "User-Agent": UA, Accept: "application/json" }, signal: AbortSignal.timeout(20_000),
+      });
+      if (!tickets.ok) throw new Error(`Palo Alto Players occurrences HTTP ${tickets.status}`);
+      const occurrence = paloAltoPlayersOccurrence(await tickets.json(), {
+        sourceUrl: detail.ticketSourceUrl, title, venue: detail.venue, today,
+        checkedAt: new Date().toISOString(),
+      });
+      if (!occurrence) continue;
+      const { date } = occurrence;
 
       const runNote = detail.runEnd && detail.runEnd !== detail.runStart
         ? `Runs ${displayDate(parseDatePT(`${detail.runStart}T12:00:00`))} – ${displayDate(parseDatePT(`${detail.runEnd}T12:00:00`))}. `
@@ -9798,10 +9810,8 @@ async function fetchPaloAltoPlayersEvents() {
       events.push({
         id: h("paplayers", title, detail.runStart),
         title,
-        date,
+        ...occurrence,
         displayDate: displayDate(parseDatePT(`${date}T12:00:00`)),
-        // PAP no longer publishes curtain times in any machine-readable form.
-        time: null,
         endTime: null,
         venue: detail.venue,
         address: detail.address,

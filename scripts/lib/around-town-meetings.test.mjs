@@ -2,6 +2,43 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
 
+test("Campbell planning captions recover their own exact dated agenda, separately from Council", async () => {
+  const config = { escribe: { host: "pub-campbell.escribemeetings.com" },
+    planningAgenda: { baseUrl: "https://www.campbellca.gov", calendarId: "Planning-Commission-6" } };
+  const meeting = { id: 7349, city: "Campbell", date: "2026-10-27", meetingType: "Planning Commission",
+    source: "ingest", excerpt: "PLN 202683, sometime in November possibly" };
+  const agenda = { id: "official-planning", date: meeting.date, source: "civicengage-direct",
+    sourceUrl: "https://www.campbellca.gov/AgendaCenter/ViewFile/Agenda/_10272026-3293",
+    fullAgendaText: "Replacement Housing and Demolition Control Ordinance (PLN-2026-83). Tentative City Council Date: December 1, 2026." };
+  let calls = 0;
+  const fetchPlanningAgenda = async (options) => {
+    calls++; assert.equal(options.today, meeting.date);
+    assert.equal(options.calendarId, "Planning-Commission-6"); return agenda;
+  };
+  const recovered = await recoverAroundTownMeetingAgendas(config, [meeting, { ...meeting, id: 7350 }], {
+    fetchPlanningAgenda, fetchEscribe: async () => { throw new Error("Planning must not borrow Council's source"); },
+  });
+  assert.equal(calls, 1);
+  assert.equal(recovered.length, 1);
+  assert.equal(recovered[0].meetingType, "Planning Commission");
+  assert.match(recovered[0].fullAgendaText, /December 1, 2026/);
+  const sources = await resolveAroundTownMeetingSources(config, recovered, { fallbackBody: "City hearing" });
+  assert.equal(sources.get(agenda.id).body, "Planning Commission");
+  assert.equal(sources.get(agenda.id).sourceUrl, agenda.sourceUrl);
+  for (const fetchPlanningAgenda of [async () => null, async () => { throw new Error("unavailable"); },
+    async () => ({ ...agenda, date: "2026-10-13" })]) {
+    assert.deepEqual(await recoverAroundTownMeetingAgendas(config, [meeting], { fetchPlanningAgenda }), []);
+  }
+});
+
+test("a named city cannot turn an old agenda into present business", () => {
+  const meeting = { city: "Palo Alto", date: "2026-10-20", excerpt: "Recommendation on electric bonds up to $100 million" };
+  const item = { date: meeting.date, headline: "Palo Alto weighs up to $100M in electric bonds for grid upgrades" };
+  assert.equal(hasPastAgendaFutureFraming(item, meeting, "2026-11-01"), true);
+  assert.equal(hasPastAgendaFutureFraming({ ...item, headline: "October 20 agenda listed a recommendation on $100M in electric bonds" }, meeting, "2026-11-01"), false);
+  assert.equal(hasPastAgendaFutureFraming(item, meeting, meeting.date), false);
+});
+
 test("Around Town replaces unattributed Council text before assigning provenance", async () => {
   const config = { escribe: { host: "pub-campbell.escribemeetings.com" } };
   const meeting = { id: 7324, city: "Campbell", date: "2026-10-20", meetingType: "City Council", source: "ingest", excerpt: "military trailer and VTA" };

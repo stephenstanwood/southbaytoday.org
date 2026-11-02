@@ -1,6 +1,7 @@
 import {
   legistarMeetingUrl,
   fetchEscribePastMeeting,
+  fetchCivicEngagePastMeeting,
   verifyLegistarBodyOnDate,
   verifyPrimeGovBodyOnDate,
 } from "./civic-meetings.mjs";
@@ -9,21 +10,29 @@ import { agendaTextForMeeting, recoverUnattributedMeetingAgenda } from "./digest
 /** Verify unattributed council text before it reaches either AI or provenance. */
 export async function recoverAroundTownMeetingAgendas(config, meetings, {
   fetchEscribe = fetchEscribePastMeeting,
+  fetchPlanningAgenda = fetchCivicEngagePastMeeting,
 } = {}) {
-  if (!config.escribe) return meetings;
+  if (!config.escribe && !config.planningAgenda) return meetings;
   const byDate = new Map();
   const recovered = [];
   for (const meeting of meetings) {
-    // This archive verifies Council records, never planning or other bodies.
-    if (!/^(?:city|town) council$/i.test(meeting.meetingType || "")) {
+    // Campbell's Planning Commission still uses CivicEngage, separately from
+    // Council's eScribe archive. Unattributed captions cannot borrow its URL.
+    const planning = config.planningAgenda && /^planning commission$/i.test(meeting.meetingType || "");
+    const council = config.escribe && /^(?:city|town) council$/i.test(meeting.meetingType || "");
+    if (!planning && !council) {
       recovered.push(meeting);
       continue;
     }
     try {
       const verified = await recoverUnattributedMeetingAgenda(meeting, {
         fetchAgenda: (date) => {
-          if (!byDate.has(date)) byDate.set(date, fetchEscribe({ ...config.escribe, today: date }));
-          return byDate.get(date);
+          const key = `${planning ? "planning" : "council"}|${date}`;
+          if (!byDate.has(key)) byDate.set(key, planning
+            ? fetchPlanningAgenda({ ...config.planningAgenda, today: date }).then((agenda) =>
+              agenda ? { ...agenda, meetingType: "Planning Commission", title: `Planning Commission — ${agenda.date}` } : null)
+            : fetchEscribe({ ...config.escribe, today: date }));
+          return byDate.get(key);
         },
       });
       if (verified && !recovered.some((record) => String(record.id) === String(verified.id))) recovered.push(verified);
@@ -45,7 +54,9 @@ export async function resolveAroundTownMeetingSources(config, meetings, {
     if (meeting.id == null) continue;
     const fallbackUrl = meeting.sourceUrl
       ?? (config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl);
-    let source = { body: fallbackBody || config.councilBody || meeting.meetingType || "City Council", sourceUrl: fallbackUrl };
+    const verifiedPlanningBody = config.planningAgenda && meeting.source === "civicengage-direct"
+      && meeting.meetingType === "Planning Commission" ? meeting.meetingType : null;
+    let source = { body: verifiedPlanningBody || fallbackBody || config.councilBody || meeting.meetingType || "City Council", sourceUrl: fallbackUrl };
     if (config.legistarApi || config.primegov) {
       const text = `${meeting.title || ""} ${agendaTextForMeeting(meeting)}`;
       let actual;
@@ -167,6 +178,13 @@ export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
   // cannot excuse a separate present-tense headline or a later sentence.
   return [item?.headline, item?.summary].some((value) => {
     const claim = String(value || "");
+    // A named city ("Palo Alto weighs...") asserts current business just as
+    // "Council weighs..." does. Bind the name to this source record's city.
+    const city = String(meeting?.city || "").trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (city) {
+      const cityAction = new RegExp(`\\b${city}\\s+(?:weighs|considers|reviews|will\\s+(?:consider|review|weigh))\\b`, "gi");
+      if ([...claim.matchAll(cityAction)].some((match) => !AGENDA_PLAN_CONTEXT.test(claim.slice(0, match.index)))) return true;
+    }
     return [CURRENT_BODY_ACTION, CURRENT_PERMIT_REQUEST, CURRENT_SESSION_PLAN].some((pattern) =>
       [...claim.matchAll(pattern)].some((match) => !AGENDA_PLAN_CONTEXT.test(claim.slice(0, match.index))),
     );
