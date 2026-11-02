@@ -1,20 +1,20 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-01T20:42:54.112Z",
+    "generatedAt": "2026-11-02T00:51:12.274Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 193,
+    "eventCount": 188,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
-      "Linden Tree Books (10)",
+      "Linden Tree Books (8)",
       "History San Jose (5)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Children's Discovery Museum (7)",
+      "Children's Discovery Museum (5)",
       "Guadalupe River Park Conservancy (16)",
-      "Santana Row (5)",
+      "Santana Row (4)",
       "City of Cupertino (18)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (66)",
@@ -84,7 +84,7 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 10,
+        "count": 8,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -158,7 +158,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 7,
+        "count": 5,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -178,7 +178,7 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null,
         "sources": [
           "Santana Row"
@@ -464,50 +464,6 @@
       "kidFriendly": false
     },
     {
-      "id": "9834003f949a",
-      "title": "Storytime with Julia Moss",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": null,
-      "description": "Join us for a special storytime with author Julia Moss as she shares her debut picture book, Wanderers: A Walk Through Time and Transportation. Since the beginning we’ve been on the roam. Searching for food, adventure, and home… Set off on a journey through history and see how many ways humans have dreamed up to travel. First, there was walking, camel-riding, and canoes. Then, the invention of the wheel brought bikes, trains, and automobiles. Next, we took to the air with airplanes and rockets, and now there’s new breakthroughs in sustainable travel every day. And what’s at the heart of each advancement? Human curiosity and inventiveness.",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-01"
-      }
-    },
-    {
-      "id": "f0ea1dd6cfae",
-      "title": "Story Write-athon",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "2:30pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": null,
-      "description": "This is an annual event where children, teens, and adults (ages 7+) are all invited to drop in any time between 2:30-4:30pm to work on a creative project. We'll start at 2:30pm with our group storytelling game, share a few tips for creating stories, and then allow everyone to dive into their sketching and/or writing. We'll have a maximum of 20 seats available. 2-3 writing coaches will be on hand to provide support. To RSVP, contact ShuHsienHo@gmail.com.",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-01"
-      }
-    },
-    {
       "id": "d46d22f2bf26",
       "title": "Hilo: The Holiday Special with Judd Winick",
       "date": "2026-11-06",
@@ -517,10 +473,9 @@
       "venue": "Linden Tree Books",
       "address": "265 State St, Los Altos, CA 94022",
       "city": "los-altos",
-      "registration": "required",
       "category": "arts",
       "cost": "free",
-      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Judd Winick to the store to celebrate the Hilo Holiday Special! ​Judd will talk about the latest adventure in his bestselling Hilo series, take questions from the audience, and then sign books. RSVP Now » ​This event is free, but you must purchase a copy of Hilo: The Holiday Special from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. ​The decorations are up! The gifts are wrapped! And Hilo and the gang are enjoying some holiday togetherness. Sure, it would be better if the skating pond wasn't blocked off. And if someone wasn't stealing trees from the tree lot. AND if a giant, super grumpy snowman wasn't going around destroying things. But what's a holiday without holiday surprises?! Can Hilo and friends figure out what the snowman wants before D.J.’s big family party?! Packed with family and food, love and laughter (lots of laughter!)—gather around and enjoy all the gifts of the season with Hilo!",
+      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Judd Winick to the store to celebrate the Hilo Holiday Special! ​Judd will talk about the latest adventure in his bestselling Hilo series, take questions from the audience, and then sign books. ​This event is free, but you must purchase a copy of Hilo: The Holiday Special from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. ​The decorations are up! The gifts are wrapped! And Hilo and the gang are enjoying some holiday togetherness. Sure, it would be better if the skating pond wasn't blocked off. And if someone wasn't stealing trees from the tree lot. AND if a giant, super grumpy snowman wasn't going around destroying things. But what's a holiday without holiday surprises?! Can Hilo and friends figure out what the snowman wants before D.J.’s big family party?! Packed with family and food, love and laughter (lots of laughter!)—gather around and enjoy all the gifts of the season with Hilo!",
       "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
@@ -575,8 +530,8 @@
       }
     },
     {
-      "id": "f42b72258ae4",
-      "title": "Book Launch with Nathan Hale",
+      "id": "55d869ef5462",
+      "title": "Book Launch with Nathan Hale — In conversation with Nidhi Chanani",
       "date": "2026-11-12",
       "displayDate": "Thu, Nov 12",
       "time": "6pm",
@@ -587,7 +542,7 @@
       "registration": "required",
       "category": "arts",
       "cost": "free",
-      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Nathan Hale to the store to celebrate the launch of Nathan Hale’s Hazardous Tales: The Web of War! ​Nathan will talk about the latest adventure in his bestselling Nathan Hale’s Hazardous Tales series, take questions from the audience, and sign books. RSVP Now » ​This event is free, but you must purchase a copy of The Web of War from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. In the summer of 1944, the Allied forces carried out the largest seaborne invasion in military history. American, British, and Canadian soldiers took to the skies and the sand, bombarding the beaches of Normandy, France in the famous operation known as D-Day. This pivotal battle turned the tides against the Nazis, but how did the French find themselves overtaken by enemy forces to begin with? How did Hitler and his Nazi ideology sweep through Germany so quickly? And how did American military service members and civilians, from generals, to war correspondents, to heroic Black soldiers, work together to defeat the Nazi government and bring an end to Hitler’s reign of terror? In The Web of War, history is in your hands! Pick your path and unravel the thrilling, shocking, gruesome, and TRUE stories of the second World War in this all-new hazardous tale.",
+      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Nathan Hale to the store to celebrate the launch of Nathan Hale’s Hazardous Tales: The Web of War! ​Nathan will be in conversation with bestselling author Nidhi Chanani. After their conversation, Nathan and Nidhi will battle in an old-fashioned, no-holds-barred DRAW-OFF! RSVP Now » ​This event is free, but you must purchase a copy of The Web of War from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. In the summer of 1944, the Allied forces carried out the largest seaborne invasion in military history. American, British, and Canadian soldiers took to the skies and the sand, bombarding the beaches of Normandy, France in the famous operation known as D-Day. This pivotal battle turned the tides against the Nazis, but how did the French find themselves overtaken by enemy forces to begin with? How did Hitler and his Nazi ideology sweep through Germany so quickly? And how did American military service members and civilians, from generals, to war correspondents, to heroic Black soldiers, work together to defeat the Nazi government and bring an end to Hitler’s reign of terror? In The Web of War, history is in your hands! Pick your path and unravel the thrilling, shocking, gruesome, and TRUE stories of the second World War in this all-new hazardous tale.",
       "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
@@ -772,23 +727,6 @@
       "kidFriendly": false
     },
     {
-      "id": "cb8470ec8a27",
-      "title": "4th Lowrider Art Showcase – Celebrating Dia de los Muertos",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/3248/3250",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "771739615a30",
       "title": "Mosaic America (Grade K-8)",
       "date": "2026-11-04",
@@ -836,6 +774,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "aad0f1430413",
+      "title": "The Sarod Trilogy: Amjad Ali Khan, Amaan Ayaan Ali Bangash, and Ayaan Ali Bangash",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-sarod-trilogy/",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -983,40 +938,6 @@
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
       "kidFriendly": false
-    },
-    {
-      "id": "0f52e815d8fb",
-      "title": "Butterfly Masks",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:00 am",
-      "endTime": "4:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
-      "id": "4d994081f790",
-      "title": "Día de los Muertos",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:00 am",
-      "endTime": "3:30 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
     },
     {
       "id": "304b2b750579",
@@ -1479,29 +1400,6 @@
       }
     },
     {
-      "id": "012ce621a519",
-      "title": "Día de Los Muertos Celebration",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:30 AM",
-      "endTime": "10:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "NOVEMBER 1, 2026  Join the festivities as Santana Row hosts a very special tribute to Día de Los Muertos on Sunday, November 1st! The holiday is a time to remember loved ones that have passed, while we embrace our eternal connections. This is a free community event featuring face painting, Catrina and Catrin meet & greets, mariachi music, crafts, and a pop-up market.Entertainment Schedule:10:30 AM – 10 PM: Brunch at Zazil & contribute to the Community Ofrendas (Altars)12 – 5 PM: Cultural Pop-Up Market12 – 3 PM: Día de los Muertos Catrina Photo Ops in Oak Tree Lounge (by Blue Bottle Coffee)12 – 3 PM: Face Painting in Santana Row Park1 – 3 PM: Mariachi & Dance Performances in Santana Row Park3– 4:30 PM: Mariachi & Face Painting at El Jardín Tequila Bar4:30 – 6 PM: Mariachi at Zazil",
-      "url": "https://santanarow.com/event/dia-de-los-muertos-celebration/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-11-01",
-        "checkedAt": "2026-11-01T20:41:45.806Z"
-      }
-    },
-    {
       "id": "3cfcb41c7673",
       "title": "Cielo Hotel Valencia Rooftop Holiday Experience",
       "date": "2026-11-27",
@@ -1521,7 +1419,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-01T20:41:45.809Z"
+        "checkedAt": "2026-11-02T00:50:05.300Z"
       }
     },
     {
@@ -1544,7 +1442,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T20:41:45.815Z"
+        "checkedAt": "2026-11-02T00:50:05.305Z"
       }
     },
     {
@@ -1567,7 +1465,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-01T20:41:45.815Z"
+        "checkedAt": "2026-11-02T00:50:05.305Z"
       }
     },
     {
@@ -1590,7 +1488,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-01T20:41:45.816Z"
+        "checkedAt": "2026-11-02T00:50:05.306Z"
       }
     },
     {
@@ -3180,7 +3078,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.075Z"
+        "checkedAt": "2026-11-02T00:50:30.204Z"
       }
     },
     {
@@ -3204,7 +3102,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.075Z"
+        "checkedAt": "2026-11-02T00:50:30.204Z"
       }
     },
     {
@@ -3228,7 +3126,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.075Z"
+        "checkedAt": "2026-11-02T00:50:30.204Z"
       }
     },
     {
@@ -3252,7 +3150,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.075Z"
+        "checkedAt": "2026-11-02T00:50:30.204Z"
       }
     },
     {
@@ -3276,7 +3174,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.077Z"
+        "checkedAt": "2026-11-02T00:50:30.205Z"
       }
     },
     {
@@ -3300,7 +3198,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3324,7 +3222,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3348,7 +3246,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3372,7 +3270,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3396,7 +3294,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3420,7 +3318,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.208Z"
       }
     },
     {
@@ -3444,7 +3342,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.209Z"
       }
     },
     {
@@ -3468,7 +3366,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.209Z"
       }
     },
     {
@@ -3492,7 +3390,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-01T20:42:10.080Z"
+        "checkedAt": "2026-11-02T00:50:30.209Z"
       }
     },
     {
