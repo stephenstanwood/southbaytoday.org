@@ -344,6 +344,8 @@ const EDITS = {
     ],
     description: [
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
+      ["children who have completed Kindergarten through", "children who have completed kindergarten through"],
+      ["The adult Non-Fiction book group", "The Adult Nonfiction Book Group"],
       ["November 19th at 7:30 PM In Our Program Room Fiction ", "November 19th at 7:30 PM in our program room. Fiction: "],
       ["—New York Times Library copies", "—New York Times. Library copies"],
       ["available for check out here.", "available for checkout here."],
