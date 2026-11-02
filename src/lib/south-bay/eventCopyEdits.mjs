@@ -495,6 +495,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/^Mips Seminar\b/g, "MIPS Seminar"],
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
       ['to Study Human Biology."', 'to Study Human Biology"'],
