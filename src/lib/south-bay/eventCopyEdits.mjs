@@ -36,6 +36,7 @@ const EDITS = {
       ["provided there are no other participants).", "provided there are no other participants.)"],
     ],
     description: [
+      ["basic computer issues like: Learning the basics of Microsoft Word and Excel; Setting up an email account; Using social networking services like Facebook; Submitting an online job application; downloading an e-book from the library's web site; And much more!", "basic computer issues like learning the basics of Microsoft Word and Excel; setting up an email account; using social networking services like Facebook; submitting an online job application; downloading an e-book from the library's web site; and much more!"],
       ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
       ["Children can play in a safe environment in the Rose Garden Library Community Room and parents can connect", "Children can play in a safe environment in the Rose Garden Library Community Room, and parents can connect"],
       ["in the Children's area.)", "in the Children's area)."],
