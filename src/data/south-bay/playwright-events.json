@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-02T17:17:04.905Z",
+    "generatedAt": "2026-11-02T21:25:31.106Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 184,
+    "eventCount": 187,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
@@ -13,7 +13,7 @@
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Children's Discovery Museum (5)",
-      "Guadalupe River Park Conservancy (16)",
+      "Guadalupe River Park Conservancy (19)",
       "Santana Row (4)",
       "City of Cupertino (18)",
       "Opera San José (5)",
@@ -168,7 +168,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 16,
+        "count": 19,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -1095,6 +1095,28 @@
       }
     },
     {
+      "id": "e4c93e2668d3",
+      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
+      "time": "9:00 AM",
+      "endTime": "10:00 AM",
+      "venue": "Arena Green West - Barack Obama Blvd",
+      "address": "San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": null,
+      "description": "",
+      "url": "https://grpg.org/calendar/events/",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-08"
+      }
+    },
+    {
       "id": "1969cdee0170",
       "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
       "date": "2026-11-11",
@@ -1186,6 +1208,28 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
         "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "579b457db96c",
+      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "9:00 AM",
+      "endTime": "10:00 AM",
+      "venue": "Arena Green West - Barack Obama Blvd",
+      "address": "San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": null,
+      "description": "",
+      "url": "https://grpg.org/calendar/events/",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-15"
       }
     },
     {
@@ -1284,6 +1328,28 @@
       }
     },
     {
+      "id": "a51027e867ef",
+      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
+      "time": "9:00 AM",
+      "endTime": "10:00 AM",
+      "venue": "Arena Green West - Barack Obama Blvd",
+      "address": "San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": null,
+      "description": "",
+      "url": "https://grpg.org/calendar/events/",
+      "source": "Guadalupe River Park Conservancy",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://grpg.org/calendar/events/",
+        "date": "2026-11-22"
+      }
+    },
+    {
       "id": "40073c1e84f7",
       "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
       "date": "2026-11-25",
@@ -1378,25 +1444,25 @@
       }
     },
     {
-      "id": "5f07f6bc5efd",
-      "title": "Yoga and Zumba in the River Park",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
+      "id": "aabb2aa2dbba",
+      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
+      "date": "2026-11-29",
+      "displayDate": "Sun, Nov 29",
       "time": "9:00 AM",
-      "endTime": "11:15 AM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95113, USA",
+      "endTime": "10:00 AM",
+      "venue": "Arena Green West - Barack Obama Blvd",
+      "address": "San Jose, CA 95113",
       "city": "san-jose",
       "category": "outdoor",
       "cost": null,
-      "description": "9:00am - 10:00am Zumba 10:15am - 11:15am Yoga",
+      "description": "",
       "url": "https://grpg.org/calendar/events/",
       "source": "Guadalupe River Park Conservancy",
       "kidFriendly": false,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-28"
+        "date": "2026-11-29"
       }
     },
     {
@@ -1419,7 +1485,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-02T17:15:56.596Z"
+        "checkedAt": "2026-11-02T21:24:21.474Z"
       }
     },
     {
@@ -1442,7 +1508,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-02T17:15:56.601Z"
+        "checkedAt": "2026-11-02T21:24:21.479Z"
       }
     },
     {
@@ -1465,7 +1531,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-02T17:15:56.601Z"
+        "checkedAt": "2026-11-02T21:24:21.480Z"
       }
     },
     {
@@ -1488,7 +1554,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-02T17:15:56.602Z"
+        "checkedAt": "2026-11-02T21:24:21.480Z"
       }
     },
     {
@@ -1811,7 +1877,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1828,7 +1894,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1845,7 +1911,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1862,7 +1928,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1879,7 +1945,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3061,7 +3127,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.868Z"
+        "checkedAt": "2026-11-02T21:24:46.915Z"
       }
     },
     {
@@ -3085,7 +3151,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.868Z"
+        "checkedAt": "2026-11-02T21:24:46.915Z"
       }
     },
     {
@@ -3109,7 +3175,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.868Z"
+        "checkedAt": "2026-11-02T21:24:46.915Z"
       }
     },
     {
@@ -3133,7 +3199,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.868Z"
+        "checkedAt": "2026-11-02T21:24:46.915Z"
       }
     },
     {
@@ -3157,7 +3223,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.870Z"
+        "checkedAt": "2026-11-02T21:24:46.917Z"
       }
     },
     {
@@ -3181,7 +3247,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.872Z"
+        "checkedAt": "2026-11-02T21:24:46.919Z"
       }
     },
     {
@@ -3205,7 +3271,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.919Z"
       }
     },
     {
@@ -3229,7 +3295,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.919Z"
       }
     },
     {
@@ -3253,7 +3319,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.919Z"
       }
     },
     {
@@ -3277,7 +3343,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.919Z"
       }
     },
     {
@@ -3301,7 +3367,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.920Z"
       }
     },
     {
@@ -3325,7 +3391,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.920Z"
       }
     },
     {
@@ -3349,7 +3415,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.920Z"
       }
     },
     {
@@ -3373,7 +3439,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-02T17:16:20.873Z"
+        "checkedAt": "2026-11-02T21:24:46.920Z"
       }
     },
     {
