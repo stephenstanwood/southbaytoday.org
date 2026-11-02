@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-01T03:22:11.562Z",
+  "generatedAt": "2026-11-02T05:45:46.944Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "stale",
-    "checkedAt": "2026-11-01T03:22:11.562Z",
+    "checkedAt": "2026-11-02T05:45:46.944Z",
     "updatedAt": "2026-10-12T13:35:45.000Z",
-    "ageDays": 19,
+    "ageDays": 20,
     "newestRawInspection": "2026-10-12",
     "newestEligibleInspection": "2026-10-07",
     "eligibleStatus": "quiet"
@@ -22,7 +22,7 @@
       "inspectionDate": "2026-10-07",
       "sourceId": "SR0877887",
       "status": "inspection-complete",
-      "blurb": "Cafe and bistro at 350 Ellis St in Mountain View.",
+      "blurb": null,
       "photoRef": "places/ChIJ82GUaRK3j4ARDkf5zm1XdVY/photos/Aa-ngMZkjaoXgvX2yE_i2nxSEuxZk6KqdlcHAreXbFqDIaVWxcMx09ZvgtK5Dhpxonw0B9l-SQdmTH9RV6Q-KioqnKWNtX2zC0apE7_3mlZUPB4lxitWiEpmxLCW3BBhvb-J1uFxAY8pw-csPiLVG3ENyuwVNfxBFm84z7b0W9dW3Mz8txvAmSz6zu6ircEOnoc8QlkmxsLsSBmwhbpIRxYgkliXFtlliJBoD420UbyIrsy57SL0VqKBVKQcUDpfKInLd40uKR6PCR1owEGvZpt3wtcM0KUAs_Urzk1V92qMdiw8ycc2jyzl1lSfwRU1IdcDQU_gBaoSKVAuBqCb90IuUaKPqASQw4mLAcjqKMdYrDGrCCe5eIjeZ8Z5paZkXB99QqTG3pTQXHXER9T8U1ZBa1DlmjU"
     },
     {
@@ -34,7 +34,7 @@
       "inspectionDate": "2026-09-30",
       "sourceId": "SR0884734",
       "status": "inspection-complete",
-      "blurb": "Food business on Waverley Street in Palo Alto.",
+      "blurb": "Matcha-focused food business at 439 Waverley Street in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884734-450.webp"
     },
     {
@@ -46,7 +46,7 @@
       "inspectionDate": "2026-09-28",
       "sourceId": "SR0884438",
       "status": "inspection-complete",
-      "blurb": "Donut shop at 2006 S Winchester Blvd in Campbell.",
+      "blurb": null,
       "photoRef": "places/ChIJGbPipR81joARUJS6ON0AGZQ/photos/AWCwydidh_svkUBDinnqcYczPuHEkMa9S8o5bKYe0JJmeNR_08S6Kye9SyIbMHDVSL0Qk8Nmzqp6R3a4-05lX2xRMp5sO0D46xE-AVlRIyXZuY1LWAYy_qTVRpBM9s8kalPo4S73Y3m4POPzUTitrhSoURbKcjOUoYETVlTHOYsRMIULDr-guDrYktY3r8E53IC-lBowJgZlCNK7Zn-toqJYzUD4V2z6FJW3IfGKC9zQquStrABG68agSjhJi9XGhzP9XjIo-FryZ8a2LwEXOr4AASDhnRSpHBkARYMt8jHoX5zi8z5wtAxqYFHoKQTyxbD3La0hH9XKqPwhk_t_yNiD_DNYAcS8z7pquI8CE6QdI8fG5R2l5GtLSw7YDko562dTBJbxOOjFxwj0mEdN9X-9wYsPoVGsdCXAyUUEzMQiLo-FVz8_"
     },
     {
@@ -70,20 +70,8 @@
       "inspectionDate": "2026-09-22",
       "sourceId": "SR0885604",
       "status": "inspection-complete",
-      "blurb": "Bakery on Berryessa Rd in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJASDhhTXMj4ARPkxzyqPvpo8/photos/AWCwydi3-gjnlJDfpElNjSPZwA1Pn77A1dmlDpTi_1l0Y92gP9iyegY2HsjL1Xxu3EpxlrpuhfrCYv2bIN0bj7apy86s76DCpzYR6lJ6GzszFTckeXq7LLCwZHnK8UokzEU2Mk0_0Dk9Eg-7IfEkGAP7CicpWDs9CXk85qF0PhYtTnCXwqkVs4uzvw3HP3UnRDfs3WHArTQO_NVast-kXMBqRuqKjELxmaSWswG8asATvB60U0B9JND3sqTQv6hvXe2KjSs-Mo_sZHDufmE3iwfTVGx_VVL2WboXig0EwG4zTP2YiCQdxWrWmFZzZyqUf3rNgxOcFNaCwsfxYD2OPWMJuHqtsPv_dvXBTTiC5RgrvDRc4-kcGw_QLEqdtv6SjO5riLMK1wKbO33gi6hBuEt-gypJxVhSAF4KlcGTQgrolOsVykjSYGoG40faBvYNtOBs"
-    },
-    {
-      "id": "inspection-SR0881159",
-      "name": "Fiesta Del Mar-Dumpling 101",
-      "address": "735 Villa St",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "inspectionDate": "2026-09-18",
-      "sourceId": "SR0881159",
-      "status": "inspection-complete",
-      "blurb": "Food business on Villa St in Mountain View.",
-      "photoRef": "places/ChIJhw3cAzS3j4ARMHCIjD6ffu0/photos/AVoNoXQqvWPc6CHaDEceocRKG3dIwF_bygpFy336XMpPOVxde2KN008Xt8nIFH4dfVIYLAISqMROTnvgL8GUtakV2_Tt8sIX5nzi2S2uG_X9-lZvJNplWGa7eKY9CKuvb1wMtOlod5obtJfDiAKdZnb-9WsE9qNkQIgi9GNNWZQv8nAFoOAuAVTW6qu8YOmnukK1JF1AoYOC_drsalRc4rv1bLNHaiHr4Ky3-PjoPoB5xe3lDigdUQSZgezWD3ijqz1kUXjese50XwvhEJcYwDJzcyoD5qM7X80Hk2vQmnX2WD9SqB3cCD5S--0tDNRM4EkAlKIQNQFJHfueYpKFg2FF_ul6p9G9awBPVaRshxoh_NIBCuEdc12v2vAY0VaQuJlc-9SZ8TDUkKFL1GpxD3SfLOhYA1SI3s6b1K0YB9QA_Nx2yk33"
     }
   ],
   "comingSoon": [
@@ -228,7 +216,7 @@
       "date": "2026-09-30",
       "status": "coming-soon",
       "sourceId": "SR0885853",
-      "blurb": "Sugarcane and juice shop planned on Great Mall Drive in Milpitas.",
+      "blurb": "Sugarcane and juice business planned on Great Mall Drive in Milpitas.",
       "photoRef": "places/ChIJp0REHDLPj4ARjCEObW7coxc/photos/Aa-ngMboHM4UMGKwVUACL89VC8Fg5gTcMplD9b1b_mQX4AjwKLJTBKuFkxzsdRrw--WufqW255Q5zOB5WknpvunXZhSF_ioHTbu9xZWMaB3liCqbCMTDqglXsBWkkHhvi3AQrY6GXFZxvlCEH0cTvtol6oyFfpQv0AqRFiMnAbzxi-vjWkOr8_rkU6rXDSXo80cZvFhmf_tTDo5zSu7m_pJU0I2pnQsrB-ibFCHpbSaPNlsR2PLWJ-3dmDXipo8MOghEoAL--nu4rR_8ahaBu43o1P56aOKp308Q91yCwycmZEXh9PHmv5n4xhXiPMzNa0dg3DgGWhLyk3tCCEdMRaGxY5RnM6sLfnYVPSOY4hXyt21gDYquyDPTAOtASSuYVGbGw99V8lmKWD8sBoaytGbgT0K5kDZupIUKv0BxB8cU8UpNh8mCL3u8CfIYJCy3Uw"
     }
   ]
