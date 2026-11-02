@@ -36,6 +36,15 @@ const EDITS = {
       ["provided there are no other participants).", "provided there are no other participants.)"],
     ],
     description: [
+      ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
+      ["in the Children's area.)", "in the Children's area)."],
+      [/\b(Schedule: Thursdays, \d{1,2}:\d{2} [AP]M - \d{1,2}:\d{2} [AP]M) (?=September:)/g, "$1. "],
+      [/\b((?:September|October|November): [\d, ]+) (?=(?:October|November|December):)/g, "$1; "],
+      [/\bNovember: (\d+),(\d+)/g, "November: $1, $2"],
+      [/\b(December: [\d, ]+) (?=More information coming)/g, "$1. "],
+      ["In this dual focused workshop a SJPL Works Business Librarian help you learn", "In this dual-focused workshop, an SJPL Works business librarian helps you learn"],
+      ["Interviewing can be very high stress and nerve racking experience.", "Interviewing can be a very high-stress and nerve-racking experience."],
+      ["market yourself as a solution to their problem.", "market yourself as a solution to an employer's problem."],
       ["Hillview library", "Hillview Library"],
       ["Tully library", "Tully Library"],
       ["something else tech related?", "something else tech-related?"],
@@ -331,6 +340,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["November 19th at 7:30 PM In Our Program Room Fiction ", "November 19th at 7:30 PM in our program room. Fiction: "],
       ["—New York Times Library copies", "—New York Times. Library copies"],
       ["available for check out here.", "available for checkout here."],
@@ -388,6 +398,9 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["In this workshop folks will make", "In this workshop, folks will make"],
+      ["We will be only hand sewing in this workshop.", "We will only be hand sewing in this workshop."],
+      ["Workshop suitable for the advanced beginner, intermediate, or advanced sewist.", "The workshop is suitable for the advanced beginner, intermediate, or advanced sewist."],
       ["The Silvermans are Gotham (IFP) Documentary Lab Fellows, CNN/Film Independent Episodic Lab Fellows.", "The Silvermans are Gotham (IFP) Documentary Lab Fellows and CNN/Film Independent Episodic Lab Fellows."],
       ["Join us at the Mitchell Park Community Center, as we celebrate Diwali! Enjoy fun activities for all ages including:", "Join us at the Mitchell Park Community Center as we celebrate Diwali! Enjoy fun activities for all ages:"],
       ["children engage in problem solving, teamwork, self-confidence, and creativity!", "children practice problem solving and teamwork while developing self-confidence and creativity!"],
