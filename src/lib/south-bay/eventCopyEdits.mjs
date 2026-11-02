@@ -247,6 +247,7 @@ const EDITS = {
       ["Meetings typically have a presentation targeted to less experienced collectors from an experienced collector.", "Meetings typically feature a presentation by an experienced collector for less experienced collectors."],
     ],
     blurb: [
+      ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
       ["at Hillview Library; bring your own mat, no registration needed.", "at Hillview Library; bring your own mat. No registration needed."],
       ["create art alongside other kids, no registration needed.", "create art alongside other kids; no registration needed."],
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
