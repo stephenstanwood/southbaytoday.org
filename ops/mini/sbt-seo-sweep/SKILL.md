@@ -300,14 +300,19 @@ require Stephen. Stage only files necessary for the verified improvement.
 4. Save one dated receipt under `data/seo/` with the confirmed GSC account and
    property; 28-day search comparison; 7/30-day traffic comparisons; source
    and product findings; changes, checks, deployment proof and unresolved work.
-5. Notify Stephen only for shipped changes, a material new finding, or a
-   decision/blocker. Combine search and product findings into one concise
-   message with `node ops/mini/sbt-seo-sweep/send-seo-dm.mjs --outcome shipped "…"`
-   (use `decision` for a required decision).
-   For unchanged success, call the same helper with `--outcome no_change` and
-   the allowed `🔍 SBT SEO sweep` prefix. This clears any recovered failure
-   locally and sends no message; keep the full result in the receipt.
-6. A new failure gets one concise message beginning `⚠️ sbt-seo-sweep:`.
-   Repeated identical failures remain in receipts without repeat messages.
+5. Keep routine success, shipped changes, and unchanged findings in the saved
+   receipt and native run chat. Call
+   `node ops/mini/sbt-seo-sweep/send-seo-dm.mjs --outcome no_change "🔍 SBT SEO sweep — report saved: EXACT PATH"`
+   to clear any recovered failure locally without sending a message.
+   For a genuine decision or human-only blocker, use the same helper with
+   `--outcome decision` and the `🔍 SBT SEO sweep` prefix. Include the exact
+   finding, report path, existing owner, and needed action. The compatibility-
+   named helper retains the full input in durable MILO intake; reuse the
+   relevant native MILO or FIX owner and leave its unresolved question visible
+   in Codex. A queued receipt is not a completed repair or a human answer.
+6. Route a new material failure through the helper with `--outcome failure`
+   and an exact input beginning `⚠️ sbt-seo-sweep:`. Repeated identical failures
+   remain in receipts without repeat notifications. Never send Discord DMs or
+   @mentions, including as a fallback.
    Never claim a successful combined audit when the required GSC evidence is
    unavailable. Preserve the native browser-capable Codex runtime.
