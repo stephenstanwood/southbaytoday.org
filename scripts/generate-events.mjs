@@ -3642,6 +3642,9 @@ function inferCity(location, address) {
   return null;
 }
 
+const FILM_SCREENING_TITLE = /\b(movie|film)\s+(?:event|day|night|screening)\b|\b(?:test|documentary)\s+screening\b|\bscreening\s+of\b/i;
+const STARTUP_PITCH_EVENT = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night|pitch\s+circuit)\b/i;
+
 function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Some callers pass raw RSS HTML descriptions. Strip tags/entities defensively
   // so anchor hrefs and class names ("...athletics-page", class="sports-tag")
@@ -3698,7 +3701,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // A screening is an arts event even when a library or teen center frames it
   // as a family/community night or the program opens with live music. Limit
   // the added screening terms so health screenings keep their own category.
-  if (/\b(movie|film)\s+(?:day|night|screening)\b|\b(?:test|documentary)\s+screening\b|\bscreening\s+of\b/.test(titleLower)) return "arts";
+  if (FILM_SCREENING_TITLE.test(titleLower)) return "arts";
   // Clinical education can name a sport injury without becoming a sports
   // event. Keep the rule anchored to explicit medical-course language.
   if (/\borthop(?:a)?edic\s+academy\b|\bsurgical\s+reconstruction\b/.test(titleLower)) return "education";
@@ -3769,7 +3772,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
   if (isMedicalProcedureEvent) return "education";
   // Startup pitch events hosted in campus theaters should be community, not arts.
-  const isStartupPitch = /\b(pitch\s+jam|incubator\s+pitch|startup\s+pitch|pitch\s+competition|pitch\s+night|pitch\s+circuit)\b/.test(t);
+  const isStartupPitch = STARTUP_PITCH_EVENT.test(t);
   if (isStartupPitch) return "community";
   // Academic/professional conferences in the title are always education — must run BEFORE
   // the arts check so medical/health conference descriptions containing "performance" (clinical
@@ -4124,6 +4127,13 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   // boilerplate must not turn the concert into an educational event.
   if (/\bmusic\s*@\s*noon\b/.test(titleLower)
     && !/\b(lecture|workshop|class|course|seminar|training)\b/.test(titleLower)) return "music";
+
+  // A public film can accompany a course, and a startup can "showcase" its
+  // product without becoming an art exhibit. Use the explicit title before
+  // the university body's course/reading/exhibition heuristics.
+  if (FILM_SCREENING_TITLE.test(titleLower) || STARTUP_PITCH_EVENT.test(titleLower)) {
+    return inferCategory(title, cleanDesc, type, venue);
+  }
 
   if (isOngoingExhibitLike(title, desc, venue)) return "arts";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
@@ -7724,7 +7734,9 @@ const FARMERS_MARKETS = [
   },
   {
     title: "Los Gatos Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
-    venue: "Town Park Plaza", address: "50 University Ave, Los Gatos", city: "los-gatos",
+    // The organizer publishes an intersection, as does events-data.ts. Never
+    // substitute a nearby numbered address for the actual market location.
+    venue: "Town Park Plaza", address: "Main St & N Santa Cruz Ave, Los Gatos", city: "los-gatos",
     url: "https://www.cafarmersmkts.com/losgatos-farmers-market/", season: [1, 12],
     evidencePatterns: [/Los Gatos Farmers[’']? Market/i, /Every Sunday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
   },

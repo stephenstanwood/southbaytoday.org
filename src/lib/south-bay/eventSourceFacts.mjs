@@ -34,6 +34,47 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // First-party November 2 source review: the public film and award ceremony
+  // explicitly offer free admission. The calendar's 4 PM award start includes
+  // food; the ceremony itself begins at 4:30 PM. Do not move the whole event.
+  // Evidence: docs/qa/2026-11-02-1007z-fact-check.md.
+  {
+    date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927",
+    facts: { cost: "free" },
+  },
+  {
+    date: "2026-11-10", url: "https://events.sjsu.edu/event/hearst-award-camille-zapata",
+    facts: {
+      cost: "free",
+      attendanceNote: "Food begins at 4 PM; the award ceremony begins at 4:30 PM. Admission is free and open to all; RSVP through SJSU's linked form.",
+    },
+  },
+  // The authenticated city originals retain the signup requirement and the
+  // senior trip's age/price restrictions omitted by the extracted records.
+  {
+    date: "2026-11-14", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/111020/",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Space is limited. Registration is required through the county Cooperative Extension's linked workshop page.",
+    },
+  },
+  {
+    date: "2026-12-17", url: "https://anc.apm.activecommunities.com/sunnyvaleactivities/activity/search/detail/3059?onlineSiteId=0&locale=en-US&from_original_cui=true",
+    facts: {
+      cost: "paid", audienceAge: "adult", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "For ages 50 and older. $111 for residents or $139 for nonresidents; lunch is not included. Register online, at the Senior Center, or by calling 408-730-7360.",
+    },
+  },
+  // The concert page and its own ticket occurrence confirm December 10 at
+  // 7:30 PM. Preserve the music category and paid ticketing for every alias.
+  {
+    date: "2026-12-10", url: "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/",
+    aliasUrls: [
+      "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/?promo=",
+      "https://my.montalvoarts.org/3113/3157",
+    ],
+    facts: { category: "music", cost: "paid" },
+  },
   // The marketing page and its linked ticket occurrence agree on 7:30 PM;
   // 5:30 PM belongs to the separate pre-concert gallery exhibition. The
   // marketing page also corrects the ticket calendar's "Amaan Ayaan" typo.
