@@ -1,18 +1,18 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-02T05:46:28.294Z"
+    "auditedAt": "2026-11-02T09:07:17.225Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1444,
+    "total": 1439,
     "totals": {
       "hard": 0,
       "soft": 1,
-      "info": 1
+      "info": 2
     },
     "byReason": {
       "virtual-not-flagged": 1,
-      "local-departure-trip": 1
+      "local-departure-trip": 2
     },
     "hard": [],
     "soft": [
@@ -27,6 +27,20 @@
             "severity": "soft",
             "reason": "virtual-not-flagged",
             "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
+      {
+        "id": "inbound-d1d760709f2010a5",
+        "title": "The Nutcracker: San Francisco Ballet Day Trip",
+        "city": "sunnyvale",
+        "date": "2026-12-17",
+        "location": "San Francisco Opera House",
+        "findings": [
+          {
+            "severity": "info",
+            "reason": "local-departure-trip",
+            "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
           }
         ]
       },
@@ -48,7 +62,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 313,
+    "total": 297,
     "totals": {
       "hard": 0,
       "soft": 1,

@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-02T04:46:41.408Z",
+    "generatedAt": "2026-11-02T08:59:26.942Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 184,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
@@ -17,13 +17,13 @@
       "Santana Row (4)",
       "City of Cupertino (18)",
       "Opera San José (5)",
-      "TheatreWorks Silicon Valley (66)",
+      "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
       "SAP Center (14)",
-      "The Tech Interactive (9)",
+      "The Tech Interactive (7)",
       "Books Inc (7)",
       "San Jose Museum of Art (3)",
-      "Peninsula Open Space Trust (3)"
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -208,7 +208,7 @@
         "id": "theatreworks-silicon-valley",
         "label": "TheatreWorks Silicon Valley",
         "status": "ok",
-        "count": 66,
+        "count": 65,
         "error": null,
         "sources": [
           "TheatreWorks Silicon Valley"
@@ -246,7 +246,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 9,
+        "count": 7,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -282,7 +282,7 @@
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
         "status": "error",
-        "count": 3,
+        "count": 2,
         "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
@@ -880,10 +880,10 @@
       "kidFriendly": false
     },
     {
-      "id": "62c164200fa0",
+      "id": "d2c30c087b68",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -900,10 +900,10 @@
       "kidFriendly": false
     },
     {
-      "id": "467612e0909e",
+      "id": "5565b7a11b18",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -920,10 +920,10 @@
       "kidFriendly": false
     },
     {
-      "id": "fc3e57d47148",
+      "id": "ea832fd5dd56",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
+      "date": "2026-11-02",
+      "displayDate": "Mon, Nov 2",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1419,7 +1419,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-02T04:45:33.867Z"
+        "checkedAt": "2026-11-02T08:58:18.138Z"
       }
     },
     {
@@ -1442,7 +1442,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-02T04:45:33.870Z"
+        "checkedAt": "2026-11-02T08:58:18.140Z"
       }
     },
     {
@@ -1465,7 +1465,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-02T04:45:33.871Z"
+        "checkedAt": "2026-11-02T08:58:18.140Z"
       }
     },
     {
@@ -1488,7 +1488,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-02T04:45:33.871Z"
+        "checkedAt": "2026-11-02T08:58:18.141Z"
       }
     },
     {
@@ -1811,7 +1811,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1828,7 +1828,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1845,7 +1845,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1862,7 +1862,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1879,26 +1879,9 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
-      "kidFriendly": false
-    },
-    {
-      "id": "c729725ff420",
-      "title": "Dracula",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "1:00 PM",
-      "endTime": null,
-      "venue": "Mountain View Center for the Performing Arts",
-      "address": "500 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Sink your teeth into the ultimate Halloween thrill. Steven Dietz’s adaptation of the timeless classic seduces with elegance and suspense, turning the legendary vampire tale into a high-octane theatrical ride. Bold, chilling, and wickedly smart, the story draws you into a world where reason clashes with superstition and love becomes dangerously intoxicating. This Dracula keeps you leaning forward—never quite sure who holds the power, or what darkness waits just out of sight.",
-      "url": "https://my.theatreworks.org/7460/7526",
-      "source": "TheatreWorks Silicon Valley",
       "kidFriendly": false
     },
     {
@@ -3078,7 +3061,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-18",
         "date": "2026-11-02",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.644Z"
+        "checkedAt": "2026-11-02T08:58:42.924Z"
       }
     },
     {
@@ -3102,7 +3085,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.644Z"
+        "checkedAt": "2026-11-02T08:58:42.925Z"
       }
     },
     {
@@ -3126,7 +3109,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.644Z"
+        "checkedAt": "2026-11-02T08:58:42.925Z"
       }
     },
     {
@@ -3150,7 +3133,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.644Z"
+        "checkedAt": "2026-11-02T08:58:42.925Z"
       }
     },
     {
@@ -3174,7 +3157,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.646Z"
+        "checkedAt": "2026-11-02T08:58:42.926Z"
       }
     },
     {
@@ -3198,7 +3181,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3222,7 +3205,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3246,7 +3229,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3270,7 +3253,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3294,7 +3277,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3318,7 +3301,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3342,7 +3325,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3366,7 +3349,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
     },
     {
@@ -3390,42 +3373,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-02T04:45:57.649Z"
+        "checkedAt": "2026-11-02T08:58:42.929Z"
       }
-    },
-    {
-      "id": "ae6e434de9d4",
-      "title": "Girl Scout Program: Home Scientist (Brownies)",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "10:30AM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
-    },
-    {
-      "id": "f9ec9d837ccd",
-      "title": "Girl Scout Program: Roller Coaster Design Challenge (Daisies)",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": "2:00PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
     },
     {
       "id": "99b5f908fdbf",
@@ -3723,23 +3672,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "700adeab2f91",
-      "title": "BioBlitz at Hellyer County Park",
-      "date": "2026-11-01",
-      "displayDate": "Sun, Nov 1",
-      "time": null,
-      "endTime": null,
-      "venue": "Hellyer County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://www.eventbrite.com/e/hellyer-county-park-bioblitz-tickets-2000658372047?aff=bb",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     },
     {
       "id": "5dd03098440a",
