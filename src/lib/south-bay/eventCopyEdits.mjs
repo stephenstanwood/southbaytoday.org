@@ -36,6 +36,7 @@ const EDITS = {
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
     ],
     attendanceNote: [
+      ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
       ["provided there are no other participants).", "provided there are no other participants.)"],
     ],
@@ -521,6 +522,9 @@ const EDITS = {
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
       ['to Study Human Biology."', 'to Study Human Biology"'],
+    ],
+    attendanceNote: [
+      ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
       ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
