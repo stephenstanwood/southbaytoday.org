@@ -34,6 +34,76 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The marketing page and its linked ticket occurrence agree on 7:30 PM;
+  // 5:30 PM belongs to the separate pre-concert gallery exhibition. The
+  // marketing page also corrects the ticket calendar's "Amaan Ayaan" typo.
+  // Normalize both adapters before deduplication, not just the winning card.
+  // Evidence: docs/qa/2026-11-02-0107z-fact-check.md.
+  {
+    date: "2026-11-14",
+    url: "https://montalvoarts.org/experience/carriage-house-concerts/the-sarod-trilogy/",
+    aliasUrls: ["https://my.montalvoarts.org/3109/3152"],
+    facts: {
+      title: "The Sarod Trilogy: Amjad Ali Khan, Amaan Ali Bangash, and Ayaan Ali Bangash",
+      time: "7:30 PM", category: "music", cost: "paid",
+      blurb: "Hear Amjad Ali Khan and his sons Amaan Ali Bangash and Ayaan Ali Bangash perform Indian classical music on sarod.",
+    },
+  },
+  // The authenticated November 1 Sunnyvale original explicitly distinguishes
+  // required attendance booking from an optional film reminder. Its footer
+  // confirms free admission; the linked online talks ask viewers to register.
+  // Evidence: docs/qa/2026-11-02-0107z-fact-check.md.
+  {
+    date: "2026-11-02", url: "https://sunnyvale.libcal.com/event/17134942",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED, audienceAge: "kids",
+      attendanceNote: "For grades K–12. Registration is required. Arrive early: registrants' spots are guaranteed only until the start of the program.",
+    },
+  },
+  {
+    date: "2026-11-23", url: "https://sunnyvale.libcal.com/event/17754557",
+    facts: {
+      cost: "free", registration: REGISTRATION_NONE, audienceAge: "adult",
+      attendanceNote: "For adults 18 and older. Registration is not required; optional signup provides an email reminder.",
+    },
+  },
+  ...[["2026-11-19", "220791"], ["2026-11-12", "220092"]].map(([date, id]) => ({
+    date, url: `https://libraryc.org/sunnyvalelibrary/${id}`,
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Register through the library's linked author-talk page to attend online.",
+    },
+  })),
+  // The workshop's current body and shared signup instructions conflict.
+  // Its unsourced 80%-of-the-US-population claim cannot support a statistic.
+  // Keep the verified schedule and qualify access rather than pick a gate.
+  {
+    date: "2026-11-05", url: "https://sjpl.bibliocommons.com/events/6a99d8351c197d11325d14f5",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a99d8351c197d11325d14f5"],
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library's description says no registration is required, but its signup instructions request registration. Confirm attendance requirements with SJPL Works before going.",
+    },
+    copyReplacements: [[/When it comes to job searching, 80% of the US population gets their job through someone they know, this workshop/gi, "This workshop"]],
+  },
+  {
+    date: "2026-11-05", url: "https://sjpl.bibliocommons.com/events/6a02181d43b41b3d0065b7ed",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a02181d43b41b3d0065b7ed"],
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library's schedule starts at 10 AM, while its description says 10:30–11:30 AM. Its booking form also conflicts with the no-registration wording. Confirm timing and signup details with Cambrian Library before going.",
+    },
+  },
+  {
+    date: "2026-11-05", url: "https://sjpl.bibliocommons.com/events/68df10f9023ff328007ce8d1",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/68df10f9023ff328007ce8d1"],
+    facts: { attendanceNote: "Preregistration is encouraged; drop-ins may also be considered. Register online or call Willow Glen Library at 408-808-3045." },
+  },
+  {
+    date: "2026-11-05", url: "https://sjpl.bibliocommons.com/events/6ac80f33901b02002cc10f6c",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6ac80f33901b02002cc10f6c"],
+    facts: { attendanceNote: "Registration is required by phone: call Biblioteca Latinoamericana at 408-294-1237." },
+  },
   // The exact Tully occurrence is Thursday, November 5, 4–5 PM, while its
   // shared description still says every Tuesday. Omit the conflicting clause;
   // this one occurrence does not establish a replacement Thursday cadence.
@@ -929,6 +999,7 @@ const CORRECTIONS = [
   // Evidence: docs/qa/2026-10-26-1007-fact-check.md.
   {
     date: "2026-11-01", url: "https://my.montalvoarts.org/3248/3250",
+    aliasUrls: ["https://my.montalvoarts.org/3248/3250?promo="],
     facts: {
       cost: "free", kidFriendly: true,
       // The dated ticket page offers $0 adult/child RSVP tiers. Retain that
@@ -937,6 +1008,13 @@ const CORRECTIONS = [
       // Evidence: docs/qa/2026-10-26-2307-fact-check.md.
       attendanceNote: "The organizer offers free adult and child RSVPs through its ticket page. No parking at Montalvo. Use free parking and shuttle service from West Valley College.",
     },
+    // Newsletter photos do not confirm this year's face-painting program;
+    // the current occurrence page does confirm artists and vendors.
+    // Evidence: docs/qa/2026-11-02-0107z-fact-check.md.
+    copyReplacements: [
+      [/with artists, vendors and face painting shown in the newsletter photos/gi, "with artists and vendors"],
+      [/with artists, vendors, and face painting/gi, "with artists and vendors"],
+    ],
   },
   {
     date: "2026-11-04", url: "https://my.montalvoarts.org/overview/3066",

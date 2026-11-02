@@ -8729,6 +8729,19 @@ function extractTimeFromHtml(html, eventDate) {
     // Arrival logistics are not performance times. Remove the whole labelled
     // time so neither the label matcher nor the generic fallback can use it.
     .replace(/\b(?:parking(?:\s+(?:lot|garage))?|box\s+office)\s+(?:opens?|starts?|begins?)\s*(?:at|:)?\s*\d{1,2}(?::\d{2})?\s*(?:am|pm)\b/gi, " ");
+  // A full dated schedule is stronger than an incidental "show at" phrase.
+  // Montalvo's Sarod page puts its 7:30 PM concert above a 5:30 PM art
+  // exhibition "before the show". Require the requested date; a different
+  // occurrence's schedule cannot fall through to the undated clock guesses.
+  const datedSchedules = [...text.matchAll(/\b(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})\s*(?:[•·|:–—-]|at|@)?\s*(\d{1,2}(?::\d{2})?)\s*(am|pm)\b/gi)];
+  if (eventDate && datedSchedules.length) {
+    const clocks = new Set();
+    for (const match of datedSchedules) {
+      const schedule = parseNaturalDateTime(...match.slice(1));
+      if (schedule?.date === eventDate) clocks.add(formatHourClock(schedule.time));
+    }
+    return clocks.size === 1 ? [...clocks][0] : null;
+  }
   // Prefer an explicit show/start time over earlier doors or gates times.
   const startMatch = matchOutsideBusinessHours(text, /\b(?:starts?|begins?|show(?:time)?|curtain)\s*(?:at|:)?\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/gi);
   if (startMatch) return formatHourClock(startMatch);
