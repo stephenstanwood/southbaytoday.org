@@ -70,6 +70,9 @@ jobs:
       - name: Check Recraft imports and quiet outage notifications (offline)
         run: node --test scripts/social/lib/recraft.test.mjs
 
+      - name: Check private notification intake and SEO routing (offline)
+        run: node --test scripts/lib/notification-intake.test.mjs ops/mini/sbt-seo-sweep/notification.test.mjs
+
       - name: Check newsletter signup and confirmation tracking
         run: npm run test:newsletter-signup
 

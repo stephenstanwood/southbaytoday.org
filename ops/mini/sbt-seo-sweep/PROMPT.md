@@ -36,5 +36,9 @@ For a normal run, use the current date and Search Console's own reporting
 window; never infer recency from training data. Measure, inspect Search Console,
 fix high-confidence issues, verify, push safely under the shared lock, then take
 only the warranted Search Console actions described by the skill. Keep the
-final summary concise and explicit about GSC actions, repo changes, and any real
-blocker.
+final native chat summary concise and explicit about GSC actions, repo changes,
+and any real blocker. Automated Discord DMs and @mentions are retired. Keep
+routine successes and shipped changes in the saved receipt. Route only a new
+material failure or genuine decision through the skill's durable MILO intake
+helper; reuse its real owner and leave unresolved questions visible in the
+native MILO or FIX chat. Never use a personal DM as a fallback.
