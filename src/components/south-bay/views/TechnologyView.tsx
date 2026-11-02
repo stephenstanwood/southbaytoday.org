@@ -782,7 +782,7 @@ function RecentlyFundedCard({ company, todayIso }: { company: RecentlyFunded; to
           {isFresh && (
             <span
               className="tech-chip tech-chip--new"
-              title={`Closed ${daysAgo === 0 ? "today" : daysAgo === 1 ? "yesterday" : `${daysAgo} days ago`}`}
+              title={`Announced ${daysAgo === 0 ? "today" : daysAgo === 1 ? "yesterday" : `${daysAgo} days ago`}`}
             >
               New
             </span>

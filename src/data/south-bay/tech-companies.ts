@@ -1069,7 +1069,9 @@ export interface RecentlyFunded {
   category: TechCategory | "medtech" | "eda";
   round: string;
   amount: string;
-  date: string; // ISO date YYYY-MM-DD (use YYYY-MM-01 for month-only known dates)
+  // Funding announcement date, not the coverage or correction date.
+  // ISO YYYY-MM-DD; use YYYY-MM-01 when only the month is known.
+  date: string;
   tagline: string;
   color: string;
   url: string;
@@ -1739,13 +1741,14 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
-  // Maxinsights' Oct 23 seed announcement datelines Santa Clara (VC News
-  // Daily's summary of the company release), and The AI Insider attributes
-  // "based in Santa Clara, Calif." to the company. Some databases list San
-  // Francisco; no company-issued source does. Hours, customer, and contractor
-  // counts are self-reported and vary by outlet, so the card avoids them.
-  // https://vcnewsdaily.com/maxinsights/venture-capital-funding/dhvbcjhfhq
-  // https://theaiinsider.tech/2026/10/23/maxinsights-raises-30m-seed-round-and-launches-physical-ai-data-tools/
+  // The company release was issued Oct 22, not the Oct 23 coverage date.
+  // Its Oct 26 corrected release explicitly names Santa Clara headquarters
+  // and says Genesis AI is testing MaxGlove; it no longer claims joint
+  // development. Preserve that distinction and avoid the varying dataset,
+  // customer, and contractor counts.
+  // https://www.businesswire.com/news/home/20261022672609/en/
+  // The company's newsroom also dates its linked Forbes story Oct 22:
+  // https://www.maxinsights.ai/newsroom.html
   {
     id: "maxinsights-seed",
     name: "Maxinsights",
@@ -1753,9 +1756,9 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     category: "robotics",
     round: "Seed",
     amount: "$30M",
-    date: "2026-10-23",
+    date: "2026-10-22",
     tagline:
-      "Santa Clara's Maxinsights pays people to film everyday work like cooking and cleaning from a first-person view, then sells the footage as training data for robots and physical AI models. Peak XV led the $30M seed, with Tola Capital, South Park Commons, INCE Capital, and Alumni Ventures joining. Alongside the raise it launched MaxLoop, which scores footage for quality as it's collected, and MaxGlove, a sensor glove built with Genesis AI to capture touch and force data.",
+      "Santa Clara's Maxinsights pays people to film everyday work like cooking and cleaning from a first-person view, then sells the footage as training data for robots and physical AI models. Peak XV led the $30M seed, with Tola Capital, South Park Commons, INCE Capital, and Alumni Ventures joining. Alongside the raise it introduced MaxLoop, which scores footage for quality as it arrives, and MaxGlove, its touch-and-force sensor glove being tested by Genesis AI.",
     color: "#7c3aed",
     url: "https://www.maxinsights.ai",
   },
