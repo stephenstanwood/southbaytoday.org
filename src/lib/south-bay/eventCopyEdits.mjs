@@ -37,6 +37,7 @@ const EDITS = {
     ],
     description: [
       ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
+      ["Children can play in a safe environment in the Rose Garden Library Community Room and parents can connect", "Children can play in a safe environment in the Rose Garden Library Community Room, and parents can connect"],
       ["in the Children's area.)", "in the Children's area)."],
       [/\b(Schedule: Thursdays, \d{1,2}:\d{2} [AP]M - \d{1,2}:\d{2} [AP]M) (?=September:)/g, "$1. "],
       [/\b((?:September|October|November): [\d, ]+) (?=(?:October|November|December):)/g, "$1; "],
@@ -398,6 +399,9 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["Registration is not required but you will receive", "Registration is not required, but you will receive"],
+      ["It is open to all levels of experience and no registration is required.", "It is open to all levels of experience, and no registration is required."],
+      ["This program is meant for families with children and no previous experience is needed!", "This program is meant for families with children, and no previous experience is needed!"],
       ["In this workshop folks will make", "In this workshop, folks will make"],
       ["We will be only hand sewing in this workshop.", "We will only be hand sewing in this workshop."],
       ["Workshop suitable for the advanced beginner, intermediate, or advanced sewist.", "The workshop is suitable for the advanced beginner, intermediate, or advanced sewist."],
