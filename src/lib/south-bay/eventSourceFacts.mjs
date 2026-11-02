@@ -34,6 +34,17 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The city's November 2 original and rendered activity page confirm a paid,
+  // registered children's session. The newsletter path omitted its badges.
+  // Evidence: docs/qa/2026-11-02-1807z-fact-check.md.
+  {
+    date: "2026-12-12", url: "https://anc.apm.activecommunities.com/mountainviewrecreation/activity/search/detail/19245?onlineSiteId=0&from_original_cui=true",
+    facts: {
+      cost: "paid", registration: REGISTRATION_REQUIRED, kidFriendly: true, audienceAge: "kids",
+      costNote: "Material fees are included in the price. Check the city's activity page for current fees.",
+      attendanceNote: "For ages 6–11. Register through the city's activity page. Held in Redwood Hall at the Mountain View Community Center.",
+    },
+  },
   // First-party November 2 source review: the public film and award ceremony
   // explicitly offer free admission. The calendar's 4 PM award start includes
   // food; the ceremony itself begins at 4:30 PM. Do not move the whole event.
@@ -375,13 +386,17 @@ const CORRECTIONS = [
   // Exact original city newsletters supply the attendance conditions that
   // the extracted descriptions omitted. Keep later closed/full metadata.
   // Evidence: docs/qa/2026-10-30-2307-fact-check.md (receiving-account originals).
+  // The November 2 bulletin prefixes these same sessions with "Senior
+  // Workshop:". Match both reviewed titles, within their exact date/venue,
+  // so a new newsletter copy cannot discard the audience or signup rules.
+  // Evidence: docs/qa/2026-11-02-1807z-fact-check.md.
   ...[
-    ["2026-11-05", "Advance Care Planning Workshop"],
-    ["2026-11-12", "Google Translate and Digital Emergency Prep Workshop"],
-    ["2026-11-19", "Medicare Annual Enrollment and Updates 2027 Workshop"],
-  ].map(([date, title]) => ({
+    ["2026-11-05", ["Advance Care Planning Workshop", "Senior Workshop: Advance Care Planning"]],
+    ["2026-11-12", ["Google Translate and Digital Emergency Prep Workshop", "Senior Workshop: Google Translate and Digital Emergency Prep"]],
+    ["2026-11-19", ["Medicare Annual Enrollment and Updates 2027 Workshop", "Senior Workshop: Medicare's Annual Enrollment and Updates 2027"]],
+  ].map(([date, titles]) => ({
     date,
-    matches: (event) => event.title === title
+    matches: (event) => titles.includes(event.title)
       && /^(?:Social Hall|Mountain View Senior Center)(?:,|$)/i.test(event.venue || ""),
     facts: {
       venue: "Mountain View Senior Center", registration: REGISTRATION_REQUIRED,
