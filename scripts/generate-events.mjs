@@ -4426,6 +4426,13 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // restricted_to describes eligibility, unlike broad audience tags. Only
+      // reject an explicit campus-only audience; a separately stated public
+      // Zoom option remains attendable online even when experience is hybrid.
+      const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
+      if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
+      const publicZoomOnly = /\bIn-person attendance is limited to Stanford\b/i.test(restriction)
+        && /\bMembers of the public are invited to participate via Zoom\b/i.test(restriction);
       // Cantor's exhibition body carries visiting hours and explicit free
       // admission after the display excerpt. Preserve the current source's
       // hours before shortening; do not freeze them in a dated override.
@@ -4438,7 +4445,7 @@ async function fetchStanfordEvents() {
       // This transport class is limited to Stanford students and employees,
       // despite having no audience tags. Read eligibility before shortening.
       // Evidence: docs/qa/2026-10-27-0307-fact-check.md.
-      if (/^Learn to Ride Class$/i.test(ev.title || "")
+      if (/^(?:Learn to Ride|Bicycle Handling Skills) Class$/i.test(ev.title || "")
         && /\bThis is a free class for Stanford Students,\s*Faculty and Staff\b/i.test(description)) return null;
       // Read attendance notices before truncation. The October 27 After
       // Fission listing says registration is at full capacity in its body.
@@ -4452,8 +4459,9 @@ async function fetchStanfordEvents() {
       if (/^(?:EH&S|Page Mill):\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i.test(ev.title || "")
         && /\bwho is eligible\?\s*all students,\s*faculty,\s*staff,\s*postdocs,\s*retirees,\s*and campus affiliates are welcome to participate\b/i.test(description)) return null;
       // Localist publishes the attendance mode outright — no need to guess it
-      // from the copy. "hybrid" stays a physical destination.
-      const isVirtual = virtualFromSourceSignal(ev.experience) === true;
+      // from the copy. Unrestricted hybrid events remain physical destinations;
+      // an explicit public-only Zoom option takes precedence above.
+      const isVirtual = publicZoomOnly || virtualFromSourceSignal(ev.experience) === true;
       // Room metadata can carry building-entry restrictions that the body and
       // generic Everyone audience omit. This verified Stanford instruction
       // requires a campus ID; it does not restrict an online-only occurrence.
@@ -4495,6 +4503,7 @@ async function fetchStanfordEvents() {
       const category = ["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture
         ? "education" : inferredCategory;
       const attendanceNotes = [
+        ...(publicZoomOnly ? [restriction] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
       ];
@@ -4511,8 +4520,8 @@ async function fetchStanfordEvents() {
         time: isOngoing ? null : displayTime(occurrence),   // no time for ongoing exhibits
         endTime: isOngoing ? null : (occurrenceEnd ? displayTime(occurrenceEnd) : null),
         ongoing: isOngoing,
-        venue,
-        address: ev.address || "",
+        venue: publicZoomOnly ? "Online (Zoom)" : venue,
+        address: publicZoomOnly ? "" : ev.address || "",
         city: "palo-alto",
         ...(isVirtual ? { virtual: true } : {}),
         category,

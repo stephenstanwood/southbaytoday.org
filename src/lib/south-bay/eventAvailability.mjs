@@ -3,6 +3,15 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  Object.freeze({
+    title: /^Bicycle Handling Skills Class$/i,
+    venue: /^(?:Galvez(?: Parking)? Lot|Stanford University)$/i,
+    date: "2026-11-03",
+    reviewOn: "2026-11-03",
+    reason:
+      "Stanford's explicit restricted_to field and full listing limit this class to Stanford students, faculty and staff. Keep sparse copies out of the public feed until public eligibility is confirmed.",
+    source: "https://events.stanford.edu/event/bicycle-handling-skills-class",
+  }),
   ...["2026-11-20", "2026-12-18"].map(date => Object.freeze({
     title: /^Mountain View Makers Market$/i,
     venue: /.*/,

@@ -34,6 +34,41 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The public audience tags describe Zoom access, not the physical room.
+  // The exact occurrence page and restricted_to field agree on that limit;
+  // its page also explicitly says Free Event despite Localist's false flag.
+  // Evidence: docs/qa/2026-11-02-2207z-fact-check.md.
+  {
+    date: "2026-11-03", url: "https://events.stanford.edu/event/book-talk-we-shall-outlast-them-putins-global-campaign-to-defeat-the-west",
+    facts: {
+      virtual: true, venue: "Online (Zoom)", address: "", cost: "free",
+      attendanceNote: "Public attendance is via Zoom. In-person attendance is limited to Stanford faculty, students and staff. Registration is offered through the organizer's linked page.",
+    },
+  },
+  // The source asks for RSVP by November 1 to plan attendance. That elapsed
+  // request does not prove closed admission. Do not guess between the room
+  // field's Courtroom and the full body's Couchroom; preserve the building.
+  {
+    date: "2026-11-03", url: "https://events.stanford.edu/event/wellness-series-elections-processing-space",
+    facts: {
+      cost: "free", attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer requested RSVP by November 1 at 11:59 PM Pacific. Confirm late attendance and the meeting room with the Asian American Activities Center before going.",
+    },
+  },
+  // The exact library occurrence is Wednesday, November 18; its shared body
+  // still advertises a Thursday cadence and misdates Theft. Both publishers
+  // date the novel to March 18, 2025. Correct source and cached copy together.
+  // https://www.bloomsbury.com/uk/theft-9781526678645/
+  // Evidence: docs/qa/2026-11-02-2207z-fact-check.md.
+  {
+    date: "2026-11-18", url: "https://sccl.bibliocommons.com/events/6ab592174852aa18b5b0a4fc",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6ab592174852aa18b5b0a4fc"],
+    copyReplacements: [
+      [/\b2022 novel Theft\b/g, "2025 novel Theft"],
+      [/The Adult Book Discussion Group meets twice a month, on the third Thursday morning at 11 am and on the third Thursday evening at 7 PM\.\s*/g, ""],
+      [/Both meetings are held in Room 201B\./g, "Meetings are held in Room 201B."],
+    ],
+  },
   // The city's November 2 original and rendered activity page confirm a paid,
   // registered children's session. The newsletter path omitted its badges.
   // Evidence: docs/qa/2026-11-02-1807z-fact-check.md.
@@ -677,7 +712,14 @@ const CORRECTIONS = [
   {
     date: "2026-11-06",
     url: "https://events.scu.edu/ciocca-center/event/517331-startup-world-cup-grand-finale",
-    aliasUrls: ["https://events.scu.edu/event/517331-startup-world-cup-grand-finale", "https://events.scu.edu/campus-calendar/event/517331-startup-world-cup-grand-finale"],
+    // SCU's November 2 RSS switched to /live/events/; it is the same dated trip.
+    // The fresh expanded LiveWhale API confirms the original travel/deadline
+    // facts. Evidence: docs/qa/2026-11-02-2207z-fact-check.md.
+    aliasUrls: [
+      "https://events.scu.edu/event/517331-startup-world-cup-grand-finale",
+      "https://events.scu.edu/campus-calendar/event/517331-startup-world-cup-grand-finale",
+      "https://events.scu.edu/live/events/517331-startup-world-cup-grand-finale",
+    ],
     facts: {
       title: "Startup World Cup Grand Finale (SCU day trip)",
       address: "333 O'Farrell Street, San Francisco, CA 94102",

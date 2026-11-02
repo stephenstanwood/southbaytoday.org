@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { fetchStanfordEvents } from "../generate-events.mjs";
 import { isEventEditoriallySuppressed } from "../../src/lib/south-bay/eventAvailability.mjs";
+import { parseDatePT } from "./dates.mjs";
 
 // Stanford's Localist API returns ONE ROW PER OCCURRENCE. `first_date` and
 // `last_date` bound the series; `event_instances[].event_instance.start` is the
@@ -20,6 +21,10 @@ const dayPT = (offsetDays = 0) => {
   const d = new Date(Date.now() + offsetDays * 86_400_000);
   return d.toLocaleDateString("en-CA", { timeZone: PT });
 };
+
+// These fixtures use relative dates, so their offset must follow that day's
+// Pacific timezone. A fixed -07:00 moved every winter fixture one hour early.
+const atPT = (day, clock) => parseDatePT(`${day}T${clock}`).toISOString();
 
 function localistEvent(overrides = {}) {
   const { instances = [], ...rest } = overrides;
@@ -57,7 +62,7 @@ async function runWith(events) {
 
 test("conditional free admission never masks published paid Localist ticket tiers", async () => {
   const tomorrow = dayPT(1);
-  const instances = [{ start: `${tomorrow}T07:30:00-07:00` }];
+  const instances = [{ start: atPT(tomorrow, "07:30:00") }];
   const costs = [
     { ticket_cost: "Free-$390", free: true },
     { ticket_cost: "$90-$390; free for Stanford affiliates", free: false },
@@ -75,7 +80,7 @@ test("Stanford visitor ID requirements survive a short display excerpt", async (
   const tomorrow = dayPT(1);
   const [event] = await runWith([localistEvent({
     title: "Branner Library Book & Map Exhibit - Water in the West",
-    location_name: "Mitchell Earth Sciences", instances: [{ start: `${tomorrow}T10:00:00-07:00` }],
+    location_name: "Mitchell Earth Sciences", instances: [{ start: atPT(tomorrow, "10:00:00") }],
     description_text: "Explore water resources in California. ".repeat(15)
       + "A current Stanford ID is needed to enter the library, visitors must present a valid, physical government-issued photo ID to sign-in at the front desk.",
   })]);
@@ -85,7 +90,7 @@ test("Stanford visitor ID requirements survive a short display excerpt", async (
 
 test("Stanford retains a current full-capacity notice before display truncation", async () => {
   const tomorrow = dayPT(1);
-  const instances = [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:15:00-07:00` }];
+  const instances = [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:15:00") }];
   const introduction = "A public talk about international affairs. ".repeat(12);
   const rows = await runWith([
     localistEvent({ id: 1, title: "After Fission", instances,
@@ -110,7 +115,7 @@ test("Stanford's Class/Seminar format outranks an industrial park in the subject
       location_name: "Encina Hall",
       description_text: "This talk examines four decades of Chinese urbanization. Case studies include the Suzhou Industrial Park and prototypical eco-cities.",
       filters: { event_types: [{ name: "Class/Seminar" }] },
-      instances: [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:30:00-07:00` }],
+      instances: [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:30:00") }],
     }),
   ]);
   assert.equal(event.category, "education");
@@ -127,7 +132,7 @@ test("Stanford's declared lecture format outranks children mentioned in the topi
       description_text: "Bani Adam literally means the children of Adam. The poem describes the interconnected nature of humankind.",
       location_name: "In person at Stanford",
       filters: { event_types: [{ name: "Lecture/Presentation/Talk" }] },
-      instances: [{ start: `${tomorrow}T18:30:00-07:00`, end: `${tomorrow}T20:00:00-07:00` }],
+      instances: [{ start: atPT(tomorrow, "18:30:00"), end: atPT(tomorrow, "20:00:00") }],
     }),
   ]);
   assert.equal(event.category, "education");
@@ -136,7 +141,7 @@ test("Stanford's declared lecture format outranks children mentioned in the topi
 
 test("Stanford lectures retain arts topics and an untyped storytime retains its audience", async () => {
   const tomorrow = dayPT(1);
-  const instances = [{ start: `${tomorrow}T13:00:00-07:00` }];
+  const instances = [{ start: atPT(tomorrow, "13:00:00") }];
   const events = await runWith([
     localistEvent({
       id: 1, title: "Tangling the Digital: Weaving, Printmaking, Computing",
@@ -155,7 +160,7 @@ test("Stanford clinic eligibility outranks Everyone metadata before description 
     location_name: "484 Oak Road, Stanford, CA 94305",
     address: "484 Oak Road, Stanford, CA 94305",
     filters: { event_audience: [{ name: "Everyone" }] },
-    instances: [{ start: `${tomorrow}T09:00:00-07:00`, end: `${tomorrow}T14:00:00-07:00` }],
+    instances: [{ start: atPT(tomorrow, "09:00:00"), end: atPT(tomorrow, "14:00:00") }],
   };
   // The October 27 page puts its eligibility section after the introductory
   // paragraph. Checking the shortened display description loses that evidence.
@@ -181,7 +186,7 @@ test("Stanford room entry instructions outrank Everyone for a physical destinati
     title: "Public Seminar", location_name: "Building 120, McClatchy Hall, Main Quad",
     filters: { event_audience: [{ name: "Everyone" }] },
     description_text: "A public seminar with lunch for Stanford affiliates beforehand.",
-    instances: [{ start: `${tomorrow}T12:00:00-07:00` }],
+    instances: [{ start: atPT(tomorrow, "12:00:00") }],
   };
   const room = "Studio S40 - bring your Stanford ID card/mobile ID to enter the building";
   const events = await runWith([
@@ -216,7 +221,7 @@ test("a dated event takes its day and clock from the occurrence, not first_date"
       title: "Fireside Chat with Anne Wojcicki",
       first_date: tomorrow,
       last_date: tomorrow,
-      instances: [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:00:00-07:00` }],
+      instances: [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:00:00") }],
     }),
   ]);
   assert.equal(event.date, tomorrow, "must not land a day early");
@@ -227,7 +232,7 @@ test("a dated event takes its day and clock from the occurrence, not first_date"
 
 test("off-site Stanford events are filtered before spending the source's local-event cap", async () => {
   const tomorrow = dayPT(1);
-  const instances = [{ start: `${tomorrow}T18:00:00-07:00`, end: `${tomorrow}T19:15:00-07:00` }];
+  const instances = [{ start: atPT(tomorrow, "18:00:00"), end: atPT(tomorrow, "19:15:00") }];
   const offsite = {
     title: "Coral Bleaching Recovery with the Help of Healthy Corals",
     location_name: "Hopkins Marine Station",
@@ -255,7 +260,7 @@ test("an all-day occurrence keeps a null time instead of inventing one", async (
       title: "Labor Day Facility Hours",
       first_date: tomorrow,
       last_date: tomorrow,
-      instances: [{ start: `${tomorrow}T00:00:00-07:00`, end: null }],
+      instances: [{ start: atPT(tomorrow, "00:00:00"), end: null }],
     }),
   ]);
   assert.equal(event.date, tomorrow);
@@ -271,14 +276,14 @@ test("each occurrence of a series gets its own dated card", async () => {
       title: "Financial Counseling with Fidelity",
       first_date: dayPT(1),
       last_date: dayPT(2),
-      instances: [{ start: `${dayPT(1)}T08:00:00-07:00`, end: `${dayPT(1)}T17:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(1), "08:00:00"), end: atPT(dayPT(1), "17:00:00") }],
     }),
     localistEvent({
       id: 42,
       title: "Financial Counseling with Fidelity",
       first_date: dayPT(1),
       last_date: dayPT(2),
-      instances: [{ start: `${dayPT(2)}T08:00:00-07:00`, end: `${dayPT(2)}T17:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(2), "08:00:00"), end: atPT(dayPT(2), "17:00:00") }],
     }),
   ]);
   assert.equal(events.length, 2);
@@ -298,7 +303,7 @@ test("an exhibit open today anchors to today, clock-free, once", async () => {
       description_text: "An exhibition drawn from the Cantor collection.",
       first_date: dayPT(-30),
       last_date: dayPT(30),
-      instances: [{ start: `${dayPT(0)}T11:00:00-07:00`, end: `${dayPT(0)}T18:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(0), "11:00:00"), end: atPT(dayPT(0), "18:00:00") }],
     }),
     localistEvent({
       id: 99,
@@ -306,7 +311,7 @@ test("an exhibit open today anchors to today, clock-free, once", async () => {
       description_text: "An exhibition drawn from the Cantor collection.",
       first_date: dayPT(-30),
       last_date: dayPT(30),
-      instances: [{ start: `${dayPT(1)}T11:00:00-07:00`, end: `${dayPT(1)}T18:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(1), "11:00:00"), end: atPT(dayPT(1), "18:00:00") }],
     }),
   ]);
   assert.equal(events.length, 1, "an open run is one card, not one per open day");
@@ -324,7 +329,7 @@ test("a multi-day series that is not an exhibit stays a set of dated sessions", 
       description_text: "A certification course for clinicians.",
       first_date: dayPT(-3),
       last_date: dayPT(3),
-      instances: [{ start: `${dayPT(1)}T08:30:00-07:00`, end: `${dayPT(1)}T16:30:00-07:00` }],
+      instances: [{ start: atPT(dayPT(1), "08:30:00"), end: atPT(dayPT(1), "16:30:00") }],
     }),
   ]);
   assert.equal(events[0].ongoing, false);
@@ -343,14 +348,14 @@ test("museum drawing sessions and public tours keep their published occurrences 
       description_text: "Drop-In Drawing happens every 2nd and 4th Friday. Sketch your way through the galleries.",
       location_name: "Anderson Collection",
       first_date: dayPT(-30), last_date: dayPT(300),
-      instances: [{ start: `${tomorrow}T12:00:00-07:00`, end: `${tomorrow}T13:00:00-07:00` }],
+      instances: [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:00:00") }],
     }),
     localistEvent({
       id: 53694822395653,
       title: "Public Tour | Auguste Rodin",
       description_text: "Join us for a tour of our indoor and outdoor Rodin Sculptures! Our collection spans three galleries.",
       first_date: dayPT(-30), last_date: dayPT(300),
-      instances: [{ start: `${tomorrow}T11:30:00-07:00`, end: `${tomorrow}T12:30:00-07:00` }],
+      instances: [{ start: atPT(tomorrow, "11:30:00"), end: atPT(tomorrow, "12:30:00") }],
     }),
   ]);
   assert.deepEqual(events.map(({ id, date, time, endTime, ongoing }) => ({ id, date, time, endTime, ongoing })), [
@@ -365,7 +370,7 @@ test("a gallery program with only a past occurrence is not kept alive by its ser
       title: "Public Tour | Auguste Rodin",
       description_text: "Explore the sculpture collection with a guide.",
       first_date: dayPT(-30), last_date: dayPT(300),
-      instances: [{ start: `${dayPT(-1)}T11:30:00-07:00`, end: `${dayPT(-1)}T12:30:00-07:00` }],
+      instances: [{ start: atPT(dayPT(-1), "11:30:00"), end: atPT(dayPT(-1), "12:30:00") }],
     }),
   ]);
   assert.deepEqual(events, []);
@@ -386,7 +391,7 @@ test("gallery conversations keep each scheduled session rather than the exhibiti
   const events = await runWith([dayPT(-1), tomorrow, nextDay].map((date) =>
     localistEvent({
       ...program,
-      instances: [{ start: `${date}T14:00:00-07:00`, end: `${date}T15:00:00-07:00` }],
+      instances: [{ start: atPT(date, "14:00:00"), end: atPT(date, "15:00:00") }],
     }),
   ));
   assert.deepEqual(events.map(({ id, date, time, endTime, ongoing }) => ({ id, date, time, endTime, ongoing })), [
@@ -402,7 +407,7 @@ test("an exhibition using tour figuratively in its name remains an ongoing exhib
       description_text: "An exhibit of newspapers, magazines, and other community publications.",
       location_name: "Library",
       first_date: dayPT(-30), last_date: dayPT(30),
-      instances: [{ start: `${dayPT(0)}T00:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(0), "00:00:00") }],
     }),
   ]);
   assert.equal(event.ongoing, true);
@@ -417,7 +422,7 @@ test("an occurrence that has already happened is dropped", async () => {
       title: "Department Meeting",
       first_date: dayPT(-2),
       last_date: dayPT(-2),
-      instances: [{ start: `${dayPT(-2)}T07:00:00-07:00`, end: `${dayPT(-2)}T08:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(-2), "07:00:00"), end: atPT(dayPT(-2), "08:00:00") }],
     }),
   ]);
   assert.deepEqual(events, []);
@@ -431,7 +436,7 @@ test("a closed exhibit does not linger as ongoing", async () => {
       description_text: "Works by regional artists.",
       first_date: dayPT(-60),
       last_date: dayPT(-2),
-      instances: [{ start: `${dayPT(-2)}T10:00:00-07:00`, end: `${dayPT(-2)}T17:00:00-07:00` }],
+      instances: [{ start: atPT(dayPT(-2), "10:00:00"), end: atPT(dayPT(-2), "17:00:00") }],
     }),
   ]);
   assert.deepEqual(events, []);
