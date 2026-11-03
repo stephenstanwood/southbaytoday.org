@@ -4,6 +4,24 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Svrmp Relaunch Mentorship Kickoff Event$/i,
+    venue: /^(?:Old Union|Stanford University)$/i,
+    date: "2026-11-03",
+    reviewOn: "2026-11-03",
+    reason:
+      "The current Localist occurrence says November 3, but its full Event Details explicitly say Thursday, October 29, 2026. Withhold the conflicting date until the organizer reconfirms it; this is not a cancellation.",
+    source: "https://events.stanford.edu/event/svrmp-relaunch-mentorship-kickoff-event",
+  }),
+  Object.freeze({
+    title: /^Coffee Hour$/i,
+    venue: /^(?:Theory Center, Neurosciences Building \(2nd Floor\)|Stanford University)$/i,
+    date: "2026-11-04",
+    reviewOn: "2026-11-04",
+    reason:
+      "The full organizer listing limits its invitation to Stanford affiliates. Keep sparse copies out of the public feed until public eligibility is confirmed.",
+    source: "https://events.stanford.edu/event/am-coffee-hour-2918",
+  }),
+  Object.freeze({
     title: /^Bicycle Handling Skills Class$/i,
     venue: /^(?:Galvez(?: Parking)? Lot|Stanford University)$/i,
     date: "2026-11-03",

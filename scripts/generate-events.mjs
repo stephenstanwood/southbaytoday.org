@@ -4433,6 +4433,12 @@ async function fetchStanfordEvents() {
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
       const publicZoomOnly = /\bIn-person attendance is limited to Stanford\b/i.test(restriction)
         && /\bMembers of the public are invited to participate via Zoom\b/i.test(restriction);
+      // This coffee hour has no audience tags, but its full body expressly
+      // invites Stanford affiliates. Read that sentence before truncation;
+      // an unrelated public coffee hour must still pass.
+      // Evidence: docs/qa/2026-11-03-0307z-fact-check.md.
+      if (/^Coffee Hour$/i.test(ev.title || "")
+        && /\bOpen to all Stanford affiliates\.?$/i.test(description)) return null;
       // Cantor's exhibition body carries visiting hours and explicit free
       // admission after the display excerpt. Preserve the current source's
       // hours before shortening; do not freeze them in a dated override.

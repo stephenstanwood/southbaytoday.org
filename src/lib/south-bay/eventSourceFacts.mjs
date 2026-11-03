@@ -34,6 +34,33 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The organizer's current RSVP form resolves the newsletter's Saturday typo:
+  // Friday, November 13 at 6 PM, San Pedro Square Market. Exclusive autographs
+  // are for season ticket holders; the general rally is not described as restricted.
+  // Evidence: docs/qa/2026-11-03-0307z-fact-check.md.
+  {
+    date: "2026-11-13", url: "https://sjearthquakes.formstack.com/forms/quakes_playoff_rally",
+    facts: {
+      venue: "San Pedro Square Market",
+      attendanceNote: "RSVP through the organizer's form. Exclusive player autographs are for season ticket holders, including new 2027–28 season ticket holders.",
+    },
+    copyReplacements: [
+      ["Fan rally to celebrate the Earthquakes' regular season and kick off the 2026 MLS Cup Playoffs, with players expected to attend. The email says 'Saturday, November 13', but November 13, 2026 is a Friday, so the date or weekday may be wrong. RSVP requested.", "Fan rally at San Pedro Square Market to celebrate the Earthquakes' regular season and kick off the 2026 MLS Cup Playoffs. The organizer's RSVP form confirms Friday, November 13 at 6 PM."],
+      [/\bat San Pedro Square to celebrate\b/g, "at San Pedro Square Market to celebrate"],
+    ],
+  },
+  // The full LiveWhale body supplies the room and mandatory signup omitted
+  // by RSS's empty excerpt. Keep admission unknown and preserve stronger
+  // booking states if the organizer later closes or fills registration.
+  {
+    date: "2026-11-05", url: "https://events.scu.edu/leavey-school-of-business/event/524992-gbp-mssb-fireside-chat-sf-giants",
+    aliasUrls: ["https://events.scu.edu/live/events/524992-gbp-mssb-fireside-chat-sf-giants"],
+    facts: {
+      title: "GBP & MSSB Fireside Chat: SF Giants",
+      venue: "Lucas Hall", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Room 209. Registration is required through the organizer's linked form for this in-person career talk with SF Giants VP of People & Culture Lan Huynh Lee.",
+    },
+  },
   // The public audience tags describe Zoom access, not the physical room.
   // The exact occurrence page and restricted_to field agree on that limit;
   // its page also explicitly says Free Event despite Localist's false flag.
@@ -65,7 +92,9 @@ const CORRECTIONS = [
     aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6ab592174852aa18b5b0a4fc"],
     copyReplacements: [
       [/\b2022 novel Theft\b/g, "2025 novel Theft"],
-      [/The Adult Book Discussion Group meets twice a month, on the third Thursday morning at 11 am and on the third Thursday evening at 7 PM\.\s*/g, ""],
+      // Prose normalization leaves the source comma in place; copy editing
+      // removes it later. Match both stages so the final pass cannot revive it.
+      [/The Adult Book Discussion Group meets twice a month, on the third Thursday morning at 11 am,? and on the third Thursday evening at 7 PM\.\s*/g, ""],
       [/Both meetings are held in Room 201B\./g, "Meetings are held in Room 201B."],
     ],
   },
