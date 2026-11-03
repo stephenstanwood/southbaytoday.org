@@ -357,6 +357,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["As a parent or caregiver, it is mandatory to stay", "As a parent or caregiver, you must stay"],
+      ["The early literacy focus is on longer picture books and flannel board stories and other storytelling activities and fingerplays.", "The early literacy focus is on longer picture books, flannel board stories, other storytelling activities, and fingerplays."],
       ["In November the Cupertino Library Adult Book Discussion Group", "In November, the Cupertino Library Adult Book Discussion Group"],
       ["Nobel Prize winning author, Abdulrazak Gurnah.", "Nobel Prize-winning author Abdulrazak Gurnah."],
       ["the East African Island of Zanzibar.", "the East African island of Zanzibar."],

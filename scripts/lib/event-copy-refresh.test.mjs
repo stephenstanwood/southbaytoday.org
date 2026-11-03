@@ -42,7 +42,8 @@ const november2MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/revi
 const november2AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-02-afternoon.json", import.meta.url)));
 const november2EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-02-evening.json", import.meta.url)));
 const november2NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-02-night.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture];
+const november2LateFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-02-late.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -60,12 +61,16 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
 }));
 
 test("November grammar repairs preserve other publishers and later source instructions", () => {
-  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases, ...attendanceFixture.cases, ...volunteersFixture.cases, ...newsletterFixture.cases, ...afternoonRefreshFixture.cases, ...november1EveningRefreshFixture.cases, ...november2Fixture.cases, ...november2OvernightFixture.cases, ...november2MorningFixture.cases, ...november2AfternoonFixture.cases, ...november2EveningFixture.cases, ...november2NightFixture.cases]) {
+  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases, ...attendanceFixture.cases, ...volunteersFixture.cases, ...newsletterFixture.cases, ...afternoonRefreshFixture.cases, ...november1EveningRefreshFixture.cases, ...november2Fixture.cases, ...november2OvernightFixture.cases, ...november2MorningFixture.cases, ...november2AfternoonFixture.cases, ...november2EveningFixture.cases, ...november2NightFixture.cases, ...november2LateFixture.cases]) {
     const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
     assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
     const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
     const event = { source: row.source, [row.field]: row.refreshed + suffix };
-    assert.deepEqual(polishReviewedEventCopy(event), { ...event, [row.field]: row.reviewed + suffix });
+    // Earlier captures can receive a later reviewed grammar repair. Use the
+    // final approved wording while preserving the new source instructions.
+    const reviewed = reviewedCases.find(candidate => candidate.source === row.source
+      && candidate.field === row.field && candidate.refreshed === row.refreshed).reviewed;
+    assert.deepEqual(polishReviewedEventCopy(event), { ...event, [row.field]: reviewed + suffix });
   }
 });
 
