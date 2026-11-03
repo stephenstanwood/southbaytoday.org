@@ -285,6 +285,11 @@ const EDITS = {
       ["workshops led by a talented, published illustrators.", "workshops led by talented, published illustrators."],
     ],
   },
+  "Kepler's Books": {
+    description: [
+      ["bestselling author and beloved community member, Abraham Verghese.", "bestselling author and beloved community member Abraham Verghese."],
+    ],
+  },
   "Montalvo Arts Center": {
     description: [
       ["RSVP Lowrider Art Showcase", ""],
@@ -302,6 +307,7 @@ const EDITS = {
   "Santana Row": {
     description: [
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
+      ["from 5:00–9:00 pm, for winter evenings", "from 5:00–9:00 pm for winter evenings"],
     ],
   },
   "Los Altos Village Association": {
@@ -440,6 +446,7 @@ const EDITS = {
       ["Workshop suitable for the advanced beginner, intermediate, or advanced sewist.", "The workshop is suitable for the advanced beginner, intermediate, or advanced sewist."],
       ["The Silvermans are Gotham (IFP) Documentary Lab Fellows, CNN/Film Independent Episodic Lab Fellows.", "The Silvermans are Gotham (IFP) Documentary Lab Fellows and CNN/Film Independent Episodic Lab Fellows."],
       ["Join us at the Mitchell Park Community Center, as we celebrate Diwali! Enjoy fun activities for all ages including:", "Join us at the Mitchell Park Community Center as we celebrate Diwali! Enjoy fun activities for all ages:"],
+      ["founded in 2016 by international Kathak artist, Farah Yasmeen Shaikh, exemplifies", "founded in 2016 by international Kathak artist Farah Yasmeen Shaikh, exemplifies"],
       ["children engage in problem solving, teamwork, self-confidence, and creativity!", "children practice problem solving and teamwork while developing self-confidence and creativity!"],
       [/Duration: (60|90) minutes$/g, "Duration: $1 minutes."],
       ["Note: Teens and Adults only. Use of", "Note: Teens and adults only. Use of"],
