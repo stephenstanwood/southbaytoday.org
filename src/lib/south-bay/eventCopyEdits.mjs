@@ -259,6 +259,10 @@ const EDITS = {
       ["Learn the fun of collecting stamps", "Discover the fun of collecting stamps"],
       ["or topic exciting to you.", "or a topic that excites you."],
       ["Meetings typically have a presentation targeted to less experienced collectors from an experienced collector.", "Meetings typically feature a presentation by an experienced collector for less experienced collectors."],
+      ["Today we have free play with Paint!", "Today we have free play with paint!"],
+      ["This month's we'll learn", "This month we'll learn"],
+      ["This program is in Celebration of Diwali.", "This program is in celebration of Diwali."],
+      ["ALL supplies are provided!", "All supplies are provided!"],
     ],
     blurb: [
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
@@ -308,6 +312,7 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
       ["from 5:00–9:00 pm, for winter evenings", "from 5:00–9:00 pm for winter evenings"],
     ],
@@ -366,6 +371,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["The Seed Keeper b y Diane Wilson.", "The Seed Keeper by Diane Wilson."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
       ["We will meet on Monday November", "We will meet on Monday, November"],
       ["As a parent or caregiver, it is mandatory to stay", "As a parent or caregiver, you must stay"],
@@ -506,6 +512,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      ["The 5th annual Poetry Live! Spoken word event featuring poets", "The 5th annual Poetry Live! spoken word event features poets"],
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["similar to Bingo.", "similar to bingo."],
       ["Drone programming program using Python at the", "Drone programming with Python at the"],
