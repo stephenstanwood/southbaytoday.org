@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-02T05:37:11.205Z",
+      "generatedAt": "2026-11-03T04:17:42.986Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 25 – Nov 1",
+      "dateRange": "Oct 26 – Nov 2",
       "stats": {
-        "total": 427,
-        "notable": 20,
-        "newUnits": 10,
-        "totalValuation": 17930558
+        "total": 508,
+        "notable": 28,
+        "newUnits": 12,
+        "totalValuation": 24097090
       },
       "permits": [
         {
@@ -111,27 +111,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2022-702414-RS",
-          "address": "1185 Sierra Av #2",
+          "id": "2026-115994-RS",
+          "address": "1482 Maxine Av #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Code Case One - Detached Garage and ADU",
-          "valuation": 58137,
+          "description": "Epr Ab 2533 Legalize Detach ADU",
+          "valuation": 64035,
           "units": 1,
-          "issueDate": "2026-10-27",
+          "issueDate": "2026-10-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-120519-RS",
-          "address": "1849 Potrero Dr #3",
+          "id": "2026-130433-RS",
+          "address": "631 N Daniel Wy #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "JADU Garage Conversion",
-          "valuation": 51017,
+          "description": "Detached Garage to ADU",
+          "valuation": 63507,
           "units": 1,
-          "issueDate": "2026-10-27",
+          "issueDate": "2026-10-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
