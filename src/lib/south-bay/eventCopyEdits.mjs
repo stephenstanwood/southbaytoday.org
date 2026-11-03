@@ -42,6 +42,9 @@ const EDITS = {
     ],
     description: [
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
+      ["No Registration required.", "No registration required."],
+      ["For ages up to 12, and families.", "For ages up to 12 and families."],
+      ["Diwali tales brought to life through expressive Indian classical movement, music and rhythms and concludes with a joyful group dance!", "Diwali tales are brought to life through expressive Indian classical movement, music and rhythms, and the program concludes with a joyful group dance!"],
       ["This program is meant for Intermediate or Advanced Level Learners, not for Beginners.", "This program is meant for intermediate or advanced-level learners, not for beginners."],
       ["increase English Language and vocabulary skills.", "increase English language and vocabulary skills."],
       ["assist you with: Accessing Wi-Fi; Using email; Web searches; Understanding your e-reader device; Using our library's e-resources.", "assist you with accessing Wi-Fi; using email; searching the web; understanding your e-reader device; and using our library's e-resources."],
@@ -257,6 +260,7 @@ const EDITS = {
     ],
     blurb: [
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
+      ["Pair up with a teen reading coach for one-on-one practice as a grades TK-5 reading buddy.", "Students in grades TK-5 can pair up with a teen reading coach for one-on-one reading practice."],
       ["at Hillview Library; bring your own mat, no registration needed.", "at Hillview Library; bring your own mat. No registration needed."],
       ["create art alongside other kids, no registration needed.", "create art alongside other kids; no registration needed."],
       [/^Join stories, songs\b/g, "Join us for stories, songs"],
@@ -303,6 +307,7 @@ const EDITS = {
   "Los Altos Village Association": {
     description: [
       ["Join us Friday, October 30th for", "Join us Friday, October 30th, for"],
+      ["Date: Sunday, November 29th, 2026 Time: 6:00 p.m. Place: Downtown Los Altos, California", "Date: Sunday, November 29th, 2026; Time: 6:00 p.m.; Place: Downtown Los Altos, California"],
     ],
   },
   "Heritage Theatre": {
@@ -517,6 +522,7 @@ const EDITS = {
   "Stanford Events": {
     title: [
       ["Applied Physics/Physics Colloquium", "Applied Physics / Physics Colloquium"],
+      ['CMEMS: Alice Brooke presents, "A Pearl of Great Price"', 'CMEMS: Alice Brooke presents "A Pearl of Great Price"'],
       ['" Wormholes and the Conformal Bootstrap"', '"Wormholes and the Conformal Bootstrap"'],
       [/^Mips Seminar\b/g, "MIPS Seminar"],
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
