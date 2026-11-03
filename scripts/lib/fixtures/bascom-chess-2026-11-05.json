@@ -1,0 +1,539 @@
+{
+  "sourceUrl": "https://gateway.bibliocommons.com/v2/libraries/sjpl/events?ids=6a83721e4cb69d003e216ef2&limit=1&page=1",
+  "retrievedAt": "2026-11-03T04:08:36.453387+00:00",
+  "sourceSha256": "c46b1c52a77bf4e537977cc4f8c44f64ba72d736202623e4f7f90b39c9d48f14",
+  "response": {
+    "events": {
+      "items": [
+        "6a83721e4cb69d003e216ef2"
+      ],
+      "pagination": {
+        "count": 1,
+        "pages": 1,
+        "page": 1,
+        "limit": 1
+      }
+    },
+    "entities": {
+      "events": {
+        "6a83721e4cb69d003e216ef2": {
+          "id": "6a83721e4cb69d003e216ef2",
+          "key": "2026-11-05T16:00:00",
+          "seriesId": "6a7e081bbe148200298724a2",
+          "definition": {
+            "start": "2026-11-05T16:00",
+            "end": "2026-11-05T17:30",
+            "title": "Chess Club for Kids ",
+            "description": "<p>Come learn to play chess, or just play a game!&nbsp;</p>\n<p>This is an informal and welcoming program.  <br></p>\n<p>For ages up to&nbsp;12, and families. Located in the children's area.</p>\n<p><strong>Registration encouraged but not required.</strong><br><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" id=\"OWAbbdd9634-7d47-736d-1ffa-9928f07f3ba3\" data-linkindex=\"0\">ADA Accommodation Requests</a><br><br></p>",
+            "partnerId": null,
+            "bibIds": [],
+            "featuredImageId": "66f301671d9fd3a585fec205",
+            "branchLocationId": "24",
+            "nonBranchLocationId": null,
+            "locationDetails": "children's area",
+            "audienceIds": [
+              "5d5f0926be771f2300369397",
+              "5d714d6c4464033900bac7c2"
+            ],
+            "languageIds": [
+              "5d52fbb909c424450063680d"
+            ],
+            "programId": null,
+            "typeIds": [
+              "5d65e9ae2f3a81f8aeaabba6"
+            ],
+            "isFeatured": null,
+            "registrationInfo": {
+              "provider": "BIBLIO_EVENTS",
+              "enabledMethods": [],
+              "cap": 10,
+              "instructions": null,
+              "maxSeats": 2,
+              "scope": null,
+              "waitlistEnabled": true,
+              "waitlistAutoPromote": true,
+              "onlineInstructions": null,
+              "instructionsToAttend": "<p>Chess Club for Kids is located in the Bascom Library&nbsp;children's area.&nbsp;All supplies provided. We hope to see you there for this free, fun program!</p>",
+              "registrationStart": {
+                "windowType": "RELATIVE",
+                "date": null,
+                "time": null,
+                "unit": "days",
+                "ordinal": 21
+              },
+              "registrationEnd": {
+                "windowType": "EVENT_START",
+                "date": null,
+                "time": null,
+                "unit": "minutes",
+                "ordinal": 1
+              }
+            },
+            "contact": {
+              "name": "Tom Hewitt",
+              "phone": {
+                "contactType": "phone",
+                "rawValue": "408-808-3077 ",
+                "value": "(408) 808-3077",
+                "globalValue": "+1-408-808-3077"
+              },
+              "email": {
+                "contactType": "email",
+                "rawValue": "Thomas.Hewitt@sjlibrary.org",
+                "value": "thomas.hewitt@sjlibrary.org",
+                "globalValue": "thomas.hewitt@sjlibrary.org"
+              }
+            },
+            "isCancelled": false
+          },
+          "indexStart": "2026-11-06T00:00:00Z",
+          "indexEnd": "2026-11-06T01:30:00Z",
+          "isRecurring": true,
+          "numberRegistered": 2,
+          "numberWaitlistRegistered": 0,
+          "isFull": false,
+          "registrationClosed": false
+        }
+      },
+      "eventSeries": {
+        "6a7e081bbe148200298724a2": {
+          "id": "6a7e081bbe148200298724a2",
+          "definition": {
+            "title": "Chess Club for Kids ",
+            "description": "<p>Come learn to play chess, or just play a game!&nbsp;</p>\n<p>This is an informal and welcoming program.  <br></p>\n<p>For ages up to&nbsp;12, and families. Located in the children's area.</p>\n<p><strong>Registration encouraged but not required.</strong><br><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" id=\"OWAbbdd9634-7d47-736d-1ffa-9928f07f3ba3\" data-linkindex=\"0\">ADA Accommodation Requests</a><br><br></p>",
+            "bibIds": [],
+            "start": "2026-10-01T16:00",
+            "end": "2026-10-01T17:30",
+            "isFeatured": null,
+            "locationDetails": "children's area",
+            "branchLocationId": "24",
+            "partnerId": null,
+            "featuredImageId": "66f301671d9fd3a585fec205",
+            "nonBranchLocationId": null,
+            "audienceIds": [
+              "5d5f0926be771f2300369397",
+              "5d714d6c4464033900bac7c2"
+            ],
+            "languageIds": [
+              "5d52fbb909c424450063680d"
+            ],
+            "programId": null,
+            "typeIds": [
+              "5d65e9ae2f3a81f8aeaabba6"
+            ],
+            "registrationInfo": {
+              "provider": "BIBLIO_EVENTS",
+              "enabledMethods": [],
+              "cap": 10,
+              "instructions": null,
+              "maxSeats": 2,
+              "scope": null,
+              "waitlistEnabled": true,
+              "waitlistAutoPromote": true,
+              "onlineInstructions": null,
+              "instructionsToAttend": "<p>Chess Club for Kids is located in the Bascom Library&nbsp;children's area.&nbsp;All supplies provided. We hope to see you there for this free, fun program!</p>",
+              "registrationStart": {
+                "windowType": "RELATIVE",
+                "date": null,
+                "time": null,
+                "unit": "days",
+                "ordinal": 21
+              },
+              "registrationEnd": {
+                "windowType": "EVENT_START",
+                "date": null,
+                "time": null,
+                "unit": "minutes",
+                "ordinal": 1
+              }
+            },
+            "contact": {
+              "name": "Tom Hewitt",
+              "phone": {
+                "contactType": "phone",
+                "rawValue": "408-808-3077 ",
+                "value": "(408) 808-3077",
+                "globalValue": "+1-408-808-3077"
+              },
+              "email": {
+                "contactType": "email",
+                "rawValue": "Thomas.Hewitt@sjlibrary.org",
+                "value": "thomas.hewitt@sjlibrary.org",
+                "globalValue": "thomas.hewitt@sjlibrary.org"
+              }
+            }
+          },
+          "eventKeys": [
+            "2026-10-01T16:00:00",
+            "2026-10-08T16:00:00",
+            "2026-10-15T16:00:00",
+            "2026-10-22T16:00:00",
+            "2026-10-29T16:00:00",
+            "2026-11-05T16:00:00",
+            "2026-11-12T16:00:00",
+            "2026-11-19T16:00:00",
+            "2026-12-03T16:00:00",
+            "2026-12-10T16:00:00",
+            "2026-12-17T16:00:00"
+          ],
+          "isReviewed": false,
+          "isSingleEvent": false,
+          "lastPublishedState": null,
+          "recurrencePatterns": [
+            {
+              "generator": "weekday",
+              "expireDate": "2026-12-17",
+              "patternStart": "2026-10-01T16:00",
+              "patternEnd": "2026-10-01T17:30",
+              "generatorArgs": {
+                "weekday": [
+                  "thursday"
+                ]
+              },
+              "id": "6a83721e4cb69d003e216eea",
+              "excludedDates": [
+                "2026-11-26"
+              ],
+              "excludedKeys": [],
+              "ordinal": [
+                1
+              ]
+            }
+          ],
+          "workflowState": "published",
+          "overrides": [],
+          "templateId": null,
+          "updateRequiresEmailNotifications": false
+        }
+      },
+      "eventAudiences": {
+        "5d5f0926be771f2300369397": {
+          "id": "5d5f0926be771f2300369397",
+          "name": "Kids, ages 5-10",
+          "imageId": null
+        },
+        "5d714d6c4464033900bac7c2": {
+          "id": "5d714d6c4464033900bac7c2",
+          "name": "Pre-Teens, ages 10-12",
+          "imageId": null
+        }
+      },
+      "eventTypes": {
+        "5d65e9ae2f3a81f8aeaabba6": {
+          "id": "5d65e9ae2f3a81f8aeaabba6",
+          "name": "Games & Family Entertainment",
+          "description": "Games & Family Entertainment",
+          "imageId": "6adbcc330b801373af90d789"
+        }
+      },
+      "eventPrograms": {},
+      "eventLanguages": {
+        "5d52fbb909c424450063680d": {
+          "id": "5d52fbb909c424450063680d",
+          "name": "English",
+          "description": "English",
+          "imageId": null
+        }
+      },
+      "locations": {
+        "24": {
+          "id": "24",
+          "name": "Bascom",
+          "coreAbsent": false,
+          "isHidden": false,
+          "imageId": "64e3cf38d0f9343a00e86656",
+          "customUrl": "https://www.sjpl.org/locations/bascom/",
+          "transitUrl": "",
+          "hours": [
+            {
+              "timeRef": "tuesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "66b520ee14460a1fe340739a"
+            },
+            {
+              "timeRef": "wednesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "66b520ee14460a1fe3407399"
+            },
+            {
+              "timeRef": "thursday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "66b520ee14460a1fe3407398"
+            },
+            {
+              "timeRef": "friday",
+              "openTime": "T12:00",
+              "closeTime": "T18:00",
+              "id": "66b520ee14460a1fe3407397"
+            },
+            {
+              "timeRef": "saturday",
+              "openTime": "T10:00",
+              "closeTime": "T18:00",
+              "id": "66b520ee14460a1fe3407396"
+            },
+            {
+              "timeRef": "monday",
+              "openTime": "T13:00",
+              "closeTime": "T19:00",
+              "id": "66b520ee14460a1fe3407395"
+            },
+            {
+              "timeRef": "sunday",
+              "openTime": "T12:00",
+              "closeTime": "T17:00",
+              "id": "66b520ee14460a1fe3407394"
+            }
+          ],
+          "sortedHours": [
+            {
+              "day": "monday",
+              "isToday": true,
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T13:00",
+                  "closeTime": "T19:00",
+                  "id": "66b520ee14460a1fe3407395"
+                }
+              ]
+            },
+            {
+              "day": "tuesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "66b520ee14460a1fe340739a"
+                }
+              ]
+            },
+            {
+              "day": "wednesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "66b520ee14460a1fe3407399"
+                }
+              ]
+            },
+            {
+              "day": "thursday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "66b520ee14460a1fe3407398"
+                }
+              ]
+            },
+            {
+              "day": "friday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "friday",
+                  "openTime": "T12:00",
+                  "closeTime": "T18:00",
+                  "id": "66b520ee14460a1fe3407397"
+                }
+              ]
+            },
+            {
+              "day": "saturday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T18:00",
+                  "id": "66b520ee14460a1fe3407396"
+                }
+              ]
+            },
+            {
+              "day": "sunday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T12:00",
+                  "closeTime": "T17:00",
+                  "id": "66b520ee14460a1fe3407394"
+                }
+              ]
+            }
+          ],
+          "hoursNote": "",
+          "address": {
+            "country": "US",
+            "zip": "95128",
+            "state": "CA",
+            "city": "San Jose",
+            "street": "S. Bascom Ave",
+            "number": "1000"
+          },
+          "branchContacts": [
+            {
+              "contactType": "phone",
+              "rawValue": "1-408-808-3077",
+              "label": null,
+              "value": "(408) 808-3077",
+              "globalValue": "+1-408-808-3077",
+              "id": "66b520ee14460a1fe340739c"
+            },
+            {
+              "contactType": "email",
+              "rawValue": "bamail@sjlibrary.org",
+              "label": null,
+              "globalValue": "bamail@sjlibrary.org",
+              "value": "bamail@sjlibrary.org",
+              "id": "66b520ee14460a1fe340739b"
+            }
+          ],
+          "mapLocation": {
+            "centrePoint": {
+              "lng": -121.9314005,
+              "lat": 37.3076292
+            },
+            "utcOffsetNow": "-0800",
+            "timeZone": "America/Los_Angeles",
+            "isGeocoded": false
+          },
+          "facilities": [
+            {
+              "typeId": "651f1befa7d41a3500013138",
+              "id": "66b520ee14460a1fe3407393",
+              "url": null
+            },
+            {
+              "typeId": "651f24ca9690c63c00ffca19",
+              "id": "66b520ee14460a1fe3407392",
+              "url": null
+            },
+            {
+              "typeId": "6531af2acb391ed4418f7d30",
+              "id": "66b520ee14460a1fe3407391",
+              "url": null
+            },
+            {
+              "typeId": "6531b6318fffe94c00c78b5a",
+              "id": "66b520ee14460a1fe3407390",
+              "url": null
+            },
+            {
+              "typeId": "6531b6548fffe94c00c78b5e",
+              "id": "66b520ee14460a1fe340738f",
+              "url": null
+            },
+            {
+              "typeId": "6531b6748fffe94c00c78b60",
+              "id": "66b520ee14460a1fe340738e",
+              "url": null
+            },
+            {
+              "typeId": "66b520a814460a1fe3407388",
+              "id": "66b520ee14460a1fe340738d",
+              "url": null
+            }
+          ],
+          "highlights": [],
+          "specialHoursIds": [
+            "691f94a806078d360078fad9",
+            "691f94b6a6fedec9530a2d65",
+            "691f94d09be7c6685c2922be",
+            "691f94db9be7c6685c2922bf"
+          ],
+          "webUrl": "https://www.sjpl.org/locations/bascom/"
+        }
+      },
+      "specialHours": {
+        "691f94a806078d360078fad9": {
+          "id": "691f94a806078d360078fad9",
+          "name": "Veteran’s Day Holiday",
+          "startDate": "2026-11-11",
+          "endDate": "2026-11-11",
+          "allLocations": true,
+          "locationIds": []
+        },
+        "691f94b6a6fedec9530a2d65": {
+          "id": "691f94b6a6fedec9530a2d65",
+          "name": "Thanksgiving Holidays",
+          "startDate": "2026-11-26",
+          "endDate": "2026-11-27",
+          "allLocations": true,
+          "locationIds": []
+        },
+        "691f94d09be7c6685c2922be": {
+          "id": "691f94d09be7c6685c2922be",
+          "name": "Christmas Holidays",
+          "startDate": "2026-12-24",
+          "endDate": "2026-12-25",
+          "allLocations": true,
+          "locationIds": []
+        },
+        "691f94db9be7c6685c2922bf": {
+          "id": "691f94db9be7c6685c2922bf",
+          "name": "New Year's Day",
+          "startDate": "2027-01-01",
+          "endDate": "2027-01-01",
+          "allLocations": true,
+          "locationIds": []
+        }
+      },
+      "places": {},
+      "images": {
+        "66f301671d9fd3a585fec205": {
+          "id": "66f301671d9fd3a585fec205",
+          "title": "pexels-pixabay-139392",
+          "url": "https://sjpl.bibliocommons.com/events/uploads/images/full/739534044dc23ea9fa5c3d1a67623131/pexels-pixabay-139392.jpg",
+          "alt": "chess pieces on a board",
+          "tag": "Event",
+          "caption": "",
+          "description": "",
+          "name": "pexels-pixabay-139392",
+          "sizes": [
+            {
+              "key": "thumbnail",
+              "width": 150,
+              "height": 150,
+              "url": "https://sjpl.bibliocommons.com/events/uploads/images/thumbnail/739534044dc23ea9fa5c3d1a67623131/pexels-pixabay-139392.jpg",
+              "id": "66f301671d9fd3a585fec206"
+            },
+            {
+              "key": "medium",
+              "width": 150,
+              "height": 300,
+              "url": "https://sjpl.bibliocommons.com/events/uploads/images/medium/739534044dc23ea9fa5c3d1a67623131/pexels-pixabay-139392.jpg",
+              "id": "66f301671d9fd3a585fec207"
+            },
+            {
+              "key": "large",
+              "width": 576,
+              "height": 1024,
+              "url": "https://sjpl.bibliocommons.com/events/uploads/images/large/739534044dc23ea9fa5c3d1a67623131/pexels-pixabay-139392.jpg",
+              "id": "66f301671d9fd3a585fec208"
+            },
+            {
+              "key": "full",
+              "width": 1280,
+              "height": 853,
+              "url": "https://sjpl.bibliocommons.com/events/uploads/images/full/739534044dc23ea9fa5c3d1a67623131/pexels-pixabay-139392.jpg",
+              "id": "66f301671d9fd3a585fec209"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1764,11 +1764,13 @@ const CORRECTIONS = [
   // Keep the capacity and priority conditions visible, and keep the repair
   // dated rather than weakening BiblioCommons' conservative provider rule.
   // Evidence: docs/qa/2026-10-21-1207-fact-check.md (first-party page bodies).
+  // November 5 Bascom chess reconfirmed in docs/qa/2026-11-03-0407z-fact-check.md.
   ...[
     ["2026-10-24", "6a3f10c0f56bd86e00b95e69", "Registration is requested but not required."],
     ["2026-10-24", "6a87354c46e4c80031cbd152", "Preregistration is recommended but not required. Limited to 20 participants; preregistered teens receive priority if capacity is reached."],
     ["2026-10-24", "68fc0358c313c23700ded894", "Registration is recommended. Walk-ins are welcome if space is available; the class is limited to 10 attendees."],
     ["2026-10-22", "6a83721e4cb69d003e216ef0", "Registration is encouraged but not required."],
+    ["2026-11-05", "6a83721e4cb69d003e216ef2", "Registration is encouraged but not required."],
   ].map(([date, sourceId, attendanceNote]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${sourceId}`,
     aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${sourceId}`],
