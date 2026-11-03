@@ -438,6 +438,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["It is impossible to leave the pleasant life", "It is impossible to live the pleasant life"],
       ["Registration is not required but you will receive", "Registration is not required, but you will receive"],
       ["It is open to all levels of experience and no registration is required.", "It is open to all levels of experience, and no registration is required."],
       ["This program is meant for families with children and no previous experience is needed!", "This program is meant for families with children, and no previous experience is needed!"],
