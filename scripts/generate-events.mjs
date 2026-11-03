@@ -1006,12 +1006,14 @@ const PROPER_NOUN_FIXES = {
   "Sketching Together Aia Silicon Valley Chapter": "Sketching Together AIA Silicon Valley Chapter",
 };
 
-// These source-published initials name organizations, programs and tools;
+// These source-published initials name organizations, programs, tools and performers;
 // they are not shouted prose. Share them across all three casing passes so
 // a refresh cannot undo verified title/body spellings. Preserve uppercase
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Campus Craze's performer, as named in Stanford's November 3 newsletter.
+  "ADHDJ",
   // Stanford Human-Centered Artificial Intelligence's published seminar initials.
   // Preserve source casing without respelling mixed-case names such as "Hai".
   "HAI",
@@ -4438,8 +4440,18 @@ async function fetchStanfordEvents() {
       // Zoom option remains attendable online even when experience is hybrid.
       const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
-      const publicZoomOnly = /\bIn-person attendance is limited to Stanford\b/i.test(restriction)
-        && /\bMembers of the public are invited to participate via Zoom\b/i.test(restriction);
+      const campusOnlyInPerson = /\bIn-person attendance is limited to Stanford\b/i.test(restriction);
+      // Public audience tags can refer only to the online portion. Some
+      // organizers put the Zoom invitation in stream_info, not restricted_to.
+      // Require both public eligibility and explicit Zoom access before
+      // treating a restricted physical room as publicly attendable online.
+      const publicAudience = [...(ev.filters?.event_audience || []), ...(ev.filters?.event_target_audience || [])]
+        .some((audience) => /^(?:General Public|Everyone)$/i.test(String(audience?.name || audience || "").trim()));
+      const publicZoomOnly = campusOnlyInPerson
+        && (/\bMembers of the public are invited to participate via Zoom\b/i.test(restriction)
+          || (ev.experience === "hybrid" && publicAudience
+            && /\bZoom\b/i.test(stripHtml(ev.stream_info || ""))));
+      if (campusOnlyInPerson && !publicZoomOnly && ev.experience !== "virtual") return null;
       // This coffee hour has no audience tags, but its full body expressly
       // invites Stanford affiliates. Read that sentence before truncation;
       // an unrelated public coffee hour must still pass.
@@ -4516,7 +4528,7 @@ async function fetchStanfordEvents() {
       const category = ["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture
         ? "education" : inferredCategory;
       const attendanceNotes = [
-        ...(publicZoomOnly ? [restriction] : []),
+        ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
       ];

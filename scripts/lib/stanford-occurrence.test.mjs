@@ -60,6 +60,41 @@ async function runWith(events) {
   }
 }
 
+test("Stanford public Zoom access does not advertise a campus-only physical room", async () => {
+  const tomorrow = dayPT(1);
+  const restricted = {
+    title: "Public policy book talk", location_name: "Encina Hall",
+    address: "616 Jane Stanford Way, Stanford, CA 94305",
+    custom_fields: { restricted_to: "In-person attendance is limited to Stanford faculty, researchers, students, and staff." },
+    filters: { event_audience: [{ name: "General Public" }, { name: "Everyone" }] },
+    experience: "hybrid", stream_info: "Register for Zoom link: organizer registration page",
+    instances: [{ start: atPT(tomorrow, "16:00:00"), end: atPT(tomorrow, "17:15:00") }],
+  };
+  const rows = await runWith([
+    localistEvent({ ...restricted, id: 1 }),
+    localistEvent({ ...restricted, id: 2, stream_info: null }),
+    localistEvent({ ...restricted, id: 3, filters: {} }),
+    localistEvent({ ...restricted, id: 4, custom_fields: {} }),
+    localistEvent({ ...restricted, id: 5, experience: "inperson" }),
+    localistEvent({ ...restricted, id: 6, filters: {}, stream_info: null,
+      custom_fields: { restricted_to: restricted.custom_fields.restricted_to + " Members of the public are invited to participate via Zoom." } }),
+    localistEvent({ ...restricted, id: 7, experience: "virtual", stream_info: null }),
+  ]);
+  assert.deepEqual(rows.map((row) => row.id), [1, 4, 6, 7].map((id) => `stanford-${id}-${tomorrow}`));
+  for (const row of [rows[0], rows[2]]) {
+    assert.equal(row.virtual, true);
+    assert.equal(row.venue, "Online (Zoom)");
+    assert.equal(row.address, "");
+    assert.match(row.attendanceNote, /Public attendance is via Zoom/);
+    assert.match(row.attendanceNote, /In-person attendance is limited to Stanford/);
+    assert.equal(row.time, "4:00 PM");
+    assert.equal(row.endTime, "5:15 PM");
+  }
+  assert.equal(rows[1].venue, "Encina Hall", "unrestricted hybrid access retains its physical venue");
+  assert.equal(rows[1].virtual, undefined);
+  assert.equal(rows[3].virtual, true, "an explicitly virtual occurrence does not require entry to the physical room");
+});
+
 test("conditional free admission never masks published paid Localist ticket tiers", async () => {
   const tomorrow = dayPT(1);
   const instances = [{ start: atPT(tomorrow, "07:30:00") }];

@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Post-Election SVLG Member Briefing$/i,
+    venue: /.*/,
+    date: "2026-11-06",
+    reviewOn: "2026-11-06",
+    reason:
+      "The organizer's ticket page identifies an online Zoom briefing open to employees of SVLG member companies. The sparse calendar card does not establish a public in-person event in San Jose.",
+    source: "https://www.eventbrite.com/e/post-election-svlg-member-briefing-tickets-2003679941643",
+  }),
+  Object.freeze({
     title: /^Svrmp Relaunch Mentorship Kickoff Event$/i,
     venue: /^(?:Old Union|Stanford University)$/i,
     date: "2026-11-03",

@@ -39,6 +39,31 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The dated member briefing is withheld from the public calendar. Its old
+  // URL still resolves as a retired leaf, which must not repeat the calendar
+  // card's invented physical location. Preserve the verified access there too.
+  // Evidence: docs/qa/2026-11-03-2307z-fact-check.md.
+  {
+    date: "2026-11-06", url: "https://www.eventbrite.com/e/post-election-svlg-member-briefing-tickets-2003679941643",
+    facts: {
+      virtual: true, venue: "Online (Zoom)", address: "",
+      description: "Online election-results briefing for employees of SVLG member companies. Registration provides the Zoom link.",
+      blurb: "Online election-results briefing for employees of SVLG member companies.",
+    },
+  },
+  // Public audience tags apply to Zoom; the organizer expressly limits the
+  // physical room to Stanford faculty, researchers, students and staff.
+  // Keep cached copy from directing the public to Encina Hall.
+  // Evidence: docs/qa/2026-11-03-2307z-fact-check.md.
+  {
+    date: "2026-11-04", url: "https://events.stanford.edu/event/the-rise-and-fall-of-tunisian-democracy-populism-polarization-and-the-perils-of-power-sharing",
+    facts: {
+      virtual: true, venue: "Online (Zoom)", address: "",
+      attendanceNote: "Public attendance is via Zoom. In-person attendance is limited to Stanford faculty, researchers, students and staff. Register through the organizer for the Zoom link.",
+      description: "Political scientist Sharan Grewal discusses Tunisia's democratic transition and collapse, and the risks of prolonged power-sharing.",
+      blurb: "Join Sharan Grewal online for a talk about Tunisia's democratic transition and the risks of power-sharing.",
+    },
+  },
   // The organizer confirms these 2026 occurrences, but its Book Now links
   // open December 2023/2024 calendars. Use the current dated source instead.
   // https://historysanjose.org/programs-events/ (verified November 3, 2026)
