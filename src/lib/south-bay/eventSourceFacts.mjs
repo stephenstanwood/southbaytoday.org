@@ -39,6 +39,16 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The organizer confirms these 2026 occurrences, but its Book Now links
+  // open December 2023/2024 calendars. Use the current dated source instead.
+  // https://historysanjose.org/programs-events/ (verified November 3, 2026)
+  ...[
+    ["2026-12-11", /^Gingerbread Village Workshop$/i],
+    ["2026-12-19", /^History Park Heritage Holiday$/i],
+  ].map(([date, title]) => ({
+    date, title, venue: /^History Park(?:, Empire Firehouse)?$/i,
+    facts: { url: "https://historysanjose.org/programs-events/" },
+  })),
   // The authenticated November 2 city newsletter announces open registration;
   // it does not establish mandatory advance signup. Keep that distinction in
   // retained intake copies as well as future publication of these exact dates.

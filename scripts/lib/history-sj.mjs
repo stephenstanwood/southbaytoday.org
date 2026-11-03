@@ -2,8 +2,10 @@ const CHCP_DOUBLE_HAPPINESS_URL = "https://www.chcp.org/event-6795488";
 
 const CANONICAL_EVENT_URLS = new Map([
   // The current listing verifies the date; its Book Now URL still contains
-  // December 2024. Link the organizer's current evidence.
+  // December 2023/2024. Link the organizer's current evidence.
   ["History Park Heritage Holiday Tea", "https://historysanjose.org/programs-events/"],
+  ["Gingerbread Village Workshop", "https://historysanjose.org/programs-events/"],
+  ["History Park Heritage Holiday", "https://historysanjose.org/programs-events/"],
   ["Chicano Soul Fest 2026", "https://historysanjose.org/event/chicano-soul-fest/"],
   ["NAMI Walks Silicon Valley 2026", "https://historysanjose.org/event/nami-walks-silicon-valley/"],
   ["Low Times Car Show", "https://historysanjose.org/event/low-times-car-show/"],
