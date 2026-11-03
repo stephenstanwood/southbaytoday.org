@@ -1012,6 +1012,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Stanford Human-Centered Artificial Intelligence's published seminar initials.
+  // Preserve source casing without respelling mixed-case names such as "Hai".
+  "HAI",
   // New Century Chamber Orchestra and Stanford's pediatric IBD center.
   // Preserve their published initials in titles and both prose casing passes.
   // Evidence: docs/qa/2026-11-01-2107z-fact-check.md.
@@ -4136,6 +4139,10 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   }
 
   if (isOngoingExhibitLike(title, desc, venue)) return "arts";
+  // A seminar's speaker biography may mention yoga or volunteering. Those
+  // hobbies do not classify the talk; keep genuinely wellness-themed titles.
+  if (/\bseminar\b/.test(titleLower)
+    && !/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(titleLower)) return "education";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
   if (/\b(guest speaker|speaker series|lectures?|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
   if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
