@@ -42,6 +42,8 @@ const EDITS = {
     ],
     description: [
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
+      ["by the City of San Jose no cost to them", "by the City of San Jose at no cost to them"],
+      ["we meet in-person", "we meet in person"],
       ["No Registration required.", "No registration required."],
       ["For ages up to 12, and families.", "For ages up to 12 and families."],
       ["Diwali tales brought to life through expressive Indian classical movement, music and rhythms and concludes with a joyful group dance!", "Diwali tales are brought to life through expressive Indian classical movement, music and rhythms, and the program concludes with a joyful group dance!"],
