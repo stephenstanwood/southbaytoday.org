@@ -17,6 +17,11 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
+const LOS_ALTOS_TEEN_DND_DATES = {
+  "693b4639ddf563280020736e": "2026-11-05",
+  "693b4639ddf563280020736f": "2026-11-12",
+  "693b4639ddf5632800207370": "2026-11-19",
+};
 // Dated organizer pages confirm these Break Room performances, including the
 // two separate December 5 shows. Never infer another occurrence from this list.
 // Evidence: docs/qa/2026-10-30-2307-fact-check.md.
@@ -34,6 +39,18 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The authenticated November 2 city newsletter announces open registration;
+  // it does not establish mandatory advance signup. Keep that distinction in
+  // retained intake copies as well as future publication of these exact dates.
+  // Evidence: docs/qa/2026-11-03-0507z-fact-check.md.
+  ...[
+    ["2026-12-12", "29965"],
+    ["2026-12-17", "29964"],
+  ].map(([date, activity]) => ({
+    date,
+    url: `https://anc.apm.activecommunities.com/santaclara/activity/search/detail/${activity}?onlineSiteId=0&from_original_cui=true`,
+    copyReplacements: [[/\bRegistration required;/g, "Registration was announced as open;"]],
+  })),
   // The organizer's current RSVP form resolves the newsletter's Saturday typo:
   // Friday, November 13 at 6 PM, San Pedro Square Market. Exclusive autographs
   // are for season ticket holders; the general rally is not described as restricted.
@@ -3185,6 +3202,23 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // These exact SCCLD occurrences allow teen spectators while player seats
+  // are full. A "full" registration badge would wrongly close spectator
+  // attendance. Protect carried/cached blurbs, and stop if the source changes
+  // its capacity terms; this list never creates or infers another occurrence.
+  // Evidence: docs/qa/2026-11-03-0507z-fact-check.md.
+  const teenGameId = /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
+  if (event?.date && LOS_ALTOS_TEEN_DND_DATES[teenGameId] === event.date
+      && /\bgame is full\b/i.test(event.description || "")
+      && /\bteen drop[ -]?ins to watch the game are welcome\b/i.test(event.description || "")) {
+    const spectatorNote = "Player seats are full. Teen spectators are welcome; check in at the adult reference desk.";
+    event = {
+      ...event,
+      blurb: "Watch the teen Dungeons and Dragons game at Los Altos Library; player seats are currently full.",
+      attendanceNote: (event.attendanceNote || "").includes(spectatorNote) ? event.attendanceNote
+        : [event.attendanceNote, spectatorNote].filter(Boolean).join(" "),
+    };
+  }
   // This dated Calabazas occurrence gives two incompatible print limits.
   // Preserve the source text and disclose the ambiguity without selecting a
   // limit. Stop adding the note when either conflicting clause is corrected.

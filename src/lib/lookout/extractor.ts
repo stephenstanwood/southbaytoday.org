@@ -106,6 +106,7 @@ Other rules:
 - Skip events past today's date.
 - Deduplicate within one email.
 - Do NOT invent fields. If a field is missing, use null (or empty string for description).
+- Preserve attendance conditions exactly: "registration is open", a booking link, a price, or an RSVP invitation does not establish mandatory advance registration. Say registration is required only when the source explicitly requires it.
 - A venue's opening hours do not establish an activity's start or end. For a confirmed event date with no event time in its own text or flyer, use T00:00:00 with the correct Pacific offset in startsAt and null for endsAt; this sentinel displays as an unknown time. Never substitute museum hours or a neighboring event's clocks.
 - Preserve the source's AM/PM labels; never change PM to AM (or AM to PM) because another time seems more plausible. If source clocks conflict, keep an unambiguous start, set endsAt to null, and describe the conflict rather than inventing a corrected finish.
 - Prefer the event's own page URL over the newsletter's main URL.

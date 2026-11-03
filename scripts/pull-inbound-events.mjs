@@ -24,6 +24,7 @@ import {
 } from "./social/lib/content-rules.mjs";
 import { unwrapMany, isTrackerUrl } from "../src/lib/south-bay/unwrapTrackerUrl.mjs";
 import { inboundReadProblems } from "./lib/inbound-shard-health.mjs";
+import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -216,6 +217,17 @@ if (trackerUrls.length) {
   if (unresolvedTrackers) {
     console.log(`  🔗 dropped ${unresolvedTrackers} unresolved tracker URL(s) rather than publish them`);
   }
+}
+
+// Retained Blob shards predate fact checks. Preserve the same verified
+// description repairs used by publication after tracker URLs are resolved,
+// so a later pull cannot restore unsupported attendance claims locally.
+for (const event of fresh) {
+  const verified = applyVerifiedEventFacts({
+    date: String(event.startsAt || "").slice(0, 10), url: event.sourceUrl,
+    title: event.title, venue: event.location, description: event.description,
+  });
+  if (typeof verified.description === "string") event.description = verified.description;
 }
 
 const out = {

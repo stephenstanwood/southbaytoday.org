@@ -1,0 +1,960 @@
+{
+  "sourceNote": "Exact November 5, 12 and 19 SCCLD captures, November 2 PT. Description trimmed to the two sentences establishing spectators and full player seats; original complete bodies remain in the private audit evidence.",
+  "captures": [
+    {
+      "url": "https://gateway.bibliocommons.com/v2/libraries/sccl/events?ids=693b4639ddf563280020736e&limit=1&page=1",
+      "response": {
+        "entities": {
+          "events": {
+            "693b4639ddf563280020736e": {
+              "id": "693b4639ddf563280020736e",
+              "key": "2026-11-05T16:30:00",
+              "seriesId": "693b4639ddf563280020733f",
+              "definition": {
+                "start": "2026-11-05T16:30",
+                "end": "2026-11-05T18:30",
+                "title": "Teen Dungeons and Dragons Social Club",
+                "description": "<p>Teen drop ins to watch the game are welcome. Right now the game is full.</p>",
+                "bibIds": [],
+                "featuredImageId": "6ac67c6fde300e004518d865",
+                "branchLocationId": "LA",
+                "nonBranchLocationId": null,
+                "audienceIds": [
+                  "5b28181c4727c7344c79667a"
+                ],
+                "languageIds": [
+                  "5b2816c2e9ce2bc14b5865a8"
+                ],
+                "programId": null,
+                "typeIds": [
+                  "5b2a5bd7cedf313f006fe273"
+                ],
+                "registrationInfo": {
+                  "registrationEnd": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "registrationStart": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "maxSeats": null,
+                  "cap": null,
+                  "enabledMethods": []
+                },
+                "contact": {
+                  "email": {
+                    "contactType": "email",
+                    "globalValue": null,
+                    "value": null
+                  },
+                  "phone": {
+                    "contactType": "phone",
+                    "globalValue": null,
+                    "value": null
+                  }
+                },
+                "isCancelled": false
+              },
+              "indexStart": "2026-11-06T00:30:00Z",
+              "indexEnd": "2026-11-06T02:30:00Z",
+              "isRecurring": true,
+              "numberRegistered": null,
+              "numberWaitlistRegistered": null,
+              "isFull": false,
+              "registrationClosed": false
+            }
+          },
+          "eventAudiences": {
+            "5b28181c4727c7344c79667a": {
+              "id": "5b28181c4727c7344c79667a",
+              "name": "Teens",
+              "description": "Teens",
+              "imageId": null
+            }
+          },
+          "eventTypes": {
+            "5b2a5bd7cedf313f006fe273": {
+              "id": "5b2a5bd7cedf313f006fe273",
+              "name": "Entertainment & Recreation",
+              "imageId": "6ac67c6fde300e004518d865"
+            }
+          },
+          "locations": {
+            "LA": {
+              "id": "LA",
+              "name": "Los Altos Library",
+              "libcalId": "4021",
+              "coreAbsent": false,
+              "isHidden": false,
+              "description": "Member of the Santa Clara County Library District.",
+              "imageId": "617c1ba4da1c542a000f6c13",
+              "customUrl": "https://sccld.org/locations/losaltos",
+              "transitUrl": "https://www.vta.org/",
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966e"
+                },
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966d"
+                },
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966c"
+                },
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966b"
+                },
+                {
+                  "timeRef": "friday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c2966a"
+                },
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29669"
+                },
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29668"
+                }
+              ],
+              "sortedHours": [
+                {
+                  "day": "monday",
+                  "isToday": true,
+                  "hours": [
+                    {
+                      "timeRef": "monday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966e"
+                    }
+                  ]
+                },
+                {
+                  "day": "tuesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "tuesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966d"
+                    }
+                  ]
+                },
+                {
+                  "day": "wednesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "wednesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966c"
+                    }
+                  ]
+                },
+                {
+                  "day": "thursday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "thursday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966b"
+                    }
+                  ]
+                },
+                {
+                  "day": "friday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "friday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c2966a"
+                    }
+                  ]
+                },
+                {
+                  "day": "saturday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "saturday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29669"
+                    }
+                  ]
+                },
+                {
+                  "day": "sunday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "sunday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29668"
+                    }
+                  ]
+                }
+              ],
+              "hoursNote": "",
+              "address": {
+                "number": "13",
+                "street": "S. San Antonio Road",
+                "city": "Los Altos",
+                "state": "CA",
+                "zip": "94022",
+                "country": "US"
+              },
+              "branchContacts": [
+                {
+                  "contactType": "email",
+                  "rawValue": "Los_Altos_Manager@lib.sccgov.org",
+                  "label": "Community Librarian",
+                  "globalValue": "los_altos_manager@lib.sccgov.org",
+                  "value": "los_altos_manager@lib.sccgov.org",
+                  "id": "6aac4b73ab7a8e0037c29670"
+                },
+                {
+                  "contactType": "phone",
+                  "rawValue": "650-948-7683",
+                  "label": "Los Altos Library",
+                  "value": "(650) 948-7683",
+                  "globalValue": "+1-650-948-7683",
+                  "id": "6aac4b73ab7a8e0037c2966f"
+                }
+              ],
+              "mapLocation": {
+                "centrePoint": {
+                  "lng": -122.11330029999999,
+                  "lat": 37.3808782
+                },
+                "utcOffsetNow": "-0800",
+                "timeZone": "America/Los_Angeles",
+                "isGeocoded": false
+              },
+              "facilities": [
+                {
+                  "typeId": "5b2819893f209ba24c721d5d",
+                  "id": "6aac4b73ab7a8e0037c29667",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d57",
+                  "id": "6aac4b73ab7a8e0037c29666",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d55",
+                  "id": "6aac4b73ab7a8e0037c29665",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5a",
+                  "id": "6aac4b73ab7a8e0037c29664",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d56",
+                  "id": "6aac4b73ab7a8e0037c29663",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5e",
+                  "id": "6aac4b73ab7a8e0037c29662",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d58",
+                  "id": "6aac4b73ab7a8e0037c29661",
+                  "url": null
+                }
+              ],
+              "highlights": [],
+              "directions": "<p>To visit Los Altos&nbsp;Library, <a href=\"https://www.google.com/maps/dir/?api=1&destination=13%20S.%20San%20Antonio%20Road%20Los%20Altos%20CA\">find driving directions</a> and <a href=\"https://www.vta.org/\">public transportation options</a>.</p>",
+              "meetingRooms": "<p><a href=\"https://sccld.org/book-a-room/\"></a>You must have a valid <a href=\"https://sccld.org/card/\">SCCLD library card</a>  to book a room, as well as read and agree to adhere to any <a href=\"https://sccld.org/book-a-room/los-altos-room-usage/\">room usage requirements</a> for the room you are booking. To find out more about this service, please refer to our <a href=\"https://sccld.org/book-a-room/\">Book a Room @ The Library</a> page.&nbsp;</p>",
+              "accessibilityInfo": "<p>The Santa Clara County Library District provides a variety of Accessibility Services to assist our community. To find out more about these services, please refer to our <a href=\"https://sccld.org/accessibility/\">Accessibility Services</a> page.</p>",
+              "specialHoursIds": [
+                "68fbbcda3cbc052f0081755f",
+                "68fbbcf806078d36007461dd",
+                "68fbbd08831f063d005385bc",
+                "68fbbd2906078d3600746201",
+                "68fbbd433cbc052f00817592",
+                "68fbbd70831f063d005385c9"
+              ],
+              "webUrl": "https://sccld.org/locations/losaltos"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "https://gateway.bibliocommons.com/v2/libraries/sccl/events?ids=693b4639ddf563280020736f&limit=1&page=1",
+      "response": {
+        "entities": {
+          "events": {
+            "693b4639ddf563280020736f": {
+              "id": "693b4639ddf563280020736f",
+              "key": "2026-11-12T16:30:00",
+              "seriesId": "693b4639ddf563280020733f",
+              "definition": {
+                "start": "2026-11-12T16:30",
+                "end": "2026-11-12T18:30",
+                "title": "Teen Dungeons and Dragons Social Club",
+                "description": "<p>Teen drop ins to watch the game are welcome. Right now the game is full.</p>",
+                "bibIds": [],
+                "featuredImageId": "6ac67c6fde300e004518d865",
+                "branchLocationId": "LA",
+                "nonBranchLocationId": null,
+                "audienceIds": [
+                  "5b28181c4727c7344c79667a"
+                ],
+                "languageIds": [
+                  "5b2816c2e9ce2bc14b5865a8"
+                ],
+                "programId": null,
+                "typeIds": [
+                  "5b2a5bd7cedf313f006fe273"
+                ],
+                "registrationInfo": {
+                  "registrationEnd": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "registrationStart": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "maxSeats": null,
+                  "cap": null,
+                  "enabledMethods": []
+                },
+                "contact": {
+                  "email": {
+                    "contactType": "email",
+                    "globalValue": null,
+                    "value": null
+                  },
+                  "phone": {
+                    "contactType": "phone",
+                    "globalValue": null,
+                    "value": null
+                  }
+                },
+                "isCancelled": false
+              },
+              "indexStart": "2026-11-13T00:30:00Z",
+              "indexEnd": "2026-11-13T02:30:00Z",
+              "isRecurring": true,
+              "numberRegistered": null,
+              "numberWaitlistRegistered": null,
+              "isFull": false,
+              "registrationClosed": false
+            }
+          },
+          "eventAudiences": {
+            "5b28181c4727c7344c79667a": {
+              "id": "5b28181c4727c7344c79667a",
+              "name": "Teens",
+              "description": "Teens",
+              "imageId": null
+            }
+          },
+          "eventTypes": {
+            "5b2a5bd7cedf313f006fe273": {
+              "id": "5b2a5bd7cedf313f006fe273",
+              "name": "Entertainment & Recreation",
+              "imageId": "6ac67c6fde300e004518d865"
+            }
+          },
+          "locations": {
+            "LA": {
+              "id": "LA",
+              "name": "Los Altos Library",
+              "libcalId": "4021",
+              "coreAbsent": false,
+              "isHidden": false,
+              "description": "Member of the Santa Clara County Library District.",
+              "imageId": "617c1ba4da1c542a000f6c13",
+              "customUrl": "https://sccld.org/locations/losaltos",
+              "transitUrl": "https://www.vta.org/",
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966e"
+                },
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966d"
+                },
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966c"
+                },
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966b"
+                },
+                {
+                  "timeRef": "friday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c2966a"
+                },
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29669"
+                },
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29668"
+                }
+              ],
+              "sortedHours": [
+                {
+                  "day": "monday",
+                  "isToday": true,
+                  "hours": [
+                    {
+                      "timeRef": "monday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966e"
+                    }
+                  ]
+                },
+                {
+                  "day": "tuesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "tuesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966d"
+                    }
+                  ]
+                },
+                {
+                  "day": "wednesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "wednesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966c"
+                    }
+                  ]
+                },
+                {
+                  "day": "thursday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "thursday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966b"
+                    }
+                  ]
+                },
+                {
+                  "day": "friday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "friday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c2966a"
+                    }
+                  ]
+                },
+                {
+                  "day": "saturday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "saturday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29669"
+                    }
+                  ]
+                },
+                {
+                  "day": "sunday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "sunday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29668"
+                    }
+                  ]
+                }
+              ],
+              "hoursNote": "",
+              "address": {
+                "number": "13",
+                "street": "S. San Antonio Road",
+                "city": "Los Altos",
+                "state": "CA",
+                "zip": "94022",
+                "country": "US"
+              },
+              "branchContacts": [
+                {
+                  "contactType": "email",
+                  "rawValue": "Los_Altos_Manager@lib.sccgov.org",
+                  "label": "Community Librarian",
+                  "globalValue": "los_altos_manager@lib.sccgov.org",
+                  "value": "los_altos_manager@lib.sccgov.org",
+                  "id": "6aac4b73ab7a8e0037c29670"
+                },
+                {
+                  "contactType": "phone",
+                  "rawValue": "650-948-7683",
+                  "label": "Los Altos Library",
+                  "value": "(650) 948-7683",
+                  "globalValue": "+1-650-948-7683",
+                  "id": "6aac4b73ab7a8e0037c2966f"
+                }
+              ],
+              "mapLocation": {
+                "centrePoint": {
+                  "lng": -122.11330029999999,
+                  "lat": 37.3808782
+                },
+                "utcOffsetNow": "-0800",
+                "timeZone": "America/Los_Angeles",
+                "isGeocoded": false
+              },
+              "facilities": [
+                {
+                  "typeId": "5b2819893f209ba24c721d5d",
+                  "id": "6aac4b73ab7a8e0037c29667",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d57",
+                  "id": "6aac4b73ab7a8e0037c29666",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d55",
+                  "id": "6aac4b73ab7a8e0037c29665",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5a",
+                  "id": "6aac4b73ab7a8e0037c29664",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d56",
+                  "id": "6aac4b73ab7a8e0037c29663",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5e",
+                  "id": "6aac4b73ab7a8e0037c29662",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d58",
+                  "id": "6aac4b73ab7a8e0037c29661",
+                  "url": null
+                }
+              ],
+              "highlights": [],
+              "directions": "<p>To visit Los Altos&nbsp;Library, <a href=\"https://www.google.com/maps/dir/?api=1&destination=13%20S.%20San%20Antonio%20Road%20Los%20Altos%20CA\">find driving directions</a> and <a href=\"https://www.vta.org/\">public transportation options</a>.</p>",
+              "meetingRooms": "<p><a href=\"https://sccld.org/book-a-room/\"></a>You must have a valid <a href=\"https://sccld.org/card/\">SCCLD library card</a>  to book a room, as well as read and agree to adhere to any <a href=\"https://sccld.org/book-a-room/los-altos-room-usage/\">room usage requirements</a> for the room you are booking. To find out more about this service, please refer to our <a href=\"https://sccld.org/book-a-room/\">Book a Room @ The Library</a> page.&nbsp;</p>",
+              "accessibilityInfo": "<p>The Santa Clara County Library District provides a variety of Accessibility Services to assist our community. To find out more about these services, please refer to our <a href=\"https://sccld.org/accessibility/\">Accessibility Services</a> page.</p>",
+              "specialHoursIds": [
+                "68fbbcda3cbc052f0081755f",
+                "68fbbcf806078d36007461dd",
+                "68fbbd08831f063d005385bc",
+                "68fbbd2906078d3600746201",
+                "68fbbd433cbc052f00817592",
+                "68fbbd70831f063d005385c9"
+              ],
+              "webUrl": "https://sccld.org/locations/losaltos"
+            }
+          }
+        }
+      }
+    },
+    {
+      "url": "https://gateway.bibliocommons.com/v2/libraries/sccl/events?ids=693b4639ddf5632800207370&limit=1&page=1",
+      "response": {
+        "entities": {
+          "events": {
+            "693b4639ddf5632800207370": {
+              "id": "693b4639ddf5632800207370",
+              "key": "2026-11-19T16:30:00",
+              "seriesId": "693b4639ddf563280020733f",
+              "definition": {
+                "start": "2026-11-19T16:30",
+                "end": "2026-11-19T18:30",
+                "title": "Teen Dungeons and Dragons Social Club",
+                "description": "<p>Teen drop ins to watch the game are welcome. Right now the game is full.</p>",
+                "bibIds": [],
+                "featuredImageId": "6ac67c6fde300e004518d865",
+                "branchLocationId": "LA",
+                "nonBranchLocationId": null,
+                "audienceIds": [
+                  "5b28181c4727c7344c79667a"
+                ],
+                "languageIds": [
+                  "5b2816c2e9ce2bc14b5865a8"
+                ],
+                "programId": null,
+                "typeIds": [
+                  "5b2a5bd7cedf313f006fe273"
+                ],
+                "registrationInfo": {
+                  "registrationEnd": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "registrationStart": {
+                    "ordinal": 0,
+                    "unit": "days"
+                  },
+                  "maxSeats": null,
+                  "cap": null,
+                  "enabledMethods": []
+                },
+                "contact": {
+                  "email": {
+                    "contactType": "email",
+                    "globalValue": null,
+                    "value": null
+                  },
+                  "phone": {
+                    "contactType": "phone",
+                    "globalValue": null,
+                    "value": null
+                  }
+                },
+                "isCancelled": false
+              },
+              "indexStart": "2026-11-20T00:30:00Z",
+              "indexEnd": "2026-11-20T02:30:00Z",
+              "isRecurring": true,
+              "numberRegistered": null,
+              "numberWaitlistRegistered": null,
+              "isFull": false,
+              "registrationClosed": false
+            }
+          },
+          "eventAudiences": {
+            "5b28181c4727c7344c79667a": {
+              "id": "5b28181c4727c7344c79667a",
+              "name": "Teens",
+              "description": "Teens",
+              "imageId": null
+            }
+          },
+          "eventTypes": {
+            "5b2a5bd7cedf313f006fe273": {
+              "id": "5b2a5bd7cedf313f006fe273",
+              "name": "Entertainment & Recreation",
+              "imageId": "6ac67c6fde300e004518d865"
+            }
+          },
+          "locations": {
+            "LA": {
+              "id": "LA",
+              "name": "Los Altos Library",
+              "libcalId": "4021",
+              "coreAbsent": false,
+              "isHidden": false,
+              "description": "Member of the Santa Clara County Library District.",
+              "imageId": "617c1ba4da1c542a000f6c13",
+              "customUrl": "https://sccld.org/locations/losaltos",
+              "transitUrl": "https://www.vta.org/",
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966e"
+                },
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966d"
+                },
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966c"
+                },
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac4b73ab7a8e0037c2966b"
+                },
+                {
+                  "timeRef": "friday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c2966a"
+                },
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29669"
+                },
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "6aac4b73ab7a8e0037c29668"
+                }
+              ],
+              "sortedHours": [
+                {
+                  "day": "monday",
+                  "isToday": true,
+                  "hours": [
+                    {
+                      "timeRef": "monday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966e"
+                    }
+                  ]
+                },
+                {
+                  "day": "tuesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "tuesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966d"
+                    }
+                  ]
+                },
+                {
+                  "day": "wednesday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "wednesday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966c"
+                    }
+                  ]
+                },
+                {
+                  "day": "thursday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "thursday",
+                      "openTime": "T10:00",
+                      "closeTime": "T21:00",
+                      "id": "6aac4b73ab7a8e0037c2966b"
+                    }
+                  ]
+                },
+                {
+                  "day": "friday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "friday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c2966a"
+                    }
+                  ]
+                },
+                {
+                  "day": "saturday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "saturday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29669"
+                    }
+                  ]
+                },
+                {
+                  "day": "sunday",
+                  "isToday": false,
+                  "hours": [
+                    {
+                      "timeRef": "sunday",
+                      "openTime": "T10:00",
+                      "closeTime": "T19:00",
+                      "id": "6aac4b73ab7a8e0037c29668"
+                    }
+                  ]
+                }
+              ],
+              "hoursNote": "",
+              "address": {
+                "number": "13",
+                "street": "S. San Antonio Road",
+                "city": "Los Altos",
+                "state": "CA",
+                "zip": "94022",
+                "country": "US"
+              },
+              "branchContacts": [
+                {
+                  "contactType": "email",
+                  "rawValue": "Los_Altos_Manager@lib.sccgov.org",
+                  "label": "Community Librarian",
+                  "globalValue": "los_altos_manager@lib.sccgov.org",
+                  "value": "los_altos_manager@lib.sccgov.org",
+                  "id": "6aac4b73ab7a8e0037c29670"
+                },
+                {
+                  "contactType": "phone",
+                  "rawValue": "650-948-7683",
+                  "label": "Los Altos Library",
+                  "value": "(650) 948-7683",
+                  "globalValue": "+1-650-948-7683",
+                  "id": "6aac4b73ab7a8e0037c2966f"
+                }
+              ],
+              "mapLocation": {
+                "centrePoint": {
+                  "lng": -122.11330029999999,
+                  "lat": 37.3808782
+                },
+                "utcOffsetNow": "-0800",
+                "timeZone": "America/Los_Angeles",
+                "isGeocoded": false
+              },
+              "facilities": [
+                {
+                  "typeId": "5b2819893f209ba24c721d5d",
+                  "id": "6aac4b73ab7a8e0037c29667",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d57",
+                  "id": "6aac4b73ab7a8e0037c29666",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d55",
+                  "id": "6aac4b73ab7a8e0037c29665",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5a",
+                  "id": "6aac4b73ab7a8e0037c29664",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d56",
+                  "id": "6aac4b73ab7a8e0037c29663",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d5e",
+                  "id": "6aac4b73ab7a8e0037c29662",
+                  "url": null
+                },
+                {
+                  "typeId": "5b2819893f209ba24c721d58",
+                  "id": "6aac4b73ab7a8e0037c29661",
+                  "url": null
+                }
+              ],
+              "highlights": [],
+              "directions": "<p>To visit Los Altos&nbsp;Library, <a href=\"https://www.google.com/maps/dir/?api=1&destination=13%20S.%20San%20Antonio%20Road%20Los%20Altos%20CA\">find driving directions</a> and <a href=\"https://www.vta.org/\">public transportation options</a>.</p>",
+              "meetingRooms": "<p><a href=\"https://sccld.org/book-a-room/\"></a>You must have a valid <a href=\"https://sccld.org/card/\">SCCLD library card</a>  to book a room, as well as read and agree to adhere to any <a href=\"https://sccld.org/book-a-room/los-altos-room-usage/\">room usage requirements</a> for the room you are booking. To find out more about this service, please refer to our <a href=\"https://sccld.org/book-a-room/\">Book a Room @ The Library</a> page.&nbsp;</p>",
+              "accessibilityInfo": "<p>The Santa Clara County Library District provides a variety of Accessibility Services to assist our community. To find out more about these services, please refer to our <a href=\"https://sccld.org/accessibility/\">Accessibility Services</a> page.</p>",
+              "specialHoursIds": [
+                "68fbbcda3cbc052f0081755f",
+                "68fbbcf806078d36007461dd",
+                "68fbbd08831f063d005385bc",
+                "68fbbd2906078d3600746201",
+                "68fbbd433cbc052f00817592",
+                "68fbbd70831f063d005385c9"
+              ],
+              "webUrl": "https://sccld.org/locations/losaltos"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "intakeOriginals": [
+    {
+      "id": "inbound_mw011fex_y144c1",
+      "title": "Breakfast with Santa: Pajama Party",
+      "startsAt": "2026-12-12T09:00:00-08:00",
+      "endsAt": "2026-12-12T11:00:00-08:00",
+      "location": "Senior Center, 1303 Fremont St., Santa Clara",
+      "description": "Holiday breakfast in pajamas with kids' crafts and photos with Santa, for all ages. Registration required; resident $25, non-resident $31.",
+      "sourceUrl": "https://anc.apm.activecommunities.com/santaclara/activity/search/detail/29965?onlineSiteId=0&from_original_cui=true",
+      "cityKey": "santa-clara"
+    },
+    {
+      "id": "inbound_mw011fex_gpxd35",
+      "title": "Evening with Santa",
+      "startsAt": "2026-12-17T19:00:00-08:00",
+      "endsAt": "2026-12-17T20:00:00-08:00",
+      "location": "Youth & Teen Center, 2446 Cabrillo Ave., Santa Clara",
+      "description": "Festive evening with music, games, sing-alongs, dancing, and photos with Santa, for ages 2-12. Registration required; resident $20, non-resident $25.",
+      "sourceUrl": "https://anc.apm.activecommunities.com/santaclara/activity/search/detail/29964?onlineSiteId=0&from_original_cui=true",
+      "cityKey": "santa-clara"
+    }
+  ]
+}
