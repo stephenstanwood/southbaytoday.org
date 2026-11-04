@@ -4,6 +4,20 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves FLASCC, PX Floro and DLCL source spellings across refresh and cached prose", () => {
+  for (const [source, expected] of [
+    ["FLASCC Fall 2026 Conference", "FLASCC Fall 2026 Conference"],
+    ["PX Floro", "PX Floro"],
+    ["Px Floro", "PX Floro"],
+  ]) {
+    assert.equal(cleanTitle(source), expected);
+    assert.equal(cleanTitle(cleanTitle(source)), expected);
+  }
+  assert.equal(polishDescription("Attend the Flascc Fall 2026 conference."), "Attend the FLASCC Fall 2026 conference.");
+  assert.equal(polishDescription("Join the DLCL Department of German Studies."), "Join the DLCL Department of German Studies.");
+  assert.equal(polishDescription("Join the Dlcl Department of German Studies."), "Join the DLCL Department of German Studies.");
+});
+
 test("preserves Stanford's source-published GSB initials without respelling mixed-case names", () => {
   const title = "GSB Alumni Innovating for America's Safety Net";
   assert.equal(cleanTitle(title), title);

@@ -39,6 +39,33 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The comedian's biography mentions parenting and family; that does not
+  // establish a children's show. The dated show page sells admission and
+  // publishes no exception to the venue's standard 21+ entry policy.
+  // https://improv.com/sanjose/comic/px+floro/ and /sanjose/info/
+  {
+    date: "2026-11-04", url: "https://improv.com/sanjose/comic/px+floro/",
+    facts: {
+      kidFriendly: false, audienceAge: "adult", cost: "paid",
+      attendanceNote: "San Jose Improv's standard entry policy is 21+ unless a show specifies otherwise. Valid photo ID and a two-item minimum apply; check the ticket listing for any show-specific age exception.",
+    },
+  },
+  // Full organizer records supply attendance conditions omitted by excerpts.
+  // Keep the RSVP request distinct from an unverified closed/full status.
+  // Evidence: docs/qa/2026-11-04-0307z-fact-check.md.
+  {
+    date: "2026-11-04", url: "https://events.stanford.edu/event/stanford-in-haus-cramer-a-berlin-microhistory-book-launch-and-reception",
+    facts: {
+      attendanceNote: "RSVP requested. The organizer asked for responses by October 26 and notes limited seating; confirm availability with the organizer before going.",
+    },
+  },
+  {
+    date: "2026-11-18", url: "https://www.eventbrite.com/e/hands-only-cpr-and-aed-class-15-monte-sereno-15-hrs-2026-tickets-2004328931790",
+    facts: {
+      endTime: "11:30 AM",
+      attendanceNote: "Ages 13+ who live or work in County Fire's service area: Campbell, Cupertino, Los Gatos, Monte Sereno, San Martin, Saratoga, Los Altos, Los Altos Hills and surrounding unincorporated areas. Participants under 18 need a signed parent or guardian liability waiver. This class does not provide certification.",
+    },
+  },
   // The dated member briefing is withheld from the public calendar. Its old
   // URL still resolves as a retired leaf, which must not repeat the calendar
   // card's invented physical location. Preserve the verified access there too.

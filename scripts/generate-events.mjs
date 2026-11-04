@@ -955,6 +955,10 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // Keep already-cached spellings consistent with these first-party names.
+  "Flascc": "FLASCC",
+  "Px Floro": "PX Floro",
+  "Dlcl Department": "DLCL Department",
   // Stanford's CBPA event heading misplaces the accent; its own body and
   // IDA staff page agree on Sánchez. https://ida.stanford.edu/about-us/
   "Benjamin Lundberg Torres Sanchéz": "Benjamin Lundberg Torres Sánchez",
@@ -1012,6 +1016,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // November 2026 first-party listings: SCU's language conference, Improv's
+  // performer and Stanford's Division of Literatures, Cultures, and Languages.
+  "FLASCC", "PX", "DLCL",
   // Campus Craze's performer, as named in Stanford's November 3 newsletter.
   "ADHDJ",
   // Stanford Human-Centered Artificial Intelligence's published seminar initials.
@@ -4128,9 +4135,10 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   const hasMatchup = titleLower.includes("vs.") || titleLower.includes(" vs ");
   if (hasMatchup && /\b(football|basketball|baseball|softball|soccer|hockey|volleyball|lacrosse|water polo|rugby)\b/.test(titleLower)) return "sports";
 
-  // SCU's public Music@Noon concerts also form part of a class. That body
-  // boilerplate must not turn the concert into an educational event.
-  if (/\bmusic\s*@\s*noon\b/.test(titleLower)
+  // Concert program notes and performer biographies can mention research,
+  // reading or a class. The performance title outranks that body wording;
+  // explicitly titled music lectures and courses remain educational.
+  if (/\b(?:concert|recital)\b|\bmusic\s*@\s*noon\b/.test(titleLower)
     && !/\b(lecture|workshop|class|course|seminar|training)\b/.test(titleLower)) return "music";
 
   // A public film can accompany a course, and a startup can "showcase" its
