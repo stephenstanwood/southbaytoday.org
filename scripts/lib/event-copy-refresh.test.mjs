@@ -49,7 +49,8 @@ const november3AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/re
 const november4OvernightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-overnight.json", import.meta.url)));
 const november4MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-morning.json", import.meta.url)));
 const november4AttendanceFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-attendance.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture];
+const november4MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-midday.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -65,6 +66,23 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("midday copy repairs retain revised schedules, contacts and later source conditions", () => {
+  for (const row of november4MiddayFixture.cases) {
+    const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
+    const fresh = row.refreshed
+      .replace("9:00-9:30 Team formation", "9:15-9:45 Team formation")
+      .replace("(408) 540-3947 7", "(408) 555-0199")
+      .replaceAll("ask@lib.sccgov.org", "updated@example.org") + suffix;
+    const original = { source: row.source, [row.field]: fresh, time: "9:15 AM", cost: "low", costNote: "$25" };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(numbers(next[row.field]), numbers(fresh));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(fresh));
+    assert.ok(next[row.field].endsWith(suffix));
+    assert.deepEqual({ ...next, [row.field]: null }, { ...original, [row.field]: null });
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+  }
+});
 
 test("attendance sentence endings preserve changed contacts, qualifiers and publisher scope", () => {
   for (const row of november4AttendanceFixture.cases) {
@@ -110,7 +128,7 @@ test("philosophy typo repair preserves publisher scope and revised wording", () 
 });
 
 test("November grammar repairs preserve other publishers and later source instructions", () => {
-  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases, ...attendanceFixture.cases, ...volunteersFixture.cases, ...newsletterFixture.cases, ...afternoonRefreshFixture.cases, ...november1EveningRefreshFixture.cases, ...november2Fixture.cases, ...november2OvernightFixture.cases, ...november2MorningFixture.cases, ...november2AfternoonFixture.cases, ...november2EveningFixture.cases, ...november2NightFixture.cases, ...november2LateFixture.cases, ...november3Fixture.cases, ...november3AfternoonFixture.cases, ...november4OvernightFixture.cases, ...november4MorningFixture.cases]) {
+  for (const row of [...november1Fixture.cases, ...november1PostFactCheckFixture.cases, ...attendanceFixture.cases, ...volunteersFixture.cases, ...newsletterFixture.cases, ...afternoonRefreshFixture.cases, ...november1EveningRefreshFixture.cases, ...november2Fixture.cases, ...november2OvernightFixture.cases, ...november2MorningFixture.cases, ...november2AfternoonFixture.cases, ...november2EveningFixture.cases, ...november2NightFixture.cases, ...november2LateFixture.cases, ...november3Fixture.cases, ...november3AfternoonFixture.cases, ...november4OvernightFixture.cases, ...november4MorningFixture.cases, ...november4MiddayFixture.cases]) {
     const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
     assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
     const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
