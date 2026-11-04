@@ -39,6 +39,14 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The dated organizer page explicitly welcomes families and all ages.
+  // Keep the public occurrence consistent with the curated recurring entry.
+  // https://www.southfirstfridays.com/ (November 6, 2026 announcement)
+  // Evidence: docs/qa/2026-11-04-0407z-fact-check.md.
+  {
+    date: "2026-11-06", url: "https://www.southfirstfridays.com/",
+    facts: { kidFriendly: true },
+  },
   // This listing's savings/spending records have no statistic, measurement
   // period or supporting citation. Retain the workshop facts, not that claim.
   // Match both original and polished copy so refreshes cannot restore it.
