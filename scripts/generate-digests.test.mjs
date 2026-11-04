@@ -5,10 +5,12 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { polishCivicCopy } from "./lib/civic-copy.mjs";
 
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
-function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1 } = {}) {
+function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1,
+  summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
   try {
     mkdirSync(join(root, "scripts"));
@@ -54,7 +56,7 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1 } = {
         if (url.hostname === 'api.anthropic.com') {
           prompts.push(JSON.parse(init.body)); fs.writeFileSync(${JSON.stringify(capture)}, JSON.stringify(prompts));
           return Response.json({ stop_reason: 'end_turn', content: [{type: 'text', text: JSON.stringify({
-            summary: 'The agenda listed winter storm preparedness and proposed changes to stream corridor protection.',
+            summary: ${JSON.stringify(summary)},
             keyTopics: ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
           })}] });
         }
@@ -125,4 +127,27 @@ test("the real digest rerun verifies sources but avoids a second unchanged-input
   assert.equal(digests["palo-alto"].body, "City Council");
   assert.match(log, /trying PrimeGov.*got 2026-10-26/);
   assert.match(log, /unchanged verified source\/prompt\/model; reused result/);
+});
+
+test("civic generation preserves the complete reviewed area summary and its facts", () => {
+  const before = "The October 26 Planning Commission study session agenda listed a proposal at 536 Hawthorn Avenue to demolish a 1,360 square foot duplex on a 0.29-acre R-3 lot and build three townhome-style condominiums in one two-story building. It also listed a tentative parcel map to split the lot into three.";
+  const after = "The October 26 Planning Commission study session agenda listed a proposal at 536 Hawthorn Avenue to demolish a 1,360-square-foot duplex on a 0.29-acre R-3 lot and build three townhome-style condominiums in one two-story building. It also listed a tentative parcel map to split the lot into three.";
+  const { digests } = run({ summary: before });
+  assert.equal(digests["palo-alto"].summary, after);
+  assert.deepEqual(after.match(/\d+(?:[,.]\d+)*/g), before.match(/\d+(?:[,.]\d+)*/g));
+  assert.equal(polishCivicCopy(after), after);
+
+  const replacement = "A revised proposal lists a 2,450.5 square foot duplex at 900 New Avenue. Staff requested a continuance to December 14, 2026. See https://example.org/proposal/2450.";
+  assert.equal(polishCivicCopy(replacement), replacement.replace("2,450.5 square foot duplex", "2,450.5-square-foot duplex"));
+});
+
+test("civic area copy preserves measurements, prices, existing hyphens, and non-text values", () => {
+  for (const value of [
+    "The building measures 1,360 square feet and costs $300 per square foot.",
+    "Allow 1 square foot per resident and measure 1 square foot of floor space.",
+    "The 1,360-square-foot duplex is listed for review.",
+    null, undefined, 1360,
+  ]) assert.equal(polishCivicCopy(value), value);
+  assert.equal(polishCivicCopy("The November 3, 2026 meeting listed a 900 square foot building."),
+    "The November 3, 2026, meeting listed a 900-square-foot building.");
 });
