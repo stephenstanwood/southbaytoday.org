@@ -39,6 +39,29 @@ test("a named city cannot turn an old agenda into present business", () => {
   assert.equal(hasPastAgendaFutureFraming(item, meeting, meeting.date), false);
 });
 
+test("a named city study claim needs evidence beyond its study-session agenda", () => {
+  const meeting = { city: "Sunnyvale", date: "2026-10-26", fullAgendaText: "Planning Commission study session: proposed three condominiums at 536 Hawthorn Avenue." };
+  const item = { date: meeting.date, headline: "Sunnyvale studied plan to replace Hawthorn Avenue duplex with three condos" };
+  assert.equal(hasUnsupportedMeetingAction(item, meeting), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "October 26 agenda listed three-condo plan on Hawthorn Avenue" }, meeting), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { ...meeting, fullAgendaText: "Sunnyvale studied the three-condo plan." }), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { ...meeting, source: "youtube-transcript" }), false);
+});
+
+test("past agendas cannot advertise compliance reviews or extension requests as current", () => {
+  const meeting = { city: "Campbell", fullAgendaText: "Agenda listed a permit compliance review and a request to extend deadlines." };
+  for (const headline of [
+    "Campbell Home Depot up for permit compliance review",
+    "Pruneyard asks to extend office tower deadlines to 2031",
+  ]) {
+    const item = { date: "2026-10-27", headline };
+    assert.equal(hasPastAgendaFutureFraming(item, meeting, "2026-11-03"), true, headline);
+    assert.equal(hasPastAgendaFutureFraming(item, meeting, item.date), false, headline);
+    assert.equal(hasPastAgendaFutureFraming(item, { ...meeting, source: "youtube-transcript" }, "2026-11-03"), false, headline);
+    assert.equal(hasPastAgendaFutureFraming({ ...item, headline: `The October 27 agenda listed ${headline}` }, meeting, "2026-11-03"), false, headline);
+  }
+});
+
 test("Around Town replaces unattributed Council text before assigning provenance", async () => {
   const config = { escribe: { host: "pub-campbell.escribemeetings.com" } };
   const meeting = { id: 7324, city: "Campbell", date: "2026-10-20", meetingType: "City Council", source: "ingest", excerpt: "military trailer and VTA" };

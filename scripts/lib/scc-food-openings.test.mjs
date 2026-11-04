@@ -107,6 +107,33 @@ test("abbreviated sink and milkshake station filings remain equipment work", () 
   }
 });
 
+test("county fencing, dishroom and misspelled cooler filings stay out of food listings", () => {
+  for (const record of [
+    { business_name: "THE LAUREL OF MOUNTAIN VIEW FENCING", city: "MOUNTAIN VIEW" },
+    { business_name: "E-555 W JAVA - BOH/DISHROOM", city: "SUNNYVALE" },
+    { business_name: "E-MIAN CUPERTINO - WAL-IN COOLER", city: "CUPERTINO" },
+    { business_name: "CAFE - WALK-IN FREEZER", city: "SAN JOSE" },
+  ]) assert.equal(shouldSkip(record), true, record.business_name);
+
+  for (const business_name of ["MIAN CUPERTINO", "JAVA CAFE", "FENCEPOST CAFE", "COOLER CAFE"]) {
+    assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), false, business_name);
+  }
+});
+
+test("reviewed apartment, corporate and unverified food identities stay source-specific", () => {
+  for (const record of [
+    { record_id: "SR0883235", business_name: "E-RUTHERFORD MONTH VISTA LLC", city: "MOUNTAIN VIEW" },
+    { record_id: "SR0886077", business_name: "1015 MARKETPLACE", city: "MOUNTAIN VIEW" },
+    { record_id: "SR0885986", business_name: "ELITE MULTISERVICES", city: "SAN JOSE" },
+  ]) assert.equal(shouldSkip(record), true, record.record_id);
+
+  // A filing entity can represent a restaurant. Do not turn these exact
+  // exclusions into a blanket ban on numbered names or enterprise names.
+  for (const business_name of ["1015 MARKETPLACE", "RTI ULAS ENTERPRISES LLC", "ELITE CAFE"]) {
+    assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), false, business_name);
+  }
+});
+
 test("Reddit discovery dates and blurbs cannot become verified opening claims", () => {
   const lead = {
     name: "Example Cafe", cityId: "san-jose", date: "2026-10-09",

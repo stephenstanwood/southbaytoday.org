@@ -116,6 +116,12 @@ const COMPLETED_CONTINUANCE = /\b(?:project|proposal|application|item|hearing|re
 /** A past agenda date does not establish that the body heard or acted on an item. */
 export function hasUnsupportedMeetingAction(item, meeting) {
   const claim = `${item?.headline || ""} ${item?.summary || ""}`;
+  // A city name can stand in for its commission in a headline. "Sunnyvale
+  // studied..." reports an actual discussion; a study-session agenda alone
+  // establishes only the plan. Bind the name to this meeting's own city.
+  const city = String(meeting?.city || "").trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const cityStudy = city ? new RegExp(`\\b${city}\\s+(?:also\\s+)?studied\\b`, "i") : null;
+  const studiedClaimed = Boolean(cityStudy?.test(claim));
   const bodyActions = [...claim.matchAll(COMPLETED_BODY_ACTION)].map((match) => match[1]);
   const sessionActions = [...claim.matchAll(COMPLETED_SESSION_ACTION)].map((match) => match[1]);
   const progressiveActions = [...claim.matchAll(PROGRESSIVE_BODY_ACTION)].map((match) => match[1]);
@@ -133,9 +139,10 @@ export function hasUnsupportedMeetingAction(item, meeting) {
       .filter((match) => !AGENDA_PLAN_CONTEXT.test(text.slice(0, match.index)))
       .map((match) => match[1].toLowerCase());
   });
-  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed && !continuanceActions.length) return false;
+  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed && !continuanceActions.length && !studiedClaimed) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
+  if (studiedClaimed && !cityStudy.test(evidence)) return true;
   const sourcedContinuances = new Set([...evidence.matchAll(COMPLETED_CONTINUANCE)].map((match) => match[1].toLowerCase()));
   if (continuanceActions.some((action) => !sourcedContinuances.has(action))) return true;
   const sourcedProgressiveActions = new Set([...evidence.matchAll(PROGRESSIVE_BODY_ACTION)].map((match) => match[1].toLowerCase()));
@@ -155,6 +162,8 @@ export function hasUnsupportedMeetingAction(item, meeting) {
 const CURRENT_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny|address|hold|interview)\b|(?:weighs|considers|holds|meets|reviews|addresses|interviews)\b)`, "gi");
 const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/gi;
 const CURRENT_SESSION_PLAN = /\b(?:study|scoping)\s+session\s+(?:is\s+)?(?:scheduled|set|expected|slated)\s+(?:for|to)\b/gi;
+const CURRENT_EXTENSION_REQUEST = /\b(?:asks?|seeks?)\s+to\s+extend\b/gi;
+const CURRENT_PENDING_REVIEW = /\b(?:is\s+)?up\s+for\s+(?:a\s+)?(?:permit\s+)?(?:compliance\s+)?review\b/gi;
 
 /** A canceled regular meeting must not obscure a separate special meeting. */
 export function hasUnscopedMeetingCancellation(item, meeting) {
@@ -185,7 +194,7 @@ export function hasPastAgendaFutureFraming(item, meeting, asOfDate) {
       const cityAction = new RegExp(`\\b${city}\\s+(?:weighs|considers|reviews|will\\s+(?:consider|review|weigh))\\b`, "gi");
       if ([...claim.matchAll(cityAction)].some((match) => !AGENDA_PLAN_CONTEXT.test(claim.slice(0, match.index)))) return true;
     }
-    return [CURRENT_BODY_ACTION, CURRENT_PERMIT_REQUEST, CURRENT_SESSION_PLAN].some((pattern) =>
+    return [CURRENT_BODY_ACTION, CURRENT_PERMIT_REQUEST, CURRENT_SESSION_PLAN, CURRENT_EXTENSION_REQUEST, CURRENT_PENDING_REVIEW].some((pattern) =>
       [...claim.matchAll(pattern)].some((match) => !AGENDA_PLAN_CONTEXT.test(claim.slice(0, match.index))),
     );
   });

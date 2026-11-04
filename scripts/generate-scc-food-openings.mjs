@@ -76,8 +76,9 @@ const NON_RESTAURANT_FACILITY = /\bPADEL\b|\bPICKLEBALL\b|\bPACE\b|\bDIALYSIS\b|
 const FOOD_BUSINESS_WORD =
   /\b(RESTAURANT|CAFE|CAFF?[EÉ]|COFFEE|BAKERY|PIZZ(?:A|ERIA)|KITCHEN|GRILL|TAQUER[IÍ]A|TACO|SUSHI|RAMEN|PHO|BOBA|TEA\s+HOUSE|JUICE|DELI|BBQ|BAR\s*&\s*GRILL|BISTRO|DINER|EATERY|CREAMERY|DONUTS?|SANDWICH|NOODLE|BUFFET\s+RESTAURANT)\b/i;
 
-// Patterns that indicate non-restaurant entries to skip
-const SKIP_PATTERNS = /BARISTA\s+BAR|BUFFET\s+TABLE|\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bAPARTMENTS?\b|\bCONDOS?\b|\bCONDOMINIUMS?\b|\bTOWNHOMES?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|\bCATERING\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|\bPANTRY\s+ROOM\b|\bSTORAGE\s+PANTRY\b|\bLVL\s+\d|\bRELOCATION\b|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b|\bMEETING\s+ROOM\b|\bHQ\d+\s+KITCHEN\b|\bFENCE\b|\bGATES?\b|\bSECURITY\b|\bALARM\b|\bSPRINKLER\b|\bRE-?ROOF\b|\bSIGNAGE\b|\bMONUMENT\s+SIGN\b|\bPARKING\s+(LOT|GARAGE|STRUCTURE)\b|\bELEVATOR\b|\bRETAINING\s+WALL\b|\bINNOVATION\s+CAMPUS\b|\b(?:1ST|2ND|3RD|\d+TH)\s+FLOOR\b/i;
+// Patterns that indicate non-restaurant entries to skip. SCC uses both FENCE
+// and FENCING for the same non-food site work.
+const SKIP_PATTERNS = /BARISTA\s+BAR|BUFFET\s+TABLE|\bPOOLS?\b|ELEM\b|SCHOOL\b|\bAPTS?\b|\bAPARTMENTS?\b|\bCONDOS?\b|\bCONDOMINIUMS?\b|\bTOWNHOMES?\b|\bHOA\b|HOMEOWNER|COMMUNITY\s+ASSOC|MICRO KITCHEN|MODERNIZATION|MFF\b|MOBILE FOOD\b|CART\b|COMMISSARY\b|\bCATERING\b|VENDING|\bCAFETERIA\b|PANTRY\b.*LEVEL|\bPANTRY\s+ROOM\b|\bSTORAGE\s+PANTRY\b|\bLVL\s+\d|\bRELOCATION\b|CORPORATE|EXTERIOR STORAGE|BARISTA AREA|COFFEE AREA|KITCHEN UNIT|BEVERAGE UNIT|AIRPORT BLVD|SJC AIRPORT|PLTR#|\bPRO SHOP\b|\bSPA\b|\bHOT TUB\b|\bAPT\s+SPA\b|APARTMENT\s+SPA|PARK\s+SPA\b|BREAKROOM|BREAK\s+ROOM|NSVC\s+B\d|EMPLOYEE\s+LOUNGE|\bREPLASTER\b|\bENCLOSURE\b|\bBLDG\b|\bYMCA\b|\bMEETING\s+ROOM\b|\bHQ\d+\s+KITCHEN\b|\bFENC(?:E|ING)\b|\bGATES?\b|\bSECURITY\b|\bALARM\b|\bSPRINKLER\b|\bRE-?ROOF\b|\bSIGNAGE\b|\bMONUMENT\s+SIGN\b|\bPARKING\s+(LOT|GARAGE|STRUCTURE)\b|\bELEVATOR\b|\bRETAINING\s+WALL\b|\bINNOVATION\s+CAMPUS\b|\b(?:1ST|2ND|3RD|\d+TH)\s+FLOOR\b/i;
 
 // Equipment/maintenance-only permits — not openings, just upgrades to existing places.
 // Anything matching here is a re-inspection of an existing facility, not a new business.
@@ -101,7 +102,9 @@ const SKIP_PATTERNS = /BARISTA\s+BAR|BUFFET\s+TABLE|\bPOOLS?\b|ELEM\b|SCHOOL\b|\
 // ENDS in ADD/ADDING (+ optional article) is that truncated shape. "Silver
 // Liquors - 3 Compartment Sink" shipped the same day — a sink install at an
 // existing liquor store, phrased as "<n> COMPARTMENT SINK".
-const EQUIPMENT_ONLY_PATTERNS = /\bADD(?:ING)?\s+(?:A|AN|NEW)?\s*$|\b\d\s*[-\s]?COMPARTMENT\s+SINKS?\b|\bMINOR\s+REMODEL\b|\bADD\s+(?:A\s+|NEW\s+)?(?:SINK|HOOD|OVEN|FRYER|GRIDDLE|COOLER|FREEZER|DISHWASHER)S?\b|\bEQUIP\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bKITCHEN\s+EQUIP\b|\bPOS\s+REMODEL\b|\bADD(?:ING|ITION\s+OF)\s+[\w\s]*\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|SINK|COOLER|FREEZER|DISHWASHER|ICE\s+MACHINE)S?\b|\bNEW\s+HOOD\b|\b(REFRIGERATION|HOOD|EXHAUST|PLUMBING|ELECTRICAL)\s*\/\s*\w+\s+(REPLACEMENT|REPAIR|UPGRADE)\b|\bRACK\s+REPLACEMENT\b|\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s/]COOLER\b|\bCOOLER\s*[-/]\s*FREEZER\b|\bKITCHEN\s+HOOD\b|\bEXHAUST\s+FAN\b|\bWALK[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bUNDERCOUNTER\b|\b(DISHWASHER|DISH\s*MACHINE|ICE\s+MACHINE|PREP\s+SINK)\s*$|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b|\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|EQUIPMENT|KITCHEN)\s+ADDITION\b|\bWATER\s+HEATER\b/i;
+// A missing K in the county's "WAL-IN COOLER" is still equipment work; the
+// optional K below stays bound to COOLER/FREEZER rather than a business name.
+const EQUIPMENT_ONLY_PATTERNS = /\bADD(?:ING)?\s+(?:A|AN|NEW)?\s*$|\b\d\s*[-\s]?COMPARTMENT\s+SINKS?\b|\bMINOR\s+REMODEL\b|\bADD\s+(?:A\s+|NEW\s+)?(?:SINK|HOOD|OVEN|FRYER|GRIDDLE|COOLER|FREEZER|DISHWASHER)S?\b|\bEQUIP\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bKITCHEN\s+EQUIP\b|\bPOS\s+REMODEL\b|\bADD(?:ING|ITION\s+OF)\s+[\w\s]*\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|SINK|COOLER|FREEZER|DISHWASHER|ICE\s+MACHINE)S?\b|\bNEW\s+HOOD\b|\b(REFRIGERATION|HOOD|EXHAUST|PLUMBING|ELECTRICAL)\s*\/\s*\w+\s+(REPLACEMENT|REPAIR|UPGRADE)\b|\bRACK\s+REPLACEMENT\b|\bMOP\s+SINK\b|\bEQUIPMENT\s+(CHANGE|REPLACEMENT|INSTALL|UPGRADE|ADDITION)\b|\bUPDATED\s+KITCHEN\s+EQUIPMENT\b|\bKITCHEN\s+EQUIPMENT\b|\bMACHINE\s+(REPLACEMENT|INSTALL(?:ATION)?|CHANGE)\b|\b(SMOOTHIE|JUICE|ESPRESSO|COFFEE|DISH)\s+MACHINE\b|\bFREEZER[-\s/]COOLER\b|\bCOOLER\s*[-/]\s*FREEZER\b|\bKITCHEN\s+HOOD\b|\bEXHAUST\s+FAN\b|\bWALK?[-\s]IN\s+(COOLER|FREEZER)\b|\bOIL\s+TANK\b|\bGREASE\s+(TRAP|TANK|INTERCEPTOR)\b|\bUNDERGROUND\s+TANK\b|\bTANK\s+(INSTALL|REMOVAL|REPLACE)\b|\bHOOD\s+INSTALL\b|\bANSUL\s+SYSTEM\b|\bFIRE\s+SUPPRESSION\b|\bLIGHT(ING)?\s+(EQUIPMENT|REPLACEMENT|UPGRADE)\b|\bMINOR\s+EQUIPMENT\b|\bUNDERCOUNTER\b|\b(DISHWASHER|DISH\s*MACHINE|ICE\s+MACHINE|PREP\s+SINK)\s*$|\bEXPANSION\s*$|\bEXPANSION\b.*(EXISTING|OWNER)|\b(GRIDDLE|FRYER|RANGE|OVEN|WARMER|STOVE|REFRIGERATION|FREEZER|COOLER|DISHWASHER|HOOD|SINK|COUNTER|EXHAUST|PLUMBING|ELECTRICAL)S?\s+(UPDATE|MODIFICATION|REPAIR|REPLACEMENT|REMODEL)\b|\b(OVEN|GRIDDLE|FRYER|RANGE|STOVE|HOOD|WARMER|EQUIPMENT|KITCHEN)\s+ADDITION\b|\bWATER\s+HEATER\b/i;
 
 // Corporate campus patterns — office cafeterias aren't public restaurants.
 // "JOHNSON & JOHNSON (AURIS HEALTH) 1ST FLOOR" shipped as a coming-soon
@@ -216,6 +219,13 @@ const BLURB_OVERRIDES = {
 
 // Source IDs to explicitly skip — non-public venues, existing restaurants with equipment-only permits, etc.
 const SOURCE_ID_SKIP = new Set([
+  // Reviewed Nov 3, 2026: a county plan-check record alone does not establish
+  // a public food venue. Keep exact exclusions rather than banning LLC names.
+  "SR0883235", // Rutherford Month Vista: Station 245 apartments at 245 Bush St.
+  // https://www.rutherfordliving.com/apartments/ca/mountain-view/bush-st-2/
+  "SR0886077", // 1015 Marketplace: Google-owned Masa Cafe at 1015 Joaquin Rd.
+  // County inspection: https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAAE2OF2E.pdf
+  "SR0885986", // Elite Multiservices: no primary evidence of a public food business.
   // Target's own location and grocery pages confirm this operating store at
   // 95 Holger Way. Its October 8 plan approval is not a new grocery opening.
   // https://www.target.com/sl/san-jose-north/2581/grocery
@@ -578,6 +588,10 @@ export function shouldSkip(item) {
   if (isAddressDerivedBusinessName(rawName, item.site_location)) return true;
   if (SKIP_PATTERNS.test(name)) return true;
   if (EQUIPMENT_ONLY_PATTERNS.test(name)) return true;
+  // SR0868682 is "555 W JAVA - BOH/DISHROOM", a back-of-house support
+  // room. cleanName removes part of that context and leaves an address-like
+  // fragment, so exclude the raw filing before it can become a business card.
+  if (/\bBOH\s*\/\s*DISH\s*ROOM\b/i.test(rawName)) return true;
   // SCC abbreviates compartment as COMP and files milkshake stations as
   // equipment work. Preserve the raw filing context before cleanName strips it.
   if (/\b\d\s*[-\s]?COMP\.?\s+SINKS?\b|\bMILKSHAKE\s+STATION\b/i.test(rawName)) return true;
