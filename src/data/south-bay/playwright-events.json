@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-04T06:43:34.887Z",
+    "generatedAt": "2026-11-04T10:52:20.317Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
     "eventCount": 187,
@@ -14,7 +14,6 @@
       "ICA San José (3)",
       "Children's Discovery Museum (6)",
       "Guadalupe River Park Conservancy (19)",
-      "Santana Row (5)",
       "City of Cupertino (17)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
@@ -23,6 +22,7 @@
       "The Tech Interactive (7)",
       "Books Inc (7)",
       "San Jose Museum of Art (3)",
+      "Santana Row (5)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -177,12 +177,14 @@
       {
         "id": "santana-row",
         "label": "Santana Row",
-        "status": "ok",
+        "status": "error",
         "count": 5,
-        "error": null,
+        "error": "page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.santanarow.com/events/\", waiting until \"domcontentloaded\"\n",
         "sources": [
           "Santana Row"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       },
       {
         "id": "city-of-cupertino",
@@ -880,10 +882,10 @@
       "kidFriendly": false
     },
     {
-      "id": "63a31bc2ccdb",
+      "id": "615ce2b8d964",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -900,10 +902,10 @@
       "kidFriendly": false
     },
     {
-      "id": "076a524ab756",
+      "id": "40cc7dafb986",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -920,10 +922,10 @@
       "kidFriendly": false
     },
     {
-      "id": "bd7181ded26c",
+      "id": "2c6ec7fc326e",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -938,6 +940,23 @@
       "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
       "source": "ICA San José",
       "kidFriendly": false
+    },
+    {
+      "id": "f45bbd6d82e0",
+      "title": "Toddler Storytime",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
     },
     {
       "id": "304b2b750579",
@@ -980,23 +999,6 @@
       "displayDate": "Sun, Nov 8",
       "time": "10:00 am",
       "endTime": "12:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
-      "id": "62ecb9a99ee7",
-      "title": "All Ages Storytime",
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
-      "time": "11:30 am",
-      "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -1480,121 +1482,6 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
         "date": "2026-11-29"
-      }
-    },
-    {
-      "id": "3cfcb41c7673",
-      "title": "Cielo Hotel Valencia Rooftop Holiday Experience",
-      "date": "2026-11-27",
-      "displayDate": "Fri, Nov 27",
-      "time": "5:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "NOVEMBER 27, 2026  Beginning November 27, join us Tuesday through Saturday from 5:00–9:00 pm, for winter evenings at Cielo Rooftop at Hotel Valencia. The experience will be closed Sundays and Mondays.This holiday season, Cielo Rooftop transforms into an intimate winter retreat high above Santana Row, where seasonal warmth and elevated style come together against the backdrop of the Santa Cruz Mountains. Settle in beneath the open sky and enjoy seasonal cocktails and a curated menu of winter-inspired bites in a warm and inviting rooftop setting. Thoughtful seasonal touches and the glow of the city below create the perfect atmosphere for festive gatherings, date nights, or simply savoring the season.Click HERE for details!",
-      "url": "https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-11-27",
-        "checkedAt": "2026-11-04T06:42:27.454Z"
-      }
-    },
-    {
-      "id": "3d2ddac93b55",
-      "title": "Spirit of The Row",
-      "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
-      "time": "6:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, photos with Santa, balloons, and more.Spirit of The Row Dates: December 1st, 8th, & 15th.Spirit of The Row Line Up to be announced soon!",
-      "url": "https://santanarow.com/event/spirit-of-the-row/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-12-01",
-        "checkedAt": "2026-11-04T06:42:27.459Z"
-      }
-    },
-    {
-      "id": "8b3387287baf",
-      "title": "Photos with Santa Claus",
-      "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
-      "time": "6:00 PM",
-      "endTime": "8:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "DECEMBER 1, 2026  Get into the holiday spirit with free photos with Santa and Mrs. Claus in the Oak Tree Lounge (in front of Blue Bottle) on December 1, 8, and 15 from 6pm–8pm during Spirit of The Row—capture a festive moment with the merry duo!",
-      "url": "https://santanarow.com/event/photos-with-santa-claus/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-12-01",
-        "checkedAt": "2026-11-04T06:42:27.459Z"
-      }
-    },
-    {
-      "id": "2630d6d8180e",
-      "title": "Santa Paws hosted by Humane Society Silicon Valley",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "10:00 AM",
-      "endTime": "2:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "DECEMBER 12, 2026  Bring your pet to Park Valencia in Santana Row for a photo with Santa Claus on Saturday, December 12th from 10am to 2pm. All proceeds will benefit Humane Society Silicon Valley. Photos with your pet are a minimum donation of $10! Registration begins at 9:30am.",
-      "url": "https://santanarow.com/event/santa-paws/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-12-12",
-        "checkedAt": "2026-11-04T06:42:27.460Z"
-      }
-    },
-    {
-      "id": "4751761886f4",
-      "title": "Cars & Croissants on The Row",
-      "date": "2026-12-13",
-      "displayDate": "Sun, Dec 13",
-      "time": "9:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "DECEMBER 13, 2026  Join us on Sunday, December 13th from 9am-12pm for the 100|OCT Cars and Croissants on The Row! Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers.Whether you’re a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.This event is FREE to attend. If you’d like to showcase your vehicle, click HERE to reserve a car display space. We look forward to seeing you on the Row!",
-      "url": "https://santanarow.com/event/cars-croissants-on-the-row/",
-      "source": "Santana Row",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-12-13",
-        "checkedAt": "2026-11-04T06:42:27.460Z"
       }
     },
     {
@@ -3150,7 +3037,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.665Z"
+        "checkedAt": "2026-11-04T10:51:28.204Z"
       }
     },
     {
@@ -3174,7 +3061,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.666Z"
+        "checkedAt": "2026-11-04T10:51:28.205Z"
       }
     },
     {
@@ -3198,7 +3085,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.666Z"
+        "checkedAt": "2026-11-04T10:51:28.205Z"
       }
     },
     {
@@ -3222,7 +3109,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.667Z"
+        "checkedAt": "2026-11-04T10:51:28.206Z"
       }
     },
     {
@@ -3246,7 +3133,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3270,7 +3157,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3294,7 +3181,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3318,7 +3205,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3342,7 +3229,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3366,7 +3253,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3390,7 +3277,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3414,7 +3301,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3438,7 +3325,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-04T06:42:50.670Z"
+        "checkedAt": "2026-11-04T10:51:28.208Z"
       }
     },
     {
@@ -3737,6 +3624,121 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "3cfcb41c7673",
+      "title": "Cielo Hotel Valencia Rooftop Holiday Experience",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
+      "time": "5:00 PM",
+      "endTime": "9:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "NOVEMBER 27, 2026  Beginning November 27, join us Tuesday through Saturday from 5:00–9:00 pm, for winter evenings at Cielo Rooftop at Hotel Valencia. The experience will be closed Sundays and Mondays.This holiday season, Cielo Rooftop transforms into an intimate winter retreat high above Santana Row, where seasonal warmth and elevated style come together against the backdrop of the Santa Cruz Mountains. Settle in beneath the open sky and enjoy seasonal cocktails and a curated menu of winter-inspired bites in a warm and inviting rooftop setting. Thoughtful seasonal touches and the glow of the city below create the perfect atmosphere for festive gatherings, date nights, or simply savoring the season.Click HERE for details!",
+      "url": "https://santanarow.com/event/cielo-hotel-valencia-rooftop-holiday-experience/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-27",
+        "checkedAt": "2026-11-04T06:42:27.454Z"
+      }
+    },
+    {
+      "id": "3d2ddac93b55",
+      "title": "Spirit of The Row",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, photos with Santa, balloons, and more.Spirit of The Row Dates: December 1st, 8th, & 15th.Spirit of The Row Line Up to be announced soon!",
+      "url": "https://santanarow.com/event/spirit-of-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-01",
+        "checkedAt": "2026-11-04T06:42:27.459Z"
+      }
+    },
+    {
+      "id": "8b3387287baf",
+      "title": "Photos with Santa Claus",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "6:00 PM",
+      "endTime": "8:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 1, 2026  Get into the holiday spirit with free photos with Santa and Mrs. Claus in the Oak Tree Lounge (in front of Blue Bottle) on December 1, 8, and 15 from 6pm–8pm during Spirit of The Row—capture a festive moment with the merry duo!",
+      "url": "https://santanarow.com/event/photos-with-santa-claus/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-01",
+        "checkedAt": "2026-11-04T06:42:27.459Z"
+      }
+    },
+    {
+      "id": "2630d6d8180e",
+      "title": "Santa Paws hosted by Humane Society Silicon Valley",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "10:00 AM",
+      "endTime": "2:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 12, 2026  Bring your pet to Park Valencia in Santana Row for a photo with Santa Claus on Saturday, December 12th from 10am to 2pm. All proceeds will benefit Humane Society Silicon Valley. Photos with your pet are a minimum donation of $10! Registration begins at 9:30am.",
+      "url": "https://santanarow.com/event/santa-paws/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-12",
+        "checkedAt": "2026-11-04T06:42:27.460Z"
+      }
+    },
+    {
+      "id": "4751761886f4",
+      "title": "Cars & Croissants on The Row",
+      "date": "2026-12-13",
+      "displayDate": "Sun, Dec 13",
+      "time": "9:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "DECEMBER 13, 2026  Join us on Sunday, December 13th from 9am-12pm for the 100|OCT Cars and Croissants on The Row! Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers.Whether you’re a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.This event is FREE to attend. If you’d like to showcase your vehicle, click HERE to reserve a car display space. We look forward to seeing you on the Row!",
+      "url": "https://santanarow.com/event/cars-croissants-on-the-row/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-12-13",
+        "checkedAt": "2026-11-04T06:42:27.460Z"
+      }
     },
     {
       "id": "5dd03098440a",
