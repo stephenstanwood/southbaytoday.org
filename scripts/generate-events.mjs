@@ -4416,6 +4416,7 @@ async function fetchStanfordEvents() {
   console.log("  ⏳ Stanford Events...");
   try {
     const data = await fetchJson("https://events.stanford.edu/api/2/events?days=60&pp=200");
+    if (!Array.isArray(data?.events)) throw new Error("Stanford calendar has no events array");
     const now = new Date();
     const todayIso = todayPT();
     const events = (data.events || []).map((e) => {
@@ -4590,8 +4591,9 @@ async function fetchStanfordEvents() {
     return deduped;
   } catch (err) {
     console.log(`  ⚠️  Stanford: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    // A failed request is not an empty calendar. Keep the failure visible so
+    // the source policy can retain previously verified future occurrences.
+    throw err;
   }
 }
 
@@ -10519,7 +10521,7 @@ export function eventSourceDefinitions() {
   });
 
   return [
-    source(fetchStanfordEvents),
+    source(fetchStanfordEvents, { label: "Stanford Events", preserveOnFailure: true }),
     source(fetchSjsuEvents),
     source(fetchScuEvents),
     source(fetchChmEvents),
