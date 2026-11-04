@@ -39,6 +39,17 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // This listing's savings/spending records have no statistic, measurement
+  // period or supporting citation. Retain the workshop facts, not that claim.
+  // Match both original and polished copy so refreshes cannot restore it.
+  // Evidence: docs/qa/2026-11-04-0407z-fact-check.md.
+  {
+    date: "2026-11-07", url: "https://sjpl.bibliocommons.com/events/6a3d7a8b6db61d280097f448",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a3d7a8b6db61d280097f448"],
+    copyReplacements: [
+      [/\bThere are record lows in savings(?:,| and) record highs? in spending, and (?:young adults are )?stepping into adulthood without (?:the )?foundational education in personal finance\.\s*/gi, ""],
+    ],
+  },
   // The comedian's biography mentions parenting and family; that does not
   // establish a children's show. The dated show page sells admission and
   // publishes no exception to the venue's standard 21+ entry policy.

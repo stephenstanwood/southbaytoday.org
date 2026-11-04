@@ -40,6 +40,8 @@ export interface SBEvent {
   category: EventCategory;
   recurrence: RecurrenceType;
   days?: DayOfWeek[];
+  // Omit when hours are published per occurrence; a dated listing does not
+  // establish standing hours for the whole recurring series.
   time?: string;
   // 1=Jan, 12=Dec; omit when no seasonal restriction is published. Use the
   // operator's current published season rather than carrying forward an
@@ -668,9 +670,11 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "arts",
     recurrence: "monthly",
     days: ["friday"],
-    time: "6pm – 10pm",
+    // The organizer's November 6, 2026 listing is 5–9pm and welcomes families
+    // and all ages. Keep dated hours on the occurrence, not the recurring row.
+    // https://www.southfirstfridays.com/ (reviewed November 3, 2026)
     cost: "free",
-    kidFriendly: false,
+    kidFriendly: true,
     description:
       "Monthly art walk through San Jose's SoFA arts district on the first Friday, with galleries, studios, pop-up art, and street performers.",
     url: "https://www.southfirstfridays.com/",

@@ -16,6 +16,38 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the dated financial-literacy listing drops unsupported economic records across raw and refreshed copy", async () => {
+  const { polishDescription } = await import("../../../scripts/generate-events.mjs");
+  const prefix = "Young adults today in the US are facing social pressures that can compromise their financial well-being. ";
+  const details = "Come learn money matters with Teens Who Invest as they present on how to make good financial choices as teens and adults. Join us every 1st and 3rd Saturday of the month. Recommended for youth ages 10-18 years old. This program is free.";
+  const claims = [
+    "There are record lows in savings, record high in spending, and stepping into adulthood without the foundational education in Personal Finance. ",
+    "There are record lows in savings and record highs in spending, and young adults are stepping into adulthood without foundational education in personal finance. ",
+  ];
+  for (const claim of claims) {
+    const raw = {
+      date: "2026-11-07", url: "https://sjpl.bibliocommons.com/events/6a3d7a8b6db61d280097f448",
+      title: "Financial Literacy with Teens Who Invest", venue: "Pearl Avenue Library", city: "san-jose",
+      time: "2:30 PM", endTime: "3:30 PM", cost: "free", sourceAudiences: ["Pre-Teens, ages 10-12", "Teens, ages 12-18"],
+      description: prefix + claim + details, blurb: "Learn personal finance basics from Teens Who Invest.",
+    };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.equal(fixed.description, prefix + details);
+    for (const field of Object.keys(raw).filter(key => key !== "description")) assert.deepEqual(fixed[field], raw[field], field);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    assert.equal(applyVerifiedEventFacts({ ...raw, description: polishDescription(raw.description) }).description, prefix + details);
+    const events = [structuredClone(raw)];
+    await resolveEventBlurbs(events, { enabled: false });
+    assert.equal(events[0].description, fixed.description, "refresh normalization preserves the correction");
+    assert.match(raw.description, /record lows/, "source records remain intact");
+    for (const other of [
+      { ...raw, date: "2027-11-07" },
+      { ...raw, url: "https://example.org/another-event" },
+      { ...raw, description: "A dated study reported household saving rates; learn personal finance basics." },
+    ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Tully's Thursday LEGO occurrence omits contradictory Tuesday boilerplate without inventing a cadence", async () => {
   const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/tully-lego-2026-11-05.json", import.meta.url)));
   const { libraryEventDetails, biblioEventOccurrence } = await import("../../../scripts/lib/library-event-details.mjs");
