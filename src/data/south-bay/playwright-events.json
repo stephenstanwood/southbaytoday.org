@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-04T16:04:04.676Z",
+    "generatedAt": "2026-11-04T19:10:21.405Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 187,
+    "eventCount": 185,
     "sourceCount": 18,
     "sources": [
       "San Jose Jazz (10)",
@@ -12,7 +12,7 @@
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
-      "Children's Discovery Museum (6)",
+      "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (19)",
       "Santana Row (5)",
       "City of Cupertino (17)",
@@ -22,8 +22,8 @@
       "SAP Center (13)",
       "The Tech Interactive (7)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (3)"
+      "San Jose Museum of Art (3)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -158,7 +158,7 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 6,
+        "count": 4,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -281,12 +281,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -989,40 +991,6 @@
       "kidFriendly": true
     },
     {
-      "id": "e324cf50b260",
-      "title": "Orbital Escape Robotics",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "10:00 am",
-      "endTime": "12:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
-      "id": "f95d81a46239",
-      "title": "Drone Programming with PYTHON",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "10:30 am",
-      "endTime": "12:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "5cf49f965f57",
       "title": "Daisy Day: Design with Nature",
       "date": "2026-11-21",
@@ -1500,7 +1468,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-04T16:02:58.010Z"
+        "checkedAt": "2026-11-04T19:08:58.426Z"
       }
     },
     {
@@ -1523,7 +1491,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T16:02:58.012Z"
+        "checkedAt": "2026-11-04T19:08:58.432Z"
       }
     },
     {
@@ -1546,7 +1514,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T16:02:58.012Z"
+        "checkedAt": "2026-11-04T19:08:58.432Z"
       }
     },
     {
@@ -1569,7 +1537,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-04T16:02:58.012Z"
+        "checkedAt": "2026-11-04T19:08:58.433Z"
       }
     },
     {
@@ -1592,7 +1560,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-04T16:02:58.012Z"
+        "checkedAt": "2026-11-04T19:08:58.433Z"
       }
     },
     {
@@ -3148,7 +3116,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.803Z"
+        "checkedAt": "2026-11-04T19:09:22.816Z"
       }
     },
     {
@@ -3172,7 +3140,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.803Z"
+        "checkedAt": "2026-11-04T19:09:22.816Z"
       }
     },
     {
@@ -3196,7 +3164,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.803Z"
+        "checkedAt": "2026-11-04T19:09:22.816Z"
       }
     },
     {
@@ -3220,7 +3188,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.803Z"
+        "checkedAt": "2026-11-04T19:09:22.818Z"
       }
     },
     {
@@ -3244,7 +3212,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.804Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3268,7 +3236,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-04T16:03:19.804Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3292,7 +3260,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.804Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3316,7 +3284,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.804Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3340,7 +3308,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.805Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3364,7 +3332,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.805Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3388,7 +3356,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.805Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3412,7 +3380,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.805Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3436,7 +3404,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-04T16:03:19.805Z"
+        "checkedAt": "2026-11-04T19:09:22.821Z"
       }
     },
     {
@@ -3678,40 +3646,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3769,6 +3703,40 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
