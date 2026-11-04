@@ -39,6 +39,18 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The complete RSS item and dated organizer page require preregistration;
+  // the short excerpt loses it. Bind the access condition to this occurrence
+  // so blurb refreshes retain it without reopening full or closed registration.
+  // https://events.sjsu.edu/event/the-ethical-stakes-of-being-a-public-scholar
+  // Evidence: docs/qa/2026-11-04-1107z-fact-check.md.
+  {
+    date: "2026-11-13", url: "https://events.sjsu.edu/event/the-ethical-stakes-of-being-a-public-scholar",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Pre-registration is required. Sign up through the organizer's linked form for this online conversation.",
+    },
+  },
   // The dated organizer page explicitly welcomes families and all ages.
   // Keep the public occurrence consistent with the curated recurring entry.
   // https://www.southfirstfridays.com/ (November 6, 2026 announcement)
