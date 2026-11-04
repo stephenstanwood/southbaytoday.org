@@ -40,6 +40,8 @@ const EDITS = {
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
       ["provided there are no other participants).", "provided there are no other participants.)"],
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
+      [/For questions, please call \(408\) 808-3040 or send an email to ab\.sjpl@sjlibrary\.org(?=$| [A-Z])/g, "$&."],
+      [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
@@ -387,6 +389,7 @@ const EDITS = {
   },
   "Santa Clara County Library": {
     attendanceNote: [
+      [/Contact Librarian Charlie Roos to be added to a waitlist for future sessions: charlie\.roos@lib\.sccgov\.org(?=$| [A-Z])/g, "$&."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
       ["(must have basic conversational skills.)", "(must have basic conversational skills)."],
       ["on a LED candle", "on an LED candle"],

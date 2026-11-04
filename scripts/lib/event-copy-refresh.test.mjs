@@ -48,7 +48,8 @@ const philosophyFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-e
 const november3AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-03-afternoon.json", import.meta.url)));
 const november4OvernightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-overnight.json", import.meta.url)));
 const november4MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-morning.json", import.meta.url)));
-const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture];
+const november4AttendanceFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-attendance.json", import.meta.url)));
+const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture];
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -64,6 +65,35 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("attendance sentence endings preserve changed contacts, qualifiers and publisher scope", () => {
+  for (const row of november4AttendanceFixture.cases) {
+    const otherPublisher = { source: "Different publisher", attendanceNote: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const extended = {
+      source: row.source,
+      attendanceNote: row.refreshed + (row.refreshed.endsWith("guaranteed")
+        ? " until you receive confirmation."
+        : " or register online by 11/5/26."),
+    };
+    assert.deepEqual(polishReviewedEventCopy(extended), extended);
+    const followingSentence = {
+      source: row.source,
+      attendanceNote: row.refreshed + " Registration opens on 11/5/26.",
+    };
+    assert.deepEqual(polishReviewedEventCopy(followingSentence), {
+      ...followingSentence,
+      attendanceNote: row.reviewed + " Registration opens on 11/5/26.",
+    });
+    if (row.refreshed.includes("@")) {
+      const changedContact = {
+        source: row.source,
+        attendanceNote: row.refreshed.replace(/[\w.]+@[\w.]+/g, "updated@example.org"),
+      };
+      assert.deepEqual(polishReviewedEventCopy(changedContact), changedContact);
+    }
+  }
+});
 
 test("philosophy typo repair preserves publisher scope and revised wording", () => {
   const row = philosophyFixture.cases[0];
