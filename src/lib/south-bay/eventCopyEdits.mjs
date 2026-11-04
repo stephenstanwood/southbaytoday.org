@@ -422,6 +422,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      [/\b(1[0-2]|[1-9])\.([0-5]\d)(?= [AP]M\b)/gi, "$1:$2"],
       ["The Seed Keeper b y Diane Wilson.", "The Seed Keeper by Diane Wilson."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
       ["We will meet on Monday November", "We will meet on Monday, November"],

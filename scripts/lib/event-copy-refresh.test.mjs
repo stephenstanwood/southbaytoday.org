@@ -50,7 +50,9 @@ const november4OvernightFixture = JSON.parse(readFileSync(new URL("./fixtures/re
 const november4MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-morning.json", import.meta.url)));
 const november4AttendanceFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-attendance.json", import.meta.url)));
 const november4MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-midday.json", import.meta.url)));
+const november4ClockFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-clock.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
+audits.push(november4ClockFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -66,6 +68,24 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("library clock punctuation preserves revised times, prices, contacts and publisher scope", () => {
+  const description = "Doors at 12.45 PM; dance at 1.15 pm. Tickets $12.50; ages 5-12. Register by 11/15 at https://example.org/v1.25 or New.Name@example.org.";
+  const original = {
+    source: "Santa Clara County Library", description,
+    time: "12:45 PM", endTime: "2:30 PM", cost: "low", costNote: "$12.50",
+  };
+  const next = polishReviewedEventCopy(original);
+  assert.equal(next.description,
+    "Doors at 12:45 PM; dance at 1:15 pm. Tickets $12.50; ages 5-12. Register by 11/15 at https://example.org/v1.25 or New.Name@example.org.");
+  assert.equal(original.description, description);
+  assert.deepEqual(numbers(next.description), numbers(description));
+  assert.deepEqual(identifiers(next.description), identifiers(description));
+  assert.deepEqual({ ...next, description: null }, { ...original, description: null });
+  assert.deepEqual(polishReviewedEventCopy(next), next);
+  const otherPublisher = { ...original, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
 
 test("midday copy repairs retain revised schedules, contacts and later source conditions", () => {
   for (const row of november4MiddayFixture.cases) {
