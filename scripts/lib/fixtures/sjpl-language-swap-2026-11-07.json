@@ -1,0 +1,321 @@
+{
+  "sourceUrl": "https://sjpl.bibliocommons.com/events/6a3f10c0f56bd86e00b95e6b",
+  "captureUrl": "https://gateway.bibliocommons.com/v2/libraries/sjpl/events?ids=68df10f9023ff328007ce8d1,690e9c6d9b8793410094b89b,69261158d923da4200b2487f,694449db76261f28005fd6d8,695477f8cba30d92b60b3b7c,6955a914c967cb41207f670c,69e687f0b6c4ac1fedcda515,69f10f40fb87a3c2e2ac6f3d,69f10f4bfb87a3c2e2ac6fe7,6a060f880c0f2c4503fa22ad,6a0632a943b41b3d00668c7e,6a0632da43b41b3d00668ce8,6a07b602c6a1dc3d00d4084a,6a347d087550c8bf9f5e64a2,6a3f10c0f56bd86e00b95e6b,6a405c29c52cdc3600ed5ad6,6a405cd36db61d280098800c,6a45a6af0e851028002e983c,6a4e94207f5b862800a707ad,6a5e86410e562e28009b31f6,6a6270c40d65ac360041bf84,6a6555353edb05633e904b33,6a67cc6b7b79214226abb922,6a74e3860d65ac360044e790,6a74e38b0d65ac360044e7c1,6a74e38dc7e02e3d006e61d4,6a74e650cca66c2f00a8b63f,6a751bec3f18b57d5233feb7,6a7b58a64cb69d003e20197a,6a7faa2c9d8416003f698ac3,6a85ecd2be14820029887e7d,6a88e0194cb69d003e22710c,6a8e202b4cb69d003e2361c8,6a8e2033b204780029958a7c,6a8e20a869166f088b94e121,6a945bedbe148200298b2d75,6aa4901565abe8002a788e74,6ab7009065abe8002a7c20b3,6abbdb3dde300e004516eeca,6ac1307f377296003a496e53,6ac6963129c3d600332e50c1,6acfdcb7035faf0033dca548,6aeb81303c35b95bcb29b2ab",
+  "retrievedAt": "2026-11-04T20:11:18.848302+00:00",
+  "captureSha256": "6e31b3821f89959fc8fbddfdf1df236a5e068a5720ac216a546f0d5268deffd9",
+  "event": {
+    "id": "6a3f10c0f56bd86e00b95e6b",
+    "key": "2026-11-07T16:30:00",
+    "seriesId": "67e6d9488fd49158705b48b8",
+    "definition": {
+      "start": "2026-11-07T16:30",
+      "end": "2026-11-07T17:30",
+      "title": "Language and Culture Swap",
+      "description": "<p>¿Hablas español y quieres aprender inglés?&nbsp;</p>\n<p>Speak English and want to learn Spanish? </p>\n<p>Build community with people from different linguistic and cultural backgrounds. Everyone has something to contribute! </p>\n<p>Construye comunidad con personas de diferentes antecedentes lingüísticos y culturales. ¡Todos tienen algo que aportar!&nbsp;</p>\n<hr>\n<p>In this program, Spanish-proficient participants with limited English skills will share their linguistic and cultural knowledge with English-proficient participants with limited Spanish skills and vice-versa to create a mutually enriching learning experience. </p>\n<p>En este programa, los participantes con dominio del español y habilidades limitadas en inglés compartirán sus conocimientos lingüísticos y culturales con participantes con dominio del inglés y habilidades limitadas en español, y viceversa, para crear una experiencia de aprendizaje mutuamente enriquecedora. </p>\n<hr>\n<p><br>Free. Registration requested but not&nbsp;required.<br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" data-linkindex=\"1\"><em>ADA Accommodation Requests</em></a><br></p>",
+      "partnerId": null,
+      "bibIds": [],
+      "featuredImageId": "67e6f18d53f2873000a8b199",
+      "branchLocationId": "22",
+      "nonBranchLocationId": null,
+      "locationDetails": "",
+      "audienceIds": [
+        "5d52fbae4d791b3a003e92e3",
+        "5d65e368eb2cac50006a08ab",
+        "5d5f0913be771f230036938d"
+      ],
+      "languageIds": [
+        "5d52fbb909c424450063680d",
+        "5d65e5fbe6fec218adacff57"
+      ],
+      "programId": null,
+      "typeIds": [
+        "67cb677dc871a641003c5280",
+        "5d65e9ae2f3a81f8aeaabba9",
+        "5d65e9ae2f3a81f8aeaabba8"
+      ],
+      "isFeatured": null,
+      "isFeaturedAtLocation": false,
+      "registrationInfo": {
+        "registrationEnd": {
+          "ordinal": 0,
+          "unit": "days",
+          "windowType": "EVENT_START"
+        },
+        "registrationStart": {
+          "ordinal": 2,
+          "unit": "weeks",
+          "windowType": "RELATIVE"
+        },
+        "waitlistEnabled": true,
+        "scope": null,
+        "maxSeats": 10,
+        "cap": 16,
+        "enabledMethods": [],
+        "provider": "BIBLIO_EVENTS"
+      },
+      "isCancelled": false
+    },
+    "indexStart": "2026-11-08T00:30:00Z",
+    "indexEnd": "2026-11-08T01:30:00Z",
+    "isRecurring": true,
+    "numberRegistered": 1,
+    "numberWaitlistRegistered": 0,
+    "isFull": false,
+    "registrationClosed": false
+  },
+  "entities": {
+    "locations": {
+      "22": {
+        "id": "22",
+        "name": "Alum Rock",
+        "coreAbsent": false,
+        "isHidden": false,
+        "imageId": "64e3cf20be89f74100a3c9e9",
+        "customUrl": "https://www.sjpl.org/locations/alum-rock/",
+        "transitUrl": "",
+        "hours": [
+          {
+            "timeRef": "tuesday",
+            "openTime": "T10:00",
+            "closeTime": "T19:00",
+            "id": "66b52100ad995a03f6b20610"
+          },
+          {
+            "timeRef": "wednesday",
+            "openTime": "T10:00",
+            "closeTime": "T19:00",
+            "id": "66b52100ad995a03f6b2060f"
+          },
+          {
+            "timeRef": "thursday",
+            "openTime": "T10:00",
+            "closeTime": "T19:00",
+            "id": "66b52100ad995a03f6b2060e"
+          },
+          {
+            "timeRef": "friday",
+            "openTime": "T12:00",
+            "closeTime": "T18:00",
+            "id": "66b52100ad995a03f6b2060d"
+          },
+          {
+            "timeRef": "saturday",
+            "openTime": "T10:00",
+            "closeTime": "T18:00",
+            "id": "66b52100ad995a03f6b2060c"
+          },
+          {
+            "timeRef": "monday",
+            "openTime": "T13:00",
+            "closeTime": "T19:00",
+            "id": "66b52100ad995a03f6b2060b"
+          },
+          {
+            "timeRef": "sunday",
+            "openTime": "T12:00",
+            "closeTime": "T17:00",
+            "id": "66b52100ad995a03f6b2060a"
+          }
+        ],
+        "sortedHours": [
+          {
+            "day": "monday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "monday",
+                "openTime": "T13:00",
+                "closeTime": "T19:00",
+                "id": "66b52100ad995a03f6b2060b"
+              }
+            ]
+          },
+          {
+            "day": "tuesday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "tuesday",
+                "openTime": "T10:00",
+                "closeTime": "T19:00",
+                "id": "66b52100ad995a03f6b20610"
+              }
+            ]
+          },
+          {
+            "day": "wednesday",
+            "isToday": true,
+            "hours": [
+              {
+                "timeRef": "wednesday",
+                "openTime": "T10:00",
+                "closeTime": "T19:00",
+                "id": "66b52100ad995a03f6b2060f"
+              }
+            ]
+          },
+          {
+            "day": "thursday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "thursday",
+                "openTime": "T10:00",
+                "closeTime": "T19:00",
+                "id": "66b52100ad995a03f6b2060e"
+              }
+            ]
+          },
+          {
+            "day": "friday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "friday",
+                "openTime": "T12:00",
+                "closeTime": "T18:00",
+                "id": "66b52100ad995a03f6b2060d"
+              }
+            ]
+          },
+          {
+            "day": "saturday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "saturday",
+                "openTime": "T10:00",
+                "closeTime": "T18:00",
+                "id": "66b52100ad995a03f6b2060c"
+              }
+            ]
+          },
+          {
+            "day": "sunday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "sunday",
+                "openTime": "T12:00",
+                "closeTime": "T17:00",
+                "id": "66b52100ad995a03f6b2060a"
+              }
+            ]
+          }
+        ],
+        "address": {
+          "country": "US",
+          "zip": "95127",
+          "state": "CA",
+          "city": "San Jose",
+          "street": "Alum Rock Ave",
+          "number": "3090"
+        },
+        "branchContacts": [
+          {
+            "contactType": "phone",
+            "rawValue": "408-808-3090",
+            "label": "",
+            "value": "(408) 808-3090",
+            "globalValue": "+1-408-808-3090",
+            "id": "66b52100ad995a03f6b20612"
+          },
+          {
+            "contactType": "email",
+            "rawValue": "ar.sjpl@sjlibrary.org",
+            "label": null,
+            "globalValue": "ar.sjpl@sjlibrary.org",
+            "value": "ar.sjpl@sjlibrary.org",
+            "id": "66b52100ad995a03f6b20611"
+          }
+        ],
+        "mapLocation": {
+          "centrePoint": {
+            "lng": -121.8280595,
+            "lat": 37.3653857
+          },
+          "utcOffsetNow": "-0800",
+          "timeZone": "America/Los_Angeles",
+          "isGeocoded": false
+        },
+        "facilities": [
+          {
+            "typeId": "651f1befa7d41a3500013138",
+            "id": "66b52100ad995a03f6b20609",
+            "url": null
+          },
+          {
+            "typeId": "651f24ca9690c63c00ffca19",
+            "id": "66b52100ad995a03f6b20608",
+            "url": null
+          },
+          {
+            "url": "https://www.sjpl.org/wee-playspace-alum-rock/",
+            "typeId": "6531b4e8cb391ed4418f7e06",
+            "id": "66b52100ad995a03f6b20607"
+          },
+          {
+            "typeId": "6531af2acb391ed4418f7d30",
+            "id": "66b52100ad995a03f6b20606",
+            "url": null
+          },
+          {
+            "typeId": "6531b4c38fffe94c00c78b2c",
+            "id": "66b52100ad995a03f6b20605",
+            "url": null
+          },
+          {
+            "typeId": "6531b6318fffe94c00c78b5a",
+            "id": "66b52100ad995a03f6b20604",
+            "url": null
+          },
+          {
+            "typeId": "6531b6548fffe94c00c78b5e",
+            "id": "66b52100ad995a03f6b20603",
+            "url": null
+          },
+          {
+            "typeId": "6531b6748fffe94c00c78b60",
+            "id": "66b52100ad995a03f6b20602",
+            "url": null
+          },
+          {
+            "typeId": "65c27fb2de4b6141009fece8",
+            "id": "66b52100ad995a03f6b20601",
+            "url": null
+          },
+          {
+            "typeId": "66b520a814460a1fe3407388",
+            "id": "66b52100ad995a03f6b20600",
+            "url": null
+          }
+        ],
+        "highlights": [],
+        "specialHoursIds": [
+          "691f94a806078d360078fad9",
+          "691f94b6a6fedec9530a2d65",
+          "691f94d09be7c6685c2922be",
+          "691f94db9be7c6685c2922bf"
+        ],
+        "webUrl": "https://www.sjpl.org/locations/alum-rock/"
+      }
+    },
+    "eventAudiences": {
+      "5d52fbae4d791b3a003e92e3": {
+        "id": "5d52fbae4d791b3a003e92e3",
+        "name": "Adults, ages 18+",
+        "imageId": null
+      },
+      "5d65e368eb2cac50006a08ab": {
+        "id": "5d65e368eb2cac50006a08ab",
+        "name": "Seniors, ages 65+",
+        "imageId": null
+      },
+      "5d5f0913be771f230036938d": {
+        "id": "5d5f0913be771f230036938d",
+        "name": "Teens, ages 12-18",
+        "imageId": null
+      }
+    }
+  }
+}

@@ -39,6 +39,18 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The organizer explicitly says signup is requested but not required.
+  // This occurrence's capped form and deadline govern optional signup only;
+  // keep the exception dated rather than relaxing other libraries' gates.
+  // Evidence: docs/qa/2026-11-04-2007z-fact-check.md.
+  {
+    date: "2026-11-07", url: "https://sjpl.bibliocommons.com/events/6a3f10c0f56bd86e00b95e6b",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a3f10c0f56bd86e00b95e6b"],
+    facts: {
+      registration: REGISTRATION_NONE, registrationClosesBy: null,
+      attendanceNote: "Registration is requested but not required.",
+    },
+  },
   // The complete RSS item and dated organizer page require preregistration;
   // the short excerpt loses it. Bind the access condition to this occurrence
   // so blurb refreshes retain it without reopening full or closed registration.

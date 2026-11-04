@@ -47,3 +47,54 @@ test("the SJSU refresh retains the public-scholar conversation's mandatory prere
     assert.deepEqual(fixed[key], event[key], key);
   }
 });
+
+const languageSwap = JSON.parse(readFileSync(new URL("../lib/fixtures/sjpl-language-swap-2026-11-07.json", import.meta.url)));
+
+test("the imported language swap keeps the organizer's optional signup through blurb refresh", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date(languageSwap.retrievedAt) });
+  const { fetchBiblioEvents } = await import("../generate-events.mjs");
+  const original = structuredClone(languageSwap);
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const request = new URL(url);
+    assert.equal(request.origin, "https://gateway.bibliocommons.com");
+    return Response.json({ entities: {
+      ...languageSwap.entities,
+      events: request.searchParams.get("page") === "1" ? { [languageSwap.event.id]: languageSwap.event } : {},
+    } });
+  });
+  const [imported] = await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose");
+  assert.match(imported.description, /Registration requested but not required/);
+  const corrected = applyVerifiedEventFacts(imported);
+  assert.equal(requiresAdvanceRegistration(corrected), false);
+  assert.equal(corrected.registrationClosesBy, null, "the optional signup deadline cannot close attendance");
+  assert.equal(corrected.attendanceNote, "Registration is requested but not required.");
+  assert.equal(corrected.date, "2026-11-07");
+  assert.equal(corrected.time, "4:30 PM");
+  assert.equal(corrected.endTime, "5:30 PM");
+  assert.equal(corrected.venue, "Alum Rock Library");
+  for (const key of Object.keys(imported).filter(key => !["registration", "registrationClosesBy", "attendanceNote"].includes(key))) {
+    assert.deepEqual(corrected[key], imported[key], key);
+  }
+  const events = [structuredClone(imported)];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(requiresAdvanceRegistration(events[0]), false);
+  assert.equal(events[0].registrationClosesBy, null);
+  assert.equal(events[0].attendanceNote, corrected.attendanceNote);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  assert.deepEqual(languageSwap, original, "keep the captured source immutable");
+});
+
+test("the optional language-swap form cannot close attendance or affect another occurrence", () => {
+  const event = { date: "2026-11-07", url: languageSwap.sourceUrl, registration: "closed",
+    registrationClosesBy: "2026-11-08T00:30:00.000Z" };
+  for (const url of [event.url, event.url.replace("/events/", "/v2/events/")]) {
+    const corrected = applyVerifiedEventFacts({ ...event, url });
+    assert.equal(requiresAdvanceRegistration(corrected), false);
+    assert.equal(corrected.registrationClosesBy, null);
+  }
+  for (const other of [
+    { ...event, date: "2026-11-14" },
+    { ...event, url: "https://sjpl.bibliocommons.com/events/another-language-swap" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+  assert.equal(event.registration, "closed");
+});
