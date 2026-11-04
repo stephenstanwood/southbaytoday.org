@@ -39,6 +39,7 @@ const EDITS = {
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
       ["provided there are no other participants).", "provided there are no other participants.)"],
+      ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
     ],
     description: [
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
@@ -263,6 +264,28 @@ const EDITS = {
       ["This month's we'll learn", "This month we'll learn"],
       ["This program is in Celebration of Diwali.", "This program is in celebration of Diwali."],
       ["ALL supplies are provided!", "All supplies are provided!"],
+      ['The current series: "Meet the Instruments & Meet the Dynasties" will', 'The current series, "Meet the Instruments & Meet the Dynasties", will'],
+      ["March 5,2027", "March 5, 2027"],
+      ["a versatile Mezzo Soprano who has studied Opera, Theater, Music and Dance, and has toured internationally, with", "a versatile mezzo-soprano who has studied opera, theater, music and dance, and has toured internationally with"],
+      ["concert halls such as:", "concert halls such as"],
+      ["lesser-known Art Songs of great Classical composers.", "lesser-known art songs of great classical composers."],
+      ["Master of Music Degree", "Master of Music degree"],
+      ["a Bachelors Degree", "a bachelor's degree"],
+      ["in Master classes", "in master classes"],
+      ["film soundtracks She", "film soundtracks. She"],
+      ["the World Premier of his one act opera", "the world premiere of his one-act opera"],
+      ["Ages: 7-11 (2nd grade to 5th grade) Registration Recommended", "Ages: 7-11 (2nd grade to 5th grade). Registration recommended."],
+      ["This program is presented by: Furry Friends Pet Assisted Therapy Services Please", "This program is presented by Furry Friends Pet Assisted Therapy Services. Please"],
+      ["your own personal dogs, or pets.", "your own dogs or other pets."],
+      ["Este programa es presentado por: Furry Friends Pet Assisted Therapy Services Por favor", "Este programa es presentado por Furry Friends Pet Assisted Therapy Services. Por favor"],
+      ["sus propios perros, ni mascotas.", "sus propios perros ni mascotas."],
+      ["There are record lows in savings, record high in spending, and stepping into adulthood without the foundational education in Personal Finance.", "There are record lows in savings and record highs in spending, and young adults are stepping into adulthood without foundational education in personal finance."],
+      ["every Sat. Morning at", "every Sat. morning at"],
+      ["4:00 p.m. -5:00 p.m. Friday,", "4:00 p.m. - 5:00 p.m.; Friday,"],
+      ["4:00 p.m. -5:00 p.m.", "4:00 p.m. - 5:00 p.m."],
+      ["This program is in-person at Alviso Branch Library.", "This program is held in person at Alviso Branch Library."],
+      ["Dr. Roberto Cruz Alum Rock library", "Dr. Roberto Cruz Alum Rock Library"],
+      ["No registration required, supplies limited.", "No registration is required. Supplies are limited."],
     ],
     blurb: [
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
@@ -517,6 +540,7 @@ const EDITS = {
       ["similar to Bingo.", "similar to bingo."],
       ["Drone programming program using Python at the", "Drone programming with Python at the"],
       ["personal readiness, employee vs. Owner trade-offs", "personal readiness, employee vs. owner trade-offs"],
+      ["the Jeopardy! Quiz show.", "the Jeopardy! quiz show."],
     ],
   },
   "SJSU Events": {
@@ -529,6 +553,9 @@ const EDITS = {
     ],
   },
   "Ticketmaster": {
+    title: [
+      ["Uw- Milwaukee Panthers", "UW-Milwaukee Panthers"],
+    ],
     description: [
       ["Lineup* Shoreline Mafia SOB", "Lineup: Shoreline Mafia SOB"],
       ["Kai Bandz Ny Ny *Lineup subject to change", "Kai Bandz Ny Ny. Lineup subject to change."],
@@ -592,6 +619,7 @@ const EDITS = {
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
       [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],
+      [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
     ],
   },
 };
