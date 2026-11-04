@@ -552,6 +552,7 @@ const EDITS = {
   },
   "SJSU Events": {
     description: [
+      ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
     ],
     blurb: [
@@ -589,6 +590,8 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Dear Community, Please join DAAAS Movie Nights", "Dear community, please join DAAAS Movie Nights"],
+      ["the screening of THE Eyes Of Ghana.", "the screening of The Eyes of Ghana."],
       ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
       ["music, activties and light bites", "music, activities and light bites"],
       ["and outdoor Rodin Sculptures!", "and outdoor Rodin sculptures!"],
