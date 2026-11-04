@@ -39,6 +39,17 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The event has a stray 7 after its phone link; the publisher's independent
+  // accessibility page confirms (408) 540-3947 for help with the same form.
+  // Match only this occurrence and known token, including normalized spacing.
+  // Preserve changed contacts and every other event/attendance fact.
+  // https://sccld.org/accessibility/
+  // Evidence: docs/qa/2026-11-04-origami-contact.md.
+  {
+    date: "2026-11-19", url: "https://sccl.bibliocommons.com/events/6ae2292c0b801373af915568",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6ae2292c0b801373af915568"],
+    copyReplacements: [[/\(408\) 540-3947\s*7(?=, or email us at )/g, "(408) 540-3947"]],
+  },
   // The organizer explicitly says signup is requested but not required.
   // This occurrence's capped form and deadline govern optional signup only;
   // keep the exception dated rather than relaxing other libraries' gates.
