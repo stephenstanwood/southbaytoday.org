@@ -29,7 +29,9 @@ export interface SchemaEventRecord {
   city?: string | null; // coverage/filter id; border venues can use a nearby city
   locality?: string | null; // actual source-backed municipality; use for location labels
   cityName?: string | null; // pre-resolved display name, optional
-  url?: string | null; // primary-source / ticketing URL
+  // Primary-source, ticketing or calendar URL; collection links are not unique
+  // occurrence IDs and may be shared by simultaneous events at different venues.
+  url?: string | null;
   pageUrl?: string | null; // canonical South Bay Today leaf page
   image?: string | null;
   photoRef?: string | null;

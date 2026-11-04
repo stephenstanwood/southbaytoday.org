@@ -1,0 +1,39 @@
+{
+  "sourceUrl": "https://www.booksinc.com/pages/events",
+  "capturedAt": "2026-11-04T07:11:18.485593+00:00",
+  "events": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "MATT O&apos;HARA: THE FLYING DEATH",
+      "startDate": "2026-11-17T18:00:00-08:00",
+      "endDate": "2026-11-17T18:00:00-08:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Books Inc. Palo Alto",
+        "address": {
+          "@type": "PostalAddress",
+          "name": "855 El Camino Real, Palo Alto, CA 94301"
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "ALL THINGS ROMANCE BOOK CLUB: HOLLY JOLLY DIWALI &amp; SET THE RECORD STRAIGHT",
+      "startDate": "2026-11-17T18:00:00-08:00",
+      "endDate": "2026-11-17T18:00:00-08:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Books Inc. Mountain View",
+        "address": {
+          "@type": "PostalAddress",
+          "name": "317 Castro St, Mountain View, CA 94041"
+        }
+      }
+    }
+  ],
+  "sourceSha256": "224cd4a7ec4c195ed959ce3243faad7b2650a4d9bd281e88afd4d2270499e978"
+}
