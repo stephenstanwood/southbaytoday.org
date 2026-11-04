@@ -60,6 +60,9 @@ const EDITS = {
       ["in case of incremental weather/facility issues", "in case of inclement weather or facility issues"],
       ["Children can play in a safe environment in the Rose Garden Library Community Room and parents can connect", "Children can play in a safe environment in the Rose Garden Library Community Room, and parents can connect"],
       ["in the Children's area.)", "in the Children's area)."],
+      // The publisher leaves the main room name unfinished. Keep its complete
+      // weather fallback without guessing the missing location.
+      ["Storytime will be held in the Community (in case of inclement weather or facility issues, storytime will be held in the Children's area).", "In case of inclement weather or facility issues, storytime will be held in the Children's area."],
       [/\b(Schedule: Thursdays, \d{1,2}:\d{2} [AP]M - \d{1,2}:\d{2} [AP]M) (?=September:)/g, "$1. "],
       [/\b((?:September|October|November): [\d, ]+) (?=(?:October|November|December):)/g, "$1; "],
       [/\bNovember: (\d+),(\d+)/g, "November: $1, $2"],
@@ -654,6 +657,7 @@ const EDITS = {
   "San Jose Theaters": {
     description: [
       ["Love, Music & Emotions Love is more", "Love, Music & Emotions. Love is more"],
+      ["awe-inspiring locations like never seen before in", "awe-inspiring locations in"],
     ],
   },
   "Santa Clara University": {
