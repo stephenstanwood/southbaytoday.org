@@ -46,6 +46,7 @@ const EDITS = {
       ["by the City of San Jose no cost to them", "by the City of San Jose at no cost to them"],
       ["we meet in-person", "we meet in person"],
       ["No Registration required.", "No registration required."],
+      ["a once a month Reading to Children event.", "a once-a-month Reading to Children event."],
       ["For ages up to 12, and families.", "For ages up to 12 and families."],
       ["Diwali tales brought to life through expressive Indian classical movement, music and rhythms and concludes with a joyful group dance!", "Diwali tales are brought to life through expressive Indian classical movement, music and rhythms, and the program concludes with a joyful group dance!"],
       ["This program is meant for Intermediate or Advanced Level Learners, not for Beginners.", "This program is meant for intermediate or advanced-level learners, not for beginners."],
@@ -304,6 +305,7 @@ const EDITS = {
   },
   "Linden Tree Books": {
     description: [
+      ["When people grab her wheelchair, to push her", "When people grab her wheelchair to push her"],
       ["(lots of laughter!) —gather around and enjoy", "(lots of laughter!) — gather around and enjoy"],
       ["beaches of Normandy, France in the famous", "beaches of Normandy, France, in the famous"],
       ["shocking, gruesome, and True stories of the second World War in", "shocking, gruesome, and true stories of the Second World War in"],
