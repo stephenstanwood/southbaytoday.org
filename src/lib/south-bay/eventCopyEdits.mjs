@@ -43,6 +43,8 @@ const EDITS = {
     ],
     description: [
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
+      ["high-beginning level ESL course", "high-beginning-level ESL course"],
+      ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
       ["by the City of San Jose no cost to them", "by the City of San Jose at no cost to them"],
       ["we meet in-person", "we meet in person"],
       ["No Registration required.", "No registration required."],
@@ -290,6 +292,7 @@ const EDITS = {
     ],
     blurb: [
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
+      ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
       ["Pair up with a teen reading coach for one-on-one practice as a grades TK-5 reading buddy.", "Students in grades TK-5 can pair up with a teen reading coach for one-on-one reading practice."],
       ["at Hillview Library; bring your own mat, no registration needed.", "at Hillview Library; bring your own mat. No registration needed."],
       ["create art alongside other kids, no registration needed.", "create art alongside other kids; no registration needed."],
@@ -471,6 +474,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["never before seen footage", "never-before-seen footage"],
       ["It is impossible to leave the pleasant life", "It is impossible to live the pleasant life"],
       ["Registration is not required but you will receive", "Registration is not required, but you will receive"],
       ["It is open to all levels of experience and no registration is required.", "It is open to all levels of experience, and no registration is required."],
@@ -525,6 +529,7 @@ const EDITS = {
       [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
     ],
     blurb: [
+      ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["join storytime and crafts,", "take part in storytime and crafts,"],
       ["join hands-on activities,", "join in hands-on activities,"],
