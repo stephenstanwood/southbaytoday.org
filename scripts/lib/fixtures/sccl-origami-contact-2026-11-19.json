@@ -1,0 +1,329 @@
+{
+  "retrievedAt": "2026-11-04T20:11:21.502790+00:00",
+  "sourceUrl": "https://sccl.bibliocommons.com/events/6ae2292c0b801373af915568",
+  "responseSha256": "cc98cbd3ae4ed49e162c86fe9c4fddebd23b07ff358c2101efdab2c420997291",
+  "accessibilityUrl": "https://sccld.org/accessibility/",
+  "verifiedPhone": "(408) 540-3947",
+  "event": {
+    "id": "6ae2292c0b801373af915568",
+    "key": "2026-11-19T16:00:00",
+    "seriesId": "6ae11f83e06996003a8659d1",
+    "definition": {
+      "start": "2026-11-19T16:00",
+      "end": "2026-11-19T16:45",
+      "title": "Origami for School Age Kids",
+      "description": "<p>Please join us as we learn 3 origami projects. Each project will be demonstrated step-by-step. Origami paper is provided. No registration required, just come and learn to fold origami! This program is for children currently in grades Kindergarten through 8th grade. Parents and caregivers are welcome to join and help your child (children).</p>\n<p>Generously sponsored by the Friends of Cupertino Library.<br></p><p>For accessibility accommodations (ex. ASL), please fill out the online form at <a href=\"https://sccld.org/accessibility/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" id=\"OWA5e41f473-2c03-8a9a-5ea1-2cc34f0e05c7\" data-linkindex=\"0\" title=\"https://sccld.org/accessibility/\">sccld.org/accessibility</a> 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call <a href=\"tel:(408) 540-3947\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" data-linkindex=\"1\" title=\"tel:(408) 540-3945\">(408) 540-3947</a>7, or email us at <a href=\"mailto:ask@lib.sccgov.org\" id=\"OWA3a96a92d-c453-b9ed-9996-3fe02a0b57c5\" title=\"mailto:ask@sccl.org\" data-linkindex=\"2\">ask@lib.sccgov.org</a>.<br></p>",
+      "partnerId": null,
+      "bibIds": [],
+      "featuredImageId": "6ae11e3ade300e00451d3d2a",
+      "branchLocationId": "CU",
+      "nonBranchLocationId": null,
+      "locationDetails": "Community Room 101",
+      "audienceIds": [
+        "5b28181c4727c7344c796678"
+      ],
+      "languageIds": [
+        "5b2816c2e9ce2bc14b5865a8"
+      ],
+      "programId": null,
+      "typeIds": [
+        "5b439c2a009bcb3700165181"
+      ],
+      "isFeatured": null,
+      "registrationInfo": {
+        "enabledMethods": [],
+        "cap": null,
+        "maxSeats": null,
+        "registrationStart": {
+          "unit": "days",
+          "ordinal": 0
+        },
+        "registrationEnd": {
+          "unit": "days",
+          "ordinal": 0
+        }
+      },
+      "contact": {
+        "name": "Cindy",
+        "phone": {
+          "contactType": "phone",
+          "rawValue": "",
+          "value": null,
+          "globalValue": null
+        },
+        "email": {
+          "contactType": "email",
+          "rawValue": "cindy.wee@lib.sccgov.org",
+          "value": "cindy.wee@lib.sccgov.org",
+          "globalValue": "cindy.wee@lib.sccgov.org"
+        }
+      },
+      "isCancelled": false
+    },
+    "indexStart": "2026-11-20T00:00:00Z",
+    "indexEnd": "2026-11-20T00:45:00Z",
+    "isRecurring": false,
+    "numberRegistered": null,
+    "numberWaitlistRegistered": null,
+    "isFull": false,
+    "registrationClosed": false
+  },
+  "entities": {
+    "eventAudiences": {
+      "5b28181c4727c7344c796678": {
+        "id": "5b28181c4727c7344c796678",
+        "name": "Kids: Grades K-8",
+        "description": "School Age: Grades K-8",
+        "imageId": null
+      }
+    },
+    "locations": {
+      "CU": {
+        "id": "CU",
+        "name": "Cupertino Library",
+        "libcalId": "4019",
+        "coreAbsent": false,
+        "isHidden": false,
+        "description": "Member of the Santa Clara County Library District. ",
+        "imageId": "617c1f21f67cb7430017987e",
+        "customUrl": "https://sccld.org/locations/cupertino",
+        "transitUrl": "https://www.vta.org/",
+        "hours": [
+          {
+            "timeRef": "tuesday",
+            "openTime": "T10:00",
+            "closeTime": "T21:00",
+            "id": "6aac3bd94b3b0600308479a4"
+          },
+          {
+            "timeRef": "thursday",
+            "openTime": "T10:00",
+            "closeTime": "T21:00",
+            "id": "6aac3bd94b3b0600308479a3"
+          },
+          {
+            "timeRef": "friday",
+            "openTime": "T10:00",
+            "closeTime": "T21:00",
+            "id": "6aac3bd94b3b0600308479a2"
+          },
+          {
+            "timeRef": "saturday",
+            "openTime": "T10:00",
+            "closeTime": "T18:30",
+            "id": "6aac3bd94b3b0600308479a1"
+          },
+          {
+            "timeRef": "monday",
+            "openTime": "T10:00",
+            "closeTime": "T21:00",
+            "id": "6aac3bd94b3b0600308479a0"
+          },
+          {
+            "timeRef": "wednesday",
+            "openTime": "T10:00",
+            "closeTime": "T21:00",
+            "id": "6aac3bd94b3b06003084799f"
+          },
+          {
+            "timeRef": "sunday",
+            "openTime": "T10:00",
+            "closeTime": "T18:30",
+            "id": "6aac3bd94b3b06003084799e"
+          }
+        ],
+        "sortedHours": [
+          {
+            "day": "monday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "monday",
+                "openTime": "T10:00",
+                "closeTime": "T21:00",
+                "id": "6aac3bd94b3b0600308479a0"
+              }
+            ]
+          },
+          {
+            "day": "tuesday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "tuesday",
+                "openTime": "T10:00",
+                "closeTime": "T21:00",
+                "id": "6aac3bd94b3b0600308479a4"
+              }
+            ]
+          },
+          {
+            "day": "wednesday",
+            "isToday": true,
+            "hours": [
+              {
+                "timeRef": "wednesday",
+                "openTime": "T10:00",
+                "closeTime": "T21:00",
+                "id": "6aac3bd94b3b06003084799f"
+              }
+            ]
+          },
+          {
+            "day": "thursday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "thursday",
+                "openTime": "T10:00",
+                "closeTime": "T21:00",
+                "id": "6aac3bd94b3b0600308479a3"
+              }
+            ]
+          },
+          {
+            "day": "friday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "friday",
+                "openTime": "T10:00",
+                "closeTime": "T21:00",
+                "id": "6aac3bd94b3b0600308479a2"
+              }
+            ]
+          },
+          {
+            "day": "saturday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "saturday",
+                "openTime": "T10:00",
+                "closeTime": "T18:30",
+                "id": "6aac3bd94b3b0600308479a1"
+              }
+            ]
+          },
+          {
+            "day": "sunday",
+            "isToday": false,
+            "hours": [
+              {
+                "timeRef": "sunday",
+                "openTime": "T10:00",
+                "closeTime": "T18:30",
+                "id": "6aac3bd94b3b06003084799e"
+              }
+            ]
+          }
+        ],
+        "hoursNote": "",
+        "address": {
+          "number": "10800",
+          "street": "Torre Avenue",
+          "city": "Cupertino",
+          "state": "CA",
+          "zip": "95014",
+          "country": "US"
+        },
+        "branchContacts": [
+          {
+            "contactType": "email",
+            "rawValue": "Cupertino_Manager@lib.sccgov.org",
+            "label": "Community Librarian",
+            "globalValue": "cupertino_manager@lib.sccgov.org",
+            "value": "cupertino_manager@lib.sccgov.org",
+            "id": "6aac3bd94b3b0600308479a6"
+          },
+          {
+            "contactType": "phone",
+            "rawValue": "(408) 446-1677",
+            "label": "Cupertino Library",
+            "value": "(408) 446-1677",
+            "globalValue": "+1-408-446-1677",
+            "id": "6aac3bd94b3b0600308479a5"
+          }
+        ],
+        "mapLocation": {
+          "centrePoint": {
+            "lng": -122.02896069999997,
+            "lat": 37.3177895
+          },
+          "utcOffsetNow": "-0800",
+          "timeZone": "America/Los_Angeles",
+          "isGeocoded": false
+        },
+        "facilities": [
+          {
+            "url": null,
+            "typeId": "5b2819893f209ba24c721d56",
+            "id": "6aac3bd94b3b06003084799d"
+          },
+          {
+            "typeId": "5b2819893f209ba24c721d5d",
+            "id": "6aac3bd94b3b06003084799c",
+            "url": null
+          },
+          {
+            "typeId": "5b2819893f209ba24c721d55",
+            "id": "6aac3bd94b3b06003084799b",
+            "url": null
+          },
+          {
+            "typeId": "5b2819893f209ba24c721d5a",
+            "id": "6aac3bd94b3b06003084799a",
+            "url": null
+          },
+          {
+            "typeId": "5b2819893f209ba24c721d5e",
+            "id": "6aac3bd94b3b060030847999",
+            "url": null
+          },
+          {
+            "typeId": "5b2819893f209ba24c721d58",
+            "id": "6aac3bd94b3b060030847998",
+            "url": null
+          }
+        ],
+        "highlights": [],
+        "directions": "<p>To visit Cupertino&nbsp;Library, <a href=\"https://www.google.com/maps/dir/?api=1&destination=10800%20Torre%20Avenue%20Cupertino%20CA\">find driving directions</a> and <a href=\"https://www.vta.org/\">public transportation options</a>.</p>",
+        "meetingRooms": "<p>You must have a valid <a href=\"https://sccld.org/card/\">SCCLD library card</a>  to book a room, as well as read and agree to adhere to any <a href=\"https://sccld.org/book-a-room/cupertino-room-usage/\">room usage requirements</a> for the room you are booking. To find out more about this service, please refer to our <a href=\"https://sccld.org/book-a-room/\">Book a Room @ the Library </a>page.</p>",
+        "accessibilityInfo": "<p>The Santa Clara County Library District provides a variety of Accessibility Services to assist our community. To find out more about these services, please refer to our <a href=\"https://sccld.org/accessibility/\">Accessibility Services</a> page.</p>",
+        "specialHoursIds": [
+          "68fbbcda3cbc052f0081755f",
+          "68fbbcf806078d36007461dd",
+          "68fbbd08831f063d005385bc",
+          "68fbbd2906078d3600746201",
+          "68fbbd433cbc052f00817592",
+          "68fbbd70831f063d005385c9"
+        ],
+        "webUrl": "https://sccld.org/locations/cupertino"
+      }
+    }
+  },
+  "publishedBefore": {
+    "id": "sccl-6ae2292c0b801373af915568",
+    "title": "Origami for School Age Kids",
+    "date": "2026-11-19",
+    "displayDate": "Thu, Nov 19",
+    "time": "4:00 PM",
+    "endTime": "4:45 PM",
+    "venue": "Cupertino Library",
+    "address": "",
+    "city": "cupertino",
+    "category": "family",
+    "cost": "free",
+    "description": "Please join us as we learn 3 origami projects. Each project will be demonstrated step-by-step. Origami paper is provided. No registration required; just come and learn to fold origami! This program is for children currently in kindergarten through 8th grade. Parents and caregivers are welcome to join and help their children. Generously sponsored by the Friends of Cupertino Library. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3947 7, or email us at ask@lib.sccgov.org.",
+    "sourceAudiences": [
+      "Kids: Grades K-8"
+    ],
+    "url": "https://sccl.bibliocommons.com/events/6ae2292c0b801373af915568",
+    "source": "Santa Clara County Library",
+    "kidFriendly": true,
+    "audienceAge": "kids",
+    "photoRef": "places/ChIJw0A7R6i1j4ARPMVjDPvu6mM/photos/AV-0GLclui3Yxd4rNHSuHNBl1WPI0UtQU_wEfb8muJsMJ26AOZOVMKb_QoZ48vT2LnEV3N9NnVsxk_IQqdKz3tIX3KBPuyQn4AiGP91f624WvmI64ZC8fqSTBoii1yu_tgMTWKJ4vkzV0cEUlnoxf_4yX1DFHsEBmZAMokbu2VrlFZuW1HdmepiVDFm-bDzHQROWQli-zxftf9bpdmFwD3uApHNNREax74m6xVaw9JnGvzvAl6TONfF_q35hUgdJOT3ylvBjCAZ-Nun_3-MZ3IGbTWt5CTkkPMvMgdLcH_hbUTAPEZIfOUaf9g57uap1Etlb8N3hJTazlUvsvvzRGMEa2_G-nu3PIqSixzliqJwjaq3N36uhuh-5HFJeeAS_ADnDboME-eW28hnhUXlCokSIpg9I2dRs",
+    "blurb": "Fold three origami projects with step-by-step demonstrations, using paper provided, in a drop-in session for kids in kindergarten through 8th grade.",
+    "firstSeenAt": "2026-11-04T19:17:11.624Z"
+  }
+}
