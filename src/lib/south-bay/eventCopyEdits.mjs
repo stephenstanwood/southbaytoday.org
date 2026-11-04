@@ -314,6 +314,21 @@ const EDITS = {
       ["interaction with Kristina who has been trained", "interaction with Kristina, who has been trained"],
       ["an exhilarating volunteer- led Bollywood dance session!", "an exhilarating volunteer-led Bollywood dance session!"],
       ["with the Mt Pleasant Neighborhood Library!", "with the Mt. Pleasant Neighborhood Library!"],
+      ["In this program kids in grades", "In this program, kids in grades"],
+      ["fun and engaging Emoji art projects!", "fun and engaging emoji art projects!"],
+      ["Todos Pueden Crear: Arte de Emojis Sábado,", "Todos Pueden Crear: Arte de Emojis. Sábado,"],
+      ["inscribirse antes de las 15:00 p.m.", "inscribirse antes de las 15:00."],
+      ["Nghệ Thuật Biểu Tượng Cảm Xúc Thứ Bảy,", "Nghệ Thuật Biểu Tượng Cảm Xúc. Thứ Bảy,"],
+      ["3:00 chiều – 4:30 chiều Trong chương trình", "3:00 chiều – 4:30 chiều. Trong chương trình"],
+      ["bằng tiếng anh.", "bằng tiếng Anh."],
+      ["*While supplies last Share Your Story Share", "*While supplies last. Share Your Story: Share"],
+      ["Special Thanks This event", "Special Thanks: This event"],
+      ["such as: Setting up an email account, composing & sending emails, using email attachments; Web searches and basic data entry; Learning the basics of Microsoft Word and Excel and web-based productivity software such as Google Docs; Using the library's pay-for-print and photocopy machines; Using social networking services like Facebook; Downloading apps on your phone or tablet; And much more!", "such as setting up an email account, composing & sending emails, using email attachments; web searches and basic data entry; learning the basics of Microsoft Word and Excel and web-based productivity software such as Google Docs; using the library's pay-for-print and photocopy machines; using social networking services like Facebook; downloading apps on your phone or tablet; and much more!"],
+      ["(Older siblings welcome) Free.", "(older siblings welcome). Free."],
+      ["Drop-in the first Saturday", "Drop in the first Saturday"],
+      ["commit to the full session • Anyone", "commit to the full session. • Anyone"],
+      ["alongside a parent/guardian • No experience", "alongside a parent/guardian. • No experience"],
+      ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
     ],
     blurb: [
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
@@ -613,6 +628,11 @@ const EDITS = {
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
       ["Catch Suicide Silence, Emmure,", "Watch Suicide Silence, Emmure,"],
       ["Hear classic Rock En Espanol artists' music and visuals at The Ritz, 21 and up.", "Enjoy music and visuals from classic Rock En Espanol artists at The Ritz, for ages 21 and up."],
+    ],
+  },
+  "Mountain Winery": {
+    title: [
+      [/^(Puppies & Pinot: Santa Paws Edition) with (\d{1,2})am-(\d{1,2})pm$/g, "$1 ($2 AM-$3 PM)"],
     ],
   },
   "Stanford Events": {
