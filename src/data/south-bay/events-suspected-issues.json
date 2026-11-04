@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-04T19:17:12.936Z"
+    "auditedAt": "2026-11-04T23:26:18.089Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1449,
+    "total": 1452,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -48,18 +48,33 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 311,
+    "total": 329,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 2,
       "info": 1
     },
     "byReason": {
+      "unknown-slug": 1,
       "local-departure-trip": 1,
       "virtual-not-flagged": 1
     },
     "hard": [],
     "soft": [
+      {
+        "id": "inbound_mw2nwgaz_sm5eno",
+        "title": "Hands Only CPR/AED & Choking Relief Course",
+        "city": "monte-sereno",
+        "date": "2026-11-18T00:00:00-08:00",
+        "location": "",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "unknown-slug",
+            "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
       {
         "id": "inbound_mvy0pyof_82vbsm",
         "title": "The Nutcracker: San Francisco Ballet Day Trip",

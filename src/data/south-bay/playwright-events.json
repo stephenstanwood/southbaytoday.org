@@ -1,21 +1,22 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-04T19:10:21.405Z",
+    "generatedAt": "2026-11-04T23:19:17.545Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 185,
-    "sourceCount": 18,
+    "eventCount": 188,
+    "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (8)",
       "History San Jose (5)",
       "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
-      "ICA San José (3)",
+      "ICA San José (4)",
+      "Mountain Winery (1)",
       "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (19)",
       "Santana Row (5)",
-      "City of Cupertino (17)",
+      "City of Cupertino (18)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
@@ -124,7 +125,7 @@
         "id": "ica-san-jose",
         "label": "ICA San Jose",
         "status": "ok",
-        "count": 3,
+        "count": 4,
         "error": null,
         "sources": [
           "ICA San José"
@@ -141,10 +142,12 @@
       {
         "id": "mountain-winery",
         "label": "Mountain Winery",
-        "status": "empty",
-        "count": 0,
+        "status": "ok",
+        "count": 1,
         "error": null,
-        "sources": []
+        "sources": [
+          "Mountain Winery"
+        ]
       },
       {
         "id": "hammer-theatre",
@@ -188,7 +191,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 17,
+        "count": 18,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -900,6 +903,26 @@
       "kidFriendly": false
     },
     {
+      "id": "2c6ec7fc326e",
+      "title": "Queer American Memorials at the ICA",
+      "date": "2026-11-04",
+      "displayDate": "Wed, Nov 4",
+      "time": null,
+      "endTime": null,
+      "ongoing": true,
+      "startDate": "2026-10-02",
+      "endDate": "2027-02-21",
+      "venue": "ICA San José",
+      "address": "560 S First St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "",
+      "url": "https://www.icasanjose.org/current-exhibitions/queeramericanmemorials/",
+      "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
       "id": "40cc7dafb986",
       "title": "Greg Ito: To Give and Take",
       "date": "2026-11-04",
@@ -920,23 +943,40 @@
       "kidFriendly": false
     },
     {
-      "id": "2c6ec7fc326e",
-      "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
+      "id": "6ef3f76973b8",
+      "title": "Nimah Gobir: Familiar",
+      "date": "2027-01-15",
+      "displayDate": "Fri, Jan 15",
       "time": null,
       "endTime": null,
       "ongoing": true,
-      "startDate": "2026-10-02",
-      "endDate": "2027-02-21",
+      "startDate": "2027-01-15",
+      "endDate": "2027-08-22",
       "venue": "ICA San José",
       "address": "560 S First St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "arts",
       "cost": "free",
       "description": "",
-      "url": "https://www.icasanjose.org/upcoming-exhibitions/queeramericanmemorials/",
+      "url": "https://www.icasanjose.org/upcoming-exhibitions/nimahgobirfamiliar/",
       "source": "ICA San José",
+      "kidFriendly": false
+    },
+    {
+      "id": "864efa207e5c",
+      "title": "Puppies & Pinot: Santa Paws Edition with 11am-3pm",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "11:00 AM",
+      "endTime": null,
+      "venue": "The Mountain Winery",
+      "address": "14831 Pierce Rd, Saratoga, CA 95070",
+      "city": "saratoga",
+      "category": "music",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.mountainwinery.com/events/detail?event_id=1683714",
+      "source": "Mountain Winery",
       "kidFriendly": false
     },
     {
@@ -1468,7 +1508,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-04T19:08:58.426Z"
+        "checkedAt": "2026-11-04T23:18:06.382Z"
       }
     },
     {
@@ -1491,7 +1531,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T19:08:58.432Z"
+        "checkedAt": "2026-11-04T23:18:06.389Z"
       }
     },
     {
@@ -1514,7 +1554,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T19:08:58.432Z"
+        "checkedAt": "2026-11-04T23:18:06.390Z"
       }
     },
     {
@@ -1537,7 +1577,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-04T19:08:58.433Z"
+        "checkedAt": "2026-11-04T23:18:06.391Z"
       }
     },
     {
@@ -1560,7 +1600,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-04T19:08:58.433Z"
+        "checkedAt": "2026-11-04T23:18:06.392Z"
       }
     },
     {
@@ -1768,6 +1808,23 @@
       "kidFriendly": false
     },
     {
+      "id": "a2318dccf50a",
+      "title": "El Nino Preparedness Community Meeting",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "06:00 PM",
+      "endTime": "07:00 PM",
+      "venue": "95014",
+      "address": "95014",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "Join the City of Cupertino for a virtual community meeting to learn how to prepare for the upcoming storm season. Hear from representatives from the City of Cupertino, PG&E, San José Water, and Valley Water about potential impacts from heavy rain, preparedness steps you can take, and resources available to help keep your household informed and ready. To get started on preparing for storm season, visit the City's El Niño preparedness webpage at cupertino.gov/elnino. Register for the Community Meeting: https://cityofcupertino.zoom.us/webinar/register/WN_Ovw1NB-DT_W-YYsE6Gl_lA#/",
+      "url": "https://www.cupertino.gov/Meetings/El-Nino-Preparedness-Community-Meeting",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
       "id": "46499ae29bb7",
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-11-28",
@@ -1866,7 +1923,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3116,7 +3173,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.816Z"
+        "checkedAt": "2026-11-04T23:18:33.568Z"
       }
     },
     {
@@ -3140,7 +3197,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.816Z"
+        "checkedAt": "2026-11-04T23:18:33.568Z"
       }
     },
     {
@@ -3164,7 +3221,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.816Z"
+        "checkedAt": "2026-11-04T23:18:33.568Z"
       }
     },
     {
@@ -3188,7 +3245,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.818Z"
+        "checkedAt": "2026-11-04T23:18:33.569Z"
       }
     },
     {
@@ -3212,7 +3269,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3236,7 +3293,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3260,7 +3317,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3284,7 +3341,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3308,7 +3365,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3332,7 +3389,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3356,7 +3413,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3380,7 +3437,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.570Z"
       }
     },
     {
@@ -3404,7 +3461,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-04T19:09:22.821Z"
+        "checkedAt": "2026-11-04T23:18:33.571Z"
       }
     },
     {
