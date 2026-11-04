@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T04:17:42.809Z",
+  "generatedAt": "2026-11-04T04:28:24.736Z",
   "meetings": {
     "san-jose": {
       "date": "2026-11-03",
@@ -36,77 +36,23 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-03",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "cupertino": {
-      "date": "2026-11-02",
-      "displayDate": "Mon, Nov 2",
-      "startTime": "18:45",
-      "bodyName": "City Council",
-      "location": "Council Chamber",
-      "closedSession": false,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5310&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5310,
-      "agendaItems": [
-        {
-          "title": "Study session on proposed updates to the 2019 Cupertino Emergency Operations Plan (EOP).",
-          "sequence": 28
-        },
-        {
-          "title": "Presentation from Toyokawa Sister City regarding recent student exchange.",
-          "sequence": 8
-        },
-        {
-          "title": "Presentation from Hsinchu Sister City regarding recent student exchange.",
-          "sequence": 9
-        },
-        {
-          "title": "Approval of the Annual Mitigation Fee Report and Five-Year Report for Fiscal Year (FY) 2025-2026.",
-          "sequence": 22
-        },
-        {
-          "title": "Vista Village Community Development Block Grant (CDBG) agreement amendment to increase the award by $114,546 and extend the agreement term through December 31, 2027.",
-          "sequence": 23
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-11-02",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-02T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-11-02",
-      "displayDate": "Mon, Nov 2",
+      "date": "2026-11-09",
+      "displayDate": "Mon, Nov 9",
       "startTime": "17:30",
       "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21919",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21901",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-11-02",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21919"
-      }
-    },
-    "campbell": {
-      "date": "2026-11-02",
-      "displayDate": "Mon, Nov 2",
-      "startTime": "19:00",
-      "bodyName": "City Council Regular Session Meeting",
-      "location": "City Hall Council Chamber",
-      "closedSession": false,
-      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0&Agenda=Agenda&lang=English",
-      "agendaItems": [],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "escribe",
-        "observedDate": "2026-11-02",
-        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
+        "observedDate": "2026-11-09",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21901"
       }
     },
     "milpitas": {
@@ -123,7 +69,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -140,12 +86,12 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-02T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
-      "date": "2026-11-02",
-      "displayDate": "Mon, Nov 2",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "startTime": null,
       "bodyName": "Town Council",
       "location": null,
@@ -155,7 +101,7 @@
       "confirmation": {
         "status": "confirmed",
         "provider": "town-of-los-gatos-schedule",
-        "observedDate": "2026-11-02",
+        "observedDate": "2026-11-17",
         "sourceUrl": "https://www.losgatosca.gov/DocumentCenter/View/16888/Town-Council-Meeting-Schedule-"
       }
     }
@@ -175,7 +121,7 @@
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "santa-clara": {
       "provider": "Legistar",
@@ -191,7 +137,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "milpitas": {
       "provider": "CivicClerk",
