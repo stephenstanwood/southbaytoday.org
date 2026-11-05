@@ -47,6 +47,22 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["someone on the waiting lists.", "someone on the waiting list."],
+      ["special STEM themed programs", "special STEM-themed programs"],
+      ["their Science, Tech, Engineering, or Math skills", "their science, tech, engineering, or math skills"],
+      ["please check website frequently for updates or call at", "please check the website frequently for updates or call us at"],
+      ["and Up Free. No registration required.", "and up. Free. No registration required."],
+      ["interaction with Grant who has been trained", "interaction with Grant, who has been trained"],
+      ["BY Appointment Only Do you need help", "By appointment only. Do you need help"],
+      ["Registration Required. Availibility IS NOT Guaranteed.", "Registration required. Availability is not guaranteed."],
+      [/\b(For more information or to make an appointment, please call the branch at \(\d{3}\) \d{3}-\d{4} or email [\w.+-]+@[\w.-]+\.[A-Za-z]{2,})(?=$| [A-Z])/g, "$1."],
+      ["English speaking & conversation skills", "English-speaking & conversation skills"],
+      ["English speaking skills are welcome!", "English-speaking skills are welcome!"],
+      ["Join us for Winter playdates", "Join us for winter playdates"],
+      ["such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources such as e-books.", "such as printing, using email, connecting to Wi-Fi, creating documents, and accessing library resources such as e-books."],
+      ["We will practice: Vocabulary for everyday activities; Listening Skills; Reading Skills; Speaking Skills.", "We will practice vocabulary for everyday activities, listening skills, reading skills, and speaking skills."],
+      ["our WEE Love ART program", "our Wee Love Art program"],
+      ["This program is perfect for children of all ages, a wonderful opportunity for families", "This program is perfect for children of all ages. It's a wonderful opportunity for families"],
       ["Student can progress at their own pace", "Students can progress at their own pace"],
       ["Request an ADA accommodations for this event.", "Request ADA accommodations for this event."],
       [/\b(To register, please call 408-808-3075 or email sarah\.kishler@sjlibrary\.org)(?=$| [A-Z])/g, "$1."],
@@ -608,6 +624,7 @@ const EDITS = {
   },
   "City of Cupertino": {
     description: [
+      ["Register Registration will open", "Registration will open"],
       ["Deaf and hard of hearing children, along with", "Deaf and hard-of-hearing children, along with"],
       ["about early Cupertino history, the craft of blacksmithing, and learn from our experienced", "about early Cupertino history and the craft of blacksmithing. Learn from our experienced"],
     ],
@@ -690,6 +707,9 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["If you've registered your bike you can", "If you've registered your bike, you can"],
+      ["Rosenkranz Aging Symposium We invite", "Rosenkranz Aging Symposium. We invite"],
+      ["anti immigrant rhetoric", "anti-immigrant rhetoric"],
       ["No Ideas But in Things Filmed and Directed by", "No Ideas But in Things. Filmed and directed by"],
       ["Dear Community, Please join DAAAS Movie Nights", "Dear community, please join DAAAS Movie Nights"],
       ["the screening of THE Eyes Of Ghana.", "the screening of The Eyes of Ghana."],
@@ -718,7 +738,12 @@ const EDITS = {
     ],
   },
   "San Jose Theaters": {
+    title: [
+      // The act's own spelling: https://valerieamyband.com/home
+      ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
+    ],
     description: [
+      ["Valerie: A Tribute to Amy Winehouse, pays", "Valerie: A Tribute to Amy Winehouse pays"],
       ["Love, Music & Emotions Love is more", "Love, Music & Emotions. Love is more"],
       ["awe-inspiring locations like never seen before in", "awe-inspiring locations in"],
     ],
