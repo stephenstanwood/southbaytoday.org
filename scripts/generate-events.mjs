@@ -3067,9 +3067,9 @@ function polishDescription(text) {
   // splitting on every period (which can strand half an abbreviation).
   if ((text.length >= 140 && /(?:…|\.{3})["')\]]*\s*$/.test(t)) || /^\s*…\s*$/.test(t)) {
     // Intl can mistake the H. in "Cecil H. Green Library" for a terminator.
-    // Protect a middle initial followed by a surname, while letting an actual
-    // new sentence after an abbreviated name ("Mallik K. You'll…") split.
-    const previewText = t.replace(/\b([A-Z][a-z]+ [A-Z])\.(?=\s+(?!(?:You|The|This|That|Join|Learn|Meet|Here|It|In|On|At|All|With|From|An|A|Please)\b)[A-Z][a-z]{2,}\b)/g,
+    // Protect a middle initial before a surname, including Lan A. Li. Let an
+    // actual new sentence after an abbreviated name ("Mallik K. You'll…") split.
+    const previewText = t.replace(/\b([A-Z][a-z]+ [A-Z])\.(?=\s+(?!(?:You|The|This|That|Join|Learn|Meet|Here|It|In|On|At|All|With|From|An|A|Please)\b)[A-Z][a-z]+\b)/g,
       `$1${DOT_PLACEHOLDER}`);
     const previewSentences = [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(previewText)];
     while (previewSentences.length && /(?:…|\.{3})["')\]]*\s*$/.test(previewSentences.at(-1).segment)) {
@@ -5320,7 +5320,8 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
       if (!previous) return event;
       return {
         ...event,
-        cost: previous.cost ?? event.cost,
+        cost: previous.costNote ? previous.cost : previous.cost ?? event.cost,
+        ...(previous.costNote ? { costNote: previous.costNote, attendanceNote: previous.costNote } : {}),
         kidFriendly: previous.kidFriendly ?? event.kidFriendly,
         occurrenceEvidence: previous.occurrenceEvidence,
       };
@@ -5342,7 +5343,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
           try {
             const performance = parseMontalvoOccurrencePage(await fetchText(performanceUrl));
             if (performance?.date === event.date && performance.time === event.time) {
-              detail = { ...detail, ...performance, cost: performance.cost || detail.cost };
+              detail = { ...detail, ...performance, cost: performance.costNote ? performance.cost : performance.cost || detail.cost };
               if (performance.cost) admissionSourceUrl = performanceUrl;
             }
           } catch { /* Keep overview facts when its linked occurrence is unavailable. */ }
@@ -5352,7 +5353,8 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
           title: detail.title || event.title,
           time: detail.time || event.time,
           endTime: detail.endTime || event.endTime,
-          cost: detail.cost || event.cost,
+          cost: detail.costNote ? detail.cost : detail.cost || event.cost,
+          ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
           kidFriendly: detail.kidFriendly ?? event.kidFriendly,
           occurrenceEvidence: {
             kind: "first-party-occurrence-page",

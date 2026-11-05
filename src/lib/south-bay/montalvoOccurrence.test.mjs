@@ -62,6 +62,30 @@ test("explicit zero-price admission remains free without paid tickets", () => {
   assert.equal(parsed.cost, "free");
 });
 
+test("member-only free admission does not establish free public admission", () => {
+  const page = `<h1 id="tn-page-heading">Susan O'Malley</h1>
+    <div class="tn-event-detail__description"><div>This program is free for Montalvo Members.</div>
+      <p>Sign in before adding tickets to your cart to access your exclusive discounts and benefits.</p></div>`;
+  for (const tickets of ["", '<div data-tn-price-amount="0.0000"></div>']) {
+    const parsed = parseMontalvoOccurrencePage(page + tickets);
+    assert.equal(parsed.cost, null, "a member benefit and zero tier do not price public admission");
+    assert.equal(parsed.costNote, "Free for Montalvo members. Check the organizer for non-member admission.");
+  }
+  const paid = parseMontalvoOccurrencePage(page + '<div data-tn-price-amount="15.0000"></div>');
+  assert.equal(paid.cost, "paid", "an explicit paid ticket still establishes paid admission");
+  assert.match(paid.costNote, /Free for Montalvo members/);
+});
+
+test("another program's member benefit cannot qualify free public admission", () => {
+  const parsed = parseMontalvoOccurrencePage(`
+    <h1 id="tn-page-heading">Community Festival</h1>
+    <div class="tn-event-detail__description">This event is free and open to the public.</div>
+    <div data-tn-price-amount="0.0000"></div>
+    <aside>This program is free for Montalvo Members.</aside>`);
+  assert.equal(parsed.cost, "free");
+  assert.equal(parsed.costNote, undefined);
+});
+
 test("reserved-seat admission reads the current performance's ticket prices", () => {
   const page = (config) => `
     <link rel="canonical" href="https://my.montalvoarts.org/3107/3150">

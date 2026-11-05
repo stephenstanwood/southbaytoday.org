@@ -16,6 +16,24 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the dated Stanford film retains the filmmaker's complete credit through cached blurb refresh", async () => {
+  const raw = {
+    date: "2026-11-05", url: "https://events.stanford.edu/event/no-ideas-but-in-things",
+    title: "No Ideas But in Things", venue: "Clark Center", time: "4:30 PM", endTime: "6:00 PM",
+    description: "No Ideas But in Things. Filmed and directed by Lan A.",
+    blurb: "Watch the film No Ideas But in Things, filmed and directed by Lan A., at the Clark Center.",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.match(fixed.description, /Lan A\. Li/);
+  assert.match(fixed.blurb, /Lan A\. Li/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const events = [structuredClone(raw)];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.match(events[0].blurb, /Lan A\. Li/);
+  for (const key of ["date", "url", "title", "venue", "time", "endTime"]) assert.equal(fixed[key], raw[key]);
+  assert.deepEqual(applyVerifiedEventFacts({ ...raw, date: "2026-11-12" }), { ...raw, date: "2026-11-12" });
+});
+
 test("the Stanford collections visit discloses conflicting wings without guessing a meeting point", async () => {
   const raw = {
     date: "2026-11-05", url: "https://events.stanford.edu/event/critical-carceral-studies-special-collections-coffee",

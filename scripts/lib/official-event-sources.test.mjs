@@ -453,6 +453,30 @@ test("Montalvo uses ticket-page admission and audience while null and blank cale
   }
 });
 
+test("Montalvo member-only free admission clears a zero calendar price and survives a failed detail refresh", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-05T04:07:01Z") });
+  const url = "https://my.montalvoarts.org/3294/3296";
+  const graph = { "@type": "Event", name: "Susan O'Malley", startDate: "2026-11-15T11:00:00+00:00", url, offers: { price: 0 } };
+  let unavailable = false;
+  t.mock.method(globalThis, "fetch", async (target) => {
+    if (String(target).endsWith("/events-calendar/")) return new Response(`<script type="application/ld+json">${JSON.stringify(graph)}</script>`);
+    assert.equal(String(target), url);
+    return unavailable ? new Response("Unavailable", { status: 403 }) : new Response(`
+      <h1 id="tn-page-heading">Susan O'Malley</h1>
+      <p class="tn-event-detail__display-time">Sunday, Nov 15, 2026 11:00AM</p>
+      <div class="tn-event-detail__description">This program is free for Montalvo Members.</div>`);
+  });
+  const [verified] = await fetchMontalvoEvents({ previousEvents: [] });
+  assert.equal(verified.cost, null);
+  assert.match(verified.attendanceNote, /Free for Montalvo members/);
+  assert.equal(verified.costNote, verified.attendanceNote);
+  unavailable = true;
+  const [retained] = await fetchMontalvoEvents({ previousEvents: [verified] });
+  assert.equal(retained.cost, null, "a failed detail read cannot restore the calendar's free default");
+  assert.equal(retained.attendanceNote, verified.attendanceNote);
+  assert.deepEqual(retained.occurrenceEvidence, verified.occurrenceEvidence);
+});
+
 test("failed Montalvo detail reads retain verified admission and audience only for the same occurrence", async (t) => {
   const date = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
   const url = "https://my.montalvoarts.org/verified-community-showcase";

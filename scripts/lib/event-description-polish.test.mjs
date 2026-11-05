@@ -13,6 +13,18 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("truncated previews preserve a middle initial before a two-letter surname", () => {
+  // Actual flattened/truncated importer output: the unfinished sentence must
+  // disappear in full, rather than making "Lan A." look like a complete credit.
+  const imported = 'No Ideas But in Things Filmed and Directed by Lan A. Li Produced by Peter N. Miller Short Film Screening, followed by a discussion with the filmmakers "No Ideas But in Things" is an art film that…';
+  assert.equal(polishDescription(imported), "");
+  const raw = 'No Ideas But in Things\n\nFilmed and Directed by Lan A. Li\nProduced by Peter N. Miller\n\nShort Film Screening,\nfollowed by a discussion with the filmmakers\n\n"No Ideas But in Things" is an art film that…';
+  const polished = polishDescription(raw);
+  assert.match(polished, /Lan A\. Li/);
+  assert.match(polished, /Peter N\. Miller/);
+  assert.equal(polishDescription(polished), polished);
+});
+
 test("removes scraped signup labels while preserving purchase and RSVP conditions", () => {
   const cases = [
     [

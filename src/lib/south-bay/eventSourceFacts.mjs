@@ -39,6 +39,18 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The complete organizer credit names Lan A. Li. The preview normalizer
+  // previously treated the initial as a sentence end and the cached blurb
+  // copied that incomplete name. Protect the existing dated occurrence.
+  // https://events.stanford.edu/event/no-ideas-but-in-things
+  // Evidence: docs/qa/2026-11-05-0407z-fact-check.md.
+  {
+    date: "2026-11-05", url: "https://events.stanford.edu/event/no-ideas-but-in-things",
+    facts: {
+      description: "Short film screening of No Ideas But in Things, filmed and directed by Lan A. Li and produced by Peter N. Miller, followed by a discussion with the filmmakers.",
+      blurb: "Watch No Ideas But in Things, filmed and directed by Lan A. Li, followed by a discussion with the filmmakers.",
+    },
+  },
   // The full organizer directions name the East Wing's IC Classroom, while
   // Localist's location names Bing Wing. Keep only their shared building and
   // require confirmation rather than choosing between conflicting wings.

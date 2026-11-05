@@ -134,14 +134,17 @@ export function parseMontalvoOccurrencePage(html) {
   const endTime = range ? clock(range[2]) : null;
   const prices = [...body.matchAll(/\bdata-tn-price-amount=["'](\d+(?:\.\d+)?)["']/gi)]
     .map((match) => Number(match[1])).concat(reservedSeatPrices(source));
-  // A paid adult ticket outranks a free-child tier or a zero in calendar JSON-LD.
-  const hasPaidTickets = prices.some((price) => price > 0);
-  const isFree = prices.includes(0) || /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText);
   const audienceText = [
     "tn-event-detail__description",
     "tn-production-season-detail-page__description",
     "tn-prod-season-header__description-text-content",
   ].map((className) => textContent(contentForClass(body, className))).join(" ");
+  // A paid adult ticket outranks a free-child tier or a zero in calendar JSON-LD.
+  const hasPaidTickets = prices.some((price) => price > 0);
+  // Member benefits do not establish public admission. A zero member tier or
+  // calendar price must not turn "free for Montalvo Members" into a free event.
+  const membersFree = /\b(?:this|the)\s+(?:program|event)\s+is\s+free\s+for\s+(?:Montalvo\s+)?members\b/i.test(audienceText);
+  const isFree = !membersFree && (prices.includes(0) || /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText));
   const familyAudience = /\b(?:whole family|family event|family[- ]friendly|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
 
   if (!title && !date && !startTime && !endTime) return null;
@@ -151,6 +154,7 @@ export function parseMontalvoOccurrencePage(html) {
     time: rangeStart || startTime,
     endTime,
     cost: hasPaidTickets ? "paid" : isFree ? "free" : null,
+    ...(membersFree ? { costNote: "Free for Montalvo members. Check the organizer for non-member admission." } : {}),
     ...(familyAudience ? { kidFriendly: true } : {}),
   };
 }
