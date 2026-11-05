@@ -16,6 +16,37 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Mountain View's dated bag sale keeps its 2 PM finish through newsletter and blurb refresh", async () => {
+  const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/mountain-view-book-sale-2026-11-08.json", import.meta.url)));
+  const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
+  const presentation = normalizeInboundEventPresentation(capture.intake);
+  assert.equal(presentation.time, "11:00 AM");
+  assert.equal(presentation.endTime, "2:00 PM", "the 2–4 PM bulk sale is separate from the bag sale");
+  assert.equal(presentation.url, capture.sourceUrl);
+  assert.match(capture.intake.endsAt, /T16:00:00-08:00$/, "keep the received source record unchanged");
+
+  const raw = capture.publishedBefore;
+  const fixed = applyVerifiedEventFacts(structuredClone(raw));
+  assert.equal(fixed.endTime, presentation.endTime);
+  assert.equal(fixed.url, capture.sourceUrl);
+  assert.match(fixed.attendanceNote, /separate bulk sale runs 2–4 PM at \$1 per foot length/);
+  for (const field of Object.keys(raw).filter(key => !["endTime", "url"].includes(key))) {
+    assert.deepEqual(fixed[field], raw[field], field);
+  }
+  const events = [structuredClone(raw)];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].endTime, "2:00 PM");
+  assert.equal(events[0].url, capture.sourceUrl);
+  assert.equal(events[0].attendanceNote, fixed.attendanceNote);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [
+    { ...raw, date: "2026-11-07", title: "Friends of the Library Book Sale (General Public Sale)" },
+    { ...raw, date: "2027-11-08" },
+    { ...raw, city: "san-jose" },
+    { ...raw, venue: "Another Library" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
 test("the dated Stanford film retains the filmmaker's complete credit through cached blurb refresh", async () => {
   const raw = {
     date: "2026-11-05", url: "https://events.stanford.edu/event/no-ideas-but-in-things",

@@ -39,6 +39,22 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The organizer separates Sunday's 11am–2pm bag sale from its 2–4pm
+  // bulk sale. The newsletter merged their hours; protect this occurrence
+  // before intake normalization and cached blurb refresh, without creating
+  // another sale or changing the Saturday members/public schedule.
+  // https://mvlibraryfriends.org/book-sales/
+  // Evidence: docs/qa/2026-11-05-0907z-fact-check.md.
+  {
+    date: "2026-11-08",
+    matches: (event) => /^Friends of the Library Book Sale \(Bag Sale\)$/i.test(event.title || "")
+      && /^Bookmobile garage on Mercy Street(?:, next to the Mountain View Public Library underground parking lot)?$/i.test(event.venue || "")
+      && (event.city === "mountain-view" || /Mountain View Public Library/i.test(event.venue || "")),
+    facts: {
+      endTime: "2:00 PM", url: "https://mvlibraryfriends.org/book-sales/",
+      attendanceNote: "Fill-a-Bag Sale ends at 2 PM. A separate bulk sale runs 2–4 PM at $1 per foot length.",
+    },
+  },
   // The staff can speak Vietnamese; the club practices beginner English.
   // The two exact organizer records share this description. Protect their
   // cached blurb without projecting additional dates or changing attendance.
