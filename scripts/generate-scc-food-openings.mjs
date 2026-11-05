@@ -443,17 +443,12 @@ export function cleanName(raw) {
 /**
  * Clean and shorten an address to just the street portion.
  */
-function cleanAddress(raw) {
+export function cleanAddress(raw) {
   if (!raw) return null;
   let s = raw.trim();
 
-  // Remove everything after the street address (city, state, zip)
-  // Pattern: "1234 MAIN ST., CITY, CA ZIPCODE" → "1234 Main St."
-  const commaIdx = s.search(/,\s*[A-Z ]+,?\s*CA/i);
-  if (commaIdx > 0) s = s.slice(0, commaIdx);
-
   // Some rows append the city with no comma before it, or with no "CA" after
-  // it, so the rule above doesn't fire and the city ships inside the street
+  // it, so a comma-only rule doesn't fire and the city ships inside the street
   // address: "99 E MIDDLEFIELD RD. MOUNTAIN VIEW CA 94043" and "82-96 E SANTA
   // CLARA ST., K101 SAN JOSE" both reached the food radar that way. Anchored to
   // the end of the string so a street named for a city ("1 San Jose Ave") is
@@ -462,6 +457,12 @@ function cleanAddress(raw) {
     /[\s,]+(SAN\s+JOSE|SANTA\s+CLARA|SUNNYVALE|MOUNTAIN\s+VIEW|PALO\s+ALTO|LOS\s+ALTOS(?:\s+HILLS)?|LOS\s+GATOS|CUPERTINO|CAMPBELL|SARATOGA|MILPITAS|MORGAN\s+HILL|GILROY)(?:\s*,?\s*CA\b)?(?:\s*\d{5}(?:-\d{4})?)?\s*$/i,
     "",
   ).trim();
+
+  // Fallback for other comma-delimited cities. Strip known cities first so
+  // "UNIT C SAN JOSE CA" retains the unit. CA must be the final state token,
+  // not the start of CAMPBELL (which previously swallowed ", UNIT C").
+  const commaIdx = s.search(/,\s*[A-Z ]+,?\s*CA\b(?:\s+\d{5}(?:-\d{4})?)?\s*$/i);
+  if (commaIdx > 0) s = s.slice(0, commaIdx);
 
   s = s.trim().replace(/\s+/g, " ");
 
@@ -489,7 +490,8 @@ function cleanAddress(raw) {
     .replace(/\bPy\b\.?/g, "Pkwy")
     .replace(/\bWy\b\.?/g, "Way")
     .replace(/\bSte\b\.?/g, "Ste.")
-    .replace(/\bFc-\d+/i, "")
+    // Food-court space numbers identify real locations, not permit noise.
+    .replace(/\bFc-(\d+)\b/gi, "FC-$1")
     .replace(/\bUnit\s+Tbd\b/gi, "")
     .replace(/\bUnit\s+Nc-[\w,\s]+$/i, "")
     // Spanish prepositions in proper-noun South Bay place names stay lowercase

@@ -10100,9 +10100,11 @@ async function fetchMidpenEvents() {
       // group actually meets at, which is the only address a reader can drive
       // to — a preserve spans thousands of acres.
       let detail = { description: null, meetingPlace: null, startTime: null, endTime: null };
+      let detailFailed = false;
       try {
         detail = parseMidpenDetail(await fetchText(url, { timeout: 25_000 }));
       } catch {
+        detailFailed = true;
         // A single unreachable detail page shouldn't drop the event; the
         // listing row already has title, date, time, preserve and miles.
       }
@@ -10120,6 +10122,9 @@ async function fetchMidpenEvents() {
 
       const isVolunteer = row.type === "Volunteer Project";
       const id = h("midpen", row.path, row.date, time || "");
+      // A failed detail fetch cannot erase previously verified access terms.
+      const prior = previous.get(id);
+      const attendanceNote = detail.attendanceNote || (detailFailed ? prior?.attendanceNote : null);
       const descriptionParts = [detail.description];
       if (row.miles) descriptionParts.push(`Approximately ${row.miles} miles.`);
       const description = truncate(
@@ -10134,9 +10139,9 @@ async function fetchMidpenEvents() {
         time: time || null,
         endTime: detail.endTime || null,
         venue: row.preserve,
-        // Volunteer projects withhold their staging area until you register,
-        // so the preserve name is the honest answer there.
-        address: midpenTrailhead(detail.meetingPlace) || row.preserve,
+        // Prefer the organizer's actual meeting point, including a volunteer
+        // portal's published Plus Code. A preserve can have several entrances.
+        address: midpenTrailhead(detail.meetingPlace) || (detailFailed ? prior?.address : null) || row.preserve,
         city,
         // Not inferred. Every row this adapter emits is a docent-led outing or
         // a habitat/trail work party inside an open space preserve — the
@@ -10157,6 +10162,7 @@ async function fetchMidpenEvents() {
         ...(detail.registration || isVolunteer
           ? { registration: isVolunteer ? midpenVolunteerRegistration(detail, previous.get(id)) : detail.registration }
           : {}),
+        ...(attendanceNote ? { attendanceNote } : {}),
         kidFriendly: /\b(kid|child|family|families|youth|teen|all ages|junior)\b/i.test(
           `${title} ${description}`,
         ),

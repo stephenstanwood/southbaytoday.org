@@ -198,7 +198,32 @@ export function parseMidpenDetail(html) {
   const body = lines.join("\n");
 
   const meetMatch = body.match(/Where to Meet\n([\s\S]{0,600}?)(?:\n(?:Link to Google Map|To ensure|For more information|If your activity)|$)/);
-  const meetingPlace = meetMatch ? meetMatch[1].replace(/\n/g, " ").trim() : null;
+  // Volunteer projects redirect to Galaxy Digital. Its public meeting block
+  // can name a separate access gate, so never substitute the preserve's main
+  // parking lot. Use a published Plus Code with its locality, not a guessed
+  // street address or the portal's generic location table.
+  const volunteerMeet = body.match(/(?:^|\n)(Meeting Location[^\n]*)\n([\s\S]*?)(?:\nWhat You Will Need|$)/);
+  const volunteerAddress = midpenText(volunteerMeet?.[2]).match(
+    /\b[23456789CFGHJMPQRVWX]{4,8}\+[23456789CFGHJMPQRVWX]{2,3}\s+[^.;:\n]+?\s+(?:California|CA)\s+\d{5}\b/i,
+  )?.[0];
+  const meetingPlace = volunteerAddress
+    || (meetMatch ? meetMatch[1].replace(/\n/g, " ").trim() : null);
+
+  // Eligibility and registration deadlines live outside Description. Keep
+  // them as attendance terms rather than turning waiver text into the blurb.
+  const requirements = [...String(html || "").matchAll(/<tr\b[^>]*class=["'][^"']*\brequirement\b[^"']*["'][^>]*>([\s\S]*?)<\/tr>/gi)]
+    .map((row) => midpenText(row[1].match(/<td\b[^>]*class=["'][^"']*\btext\b[^"']*["'][^>]*>([\s\S]*?)<\/td>/i)?.[1]));
+  const minimumAge = requirements.find((value) => /^\d{1,2} and older$/i.test(value));
+  const deadline = requirements.find((value) => /^Register by [A-Za-z]+ \d{1,2}, \d{4}$/i.test(value));
+  const minorTerms = body.match(/(?:^|\n)(All minors under the age of 18[^\n]+)/)?.[1];
+  const gate = /not the main lot/i.test(volunteerMeet?.[1] || "")
+    ? volunteerMeet?.[2].match(/\bgate\s+([A-Z0-9]+)\b/i)?.[1] : null;
+  const attendanceNotes = [
+    minimumAge ? `Ages ${minimumAge}.` : null,
+    minorTerms,
+    deadline ? `${deadline}.` : null,
+    gate ? `Meet at gate ${gate}, not the main lot.` : null,
+  ].filter(Boolean);
 
   // "9:30 am - 12:30 pm" sits directly under the date line on the detail page.
   const rangeMatch = body.match(
@@ -235,6 +260,7 @@ export function parseMidpenDetail(html) {
     date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1])) : null,
     description: paragraph?.replace(/\s+([.,;!?])/g, "$1") || null,
     meetingPlace,
+    attendanceNote: attendanceNotes.length ? attendanceNotes.join(" ") : null,
     startTime: rangeMatch ? midpenClockTime(rangeMatch[1]) : null,
     endTime: rangeMatch ? midpenClockTime(rangeMatch[2]) : null,
     registration: parseMidpenVolunteerAvailability(html)

@@ -10,7 +10,16 @@ import {
   normalizeSouthBayAddress,
   normalizeComingSoonDiscovery,
 } from "./scc-food-openings.mjs";
-import { cleanName, shouldSkip } from "../generate-scc-food-openings.mjs";
+import { cleanAddress, cleanName, shouldSkip } from "../generate-scc-food-openings.mjs";
+
+test("county addresses retain food-court and lettered suites when removing city/state", () => {
+  // Live county records SR0882555 and SR0884438, verified November 5, 2026.
+  assert.equal(cleanAddress("613 GREAT MALL DR., SPC FC-09, MILPITAS, CA"), "613 Great Mall Dr., Spc FC-09");
+  assert.equal(cleanAddress("2006 S WINCHESTER BL., UNIT C, CAMPBELL, CA 95008"), "2006 S Winchester Blvd, Unit C");
+  assert.equal(cleanAddress("123 MAIN ST., UNIT C SAN JOSE CA 95112"), "123 Main St., Unit C");
+  assert.equal(cleanAddress("99 E MIDDLEFIELD RD. MOUNTAIN VIEW CA 94043"), "99 E Middlefield Rd");
+  assert.equal(cleanAddress("1 SAN JOSE AVE"), "1 San Jose Ave");
+});
 
 test("county business names retain meaningful trailing numbers", () => {
   // SCC record SR0881159, 735 Villa St, Mountain View. The name's 101 is

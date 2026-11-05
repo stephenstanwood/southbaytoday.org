@@ -26,6 +26,27 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const LIST = readFileSync(join(HERE, "fixtures", "midpen-activity-list.html"), "utf8");
 const DETAIL = readFileSync(join(HERE, "fixtures", "midpen-event-detail.html"), "utf8");
 const SPOTS = readFileSync(join(HERE, "fixtures", "midpen-volunteer-spots.html"), "utf8");
+const VOLUNTEER_ACCESS = readFileSync(join(HERE, "fixtures", "midpen-volunteer-access.html"), "utf8");
+
+test("volunteer details retain the actual entrance, age limit, minor rules and signup deadline", () => {
+  const detail = parseMidpenDetail(VOLUNTEER_ACCESS);
+  assert.equal(midpenTrailhead(detail.meetingPlace), "52P3+RH Lexington Hills, California 95033");
+  assert.match(detail.attendanceNote, /^Ages 14 and older\./);
+  assert.match(detail.attendanceNote, /parent\/guardian approval/);
+  assert.match(detail.attendanceNote, /accompanied by a parent\/adult/);
+  assert.match(detail.attendanceNote, /Register by Dec 18, 2026\./);
+  assert.match(detail.attendanceNote, /Meet at gate BC01, not the main lot\./);
+  assert.equal(detail.registration, "required");
+  assert.doesNotMatch(detail.description, /All minors|Register by|gate BC01/);
+});
+
+test("volunteer age is source-specific, and prose alone does not establish a requirement", () => {
+  assert.match(parseMidpenDetail(VOLUNTEER_ACCESS.replace("14 and older", "16 and older")).attendanceNote, /^Ages 16 and older\./);
+  const prose = "<p>Volunteers 14 and older helped last year. Register by Dec 18, 2026 for updates.</p>";
+  assert.equal(parseMidpenDetail(prose).attendanceNote, null);
+  assert.equal(parseMidpenDetail(prose).meetingPlace, null);
+  assert.equal(parseMidpenDetail(DETAIL).attendanceNote, null);
+});
 
 test("volunteer capacity uses the live count, never the conditional waitlist instructions", () => {
   const boilerplate = "<p>If there are 0 spots available, click the WAITLIST button.</p>";
