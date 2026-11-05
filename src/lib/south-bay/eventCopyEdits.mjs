@@ -35,6 +35,7 @@ const EDITS = {
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
+      ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
       ["Lego Club!", "LEGO Club!"],
     ],
     attendanceNote: [
@@ -458,6 +459,9 @@ const EDITS = {
     ],
   },
   "Santa Clara County Library": {
+    title: [
+      [/^Lego Club$/g, "LEGO Club"],
+    ],
     attendanceNote: [
       [/Contact Librarian Charlie Roos to be added to a waitlist for future sessions: charlie\.roos@lib\.sccgov\.org(?=$| [A-Z])/g, "$&."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
