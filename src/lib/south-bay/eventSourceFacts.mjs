@@ -98,7 +98,7 @@ const CORRECTIONS = [
   {
     date: "2026-11-06", url: "https://events.stanford.edu/event/knight-initiative-rosenkranz-aging-joint-symposium",
     facts: {
-      cost: "free", registration: REGISTRATION_REQUIRED, attendanceStatus: "needs-confirmation",
+      category: "education", cost: "free", registration: REGISTRATION_REQUIRED, attendanceStatus: "needs-confirmation",
       attendanceNote: "Free; registration is required. The organizer asks attendees to register by November 3. Confirm late registration with the organizer before going.",
     },
   },

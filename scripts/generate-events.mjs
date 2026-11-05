@@ -4086,6 +4086,11 @@ function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
 
+  // A symposium can "showcase" research posters without being an art show.
+  // Use the program's title, not a symposium mentioned by a real exhibition.
+  // Keep multi-day symposia on their published occurrence dates and clocks.
+  if (/\bsymposium\b/i.test(title || "")) return false;
+
   // Museum tours, drawing sessions, and gallery conversations keep their
   // occurrence dates and clocks even when their series spans an exhibition.
   // Match activity names, not a figurative "A Tour of ..." exhibition title.

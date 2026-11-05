@@ -154,3 +154,43 @@ test("Stanford's full body preserves mandatory booking without treating optional
   for (const event of [corrected, online]) assert.deepEqual(applyVerifiedEventFacts(event), event);
   assert.deepEqual(source, stanford);
 });
+
+test("a research symposium can showcase posters without becoming an ongoing arts exhibit", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date(stanford.retrievedAt) });
+  const captured = stanford.events.find(({ event }) => event.id === 53078256573608).event;
+  const before = structuredClone(captured);
+  assert.match(captured.description_text, /poster session.*showcase/s);
+  const multiDay = {
+    ...structuredClone(captured), id: "multi-day-symposium-control",
+    first_date: "2026-11-04", last_date: "2026-11-06",
+    localist_url: "https://events.stanford.edu/event/multi-day-symposium-control",
+  };
+  const exhibition = {
+    ...structuredClone(multiDay), id: "exhibition-control",
+    title: "Gallery Exhibition: Research in Print",
+    description: "A gallery exhibition of prints. An accompanying symposium discusses the collection.",
+    description_text: "A gallery exhibition of prints. An accompanying symposium discusses the collection.",
+    localist_url: "https://events.stanford.edu/event/exhibition-control",
+  };
+  t.mock.method(globalThis, "fetch", async url => {
+    assert.equal(String(url), stanford.sourceUrl);
+    return Response.json({ events: [captured, multiDay, exhibition].map(event => ({ event })) });
+  });
+  const events = await fetchStanfordEvents();
+  for (const source of [captured, multiDay]) {
+    const event = events.find(event => event.url === source.localist_url);
+    assert.equal(event.category, "education");
+    assert.equal(event.ongoing, false);
+    assert.equal(event.date, "2026-11-06");
+    assert.equal(event.time, "12:30 PM");
+    assert.equal(event.endTime, "6:00 PM");
+  }
+  const art = events.find(event => event.url === exhibition.localist_url);
+  assert.equal(art.category, "arts");
+  assert.equal(art.ongoing, true, "a symposium in an exhibition's body does not change its format");
+  assert.equal(art.time, null);
+  const event = events.find(event => event.url === captured.localist_url);
+  assert.equal(applyVerifiedEventFacts({ ...event, category: "arts" }).category, "education",
+    "retained copies must not restore the reviewed category error");
+  assert.deepEqual(captured, before, "the captured organizer record remains immutable");
+});
