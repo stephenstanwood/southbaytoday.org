@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-05T07:28:12.514Z",
+    "generatedAt": "2026-11-05T11:36:50.866Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 187,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -14,7 +14,7 @@
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (4)",
-      "Guadalupe River Park Conservancy (19)",
+      "Guadalupe River Park Conservancy (18)",
       "Santana Row (5)",
       "City of Cupertino (18)",
       "Opera San José (5)",
@@ -23,8 +23,8 @@
       "SAP Center (13)",
       "The Tech Interactive (7)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (3)"
+      "San Jose Museum of Art (3)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -171,7 +171,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 19,
+        "count": 18,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -284,12 +284,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -881,10 +883,10 @@
       "kidFriendly": false
     },
     {
-      "id": "615ce2b8d964",
+      "id": "23ad6c442cb3",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -901,10 +903,10 @@
       "kidFriendly": false
     },
     {
-      "id": "2c6ec7fc326e",
+      "id": "be68163c75e6",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -921,10 +923,10 @@
       "kidFriendly": false
     },
     {
-      "id": "40cc7dafb986",
+      "id": "2569a4b91556",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -978,10 +980,10 @@
       "kidFriendly": true
     },
     {
-      "id": "f45bbd6d82e0",
+      "id": "7619a92001af",
       "title": "Toddler Storytime",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1044,30 +1046,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "496881fb5a71",
-      "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
-      "time": "9:30 AM",
-      "endTime": "11:30 AM",
-      "venue": "Historic Orchard",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "The Historic Orchard is a 3.3-acre site planted in 1994 and located in Guadalupe Gardens just south of Taylor Street, adjacent to the Heritage Rose Garden and River Park trails. In the 1930s and ’40s almost everyone who lived here was engaged in the business of fruit production: growing, picking, packing, canning, selling, or otherwise supporting the industry. Today, with very few orchards remaining, this is a place where adults and children can come to experience a piece of local history. Fruit harvested from the Historic Orchard is donated to Second Harvest of Silicon Valley and local shelters. Help us maintain the River Park's Historic Orchard including: - tree planting and pruning- disease diagnosis and treatment- sun scald prevention painting- sheet mulching- experimenting with different types of irrigation or ground cover- grafting for improved pollination Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. Register HERE Please note this event may cancel in the case of inclement weather. Restrooms are available at the Rotary PlayGarden and will require staff assistance. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Historic Orchard (Refer to registration form for map) Time: 9:30 AM - 11:30 AM Recurring Dates: Every Wednesday",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Historic Orchard; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-04"
-      }
     },
     {
       "id": "67e592672d35",
@@ -1506,7 +1484,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-05T07:27:05.198Z"
+        "checkedAt": "2026-11-05T11:35:43.776Z"
       }
     },
     {
@@ -1529,7 +1507,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T07:27:05.201Z"
+        "checkedAt": "2026-11-05T11:35:43.781Z"
       }
     },
     {
@@ -1552,7 +1530,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T07:27:05.202Z"
+        "checkedAt": "2026-11-05T11:35:43.781Z"
       }
     },
     {
@@ -1575,7 +1553,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-05T07:27:05.202Z"
+        "checkedAt": "2026-11-05T11:35:43.782Z"
       }
     },
     {
@@ -1598,7 +1576,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-05T07:27:05.202Z"
+        "checkedAt": "2026-11-05T11:35:43.783Z"
       }
     },
     {
@@ -3171,7 +3149,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.768Z"
+        "checkedAt": "2026-11-05T11:36:08.751Z"
       }
     },
     {
@@ -3195,7 +3173,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.768Z"
+        "checkedAt": "2026-11-05T11:36:08.752Z"
       }
     },
     {
@@ -3219,7 +3197,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.768Z"
+        "checkedAt": "2026-11-05T11:36:08.752Z"
       }
     },
     {
@@ -3243,7 +3221,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.770Z"
+        "checkedAt": "2026-11-05T11:36:08.753Z"
       }
     },
     {
@@ -3267,7 +3245,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.772Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3291,7 +3269,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-05T07:27:29.772Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3315,7 +3293,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.772Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3339,7 +3317,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.772Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3363,7 +3341,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.773Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3387,7 +3365,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.773Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3411,7 +3389,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.773Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3435,7 +3413,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.773Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3459,7 +3437,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-05T07:27:29.773Z"
+        "checkedAt": "2026-11-05T11:36:08.756Z"
       }
     },
     {
@@ -3701,40 +3679,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3792,6 +3736,40 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
