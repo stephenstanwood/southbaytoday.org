@@ -34,6 +34,8 @@ const EDITS = {
       ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
+      ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
+      ["Lego Club!", "LEGO Club!"],
     ],
     attendanceNote: [
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
@@ -44,6 +46,31 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["interaction with Pearl who has been trained", "interaction with Pearl, who has been trained"],
+      [/(The Science & Engineering of El Niño - [A-Za-z]+ \d{1,2}) 2\./g, "$1; 2."],
+      [/(Engineering Solutions to Urban Heat - [A-Za-z]+ \d{1,2}) 3\./g, "$1; 3."],
+      [/(The Science of Pollution & Filtration - [A-Za-z]+ \d{1,2}) 4\./g, "$1; 4."],
+      [/(Investigating Tiny Plastics in Our Environment - [A-Za-z]+ \d{1,2}) Ages:/g, "$1. Ages:"],
+      [/\b(Ages:? \d+-\d+) Registration Recommended!/g, "$1. Registration recommended!"],
+      ["is not affiliated, sponsored, or endorsed by LEGO Education", "is not affiliated with, sponsored by, or endorsed by LEGO Education"],
+      ["We'll provide the supplies, you bring", "We'll provide the supplies; you bring"],
+      ["a finished project and better understanding", "a finished project and a better understanding"],
+      ["STEAM Sunday: Botellas Sensoriales de Otoño ¡Los mundos de la ciencia y arte se juntan en domingos STEAM.", "STEAM Sunday: Botellas Sensoriales de Otoño. ¡Los mundos de la ciencia y el arte se juntan en los domingos STEAM!"],
+      ["¡Nosotros traemos los materiales, ¡tú", "Nosotros traemos los materiales; ¡tú"],
+      ["experimentos y creaciones práctica,", "experimentos y creaciones prácticas,"],
+      ["ciencia, tecnología, ingeniería, y matemáticas", "ciencia, tecnología, ingeniería y matemáticas"],
+      ["super easy to understand, and beginner friendly,", "super easy to understand and beginner-friendly,"],
+      ["Tickets and Participation Free.", "Tickets and Participation: Free."],
+      [/(Recommended for ages \d+-\d+) Free\. Registration Required\./g, "$1. Free. Registration required."],
+      ["join us for an family Rock Painting workshop", "join us for a family rock painting workshop"],
+      ["Learn the basic design in Tinkercad", "Learn the basics of design in Tinkercad"],
+      [/Recommended ages for (\d+)\+ and older\./g, "Recommended for ages $1+."],
+      [/Reminder: Limited Laptops FOR (\d+) Participants\./g, "Reminder: Laptops are available for only $1 participants."],
+      ["for Lego Club!", "for LEGO Club!"],
+      ["tons of Lego bricks", "tons of LEGO bricks"],
+      ["a Lego Challenge!", "a LEGO Challenge!"],
+      ["use Tinker CAD and how", "use Tinkercad and how"],
+      ["Space is limited, no registration is required.", "Space is limited; no registration is required."],
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
       ["high-beginning level ESL course", "high-beginning-level ESL course"],
       ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
@@ -331,6 +358,8 @@ const EDITS = {
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
     ],
     blurb: [
+      ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
+      ["a librarian-issued Lego Challenge.", "a librarian-issued LEGO Challenge."],
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
       ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
       ["Pair up with a teen reading coach for one-on-one practice as a grades TK-5 reading buddy.", "Students in grades TK-5 can pair up with a teen reading coach for one-on-one reading practice."],
@@ -366,6 +395,7 @@ const EDITS = {
   },
   "Montalvo Arts Center": {
     description: [
+      ["OA Susan O'Malley", ""],
       ["RSVP Lowrider Art Showcase", ""],
       ["The Music of ABBA", ""],
     ],
@@ -440,6 +470,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Geodes are beautiful and diverse as the areas", "Geodes are as beautiful and diverse as the areas"],
+      ["Silicon Valley Gem and Mineral Society Veteran, Steve May will", "Silicon Valley Gem and Mineral Society veteran Steve May will"],
       [/\b(1[0-2]|[1-9])\.([0-5]\d)(?= [AP]M\b)/gi, "$1:$2"],
       ["The Seed Keeper b y Diane Wilson.", "The Seed Keeper by Diane Wilson."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
@@ -649,6 +681,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["No Ideas But in Things Filmed and Directed by", "No Ideas But in Things. Filmed and directed by"],
       ["Dear Community, Please join DAAAS Movie Nights", "Dear community, please join DAAAS Movie Nights"],
       ["the screening of THE Eyes Of Ghana.", "the screening of The Eyes of Ghana."],
       ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
@@ -664,6 +697,7 @@ const EDITS = {
       ["Biology Seminar Series", ""],
     ],
     blurb: [
+      ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
     ],
@@ -690,6 +724,11 @@ const EDITS = {
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
       [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
+    ],
+  },
+  "Computer History Museum": {
+    description: [
+      ["Postponed Due to Illness Where", "Postponed due to illness. Where"],
     ],
   },
 };

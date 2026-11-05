@@ -53,8 +53,9 @@ const november4MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/revie
 const november4ClockFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-clock.json", import.meta.url)));
 const november4AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-afternoon.json", import.meta.url)));
 const november4EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-evening.json", import.meta.url)));
+const november4NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-night.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
-audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture);
+audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -70,6 +71,29 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("night copy repairs retain updated source facts, later instructions and publisher scope", () => {
+  const revised = text => text.replaceAll("November 8", "November 10")
+    .replaceAll("November 20", "November 21").replaceAll("December 13", "December 14")
+    .replaceAll("December 18", "December 19").replaceAll("7-12", "8-13")
+    .replaceAll("6-12", "7-13").replaceAll("10-17", "11-18")
+    .replaceAll("8+", "9+").replaceAll("FOR 8", "FOR 10")
+    .replaceAll("only 8 participants", "only 10 participants");
+  const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
+  for (const row of november4NightFixture.cases) {
+    const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const original = { source: row.source, [row.field]: revised(row.refreshed) + suffix,
+      id: "new-source-id", date: "2026-12-12", time: "4:00 PM", costNote: "$25" };
+    // A former title echo becomes substantive when the publisher appends new
+    // attendance instructions. It must remain rather than being cleared.
+    const reviewed = row.reviewed === "" ? row.refreshed : row.reviewed;
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revised(reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+  }
+});
 
 test("evening punctuation repairs preserve revised facts, contacts and publisher scope", () => {
   for (const row of november4EveningFixture.cases) {
