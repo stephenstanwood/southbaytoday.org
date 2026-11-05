@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-05T16:51:00.400Z",
+    "generatedAt": "2026-11-05T20:59:49.213Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 187,
+    "eventCount": 188,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -16,15 +16,15 @@
       "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (18)",
       "Santana Row (5)",
-      "City of Cupertino (18)",
+      "City of Cupertino (19)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
       "SAP Center (13)",
       "The Tech Interactive (7)",
       "Books Inc (7)",
-      "Peninsula Open Space Trust (2)",
-      "San Jose Museum of Art (3)"
+      "San Jose Museum of Art (3)",
+      "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
       {
@@ -191,7 +191,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 18,
+        "count": 19,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -284,12 +284,14 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "ok",
+        "status": "error",
         "count": 2,
-        "error": null,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
         "sources": [
           "Peninsula Open Space Trust"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       }
     ]
   },
@@ -1482,7 +1484,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-05T16:49:51.397Z"
+        "checkedAt": "2026-11-05T20:58:42.613Z"
       }
     },
     {
@@ -1505,7 +1507,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T16:49:51.402Z"
+        "checkedAt": "2026-11-05T20:58:42.617Z"
       }
     },
     {
@@ -1528,7 +1530,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T16:49:51.402Z"
+        "checkedAt": "2026-11-05T20:58:42.617Z"
       }
     },
     {
@@ -1551,7 +1553,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-05T16:49:51.403Z"
+        "checkedAt": "2026-11-05T20:58:42.618Z"
       }
     },
     {
@@ -1574,7 +1576,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-05T16:49:51.404Z"
+        "checkedAt": "2026-11-05T20:58:42.618Z"
       }
     },
     {
@@ -1886,6 +1888,23 @@
       "kidFriendly": true
     },
     {
+      "id": "92b1ba6c8464",
+      "title": "Cupertino Spelling Bee",
+      "date": "2027-01-23",
+      "displayDate": "Sat, Jan 23",
+      "time": "01:00 PM",
+      "endTime": "05:30 PM",
+      "venue": "Cupertino Community Hall",
+      "address": "Cupertino Community Hall, 10350 Torre Ave, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "The Cupertino Spelling Bee is an annual contest for Cupertino students in grades 2-5, and is organized by the Cupertino Parks and Recreation Department and the Cupertino Youth Activity Board. For more information, please visit the Cupertino Spelling Bee event page. Please note: The Cupertino Spelling Bee is not affiliated with the National Scripps Spelling Bee and we cannot sponsor or send winners to the National Spelling Bee. Register Registration will open with winter activity registration.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Cupertino-Spelling-Bee/Cupertino-Spelling-Bee-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
       "id": "4bee933d9da1",
       "title": "Fiddler on the Roof",
       "date": "2026-11-15",
@@ -1897,7 +1916,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1914,7 +1933,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3147,7 +3166,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.477Z"
+        "checkedAt": "2026-11-05T20:59:08.612Z"
       }
     },
     {
@@ -3171,7 +3190,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.478Z"
+        "checkedAt": "2026-11-05T20:59:08.612Z"
       }
     },
     {
@@ -3195,7 +3214,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.478Z"
+        "checkedAt": "2026-11-05T20:59:08.612Z"
       }
     },
     {
@@ -3219,7 +3238,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.480Z"
+        "checkedAt": "2026-11-05T20:59:08.613Z"
       }
     },
     {
@@ -3243,7 +3262,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.615Z"
       }
     },
     {
@@ -3267,7 +3286,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3291,7 +3310,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3315,7 +3334,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3339,7 +3358,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3363,7 +3382,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3387,7 +3406,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3411,7 +3430,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3435,7 +3454,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-05T16:50:18.483Z"
+        "checkedAt": "2026-11-05T20:59:08.616Z"
       }
     },
     {
@@ -3677,40 +3696,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3768,6 +3753,40 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
     }
   ]
 }
