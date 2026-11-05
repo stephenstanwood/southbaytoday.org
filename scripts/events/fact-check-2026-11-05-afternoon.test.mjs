@@ -66,7 +66,12 @@ test("captured SJSU reminder dates become the two poster-confirmed programs", as
   assert.equal(reading.date, "2026-11-09");
   assert.equal(reading.time, "3:30 PM");
   assert.equal(reading.endTime, null, "the film's finish is unknown");
-  assert.match(reading.venue, /Campus Village B RAC.*Uchida Hall 124/);
+  assert.match(reading.venue, /Campus Village B RAC.*Uchida Hall/);
+  assert.doesNotMatch(reading.venue, /\b(?:114|124)\b/, "do not choose between conflicting film rooms");
+  assert.match(posters.calendarLocationText, /YUH 114/);
+  assert.match(posters.posters[0].film, /124/);
+  assert.match(reading.attendanceNote, /Room 124.*Room 114.*Confirm the film room/);
+  assert.equal(requiresAttendanceConfirmation(reading), true);
   assert.equal(reading.address, "", "a two-building program cannot inherit one building's street address");
   assert.match(reading.attendanceNote, /3:30–4:30 PM.*5:30 PM/);
   const movie = events.find(e => e.url === posters.sourceUrls[2]);

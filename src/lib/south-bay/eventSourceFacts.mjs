@@ -40,10 +40,11 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
 ];
 const SJSU_NOVEMBER_READING = {
   time: "3:30 PM", endTime: null,
-  venue: "Campus Village B RAC (1st floor) and Uchida Hall 124", address: "",
-  description: "Discuss I, Robot's sixth story, Little Lost Robot, with Professor Hilary Hurst from 3:30–4:30 PM in the Campus Village B RAC (1st floor). A separate screening of I, Robot (2004) begins at 5:30 PM in Uchida Hall 124.",
+  venue: "Campus Village B RAC (1st floor) and Uchida Hall", address: "",
+  description: "Discuss I, Robot's sixth story, Little Lost Robot, with Professor Hilary Hurst from 3:30–4:30 PM in the Campus Village B RAC (1st floor). A separate screening of I, Robot (2004) begins at 5:30 PM in Uchida Hall; confirm its room with the organizer.",
   blurb: "Discuss Little Lost Robot with Professor Hilary Hurst, with a separate I, Robot screening later in Uchida Hall.",
-  attendanceNote: "Discussion: 3:30–4:30 PM in Campus Village B RAC (1st floor). Film: 5:30 PM in Uchida Hall 124; its finish is not published.",
+  attendanceStatus: "needs-confirmation",
+  attendanceNote: "Discussion: 3:30–4:30 PM in Campus Village B RAC (1st floor). Film: 5:30 PM in Uchida Hall. The poster names Room 124, while the calendar's location field names Room 114. Confirm the film room with the organizer; its finish is not published.",
 };
 const SJSU_NOVEMBER_METROPOLIS = {
   title: "HumHonCultureCon Movie Event: Metropolis (1927)",
