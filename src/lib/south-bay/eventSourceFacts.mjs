@@ -39,6 +39,19 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // This occurrence's booking panel conflicts with its no-registration prose.
+  // Preserve the gate, disclose the conflict, and use the current published
+  // November 7, 4 PM deadline rather than the stale November 5 cutoff.
+  // Evidence: docs/qa/2026-11-05-1007z-fact-check.md.
+  {
+    date: "2026-11-07", url: "https://sjpl.bibliocommons.com/events/6a3ec53af56bd86e00b94805",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a3ec53af56bd86e00b94805"],
+    facts: {
+      registrationClosesBy: "2026-11-08T00:00:00.000Z",
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "Ages 8–14. The library's booking panel requires registration, while its description says no registration is required. Confirm attendance requirements with Almaden Library before going.",
+    },
+  },
   // The organizer separates Sunday's 11am–2pm bag sale from its 2–4pm
   // bulk sale. The newsletter merged their hours; protect this occurrence
   // before intake normalization and cached blurb refresh, without creating

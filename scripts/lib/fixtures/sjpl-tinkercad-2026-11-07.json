@@ -1,0 +1,117 @@
+{
+  "retrievedAt": "2026-11-05T10:11:05.277669+00:00",
+  "sourceUrl": "https://sjpl.bibliocommons.com/v2/events/6a3ec53af56bd86e00b94805",
+  "captureNote": "Selected event fields from the public page state; original HTML and complete state retained privately. No fields or source instructions synthesized.",
+  "event": {
+    "id": "6a3ec53af56bd86e00b94805",
+    "definition": {
+      "title": "Print it, Don't Just Think it: 3D Printing and TinkerCAD Workshop for Kids",
+      "start": "2026-11-07T16:00",
+      "end": "2026-11-07T17:00",
+      "description": "&lt;p&gt;Come join us for an introduction to 3D printing and CAD! We will learn how to use TinkerCAD and how 3D printing works. There will be a live demonstration of the 3D printer working.&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;Free. Ages 8-14. Space is limited, no registration is required.&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;&lt;strong&gt;This program is generously sponsored by the Friends of the Almaden Library and the SJPL Foundation’s Pat Dando Endowment.&lt;/strong&gt;&lt;/strong&gt;&lt;br&gt;&lt;br&gt;&lt;a href=\"https://www.sjpl.org/ada-event-accommodation/?_gl=1*1hl81cm*_ga*NTM4NDg5NjY5LjE3Mzc2NzEyMTg.*_ga_G99DMMNG39*czE3NTgwNDI4MjgkbzE5NiRnMSR0MTc1ODA0Mzc2NCRqNiRsMCRoMA..*_ga_F5QPDQX1BM*czE3NTgwNDI4MjgkbzE5NiRnMSR0MTc1ODA0Mzc2NCRqNiRsMCRoMA..\"&gt;ADA Accommodation Requests&lt;/a&gt;&lt;br&gt;&lt;/p&gt;",
+      "branchLocationId": "10",
+      "audienceIds": [
+        "5d5f0926be771f2300369397",
+        "5d714d6c4464033900bac7c2"
+      ],
+      "registrationInfo": {
+        "registrationEnd": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 2,
+          "windowType": "EVENT_START"
+        },
+        "instructions": null,
+        "loginToRegister": false,
+        "registrationStart": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 28,
+          "windowType": "RELATIVE"
+        },
+        "maxSeats": 2,
+        "waitlistEnabled": false,
+        "enabledMethods": [],
+        "provider": "BIBLIO_EVENTS",
+        "cap": 20,
+        "scope": null,
+        "onlineInstructions": "&lt;p&gt;Participants should bring their own laptop or tablet if possible. The library has a limited number of iPads that can be borrowed for the workshop on a first-come, first-served basis.&lt;/p&gt;",
+        "isFull": false,
+        "instructionsToAttend": "&lt;p&gt;If you can bring your own laptop, please bring it. The branch has a limited number of iPads available.&lt;/p&gt;",
+        "waitlistAutoPromote": false
+      },
+      "isCancelled": false
+    },
+    "isFull": false,
+    "registrationClosed": false,
+    "registrationWindow": {
+      "id": "6a3ec53af56bd86e00b94805",
+      "libraryId": "sjpl",
+      "windowStart": "2026-10-10T00:00:00",
+      "windowEnd": "2026-11-07T16:00:00",
+      "status": "ACTIVE"
+    },
+    "indexStart": "2026-11-08T00:00:00Z",
+    "indexEnd": "2026-11-08T01:00:00Z",
+    "isRecurring": true,
+    "seriesId": "6a0383fcf6bd012f00677e0b"
+  },
+  "entities": {
+    "locations": {
+      "10": {
+        "id": "10",
+        "name": "Almaden",
+        "address": {
+          "country": "US",
+          "zip": "95120",
+          "state": "CA",
+          "city": "San Jose",
+          "street": "Camden Ave.",
+          "number": "6445"
+        }
+      }
+    },
+    "eventAudiences": {
+      "5d5f0926be771f2300369397": {
+        "id": "5d5f0926be771f2300369397",
+        "name": "Kids, ages 5-10",
+        "imageId": null
+      },
+      "5d714d6c4464033900bac7c2": {
+        "id": "5d714d6c4464033900bac7c2",
+        "name": "Pre-Teens, ages 10-12",
+        "imageId": null
+      }
+    }
+  },
+  "publishedBefore": {
+    "id": "sjpl-6a3ec53af56bd86e00b94805",
+    "title": "Print it, Don't Just Think it: 3D Printing and Tinkercad Workshop for Kids",
+    "date": "2026-11-07",
+    "displayDate": "Sat, Nov 7",
+    "time": "4:00 PM",
+    "endTime": "5:00 PM",
+    "venue": "Almaden Library",
+    "address": "6445 Camden Ave. San Jose",
+    "city": "san-jose",
+    "registration": "required",
+    "registrationClosesBy": "2026-11-06T00:00:00.000Z",
+    "category": "family",
+    "cost": "free",
+    "description": "Come join us for an introduction to 3D printing and CAD! We will learn how to use Tinkercad and how 3D printing works. There will be a live demonstration of the 3D printer working. Free. Ages 8-14. Space is limited; no registration is required. This program is generously sponsored by the Friends of the Almaden Library and the SJPL Foundation's Pat Dando Endowment.",
+    "sourceAudiences": [
+      "Kids, ages 5-10",
+      "Pre-Teens, ages 10-12"
+    ],
+    "attendanceNote": "Free. Ages 8-14. Space is limited, no registration is required.",
+    "url": "https://sjpl.bibliocommons.com/events/6a3ec53af56bd86e00b94805",
+    "source": "San Jose Public Library",
+    "kidFriendly": true,
+    "audienceAge": "kids",
+    "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/3c15a8fd3cb2ca14968f878d75ae6eef/3DPrinting.png",
+    "blurb": "Learn Tinkercad basics and watch a live 3D printer demonstration in this beginner workshop.",
+    "firstSeenAt": "2026-11-05T03:24:44.049Z"
+  }
+}
