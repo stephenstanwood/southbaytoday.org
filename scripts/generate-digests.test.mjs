@@ -5,11 +5,12 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { polishCivicCopy } from "./lib/civic-copy.mjs";
+import { polishCivicCopy, polishCivicModifiers, polishCivicTopic } from "./lib/civic-copy.mjs";
 
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
 function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1,
+  keyTopics = ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
   summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
   try {
@@ -57,7 +58,7 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1,
           prompts.push(JSON.parse(init.body)); fs.writeFileSync(${JSON.stringify(capture)}, JSON.stringify(prompts));
           return Response.json({ stop_reason: 'end_turn', content: [{type: 'text', text: JSON.stringify({
             summary: ${JSON.stringify(summary)},
-            keyTopics: ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
+            keyTopics: ${JSON.stringify(keyTopics)},
           })}] });
         }
         // Other cities retain their own published cards; no live I/O in this fixture.
@@ -150,4 +151,39 @@ test("civic area copy preserves measurements, prices, existing hyphens, and non-
   ]) assert.equal(polishCivicCopy(value), value);
   assert.equal(polishCivicCopy("The November 3, 2026 meeting listed a 900 square foot building."),
     "The November 3, 2026, meeting listed a 900-square-foot building.");
+});
+
+test("civic modifiers keep numbers, identifiers, headline dates, and standalone terms exact", () => {
+  const copy = "The fee for below market rate in-lieu fees would become a square footage-based fee. A City Council sponsored special event costs $25. See https://example.org/below-market-rate or email fee@example.org.";
+  const reviewed = copy.replace("below market rate", "below-market-rate")
+    .replace("square footage-based", "square-footage-based").replace("City Council sponsored", "City Council-sponsored");
+  assert.equal(polishCivicCopy(copy), reviewed);
+  assert.equal(polishCivicCopy(reviewed), reviewed);
+  assert.deepEqual(reviewed.match(/\d+/g), copy.match(/\d+/g));
+  const headline = "November 4, 2026 agenda: below market rate in-lieu fee changes";
+  assert.equal(polishCivicModifiers(headline), headline.replace("below market rate", "below-market-rate"));
+  for (const value of ["Fees remain below market rate.", "Measure the square footage.", null]) {
+    assert.equal(polishCivicModifiers(value), value);
+  }
+});
+
+test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {
+  const keyTopics = [
+    "The agenda listed a proposed agreement not to exceed $165,000 for fiscal year 2026-27",
+    "The Consent Calendar included the 2026 Annual Code Update",
+    "A revised Citywide Records Retention Schedule was listed for adoption by resolution on the Consent Calendar",
+    "The Consent Calendar also listed the Treasurer's Report for the month ended September 30, 2026",
+    "Review of the November 10, 2026, final City Council agenda",
+    "The agenda listed details at https://example.org/agenda/2026",
+  ];
+  const { digests } = run({ keyTopics });
+  assert.deepEqual(digests["palo-alto"].keyTopics, keyTopics.map((topic, i) => i < 4 ? topic + "." : topic));
+  for (const topic of keyTopics) {
+    const next = polishCivicTopic(topic);
+    assert.equal(polishCivicTopic(next), next);
+    assert.deepEqual(next.match(/\d+/g), topic.match(/\d+/g));
+  }
+  for (const value of ["The agenda listed a request to email fee@example.org", "The agenda listed a public hearing.", "The agenda listed:", null]) {
+    assert.equal(polishCivicTopic(value), value);
+  }
 });

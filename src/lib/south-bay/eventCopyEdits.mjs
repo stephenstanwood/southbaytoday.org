@@ -46,6 +46,8 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["Student can progress at their own pace", "Students can progress at their own pace"],
+      ["Request an ADA accommodations for this event.", "Request ADA accommodations for this event."],
       ["interaction with Pearl who has been trained", "interaction with Pearl, who has been trained"],
       [/(The Science & Engineering of El Niño - [A-Za-z]+ \d{1,2}) 2\./g, "$1; 2."],
       [/(Engineering Solutions to Urban Heat - [A-Za-z]+ \d{1,2}) 3\./g, "$1; 3."],
@@ -733,11 +735,23 @@ const EDITS = {
   },
 };
 
+// Title normalization accents San José while some sources use San Jose.
+// Fold that known place-name variant, preserving other language distinctions,
+// and compare complete fields so new attendance details survive.
+export function isTitleOnlyDescription(title, description) {
+  if (typeof title !== "string" || typeof description !== "string") return false;
+  const normalize = text => text.normalize("NFC").toLowerCase()
+    .replace(/\s+/g, " ").trim()
+    .replace(/(?<![\p{L}\p{N}_])san josé(?![\p{L}\p{N}_])/gu, "san jose");
+  return Boolean(normalize(title)) && normalize(title) === normalize(description);
+}
+
 /** Return an event with only its reviewed display-copy phrases repaired.
  * The source-text cache fingerprint must be computed before this display pass:
  * punctuation repairs do not warrant regenerating already source-bound blurbs. */
 export function polishReviewedEventCopy(event) {
   const next = { ...event };
+  if (isTitleOnlyDescription(next.title, next.description)) next.description = "";
   const fields = EDITS[event.source];
   if (!fields) return next;
   for (const [field, edits] of Object.entries(fields)) {

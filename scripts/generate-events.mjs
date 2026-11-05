@@ -68,6 +68,7 @@ import { stripHtml } from "./lib/event-html.mjs";
 import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
+import { isTitleOnlyDescription } from "../src/lib/south-bay/eventCopyEdits.mjs";
 import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -10912,12 +10913,10 @@ async function main() {
 
   // Drop descriptions that just repeat the title — SJSU's Localist RSS feeds
   // sports events with description == title, which adds noise to plan-day blurbs
-  // and event cards. Compare on a normalized form so casing/whitespace doesn't
-  // hide the duplication.
+  // and event cards. Use the same complete-field comparison as the final copy
+  // pass, including accent differences introduced by title normalization.
   allEvents.forEach((e) => {
-    if (!e.description || !e.title) return;
-    const norm = (s) => String(s).toLowerCase().replace(/\s+/g, " ").trim();
-    if (norm(e.description) === norm(e.title)) e.description = "";
+    if (isTitleOnlyDescription(e.title, e.description)) e.description = "";
   });
 
   // Apply verified facts before time backfill, publication filtering and date

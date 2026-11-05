@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import test from "node:test";
 import { cleanTitle, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
-import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
+import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
@@ -71,6 +71,41 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("complete title echoes ignore accents but retain any added source information", () => {
+  const event = {
+    id: "sjsu-996707af83523fc9", source: "SJSU Events",
+    title: "Football - San José State vs. Northern Illinois",
+    description: "Football - San Jose State vs. Northern Illinois",
+    date: "2026-11-14", time: "12:30 PM", cost: "paid",
+  };
+  assert.equal(isTitleOnlyDescription(event.title, event.description), true);
+  assert.equal(isTitleOnlyDescription("Resume", "Résumé"), false);
+  assert.equal(isTitleOnlyDescription("San Jose Stories", " SAN JOSÉ  STORIES "), true);
+  assert.deepEqual(polishReviewedEventCopy(event), { ...event, description: "" });
+  for (const description of [
+    event.description + ". Registration required; ages 12+; $25.",
+    "Football - San Jose State vs. Fresno State",
+    "", null,
+  ]) {
+    const revised = { ...event, description };
+    assert.equal(isTitleOnlyDescription(event.title, description), false);
+    assert.deepEqual(polishReviewedEventCopy(revised), revised);
+  }
+});
+
+test("OneInMath grammar preserves source conditions and does not affect other publishers", () => {
+  const description = "Student can progress at their own pace in a welcoming and supportive learning environment. Registration is required. Visit the OneInMath website to register. You may be asked to provide personal information to sign up. Please review OneInMath's Privacy Policy before registering. Request an ADA accommodations for this event. Ages 5-8; $10. Contact updated@example.org.";
+  const event = { source: "San Jose Public Library", description, date: "2026-12-13", registration: "required" };
+  const reviewed = { ...event, description: description.replace("Student can", "Students can")
+    .replace("Request an ADA accommodations", "Request ADA accommodations") };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  assert.deepEqual(numbers(reviewed.description), numbers(description));
+  assert.deepEqual(identifiers(reviewed.description), identifiers(description));
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
 
 test("night copy repairs retain updated source facts, later instructions and publisher scope", () => {
   const revised = text => text.replaceAll("November 8", "November 10")
