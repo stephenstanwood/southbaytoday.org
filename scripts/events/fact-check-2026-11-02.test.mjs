@@ -84,7 +84,7 @@ test("reviewed newsletters keep the Nutcracker age, price and registration condi
 
 test("dated admission and concert corrections stay bound to their reviewed sources", () => {
   const cases = [
-    { date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927", cost: "free" },
+    { date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927", cost: "free", time: "3:30 PM", endTime: "6:30 PM" },
     { date: "2026-11-10", url: "https://events.sjsu.edu/event/hearst-award-camille-zapata", cost: "free" },
     { date: "2026-11-14", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/111020/", registration: "required" },
     ...[
@@ -97,8 +97,8 @@ test("dated admission and concert corrections stay bound to their reviewed sourc
     const input = { date, url, time: "7:30 PM", endTime: null, cost: null, category: "arts" };
     const corrected = applyVerifiedEventFacts(input);
     for (const [key, value] of Object.entries(expected)) assert.equal(corrected[key], value, url);
-    assert.equal(corrected.time, input.time);
-    assert.equal(corrected.endTime, null);
+    assert.equal(corrected.time, expected.time ?? input.time);
+    assert.equal(corrected.endTime, expected.endTime ?? null);
     assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
     if (url.includes("hearst-award")) assert.match(corrected.attendanceNote, /4 PM.*4:30 PM/);
     for (const unrelated of [{ ...input, date: "2027-12-10" }, { ...input, url: "https://example.org/unrelated" }]) {

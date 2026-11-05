@@ -3,6 +3,33 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  ...["2026-11-05", "2026-11-06"].map(date => Object.freeze({
+    title: /^Campus Reading Program, November 9 Events!?$/i,
+    venue: /.*/,
+    date,
+    reviewOn: "2026-11-09",
+    reason:
+      "The calendar row is a reminder. The organizer's poster places the discussion and film on November 9, starting at 3:30 PM, not at midnight on this date.",
+    source: "https://events.sjsu.edu/event/campus-reading-program-november-9-events",
+  })),
+  ...["2026-11-05", "2026-11-06", "2026-11-09"].map(date => Object.freeze({
+    title: /^Silent Movie Classic with Live Score Performance!?\s*Don't Miss It!?$/i,
+    venue: /.*/,
+    date,
+    reviewOn: "2026-11-10",
+    reason:
+      "The calendar row is a reminder. The organizer's poster confirms the Metropolis screening on November 10, 3:30–6:30 PM in King Library Room 225, not a midnight screening on this date.",
+    source: "https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it",
+  })),
+  Object.freeze({
+    title: /^First Fridays Collab Lab$/i,
+    venue: /^(?:Braun Music Center|Stanford University)$/i,
+    date: "2026-11-06",
+    reviewOn: "2026-11-06",
+    reason:
+      "The organizer's full description invites Stanford faculty, staff and students, while its calendar tags say General Public and Everyone. Withhold this occurrence until public eligibility is confirmed; this is not a cancellation.",
+    source: "https://events.stanford.edu/event/collab-lab-nov6",
+  }),
   Object.freeze({
     title: /^Search for What Matters, Featuring Fr\. Andrew Laguna, SJ$/i,
     venue: /^(?:Williman Room, Benson|Santa Clara University)$/i,

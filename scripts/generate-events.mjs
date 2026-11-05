@@ -4487,7 +4487,12 @@ async function fetchStanfordEvents() {
         && /\bThis is a free class for Stanford Students,\s*Faculty and Staff\b/i.test(description)) return null;
       // Read attendance notices before truncation. The October 27 After
       // Fission listing says registration is at full capacity in its body.
-      const registration = declaredRegistrationAvailability(description);
+      const registration = declaredRegistrationAvailability(description)
+        // A mandatory booking gate can follow the display excerpt. Require
+        // an affirmative statement, not optional signup or no-registration
+        // language; published full/closed notices still take precedence.
+        || (/(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description)
+          ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.

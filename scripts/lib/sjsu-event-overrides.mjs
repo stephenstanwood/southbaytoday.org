@@ -1,5 +1,15 @@
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+
 const SEPTEMBER_10_READING_URL =
   "https://events.sjsu.edu/event/september-10-campus-reading-discussion-and-film";
+
+// These promotional calendar rows contain all-day reminder dates. Their
+// attached organizer posters establish just one actual program date each.
+// Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+const NOVEMBER_POSTER_DATES = new Map([
+  ["https://events.sjsu.edu/event/campus-reading-program-november-9-events", "2026-11-09"],
+  ["https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it", "2026-11-10"],
+]);
 
 // Localist currently publishes this one-day program as five all-day
 // occurrences. SJSU's event poster is the controlling source: the discussion
@@ -14,6 +24,10 @@ export function applyVerifiedSjsuEventOverride(event) {
   // https://infocon.arma.org/
   // Evidence: docs/qa/2026-10-19-0407-fact-check.md.
   if (url === "https://events.sjsu.edu/event/ischool-at-arma-infocon-2026") return null;
+  if (NOVEMBER_POSTER_DATES.has(url)) {
+    if (event.date !== NOVEMBER_POSTER_DATES.get(url)) return null;
+    return applyVerifiedEventFacts({ ...event, url });
+  }
   if (url !== SEPTEMBER_10_READING_URL) return event;
   if (event.date !== "2026-09-10") return null;
 

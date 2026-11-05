@@ -38,7 +38,86 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan", "paid"],
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
+const SJSU_NOVEMBER_READING = {
+  time: "3:30 PM", endTime: null,
+  venue: "Campus Village B RAC (1st floor) and Uchida Hall 124", address: "",
+  description: "Discuss I, Robot's sixth story, Little Lost Robot, with Professor Hilary Hurst from 3:30–4:30 PM in the Campus Village B RAC (1st floor). A separate screening of I, Robot (2004) begins at 5:30 PM in Uchida Hall 124.",
+  blurb: "Discuss Little Lost Robot with Professor Hilary Hurst, with a separate I, Robot screening later in Uchida Hall.",
+  attendanceNote: "Discussion: 3:30–4:30 PM in Campus Village B RAC (1st floor). Film: 5:30 PM in Uchida Hall 124; its finish is not published.",
+};
+const SJSU_NOVEMBER_METROPOLIS = {
+  title: "HumHonCultureCon Movie Event: Metropolis (1927)",
+  time: "3:30 PM", endTime: "6:30 PM", cost: "free",
+  venue: "Dr. Martin Luther King, Jr. Library, Room 225",
+  address: "150 E. San Fernando Street, San Jose, CA 95112",
+  url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927",
+  description: "Watch Fritz Lang's Metropolis (1927) with live accompaniment by members of the SJSU Saxophone Studio. Free and open to the campus community and general public, November 10, 3:30–6:30 PM in King Library Room 225.",
+  blurb: "Watch Metropolis (1927) with live accompaniment by the SJSU Saxophone Studio in King Library Room 225.",
+};
+
 const CORRECTIONS = [
+  // A live library edit moved the header to 2–3:30 PM but retained a
+  // two-hour claim in the body. Preserve the published clocks and optional
+  // signup, disclose the conflict, and never invent a 4 PM finish. Stop
+  // qualifying a fresh occurrence when either side of the conflict changes.
+  // Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+  {
+    date: "2026-12-19",
+    matches: (event) => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6ad7a697295d793e2d1803ec\/?$/.test(event.url || "")
+      && event.time === "2:00 PM" && event.endTime === "3:30 PM"
+      && /\btwo[-\s]hour concert\b/i.test(event.description || ""),
+    facts: {
+      registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceStatus: "needs-confirmation",
+      attendanceNote: "The library lists 2–3:30 PM, while its description calls this a two-hour concert. Confirm the finish with Rinconada Library. Registration is not required; optional signup provides a reminder email the day before.",
+      blurb: "Hear Nathan's Fearless Five perform in Rinconada Library's Embarcadero Room.",
+    },
+  },
+  // The published reminder URLs must resolve to the verified programs too.
+  // Scope these date corrections to the exact reviewed 2026 source rows;
+  // never infer another program from a reused title or future calendar year.
+  ...["2026-11-05", "2026-11-06"].map(date => ({
+    date, url: "https://events.sjsu.edu/event/campus-reading-program-november-9-events",
+    facts: { ...SJSU_NOVEMBER_READING, date: "2026-11-09", displayDate: "Mon, Nov 9" },
+  })),
+  ...["2026-11-05", "2026-11-06", "2026-11-09"].map(date => ({
+    date, url: "https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it",
+    facts: { ...SJSU_NOVEMBER_METROPOLIS, date: "2026-11-10", displayDate: "Tue, Nov 10" },
+  })),
+  // Read the organizer's actual program from its poster, not the all-day
+  // reminder dates. The discussion and film have distinct rooms and clocks;
+  // the film's finish is not published. Keep those facts through cached copy.
+  // Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+  {
+    date: "2026-11-09", url: "https://events.sjsu.edu/event/campus-reading-program-november-9-events",
+    facts: SJSU_NOVEMBER_READING,
+  },
+  // The full Stanford body requires registration and gives a November 3
+  // deadline, both lost by excerpt truncation. Do not invent a cutoff clock
+  // or claim a late booking is available.
+  {
+    date: "2026-11-06", url: "https://events.stanford.edu/event/knight-initiative-rosenkranz-aging-joint-symposium",
+    facts: {
+      cost: "free", registration: REGISTRATION_REQUIRED, attendanceStatus: "needs-confirmation",
+      attendanceNote: "Free; registration is required. The organizer asks attendees to register by November 3. Confirm late registration with the organizer before going.",
+    },
+  },
+  {
+    date: "2026-11-06", url: "https://events.stanford.edu/event/artificial-intelligence-regulatory-policy-landscapes",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Online via Zoom. Register through ALA-GODORT's Friday Chats page to receive the link.",
+    },
+  },
+  // The broad calendar tags conflict with the explicitly named campus
+  // audience. The shared suppression withholds this occurrence; keep its
+  // retired leaf and sparse copies qualified without claiming cancellation.
+  {
+    date: "2026-11-06", url: "https://events.stanford.edu/event/collab-lab-nov6",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The description invites Stanford faculty, staff and students, while the calendar audience tags say General Public and Everyone. Confirm public eligibility with the organizer.",
+    },
+  },
   // The museum's November 7 celebration starts at 10 AM; 10:40 is its first
   // performance, which newsletter intake mistook for the event's start.
   // Normalize both newsletter copies and the calendar listing before dedup.
@@ -371,7 +450,12 @@ const CORRECTIONS = [
   // Evidence: docs/qa/2026-11-02-1007z-fact-check.md.
   {
     date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927",
-    facts: { cost: "free" },
+    // The Campus Reading Program's second announcement advertises this same
+    // screening. Normalize it before deduplication; its poster confirms the
+    // finish and room, not three separate midnight performances.
+    // Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+    aliasUrls: ["https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it"],
+    facts: SJSU_NOVEMBER_METROPOLIS,
   },
   {
     date: "2026-11-10", url: "https://events.sjsu.edu/event/hearst-award-camille-zapata",
