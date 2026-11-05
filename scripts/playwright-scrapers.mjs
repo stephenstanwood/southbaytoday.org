@@ -1521,7 +1521,7 @@ async function scrapeHPB(page) {
 // HIGH-YIELD VENUES / DISTRICTS
 // ═══════════════════════════════════════════════════════════════════════════
 
-async function scrapeMountainWinery(page) {
+export async function scrapeMountainWinery(page, { today = TODAY } = {}) {
   await page.setExtraHTTPHeaders({
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   });
@@ -1629,13 +1629,15 @@ async function scrapeMountainWinery(page) {
   return raw.map((r) => {
     const card = normalizeMountainWineryCard(r) || r;
     const date = yearAwareDate(card.date);
-    if (!date || date < TODAY || !isUsefulTitle(card.title)) return null;
+    if (!date || date < today || !isUsefulTitle(card.title)) return null;
     // Drop billing fragments where the headliner couldn't be parsed —
     // "with Wang Chung…", "Special Guest Cheap Trick" — these would render
     // as a meaningless event title.
     if (/^(with\s|special guest)/i.test(card.title)) return null;
     const isComedy = /\b(comedy|comedian|stand-?up)\b/i.test(card.title) || COMEDY_NAMES.test(card.title);
-    return {
+    // The calendar includes non-concerts such as Santa Paws. Apply verified
+    // occurrence facts before the browser snapshot can publish venue defaults.
+    return applyVerifiedEventFacts({
       title: card.title,
       date,
       time: isoTimeToClock(card.date) || clockFromText(card.time) || clockFromText(card.date),
@@ -1651,7 +1653,7 @@ async function scrapeMountainWinery(page) {
       ...(card.image ? { image: card.image } : {}),
       ...(card.imageAlt ? { imageAlt: card.imageAlt } : {}),
       ...(card.imageSourceUrl ? { imageSourceUrl: card.imageSourceUrl } : {}),
-    };
+    });
   }).filter(Boolean);
 }
 

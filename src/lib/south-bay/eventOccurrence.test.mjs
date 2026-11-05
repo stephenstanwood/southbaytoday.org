@@ -9,6 +9,20 @@ import {
 } from "./eventOccurrence.mjs";
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 
+test("withholds the Music Library Association meeting while organizer eligibility, year and meeting point conflict", () => {
+  const event = {
+    title: "Music Library Association California Chapter Annual Meeting",
+    date: "2026-11-05", time: "2:00 PM", endTime: "4:00 PM",
+    venue: "Hohbach Hall", source: "Stanford Events",
+    url: "https://events.stanford.edu/event/music-library-association-california-chapter-annual-meeting",
+  };
+  assert.equal(isEventPublishable(event), false);
+  assert.equal(isEventPublishable({ ...event, date: "2026-11-06" }), false);
+  assert.equal(isEventPublishable({ ...event, venue: "Braun Music Center" }), false, "choosing an agenda venue does not resolve eligibility or the year");
+  assert.equal(isEventPublishable({ ...event, date: "2027-11-05" }), true);
+  assert.equal(isEventPublishable({ ...event, title: "Public music lecture" }), true);
+});
+
 const grpgEvent = {
   source: "Guadalupe River Park Conservancy",
   title: "Yoga and Zumba in the River Park",

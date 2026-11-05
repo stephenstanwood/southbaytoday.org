@@ -39,6 +39,40 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The full organizer directions name the East Wing's IC Classroom, while
+  // Localist's location names Bing Wing. Keep only their shared building and
+  // require confirmation rather than choosing between conflicting wings.
+  // Evidence: docs/qa/2026-11-04-1607pt-fact-check.md.
+  {
+    date: "2026-11-05", url: "https://events.stanford.edu/event/critical-carceral-studies-special-collections-coffee",
+    facts: {
+      venue: "Green Library", address: "", attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer's detailed directions name the IC Classroom (East Wing), while its location header names Bing Wing. Confirm the meeting point with the organizer when you RSVP.",
+    },
+  },
+  // Keep the retired URL honest too: this is a professional meeting with
+  // restricted eligibility and internally inconsistent year/location details,
+  // not a public music performance. Never select a replacement date or venue.
+  // Evidence: docs/qa/2026-11-04-1607pt-fact-check.md.
+  ...["2026-11-05", "2026-11-06"].map(date => ({
+    date, url: "https://events.stanford.edu/event/music-library-association-california-chapter-annual-meeting",
+    facts: {
+      category: "education", attendanceStatus: "needs-confirmation",
+      description: "Professional meeting for Music Library Association California Chapter meeting registrants. Public eligibility, dates and meeting points need confirmation with the organizer.",
+      blurb: "Professional Music Library Association meeting; confirm eligibility, dates and meeting points with the organizer.",
+      attendanceNote: "The organizer lists Members and meeting registrants. Its agenda uses 2025 while the calendar uses 2026; the first-day tour names Braun Music Center while the event location says Hohbach Hall. Confirm eligibility, dates and meeting points with the organizer.",
+    },
+  })),
+  // The venue's concert calendar also carries non-concert events. Its exact
+  // December 5 record describes pet adoption, vendors and Santa photos,
+  // welcomes all ages and supplies the 11am–3pm window. Do not infer free
+  // admission from the calendar's $0 price placeholders beside ticket sales.
+  // Evidence: docs/qa/2026-11-04-1607pt-fact-check.md.
+  {
+    date: "2026-12-05", url: "https://www.mountainwinery.com/events/detail?event_id=1683714",
+    aliasUrls: ["https://www.mountainwinery.com/events/detail/?event_id=1683714"],
+    facts: { category: "community", endTime: "3:00 PM", kidFriendly: true },
+  },
   // The event has a stray 7 after its phone link; the publisher's independent
   // accessibility page confirms (408) 540-3947 for help with the same form.
   // Match only this occurrence and known token, including normalized spacing.

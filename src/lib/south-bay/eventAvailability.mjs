@@ -3,6 +3,15 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  ...["2026-11-05", "2026-11-06"].map(date => Object.freeze({
+    title: /^Music Library Association California Chapter Annual Meeting$/i,
+    venue: /.*/,
+    date,
+    reviewOn: "2026-11-05",
+    reason:
+      "The organizer lists Members and restricts attendance to meeting registrants. Its detailed agenda uses 2025 beside 2026 calendar occurrences and names Braun Music Center for the first-day tour while the event location says Hohbach Hall. Withhold until public eligibility, dates and meeting points are confirmed; this is not a cancellation.",
+    source: "https://events.stanford.edu/event/music-library-association-california-chapter-annual-meeting",
+  })),
   Object.freeze({
     title: /^Post-Election SVLG Member Briefing$/i,
     venue: /.*/,

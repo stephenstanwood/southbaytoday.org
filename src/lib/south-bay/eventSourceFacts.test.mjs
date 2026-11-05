@@ -16,6 +16,61 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the Stanford collections visit discloses conflicting wings without guessing a meeting point", async () => {
+  const raw = {
+    date: "2026-11-05", url: "https://events.stanford.edu/event/critical-carceral-studies-special-collections-coffee",
+    title: "Critical Carceral Studies | Special Collections & Coffee", venue: "Green Library, Bing Wing",
+    address: "459 Lasuen Mall, Stanford, CA 94305", time: "1:00 PM", endTime: "2:30 PM",
+    description: "Please join us and archivist Benjamin Stone for a viewing of various items in the Stanford Special Collections.",
+  };
+  const fixed = applyVerifiedEventFacts(raw);
+  assert.equal(fixed.venue, "Green Library");
+  assert.equal(fixed.address, "", "do not retain the disputed wing's address as an exact meeting point");
+  assert.equal(requiresAttendanceConfirmation(fixed), true);
+  assert.match(fixed.attendanceNote, /IC Classroom \(East Wing\)/);
+  assert.match(fixed.attendanceNote, /header names Bing Wing/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const key of ["date", "url", "title", "time", "endTime", "description"]) assert.equal(fixed[key], raw[key], key);
+  const events = [structuredClone(raw)];
+  await resolveEventBlurbs(events, { enabled: false });
+  assert.equal(events[0].venue, "Green Library");
+  assert.equal(requiresAttendanceConfirmation(events[0]), true);
+  for (const other of [{ ...raw, date: "2026-11-12" }, { ...raw, url: "https://example.org/another-event" }]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
+test("Santa Paws retains its organizer-backed community category, end time and all-ages admission through refresh", async () => {
+  const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/mountain-winery-santa-paws-2026-12-05.json", import.meta.url)));
+  const { scrapeMountainWinery, normalizePlaywrightEvent } = await import("../../../scripts/playwright-scrapers.mjs");
+  const page = {
+    setExtraHTTPHeaders: async () => {}, goto: async () => {}, waitForTimeout: async () => {},
+    evaluate: async () => [capture.card],
+  };
+  const [raw] = await scrapeMountainWinery(page, { today: "2026-11-04" });
+  assert.equal(raw.category, "community", "an adoption event must not inherit the concert calendar's music default");
+  assert.equal(raw.endTime, "3:00 PM");
+  assert.equal(raw.kidFriendly, true);
+  assert.equal(raw.cost, "paid", "zero-valued price placeholders do not verify free admission");
+  const normalized = normalizePlaywrightEvent(raw);
+  for (const key of ["category", "endTime", "kidFriendly"]) assert.equal(normalized[key], raw[key], key);
+  const stale = { ...normalized, category: "music", endTime: null, kidFriendly: false };
+  const fixed = applyVerifiedEventFacts(stale);
+  assert.equal(fixed.category, "community");
+  assert.equal(fixed.endTime, "3:00 PM");
+  assert.equal(fixed.kidFriendly, true);
+  for (const key of Object.keys(stale).filter(key => !["category", "endTime", "kidFriendly"].includes(key))) assert.deepEqual(fixed[key], stale[key], key);
+  const events = [structuredClone(stale)];
+  await resolveEventBlurbs(events, { enabled: false });
+  for (const key of ["category", "endTime", "kidFriendly"]) assert.equal(events[0][key], fixed[key], key);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const aliasUrl = capture.sourceUrl.replace("/detail?", "/detail/?");
+  assert.deepEqual(applyVerifiedEventFacts({ ...stale, url: aliasUrl }), { ...fixed, url: aliasUrl });
+  for (const other of [
+    { ...stale, date: "2027-12-05" },
+    { ...stale, url: "https://www.mountainwinery.com/events/detail?event_id=1350103" },
+    { ...stale, url: "https://example.org/unrelated" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+});
+
 test("the dated financial-literacy listing drops unsupported economic records across raw and refreshed copy", async () => {
   const { polishDescription } = await import("../../../scripts/generate-events.mjs");
   const prefix = "Young adults today in the US are facing social pressures that can compromise their financial well-being. ";
