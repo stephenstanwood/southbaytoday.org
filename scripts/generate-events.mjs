@@ -6888,6 +6888,9 @@ async function fetchSantaCruzWarriorsSchedule() {
       );
       if (!res.ok) throw new Error(`${res.status}`);
       const data = await res.json();
+      if (!Array.isArray(data?.leagueSchedule?.gameDates)) {
+        throw new Error("G League schedule response has no gameDates array");
+      }
       games = (data?.leagueSchedule?.gameDates || []).flatMap((d) => d.games || []);
       if (games.length) break;
     }
@@ -6907,7 +6910,8 @@ async function fetchSantaCruzWarriorsSchedule() {
         date: dateStr,
         displayDate: displayDate(start),
         time: displayTime(start),
-        endTime: displayTime(new Date(start.getTime() + 2 * 60 * 60 * 1000)),
+        // The league publishes tipoff, not a guaranteed final-buzzer time.
+        endTime: null,
         venue: "Kaiser Permanente Arena",
         address: "140 Front St, Santa Cruz, CA 95060",
         city: "santa-cruz",
@@ -6924,8 +6928,9 @@ async function fetchSantaCruzWarriorsSchedule() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SC Warriors: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    // An unavailable schedule must reach the existing retention policy in
+    // non-strict runs too; only a successful empty season replaces old games.
+    throw err;
   }
 }
 
@@ -6953,7 +6958,8 @@ async function fetchSharksSchedule() {
           date: dateStr,
           displayDate: displayDate(new Date(dateStr + "T12:00:00")),
           time: timeUtc ? displayTime(timeUtc) : "7:00 PM",
-          endTime: timeUtc ? displayTime(new Date(timeUtc.getTime() + 2.5 * 60 * 60 * 1000)) : null,
+          // The schedule has no published finish; overtime also varies by game.
+          endTime: null,
           venue: "SAP Center",
           address: "525 W Santa Clara St, San Jose",
           city: "san-jose",
@@ -10576,7 +10582,7 @@ export function eventSourceDefinitions() {
     source(fetchSJGiantsSchedule, { label: "San Jose Giants" }),
     source(fetchTicketmasterEvents, { label: "Ticketmaster", critical: true }),
     source(fetchSharksSchedule),
-    source(fetchSantaCruzWarriorsSchedule),
+    source(fetchSantaCruzWarriorsSchedule, { label: "G League", preserveOnFailure: true }),
     source(fetchSantaCruzPicks),
     // fetchMvplEvents, — hardcoded `return []`; Mountain View's LibCal
     //   collection is also retired after the 2026-10-24 robots review.

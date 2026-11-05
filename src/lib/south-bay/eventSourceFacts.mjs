@@ -3405,6 +3405,16 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // These league adapters used fixed durations to invent exact finish times.
+  // Strip those values from retained/cached rows as well as fresh ingestion;
+  // an endTime is a published clock, never a predicted game duration.
+  // Evidence: docs/qa/2026-11-05-1307z-fact-check.md.
+  const leagueScheduleGame = (event?.source === "G League"
+      && /^sc-warriors-/.test(event.id || "")
+      && /^https:\/\/santacruz\.gleague\.nba\.com\/schedule\/?$/.test(event.url || ""))
+    || (event?.source === "NHL" && /^sharks-/.test(event.id || "")
+      && /^https:\/\/www\.nhl\.com\/sharks\/schedule\/?$/.test(event.url || ""));
+  if (leagueScheduleGame && event.endTime != null) event = { ...event, endTime: null };
   // These exact SCCLD occurrences allow teen spectators while player seats
   // are full. A "full" registration badge would wrongly close spectator
   // attendance. Protect carried/cached blurbs, and stop if the source changes

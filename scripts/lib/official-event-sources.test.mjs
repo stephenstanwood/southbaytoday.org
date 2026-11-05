@@ -318,6 +318,9 @@ test("sports schedules without ticket prices cannot publish estimated admission 
       assert.equal(events[0].category, "sports");
       assert.equal(events[0].cost, "paid");
       assert.equal(Object.hasOwn(events[0], "costNote"), false, adapter.name);
+      if ([fetchSantaCruzWarriorsSchedule, fetchSharksSchedule].includes(adapter)) {
+        assert.equal(events[0].endTime, null, "league schedules do not establish a final-buzzer time");
+      }
     }
   } finally {
     globalThis.fetch = originalFetch;

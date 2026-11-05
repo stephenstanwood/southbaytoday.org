@@ -21,6 +21,8 @@ export interface SchemaEventRecord {
   title?: string | null;
   date?: string | null; // "YYYY-MM-DD" (PT)
   time?: string | null; // "6:00 PM"
+  // Published finish only; omit or use null when the source gives only a start.
+  // Typical game durations cannot establish an exact endDate in Event schema.
   endTime?: string | null;
   venue?: string | null;
   organizerName?: string | null;
