@@ -56,10 +56,12 @@ const november4EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/revi
 const november4NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-04-night.json", import.meta.url)));
 const november5BrandTitlesFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-brand-titles.json", import.meta.url)));
 const november5MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-morning.json", import.meta.url)));
+const november5MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-midday.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
 audits.push(november5MorningFixture);
+audits.push(november5MiddayFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
@@ -75,6 +77,19 @@ const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row 
   }
   return { ...row, reviewed };
 }));
+
+test("midday copy repairs preserve publisher scope and new source information", () => {
+  for (const row of november5MiddayFixture.cases) {
+    const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const revise = text => text.replace("Philadelphia Flyers", "Boston Bruins")
+      .replace("Friday", "Sunday");
+    const suffix = " Registration required; ages 12+; $25. Contact updated@example.org.";
+    const event = { source: row.source, [row.field]: revise(row.refreshed) + suffix };
+    const next = polishReviewedEventCopy(event);
+    assert.deepEqual(next, { ...event, [row.field]: revise(row.reviewed) + suffix });
+  }
+});
 
 test("complete title echoes ignore accents but retain any added source information", () => {
   const event = {

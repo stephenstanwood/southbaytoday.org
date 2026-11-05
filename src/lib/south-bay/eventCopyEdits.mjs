@@ -49,6 +49,7 @@ const EDITS = {
     description: [
       ["Student can progress at their own pace", "Students can progress at their own pace"],
       ["Request an ADA accommodations for this event.", "Request ADA accommodations for this event."],
+      [/\b(To register, please call 408-808-3075 or email sarah\.kishler@sjlibrary\.org)(?=$| [A-Z])/g, "$1."],
       ["interaction with Pearl who has been trained", "interaction with Pearl, who has been trained"],
       [/(The Science & Engineering of El Niño - [A-Za-z]+ \d{1,2}) 2\./g, "$1; 2."],
       [/(Engineering Solutions to Urban Heat - [A-Za-z]+ \d{1,2}) 3\./g, "$1; 3."],
@@ -664,6 +665,7 @@ const EDITS = {
     ],
     blurb: [
       ["Greedo, Kamaiyah and more, lineup subject to", "Greedo, Kamaiyah and more; lineup subject to"],
+      ["Catch the Sharks host", "Watch the Sharks host"],
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
       ["Catch Suicide Silence, Emmure,", "Watch Suicide Silence, Emmure,"],
       ["Hear classic Rock En Espanol artists' music and visuals at The Ritz, 21 and up.", "Enjoy music and visuals from classic Rock En Espanol artists at The Ritz, for ages 21 and up."],
