@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-04T04:37:37.554Z",
+  "generatedAt": "2026-11-05T04:37:25.497Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-04T04:37:37.554Z",
-    "updatedAt": "2026-11-03T16:44:34.000Z",
+    "checkedAt": "2026-11-05T04:37:25.497Z",
+    "updatedAt": "2026-11-04T14:34:53.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-02",
     "newestEligibleInspection": "2026-11-02",
@@ -22,8 +22,20 @@
       "inspectionDate": "2026-11-02",
       "sourceId": "SR0866494",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Food business on Story Road in San Jose.",
       "photoRef": "places/ChIJvfNixdbNj4AR7BMg8JHtsBo/photos/AV-0GLcDk6Rv17zmQ3ZcbxZJUBpcBGF3_ib1FnFZMFZzlaC1TqJfse1hK5vJoyr0hEymkDPJPkskDRdmn4jLLsSExmqL1G7SZNnk_yklA0Udz7tAyXVgeAGb9ZTjn8Ec_3E-Q9bN1cNpugSTvN7MvYbPlsmxcSqc7PAdVmnqJh5liFmQO3nnX4jPFRP1wvBQNoVlc6LX2TqSj6i_XmMZh3fXmyk5-EsY3inXLR3nQ8uj-FFVTljbHhFksYOtlIwUZd8kVm6b_866MtF-lPH-aF2rUQPHXNjJru86OK6XrL3a_CMYgsCZAxvAxgMzzhY-QIXa_pI6xLr235tZhCpMIg1shFnEfIkNhtKYEUHCgg8vdGrdgW4zVGbt_VgYP7z478kVuCvUk5LnIkqAvCrjivcTYuDXYkDW0mY"
+    },
+    {
+      "id": "inspection-SR0868679",
+      "name": "555 W Java -",
+      "address": "555 Java Dr",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "inspectionDate": "2026-10-29",
+      "sourceId": "SR0868679",
+      "status": "inspection-complete",
+      "blurb": "Food business on Java Dr in Sunnyvale.",
+      "photoRef": "places/ChIJJV014sa3j4AR_qysJtVBAoE/photos/AV-0GLfBIgDQy3IcxaFRrxm9MOg_VI49opIJ51e4lTvrsHnbEi9CXGhBMUkqT-ut4W6ghq8r9BErE6of_HADsa3pNBnh-71uCY4ey3nI6dB41YBQEuBdDsv2y1mJNeIjdjz1CNkfbHlDqk2xznetIN0BShwajDvx5PkYDJtBaKWEFIGDG3szm43x-l74jLDVt7SH06lZzlBy_kX8ND-Tz5E4IwxkY7QYGbnAocudJ7EaUXepTIxJ_h_9Xa2TfH6kA0pq1VZujb5xFQhemCJD8kBcjKMzo6ntSCbMJ9uG-8jj4lZ7ykbhXIV3MYumh7-pJhqMlN1gPL6VzJEYPnLeMcyi72GBEKL23TCKXouzGADz5bzCqwlMr-LjFRXxTFURwd-1izJjM90fWu1Zyhx7tZK6U9Vn04k"
     },
     {
       "id": "inspection-SR0882735",
@@ -46,7 +58,7 @@
       "inspectionDate": "2026-10-26",
       "sourceId": "SR0880579",
       "status": "inspection-complete",
-      "blurb": "Cafe at 2897 Senter Rd in San Jose.",
+      "blurb": "Cafe on Senter Rd in San Jose.",
       "photoRef": "places/ChIJLw848FozjoAR9Nv8ZQqd4KE/photos/AV-0GLcRMcx7ou7xL3-KfJOYi_lo7dEZ_0fFNKZzslcSYhp0u3Gy4KbOkOVl1EJ0psO031tuGQovjJFVlYGEoEqYwIhGEixCZUDwb37uIdjQBY5et9oTgASGB5xauebH0HDPG-JpMJo9NcSA6NezHe36vAuCl4gRutgbzAG1_75pe_N0s9js86eukTtLEM5Y6nwPc0drfdogjJgM6IsXGSBzv0x0kywT6BztRRtSUkp3FR1lpFj4OYHInZHkyo6BO_T-GV626ynyY-ynG5Y29jE6W7XuZmpmsEynMIAh8O6b0LGm0wuSe4Glh84God7dxPQJ9TXMrg-OMMZ6JveU-koB44W-g8qi1KY12aE9q6hk7Kexnd17ufKH3CgaIclFEONROvc_bBQNqKQCfYaU6Fw7FtaCcn2a"
     },
     {
@@ -70,7 +82,7 @@
       "inspectionDate": "2026-10-23",
       "sourceId": "SR0867345",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Food business on State St in Los Altos.",
       "photoRef": "places/ChIJ_3-FKPA1joAR4oJuHqtgoeQ/photos/AV-0GLejHjT6_EhcFHr4w2NtXJj3iyVK1FSO-hKv_DDZcu_rhJewgylrMrVYFUNrrVX38OlQOCZgErd8jWP7uKtHROj3g4l9o61J68mULjM-9L7MCq8_xJA_TajM1oOfOgHsxAr5kCSjp8xdNImTqOI3kWsXAv74uO7d03nN-Eludy1OZwrOkg9djuWrJBWL-k_Y3oG1YmCI5VsdKNoTtipsXeGsztoPXcerGLPcDWXIRxZzZmxcpDJzmQ3-OQADu3ssd8Km13gEMNkbLgT68xml0_yfDUGIqK4TOpkjv_0PWkrwCQYEb9n9J5aonuPBtqRoUQ1hdlnUFUTNXXipAFB2dPjzbs6poX9-qweTwyi37zj9EEH96fgBMVcHr9xvBmtXSIHVJgMA4TTipll3qqO626LCHjqvLrw"
     },
     {
@@ -94,7 +106,7 @@
       "inspectionDate": "2026-10-20",
       "sourceId": "SR0885196",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Food business on N Wolfe Rd in Cupertino.",
       "photoRef": "places/ChIJAxPI-JW1j4AR8E2xe51iij8/photos/AaVGc3lJQt4sp6YdmEsk9KA3DiZI9hshlO3htK2VGEqQIV1jomvHCCfd3fYW58mnp5WY5iVcXd8lROkn4-Z8vg2-Rr2eXgS_0mXV30Rzip67W_En3pXXsLGrIhXUE3WYjx0ENPZ3GEeI4iP0snvTx83FlJRnw2iUjmLOtjxUNeUvN7BPgh_SDY7Ufp1UVNcFMQOPHkqeYJQe2f5ZGPeBlIgCkT_HuXQoGIg7oz3F0VZMAdmU3gtN_fYRc-5s1JxuzrivPh0AkB43MIeY5LDZdwmEaKCGEI205aXDU06MizwrCfD9zcSNTwFduJs2AyMU5NCQncwEVopn256xgJUdjSqF895Vy4H-CFSIXKm8aL27BBW8PEcNPQSDL7xY1HKg08Lv2HewYEdJP5n1E1RysxXul3B7Vpj-OpOgAFSAKoSqONz8Aw"
     },
     {
@@ -106,7 +118,7 @@
       "inspectionDate": "2026-10-14",
       "sourceId": "SR0881689",
       "status": "inspection-complete",
-      "blurb": "Food business on Almaden Expressway in San Jose.",
+      "blurb": "Food business on Almaden Expwy in San Jose.",
       "photoRef": "places/ChIJn2UPvN0zjoAR7KokP0ZK0kM/photos/AV-0GLdNxl3ZpTmOXr5OEgF1d9tcnAYQQNDK9gONanLkvdmrh8kyMBE55KjCoRgb3ZE1ccHXJSA211KwTzdG7g2JHRkfzlIZc_1-OXl3FCkrXBK27zpToFQju3wUZkUoafks5Tn3Lb_Pwa4Zo_UeqGSNxLt9If8fJ079Y32C3sebEetfkOpQUXfWnxHQWdLnLd35iSkIuCI6V2xXXZ42C9rG26SZBOkes13TigODOarob5VpK0bJ_spo9MMZ8uh-IZp47ToGug1E7WuwIUFdcnIEWKdezEW5nCTTqQKJ4xO9mPMZMNJdAX5GvQpG9DAJC6nSu-BtYNo1k0ZRR98rq9uRjtQxRPbQEjBI1WZIvofo7ejNv9BChI-VJXb8_v0w9ae4NiKkb19vpkpfJEyzr2h1J5JUJCM"
     },
     {
@@ -132,6 +144,18 @@
       "status": "inspection-complete",
       "blurb": "Donut shop on S Winchester Blvd in Campbell.",
       "photoRef": "places/ChIJGbPipR81joARUJS6ON0AGZQ/photos/AWCwydidh_svkUBDinnqcYczPuHEkMa9S8o5bKYe0JJmeNR_08S6Kye9SyIbMHDVSL0Qk8Nmzqp6R3a4-05lX2xRMp5sO0D46xE-AVlRIyXZuY1LWAYy_qTVRpBM9s8kalPo4S73Y3m4POPzUTitrhSoURbKcjOUoYETVlTHOYsRMIULDr-guDrYktY3r8E53IC-lBowJgZlCNK7Zn-toqJYzUD4V2z6FJW3IfGKC9zQquStrABG68agSjhJi9XGhzP9XjIo-FryZ8a2LwEXOr4AASDhnRSpHBkARYMt8jHoX5zi8z5wtAxqYFHoKQTyxbD3La0hH9XKqPwhk_t_yNiD_DNYAcS8z7pquI8CE6QdI8fG5R2l5GtLSw7YDko562dTBJbxOOjFxwj0mEdN9X-9wYsPoVGsdCXAyUUEzMQiLo-FVz8_"
+    },
+    {
+      "id": "inspection-SR0878266",
+      "name": "Sulbing",
+      "address": "975 W. Dana St",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "inspectionDate": "2026-09-23",
+      "sourceId": "SR0878266",
+      "status": "inspection-complete",
+      "blurb": "Food business on W Dana St in Mountain View.",
+      "photoRef": "places/ChIJr2IF4U3Lj4ARTQLUCE-IRn0/photos/AV-0GLdy9-qvwO2-bVWxRaHSt_M4afsDk5aAiGosvmbYT2d5TDTLOsHygc-xyGrwxBuc5yRsOlFjwb1auoCkKR2zL0lqgeamoqwT_32NdZc_ABjPQ4DXQXk_-B5H8oG2oFlx_lIzPcf664DxH_Lza2stm5r5OSdj4w0VKhRd6jDwPTFHKH_6uGrj2pYJxj-IlKJgOOzzuH46mKUaEWn4Dy7A0fdQXmqkEWxY41lo347jWudd-ed9Mi4ptc5zyj0G_bImu79MXPq_0sEugap8OGdFWugToPH3DfvPXO2rXB9Q2lc4XyHgbg0_j-Dq6HdVkNMZlk1bDpRvilnKH0Elbl_n8d7GwuukGjvPfq5KiVfoRi03Zu-TpZt-MtwjI5sNHknvl02tC9ZdYM6umz_vOcloK0ND-es"
     }
   ],
   "comingSoon": [
@@ -168,7 +192,7 @@
       "date": "2026-10-30",
       "status": "coming-soon",
       "sourceId": "SR0886411",
-      "blurb": "Food business planned on Monterey Road in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
     },
     {
@@ -204,7 +228,7 @@
       "date": "2026-10-28",
       "status": "coming-soon",
       "sourceId": "SR0885628",
-      "blurb": "Cafe planned on Almaden Boulevard in San Jose.",
+      "blurb": "Cafe planned at Mershops on Almaden Boulevard in San Jose.",
       "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
     },
     {
@@ -230,6 +254,54 @@
       "sourceId": "SR0885067",
       "blurb": "Teriyaki cafe planned on Branham Lane in San Jose.",
       "photoRef": "places/ChIJ_VPEd9_pj4ARmxq-V0ykzwA/photos/AV-0GLcSuC-w6OSdVFeFKr_1NU131wUzqZwJVdC-CTLbjh6PacrHTYp58o_0CrKGJaIh0_ijj9y4YAsmAuOBBt-80LcR4LSoLBDs5lDGrWlnSnuqTKXzmoZp7RTfMD2sCd3KhCOzW0guuaZHIqDVnKnWVeYb3GZl2yu8OnDSaxgyWFsrmZH1pRtbEyXaqiy0vLVbpvJqwAMRGWqKhCypSrkKJfzXNreAScu7UEfXldsJwtOXywL7Dk1AY1jOGkoZcvnwDZo7yuxbG06gPaBKaREnFTXdnC344ypHXkKHn5CO9HZYm6t1munJRHGXe8S63z6-sIdyBigNs4Gp4XuuxyXJixCdeSXRBcIlzpQt0z9PApGhqXNJYqrHyGfDa2EjFaYeVghf495XPvfcLzJzTt15EqBRLgg"
+    },
+    {
+      "id": "soon-SR0884037",
+      "name": "Our Mood Coffee & Bakery",
+      "address": "P2020 W El Camino Real",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "date": "2026-10-26",
+      "status": "coming-soon",
+      "sourceId": "SR0884037",
+      "blurb": "Coffee and bakery planned on West El Camino Real in Mountain View.",
+      "photoRef": "places/ChIJhzdHZwCxj4ARc00W_SclgB8/photos/AV-0GLd7L_ezsLom1mATYyNnJmrgxjnrqIVGuklSP3TqDLTH7ztdovn2_8Kqtwr81Fl-tV12osKBeQ4UrW8oEvFjCt1NwMJDlXg5ffXJ-6XWuHLlzkHt26isKw22_am0Qo_wnUeHugTCVYW4Lx5M4sMjIGrC2FY-CFOTHieuyM2n4fzCnHbgJLzYwHWub4jVZRO98l-tIgM3pAXYLLD0Ni7_8bx05D2DVRs1mjMbedjl4VAx_XDOGfkoMk1gYhBqwryGaMsHA5_XVAFLDSHVfmTylbUZDHH4gPANsWauv0rxV79l6QDTYr60E3XDtFGMorovmHEuX9u9E8IWkJNIKra66l5dPp_COb8uzKZXMUSGmMRezNapN0pKFruEg6XpnPzgj2npT_01eKUtGKSLZBvKcG9nPZrtZ7KQKBsZuem2V89DmA"
+    },
+    {
+      "id": "soon-SR0886649",
+      "name": "Vegetarian House Vegan",
+      "address": "1026 W Evelyn Ave",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "date": "2026-10-26",
+      "status": "coming-soon",
+      "sourceId": "SR0886649",
+      "blurb": null,
+      "photoRef": "places/ChIJe-4L03q3j4ARz5ky3Hr5zRE/photos/AV-0GLcCwEdgX8Q49J2r3BMyrRTj0ioJuU9ECAFbbMpNRbV0ejqE8Rbp8zw_fhfm44pfjt-qvS8UpB6Ss-xl8-intAhMRNgWJPvPOalChc_quUIbbSkBxrpjEZFIepW7S_wV7xmGNCTHaWdEM_hPBERH0mw0eviUirj7VFne-Z20RVioUgCLnzaThcq1GpopYdm3plZ8mNl5siLmS_J88PmLCD-K5eHYCZKCd8CNacaOzZQyanGDNIKV-GZvpusEJuJLtUbQiQXjGrFhLM5Bu7PWyjJ1F6S1T-Urcze81O56ff1tYeuNlU6KAi-4Y3Ezzz5gnSoTowqtoiPffqyfEskdb3y1exjPx5zn6W8hpeG6FXUJjtGzU-81OxyHuUiYex6U7zGfRAxoCF6GQiJu_gfv4ujZV3kNNjEGBCjqSCzC3Dtr"
+    },
+    {
+      "id": "soon-SR0884942",
+      "name": "Project Meridian",
+      "address": "370 Ellis St., Bldg B",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "date": "2026-10-23",
+      "status": "coming-soon",
+      "sourceId": "SR0884942",
+      "blurb": "Food business planned on Ellis Street in Mountain View.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884942-450.webp"
+    },
+    {
+      "id": "soon-SR0884385",
+      "name": "Los Altos Community Center Café",
+      "address": "97 Hillview Ave",
+      "cityId": "los-altos",
+      "cityName": "LOS ALTOS",
+      "date": "2026-10-23",
+      "status": "coming-soon",
+      "sourceId": "SR0884385",
+      "blurb": "Cafe planned at the Los Altos Community Center on Hillview Avenue.",
+      "photoRef": "places/ChIJERZp3eiwj4ARsU0QJdRVi4Q/photos/AV-0GLdawPW60qxxUCTWj7AZ5nEsPmQ_ZE2Tilb7bw56lNcQMraBZA9pHye2-kyjKgdJEkqOx1k40SPi5i9kS3XBaIEn81a6URBBeL-gqs-MKbxeP9_c1YOHLKQCeq24gD1Neg44JWLviFujiReYI2QXBxuNOMirqG5M0WqjnSX9D-6_fqY4eDW3fetnRnNxYNYBeXtouDT2wKB6hgUWBCwM8XyBOWuunD9lmtHiQy5Gznktk1kX3gJ64cyVRhyulG_5iS4gIuxlBcKAFBmBhQ8Hp716hhzmBr8JsNvQ3IB06t1l40C2ext9WIXQ2UL4xlDLcRWGTl_n9jqEg--BdMnjYA_2djfmYl7ntnvw4fePePGgqUCVAxu1mXE7C--h4LLQYjMxYnZpXMsHyohRktjcAeQgWe_poFk"
     }
   ]
 }

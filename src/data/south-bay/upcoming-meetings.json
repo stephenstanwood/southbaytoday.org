@@ -1,42 +1,64 @@
 {
-  "generatedAt": "2026-11-04T04:28:24.736Z",
+  "generatedAt": "2026-11-05T04:28:29.306Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-11-03",
-      "displayDate": "Tue, Nov 3",
-      "startTime": "13:30",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "startTime": "10:40",
       "bodyName": "City Council",
-      "location": "Hybrid Meeting - Council Chambers",
+      "location": "San José–Santa Clara Regional Wastewater Facility, Environmental Services Bui...",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8122&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8122,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8210&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8210,
       "agendaItems": [
         {
-          "title": "First Amendment to the Master Consultant Agreement with SCI Consulting Group.",
-          "sequence": 44
+          "title": "Joint Special Meeting of the City Council of San José and San José/Santa Clara Treatment Plant Advisory Committee",
+          "sequence": 17
         },
         {
-          "title": "Torch Relay Agreement with Los Angeles Organizing Committee for the Olympic and Paralympic Games 2028.",
-          "sequence": 45
+          "title": "Meet and Greet, Historic Information and Resource Tables (10:00 a.m.)",
+          "sequence": 15
         },
         {
-          "title": "Boards and Commissions Appointment.",
-          "sequence": 54
+          "title": "Remarks by City, Partner, and Elected Officials",
+          "sequence": 20
         },
         {
-          "title": "Retirement Board Public Member Interviews.",
-          "sequence": 55
+          "title": "Personal Protective Equipment and Transportation",
+          "sequence": 22
         },
         {
-          "title": "Acceptance of Retirement Plans’ Comprehensive Annual Investment Fee Reports for Calendar Year 2025.",
-          "sequence": 52
+          "title": "Regional Wastewater Facility Site Tour",
+          "sequence": 23
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-03",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-03T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-05",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-11-09",
+      "displayDate": "Mon, Nov 9",
+      "startTime": "17:00",
+      "bodyName": "City Council",
+      "location": "Online and Cottonwood Conference Room, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4527&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4527,
+      "agendaItems": [
+        {
+          "title": "Board and Commission Interviews",
+          "sequence": 6
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-09",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -56,20 +78,20 @@
       }
     },
     "milpitas": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "startTime": "17:30",
-      "bodyName": "City Council Special Meeting",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "19:00",
+      "bodyName": "City Council Meeting",
       "location": "Milpitas City Hall",
       "closedSession": false,
       "url": "https://www.milpitas.gov/129/Agendas-Minutes",
-      "civicClerkEventId": 3024,
+      "civicClerkEventId": 2945,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-04T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -86,7 +108,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-03T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-04T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -117,7 +139,7 @@
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "cupertino": {
       "provider": "Legistar",
