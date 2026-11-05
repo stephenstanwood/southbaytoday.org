@@ -619,6 +619,7 @@ const EDITS = {
     title: [
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
       [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
+      [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
       ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
