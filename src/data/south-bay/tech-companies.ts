@@ -1741,6 +1741,24 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // &Truth's Oct 29 company release datelines Palo Alto and Singapore and
+  // states "its U.S. headquarters in Palo Alto." FinSMEs covered it Nov 2;
+  // use the release date. No investors are named, so the card names none.
+  // https://andtruth.com/press/andtruth-emerges-from-stealth/
+  // https://www.finsmes.com/2026/11/andtruth-raises-70m-in-seed-funding.html
+  {
+    id: "andtruth-seed",
+    name: "&Truth",
+    city: "Palo Alto",
+    category: "software",
+    round: "Seed",
+    amount: "$70M",
+    date: "2026-10-29",
+    tagline:
+      "Palo Alto's &Truth came out of stealth with a $70M seed to build a “universal verification machine” that mathematically proves code is safe and correct, with proofs anyone can check. It builds on the open-source Lean proof system and plans to open-source its foundational libraries. Stanford computer scientist Clark Barrett co-leads the public benefit corporation with Chris Hsu, alongside NUS researcher Ilya Sergey; it also keeps an international headquarters in Singapore.",
+    color: "#4f46e5",
+    url: "https://andtruth.com",
+  },
   // The company release was issued Oct 22, not the Oct 23 coverage date.
   // Its Oct 26 corrected release explicitly names Santa Clara headquarters
   // and says Genesis AI is testing MaxGlove; it no longer claims joint

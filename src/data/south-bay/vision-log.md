@@ -2,6 +2,25 @@
 
 ---
 
+## 2026-11-05 — Cycle 238: Palo Alto's &Truth Joins Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**&Truth now leads the Tech funding list.** The Palo Alto public benefit
+corporation came out of stealth with a $70M seed to build a "universal
+verification machine" that mathematically proves code is safe and correct,
+built on the open-source Lean proof system. Stanford's Clark Barrett co-leads
+it with Chris Hsu. The [company release](https://andtruth.com/press/andtruth-emerges-from-stealth/)
+(Oct 29) datelines Palo Alto and Singapore and names Palo Alto as its U.S.
+headquarters; [FinSMEs](https://www.finsmes.com/2026/11/andtruth-raises-70m-in-seed-funding.html)
+covered it Nov 2. No investors are named, so the card names none.
+
+**Logo:** none fetched yet; the card uses the favicon fallback.
+
+Verification: logo gate and funding-date tests passed; Astro check 0 errors.
+
+---
+
 ## 2026-11-02 — Cycle 237: Santa Clara's Maxinsights Joins Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).
