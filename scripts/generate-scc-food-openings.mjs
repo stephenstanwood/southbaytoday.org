@@ -592,6 +592,13 @@ export function shouldSkip(item) {
   // room. cleanName removes part of that context and leaves an address-like
   // fragment, so exclude the raw filing before it can become a business card.
   if (/\bBOH\s*\/\s*DISH\s*ROOM\b/i.test(rawName)) return true;
+  // County filings SR0868679 and SR0884942 name food-service stations,
+  // not public restaurants. Keep the raw context: cleanName/dedup shorten
+  // them to "555 W Java -" and "Project Meridian". Do not exclude real
+  // restaurant brands merely because they contain Coffee Station or Grill.
+  // Evidence: docs/qa/2026-11-05-0507z-fact-check.md.
+  if (/^\d+[a-z]?\b.*\s+-\s+COFFEE\s+STATION$/i.test(rawName)
+      || /^PROJECT\b.+\bPIZZA\s+GRILL\s+WAREWASH$/i.test(rawName)) return true;
   // SCC abbreviates compartment as COMP and files milkshake stations as
   // equipment work. Preserve the raw filing context before cleanName strips it.
   if (/\b\d\s*[-\s]?COMP\.?\s+SINKS?\b|\bMILKSHAKE\s+STATION\b/i.test(rawName)) return true;

@@ -229,6 +229,17 @@ test("keeps numeric restaurant brands that do not encode their site address", ()
   );
 });
 
+test("unnamed county food-service stations cannot become restaurant cards", () => {
+  const records = [
+    { record_id: "SR0868679", business_name: "E-555 W JAVA - COFFEE STATION", site_location: "555 JAVA DR. SUNNYVALE, CA 94089", city: "SUNNYVALE" },
+    { record_id: "SR0884942", business_name: "E-PROJECT MERIDIAN PIZZA GRILL WAREWASH", site_location: "370 ELLIS ST., BLDG B, MOUNTAIN VIEW, CA 94043", city: "MOUNTAIN VIEW" },
+  ];
+  for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
+  for (const business_name of ["E-COFFEE STATION CAFE", "E-MERIDIAN PIZZA GRILL", "E-333 SKEWERS", "E-7 LEAVES CAFE"]) {
+    assert.equal(shouldSkip({ business_name, site_location: "123 MAIN ST., SAN JOSE, CA", city: "SAN JOSE" }), false, business_name);
+  }
+});
+
 test("a county final inspection alone is not an opening", () => {
   const record = classifyFinalInspection({
     sourceId: "SR0884792",

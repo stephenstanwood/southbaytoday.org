@@ -3,6 +3,15 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  Object.freeze({
+    title: /^Search for What Matters, Featuring Fr\. Andrew Laguna, SJ$/i,
+    venue: /^(?:Williman Room, Benson|Santa Clara University)$/i,
+    date: "2026-11-10",
+    reviewOn: "2026-11-10",
+    reason:
+      "The organizer describes a luncheon for faculty and staff and requires an RSVP. Withhold this occurrence until public eligibility is confirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/live/events/517450-search-for-what-matters-featuring-fr-andrew-laguna",
+  }),
   ...["2026-11-05", "2026-11-06"].map(date => Object.freeze({
     title: /^Music Library Association California Chapter Annual Meeting$/i,
     venue: /.*/,

@@ -39,6 +39,18 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The staff can speak Vietnamese; the club practices beginner English.
+  // The two exact organizer records share this description. Protect their
+  // cached blurb without projecting additional dates or changing attendance.
+  // Evidence: docs/qa/2026-11-05-0507z-fact-check.md.
+  ...[
+    ["2026-11-06", "6a50271ecca66c2f00a26762"],
+    ["2026-11-07", "6a751bec3f18b57d5233feb7"],
+  ].map(([date, id]) => ({
+    date, url: `https://sjpl.bibliocommons.com/events/${id}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],
+    facts: { blurb: "Practice beginner English conversation with library staff who speak Vietnamese at Seven Trees Library." },
+  })),
   // The complete organizer credit names Lan A. Li. The preview normalizer
   // previously treated the initial as a sentence end and the cached blurb
   // copied that incomplete name. Protect the existing dated occurrence.

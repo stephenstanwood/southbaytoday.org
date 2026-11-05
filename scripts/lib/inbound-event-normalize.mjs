@@ -38,6 +38,9 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // The museum's own page confirms the November 4 book and 9:30 AM session.
+  // Evidence: docs/qa/2026-11-05-0507z-fact-check.md.
+  ["2026-11-04|Triton Book Club: The Last Tycoon", "https://www.tritonmuseum.org/book-club"],
   // November city bulletins, recovered from their authenticated receiving
   // originals. Evidence: docs/qa/2026-11-01-1807z-fact-check.md.
   ["2026-11-13|Unique Boutique Holiday Craft Fair", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/42e022e"],
