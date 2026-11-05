@@ -5,6 +5,7 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 import {
   compareDuplicateAuthority,
@@ -466,4 +467,23 @@ test("handles empty and malformed input without throwing", () => {
   const { kept, droppedCount } = fuzzyDedupEvents(messy);
   assert.equal(droppedCount, 0);
   assert.equal(kept.length, 3);
+});
+
+test("captured accented theater names match ticketing copies while preserving the first-party facts", () => {
+  const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/failed-source-retention-2026-11-05.json", import.meta.url)));
+  for (const ticket of capture.ticketmasterDuplicates) {
+    const official = capture.events.find(event => event.source === "San Jose Theaters"
+      && event.date === ticket.date && event.venue === ticket.venue);
+    assert(official);
+    const input = [ticket, official];
+    const before = structuredClone(input);
+    for (const order of [input, [...input].reverse()]) {
+      const { kept, droppedCount } = fuzzyDedupEvents(order);
+      assert.equal(droppedCount, 1);
+      assert.deepEqual(kept, [official], "retain the accented name, first-party occurrence, time, venue and URL");
+    }
+    assert.deepEqual(input, before, "comparison never rewrites the source records");
+    assert.equal(fuzzyDedupEvents([official, { ...ticket, date: "2026-12-31" }]).droppedCount, 0);
+    assert.equal(fuzzyDedupEvents([official, { ...ticket, venue: "Other Theater", time: "1:00 PM" }]).droppedCount, 0);
+  }
 });

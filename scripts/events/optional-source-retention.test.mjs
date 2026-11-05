@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { fetchLosAltosVillageEvents, fetchSvlgEvents } from '../generate-events.mjs';
+import { readFileSync } from 'node:fs';
+import { eventSourceDefinitions, fetchLosAltosVillageEvents, fetchSvlgEvents } from '../generate-events.mjs';
 import { buildSourceHealth, eventsForSourceResult, retainFailedOptionalSources, sourceProblems } from '../lib/event-source-health.mjs';
 
 const today = '2026-10-30';
@@ -100,4 +101,57 @@ test('an ongoing occurrence expires at its actual end date', () => {
   const failures = [rejected('403'), rejected('parse failed')];
   assert.equal(retainFailedOptionalSources(sources, failures, snapshot, { today }).flatMap(eventsForSourceResult).length, 1);
   assert.equal(retainFailedOptionalSources(sources, failures, snapshot, { today: '2026-11-01' }).flatMap(eventsForSourceResult).length, 0);
+});
+
+const novemberCapture = JSON.parse(readFileSync(new URL('../lib/fixtures/failed-source-retention-2026-11-05.json', import.meta.url)));
+const novemberSources = () => eventSourceDefinitions().filter(source =>
+  ['fetchSjsuEvents', 'fetchSanJoseTheatersEvents'].includes(source.id));
+
+test('registered university and theater failures retain the captured future records without claiming a live success', async t => {
+  const adapters = novemberSources();
+  assert.deepEqual(adapters.map(source => source.label), ['SJSU Events', 'San Jose Theaters']);
+  const requests = [];
+  t.mock.method(globalThis, 'fetch', async input => {
+    requests.push(String(input));
+    return new Response('Forbidden', { status: 403 });
+  });
+  const capturedBefore = structuredClone(novemberCapture);
+  const failures = await Promise.allSettled(adapters.map(source => source.fn()));
+  assert.equal(requests.length, 2, 'an access refusal is not retried or bypassed');
+  assert(failures.every(result => result.status === 'rejected'));
+  const retained = retainFailedOptionalSources(adapters, failures, novemberCapture, { today: '2026-11-05' });
+  const expected = novemberCapture.events.filter(event => event.date >= '2026-11-05');
+  assert.deepEqual(retained.flatMap(eventsForSourceResult), expected);
+  assert.deepEqual(novemberCapture, capturedBefore, 'the original published facts and timestamps remain immutable');
+  const health = buildSourceHealth(adapters, retained);
+  assert(health.every(source => source.status === 'error' && source.count === 0
+    && source.retainedFrom === novemberCapture.generatedAt && /403/.test(source.error)));
+  assert.equal(sourceProblems(health).tolerated.length, 2, 'retention does not clear the live failures');
+
+  const repeat = retainFailedOptionalSources(adapters, failures, {
+    generatedAt: '2026-11-06T12:00:00.000Z', events: expected, sourceHealth: health,
+  }, { today: '2026-11-11' });
+  assert.deepEqual(repeat.flatMap(eventsForSourceResult), expected.filter(event => event.date >= '2026-11-11'));
+  assert(repeat.filter(result => result.retained).every(result => result.retained.from === novemberCapture.generatedAt));
+});
+
+test('a successful university or theater replacement, including an empty calendar, supersedes its retained records', () => {
+  const adapters = novemberSources();
+  const changed = { ...novemberCapture.events.find(event => event.source === 'San Jose Theaters'), time: '9:00 PM' };
+  const results = retainFailedOptionalSources(adapters, [
+    { status: 'fulfilled', value: [] }, { status: 'fulfilled', value: [changed] },
+  ], novemberCapture, { today: '2026-11-05' });
+  assert.deepEqual(results.flatMap(eventsForSourceResult), [changed]);
+  assert(results.every(result => !result.retained));
+  assert.deepEqual(buildSourceHealth(adapters, results).map(source => source.status), ['empty', 'ok']);
+});
+
+test('SJSU rejects an HTML outage page but accepts a valid empty RSS calendar', async t => {
+  const adapter = novemberSources().find(source => source.id === 'fetchSjsuEvents');
+  t.mock.method(globalThis, 'fetch', async () => new Response('<html>Temporarily unavailable</html>'));
+  await assert.rejects(adapter.fn(), /no RSS channel/);
+  t.mock.method(globalThis, 'fetch', async input => String(input).endsWith('/calendar.xml')
+    ? new Response('<rss version="2.0"><channel><title>SJSU Events</title></channel></rss>')
+    : Response.json({ events: [] }));
+  assert.deepEqual(await adapter.fn(), []);
 });

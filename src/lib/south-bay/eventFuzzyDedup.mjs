@@ -27,7 +27,10 @@ const STOP_WORDS = new Set([
 function tokenize(s) {
   if (!s) return new Set();
   const out = new Set();
-  for (const w of String(s).toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/)) {
+  // Compare accented names as whole words: ticket feeds omit the accents in
+  // Álvaro Díaz and Adrián Uribe. Preserve the original display text and IDs.
+  const comparison = String(s).normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+  for (const w of comparison.replace(/[^a-z0-9 ]/g, " ").split(/\s+/)) {
     if (!w || STOP_WORDS.has(w)) continue;
     // Keep all numeric tokens (age ranges, grade levels, years, edition numbers
     // distinguish otherwise-identical titles like "Chess Grades 1-5" vs "6-8").

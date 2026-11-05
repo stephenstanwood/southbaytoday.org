@@ -4742,6 +4742,9 @@ async function fetchSjsuEvents() {
   console.log("  ⏳ SJSU Events...");
   try {
     const xml = await fetchText("https://events.sjsu.edu/calendar.xml", { timeout: 45_000 }); // large feed ~1.4MB
+    if (!/<rss\b/i.test(xml) || !/<channel\b/i.test(xml)) {
+      throw new Error("SJSU calendar response has no RSS channel");
+    }
     const items = parseRssItems(xml);
     // The RSS carries no location field at all — SJSU's Localist API does,
     // and its `localist_url` joins 1:1 with the RSS <link>. Without this, ~20%
@@ -4853,8 +4856,8 @@ async function fetchSjsuEvents() {
     return events;
   } catch (err) {
     console.log(`  ⚠️  SJSU: ${err.message}`);
-    if (STRICT_EVENT_REFRESH) throw err;
-    return [];
+    // A failed request is not an empty calendar, including non-strict refreshes.
+    throw err;
   }
 }
 
@@ -10541,7 +10544,7 @@ export function eventSourceDefinitions() {
 
   return [
     source(fetchStanfordEvents, { label: "Stanford Events", preserveOnFailure: true }),
-    source(fetchSjsuEvents),
+    source(fetchSjsuEvents, { label: "SJSU Events", preserveOnFailure: true }),
     source(fetchScuEvents),
     source(fetchChmEvents),
     source(fetchCampbellEvents),
@@ -10621,7 +10624,7 @@ export function eventSourceDefinitions() {
     // JAMsj — live collection retired; see docs/event-source-refresh.md.
     source(fetchHistorySanJoseEvents),
     // VBO theater adapters retired: excluded occurrence-calendar controls.
-    source(fetchSanJoseTheatersEvents),
+    source(fetchSanJoseTheatersEvents, { label: "San Jose Theaters", preserveOnFailure: true }),
     source(fetchSouthBayMusicalTheatreEvents),
     source(fetchLosAltosStageEvents),
     source(fetchPaloAltoPlayersEvents),
