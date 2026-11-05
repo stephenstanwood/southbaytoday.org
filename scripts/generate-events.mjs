@@ -626,6 +626,8 @@ const CANCELLED_PATTERN = /\bcancell?ed\b/i;
 // list tight — we're matching language, not the bare word "cancel" (a
 // "Cancel Culture Book Club" should stay).
 const CANCELLED_BODY_PATTERNS = [
+  // CHM publishes this notice ahead of an otherwise unchanged date and title.
+  /^\s*postponed\s+due\s+to\s+illness\b/i,
   /\bevent (?:has been|is|was) cancell?ed\b/i,
   /\bhas had to cancel (?:your |the |this )?event\b/i,
   /\bthis (?:show|performance) (?:has been|is) cancell?ed\b/i,
@@ -5056,17 +5058,25 @@ function parseCivicPlusEventDates(eventDatesStr) {
 async function fetchChmEventDateTime(url) {
   try {
     const html = await fetchText(url, { timeout: 30_000 });
-    const m = html.match(
-      /<h2>\s*((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s*\d{4})\s*<br\s*\/?\s*>\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i,
-    );
-    if (!m) return null;
-    const dt = new Date(`${m[1]} ${m[2]}`);
-    if (isNaN(dt.getTime())) return null;
-    return { date: dt, time: m[2] };
+    return parseChmEventDateTime(html);
   } catch (err) {
     if (STRICT_EVENT_REFRESH) throw err;
     return null;
   }
+}
+
+// The explicit status heading wins over the stale date block. Do not scan
+// unrelated page prose or infer a replacement date from a postponement notice.
+function parseChmEventDateTime(html) {
+  const headings = [...html.matchAll(/<h[1-6]\b[^>]*>([\s\S]*?)<\/h[1-6]>/gi)];
+  if (headings.some(([, body]) => /^(?:postponed|cancell?ed)\b/i.test(stripHtml(body).trim()))) return null;
+  const m = html.match(
+    /<h2>\s*((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s*\d{4})\s*<br\s*\/?\s*>\s*(\d{1,2}(?::\d{2})?\s*(?:am|pm))/i,
+  );
+  if (!m) return null;
+  const dt = new Date(`${m[1]} ${m[2]}`);
+  if (isNaN(dt.getTime())) return null;
+  return { date: dt, time: m[2] };
 }
 
 // CHM RSS descriptions are wrapped in WordPress excerpt boilerplate:
@@ -11641,6 +11651,7 @@ export {
   isStudentOnlyEvent,
   isCampusOnlyLocalistAudience,
   looksCancelled,
+  parseChmEventDateTime,
   looksLikeEmbedCode,
   mapTicketmasterEvent,
   resolveBiblioLocationFields,
