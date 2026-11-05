@@ -39,6 +39,42 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const CORRECTIONS = [
+  // The museum's November 7 celebration starts at 10 AM; 10:40 is its first
+  // performance, which newsletter intake mistook for the event's start.
+  // Normalize both newsletter copies and the calendar listing before dedup.
+  // https://www.cdm.org/event/diwali/
+  // Evidence: docs/qa/2026-11-05-1707z-fact-check.md.
+  {
+    date: "2026-11-07",
+    title: /^Diwali(?:: Festival of Lights| Cultural Celebration)$/i,
+    venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
+    facts: {
+      title: "Diwali: Festival of Lights",
+      time: "10:00 AM", endTime: "3:30 PM",
+      venue: "Children's Discovery Museum",
+      address: "180 Woz Way, San Jose, CA 95110",
+      url: "https://www.cdm.org/event/diwali/",
+      cost: "paid",
+      blurb: "Celebrate Diwali with lamp-making, Rangoli art, storytelling, music and dance at the Children's Discovery Museum.",
+    },
+  },
+  // The dated organizer page and its Event schema confirm this storytime's
+  // place and clocks, but do not name a book. Keep the verified occurrence
+  // without the unconfirmed book/author claim or subscriber tracking URL.
+  // https://www.cdm.org/event/all-ages-storytime-2-2/2026-11-10/
+  // Evidence: docs/qa/2026-11-05-1707z-fact-check.md.
+  {
+    date: "2026-11-10",
+    title: /^All Ages Storytime(?:: Chugga Chugga Choo Choo)?$/i,
+    venue: /^Brandenburg Theatre(?:, Children's Discovery Museum of San Jose(?:,|$)|$)/i,
+    facts: {
+      title: "All Ages Storytime",
+      time: "11:30 AM", endTime: "12:00 PM",
+      url: "https://www.cdm.org/event/all-ages-storytime-2-2/2026-11-10/",
+      description: "All-ages storytime in the museum's Lee & Diane Brandenburg Theatre.",
+      blurb: "Join an all-ages storytime in the museum's Brandenburg Theatre.",
+    },
+  },
   // This occurrence's booking panel conflicts with its no-registration prose.
   // Preserve the gate, disclose the conflict, and use the current published
   // November 7, 4 PM deadline rather than the stale November 5 cutoff.

@@ -1,0 +1,122 @@
+{
+  "retrievedAt": "2026-11-05T17:10:47.947920+00:00",
+  "evidenceNote": "Published rows captured before correction. Subscriber tracking tokens are redacted. Organizer occurrence pages supply the verified dates, clocks and titles.",
+  "diwali": {
+    "sourceEvent": {
+      "name": "Diwali: Festival of Lights",
+      "url": "https://www.cdm.org/event/diwali/",
+      "startDate": "2026-11-07T10:00:00-08:00",
+      "endDate": "2026-11-07T15:30:00-08:00"
+    },
+    "firstPerformanceTime": "10:40 AM",
+    "publishedBefore": [
+      {
+        "id": "304b2b750579",
+        "title": "Diwali: Festival of Lights",
+        "date": "2026-11-07",
+        "time": "10:00 AM",
+        "endTime": "3:30 PM",
+        "venue": "Children's Discovery Museum",
+        "address": "180 Woz Way, San Jose, CA 95110",
+        "city": "san-jose",
+        "category": "family",
+        "cost": "paid",
+        "description": "",
+        "url": "https://www.cdm.org/calendar/",
+        "source": "Children's Discovery Museum",
+        "kidFriendly": true,
+        "audienceAge": "all",
+        "blurb": "Join the Diwali: Festival of Lights family program at the Children's Discovery Museum on Saturday morning."
+      },
+      {
+        "id": "inbound-79fb3284aff1adc5",
+        "title": "Diwali Cultural Celebration",
+        "date": "2026-11-07",
+        "time": "10:40 AM",
+        "endTime": null,
+        "venue": "Children's Discovery Museum of San Jose",
+        "address": "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+        "city": "san-jose",
+        "category": "family",
+        "cost": null,
+        "description": "Family Diwali celebration with hands-on activities such as making a Diya lamp, Rangoli art and a Bandi Chhor Divas cloak, plus music, dance performances and storytelling. The listed performance schedule starts at 10:40 am with the last listed performance at 12:05 pm.",
+        "url": "https://secure2.convio.net/cdm/site/R?i=redacted",
+        "source": "City Newsletter",
+        "kidFriendly": true,
+        "audienceAge": "all",
+        "blurb": "Make a diya lamp, Rangoli art and a Bandi Chhor Divas cloak, then catch music, dance performances and storytelling starting at 10:40."
+      },
+      {
+        "id": "inbound-882aacdb8018989f",
+        "title": "Diwali Cultural Celebration",
+        "date": "2026-11-07",
+        "time": "10:00 AM",
+        "endTime": "3:30 PM",
+        "venue": "Children's Discovery Museum of San Jose",
+        "address": "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+        "city": "san-jose",
+        "category": "family",
+        "cost": null,
+        "description": "Family Diwali celebration with Diya lamp and Rangoli art activities, Bandi Chhor Divas cloak decorating, music, dance performances, and an interactive workshop.",
+        "url": "https://secure2.convio.net/cdm/site/R?i=redacted",
+        "source": "City Newsletter",
+        "kidFriendly": true,
+        "audienceAge": "all",
+        "blurb": "Make Diya lamp and Rangoli art, decorate a Bandi Chhor Divas cloak, and catch music, dance performances, and an interactive workshop."
+      }
+    ],
+    "intake": [
+      {
+        "id": "inbound_mvtm6kg6_tx8bz5",
+        "title": "Diwali Cultural Celebration",
+        "startsAt": "2026-11-07T10:00:00-08:00",
+        "endsAt": "2026-11-07T15:30:00-08:00",
+        "location": "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+        "description": "Family Diwali celebration with Diya lamp and Rangoli art activities, Bandi Chhor Divas cloak decorating, music, dance performances, and an interactive workshop.",
+        "sourceUrl": "https://secure2.convio.net/cdm/site/R?i=redacted",
+        "cityKey": "san-jose",
+        "cityName": "San Jose",
+        "status": "new"
+      },
+      {
+        "id": "inbound_mw3od5ci_jqtoh7",
+        "title": "Diwali Cultural Celebration",
+        "startsAt": "2026-11-07T10:40:00-08:00",
+        "endsAt": null,
+        "location": "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+        "description": "Family Diwali celebration with hands-on activities such as making a Diya lamp, Rangoli art and a Bandi Chhor Divas cloak, plus music, dance performances and storytelling. The listed performance schedule starts at 10:40 am with the last listed performance at 12:05 pm.",
+        "sourceUrl": "https://secure2.convio.net/cdm/site/R?i=redacted",
+        "cityKey": "san-jose",
+        "cityName": "San Jose",
+        "status": "new"
+      }
+    ]
+  },
+  "storytime": {
+    "sourceEvent": {
+      "name": "All Ages Storytime",
+      "url": "https://www.cdm.org/event/all-ages-storytime-2-2/2026-11-10/",
+      "startDate": "2026-11-10T11:30:00-08:00",
+      "endDate": "2026-11-10T12:00:00-08:00",
+      "description": "&lt;p&gt;Every Tuesday at 11:30 a.m. in the Lee &amp; Diane Brandenburg Theatre&lt;/p&gt;\\n"
+    },
+    "publishedBefore": {
+      "id": "inbound-e11de637b8f5c6f6",
+      "title": "All Ages Storytime: Chugga Chugga Choo Choo",
+      "date": "2026-11-10",
+      "time": "11:30 AM",
+      "endTime": null,
+      "venue": "Brandenburg Theatre",
+      "address": "Brandenburg Theatre, Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": null,
+      "description": "Storytime reading of Kevin Lewis's 'Chugga Chugga Choo Choo,' about a busy toy locomotive, for all ages.",
+      "url": "https://secure2.convio.net/cdm/site/R?i=redacted",
+      "source": "City Newsletter",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "blurb": "Hear a reading of Kevin Lewis's 'Chugga Chugga Choo Choo,' the story of a busy toy locomotive, at Brandenburg Theatre."
+    }
+  }
+}
