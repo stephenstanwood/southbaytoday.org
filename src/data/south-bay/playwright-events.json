@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-04T23:19:17.545Z",
+    "generatedAt": "2026-11-05T03:16:54.445Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
     "eventCount": 188,
@@ -23,8 +23,8 @@
       "SAP Center (13)",
       "The Tech Interactive (7)",
       "Books Inc (7)",
-      "San Jose Museum of Art (3)",
-      "Peninsula Open Space Trust (2)"
+      "Peninsula Open Space Trust (2)",
+      "San Jose Museum of Art (3)"
     ],
     "sourceHealth": [
       {
@@ -105,7 +105,7 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 5,
+        "count": 4,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -284,14 +284,12 @@
       {
         "id": "post-peninsula-open-space-trust",
         "label": "POST (Peninsula Open Space Trust)",
-        "status": "error",
+        "status": "ok",
         "count": 2,
-        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
+        "error": null,
         "sources": [
           "Peninsula Open Space Trust"
-        ],
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       }
     ]
   },
@@ -730,23 +728,6 @@
       "kidFriendly": false
     },
     {
-      "id": "771739615a30",
-      "title": "Mosaic America (Grade K-8)",
-      "date": "2026-11-04",
-      "displayDate": "Wed, Nov 4",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3066",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": true
-    },
-    {
       "id": "c7d359f9503c",
       "title": "The Smithereens",
       "date": "2026-11-12",
@@ -794,6 +775,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-sarod-trilogy/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "598139b9b514",
+      "title": "Lucas Artists Program presents Open Access\nIt Will Be More Beautiful Than You Can Imagine: Susan O’Malley",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3294/3296",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -968,16 +966,16 @@
       "date": "2026-12-05",
       "displayDate": "Sat, Dec 5",
       "time": "11:00 AM",
-      "endTime": null,
+      "endTime": "3:00 PM",
       "venue": "The Mountain Winery",
       "address": "14831 Pierce Rd, Saratoga, CA 95070",
       "city": "saratoga",
-      "category": "music",
+      "category": "community",
       "cost": "paid",
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1683714",
       "source": "Mountain Winery",
-      "kidFriendly": false
+      "kidFriendly": true
     },
     {
       "id": "f45bbd6d82e0",
@@ -1508,7 +1506,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-04T23:18:06.382Z"
+        "checkedAt": "2026-11-05T03:15:37.568Z"
       }
     },
     {
@@ -1531,7 +1529,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T23:18:06.389Z"
+        "checkedAt": "2026-11-05T03:15:37.573Z"
       }
     },
     {
@@ -1554,7 +1552,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-04T23:18:06.390Z"
+        "checkedAt": "2026-11-05T03:15:37.573Z"
       }
     },
     {
@@ -1577,7 +1575,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-04T23:18:06.391Z"
+        "checkedAt": "2026-11-05T03:15:37.574Z"
       }
     },
     {
@@ -1600,7 +1598,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-04T23:18:06.392Z"
+        "checkedAt": "2026-11-05T03:15:37.574Z"
       }
     },
     {
@@ -1923,7 +1921,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3173,7 +3171,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.568Z"
+        "checkedAt": "2026-11-05T03:16:04.053Z"
       }
     },
     {
@@ -3197,7 +3195,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.568Z"
+        "checkedAt": "2026-11-05T03:16:04.053Z"
       }
     },
     {
@@ -3221,7 +3219,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.568Z"
+        "checkedAt": "2026-11-05T03:16:04.053Z"
       }
     },
     {
@@ -3245,7 +3243,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.569Z"
+        "checkedAt": "2026-11-05T03:16:04.054Z"
       }
     },
     {
@@ -3269,7 +3267,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3293,7 +3291,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3317,7 +3315,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3341,7 +3339,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3365,7 +3363,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3389,7 +3387,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.057Z"
       }
     },
     {
@@ -3413,7 +3411,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.058Z"
       }
     },
     {
@@ -3437,7 +3435,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.570Z"
+        "checkedAt": "2026-11-05T03:16:04.058Z"
       }
     },
     {
@@ -3461,7 +3459,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-04T23:18:33.571Z"
+        "checkedAt": "2026-11-05T03:16:04.058Z"
       }
     },
     {
@@ -3703,6 +3701,40 @@
       "kidFriendly": false
     },
     {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
       "id": "8f7697d5027c",
       "title": "First Fridays: November 2026",
       "date": "2026-11-06",
@@ -3760,40 +3792,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "5dd03098440a",
-      "title": "Bear Creek Redwoods Hike",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "9:00 AM",
-      "endTime": null,
-      "venue": "Bear Creek Redwoods OSP",
-      "address": "",
-      "city": "los-gatos",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
-    },
-    {
-      "id": "d0efe24ec54e",
-      "title": "Hike at Calero County Park",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "9:30 AM",
-      "endTime": null,
-      "venue": "Calero County Park",
-      "address": "",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": "free",
-      "description": "",
-      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
-      "source": "Peninsula Open Space Trust",
-      "kidFriendly": false
     }
   ]
 }
