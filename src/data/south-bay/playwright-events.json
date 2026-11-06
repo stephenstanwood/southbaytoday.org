@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-06T05:37:02.050Z",
+    "generatedAt": "2026-11-06T09:52:18.830Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 185,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -14,14 +14,14 @@
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (4)",
-      "Guadalupe River Park Conservancy (18)",
+      "Guadalupe River Park Conservancy (17)",
       "Santana Row (5)",
       "City of Cupertino (20)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
-      "SAP Center (13)",
-      "The Tech Interactive (7)",
+      "SAP Center (12)",
+      "The Tech Interactive (6)",
       "Books Inc (6)",
       "San Jose Museum of Art (3)",
       "Peninsula Open Space Trust (2)"
@@ -171,7 +171,7 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 18,
+        "count": 17,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -239,7 +239,7 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
+        "count": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -249,7 +249,7 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 7,
+        "count": 6,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -883,10 +883,10 @@
       "kidFriendly": false
     },
     {
-      "id": "23ad6c442cb3",
+      "id": "beec28a54682",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -903,10 +903,10 @@
       "kidFriendly": false
     },
     {
-      "id": "be68163c75e6",
+      "id": "a406f83dd9e6",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -923,10 +923,10 @@
       "kidFriendly": false
     },
     {
-      "id": "2569a4b91556",
+      "id": "ecf4887fb8b8",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -980,10 +980,10 @@
       "kidFriendly": true
     },
     {
-      "id": "7619a92001af",
+      "id": "3dfc08019863",
       "title": "Toddler Storytime",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1046,28 +1046,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "67e592672d35",
-      "title": "Bootcamp in the River Park with GymParty",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
-      "time": "5:30 PM",
-      "endTime": "6:30 PM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95113, USA",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": null,
-      "description": "We are partnering with @gymparty_ to bring the finest instructors to Bootcamp in the River Park. 💯 Bootcamp workout classes are fast-paced, full-body group sessions mixing cardio and strength training into one efficient workout. The classes are designed for all levels! Our first program launches AUGUST 6, 2026 2026 Dates are as follows: 8/6, 8/20, 9/3, 9/17, 10/1, 10/15, 11/5, 11/19",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-05"
-      }
     },
     {
       "id": "8c17ec49f1c7",
@@ -1484,7 +1462,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-06T05:35:53.114Z"
+        "checkedAt": "2026-11-06T09:50:46.486Z"
       }
     },
     {
@@ -1507,7 +1485,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T05:35:53.118Z"
+        "checkedAt": "2026-11-06T09:50:46.488Z"
       }
     },
     {
@@ -1530,7 +1508,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T05:35:53.118Z"
+        "checkedAt": "2026-11-06T09:50:46.488Z"
       }
     },
     {
@@ -1553,7 +1531,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-06T05:35:53.119Z"
+        "checkedAt": "2026-11-06T09:50:46.488Z"
       }
     },
     {
@@ -1576,7 +1554,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-06T05:35:53.119Z"
+        "checkedAt": "2026-11-06T09:50:46.489Z"
       }
     },
     {
@@ -3163,23 +3141,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c8355a89c779",
-      "title": "Don Omar",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/don-omar",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "62466a6932a3",
       "title": "Mon Laferte",
       "date": "2026-11-06",
@@ -3200,7 +3161,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.777Z"
+        "checkedAt": "2026-11-06T09:51:29.374Z"
       }
     },
     {
@@ -3224,7 +3185,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.777Z"
+        "checkedAt": "2026-11-06T09:51:29.374Z"
       }
     },
     {
@@ -3248,7 +3209,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.778Z"
+        "checkedAt": "2026-11-06T09:51:29.375Z"
       }
     },
     {
@@ -3272,7 +3233,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3296,7 +3257,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3320,7 +3281,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3344,7 +3305,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3368,7 +3329,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3392,7 +3353,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3416,7 +3377,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3440,7 +3401,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
     },
     {
@@ -3464,25 +3425,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-06T05:36:20.781Z"
+        "checkedAt": "2026-11-06T09:51:29.376Z"
       }
-    },
-    {
-      "id": "99b5f908fdbf",
-      "title": "Godzilla Minus Zero",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
-      "time": "6:00PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
     },
     {
       "id": "14ac2c3257eb",

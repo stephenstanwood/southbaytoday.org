@@ -1,35 +1,20 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-06T05:43:40.301Z"
+    "auditedAt": "2026-11-06T09:59:17.901Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1465,
+    "total": 1458,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 1
     },
     "byReason": {
-      "virtual-not-flagged": 1,
       "local-departure-trip": 1
     },
     "hard": [],
     "soft": [
-      {
-        "id": "inbound-8033706b838b2114",
-        "title": "Housing Help Center for Tenants",
-        "city": "mountain-view",
-        "date": "2026-11-05",
-        "location": "298 Escuela Ave, Mountain View, CA",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
       {
         "id": "scu-271b4132f5822d7a",
         "title": "Startup World Cup Grand Finale (SCU day trip)",
@@ -48,14 +33,14 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 343,
+    "total": 328,
     "totals": {
       "hard": 0,
-      "soft": 3,
+      "soft": 2,
       "info": 1
     },
     "byReason": {
-      "virtual-not-flagged": 2,
+      "virtual-not-flagged": 1,
       "unknown-slug": 1,
       "local-departure-trip": 1
     },
@@ -100,20 +85,6 @@
             "severity": "info",
             "reason": "local-departure-trip",
             "detail": "destination \"san francisco\" is out of area, but the title reads as a trip departing from a covered city — kept by design"
-          }
-        ]
-      },
-      {
-        "id": "inbound_mvy0q783_l4bjmo",
-        "title": "Housing Help Center for Tenants",
-        "city": "mountain-view",
-        "date": "2026-11-05T18:00:00-08:00",
-        "location": "298 Escuela Ave, Mountain View, CA",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
           }
         ]
       }
