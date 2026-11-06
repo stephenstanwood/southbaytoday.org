@@ -1224,11 +1224,9 @@ const BN_STORES = [
 ];
 
 // ── Peninsula Open Space Trust (POST) ──
-// openspacetrust.org/events — Cloudflare-protected, needs real browser + a
-// desktop UA (default headless UA is blocked). Event cards are well-structured
-// with article.card-event containing .event-date (month/day/dayofweek),
-// p.event-title > a, ul.pills.badges (category + "In Person"/"Virtual"), and
-// an optional .event-time sibling.
+// openspacetrust.org/events — collection held after the November 6 HTTP 403.
+// Keep the historical location/card normalization below for offline fixtures;
+// neither a desktop User-Agent nor a browser challenge is an approved recovery.
 //
 // POST runs events across the whole Peninsula. We only cover the South Bay,
 // so we (a) drop events whose titles name a non-South-Bay location (San Mateo
@@ -1304,54 +1302,16 @@ export function inferPostLocation(title, { date, url } = {}) {
   return null;
 }
 
-export async function scrapePOST(page, { today = TODAY } = {}) {
-  // Force a realistic desktop UA so Cloudflare serves the real page.
-  await page.setExtraHTTPHeaders({
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-  });
-  try {
-    await page.goto("https://openspacetrust.org/events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
-  } catch {
-    return [];
-  }
-  await page.waitForTimeout(4000); // let Cloudflare settle and cards render
+export async function scrapePOST() {
+  // Access hold, not source retirement: keep the registered task and its
+  // failed health/retention path. Do not repeat the refusal or change identity.
+  // The date is the captured refusal, never a claim of a new source check.
+  throw new Error("POST access hold: calendar access returned HTTP 403 at https://openspacetrust.org/events/ (observed 2026-11-06T17:38:14.302Z); collection not attempted; see docs/event-source-refresh.md");
+}
 
-  const raw = await page.evaluate(() => {
-    const out = [];
-    const cards = document.querySelectorAll("article.card-event");
-    for (const card of cards) {
-      const month = card.querySelector(".event-month")?.textContent?.trim() ?? "";
-      const day = card.querySelector(".event-day")?.textContent?.trim() ?? "";
-      if (!month || !day) continue;
-
-      const titleLink = card.querySelector("p.event-title a, .event-title a");
-      const title = titleLink?.textContent?.trim() ?? "";
-      const link = titleLink?.href ?? card.querySelector(".event-image a")?.href ?? "";
-      if (!title || title.length < 4) continue;
-
-      const tags = Array.from(card.querySelectorAll("ul.pills li, .pills li, .badges li"))
-        .map((t) => t.textContent?.trim() ?? "")
-        .filter(Boolean);
-      const tagsLower = tags.join("|").toLowerCase();
-
-      // Time pattern: "9:30 A.M. - 1:30 P.M." or "9:00 AM" — in the content area.
-      const content = card.querySelector(".event-content")?.textContent ?? card.textContent ?? "";
-      const timeMatch = content.match(/(\d{1,2}(?::\d{2})?\s*[AP]\.?\s*M\.?)(?:\s*[-–]\s*(\d{1,2}(?::\d{2})?\s*[AP]\.?\s*M\.?))?/i);
-
-      out.push({
-        month, day,
-        title,
-        link,
-        time: timeMatch?.[1] ?? null,
-        endTime: timeMatch?.[2] ?? null,
-        tags,
-        virtual: /\bvirtual\b|\bonline\b|webinar/i.test(tagsLower) || /\bvirtual\b|\bonline\b|webinar/i.test(title),
-        volunteer: /\bvolunteer\b/i.test(tagsLower),
-      });
-    }
-    return out;
-  });
-
+// Preserve the historical card parser for offline regression coverage. Live
+// collection may resume only after source-policy review establishes permission.
+export function parsePostEvents(raw, { today = TODAY } = {}) {
   const MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
   const { year: curYear, month } = isoDateParts(today);
   const curMonth = month - 1;
@@ -2352,6 +2312,71 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
 // Main
 // ═══════════════════════════════════════════════════════════════════════════
 
+// Assemble live and retained rows through the same path used by the runner.
+// Retained counts remain explicitly separate from fresh live collection.
+export function collectPlaywrightSourceResults({ tasks, results, previous, today = TODAY }) {
+  // Flatten and normalize to standard event schema
+  const allRaw = results.flatMap((result) => result.events);
+  const events = allRaw.map(normalizePlaywrightEvent);
+
+  const sourceHealth = tasks.map((task, index) => ({
+    id: sourceTaskId(task.name),
+    label: task.name,
+    status: results[index].error ? "error" : (results[index].events.length > 0 ? "ok" : "empty"),
+    count: results[index].events.length,
+    liveCount: results[index].events.length,
+    error: results[index].error,
+    // Record which `source` strings this task produced. Task names and event
+    // source labels don't always match ("SJ Museum of Art" emits "San Jose
+    // Museum of Art"), so the next run needs this mapping to know what to
+    // carry forward when the task errors and returns nothing.
+    sources: [...new Set(results[index].events.map((e) => e.source).filter(Boolean))],
+  }));
+
+  // A scraper that THREW must not delete its source. On 2026-08-11 the City of
+  // Cupertino scraper died with "Execution context was destroyed" and the run
+  // wrote out a file with all 77 of its events gone — taking real listings
+  // (India Independence Day Flag Raising at Community Hall among them) off the
+  // site and stranding a city briefing that referenced them. The aggregate
+  // regression guard below never fired: one source out of 23 is far under its
+  // thresholds. So carry the previous run's events forward per-source instead.
+  //
+  // Only `error` carries forward. A first-pass empty remains legitimate unless
+  // the previous snapshot proves that source still has future rows; that one
+  // narrow case is retried above and classified as an error only after the
+  // retry also fails to prove a real empty calendar.
+  const prevHealth = new Map((previous?._meta?.sourceHealth ?? []).map((h) => [h.id, h]));
+  const prevBySource = new Map();
+  for (const e of previous?.events ?? []) {
+    if (!prevBySource.has(e.source)) prevBySource.set(e.source, []);
+    prevBySource.get(e.source).push(e);
+  }
+  const carriedForward = [];
+  for (const health of sourceHealth) {
+    if (health.status !== "error") continue;
+    const knownSources = prevHealth.get(health.id)?.sources ?? [];
+    const retained = knownSources
+      .flatMap((s) => prevBySource.get(s) ?? [])
+      .filter((e) => e.date >= today);
+    if (!retained.length) continue;
+    carriedForward.push(...retained);
+    health.count = retained.length;
+    health.retainedCount = retained.length;
+    health.sources = knownSources;
+    health.carriedForward = true;
+    health.carryForwardReason = "scraper errored; retained previous run's events";
+    console.warn(`  ⚠ ${health.label} errored — carrying forward ${retained.length} events from the previous run`);
+  }
+  if (carriedForward.length) {
+    const seen = new Set(events.map((e) => e.id));
+    for (const e of carriedForward) {
+      if (!seen.has(e.id)) { events.push(e); seen.add(e.id); }
+    }
+  }
+
+  return { events, sourceHealth };
+}
+
 async function main() {
   console.log("Playwright unified scraper — scraping all browser-dependent sources...\n");
 
@@ -2478,63 +2503,7 @@ async function main() {
 
   await browser.close();
 
-  // Flatten and normalize to standard event schema
-  const allRaw = results.flatMap((result) => result.events);
-  const events = allRaw.map(normalizePlaywrightEvent);
-
-  const sourceHealth = tasks.map((task, index) => ({
-    id: sourceTaskId(task.name),
-    label: task.name,
-    status: results[index].error ? "error" : (results[index].events.length > 0 ? "ok" : "empty"),
-    count: results[index].events.length,
-    error: results[index].error,
-    // Record which `source` strings this task produced. Task names and event
-    // source labels don't always match ("SJ Museum of Art" emits "San Jose
-    // Museum of Art"), so the next run needs this mapping to know what to
-    // carry forward when the task errors and returns nothing.
-    sources: [...new Set(results[index].events.map((e) => e.source).filter(Boolean))],
-  }));
-
-  // A scraper that THREW must not delete its source. On 2026-08-11 the City of
-  // Cupertino scraper died with "Execution context was destroyed" and the run
-  // wrote out a file with all 77 of its events gone — taking real listings
-  // (India Independence Day Flag Raising at Community Hall among them) off the
-  // site and stranding a city briefing that referenced them. The aggregate
-  // regression guard below never fired: one source out of 23 is far under its
-  // thresholds. So carry the previous run's events forward per-source instead.
-  //
-  // Only `error` carries forward. A first-pass empty remains legitimate unless
-  // the previous snapshot proves that source still has future rows; that one
-  // narrow case is retried above and classified as an error only after the
-  // retry also fails to prove a real empty calendar.
-  const prevHealth = new Map((previous?._meta?.sourceHealth ?? []).map((h) => [h.id, h]));
-  const prevBySource = new Map();
-  for (const e of previous?.events ?? []) {
-    if (!prevBySource.has(e.source)) prevBySource.set(e.source, []);
-    prevBySource.get(e.source).push(e);
-  }
-  const today = TODAY;
-  const carriedForward = [];
-  for (const health of sourceHealth) {
-    if (health.status !== "error") continue;
-    const knownSources = prevHealth.get(health.id)?.sources ?? [];
-    const retained = knownSources
-      .flatMap((s) => prevBySource.get(s) ?? [])
-      .filter((e) => e.date >= today);
-    if (!retained.length) continue;
-    carriedForward.push(...retained);
-    health.count = retained.length;
-    health.sources = knownSources;
-    health.carriedForward = true;
-    health.carryForwardReason = "scraper errored; retained previous run's events";
-    console.warn(`  ⚠ ${health.label} errored — carrying forward ${retained.length} events from the previous run`);
-  }
-  if (carriedForward.length) {
-    const seen = new Set(events.map((e) => e.id));
-    for (const e of carriedForward) {
-      if (!seen.has(e.id)) { events.push(e); seen.add(e.id); }
-    }
-  }
+  const { events, sourceHealth } = collectPlaywrightSourceResults({ tasks, results, previous, today: TODAY });
 
   // Collapse repeat ids. Several calendars list the same event on more than one
   // index page, which produced 27 byte-identical duplicate rows in the shipped
