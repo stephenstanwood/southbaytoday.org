@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import {
   assertIcalCalendar,
   fetchSanJoseTheatersEvents,
@@ -139,6 +140,31 @@ async function runWith(routes) {
     globalThis.fetch = original;
   }
 }
+
+test("published matinee and evening clocks survive downstream deduplication", async () => {
+  const start = dayPT(30);
+  const end = dayPT(31);
+  const url = "https://www.sanjose.org/theaters/events/bodyguard";
+  const item = listing({ title: "The Bodyguard", slug: "bodyguard", start, end,
+    dates: [start, end], venue: "Center for the Performing Arts" });
+  const { events } = await runWith({
+    [SAN_JOSE_THEATERS_LISTINGS_URL]: JSON.stringify([item]),
+    [url]: detailPage({ focus: `${longDate(start)} to ${longDate(end)}`,
+      venue: item.venue, street: "255 South Almaden Boulevard",
+      copy: `<p>${longDate(start)} @ 2pm, 7:30pm<br>${longDate(end)} @ 1pm, 6:30pm</p>` }),
+  });
+  assert.equal(events.length, 4, "all explicit curtain times are parsed");
+  assert.equal(fuzzyDedupEvents(events).kept.length, 4,
+    "a shared production URL does not merge separately sourced performances");
+  for (const event of events) assert.equal(event.occurrenceEvidence.time, event.time);
+  assert.equal(fuzzyDedupEvents([...events, { ...events[0], id: "copied-matinee" }]).kept.length, 4,
+    "a copy of the same performance is still removed");
+  const unconfirmed = events.map(({ occurrenceEvidence, ...event }) => ({
+    ...event, occurrenceEvidence: { ...occurrenceEvidence, time: undefined },
+  }));
+  assert.equal(fuzzyDedupEvents(unconfirmed).kept.length, 2,
+    "unsourced clocks do not establish extra performances");
+});
 
 test("the landing page served in place of the feed is an error, never an empty season", async () => {
   assert.throws(

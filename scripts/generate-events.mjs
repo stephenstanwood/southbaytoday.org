@@ -9646,6 +9646,9 @@ async function fetchSanJoseTheatersEvents() {
               kind: "first-party-occurrence-page",
               sourceUrl: url,
               date,
+              // One production page can list a matinee and an evening show.
+              // Deduplication needs the sourced clock to keep both sessions.
+              time,
               checkedAt,
             },
             kidFriendly,

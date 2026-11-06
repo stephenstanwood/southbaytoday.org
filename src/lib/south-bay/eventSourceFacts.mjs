@@ -60,6 +60,22 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Broadway San Jose renamed this single November 27, 7 PM concert. Its
+  // performance table marks that same booking as ASL interpreted; Ticketmaster
+  // still carries the old title. Align identity before deduplication and keep
+  // the access detail on the surviving first-party card.
+  // https://broadwaysanjose.com/shows/the-carpenters-songbook-at-christmas/
+  // Evidence: docs/qa/2026-11-06-1307z-fact-check.md.
+  {
+    date: "2026-11-27",
+    url: "https://www.sanjose.org/theaters/events/carpenters-songbook-christmas",
+    aliasUrls: ["https://www.ticketmaster.com/the-carpenters-songbook-a-live-celebration-san-jose-california-11-27-2026/event/1C0064E1DECF3956"],
+    facts: {
+      title: "The Carpenters Songbook: At Christmas",
+      venue: "Center for the Performing Arts",
+      attendanceNote: "ASL interpretation is available for this performance.",
+    },
+  },
   // Fresh organizer pages confirm the acronym and farm eligibility omitted by
   // sparse source excerpts. Preserve these reviewed dates in cached cards too.
   // Evidence: docs/qa/2026-11-06-1007z-fact-check.md.
