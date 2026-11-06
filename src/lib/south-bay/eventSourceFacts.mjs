@@ -39,21 +39,24 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
 const SJSU_NOVEMBER_READING = {
-  time: "3:30 PM", endTime: null,
-  venue: "Campus Village B RAC (1st floor) and Uchida Hall", address: "",
-  description: "Discuss I, Robot's sixth story, Little Lost Robot, with Professor Hilary Hurst from 3:30–4:30 PM in the Campus Village B RAC (1st floor). A separate screening of I, Robot (2004) begins at 5:30 PM in Uchida Hall; confirm its room with the organizer.",
-  blurb: "Discuss Little Lost Robot with Professor Hilary Hurst, with a separate I, Robot screening later in Uchida Hall.",
+  title: "I, Robot - Campus Reading Discussion",
+  time: "3:30 PM", endTime: "4:30 PM",
+  venue: "Campus Village B RAC (1st floor)", address: "350 S 10th St, San José, CA 95112",
+  description: "Discuss I, Robot's sixth story, Little Lost Robot, with Professor Hilary Hurst from 3:30–4:30 PM in the Campus Village B RAC (1st floor). The calendar lists SJSU employees and students as its audience; public attendance is unconfirmed.",
+  blurb: "Discuss Little Lost Robot with Professor Hilary Hurst in Campus Village B RAC; confirm public eligibility with the organizer.",
   attendanceStatus: "needs-confirmation",
-  attendanceNote: "Discussion: 3:30–4:30 PM in Campus Village B RAC (1st floor). Film: 5:30 PM in Uchida Hall. The poster names Room 124, while the calendar's location field names Room 114. Confirm the film room with the organizer; its finish is not published.",
+  attendanceNote: "The current listing covers the 3:30–4:30 PM discussion and names SJSU employees and students as its audience. Confirm public eligibility with the organizer. The later film is a separate program.",
 };
 const SJSU_NOVEMBER_METROPOLIS = {
   title: "HumHonCultureCon Movie Event: Metropolis (1927)",
-  time: "3:30 PM", endTime: "6:30 PM", cost: "free",
+  time: "3:30 PM", endTime: null, cost: "free",
   venue: "Dr. Martin Luther King, Jr. Library, Room 225",
   address: "150 E. San Fernando Street, San Jose, CA 95112",
   url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927",
-  description: "Watch Fritz Lang's Metropolis (1927) with live accompaniment by members of the SJSU Saxophone Studio. Free and open to the campus community and general public, November 10, 3:30–6:30 PM in King Library Room 225.",
+  description: "Watch Fritz Lang's Metropolis (1927) with live accompaniment by members of the SJSU Saxophone Studio. Free and open to the campus community and general public, November 10 at 3:30 PM in King Library Room 225.",
   blurb: "Watch Metropolis (1927) with live accompaniment by the SJSU Saxophone Studio in King Library Room 225.",
+  attendanceStatus: "needs-confirmation",
+  attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
 
 const CORRECTIONS = [
@@ -84,10 +87,10 @@ const CORRECTIONS = [
     date, url: "https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it",
     facts: { ...SJSU_NOVEMBER_METROPOLIS, date: "2026-11-10", displayDate: "Tue, Nov 10" },
   })),
-  // Read the organizer's actual program from its poster, not the all-day
-  // reminder dates. The discussion and film have distinct rooms and clocks;
-  // the film's finish is not published. Keep those facts through cached copy.
-  // Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+  // The live listing now identifies only the one-hour discussion and names
+  // campus audiences. Do not restore the former combined discussion/film
+  // card through sparse snapshots or retired URLs. Public access is unconfirmed.
+  // Evidence: docs/qa/2026-11-06-0007z-fact-check.md.
   {
     date: "2026-11-09", url: "https://events.sjsu.edu/event/campus-reading-program-november-9-events",
     facts: SJSU_NOVEMBER_READING,
@@ -452,9 +455,10 @@ const CORRECTIONS = [
   {
     date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927",
     // The Campus Reading Program's second announcement advertises this same
-    // screening. Normalize it before deduplication; its poster confirms the
-    // finish and room, not three separate midnight performances.
-    // Evidence: docs/qa/2026-11-05-2207z-fact-check.md.
+    // screening. Normalize it before deduplication. Its poster's 6:30 PM
+    // finish conflicts with the canonical page's 6 PM; neither establishes
+    // an unqualified finish. Preserve the shared 3:30 PM start and Room 225.
+    // Evidence: docs/qa/2026-11-06-0007z-fact-check.md.
     aliasUrls: ["https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it"],
     facts: SJSU_NOVEMBER_METROPOLIS,
   },

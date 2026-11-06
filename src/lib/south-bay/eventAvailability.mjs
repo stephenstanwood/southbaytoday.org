@@ -3,6 +3,15 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  Object.freeze({
+    title: /^(?:Campus Reading Program, November 9 Events!?|I, Robot - Campus Reading Discussion)$/i,
+    venue: /.*/,
+    date: "2026-11-09",
+    reviewOn: "2026-11-09",
+    reason:
+      "The current SJSU listing covers a 3:30–4:30 PM discussion and names only SJSU employees and students as its audience. Withhold until public eligibility is confirmed; this is not a cancellation.",
+    source: "https://events.sjsu.edu/event/campus-reading-program-november-9-events",
+  }),
   ...["2026-11-05", "2026-11-06"].map(date => Object.freeze({
     title: /^Campus Reading Program, November 9 Events!?$/i,
     venue: /.*/,
@@ -18,7 +27,7 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     date,
     reviewOn: "2026-11-10",
     reason:
-      "The calendar row is a reminder. The organizer's poster confirms the Metropolis screening on November 10, 3:30–6:30 PM in King Library Room 225, not a midnight screening on this date.",
+      "The calendar row is a reminder. The organizer places the Metropolis screening on November 10 at 3:30 PM in King Library Room 225, not at midnight on this date. Its published finish times conflict.",
     source: "https://events.sjsu.edu/event/silent-movie-classic-with-live-score-performance-dont-miss-it",
   })),
   Object.freeze({

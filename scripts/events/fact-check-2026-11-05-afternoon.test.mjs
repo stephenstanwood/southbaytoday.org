@@ -65,19 +65,21 @@ test("captured SJSU reminder dates become the two poster-confirmed programs", as
   const reading = events.find(e => e.url === posters.sourceUrls[0]);
   assert.equal(reading.date, "2026-11-09");
   assert.equal(reading.time, "3:30 PM");
-  assert.equal(reading.endTime, null, "the film's finish is unknown");
-  assert.match(reading.venue, /Campus Village B RAC.*Uchida Hall/);
-  assert.doesNotMatch(reading.venue, /\b(?:114|124)\b/, "do not choose between conflicting film rooms");
+  assert.equal(reading.endTime, "4:30 PM", "the live listing now covers only the discussion");
+  assert.equal(reading.venue, "Campus Village B RAC (1st floor)");
+  assert.doesNotMatch(reading.venue, /Uchida|\b(?:114|124)\b/);
   assert.match(posters.calendarLocationText, /YUH 114/);
   assert.match(posters.posters[0].film, /124/);
-  assert.match(reading.attendanceNote, /Room 124.*Room 114.*Confirm the film room/);
+  assert.match(reading.attendanceNote, /SJSU employees and students.*Confirm public eligibility/);
   assert.equal(requiresAttendanceConfirmation(reading), true);
-  assert.equal(reading.address, "", "a two-building program cannot inherit one building's street address");
-  assert.match(reading.attendanceNote, /3:30–4:30 PM.*5:30 PM/);
+  assert.equal(isEventPublishable(reading), false, "the discussion's current audience is campus-only");
+  assert.equal(reading.address, "350 S 10th St, San José, CA 95112");
+  assert.match(reading.attendanceNote, /3:30–4:30 PM/);
   const movie = events.find(e => e.url === posters.sourceUrls[2]);
   assert.equal(movie.date, "2026-11-10");
   assert.equal(movie.time, "3:30 PM");
-  assert.equal(movie.endTime, "6:30 PM");
+  assert.equal(movie.endTime, null, "the poster and canonical page disagree on the finish");
+  assert.match(movie.attendanceNote, /6 PM.*6:30 PM.*Confirm the finish/);
   assert.equal(movie.cost, "free");
   assert.match(movie.venue, /Room 225/);
   assert.match(movie.description, /live accompaniment/);
@@ -97,7 +99,7 @@ test("stale published rows cannot recover reminder dates, midnight clocks or dup
   }
   await resolveEventBlurbs(events, { enabled: false });
   assert(events.every(e => e.time === "3:30 PM"));
-  assert.equal(events.find(e => e.date === "2026-11-10").endTime, "6:30 PM");
+  assert.equal(events.find(e => e.date === "2026-11-10").endTime, null);
   for (const event of events) assert.deepEqual(applyVerifiedEventFacts(event), event);
   for (const url of posters.sourceUrls.slice(0, 2)) {
     for (const date of ["2026-11-05", "2026-11-06", "2027-11-09"]) {

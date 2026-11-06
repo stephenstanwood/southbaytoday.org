@@ -84,7 +84,7 @@ test("reviewed newsletters keep the Nutcracker age, price and registration condi
 
 test("dated admission and concert corrections stay bound to their reviewed sources", () => {
   const cases = [
-    { date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927", cost: "free", time: "3:30 PM", endTime: "6:30 PM" },
+    { date: "2026-11-10", url: "https://events.sjsu.edu/event/humhonculturecon-movie-event-metropolis-1927", cost: "free", time: "3:30 PM", endTime: null },
     { date: "2026-11-10", url: "https://events.sjsu.edu/event/hearst-award-camille-zapata", cost: "free" },
     { date: "2026-11-14", url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/111020/", registration: "required" },
     ...[
