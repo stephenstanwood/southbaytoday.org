@@ -4,6 +4,16 @@ import assert from "node:assert/strict";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { cleanDescription as cleanPermitDescription } from "../generate-permits.mjs";
 
+test("preserves KQED's source-published call letters in titles and prose", () => {
+  const title = "Documentary Screening with KQED";
+  const description = "Many local affiliates of PBS have broadcast the film, including KQED.";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle(cleanTitle(title)), title);
+  assert.equal(polishDescription(description), description);
+  assert.equal(polishDescription(polishDescription(description)), description);
+  assert.equal(cleanTitle("Kqed is a source-spelled name"), "Kqed is a source-spelled name");
+});
+
 test("preserves FLASCC, PX Floro and DLCL source spellings across refresh and cached prose", () => {
   for (const [source, expected] of [
     ["FLASCC Fall 2026 Conference", "FLASCC Fall 2026 Conference"],

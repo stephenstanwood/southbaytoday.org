@@ -1020,6 +1020,8 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Public broadcaster named in Palo Alto City Library's screening copy.
+  "KQED",
   // November 2026 first-party listings: SCU's language conference, Improv's
   // performer and Stanford's Division of Literatures, Cultures, and Languages.
   "FLASCC", "PX", "DLCL",

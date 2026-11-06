@@ -133,6 +133,8 @@ const EDITS = {
       ["Tully library", "Tully Library"],
       ["something else tech related?", "something else tech-related?"],
       ["#dsb Digital Skills Free.", "#dsb Digital Skills: Free."],
+      [/(\bthe \d+(?:st|nd|rd|th) and \d+(?:st|nd|rd|th)) Friday(?= in [A-Z][a-z]+:)/g, "$1 Fridays"],
+      [/(\bFriday, [A-Z][a-z]+ \d{1,2}(?:st|nd|rd|th)?, \d{1,2}:\d{2} [ap]\.m\. - \d{1,2}:\d{2} [ap]\.m\.)(?= Friday, )/g, "$1;"],
       ["Only one 30-minute appointment per day please.", "Only one 30-minute appointment per day, please."],
       ["verificación de historial laboral, y otros documentos", "verificación de historial laboral y otros documentos"],
       ["celebrating Dia de los Muertos", "celebrating Día de los Muertos"],
@@ -610,6 +612,9 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [/\bincluding Kqed\b/g, "including KQED"],
+      ["but national PBS, however, has refused", "but national PBS has refused"],
+      ["Registration is not required, but means you will receive", "Registration is not required, but registering means you will receive"],
       ["never before seen footage", "never-before-seen footage"],
       ["It is impossible to leave the pleasant life", "It is impossible to live the pleasant life"],
       ["Registration is not required but you will receive", "Registration is not required, but you will receive"],
