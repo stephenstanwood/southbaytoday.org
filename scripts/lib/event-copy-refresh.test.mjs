@@ -60,6 +60,7 @@ const november5MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/revie
 const november5AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-afternoon.json", import.meta.url)));
 const november5EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-evening.json", import.meta.url)));
 const november5NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-night.json", import.meta.url)));
+const november5LateFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-late.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -68,9 +69,28 @@ audits.push(november5MiddayFixture);
 audits.push(november5AfternoonFixture);
 audits.push(november5EveningFixture);
 audits.push(november5NightFixture);
+audits.push(november5LateFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("residency punctuation preserves revised household limits and publisher scope", () => {
+  const row = november5LateFixture.cases[0];
+  const revise = text => text.replace("five bags", "eight bags").replace("3:00 p.m.", "4:30 p.m.");
+  const suffix = " Registration required; ages 18+; $25. Contact updated@example.org.";
+  const original = {
+    source: row.source, description: revise(row.refreshed) + suffix,
+    id: "revised-shredding-event", date: "2026-12-12", time: "9:00 AM", endTime: "4:30 PM",
+    cost: "low", costNote: "$25",
+  };
+  const next = polishReviewedEventCopy(original);
+  assert.deepEqual(next, { ...original, description: revise(row.reviewed) + suffix });
+  assert.deepEqual(numbers(next.description), numbers(original.description));
+  assert.deepEqual(identifiers(next.description), identifiers(original.description));
+  assert.deepEqual(polishReviewedEventCopy(next), next);
+  const otherPublisher = { ...original, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
 
 test("evening copy repairs preserve revised source facts, new details and publisher scope", () => {
   const revise = text => text.replaceAll("$100", "$150")

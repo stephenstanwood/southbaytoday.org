@@ -682,6 +682,7 @@ const EDITS = {
       ["Drone programming program using Python at the", "Drone programming with Python at the"],
       ["personal readiness, employee vs. Owner trade-offs", "personal readiness, employee vs. owner trade-offs"],
       ["the Jeopardy! Quiz show.", "the Jeopardy! quiz show."],
+      ["Proof of residency is required, there is a limit of", "Proof of residency is required; there is a limit of"],
     ],
   },
   "SJSU Events": {
