@@ -420,6 +420,44 @@ errors, unknown persistent zeros, failed alternate coverage or unexpected loss
 of retained future rows still require an exact actionable alert. A source name
 in this document is never an empty-season allowlist.
 
+## November 6: POST access refusal and collection hold
+
+The November 6 snapshots at 14:01:22.547Z and 17:38:14.302Z both recorded
+HTTP 403 at `https://openspacetrust.org/events/`. The latter snapshot was
+published at `01ad711ea04e2f04815bbcfb97fe486ad46069b3`. This supersedes the
+October 22 POST recovery above: it is a reviewed access gap, not a selector
+defect, a quiet season, a cancellation or proof of restored access. This
+review used the captured producer evidence; no repeat POST request was made.
+
+The legacy Chrome/124 User-Agent override and Cloudflare-settling wait have
+been removed. POST remains a registered task under an explicit access hold.
+It makes no network request and reports the captured HTTP 403 with its original
+observation time and `collection not attempted`. Do not probe alternate hosts
+or endpoints, change browser/client identity or add challenge workarounds.
+Resuming collection requires a source-policy review establishing an approved
+channel or permission. This is not source retirement or a schedule change.
+The historical event parser remains available only for offline fixtures.
+
+Both previously published future rows remain eligible for the unchanged
+error-retention path: December 4 **Bear Creek Redwoods Hike** and December 12
+**Hike at Calero County Park**. The captured snapshot contains 185 unique rows
+from 19 source labels, with 180 live rows and five retained rows (SJMA three,
+POST two); no future IDs were lost. These are historical snapshot counts.
+POST health remains `status: error` and `carriedForward: true` while eligible
+rows remain. `liveCount` stays zero and `retainedCount` is separate from the
+legacy retained-inclusive `count`; a new whole-snapshot timestamp does not
+establish fresh POST collection. Ordinary date expiry, cancellation filtering,
+snapshot freshness and aggregate/per-source coverage guards remain in force.
+Do not restamp or edit old snapshots to imply a successful source check.
+
+The installed Mini `sbs-playwright-scrape` recipe already requires consulting
+the latest dated review before alerting. An unchanged POST hold/refusal with
+intact eligible retained rows stays visible in local source evidence without
+another MILO repair request. New parser defects, changed access conditions,
+failed alternate coverage, unexpected loss of still-eligible retained rows,
+and freshness/coverage failures remain actionable. Normal expiry is not an
+unexpected loss; this disposition is not a blanket suppression by source name.
+
 ## October 29: retire the Timely theater mirror
 
 The browser's legacy Timely stream supplied nine November theater listings

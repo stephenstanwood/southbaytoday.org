@@ -1,0 +1,55 @@
+{
+  "_meta": {
+    "generatedAt": "2026-11-06T17:38:14.302Z",
+    "sourceHealth": [
+      {
+        "id": "post-peninsula-open-space-trust",
+        "label": "POST (Peninsula Open Space Trust)",
+        "status": "error",
+        "count": 2,
+        "error": "calendar access returned HTTP 403 at https://openspacetrust.org/events/",
+        "sources": [
+          "Peninsula Open Space Trust"
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
+      }
+    ]
+  },
+  "events": [
+    {
+      "id": "5dd03098440a",
+      "title": "Bear Creek Redwoods Hike",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "9:00 AM",
+      "endTime": null,
+      "venue": "Bear Creek Redwoods OSP",
+      "address": "",
+      "city": "los-gatos",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/bear-creek-redwoods-hike/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    },
+    {
+      "id": "d0efe24ec54e",
+      "title": "Hike at Calero County Park",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "9:30 AM",
+      "endTime": null,
+      "venue": "Calero County Park",
+      "address": "",
+      "city": "san-jose",
+      "category": "outdoor",
+      "cost": "free",
+      "description": "",
+      "url": "https://openspacetrust.org/event/hike-at-calero-county-park-9/",
+      "source": "Peninsula Open Space Trust",
+      "kidFriendly": false
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { inferPostLocation, normalizePlaywrightEvent, scrapePOST } from "../playwright-scrapers.mjs";
+import { inferPostLocation, normalizePlaywrightEvent, parsePostEvents } from "../playwright-scrapers.mjs";
 
 const date = "2026-10-18";
 const url = "https://www.eventbrite.com/e/coyote-creek-trail-bioblitz-tickets-1999128802062?aff=post";
@@ -12,7 +12,7 @@ const location = {
   address: "Ranch Dr. and Alviso Milpitas Rd, Milpitas, CA 95035",
 };
 
-test("the POST scraper publishes the dated Milpitas meeting point and keeps unrelated locations", async () => {
+test("the historical POST parser preserves the dated Milpitas meeting point and keeps unrelated locations", async () => {
   const raw = [
     { month: "Oct", day: "18", title, link: url, time: "9:00 AM", endTime: "11:30 AM", volunteer: true },
     // Neither another occurrence nor another organizer URL establishes a city
@@ -22,13 +22,7 @@ test("the POST scraper publishes the dated Milpitas meeting point and keeps unre
     { month: "Nov", day: "1", title: "BioBlitz at Hellyer County Park", link: "https://example.org/hellyer", volunteer: true },
     { month: "Oct", day: "29", title: "Bug’s Eye View (Online Event)", link: "https://openspacetrust.org/event/bugs-eye-view-online-event/", virtual: true },
   ];
-  const page = {
-    setExtraHTTPHeaders: async () => {},
-    goto: async (target) => assert.equal(target, "https://openspacetrust.org/events/"),
-    waitForTimeout: async () => {},
-    evaluate: async () => raw,
-  };
-  const events = (await scrapePOST(page, { today: date })).map(normalizePlaywrightEvent);
+  const events = parsePostEvents(raw, { today: date }).map(normalizePlaywrightEvent);
   assert.equal(events.length, 3);
   assert.deepEqual(
     Object.fromEntries(["city", "venue", "address"].map((key) => [key, events[0][key]])), location,
