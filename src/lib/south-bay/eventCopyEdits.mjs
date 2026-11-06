@@ -41,6 +41,7 @@ const EDITS = {
     ],
     attendanceNote: [
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
+      [/^BY APPOINTMENT ONLY$/g, "By appointment only."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
       ["provided there are no other participants).", "provided there are no other participants.)"],
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
@@ -698,6 +699,8 @@ const EDITS = {
       ["Uw- Milwaukee Panthers", "UW-Milwaukee Panthers"],
     ],
     description: [
+      ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
+      ["court --hungry for a win, and out to prove it!", "court — hungry for a win and out to prove it!"],
       ["Lineup* Shoreline Mafia SOB", "Lineup: Shoreline Mafia SOB"],
       ["Kai Bandz Ny Ny *Lineup subject to change", "Kai Bandz Ny Ny. Lineup subject to change."],
       ["Rock En Espanol Night Fri November 6, 9 PM 21+ A night of", "Rock En Espanol Night. Fri, November 6, 9 PM. 21+. A night of"],
@@ -772,9 +775,11 @@ const EDITS = {
   },
   "Santa Clara University": {
     title: [
+      ["Brown Bag in the Humanities featuring:", "Brown Bag in the Humanities featuring"],
       ['"Why Don\'t They Just Come Here the Right Way?" a Day of', '"Why Don\'t They Just Come Here the Right Way?" A Day of'],
     ],
     description: [
+      ["The music of Jennifer Higdon and George Crumb Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello Margaret Halbig and Teresa McCollough, piano", "The music of Jennifer Higdon and George Crumb. Melinda Martinez Becker, mezzo-soprano; Megan Chartier, cello; Margaret Halbig and Teresa McCollough, piano."],
       ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
