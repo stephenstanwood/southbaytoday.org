@@ -97,6 +97,7 @@ const EDITS = {
       [/Reminder: Limited Laptops FOR (\d+) Participants\./g, "Reminder: Laptops are available for only $1 participants."],
       [/Parents must supervise children under (\d+) and younger\./g, "Parents must supervise children under $1."],
       ["funding Almaden library books", "funding Almaden Library books"],
+      [/\bLegos\b/g, "LEGOs"],
       ["for Lego Club!", "for LEGO Club!"],
       ["tons of Lego bricks", "tons of LEGO bricks"],
       ["a Lego Challenge!", "a LEGO Challenge!"],
@@ -410,6 +411,7 @@ const EDITS = {
   },
   "Linden Tree Books": {
     description: [
+      ["Draw-OFF!", "draw-off!"],
       ["When people grab her wheelchair, to push her", "When people grab her wheelchair to push her"],
       ["(lots of laughter!) —gather around and enjoy", "(lots of laughter!) — gather around and enjoy"],
       ["beaches of Normandy, France in the famous", "beaches of Normandy, France, in the famous"],
@@ -510,6 +512,7 @@ const EDITS = {
     ],
     description: [
       ["Lego building", "LEGO building"],
+      [/\bLegos\b/g, "LEGOs"],
       ["Bay area musicians", "Bay Area musicians"],
       [/\bChildren in Grades (?=K to \d)/g, "Children in grades "],
       ["celebrate Fall with us by making fall inspired crafts", "celebrate fall with us by making fall-inspired crafts"],
@@ -596,6 +599,7 @@ const EDITS = {
       ["Levi Strauss & Co. On the Corporate Insights team", "Levi Strauss & Co. on the Corporate Insights team"],
     ],
     blurb: [
+      [/\bLegos\b/g, "LEGOs"],
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
