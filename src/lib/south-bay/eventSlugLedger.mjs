@@ -28,7 +28,7 @@
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
-import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isNonEventOffer } from "./eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isNonEventOffer, nonEventOfferNotice } from "./eventOccurrence.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -69,7 +69,7 @@ export function snapshotEvent(e) {
     out.description = "This event will be rescheduled to another day; the replacement date is still to be determined.";
     out.blurb = out.description;
   } else if (isNonEventOffer(e)) {
-    out.description = "This is a membership promotion offering vouchers for a separate activity, not a scheduled event.";
+    out.description = nonEventOfferNotice(e);
     out.blurb = out.description;
     delete out.cost;
     delete out.kidFriendly;

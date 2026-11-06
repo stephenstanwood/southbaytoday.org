@@ -60,6 +60,57 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Full organizer records reviewed November 5, including the hash-verified
+  // retained Stanford response. Sparse excerpts omit attendance restrictions.
+  // Evidence: docs/qa/2026-11-06-0507z-fact-check.md.
+  {
+    date: "2026-11-11",
+    url: "https://events.scu.edu/leavey-school-of-business/event/525136-dnaxai-series-demo-day-see-it-try-it-use-it-ai",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "The organizer addresses this workshop to Leavey faculty and asks for an RSVP by November 9. Confirm public eligibility with SCU before attending.",
+    },
+  },
+  {
+    date: "2027-01-16",
+    url: "https://www.ticketmaster.com/mvp-court-pass-check-in-by-san-jose-california-01-16-2027/event/1C00650BEAA35A61",
+    facts: {
+      attendanceNote: "This optional pregame upgrade requires a separate Harlem Globetrotters game ticket. It is not admission to the main event.",
+    },
+  },
+  {
+    date: "2026-11-06",
+    url: "https://events.stanford.edu/event/omac-first-fridays",
+    facts: {
+      category: "community",
+      venue: "EVGR Pub & Beer Garden",
+      description: "The Office for Military-Affiliated Communities hosts a social gathering for military-affiliated community members, including veterans and families, at EVGR Pub & Beer Garden.",
+      blurb: "Military-affiliated community members can meet at EVGR Pub & Beer Garden for OMAC's First Friday gathering.",
+      attendanceNote: "Open to military-affiliated community members, including veterans and families.",
+    },
+  },
+  {
+    date: "2026-11-06",
+    url: "https://events.stanford.edu/event/first-fridays-at-ida-social",
+    facts: { title: "First Fridays at IDA (Social)" },
+  },
+  {
+    date: "2026-11-07",
+    url: "https://sunnyvale.libcal.com/event/17603300",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Registration is required; walk-ins are welcome if space remains. Supplies are limited. For teens in grades 6–12.",
+    },
+  },
+  // These two newsletter titles point to Santa Clara's same numbered
+  // November 5 calendar event, at the same time in the same library room.
+  // Normalize before URL deduplication and when resolving retired aliases.
+  {
+    date: "2026-11-05",
+    url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114903/",
+    aliasUrls: ["https://www.sclibrary.org/Home/Components/Calendar/Event/114903/7953?curm=11&cury=2026"],
+    facts: { url: "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114903/" },
+  },
   // Organizer records and ticket pages reviewed November 5. Apply these
   // before URL deduplication so sparse newsletter copies cannot reappear.
   // Evidence: docs/qa/2026-11-06-0207z-fact-check.md.

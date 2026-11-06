@@ -594,6 +594,10 @@ export function shouldSkip(item) {
   // room. cleanName removes part of that context and leaves an address-like
   // fragment, so exclude the raw filing before it can become a business card.
   if (/\bBOH\s*\/\s*DISH\s*ROOM\b/i.test(rawName)) return true;
+  // The companion SR0868681 filing is "555 W JAVA - FOH/SERVERY".
+  // A numbered building's front-of-house food-service area is not a named
+  // restaurant. Inspect raw context before cleanName removes FOH/SERVERY.
+  if (/^\d+[a-z]?\b.*\s+-\s+FOH\s*\/\s*SERVERY$/i.test(rawName)) return true;
   // County filings SR0868679 and SR0884942 name food-service stations,
   // not public restaurants. Keep the raw context: cleanName/dedup shorten
   // them to "555 W Java -" and "Project Meridian". Do not exclude real

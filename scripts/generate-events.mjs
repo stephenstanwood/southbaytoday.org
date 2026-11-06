@@ -1463,6 +1463,7 @@ function cleanTitle(title) {
     // Affiliated Communities ("OMAC Kickback Social"), SDRC ("SDRC Friday
     // Seminar").
     "SASCC", "WCC", "OMAC", "SDRC",
+    "IDA", // Stanford's Institute for Diversity in the Arts, not a person's name
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");

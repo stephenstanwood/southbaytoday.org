@@ -117,12 +117,27 @@ export function hasUnconfirmedOccurrenceDate(event) {
     && /\b(?:TBD|TBA|to\s+be\s+(?:announced|determined|confirmed))\b/i.test(text);
 }
 
-export function isNonEventOffer(event) {
+export function nonEventOfferNotice(event) {
+  // The Globetrotters' MVP Court Pass is a pregame add-on requiring a
+  // separate game ticket, even when Ticketmaster supplies an event clock.
+  // Keep the main game eligible and reject sparse cached copies of the offer.
+  // https://www.harlemglobetrotters.com/world-tour/schedule/tech-cu-arena/
+  if (event?.source === "Ticketmaster"
+      && /^\s*MVP Court Pass\b/i.test(String(event?.title || ""))) {
+    return "This optional pregame upgrade requires a separate Harlem Globetrotters game ticket. It is not admission to the main event.";
+  }
   // The Tech's event index also carries membership-sales promotions. This
   // offer grants vouchers for a separate December activity; its October
   // timestamp is not a public cookie-cutter session. Keep the actual activity.
-  return event?.source === "The Tech Interactive"
-    && /^Buy or Renew In-Person\b/i.test(String(event?.title || ""));
+  if (event?.source === "The Tech Interactive"
+      && /^Buy or Renew In-Person\b/i.test(String(event?.title || ""))) {
+    return "This is a membership promotion offering vouchers for a separate activity, not a scheduled event.";
+  }
+  return null;
+}
+
+export function isNonEventOffer(event) {
+  return nonEventOfferNotice(event) !== null;
 }
 
 export function isEventPublishable(event) {

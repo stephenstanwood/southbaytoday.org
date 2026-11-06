@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-06T04:44:11.031Z",
-  "eventCount": 1467,
+  "eventCount": 1464,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -22629,7 +22629,9 @@
       "audienceAge": "kids",
       "image": "https://d68g328n4ug0e.cloudfront.net/gallery/4934/crochet-1864716_150.jpg",
       "blurb": "Learn foundational crochet stitches in a beginner workshop for teens in grades 6 to 12, led by Monta Vista's Crochet Club.",
-      "firstSeenAt": "2026-11-06T04:44:11.016Z"
+      "firstSeenAt": "2026-11-06T04:44:11.016Z",
+      "registration": "required",
+      "attendanceNote": "Registration is required; walk-ins are welcome if space remains. Supplies are limited. For teens in grades 6–12."
     },
     {
       "id": "a2b447b7251a",
@@ -23866,19 +23868,20 @@
       "time": "5:00 PM",
       "endTime": "7:00 PM",
       "ongoing": false,
-      "venue": "EVGR pub & beer Garden",
+      "venue": "EVGR Pub & Beer Garden",
       "address": "716 Serra St., Stanford CA 94305",
       "city": "palo-alto",
-      "category": "outdoor",
+      "category": "community",
       "cost": null,
-      "description": "Every first Friday, the Office for Military-Affiliated Communities hosts Omac First Fridays at Evgr Pub & Beer Garden — a casual hangout for students, staff, veterans, and families.",
+      "description": "The Office for Military-Affiliated Communities hosts a social gathering for military-affiliated community members, including veterans and families, at EVGR Pub & Beer Garden.",
       "url": "https://events.stanford.edu/event/omac-first-fridays",
       "source": "Stanford Events",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53898119007827/huge/81def89ae26b08a117f48396ffc9fe4c494ff7e8.jpg",
-      "blurb": "Meet fellow students, staff, veterans, and families at a casual first-Friday hangout hosted by the Office for Military-Affiliated Communities at the beer garden.",
-      "firstSeenAt": "2026-11-06T04:44:11.016Z"
+      "blurb": "Military-affiliated community members can meet at EVGR Pub & Beer Garden for OMAC's First Friday gathering.",
+      "firstSeenAt": "2026-11-06T04:44:11.016Z",
+      "attendanceNote": "Open to military-affiliated community members, including veterans and families."
     },
     {
       "id": "los-altos-village-871ea1fef29cf898",
@@ -24599,7 +24602,7 @@
     },
     {
       "id": "stanford-50731549488587-2026-11-06",
-      "title": "First Fridays at Ida (Social)",
+      "title": "First Fridays at IDA (Social)",
       "date": "2026-11-06",
       "displayDate": "Fri, Nov 6",
       "time": "5:00 PM",
@@ -24642,27 +24645,6 @@
       "image": "https://i.ytimg.com/vi/4fW8Rnykijw/maxresdefault.jpg",
       "blurb": "Join online to hear Next Level Chef winner Pyet DeSpain share fusion dishes from her book Rooted in Fire.",
       "firstSeenAt": "2026-11-02T00:57:33.134Z"
-    },
-    {
-      "id": "inbound-29108783d8f5c899",
-      "title": "Celebrate Diwali by Painting Diyas",
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
-      "time": "5:30 PM",
-      "endTime": "7:00 PM",
-      "venue": "Central Park Library - Margie Edinger Room",
-      "address": "Central Park Library - Margie Edinger Room, Santa Clara",
-      "city": "santa-clara",
-      "category": "community",
-      "cost": null,
-      "description": "Paint clay diyas, the small oil lamps traditionally lit during Diwali. All ages welcome; seating is first-come, first-served and supplies are limited.",
-      "url": "https://www.sclibrary.org/Home/Components/Calendar/Event/114903/7953?curm=11&cury=2026",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJA5nt2n61j4AR_PaZL8-UEog/photos/AV-0GLewl9HHH4xO8KlLvmpZ165GNCWUa1UZr2TuOQkboZj7Q1dA0Mp-JFWU-X8MQ241LiwCbTceT7nwXarXZoDGFUWreCEH3drakggAvIPaGKd7J1JqYeav76wuWbc_ScNraD_GgI2pNNPlspLxafRpy_aTkMFTVsEhDKVu4yPXU90rkkXe-O3IRP5uukmG2Ifyra4kkThKnwrK5kHfbavtJ_IK1wqVghb4LXiuTajX5zdRut9wjf8hnzm2BMV8_-7kUoOOXEz8p9NsTSXiyeITVIEks1REOyJAKFyNk3qnFNxdS5dURLtbULv5Zhv9oDiKoe3cLWpR01KoC0HQ99CUGtoudPOrjKRQmn4_F1XOm5kd31fmKyCjwf06dyUfzsBBP16Vqw-xSNN50CBXVKM1qTaWZRc",
-      "blurb": "Paint clay diyas, the small oil lamps traditionally lit during Diwali, in a session open to all ages.",
-      "firstSeenAt": "2026-10-29T23:40:35.630Z"
     },
     {
       "id": "midpen-54becb5845a7ec4a",
@@ -25436,7 +25418,7 @@
       "description": "Join Midpen staff for a trail maintenance workday at Saratoga Gap Open Space Preserve on the Saratoga Gap Trail.",
       "url": "https://www.openspace.org/events/volunteer-projects/saratoga-gap-preserve-trail-maintenance-saratoga-gap-trail",
       "source": "Midpen Open Space",
-      "registration": "required",
+      "registration": "full",
       "attendanceNote": "Ages 14 and older. Register by Dec 5, 2026.",
       "kidFriendly": false,
       "audienceAge": "all",
@@ -31039,27 +31021,6 @@
       "firstSeenAt": "2026-09-23T03:22:11.158Z"
     },
     {
-      "id": "tm-G5vYZ_8RnIgt-",
-      "title": "Mvp Court Pass (Check in By 2:30pm)",
-      "date": "2027-01-16",
-      "displayDate": "Sat, Jan 16",
-      "time": "3:00 PM",
-      "endTime": null,
-      "venue": "Tech CU Arena",
-      "address": "1500 S Tenth Street",
-      "city": "san-jose",
-      "category": "education",
-      "cost": "paid",
-      "description": "This IS AN Optional Upgrade. Ticket TO THE Main Event Is Also Required. Get closer than courtside with the MVP Court Pass!",
-      "url": "https://www.ticketmaster.com/mvp-court-pass-check-in-by-san-jose-california-01-16-2027/event/1C00650BEAA35A61",
-      "source": "Ticketmaster",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJJx_xws8zjoARo9omW6ZKHGg/photos/AV-0GLdl3pnNtv0XBkGMVRdzMo0GptvmgdPJk9IEO23THBhsc7Jtr7nS_hDX1ERfbE2U4S1V8pLQnSoUlOhIipSjEp6uYqm3YR3PtrqMFAZtmDrsZuGfrzAqB885OZMEI2JI9Y6zQcIrnSfCglDl9j_8PSv8ZWL_Tkk3Jb1hFh4MhWQ04hPZ4JASllQGulXS5SQV3FdwfeXOPMULq-3dW5n9VeDqWoTVjYa5gAO-rzCNgbb-q3LiFIRrhOVu1Hd7jKx1J-1jlKwGZNEGU6BoLW8PDlcwBOUPzWQRDFHlScKnDbbv79l5InksZ_ZuionN3-RJg7248cXD6NVlDf5kdNRz6ZHFEPfb6EDk-q-awtbukSB5oijCoMHL_4L5yJB12jISaSH1a6J6ypIt0zvKk3Iu3-KpRTsZ",
-      "blurb": "Upgrade your main event ticket with the MVP Court Pass for a closer-than-courtside view; check in by 2:30 PM.",
-      "firstSeenAt": "2026-11-06T04:44:11.016Z"
-    },
-    {
       "id": "sanjosetheaters-e9e7114806ce2859",
       "title": "Concerto for Orchestra – Symphony San Jose",
       "date": "2027-03-06",
@@ -34081,27 +34042,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/isa-research-seminar-joel-goh-national-university-of-singapore--lucas-106-santa-clara-1793849066597-280.webp",
       "blurb": "Hear Joel Goh of the National University of Singapore present at this ISA research seminar in Lucas 106.",
       "firstSeenAt": "2026-11-05T03:24:44.049Z"
-    },
-    {
-      "id": "scu-446d9207db43e5e6",
-      "title": "DNAxAI Series: Demo Day! See It, Try It, Use It: AI Tools for Research",
-      "date": "2026-11-11",
-      "displayDate": "Wed, Nov 11",
-      "time": "12:00 PM",
-      "endTime": null,
-      "venue": "Lucas Hall 107",
-      "address": "",
-      "city": "santa-clara",
-      "category": "education",
-      "cost": "",
-      "description": "",
-      "url": "https://events.scu.edu/leavey-school-of-business/event/525136-dnaxai-series-demo-day-see-it-try-it-use-it-ai",
-      "source": "Santa Clara University",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/dnaxai-series-demo-day-see-it-try-it-use-it-ai-tools-for-research-lucas-hall-107-santa-clara-1793940245346-280.webp",
-      "blurb": "Try out AI tools for research at a hands-on demo day in Lucas Hall as part of the DNAxAI Series.",
-      "firstSeenAt": "2026-11-06T04:44:11.016Z"
     },
     {
       "id": "sjsu-f883bf0116186cde",

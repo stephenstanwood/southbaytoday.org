@@ -1,0 +1,503 @@
+{
+  "reviewedAt": "2026-11-06T05:07:02Z",
+  "stanford": [
+    {
+      "event": {
+        "id": 50731549488587,
+        "title": "First Fridays at IDA (Social)",
+        "description_text": "Join us at Harmony House for IDA’s monthly First Fridays! A gathering space for artists, students, and community to connect, unwind, and create together. Each month, we open our doors at the Harmony House  for an evening of conversation, art-making, and chill vibes over food and drinks. Whether you’re here to meet new people, share your work, or just hang out, First Fridays are a chance to slow down and be in creative community.",
+        "filters": {
+          "event_audience": [
+            {
+              "name": "Everyone",
+              "id": 37146718530202
+            }
+          ],
+          "event_subject": [
+            {
+              "name": "Arts/Media",
+              "id": 37093209005248
+            },
+            {
+              "name": "Theater/Dance",
+              "id": 37093211004884
+            },
+            {
+              "name": "Humanities",
+              "id": 37952873733649
+            },
+            {
+              "name": "Diversity/Identity",
+              "id": 37952873735698
+            }
+          ],
+          "event_types": [
+            {
+              "name": "Social Event/Reception",
+              "id": 37952570042720
+            }
+          ]
+        },
+        "event_instances": [
+          {
+            "event_instance": {
+              "id": 53994312442198,
+              "event_id": 50731549488587,
+              "start": "2026-11-06T17:00:00-08:00",
+              "end": "2026-11-06T19:00:00-08:00",
+              "ranking": 0.54,
+              "all_day": false,
+              "num_attending": 2
+            }
+          }
+        ],
+        "localist_url": "https://events.stanford.edu/event/first-fridays-at-ida-social"
+      },
+      "publishedBefore": {
+        "id": "stanford-50731549488587-2026-11-06",
+        "title": "First Fridays at Ida (Social)",
+        "date": "2026-11-06",
+        "displayDate": "Fri, Nov 6",
+        "time": "5:00 PM",
+        "endTime": "7:00 PM",
+        "ongoing": false,
+        "venue": "Harmony House",
+        "address": "561 Lomita Drive, Stanford, CA 94305",
+        "city": "palo-alto",
+        "category": "arts",
+        "cost": "free",
+        "description": "Join us at Harmony House for IDA's monthly First Fridays! A gathering space for artists, students, and community to connect, unwind, and create together.",
+        "url": "https://events.stanford.edu/event/first-fridays-at-ida-social",
+        "source": "Stanford Events",
+        "kidFriendly": false,
+        "audienceAge": "all",
+        "blurb": "Join artists, students, and neighbors at Harmony House for IDA's monthly First Fridays gathering to connect and create together."
+      }
+    },
+    {
+      "event": {
+        "id": 53898107751560,
+        "title": "OMAC First Fridays",
+        "description_text": "Every first Friday, the Office for Military-Affiliated Communities hosts OMAC First Fridays at EVGR Pub & Beer Garden — a casual hangout for students, staff, veterans, and families. Expect friendly faces, easy conversation, and options for food and drink. Perfect for networking or simply unplugging, the event is open to all military-affiliated community members. Come by when you can and leave feeling more connected to campus life.",
+        "filters": {},
+        "event_instances": [
+          {
+            "event_instance": {
+              "id": 53898107752586,
+              "event_id": 53898107751560,
+              "start": "2026-11-06T17:00:00-08:00",
+              "end": "2026-11-06T19:00:00-08:00",
+              "ranking": 0.06,
+              "all_day": false,
+              "num_attending": 0
+            }
+          }
+        ],
+        "localist_url": "https://events.stanford.edu/event/omac-first-fridays"
+      },
+      "publishedBefore": {
+        "id": "stanford-53898107751560-2026-11-06",
+        "title": "OMAC First Fridays",
+        "date": "2026-11-06",
+        "displayDate": "Fri, Nov 6",
+        "time": "5:00 PM",
+        "endTime": "7:00 PM",
+        "ongoing": false,
+        "venue": "EVGR pub & beer Garden",
+        "address": "716 Serra St., Stanford CA 94305",
+        "city": "palo-alto",
+        "category": "outdoor",
+        "cost": null,
+        "description": "Every first Friday, the Office for Military-Affiliated Communities hosts Omac First Fridays at Evgr Pub & Beer Garden — a casual hangout for students, staff, veterans, and families.",
+        "url": "https://events.stanford.edu/event/omac-first-fridays",
+        "source": "Stanford Events",
+        "kidFriendly": false,
+        "audienceAge": "all",
+        "blurb": "Meet fellow students, staff, veterans, and families at a casual first-Friday hangout hosted by the Office for Military-Affiliated Communities at the beer garden."
+      }
+    }
+  ],
+  "scu": [
+    {
+      "schema": {
+        "@context": "http://schema.org/",
+        "@type": "Event",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "name": "DNAxAI Series: Demo Day! See It, Try It, Use It: AI Tools for Research",
+        "startDate": "2026-11-11T20:00:00+00:00",
+        "endDate": "2026-11-11T21:30:00+00:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "url": "https://events.scu.edu/leavey-school-of-business/event/525136-dnaxai-series-demo-day-see-it-try-it-use-it-ai",
+        "description": "  Join us for a hands-on, 90-minute DNAxAI session for Leavey faculty who want to move beyond chatting with AI and start using it to produce real scholarly work. Three colleagues will share how they use AI in their own work and guide you as you try each tool yourself.    Wilson Lin will introduce Gemini Notebook for working with your own sources and Claude Code for AI-assisted coding. Sanjiv Das will show how to use quick agents to draft a paper, generate a companion website, and manage it all with VS Code and GitHub. Michele Samorani will demonstrate how to write and publish a book using VS Code, Git, Quarto, and Claude Code.    No specific technical background required. Just bring a laptop and your curiosity; lunch will be provided. You’ll leave with workflows you can use right away in your research, teaching, and writing. Please RSVP by Nov 9 so we can plan for lunch.    Before the workshop: About a week ahead, we’ll email instructions for installing VS Code and setting up GitHub. Please watch for that message and complete the setup beforehand so you can jump right into the hands-on activities. ",
+        "location": [
+          {
+            "@type": "Place",
+            "name": "Lucas Hall 107",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Lucas Hall 107"
+            }
+          }
+        ],
+        "organizer": {
+          "@type": "Organization",
+          "name": "Leavey School of Business (SCU)",
+          "url": "https://events.scu.edu/leavey-school-of-business/"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "AI"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "Leavey School of Business"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "DNAxAI"
+          }
+        ]
+      },
+      "publishedBefore": {
+        "id": "scu-446d9207db43e5e6",
+        "title": "DNAxAI Series: Demo Day! See It, Try It, Use It: AI Tools for Research",
+        "date": "2026-11-11",
+        "displayDate": "Wed, Nov 11",
+        "time": "12:00 PM",
+        "endTime": null,
+        "venue": "Lucas Hall 107",
+        "address": "",
+        "city": "santa-clara",
+        "category": "education",
+        "cost": "",
+        "description": "",
+        "url": "https://events.scu.edu/leavey-school-of-business/event/525136-dnaxai-series-demo-day-see-it-try-it-use-it-ai",
+        "source": "Santa Clara University",
+        "kidFriendly": false,
+        "audienceAge": "all",
+        "blurb": "Try out AI tools for research at a hands-on demo day in Lucas Hall as part of the DNAxAI Series."
+      }
+    },
+    {
+      "schema": {
+        "@context": "http://schema.org/",
+        "@type": "Event",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "name": "Brown Bag in the Humanities featuring: Michelle Velasquez-Potts (Gender and Sexuality Studies)",
+        "startDate": "2026-11-11T19:45:00+00:00",
+        "endDate": "2026-11-11T20:50:00+00:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "url": "https://events.scu.edu/arts-and-sciences/event/524817-brown-bag-in-the-humanities-featuring-michelle-velasq",
+        "description": "Force-Feeding in Carceral Times",
+        "location": [
+          {
+            "@type": "Place",
+            "name": "Learning Commons Viewing and Taping A",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Learning Commons Viewing and Taping A"
+            }
+          }
+        ],
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://events.scu.edu/live/image/gid/10/width/600/height/600/crop/1/src_region/0,0,366,546/11129_images.jpg",
+          "width": 366,
+          "height": 366
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": "Arts &amp; Sciences (SCU)",
+          "url": "https://events.scu.edu/arts-and-sciences/"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "Open to the Public"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "College of Arts &amp; Sciences"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "CAH"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "CAH feature"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "cas"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "CAS Home"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "CAS Salon"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "catholic"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Center for Arts and Humanities"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Classics"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "college"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "College Notes"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "College of Arts and Science"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "College of Arts and Sciences"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Gender &amp; Sexuality Studies"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Markkula Center for Applied Ethics"
+          }
+        ]
+      },
+      "publishedBefore": {
+        "id": "scu-b5093756d8084cd3",
+        "title": "Brown Bag in the Humanities featuring: Michelle Velasquez-Potts (Gender and Sexuality Studies)",
+        "date": "2026-11-11",
+        "displayDate": "Wed, Nov 11",
+        "time": "11:45 AM",
+        "endTime": null,
+        "venue": "Learning Commons Viewing and Taping A",
+        "address": "",
+        "city": "santa-clara",
+        "category": "education",
+        "cost": "free",
+        "description": "Force-Feeding in Carceral Times",
+        "url": "https://events.scu.edu/arts-and-sciences/event/524817-brown-bag-in-the-humanities-featuring-michelle-velasq",
+        "source": "Santa Clara University",
+        "kidFriendly": false,
+        "audienceAge": "all",
+        "blurb": "Hear Michelle Velasquez-Potts of Gender and Sexuality Studies present \"Force-Feeding in Carceral Times\" at this lunchtime humanities talk."
+      }
+    },
+    {
+      "schema": {
+        "@context": "http://schema.org/",
+        "@type": "Event",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "name": "Music@Noon – Threads of Sound",
+        "startDate": "2026-11-11T20:00:00+00:00",
+        "endDate": "2026-11-11T20:00:00+00:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "url": "https://events.scu.edu/arts-and-sciences/event/510147-musicnoon-threads-of-sound",
+        "description": "    The music of Jennifer Higdon and George Crumb  Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello  Margaret Halbig and Teresa McCollough, piano   ",
+        "location": [
+          {
+            "@type": "Place",
+            "name": "Music Recital Hall",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Music Recital Hall"
+            }
+          }
+        ],
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://events.scu.edu/live/image/gid/10/width/600/height/600/crop/1/src_region/0,0,1064,1552/10872_Screenshot_2026-02-25_at_16.24.58.png",
+          "width": 600,
+          "height": 600
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": "Arts &amp; Sciences (SCU)",
+          "url": "https://events.scu.edu/arts-and-sciences/"
+        },
+        "additionalProperty": [
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "Open to the Public"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "College of Arts &amp; Sciences"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "eventType",
+            "value": "Performances"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Arts at SCU"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "College of Arts and Sciences"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "Music"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "performance"
+          },
+          {
+            "@type": "PropertyValue",
+            "name": "tag",
+            "value": "SCU Presents"
+          }
+        ]
+      },
+      "publishedBefore": {
+        "id": "scu-379111a5d94c69e5",
+        "title": "Music@Noon – Threads of Sound",
+        "date": "2026-11-11",
+        "displayDate": "Wed, Nov 11",
+        "time": "12:00 PM",
+        "endTime": null,
+        "venue": "Music Recital Hall",
+        "address": "",
+        "city": "santa-clara",
+        "category": "music",
+        "cost": "free",
+        "description": "The music of Jennifer Higdon and George Crumb Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello Margaret Halbig and Teresa McCollough, piano",
+        "url": "https://events.scu.edu/arts-and-sciences/event/510147-musicnoon-threads-of-sound",
+        "source": "Santa Clara University",
+        "kidFriendly": false,
+        "audienceAge": "all",
+        "blurb": "Hear works by Jennifer Higdon and George Crumb performed by a mezzo-soprano, a cellist, and two pianists at this midday recital."
+      }
+    }
+  ],
+  "crochet": {
+    "id": "inbound-d9483c271a4d2528",
+    "title": "Learn to Crochet (Teens Grades 6-12)",
+    "date": "2026-11-07",
+    "displayDate": "Sat, Nov 7",
+    "time": "4:00 PM",
+    "endTime": "5:30 PM",
+    "venue": "Sunnyvale Main Library",
+    "address": "Sunnyvale Main Library, Library Program Room",
+    "city": "sunnyvale",
+    "category": "education",
+    "cost": null,
+    "description": "Beginner crochet workshop for teens in grades 6 to 12, led by Monta Vista's Crochet Club. Participants learn foundational stitches and make a project to take home, and all materials are provided. Registration is required and supplies are limited, but walk-ins are welcome if space allows.",
+    "url": "https://sunnyvale.libcal.com/event/17603300",
+    "source": "City Newsletter",
+    "kidFriendly": true,
+    "audienceAge": "kids",
+    "blurb": "Learn foundational crochet stitches in a beginner workshop for teens in grades 6 to 12, led by Monta Vista's Crochet Club."
+  },
+  "ticketUpgrade": {
+    "id": "tm-G5vYZ_8RnIgt-",
+    "title": "Mvp Court Pass (Check in By 2:30pm)",
+    "date": "2027-01-16",
+    "displayDate": "Sat, Jan 16",
+    "time": "3:00 PM",
+    "endTime": null,
+    "venue": "Tech CU Arena",
+    "address": "1500 S Tenth Street",
+    "city": "san-jose",
+    "category": "education",
+    "cost": "paid",
+    "description": "This IS AN Optional Upgrade. Ticket TO THE Main Event Is Also Required. Get closer than courtside with the MVP Court Pass!",
+    "url": "https://www.ticketmaster.com/mvp-court-pass-check-in-by-san-jose-california-01-16-2027/event/1C00650BEAA35A61",
+    "source": "Ticketmaster",
+    "kidFriendly": false,
+    "audienceAge": "all",
+    "blurb": "Upgrade your main event ticket with the MVP Court Pass for a closer-than-courtside view; check in by 2:30 PM."
+  },
+  "foodPlaceholder": {
+    "record_id": "SR0868681",
+    "business_name": "E-555 W JAVA - FOH/SERVERY",
+    "site_location": "555 JAVA DR. SUNNYVALE",
+    "city": "SUNNYVALE",
+    "date_plan_approved": "2022-07-05T00:00:00.000",
+    "final_inspection": "2026-10-29T00:00:00.000"
+  },
+  "midpenCapacity": "<section class=\"volunteer-spots-remaining\">\n                            <div class=\"section-inner\">\n                                <h2 class=\"section-header\">Volunteer Spots Remaining</h2>\n                                <div class=\"section-content\">\n                                    <div class=\"spots-remaining\">\n                                        <span class=\"spots-remaining__count\">0 open spots</span>\n                                    </div>\n                                                                    </div>\n                            </div>\n                        </section>",
+  "duplicateDiya": [
+    {
+      "id": "inbound-89733c3e829d78b9",
+      "title": "Diya Painting Workshop",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "5:30 PM",
+      "endTime": "7:00 PM",
+      "venue": "Central Park Library - Edinger Room",
+      "address": "Central Park Library - Edinger Room, 2635 Homestead Road, Santa Clara, California 95051",
+      "city": "santa-clara",
+      "category": "education",
+      "cost": null,
+      "description": "A Diwali-themed workshop where attendees learn about the Festival of Lights and paint their own diya (traditional oil lamp) to take home; all materials provided, first-come, first-served.",
+      "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114903/",
+      "source": "City Newsletter",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Paint your own traditional diya lamp and learn about the Festival of Lights at Central Park Library."
+    },
+    {
+      "id": "inbound-29108783d8f5c899",
+      "title": "Celebrate Diwali by Painting Diyas",
+      "date": "2026-11-05",
+      "displayDate": "Thu, Nov 5",
+      "time": "5:30 PM",
+      "endTime": "7:00 PM",
+      "venue": "Central Park Library - Margie Edinger Room",
+      "address": "Central Park Library - Margie Edinger Room, Santa Clara",
+      "city": "santa-clara",
+      "category": "community",
+      "cost": null,
+      "description": "Paint clay diyas, the small oil lamps traditionally lit during Diwali. All ages welcome; seating is first-come, first-served and supplies are limited.",
+      "url": "https://www.sclibrary.org/Home/Components/Calendar/Event/114903/7953?curm=11&cury=2026",
+      "source": "City Newsletter",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Paint clay diyas, the small oil lamps traditionally lit during Diwali, in a session open to all ages."
+    }
+  ]
+}
