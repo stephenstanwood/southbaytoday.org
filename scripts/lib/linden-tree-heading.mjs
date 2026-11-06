@@ -19,7 +19,7 @@
 //
 // Pure string functions, no I/O — see linden-tree-heading.test.mjs.
 
-import { assertsWalkUp, declaredRegistrationAvailability, registrationFromInstructions } from "../../src/lib/south-bay/eventFilters.mjs";
+import { assertsWalkUp, declaredRegistrationAvailability, registrationFromInstructions, REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
 
 /** Off-site venues Linden Tree actually books, with hand-verified location
  *  data. The store hardcodes its own address on every event it scrapes, so an
@@ -97,7 +97,15 @@ export function lindenTreeEventFacts(headingText, description = "") {
   const text = String(description || "").replace(/\s+/g, " ").trim();
   const cost = lindenTreeIsTicketed(headingText) ? "paid"
     : /\b(?:this event is free|these free meet-ups|free admission)\b/i.test(text) ? "free" : null;
-  const registration = declaredRegistrationAvailability(text)
+  // The calendar puts EVENT FULL on its own line after the dated heading,
+  // outside the body copy. Read this occurrence's notice before instructions;
+  // a fresh heading without it can reopen booking on the next scrape.
+  const headingLines = String(headingText || "").split(/\r?\n/);
+  const dateLine = headingLines.findIndex(line => /^\s*(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+\w+\s+\d{1,2}\s+at\s+\d/i.test(line));
+  const headingFull = dateLine >= 0 && headingLines.slice(dateLine + 1)
+    .some(line => /^\s*event\s+full[!.]?\s*$/i.test(line));
+  const registration = (headingFull ? REGISTRATION_FULL : null)
+    || declaredRegistrationAvailability(text)
     || (assertsWalkUp(text) ? null : registrationFromInstructions(text));
   const age = text.match(/\b(?:book club|workshops?)\s+for\s+(?:readers\s+)?ages?\s+(\d{1,2})(?:\+|\s+(?:and|&)\s+(?:up|older))(?=\s|[.!?,]|$)/i);
   const forKids = age && Number(age[1]) <= 12;
