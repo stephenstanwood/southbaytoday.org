@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-06T19:20:16.547Z",
+    "generatedAt": "2026-11-06T19:52:07.310Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
     "eventCount": 185,
@@ -22,8 +22,8 @@
       "Levi's Stadium (3)",
       "SAP Center (12)",
       "The Tech Interactive (6)",
-      "San Jose Museum of Art (3)",
       "Books Inc (6)",
+      "San Jose Museum of Art (3)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -283,16 +283,13 @@
       {
         "id": "books-inc",
         "label": "Books Inc",
-        "status": "error",
+        "status": "ok",
         "count": 6,
-        "liveCount": 0,
-        "error": "page.waitForFunction: Timeout 15000ms exceeded.",
+        "liveCount": 6,
+        "error": null,
         "sources": [
           "Books Inc"
-        ],
-        "retainedCount": 6,
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       },
       {
         "id": "barnes-noble",
@@ -1496,7 +1493,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-06T19:17:32.282Z"
+        "checkedAt": "2026-11-06T19:51:00.411Z"
       }
     },
     {
@@ -1519,7 +1516,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T19:17:32.287Z"
+        "checkedAt": "2026-11-06T19:51:00.413Z"
       }
     },
     {
@@ -1542,7 +1539,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T19:17:32.288Z"
+        "checkedAt": "2026-11-06T19:51:00.413Z"
       }
     },
     {
@@ -1565,7 +1562,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-06T19:17:32.288Z"
+        "checkedAt": "2026-11-06T19:51:00.414Z"
       }
     },
     {
@@ -1588,7 +1585,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-06T19:17:32.289Z"
+        "checkedAt": "2026-11-06T19:51:00.414Z"
       }
     },
     {
@@ -3195,7 +3192,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.186Z"
+        "checkedAt": "2026-11-06T19:51:21.595Z"
       }
     },
     {
@@ -3219,7 +3216,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.186Z"
+        "checkedAt": "2026-11-06T19:51:21.595Z"
       }
     },
     {
@@ -3243,7 +3240,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.203Z"
+        "checkedAt": "2026-11-06T19:51:21.596Z"
       }
     },
     {
@@ -3267,7 +3264,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.259Z"
+        "checkedAt": "2026-11-06T19:51:21.597Z"
       }
     },
     {
@@ -3291,7 +3288,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-06T19:20:14.260Z"
+        "checkedAt": "2026-11-06T19:51:21.597Z"
       }
     },
     {
@@ -3315,7 +3312,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.260Z"
+        "checkedAt": "2026-11-06T19:51:21.597Z"
       }
     },
     {
@@ -3339,7 +3336,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.260Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3363,7 +3360,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.260Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3387,7 +3384,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.260Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3411,7 +3408,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.261Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3435,7 +3432,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.262Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3459,7 +3456,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-06T19:20:14.262Z"
+        "checkedAt": "2026-11-06T19:51:21.598Z"
       }
     },
     {
@@ -3565,65 +3562,6 @@
       "kidFriendly": true
     },
     {
-      "id": "8f7697d5027c",
-      "title": "First Fridays: November 2026",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
-      "url": "https://sjmusart.org/event/first-fridays-november-2026",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
-      "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "fe4a7a23e4bd",
-      "title": "Walk with a Naturalist: November 2026",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "12:30 PM",
-      "endTime": "1:30 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
-      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": true,
-      "costNote": "Tour included with museum admission",
-      "audienceAge": "all",
-      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
-      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
-    },
-    {
-      "id": "a322ab0c474f",
-      "title": "First Fridays: Celebrate the Holidays with Pride",
-      "date": "2026-12-04",
-      "displayDate": "Fri, Dec 4",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Celebrate San Jose's LGBTQIA+ community with live music, storytelling, and drag performances. Museum admission is free after 6 PM.",
-      "url": "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
-      "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
       "id": "7639bf0ba2b1",
       "title": "SCOTT LAMBRIDIS: ST. ULPHIA'S DEAD",
       "date": "2026-11-10",
@@ -3724,6 +3662,65 @@
       "url": "https://www.booksinc.com/pages/events",
       "source": "Books Inc",
       "kidFriendly": false
+    },
+    {
+      "id": "8f7697d5027c",
+      "title": "First Fridays: November 2026",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": "6:00 PM",
+      "endTime": "9:00 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
+      "url": "https://sjmusart.org/event/first-fridays-november-2026",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": false,
+      "blurb": "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
+      "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "fe4a7a23e4bd",
+      "title": "Walk with a Naturalist: November 2026",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "12:30 PM",
+      "endTime": "1:30 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
+      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": true,
+      "costNote": "Tour included with museum admission",
+      "audienceAge": "all",
+      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
+      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
+    },
+    {
+      "id": "a322ab0c474f",
+      "title": "First Fridays: Celebrate the Holidays with Pride",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": "6:00 PM",
+      "endTime": "9:00 PM",
+      "venue": "San Jose Museum of Art",
+      "address": "110 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "free",
+      "description": "Celebrate San Jose's LGBTQIA+ community with live music, storytelling, and drag performances. Museum admission is free after 6 PM.",
+      "url": "https://sjmusart.org/event/first-fridays-celebrate-holidays-pride",
+      "source": "San Jose Museum of Art",
+      "kidFriendly": false,
+      "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
+      "attendanceNote": "Register in advance for faster check-in."
     },
     {
       "id": "5dd03098440a",
