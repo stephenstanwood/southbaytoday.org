@@ -49,6 +49,8 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [/\bjoin us the ((?:first|second|third|fourth|fifth|last) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)) every month\b/g, "join us on the $1 of every month"],
+      ["Byoc (Bring Your Own Cup)", "BYOC (Bring Your Own Cup)"],
       ["someone on the waiting lists.", "someone on the waiting list."],
       ["special STEM themed programs", "special STEM-themed programs"],
       ["their Science, Tech, Engineering, or Math skills", "their science, tech, engineering, or math skills"],
@@ -393,6 +395,7 @@ const EDITS = {
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
     ],
     blurb: [
+      ["Sip an English-style tea service", "Enjoy an English-style tea service"],
       ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
       [/\bziploc bag\b/g, "Ziploc bag"],
       ["a librarian-issued Lego Challenge.", "a librarian-issued LEGO Challenge."],
@@ -427,6 +430,7 @@ const EDITS = {
   },
   "Kepler's Books": {
     description: [
+      ["challenges–and unexpected grace–of caregiving", "challenges—and unexpected grace—of caregiving"],
       ["bestselling author and beloved community member, Abraham Verghese.", "bestselling author and beloved community member Abraham Verghese."],
     ],
   },
@@ -693,6 +697,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      [/\bEBT\/Snap benefits\b/g, "EBT/SNAP benefits"],
       ["Mpsf Championship", "MPSF Championship"],
       ["streamed on Accnx.", "streamed on ACCNX."],
       ["The 5th annual Poetry Live! Spoken word event featuring poets", "The 5th annual Poetry Live! spoken word event features poets"],
@@ -741,6 +746,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/^(University Public Worship: .+\))\.$/g, "$1"],
       ["Applied Physics/Physics Colloquium", "Applied Physics / Physics Colloquium"],
       ['CMEMS: Alice Brooke presents, "A Pearl of Great Price"', 'CMEMS: Alice Brooke presents "A Pearl of Great Price"'],
       ['" Wormholes and the Conformal Bootstrap"', '"Wormholes and the Conformal Bootstrap"'],
