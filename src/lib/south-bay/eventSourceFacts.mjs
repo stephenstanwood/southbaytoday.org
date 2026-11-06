@@ -60,6 +60,22 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // The newly added occurrences were checked against full organizer records.
+  // Keep sparse/cached rows and retired pages consistent with those records.
+  // Evidence: docs/qa/2026-11-06-0607z-fact-check.md.
+  {
+    date: "2027-01-16",
+    url: "https://www.ticketmaster.com/harlem-globetrotters-rivalry-tour-presented-by-san-jose-california-01-16-2027/event/1C00650CF372571B",
+    facts: { category: "sports" },
+  },
+  {
+    date: "2026-11-11",
+    url: "https://events.scu.edu/library/event/521864-find-your-space-in-the-library",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "SCU addresses this library orientation to commuter and transfer students. Confirm public eligibility with the organizer before attending.",
+    },
+  },
   // Full organizer records reviewed November 5, including the hash-verified
   // retained Stanford response. Sparse excerpts omit attendance restrictions.
   // Evidence: docs/qa/2026-11-06-0507z-fact-check.md.

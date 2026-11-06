@@ -1,0 +1,186 @@
+{
+  "reviewedAt": "2026-11-06T06:07:02Z",
+  "library": {
+    "schema": {
+      "@context": "http://schema.org/",
+      "@type": "Event",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "name": "Find Your Space in the Library",
+      "startDate": "2026-11-11T20:30:00+00:00",
+      "endDate": "2026-11-11T21:30:00+00:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "url": "https://events.scu.edu/library/event/521864-find-your-space-in-the-library",
+      "description": "  As a commuter or transfer student, stepping past the first floor of the University Library can feel uncertain or intimidating. You might wonder which spaces are best for focused studying, hanging out with friends, or taking a well-deserved nap and what the noise expectations are for each area. The University Library is here to help you confidently explore, navigate, and claim the spaces that fit your lifestyle and learning needs.        Lunch will be provided.    We’d love for you to RSVP, and feel free to bring a friend or two.    Location: Learning Commons, Viewing &amp; Production-B (LC 133)    11125721933 \t \t \t \t \t     &#160; ",
+      "location": [
+        {
+          "@type": "Place",
+          "name": "Learning Commons, Viewing &amp; Production B - LC 133",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Learning Commons, Viewing &amp; Production B - LC 133"
+          }
+        }
+      ],
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://events.scu.edu/live/image/gid/23/width/600/height/600/crop/1/src_region/0,0,2688,4032/11117_Blue_Collage_Scuba_Diving_Promotion_Facebook_Post_28_x_42_in.png",
+        "width": 600,
+        "height": 600
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Library (SCU)",
+        "url": "https://events.scu.edu/library/"
+      }
+    },
+    "publishedBefore": {
+      "id": "scu-9864ad76cd5dff3b",
+      "title": "Find Your Space in the Library",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "12:30 PM",
+      "endTime": null,
+      "venue": "Learning Commons, Viewing & Production B - LC 133",
+      "address": "",
+      "city": "santa-clara",
+      "category": "education",
+      "cost": "free",
+      "description": "",
+      "url": "https://events.scu.edu/library/event/521864-find-your-space-in-the-library",
+      "source": "Santa Clara University",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Join a midday session in the Learning Commons, Viewing & Production B, room LC 133, centered on finding your space in the library.",
+      "firstSeenAt": "2026-11-06T05:43:38.967Z"
+    }
+  },
+  "veterans": {
+    "schema": {
+      "@context": "http://schema.org/",
+      "@type": "Event",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "name": "Veterans Day Ceremony",
+      "startDate": "2026-11-11T23:00:00+00:00",
+      "endDate": "2026-11-12T00:00:00+00:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "url": "https://events.scu.edu/arts-and-sciences/event/517045-veterans-day-ceremony",
+      "description": "SCU commemorates Veterans Day with a formal color guard ceremony just steps from the Mission Church and remarks from Santa Clara University alumnus and former Secretary of Defense Leon Panetta ’60, J.D. ’63.&#160; Join us for the formal ceremony starting at 3:00pm.",
+      "location": [
+        {
+          "@type": "Place",
+          "name": "St. Ignatius Lawn",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "St. Ignatius Lawn"
+          }
+        }
+      ],
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://events.scu.edu/live/image/gid/10/width/600/height/600/crop/1/src_region/0,0,1620,911/10990_2025_Veterans_Day_ROTCjpg.jpg",
+        "width": 600,
+        "height": 600
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Arts &amp; Sciences (SCU)",
+        "url": "https://events.scu.edu/arts-and-sciences/"
+      },
+      "additionalProperty": [
+        {
+          "@type": "PropertyValue",
+          "name": "eventType",
+          "value": "Open to the Public"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "eventType",
+          "value": "College of Arts &amp; Sciences"
+        },
+        {
+          "@type": "PropertyValue",
+          "name": "tag",
+          "value": "Military Science Program"
+        }
+      ]
+    },
+    "publishedBefore": {
+      "id": "scu-3c4dcb490fa619e7",
+      "title": "Veterans Day Ceremony",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": "3:00 PM",
+      "endTime": null,
+      "venue": "St. Ignatius Lawn",
+      "address": "",
+      "city": "santa-clara",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://events.scu.edu/arts-and-sciences/event/517045-veterans-day-ceremony",
+      "source": "Santa Clara University",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Attend the Veterans Day Ceremony on St. Ignatius Lawn, a Wednesday afternoon community gathering at Santa Clara.",
+      "firstSeenAt": "2026-11-06T05:43:38.967Z"
+    }
+  },
+  "game": {
+    "publishedBefore": {
+      "id": "tm-G5vYZ_8SSjPjh",
+      "title": "Harlem Globetrotters: Rivalry Tour Presented by Sprite",
+      "date": "2027-01-16",
+      "displayDate": "Sat, Jan 16",
+      "time": "3:00 PM",
+      "endTime": null,
+      "venue": "Tech CU Arena",
+      "address": "1500 S Tenth Street",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "Have the Harlem Globetrotters finally met their match? The Washington Generals and new lineup of rivals step onto the court --hungry for a win, and out to prove it!",
+      "url": "https://www.ticketmaster.com/harlem-globetrotters-rivalry-tour-presented-by-san-jose-california-01-16-2027/event/1C00650CF372571B",
+      "source": "Ticketmaster",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "blurb": "Watch the Harlem Globetrotters take on the Washington Generals and a new lineup of rivals in a Saturday afternoon game at Tech CU Arena.",
+      "firstSeenAt": "2026-11-06T05:43:38.967Z"
+    },
+    "organizer": {
+      "sourceUrl": "https://www.harlemglobetrotters.com/world-tour/schedule/tech-cu-arena/",
+      "retrieval": "Current primary occurrence via native web reader",
+      "date": "2027-01-16",
+      "time": "3:00 PM",
+      "venue": "Tech CU Arena",
+      "format": "basketball game"
+    },
+    "minimalAdapterInput": {
+      "id": "G5vYZ_8SSjPjh",
+      "name": "Harlem Globetrotters: Rivalry Tour Presented by Sprite",
+      "url": "https://www.ticketmaster.com/harlem-globetrotters-rivalry-tour-presented-by-san-jose-california-01-16-2027/event/1C00650CF372571B",
+      "info": "Have the Harlem Globetrotters finally met their match? The Washington Generals and new lineup of rivals step onto the court --hungry for a win, and out to prove it!",
+      "dates": {
+        "start": {
+          "localDate": "2027-01-16",
+          "localTime": "15:00:00"
+        },
+        "status": {
+          "code": "onsale"
+        }
+      },
+      "_embedded": {
+        "venues": [
+          {
+            "name": "Tech CU Arena",
+            "city": {
+              "name": "San Jose"
+            },
+            "address": {
+              "line1": "1500 S Tenth Street"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

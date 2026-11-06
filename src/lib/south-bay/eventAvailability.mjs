@@ -4,6 +4,13 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Find Your Space in the Library$/i,
+    venue: /.*/,
+    date: "2026-11-11",
+    reason: "SCU addresses this library orientation to commuter and transfer students. Withhold until public eligibility is confirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/library/event/521864-find-your-space-in-the-library",
+  }),
+  Object.freeze({
     title: /^DNAxAI Series: Demo Day! See It, Try It, Use It: AI Tools for Research$/i,
     venue: /.*/,
     date: "2026-11-11",

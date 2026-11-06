@@ -3753,6 +3753,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // hits the family rule. All three shipped as miscategorized games.
   const titleHasVs = titleLower.includes("vs.") || titleLower.includes(" vs ");
   if (titleHasVs && /\b(football|basketball|baseball|softball|soccer|hockey|volleyball|lacrosse|water polo|rugby)\b/.test(titleLower)) return "sports";
+  // The organizer's Rivalry Tour is a basketball game. Tech CU Arena's
+  // sponsor name must not turn it into a technology lesson. Match the tour
+  // title, leaving lectures and separately named ticket upgrades alone.
+  if (/^harlem\s+globetrotters\s*:\s*rivalry\s+tour\b/.test(titleLower)) return "sports";
   // Pro and club matchups name the teams, not the sport, so the rule above
   // misses them: "San Jose Earthquakes vs LAFC - Prime Time" has no sport word
   // anywhere in the title. Feeds that carry a classification (Ticketmaster)
