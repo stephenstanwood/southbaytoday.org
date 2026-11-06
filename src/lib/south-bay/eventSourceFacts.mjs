@@ -60,6 +60,45 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Organizer records and ticket pages reviewed November 5. Apply these
+  // before URL deduplication so sparse newsletter copies cannot reappear.
+  // Evidence: docs/qa/2026-11-06-0207z-fact-check.md.
+  {
+    date: "2026-11-06",
+    url: "https://events.stanford.edu/event/ewear-health-prize-stanford-u-2026",
+    facts: { category: "education" },
+  },
+  {
+    date: "2026-11-08",
+    url: "https://tickets.gostanford.com/events/womens-basketball-vs-uc-davis-xp06qg",
+    aliasUrls: ["https://www.espn.com/watch/player/_/eventCalendarId/401915979?gameId=401915979&sourceLang=en&om-navmethod=espn%3Aglobalsearch%3Aresults"],
+    facts: {
+      url: "https://tickets.gostanford.com/events/womens-basketball-vs-uc-davis-xp06qg",
+      venue: "Maples Pavilion",
+      address: "655 Campus Drive, Stanford, CA 94305",
+    },
+  },
+  {
+    date: "2026-11-08",
+    url: "https://tickets.gostanford.com/events/acc-mens-soccer-championship-quarterfinals-1yr8bl",
+    facts: { address: "641 Nelson Road, Stanford, CA 94305" },
+  },
+  {
+    date: "2026-11-10",
+    url: "https://events.scu.edu/leavey-school-of-business/event/521785-queer-qualified-networking-101",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "SCU labels this a Student Organizations / Undergraduate Business workshop. Confirm public eligibility with the organizer before attending.",
+    },
+  },
+  {
+    date: "2026-11-10",
+    url: "https://events.scu.edu/library/event/521863-find-your-space-in-the-library",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "SCU addresses this library orientation to commuter and transfer students. Confirm public eligibility with the organizer before attending.",
+    },
+  },
   // A live library edit moved the header to 2–3:30 PM but retained a
   // two-hour claim in the body. Preserve the published clocks and optional
   // signup, disclose the conflict, and never invent a 4 PM finish. Stop

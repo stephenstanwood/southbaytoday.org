@@ -4,6 +4,20 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Queer\s*&\s*Qualified\s*-\s*Networking 101$/i,
+    venue: /.*/,
+    date: "2026-11-10",
+    reason: "SCU identifies this career workshop as a Student Organizations / Undergraduate Business program. Public eligibility is unconfirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/leavey-school-of-business/event/521785-queer-qualified-networking-101",
+  }),
+  Object.freeze({
+    title: /^Find Your Space in the Library$/i,
+    venue: /.*/,
+    date: "2026-11-10",
+    reason: "SCU addresses this library orientation to commuter and transfer students. Withhold until public eligibility is confirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/library/event/521863-find-your-space-in-the-library",
+  }),
+  Object.freeze({
     title: /^(?:Campus Reading Program, November 9 Events!?|I, Robot - Campus Reading Discussion)$/i,
     venue: /.*/,
     date: "2026-11-09",

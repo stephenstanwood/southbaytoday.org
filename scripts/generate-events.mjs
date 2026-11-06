@@ -4552,7 +4552,14 @@ async function fetchStanfordEvents() {
       // park. Preserve arts and the other established topic categories.
       const sourceSaysLecture = (ev.filters?.event_types || [])
         .some((type) => /^(?:Lecture\/Presentation\/Talk|Class\/Seminar)$/i.test(type.name || ""));
-      const category = ["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture
+      // A research/technology conference can include a demo "showcase".
+      // Its declared format outranks that exhibition heuristic, while an
+      // explicitly named art show or performance keeps its subject category.
+      const sourceSaysConference = (ev.filters?.event_types || [])
+        .some((type) => /^Conference\/Symposium$/i.test(type.name || ""));
+      const conferenceMisreadAsArt = inferredCategory === "arts" && sourceSaysConference
+        && !/\b(?:exhibit(?:ion)?|gallery|art|concert|recital|performance|film|dance)\b/i.test(ev.title || "");
+      const category = conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
         ? "education" : inferredCategory;
       const attendanceNotes = [
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
