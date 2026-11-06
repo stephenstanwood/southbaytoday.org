@@ -1,22 +1,21 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-05T20:59:49.213Z",
+    "generatedAt": "2026-11-06T01:21:54.155Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 190,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (8)",
-      "History San Jose (5)",
-      "Montalvo Arts Center (4)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (4)",
       "Guadalupe River Park Conservancy (18)",
       "Santana Row (5)",
-      "City of Cupertino (19)",
+      "City of Cupertino (20)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
@@ -24,6 +23,7 @@
       "The Tech Interactive (7)",
       "Books Inc (7)",
       "San Jose Museum of Art (3)",
+      "History San Jose (5)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -94,18 +94,20 @@
       {
         "id": "history-san-jose",
         "label": "History San Jose",
-        "status": "ok",
-        "count": 10,
-        "error": null,
+        "status": "error",
+        "count": 5,
+        "error": "unexpected empty result after retry; previous snapshot still has 5 future event(s) from History San Jose",
         "sources": [
           "History San Jose"
-        ]
+        ],
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       },
       {
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 4,
+        "count": 5,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -191,7 +193,7 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 19,
+        "count": 20,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -645,88 +647,20 @@
       }
     },
     {
-      "id": "0b2b97a39872",
-      "title": "San José Roots",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "12:00 pm",
-      "endTime": "4:00 pm",
-      "venue": "Gonzales/Peralta Adobe",
-      "address": "87 N San Pedro St., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "",
-      "url": "https://historysanjose.org/event/san-jose-roots/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "8b3cbcd17913",
-      "title": "South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": "11:00 am",
-      "endTime": "1:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
+      "id": "655912098616",
+      "title": "Events Calendar",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
       "cost": "paid",
       "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "a18ccd8100ff",
-      "title": "History Park Heritage Holiday Tea",
-      "date": "2026-12-05",
-      "displayDate": "Sat, Dec 5",
-      "time": "11:00 am",
-      "endTime": "3:30 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "1f9145761e09",
-      "title": "Gingerbread Village Workshop",
-      "date": "2026-12-11",
-      "displayDate": "Fri, Dec 11",
-      "time": "7:00 pm",
-      "endTime": "9:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "fc8e02e611b6",
-      "title": "History Park Heritage Holiday",
-      "date": "2026-12-19",
-      "displayDate": "Sat, Dec 19",
-      "time": "2:00 pm",
-      "endTime": "6:00 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
+      "url": "https://montalvoarts.org/",
+      "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
     {
@@ -1484,7 +1418,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-05T20:58:42.613Z"
+        "checkedAt": "2026-11-06T01:19:41.636Z"
       }
     },
     {
@@ -1507,7 +1441,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T20:58:42.617Z"
+        "checkedAt": "2026-11-06T01:19:41.639Z"
       }
     },
     {
@@ -1530,7 +1464,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-05T20:58:42.617Z"
+        "checkedAt": "2026-11-06T01:19:41.640Z"
       }
     },
     {
@@ -1553,7 +1487,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-05T20:58:42.618Z"
+        "checkedAt": "2026-11-06T01:19:41.640Z"
       }
     },
     {
@@ -1576,7 +1510,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-05T20:58:42.618Z"
+        "checkedAt": "2026-11-06T01:19:41.640Z"
       }
     },
     {
@@ -1784,6 +1718,23 @@
       "kidFriendly": false
     },
     {
+      "id": "9583a73da599",
+      "title": "Taiso with Mayor Moore",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "10:00 AM",
+      "endTime": "11:00 AM",
+      "venue": "Cupertino Community Hall",
+      "address": "Cupertino Community Hall, 10350 Torre Avenue, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Join Mayor Kitty Moore for Taiso, a simple and energizing Japanese exercise routine that promotes flexibility, circulation, and overall wellness. Hosted by the City of Cupertino and the Cupertino-Toyokawa Sister Cities Committee (CTSC), this free event introduces participants to Radio Taiso, a nearly 100-year-old Japanese exercise routine designed for people of all ages and fitness levels. As part of Mayor Moore's Initiative, the event encourages residents to stay active, connect with others, and explore a fun and accessible wellness tradition practiced in Japan for generations. Event Details Date: Saturday, November 14 Time: 10 to 11 a.m. Location: Cupertino Community Hall Address: 10350 Torre Ave, Cupertino, CA 95014 Event Registration Visit cupertino.gov/taiso to reserve your spot. Special Guests & Raffle Prizes The event will feature a special appearance by the CTSC-sponsored 2026 San Francisco Cherry Blossom Festival Queen. Attendees will also have a chance to win raffle prizes, including tickets to Hakone Estate and Gardens. Raffle winner must be present to win.",
+      "url": "https://www.cupertino.gov/Events-directory/Taiso-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
       "id": "a2318dccf50a",
       "title": "El Nino Preparedness Community Meeting",
       "date": "2026-11-18",
@@ -1916,7 +1867,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1933,7 +1884,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3166,7 +3117,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/don-omar",
         "date": "2026-11-05",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.612Z"
+        "checkedAt": "2026-11-06T01:20:48.815Z"
       }
     },
     {
@@ -3190,7 +3141,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.612Z"
+        "checkedAt": "2026-11-06T01:20:48.816Z"
       }
     },
     {
@@ -3214,7 +3165,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.612Z"
+        "checkedAt": "2026-11-06T01:20:48.816Z"
       }
     },
     {
@@ -3238,7 +3189,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.613Z"
+        "checkedAt": "2026-11-06T01:20:48.817Z"
       }
     },
     {
@@ -3262,7 +3213,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.615Z"
+        "checkedAt": "2026-11-06T01:20:48.819Z"
       }
     },
     {
@@ -3286,7 +3237,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.819Z"
       }
     },
     {
@@ -3310,7 +3261,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3334,7 +3285,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3358,7 +3309,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3382,7 +3333,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3406,7 +3357,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3430,7 +3381,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3454,7 +3405,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-05T20:59:08.616Z"
+        "checkedAt": "2026-11-06T01:20:48.820Z"
       }
     },
     {
@@ -3753,6 +3704,91 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "0b2b97a39872",
+      "title": "San José Roots",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "12:00 pm",
+      "endTime": "4:00 pm",
+      "venue": "Gonzales/Peralta Adobe",
+      "address": "87 N San Pedro St., San José",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "url": "https://historysanjose.org/event/san-jose-roots/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "8b3cbcd17913",
+      "title": "South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "11:00 am",
+      "endTime": "1:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave., San José",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "a18ccd8100ff",
+      "title": "History Park Heritage Holiday Tea",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "11:00 am",
+      "endTime": "3:30 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "1f9145761e09",
+      "title": "Gingerbread Village Workshop",
+      "date": "2026-12-11",
+      "displayDate": "Fri, Dec 11",
+      "time": "7:00 pm",
+      "endTime": "9:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
+      "id": "fc8e02e611b6",
+      "title": "History Park Heritage Holiday",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
+      "time": "2:00 pm",
+      "endTime": "6:00 pm",
+      "venue": "History Park",
+      "address": "635 Phelan Ave., San José",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
     },
     {
       "id": "5dd03098440a",
