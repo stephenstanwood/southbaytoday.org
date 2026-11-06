@@ -13,6 +13,21 @@ import {
 import { canonicalHistorySjUrl, inferHistorySjCost } from "./history-sj.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
+test("a preview clipped at a speaker's middle initial drops the incomplete sentence", () => {
+  // Stanford's eWEAR preview stops at 200 characters, just before Hennessy.
+  // https://events.stanford.edu/event/ewear-health-prize-stanford-u-2026
+  const complete = "Deep Tech and AI for the Medical/Health Sector with brain-machine interfaces, longevity, precision health, robotics, or wearables. Start-ups compete for a $25,000 cash prize.";
+  for (const ending of ["John L.…", "Wendy K....", 'John L.…"']) {
+    const reviewed = polishDescription(`${complete} Keynote with ${ending}`);
+    assert.equal(reviewed, complete);
+    assert.equal(polishDescription(reviewed), reviewed);
+  }
+  const suppliedName = `${complete} Keynote with John L. Hennessy.`;
+  assert.equal(polishDescription(suppliedName), suppliedName);
+  const suppliedInitial = `${complete} Keynote with John L.`;
+  assert.equal(polishDescription(suppliedInitial), suppliedInitial);
+});
+
 test("truncated previews preserve a middle initial before a two-letter surname", () => {
   // Actual flattened/truncated importer output: the unfinished sentence must
   // disappear in full, rather than making "Lan A." look like a complete credit.

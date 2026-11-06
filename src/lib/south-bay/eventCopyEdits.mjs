@@ -37,6 +37,7 @@ const EDITS = {
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
       ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
       ["Lego Club!", "LEGO Club!"],
+      ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
     ],
     attendanceNote: [
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
@@ -62,6 +63,13 @@ const EDITS = {
       ["such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources such as e-books.", "such as printing, using email, connecting to Wi-Fi, creating documents, and accessing library resources such as e-books."],
       ["We will practice: Vocabulary for everyday activities; Listening Skills; Reading Skills; Speaking Skills.", "We will practice vocabulary for everyday activities, listening skills, reading skills, and speaking skills."],
       ["our WEE Love ART program", "our Wee Love Art program"],
+      ["our Wee Love ART program", "our Wee Love Art program"],
+      [/\bLight refreshments and (\$\d+(?:,\d{3})*(?:\.\d{2})?) gift card will be raffled\./g, "Light refreshments and a $1 gift card will be raffled."],
+      [/\bNovember (\d{1,2}): Reduciendo Nuestro Impacto Ambiental\./g, "Noviembre $1: Reduciendo Nuestro Impacto Ambiental."],
+      ["Our in-person meet up plans", "Our in-person meetup plans"],
+      ["a lively kids' Zumba-style inspired class", "a lively kids' Zumba-inspired class"],
+      ["start with warm-up songs then transition", "start with warm-up songs, then transition"],
+      [/\bziploc bag\b/g, "Ziploc bag"],
       ["This program is perfect for children of all ages, a wonderful opportunity for families", "This program is perfect for children of all ages. It's a wonderful opportunity for families"],
       ["Student can progress at their own pace", "Students can progress at their own pace"],
       ["Request an ADA accommodations for this event.", "Request ADA accommodations for this event."],
@@ -379,6 +387,7 @@ const EDITS = {
     ],
     blurb: [
       ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
+      [/\bziploc bag\b/g, "Ziploc bag"],
       ["a librarian-issued Lego Challenge.", "a librarian-issued LEGO Challenge."],
       ["from a SJPL Works Business Librarian", "from an SJPL Works business librarian"],
       ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
@@ -493,6 +502,9 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      [/\bChildren in Grades (?=K to \d)/g, "Children in grades "],
+      ["celebrate Fall with us by making fall inspired crafts", "celebrate fall with us by making fall-inspired crafts"],
+      [/(\bKathak Dance by [\p{L}.' -]+?)(?= \d{1,2}:\d{2} [AP]M -)/gu, "$1;"],
       ["Geodes are beautiful and diverse as the areas", "Geodes are as beautiful and diverse as the areas"],
       ["Silicon Valley Gem and Mineral Society Veteran, Steve May will", "Silicon Valley Gem and Mineral Society veteran Steve May will"],
       [/\b(1[0-2]|[1-9])\.([0-5]\d)(?= [AP]M\b)/gi, "$1:$2"],
@@ -624,6 +636,13 @@ const EDITS = {
   },
   "City of Cupertino": {
     description: [
+      ["Event Details Date:", "Event details: Date:"],
+      [/(\bDate: [^.!?;]+) Time:/g, "$1; Time:"],
+      [/(\bLocation: [^.!?;]+) Address:/g, "$1; Address:"],
+      [/(\bCA \d{5}(?:-\d{4})?) Event Registration Visit /g, "$1. Event registration: Visit "],
+      ["Special Guests & Raffle Prizes The event", "Special guests & raffle prizes: The event"],
+      ["Ctsc-sponsored", "CTSC-sponsored"],
+      ["Raffle winner must", "The raffle winner must"],
       ["Register Registration will open", "Registration will open"],
       ["Deaf and hard of hearing children, along with", "Deaf and hard-of-hearing children, along with"],
       ["about early Cupertino history, the craft of blacksmithing, and learn from our experienced", "about early Cupertino history and the craft of blacksmithing. Learn from our experienced"],
@@ -635,6 +654,7 @@ const EDITS = {
   },
   "City Newsletter": {
     title: [
+      ["– Acc Men's Soccer Tournament", "– ACC Men's Soccer Tournament"],
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
       [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
@@ -653,6 +673,8 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      ["Mpsf Championship", "MPSF Championship"],
+      ["streamed on Accnx.", "streamed on ACCNX."],
       ["The 5th annual Poetry Live! Spoken word event featuring poets", "The 5th annual Poetry Live! spoken word event features poets"],
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["similar to Bingo.", "similar to bingo."],

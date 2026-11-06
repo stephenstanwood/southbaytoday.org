@@ -58,15 +58,38 @@ const november5BrandTitlesFixture = JSON.parse(readFileSync(new URL("./fixtures/
 const november5MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-morning.json", import.meta.url)));
 const november5MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-midday.json", import.meta.url)));
 const november5AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-afternoon.json", import.meta.url)));
+const november5EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-evening.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
 audits.push(november5MorningFixture);
 audits.push(november5MiddayFixture);
 audits.push(november5AfternoonFixture);
+audits.push(november5EveningFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("evening copy repairs preserve revised source facts, new details and publisher scope", () => {
+  const revise = text => text.replaceAll("$100", "$150")
+    .replaceAll("November 22", "November 25").replaceAll("Noviembre 22", "Noviembre 25")
+    .replaceAll("November 14", "November 21").replaceAll("10 to 11 a.m.", "9 to 10 a.m.")
+    .replaceAll("10350 Torre Ave", "10360 Torre Ave").replaceAll("CA 95014", "CA 95015")
+    .replaceAll("K to 5", "K to 6").replaceAll("Vyoma Bhanap", "Updated Dancer")
+    .replaceAll("2:00 PM - 2:45 PM", "2:15 PM - 3:00 PM");
+  const suffix = " Registration required; ages 12+; $25. Contact updated@example.org. See https://example.org/new.";
+  for (const row of november5EveningFixture.cases) {
+    const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const original = { source: row.source, [row.field]: revise(row.refreshed) + suffix,
+      id: "revised-source-id", date: "2026-12-12", time: "4:00 PM", costNote: "$25" };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+  }
+});
 
 test("tech-help copy repairs preserve revised contacts and later attendance conditions", () => {
   const original = {

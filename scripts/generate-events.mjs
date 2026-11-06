@@ -3071,7 +3071,11 @@ function polishDescription(text) {
     // Protect a middle initial before a surname, including Lan A. Li. Let an
     // actual new sentence after an abbreviated name ("Mallik K. You'll…") split.
     const previewText = t.replace(/\b([A-Z][a-z]+ [A-Z])\.(?=\s+(?!(?:You|The|This|That|Join|Learn|Meet|Here|It|In|On|At|All|With|From|An|A|Please)\b)[A-Z][a-z]+\b)/g,
-      `$1${DOT_PLACEHOLDER}`);
+      `$1${DOT_PLACEHOLDER}`)
+      // A preview can stop immediately after the initial ("John L.…").
+      // Keep that period inside the clipped sentence so it is dropped whole.
+      .replace(/\b([A-Z][a-z]+ [A-Z])\.(?=\s*(?:…|\.{3})["')\]]*\s*$)/g,
+        `$1${DOT_PLACEHOLDER}`);
     const previewSentences = [...new Intl.Segmenter("en", { granularity: "sentence" }).segment(previewText)];
     while (previewSentences.length && /(?:…|\.{3})["')\]]*\s*$/.test(previewSentences.at(-1).segment)) {
       previewSentences.pop();
