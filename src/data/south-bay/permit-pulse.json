@@ -1,55 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-05T04:28:29.435Z",
+      "generatedAt": "2026-11-06T04:37:13.784Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 28 – Nov 4",
+      "dateRange": "Oct 29 – Nov 5",
       "stats": {
-        "total": 395,
-        "notable": 21,
-        "newUnits": 10,
-        "totalValuation": 13258486
+        "total": 429,
+        "notable": 18,
+        "newUnits": 7,
+        "totalValuation": 23921047
       },
       "permits": [
-        {
-          "id": "2025-119589-RS",
-          "address": "119 Scharff Av",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Sb9 Construct New Sb9 Duplex #2",
-          "valuation": 417986,
-          "units": 1,
-          "issueDate": "2026-10-28",
-          "subtype": "Duplex"
-        },
-        {
-          "id": "2025-112981-RS",
-          "address": "117 Scharff Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Sb9 New ADU #117 Unit 2 for New Duplex Unit #1",
-          "valuation": 140208,
-          "units": 1,
-          "issueDate": "2026-10-28",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-119592-RS",
-          "address": "119 Scharff Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Sb9 New ADU Unit #2 for New Duplex Unit #2",
-          "valuation": 140208,
-          "units": 1,
-          "issueDate": "2026-10-28",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
         {
           "id": "2026-123066-RS",
           "address": "1431 Pomona Av #2",
@@ -63,51 +27,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-108953-RS",
-          "address": "13612 Emilie Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 100274,
-          "units": 1,
-          "issueDate": "2026-10-28",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-112507-RS",
-          "address": "2496 Glen Angus Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached ADU",
-          "valuation": 87080,
-          "units": 1,
-          "issueDate": "2026-10-28",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2025-139608-RS",
-          "address": "6162 Valley Glen Dr #2",
+          "id": "2026-110120-RS",
+          "address": "15159 Rosemar Av #3",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Garage Conversion to JADU",
-          "valuation": 78460,
+          "valuation": 82682,
           "units": 1,
-          "issueDate": "2026-10-28",
+          "issueDate": "2026-11-03",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-131602-RS",
-          "address": "7108 Avenida Rotella #2",
+          "id": "2026-124944-RS",
+          "address": "1990 Leigh Ann Pl #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to JADU",
-          "valuation": 74928,
+          "description": "Code Case Garage Conversion to JADU",
+          "valuation": 64739,
           "units": 1,
-          "issueDate": "2026-10-28",
+          "issueDate": "2026-11-03",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -133,6 +73,66 @@
           "units": 1,
           "issueDate": "2026-10-30",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-143690-RS",
+          "address": "1489 Fruitdale Av 26-2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "MF ADU Unit 26-2 Convert Accessory Structure to MF ADU",
+          "valuation": 54113,
+          "units": 1,
+          "issueDate": "2026-11-03",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-143665-RS",
+          "address": "1489 Fruitdale Av 25-2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "MF ADU Unit 25-2 Convert Accessory Structure to MF ADU",
+          "valuation": 52012,
+          "units": 1,
+          "issueDate": "2026-11-03",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-144905-CI",
+          "address": "3000 Orchard Py",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Rosendin Electric Tenant Improvement",
+          "valuation": 10255535,
+          "units": 0,
+          "issueDate": "2026-11-03",
+          "subtype": "Office"
+        },
+        {
+          "id": "2026-144393-CI",
+          "address": "5891 Rue Ferrari",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "First Church Religious Assembly TI",
+          "valuation": 2225000,
+          "units": 0,
+          "issueDate": "2026-11-03",
+          "subtype": "Church"
+        },
+        {
+          "id": "2026-144327-CI",
+          "address": "2355 Zanker Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Sumitomo Electric Lightwave Tenant Improvement",
+          "valuation": 702000,
+          "units": 0,
+          "issueDate": "2026-10-30",
+          "subtype": "Manufacturing"
         }
       ]
     }

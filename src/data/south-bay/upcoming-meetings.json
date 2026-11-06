@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T04:28:29.306Z",
+  "generatedAt": "2026-11-06T04:37:13.452Z",
   "meetings": {
     "san-jose": {
       "date": "2026-11-05",
@@ -36,7 +36,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-05",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "mountain-view": {
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "startTime": "18:30",
+      "bodyName": "City Council",
+      "location": "Council Chambers and Video Conference",
+      "closedSession": false,
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3368&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3368,
+      "agendaItems": [
+        {
+          "title": "Community Foundation Week Proclamation",
+          "sequence": 5
+        },
+        {
+          "title": "National Hunger and Homelessness Awareness Week Proclamation",
+          "sequence": 6
+        },
+        {
+          "title": "Presentation of a commendation to City Manager Kimbra McCarthy, recognizing her as the first recipient of the International City/County Management Association's (ICMA) Good Governance Award",
+          "sequence": 7
+        },
+        {
+          "title": "2024 Community Greenhouse Gas Emissions Inventory",
+          "sequence": 12
+        },
+        {
+          "title": "Adobe Building Patio Tiles Replacement, Project 23-34",
+          "sequence": 13
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-10",
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -58,7 +96,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-09",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-04T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -68,13 +106,13 @@
       "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21901",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21951",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-11-09",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21901"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21951"
       }
     },
     "milpitas": {
@@ -91,7 +129,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-04T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-05T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -108,7 +146,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-04T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-05T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -135,7 +173,7 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "sunnyvale": {
       "provider": "Legistar",
