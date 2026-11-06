@@ -42,5 +42,16 @@ test("only timed public pages within the 90-day archive window are eligible", ()
     { ...row, date: "not-a-date" },
     { ...row, title: "" },
     { ...row, time: null },
-  ], [row], "2026-10-02"), [{ ...row, date: "2026-07-04" }]);
+  ], [{ ...row, date: "2026-10-03" }], "2026-10-02"), [{ ...row, date: "2026-07-04" }]);
+});
+
+test("archiving a started session today preserves each later session's URL", () => {
+  const morning = { id: "a", title: "Tech Mentor", date: "2026-11-06", time: "10:00 AM", venue: "King Library" };
+  const noon = { ...morning, id: "b", time: "12:00 PM" };
+  const afternoon = { ...morning, id: "c", time: "2:00 PM" };
+  const before = buildEventSlugs(eventPagePool([morning, noon, afternoon], [], "2026-11-06"));
+  const after = buildEventSlugs(eventPagePool([noon, afternoon], [morning], "2026-11-06"));
+  assert.deepEqual(after, before);
+  const corrected = { ...noon, venue: "Corrected Library" };
+  assert.equal(eventPagePool([corrected], [noon], "2026-11-06")[0], corrected);
 });

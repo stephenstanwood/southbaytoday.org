@@ -2,20 +2,23 @@
 import SignalShell from "../layouts/SignalShell.astro";
 import StaticLinkStrip from "../components/south-bay/StaticLinkStrip.astro";
 import upcomingData from "../data/south-bay/upcoming-events.json";
+import archiveData from "../data/south-bay/events-archive.json";
 import { CITIES } from "../lib/south-bay/cities";
 import { eventListJsonLd, type SchemaEventRecord } from "../lib/south-bay/eventSchema";
 import { buildEventSlugs } from "../lib/south-bay/eventSlug";
+import { eventPagePool } from "../lib/south-bay/eventPagePool";
 
 // The Events tab fetches its list after it loads, so crawlers never see the
 // rendered list — this build-time JSON-LD block is how today's events reach
 // search engines. The static /events/<date> pages carry the full window.
 const cityNames = new Map<string, string>(CITIES.map((c) => [c.id as string, c.name]));
 const allEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? []);
+const archived = ((archiveData as { events?: SchemaEventRecord[] }).events ?? []);
+const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const slugById = new Map<string, string>();
-for (const [slug, event] of buildEventSlugs(allEvents)) {
+for (const [slug, event] of buildEventSlugs(eventPagePool(allEvents, archived, todayPt))) {
   if (event.id) slugById.set(String(event.id), slug);
 }
-const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const todaysEvents = allEvents
   .filter((e) => e.date === todayPt && e.time)
   .map((e) => {

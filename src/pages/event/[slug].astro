@@ -279,7 +279,11 @@ const venueTodayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America
 const upcomingPool = ((upcomingData as { events?: RawEvent[] }).events ?? []).filter(
   (e) => e.date && e.date >= venueTodayPt && e.time,
 );
-const venueSlugs = buildEventSlugs(upcomingPool);
+const venueSlugs = buildEventSlugs(eventPagePool(
+  (upcomingData as { events?: RawEvent[] }).events ?? [],
+  (archiveData as { events?: RawEvent[] }).events ?? [],
+  venueTodayPt,
+));
 const slugByEvent = new Map<RawEvent, string>();
 for (const [slug, e] of venueSlugs) slugByEvent.set(e, slug);
 const eventVenueKey = (event.venue ?? "").trim().toLowerCase();

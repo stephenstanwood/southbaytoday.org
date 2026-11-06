@@ -58,6 +58,7 @@ import { readFileSync, existsSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
 import { refreshBriefingAvailability } from "./lib/city-briefing-integrity.mjs";
 import { advanceLedger } from "./lib/event-slug-ledger-io.mjs";
+import { maintainEventArchive } from "./lib/event-archive.mjs";
 import { catSignal } from "./lib/notify.mjs";
 import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-suffix.mjs";
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
@@ -4504,11 +4505,16 @@ async function fetchStanfordEvents() {
         && /\bThis is a free class for Stanford Students,\s*Faculty and Staff\b/i.test(description)) return null;
       // Read attendance notices before truncation. The October 27 After
       // Fission listing says registration is at full capacity in its body.
+      // Admission terms are separate from the body in Localist. A free event
+      // can still require a ticket; a ticket URL alone does not establish that.
+      const ticketTerms = stripHtml(ev.ticket_cost || "");
+      const ticketRequirement = ticketTerms.match(/(?:^|[.!?]\s+)((?:free\s+)?tickets?\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?)/i)?.[1]?.trim();
       const registration = declaredRegistrationAvailability(description)
+        || declaredRegistrationAvailability(ticketTerms)
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || (/(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description)
+        || ((ticketRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4580,6 +4586,7 @@ async function fetchStanfordEvents() {
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
         ...(farmVolunteerEligibility ? [farmVolunteerEligibility] : []),
+        ...(ticketRequirement ? [ticketRequirement] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
@@ -10032,7 +10039,11 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
         const apiDescription = gambleGardenProgramDescription(ev.description || ev.excerpt || "");
         const apiExcerpt = truncate(stripBareUrls(apiDescription));
         let sourceDescription = apiDescription;
-        if (!sourceDescription && ev.url) {
+        // Second Saturday's API body can be only the monthly theme. Its
+        // linked program page carries the free admission and timed-entry
+        // instructions even when that excerpt is nonempty.
+        const secondSaturday = /^Second Saturday\b/i.test(title);
+        if ((!sourceDescription || secondSaturday) && ev.url) {
           const detailUrl = new URL(ev.url, "https://www.gamblegarden.org");
           if (detailUrl.protocol === "https:" && /^(?:www\.)?gamblegarden\.org$/.test(detailUrl.hostname) && detailUrl.pathname.startsWith("/event/")) {
             const key = detailUrl.href;
@@ -10054,8 +10065,16 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
         // Read attendance terms before truncation. Only an affirmative current
         // requirement establishes a booking gate; optional RSVP links and
         // "no reservations are required" do not. Closures take precedence.
+        const timedEntry = secondSaturday
+          ? sourceDescription.match(/\bRegister for timed entry at [^.!?]+[.!?]?/i)?.[0]?.trim()
+          : null;
+        const checkIn = timedEntry
+          ? sourceDescription.match(/\bAll Second Saturday guests,[^.!?]+[.!?]?/i)?.[0]?.trim()
+          : null;
+        const freeSecondSaturday = secondSaturday
+          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription);
         const registration = declaredRegistrationAvailability(sourceDescription)
-          || (/(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription)
+          || ((timedEntry || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription))
             ? REGISTRATION_REQUIRED : null);
         const image = ev.image?.url || "";
 
@@ -10070,13 +10089,15 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           address,
           city: "palo-alto",
           category: inferCategory(title, description, "", venue),
-          // Detail text may offer free refreshments/parking; it does not
-          // establish admission. Keep the existing API price evidence.
-          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) ? "free" : (ev.cost ? "paid" : null),
+          // Only an explicit Second Saturday admission statement supplements
+          // API prices; free refreshments or parking do not establish entry.
+          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) || (!ev.cost && freeSecondSaturday)
+            ? "free" : (ev.cost ? "paid" : null),
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",
           source: "Gamble Garden",
           ...(registration ? { registration } : {}),
+          ...(timedEntry ? { attendanceNote: [timedEntry, checkIn].filter(Boolean).join(" ") } : {}),
           ...(image ? { image } : {}),
           // Use the complete first-party audience text before truncation.
           // A renamed title can drop "Family Night" while its body still
@@ -11627,26 +11648,14 @@ async function main() {
   const ARCHIVE_DAYS = 90;
   try {
     const ARCHIVE_PATH = join(__dirname, "..", "src", "data", "south-bay", "events-archive.json");
-    const todayPt = new Date().toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-    const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - ARCHIVE_DAYS);
-    const cutoffPt = cutoff.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-
     let archive = { events: [] };
     try { archive = JSON.parse(readFileSync(ARCHIVE_PATH, "utf8")); } catch { /* first run */ }
-    const byId = new Map((archive.events ?? []).map((e) => [e.id ?? `${e.date}|${e.title}`, e]));
-
-    const aging = (prevRun?.events ?? []).filter(
-      (e) => typeof e?.date === "string" && e.date < todayPt,
-    );
-    for (const e of aging) byId.set(e.id ?? `${e.date}|${e.title}`, e);
-
-    const kept = [...byId.values()].filter(
-      (e) => typeof e?.date === "string" && e.date >= cutoffPt && e.date < todayPt,
-    );
-    kept.sort((a, b) => String(a.date).localeCompare(String(b.date)) || String(a.id ?? "").localeCompare(String(b.id ?? "")));
+    const { events: kept, agingCount } = maintainEventArchive({
+      archiveEvents: archive.events ?? [], previousEvents: prevRun?.events ?? [],
+      currentEvents: output.events, retainDays: ARCHIVE_DAYS,
+    });
     writeFileAtomic(ARCHIVE_PATH, JSON.stringify({ updatedAt: new Date().toISOString(), eventCount: kept.length, events: kept }, null, 2) + "\n");
-    console.log(`🗄️  Archive: +${aging.length} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
+    console.log(`🗄️  Archive: +${agingCount} aged-out, ${kept.length} kept (${ARCHIVE_DAYS}-day window)`);
   } catch (err) {
     console.warn(`⚠️  events-archive maintenance failed (non-fatal): ${err.message}`);
   }

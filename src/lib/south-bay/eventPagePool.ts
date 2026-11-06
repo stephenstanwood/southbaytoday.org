@@ -18,7 +18,7 @@ export function eventPagePool<T extends EventPageRecord>(current: T[], archived:
   for (const [rows, archiveOnly] of [[current, false], [archived, true]] as const) {
     for (const event of rows) {
       if (!event.title || !event.time || !event.date || !/^\d{4}-\d{2}-\d{2}$/.test(event.date)) continue;
-      if (event.date < cutoffPt || (archiveOnly && event.date >= todayPt)) continue;
+      if (event.date < cutoffPt || (archiveOnly && event.date > todayPt)) continue;
       // A series can reuse an id on different dates; distinct sessions on the
       // same day can share a title. Keep both, while preferring the current
       // snapshot when the archive holds a copy of the same occurrence.

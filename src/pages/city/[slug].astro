@@ -5,8 +5,10 @@ import StaticLinkStrip from "../../components/south-bay/StaticLinkStrip.astro";
 import { CITIES } from "../../lib/south-bay/cities";
 import { getCityPageData } from "../../lib/south-bay/cityPageData";
 import upcomingData from "../../data/south-bay/upcoming-events.json";
+import archiveData from "../../data/south-bay/events-archive.json";
 import { eventListJsonLd, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
 import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
+import { eventPagePool } from "../../lib/south-bay/eventPagePool";
 
 export function getStaticPaths() {
   return CITIES.map((city) => ({
@@ -39,8 +41,9 @@ const weekOut = new Date();
 weekOut.setDate(weekOut.getDate() + 7);
 const weekOutPt = weekOut.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
 const allEvents = ((upcomingData as { events?: SchemaEventRecord[] }).events ?? []);
+const archived = ((archiveData as { events?: SchemaEventRecord[] }).events ?? []);
 const slugById = new Map<string, string>();
-for (const [slug, event] of buildEventSlugs(allEvents)) {
+for (const [slug, event] of buildEventSlugs(eventPagePool(allEvents, archived, todayPt))) {
   if (event.id) slugById.set(String(event.id), slug);
 }
 const cityEvents = allEvents

@@ -60,6 +60,26 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // The current organizer records put booking instructions outside the short
+  // display excerpt. Preserve the verified dates when cached cards are read.
+  // Evidence: docs/qa/2026-11-06-2007z-fact-check.md.
+  {
+    date: "2026-11-07",
+    url: "https://events.stanford.edu/event/16th-bita-prize-for-persian-arts-celebrating-sima-bina",
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Free ticket required.",
+    },
+  },
+  {
+    date: "2026-11-14",
+    url: "https://www.gamblegarden.org/event/novembersaturday/",
+    facts: {
+      cost: "free",
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Register for timed entry at 10:00 AM, 10:30 AM, or 11:00 AM. All Second Saturday guests, when you arrive, please check in at one of our two Welcome Tables in order to enjoy the Second Saturday tours and special activities.",
+    },
+  },
   // Broadway San Jose renamed this single November 27, 7 PM concert. Its
   // performance table marks that same booking as ASL interpreted; Ticketmaster
   // still carries the old title. Align identity before deduplication and keep
