@@ -95,6 +95,8 @@ const EDITS = {
       ["Learn the basic design in Tinkercad", "Learn the basics of design in Tinkercad"],
       [/Recommended ages for (\d+)\+ and older\./g, "Recommended for ages $1+."],
       [/Reminder: Limited Laptops FOR (\d+) Participants\./g, "Reminder: Laptops are available for only $1 participants."],
+      [/Parents must supervise children under (\d+) and younger\./g, "Parents must supervise children under $1."],
+      ["funding Almaden library books", "funding Almaden Library books"],
       ["for Lego Club!", "for LEGO Club!"],
       ["tons of Lego bricks", "tons of LEGO bricks"],
       ["a Lego Challenge!", "a LEGO Challenge!"],
@@ -503,6 +505,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Lego building", "LEGO building"],
+      ["Bay area musicians", "Bay Area musicians"],
       [/\bChildren in Grades (?=K to \d)/g, "Children in grades "],
       ["celebrate Fall with us by making fall inspired crafts", "celebrate fall with us by making fall-inspired crafts"],
       [/(\bKathak Dance by [\p{L}.' -]+?)(?= \d{1,2}:\d{2} [AP]M -)/gu, "$1;"],

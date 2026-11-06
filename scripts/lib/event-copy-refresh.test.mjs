@@ -61,6 +61,7 @@ const november5AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/re
 const november5EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-evening.json", import.meta.url)));
 const november5NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-night.json", import.meta.url)));
 const november5LateFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-05-late.json", import.meta.url)));
+const november6MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-06-morning.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -70,9 +71,28 @@ audits.push(november5AfternoonFixture);
 audits.push(november5EveningFixture);
 audits.push(november5NightFixture);
 audits.push(november5LateFixture);
+audits.push(november6MorningFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("supervision grammar preserves a revised strict age threshold and publisher scope", () => {
+  const original = {
+    source: "San Jose Public Library", date: "2026-12-12", registration: "required",
+    description: "Parents must supervise children under 9 and younger. Ages 9+; $25. Contact updated@example.org.",
+  };
+  const next = polishReviewedEventCopy(original);
+  assert.deepEqual(next, { ...original,
+    description: "Parents must supervise children under 9. Ages 9+; $25. Contact updated@example.org.",
+  });
+  assert.deepEqual(numbers(next.description), numbers(original.description));
+  assert.deepEqual(identifiers(next.description), identifiers(original.description));
+  assert.deepEqual(polishReviewedEventCopy(next), next);
+  const otherPublisher = { ...original, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  const revised = { ...original, description: "Parents must supervise children 9 and younger. Registration required." };
+  assert.deepEqual(polishReviewedEventCopy(revised), revised);
+});
 
 test("residency punctuation preserves revised household limits and publisher scope", () => {
   const row = november5LateFixture.cases[0];
@@ -209,7 +229,10 @@ test("night copy repairs retain updated source facts, later instructions and pub
       id: "new-source-id", date: "2026-12-12", time: "4:00 PM", costNote: "$25" };
     // A former title echo becomes substantive when the publisher appends new
     // attendance instructions. It must remain rather than being cleared.
-    const reviewed = row.reviewed === "" ? row.refreshed : row.reviewed;
+    // Later copy-desk captures can refine this historical wording.
+    const latest = reviewedCases.find(candidate => candidate.source === row.source
+      && candidate.field === row.field && candidate.refreshed === row.refreshed).reviewed;
+    const reviewed = latest === "" ? row.refreshed : latest;
     const next = polishReviewedEventCopy(original);
     assert.deepEqual(next, { ...original, [row.field]: revised(reviewed) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
