@@ -1224,11 +1224,9 @@ const BN_STORES = [
 ];
 
 // ── Peninsula Open Space Trust (POST) ──
-// openspacetrust.org/events — Cloudflare-protected, needs real browser + a
-// desktop UA (default headless UA is blocked). Event cards are well-structured
-// with article.card-event containing .event-date (month/day/dayofweek),
-// p.event-title > a, ul.pills.badges (category + "In Person"/"Virtual"), and
-// an optional .event-time sibling.
+// openspacetrust.org/events — collection held after the November 6 HTTP 403.
+// Keep the historical location/card normalization below for offline fixtures;
+// neither a desktop User-Agent nor a browser challenge is an approved recovery.
 //
 // POST runs events across the whole Peninsula. We only cover the South Bay,
 // so we (a) drop events whose titles name a non-South-Bay location (San Mateo
