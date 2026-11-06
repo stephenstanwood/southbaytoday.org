@@ -459,9 +459,12 @@ const EDITS = {
       [/^Featuring Assistant Principal Cello of the Seattle Symphony Nathan Chan$/g, "Featuring Nathan Chan, Assistant Principal Cello of the Seattle Symphony."],
       ["in De Ridder, Louisiana and raised in", "in De Ridder, Louisiana, and raised in"],
       ["never experienced a Winter quite like this!", "never experienced a winter quite like this!"],
+      // Organizer's spelling: heritagetheatre.org/events/december-dreamscape-a-video-game-and-film-concert
+      [/\bGg Orchestra\b/g, "GG Orchestra"],
     ],
     blurb: [
       ["cast members from Whose Line Is It Anyway improvise scenes built", "cast members from \"Whose Line Is It Anyway?\" improvise scenes built"],
+      [/\bGg Orchestra\b/g, "GG Orchestra"],
     ],
   },
   "Gamble Garden": {
@@ -785,7 +788,11 @@ const EDITS = {
       ["Brown Bag in the Humanities featuring:", "Brown Bag in the Humanities featuring"],
       ['"Why Don\'t They Just Come Here the Right Way?" a Day of', '"Why Don\'t They Just Come Here the Right Way?" A Day of'],
     ],
+    venue: [
+      [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
+    ],
     description: [
+      [/\bFood justice eco-burritos will be provided$/g, "$&."],
       ["The music of Jennifer Higdon and George Crumb Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello Margaret Halbig and Teresa McCollough, piano", "The music of Jennifer Higdon and George Crumb. Melinda Martinez Becker, mezzo-soprano; Megan Chartier, cello; Margaret Halbig and Teresa McCollough, piano."],
       ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
