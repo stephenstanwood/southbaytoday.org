@@ -516,10 +516,12 @@ const EDITS = {
       ["Bay area musicians", "Bay Area musicians"],
       [/\bChildren in Grades (?=K to \d)/g, "Children in grades "],
       ["celebrate Fall with us by making fall inspired crafts", "celebrate fall with us by making fall-inspired crafts"],
+      // The schedule separator below expects colon clocks. Normalize the
+      // publisher's dot notation first so one refresh repairs both issues.
+      [/\b(1[0-2]|[1-9])\.([0-5]\d)(?= [AP]M\b)/gi, "$1:$2"],
       [/(\bKathak Dance by [\p{L}.' -]+?)(?= \d{1,2}:\d{2} [AP]M -)/gu, "$1;"],
       ["Geodes are beautiful and diverse as the areas", "Geodes are as beautiful and diverse as the areas"],
       ["Silicon Valley Gem and Mineral Society Veteran, Steve May will", "Silicon Valley Gem and Mineral Society veteran Steve May will"],
-      [/\b(1[0-2]|[1-9])\.([0-5]\d)(?= [AP]M\b)/gi, "$1:$2"],
       ["The Seed Keeper b y Diane Wilson.", "The Seed Keeper by Diane Wilson."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
       ["We will meet on Monday November", "We will meet on Monday, November"],

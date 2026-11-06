@@ -135,6 +135,19 @@ test("evening copy repairs preserve revised source facts, new details and publis
   }
 });
 
+test("dance schedule separators survive dot-formatted source clocks on the first refresh", () => {
+  const row = november5EveningFixture.cases.find(row => row.events.some(event => event.id === "sccl-6acea9ef9dbc2b002c8e679d"));
+  const original = {
+    ...row.events[0],
+    date: "2026-11-07", time: "12:50 PM", endTime: "4:45 PM", cost: "free",
+    description: row.refreshed.replaceAll(/(\d{1,2}):(\d{2})(?= [AP]M)/g, "$1.$2"),
+  };
+  const next = polishReviewedEventCopy({ ...original, description: polishDescription(original.description) });
+  assert.deepEqual(next, { ...original, description: row.reviewed });
+  assert.deepEqual(numbers(next.description), numbers(original.description));
+  assert.deepEqual(polishReviewedEventCopy(next), next);
+});
+
 test("tech-help copy repairs preserve revised contacts and later attendance conditions", () => {
   const original = {
     source: "San Jose Public Library", id: "revised-tech-session",
