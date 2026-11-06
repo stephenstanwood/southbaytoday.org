@@ -1464,6 +1464,7 @@ function cleanTitle(title) {
     // Seminar").
     "SASCC", "WCC", "OMAC", "SDRC",
     "IDA", // Stanford's Institute for Diversity in the Arts, not a person's name
+    "ECI", // SJSU's Early Childhood Institute speaker series
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -4508,6 +4509,12 @@ async function fetchStanfordEvents() {
         || (/(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description)
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
+      // The farm's minimum age and active guardian requirement follow the
+      // display excerpt. Preserve the current source wording before truncation;
+      // neither an Everyone audience tag nor missing text establishes all ages.
+      const farmVolunteerEligibility = /^Volunteering at Stanford Educational Farm$/i.test(ev.title || "")
+        ? description.match(/\bWe welcome volunteers \d{1,2} years old and older\.\s*Those between \d{1,2} and \d{1,2} years old are required to have a guardian actively volunteering alongside them for the duration of the volunteer session\./i)?.[0]
+        : null;
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.
       // https://events.stanford.edu/event/ehs-flu-covid-19-vaccination-clinic-640
@@ -4570,6 +4577,7 @@ async function fetchStanfordEvents() {
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
+        ...(farmVolunteerEligibility ? [farmVolunteerEligibility] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the

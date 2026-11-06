@@ -60,6 +60,21 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Fresh organizer pages confirm the acronym and farm eligibility omitted by
+  // sparse source excerpts. Preserve these reviewed dates in cached cards too.
+  // Evidence: docs/qa/2026-11-06-1007z-fact-check.md.
+  {
+    date: "2026-11-16",
+    url: "https://events.sjsu.edu/event/eci-speaker-series-featuring-dr-heidi-emberling",
+    facts: { title: "ECI Speaker Series Featuring Dr. Heidi Emberling" },
+  },
+  {
+    date: "2026-11-07",
+    url: "https://events.stanford.edu/event/copy-of-volunteering-at-the-stanford-educational-farm",
+    facts: {
+      attendanceNote: "We welcome volunteers 10 years old and older. Those between 10 and 14 years old are required to have a guardian actively volunteering alongside them for the duration of the volunteer session.",
+    },
+  },
   // The newly added occurrences were checked against full organizer records.
   // Keep sparse/cached rows and retired pages consistent with those records.
   // Evidence: docs/qa/2026-11-06-0607z-fact-check.md.

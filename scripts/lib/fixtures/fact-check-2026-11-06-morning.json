@@ -1,0 +1,94 @@
+{
+  "farm": {
+    "publishedBefore": {
+      "id": "stanford-47557682677329-2026-11-07",
+      "title": "Volunteering at Stanford Educational Farm",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
+      "time": "9:30 AM",
+      "endTime": "11:30 AM",
+      "ongoing": false,
+      "venue": "O'Donohue Educational Farm",
+      "address": "175 Electioneer Rd, Stanford, CA 94305",
+      "city": "palo-alto",
+      "category": "community",
+      "cost": null,
+      "description": "Volunteers help keep the farm running. Volunteer tasks vary from week to week.",
+      "url": "https://events.stanford.edu/event/copy-of-volunteering-at-the-stanford-educational-farm",
+      "source": "Stanford Events",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Pitch in at the O'Donohue Educational Farm on Saturday morning, helping with tasks that change from week to week."
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Volunteering at Stanford Educational Farm",
+      "description": "Volunteers help keep the farm running. Volunteer tasks vary from week to week. Farm tasks may include keeping our fields free of weeds and rocks, planting new crop rotations, deadheading flowers, teaming up on irrigation, composting, mulching, and having a great time getting dirty. We ask that volunteers come prepared with close-toed shoes and clothes you don't mind getting dirty! We have gloves and tools for all.\n\nWe welcome volunteers 10 years old and older. Those between 10 and 14 years old are required to have a guardian actively volunteering alongside them for the duration of the volunteer session.\n\nWe reserve the right to cancel volunteer sessions up to two hours in advance. Possible reasons for cancelation are a change in COVID-19 guidelines as outlined by the University or County Officials, excessive heat (90 degree and above), poor air quality, rain or other inclement weather.\n\nWe encourage all volunteers to carpool, bike, ride public transportation; there is a charge for parking on all Stanford property. The farm is not responsible for any tickets incurred while volunteering.\n\nUPON ARRIVAL: ALL VOLUNTEERS MUST COMPLETE A SAFETY WAIVER \n\nWHEN YOU ARRIVE AT THE FARM: Complete Waiver Form",
+      "startDate": "2026-11-07T09:30:00-08:00",
+      "endDate": "2026-11-07T11:30:00-08:00",
+      "eventStatus": "EventScheduled",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.eventbrite.com/e/volunteer-at-the-farm-tickets-161967002665?aff=oddtdtcreator&lang=en-us&locale=en_US&status=40&view=listing",
+        "price": "0"
+      },
+      "location": {
+        "@type": "Place",
+        "name": "O'Donohue Educational Farm",
+        "address": "175 Electioneer Rd, Stanford, CA 94305",
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "37.426059",
+          "longitude": "-122.183261"
+        },
+        "sameAs": "https://events.stanford.edu/odonohue_educational_farm",
+        "url": "https://events.stanford.edu/odonohue_educational_farm"
+      },
+      "url": "https://events.stanford.edu/event/copy-of-volunteering-at-the-stanford-educational-farm",
+      "image": "https://localist-images.azureedge.net/photos/45439829176291/huge/b9be8d5c99a1837d0eceb241e1206b07fd8f76b8.jpg"
+    }
+  },
+  "eci": {
+    "publishedBefore": {
+      "id": "sjsu-4aea664f3f7e411b",
+      "title": "Eci Speaker Series Featuring Dr. Heidi Emberling",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
+      "time": "12:00 PM",
+      "endTime": null,
+      "venue": "San Jose State University",
+      "address": "",
+      "city": "san-jose",
+      "virtual": true,
+      "category": "education",
+      "cost": "free",
+      "description": "",
+      "url": "https://events.sjsu.edu/event/eci-speaker-series-featuring-dr-heidi-emberling",
+      "source": "SJSU Events",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Join the ECI Speaker Series online at midday Monday to hear a talk from Dr. Heidi Emberling, hosted by San Jose State University."
+    },
+    "schema": {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "ECI Speaker Series Featuring Dr. Heidi Emberling",
+      "description": "Join the Early Childhood Institutefor a virtual presentation by Dr. Heidi Emberling (Director, Santa Clara County Office of Children and Families Policy) titled, \"Think Globally, Act Locally: Shoring Up Childcare in an Age of Limited Public Resources.\"\n\nMonday, November 16th | 12:00 PM – 1:00 PM",
+      "startDate": "2026-11-16T12:00:00-08:00",
+      "endDate": "2026-11-16T13:00:00-08:00",
+      "eventStatus": "EventScheduled",
+      "offers": {
+        "@type": "Offer",
+        "url": "http://tinyurl.com/ECISpeaker-Nov16",
+        "price": "FREE"
+      },
+      "location": {
+        "@type": "VirtualLocation",
+        "url": "http://tinyurl.com/ECISpeaker-Nov16"
+      },
+      "url": "https://events.sjsu.edu/event/eci-speaker-series-featuring-dr-heidi-emberling",
+      "image": "https://localist-images.azureedge.net/photos/54420335961411/huge/f0c0991dac77cbcad09582ccc00b7433121d4528.jpg"
+    }
+  }
+}
