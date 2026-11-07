@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-06T19:52:07.310Z",
+    "generatedAt": "2026-11-07T00:32:37.195Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 185,
+    "eventCount": 186,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (8)",
       "History San Jose (5)",
-      "Montalvo Arts Center (4)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (4)",
       "Mountain Winery (1)",
@@ -114,8 +114,8 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -829,6 +829,23 @@
       "kidFriendly": false
     },
     {
+      "id": "6496de48e299",
+      "title": "Workshop Youth 10am 5-8yrs",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/overview/3280",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": true
+    },
+    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -1011,23 +1028,6 @@
       "kidFriendly": true
     },
     {
-      "id": "3dfc08019863",
-      "title": "Toddler Storytime",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "304b2b750579",
       "title": "Diwali: Festival of Lights",
       "date": "2026-11-07",
@@ -1051,6 +1051,23 @@
       "displayDate": "Sat, Nov 7",
       "time": "10:00 am",
       "endTime": "4:00 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "3dfc08019863",
+      "title": "Toddler Storytime",
+      "date": "2026-11-06",
+      "displayDate": "Fri, Nov 6",
+      "time": "11:30 am",
+      "endTime": null,
       "venue": "Children's Discovery Museum",
       "address": "180 Woz Way, San Jose, CA 95110",
       "city": "san-jose",
@@ -1493,7 +1510,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-06T19:51:00.411Z"
+        "checkedAt": "2026-11-07T00:31:29.335Z"
       }
     },
     {
@@ -1516,7 +1533,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T19:51:00.413Z"
+        "checkedAt": "2026-11-07T00:31:29.338Z"
       }
     },
     {
@@ -1539,7 +1556,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-06T19:51:00.413Z"
+        "checkedAt": "2026-11-07T00:31:29.338Z"
       }
     },
     {
@@ -1562,7 +1579,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-06T19:51:00.414Z"
+        "checkedAt": "2026-11-07T00:31:29.339Z"
       }
     },
     {
@@ -1585,7 +1602,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-06T19:51:00.414Z"
+        "checkedAt": "2026-11-07T00:31:29.339Z"
       }
     },
     {
@@ -3192,7 +3209,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/mon-laferte",
         "date": "2026-11-06",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.595Z"
+        "checkedAt": "2026-11-07T00:31:57.432Z"
       }
     },
     {
@@ -3216,7 +3233,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.595Z"
+        "checkedAt": "2026-11-07T00:31:57.432Z"
       }
     },
     {
@@ -3240,7 +3257,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.596Z"
+        "checkedAt": "2026-11-07T00:31:57.434Z"
       }
     },
     {
@@ -3264,7 +3281,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.597Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3288,7 +3305,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-06T19:51:21.597Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3312,7 +3329,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.597Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3336,7 +3353,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3360,7 +3377,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3384,7 +3401,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3408,7 +3425,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3432,7 +3449,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
@@ -3456,7 +3473,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-06T19:51:21.598Z"
+        "checkedAt": "2026-11-07T00:31:57.436Z"
       }
     },
     {
