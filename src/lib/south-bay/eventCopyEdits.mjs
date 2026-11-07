@@ -4,6 +4,12 @@
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
 const EDITS = {
+  "SC County Fire Dept": {
+    title: [
+      // The organizer's title clips "Hills"; its venue and address spell it out.
+      [/^(Community Emergency Response Team \(CERT\) Academy - Spring \d{4} Los Altos) Hi$/g, "$1 Hills"],
+    ],
+  },
   "Guadalupe River Park Conservancy": {
     title: [
       ["Grpc x YogaSix", "GRPC x YogaSix"],
