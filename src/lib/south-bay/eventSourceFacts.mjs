@@ -60,6 +60,33 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // The organizer cards omit the 18+ gate and five-session commitment. These
+  // exact academy pages publish four evening classes and a Saturday skills
+  // day; the listed clock below is the first class, not the entire academy.
+  // Evidence: docs/qa/2026-11-07-1907z-fact-check.md.
+  ...[
+    {
+      date: "2027-01-25",
+      url: "https://www.eventbrite.com/e/community-emergency-response-team-cert-academy-winter-2027-campbell-tickets-2003375376681",
+      venue: "Campbell Community Center's Orchard City Banquet Hall",
+      schedule: "Evening classes: January 25 and 27, February 1 and 3, 6–9 PM. Skills day: February 6, 8 AM–12:30 PM.",
+    },
+    {
+      date: "2027-04-05",
+      url: "https://www.eventbrite.com/e/community-emergency-response-team-cert-academy-spring-2027-los-altos-hi-tickets-2003529728351",
+      venue: "Los Altos Hills Town Hall",
+      schedule: "Evening classes: April 5, 7, 12 and 14, 6–9 PM. Skills day: April 17, 8 AM–12:30 PM.",
+    },
+  ].map(({ date, url, venue, schedule }) => ({
+    date, url,
+    facts: {
+      endTime: "9:00 PM", registration: REGISTRATION_REQUIRED,
+      audienceAge: "adult", sourceAudiences: ["Adults, ages 18+"], kidFriendly: false,
+      description: `Five-session disaster-preparedness academy for adults ages 18+ at ${venue}. ${schedule} Registration is required; all five sessions are needed to graduate.`,
+      attendanceNote: `Ages 18+. Registration required; attend all five sessions to graduate. ${schedule} Registration preference is given to residents in County Fire's jurisdiction.`,
+      blurb: `Start County Fire's five-session CERT academy at ${venue}; ages 18+ and advance registration required.`,
+    },
+  })),
   // Both exact November 15 ticket instances say sold out and offer a waitlist.
   // The overview is a duplicate of the morning occurrence at its stated clock,
   // not a third workshop. The old newsletter's finish times are unconfirmed.
