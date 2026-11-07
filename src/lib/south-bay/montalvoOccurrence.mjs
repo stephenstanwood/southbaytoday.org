@@ -148,6 +148,12 @@ export function parseMontalvoOccurrencePage(html) {
   const childWorkshop = /\bworkshop\s+for\s+(?:youth|children)\b/i.test(title || "")
     && /\b(?:ages?\s+[5-9]\s*[-–]\s*(?:[6-9]|1[0-2])|[5-9]\s*[-–]\s*1[0-2][ -]year[ -]olds?)\b/i.test(audienceText);
   const familyAudience = childWorkshop || /\b(?:whole family|family event|family[- ]friendly|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
+  // Only the current occurrence's unavailable alert establishes sold-out
+  // admission. The shared ticket selector includes a hidden "Sold Out!"
+  // heading even while tickets are available, and other sessions appear in
+  // the production overview. Neither closes this occurrence.
+  const unavailableText = textContent(contentForClass(body, "tn-event-detail__unavailable-text"));
+  const soldOut = date && startTime && /\bsold\s+out\b/i.test(unavailableText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {
@@ -159,5 +165,11 @@ export function parseMontalvoOccurrencePage(html) {
     ...(membersFree ? { costNote: "Free for Montalvo members. Check the organizer for non-member admission." } : {}),
     ...(familyAudience ? { kidFriendly: true } : {}),
     ...(childWorkshop ? { sourceAudiences: ["Children"] } : {}),
+    ...(soldOut ? {
+      registration: "full",
+      attendanceNote: /\bwaitlist\b/i.test(unavailableText)
+        ? "Sold out. The organizer offers a waitlist."
+        : "Sold out according to the organizer's ticket page.",
+    } : {}),
   };
 }

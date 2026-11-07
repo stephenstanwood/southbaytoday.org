@@ -5422,6 +5422,8 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
           endTime: detail.endTime || event.endTime,
           cost: detail.costNote ? detail.cost : detail.cost || event.cost,
           ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
+          ...(detail.registration ? { registration: detail.registration } : {}),
+          ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),
           kidFriendly: detail.kidFriendly ?? event.kidFriendly,
           ...(detail.sourceAudiences ? { sourceAudiences: detail.sourceAudiences } : {}),
           occurrenceEvidence: {

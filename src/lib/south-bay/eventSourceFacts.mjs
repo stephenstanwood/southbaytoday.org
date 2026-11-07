@@ -60,6 +60,25 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Both exact November 15 ticket instances say sold out and offer a waitlist.
+  // The overview is a duplicate of the morning occurrence at its stated clock,
+  // not a third workshop. The old newsletter's finish times are unconfirmed.
+  // Its postal code is also wrong: the organizer publishes 95071.
+  // Evidence: docs/qa/2026-11-07-1407z-fact-check.md.
+  ...[["3276", "10:00 AM"], ["3277", "3:00 PM"]].map(([performance, time]) => ({
+    date: "2026-11-15",
+    matches: (event) => new RegExp(`^https://my\\.montalvoarts\\.org/3275/${performance}/?(?:[?#]|$)`).test(event.url || "")
+      || (time === event.time && /^https:\/\/my\.montalvoarts\.org\/overview\/3275\/?(?:[?#]|$)/.test(event.url || "")),
+    facts: {
+      url: `https://my.montalvoarts.org/3275/${performance}`,
+      time, endTime: null, cost: "paid", registration: REGISTRATION_FULL,
+      venue: "Creekside Studio at Montalvo Arts Center",
+      address: "15400 Montalvo Rd, Saratoga, CA 95071",
+      sourceAudiences: ["Adults"], audienceAge: "adult", kidFriendly: false,
+      attendanceNote: "Sold out. The organizer offers a waitlist. All supplies are included in the workshop fee.",
+      blurb: "This wreath-making workshop at Montalvo's Creekside Studio is sold out; the organizer offers a waitlist.",
+    },
+  })),
   // The exact organizer ticket instances confirm paid admission. The kids'
   // promotion is limited to eighth grade or younger, not unrestricted youth.
   // Evidence: docs/qa/2026-11-07-1207z-fact-check.md.
