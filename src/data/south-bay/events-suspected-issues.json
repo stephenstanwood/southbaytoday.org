@@ -1,18 +1,51 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-07T17:21:02.758Z"
+    "auditedAt": "2026-11-07T21:30:02.098Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1477,
+    "total": 1471,
     "totals": {
-      "hard": 0,
-      "soft": 0,
+      "hard": 1,
+      "soft": 1,
       "info": 0
     },
-    "byReason": {},
-    "hard": [],
-    "soft": []
+    "byReason": {
+      "virtual-not-flagged": 1,
+      "slug-mismatch": 1
+    },
+    "hard": [
+      {
+        "id": "tm-LvZ18QlfXjJY9siiUAmT9",
+        "title": "Jurassic Quest – San Jose, CA",
+        "city": "san-jose",
+        "date": "2027-01-22",
+        "location": "344 Tully Rd",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "slug-mismatch",
+            "detail": "city=\"san-jose\" but location references \"santa-clara\""
+          }
+        ]
+      }
+    ],
+    "soft": [
+      {
+        "id": "sjpl-693866301e64afd01e4e227e",
+        "title": "Santa Teresa Book Club (Hybrid)",
+        "city": "san-jose",
+        "date": "2026-11-12",
+        "location": "290 International Circle San Jose",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      }
+    ]
   },
   "inbound": {
     "label": "inbound-events.json",
