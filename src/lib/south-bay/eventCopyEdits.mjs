@@ -695,6 +695,7 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      [/\bImax\b/g, "IMAX"],
       ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
       ["join storytime and crafts,", "take part in storytime and crafts,"],
@@ -708,6 +709,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      [/\bImax\b/g, "IMAX"],
       [/\bEBT\/Snap benefits\b/g, "EBT/SNAP benefits"],
       ["Mpsf Championship", "MPSF Championship"],
       ["streamed on Accnx.", "streamed on ACCNX."],
