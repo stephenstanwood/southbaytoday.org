@@ -5,6 +5,7 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { resolveRetired, snapshotEvent } from "../../src/lib/south-bay/eventSlugLedger.mjs";
+import { eventPagePool } from "../../src/lib/south-bay/eventPagePool.ts";
 import { requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
 
 // Sparse intake shapes; verified terms come from the original November city,
@@ -111,7 +112,8 @@ test("conflicting Rush clocks retain a visible confirmation notice and cannot be
     assert.equal(fixed.cost, "paid");
     assert.match(fixed.attendanceNote, /SAP Center lists 7 PM; Ticketmaster lists 7:30 PM/);
     assert.equal(isEventTimeBackfillCandidate(fixed), false);
-    assert.equal(isEventPublishable(fixed), true, "the known date and concert remain useful with a confirmation notice");
+    assert.equal(isEventPublishable(fixed), true, "the known date and identity remain useful on the retained leaf");
+    assert.equal(eventPagePool([fixed], [], "2026-11-07").length, 0, "no confirmed clock means no scheduled event page");
     assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
   }
   const events = [{ ...source }];
