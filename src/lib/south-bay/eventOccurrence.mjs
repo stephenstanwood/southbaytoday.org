@@ -53,7 +53,14 @@ export function isEventExplicitlyInactive(event) {
 
   // Keep this title rule narrow. Generic page boilerplate often explains what
   // happens "if an event is canceled" without saying this occurrence is off.
-  return /\b(?:cancell?ed|postponed)\b/i.test(String(event.title || event.name || ""));
+  if (/\b(?:cancell?ed|postponed)\b/i.test(String(event.title || event.name || ""))) return true;
+
+  // Visit San Jose kept the old date beneath "THIS EVENT HAS BEEN
+  // POSTPOINED." Require an affirmative, complete notice; conditional policy
+  // copy and a move to an explicitly named replacement date are not holds.
+  const postponementNotice = /(?:^|[.!?])\s*this\s+(?:event|show|performance|concert)\s+(?:has\s+been|is|was)\s+(?:postponed|postpoined)\s*(?:[.!?]|$)/i;
+  return [event.description, event.blurb].some((value) =>
+    postponementNotice.test(String(value || "").replace(/<[^>]*>/g, " ")));
 }
 
 export function hasRequiredOccurrenceEvidence(event) {

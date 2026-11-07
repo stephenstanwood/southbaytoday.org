@@ -60,6 +60,26 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // The exact organizer ticket instances confirm paid admission. The kids'
+  // promotion is limited to eighth grade or younger, not unrestricted youth.
+  // Evidence: docs/qa/2026-11-07-1207z-fact-check.md.
+  {
+    date: "2026-12-06",
+    matches: (event) => event.source === "City Newsletter" && event.venue === "Maples Pavilion"
+      && /^https:\/\/tickets\.gostanford\.com\/events\/6aa42f3d18db9fde45dc7752\/6aecd0d65c621b96be40ac4b(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      cost: "paid",
+      costNote: "Each paid adult ticket includes up to two free tickets for children in eighth grade or younger.",
+      attendanceNote: "Each paid adult ticket includes up to two free tickets for children in eighth grade or younger.",
+    },
+  },
+  {
+    date: "2026-12-06",
+    matches: (event) => event.source === "City Newsletter" && event.venue === "Bing Concert Hall"
+      && /^https:\/\/ticketing\.purchase\.live\.stanford\.edu\/stanfordlive\/website\/ChooseSeats\.aspx$/i.test((event.url || "").split("?")[0])
+      && new URL(event.url).searchParams.get("EventInstanceId") === "33401",
+    facts: { cost: "paid" },
+  },
   // Original received newsletters and exact organizer records reviewed on
   // November 7. Keep admission separate from a signup link: the Sunnyvale
   // bulletin gives fees and a registration link, not a mandatory advance gate.
@@ -1717,7 +1737,6 @@ const CORRECTIONS = [
   ...[
     ["2026-11-07", /^Harry Clewans Artist Talk$/i],
     ["2026-11-08", /^The Monuments Men: Reception and Art History Presentation$/i],
-    ["2026-12-05", /^Rose Sellery Artist Talk and Gallery Tour$/i],
   ].map(([date, title]) => ({
     date, title, venue: /^Triton Museum of Art$/i,
     facts: {
@@ -1725,6 +1744,18 @@ const CORRECTIONS = [
       attendanceNote: "Free admission. RSVP through the organizer's Eventbrite page.",
     },
   })),
+  // An RSVP link alone does not establish mandatory advance registration.
+  // Leave any later source-supplied booking state intact.
+  // Evidence: docs/qa/2026-11-07-1207z-fact-check.md.
+  {
+    date: "2026-12-05",
+    matches: (event) => event.venue === "Triton Museum of Art"
+      && /^https:\/\/www\.eventbrite\.com\/e\/rose-sellery-artist-talk-tickets-2002592274401(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      cost: "free",
+      attendanceNote: "Free admission. RSVP through the organizer's Eventbrite page.",
+    },
+  },
   // The exhibition pages describe selected studio work and an exploration
   // of inheritance, not newly created work by both artists or inherited
   // physical objects. Keep cached blurbs within those verified claims.

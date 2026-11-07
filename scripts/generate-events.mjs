@@ -123,7 +123,7 @@ import {
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 import { deduplicateEventUrls } from "./lib/event-url-dedup.mjs";
-import { hasUnconfirmedStartTime, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
   verifyMarketScheduleSource,
@@ -642,6 +642,7 @@ const CANCELLED_BODY_PATTERNS = [
 ];
 
 function looksCancelled(description, blurb) {
+  if (isEventExplicitlyInactive({ description, blurb })) return true;
   const text = [description, blurb].filter(Boolean).join(" ");
   if (!text) return false;
   return CANCELLED_BODY_PATTERNS.some((p) => p.test(text));

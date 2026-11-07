@@ -385,12 +385,11 @@ test("Linden Tree's moved book club survives a stale snapshot with matching occu
   ]) assert.equal(applyVerifiedEventFacts(other), other, "unrelated occurrences retain their own facts");
 });
 
-test("four dated Triton events retain ticket or RSVP gates and their distinct admission", () => {
+test("three dated Triton events retain their previously verified booking gates and distinct admission", () => {
   const cases = [
     ["2026-10-29", "Impressionism: The Beautiful Revolution – Lecture 4", "paid"],
     ["2026-11-07", "Harry Clewans Artist Talk", "free"],
     ["2026-11-08", "The Monuments Men: Reception and Art History Presentation", "free"],
-    ["2026-12-05", "Rose Sellery Artist Talk and Gallery Tour", "free"],
   ];
   for (const [date, title, cost] of cases) {
     const raw = { date, title, venue: "Triton Museum of Art", cost: null, time: "1:00 PM" };

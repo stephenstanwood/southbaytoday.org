@@ -28,7 +28,7 @@
 import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
-import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isNonEventOffer, nonEventOfferNotice } from "./eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isEventExplicitlyInactive, isNonEventOffer, nonEventOfferNotice } from "./eventOccurrence.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -59,7 +59,7 @@ export function snapshotEvent(e) {
     if (e[f] !== undefined && e[f] !== null && e[f] !== "") out[f] = e[f];
   }
   // Retaining an old URL must not retain a kickoff the source says is TBA.
-  if (hasUnconfirmedStartTime(e) || hasUnconfirmedOccurrenceDate(e) || isNonEventOffer(e)) {
+  if (isEventExplicitlyInactive(e) || hasUnconfirmedStartTime(e) || hasUnconfirmedOccurrenceDate(e) || isNonEventOffer(e)) {
     delete out.time;
     delete out.endTime;
   }
@@ -230,7 +230,7 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
     // A verified date correction also belongs on the published old URL.
     // Keep findSuccessor's same-day guard for reused recurring-event IDs.
     const verified = applyVerifiedEventFacts(entry?.event);
-    const event = hasUnconfirmedStartTime(verified) || hasUnconfirmedOccurrenceDate(verified) || isNonEventOffer(verified)
+    const event = isEventExplicitlyInactive(verified) || hasUnconfirmedStartTime(verified) || hasUnconfirmedOccurrenceDate(verified) || isNonEventOffer(verified)
       ? snapshotEvent(verified) : verified;
     if (!entry?.slug || !isDated(event) || event.date < cutoff) continue;
     if (live.has(entry.slug)) continue;
