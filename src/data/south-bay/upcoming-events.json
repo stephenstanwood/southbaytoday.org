@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-07T08:58:57.674Z",
-  "eventCount": 1474,
+  "eventCount": 1473,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -6037,12 +6037,12 @@
       "title": "Rush",
       "date": "2026-12-06",
       "displayDate": "Sun, Dec 6",
-      "time": "7:00 PM",
+      "time": null,
       "endTime": null,
       "venue": "SAP Center",
       "address": "525 W Santa Clara St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "music",
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/rush-2",
@@ -6051,7 +6051,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJq56TmaDMj4ARJJCpWy9v-i0/photos/AV-0GLd-l7CY8loUmtadyoXXncLV5OC8MMH0lh8JwgHFyfIfjiZCsuS8ZH6W3H6lS3Y74sC4J68xfmVeFYRee17ZVEce8fJTXGR9vm2m7QP1gIAsXyHFkZIZlOcrcX4iyvm8MScRfYzOwroKA1P03YgwnOboDeHsbFq3XM1Oi50x2K0Vjh8jJ-fuMyMSk9XGMxJyu8pd0iG-2hZ3YUx2acjd9I3U8SzqVZKI3_A_FInwBFa1dvcG3ib7EqigH6XT7ky0Nev6uDWbgTaWTBdwAt75j682KSeQoxfLvpsR9Fbhs-iXu2WUCb3dPPsAKDoQkfC2FFHuM7pYJgFmV-lLVkTGZeByC-BAkDfiGGOcs6GRMiMCQ9L22fG8sfqxryYL1znKWuZqvau_WT9RD3ybBvdERR3VT1d2nq0",
       "blurb": "See Rush perform live on stage at SAP Center.",
-      "firstSeenAt": "2026-11-07T08:58:57.644Z"
+      "firstSeenAt": "2026-11-07T08:58:57.644Z",
+      "attendanceStatus": "needs-confirmation",
+      "attendanceNote": "SAP Center lists 7 PM; Ticketmaster lists 7:30 PM for this rescheduled concert. Confirm the start with the venue before going."
     },
     {
       "id": "sanjosetheaters-07f75bcb73b79390",
@@ -24484,15 +24486,17 @@
       "address": "Recreation Center, Sunnyvale",
       "city": "sunnyvale",
       "category": "family",
-      "cost": null,
-      "description": "Supervised evening of games, crafts, group activities and pizza for children ages 5 to 11. Registration required; $30 resident, $38 nonresident.",
+      "cost": "paid",
+      "description": "Supervised evening of games, crafts, group activities and pizza for children ages 5 to 11. $30 resident, $38 nonresident. The city newsletter links to activity registration.",
       "url": "https://anc.apm.activecommunities.com/sunnyvaleactivities/activity/search/detail/1704?onlineSiteId=0&locale=en-US&from_original_cui=true",
       "source": "City Newsletter",
       "kidFriendly": true,
       "audienceAge": "kids",
       "photoRef": "places/ChIJHwZQj-M1joARoB_X5LbJuMw/photos/AV-0GLe885XbvfCRBUtc2Bdx8TPevbItpK0jd9RQ0jIb-5gPHYcQx93hXkyf9oeZUh-50-G8xi5XC_d7-iM1W6lEUJ7aaxIB1NY7dSbMC4h1CIZeoKITkOUafOtLGh5GDWe_zSoNyxASG30meiffWddSUV6yB9-EvMCwJKgWecpwkyaK0QGm3i2QgTchLsgdOw69g31-cRK5TcflvqowOmmmwG_jJUdqxeT7LdeG2cLuM34ziGUFtrplwJTwa13PCl8Fx8qw9hO3-XURA2GogqLiNfBK4qZFE0a6ylth2AOIlVDBB75d9WfpL8a30OXlHg053vK4s84QDjpeGVsqb4DxDn4MdmwEh--g1bOmnXU6Aq7JT8QFSzDpcDQOPkidr3eIH7YJ3auQf6kOiFUkQpPHLhbhnSHs0vE",
       "blurb": "Drop kids ages 5 to 11 off for a supervised Friday evening of games, crafts, group activities and pizza.",
-      "firstSeenAt": "2026-11-01T16:41:00.334Z"
+      "firstSeenAt": "2026-11-01T16:41:00.334Z",
+      "costNote": "$30 resident; $38 nonresident. $5 sibling discount when registering together.",
+      "attendanceNote": "For children ages 5–11. Register through the city's linked activity catalog."
     },
     {
       "id": "midpen-7ffe4c7101aad178",
@@ -24690,27 +24694,6 @@
       "audienceAge": "all",
       "blurb": "Browse holiday vendor stalls and soak up seasonal music along State Street in downtown Los Altos.",
       "firstSeenAt": "2026-09-20T14:19:40.305Z"
-    },
-    {
-      "id": "inbound-851d9c89e920b31d",
-      "title": "Stanford Football vs. SMU (Fan Appreciation Game)",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "Stanford Stadium",
-      "address": "Stanford Stadium, 641 Campus Drive, Stanford, CA 94305",
-      "city": "palo-alto",
-      "category": "sports",
-      "cost": null,
-      "description": "Stanford hosts SMU in its Fan Appreciation football game. Tickets are ticketed; select seats are 40% off with code buyweek40 through Nov. 8 at 11:59 PM PT, and a Fan Appreciation 4-Pack (4 tickets + 1 parking pass) starts at $60.",
-      "url": "https://tickets.gostanford.com/events/69c4649c39baf6e77d7c9b7f/6ae10caa2652b89aac76ea31?elqTrackId=0E95281F07A8F2BCA4AFA1703DF678E9&elq=9fa4ea5df9fd4c4e877dfe3dbb369832&elqaid=1108&elqat=1&elqCampaignId=1024&elqak=8AF500B828BEE8B13B46586D12B175D5391202D44065623A7E4CDFAB290886005251",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2F1837bdb2-9c02-41cf-a698-39482e24e5df.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
-      "blurb": "Watch Stanford host SMU at Stanford Stadium in the Fan Appreciation football game, with discounted seats and a 4-pack ticket and parking option.",
-      "firstSeenAt": "2026-11-07T08:58:57.644Z"
     },
     {
       "id": "midpen-3334e2b5264dd8b0",
@@ -33109,12 +33092,12 @@
       "date": "2026-11-17",
       "displayDate": "Tue, Nov 17",
       "time": "5:00 PM",
-      "endTime": null,
+      "endTime": "8:00 PM",
       "venue": "Plug & Play Tech Center",
       "address": "440 N Wolfe Rd, Sunnyvale, CA 94085",
       "city": "sunnyvale",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "Join us for an exclusive event where innovation meets opportunity!",
       "url": "https://events.sjsu.edu/event/de-risking-for-startups-through-partnerships-hosted-by-emumba-x-silicon-valley-sbdc-x-aws",
       "source": "SJSU Events",
@@ -38419,7 +38402,7 @@
       "address": "Palo Alto Art Center, 1313 Newell Road, Palo Alto, CA 94303",
       "city": "palo-alto",
       "category": "community",
-      "cost": null,
+      "cost": "free",
       "description": "Free session in the Art Center galleries with 30 minutes of sitting mindfulness meditation, 15 minutes of releasing meditation, and 15 minutes of group sharing and Q&A. No registration is required.",
       "url": "",
       "source": "City Newsletter",
@@ -38427,7 +38410,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJ21neJQW7j4ARlCPL950Syuw/photos/AV-0GLcBdybsOWb4gMtT7tdzgThFB2gPmfpi3HVNyX6lFyh_FDmVTc8EZf18Zdlh3nJcmG4GsKRWzm70F3lmwJ0VQlWFAdKIIOpjjKORlwN6pHF3K1KrplkA0N4BiRIAivpTQ3E8NlPCvUHPZ1Tombz6-6fqrrEeTwfuoGmzbsddIQkDYt-8mDQxS6SMe6hT8msJ91y2g87ZFjFiBz7kvk9aw6Vitl0pnKlulrIqXVl_RP3h5BfGt-tSAGs6ndbxMrMAFtfWd3F6Ozp_lWjEkUpQRycNzBMtEfxeTeD2e-wtXo_woZwxLl0ZZ1Uh83wDFso0dY824c_WEDqzweqJwQw5IJDrjl4jaFrEsUnoQn5FrMucaCRfeMsHlV8liww7iC-p02GcA6LXHb6fw23kjWjHKle8nzdm2d8",
       "blurb": "Practice 30 minutes of sitting meditation and 15 minutes of releasing meditation with Phuong Pham, then join group sharing and Q&A.",
-      "firstSeenAt": "2026-11-04T02:38:42.285Z"
+      "firstSeenAt": "2026-11-04T02:38:42.285Z",
+      "registration": "none",
+      "attendanceNote": "No registration required. Children under 10 must be accompanied by an adult."
     },
     {
       "id": "inbound-662ef7ccdda6f5cf",
@@ -38440,7 +38425,7 @@
       "address": "Presbyterian Church of Los Gatos, 16575 Shannon Rd, Los Gatos",
       "city": "los-gatos",
       "category": "music",
-      "cost": null,
+      "cost": "paid",
       "description": "Annual Christmas Tea starting in the sanctuary with a performance by the Mountain View High School Madrigal Choir, followed by homemade treats in the Social Hall. Tickets are $25 (cash or check) and sold during coffee hour after Sunday worship.",
       "url": "",
       "source": "City Newsletter",
@@ -38448,7 +38433,8 @@
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1763889245414-7f6e8e2a34ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwbXVzaWMlMjBjb25jZXJ0JTIwcGVyZm9ybWFuY2V8ZW58MHwyfHx8MTc3NzIzMDYxNnww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Hear the Mountain View High School Madrigal Choir in the sanctuary, then enjoy homemade treats in the Social Hall at this Christmas tea.",
-      "firstSeenAt": "2026-11-04T23:26:17.018Z"
+      "firstSeenAt": "2026-11-04T23:26:17.018Z",
+      "costNote": "$25; cash or check. Tickets sold during coffee hour after Sunday worship."
     },
     {
       "id": "inbound-5f6c0027803a74f9",

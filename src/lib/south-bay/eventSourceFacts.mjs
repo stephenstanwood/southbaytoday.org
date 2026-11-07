@@ -60,6 +60,69 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Original received newsletters and exact organizer records reviewed on
+  // November 7. Keep admission separate from a signup link: the Sunnyvale
+  // bulletin gives fees and a registration link, not a mandatory advance gate.
+  // Evidence: docs/qa/2026-11-07-0907z-fact-check.md.
+  {
+    date: "2026-12-04",
+    matches: (event) => event.source === "City Newsletter" && event.city === "sunnyvale"
+      && /^https:\/\/anc\.apm\.activecommunities\.com\/sunnyvaleactivities\/activity\/search\/detail\/1704(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      cost: "paid", costNote: "$30 resident; $38 nonresident. $5 sibling discount when registering together.",
+      attendanceNote: "For children ages 5–11. Register through the city's linked activity catalog.",
+    },
+    copyReplacements: [[/\bRegistration required; \$30 resident, \$38 nonresident\./g,
+      "$30 resident, $38 nonresident. The city newsletter links to activity registration."]],
+  },
+  {
+    date: "2026-12-03",
+    matches: (event) => event.source === "City Newsletter" && event.city === "los-gatos"
+      && event.title === "PCLG Christmas Tea" && event.venue === "Presbyterian Church of Los Gatos",
+    facts: {
+      cost: "paid", costNote: "$25; cash or check. Tickets sold during coffee hour after Sunday worship.",
+    },
+  },
+  {
+    date: "2026-12-05",
+    matches: (event) => event.source === "City Newsletter" && event.city === "palo-alto"
+      && event.title === "Mindfulness Meditation with Phuong Pham" && event.venue === "Palo Alto Art Center"
+      && ![REGISTRATION_REQUIRED, REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: {
+      cost: "free", registration: REGISTRATION_NONE,
+      attendanceNote: "No registration required. Children under 10 must be accompanied by an adult.",
+    },
+  },
+  {
+    date: "2026-11-17",
+    url: "https://events.sjsu.edu/event/de-risking-for-startups-through-partnerships-hosted-by-emumba-x-silicon-valley-sbdc-x-aws",
+    facts: { cost: "free", endTime: "8:00 PM" },
+  },
+  // Both team schedules still say TBA. The ticket shop's JSON-LD 7 PM
+  // placeholder is not an announced kickoff. Reverify the team schedule
+  // before releasing this dated hold; retained URLs must also lose the clock.
+  {
+    date: "2026-11-28",
+    matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
+      && /^https:\/\/tickets\.gostanford\.com\/(?:events?\/football-vs-smu-fauvdl|events\/69c4649c39baf6e77d7c9b7f\/(?:6ae10caa2652b89aac76ea31|6ada9e67bf5c964ef46db282))(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      time: null, endTime: null,
+      description: "Stanford hosts SMU at Stanford Stadium on November 28. Kickoff time is TBA on Stanford's official football schedule; the ticket shop's structured clock is unconfirmed.",
+      blurb: "Stanford hosts SMU at Stanford Stadium on November 28; kickoff time is TBA.",
+    },
+  },
+  // The current venue page and its exact, rescheduled ticket record disagree.
+  // Neither establishes a single confirmed clock. Keep the concert with a
+  // visible source-conflict notice, without borrowing either clock in backfill.
+  {
+    date: "2026-12-06",
+    url: "https://www.sapcenter.com/events/detail/rush-2",
+    aliasUrls: ["https://www.ticketmaster.com/rush-fifty-something-san-jose-california-12-06-2026/event/1C006355EC78A84D"],
+    facts: {
+      time: null, endTime: null, category: "music", attendanceStatus: "needs-confirmation",
+      attendanceNote: "SAP Center lists 7 PM; Ticketmaster lists 7:30 PM for this rescheduled concert. Confirm the start with the venue before going.",
+    },
+  },
   // Sparse newsletter copies won deduplication without the organizer's entry
   // terms. Keep these exact dated occurrences consistent with the full ticket
   // records and the city's original bulletin, including retained cards.

@@ -123,7 +123,7 @@ import {
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 import { deduplicateEventUrls } from "./lib/event-url-dedup.mjs";
-import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
   verifyMarketScheduleSource,
@@ -8933,6 +8933,9 @@ function extractTimeFromHtml(html, eventDate) {
 
 export function isEventTimeBackfillCandidate(event) {
   if (event.time || event.ongoing || !event.url) return false;
+  // A reviewed source conflict needs confirmation from the organizer. Reading
+  // one of those same pages (or its old cache) cannot resolve the conflict.
+  if (event.attendanceStatus === "needs-confirmation" || hasUnconfirmedStartTime(event)) return false;
   // A production page lists a run, weekday schedules and special performances.
   // Its first clock (including an old cached clock) cannot date a performance.
   if (event.source === "Palo Alto Players") return false;
