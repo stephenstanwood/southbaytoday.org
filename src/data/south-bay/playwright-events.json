@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-07T04:41:36.380Z",
+    "generatedAt": "2026-11-07T08:52:02.788Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 186,
+    "eventCount": 183,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (10)",
-      "Linden Tree Books (8)",
+      "San Jose Jazz (9)",
+      "Linden Tree Books (7)",
       "History San Jose (5)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
@@ -23,7 +23,7 @@
       "SAP Center (12)",
       "The Tech Interactive (6)",
       "Books Inc (6)",
-      "San Jose Museum of Art (3)",
+      "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 9,
+        "liveCount": 9,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -78,13 +78,13 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 3,
+        "count": 2,
         "liveCount": 0,
         "error": "SJMA calendar returned HTTP 403",
         "sources": [
           "San Jose Museum of Art"
         ],
-        "retainedCount": 3,
+        "retainedCount": 2,
         "carriedForward": true,
         "carryForwardReason": "scraper errored; retained previous run's events"
       },
@@ -92,8 +92,8 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 8,
-        "liveCount": 8,
+        "count": 7,
+        "liveCount": 7,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -327,23 +327,6 @@
   },
   "events": [
     {
-      "id": "6c14cd148fab",
-      "title": "SJZ Break Room Jazz Jam",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "5:20pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
-      "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-2/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
-    {
       "id": "5d9cffa919f1",
       "title": "Emily Day & The Cosmo Alleycats",
       "date": "2026-11-13",
@@ -495,29 +478,6 @@
       "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "d46d22f2bf26",
-      "title": "Hilo: The Holiday Special with Judd Winick",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "6pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "registration": "full",
-      "category": "arts",
-      "cost": "free",
-      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Judd Winick to the store to celebrate the Hilo Holiday Special! ​Judd will talk about the latest adventure in his bestselling Hilo series, take questions from the audience, and then sign books. ​This event is free, but you must purchase a copy of Hilo: The Holiday Special from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. ​The decorations are up! The gifts are wrapped! And Hilo and the gang are enjoying some holiday togetherness. Sure, it would be better if the skating pond wasn't blocked off. And if someone wasn't stealing trees from the tree lot. AND if a giant, super grumpy snowman wasn't going around destroying things. But what's a holiday without holiday surprises?! Can Hilo and friends figure out what the snowman wants before D.J.’s big family party?! Packed with family and food, love and laughter (lots of laughter!)—gather around and enjoy all the gifts of the season with Hilo!",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-06"
-      }
     },
     {
       "id": "d4f26b0a6ed7",
@@ -931,10 +891,10 @@
       "kidFriendly": false
     },
     {
-      "id": "beec28a54682",
+      "id": "7984bca3b2a9",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -951,10 +911,10 @@
       "kidFriendly": false
     },
     {
-      "id": "a406f83dd9e6",
+      "id": "752e29c96b53",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -971,10 +931,10 @@
       "kidFriendly": false
     },
     {
-      "id": "ecf4887fb8b8",
+      "id": "4a17d5f59728",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -1062,10 +1022,10 @@
       "kidFriendly": true
     },
     {
-      "id": "3dfc08019863",
+      "id": "c36a1925caaf",
       "title": "Toddler Storytime",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
+      "date": "2026-11-07",
+      "displayDate": "Sat, Nov 7",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1510,7 +1470,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-07T04:40:26.700Z"
+        "checkedAt": "2026-11-07T08:50:56.045Z"
       }
     },
     {
@@ -1533,7 +1493,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-07T04:40:26.707Z"
+        "checkedAt": "2026-11-07T08:50:56.049Z"
       }
     },
     {
@@ -1556,7 +1516,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-07T04:40:26.707Z"
+        "checkedAt": "2026-11-07T08:50:56.049Z"
       }
     },
     {
@@ -1579,7 +1539,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-07T04:40:26.708Z"
+        "checkedAt": "2026-11-07T08:50:56.050Z"
       }
     },
     {
@@ -1602,7 +1562,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-07T04:40:26.708Z"
+        "checkedAt": "2026-11-07T08:50:56.050Z"
       }
     },
     {
@@ -3189,23 +3149,6 @@
       "kidFriendly": false
     },
     {
-      "id": "62466a6932a3",
-      "title": "Mon Laferte",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/mon-laferte",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "30d457c29ec8",
       "title": "The Smashing Pumpkins",
       "date": "2026-11-08",
@@ -3226,7 +3169,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.047Z"
+        "checkedAt": "2026-11-07T08:51:20.098Z"
       }
     },
     {
@@ -3250,7 +3193,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.049Z"
+        "checkedAt": "2026-11-07T08:51:20.100Z"
       }
     },
     {
@@ -3274,7 +3217,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.052Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3298,7 +3241,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-07T04:40:51.052Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3322,7 +3265,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.052Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3346,7 +3289,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.052Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3370,7 +3313,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.053Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3394,7 +3337,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.053Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3418,7 +3361,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.053Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3442,7 +3385,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.053Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
     },
     {
@@ -3466,8 +3409,25 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-07T04:40:51.053Z"
+        "checkedAt": "2026-11-07T08:51:20.103Z"
       }
+    },
+    {
+      "id": "1f1a26b765fb",
+      "title": "Rush",
+      "date": "2026-12-06",
+      "displayDate": "Sun, Dec 6",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/rush-2",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
       "id": "14ac2c3257eb",
@@ -3672,25 +3632,6 @@
       "url": "https://www.booksinc.com/pages/events",
       "source": "Books Inc",
       "kidFriendly": false
-    },
-    {
-      "id": "8f7697d5027c",
-      "title": "First Fridays: November 2026",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "free",
-      "description": "Enjoy free evening galleries and entertainment at San Jose Museum of Art's First Fridays.",
-      "url": "https://sjmusart.org/event/first-fridays-november-2026",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": false,
-      "blurb": "Enjoy free evening galleries and entertainment at San Jose Museum of Art.",
-      "attendanceNote": "Register in advance for faster check-in."
     },
     {
       "id": "fe4a7a23e4bd",
