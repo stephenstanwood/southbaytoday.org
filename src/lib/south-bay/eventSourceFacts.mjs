@@ -2190,10 +2190,15 @@ const CORRECTIONS = [
   // instructions say 30. Neither source field establishes the right pickup
   // time. Stop applying this warning if a fresh source resolves the conflict.
   // https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4
-  // Evidence: docs/qa/2026-10-24-0407-fact-check.md (retained gateway response).
-  {
-    date: "2026-10-27",
-    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4"
+  // The November 10 occurrence repeats the same conflict in its exact record.
+  // Evidence: docs/qa/2026-10-24-0407-fact-check.md and
+  // docs/qa/2026-11-07-1807z-fact-check.md (exact gateway responses).
+  ...[
+    ["2026-10-27", "691fb8c1dff9d93e00d10dc4"],
+    ["2026-11-10", "691fb8c1dff9d93e00d10dc6"],
+  ].map(([date, id]) => ({
+    date,
+    matches: (event) => event.url === `https://sjpl.bibliocommons.com/events/${id}`
       && /\b60 minutes\b/i.test(event.description || "")
       && /\b30 minutes\b/i.test(event.attendanceNote || ""),
     facts: {
@@ -2202,7 +2207,7 @@ const CORRECTIONS = [
     },
     copyReplacements: [[/A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime\./gi,
       "The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime); confirm pickup timing with Willow Glen Library."]],
-  },
+  })),
   // "Reading to Children" is not evidence that children read to the volunteer.
   // Keep the source's small-group format without inventing a participant role.
   // https://sjpl.bibliocommons.com/events/6a5e86410e562e28009b31f5

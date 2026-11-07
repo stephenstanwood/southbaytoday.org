@@ -38,6 +38,10 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // The authenticated November 7 original links to this public city bulletin,
+  // which confirms the November 18 meeting, 5–6:30 PM and Senior Center.
+  // Evidence: docs/qa/2026-11-07-1807z-fact-check.md.
+  ["2026-11-18|International Swim Center Phase 2 Community Meeting", "https://content.govdelivery.com/accounts/CASANTACLARA/bulletins/431da35"],
   // The museum's own page confirms the November 4 book and 9:30 AM session.
   // Evidence: docs/qa/2026-11-05-0507z-fact-check.md.
   ["2026-11-04|Triton Book Club: The Last Tycoon", "https://www.tritonmuseum.org/book-club"],

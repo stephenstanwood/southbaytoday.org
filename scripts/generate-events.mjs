@@ -9004,6 +9004,13 @@ async function backfillEventTimes(events) {
   console.log(`   no time:       ${failed}`);
 }
 
+export async function backfillVerifiedEventTimes(events, { backfill = backfillEventTimes } = {}) {
+  await backfill(events);
+  // A recovered clock can make a dated source correction match for the first
+  // time. Canonicalize its URL and venue before publication and deduplication.
+  for (const event of events) Object.assign(event, applyVerifiedEventFacts(event));
+}
+
 /** Normalize a time string like "7:30 pm" / "7 PM" / "19:30" to "H:MM AM/PM". */
 function formatHourClock(s) {
   if (!s || typeof s !== "string") return null;
@@ -11062,7 +11069,7 @@ async function main() {
   // shows (Les Mis etc.), inbound newsletter events where the LLM extractor
   // couldn't parse a time, and similar "URL has the time but the feed didn't"
   // cases. Caches both successful times and "no time available" results.
-  await backfillEventTimes(allEvents);
+  await backfillVerifiedEventTimes(allEvents);
 
   // Filter: must have date and city and title, must be today or future, must be public, not cancelled
   // Also skip zero-duration university calendar markers (e.g. "5:00 PM – 5:00 PM")
