@@ -55,6 +55,8 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      // Remove the paired display markup, preserving the entire HICAP notice.
+      [/\*\* (HICAP Counselors [^*]+?) \*\*/g, "$1"],
       ["Training and supplies will be provide;", "Training and supplies will be provided;"],
       ["put it altogether with play songs.", "put it all together by playing songs."],
       ["the basics of using sewing machine!", "the basics of using a sewing machine!"],
@@ -538,6 +540,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
+      [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
       [/\b(\d+) teams (\d+) people each,/g, "$1 teams of $2 people each,"],
       [/\b(at the \d+) hour mark,/g, "$1-hour mark,"],
       ["the one with fewest remaining loose pieces.", "the one with the fewest remaining loose pieces."],
@@ -643,6 +647,9 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
+      [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
+      [" *This event will be held in the ", " This event will be held in the "],
       [/\bincluding Kqed\b/g, "including KQED"],
       ["but national PBS, however, has refused", "but national PBS has refused"],
       ["Registration is not required, but means you will receive", "Registration is not required, but registering means you will receive"],
@@ -830,6 +837,7 @@ const EDITS = {
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
     ],
     description: [
+      ["! * Tickets go on sale", "! Tickets go on sale"],
       ["HA*ASH,", "Ha*Ash,"],
       ["NO ME Hablen De Amor", "No Me Hablen De Amor"],
       ["Valerie: A Tribute to Amy Winehouse, pays", "Valerie: A Tribute to Amy Winehouse pays"],

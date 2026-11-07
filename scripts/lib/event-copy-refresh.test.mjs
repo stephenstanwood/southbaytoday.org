@@ -67,6 +67,7 @@ const november6MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/revie
 const november6AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-06-afternoon.json", import.meta.url)));
 const november6EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-06-evening.json", import.meta.url)));
 const november7AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-afternoon.json", import.meta.url)));
+const november7MarkupFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-markup.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -82,9 +83,41 @@ audits.push(november6MiddayFixture);
 audits.push(november6AfternoonFixture);
 audits.push(november6EveningFixture);
 audits.push(november7AfternoonFixture);
+audits.push(november7MarkupFixture);
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("markup repairs preserve revised appointments, contacts, notices and publisher scope", () => {
+  const revise = text => text.replaceAll("350-3239", "350-9876")
+    .replaceAll("8 AM-5 PM", "9 AM-4 PM").replaceAll("Room 201A", "Room 302B")
+    .replaceAll("HICAP's goal is to inform and educate", "HICAP's updated goal is to inform and educate");
+  const suffix = " Registration required; ages 18+; contact updated@example.org. See https://example.org/new.";
+  for (const row of november7MarkupFixture.cases) {
+    const original = {
+      source: row.source, description: revise(row.refreshed) + suffix,
+      id: "revised-markup-event", date: "2026-12-04", time: "11:45 AM",
+      endTime: "1:00 PM", registration: "appointment-only", cost: "free",
+    };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, description: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next.description), numbers(original.description));
+    assert.deepEqual(identifiers(next.description), identifiers(original.description));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+});
+
+test("markup repairs preserve footnotes, literal names and incomplete emphasis", () => {
+  const examples = [
+    { source: "San Jose Public Library", description: "Free referrals*. *Disclaimer: No case management is provided. *Aviso: No se ofrece gestión de casos." },
+    { source: "San Jose Public Library", description: "** HICAP Counselors have updated their notice." },
+    { source: "Santa Clara County Library", description: "Meet every second Tuesday of the month*. Exceptions: November 17; December 8." },
+    { source: "San Jose Theaters", description: "Ha*Ash performs on December 26. Tickets go on sale October 23." },
+  ];
+  for (const event of examples) assert.deepEqual(polishReviewedEventCopy(event), event);
+});
 
 test("November 7 grammar repairs preserve revised counts, schedules, contacts and publisher scope", () => {
   const revise = text => text.replaceAll("10 teams", "8 teams")
@@ -439,16 +472,21 @@ test("attendance sentence endings preserve changed contacts, qualifiers and publ
 
 test("philosophy typo repair preserves publisher scope and revised wording", () => {
   const row = philosophyFixture.cases[0];
+  const markupRow = november7MarkupFixture.cases.find(candidate => candidate.refreshed === row.reviewed);
+  assert.ok(markupRow, "the later audit captures the complete wording after the typo repair");
   const otherPublisher = { source: "Different publisher", description: row.refreshed };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
   const revised = {
     source: row.source,
     description: row.refreshed.replace("It is impossible to leave the pleasant life", "It is impossible to enjoy a pleasant life"),
   };
-  assert.deepEqual(polishReviewedEventCopy(revised), revised);
+  assert.deepEqual(polishReviewedEventCopy(revised), {
+    ...revised,
+    description: markupRow.reviewed.replace("It is impossible to live the pleasant life", "It is impossible to enjoy a pleasant life"),
+  });
   const suffix = " Registration required. Ages 12+; $25. Contact updated@example.org.";
   const extended = { source: row.source, description: row.refreshed + suffix };
-  assert.deepEqual(polishReviewedEventCopy(extended), { ...extended, description: row.reviewed + suffix });
+  assert.deepEqual(polishReviewedEventCopy(extended), { ...extended, description: markupRow.reviewed + suffix });
 });
 
 test("November grammar repairs preserve other publishers and later source instructions", () => {
