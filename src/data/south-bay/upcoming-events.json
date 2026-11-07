@@ -24370,7 +24370,9 @@
       "audienceAge": "kids",
       "image": "https://images.unsplash.com/photo-1768509196851-16084e78f6ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxmYW1pbHklMjBhY3Rpdml0eSUyMG91dGRvb3IlMjBwYXJrfGVufDB8Mnx8fDE3NzcyMzA2MTR8MA&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Bring your elementary schooler to a glow-themed evening of crafts, music, snacks and recreational activities; pre-registration is required.",
-      "firstSeenAt": "2026-11-07T04:50:07.476Z"
+      "firstSeenAt": "2026-11-07T04:50:07.476Z",
+      "registration": "required",
+      "attendanceNote": "Pre-registration is required. For elementary school children."
     },
     {
       "id": "inbound-b79aa5afd82ba99e",
@@ -25359,15 +25361,20 @@
       "address": "Fuze",
       "city": "san-jose",
       "category": "sports",
-      "cost": null,
+      "cost": "low",
       "description": "Game-day watch party with food, drinks, music, and prizes, hosted by DJ Cisco and Robert Robledo.",
       "url": "https://www.eventbrite.com/e/49ers-vs-raiders-the-ultimate-football-watch-party-at-fuze-tickets-2003954792730?aff=odeimcmailchimp",
       "source": "City Newsletter",
       "kidFriendly": false,
-      "audienceAge": "all",
+      "audienceAge": "adult",
       "image": "https://www.eventbrite.com/_next/image?url=https%3A%2F%2Fimg.evbuc.com%2Fhttps%253A%252F%252Fcdn.evbuc.com%252Fimages%252F1196660483%252F249534108584%252F1%252Foriginal.20261027-064622%3Fcrop%3Dfocalpoint%26fit%3Dcrop%26w%3D940%26auto%3Dformat%252Ccompress%26q%3D75%26sharp%3D10%26fp-x%3D0.5%26fp-y%3D0.5%26s%3D24d7480ddb5ef6341ddfa8be36db3df9&w=940&q=75",
       "blurb": "Watch the 49ers play the Raiders at Fuze with food, drinks, music and prizes, hosted by DJ Cisco and Robert Robledo.",
-      "firstSeenAt": "2026-11-07T04:50:07.476Z"
+      "firstSeenAt": "2026-11-07T04:50:07.476Z",
+      "costNote": "$5 in advance; $10 at the door.",
+      "sourceAudiences": [
+        "Adults, ages 21+"
+      ],
+      "attendanceNote": "Ages 21+. Tickets are $5 in advance or $10 at the door."
     },
     {
       "id": "inbound-244c778f1efad894",
@@ -32002,15 +32009,19 @@
       "address": "San Jose Improv",
       "city": "san-jose",
       "category": "arts",
-      "cost": null,
+      "cost": "paid",
       "description": "Stand-up and impressions from comedian Tyler Fischer, known for viral online videos. Ticketed show.",
       "url": "https://improv.com/sanjose/comic/tyler+fischer/",
       "source": "City Newsletter",
       "kidFriendly": false,
-      "audienceAge": "all",
+      "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/09/55/52/18/Original.jpg?v=3?v=4",
       "blurb": "See comedian Tyler Fischer perform stand-up and impressions at San Jose Improv, a ticketed show.",
-      "firstSeenAt": "2026-11-07T04:50:07.476Z"
+      "firstSeenAt": "2026-11-07T04:50:07.476Z",
+      "sourceAudiences": [
+        "Adults, ages 21+"
+      ],
+      "attendanceNote": "Ages 21+. The showroom requires a two-item minimum purchase per person."
     },
     {
       "id": "sanjosetheaters-63404b67d4280682",

@@ -60,6 +60,36 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Sparse newsletter copies won deduplication without the organizer's entry
+  // terms. Keep these exact dated occurrences consistent with the full ticket
+  // records and the city's original bulletin, including retained cards.
+  // Evidence: docs/qa/2026-11-07-0507z-fact-check.md.
+  {
+    date: "2026-11-08",
+    matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/49ers-vs-raiders-the-ultimate-football-watch-party-at-fuze-tickets-2003954792730(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      cost: "low", costNote: "$5 in advance; $10 at the door.",
+      kidFriendly: false, audienceAge: "adult", sourceAudiences: ["Adults, ages 21+"],
+      attendanceNote: "Ages 21+. Tickets are $5 in advance or $10 at the door.",
+    },
+  },
+  {
+    date: "2026-11-08",
+    url: "https://improv.com/sanjose/comic/tyler+fischer/",
+    aliasUrls: ["https://www.ticketweb.com/event/tyler-fischer-san-jose-improv-tickets/14934463"],
+    facts: {
+      cost: "paid", kidFriendly: false, audienceAge: "adult", sourceAudiences: ["Adults, ages 21+"],
+      attendanceNote: "Ages 21+. The showroom requires a two-item minimum purchase per person.",
+    },
+  },
+  {
+    date: "2026-11-13",
+    matches: (event) => /^https:\/\/anc\.apm\.activecommunities\.com\/santaclara\/activity\/search\/detail\/30217(?:[/?#]|$)/.test(event.url || ""),
+    facts: {
+      registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Pre-registration is required. For elementary school children.",
+    },
+  },
   // Exact first-party occurrence body says registration is recommended but
   // not required. Its enabled seat form alone does not establish a mandate.
   // Preserve a subsequent explicit closed/full state or changed requirement.
