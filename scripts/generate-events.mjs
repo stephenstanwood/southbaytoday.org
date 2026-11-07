@@ -6529,6 +6529,18 @@ async function fetchEventbriteEvents() {
 // ── Ticketmaster Discovery API ──
 // Covers SAP Center (Sharks), Shoreline, SJ Civic Auditorium, etc.
 
+function ticketmasterItemMinimum(...sourceFields) {
+  // Venue-policy copy may be discarded or shortened below. An explicit
+  // purchase requirement still belongs in the attendance note. Do not infer
+  // it from the venue, or turn a conditional/waived/group offer into a rule.
+  const text = sourceFields.join("\n");
+  if (/\b(?:no|without)\s+(?:a\s+)?(?:two|2)[ -]item\s+minimum\b|\b(?:two|2)[ -]item\s+minimum[^.!?\n]*\b(?:waived|optional|not\s+required)\b/i.test(text)) return null;
+  // A line wrap does not end a condition or historical introduction.
+  const sentences = sourceFields.flatMap(field => field.split(/(?<=[.!?])\s+|•/u));
+  const required = sentences.some(sentence => /^(?:event\s+info:\s*)?(?:mandatory\s+(?:two|2)[ -]item\s+minimum\s+purchase\s+per\s+person(?:\s+in\s+the\s+showroom)?|there\s+is\s+a\s+(?:two|2)[ -]item\s+minimum\s+purchase\s+requirement\s+in\s+the\s+showroom\s+for\s+all\s+guests)\s*[.!]?$/i.test(sentence.trim()));
+  return required ? "Two-item minimum purchase per person." : null;
+}
+
 function mapTicketmasterEvent(e) {
   const dateInfo = e.dates?.start;
   const dateStr = dateInfo?.localDate;
@@ -6611,6 +6623,7 @@ function mapTicketmasterEvent(e) {
   const attendanceNotes = [
     soldOut && "Tickets are sold out according to the ticket seller.",
     minimumAge && `Ages ${minimumAge}+.`,
+    ticketmasterItemMinimum(rawInfo, rawNote),
   ].filter(Boolean);
   let descCandidate = "";
   if (rawInfo && !looksLikeVenuePolicy(rawInfo)) {
