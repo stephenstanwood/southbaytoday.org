@@ -51,7 +51,7 @@ test("event city keeps the extractor's answer when the address is ambiguous", ()
   );
   // "Santa Clara County" is not a Santa Clara address.
   assert.equal(
-    resolveEventCity("campbell", "Santa Clara County Fairgrounds", "County Fair Preview"),
+    resolveEventCity("campbell", "Santa Clara County facility", "County Services Preview"),
     "campbell",
   );
   // Slugs outside the 11-city map share tokens with their neighbors and can't

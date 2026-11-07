@@ -3,6 +3,7 @@ import test from "node:test";
 import { generateKeyPairSync } from "node:crypto";
 import { classify } from "../audit-events.mjs";
 import { fetchMeetupEvents } from "../generate-events.mjs";
+import { resolveEventCity } from "../lib/event-city.mjs";
 
 test("regional Santa Cruz events pass geography while mislabeled campus events fail", () => {
   const event = {
@@ -20,6 +21,19 @@ test("Campbell Recital Hall uses the shared Stanford landmark evidence", () => {
   assert.deepEqual(classify(event), []);
   assert.ok(classify({ ...event, city: "campbell" }).some((finding) => finding.reason === "slug-mismatch"));
   assert.deepEqual(classify({ ...event, venue: "Campbell Community Center", city: "campbell" }), []);
+});
+
+test("the county fairgrounds stay in San Jose even when their name is the only city signal", () => {
+  const event = {
+    title: "Jurassic Quest – San Jose, CA", city: "san-jose",
+    venue: "Santa Clara County Fairgrounds", address: "344 Tully Rd",
+  };
+  assert.deepEqual(classify(event), []);
+  for (const city of ["santa-clara", "campbell"]) {
+    assert.equal(resolveEventCity(city, `${event.venue}, ${event.address}`, event.title), "san-jose");
+    assert.ok(classify({ ...event, city }).some((finding) => finding.reason === "slug-mismatch"));
+  }
+  assert.equal(resolveEventCity("campbell", "Santa Clara County facility", "County Services Preview"), "campbell");
 });
 
 test("Meetup excludes verified online products advertised at local venues, while keeping local workshops", async (t) => {

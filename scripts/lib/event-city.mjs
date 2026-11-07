@@ -97,6 +97,9 @@ const FIXED_VENUE_CITY = [
   [/\bsap\s+center\b/i, "san-jose"],
   [/\bpaypal\s+park\b/i, "san-jose"],
   [/\bexcite\s+ballpark\b/i, "san-jose"],
+  // The county's name is not the city: the fairgrounds are at 344 Tully Rd,
+  // San Jose. https://www.jurassicquest.com/events/XGBKF2
+  [/\bsanta\s+clara\s+county\s+fairgrounds\b/i, "san-jose"],
   [/\bshoreline\s+amphitheatre\b/i, "mountain-view"],
   [/\bmountain\s+winery\b/i, "saratoga"],
 ];

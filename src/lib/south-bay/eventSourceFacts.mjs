@@ -22,6 +22,10 @@ const LOS_ALTOS_TEEN_DND_DATES = {
   "693b4639ddf563280020736f": "2026-11-12",
   "693b4639ddf5632800207370": "2026-11-19",
 };
+const CALABAZAS_PRINT_LIMIT_DATES = {
+  "6ad7b5ac377296003a4d47e1": "2026-11-03",
+  "6ad7b5ac377296003a4d47e3": "2026-11-10",
+};
 // Dated organizer pages confirm these Break Room performances, including the
 // two separate December 5 shows. Never infer another occurrence from this list.
 // Evidence: docs/qa/2026-10-30-2307-fact-check.md.
@@ -3913,13 +3917,13 @@ export function applyVerifiedEventFacts(event) {
         : [event.attendanceNote, spectatorNote].filter(Boolean).join(" "),
     };
   }
-  // This dated Calabazas occurrence gives two incompatible print limits.
+  // These dated Calabazas occurrences give two incompatible print limits.
   // Preserve the source text and disclose the ambiguity without selecting a
   // limit. Stop adding the note when either conflicting clause is corrected.
-  // https://sjpl.bibliocommons.com/events/6ad7b5ac377296003a4d47e1
-  // Evidence: docs/qa/2026-10-30-2007-fact-check.md (fresh exact-ID response).
-  if (event?.date === "2026-11-03"
-      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ad7b5ac377296003a4d47e1(?:[/?#]|$)/.test(event?.url || "")
+  // Evidence: docs/qa/2026-10-30-2007-fact-check.md and
+  // docs/qa/2026-11-07-2207z-fact-check.md (fresh exact-ID responses).
+  const printLimitId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
+  if (event?.date && CALABAZAS_PRINT_LIMIT_DATES[printLimitId] === event.date
       && /\bDesigns must print in 1 hour 45 minutes\b/i.test(event.description || "")
       && /\bhave a print time of under 45 minutes\b/i.test(event.description || "")) {
     const printLimitNote = "The library lists conflicting print-time limits (45 minutes and 1 hour 45 minutes). Confirm your design's limit with Calabazas Library at cz.sjpl@sjlibrary.org.";
