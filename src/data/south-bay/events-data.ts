@@ -505,7 +505,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "West Valley Community Services offers free access to fresh produce, meat, dairy, dry goods and canned food on the 2nd and 4th Thursday of each month.",
+      "West Valley Community Services offers free access to fresh produce, meat, dairy, dry goods and canned food on the 2nd and 4th Thursdays of each month.",
     url: "https://www.wvcommunityservices.org",
     emoji: "🥬",
   },

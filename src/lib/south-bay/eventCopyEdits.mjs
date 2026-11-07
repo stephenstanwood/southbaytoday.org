@@ -689,6 +689,7 @@ const EDITS = {
   },
   "City Newsletter": {
     title: [
+      ["Landlord/Tenant Counseling", "Landlord / Tenant Counseling"],
       ["– Acc Men's Soccer Tournament", "– ACC Men's Soccer Tournament"],
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
       [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
@@ -709,6 +710,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      ["landlord/tenant law questions", "landlord / tenant law questions"],
       [/\bImax\b/g, "IMAX"],
       [/\bEBT\/Snap benefits\b/g, "EBT/SNAP benefits"],
       ["Mpsf Championship", "MPSF Championship"],
@@ -759,6 +761,8 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/\bPfas\b/g, "PFAS"],
+      ['MD "Ion channels and transporters regulating lymphocyte function "', 'MD: "Ion channels and transporters regulating lymphocyte function"'],
       [/^(University Public Worship: .+\))\.$/g, "$1"],
       ["Applied Physics/Physics Colloquium", "Applied Physics / Physics Colloquium"],
       ['CMEMS: Alice Brooke presents, "A Pearl of Great Price"', 'CMEMS: Alice Brooke presents "A Pearl of Great Price"'],
@@ -772,6 +776,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
       [/(\bto launch a new book, "[^"]+)"\./g, '$1."'],
       ["If you've registered your bike you can", "If you've registered your bike, you can"],
       ["Rosenkranz Aging Symposium We invite", "Rosenkranz Aging Symposium. We invite"],
@@ -809,6 +814,8 @@ const EDITS = {
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
     ],
     description: [
+      ["HA*ASH,", "Ha*Ash,"],
+      ["NO ME Hablen De Amor", "No Me Hablen De Amor"],
       ["Valerie: A Tribute to Amy Winehouse, pays", "Valerie: A Tribute to Amy Winehouse pays"],
       ["Love, Music & Emotions Love is more", "Love, Music & Emotions. Love is more"],
       ["awe-inspiring locations like never seen before in", "awe-inspiring locations in"],
