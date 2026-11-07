@@ -140,6 +140,40 @@ test("Stanford retains a current full-capacity notice before display truncation"
   assert.equal(rows[1].registration, undefined);
 });
 
+test("Stanford preserves a closed-RSVP notice beyond the excerpt and accepts a later reopening", async () => {
+  const tomorrow = dayPT(1);
+  const instances = [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:30:00") }];
+  const introduction = 'Join the Asian American Research Center at Stanford for this free public book launch. '.repeat(12);
+  const notice = "Due to room capacity limits, we can no longer accept RSVPs.";
+  const [closed] = await runWith([localistEvent({
+    title: "For the Next Generation", instances, free: true,
+    description_text: introduction + "Co-sponsored by the Asian American Activities Center (A3C) and Asian American Studies Program\n\n \n\n"
+      + notice + " Thank you for your interest!",
+  })]);
+  assert.equal(closed.registration, "closed");
+  assert.equal(closed.attendanceNote, notice);
+  assert.doesNotMatch(closed.description, /no longer accept/);
+  assert.equal(closed.cost, "free");
+  assert.equal(closed.time, "12:00 PM");
+  assert.equal(closed.endTime, "1:30 PM");
+  const [html] = await runWith([localistEvent({
+    title: closed.title, instances, free: true, description_text: "",
+    description: `<p>${introduction}</p><p>Co-sponsored by the Asian American Studies Program</p><p>${notice}</p>`,
+  })]);
+  assert.equal(html.registration, "closed");
+  assert.equal(html.attendanceNote, notice);
+  for (const description_text of [
+    introduction + "Registration is open again. Please RSVP.",
+    introduction + "If we can no longer accept RSVPs, check another session.",
+    introduction + "If\nwe can no longer accept RSVPs.",
+    introduction + "If<br>we can no longer accept RSVPs.",
+  ]) {
+    const [open] = await runWith([localistEvent({ title: closed.title, instances, free: true, description_text })]);
+    assert.equal(open.registration, undefined);
+    assert.equal(open.attendanceNote, undefined);
+  }
+});
+
 test("Stanford's Class/Seminar format outranks an industrial park in the subject", async () => {
   // The October 26 Constructing Utopias listing declares Class/Seminar.
   // Its reference to Suzhou Industrial Park does not make it an outdoor trip.

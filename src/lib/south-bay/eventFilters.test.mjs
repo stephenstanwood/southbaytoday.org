@@ -37,6 +37,22 @@ test("explicit capacity notices close registration without treating conditions o
   ]) assert.equal(declaredRegistrationAvailability(text), null, text);
 });
 
+test("a current refusal of new RSVPs closes signup without inferring a cancellation", () => {
+  for (const text of [
+    "Due to room capacity limits, we can no longer accept RSVPs. Thank you for your interest!",
+    "We can no longer accept new registrations.",
+    "We can no longer accept reservations.",
+  ]) assert.equal(declaredRegistrationAvailability(text), "closed", text);
+  for (const text of [
+    "If we can no longer accept RSVPs, check another session.",
+    "Last year we could no longer accept RSVPs.",
+    "We can no longer accept RSVPs after Friday.",
+    "We can no longer accept RSVPs for dinner, but the talk is open.",
+    "We can accept RSVPs. Registration is open.",
+    "RSVPs are not required.",
+  ]) assert.equal(declaredRegistrationAvailability(text), null, text);
+});
+
 test("LibCal's required-registration category survives a signup window that has not opened", () => {
   // Los Gatos 17286098 (Jan 13, 2027): its form is not enabled until Dec 23,
   // but the first-party category and occurrence page already require booking.

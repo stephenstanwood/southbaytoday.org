@@ -241,6 +241,12 @@ export function declaredRegistrationAvailability(html) {
     if (/^(?:registration|enrollment)\s+(?:(?:is|has)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
       return REGISTRATION_CLOSED;
     }
+    // A current refusal of new RSVPs closes signup without proving the
+    // event is canceled. Require a complete statement: future conditions,
+    // past reports and restrictions on only one part of a program differ.
+    if (/^(?:due to (?:room )?capacity limits,\s*)?we\s+can\s+no\s+longer\s+accept\s+(?:new\s+)?(?:rsvps?|registrations?|reservations?)\s*$/i.test(statement)) {
+      return REGISTRATION_CLOSED;
+    }
     if (/^(?:(?:we['’]re|we are)\s+sorry\s*[,;:]\s*)?(?:this|the|our)\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?(?:full|sold[-\s]out)\b/i.test(statement)) {
       return REGISTRATION_FULL;
     }

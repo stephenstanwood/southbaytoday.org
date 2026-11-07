@@ -4518,7 +4518,15 @@ async function fetchStanfordEvents() {
       // can still require a ticket; a ticket URL alone does not establish that.
       const ticketTerms = stripHtml(ev.ticket_cost || "");
       const ticketRequirement = ticketTerms.match(/(?:^|[.!?]\s+)((?:free\s+)?tickets?\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?)/i)?.[1]?.trim();
-      const registration = declaredRegistrationAvailability(description)
+      // Preserve the publisher's paragraph boundaries before stripHtml joins
+      // them: a credit without final punctuation can precede a closure notice.
+      const registrationNotice = [ev.description_text || ev.description || "", ev.ticket_cost || ""]
+        .flatMap((text) => String(text).split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi))
+        .map((text) => stripHtml(text).trim())
+        .flatMap((text) => text.split(/(?<=[.!?])\s+/))
+        .find((sentence) => declaredRegistrationAvailability(sentence));
+      const registration = declaredRegistrationAvailability(registrationNotice)
+        || declaredRegistrationAvailability(description)
         || declaredRegistrationAvailability(ticketTerms)
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
@@ -4596,6 +4604,7 @@ async function fetchStanfordEvents() {
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
         ...(farmVolunteerEligibility ? [farmVolunteerEligibility] : []),
         ...(ticketRequirement ? [ticketRequirement] : []),
+        ...(registrationNotice ? [registrationNotice] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
