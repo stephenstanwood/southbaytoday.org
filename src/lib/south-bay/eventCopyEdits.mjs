@@ -55,6 +55,12 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["Training and supplies will be provide;", "Training and supplies will be provided;"],
+      ["put it altogether with play songs.", "put it all together by playing songs."],
+      ["the basics of using sewing machine!", "the basics of using a sewing machine!"],
+      ["PLA - filament color at the discretion", "PLA - filament color is at the discretion"],
+      ["some adult only craft time.", "some adult-only craft time."],
+      ["reading of Hello, Universe where patrons will", "reading of Hello, Universe. Patrons will"],
       [/Sessions take place every (\d+(?:st|nd|rd|th) and \d+(?:st|nd|rd|th) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)s)\./g, "Sessions take place on the $1."],
       ["This program generously sponsored by", "This program is generously sponsored by"],
       ["Food Crafting is a thing", "Food crafting is a thing"],
@@ -532,6 +538,10 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      [/\b(\d+) teams (\d+) people each,/g, "$1 teams of $2 people each,"],
+      [/\b(at the \d+) hour mark,/g, "$1-hour mark,"],
+      ["the one with fewest remaining loose pieces.", "the one with the fewest remaining loose pieces."],
+      ["UV resin. **.", "UV resin."],
       ["Lego building", "LEGO building"],
       [/\bLegos\b/g, "LEGOs"],
       ["Bay area musicians", "Bay Area musicians"],
@@ -836,6 +846,8 @@ const EDITS = {
       [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
     ],
     description: [
+      [/\ba Q & A with\b/g, "a Q&A with"],
+      [/ - with a focus on Zinemaking(?=$| [A-Z])/g, ", with a focus on zinemaking."],
       [/\bFood justice eco-burritos will be provided$/g, "$&."],
       ["The music of Jennifer Higdon and George Crumb Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello Margaret Halbig and Teresa McCollough, piano", "The music of Jennifer Higdon and George Crumb. Melinda Martinez Becker, mezzo-soprano; Megan Chartier, cello; Margaret Halbig and Teresa McCollough, piano."],
       ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
