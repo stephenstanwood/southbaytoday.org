@@ -1,42 +1,42 @@
 {
-  "generatedAt": "2026-11-06T04:37:13.452Z",
+  "generatedAt": "2026-11-07T05:37:11.614Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-11-05",
-      "displayDate": "Thu, Nov 5",
-      "startTime": "10:40",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "startTime": "13:30",
       "bodyName": "City Council",
-      "location": "San José–Santa Clara Regional Wastewater Facility, Environmental Services Bui...",
+      "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8210&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8210,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8123&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8123,
       "agendaItems": [
         {
-          "title": "Joint Special Meeting of the City Council of San José and San José/Santa Clara Treatment Plant Advisory Committee",
-          "sequence": 17
+          "title": "Agreements with Catholic Charities of Santa Clara County and U.S. Department of Housing and Urban Development for the Development of the Blossom Valley Family Center.",
+          "sequence": 44
         },
         {
-          "title": "Meet and Greet, Historic Information and Resource Tables (10:00 a.m.)",
-          "sequence": 15
+          "title": "Funding Agreement with the Santa Clara Valley Transportation Authority for the San José Arterial Management - Adaptive Traffic Control System Deployment Project.",
+          "sequence": 45
         },
         {
-          "title": "Remarks by City, Partner, and Elected Officials",
-          "sequence": 20
+          "title": "El Niño Update, Flood Preparedness, and Proclamation of a Local Emergency.",
+          "sequence": 50
         },
         {
-          "title": "Personal Protective Equipment and Transportation",
-          "sequence": 22
+          "title": "Actions Related to the Conditional Vacation of a Portion of Orchard Parkway. - TO BE HEARD AFTER ITEM 10.2",
+          "sequence": 51
         },
         {
-          "title": "Regional Wastewater Facility Site Tour",
-          "sequence": 23
+          "title": "Actions Related to First Community Housing Stabilization.",
+          "sequence": 59
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-05",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-10",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -74,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -96,7 +96,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-09",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-05T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "santa-clara": {
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "startTime": "17:00",
+      "bodyName": "City Council and Authorities Concurrent",
+      "location": "Hybrid Meeting\r\nCity Hall Council Chambers/Virtual \r\n1500 Warburton Avenue\r\nS...",
+      "closedSession": false,
+      "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5055&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+      "legistarEventId": 5055,
+      "agendaItems": [
+        {
+          "title": "Proclamation of November 2026 as Sikh Awareness and Appreciation Month",
+          "sequence": 19
+        },
+        {
+          "title": "Proclamation of October 9, 2026 as Hangul Day and October 3, 2026 as Korean National Foundation Day",
+          "sequence": 20
+        },
+        {
+          "title": "Board, Commissions and Committee Minutes",
+          "sequence": 23
+        },
+        {
+          "title": "Action on Amendments to Agreements with West Coast Arborists, Inc. for City Tree Maintenance and Tree Planting Services and an Agreement with BrightView Landscape Services, Inc. for Secondary Tree Maintenance Services",
+          "sequence": 25
+        },
+        {
+          "title": "Action to Authorize the Use of City Electric Forces for Public Works at 2035 White Oak Lane, 3833 Kifer Road, Scott Receiving Station, and 2215 Martin Avenue, with an Estimated Cost of $110,725",
+          "sequence": 28
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-10",
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -129,7 +167,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-05T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -146,7 +184,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-05T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -185,7 +223,7 @@
     },
     "santa-clara": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "palo-alto": {
       "provider": "PrimeGov",

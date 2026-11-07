@@ -1,31 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-06T04:37:13.784Z",
+      "generatedAt": "2026-11-07T05:37:13.579Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 29 – Nov 5",
+      "dateRange": "Oct 30 – Nov 6",
       "stats": {
-        "total": 429,
-        "notable": 18,
+        "total": 444,
+        "notable": 25,
         "newUnits": 7,
-        "totalValuation": 23921047
+        "totalValuation": 26965603
       },
       "permits": [
-        {
-          "id": "2026-123066-RS",
-          "address": "1431 Pomona Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr Preapproved ADU Site Specific Ca2homes 747 Sq Ft",
-          "valuation": 131412,
-          "units": 1,
-          "issueDate": "2026-10-29",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
         {
           "id": "2026-110120-RS",
           "address": "15159 Rosemar Av #3",
@@ -72,6 +60,18 @@
           "valuation": 63507,
           "units": 1,
           "issueDate": "2026-10-30",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2025-138925-RS",
+          "address": "2342 Kayla Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Attached ADU",
+          "valuation": 63190,
+          "units": 1,
+          "issueDate": "2026-11-04",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -123,16 +123,16 @@
           "subtype": "Church"
         },
         {
-          "id": "2026-144327-CI",
-          "address": "2355 Zanker Rd",
+          "id": "2026-142975-CI",
+          "address": "4553 N 1st St",
           "category": "commercial-large",
           "categoryLabel": "Commercial Project",
           "workType": "Tenant Improvement",
-          "description": "Sumitomo Electric Lightwave Tenant Improvement",
-          "valuation": 702000,
+          "description": "Second Harvest (Be 100%) Pv Installation",
+          "valuation": 2163155,
           "units": 0,
-          "issueDate": "2026-10-30",
-          "subtype": "Manufacturing"
+          "issueDate": "2026-11-04",
+          "subtype": "Commercial/Industrial"
         }
       ]
     }
