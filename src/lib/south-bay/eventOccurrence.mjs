@@ -118,12 +118,12 @@ export function hasUnconfirmedOccurrenceDate(event) {
 }
 
 export function nonEventOfferNotice(event) {
-  // The Globetrotters' MVP Court Pass is a pregame add-on requiring a
+  // The Globetrotters' Court/Fan Passes are pregame add-ons requiring a
   // separate game ticket, even when Ticketmaster supplies an event clock.
   // Keep the main game eligible and reject sparse cached copies of the offer.
   // https://www.harlemglobetrotters.com/world-tour/schedule/tech-cu-arena/
   if (event?.source === "Ticketmaster"
-      && /^\s*MVP Court Pass\b/i.test(String(event?.title || ""))) {
+      && /^\s*(?:MVP Court|Ultimate Fan) Pass\b/i.test(String(event?.title || ""))) {
     return "This optional pregame upgrade requires a separate Harlem Globetrotters game ticket. It is not admission to the main event.";
   }
   // The Tech's event index also carries membership-sales promotions. This

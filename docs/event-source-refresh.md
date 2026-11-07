@@ -225,6 +225,12 @@ alone would miss that ordering regression.
   preview for Fiesta Navideña incorrectly repeated Avenida de Altares. An
   image-only detail keeps empty copy; never substitute another event's preview.
   Missing dates, mismatched details and HTTP/parser failures remain failures.
+- MOAH, Kepler's and East West also exclude `?format=json`. Their registered
+  adapters use `scripts/lib/squarespace-public-events.mjs` to read ordinary
+  public calendars and dated HTML detail pages, with sequential paced requests.
+  Match the visible heading and occurrence date, retain event-scoped body
+  admission/audience evidence, and never turn a started single-day workshop
+  into an ongoing exhibit. See `qa/2026-11-07-0107z-fact-check.md`.
 - San Jose Theaters (California Theatre, San Jose Civic, Center for the
   Performing Arts, Montgomery Theater) moved from sanjosetheaters.org to Visit
   San Jose in September 2026. The old All-in-One Event Calendar iCal export

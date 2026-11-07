@@ -129,6 +129,7 @@ import {
   verifyMarketScheduleSource,
 } from "../src/lib/south-bay/marketOccurrence.mjs";
 import { findMontalvoPerformanceUrl, parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
+import { PUBLIC_SQUARESPACE_CALENDARS, fetchSquarespacePublicItems } from "./lib/squarespace-public-events.mjs";
 import { mergeLosGatosSummerConcerts } from "./lib/los-gatos-summer-concerts-2026.mjs";
 import { mergePaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
 import { mergeCampbellOktoberfest } from "./lib/campbell-oktoberfest-2026.mjs";
@@ -1021,6 +1022,8 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Military Officers Association of America; county's Veterans Day notice.
+  "MOAA",
   // Public broadcaster named in Palo Alto City Library's screening copy.
   "KQED",
   // November 2026 first-party listings: SCU's language conference, Improv's
@@ -3736,6 +3739,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // Parades are civic/community gatherings even when their descriptions say
   // attendees can dance or mention performers along the route.
   if (/\bparade\b/.test(titleLower)) return "community";
+  // Memorial observances stay civic even at MacArthur Park Restaurant & Bar.
+  if (/\bveterans?['’]?\s+day\b/.test(titleLower)
+    && /\b(?:celebration|ceremony|memorial|observance|event)\b/.test(titleLower)) return "community";
   // Leadership fairs are campus opportunity expos. Descriptions commonly
   // promise "fun games," which otherwise trips the broad sports detector.
   if (/\bleadership\s+fair\b/.test(titleLower)) return "community";
@@ -4139,6 +4145,9 @@ function resolveRunWindow(start, end, now, { title, description, venue } = {}) {
   if (!start) return null;
   if (start >= now) return { date: start, ongoing: false };
   if (!end || end < now) return null;
+  // A timed, single-day activity cannot become a clock-free exhibition just
+  // because its title says "Build a Mini ... Exhibit" after it has started.
+  if (isoDate(start) === isoDate(end)) return null;
   if (!isOngoingExhibitLike(title, description, venue)) return null;
   return { date: now, ongoing: true };
 }
@@ -5370,6 +5379,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
         cost: previous.costNote ? previous.cost : previous.cost ?? event.cost,
         ...(previous.costNote ? { costNote: previous.costNote, attendanceNote: previous.costNote } : {}),
         kidFriendly: previous.kidFriendly ?? event.kidFriendly,
+        ...(previous.sourceAudiences ? { sourceAudiences: previous.sourceAudiences } : {}),
         occurrenceEvidence: previous.occurrenceEvidence,
       };
     }
@@ -5403,6 +5413,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
           cost: detail.costNote ? detail.cost : detail.cost || event.cost,
           ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
           kidFriendly: detail.kidFriendly ?? event.kidFriendly,
+          ...(detail.sourceAudiences ? { sourceAudiences: detail.sourceAudiences } : {}),
           occurrenceEvidence: {
             kind: "first-party-occurrence-page",
             sourceUrl: event.url,
@@ -8619,6 +8630,10 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
     let items;
     if (pageUrl === MHP_CALENDAR_URL) {
       items = await fetchMhpItems({ now, headers: { "User-Agent": UA } });
+    } else if (PUBLIC_SQUARESPACE_CALENDARS.has(pageUrl)) {
+      // These sites' robots policies exclude ?format=json; their ordinary
+      // public calendars link dated HTML pages with exact Event schemas.
+      items = await fetchSquarespacePublicItems(pageUrl, { headers: { "User-Agent": UA } });
     } else {
       const res = await fetch(`${pageUrl}?format=json`, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(15_000) });
       if (!res.ok) throw new Error(`${res.status}`);
@@ -8650,7 +8665,7 @@ async function fetchSquarespaceEvents(pageUrl, source, defaultCity, defaultVenue
         // Feb–Sep and was being dropped the day after it opened.
         const run = resolveRunWindow(start, end, now, {
           title: item.title,
-          description: desc,
+          description: eventText,
           venue,
         });
         if (!run) return null;

@@ -145,7 +145,9 @@ export function parseMontalvoOccurrencePage(html) {
   // calendar price must not turn "free for Montalvo Members" into a free event.
   const membersFree = /\b(?:this|the)\s+(?:program|event)\s+is\s+free\s+for\s+(?:Montalvo\s+)?members\b/i.test(audienceText);
   const isFree = !membersFree && (prices.includes(0) || /\bis\s+(?:a\s+)?FREE\b/i.test(visibleText));
-  const familyAudience = /\b(?:whole family|family event|family[- ]friendly|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
+  const childWorkshop = /\bworkshop\s+for\s+(?:youth|children)\b/i.test(title || "")
+    && /\b(?:ages?\s+[5-9]\s*[-–]\s*(?:[6-9]|1[0-2])|[5-9]\s*[-–]\s*1[0-2][ -]year[ -]olds?)\b/i.test(audienceText);
+  const familyAudience = childWorkshop || /\b(?:whole family|family event|family[- ]friendly|activities for kids|school groups|homeschooled students)\b/i.test(audienceText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {
@@ -156,5 +158,6 @@ export function parseMontalvoOccurrencePage(html) {
     cost: hasPaidTickets ? "paid" : isFree ? "free" : null,
     ...(membersFree ? { costNote: "Free for Montalvo members. Check the organizer for non-member admission." } : {}),
     ...(familyAudience ? { kidFriendly: true } : {}),
+    ...(childWorkshop ? { sourceAudiences: ["Children"] } : {}),
   };
 }

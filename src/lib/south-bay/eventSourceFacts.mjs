@@ -60,6 +60,29 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // Exact first-party occurrence body says registration is recommended but
+  // not required. Its enabled seat form alone does not establish a mandate.
+  // Preserve a subsequent explicit closed/full state or changed requirement.
+  // Evidence: docs/qa/2026-11-07-0107z-fact-check.md.
+  {
+    date: "2026-11-10",
+    matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/6a85eceebe14820029887e87"
+      && /\bregistration\s+(?:is\s+)?recommended\s+but\s+not\s+required\b/i.test(sourceText(event))
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceNote: "Registration is recommended but not required." },
+  },
+  // The received county notice names this observance, clock and place. It
+  // does not establish who organizes the whole parade or who will march.
+  {
+    date: "2026-11-11",
+    matches: (event) => event.source === "City Newsletter" && event.city === "san-jose"
+      && /^MOAA Silicon Valley Veterans Day Parade & Ceremony$/i.test(event.title || ""),
+    facts: {
+      title: "MOAA Silicon Valley Veterans Day Parade & Ceremony",
+      description: "Veterans Day parade and ceremony in downtown San Jose, listed in Supervisor Otto Lee's community newsletter.",
+      blurb: "Attend the MOAA Silicon Valley Veterans Day parade and ceremony in downtown San Jose.",
+    },
+  },
   // The current organizer records put booking instructions outside the short
   // display excerpt. Preserve the verified dates when cached cards are read.
   // Evidence: docs/qa/2026-11-06-2007z-fact-check.md.

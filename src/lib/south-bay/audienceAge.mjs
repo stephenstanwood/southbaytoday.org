@@ -136,8 +136,12 @@ export function classifyAudienceAge(event) {
   for (const r of NON_AUDIENCE_AGE_PHRASES) hay = hay.replace(r, "");
   if (ACADEMIC_TALK_TITLE.test(title)) hay = hay.replace(STORYTIME_AS_SUBJECT, "");
 
+  // A parenting author's discussion of toddlers describes the book's subject,
+  // not an invitation to toddler programming. Actual child-directed titles
+  // and explicit structured audience labels retain their normal precedence.
+  const childAudienceText = event.kidFriendly === false && /\bparenting expert\b/i.test(desc) ? title : hay;
   const isKids =
-    KIDS_SIGNALS.some((r) => r.test(hay)) ||
+    KIDS_SIGNALS.some((r) => r.test(childAudienceText)) ||
     KIDS_TITLE_SIGNALS.some((r) => r.test(title));
   const isAdult = ADULT_SIGNALS.some((r) => r.test(hay));
 

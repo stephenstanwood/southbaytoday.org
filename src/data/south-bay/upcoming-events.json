@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-07T00:39:38.143Z",
-  "eventCount": 1477,
+  "eventCount": 1475,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -3035,7 +3035,7 @@
       "description": null,
       "url": "https://my.montalvoarts.org/overview/3280",
       "source": "Montalvo Arts Center",
-      "kidFriendly": false,
+      "kidFriendly": true,
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://my.montalvoarts.org/overview/3280",
@@ -3043,10 +3043,13 @@
         "checkedAt": "2026-11-07T00:32:56.294Z",
         "admissionSourceUrl": "https://my.montalvoarts.org/3280/3281"
       },
-      "audienceAge": "all",
+      "audienceAge": "kids",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
       "blurb": "Make holiday gifts at a youth workshop at Montalvo Arts Center on Sunday morning.",
-      "firstSeenAt": "2026-11-07T00:39:38.114Z"
+      "firstSeenAt": "2026-11-07T00:39:38.114Z",
+      "sourceAudiences": [
+        "Children"
+      ]
     },
     {
       "id": "0d7b8aac6ccd",
@@ -3389,7 +3392,7 @@
       "url": "https://www.keplers.org/upcoming-events-internal/lansbury",
       "source": "Kepler's Books",
       "kidFriendly": false,
-      "audienceAge": "kids",
+      "audienceAge": "all",
       "image": "https://static1.squarespace.com/static/57f40997ff7c50a82fded7c9/57f40ce93e00becf61a25cae/6aee326fcc16260575d45803/1793999139599/High+Res+Headshot+-+Janet+Lansbury+%28%C2%A9+Madeline+Lansbury%29+%281%29.png?format=1500w",
       "blurb": "Hear parenting expert Janet Lansbury, author of No Bad Kids, talk with Ruth Whippman about caring for infants and toddlers.",
       "firstSeenAt": "2026-11-07T00:39:38.114Z"
@@ -8527,8 +8530,8 @@
       "venue": "Bascom Library",
       "address": "1000 S. Bascom Ave San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-11T00:30:00.000Z",
+      "registration": "none",
+      "registrationClosesBy": null,
       "category": "community",
       "cost": "free",
       "description": "Do you feel like you have remarkable things to say, waiting to be expressed? Are you curious what others are writing? Want to share your creativity with others? Come to the Teen Writing Group at Bascom Library! You'll have a chance to read your stories and poems to others, and we'll practice writing by responding to fun prompts. A great way to develop your writing skills and meet fellow writers! Please bring any creative writing you've done that you want to share. Registration recommended but not required. For ages 12-18. Held on the second Tuesday of each month.",
@@ -8541,7 +8544,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/5c1fcb52e8869ff886572329701167d0/200416164101-3-underscored-creative-writing-lead-super-tease-3362136013.jpg",
       "blurb": "Read your stories and poems aloud and hear what fellow teens are writing at the Bascom Library Teen Writing Group.",
-      "firstSeenAt": "2026-11-07T00:39:38.114Z"
+      "firstSeenAt": "2026-11-07T00:39:38.114Z",
+      "attendanceNote": "Registration is recommended but not required."
     },
     {
       "id": "sjpl-6ad10c8329c3d600333025a4",
@@ -19248,7 +19252,7 @@
     },
     {
       "id": "paloalto-6aee382330b4d5b2f42c0e04",
-      "title": "Valentine's Button Making Pop-up for Teens!",
+      "title": "Button Making Pop-up for Teens!",
       "date": "2027-02-10",
       "displayDate": "Wed, Feb 10",
       "time": "3:30 PM",
@@ -28521,27 +28525,6 @@
       "audienceAge": "all",
       "blurb": "Hear Ryan Carrington speak in the weekly Tuesday night art lecture series that brings artists, designers and critical theorists to campus.",
       "firstSeenAt": "2026-11-02T09:07:16.233Z"
-    },
-    {
-      "id": "tm-G5vYZ_8Sg1ABj",
-      "title": "Ultimate Fan Pass: 30-min Exclusive On-Court Access from 1:30PM-2:00PM",
-      "date": "2027-01-16",
-      "displayDate": "Sat, Jan 16",
-      "time": "3:00 PM",
-      "endTime": null,
-      "venue": "Tech CU Arena",
-      "address": "1500 S Tenth Street",
-      "city": "san-jose",
-      "category": "education",
-      "cost": "paid",
-      "description": "All-new Ultimate Fan Pass: Step onto the court early and get up-close with the players before the game even begins! This IS AN Optional Upgrade. Ticket TO THE Main Event Is Also Required.",
-      "url": "https://www.ticketmaster.com/ultimate-fan-pass-30min-exclusive-oncourt-san-jose-california-01-16-2027/event/1C00650CF5285E9C",
-      "source": "Ticketmaster",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJJx_xws8zjoARo9omW6ZKHGg/photos/AV-0GLdl3pnNtv0XBkGMVRdzMo0GptvmgdPJk9IEO23THBhsc7Jtr7nS_hDX1ERfbE2U4S1V8pLQnSoUlOhIipSjEp6uYqm3YR3PtrqMFAZtmDrsZuGfrzAqB885OZMEI2JI9Y6zQcIrnSfCglDl9j_8PSv8ZWL_Tkk3Jb1hFh4MhWQ04hPZ4JASllQGulXS5SQV3FdwfeXOPMULq-3dW5n9VeDqWoTVjYa5gAO-rzCNgbb-q3LiFIRrhOVu1Hd7jKx1J-1jlKwGZNEGU6BoLW8PDlcwBOUPzWQRDFHlScKnDbbv79l5InksZ_ZuionN3-RJg7248cXD6NVlDf5kdNRz6ZHFEPfb6EDk-q-awtbukSB5oijCoMHL_4L5yJB12jISaSH1a6J6ypIt0zvKk3Iu3-KpRTsZ",
-      "blurb": "Step onto the court before the game and get up close with the players, as an optional upgrade to your game ticket.",
-      "firstSeenAt": "2026-11-07T00:39:38.114Z"
     },
     {
       "id": "sanjosetheaters-80012abdd34364a3",
@@ -38196,29 +38179,6 @@
       "firstSeenAt": "2026-11-04T19:17:11.624Z"
     },
     {
-      "id": "museumofamericanheritage-9d00099ee508fc8f",
-      "title": "Collage Capsules: Build a Mini Bookshelf or Exhibit",
-      "date": "2026-11-06",
-      "displayDate": "Fri, Nov 6",
-      "time": null,
-      "endTime": null,
-      "ongoing": true,
-      "venue": "Downtown Library",
-      "address": "270 Forest Avenue, Palo Alto, California, 94301",
-      "city": "palo-alto",
-      "locality": "Palo Alto",
-      "category": "arts",
-      "cost": "free",
-      "description": "An afternoon of crafting and imaginative making with the Palo Alto Library! Supplies included",
-      "url": "https://www.moah.org/moahevents/collage-capsules-build-a-mini-museum",
-      "source": "Museum of American Heritage",
-      "kidFriendly": true,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJp2xbvzu7j4ARbE0Yv7Tx68g/photos/AV-0GLej0ZiNV1R0y37lOJqSozFH7Rjejyisx5a_HWUXK14TWgFLbUHOsG8Iin2i6_fWyWjRfbpGvcPHQ4QtQaMl2aNBuKHBvKjsGsrXWAbl6xY537_bgvh8WtwhZNfSMhmcEgXwWapSLd_B9GObZJ3JNQ4taTbPpRwM6DEhmyDgo3v3l7S3nwTZsNls-ge5136ZBO_pV-FfCvgzZ8Gc8g_ltRBa9RUipdvN-IYSANDmGlWjIDBhyCXRQTxKUrRUdWQUZ7V2pjGCbCUFpQIo3hTbG6LTQIYEtRKUOOI952nT2jqPcf7Wpff-gzcVAm3PDKdjiAnNpSdNpHUyreZOUDgaO3fPl8UjdELfDn_QUqNvHfG7OQBDXwOvkwGQnB4OKn-Fy6UCescsOuj8Em1W6la5Db6YUw",
-      "blurb": "Make a mini bookshelf or exhibit from collage materials in a hands-on crafting session at the Downtown Library, with supplies included.",
-      "firstSeenAt": "2026-11-07T00:39:38.114Z"
-    },
-    {
       "id": "stanford-54321173858822",
       "title": "Green Library Book Display: Witches and Witchcraft",
       "date": "2026-11-06",
@@ -38532,7 +38492,7 @@
       "venue": "MacArthur Park Restaurant & Bar",
       "address": "MacArthur Park Restaurant & Bar, Palo Alto",
       "city": "palo-alto",
-      "category": "outdoor",
+      "category": "community",
       "cost": null,
       "description": "Veterans Day celebration associated with Stanford University, held at MacArthur Park Restaurant & Bar.",
       "url": "",
@@ -38545,7 +38505,7 @@
     },
     {
       "id": "inbound-42fefdd039e07af0",
-      "title": "Moaa Silicon Valley Veterans Day Parade & Ceremony",
+      "title": "MOAA Silicon Valley Veterans Day Parade & Ceremony",
       "date": "2026-11-11",
       "displayDate": "Wed, Nov 11",
       "time": "12:00 PM",
@@ -38555,13 +38515,13 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Veterans Day parade and ceremony in downtown San Jose organized by the Military Officers Association of America Silicon Valley chapter. Veterans and local elected officials will march.",
+      "description": "Veterans Day parade and ceremony in downtown San Jose, listed in Supervisor Otto Lee's community newsletter.",
       "url": "",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJXXPo5aLMj4ARsvYH9l4oNis/photos/AV-0GLfZNVYWyy2cLl7N1GpMqwxMQgH4LsZQ_-dBhn1THiJwoSWjJ2FRCrpT4EIcrvo5eUz5A3eLgYOQs20Q3S5rNSAxoDODoxXy9hnwBPK0akibqs865xAn06G3x3QiRFdJyIGpR-43BwjwX8qC8e4PLHjlAOHkSbKtG5v5rNFfDAuPmguKnT2JQAf8EVb5mXnUTrwt00-Cxh6LufPNAgEhqW6hw0umcqWRg-i6LjgIjzYxxsdYFdQ5FMcinWGqUgXa3P4NVVsaz-rxQLFYS8UgQVwj2yPww9cSHpU7zfSWDapCa76KM9rgjoo13eFLzrommubvMVDppqy0EHK32leMaVGXtti9PJtE-Exc3J0SA610ck6LlPhozXhLwMYTqXmOkXlr7IUg4HckBCt6782piuW5qQ",
-      "blurb": "Watch veterans and local elected officials march in downtown San Jose's Veterans Day parade, then stay for the ceremony from the Military Officers Association chapter.",
+      "blurb": "Attend the MOAA Silicon Valley Veterans Day parade and ceremony in downtown San Jose.",
       "firstSeenAt": "2026-11-07T00:39:38.114Z"
     },
     {
