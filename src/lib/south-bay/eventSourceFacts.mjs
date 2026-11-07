@@ -68,6 +68,7 @@ const CORRECTIONS = [
     date: "2026-11-10",
     matches: (event) => event.url === "https://sjpl.bibliocommons.com/events/6a85eceebe14820029887e87"
       && /\bregistration\s+(?:is\s+)?recommended\s+but\s+not\s+required\b/i.test(sourceText(event))
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\bmust\s+(?:register|reserve|book)\b/i.test(sourceText(event))
       && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceNote: "Registration is recommended but not required." },
   },

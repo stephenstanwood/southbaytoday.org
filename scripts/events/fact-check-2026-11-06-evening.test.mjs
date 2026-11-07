@@ -68,6 +68,7 @@ test("a started craft session cannot return as a clock-free exhibit", async (t) 
 });
 
 test("youth workshop audience survives overview, ticket parsing, ingestion and retained admission", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-07T01:07:05Z") });
   const title = "Super-Secret Holiday Gift-Making Workshop for Youth";
   for (const html of [fixture.montalvo.overview, fixture.montalvo.occurrence]) {
     const detail = parseMontalvoOccurrencePage(html);
@@ -118,6 +119,7 @@ test("the dated teen writing group honors optional signup without opening a chan
   assert.equal(fixed.registrationClosesBy, null);
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
   assert.equal(applyVerifiedEventFacts({ ...event, description: "Registration is required." }).registration, "required");
+  assert.equal(applyVerifiedEventFacts({ ...event, description: event.description + " Registration is required for the workshop." }).registration, "required");
   for (const registration of ["full", "closed", "appointment-only"]) {
     assert.equal(applyVerifiedEventFacts({ ...event, registration }).registration, registration);
   }
