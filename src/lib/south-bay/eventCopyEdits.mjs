@@ -49,6 +49,15 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [/Sessions take place every (\d+(?:st|nd|rd|th) and \d+(?:st|nd|rd|th) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)s)\./g, "Sessions take place on the $1."],
+      ["This program generously sponsored by", "This program is generously sponsored by"],
+      ["Food Crafting is a thing", "Food crafting is a thing"],
+      ["November's Recipe is: Miniature Fruit Pies!", "November's recipe is miniature fruit pies!"],
+      ["Who doesn't love a sweet, fruity treat in honor of the holiday season, or whenever you want.", "Who doesn't love a sweet, fruity treat in honor of the holiday season, or whenever you want?"],
+      ["Free Program.", "Free program."],
+      ["Middle and High School students welcome.", "Middle and high school students welcome."],
+      ["such as: 2 Sewing Machines; Cricut Explore Air 2; Cricut Maker; Cricut Easy Press.", "such as 2 sewing machines, a Cricut Explore Air 2, a Cricut Maker, and a Cricut Easy Press."],
+      ["learning about rangoli then making art", "learning about rangoli, then making art"],
       [/\bjoin us the ((?:first|second|third|fourth|fifth|last) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)) every month\b/g, "join us on the $1 of every month"],
       ["Byoc (Bring Your Own Cup)", "BYOC (Bring Your Own Cup)"],
       ["someone on the waiting lists.", "someone on the waiting list."],
@@ -607,6 +616,8 @@ const EDITS = {
       ["Levi Strauss & Co. On the Corporate Insights team", "Levi Strauss & Co. on the Corporate Insights team"],
     ],
     blurb: [
+      ["with a friend or new ones.", "with a friend or make new ones."],
+      [/Get homework help from tutors in grades ((?:K|\d+)-\d+), with/g, "Students in grades $1 can get homework help from tutors, with"],
       [/\bLegos\b/g, "LEGOs"],
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
@@ -759,6 +770,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      [/(\bto launch a new book, "[^"]+)"\./g, '$1."'],
       ["If you've registered your bike you can", "If you've registered your bike, you can"],
       ["Rosenkranz Aging Symposium We invite", "Rosenkranz Aging Symposium. We invite"],
       ["anti immigrant rhetoric", "anti-immigrant rhetoric"],
