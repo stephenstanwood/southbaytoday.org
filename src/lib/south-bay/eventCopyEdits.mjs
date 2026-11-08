@@ -776,6 +776,7 @@ const EDITS = {
     ],
     description: [
       ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
+      ["A ticket hold delivery is in effect for this event.", "A ticket delivery hold is in effect for this event."],
       ["court --hungry for a win, and out to prove it!", "court — hungry for a win and out to prove it!"],
       ["Lineup* Shoreline Mafia SOB", "Lineup: Shoreline Mafia SOB"],
       ["Kai Bandz Ny Ny *Lineup subject to change", "Kai Bandz Ny Ny. Lineup subject to change."],
