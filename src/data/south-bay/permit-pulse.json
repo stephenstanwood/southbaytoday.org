@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-07T05:37:13.579Z",
+      "generatedAt": "2026-11-08T05:37:11.277Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Oct 30 – Nov 6",
+      "dateRange": "Oct 31 – Nov 7",
       "stats": {
-        "total": 444,
-        "notable": 25,
-        "newUnits": 7,
-        "totalValuation": 26965603
+        "total": 457,
+        "notable": 19,
+        "newUnits": 5,
+        "totalValuation": 20032421
       },
       "permits": [
         {
@@ -36,30 +36,6 @@
           "valuation": 64739,
           "units": 1,
           "issueDate": "2026-11-03",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-115994-RS",
-          "address": "1482 Maxine Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr Ab 2533 Legalize Detach ADU",
-          "valuation": 64035,
-          "units": 1,
-          "issueDate": "2026-10-30",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-130433-RS",
-          "address": "631 N Daniel Wy #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Detached Garage to ADU",
-          "valuation": 63507,
-          "units": 1,
-          "issueDate": "2026-10-30",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -132,6 +108,30 @@
           "valuation": 2163155,
           "units": 0,
           "issueDate": "2026-11-04",
+          "subtype": "Commercial/Industrial"
+        },
+        {
+          "id": "2026-145229-CI",
+          "address": "581 Dado St",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "Wessdel Tenant Improvement",
+          "valuation": 575000,
+          "units": 0,
+          "issueDate": "2026-11-04",
+          "subtype": "Manufacturing"
+        },
+        {
+          "id": "2026-146402-CI",
+          "address": "665 N King Rd",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "ReRoof",
+          "description": "(B100%) Reroof",
+          "valuation": 234360,
+          "units": 0,
+          "issueDate": "2026-11-05",
           "subtype": "Commercial/Industrial"
         }
       ]

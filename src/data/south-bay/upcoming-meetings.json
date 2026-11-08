@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-07T05:37:11.614Z",
+  "generatedAt": "2026-11-08T05:37:10.716Z",
   "meetings": {
     "san-jose": {
       "date": "2026-11-10",
@@ -36,7 +36,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-07T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -74,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-07T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -96,7 +96,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-09",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-07T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
@@ -134,7 +134,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-06T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-07T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -167,7 +167,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-07T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -184,7 +184,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-06T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-07T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
