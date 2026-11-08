@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { writeFileAtomic } from "./io.mjs";
 import { REGISTRATION_CLOSED, REGISTRATION_FULL, declaredRegistrationAvailability, requiresAttendanceConfirmation } from "../../src/lib/south-bay/eventFilters.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { normalizeClockTime } from "./clock-time.mjs";
 
 /** Highlights have no attendance badge; require confirmed, available events. */
 export function isBriefingEventAvailable(event) {
@@ -151,6 +152,54 @@ export function hasUnsupportedSharedEventVenue(text, events = []) {
       if ([...named.values()].some((occurrences) =>
         !occurrences.some((event) => normalizeEventWords(event.venue) === venue)
       )) return true;
+    }
+  }
+  return false;
+}
+
+function eventTitleSpan(copy, title) {
+  const words = normalizeEventWords(title).split(" ").filter(Boolean);
+  // Leads shorten titles: "Baby Bouncers Lapsit for Prewalkers" becomes
+  // "Baby Bouncers Lapsit". Still require a contiguous, distinctive phrase.
+  for (let width = words.length; width >= Math.min(3, words.length) && width > 0; width -= 1) {
+    for (let i = 0; i <= words.length - width; i += 1) {
+      const phrase = words.slice(i, i + width);
+      if (phrase.filter((word) => !TITLE_CONNECTORS.has(word)).length < Math.min(2, width)) continue;
+      const index = ` ${copy} `.indexOf(` ${phrase.join(" ")} `);
+      if (index >= 0) return { start: index, end: index + phrase.join(" ").length };
+    }
+  }
+  return null;
+}
+
+/** A shared trailing start clock must be supported for each coordinated event. */
+export function hasUnsupportedSharedEventTime(text, events = []) {
+  const clockKey = (value) => normalizeClockTime(String(value || "").replace(/\./g, "").replace(/\s+/g, ""));
+  const copy = String(text || "").replace(/\b([ap])\.\s*m\./gi, "$1m");
+  for (const sentence of copy.split(/[.!?;\n]+/)) {
+    let previousClockEnd = 0;
+    for (const clock of sentence.matchAll(/\b(?:1[0-2]|[1-9])(?::[0-5]\d)?\s*[ap]m\b/gi)) {
+      const before = normalizeEventWords(sentence.slice(previousClockEnd, clock.index));
+      previousClockEnd = clock.index + clock[0].length;
+      const named = new Map();
+      for (const event of events) {
+        const span = eventTitleSpan(before, event?.title);
+        if (!span) continue;
+        const title = normalizeEventWords(event.title);
+        if (!named.has(title)) named.set(title, { ...span, occurrences: [] });
+        named.get(title).occurrences.push(event);
+      }
+      const mentions = [...named.values()].sort((a, b) => a.start - b.start);
+      for (let i = 1; i < mentions.length; i += 1) {
+        const left = mentions[i - 1], right = mentions[i];
+        // Check clear "A and B at 6:30 PM" coordination only. Separate
+        // clocks, dates, clauses and explicitly stated finishes stay distinct.
+        if (!/^\s*and(?:\s+(?:a|an|the))?\s*$/.test(before.slice(left.end, right.start))) continue;
+        if (!/^\s*(?:(?:both|all)\s+)?(?:(?:start|starts|begin|begins)\s+)?at\s*$/.test(before.slice(right.end))) continue;
+        if ([left, right].some(({ occurrences }) =>
+          !occurrences.some((event) => clockKey(event.time) === clockKey(clock[0]))
+        )) return true;
+      }
     }
   }
   return false;
