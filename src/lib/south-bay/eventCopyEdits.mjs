@@ -56,6 +56,8 @@ const EDITS = {
     ],
     description: [
       ["This Bridge program", "This bridge program"],
+      ["Note: No session on 3rd Thursday of the month.", "Note: No session on the 3rd Thursday of the month."],
+      ["Performer Biography Daniel Barash,", "Performer Biography: Daniel Barash,"],
       ["passionate about Bridge", "passionate about bridge"],
       ["fellow Bridge enthusiasts", "fellow bridge enthusiasts"],
       ["familiar with Bridge terminology", "familiar with bridge terminology"],
@@ -567,6 +569,8 @@ const EDITS = {
     ],
     description: [
       [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
+      ["The film carries a R rating.", "The film carries an R rating."],
+      ["No Registration is required.", "No registration is required."],
       [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
       ["For Kindergarten through", "For kindergarten through"],
@@ -831,6 +835,7 @@ const EDITS = {
     ],
     description: [
       ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
+      ["advancements in AI for biology, and relevant security", "advancements in AI for biology and relevant security"],
       [/(\bto launch a new book, "[^"]+)"\./g, '$1."'],
       ["If you've registered your bike you can", "If you've registered your bike, you can"],
       ["Rosenkranz Aging Symposium We invite", "Rosenkranz Aging Symposium. We invite"],
@@ -878,6 +883,7 @@ const EDITS = {
   },
   "Santa Clara University": {
     title: [
+      ["Mass of Remembrance: Uca Salvadoran Martyrs", "Mass of Remembrance: UCA Salvadoran Martyrs"],
       ["Brown Bag in the Humanities featuring:", "Brown Bag in the Humanities featuring"],
       ['"Why Don\'t They Just Come Here the Right Way?" a Day of', '"Why Don\'t They Just Come Here the Right Way?" A Day of'],
     ],
@@ -885,6 +891,7 @@ const EDITS = {
       [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
     ],
     description: [
+      ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
       [/\ba Q & A with\b/g, "a Q&A with"],
       [/ - with a focus on Zinemaking(?=$| [A-Z])/g, ", with a focus on zinemaking."],
       [/\bFood justice eco-burritos will be provided$/g, "$&."],
