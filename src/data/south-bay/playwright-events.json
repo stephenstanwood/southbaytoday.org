@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-08T04:46:42.522Z",
+    "generatedAt": "2026-11-08T09:44:51.049Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 179,
+    "eventCount": 178,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
@@ -14,7 +14,7 @@
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (17)",
+      "Guadalupe River Park Conservancy (16)",
       "Santana Row (5)",
       "City of Cupertino (19)",
       "Opera San José (5)",
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 17,
-        "liveCount": 17,
+        "count": 16,
+        "liveCount": 16,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -874,10 +874,10 @@
       "kidFriendly": false
     },
     {
-      "id": "7984bca3b2a9",
+      "id": "b1038f87efc6",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -894,10 +894,10 @@
       "kidFriendly": false
     },
     {
-      "id": "752e29c96b53",
+      "id": "8df311960651",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -914,10 +914,10 @@
       "kidFriendly": false
     },
     {
-      "id": "4a17d5f59728",
+      "id": "01c7d508c02e",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -971,10 +971,10 @@
       "kidFriendly": true
     },
     {
-      "id": "c36a1925caaf",
+      "id": "b2637781e3fd",
       "title": "Toddler Storytime",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1003,30 +1003,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "8c17ec49f1c7",
-      "title": "Volunteer in the Heritage Rose Garden!",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "8:30 AM",
-      "endTime": "11:30 AM",
-      "venue": "Rose Garden Shed",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "Help us revitalize the largest public rose collection in the Western Hemisphere! Tasks include weeding, deadheading/pruning, and seasonal planting. We suggest bringing: - A full water bottle - Thick work gloves Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. Register HERE Please note this event may cancel in the case of inclement weather. Restrooms are available at the Rotary PlayGarden starting at 10AM. We highly recommend using the restrooms prior to volunteering. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Rose Garden Shed (Refer to registration form for map) Time: 8:30 AM - 11:30 AM Recurring Dates: Every Saturday",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Rose Garden Shed; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-07"
-      }
     },
     {
       "id": "e4c93e2668d3",
@@ -1419,7 +1395,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-08T04:45:35.133Z"
+        "checkedAt": "2026-11-08T09:43:43.613Z"
       }
     },
     {
@@ -1442,7 +1418,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-08T04:45:35.138Z"
+        "checkedAt": "2026-11-08T09:43:43.617Z"
       }
     },
     {
@@ -1465,7 +1441,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-08T04:45:35.138Z"
+        "checkedAt": "2026-11-08T09:43:43.617Z"
       }
     },
     {
@@ -1488,7 +1464,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-08T04:45:35.139Z"
+        "checkedAt": "2026-11-08T09:43:43.618Z"
       }
     },
     {
@@ -1511,7 +1487,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-08T04:45:35.139Z"
+        "checkedAt": "2026-11-08T09:43:43.618Z"
       }
     },
     {
@@ -1634,23 +1610,6 @@
       "kidFriendly": false
     },
     {
-      "id": "304e597fe848",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-11-07",
-      "displayDate": "Sat, Nov 7",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
       "id": "e2a86ea7bc7c",
       "title": "Environmental Education Center Open House",
       "date": "2026-11-14",
@@ -1706,6 +1665,23 @@
       "title": "Environmental Education Center Open House",
       "date": "2026-12-05",
       "displayDate": "Sat, Dec 5",
+      "time": "12:00 PM",
+      "endTime": "04:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "be85f0b20e3b",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
       "time": "12:00 PM",
       "endTime": "04:00 PM",
       "venue": "McClellan Ranch Preserve",
@@ -3101,7 +3077,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
         "date": "2026-11-08",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.981Z"
+        "checkedAt": "2026-11-08T09:44:08.478Z"
       }
     },
     {
@@ -3125,7 +3101,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.983Z"
+        "checkedAt": "2026-11-08T09:44:08.479Z"
       }
     },
     {
@@ -3149,7 +3125,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3173,7 +3149,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3197,7 +3173,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3221,7 +3197,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3245,7 +3221,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3269,7 +3245,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.985Z"
+        "checkedAt": "2026-11-08T09:44:08.482Z"
       }
     },
     {
@@ -3293,7 +3269,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.986Z"
+        "checkedAt": "2026-11-08T09:44:08.483Z"
       }
     },
     {
@@ -3317,7 +3293,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.986Z"
+        "checkedAt": "2026-11-08T09:44:08.483Z"
       }
     },
     {
@@ -3341,7 +3317,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-08T04:45:59.986Z"
+        "checkedAt": "2026-11-08T09:44:08.483Z"
       }
     },
     {
