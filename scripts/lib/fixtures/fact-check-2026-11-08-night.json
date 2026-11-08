@@ -1,0 +1,322 @@
+{
+  "sourceNote": "Minimal excerpts of the exact SCCL record retrieved November 8, 2026 UTC. Plot text, staff contact and unrelated entities omitted. Publisher dates the novel to March 18, 2025. No occurrence is inferred.",
+  "sourceUrl": "https://sccl.bibliocommons.com/events/6ab5925ced69cc15475c5a98",
+  "publisherUrl": "https://www.penguinrandomhouse.com/books/763656/theft-winner-of-the-nobel-prize-in-literature-by-abdulrazak-gurnah/",
+  "library": {
+    "entities": {
+      "eventAudiences": {
+        "5b28181c4727c7344c79667b": {
+          "id": "5b28181c4727c7344c79667b",
+          "name": "Adults",
+          "description": "Adults",
+          "imageId": null
+        },
+        "5b28181c4727c7344c79667c": {
+          "id": "5b28181c4727c7344c79667c",
+          "name": "Older Adults",
+          "description": "Seniors",
+          "imageId": null
+        }
+      },
+      "eventLanguages": {
+        "5b2816c2e9ce2bc14b5865a8": {
+          "id": "5b2816c2e9ce2bc14b5865a8",
+          "name": "English",
+          "description": "English"
+        }
+      },
+      "locations": {
+        "CU": {
+          "id": "CU",
+          "name": "Cupertino Library",
+          "libcalId": "4019",
+          "coreAbsent": false,
+          "isHidden": false,
+          "description": "Member of the Santa Clara County Library District. ",
+          "imageId": "617c1f21f67cb7430017987e",
+          "customUrl": "https://sccld.org/locations/cupertino",
+          "transitUrl": "https://www.vta.org/",
+          "hours": [
+            {
+              "timeRef": "tuesday",
+              "openTime": "T10:00",
+              "closeTime": "T21:00",
+              "id": "6aac3bd94b3b0600308479a4"
+            },
+            {
+              "timeRef": "thursday",
+              "openTime": "T10:00",
+              "closeTime": "T21:00",
+              "id": "6aac3bd94b3b0600308479a3"
+            },
+            {
+              "timeRef": "friday",
+              "openTime": "T10:00",
+              "closeTime": "T21:00",
+              "id": "6aac3bd94b3b0600308479a2"
+            },
+            {
+              "timeRef": "saturday",
+              "openTime": "T10:00",
+              "closeTime": "T18:30",
+              "id": "6aac3bd94b3b0600308479a1"
+            },
+            {
+              "timeRef": "monday",
+              "openTime": "T10:00",
+              "closeTime": "T21:00",
+              "id": "6aac3bd94b3b0600308479a0"
+            },
+            {
+              "timeRef": "wednesday",
+              "openTime": "T10:00",
+              "closeTime": "T21:00",
+              "id": "6aac3bd94b3b06003084799f"
+            },
+            {
+              "timeRef": "sunday",
+              "openTime": "T10:00",
+              "closeTime": "T18:30",
+              "id": "6aac3bd94b3b06003084799e"
+            }
+          ],
+          "sortedHours": [
+            {
+              "day": "monday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac3bd94b3b0600308479a0"
+                }
+              ]
+            },
+            {
+              "day": "tuesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac3bd94b3b0600308479a4"
+                }
+              ]
+            },
+            {
+              "day": "wednesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac3bd94b3b06003084799f"
+                }
+              ]
+            },
+            {
+              "day": "thursday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac3bd94b3b0600308479a3"
+                }
+              ]
+            },
+            {
+              "day": "friday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "friday",
+                  "openTime": "T10:00",
+                  "closeTime": "T21:00",
+                  "id": "6aac3bd94b3b0600308479a2"
+                }
+              ]
+            },
+            {
+              "day": "saturday",
+              "isToday": true,
+              "hours": [
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T18:30",
+                  "id": "6aac3bd94b3b0600308479a1"
+                }
+              ]
+            },
+            {
+              "day": "sunday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T10:00",
+                  "closeTime": "T18:30",
+                  "id": "6aac3bd94b3b06003084799e"
+                }
+              ]
+            }
+          ],
+          "hoursNote": "",
+          "address": {
+            "number": "10800",
+            "street": "Torre Avenue",
+            "city": "Cupertino",
+            "state": "CA",
+            "zip": "95014",
+            "country": "US"
+          },
+          "branchContacts": [
+            {
+              "contactType": "email",
+              "rawValue": "Cupertino_Manager@lib.sccgov.org",
+              "label": "Community Librarian",
+              "globalValue": "cupertino_manager@lib.sccgov.org",
+              "value": "cupertino_manager@lib.sccgov.org",
+              "id": "6aac3bd94b3b0600308479a6"
+            },
+            {
+              "contactType": "phone",
+              "rawValue": "(408) 446-1677",
+              "label": "Cupertino Library",
+              "value": "(408) 446-1677",
+              "globalValue": "+1-408-446-1677",
+              "id": "6aac3bd94b3b0600308479a5"
+            }
+          ],
+          "mapLocation": {
+            "centrePoint": {
+              "lng": -122.02896069999997,
+              "lat": 37.3177895
+            },
+            "utcOffsetNow": "-0800",
+            "timeZone": "America/Los_Angeles",
+            "isGeocoded": false
+          },
+          "facilities": [
+            {
+              "url": null,
+              "typeId": "5b2819893f209ba24c721d56",
+              "id": "6aac3bd94b3b06003084799d"
+            },
+            {
+              "typeId": "5b2819893f209ba24c721d5d",
+              "id": "6aac3bd94b3b06003084799c",
+              "url": null
+            },
+            {
+              "typeId": "5b2819893f209ba24c721d55",
+              "id": "6aac3bd94b3b06003084799b",
+              "url": null
+            },
+            {
+              "typeId": "5b2819893f209ba24c721d5a",
+              "id": "6aac3bd94b3b06003084799a",
+              "url": null
+            },
+            {
+              "typeId": "5b2819893f209ba24c721d5e",
+              "id": "6aac3bd94b3b060030847999",
+              "url": null
+            },
+            {
+              "typeId": "5b2819893f209ba24c721d58",
+              "id": "6aac3bd94b3b060030847998",
+              "url": null
+            }
+          ],
+          "highlights": [],
+          "directions": "<p>To visit Cupertino&nbsp;Library, <a href=\"https://www.google.com/maps/dir/?api=1&destination=10800%20Torre%20Avenue%20Cupertino%20CA\">find driving directions</a> and <a href=\"https://www.vta.org/\">public transportation options</a>.</p>",
+          "meetingRooms": "<p>You must have a valid <a href=\"https://sccld.org/card/\">SCCLD library card</a>  to book a room, as well as read and agree to adhere to any <a href=\"https://sccld.org/book-a-room/cupertino-room-usage/\">room usage requirements</a> for the room you are booking. To find out more about this service, please refer to our <a href=\"https://sccld.org/book-a-room/\">Book a Room @ the Library </a>page.</p>",
+          "accessibilityInfo": "<p>The Santa Clara County Library District provides a variety of Accessibility Services to assist our community. To find out more about these services, please refer to our <a href=\"https://sccld.org/accessibility/\">Accessibility Services</a> page.</p>",
+          "specialHoursIds": [
+            "68fbbcda3cbc052f0081755f",
+            "68fbbcf806078d36007461dd",
+            "68fbbd08831f063d005385bc",
+            "68fbbd2906078d3600746201",
+            "68fbbd433cbc052f00817592",
+            "68fbbd70831f063d005385c9"
+          ],
+          "webUrl": "https://sccld.org/locations/cupertino"
+        }
+      },
+      "events": {
+        "6ab5925ced69cc15475c5a98": {
+          "id": "6ab5925ced69cc15475c5a98",
+          "key": "2026-11-19T19:00:00",
+          "seriesId": "6ab5925cc9d1b8187a993da3",
+          "definition": {
+            "start": "2026-11-19T19:00",
+            "end": "2026-11-19T20:15",
+            "title": "Adult Book Discussion: Theft  ",
+            "description": "<p>In November the Cupertino Library Adult Book Discussion Group will talk about the 2022 novel&nbsp;<em>Theft </em>by Nobel Prize winning author,&nbsp;Abdulrazak Gurnah.&nbsp;</p><p>The Adult Book Discussion Group meets twice a month, on the third Thursday morning at 11 am, and on the third Thursday evening at 7pm. Both meetings are held in Room 201B. All meetings are sponsored by The&nbsp;Friends of the Cupertino Library<br></p>",
+            "bibIds": [],
+            "branchLocationId": "CU",
+            "nonBranchLocationId": null,
+            "locationDetails": "Room 201B",
+            "audienceIds": [
+              "5b28181c4727c7344c79667b",
+              "5b28181c4727c7344c79667c"
+            ],
+            "languageIds": [
+              "5b2816c2e9ce2bc14b5865a8"
+            ],
+            "programId": "5d4c5a31f333474500b26f60",
+            "typeIds": [
+              "5b439d4bce454e3100bdd843",
+              "5b2a5bd7cedf313f006fe273"
+            ],
+            "registrationInfo": {
+              "registrationEnd": {
+                "ordinal": 0,
+                "unit": "days"
+              },
+              "registrationStart": {
+                "ordinal": 0,
+                "unit": "days"
+              },
+              "maxSeats": null,
+              "cap": null,
+              "enabledMethods": []
+            },
+            "isCancelled": false
+          },
+          "indexStart": "2026-11-20T03:00:00Z",
+          "indexEnd": "2026-11-20T04:15:00Z",
+          "isRecurring": false,
+          "numberRegistered": null,
+          "numberWaitlistRegistered": null,
+          "isFull": false,
+          "registrationClosed": false
+        }
+      }
+    }
+  },
+  "published": {
+    "id": "sccl-6ab5925ced69cc15475c5a98",
+    "title": "Adult Book Discussion: Theft",
+    "date": "2026-11-19",
+    "time": "7:00 PM",
+    "endTime": "8:15 PM",
+    "venue": "Cupertino Library",
+    "city": "cupertino",
+    "cost": "free",
+    "url": "https://sccl.bibliocommons.com/events/6ab5925ced69cc15475c5a98",
+    "source": "Santa Clara County Library",
+    "description": "In November, the Cupertino Library Adult Book Discussion Group will talk about the 2022 novel Theft by Nobel Prize-winning author Abdulrazak Gurnah. The Adult Book Discussion Group meets twice a month, on the third Thursday morning at 11 am and on the third Thursday evening at 7 PM. Both meetings are held in Room 201B.",
+    "blurb": "Join the library's adult book group to talk through Abdulrazak Gurnah's 2022 novel Theft, which follows two young men living on Zanzibar.",
+    "sourceAudiences": [
+      "Adults",
+      "Older Adults"
+    ]
+  }
+}

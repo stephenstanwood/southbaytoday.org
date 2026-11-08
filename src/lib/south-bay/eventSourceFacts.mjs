@@ -817,6 +817,16 @@ const CORRECTIONS = [
       [/Both meetings are held in Room 201B\./g, "Meetings are held in Room 201B."],
     ],
   },
+  // The independently verified evening occurrence repeats the same wrong
+  // publication year. Its Thursday schedule is accurate; correct only the
+  // book year in source/cached copy, keeping the occurrence and access fields.
+  // Publisher: https://www.penguinrandomhouse.com/books/763656/theft-winner-of-the-nobel-prize-in-literature-by-abdulrazak-gurnah/
+  // Evidence: docs/qa/2026-11-08-0507z-fact-check.md.
+  {
+    date: "2026-11-19", url: "https://sccl.bibliocommons.com/events/6ab5925ced69cc15475c5a98",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6ab5925ced69cc15475c5a98"],
+    copyReplacements: [[/\b2022 novel Theft\b/g, "2025 novel Theft"]],
+  },
   // The city's November 2 original and rendered activity page confirm a paid,
   // registered children's session. The newsletter path omitted its badges.
   // Evidence: docs/qa/2026-11-02-1807z-fact-check.md.
