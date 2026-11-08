@@ -785,6 +785,12 @@ function isPublicEvent(title, source, description, venue) {
     }
     // Stanford-internal access requirements (SUID card / SUNet ID) — Stanford-only
     if (source === "Stanford Events") {
+      // Stanford CME identifies Surgery M&M as a HIPAA-restricted,
+      // Department of Surgery-only activity. Its sparse Localist row omits
+      // that boundary. Keep public medical lectures eligible.
+      // https://stanford.cloud-cme.com/course/courseoverview?EID=57525&P=0
+      // Evidence: docs/qa/2026-11-08-0207z-fact-check.md.
+      if (/^Surgery M&M$/i.test(title || "")) return false;
       if (description && (/\bSUID\b/i.test(description) || /\bSUNet\s*ID\b/i.test(description))) return false;
       // Vaden Student Health Center is Stanford CAPS / student health — every
       // event there is enrolled-student-only by design (counseling drop-ins,

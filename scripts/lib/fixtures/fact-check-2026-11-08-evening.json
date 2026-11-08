@@ -1,0 +1,456 @@
+{
+  "library": {
+    "entities": {
+      "events": {
+        "6a7e0aa9d4b10d0030064609": {
+          "id": "6a7e0aa9d4b10d0030064609",
+          "definition": {
+            "start": "2026-11-12T10:30",
+            "end": "2026-11-12T11:00",
+            "title": "2nd_Mandarin Stories and Songs / 亲子中文活動",
+            "description": "参加亲子中文故事 / 唱歌跳舞 / 小小藝術活動。 · 第一個星期四 : 中文故事 / 唱歌跳舞 · 第二個星期四 : 中英雙語小小藝術活動 · 第三個星期四 : 中文故事 / 唱歌跳舞 · 第四個和最後一個星期四 : 中英雙語小小音樂與運動活動 免费的亲子中文 活動. 座位数量有限. 门票将在故事时间开始前 30 分钟在询问处领取。",
+            "branchLocationId": "07",
+            "locationDetails": "community room ",
+            "audienceIds": [
+              "5d5f09306bb98139001cffcc"
+            ],
+            "registrationInfo": {
+              "provider": null,
+              "registrationStart": {
+                "unit": "hours",
+                "date": null,
+                "time": null,
+                "ordinal": null,
+                "windowType": null
+              },
+              "registrationEnd": {
+                "unit": "hours",
+                "date": null,
+                "time": null,
+                "ordinal": 12,
+                "windowType": "RELATIVE"
+              },
+              "enabledMethods": [],
+              "cap": 30,
+              "maxSeats": 1,
+              "scope": null,
+              "isFull": false,
+              "instructions": null,
+              "onlineInstructions": null,
+              "instructionsToAttend": null,
+              "loginToRegister": false,
+              "waitlistEnabled": true,
+              "waitlistAutoPromote": true
+            },
+            "isCancelled": false
+          },
+          "isRecurring": true,
+          "numberRegistered": null,
+          "numberWaitlistRegistered": null,
+          "isFull": false,
+          "registrationClosed": false
+        },
+        "6a7e0a6ed4b10d00300645be": {
+          "id": "6a7e0a6ed4b10d00300645be",
+          "definition": {
+            "start": "2026-11-12T11:15",
+            "end": "2026-11-12T11:45",
+            "title": "2nd Mandarin Stories and Songs / 亲子中文活動",
+            "description": "参加亲子中文故事 / 唱歌跳舞 / 小小藝術活動。 · 第一個星期四 : 中文故事 / 唱歌跳舞 · 第二個星期四 : 中英雙語小小藝術活動 · 第三個星期四 : 中文故事 / 唱歌跳舞 · 第四個和最後一個星期四 : 中英雙語小小音樂與運動活動 免费的亲子中文 活動. 座位数量有限. 门票将在故事时间开始前 30 分钟在询问处领取。",
+            "branchLocationId": "07",
+            "locationDetails": "community room ",
+            "audienceIds": [
+              "5d5f09306bb98139001cffcc"
+            ],
+            "registrationInfo": {
+              "provider": null,
+              "registrationStart": {
+                "unit": "hours",
+                "date": null,
+                "time": null,
+                "ordinal": null,
+                "windowType": null
+              },
+              "registrationEnd": {
+                "unit": "hours",
+                "date": null,
+                "time": null,
+                "ordinal": 12,
+                "windowType": "RELATIVE"
+              },
+              "enabledMethods": [],
+              "cap": 30,
+              "maxSeats": 1,
+              "scope": null,
+              "isFull": false,
+              "instructions": null,
+              "onlineInstructions": null,
+              "instructionsToAttend": null,
+              "loginToRegister": false,
+              "waitlistEnabled": true,
+              "waitlistAutoPromote": true
+            },
+            "isCancelled": false
+          },
+          "isRecurring": true,
+          "numberRegistered": null,
+          "numberWaitlistRegistered": null,
+          "isFull": false,
+          "registrationClosed": false
+        }
+      },
+      "locations": {
+        "07": {
+          "id": "07",
+          "name": "Calabazas",
+          "address": {
+            "country": "US",
+            "zip": "95129",
+            "state": "CA",
+            "city": "San Jose",
+            "street": "S Blaney Ave",
+            "number": "1230"
+          }
+        }
+      },
+      "eventAudiences": {
+        "5d5f09306bb98139001cffcc": {
+          "id": "5d5f09306bb98139001cffcc",
+          "name": "Young Children, ages 0-5",
+          "imageId": null
+        }
+      }
+    }
+  },
+  "published": [
+    {
+      "id": "sjpl-6a7e0aa9d4b10d0030064609",
+      "title": "2nd Mandarin Stories and Songs",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "10:30 AM",
+      "endTime": "11:00 AM",
+      "venue": "Calabazas Library",
+      "address": "1230 S Blaney Ave San Jose",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Young Children, ages 0-5"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a7e0aa9d4b10d0030064609",
+      "source": "San Jose Public Library",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "blurb": "Join Mandarin stories and songs together with your family at Calabazas Library."
+    },
+    {
+      "id": "sjpl-6a7e0a6ed4b10d00300645be",
+      "title": "2nd Mandarin Stories and Songs",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "11:15 AM",
+      "endTime": "11:45 AM",
+      "venue": "Calabazas Library",
+      "address": "1230 S Blaney Ave San Jose",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "free",
+      "description": "",
+      "sourceAudiences": [
+        "Young Children, ages 0-5"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a7e0a6ed4b10d00300645be",
+      "source": "San Jose Public Library",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "blurb": "Join Mandarin stories and songs together with your family at Calabazas Library."
+    }
+  ],
+  "surgery": {
+    "id": "stanford-53727552933791-2026-11-10",
+    "title": "Surgery M&M",
+    "date": "2026-11-10",
+    "displayDate": "Tue, Nov 10",
+    "time": "7:00 AM",
+    "endTime": "8:00 AM",
+    "ongoing": false,
+    "venue": "Li Ka Shing Center",
+    "address": "291 Campus Drive, Stanford, CA 94305",
+    "city": "palo-alto",
+    "category": "community",
+    "cost": null,
+    "description": "",
+    "url": "https://events.stanford.edu/event/surgery-mm-26-27",
+    "source": "Stanford Events",
+    "kidFriendly": false,
+    "audienceAge": "all",
+    "blurb": "Attend the Surgery Morbidity and Mortality conference at Li Ka Shing Center."
+  },
+  "taylor": {
+    "id": "tm-rZ7HnEZ1AfG3OV",
+    "title": "Taylor Tomlinson: Tries Out New Ideas",
+    "date": "2027-01-22",
+    "displayDate": "Fri, Jan 22",
+    "time": "6:00 PM",
+    "endTime": null,
+    "venue": "San Jose Improv",
+    "address": "62 S Second St",
+    "city": "san-jose",
+    "category": "arts",
+    "cost": "paid",
+    "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+    "sourceAudiences": [
+      "Adults, ages 21+"
+    ],
+    "description": "Urgent: A ticket hold delivery is in effect for this event. Please bring a valid ID to the box office on the night of the event to collect your tickets.",
+    "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312834",
+    "source": "Ticketmaster",
+    "kidFriendly": false,
+    "audienceAge": "adult",
+    "blurb": "Watch Taylor Tomlinson try out new comedy ideas at San Jose Improv, and bring valid ID if you have a ticket hold."
+  },
+  "taylorOffers": [
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "name": "Taylor Tomlinson: Tries Out New Ideas",
+      "startDate": "2027-01-22T18:00:00-08:00",
+      "location": {
+        "@type": "Place",
+        "name": "San Jose Improv",
+        "address": {
+          "streetAddress": "62 South 2nd Street",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "postalCode": "95113",
+          "addressCountry": "US"
+        }
+      },
+      "image": "https://i.ticketweb.com/i/00/13/03/50/84_Edp.jpg?v=2",
+      "description": "Taylor Tomlinson: Tries Out New Ideas Performing at San Jose Improv",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312834?pl=sanjoseimprov&REFID=sanjoseWP",
+        "price": "49.22",
+        "priceCurrency": "USD",
+        "availability": "http://schema.org/SoldOut",
+        "validFrom": "2026-09-10T14:00:00-08:00"
+      },
+      "performer": [
+        {
+          "name": "Taylor Tomlinson"
+        }
+      ]
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "name": "Taylor Tomlinson: Tries Out New Ideas",
+      "startDate": "2027-01-22T20:15:00-08:00",
+      "location": {
+        "@type": "Place",
+        "name": "San Jose Improv",
+        "address": {
+          "streetAddress": "62 South 2nd Street",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "postalCode": "95113",
+          "addressCountry": "US"
+        }
+      },
+      "image": "https://i.ticketweb.com/i/00/13/03/39/14_Edp.jpg?v=5",
+      "description": "Taylor Tomlinson: Tries Out New Ideas Performing at San Jose Improv",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312844?pl=sanjoseimprov&REFID=sanjoseWP",
+        "price": "49.22",
+        "priceCurrency": "USD",
+        "availability": "http://schema.org/SoldOut",
+        "validFrom": "2026-09-10T14:00:00-08:00"
+      },
+      "performer": [
+        {
+          "name": "Taylor Tomlinson"
+        }
+      ]
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "name": "Taylor Tomlinson: Tries Out New Ideas",
+      "startDate": "2027-01-23T18:00:00-08:00",
+      "location": {
+        "@type": "Place",
+        "name": "San Jose Improv",
+        "address": {
+          "streetAddress": "62 South 2nd Street",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "postalCode": "95113",
+          "addressCountry": "US"
+        }
+      },
+      "image": "https://i.ticketweb.com/i/00/13/03/39/34_Edp.jpg?v=4",
+      "description": "Taylor Tomlinson: Tries Out New Ideas Performing at San Jose Improv",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312884?pl=sanjoseimprov&REFID=sanjoseWP",
+        "price": "49.22",
+        "priceCurrency": "USD",
+        "availability": "http://schema.org/SoldOut",
+        "validFrom": "2026-09-10T14:00:00-08:00"
+      },
+      "performer": [
+        {
+          "name": "Taylor Tomlinson"
+        }
+      ]
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "name": "Taylor Tomlinson: Tries Out New Ideas",
+      "startDate": "2027-01-23T20:15:00-08:00",
+      "location": {
+        "@type": "Place",
+        "name": "San Jose Improv",
+        "address": {
+          "streetAddress": "62 South 2nd Street",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "postalCode": "95113",
+          "addressCountry": "US"
+        }
+      },
+      "image": "https://i.ticketweb.com/i/00/13/03/39/54_Edp.jpg?v=2",
+      "description": "Taylor Tomlinson: Tries Out New Ideas Performing at San Jose Improv",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312874?pl=sanjoseimprov&REFID=sanjoseWP",
+        "price": "49.22",
+        "priceCurrency": "USD",
+        "availability": "http://schema.org/SoldOut",
+        "validFrom": "2026-09-10T14:00:00-08:00"
+      },
+      "performer": [
+        {
+          "name": "Taylor Tomlinson"
+        }
+      ]
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "name": "Taylor Tomlinson: Tries Out New Ideas",
+      "startDate": "2027-01-24T18:00:00-08:00",
+      "location": {
+        "@type": "Place",
+        "name": "San Jose Improv",
+        "address": {
+          "streetAddress": "62 South 2nd Street",
+          "addressLocality": "San Jose",
+          "addressRegion": "CA",
+          "postalCode": "95113",
+          "addressCountry": "US"
+        }
+      },
+      "image": "https://i.ticketweb.com/i/00/13/03/39/74_Edp.jpg?v=7",
+      "description": "Taylor Tomlinson: Tries Out New Ideas Performing at San Jose Improv",
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312864?pl=sanjoseimprov&REFID=sanjoseWP",
+        "price": "49.22",
+        "priceCurrency": "USD",
+        "availability": "http://schema.org/SoldOut",
+        "validFrom": "2026-09-10T14:00:00-08:00"
+      },
+      "performer": [
+        {
+          "name": "Taylor Tomlinson"
+        }
+      ]
+    }
+  ],
+  "discovery": {
+    "name": "Taylor Tomlinson: Tries Out New Ideas",
+    "id": "rZ7HnEZ1AfG3OV",
+    "url": "https://www.ticketweb.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/14312834",
+    "dates": {
+      "access": {
+        "startDateTime": "2027-01-23T00:30:00Z",
+        "startApproximate": false,
+        "endApproximate": false
+      },
+      "start": {
+        "localDate": "2027-01-22",
+        "localTime": "18:00:00",
+        "dateTime": "2027-01-23T02:00:00Z",
+        "dateTBD": false,
+        "dateTBA": false,
+        "timeTBA": false,
+        "noSpecificTime": false
+      },
+      "end": {
+        "approximate": false,
+        "noSpecificTime": false
+      },
+      "timezone": "America/Los_Angeles",
+      "status": {
+        "code": "onsale"
+      },
+      "spanMultipleDays": false
+    },
+    "classifications": [
+      {
+        "primary": true,
+        "segment": {
+          "id": "KZFzniwnSyZfZ7v7na",
+          "name": "Arts & Theatre"
+        },
+        "genre": {
+          "id": "KnvZfZ7vAe1",
+          "name": "Comedy"
+        },
+        "subGenre": {
+          "id": "KZazBEonSMnZfZ7vF17",
+          "name": "Comedy"
+        },
+        "type": {
+          "id": "KZAyXgnZfZ7v7nI",
+          "name": "Undefined"
+        },
+        "subType": {
+          "id": "KZFzBErXgnZfZ7v7lJ",
+          "name": "Undefined"
+        },
+        "family": false
+      }
+    ],
+    "info": "Urgent: A ticket hold delivery is in effect for this event. Physical tickets will not be emailed. Please bring a valid ID to the box office on the night of the event to collect your tickets. Physical ID must match the ID used to purchase. DO NOT PURCHASE TICKETS FROM ANYONE OR ANY OTHER SITE OTHER THAN IMPROV.COM TICKET RESALE IS STRICTLY PROHIBITED. TICKETS SUSPECTED OF BEING PURCHASED FOR THE SOLE PURPOSE OF RESELLING MAY BE CANCELLED AT THE DISCRETION OF THE SAN JOSE IMPROV. EVENT INFO: There is a two-item minimum purchase requirement in the showroom for all guests. Seating is general admission, first-come, first-served, with the exception of groups and premium booths. No cell phone use, photography or video recording is permitted during performances. All sales are final. MISCELLANOUS: For group sales info, e-mail our Events Manager to learn about special menu options and reserved seating. Additional questions may be addressed in our Frequently Asked Questions. For further assistance, contact San Jose Improv.",
+    "pleaseNote": "This event is 21 and over. Mandatory two-item minimum purchase per person in the showroom.",
+    "priceRanges": [
+      {
+        "type": "standard",
+        "currency": "USD",
+        "min": 0,
+        "max": 0
+      }
+    ],
+    "_embedded": {
+      "venues": [
+        {
+          "name": "San Jose Improv",
+          "city": {
+            "name": "San Jose"
+          },
+          "address": {
+            "line1": "62 S Second St"
+          }
+        }
+      ]
+    }
+  },
+  "sourceNote": "Selected exact public records captured November 7, 2026; library description retains the published activity rotation and ticket instructions, omitting unrelated catalog links."
+}

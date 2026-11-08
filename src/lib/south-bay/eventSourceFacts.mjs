@@ -64,6 +64,42 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 
 const CORRECTIONS = [
+  // The exact SJPL records publish a Mandarin/English art activity on the
+  // second Thursday. Their Chinese-only body was lost during display cleanup,
+  // leaving the series title to generate an incorrect stories-and-songs blurb.
+  // Translate only these verified November 12 sessions, including walk-up
+  // ticket pickup; this list neither projects dates nor changes the clocks.
+  // Evidence: docs/qa/2026-11-08-0207z-fact-check.md.
+  ...["6a7e0aa9d4b10d0030064609", "6a7e0a6ed4b10d00300645be"].map(id => ({
+    date: "2026-11-12",
+    url: `https://sjpl.bibliocommons.com/events/${id}`,
+    facts: {
+      description: "This second-Thursday family session offers art activities in Mandarin and English. Free, with limited seating. Tickets are available at the Information Desk 30 minutes before the program starts.",
+      attendanceNote: "Limited seating. Tickets are available at the Information Desk 30 minutes before the program starts.",
+      blurb: "Join a family art activity in Mandarin and English at Calabazas Library's second-Thursday session.",
+    },
+  })),
+  // The Improv's own dated Event offers say SoldOut and its show cards offer
+  // a waitlist, while Discovery still says onsale. Match the exact ticket
+  // identities and clocks; no other performance inherits this availability.
+  // https://improv.com/sanjose/event/taylor+tomlinson%3a+tries+out+new+ideas/14312864/
+  // Evidence: docs/qa/2026-11-08-0207z-fact-check.md.
+  ...[
+    ["2027-01-22", "6:00 PM", "14312834"],
+    ["2027-01-22", "8:15 PM", "14312844"],
+    ["2027-01-23", "6:00 PM", "14312884"],
+    ["2027-01-23", "8:15 PM", "14312874"],
+    ["2027-01-24", "6:00 PM", "14312864"],
+  ].map(([date, time, ticketId]) => ({
+    date,
+    matches: event => event.time === time && event.venue === "San Jose Improv"
+      && /^Taylor Tomlinson: Tries Out New Ideas$/i.test(event.title || "")
+      && new RegExp(`^https://www\\.ticketweb\\.com/event/taylor-tomlinson-tries-out-new-san-jose-improv-tickets/${ticketId}/?(?:[?#]|$)`).test(event.url || ""),
+    facts: {
+      registration: REGISTRATION_FULL,
+      attendanceNote: "Sold out. The organizer offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+    },
+  })),
   // The organizer cards omit the 18+ gate and five-session commitment. These
   // exact academy pages publish four evening classes and a Saturday skills
   // day; the listed clock below is the first class, not the entire academy.

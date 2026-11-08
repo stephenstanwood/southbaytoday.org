@@ -4,6 +4,13 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Surgery M&M$/i,
+    venue: /^Li Ka Shing Center$/i,
+    date: "2026-11-10",
+    reason: "Stanford CME identifies Surgery M&M as a HIPAA-restricted, Department of Surgery-only activity. The sparse Localist listing does not confirm public eligibility. Withhold this occurrence; this is not a cancellation.",
+    source: "https://stanford.cloud-cme.com/course/courseoverview?EID=57525&P=0",
+  }),
+  Object.freeze({
     title: /^Find Your Space in the Library$/i,
     venue: /.*/,
     date: "2026-11-11",
