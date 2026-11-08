@@ -55,6 +55,12 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["This Bridge program", "This bridge program"],
+      ["passionate about Bridge", "passionate about bridge"],
+      ["fellow Bridge enthusiasts", "fellow bridge enthusiasts"],
+      ["familiar with Bridge terminology", "familiar with bridge terminology"],
+      ["This week in celebration of Native American Heritage Month,", "This week, in celebration of Native American Heritage Month,"],
+      ["John Herrington who is the first enrolled citizen", "John Herrington, who is the first enrolled citizen"],
       [/\b(To register, please call [\d+(). -]+ or email [\w.%+-]+@[\w.-]+\.[a-z]{2,})(?=$| [A-Z])/g, "$1."],
       ["introductory session with a Librarian.", "introductory session with a librarian."],
       ["one-on-one time with the Librarian for", "one-on-one time with the librarian for"],
