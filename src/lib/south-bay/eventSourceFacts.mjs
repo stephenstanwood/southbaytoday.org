@@ -63,7 +63,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
   attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
 
+// Only the first matching correction applies. Extend an existing occurrence's
+// rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The dated Teen Center newsletter confirms the party; the city's program
+  // page restricts membership to Mountain View/Los Altos students in grades
+  // 6–12. Preserve the youth audience after generic text classification.
+  // https://www.mountainview.gov/our-city/departments/community-services/recreation/youth-teens/teen-programs/the-view-teen-center
+  // Evidence: docs/qa/2026-11-08-1007z-fact-check.md.
+  {
+    date: "2026-12-18",
+    url: "https://anc.apm.activecommunities.com/mountainviewrecreation/activity/search/detail/19453?onlineSiteId=0&from_original_cui=true",
+    facts: {
+      audienceAge: "kids", kidFriendly: true,
+      attendanceNote: "For Mountain View and Los Altos students in grades 6–12. A View Teen Center membership is required for activity registration.",
+    },
+  },
+  // The foundation's exact public occurrence supplies the lost newsletter
+  // link and free admission. An RSVP invitation is not a mandatory gate.
+  // https://paacf.org/event/coritas-legacy-a-panel-discussion/
+  // Evidence: docs/qa/2026-11-08-1007z-fact-check.md.
+  {
+    date: "2026-12-12",
+    matches: event => /^Corita['’]s Legacy: A Panel Discussion$/.test(event.title || "")
+      && /^Palo Alto Art Center(?:,|$)/.test(event.venue || "")
+      && (!event.url || event.url === "https://paacf.org/event/coritas-legacy-a-panel-discussion/"),
+    facts: { url: "https://paacf.org/event/coritas-legacy-a-panel-discussion/", cost: "free" },
+  },
+  // The organizer's dated ticket offer is free; this civil-liberties
+  // gathering is community programming, not a visual-arts event. JAMsj's
+  // original November newsletter independently confirms its museum offer
+  // for 2027, despite the ticket page's stale 2026 year in that sentence.
+  // https://www.eventbrite.com/e/fred-korematsu-day-of-civil-liberties-the-constitution-tickets-2003742722422
+  // Evidence: docs/qa/2026-11-08-1007z-fact-check.md.
+  {
+    date: "2027-01-23",
+    matches: event => /^https:\/\/www\.eventbrite\.com\/e\/fred-korematsu-day-of-civil-liberties-the-constitution-tickets-2003742722422\/?(?:[?#].*)?$/.test(event.url || ""),
+    facts: { category: "community", cost: "free" },
+  },
   // The exact SJPL records publish a Mandarin/English art activity on the
   // second Thursday. Their Chinese-only body was lost during display cleanup,
   // leaving the series title to generate an incorrect stories-and-songs blurb.
@@ -745,12 +782,18 @@ const CORRECTIONS = [
   // it does not establish mandatory advance signup. Keep that distinction in
   // retained intake copies as well as future publication of these exact dates.
   // Evidence: docs/qa/2026-11-03-0507z-fact-check.md.
+  // Its public bulletin also confirms family audiences and the announced
+  // resident/nonresident fees, not current seat availability. Keep the copy
+  // repair in this same first-match rule.
+  // https://content.govdelivery.com/accounts/CASANTACLARA/bulletins/4311a7c
+  // Follow-up: docs/qa/2026-11-08-1007z-fact-check.md.
   ...[
-    ["2026-12-12", "29965"],
-    ["2026-12-17", "29964"],
-  ].map(([date, activity]) => ({
+    ["2026-12-12", "29965", { kidFriendly: true, cost: "paid", costNote: "Announced fees: residents $25; nonresidents $31." }],
+    ["2026-12-17", "29964", { category: "family", kidFriendly: true, cost: "paid", costNote: "Announced fees: residents $20; nonresidents $25." }],
+  ].map(([date, activity, facts]) => ({
     date,
     url: `https://anc.apm.activecommunities.com/santaclara/activity/search/detail/${activity}?onlineSiteId=0&from_original_cui=true`,
+    facts,
     copyReplacements: [[/\bRegistration required;/g, "Registration was announced as open;"]],
   })),
   // The organizer's current RSVP form resolves the newsletter's Saturday typo:

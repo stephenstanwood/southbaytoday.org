@@ -83,8 +83,11 @@ test("Santa Clara's intake copies cannot turn an announcement of open registrati
     for (const other of [
       { ...imported, date: "2027-12-12" },
       { ...imported, url: "https://example.org/another-activity" },
-      { ...imported, description: "The organizer requires advance registration." },
     ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+    const updatedRequirement = { ...imported, description: "The organizer requires advance registration.", registration: "required" };
+    const updated = applyVerifiedEventFacts(updatedRequirement);
+    assert.equal(updated.description, updatedRequirement.description, "a later explicit requirement must not be rewritten");
+    assert.equal(updated.registration, "required");
     assert.match(raw.description, /Registration required/, "intake originals remain immutable");
   }
 });
