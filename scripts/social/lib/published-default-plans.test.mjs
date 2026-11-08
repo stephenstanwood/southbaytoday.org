@@ -55,14 +55,15 @@ function fixture(t) {
     git(seed, "add", PLANS); git(seed, "commit", "-m", "plans"); git(seed, "push");
     return git(seed, "rev-parse", "HEAD");
   }
-  function run(...args) {
+  function runWithEnv(extraEnv, ...args) {
     return spawnSync(process.execPath, [runner, ...args], {
       encoding: "utf8",
       env: { ...process.env, NODE_TEST_CONTEXT: process.env.NODE_TEST_CONTEXT || "child-v8", SBT_NEWSLETTER_REPO_ROOT: checkout,
-        SBT_REPO_LOCK_SCRIPT: lock, SBT_NOTIFICATION_TEST_DIR: join(root, "notifications") },
+        SBT_REPO_LOCK_SCRIPT: lock, SBT_NOTIFICATION_TEST_DIR: join(root, "notifications"),
+        SBT_DEFAULT_PLANS_LOCK_WAIT_MS: "0", ...extraEnv },
     });
   }
-  return { root, seed, checkout, publish, run };
+  return { root, seed, checkout, publish, lock, runWithEnv, run: (...args) => runWithEnv({}, ...args) };
 }
 
 test("busy retry reads the actual remote publication without changing another job's checkout", (t) => {
@@ -111,4 +112,40 @@ test("forced refresh and explicit preflight still require the shared lock", (t) 
     assert.match(result.stderr, /BLOCKED: repo lock is busy/);
     assert.doesNotMatch(result.stdout, /busy retry is a no-op/);
   }
+});
+
+test("a contended refresh waits for its actual owner to release, then preflights without sending", t => {
+  const f = fixture(t);
+  const marker = join(f.root, "attempts");
+  writeFileSync(f.lock, `#!/bin/sh
+[ "$SBT_REPO_LOCK_STALE_MIN" = "2147483647" ] || exit 2
+echo "$1" >> "${marker}"
+if [ "$1" = "acquire" ] && [ "$(wc -l < "${marker}")" -lt 3 ]; then
+  echo "repo-lock: BUSY (held by 'newsletter-send')"
+  exit 1
+fi
+exit 0
+`);
+  const before = git(f.checkout, "rev-parse", "HEAD");
+  const result = f.runWithEnv({ SBT_DEFAULT_PLANS_LOCK_WAIT_MS: "3000" }, "--preflight-only");
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /repo lock busy; retrying/);
+  assert.match(result.stdout, /preflight-only complete; no plans generated/);
+  assert.deepEqual(readFileSync(marker, "utf8").trim().split("\n"), ["acquire", "acquire", "acquire", "release"]);
+  assert.equal(git(f.checkout, "rev-parse", "HEAD"), before);
+  assert.equal(readFileSync(join(f.checkout, PLANS), "utf8"), "{}\n");
+});
+
+test("exhausted lock contention never releases another owner's lock", t => {
+  const f = fixture(t), calls = join(f.root, "calls");
+  writeFileSync(f.lock, `#!/bin/sh
+[ "$SBT_REPO_LOCK_STALE_MIN" = "2147483647" ] || exit 2
+echo "$1" >> "${calls}"
+echo "repo-lock: BUSY (held by 'newsletter-send')"
+exit 1
+`);
+  const result = f.run();
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /BLOCKED: repo lock is busy/);
+  assert.ok(readFileSync(calls, "utf8").trim().split("\n").every(action => action === "acquire"));
 });

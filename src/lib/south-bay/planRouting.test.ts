@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { generateDayPlan } from "../../pages/api/plan-day";
+import { generateDayPlan, pickPillarPairsWithClaude } from "../../pages/api/plan-day";
 import { dayPlanPairingIssues } from "./dayPlanPairs";
 
 test("public planner always requests Sonnet 5.5; identical input makes one paid call", async t => {
@@ -51,4 +51,34 @@ test("scheduled selector failure propagates without making a paid API call", asy
   assert.equal(response.status, 500);
   assert.match(await response.text(), /subscription capped/);
   assert.equal(anthropicCalls, 0);
+});
+
+test("different showtime IDs cannot repeat an activity or transfer its blurb to the replacement", async () => {
+  const base = { source: "event", category: "arts", city: "campbell", address: "1 Main St", lat: 37.3, lng: -121.9,
+    locationPrecision: "exact", kidFriendly: true, eventDate: "2026-11-08", score: 100 };
+  const pool: any[] = [
+    { ...base, id: "event:show-10am", name: "The Dragon Musical Jr.", eventTime: "10:00 AM" },
+    { ...base, id: "event:show-2pm", name: "The Dragon Musical Jr.", eventTime: "2:00 PM" },
+    { ...base, id: "event:exhibit", name: "Photography Exhibit", eventTime: "2:00 PM", score: 60 },
+    { ...base, id: "event:jazz", name: "Jazz Concert", eventTime: "6:00 PM" },
+    ...["Olive", "Maple", "Willow"].map((name, i) => ({ ...base, id: `place:meal-${i}`, name: `${name} Cafe`,
+      source: "place", category: "food", primaryType: "restaurant", types: ["cafe", "restaurant"],
+      hours: { sun: "8:00 AM - 10:00 PM" }, rating: 4.8, ratingCount: 500 })),
+  ];
+  const { cards } = await pickPillarPairsWithClaude(pool, [], null, "campbell", "regional", true,
+    undefined, "2026-11-08", undefined, "sun", {
+      provider: "codex-subscription", model: "gpt-6.1-sol", strict: true,
+      select: async () => JSON.stringify([
+        { pillarBucket: "morning", pillarId: "event:show-10am", mealId: "place:meal-0", pillarBlurb: "The morning show.", mealBlurb: "Olive cafe fact." },
+        { pillarBucket: "afternoon", pillarId: "event:show-2pm", mealId: "place:meal-1", pillarBlurb: "WRONG_MUSICAL_COPY", mealBlurb: "Maple cafe fact." },
+        { pillarBucket: "evening", pillarId: "event:jazz", mealId: "place:meal-2", pillarBlurb: "The jazz show.", mealBlurb: "Willow cafe fact." },
+      ]),
+    });
+  assert.equal(cards.find(c => c.bucket === "morning")?.id, "event:show-10am");
+  assert.equal(cards.find(c => c.bucket === "afternoon")?.id, "event:exhibit");
+  assert.doesNotMatch(cards.find(c => c.bucket === "afternoon")!.blurb, /WRONG_MUSICAL_COPY/);
+  assert.deepEqual(dayPlanPairingIssues(cards), []);
+  const broken = structuredClone(cards);
+  broken.find(c => c.bucket === "afternoon")!.name = "THE DRAGON MUSICAL JR!";
+  assert.ok(dayPlanPairingIssues(broken).some(issue => issue.includes("duplicate pillar activity")));
 });

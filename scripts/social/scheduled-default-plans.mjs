@@ -7,6 +7,7 @@ import { spawnSync } from "node:child_process";
 
 import { loadEnvLocal } from "../lib/env.mjs";
 import { catSignal } from "../lib/notify.mjs";
+import { acquireRefreshLock } from "../events/refresh-lock.mjs";
 import {
   DEFAULT_REPO_ROOT,
   preflightNewsletterCheckout,
@@ -36,7 +37,12 @@ function log(message) {
 }
 
 function runRepoLock(script, action) {
-  const result = spawnSync(script, [action, LOCK_TASK], { encoding: "utf8" });
+  const result = spawnSync(script, [action, LOCK_TASK], {
+    encoding: "utf8",
+    // A plan retry must never turn an active writer's age into permission to
+    // steal its lock. Persistent ownership remains visible for diagnosis.
+    env: { ...process.env, SBT_REPO_LOCK_STALE_MIN: "2147483647" },
+  });
   const output = `${result.stdout || ""}${result.stderr || ""}`;
   if (output) process.stdout.write(output);
   if (result.error) {
@@ -144,7 +150,26 @@ try {
         process.exit(0);
       }
     }
-    throw error;
+    if (error.code !== "SBT_REPO_LOCK_BUSY") throw error;
+    // Preserve the three launchd slots. The final invocation can outlast a
+    // healthy newsletter overlap instead of abandoning the whole day.
+    const waitMs = Number(process.env.SBT_DEFAULT_PLANS_LOCK_WAIT_MS
+      ?? (force || preflightOnly || nextScheduledSlotPT() ? 0 : 20 * 60_000));
+    if (!Number.isFinite(waitMs) || waitMs < 0 || waitMs > 20 * 60_000) {
+      throw new Error("SBT_DEFAULT_PLANS_LOCK_WAIT_MS must be between 0 and 1200000");
+    }
+    const acquired = await acquireRefreshLock({
+      tryAcquire: () => {
+        try { runRepoLock(lockScript, "acquire"); return true; }
+        catch (retryError) {
+          if (retryError.code !== "SBT_REPO_LOCK_BUSY") throw retryError;
+          return false;
+        }
+      },
+      maxWaitMs: waitMs,
+      onWait: ms => log(`repo lock busy; retrying in ${Math.ceil(ms / 1000)}s before fresh preflight`),
+    });
+    if (!acquired) throw error;
   }
   lockHeld = true;
   log(`acquired shared repo lock (${LOCK_TASK})`);

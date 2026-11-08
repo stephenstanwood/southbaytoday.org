@@ -64,6 +64,7 @@ import {
   dominantPillarCity,
   isWithinQualityBand,
   mealBrandKey,
+  pillarActivityKey,
   rankNearbyMeals,
   type PillarBucket,
 } from "../../lib/south-bay/dayPlanPairs";
@@ -1427,7 +1428,7 @@ function toDayCard(
   };
 }
 
-async function pickPillarPairsWithClaude(
+export async function pickPillarPairsWithClaude(
   pool: Candidate[],
   lockedCandidates: Array<{ candidate: Candidate; bucket: Bucket | null }>,
   weather: string | null,
@@ -1583,6 +1584,10 @@ OUTPUT — JSON array only:
 
   const cards: DayCard[] = [];
   const usedPillars = new Set<string>();
+  const usedPillarNames = new Set<string>();
+  const pillarIsAvailable = (candidate: Candidate) =>
+    !usedPillars.has(candidate.id) &&
+    !usedPillarNames.has(pillarActivityKey(candidate.name, candidate.id));
   const usedMeals = new Set<string>();
   const usedMealBrands = new Set<string>();
   const mealIsAvailable = (candidate: Candidate) =>
@@ -1606,9 +1611,9 @@ OUTPUT — JSON array only:
     const optionHasAvailableMeal = (entry: PillarOption) =>
       entry.meals.some((meal) => mealIsAvailable(meal.candidate));
     const bestAvailableOption = options.find((entry) =>
-      !usedPillars.has(entry.candidate.id) && optionHasAvailableMeal(entry));
+      pillarIsAvailable(entry.candidate) && optionHasAvailableMeal(entry));
     const modelOption = options.find((entry) =>
-      entry.candidate.id === modelPick?.pillarId && optionHasAvailableMeal(entry));
+      entry.candidate.id === modelPick?.pillarId && pillarIsAvailable(entry.candidate) && optionHasAvailableMeal(entry));
     let option = lockedPillar
       ? options.find((entry) => entry.candidate.id === lockedPillar.id)
       : modelOption && bestAvailableOption && isWithinQualityBand(
@@ -1626,17 +1631,17 @@ OUTPUT — JSON array only:
         throw new Error(`Locked ${mealBucket} ${lockedMeal.name} is not within ${MEAL_PAIR_MAX_MILES} miles of locked ${bucket} activity`);
       }
       option = options.find((entry) =>
-        !usedPillars.has(entry.candidate.id) &&
+        pillarIsAvailable(entry.candidate) &&
         entry.meals.some((meal) => meal.candidate.id === lockedMeal.id)
       );
       if (!option) {
         throw new Error(`Locked ${mealBucket} ${lockedMeal.name} has no compatible ${bucket} activity`);
       }
     }
-    if (!option || usedPillars.has(option.candidate.id)) {
+    if (!option || !pillarIsAvailable(option.candidate)) {
       if (lockedPillar || lockedMeal) throw new Error(`Locked choice for ${bucket}/${mealBucket} conflicts with another pair`);
       option = options.find((entry) =>
-        !usedPillars.has(entry.candidate.id) && optionHasAvailableMeal(entry));
+        pillarIsAvailable(entry.candidate) && optionHasAvailableMeal(entry));
     }
     if (!option) throw new Error(`Could not choose a unique ${bucket} pillar`);
 
@@ -1678,7 +1683,7 @@ OUTPUT — JSON array only:
       "pillar",
       meal.candidate.id,
       kids,
-      modelPick?.pillarBlurb,
+      modelPick?.pillarId === option.candidate.id ? modelPick.pillarBlurb : undefined,
       pillarRationale,
     );
     const mealCard = toDayCard(
@@ -1687,7 +1692,7 @@ OUTPUT — JSON array only:
       "paired-meal",
       option.candidate.id,
       kids,
-      modelPick?.mealBlurb,
+      modelPick?.mealId === meal.candidate.id ? modelPick.mealBlurb : undefined,
       mealRationale,
       Math.round(meal.distanceMiles * 10) / 10,
       option.candidate.locationPrecision === "city" || meal.candidate.locationPrecision === "city"
@@ -1698,6 +1703,7 @@ OUTPUT — JSON array only:
     );
     cards.push(mealCard, pillarCard);
     usedPillars.add(option.candidate.id);
+    usedPillarNames.add(pillarActivityKey(option.candidate.name, option.candidate.id));
     usedMeals.add(meal.candidate.id);
     usedMealBrands.add(mealBrandKey(meal.candidate.name, meal.candidate.id));
 
