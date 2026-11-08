@@ -66,6 +66,18 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The series' first occurrence (454597) is September 23, not November 11.
+  // SCU's dated RSS item and Event schema identify the November 11, 8 PM
+  // occurrence as 454604. Preserve that link when RSS reuses the series URL.
+  // https://events.scu.edu/center-for-spirituality-and-faith/event/454604-student-candlelight-mass
+  // Evidence: docs/qa/2026-11-08-1907z-fact-check.md.
+  {
+    date: "2026-11-11",
+    matches: event => event.title === "Student Candlelight Mass"
+      && event.venue === "Mission Santa Clara de Asis" && event.time === "8:00 PM"
+      && /^https:\/\/events\.scu\.edu\/(?:live\/events|center-for-spirituality-and-faith\/event)\/(?:454597|454604)-student-candlelight-mass$/.test(event.url || ""),
+    facts: { url: "https://events.scu.edu/center-for-spirituality-and-faith/event/454604-student-candlelight-mass" },
+  },
   // The dated Teen Center newsletter confirms the party; the city's program
   // page restricts membership to Mountain View/Los Altos students in grades
   // 6–12. Preserve the youth audience after generic text classification.
