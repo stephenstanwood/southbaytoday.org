@@ -57,6 +57,16 @@ const EDITS = {
     description: [
       // Remove the paired display markup, preserving the entire HICAP notice.
       [/\*\* (HICAP Counselors [^*]+?) \*\*/g, "$1"],
+      ["So are we, come explore with us!", "So are we! Come explore with us!"],
+      ["In this drop-in session visitors", "In this drop-in session, visitors"],
+      ["and checkout some objects", "and check out some objects"],
+      ["this program is intended as an explorative demo, we will", "this program is intended as an explorative demo; we will"],
+      ["Demostración y exhibición de impresión 3D ¿Te interesa", "Demostración y exhibición de impresión 3D: ¿Te interesa"],
+      ["Come try Swift Playground!", "Come try Swift Playgrounds!"],
+      [/\bi OS\b/g, "iOS"],
+      [/\bmac OS\b/g, "macOS"],
+      ["iPads will be provided however, but they are limited.", "iPads will be provided, but they are limited."],
+      ["Programación con Swift Playgrounds ¿Buscas", "Programación con Swift Playgrounds: ¿Buscas"],
       ["Training and supplies will be provide;", "Training and supplies will be provided;"],
       ["put it altogether with play songs.", "put it all together by playing songs."],
       ["the basics of using sewing machine!", "the basics of using a sewing machine!"],
@@ -542,6 +552,8 @@ const EDITS = {
     description: [
       [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
+      ["For Kindergarten through", "For kindergarten through"],
+      [/\bEach (\d+) minute session\b/g, "Each $1-minute session"],
       [/\b(\d+) teams (\d+) people each,/g, "$1 teams of $2 people each,"],
       [/\b(at the \d+) hour mark,/g, "$1-hour mark,"],
       ["the one with fewest remaining loose pieces.", "the one with the fewest remaining loose pieces."],
