@@ -671,6 +671,12 @@ The night audit also covers missing contact-sentence punctuation and new
 library and theatre grammar; contact repairs leave later instructions and
 changed addresses intact.
 
+The November 7 late audit also preserves the feed's registration punctuation,
+resume-workshop wording, missing article in the mending workshop, and family
+game description and blurb. These repairs match source-specific phrases rather
+than event IDs. Regression cases change the session hours, lateness limit,
+prices, and contact details to verify that new source facts still flow through.
+
 Offline publication fixtures intentionally produce source failures and must
 never reach personal MILO intake. `notification-intake.mjs` rejects uninjected
 live transports inside Node test workers. CLI fixtures preserve

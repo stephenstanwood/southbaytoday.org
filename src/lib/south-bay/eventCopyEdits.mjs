@@ -55,6 +55,12 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [/\b(To register, please call [\d+(). -]+ or email [\w.%+-]+@[\w.-]+\.[a-z]{2,})(?=$| [A-Z])/g, "$1."],
+      ["introductory session with a Librarian.", "introductory session with a librarian."],
+      ["one-on-one time with the Librarian for", "one-on-one time with the librarian for"],
+      ["a job description they are interested in applying for.", "a job description for a position they are interested in applying for."],
+      ["Do you have pile of clothing", "Do you have a pile of clothing"],
+      [/Must arrive no later than (\d+) minutes late\./g, "Must arrive no more than $1 minutes late."],
       // Remove the paired display markup, preserving the entire HICAP notice.
       [/\*\* (HICAP Counselors [^*]+?) \*\*/g, "$1"],
       ["So are we, come explore with us!", "So are we! Come explore with us!"],
@@ -550,6 +556,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
       [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
       ["For Kindergarten through", "For kindergarten through"],
@@ -649,6 +656,7 @@ const EDITS = {
     ],
     blurb: [
       ["with a friend or new ones.", "with a friend or make new ones."],
+      ["in the Children's Room, with a friend or make new ones.", "in the Children's Room with a friend, or make new friends."],
       [/Get homework help from tutors in grades ((?:K|\d+)-\d+), with/g, "Students in grades $1 can get homework help from tutors, with"],
       [/\bLegos\b/g, "LEGOs"],
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],

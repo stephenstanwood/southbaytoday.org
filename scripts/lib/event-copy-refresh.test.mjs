@@ -69,6 +69,7 @@ const november6EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/revi
 const november7AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-afternoon.json", import.meta.url)));
 const november7MarkupFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-markup.json", import.meta.url)));
 const november7EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-evening.json", import.meta.url)));
+const november7LateFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-07-late.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -86,9 +87,57 @@ audits.push(november6EveningFixture);
 audits.push(november7AfternoonFixture);
 audits.push(november7MarkupFixture);
 audits.push(november7EveningFixture);
+audits.push(november7LateFixture);
+const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
+  // A later audit can refine the same complete text. Follow only its captured
+  // before/after pair, preserving the earlier audit's original evidence.
+  let reviewed = row.reviewed;
+  for (const later of audits.slice(auditIndex + 1)) {
+    const revision = later.cases.find(candidate => candidate.source === row.source
+      && candidate.field === row.field && candidate.refreshed === reviewed);
+    if (revision) reviewed = revision.reviewed;
+  }
+  return { ...row, reviewed };
+}));
+const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.source === row.source
+  && candidate.field === row.field && candidate.refreshed === row.refreshed).reviewed;
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("late library copy repairs preserve changed hours, lateness limits, contacts and publisher scope", () => {
+  const revise = text => text.replaceAll("11:00 a.m.", "10:30 a.m.")
+    .replaceAll("5:00 p.m.", "4:45 p.m.").replaceAll("15-minute", "25-minute")
+    .replaceAll("10 minutes late", "5 minutes late").replaceAll("$20", "$30")
+    .replaceAll("408-808-3043", "650-555-0199")
+    .replaceAll("je.sjpl@sjlibrary.org", "updated@example.org");
+  const suffix = " Registration required; ages 12+; tickets $25. See https://example.org/updated.";
+  for (const row of november7LateFixture.cases) {
+    const original = {
+      source: row.source, [row.field]: revise(row.refreshed) + suffix,
+      id: "revised-library-event", date: "2026-12-10", time: "10:30 AM",
+      endTime: "4:45 PM", registration: "required", cost: "paid", costNote: "$25",
+    };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+});
+
+test("registration punctuation preserves a continuation and an existing sentence ending", () => {
+  for (const description of [
+    "To register, please call 650-555-0199 or email updated@example.org or register online.",
+    "To register, please call 650-555-0199 or email updated@example.org.",
+    "To register, please call 650-555-0199 or email updated@example.org. Registration is required.",
+  ]) {
+    const event = { source: "San Jose Public Library", description };
+    assert.deepEqual(polishReviewedEventCopy(event), event);
+  }
+});
 
 test("library demo and reading repairs preserve revised limits, contacts and publisher scope", () => {
   const revise = text => text.replaceAll("20 minute", "35 minute").replaceAll("20-minute", "35-minute")
@@ -156,7 +205,7 @@ test("November 7 grammar repairs preserve revised counts, schedules, contacts an
       endTime: "1:00 PM", registration: "required", cost: "paid", costNote: "$25",
     };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, description: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, description: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next.description), numbers(original.description));
     assert.deepEqual(identifiers(next.description), identifiers(original.description));
     assert.deepEqual(polishReviewedEventCopy(next), next);
@@ -176,7 +225,7 @@ test("evening library copy repairs preserve new schedules, grade ranges and publ
       endTime: "12:00 PM", registration: "required", cost: "paid", costNote: "$25",
     };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);
@@ -319,18 +368,6 @@ test("tech-help copy repairs preserve revised contacts and later attendance cond
   assert.deepEqual(polishReviewedEventCopy(revised), revised);
 });
 
-const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
-  // A later audit can refine the same complete text. Follow only its captured
-  // before/after pair, preserving the earlier audit's original evidence.
-  let reviewed = row.reviewed;
-  for (const later of audits.slice(auditIndex + 1)) {
-    const revision = later.cases.find(candidate => candidate.source === row.source
-      && candidate.field === row.field && candidate.refreshed === reviewed);
-    if (revision) reviewed = revision.reviewed;
-  }
-  return { ...row, reviewed };
-}));
-
 test("midday copy repairs preserve publisher scope and new source information", () => {
   for (const row of november5MiddayFixture.cases) {
     const otherPublisher = { source: "Different publisher", [row.field]: row.refreshed };
@@ -417,7 +454,9 @@ test("evening punctuation repairs preserve revised facts, contacts and publisher
       .replaceAll("sarah.kishler@sjlibrary.org", "updated@example.org");
     const original = { source: row.source, description: revised(row.refreshed) + suffix, time: "4:00 PM", costNote: "$30" };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, description: revised(row.reviewed) + suffix });
+    // The later registration-sentence repair also punctuates a new contact.
+    const reviewed = revised(row.reviewed).replace(/email updated@example\.org$/, "email updated@example.org.");
+    assert.deepEqual(next, { ...original, description: reviewed + suffix });
     assert.deepEqual(numbers(next.description), numbers(original.description));
     assert.deepEqual(identifiers(next.description), identifiers(original.description));
   }
