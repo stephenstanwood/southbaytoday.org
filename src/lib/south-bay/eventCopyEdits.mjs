@@ -56,6 +56,7 @@ const EDITS = {
     ],
     description: [
       ["This Bridge program", "This bridge program"],
+      ["on the second Thursday January through November.", "on the second Thursday of each month from January through November."],
       ["Note: No session on 3rd Thursday of the month.", "Note: No session on the 3rd Thursday of the month."],
       ["Performer Biography Daniel Barash,", "Performer Biography: Daniel Barash,"],
       ["passionate about Bridge", "passionate about bridge"],
@@ -571,6 +572,8 @@ const EDITS = {
       [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
       ["The film carries a R rating.", "The film carries an R rating."],
       ["No Registration is required.", "No registration is required."],
+      ["strong smells of glue, and the sound of fans", "strong smells of glue and the sound of fans"],
+      ["If you are just here for the vibes there is no need to register!", "If you are just here for the vibes, there is no need to register!"],
       [". *We will be holding ongoing weekly meetings", ". We will be holding ongoing weekly meetings"],
       [". *We can supply some knitting and crochet supplies,", ". We can supply some knitting and crochet supplies,"],
       ["For Kindergarten through", "For kindergarten through"],
