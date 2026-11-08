@@ -1,5 +1,6 @@
 import type { Bucket } from "./buckets";
 import { chainBrandKey } from "./chains.mjs";
+import { normalizeName } from "./normalizeName.ts";
 
 /**
  * The regional day plan is three strong activity pillars. Each pillar owns
@@ -37,6 +38,11 @@ export const MEAL_PAIR_MAX_MILES = 5;
  */
 export function mealBrandKey(name: string | null | undefined, fallbackId = ""): string {
   return chainBrandKey(name) || String(fallbackId || "").trim().toLowerCase();
+}
+
+/** Separate showtime IDs do not make the same activity a new recommendation. */
+export function pillarActivityKey(name: string | null | undefined, fallbackId = ""): string {
+  return normalizeName(name) || fallbackId;
 }
 
 /** Claude may exercise taste among comparably strong finalists, but cannot
@@ -182,6 +188,16 @@ export function dayPlanPairingIssues(
   for (const card of cards) {
     if (ids.has(card.id)) issues.push(`duplicate card id: ${card.id}`);
     ids.add(card.id);
+  }
+
+  const activities = new Map<string, string>();
+  for (const bucket of PILLAR_BUCKETS) {
+    const pillar = cards.find(card => card.bucket === bucket);
+    if (!pillar) continue;
+    const key = pillarActivityKey(pillar.name, pillar.id);
+    const first = activities.get(key);
+    if (first) issues.push(`duplicate pillar activity: ${first} / ${pillar.name || pillar.id}`);
+    else activities.set(key, pillar.name || pillar.id);
   }
 
   const mealBrands = new Map<string, string>();

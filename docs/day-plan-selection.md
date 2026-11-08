@@ -47,6 +47,12 @@ logo does not beat an equivalent independent. Caterers, grocery stores,
 food-delivery businesses, home food businesses, and meal-inappropriate venue
 types are not eligible.
 
+An activity may appear only once in a plan. Separate showtime IDs with the
+same normalized activity name remain one recommendation; selection excludes
+repeat activities before comparing the remaining quality scores, and the shared
+pair validator rejects repeats. Copy from a rejected model pick never moves to
+its replacement.
+
 A restaurant brand may appear only once in a plan. Branch IDs and addresses do
 not make repeat locations distinct recommendations: Oren's in Cupertino and
 Oren's in Mountain View still count as the same meal brand. Selection enforces
@@ -203,6 +209,12 @@ the latest stable Sol with max effort, verifies ChatGPT login, strips API-key
 and endpoint environment overrides, and forces the OpenAI provider with
 ChatGPT auth. A missing login or usage cap fails closed; the prior published
 plans remain intact and the three guarded retry slots remain unchanged.
+Each selector process has a four-minute timeout and one fresh-process retry
+for transport failures; auth failures and usage caps never trigger that retry.
+Failure logs retain the exit/timeout code, CLI event types and bounded error
+detail. The final refresh slot waits up to 20 minutes for the shared repo lock,
+then preflights the current source before generating. It never steals a lock
+because its holder is old; an owner that remains active stays protected.
 
 Default publication is atomic across adults/kids and today/tomorrow. Successful
 source-identical editorial results survive a failed publication retry in the

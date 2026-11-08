@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { sql } from "../lookout/db";
 
-export const PLAN_PROMPT_VERSION = "pillar-pairs-sonnet-2026-10-29-v2";
+export const PLAN_PROMPT_VERSION = "pillar-pairs-sonnet-2026-11-08-v3";
 const TTL_MS = 5 * 60_000;
 const LEASE_MS = 90_000;
 const local = new Map<string, { at: number; value: any }>();

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join } from "node:path";
-import { createCodexPlanEditorial, latestStableSol, subscriptionEnvironment } from "./codex-subscription.mjs";
+import { createCodexPlanEditorial, latestStableSol, subscriptionEnvironment, SELECTION_TIMEOUT_MS, SELECTION_ATTEMPTS } from "./codex-subscription.mjs";
 
 const model = slug => ({ slug, supported_reasoning_levels: [{ effort: "max" }] });
 test("live stable Sol discovery excludes preview and sorts versions numerically", () => {
@@ -51,4 +51,86 @@ test("structured subscription execution pins auth/provider and reuses a complete
   assert.equal(JSON.parse(await editorial.select("source-locked prompt")).length, 3);
   await editorial.select("source-locked prompt");
   assert.equal(generations, 1);
+});
+
+function selectorFixture(t, execute) {
+  const root = mkdtempSync(join(tmpdir(), "sbt-codex-retry-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  return createCodexPlanEditorial({ cacheRoot: root, env: { HOME: root },
+    run: (_cli, args, options) => {
+      if (args[0] === "login") return { status: 0, stdout: "Logged in using ChatGPT" };
+      if (args[0] === "debug") return { status: 0, stdout: JSON.stringify({ models: [model("gpt-6.1-sol")] }) };
+      return execute(args, options);
+    } });
+}
+function completeSelection(args, blurb = "Complete source fact.") {
+  const pairs = ["morning", "afternoon", "evening"].map(pillarBucket => ({
+    pillarBucket, pillarId: `event:${pillarBucket}`, mealId: `place:${pillarBucket}`,
+    pillarBlurb: blurb, mealBlurb: blurb,
+  }));
+  writeFileSync(args[args.indexOf("--output-last-message") + 1], JSON.stringify({ pairs }));
+  return { status: 0, stdout: JSON.stringify({ type: "turn.completed", usage: {} }) };
+}
+
+test("a timed-out selection retries once in a fresh process and ignores its partial output", async t => {
+  const directories = [];
+  const editorial = selectorFixture(t, (args, options) => {
+    assert.equal(options.timeout, SELECTION_TIMEOUT_MS);
+    assert.equal(SELECTION_TIMEOUT_MS, 240_000);
+    directories.push(options.cwd);
+    if (directories.length === 1) {
+      completeSelection(args, "Uncommitted partial output.");
+      return { error: Object.assign(new Error("spawn timed out"), { code: "ETIMEDOUT" }), status: null,
+        stdout: JSON.stringify({ type: "turn.started" }) };
+    }
+    return completeSelection(args);
+  });
+  const pairs = JSON.parse(await editorial.select("exact source prompt"));
+  assert.equal(directories.length, 2);
+  assert.notEqual(directories[0], directories[1]);
+  assert.ok(pairs.every(p => p.pillarBlurb === "Complete source fact."));
+  await editorial.select("exact source prompt");
+  assert.equal(directories.length, 2, "only the completed retry is cached");
+});
+
+test("transport retry is bounded and exhausted attempts never poison the recovery cache", async t => {
+  let calls = 0, healthy = false;
+  const editorial = selectorFixture(t, args => {
+    calls++;
+    return healthy ? completeSelection(args) : { status: null,
+      error: Object.assign(new Error("spawn timed out"), { code: "ETIMEDOUT" }) };
+  });
+  await assert.rejects(editorial.select("same source"), /ETIMEDOUT.*no CLI events/);
+  assert.equal(calls, SELECTION_ATTEMPTS);
+  healthy = true;
+  await editorial.select("same source");
+  assert.equal(calls, SELECTION_ATTEMPTS + 1);
+});
+
+test("authentication and subscription caps fail immediately even with transport-like wording", async t => {
+  for (const stderr of ["401 unauthorized: connection closed", "usage limit reached; timed out", "429 rate limit exceeded"]) {
+    let calls = 0;
+    const editorial = selectorFixture(t, () => { calls++; return { status: 1, stderr }; });
+    await assert.rejects(editorial.select(stderr), /Codex subscription command failed/);
+    assert.equal(calls, 1);
+  }
+});
+
+test("a structured disconnected-stream failure retries with its failure detail retained", async t => {
+  let calls = 0;
+  const editorial = selectorFixture(t, args => ++calls === 1
+    ? { status: 1, stdout: JSON.stringify({ type: "turn.failed", error: { message: "stream disconnected before completion" } }) }
+    : completeSelection(args));
+  await editorial.select("stream fixture");
+  assert.equal(calls, 2);
+});
+
+test("non-transient CLI errors and incomplete turns never trigger a transport retry", async t => {
+  for (const result of [{ status: 1, stderr: "invalid output schema" },
+    { status: 0, stdout: JSON.stringify({ type: "turn.started" }) }]) {
+    let calls = 0;
+    const editorial = selectorFixture(t, () => { calls++; return result; });
+    await assert.rejects(editorial.select("invalid fixture"), /invalid output schema|did not complete/);
+    assert.equal(calls, 1);
+  }
 });
