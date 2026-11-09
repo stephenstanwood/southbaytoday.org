@@ -66,6 +66,23 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Montalvo names this dated show Taking Tangents Tour and explicitly limits
+  // entry to ages 18+ with valid photo ID. The newsletter's Shelf Help title
+  // and missing audience gate survived the separate start-time backfill.
+  // https://montalvoarts.org/experience/carriage-house-concerts/taking-tangents-tour/
+  // Evidence: docs/qa/2026-11-09-1207z-fact-check.md.
+  {
+    date: "2027-03-25",
+    matches: event => /^https:\/\/montalvoarts\.org\/experience\/carriage-house-concerts\/taking-tangents-tour\/?(?:[?#].*)?$/.test(event.url || "")
+      && /^(?:Comedian )?David Nihill: (?:Shelf Help|Taking Tangents Tour)$/.test(event.title || "")
+      && /^(?:The )?Carriage House(?: Theatre)?(?:, Montalvo Arts Center(?:,.*)?)?$/.test(event.venue || ""),
+    facts: {
+      title: "David Nihill: Taking Tangents Tour", time: "7:30 PM",
+      audienceAge: "adult", kidFriendly: false, sourceAudiences: ["Adults 18+"],
+    },
+    appendAttendanceNote: "Ages 18+; valid photo ID required for entry.",
+    copyReplacements: [[/;\s*no start time given\./gi, "."]],
+  },
   // These exact SJPL occurrences allow attendance without advance booking.
   // A capped signup form or phone-registration instruction does not make
   // optional signup mandatory. Keep the source's space-available condition
@@ -4153,6 +4170,12 @@ export function applyVerifiedEventFacts(event) {
       && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration))
       || (correction.facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
     corrected.registration = event.registration;
+  }
+  // Entry conditions supplement current booking/availability notices; never
+  // replace a later sold-out, closed or organizer-confirmation message.
+  if (correction.appendAttendanceNote
+      && !(corrected.attendanceNote || "").includes(correction.appendAttendanceNote)) {
+    corrected.attendanceNote = [corrected.attendanceNote, correction.appendAttendanceNote].filter(Boolean).join(" ");
   }
   // Attendance notes also carry source copy and need the same verified fixes.
   for (const field of ["description", "blurb", "attendanceNote"]) {
