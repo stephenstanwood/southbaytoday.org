@@ -811,9 +811,9 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     employeesNote: "~300 employees",
   },
   {
-    // Renamed 2026-08-07: the company dropped "Labs" and moved its main domain
-    // from lambdalabs.com to lambda.ai. `id` and the logo-manifest key stay
-    // "lambda-labs" so the existing logo keeps resolving.
+    // The company dropped "Labs" and later moved from lambda.ai to lambda.com:
+    // https://lambda.com/blog/lambda-ai-is-now-lambda-com (Nov 5, 2026).
+    // Keep "lambda-labs" as the id and logo-manifest key so the logo resolves.
     id: "lambda-labs",
     name: "Lambda",
     city: "San Jose",
@@ -821,7 +821,7 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     stage: "growth",
     tagline: "GPU cloud built for AI teams — H100 and A100 clusters you can rent by the hour without a hyperscaler contract. The go-to option for startups and researchers who can't get AWS quota. More than $3B raised, including a $1.5B Series E in late 2025; weighing a 2026 IPO.",
     color: "#EA580C",
-    url: "https://lambda.ai",
+    url: "https://lambda.com",
     employeesNote: "~250 employees",
   },
   {
@@ -1905,7 +1905,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     tagline:
       "Palo Alto's PaleBlueDot AI provides GPU computing power through its own clusters, a marketplace, and services that run AI models on demand. ComputeCore led its $200M Series C at a $3.2B valuation, with B Capital participating. The company plans to expand computing capacity and invest in engineering and sales teams.",
     color: "#2563eb",
-    url: "https://palebluedot.ai",
+    url: "https://www.palebluedot.ai",
   },
   // Armadin's Oct 1 release carries a Palo Alto, Calif. dateline; its March
   // launch coverage (SecurityWeek) also calls it Palo Alto-based. $445M is the
@@ -3384,7 +3384,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     date: "2026-01-28",
     tagline: "AI compute platform that brokers spare GPU capacity to AI companies and builds dedicated GPU clusters for enterprises — making large-scale compute faster and cheaper to access. The Series B (B Capital) valued the Palo Alto company at over $1B; revenue grew more than 10× in the prior year.",
     color: "#2563eb",
-    url: "https://palebluedot.ai",
+    url: "https://www.palebluedot.ai",
   },
   {
     id: "also-ev",
