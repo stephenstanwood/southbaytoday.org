@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-09T16:04:13.505Z",
+    "generatedAt": "2026-11-09T19:02:44.631Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 173,
+    "eventCount": 184,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (9)",
+      "San Jose Jazz (10)",
       "Linden Tree Books (5)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
@@ -16,7 +16,7 @@
       "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (15)",
       "Santana Row (5)",
-      "City of Cupertino (19)",
+      "City of Cupertino (29)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 9,
-        "liveCount": 9,
+        "count": 10,
+        "liveCount": 10,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 19,
-        "liveCount": 19,
+        "count": 29,
+        "liveCount": 29,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -408,6 +408,23 @@
       "cost": null,
       "description": "Noah and the Arkiteks bring Bay Area soul, blues & funk, channeling Otis Redding, Sam Cooke & Stevie Wonder with a groove all their own.",
       "url": "https://sanjosejazz.org/events/noah-the-arkiteks/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "d42e1c65bf1b",
+      "title": "Brass Queens",
+      "date": "2026-12-03",
+      "displayDate": "Thu, Dec 3",
+      "time": "8pm",
+      "endTime": null,
+      "venue": "SJZ Break Room",
+      "address": "",
+      "city": "san-jose",
+      "category": "music",
+      "cost": null,
+      "description": "Brothers Aaron and Lawrence Shaw, performing as Black Nile, see a different Los Angeles: not Hollywood's fantasy but a city of improvisation, fresh ideas and jazz, built on deep Black and Latino roots. Born and raised in LA's Inglewood neighborhood, they came up in the city's red-hot jazz scene, rubbing shoulders with elder legends and next-gen stars alike.",
+      "url": "https://sanjosejazz.org/events/brass-queens/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -1312,7 +1329,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-09T16:03:04.084Z"
+        "checkedAt": "2026-11-09T19:01:34.530Z"
       }
     },
     {
@@ -1335,7 +1352,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T16:03:04.085Z"
+        "checkedAt": "2026-11-09T19:01:34.534Z"
       }
     },
     {
@@ -1358,7 +1375,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T16:03:04.085Z"
+        "checkedAt": "2026-11-09T19:01:34.534Z"
       }
     },
     {
@@ -1381,7 +1398,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-09T16:03:04.085Z"
+        "checkedAt": "2026-11-09T19:01:34.535Z"
       }
     },
     {
@@ -1404,7 +1421,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-09T16:03:04.085Z"
+        "checkedAt": "2026-11-09T19:01:34.535Z"
       }
     },
     {
@@ -1493,6 +1510,57 @@
       "kidFriendly": true
     },
     {
+      "id": "65d33214a341",
+      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
+      "date": "2027-01-15",
+      "displayDate": "Fri, Jan 15",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "050024f32ebb",
+      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
+      "date": "2027-02-19",
+      "displayDate": "Fri, Feb 19",
+      "time": "06:00 PM",
+      "endTime": "07:30 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "5a6479cad9c6",
+      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
+      "date": "2027-03-05",
+      "displayDate": "Fri, Mar 5",
+      "time": "06:30 PM",
+      "endTime": "08:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
       "id": "86e44567cb97",
       "title": "Paper Shredding and Environmental Recycling",
       "date": "2026-11-14",
@@ -1527,12 +1595,12 @@
       "kidFriendly": false
     },
     {
-      "id": "e2a86ea7bc7c",
+      "id": "5cbcf241381a",
       "title": "Environmental Education Center Open House",
       "date": "2026-11-14",
       "displayDate": "Sat, Nov 14",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -1544,12 +1612,12 @@
       "kidFriendly": true
     },
     {
-      "id": "ae1228165488",
+      "id": "599ed394f0cf",
       "title": "Environmental Education Center Open House",
       "date": "2026-11-21",
       "displayDate": "Sat, Nov 21",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -1561,12 +1629,12 @@
       "kidFriendly": true
     },
     {
-      "id": "9d4bb8504919",
+      "id": "1330abdeba6b",
       "title": "Environmental Education Center Open House",
       "date": "2026-11-28",
       "displayDate": "Sat, Nov 28",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -1578,12 +1646,12 @@
       "kidFriendly": true
     },
     {
-      "id": "fbdd3862393d",
+      "id": "d2e3788b718d",
       "title": "Environmental Education Center Open House",
       "date": "2026-12-05",
       "displayDate": "Sat, Dec 5",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -1595,12 +1663,12 @@
       "kidFriendly": true
     },
     {
-      "id": "be85f0b20e3b",
+      "id": "a83ee95ec3a8",
       "title": "Environmental Education Center Open House",
       "date": "2026-12-12",
       "displayDate": "Sat, Dec 12",
-      "time": "12:00 PM",
-      "endTime": "04:00 PM",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
       "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
       "city": "cupertino",
@@ -1650,6 +1718,57 @@
       "title": "Baer Blacksmith Shop Demonstrations",
       "date": "2026-12-26",
       "displayDate": "Sat, Dec 26",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "a25be007b4ce",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-01-30",
+      "displayDate": "Sat, Jan 30",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "a8bca96b2e24",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-02-27",
+      "displayDate": "Sat, Feb 27",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "9c2236ed9df6",
+      "title": "Baer Blacksmith Shop Demonstrations",
+      "date": "2027-03-27",
+      "displayDate": "Sat, Mar 27",
       "time": "11:00 AM",
       "endTime": "03:00 PM",
       "venue": "McClellan Ranch Preserve",
@@ -1733,6 +1852,74 @@
       "kidFriendly": true
     },
     {
+      "id": "477e2322b857",
+      "title": "Cupertino Holi Festival",
+      "date": "2027-03-21",
+      "displayDate": "Sun, Mar 21",
+      "time": "10:00 AM",
+      "endTime": "04:00 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Blvd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The Cupertino Holi Festival is a City-sponsored event managed by an external organization. For festival details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Cupertino-Holi-Festival",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "08dbedd45d59",
+      "title": "Cupertino Cherry Blossom Festival",
+      "date": "2027-04-24",
+      "displayDate": "Sat, Apr 24",
+      "time": "10:00 AM",
+      "endTime": "05:30 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Blvd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The Cupertino Cherry Blossom Festival is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Cupertino-Cherry-Blossom-Festival",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "6b3df9b266c4",
+      "title": "Cupertino Cherry Blossom Festival",
+      "date": "2027-04-25",
+      "displayDate": "Sun, Apr 25",
+      "time": "10:00 AM",
+      "endTime": "05:30 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Blvd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The Cupertino Cherry Blossom Festival is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Cupertino-Cherry-Blossom-Festival",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "cad7a96ebf40",
+      "title": "Dilli Haat Festival",
+      "date": "2027-06-12",
+      "displayDate": "Sat, Jun 12",
+      "time": "10:00 AM",
+      "endTime": "06:00 PM",
+      "venue": "Memorial Park",
+      "address": "Memorial Park, 21121 Stevens Creek Blvd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The Dilli Haat Festival is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Dilli-Haat-Festival",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
       "id": "4bee933d9da1",
       "title": "Fiddler on the Roof",
       "date": "2026-11-15",
@@ -1744,7 +1931,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1761,7 +1948,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1778,7 +1965,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1795,7 +1982,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1812,7 +1999,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2977,7 +3164,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.141Z"
+        "checkedAt": "2026-11-09T19:02:00.294Z"
       }
     },
     {
@@ -3001,7 +3188,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.142Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3025,7 +3212,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3049,7 +3236,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3073,7 +3260,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3097,7 +3284,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3121,7 +3308,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3145,7 +3332,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3169,7 +3356,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3193,7 +3380,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
@@ -3234,7 +3421,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T16:03:31.143Z"
+        "checkedAt": "2026-11-09T19:02:00.295Z"
       }
     },
     {
