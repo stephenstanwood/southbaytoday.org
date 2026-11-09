@@ -66,6 +66,33 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // These exact SJPL occurrences allow attendance without advance booking.
+  // A capped signup form or phone-registration instruction does not make
+  // optional signup mandatory. Keep the source's space-available condition
+  // and stop overriding when its wording or explicit availability changes.
+  // Evidence: docs/qa/2026-11-09-0307z-fact-check.md (fresh exact-ID responses).
+  {
+    date: "2026-11-12",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a83721e4cb69d003e216ef3\/?$/.test(event.url || "")
+      && event.venue === "Bascom Library" && event.time === "4:00 PM"
+      && /\bregistration\s+(?:is\s+)?encouraged\s+but\s+not\s+required\b/i.test(event.description || "")
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\bmust\s+(?:register|reserve|book)\b/i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: {
+      registration: REGISTRATION_NONE, registrationClosesBy: null,
+      attendanceNote: "Registration is encouraged but not required.",
+    },
+  },
+  {
+    date: "2026-11-12",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6920f0bad6833e76917eb5e9\/?$/.test(event.url || "")
+      && event.venue === "Rose Garden Library" && event.time === "5:00 PM"
+      && /\bappointments\s+are\s+highly\s+encouraged\b/i.test(event.description || "")
+      && /\bdrop-ins\s+can\s+be\s+taken\b[^.!?]*\bif\s+times\s+are\s+available\b/i.test(event.description || "")
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\bmust\s+(?:register|reserve|book)\b|\bno\s+drop-ins\b|\bby\s+appointment\s+only\b/i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+  },
   // The series' first occurrence (454597) is September 23, not November 11.
   // SCU's dated RSS item and Event schema identify the November 11, 8 PM
   // occurrence as 454604. Preserve that link when RSS reuses the series URL.
