@@ -56,6 +56,10 @@ const EDITS = {
     ],
     description: [
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      ['a "book club" style program', "a book-club-style program"],
+      ["action packed experience", "action-packed experience"],
+      ["Each month discover", "Each month, discover"],
+      [/Games of the Month Titles subject to change at staff discretion (November - [^.]+?) (December - [^.]+?)(?:\.|$)/g, "Games of the month (titles subject to change at staff discretion): $1; $2."],
       [/\bhotspot\/(?:Wifi|Wi-Fi)\b/g, "hotspot / Wi-Fi"],
       ["Chromebooks/computadoras", "Chromebooks / computadoras"],
       ["El personal de la biblioteca o un voluntario estarán allí", "El personal de la biblioteca o un voluntario estará allí"],
@@ -526,6 +530,7 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      [/^(November \d{1,2}, \d{4}) Skip the cooking this Thanksgiving\./g, "$1. Skip the cooking this Thanksgiving."],
       ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
       ["from 5:00–9:00 pm, for winter evenings", "from 5:00–9:00 pm for winter evenings"],
@@ -789,6 +794,7 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      [/\bCvmf\b/g, "CVMF"],
       [/\bImax\b/g, "IMAX"],
       ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
       ["Paint clay diya, the small oil lamps", "Paint clay diyas, the small oil lamps"],
@@ -803,6 +809,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      [/\bCvmf\b/g, "CVMF"],
       ["landlord/tenant law questions", "landlord / tenant law questions"],
       [/\bImax\b/g, "IMAX"],
       [/\bEBT\/Snap benefits\b/g, "EBT/SNAP benefits"],
@@ -856,6 +863,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/^Ent Experts Up Close:/g, "ENT Experts Up Close:"],
       [/\bPfas\b/g, "PFAS"],
       ['MD "Ion channels and transporters regulating lymphocyte function "', 'MD: "Ion channels and transporters regulating lymphocyte function"'],
       [/^(University Public Worship: .+\))\.$/g, "$1"],
@@ -871,6 +879,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      [/^Overview This one-hour CME activity\b/g, "Overview: This one-hour CME activity"],
       ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
       ["advancements in AI for biology, and relevant security", "advancements in AI for biology and relevant security"],
       [/(\bto launch a new book, "[^"]+)"\./g, '$1."'],
@@ -931,6 +940,7 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      [/Stanford University\s*\/\s*(?:Slac|SLAC)\b/g, "Stanford University / SLAC"],
       ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
       [/\ba Q & A with\b/g, "a Q&A with"],
       [/ - with a focus on Zinemaking(?=$| [A-Z])/g, ", with a focus on zinemaking."],

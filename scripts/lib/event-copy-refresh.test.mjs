@@ -82,6 +82,7 @@ const november9BilingualFixture = JSON.parse(readFileSync(new URL("./fixtures/re
 const november9LegoFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-lego.json", import.meta.url)));
 const november9MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-midday.json", import.meta.url)));
 const november9PuzzleFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-puzzle.json", import.meta.url)));
+const november9AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-afternoon.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -112,6 +113,7 @@ audits.push(november9BilingualFixture);
 audits.push(november9LegoFixture);
 audits.push(november9MiddayFixture);
 audits.push(november9PuzzleFixture);
+audits.push(november9AfternoonFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -128,6 +130,33 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("afternoon acronyms and list punctuation preserve changed source facts and publisher scope", () => {
+  const revise = text => text.replaceAll("November 26, 2026", "November 25, 2027")
+    .replaceAll("Thursday, November 26", "Thursday, November 25")
+    .replaceAll("$85", "$95").replaceAll("10:30 AM", "11:00 AM")
+    .replaceAll("Castlevania", "Metroid").replaceAll("The Legend of Zelda", "Portal 2");
+  const suffix = " Register at https://example.org/updated or contact updated@example.org. Ages 16+; tickets $25.";
+  for (const row of november9AfternoonFixture.cases) {
+    const before = revise(row.refreshed);
+    const separator = row.field === "description" && !/[.!?]$/.test(before) ? "." : "";
+    const original = {
+      title: "Revised public program", source: row.source, [row.field]: before + separator + suffix,
+      id: "revised-afternoon-event", date: "2027-11-25", time: "11:00 AM", endTime: "4:00 PM",
+      registration: "required", cost: "paid", costNote: "$25", category: "education",
+      address: "500 Updated Avenue", url: "https://example.org/updated",
+    };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, [row.field]: "New source wording and a new schedule: November 30; $40." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
+  }
+});
 
 test("midday sentence repairs preserve revised fees, attendance details and publisher scope", () => {
   const suffix = " Registration required; ages 8+; contact updated@example.org or https://example.org/revised.";
