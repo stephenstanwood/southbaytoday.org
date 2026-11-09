@@ -66,6 +66,72 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The Jazz calendar reused Black Nile's excerpt for Brass Queens. The
+  // band's own dated detail page supplies its identity and ticket price.
+  // https://sanjosejazz.org/events/brass-queens/
+  // Evidence: docs/qa/2026-11-09-2007z-fact-check.md.
+  {
+    date: "2026-12-03",
+    matches: event => /^https:\/\/(?:www\.)?sanjosejazz\.org\/events\/brass-queens\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.title === "Brass Queens" && event.venue === "SJZ Break Room",
+    facts: {
+      cost: "paid", costNote: "$27 including fees",
+      description: "Brass Queens is a female-led brass band from New York, blending New Orleans brass traditions with pop and reggaeton. The December 3 show at SJZ Break Room starts at 8 PM; doors open at 7 PM. Tickets are $27 including fees.",
+      blurb: "Hear New York's female-led Brass Queens blend New Orleans brass traditions with pop and reggaeton at SJZ Break Room.",
+    },
+  },
+  // Five published occurrences share an explicit body-text price and signup
+  // condition that the OpenCities Cost-box-only parser missed. Never create
+  // another date or override a later full/closed state.
+  // https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour
+  // Evidence: docs/qa/2026-11-09-2007z-fact-check.md.
+  {
+    dateFrom: "2026-11-13", dateThrough: "2027-03-05",
+    matches: event => ["2026-11-13", "2026-12-18", "2027-01-15", "2027-02-19", "2027-03-05"].includes(event.date)
+      && event.url === "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour"
+      && event.venue === "McClellan Ranch Preserve"
+      && /\ball attendees must register\b/i.test(event.description || ""),
+    facts: { cost: "low", costNote: "$10 resident; $13 nonresident", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "All attendees must register. Children must be accompanied by an adult.",
+  },
+  // The museum's November 9 newsletter says 1–3 PM; its exact ticket page
+  // says 10 AM–noon, explicitly in America/Los_Angeles. Neither establishes
+  // a settled start. Keep the occurrence with a confirmation notice, outside
+  // recommendations, rather than choose a clock from one conflicting source.
+  // https://www.eventbrite.com/e/little-rams-leap-ink-painting-on-canvas-for-children-tickets-2004454841389
+  // Evidence: docs/qa/2026-11-09-2007z-fact-check.md.
+  {
+    date: "2027-01-30",
+    matches: event => /^https:\/\/www\.eventbrite\.com\/e\/little-rams-leap-ink-painting-on-canvas-for-children-tickets-2004454841389\/?(?:[?#].*)?$/.test(event.url || "")
+      && /^Little Rams Leap: Ink Painting on Canvas \((?:For )?Children\)$/.test(event.title || "")
+      && event.venue === "Linn Studio behind the Triton Museum of Art",
+    facts: {
+      time: null, endTime: null, cost: "paid", costNote: "$30 per child; materials included",
+      attendanceStatus: "needs-confirmation",
+    },
+    appendAttendanceNote: "The museum newsletter lists 1–3 PM, but its Eventbrite page lists 10 AM–noon Pacific. Confirm the workshop time with Triton Museum before booking or going.",
+  },
+  // Recover source links lost by newsletter extraction. Match only the dated
+  // program at its verified venue and preserve any later supplied URL.
+  // Evidence: docs/qa/2026-11-09-2007z-fact-check.md.
+  {
+    date: "2026-11-13",
+    matches: event => !event.url && event.title === "Ceremonial Check Presentation for Fire Truck Replacement Funding"
+      && event.venue === "Sunnyvale Fire Station Five",
+    facts: { url: "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/431c99d" },
+  },
+  {
+    date: "2026-12-02",
+    matches: event => !event.url && event.title === "Triton Book Club: A Christmas Carol"
+      && event.venue === "Triton Museum of Art",
+    facts: { url: "https://www.tritonmuseum.org/book-club" },
+  },
+  {
+    date: "2026-11-21",
+    matches: event => /^https:\/\/www\.eventbrite\.com\/e\/triton-holiday-art-fair-tickets-1998434110220\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.title === "Triton Holiday Art Fair" && event.venue === "Triton Museum of Art",
+    facts: { cost: "free" },
+  },
   // Montalvo names this dated show Taking Tangents Tour and explicitly limits
   // entry to ages 18+ with valid photo ID. The newsletter's Shelf Help title
   // and missing audience gate survived the separate start-time backfill.

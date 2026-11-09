@@ -1927,10 +1927,16 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
     const key = `${date}|${time}|${r.title}|${venue}`;
     if (seen.has(key)) return null;
     seen.add(key);
-    const { cost } = parseCivicPlusEventCost(r.cost);
+    // Some OpenCities pages put their resident/nonresident admission table
+    // in the body instead of a Cost box. Only use that explicit price pair;
+    // an unrelated dollar figure in prose is not an admission price.
+    const inlinePricing = r.description?.match(/\$\s*\d+(?:\.\d{1,2})?\s+Resident\s*\|\s*\$\s*\d+(?:\.\d{1,2})?\s+Non[- ]resident\b/i)?.[0];
+    const costText = r.cost || inlinePricing || "";
+    const { cost } = parseCivicPlusEventCost(costText);
     // A child-only requirement still gates family admission, even when the
     // next sentence explicitly exempts accompanying adults from registration.
-    const registrationRequired = /\b(?:pre[-\s]?)?registration\s+(?:is\s+)?(?:required|mandatory)\b|\bchildren\s+must\s+(?:be\s+)?register(?:ed)?\b/i.test(r.cost || "");
+    const registrationRequired = /\b(?:pre[-\s]?)?registration\s+(?:is\s+)?(?:required|mandatory)\b|\bchildren\s+must\s+(?:be\s+)?register(?:ed)?\b/i.test(r.cost || "")
+      || /\ball\s+(?:attendees|participants)\s+must\s+(?:be\s+)?register(?:ed)?\b/i.test(r.description || "");
     return {
       title: r.title,
       date,
@@ -1943,7 +1949,7 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
       source: "City of Cupertino",
       category: /\b(concert|music|disco|movie)\b/i.test(r.title) ? "music" : inferCategory(`${r.title} ${r.tags || ""}`),
       cost,
-      ...(cost && cost !== "free" ? { costNote: r.cost } : {}),
+      ...(cost && cost !== "free" ? { costNote: costText } : {}),
       ...(registrationRequired ? { registration: REGISTRATION_REQUIRED } : {}),
       description: r.description,
       kidFriendly: KID_RE.test(`${r.title} ${r.tags || ""}`),

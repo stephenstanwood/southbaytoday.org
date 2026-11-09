@@ -38,6 +38,10 @@ const TRACKER_FALLBACKS = [
 // Each replacement points to the organizer's official event or calendar page.
 // October follow-up evidence: docs/qa/2026-10-02-primary-url-disposition.json.
 const VERIFIED_INBOUND_URLS = new Map([
+  // Exact receiving originals and public first-party pages, November 9.
+  // Evidence: docs/qa/2026-11-09-2007z-fact-check.md.
+  ["2026-11-13|Ceremonial Check Presentation for Fire Truck Replacement Funding", "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/431c99d"],
+  ["2026-12-02|Triton Book Club: A Christmas Carol", "https://www.tritonmuseum.org/book-club"],
   // The authenticated November 7 original links to this public city bulletin,
   // which confirms the November 18 meeting, 5–6:30 PM and Senior Center.
   // Evidence: docs/qa/2026-11-07-1807z-fact-check.md.
