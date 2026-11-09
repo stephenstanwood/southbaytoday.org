@@ -56,6 +56,14 @@ const EDITS = {
     ],
     description: [
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      ["take public transportations.", "take public transportation."],
+      ["No registrations required.", "No registration required."],
+      ["Park for Free (first", "Park for free (first"],
+      ["distances (ptich)", "distances (pitch)"],
+      ["with less turns.", "with fewer turns."],
+      [/(^|[.!?]\s)Program is recommended for patrons (\d+-\d+)\./g, "$1The program is recommended for patrons ages $2."],
+      ["first-come, first-served; capacities limited.", "first-come, first-served; capacity is limited."],
+      ["Monthly meet up with tea and biscuits.", "Monthly meetup with tea and biscuits."],
       ["every Second Friday of each month.", "every second Friday of each month."],
       [/click "Sign Me Up" under Almaden Branch Library$/g, "$&."],
       ["learn fundamentals for photo editing.", "learn the fundamentals of photo editing."],
@@ -452,6 +460,7 @@ const EDITS = {
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
     ],
     blurb: [
+      ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
       [/\bApple pencils\b/g, "Apple Pencils"],
       ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
