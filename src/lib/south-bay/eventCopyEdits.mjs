@@ -56,6 +56,13 @@ const EDITS = {
     ],
     description: [
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      [/\bhotspot\/(?:Wifi|Wi-Fi)\b/g, "hotspot / Wi-Fi"],
+      ["Chromebooks/computadoras", "Chromebooks / computadoras"],
+      ["El personal de la biblioteca o un voluntario estarán allí", "El personal de la biblioteca o un voluntario estará allí"],
+      ["sizes from XS-XL", "sizes from XS to XL"],
+      [/(\b\d{1,2}:\d{2} (?:AM|PM) - \d{1,2}:\d{2} (?:AM|PM)) (students only|solo estudiantes);/g, "$1: $2;"],
+      [/(\b\d{1,2}:\d{2} (?:AM|PM) - \d{1,2}:\d{2} (?:AM|PM)) is open to everyone!/g, "$1: open to everyone!"],
+      [/(\b\d{1,2}:\d{2} (?:AM|PM) - \d{1,2}:\d{2} (?:AM|PM)) abierto a todos!/g, "$1: abierto a todos."],
       ["take public transportations.", "take public transportation."],
       ["No registrations required.", "No registration required."],
       ["Park for Free (first", "Park for free (first"],
