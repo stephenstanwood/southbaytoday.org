@@ -81,6 +81,7 @@ const november9PostRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/
 const november9BilingualFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-bilingual.json", import.meta.url)));
 const november9LegoFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-lego.json", import.meta.url)));
 const november9MiddayFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-midday.json", import.meta.url)));
+const november9PuzzleFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-09-puzzle.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -110,6 +111,7 @@ audits.push(november9PostRefreshFixture);
 audits.push(november9BilingualFixture);
 audits.push(november9LegoFixture);
 audits.push(november9MiddayFixture);
+audits.push(november9PuzzleFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
