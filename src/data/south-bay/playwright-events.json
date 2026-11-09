@@ -1,26 +1,26 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-09T06:27:45.090Z",
+    "generatedAt": "2026-11-09T10:36:09.065Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 179,
+    "eventCount": 173,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
-      "Linden Tree Books (7)",
+      "Linden Tree Books (5)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (4)",
       "Mountain Winery (1)",
-      "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (16)",
+      "Children's Discovery Museum (1)",
+      "Guadalupe River Park Conservancy (15)",
       "Santana Row (5)",
       "City of Cupertino (19)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
-      "Levi's Stadium (3)",
-      "SAP Center (13)",
+      "Levi's Stadium (2)",
+      "SAP Center (12)",
       "The Tech Interactive (6)",
       "Books Inc (6)",
       "San Jose Museum of Art (2)",
@@ -92,8 +92,8 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 7,
-        "liveCount": 7,
+        "count": 5,
+        "liveCount": 5,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -176,8 +176,8 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 2,
-        "liveCount": 2,
+        "count": 1,
+        "liveCount": 1,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 16,
-        "liveCount": 16,
+        "count": 15,
+        "liveCount": 15,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -251,8 +251,8 @@
         "id": "levi-s-stadium",
         "label": "Levi's Stadium",
         "status": "ok",
-        "count": 3,
-        "liveCount": 3,
+        "count": 2,
+        "liveCount": 2,
         "error": null,
         "sources": [
           "Levi's Stadium"
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
-        "liveCount": 13,
+        "count": 12,
+        "liveCount": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -478,50 +478,6 @@
       "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "d4f26b0a6ed7",
-      "title": "Storytime with Seina Wedlick",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": null,
-      "description": "Join us as we welcome local author Seina Wedlick back to the store to celebrate her new picture book, Noor and the Storyteller, about a girl who fills the starry, moonlit sky with magical tales. Every night, Noor listens for the sound of the gong and the storyteller’s drum.\nGONG, GONG, GONG! Tap! Tap! Tap! With each beat, fantastic tales swirl and sway and unfold around her. One night, she waits and waits, but no drumbeat comes her way. Can Noor tap the drum and keep the storyteller’s magic alive? Find out in this modern fairy tale about a young Nigerian girl who taps stories on her drum and carries tradition in her heart.",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-08"
-      }
-    },
-    {
-      "id": "c969bb78abcf",
-      "title": "Fall Art Workshop with Isabella Kung",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "4pm",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Calling all young artists ages 10-13! Join us this fall for a series of hands-on art workshops led by a  talented, published illustrators. This month's teacher/illustrator is Isabella Kung, author-illustrator of Nunu and the Sea, No Snowball!, and more. Each workshop lasts 90 minutes and costs $75. Materials (paper, pens, etc) will be provided and, at the end of each workshop, students will receive a signed copy of one of the featured illustrator’s books. Space for each workshop is limited. Buy tickets now »",
-      "url": "https://www.lindentreebooks.com/workshops-fall2026",
-      "source": "Linden Tree Books",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-08"
-      }
     },
     {
       "id": "55d869ef5462",
@@ -874,10 +830,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b1038f87efc6",
+      "id": "8393743833f6",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
+      "date": "2026-11-09",
+      "displayDate": "Mon, Nov 9",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -894,10 +850,10 @@
       "kidFriendly": false
     },
     {
-      "id": "8df311960651",
+      "id": "d13ee35e9cb2",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
+      "date": "2026-11-09",
+      "displayDate": "Mon, Nov 9",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -914,10 +870,10 @@
       "kidFriendly": false
     },
     {
-      "id": "01c7d508c02e",
+      "id": "360bb954d656",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
+      "date": "2026-11-09",
+      "displayDate": "Mon, Nov 9",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -971,23 +927,6 @@
       "kidFriendly": true
     },
     {
-      "id": "b2637781e3fd",
-      "title": "Toddler Storytime",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "5cf49f965f57",
       "title": "Daisy Day: Design with Nature",
       "date": "2026-11-21",
@@ -1003,28 +942,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "e4c93e2668d3",
-      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "9:00 AM",
-      "endTime": "10:00 AM",
-      "venue": "Arena Green West - Barack Obama Blvd",
-      "address": "San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": null,
-      "description": "",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-08"
-      }
     },
     {
       "id": "1969cdee0170",
@@ -1395,7 +1312,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-09T06:26:34.940Z"
+        "checkedAt": "2026-11-09T10:35:02.524Z"
       }
     },
     {
@@ -1418,7 +1335,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T06:26:34.944Z"
+        "checkedAt": "2026-11-09T10:35:02.525Z"
       }
     },
     {
@@ -1441,7 +1358,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T06:26:34.944Z"
+        "checkedAt": "2026-11-09T10:35:02.525Z"
       }
     },
     {
@@ -1464,7 +1381,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-09T06:26:34.945Z"
+        "checkedAt": "2026-11-09T10:35:02.526Z"
       }
     },
     {
@@ -1487,7 +1404,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-09T06:26:34.945Z"
+        "checkedAt": "2026-11-09T10:35:02.526Z"
       }
     },
     {
@@ -3006,23 +2923,6 @@
       "kidFriendly": false
     },
     {
-      "id": "5229328e2d6b",
-      "title": "LAS VEGAS RAIDERS VS. SAN FRANCISCO 49ERS",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": null,
-      "endTime": null,
-      "venue": "Levi's Stadium",
-      "address": "4900 Marie P DeBartolo Way, Santa Clara, CA 95054",
-      "city": "santa-clara",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://levisstadium.com/events/",
-      "source": "Levi's Stadium",
-      "kidFriendly": false
-    },
-    {
       "id": "967b7ce2c0ee",
       "title": "SEATTLE SEAHAWKS VS. SAN FRANCISCO 49ERS",
       "date": "2026-11-29",
@@ -3077,7 +2977,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.697Z"
+        "checkedAt": "2026-11-09T10:35:27.887Z"
       }
     },
     {
@@ -3101,7 +3001,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.889Z"
       }
     },
     {
@@ -3125,7 +3025,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3149,7 +3049,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3173,7 +3073,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3197,7 +3097,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3221,7 +3121,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3245,7 +3145,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3269,7 +3169,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.700Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3293,7 +3193,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.701Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
     },
     {
@@ -3334,25 +3234,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T06:27:01.701Z"
+        "checkedAt": "2026-11-09T10:35:27.890Z"
       }
-    },
-    {
-      "id": "30d457c29ec8",
-      "title": "The Smashing Pumpkins",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
-      "source": "SAP Center",
-      "kidFriendly": false
     },
     {
       "id": "14ac2c3257eb",
