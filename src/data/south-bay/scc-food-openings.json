@@ -1,18 +1,54 @@
 {
-  "generatedAt": "2026-11-08T05:45:48.327Z",
+  "generatedAt": "2026-11-09T05:46:05.487Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-08T05:45:48.327Z",
-    "updatedAt": "2026-11-07T14:36:33.000Z",
+    "checkedAt": "2026-11-09T05:46:05.486Z",
+    "updatedAt": "2026-11-08T14:45:45.000Z",
     "ageDays": 0,
-    "newestRawInspection": "2026-11-05",
-    "newestEligibleInspection": "2026-11-05",
+    "newestRawInspection": "2026-11-06",
+    "newestEligibleInspection": "2026-11-06",
     "eligibleStatus": "recent"
   },
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0881373",
+      "name": "Peet's Coffee",
+      "address": "2035 Camden Ave",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0881373",
+      "status": "inspection-complete",
+      "blurb": "Coffee shop on Camden Ave in San Jose.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
+    },
+    {
+      "id": "inspection-SR0886293",
+      "name": "Casa De Theo",
+      "address": "765 Lotus St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0886293",
+      "status": "inspection-complete",
+      "blurb": "Food business on Lotus St in San Jose.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886293-450.webp"
+    },
+    {
+      "id": "inspection-SR0886483",
+      "name": "Pho Lucky 7",
+      "address": "3730 N 1st St., Ste. 145",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0886483",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
+    },
     {
       "id": "inspection-SR0882351",
       "name": "Chef Zhao's Kitchen",
@@ -34,8 +70,8 @@
       "inspectionDate": "2026-11-04",
       "sourceId": "SR0881394",
       "status": "inspection-complete",
-      "blurb": "Coffee business on Middlefield Rd in Palo Alto.",
-      "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLdkT9_HMivZgsxfTyG0UpWP8w43OxQGLKsSx5KJuBNa88MqYf3zszojcOgphW7HYtRKyWokeCD4vpERU968yLXS4QCfnmlWl07L9WHl5yeqHcNsxAWIvBeT5HosQX91QGKjWsz_NGB6a5nnyKF2qz6aL5mdoG9g7juuSsG12VcvyRIdY-oGLWBEA4lK5MasULUzqYFkllkWV7NktjMqk2V3C-R53weQCW8DKBECQxvgN08AFnxybPWy9bhRSekUvJxnTPcH3FkMn0k0RrUMGq8Ei62jhoAL8no-F_VpHUIW_xj4vq_NdDCuy-seCcUGdDDmaFwua6NhXYfhQ35vufPIDNRYR8cOjuLh4h7Dw9PrIR50O7TJezPHY9Yg_o4M4Vhv14IVcgeQlMGOxiu4UwsAO-s"
+      "blurb": "Coffee shop on Middlefield Rd in Palo Alto.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
     },
     {
       "id": "inspection-SR0883213",
@@ -58,7 +94,7 @@
       "inspectionDate": "2026-10-30",
       "sourceId": "SR0884461",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Tea business on Grant Rd in Mountain View.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884461-450.webp"
     },
     {
@@ -70,20 +106,20 @@
       "inspectionDate": "2026-10-29",
       "sourceId": "SR0868680",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Bakery station on Java Dr in Sunnyvale.",
       "photoRef": "places/ChIJJV014sa3j4AR_qysJtVBAoE/photos/AV-0GLeWhleS8x44YHk_JJdECiJoZO25MAEy4A8yYh9aYuf6X26WSb5IQjttwT8DnsTe8sSHSSPhRsWag_ZE9TW8cMFmrH3yKANNlVKOVzpPv5QrRoVBJVz3qZN1cx5Oava3LjqH9uUIzq5Vs19c7dmtNfUEzqXGHUxbqVVev86SOYSxaIYKEKmGoarL4_4_1pRxHczQW2B0nH6JyspSuJDFyHybl-k5iHktwv_PhV-Nsf3sok0m0hLHIRYfHaDDk79Wt3idDxIVR5Ri9Wp6Vt_DZtwCfWJQT11RlWQvldC9kJ0TjCJhWxfqFczS2QROTlydmCFS8OSLUKPeQEGznexVPVUdUW2rRO8F_-jOOeeTXJQ70QDM4p_-ZUK_JvemMNhalRe7FPAd1N5wCoPzZcy4tMPPlJk"
     },
     {
-      "id": "inspection-SR0882735",
+      "id": "inspection-SR0882736",
       "name": "Vallarta Supermarket #75",
       "address": "2179 Monterey Rd",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
       "inspectionDate": "2026-10-27",
-      "sourceId": "SR0882735",
+      "sourceId": "SR0882736",
       "status": "inspection-complete",
       "blurb": "Supermarket on Monterey Rd in San Jose.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0882735-450.webp"
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0882736-450.webp"
     },
     {
       "id": "inspection-SR0886593",
@@ -106,7 +142,7 @@
       "inspectionDate": "2026-10-23",
       "sourceId": "SR0867345",
       "status": "inspection-complete",
-      "blurb": null,
+      "blurb": "Bread business on State St in Los Altos.",
       "photoRef": "places/ChIJ_3-FKPA1joAR4oJuHqtgoeQ/photos/AV-0GLejHjT6_EhcFHr4w2NtXJj3iyVK1FSO-hKv_DDZcu_rhJewgylrMrVYFUNrrVX38OlQOCZgErd8jWP7uKtHROj3g4l9o61J68mULjM-9L7MCq8_xJA_TajM1oOfOgHsxAr5kCSjp8xdNImTqOI3kWsXAv74uO7d03nN-Eludy1OZwrOkg9djuWrJBWL-k_Y3oG1YmCI5VsdKNoTtipsXeGsztoPXcerGLPcDWXIRxZzZmxcpDJzmQ3-OQADu3ssd8Km13gEMNkbLgT68xml0_yfDUGIqK4TOpkjv_0PWkrwCQYEb9n9J5aonuPBtqRoUQ1hdlnUFUTNXXipAFB2dPjzbs6poX9-qweTwyi37zj9EEH96fgBMVcHr9xvBmtXSIHVJgMA4TTipll3qqO626LCHjqvLrw"
     },
     {
@@ -120,42 +156,6 @@
       "status": "inspection-complete",
       "blurb": null,
       "photoRef": "places/ChIJ9WHlHACfj4ARfU8L1ZrFfvo/photos/AV-0GLfeqcocviAa2btsKv-jeyFQoGxgR2cKS0KjnCGVSh71cG4zSoFvLdUkGGgc5vcgn76O5VgGdZK0RwANOpXjGENtYq-36zC_VT2b96ViuGZyK4XtWA5-Qqy5pj0N94KRFp1vzAOkbJqgNpmzJgNUWB-zoB9Q1SMcwcowOa6EZYpTHqnK5juyxRgei-F-G8JqhMBaa2A7Uid52fWjGE7wSCTKDEES_1s4W8RtUf6PVBk3KOcj23fBRMMhQdQcMD2wT0Vm0mU_MfObn8aDwezq1kqclNQ_5kYC1iZOeYb7J3PtzpP_ES76VSBuMiM56Y8BZYvs7ubUbrv5MxDHxWpxPd8NPhMbMm6KP8zSDsGAAb4tBPs7BeDOOsijRJ_E_bD3u8-3WcPZQnr7c_BhHTKd_cl0_3WvzEhDvBep64XdY7Xn"
-    },
-    {
-      "id": "inspection-SR0885196",
-      "name": "333 Skewers",
-      "address": "10831 N Wolfe Rd",
-      "cityId": "cupertino",
-      "cityName": "CUPERTINO",
-      "inspectionDate": "2026-10-20",
-      "sourceId": "SR0885196",
-      "status": "inspection-complete",
-      "blurb": "Food business on N Wolfe Rd in Cupertino.",
-      "photoRef": "places/ChIJAxPI-JW1j4AR8E2xe51iij8/photos/AaVGc3lJQt4sp6YdmEsk9KA3DiZI9hshlO3htK2VGEqQIV1jomvHCCfd3fYW58mnp5WY5iVcXd8lROkn4-Z8vg2-Rr2eXgS_0mXV30Rzip67W_En3pXXsLGrIhXUE3WYjx0ENPZ3GEeI4iP0snvTx83FlJRnw2iUjmLOtjxUNeUvN7BPgh_SDY7Ufp1UVNcFMQOPHkqeYJQe2f5ZGPeBlIgCkT_HuXQoGIg7oz3F0VZMAdmU3gtN_fYRc-5s1JxuzrivPh0AkB43MIeY5LDZdwmEaKCGEI205aXDU06MizwrCfD9zcSNTwFduJs2AyMU5NCQncwEVopn256xgJUdjSqF895Vy4H-CFSIXKm8aL27BBW8PEcNPQSDL7xY1HKg08Lv2HewYEdJP5n1E1RysxXul3B7Vpj-OpOgAFSAKoSqONz8Aw"
-    },
-    {
-      "id": "inspection-SR0881689",
-      "name": "Trader Joe's 063",
-      "address": "5353 Almaden Expwy, #J38",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-10-14",
-      "sourceId": "SR0881689",
-      "status": "inspection-complete",
-      "blurb": "Food business on Almaden Expwy in San Jose.",
-      "photoRef": "places/ChIJn2UPvN0zjoAR7KokP0ZK0kM/photos/AV-0GLdNxl3ZpTmOXr5OEgF1d9tcnAYQQNDK9gONanLkvdmrh8kyMBE55KjCoRgb3ZE1ccHXJSA211KwTzdG7g2JHRkfzlIZc_1-OXl3FCkrXBK27zpToFQju3wUZkUoafks5Tn3Lb_Pwa4Zo_UeqGSNxLt9If8fJ079Y32C3sebEetfkOpQUXfWnxHQWdLnLd35iSkIuCI6V2xXXZ42C9rG26SZBOkes13TigODOarob5VpK0bJ_spo9MMZ8uh-IZp47ToGug1E7WuwIUFdcnIEWKdezEW5nCTTqQKJ4xO9mPMZMNJdAX5GvQpG9DAJC6nSu-BtYNo1k0ZRR98rq9uRjtQxRPbQEjBI1WZIvofo7ejNv9BChI-VJXb8_v0w9ae4NiKkb19vpkpfJEyzr2h1J5JUJCM"
-    },
-    {
-      "id": "inspection-SR0884734",
-      "name": "Bonbon Matcha",
-      "address": "439 Waverley Street",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "inspectionDate": "2026-09-30",
-      "sourceId": "SR0884734",
-      "status": "inspection-complete",
-      "blurb": null,
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884734-450.webp"
     }
   ],
   "comingSoon": [
@@ -165,7 +165,7 @@
       "address": "611 Emerson St",
       "cityId": "palo-alto",
       "cityName": "PALO ALTO",
-      "date": "2026-11-05",
+      "date": "2026-11-06",
       "status": "coming-soon",
       "sourceId": "SR0886238",
       "blurb": "Food business planned on Emerson St in Palo Alto.",
@@ -180,8 +180,20 @@
       "date": "2026-11-04",
       "status": "coming-soon",
       "sourceId": "SR0881355",
-      "blurb": "Food business planned on N San Antonio Rd in Los Altos.",
+      "blurb": "Food business planned on North San Antonio Road in Los Altos.",
       "photoRef": "places/ChIJ5wdFOu6wj4ARKPFSgIu3C1Q/photos/AWCwydhXtpHtmzTNyIlOUFlJrg7w5elgX56T5wP5RhlR2rsFyUrWDSpWk7NjlER6Gkctlnuuz_6oMQuSLr_CqAAJ2Qw76wgUz7TntUAxOzYVOqO-lQ1BpFG4B27QFJNOaCp3zX2E4QhW_nzPKOnr38HMUK6NcRnDDU7GcXgLsXb1aBNDv1h3UUWkJXNak5Tz-9O4k3Sl31930k1VUMT91NyjbQjVVP4LRbZ5oMsiyOsVNKReWoQRULycE_yMBuVt-UW9gkY3UecFGoDW0VRzJO_vRcoHeSdxF2reRYWH7vIKLCUn74GCGt7gAG3qz1xZoM0cUlaI_bFC0tFtuiQSSJWfNl-YuzH4Dz1Gs0_qs1XFaNYbeGh1kZ6cKucKyW4s1SoinhAZ4AtOlW8jHaHczk9SFu9S6fyo7K5mtOtToX0_k84f2A"
+    },
+    {
+      "id": "soon-SR0886043",
+      "name": "Almaden Market",
+      "address": "5965 Almaden Express Way",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-11-04",
+      "status": "coming-soon",
+      "sourceId": "SR0886043",
+      "blurb": "Market planned on Almaden Express Way in San Jose.",
+      "photoRef": "places/ChIJPWbdxhgxjoARK0-XEKj3WiE/photos/AV-0GLeiKWA3g3OX70xmVy9CbdO5hUZAyy64adB_cD67Mj752286s9DqF1xt-a3dIw5ReGHRq-8fT2VaChyIIPDYnkLdfIh_fjS9ixOolOVSXbz8bSvufRht-vWVk9Y2fHElR5pGfq9uqbUQ4Q4bjPTgZgTthFolD6pUt4cU7r_v8hXfBR5hfLeq_aojLGGJQZm_5f8MW7jhxEtvnKNGyaACCaZBLhifWVtLlJnT4FYIFrEaWNN0lFvp1HsC5mQN2xZ2KQjxpV5dgUbTfOAn2O7L4MCOwKvj4Ua0ZMYD1v9Pg14dBGjUVBIlDRyZePD6bkUVGrE98M4AroRx-pLjRK87qzlPcf8_1ux0pbx_wCjhbKnDPIoFrbtxS7FYl_bHrCMosKQftA5xHwYD8uSsKCL_eLFlqT4DCh-wQH8oMA4-53ipzg"
     },
     {
       "id": "soon-SR0885671",
@@ -196,18 +208,6 @@
       "photoRef": "places/ChIJS128bEXLj4ARjFvsKzXDBS8/photos/AV-0GLdVlnirOt8wvwwxO3xtPRWxN8wqk8ktiUcAxVZY_lVAcFh2xhzT5LWhX5lEzBe0xS7rEsZ7CuGRcTLoScinTaa4goL9_jM9IWHSi6N0IFPRQ_iRNiGo7wRbMPdQM1p2WxLMhuWtoOtK-owtB-hvwG8RbebfnZgQm9vmtaUGYZGQhQVQ7UK3rIzg08pZe_JsMz06eb2f_jK7a30m20O32FxaADQ9jbEBPhUrerm2xTqjivS9g3u40wX4aXyEP7bKCI0q0RwhrS70a2ifB85A8UfCVCK6mxkZLRU1qV65IJp7cHc4LxQm0bK_EJNN9ZUZEoJMEShhlR-n_wdKqZNlTxagEkO9L73qXJk1COUu7mCb9FaKDW30ZyAJiV5LSklAqqOf-h5eUOnU1JUHfaumphA3xLrNutlepL5TjjZnT3XV2A"
     },
     {
-      "id": "soon-SR0886043",
-      "name": "Almaden Market",
-      "address": "5965 Almaden Express Way",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-11-04",
-      "status": "coming-soon",
-      "sourceId": "SR0886043",
-      "blurb": "Market planned on Almaden Expressway in San Jose.",
-      "photoRef": "places/ChIJPWbdxhgxjoARK0-XEKj3WiE/photos/AV-0GLeiKWA3g3OX70xmVy9CbdO5hUZAyy64adB_cD67Mj752286s9DqF1xt-a3dIw5ReGHRq-8fT2VaChyIIPDYnkLdfIh_fjS9ixOolOVSXbz8bSvufRht-vWVk9Y2fHElR5pGfq9uqbUQ4Q4bjPTgZgTthFolD6pUt4cU7r_v8hXfBR5hfLeq_aojLGGJQZm_5f8MW7jhxEtvnKNGyaACCaZBLhifWVtLlJnT4FYIFrEaWNN0lFvp1HsC5mQN2xZ2KQjxpV5dgUbTfOAn2O7L4MCOwKvj4Ua0ZMYD1v9Pg14dBGjUVBIlDRyZePD6bkUVGrE98M4AroRx-pLjRK87qzlPcf8_1ux0pbx_wCjhbKnDPIoFrbtxS7FYl_bHrCMosKQftA5xHwYD8uSsKCL_eLFlqT4DCh-wQH8oMA4-53ipzg"
-    },
-    {
       "id": "soon-SR0886360",
       "name": "Mendocino Farms Brokaw",
       "address": "1098 E Brokaw Rd., #10",
@@ -216,8 +216,32 @@
       "date": "2026-11-03",
       "status": "coming-soon",
       "sourceId": "SR0886360",
-      "blurb": "Food business planned on E Brokaw Rd in San Jose.",
+      "blurb": "Food business planned on East Brokaw Road in San Jose.",
       "photoRef": "places/ChIJE46t_57Lj4ARq6YTDs6y0_0/photos/AV-0GLdTPkbTzr5ZK2mbHKMpHIGvIWh63gQh4C135Qonhs5WOZ7h7k3bCLGyPtVNgwh8TAiblcmTb9gJD6iWUB0h_9PbZCT8JnP_4UTOWkK5zD-XeZ0nqeiFVebvx0dyTcU7cV2scHveIWZP_W4JmlmTwkqAaue-nKQMeMbOaa_Dmf1EAmU_kjWZV36bDlKh7cI8IDYWw8GEkquQfgD5Q4cfdWzMjN9-n3hKtOKIDQnu-TAQIKXq2QNPFX8kEQT-oYtmamogeD-poywA1ZIRBpTXzz_CyUwk8bgtGrICipx8kMPVXiM6MlNH8hANPpA2LZeLAU1YaP3Y4QdJDlQ4b7t580s58uX_msfLe7-BuPGNSaYxob6JpAiSJnCAj6uizw0tXPxbZNqVMMBp9YMqdTsJW1uPFt0"
+    },
+    {
+      "id": "soon-SR0886411",
+      "name": "King Kong Japan",
+      "address": "1430 Monterey Rd., Unit 10",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886411",
+      "blurb": "Food business planned on Monterey Road in San Jose.",
+      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
+    },
+    {
+      "id": "soon-SR0886237",
+      "name": "Sweetgreen Restaurant",
+      "address": "261 Hamilton Ave",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886237",
+      "blurb": "Restaurant planned on Hamilton Avenue in Palo Alto.",
+      "photoRef": "places/ChIJKWjVKTq7j4ARuUYobtoUXfQ/photos/AV-0GLcTNfM1N1erhRjXEgyDVxece2XgQd1fkIfONT_ZjVLKH1rMr0nk782VtI9BtW8mKh6LtGUU-dc042KkDFmVxQy5QzkGwtrOzPM61wrjEXYOqlHUWup0NI3K3QquUtzha31A6RXNn4LRndA_3G1A3inxKaEUylGAfjqk5Jo7NB3aV5ffUrfcnxVj3e-f6rTZh-Z8oiHiZfzEK7KdJ9Mf-M_gfESh8kXdJ1hEp3QdwyZPKK2P1O4U_Yi2N0jgUy7KZVuDOfVsuPCvwsk7VmYIDZSns3ZdWUj_1HHIfY-VfubvqGtJcr2yQuQjv9auDCfIrWvDc_YcIFSnQf5GBh0p4rtd8zHCFLhx-msM0AohNI6nLuNUHgRjizRVWefWODCSvwh-b0_ZhkOoN_wb6WzQ6OL67h6mBgw"
     },
     {
       "id": "soon-SR0885275",
@@ -228,20 +252,8 @@
       "date": "2026-10-30",
       "status": "coming-soon",
       "sourceId": "SR0885275",
-      "blurb": null,
+      "blurb": "Food business planned on South 11th Street in San Jose.",
       "photoRef": "places/ChIJ809xRgDNj4ARvYa8u-Lvv50/photos/AV-0GLdP2iwZHDR4CBABSsnPs04Ck6xlNnQImb7zpPpZQKTRUtWfcs4ukWjPHJloWwokAuuN-Y8ghy9p-x_0G_ozeGfDsp2q-Cn7h1aLwzVy4RV-lKS7vCLDsJGLsy8DrCvIoi1X_8kON-fPeXFh_Bae63jCFjmdbqzrF9U5D7puK60zf8MVeaJVHrKG1dnDPrX5Qy5oIeJHCGmoUjaZIKCLFYe0c-UONbIrgqz6YPVt-WdEwL7mSKenGqt5OcC76LeiyNgbxVQ0VQ6XCrKpvFKqK7dWTwQeQq6LyKDvgOHrAFxYaZ_vRv5KGa6lD4vuJeUWhPdUJkGPStyXOnTm7uK_ZA3dBBx_LpEKNWBH-hVMqnt9yaMGuCuSFtXjEtbffSxbMo1EwEFr7PVhV786OhIBFxt-C1vqAxdy_bB20bDiDaHbbg"
-    },
-    {
-      "id": "soon-SR0886435",
-      "name": "Ulas Enterprises",
-      "address": "14554 Big Basin Way A",
-      "cityId": "saratoga",
-      "cityName": "SARATOGA",
-      "date": "2026-10-30",
-      "status": "coming-soon",
-      "sourceId": "SR0886435",
-      "blurb": "Food business planned on Big Basin Way in Saratoga.",
-      "photoRef": "places/ChIJrTYpGt5KjoARcrP5Cm3syJ8/photos/AV-0GLeazcWiPpZVy0ZmBT4mpjapiqhZUsGD84vU3Czs2lcc9d48BhI_cnIg66vBoIOfoyvn05GhaqGMLJJ0PBXIqeeZgLzOrFpW20z7ahelL0w9x7vZ03VJvesySHkqf6Zh5gTdUR5YuevKo2bDDgZQlZYLrCyTdOAtc9r32bapTXsRV4izUQy0hrG6uenOyI5aqOv1WBaEQCQHWg6Ep_J-nZ3iqYx37GE8mAUr2BhYpYzqmfHB6-Q7u_1G5PhKDGDG4NYTyrzkpSiN2p6JlWO9kQFn9_G3xrIvWS1yAcGnwxrD9xhidECfdeVM8e-nOgNGNG4glm9g2Q4dC6446qeFzPm9NXtdK630XyYDaBNuKJy0V1IsRODoWJTckcynEfTBsP8SHujppl-NUmlsrPi9HyCqhgs"
     },
     {
       "id": "soon-SR0886514",
@@ -256,40 +268,16 @@
       "photoRef": "places/ChIJwz19egDNj4ARrLccQACXG8w/photos/AV-0GLfCfAUSKtOA_W0XRUSTkhFxM0eXUnpCadddui7eJOLDoMCog94GspzcUyR8BL5YhAWl3PGIs_Fi-9dzNsqwznhLO4_QFjZodUhmmZOgpUbxk6DVD38Kgo6omdYGaCpqni_-jWRkoBk6SOudjePuHsXxuh3hFzIsU5XpnX7VzrsconDdTzSUAb-XaVjTCu8Dchq6TEvOB1iYnK4a7O9Zzz9WxH136a6tBB6IqZk6hlmZTVTXiRDcV8634AQc3knXJa6CuKYDjAD1CNtbCzrD8SvHzn6pVCzh9BWdO7u8Q2iP26mFLXd6ZjJ6M2s4FurqgdNaoHTWo5SKFMii2W9sRh1SSyeRKeIuitGUio_LBu_txciVPhbJ4j02HKjWRTUR45t69Hdj1N5tg8QXr-WisN9QcvpZixEnzHVe2hmT5FxlqQ"
     },
     {
-      "id": "soon-SR0886237",
-      "name": "Sweetgreen Restaurant",
-      "address": "261 Hamilton Ave",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
+      "id": "soon-SR0886435",
+      "name": "Ulas Enterprises",
+      "address": "14554 Big Basin Way A",
+      "cityId": "saratoga",
+      "cityName": "SARATOGA",
       "date": "2026-10-30",
       "status": "coming-soon",
-      "sourceId": "SR0886237",
-      "blurb": "Restaurant planned on Hamilton Ave in Palo Alto.",
-      "photoRef": "places/ChIJKWjVKTq7j4ARuUYobtoUXfQ/photos/AV-0GLcTNfM1N1erhRjXEgyDVxece2XgQd1fkIfONT_ZjVLKH1rMr0nk782VtI9BtW8mKh6LtGUU-dc042KkDFmVxQy5QzkGwtrOzPM61wrjEXYOqlHUWup0NI3K3QquUtzha31A6RXNn4LRndA_3G1A3inxKaEUylGAfjqk5Jo7NB3aV5ffUrfcnxVj3e-f6rTZh-Z8oiHiZfzEK7KdJ9Mf-M_gfESh8kXdJ1hEp3QdwyZPKK2P1O4U_Yi2N0jgUy7KZVuDOfVsuPCvwsk7VmYIDZSns3ZdWUj_1HHIfY-VfubvqGtJcr2yQuQjv9auDCfIrWvDc_YcIFSnQf5GBh0p4rtd8zHCFLhx-msM0AohNI6nLuNUHgRjizRVWefWODCSvwh-b0_ZhkOoN_wb6WzQ6OL67h6mBgw"
-    },
-    {
-      "id": "soon-SR0886411",
-      "name": "King Kong Japan",
-      "address": "1430 Monterey Rd., Unit 10",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-10-30",
-      "status": "coming-soon",
-      "sourceId": "SR0886411",
-      "blurb": "Food business planned on Monterey Rd in San Jose.",
-      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
-    },
-    {
-      "id": "soon-SR0885628",
-      "name": "Voyager Cafe At Mershops",
-      "address": "303 Almaden Blvd",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-10-28",
-      "status": "coming-soon",
-      "sourceId": "SR0885628",
-      "blurb": "Cafe planned at Mershops on Almaden Blvd in San Jose.",
-      "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
+      "sourceId": "SR0886435",
+      "blurb": "Food business planned on Big Basin Way in Saratoga.",
+      "photoRef": "places/ChIJrTYpGt5KjoARcrP5Cm3syJ8/photos/AV-0GLeazcWiPpZVy0ZmBT4mpjapiqhZUsGD84vU3Czs2lcc9d48BhI_cnIg66vBoIOfoyvn05GhaqGMLJJ0PBXIqeeZgLzOrFpW20z7ahelL0w9x7vZ03VJvesySHkqf6Zh5gTdUR5YuevKo2bDDgZQlZYLrCyTdOAtc9r32bapTXsRV4izUQy0hrG6uenOyI5aqOv1WBaEQCQHWg6Ep_J-nZ3iqYx37GE8mAUr2BhYpYzqmfHB6-Q7u_1G5PhKDGDG4NYTyrzkpSiN2p6JlWO9kQFn9_G3xrIvWS1yAcGnwxrD9xhidECfdeVM8e-nOgNGNG4glm9g2Q4dC6446qeFzPm9NXtdK630XyYDaBNuKJy0V1IsRODoWJTckcynEfTBsP8SHujppl-NUmlsrPi9HyCqhgs"
     },
     {
       "id": "soon-SR0886747",
@@ -300,8 +288,20 @@
       "date": "2026-10-28",
       "status": "coming-soon",
       "sourceId": "SR0886747",
-      "blurb": null,
+      "blurb": "Kitchen planned on Dixon Road in Milpitas.",
       "photoRef": "places/ChIJewRKIADJj4ARTXImQFFWw9k/photos/AV-0GLcMlHJq76p7gRl9Dcj2zA1HpAbHoxCMD8R7oy9V3jcFfrYmQeZ1p_WeJHjS_cL2qeLnZLZS2cSHYWvbXABkeJty1bl9QX5wxuCB792ti8DWzsWVQf6dJ5liQMlvHPGSSM_o8Tbxq-E0HWxsGKBzBzIzCzAq-oXW8gq-EaJcXz4WjYutuTx2ViHv3DSTtvAp3mLk-Q_LattaKira5iu54xE3xdVq7efHmpsjr2gcp80Y_ZahxtEBBgSewqDmYdSrctWRj_0Yyy1i2Txncqgu3-Eafngt1iYpXJYJDdPedFctVr2wiYLhlpqSEpQS_gn_aFZORlLvJWzlpEZhOdH3lDh6CZ8fuv6f_pd1Xm468LXRsMcNgAigS3cNDm-eGkLODPE5XVZX0oURtL3jxrQVtRqKbs2H45__PgyvPlb-63y20A"
+    },
+    {
+      "id": "soon-SR0885628",
+      "name": "Voyager Cafe At Mershops",
+      "address": "303 Almaden Blvd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-28",
+      "status": "coming-soon",
+      "sourceId": "SR0885628",
+      "blurb": "Cafe planned on Almaden Boulevard in San Jose.",
+      "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
     }
   ]
 }
