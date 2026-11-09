@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-09T02:19:20.601Z",
+    "generatedAt": "2026-11-09T06:27:45.090Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 178,
+    "eventCount": 179,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (9)",
@@ -20,7 +20,7 @@
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (3)",
-      "SAP Center (12)",
+      "SAP Center (13)",
       "The Tech Interactive (6)",
       "Books Inc (6)",
       "San Jose Museum of Art (2)",
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 13,
+        "liveCount": 13,
         "error": null,
         "sources": [
           "SAP Center"
@@ -1395,7 +1395,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-09T02:18:13.416Z"
+        "checkedAt": "2026-11-09T06:26:34.940Z"
       }
     },
     {
@@ -1418,7 +1418,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T02:18:13.422Z"
+        "checkedAt": "2026-11-09T06:26:34.944Z"
       }
     },
     {
@@ -1441,7 +1441,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-09T02:18:13.423Z"
+        "checkedAt": "2026-11-09T06:26:34.944Z"
       }
     },
     {
@@ -1464,7 +1464,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-09T02:18:13.423Z"
+        "checkedAt": "2026-11-09T06:26:34.945Z"
       }
     },
     {
@@ -1487,7 +1487,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-09T02:18:13.424Z"
+        "checkedAt": "2026-11-09T06:26:34.945Z"
       }
     },
     {
@@ -3057,30 +3057,6 @@
       "kidFriendly": false
     },
     {
-      "id": "30d457c29ec8",
-      "title": "The Smashing Pumpkins",
-      "date": "2026-11-08",
-      "displayDate": "Sun, Nov 8",
-      "time": "8:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
-      "source": "SAP Center",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
-        "date": "2026-11-08",
-        "time": "8:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.890Z"
-      }
-    },
-    {
       "id": "b3498ea951cb",
       "title": "Sharks vs Islanders — Native American Heritage Celebration",
       "date": "2026-11-09",
@@ -3101,7 +3077,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-19",
         "date": "2026-11-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.891Z"
+        "checkedAt": "2026-11-09T06:27:01.697Z"
       }
     },
     {
@@ -3125,7 +3101,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.894Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3149,7 +3125,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-09T02:18:37.894Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3173,7 +3149,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3197,7 +3173,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3221,7 +3197,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3245,7 +3221,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3269,7 +3245,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3293,7 +3269,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.700Z"
       }
     },
     {
@@ -3317,7 +3293,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-09T02:18:37.895Z"
+        "checkedAt": "2026-11-09T06:27:01.701Z"
       }
     },
     {
@@ -3334,6 +3310,47 @@
       "cost": "paid",
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/rush-2",
+      "source": "SAP Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "22f55169ecb2",
+      "title": "Sharks vs Kraken",
+      "date": "2026-12-08",
+      "displayDate": "Tue, Dec 8",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
+        "date": "2026-12-08",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-09T06:27:01.701Z"
+      }
+    },
+    {
+      "id": "30d457c29ec8",
+      "title": "The Smashing Pumpkins",
+      "date": "2026-11-08",
+      "displayDate": "Sun, Nov 8",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/the-smashing-pumpkins",
       "source": "SAP Center",
       "kidFriendly": false
     },
