@@ -813,6 +813,7 @@ const EDITS = {
       ["the Jeopardy! Quiz show.", "the Jeopardy! quiz show."],
       ["winter Let's Work! Program,", "winter Let's Work! program,"],
       ["Proof of residency is required, there is a limit of", "Proof of residency is required; there is a limit of"],
+      ["All levels welcome, $", "All levels are welcome. The cost is $"],
     ],
   },
   "SJSU Events": {
@@ -912,6 +913,8 @@ const EDITS = {
       ["Valerie: A Tribute to Amy Winehouse, pays", "Valerie: A Tribute to Amy Winehouse pays"],
       ["Love, Music & Emotions Love is more", "Love, Music & Emotions. Love is more"],
       ["awe-inspiring locations like never seen before in", "awe-inspiring locations in"],
+      ["NorCal Academy of Performing Arts Presents Disney's Frozen:", "NorCal Academy of Performing Arts presents Disney's Frozen:"],
+      ["The Broadway Musical Don't let winter freeze", "The Broadway Musical. Don't let winter freeze"],
     ],
   },
   "Santa Clara University": {
