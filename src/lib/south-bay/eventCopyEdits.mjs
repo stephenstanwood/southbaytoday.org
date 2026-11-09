@@ -55,6 +55,10 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      ["every Second Friday of each month.", "every second Friday of each month."],
+      [/click "Sign Me Up" under Almaden Branch Library$/g, "$&."],
+      ["learn fundamentals for photo editing.", "learn the fundamentals of photo editing."],
       ["This Bridge program", "This bridge program"],
       ["on the second Thursday January through November.", "on the second Thursday of each month from January through November."],
       ["Note: No session on 3rd Thursday of the month.", "Note: No session on the 3rd Thursday of the month."],
@@ -556,6 +560,9 @@ const EDITS = {
       [/^Lego Club$/g, "LEGO Club"],
     ],
     attendanceNote: [
+      ["KinderReadiness!", "Kinder Readiness!"],
+      ["different themes and hands on activities.", "different themes and hands-on activities."],
+      [/(For children ages \d+-\d+ and their) parent and caregivers\./g, "$1 parents and caregivers."],
       [/Contact Librarian Charlie Roos to be added to a waitlist for future sessions: charlie\.roos@lib\.sccgov\.org(?=$| [A-Z])/g, "$&."],
       [/Classes are Tuesdays and Thursdays,? (11 a\.m\. to 1 p\.m\.)[;,]? (?=\d{1,2}\/\d{1,2}-\d{1,2}\/\d{1,2}\.)/g, "Classes are Tuesdays and Thursdays, $1, "],
       ["(must have basic conversational skills.)", "(must have basic conversational skills)."],
@@ -569,6 +576,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["different themes and hands on activities.", "different themes and hands-on activities."],
       [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
       ["The film carries a R rating.", "The film carries an R rating."],
       ["No Registration is required.", "No registration is required."],
