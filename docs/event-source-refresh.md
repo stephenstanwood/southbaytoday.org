@@ -652,7 +652,8 @@ October 29 copy-desk audits, including title spacing and grammar. Raw source spa
 can hide a repair before normalization; cached blurbs can restore old grammar
 afterward. Both paths therefore pass through the same final publication step.
 
-The table edits only matched phrases in `title`, `description`, and `blurb`. An
+The table edits only matched phrases in display fields such as `title`, `venue`,
+`description`, and `blurb`. An
 anchored suffix repair removes an unfinished accessibility instruction only
 while it ends at "please visit"; complete directions remain intact. It does not
 look up old text by event ID, restore an older feed, or change structured fields.

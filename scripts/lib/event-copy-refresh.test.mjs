@@ -75,6 +75,7 @@ const november8MorningFixture = JSON.parse(readFileSync(new URL("./fixtures/revi
 const november8AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-08-afternoon.json", import.meta.url)));
 const november8LibraryClarityFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-08-library-clarity.json", import.meta.url)));
 const november8EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-08-evening.json", import.meta.url)));
+const november8NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-08-night.json", import.meta.url)));
 const audits = [fixture, eveningFixture, nightFixture, morningFixture, refreshFixture, middayFixture, eveningRefreshFixture, nightRefreshFixture, postRefreshFixture, october31Fixture, storytimeFixture, activitiesFixture, afternoonFixture, lateAfternoonFixture, october31EveningFixture, stampClubFixture, makerStudioFixture, accessibilityFixture, november1Fixture, november1PostFactCheckFixture, attendanceFixture, volunteersFixture, newsletterFixture, afternoonRefreshFixture, november1EveningRefreshFixture, november2Fixture, november2OvernightFixture, november2MorningFixture, november2AfternoonFixture, november2EveningFixture, november2NightFixture, november2LateFixture, november3Fixture, philosophyFixture, november3AfternoonFixture, november4OvernightFixture, november4MorningFixture, november4AttendanceFixture, november4MiddayFixture];
 audits.push(november4ClockFixture, november4AfternoonFixture, november4EveningFixture, november4NightFixture);
 audits.push(november5BrandTitlesFixture);
@@ -98,6 +99,7 @@ audits.push(november8MorningFixture);
 audits.push(november8AfternoonFixture);
 audits.push(november8LibraryClarityFixture);
 audits.push(november8EveningFixture);
+audits.push(november8NightFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -114,6 +116,21 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("SCU room spacing preserves changed venue details and publisher scope", () => {
+  const original = {
+    source: "Santa Clara University", venue: "St.Clare Room, Learning Commons, Floor 3",
+    id: "revised-event", date: "2026-12-10", time: "4:15 PM", cost: "paid", costNote: "$25",
+    address: "500 El Camino Real", url: "https://events.scu.edu/revised",
+  };
+  assert.deepEqual(polishReviewedEventCopy(original), {
+    ...original, venue: "St. Clare Room, Learning Commons, Floor 3",
+  });
+  for (const venue of ["St.Clareton Room", "St.Clare Hall", "St. Clare Room, New Building"])
+    assert.deepEqual(polishReviewedEventCopy({ ...original, venue }), { ...original, venue });
+  const otherPublisher = { ...original, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
 
 test("afternoon copy repairs preserve revised facts, contacts, and publisher scope", () => {
   for (const row of november8AfternoonFixture.cases) {

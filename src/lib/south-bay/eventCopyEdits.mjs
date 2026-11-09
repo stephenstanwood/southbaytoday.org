@@ -900,6 +900,7 @@ const EDITS = {
     ],
     venue: [
       [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
+      [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
       ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
