@@ -465,6 +465,7 @@ const EDITS = {
       ["commit to the full session • Anyone", "commit to the full session. • Anyone"],
       ["alongside a parent/guardian • No experience", "alongside a parent/guardian. • No experience"],
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
+      [/\bLego\b/g, "LEGO"],
     ],
     blurb: [
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
@@ -609,6 +610,7 @@ const EDITS = {
       ["the one with fewest remaining loose pieces.", "the one with the fewest remaining loose pieces."],
       ["UV resin. **.", "UV resin."],
       ["Lego building", "LEGO building"],
+      [/\bfourth to sixth graders\b/g, "fourth- to sixth-graders"],
       [/\bLegos\b/g, "LEGOs"],
       ["Bay area musicians", "Bay Area musicians"],
       [/\bChildren in Grades (?=K to \d)/g, "Children in grades "],
@@ -706,6 +708,8 @@ const EDITS = {
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
       ["supermassive blackholes grow", "supermassive black holes grow"],
+      [/\bLego\b/g, "LEGO"],
+      [/\bfourth to sixth graders\b/g, "fourth- to sixth-graders"],
     ],
   },
   "Palo Alto City Library": {

@@ -667,6 +667,8 @@ here or in the original normalizer, and capture its complete before/after text
 in a regression fixture. A generated-JSON edit alone will be lost on refresh.
 The November 9 bilingual fixture covers Spanish tech-help slash spacing and
 agreement, plus clothing-giveaway schedule punctuation in both languages.
+The November 9 LEGO fixture preserves brand capitalization in the STEaM
+description and book-club blurb, plus grade-range hyphens in the book-club copy.
 `event-copy-refresh.test.mjs` replays the complete reviewed audits, the captured
 raw Linden Tree snapshot, and an isolated real cache hit. Every pass starts
 from the source again and checks facts, identifiers, and repeated stability.
