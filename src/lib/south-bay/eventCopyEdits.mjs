@@ -59,6 +59,7 @@ const EDITS = {
       ["every Second Friday of each month.", "every second Friday of each month."],
       [/click "Sign Me Up" under Almaden Branch Library$/g, "$&."],
       ["learn fundamentals for photo editing.", "learn the fundamentals of photo editing."],
+      [/\bApple pencils\b/g, "Apple Pencils"],
       ["This Bridge program", "This bridge program"],
       ["on the second Thursday January through November.", "on the second Thursday of each month from January through November."],
       ["Note: No session on 3rd Thursday of the month.", "Note: No session on the 3rd Thursday of the month."],
@@ -452,6 +453,7 @@ const EDITS = {
     ],
     blurb: [
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
+      [/\bApple pencils\b/g, "Apple Pencils"],
       ["a huge collection of Lego and Duplo bricks", "a huge collection of LEGO and Duplo bricks"],
       [/\bziploc bag\b/g, "Ziploc bag"],
       ["a librarian-issued Lego Challenge.", "a librarian-issued LEGO Challenge."],
