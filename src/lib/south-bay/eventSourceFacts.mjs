@@ -66,6 +66,38 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Dated organizer pages restore source links omitted by newsletter intake.
+  // Milpitas also names the plaza and its street address. Keep occurrence
+  // identity, admission and booking state unchanged; never replace a new URL.
+  // Evidence: data/seo/2026-11-10.json (2026-11-10 primary-source checks).
+  {
+    date: "2026-11-11",
+    matches: event => event.title === "Campbell Veterans Day Memorial"
+      && event.venue === "Campbell City Hall"
+      && (!event.city || event.city === "campbell")
+      && (!event.url || event.url === "https://www.campbellveteransmemorial.com/post/cvmf-newsletter-september-2026"),
+    facts: { url: "https://www.campbellveteransmemorial.com/post/cvmf-newsletter-september-2026" },
+  },
+  {
+    date: "2026-11-11",
+    matches: event => event.title === "Milpitas Veterans Day Event"
+      && ["Between Milpitas City Hall and the Community Center", "Veterans Plaza"].includes(event.venue)
+      && (!event.city || event.city === "milpitas")
+      && (!event.url || event.url === "https://www.milpitas.gov/1326/11084/Veterans-Day"),
+    facts: {
+      url: "https://www.milpitas.gov/1326/11084/Veterans-Day",
+      venue: "Veterans Plaza",
+      address: "457 E. Calaveras Blvd., Milpitas",
+    },
+  },
+  {
+    date: "2026-11-11",
+    matches: event => event.title === "MOAA Silicon Valley Veterans Day Parade & Ceremony"
+      && event.venue === "Downtown San Jose"
+      && (!event.city || event.city === "san-jose")
+      && (!event.url || event.url === "https://svcmoaa-events.com/san-jose-veterans-day-parade"),
+    facts: { url: "https://svcmoaa-events.com/san-jose-veterans-day-parade" },
+  },
   // SJPL explicitly makes this session's signup optional. The known expired
   // form deadline cannot close walk-up attendance. Stop if the body changes
   // its terms or a later booking state/notice establishes a different gate.

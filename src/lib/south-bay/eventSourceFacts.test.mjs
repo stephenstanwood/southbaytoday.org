@@ -16,6 +16,52 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("dated Veterans Day source links survive newsletter reingestion without changing other occurrences", async () => {
+  const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
+  const cases = [
+    {
+      title: "Campbell Veterans Day Memorial", venue: "Campbell City Hall", city: "campbell",
+      facts: { url: "https://www.campbellveteransmemorial.com/post/cvmf-newsletter-september-2026" },
+    },
+    {
+      title: "Milpitas Veterans Day Event", venue: "Between Milpitas City Hall and the Community Center", city: "milpitas",
+      facts: {
+        url: "https://www.milpitas.gov/1326/11084/Veterans-Day",
+        venue: "Veterans Plaza", address: "457 E. Calaveras Blvd., Milpitas",
+      },
+    },
+    {
+      title: "MOAA Silicon Valley Veterans Day Parade & Ceremony", venue: "Downtown San Jose", city: "san-jose",
+      facts: { url: "https://svcmoaa-events.com/san-jose-veterans-day-parade" },
+    },
+  ];
+  for (const { facts, ...identity } of cases) {
+    const raw = {
+      ...identity, date: "2026-11-11", url: "", address: identity.venue,
+      time: identity.city === "san-jose" ? "12:00 PM" : "9:00 AM",
+      cost: null, registration: "closed", description: "Original newsletter excerpt.",
+    };
+    const fixed = applyVerifiedEventFacts(raw);
+    assert.deepEqual(fixed, { ...raw, ...facts });
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const intake = {
+      title: raw.title, location: raw.venue, sourceUrl: "",
+      startsAt: `2026-11-11T${identity.city === "san-jose" ? "12" : "09"}:00:00-08:00`,
+    };
+    const normalized = normalizeInboundEventPresentation(intake);
+    assert.equal(normalized.url, facts.url);
+    assert.equal(normalized.time, raw.time);
+    assert.equal(normalized.venue ?? raw.venue, facts.venue ?? raw.venue);
+    assert.deepEqual(intake.sourceUrl, "", "leave the received source record unchanged");
+    for (const other of [
+      { ...raw, date: "2027-11-11" },
+      { ...raw, city: "another-city" },
+      { ...raw, venue: "Another venue" },
+      { ...raw, url: "https://example.org/new-organizer-notice" },
+    ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Mountain View's dated bag sale keeps its 2 PM finish through newsletter and blurb refresh", async () => {
   const capture = JSON.parse(readFileSync(new URL("../../../scripts/lib/fixtures/mountain-view-book-sale-2026-11-08.json", import.meta.url)));
   const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
