@@ -60,6 +60,7 @@ const EDITS = {
       [/\bPlease Bring Your Own Bags\.?$/g, "Please bring your own bags."],
       ["make pine cone turkeys, for Thanksgiving.", "make pine cone turkeys for Thanksgiving."],
       ["Please Join us at the", "Please join us at the"],
+      ["Please note, this is not a tutoring session.", "Please note: this is not a tutoring session."],
       ["Children and Families will enjoy stories and music that encourages plays and exploration, all in Persian language.", "Children and families will enjoy stories and music that encourage play and exploration, all in the Persian language."],
       ["Celebrate the Fall season", "Celebrate the fall season"],
       ["Crafts, Board games, Bingo - lots of fun", "Crafts, board games, bingo - lots of fun"],
