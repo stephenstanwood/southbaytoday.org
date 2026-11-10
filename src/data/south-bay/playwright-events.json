@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-10T17:10:55.461Z",
+    "generatedAt": "2026-11-10T21:18:53.475Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 186,
+    "eventCount": 195,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -16,7 +16,7 @@
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (15)",
       "Santana Row (6)",
-      "City of Cupertino (29)",
+      "City of Cupertino (38)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 29,
-        "liveCount": 29,
+        "count": 38,
+        "liveCount": 38,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -621,7 +621,7 @@
       "category": "community",
       "cost": "paid",
       "description": "",
-      "url": "https://historysanjose.org/programs-events/",
+      "url": "https://fareharbor.com/embeds/book/historysanjose/items/735277/?full-items=yes&flow=583745",
       "source": "History San Jose",
       "kidFriendly": false
     },
@@ -1346,7 +1346,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-10T17:09:38.535Z"
+        "checkedAt": "2026-11-10T21:17:46.695Z"
       }
     },
     {
@@ -1369,7 +1369,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-10T17:09:38.537Z"
+        "checkedAt": "2026-11-10T21:17:46.696Z"
       }
     },
     {
@@ -1392,7 +1392,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-10T17:09:38.541Z"
+        "checkedAt": "2026-11-10T21:17:46.699Z"
       }
     },
     {
@@ -1415,7 +1415,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-10T17:09:38.541Z"
+        "checkedAt": "2026-11-10T21:17:46.699Z"
       }
     },
     {
@@ -1438,7 +1438,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-10T17:09:38.542Z"
+        "checkedAt": "2026-11-10T21:17:46.699Z"
       }
     },
     {
@@ -1461,7 +1461,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-10T17:09:38.542Z"
+        "checkedAt": "2026-11-10T21:17:46.700Z"
       }
     },
     {
@@ -1902,6 +1902,74 @@
       "kidFriendly": true
     },
     {
+      "id": "d396077dd52e",
+      "title": "Preschool Open House",
+      "date": "2027-01-30",
+      "displayDate": "Sat, Jan 30",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Discover what makes Cupertino Preschool a welcoming, nurturing place for your child to learn and grow! Bring your little ones and explore our classrooms and outdoor play areas, meet our caring teachers and administrators, and get all your questions answered about our program, curriculum, and enrollment process. Kids can experience our play-based environment while parents learn how we support early learning, social development, and a smooth transition into kindergarten. Can’t make the Open House? Schedule a tour with Mariah Greene at mariahg@cupertino.gov. For more information on Cupertino Preschool, visit the City's preschool webpage. The Classroom",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Preschool-Open-House/Preschool-Open-House-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "78549e06546b",
+      "title": "Sweetheart Social",
+      "date": "2027-02-13",
+      "displayDate": "Sat, Feb 13",
+      "time": "05:30 PM",
+      "endTime": "07:30 PM",
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Celebrate Valentine’s Day with a memorable family night out at our Sweetheart Social! This event is the perfect way to make the Valentines Day feel extra special for you and your loved ones. Enjoy an evening filled with hands-on Valentine crafts, fun games and activities, sweet treat, and a keepsake photo! Create sweet lasting memories, and treat your family to a night of love and laughter. For more information, please visit the cupertino.gov/sweetheartsocial event page. Register Registration will open with winter activity registration.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Sweetheart-Social/Sweetheart-Social-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "e073d5d916d4",
+      "title": "Big Bunny 5K and Kids Fun Run",
+      "date": "2027-03-06",
+      "displayDate": "Sat, Mar 6",
+      "time": "08:30 AM",
+      "endTime": "11:00 AM",
+      "venue": "Cupertino Civic Center",
+      "address": "Cupertino Civic Center, 10300 Torre Avenue, Cupertino, CA, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": null,
+      "description": "Lace up and join the fun at the Big Bunny 5K! Run, walk, or hop your way through a 3.1-mile course winding through the streets of Cupertino, starting and finishing at the Cupertino Civic Center. Whether you’re racing for a personal best or enjoying a morning out with friends and family, this community fun run is the perfect way to kick off the day. For our youngest participants (ages 7 and under), we offer a special kid-friendly course on Library Field—short, sweet, and designed for maximum fun. Everyone who participates is a winner! Register For more information, visit the Big Bunny 5K event page.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Big-Bunny-5K/Big-Bunny-5K-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "49ef6617220b",
+      "title": "Teen Resource Fair",
+      "date": "2027-03-20",
+      "displayDate": "Sat, Mar 20",
+      "time": "12:00 PM",
+      "endTime": "03:00 PM",
+      "venue": "Main Street Cupertino",
+      "address": "Main Street Cupertino, 19401 Stevens Creek Boulevard, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "This event is focused on helping teens explore City of Cupertino summer job opportunities and volunteer programs that build real-world skills and look great on college and job applications. Learn about opportunities like REV, YAB, LIT, and Techie Teens, and meet the staff who coordinate and recruit for these programs. In addition, the fair will include mental health and wellness resources through IDC Wellness, so teens can also learn what support is available to them. For more information, visit the Teen Resource Fair webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Teen-Resource-Fair/Teen-Resource-Fair-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
       "id": "477e2322b857",
       "title": "Cupertino Holi Festival",
       "date": "2027-03-21",
@@ -1917,6 +1985,40 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Cupertino-Holi-Festival",
       "source": "City of Cupertino",
       "kidFriendly": false
+    },
+    {
+      "id": "950d040aa6ff",
+      "title": "Earth and Arbor Day Festival",
+      "date": "2027-04-03",
+      "displayDate": "Sat, Apr 3",
+      "time": "10:00 AM",
+      "endTime": "02:00 PM",
+      "venue": "Cupertino Civic Center",
+      "address": "Cupertino Civic Center, Torre Avenue, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Cupertino’s annual Earth and Arbor Day Festival is an interactive event that invites community members of all ages to learn about environmental issues and solutions in a family-friendly atmosphere. Explore booths, hands-on activities, live entertainment, food trucks, and connect with local organizations working to protect our environment at this free community event. For additional information on the City's Earth and Arbor Day festival, see the Earth and Arbor Day Festival webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Earth-and-Arbor-Day-Festival/Earth-and-Arbor-Day-Festival-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "4b5a72575d1c",
+      "title": "Hack Cupertino",
+      "date": "2027-04-10",
+      "displayDate": "Sat, Apr 10",
+      "time": "06:30 PM",
+      "endTime": null,
+      "venue": "Quinlan Community Center",
+      "address": "Quinlan Community Center, 10185 North Stelling Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "education",
+      "cost": null,
+      "description": "<hack> Cupertino is a 13-hour overnight high-school hackathon organized by the Cupertino Teen Commission and Cupertino's Recreation Department. During our opening ceremony, we will present a problem in which teams or individuals will work together to create an app, software, or website which will address the topic. For more information, visit the Hack Cupertino webpage. Register Registration will open with spring activity registration.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Hack-Cupertino/Hack-Cupertino",
+      "source": "City of Cupertino",
+      "kidFriendly": true
     },
     {
       "id": "08dbedd45d59",
@@ -1949,6 +2051,57 @@
       "cost": null,
       "description": "The Cupertino Cherry Blossom Festival is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Cupertino-Cherry-Blossom-Festival",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "41ea2a79f380",
+      "title": "FootGolf Tournament",
+      "date": "2027-05-01",
+      "displayDate": "Sat, May 1",
+      "time": "04:30 PM",
+      "endTime": "07:00 PM",
+      "venue": "Blackberry Farm Golf Course",
+      "address": "Blackberry Farm Golf Course, 22100 Stevens Creek Boulevard, Cupertino, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Enjoy a family-friendly evening of 9-hole FootGolf, a fun twist on traditional golf where you kick a soccer ball toward the hole. Check in at 4:30 p.m., then tee off with a 5 p.m. shotgun start. Your registration includes soccer ball rental, green fees, snacks, and prizes for top overall scores. Perfect for all ages and skill levels. Register For more information, visit the FootGolf webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/FootGolf-Tournament/FootGolf-Tournament-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "88283c62128e",
+      "title": "Live Well Age Well Health Expo",
+      "date": "2027-05-14",
+      "displayDate": "Fri, May 14",
+      "time": "10:30 AM",
+      "endTime": "01:30 PM",
+      "venue": "Cupertino Senior Center",
+      "address": "Cupertino Senior Center, 21251 Stevens Creek Blvd, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Embrace a vibrant life at 50 and beyond! Join the Cupertino Senior Center for the Live Well Age Well Health Expo designed for individuals ages 50 and better. Explore booths, resources, and educational sessions tailored to support a healthy lifestyle as you age. Then get moving with exciting activity demonstrations, perfect for discovering new exercises that will help you stay active! For more information, visit the Live Well Age Well Health Expo webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Live-Well-Age-Well-Health-Expo/Live-Well-Age-Well-Health-Expo-Event",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "f5e06eb918ff",
+      "title": "AAPI Multicultural Festival",
+      "date": "2027-05-22",
+      "displayDate": "Sat, May 22",
+      "time": "12:00 PM",
+      "endTime": "05:00 PM",
+      "venue": "Community Hall",
+      "address": "Community Hall, 10350 Torre Avenue, 95014, View Map",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "The AAPI Multicultural Festival is a City-sponsored event organized by the Asian American Parents Association (AAPA) and the Cupertino Library Foundation. For details, visit the event organizer’s webpage.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/AAPI-Multicultural-Festival",
       "source": "City of Cupertino",
       "kidFriendly": false
     },
@@ -3214,7 +3367,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.939Z"
+        "checkedAt": "2026-11-10T21:18:14.577Z"
       }
     },
     {
@@ -3238,7 +3391,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3262,7 +3415,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3286,7 +3439,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3310,7 +3463,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3334,7 +3487,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3358,7 +3511,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3382,7 +3535,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3406,7 +3559,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.580Z"
       }
     },
     {
@@ -3447,7 +3600,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.581Z"
       }
     },
     {
@@ -3471,7 +3624,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T17:10:12.942Z"
+        "checkedAt": "2026-11-10T21:18:14.581Z"
       }
     },
     {
