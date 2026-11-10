@@ -43,6 +43,7 @@ const EDITS = {
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
       ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
       ["Lego Club!", "LEGO Club!"],
+      ["Friday Fun: Legos Fun", "Friday Fun: LEGO Fun"],
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
     ],
     attendanceNote: [
@@ -56,6 +57,11 @@ const EDITS = {
     ],
     description: [
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      ["Please Join us at the", "Please join us at the"],
+      ["Children and Families will enjoy stories and music that encourages plays and exploration, all in Persian language.", "Children and families will enjoy stories and music that encourage play and exploration, all in the Persian language."],
+      ["Celebrate the Fall season", "Celebrate the fall season"],
+      ["Crafts, Board games, Bingo - lots of fun", "Crafts, board games, bingo - lots of fun"],
+      ["No registration required This program", "No registration required. This program"],
       ['a "book club" style program', "a book-club-style program"],
       ["action packed experience", "action-packed experience"],
       ["Each month discover", "Each month, discover"],
@@ -472,6 +478,7 @@ const EDITS = {
       [/\bLego\b/g, "LEGO"],
     ],
     blurb: [
+      ["free play with Legos", "free play with LEGOs"],
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
       [/\bApple pencils\b/g, "Apple Pencils"],
