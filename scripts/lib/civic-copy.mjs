@@ -19,6 +19,8 @@ export function polishCivicModifiers(text) {
 export function polishCivicCopy(text) {
   return typeof text === "string"
     ? polishCivicModifiers(text).replace(FULL_DATE_IN_PROSE, "$1,").replace(SQUARE_FOOT_MODIFIER, "$1-square-foot ")
+      .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
+      .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
     : text;
 }
 

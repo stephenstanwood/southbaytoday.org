@@ -57,6 +57,8 @@ const EDITS = {
     ],
     description: [
       [". *Drop-ins are accepted.", ". Drop-ins are accepted."],
+      [/\bPlease Bring Your Own Bags\.?$/g, "Please bring your own bags."],
+      ["make pine cone turkeys, for Thanksgiving.", "make pine cone turkeys for Thanksgiving."],
       ["Please Join us at the", "Please join us at the"],
       ["Children and Families will enjoy stories and music that encourages plays and exploration, all in Persian language.", "Children and families will enjoy stories and music that encourage play and exploration, all in the Persian language."],
       ["Celebrate the Fall season", "Celebrate the fall season"],
@@ -608,6 +610,9 @@ const EDITS = {
     ],
     description: [
       ["different themes and hands on activities.", "different themes and hands-on activities."],
+      ["Join us as we discuss how a specific part of AI that is currently all over the news: AI enabled scam and fraud.", "Join us as we discuss a specific part of AI that is currently all over the news: AI-enabled scams and fraud."],
+      ["How is AI enabling scam and fraud?", "How is AI enabling scams and fraud?"],
+      ['tear off the mask and protect her family".', 'tear off the mask and protect her family."'],
       [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
       ["The film carries a R rating.", "The film carries an R rating."],
       ["No Registration is required.", "No registration is required."],
