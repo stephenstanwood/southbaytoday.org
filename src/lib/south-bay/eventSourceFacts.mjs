@@ -66,6 +66,36 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SJPL explicitly makes this session's signup optional. The known expired
+  // form deadline cannot close walk-up attendance. Stop if the body changes
+  // its terms or a later booking state/notice establishes a different gate.
+  // Evidence: docs/qa/2026-11-10-1107z-fact-check.md.
+  {
+    date: "2026-11-10",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a83713669166f088b92df7a\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.title === "Origami for Kids" && event.venue === "Bascom Library"
+      && /\bregistration\s+(?:is\s+)?recommended\s+but\s+not\s+required\b/i.test(event.description || "")
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory|closed)\b|\bmust\s+(?:register|reserve|book)\b/i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_APPOINTMENT].includes(event.registration)
+      && (event.registration !== REGISTRATION_CLOSED || event.registrationClosesBy === "2026-11-09T23:15:00.000Z")
+      && !/\b(?:registration|event|program|session)\s+(?:is\s+)?(?:now\s+)?(?:closed|full)\b|\bno\s+(?:drop|walk)[-\s]?ins\b/i.test(event.attendanceNote || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "Registration is recommended but not required.",
+  },
+  // The exact Stanford Athletics ticket page confirms the Georgia Tech
+  // opponent and paid admission; the newsletter's Tigers caveat is resolved.
+  // Preserve current booking notices and do not freeze its changeable price.
+  // Evidence: docs/qa/2026-11-10-1107z-fact-check.md.
+  {
+    date: "2026-11-14",
+    matches: event => /^https:\/\/tickets\.gostanford\.com\/events?\/womens-volleyball-vs-georgia-tech-ir6yuy\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.venue === "Maples Pavilion",
+    facts: { cost: "paid" },
+    copyReplacements: [
+      [/,\s*though the email also calls it Saturday['’]s match against ['‘]the Tigers(?:['’]\.|\.['’])/gi, "."],
+      [/\s*The start time was not given in the email\./gi, ""],
+    ],
+  },
   // Exact organizer pages supply admission omitted by newsletter/RSS excerpts.
   // These corrections never create another occurrence or infer an RSVP gate.
   // Evidence: docs/qa/2026-11-10-0907z-fact-check.md.
@@ -129,7 +159,8 @@ const CORRECTIONS = [
   {
     date: "2027-01-30",
     matches: event => /^https:\/\/www\.eventbrite\.com\/e\/painting-the-year-of-the-ram-ink-painting-on-canvas-teensadults-tickets-2004454467270\/?(?:[?#].*)?$/.test(event.url || "")
-      && event.title === "Painting the Year of the Ram: Ink Painting on Canvas (Teens/Adults)"
+      // Reviewed display copy may already have added spaces around the slash.
+      && /^Painting the Year of the Ram: Ink Painting on Canvas \(Teens\s*\/\s*Adults\)$/.test(event.title || "")
       && event.venue === "Linn Studio behind the Triton Museum of Art",
     facts: { cost: "paid", costNote: "$30 per person; materials included" },
     appendAttendanceNote: "Ages 13+; select the afternoon teen/adult workshop when registering.",

@@ -115,6 +115,71 @@
       "kidFriendly": false,
       "audienceAge": "all",
       "blurb": "Hear the Saint Michael Trio talk through and perform Beethoven's Archduke Trio in an informance that explains why his music matters."
+    },
+    {
+      "id": "inbound-7202bbd0eacbdd18",
+      "title": "Stanford Volleyball Holiday Toy Drive & Picture Frame Giveaway vs. Georgia Tech",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Maples Pavilion",
+      "address": "Maples Pavilion, Stanford",
+      "city": "palo-alto",
+      "category": "sports",
+      "cost": null,
+      "description": "Fans are asked to bring a new unwrapped toy (newborn to 12 years old) to the Stanford vs. Georgia Tech volleyball match to support local Bay Area families in need. A picture frame giveaway is planned while supplies last, though the email also calls it Saturday's match against 'the Tigers.' The start time was not given in the email.",
+      "url": "https://tickets.gostanford.com/events/womens-volleyball-vs-georgia-tech-ir6yuy",
+      "source": "City Newsletter",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Watch Stanford volleyball host Georgia Tech, and bring a new unwrapped toy to support local Bay Area families in need."
+    },
+    {
+      "id": "inbound-cbe7bf12fd0834c1",
+      "title": "Painting the Year of the Ram: Ink Painting on Canvas (Teens / Adults)",
+      "date": "2027-01-30",
+      "displayDate": "Sat, Jan 30",
+      "time": "1:00 PM",
+      "endTime": "3:00 PM",
+      "venue": "Linn Studio behind the Triton Museum of Art",
+      "address": "Linn Studio behind the Triton Museum of Art, 1505 Warburton Avenue, Santa Clara, CA 95050",
+      "city": "santa-clara",
+      "category": "arts",
+      "cost": "paid",
+      "description": "In-person ink painting workshop led by Mei-Ying Dell'Aquila celebrating the Year of the Ram. For ages 13+, all levels welcome, $30 per person, and all materials are provided.",
+      "url": "https://www.eventbrite.com/e/painting-the-year-of-the-ram-ink-painting-on-canvas-teensadults-tickets-2004454467270?aff=erellivmlt",
+      "source": "City Newsletter",
+      "kidFriendly": true,
+      "costNote": "$30 per person; materials included",
+      "attendanceNote": "Ages 13+; select the afternoon teen/adult workshop when registering.",
+      "audienceAge": "all",
+      "blurb": "Paint with ink on canvas in a Year of the Ram workshop led by Mei-Ying Dell'Aquila, with materials provided."
+    },
+    {
+      "id": "sjpl-6a83713669166f088b92df7a",
+      "title": "Origami for Kids",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "3:15 PM",
+      "endTime": "4:15 PM",
+      "venue": "Bascom Library",
+      "address": "1000 S. Bascom Ave San Jose",
+      "city": "san-jose",
+      "registration": "closed",
+      "registrationClosesBy": "2026-11-09T23:15:00.000Z",
+      "category": "family",
+      "cost": "free",
+      "description": "Make designs like a sailboat, penguin, frog, or samurai helmet using colorful paper. Then decorate your origami with markers! This is a self-directed program in which all supplies and instructions are made available. A staff member or volunteer will be available for assistance. Registration recommended but not required. Held in the children's area. Recommended for ages 6-12. \"Origami for the First Time\"; \"Origami for Fun!\"; \"Folding for Fun\"; \"Origami Zoo.\"",
+      "sourceAudiences": [
+        "Kids, ages 5-10",
+        "Pre-Teens, ages 10-12"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a83713669166f088b92df7a",
+      "source": "San Jose Public Library",
+      "kidFriendly": true,
+      "audienceAge": "kids",
+      "blurb": "Fold colorful paper into sailboats, penguins, or samurai helmets at Bascom Library's origami session."
     }
   ],
   "farmSchema": {
@@ -175,6 +240,21 @@
       "url": "https://my.montalvoarts.org/3291/3292?promo=",
       "sha256": "8fb63aa0e3c015e4572b371f16307b5c31fe7cb269d687965de00ac2bc5de810",
       "checkedAt": 1794301812.202431
+    },
+    {
+      "url": "https://tickets.gostanford.com/events/womens-volleyball-vs-georgia-tech-ir6yuy",
+      "sha256": "e10fd08354fb6b1d3974cffd2ce55f7a720cbc6c263b3ce20dcc12c5091f2265",
+      "checkedAt": 1794308982.630292
+    },
+    {
+      "url": "https://www.eventbrite.com/e/painting-the-year-of-the-ram-ink-painting-on-canvas-teensadults-tickets-2004454467270?aff=erellivmlt",
+      "sha256": "e2ff9f7fe499aced37339157215d0eccba6d198f471c293e037fac8cac8dae78",
+      "checkedAt": 1794308984.849026
+    },
+    {
+      "url": "https://sjpl.bibliocommons.com/events/6a83713669166f088b92df7a",
+      "sha256": "bf6fff7ee24d38029e1191af935e8c045cd815a4a740f1b4316ebb2a83f6bdc2",
+      "checkedAt": 1794309105.404178
     }
   ]
 }

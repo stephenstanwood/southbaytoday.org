@@ -4,6 +4,8 @@ import test from "node:test";
 import { cleanTitle, fetchInboundEvents, fetchStanfordEvents } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
+import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
+import { requiresAdvanceRegistration, isRegistrationClosedForDay } from "../../src/lib/south-bay/eventFilters.mjs";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-10-night.json", import.meta.url)));
 const event = id => fixture.events.find(e => e.id === id);
@@ -101,4 +103,81 @@ test("the film's BLKNWS initials survive repeated display and cache normalizatio
   assert.match(actual.blurb, /BLKNWS: Pilgrim/);
   assert.deepEqual(applyVerifiedEventFacts(actual), actual);
   for (const key of ["id", "date", "time", "endTime", "venue", "url", "cost"]) assert.equal(actual[key], before[key], key);
+});
+
+// Current primary pages and capture hashes: docs/qa/2026-11-10-1107z-fact-check.md.
+test("sparse newsletter ingestion retains Stanford volleyball's paid admission and resolves the old opponent warning", async () => {
+  const before = event("inbound-7202bbd0eacbdd18");
+  const [actual] = fetchInboundEvents({ today: "2026-11-10", events: [{
+    id: "volleyball-source", title: before.title, description: before.description,
+    startsAt: "2026-11-14T19:00:00-08:00", location: before.venue,
+    cityKey: before.city, sourceUrl: before.url,
+  }] });
+  await resolveEventBlurbs([actual], { enabled: false });
+  assert.equal(actual.cost, "paid");
+  assert.equal(actual.time, "7:00 PM");
+  assert.equal(actual.costNote, undefined, "do not freeze a changeable ticket price");
+  assert.match(actual.description, /picture frame giveaway is planned while supplies last\./i);
+  assert.doesNotMatch(actual.description, /Tigers|start time was not given/);
+  assert.equal(actual.registration, undefined, "a ticket offer does not establish a reservation gate");
+  for (const registration of ["full", "closed", "appointment-only"]) {
+    const retained = applyVerifiedEventFacts({ ...before, registration, attendanceNote: "Later organizer notice." });
+    assert.equal(retained.registration, registration);
+    assert.equal(retained.attendanceNote, "Later organizer notice.");
+    assert.equal(retained.endTime, before.endTime);
+    assert.deepEqual(applyVerifiedEventFacts(retained), retained);
+  }
+  for (const change of [{ date: "2026-12-14" }, { url: "https://example.org/another-game" }, { venue: "Another arena" }]) {
+    const other = { ...before, ...change };
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("copy-normalized painting titles still recover verified price and age conditions through cached publication", async () => {
+  const before = event("inbound-cbe7bf12fd0834c1");
+  for (const title of [before.title, before.title.replace("Teens / Adults", "Teens/Adults")]) {
+    for (const registration of [undefined, "full", "closed", "appointment-only"]) {
+      const actual = polishReviewedEventCopy({
+        ...before, title, cost: null, costNote: undefined,
+        registration, attendanceNote: "Later organizer notice.",
+      });
+      await resolveEventBlurbs([actual], { enabled: false });
+      assert.equal(actual.title, "Painting the Year of the Ram: Ink Painting on Canvas (Teens / Adults)");
+      assert.equal(actual.cost, "paid");
+      assert.equal(actual.costNote, "$30 per person; materials included");
+      assert.match(actual.attendanceNote, /^Later organizer notice\./);
+      assert.match(actual.attendanceNote, /Ages 13\+; select the afternoon teen\/adult workshop/);
+      assert.equal(actual.registration, registration);
+      for (const key of ["id", "date", "time", "endTime", "venue", "url"]) assert.equal(actual[key], before[key], key);
+      assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+    }
+  }
+  for (const change of [{ date: "2027-02-01" }, { url: "https://example.org/another-class" }, { venue: "Another studio" }, { title: "A Different Painting Class" }]) {
+    const other = { ...before, ...change, cost: null, costNote: undefined, attendanceNote: undefined };
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Bascom's optional origami signup deadline cannot close attendance, while later source changes remain authoritative", async () => {
+  const before = event("sjpl-6a83713669166f088b92df7a");
+  const actual = structuredClone(before);
+  await resolveEventBlurbs([actual], { enabled: false });
+  assert.equal(actual.registration, "none");
+  assert.equal(actual.registrationClosesBy, null);
+  assert.equal(requiresAdvanceRegistration(actual), false);
+  assert.equal(isRegistrationClosedForDay(actual, actual.date), false);
+  assert.match(actual.attendanceNote, /Registration is recommended but not required/);
+  for (const key of ["id", "title", "date", "time", "endTime", "venue", "url", "cost", "description", "blurb"]) assert.deepEqual(actual[key], before[key], key);
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  for (const change of [
+    { date: "2026-11-17" }, { url: "https://example.org/another-program" }, { venue: "Another Library" },
+    { registration: "full" }, { registration: "appointment-only" },
+    { attendanceNote: "Registration is now closed. No drop-ins." },
+    { registrationClosesBy: "2026-11-10T22:00:00.000Z" },
+    { description: "Registration is required." }, { description: "" },
+    { description: before.description + " Registration is mandatory. You must register." },
+  ]) {
+    const other = { ...before, ...change };
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
 });
