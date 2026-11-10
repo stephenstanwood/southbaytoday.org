@@ -96,8 +96,31 @@ const CORRECTIONS = [
       && event.venue === "Downtown San Jose"
       && (!event.city || event.city === "san-jose")
       && (!event.url || event.url === "https://svcmoaa-events.com/san-jose-veterans-day-parade"),
-    facts: { url: "https://svcmoaa-events.com/san-jose-veterans-day-parade" },
+    // Keep the earlier conservative copy correction in this first match:
+    // restoring the source URL must not mask its participant/order safeguards.
+    // The organizer confirms noon but does not establish a later ceremony.
+    // Evidence: docs/qa/2026-11-10-1807z-fact-check.md.
+    facts: {
+      url: "https://svcmoaa-events.com/san-jose-veterans-day-parade",
+      description: "Veterans Day parade and ceremony in downtown San Jose, listed in Supervisor Otto Lee's community newsletter.",
+      blurb: "Attend the MOAA Silicon Valley Veterans Day parade and ceremony in downtown San Jose.",
+    },
   },
+  // These exact online open houses publish a 6:30 PM finish and deliver the
+  // participation link to registrants. RSS excerpts omit both facts. Keep
+  // booking state and admission untouched; an RSVP invitation is not itself
+  // evidence of a mandatory advance gate.
+  // Evidence: docs/qa/2026-11-10-1807z-fact-check.md.
+  ...[
+    ["2026-11-12", "mlis-open-house", "MLIS Open House"],
+    ["2026-11-17", "msidt-open-house", "MSIDT Open House"],
+  ].map(([date, slug, title]) => ({
+    date,
+    matches: event => event.url === `https://events.sjsu.edu/event/${slug}`
+      && event.title === title && event.venue === "San Jose State University",
+    facts: { endTime: "6:30 PM" },
+    appendAttendanceNote: "Register through the organizer's event page to receive the online participation link.",
+  })),
   // SJPL explicitly makes this session's signup optional. The known expired
   // form deadline cannot close walk-up attendance. Stop if the body changes
   // its terms or a later booking state/notice establishes a different gate.

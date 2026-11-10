@@ -32,7 +32,11 @@ test("dated Veterans Day source links survive newsletter reingestion without cha
     },
     {
       title: "MOAA Silicon Valley Veterans Day Parade & Ceremony", venue: "Downtown San Jose", city: "san-jose",
-      facts: { url: "https://svcmoaa-events.com/san-jose-veterans-day-parade" },
+      facts: {
+        url: "https://svcmoaa-events.com/san-jose-veterans-day-parade",
+        description: "Veterans Day parade and ceremony in downtown San Jose, listed in Supervisor Otto Lee's community newsletter.",
+        blurb: "Attend the MOAA Silicon Valley Veterans Day parade and ceremony in downtown San Jose.",
+      },
     },
   ];
   for (const { facts, ...identity } of cases) {
