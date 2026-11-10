@@ -845,6 +845,10 @@ const EDITS = {
     ],
   },
   "SJSU Events": {
+    title: [
+      ["Msidt Open House", "MSIDT Open House"],
+      ["Mlis Open House", "MLIS Open House"],
+    ],
     description: [
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
