@@ -11,7 +11,7 @@ const openHouses = fixture.events.slice(0, 2);
 
 test("SJSU's sparse RSS and cached publication retain open-house finishes and online access instructions", async t => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date(fixture.reviewedAt) });
-  const xml = `<rss><channel>${openHouses.map((event, i) => `<item><title>${event.title}</title><description><![CDATA[${event.description}]]></description><pubDate>${new Date(fixture.sourceFacts[i].startDate).toUTCString()}</pubDate><link>${event.url}</link></item>`).join("")}</channel></rss>`;
+  const xml = `<rss><channel>${openHouses.map((event, i) => `<item><title>${event.title.replace("MSIDT", "Msidt").replace("MLIS", "Mlis")}</title><description><![CDATA[${event.description}]]></description><pubDate>${new Date(fixture.sourceFacts[i].startDate).toUTCString()}</pubDate><link>${event.url}</link></item>`).join("")}</channel></rss>`;
   t.mock.method(globalThis, "fetch", async url => {
     const request = new URL(url);
     assert.equal(request.origin, "https://events.sjsu.edu");
@@ -23,6 +23,7 @@ test("SJSU's sparse RSS and cached publication retain open-house finishes and on
   });
   const events = await fetchSjsuEvents();
   assert.equal(events.length, 2);
+  assert.deepEqual(events.map(event => event.title), openHouses.map(event => event.title), "restore source acronyms before fact matching");
   await resolveEventBlurbs(events, { enabled: false });
   for (const actual of events) {
     assert.equal(actual.time, "5:30 PM");

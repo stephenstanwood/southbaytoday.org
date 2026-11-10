@@ -4183,8 +4183,8 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   // Concert program notes and performer biographies can mention research,
   // reading or a class. The performance title outranks that body wording;
   // explicitly titled music lectures and courses remain educational.
-  if (/\b(?:concert|recital)\b|\bmusic\s*@\s*noon\b/.test(titleLower)
-    && !/\b(lecture|workshop|class|course|seminar|training)\b/.test(titleLower)) return "music";
+  if (/\b(?:concerts?|recitals?)\b|\bmusic\s*@\s*noon\b/.test(titleLower)
+    && !/\b(lectures?|workshops?|class|classes|courses?|seminars?|training)\b/.test(titleLower)) return "music";
 
   // A public film can accompany a course, and a startup can "showcase" its
   // product without becoming an art exhibit. Use the explicit title before
@@ -4200,7 +4200,7 @@ function inferUniversityCategory(title, desc, type, venue = "") {
     && !/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(titleLower)) return "education";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(haystack)) return "community";
   if (/\b(guest speaker|speaker series|lectures?|symposium|workshop|training|class|course|rounds?|seminar|qualtrics|research|science|book display|reading)\b/.test(haystack)) return "education";
-  if (/\b(concert|carillon|recital|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
+  if (/\b(concerts?|carillon|recitals?|choir|orchestra|jazz|music)\b/.test(titleLower)) return "music";
 
   const inferredCategory = inferCategory(title, cleanDesc, type, venue);
   // A fireside chat can use a recital hall or mention "baby" in its title.
@@ -4613,10 +4613,19 @@ async function fetchStanfordEvents() {
       // explicitly named art show or performance keeps its subject category.
       const sourceSaysConference = (ev.filters?.event_types || [])
         .some((type) => /^Conference\/Symposium$/i.test(type.name || ""));
+      // A performance can have an opaque title and an academic performer bio.
+      // Use Stanford's declared format and music subject before treating it
+      // as education; keep explicit lectures/classes and arts classifications.
+      const sourceSaysMusicPerformance = !sourceSaysLecture
+        && (ev.filters?.event_types || []).some((type) => /^Performance$/i.test(type.name || ""))
+        && (ev.filters?.event_subject || []).some((subject) => /^Music$/i.test(subject.name || ""))
+        && !/\b(?:lectures?|workshops?|class|classes|courses?|seminars?|training)\b/i.test(ev.title || "");
       const conferenceMisreadAsArt = inferredCategory === "arts" && sourceSaysConference
         && !/\b(?:exhibit(?:ion)?|gallery|art|concert|recital|performance|film|dance)\b/i.test(ev.title || "");
-      const category = conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
-        ? "education" : inferredCategory;
+      const category = sourceSaysMusicPerformance && inferredCategory === "education"
+        ? "music"
+        : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
+          ? "education" : inferredCategory;
       const attendanceNotes = [
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
@@ -4749,6 +4758,10 @@ function restoreSjsuAcronyms(text) {
   // MOSAIC Cross Cultural Center) is deliberately absent — uppercasing it would
   // wreck every mosaic art workshop in the feed.
   return text
+    // These degree names must be canonical before source-fact matching, not
+    // only in the final copy polish, or their verified access details vanish.
+    .replace(/\bMlis\b/g, "MLIS")
+    .replace(/\bMsidt\b/g, "MSIDT")
     .replace(/\bShrm\b/g, "SHRM")
     .replace(/\bIsss\b/g, "ISSS")
     .replace(/\bUsrc\b/g, "USRC")

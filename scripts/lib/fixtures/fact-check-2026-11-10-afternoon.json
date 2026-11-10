@@ -1,0 +1,91 @@
+{
+  "reviewedAt": "2026-11-10T22:07:05Z",
+  "sources": [
+    "https://events.stanford.edu/event/mighty-like-a-moose-prutsman-dolphins",
+    "https://events.stanford.edu/event/lunchtime-recitals-communi-tea-2247"
+  ],
+  "events": [
+    {
+      "id": 54231147388320,
+      "title": "Mighty Like a Moose – Stephen Prutsman & The Dolphins Quartet",
+      "localist_url": "https://events.stanford.edu/event/mighty-like-a-moose-prutsman-dolphins",
+      "location_name": "Braun Music Center",
+      "address": "541 Lasuen Mall, Stanford, CA 94305",
+      "experience": "inperson",
+      "ticket_cost": "Free Admission",
+      "description_text": "world-class ensemble",
+      "event_instances": [
+        {
+          "event_instance": {
+            "start": "2026-11-11T12:30:00-08:00",
+            "end": "2026-11-11T13:00:00-08:00",
+            "all_day": false
+          }
+        }
+      ],
+      "filters": {
+        "event_audience": [
+          {
+            "name": "Everyone"
+          },
+          {
+            "name": "General Public"
+          }
+        ],
+        "event_subject": [
+          {
+            "name": "Music"
+          },
+          {
+            "name": "Arts/Media"
+          },
+          {
+            "name": "Humanities"
+          }
+        ],
+        "event_types": [
+          {
+            "name": "Performance"
+          }
+        ]
+      }
+    },
+    {
+      "id": 53969632558021,
+      "title": "Lunchtime Recitals & Communi-Tea",
+      "localist_url": "https://events.stanford.edu/event/lunchtime-recitals-communi-tea-2247",
+      "location_name": "Memorial Church",
+      "address": "450 Jane Stanford Way, Building. 500, Stanford, CA 94305",
+      "experience": "inperson",
+      "ticket_cost": "Free Admission",
+      "description_text": "Enjoy lunchtime organ music in the glowing acoustic of Memorial Church.",
+      "event_instances": [
+        {
+          "event_instance": {
+            "start": "2026-11-11T12:15:00-08:00",
+            "end": "2026-11-11T13:15:00-08:00",
+            "all_day": false
+          }
+        }
+      ],
+      "filters": {
+        "event_audience": [
+          {
+            "name": "Everyone"
+          }
+        ],
+        "event_subject": [
+          {
+            "name": "Music"
+          }
+        ],
+        "event_types": [
+          {
+            "name": "Performance"
+          }
+        ]
+      }
+    }
+  ],
+  "fixtureNote": "First-party occurrence metadata with short description excerpts sufficient to reproduce classification. Complete captures stay in the private audit evidence."
+}
