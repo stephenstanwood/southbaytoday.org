@@ -330,14 +330,25 @@ export function relabelIfOtherBodyMatches(others, recordText) {
   // lone other body must still earn the relabel with a hit in the record.
   const haystack = String(recordText).toLowerCase();
   const scored = others
-    .map((c) => ({
-      ...c,
-      score: distinctiveTokens(c.body).filter((t) => new RegExp(`\\b${t}\\b`).test(haystack)).length,
-    }))
+    .map((c) => {
+      const tokens = distinctiveTokens(c.body);
+      // "Planning" is also a verb in Sunnyvale's Council participation
+      // notices ("Planning a presentation…"). A one-word signal must name
+      // the complete body before it can relabel a same-day Council agenda.
+      // Keep its score for tie detection; an ineligible rival still cannot
+      // turn an ambiguous match into evidence for another body.
+      const namesBody = tokens.length !== 1
+        || ` ${normalizeAgendaText(recordText)} `.includes(` ${normalizeAgendaText(c.body)} `);
+      return {
+        ...c,
+        score: tokens.filter((t) => new RegExp(`\\b${t}\\b`).test(haystack)).length,
+        namesBody,
+      };
+    })
     .sort((a, b) => b.score - a.score);
   const top = scored[0];
-  if (top && top.score > 0 && (scored.length === 1 || top.score > scored[1].score)) {
-    const { score, ...winner } = top;
+  if (top && top.namesBody && top.score > 0 && (scored.length === 1 || top.score > scored[1].score)) {
+    const { score, namesBody, ...winner } = top;
     return winner;
   }
   // An advisory record asking for a recommendation TO council cannot inherit

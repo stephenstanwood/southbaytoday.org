@@ -66,6 +66,19 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The authenticated November 9 city newsletter distinguishes optional
+  // event signup from the volunteer application needed for service credit.
+  // Evidence: docs/qa/2026-11-10-0507z-fact-check.md.
+  {
+    date: "2026-11-12",
+    matches: event => event.url === "https://sunnyvale.libcal.com/event/16531840"
+      && event.title === "Teen Volunteer Club: Letters Against Isolation"
+      && event.venue === "Sunnyvale Main Library",
+    facts: {
+      blurb: "Write letters for seniors with Letters Against Isolation. Teens age 13+ seeking volunteer hours must be registered library volunteers or apply.",
+    },
+    appendAttendanceNote: "Event registration is optional. To earn volunteer hours, you must be a registered library volunteer; new volunteers must apply.",
+  },
   // Current organizer pages and authenticated newsletter originals confirm
   // these exact occurrences. Preserve their clocks unless explicitly corrected.
   // Evidence: docs/qa/2026-11-10-0007z-fact-check.md.

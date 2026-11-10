@@ -116,6 +116,7 @@ audits.push(november9MiddayFixture);
 audits.push(november9PuzzleFixture);
 audits.push(november9AfternoonFixture);
 audits.push(november9EveningFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-10-brand.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.

@@ -1060,6 +1060,39 @@ test("relabelIfOtherBodyMatches: same-day non-council body wins only with a hit 
   assert.deepEqual(relabelIfOtherBodyMatches([], "anything"), { body: null, sourceUrl: null, councilMet: true });
 });
 
+const sunnyvaleCouncilAgenda = readFileSync(new URL("./fixtures/sunnyvale-2026-11-09/council-agenda.txt", import.meta.url), "utf8");
+
+test("Sunnyvale's presentation-planning notices do not rename its Council agenda", () => {
+  const planning = { body: "Planning Commission", sourceUrl: "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4415" };
+  assert.match(sunnyvaleCouncilAgenda, /Planning a presentation for a City Council meeting/);
+  assert.deepEqual(relabelIfOtherBodyMatches([planning], sunnyvaleCouncilAgenda), {
+    body: null, sourceUrl: null, councilMet: true,
+  });
+  assert.deepEqual(relabelIfOtherBodyMatches([planning], "Planning Commission: Proposed preschool and residential parking requirements."), planning);
+});
+
+test("the real Legistar verifier keeps the same-day Sunnyvale Council source distinct", async (t) => {
+  const calls = [];
+  t.mock.method(globalThis, "fetch", async input => {
+    const url = new URL(String(input));
+    calls.push(url.pathname);
+    if (url.pathname.endsWith("/Events")) return Response.json([
+      { EventId: 4527, EventBodyName: "City Council", EventInSiteURL: "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4527" },
+      { EventId: 4415, EventBodyName: "Planning Commission", EventInSiteURL: "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4415" },
+    ]);
+    assert.equal(url.pathname, "/v1/sunnyvaleca/Events/4415/EventItems");
+    return Response.json([
+      { EventItemAgendaNumber: "1", EventItemTitle: "Approve Planning Commission Meeting Minutes of October 26, 2026" },
+      { EventItemAgendaNumber: "2", EventItemTitle: "Proposed Project: Related applications on a 1.11 acre site: SPECIAL DEVELOPMENT PERMIT: To demolish a vacant commercial building and construct a new 16,000-square-foot, 2-story building for a childcare and preschool facility of up to 192 children." },
+      { EventItemAgendaNumber: "3", EventItemTitle: "Proposed Project: Forward a recommendation to the City Council on related items associated with residential off-street parking requirements" },
+    ]);
+  });
+  assert.deepEqual(await verifyLegistarBodyOnDate("sunnyvaleca", "2026-11-09", sunnyvaleCouncilAgenda), {
+    body: null, sourceUrl: null, councilMet: true,
+  });
+  assert(calls.includes("/v1/sunnyvaleca/Events/4415/EventItems"));
+});
+
 test("a recommendation TO council cannot earn council attribution from its date alone", () => {
   const text = "Discussion and Possible Recommendation to the City Council Regarding Implementation of Housing Element Program 3.9A";
   assert.deepEqual(relabelIfOtherBodyMatches([], text), {

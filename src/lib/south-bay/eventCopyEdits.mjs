@@ -875,6 +875,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/\bEn-Roads\b/gi, "En-ROADS"],
       [/^Ent Experts Up Close:/g, "ENT Experts Up Close:"],
       [/\bPfas\b/g, "PFAS"],
       ['MD "Ion channels and transporters regulating lymphocyte function "', 'MD: "Ion channels and transporters regulating lymphocyte function"'],
@@ -891,6 +892,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      [/\bEn-Roads\b/gi, "En-ROADS"],
       [/^Overview This one-hour CME activity\b/g, "Overview: This one-hour CME activity"],
       ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
       ["advancements in AI for biology, and relevant security", "advancements in AI for biology and relevant security"],
@@ -914,6 +916,7 @@ const EDITS = {
       ["Biology Seminar Series", ""],
     ],
     blurb: [
+      [/\bEn-Roads\b/gi, "En-ROADS"],
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
