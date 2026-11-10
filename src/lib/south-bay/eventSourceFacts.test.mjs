@@ -2126,7 +2126,7 @@ test("Milpitas ESL preserves dated sessions while disclosing conflicting term an
 test("verified concert times and links survive newsletter refreshes and changed intake IDs", async () => {
   const rows = [
     ["2027-03-16", "Buena Vista Orchestra", "Carriage House", "8:00 PM", "", "7:30 PM",
-      "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/"],
+      "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/", "paid"],
     ["2027-04-16", "Peter Asher: Songs and Stories", "Carriage House", "8:00 PM", "", "7:30 PM",
       "https://montalvoarts.org/experience/carriage-house-concerts/peter-asher-songs-and-stories/"],
     ["2027-03-19", "The Spinners", "Heritage Theatre", "8:00 PM", "", "8:00 PM",
@@ -2137,7 +2137,7 @@ test("verified concert times and links survive newsletter refreshes and changed 
     ["2027-04-03", "Jack West: Guitars on Life", "The Studio", "7:00 PM", "https://stanfordlive.stanford.edu", "7:00 PM",
       "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/"],
   ];
-  for (const [date, title, venue, time, url, expectedTime, expectedUrl] of rows) {
+  for (const [date, title, venue, time, url, expectedTime, expectedUrl, expectedCost = null] of rows) {
     const raw = {
       id: "replacement-newsletter-id", date, title, venue, time, url,
       address: "Source address", cost: null, description: "A live concert.",
@@ -2146,7 +2146,7 @@ test("verified concert times and links survive newsletter refreshes and changed 
     const events = [{ ...raw }];
     const stats = await resolveEventBlurbs(events, { enabled: false });
     const category = /^(?:Peter Asher|Jack West)/.test(title) ? { category: "music" } : {};
-    assert.deepEqual(events[0], { ...raw, time: expectedTime, url: expectedUrl, ...category });
+    assert.deepEqual(events[0], { ...raw, time: expectedTime, url: expectedUrl, cost: expectedCost, ...category });
     assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
     assert.equal(stats.generated, 0);
     assert.equal(raw.time, time);

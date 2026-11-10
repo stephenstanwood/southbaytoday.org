@@ -4551,8 +4551,13 @@ async function fetchStanfordEvents() {
       // The farm's minimum age and active guardian requirement follow the
       // display excerpt. Preserve the current source wording before truncation;
       // neither an Everyone audience tag nor missing text establishes all ages.
-      const farmVolunteerEligibility = /^Volunteering at Stanford Educational Farm$/i.test(ev.title || "")
+      const isFarmVolunteering = /^Volunteering at Stanford Educational Farm(?: - Weekday)?$/i.test(ev.title || "");
+      const farmVolunteerEligibility = isFarmVolunteering
         ? description.match(/\bWe welcome volunteers \d{1,2} years old and older\.\s*Those between \d{1,2} and \d{1,2} years old are required to have a guardian actively volunteering alongside them for the duration of the volunteer session\./i)?.[0]
+        : null;
+      const farmVolunteerWaiver = isFarmVolunteering
+        && /\bALL VOLUNTEERS MUST COMPLETE A SAFETY WAIVER\b/i.test(description)
+        ? "All volunteers must complete a safety waiver on arrival."
         : null;
       // The clinic's Everyone tag conflicts with its explicit campus-only
       // eligibility section. Read the full body before display truncation.
@@ -4617,6 +4622,7 @@ async function fetchStanfordEvents() {
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
         ...(farmVolunteerEligibility ? [farmVolunteerEligibility] : []),
+        ...(farmVolunteerWaiver ? [farmVolunteerWaiver] : []),
         ...(ticketRequirement ? [ticketRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
       ];

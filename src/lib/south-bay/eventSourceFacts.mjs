@@ -66,6 +66,43 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Exact organizer pages supply admission omitted by newsletter/RSS excerpts.
+  // These corrections never create another occurrence or infer an RSVP gate.
+  // Evidence: docs/qa/2026-11-10-0907z-fact-check.md.
+  {
+    date: "2027-03-20",
+    matches: event => event.url === "https://ceefcares.org/2027-ceef-5k/"
+      && /^CEEF & CUSD Run for Great Schools 5K \+ Kids Dash$/i.test(event.title || "")
+      && event.venue === "Homestead High School",
+    facts: {
+      title: "CEEF & CUSD Run for Great Schools 5K + Kids Dash",
+      cost: "paid",
+      costNote: "Early registration: 5K $35; Kids Dash $15; family of four $90, plus card fees. Prices increase February 14.",
+    },
+    appendAttendanceNote: "The Kids Dash is for children age 5 and younger.",
+  },
+  {
+    date: "2027-03-21",
+    matches: event => /^https:\/\/my\.montalvoarts\.org\/3291\/3292\/?(?:[?#].*)?$/.test(event.url || "")
+      && /^Saint Michael Trio: What's the Big Deal About Beethoven\?$/i.test(event.title || "")
+      && event.venue === "Montalvo Arts Center",
+    facts: {
+      cost: "paid",
+      costNote: "Standard $47 ($42 ticket + $5 fee); student $30 ($25 ticket + $5 fee)",
+    },
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.url === "https://events.sjsu.edu/event/who-has-your-data-understanding-privacy-rights-in-the-age-of-ai"
+      && event.venue === "King Library",
+    facts: { cost: "free", endTime: "12:00 PM" },
+  },
+  {
+    date: "2026-11-10",
+    matches: event => event.url === "https://events.stanford.edu/event/filmmaker-kahlil-joseph-in-conversation"
+      && event.venue === "McMurtry Building",
+    copyReplacements: [[/\bBlknws\b/g, "BLKNWS"]],
+  },
   // The authenticated November 9 city newsletter distinguishes optional
   // event signup from the volunteer application needed for service credit.
   // Evidence: docs/qa/2026-11-10-0507z-fact-check.md.
@@ -3124,6 +3161,9 @@ const CORRECTIONS = [
     facts: {
       time: "7:30 PM",
       url: "https://montalvoarts.org/experience/carriage-house-concerts/the-buena-vista-orchestra/",
+      // The dated organizer page and linked ticket page confirm paid seating;
+      // no unverified ticket-price floor is supplied. Rechecked November 10.
+      cost: "paid",
     },
   },
   {
