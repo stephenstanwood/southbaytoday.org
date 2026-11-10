@@ -360,6 +360,7 @@ const EDITS = {
       ["This program is in-person at Santa Teresa Branch Library.", "This program is held in person at Santa Teresa Branch Library."],
       ["Paper Rockets Learn what makes", "Paper Rockets. Learn what makes"],
       ["Origami for the First Time Origami for Fun! Folding for Fun Origami Zoo", '"Origami for the First Time"; "Origami for Fun!"; "Folding for Fun"; "Origami Zoo".'],
+      ['"Origami Zoo".', '"Origami Zoo."'],
       ["(Recommended ages 5 years and up due to small parts).", "(Recommended for ages 5 years and up due to small parts.)"],
       ["their own Graham Cracker Haunted House for Halloween!", "their own graham cracker haunted house for Halloween!"],
       ["is for Middle and High Schoolers (grades 6-12) only.", "is for middle and high schoolers (grades 6-12) only."],
@@ -553,6 +554,7 @@ const EDITS = {
   },
   "Heritage Theatre": {
     description: [
+      ["'Trying To Get The Feeling Again'.", "'Trying To Get The Feeling Again.'"],
       [/^Featuring Assistant Principal Cello of the Seattle Symphony Nathan Chan$/g, "Featuring Nathan Chan, Assistant Principal Cello of the Seattle Symphony."],
       ["in De Ridder, Louisiana and raised in", "in De Ridder, Louisiana, and raised in"],
       ["never experienced a Winter quite like this!", "never experienced a winter quite like this!"],
@@ -800,6 +802,7 @@ const EDITS = {
   },
   "City Newsletter": {
     title: [
+      ["(Teens/Adults)", "(Teens / Adults)"],
       ["Landlord/Tenant Counseling", "Landlord / Tenant Counseling"],
       ["– Acc Men's Soccer Tournament", "– ACC Men's Soccer Tournament"],
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
@@ -823,6 +826,7 @@ const EDITS = {
     ],
     description: [
       [/\bCvmf\b/g, "CVMF"],
+      ["against 'the Tigers'.", "against 'the Tigers.'"],
       [/(\bThe newsletter calls [A-Z][a-z]+ \d{1,2}, \d{4})(?= a (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)/g, "$1,"],
       ["landlord/tenant law questions", "landlord / tenant law questions"],
       [/\bImax\b/g, "IMAX"],
@@ -938,6 +942,8 @@ const EDITS = {
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
     ],
     description: [
+      ['"Eterna Tour 2026".', '"Eterna Tour 2026."'],
+      ['"Hope For Civilization".', '"Hope For Civilization."'],
       ["! * Tickets go on sale", "! Tickets go on sale"],
       ["HA*ASH,", "Ha*Ash,"],
       ["NO ME Hablen De Amor", "No Me Hablen De Amor"],
