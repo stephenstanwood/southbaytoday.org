@@ -13,6 +13,7 @@ export function polishCivicModifiers(text) {
     ? text.replace(/\bbelow market rate (?=in-lieu fees?\b)/g, "below-market-rate ")
       .replace(/\bsquare footage-based fee\b/g, "square-footage-based fee")
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
+      .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
     : text;
 }
 

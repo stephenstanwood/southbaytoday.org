@@ -591,6 +591,7 @@ const EDITS = {
   "Santa Clara County Library": {
     title: [
       [/^Lego Club$/g, "LEGO Club"],
+      ["Intermediate Mass Black Holes", "Intermediate-Mass Black Holes"],
     ],
     attendanceNote: [
       ["KinderReadiness!", "Kinder Readiness!"],
@@ -876,6 +877,7 @@ const EDITS = {
   "Stanford Events": {
     title: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
+      ["Fossil Fuel Phase Out Scenarios", "Fossil Fuel Phase-Out Scenarios"],
       [/^Ent Experts Up Close:/g, "ENT Experts Up Close:"],
       [/\bPfas\b/g, "PFAS"],
       ['MD "Ion channels and transporters regulating lymphocyte function "', 'MD: "Ion channels and transporters regulating lymphocyte function"'],
