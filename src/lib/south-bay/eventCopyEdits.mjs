@@ -823,6 +823,7 @@ const EDITS = {
     ],
     description: [
       [/\bCvmf\b/g, "CVMF"],
+      [/(\bThe newsletter calls [A-Z][a-z]+ \d{1,2}, \d{4})(?= a (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)/g, "$1,"],
       ["landlord/tenant law questions", "landlord / tenant law questions"],
       [/\bImax\b/g, "IMAX"],
       [/\bEBT\/Snap benefits\b/g, "EBT/SNAP benefits"],
@@ -895,6 +896,7 @@ const EDITS = {
     ],
     description: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
+      ["film and dialogue with Kahlil Joseph Please join us", "film and dialogue with Kahlil Joseph. Please join us"],
       [/^Overview This one-hour CME activity\b/g, "Overview: This one-hour CME activity"],
       ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
       ["advancements in AI for biology, and relevant security", "advancements in AI for biology and relevant security"],
