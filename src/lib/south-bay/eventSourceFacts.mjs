@@ -66,6 +66,58 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Current organizer pages and authenticated newsletter originals confirm
+  // these exact occurrences. Preserve their clocks unless explicitly corrected.
+  // Evidence: docs/qa/2026-11-10-0007z-fact-check.md.
+  {
+    date: "2026-11-24",
+    matches: event => event.url === "https://www.ticketmaster.com/houston-dynamo-at-san-jose-earthquakes-western-conference-round-one-home-game-1-san-jose-california-11-24-2026/event/Z7r9jZ1AA7ff6"
+      && event.venue === "PayPal Park"
+      && event.title === "Houston Dynamo at San Jose Earthquakes: Western Conference Round One (Home Game 1)",
+    facts: { category: "sports" },
+  },
+  {
+    date: "2027-01-30",
+    matches: event => /^https:\/\/www\.eventbrite\.com\/e\/painting-the-year-of-the-ram-ink-painting-on-canvas-teensadults-tickets-2004454467270\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.title === "Painting the Year of the Ram: Ink Painting on Canvas (Teens/Adults)"
+      && event.venue === "Linn Studio behind the Triton Museum of Art",
+    facts: { cost: "paid", costNote: "$30 per person; materials included" },
+    appendAttendanceNote: "Ages 13+; select the afternoon teen/adult workshop when registering.",
+  },
+  {
+    date: "2026-12-10",
+    matches: event => event.url === "https://business.campbellchamber.net/events/details/making-spirits-bright-festive-community-open-house-16560"
+      && event.title === "Making Spirits Bright Community Open House" && event.venue === "Darling Fischer",
+    facts: { category: "community", costNote: "$15 suggested donation; includes appetizers and one beer/wine drink ticket" },
+    // Unknown-price event pages omit cost badges, so keep the voluntary terms
+    // in the visible attendance note as well as the structured cost note.
+    appendAttendanceNote: "$15 suggested donation includes appetizers and one beer/wine drink ticket. Advance RSVP is appreciated; walk-ins are welcome.",
+  },
+  {
+    date: "2026-11-13",
+    matches: event => event.url === "https://business.campbellchamber.net/events/details/ribbon-cutting-nexis-detailing-16561"
+      && /^Nexis Detailing Ribbon Cutting$/i.test(event.title || "")
+      && /^NEXIS Detailing Automotive Refinement$/i.test(event.venue || ""),
+    facts: { cost: "free", endTime: "6:30 PM" },
+  },
+  {
+    date: "2026-11-09",
+    matches: event => !event.url && event.title === "Stanford Palo Alto Veterans Day Celebration"
+      && event.venue === "MacArthur Park Restaurant & Bar" && event.time === "3:00 PM",
+    facts: { url: "https://events.stanford.edu/event/stanford-university-palo-alto-veterans-day-celebration" },
+  },
+  {
+    date: "2026-11-10",
+    matches: event => event.venue === "Encina Commons"
+      && event.url === "https://events.stanford.edu/event/protest-and-politics-in-turkey-in-the-70s",
+    facts: { cost: "free" },
+  },
+  {
+    date: "2026-11-10",
+    matches: event => event.venue === "Building 360"
+      && event.url === "https://events.stanford.edu/event/l-maria-bo-writing-on-water-cold-war-literary-translations-and-the-chinese-diaspora",
+    facts: { cost: "free" },
+  },
   // The Jazz calendar reused Black Nile's excerpt for Brass Queens. The
   // band's own dated detail page supplies its identity and ticket price.
   // https://sanjosejazz.org/events/brass-queens/

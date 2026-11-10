@@ -4,6 +4,13 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^New Faculty Research Lifecycle Workshop$/i,
+    venue: /.*/,
+    date: "2026-11-17",
+    reason: "SCU's organizer record identifies Faculty as the audience for this research-services workshop. Public eligibility is unconfirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/library/event/513401-new-faculty-research-lifecycle-workshop",
+  }),
+  Object.freeze({
     title: /^Surgery M&M$/i,
     venue: /^Li Ka Shing Center$/i,
     date: "2026-11-10",

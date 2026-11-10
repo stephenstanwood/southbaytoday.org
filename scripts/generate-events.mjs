@@ -518,6 +518,8 @@ const INTERNAL_EVENT_PATTERNS = [
   /\bace\s+your\s+(next\s+)?interview\b/i,
   /\bnetworking\s+success\b/i,
   // Academic writing / research workshops (internal university)
+  // SCU's organizer record explicitly lists Faculty as this workshop's audience.
+  /\bnew\s+faculty\s+research\s+lifecycle\s+workshop\b/i,
   /\brevising\s+for\s+clarity\b/i,
   /\bscientific\s+abstracts?\b/i,
   /\bnavigating\s+literature\s+reviews?\b/i,
@@ -3783,7 +3785,12 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // above was written for, one rung lower. Anchor on the local club names so a
   // matchup title beats a description's stray performance/artist cue.
   const LOCAL_TEAM = /\b(earthquakes|quakes|sharks|barracuda|bay fc|sj giants|san jose giants|49ers|valkyries|warriors|athletics|lafc|mls|nwsl|nhl|nfl|broncos|cardinal|spartans)\b/;
-  if (titleHasVs && LOCAL_TEAM.test(titleLower)) return "sports";
+  // Playoff sellers also use "Away at Home: Western Conference Round One".
+  // Require both a matchup and a playoff round so a team-related conference
+  // or public talk keeps its own category instead of becoming a game.
+  const titleHasPlayoffMatchup = /\s+at\s+/.test(titleLower)
+    && /\b(?:western|eastern)\s+conference\s+(?:round|(?:semi)?finals?)\b/.test(titleLower);
+  if ((titleHasVs || titleHasPlayoffMatchup) && LOCAL_TEAM.test(titleLower)) return "sports";
   // Title-anchored "concert" / "choir" / "symphony" / "orchestra" / "philharmonic"
   // wins over the arts rule below — venues like "Heritage Theatre" or "Hammer
   // Theatre Center" otherwise capture symphony/concert performances (Peninsula
