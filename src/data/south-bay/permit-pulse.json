@@ -1,19 +1,43 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-09T05:37:02.079Z",
+      "generatedAt": "2026-11-10T04:11:04.745Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 1 – Nov 8",
+      "dateRange": "Nov 2 – Nov 9",
       "stats": {
-        "total": 448,
-        "notable": 19,
-        "newUnits": 5,
-        "totalValuation": 20018071
+        "total": 557,
+        "notable": 28,
+        "newUnits": 9,
+        "totalValuation": 26975527
       },
       "permits": [
+        {
+          "id": "2026-108386-RS",
+          "address": "1018 Pine Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 104848,
+          "units": 0,
+          "issueDate": "2026-11-06",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-118441-RS",
+          "address": "15195 Clydelle Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 86904,
+          "units": 1,
+          "issueDate": "2026-11-06",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
         {
           "id": "2026-110120-RS",
           "address": "15159 Rosemar Av #3",
@@ -24,6 +48,30 @@
           "valuation": 82682,
           "units": 1,
           "issueDate": "2026-11-03",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-112936-RS",
+          "address": "668 Curtner Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached JADU",
+          "valuation": 80571,
+          "units": 1,
+          "issueDate": "2026-11-06",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-126432-RS",
+          "address": "1325 Santa Paula Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to JADU",
+          "valuation": 68785,
+          "units": 1,
+          "issueDate": "2026-11-06",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -51,6 +99,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-122661-RS",
+          "address": "137 Cedar Ln #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 3 Garage Conversion to JADU",
+          "valuation": 58757,
+          "units": 1,
+          "issueDate": "2026-11-06",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-143690-RS",
           "address": "1489 Fruitdale Av 26-2",
           "category": "residential-new",
@@ -73,66 +133,6 @@
           "units": 1,
           "issueDate": "2026-11-03",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-144905-CI",
-          "address": "3000 Orchard Py",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Rosendin Electric Tenant Improvement",
-          "valuation": 10255535,
-          "units": 0,
-          "issueDate": "2026-11-03",
-          "subtype": "Office"
-        },
-        {
-          "id": "2026-144393-CI",
-          "address": "5891 Rue Ferrari",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "First Church Religious Assembly TI",
-          "valuation": 2225000,
-          "units": 0,
-          "issueDate": "2026-11-03",
-          "subtype": "Church"
-        },
-        {
-          "id": "2026-142975-CI",
-          "address": "4553 N 1st St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Second Harvest (Be 100%) Pv Installation",
-          "valuation": 2163155,
-          "units": 0,
-          "issueDate": "2026-11-04",
-          "subtype": "Commercial/Industrial"
-        },
-        {
-          "id": "2026-145229-CI",
-          "address": "581 Dado St",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "Wessdel Tenant Improvement",
-          "valuation": 575000,
-          "units": 0,
-          "issueDate": "2026-11-04",
-          "subtype": "Manufacturing"
-        },
-        {
-          "id": "2026-146402-CI",
-          "address": "665 N King Rd",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "ReRoof",
-          "description": "(B100%) Reroof",
-          "valuation": 234360,
-          "units": 0,
-          "issueDate": "2026-11-05",
-          "subtype": "Commercial/Industrial"
         }
       ]
     }
