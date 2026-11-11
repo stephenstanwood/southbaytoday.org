@@ -4553,6 +4553,21 @@ async function fetchStanfordEvents() {
       const streamTerms = publicZoomOnly || virtualFromSourceSignal(ev.experience) === true
         ? stripHtml(ev.stream_info || "").trim() : "";
       const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1];
+      // Localist also puts mandatory joining instructions in ticket_cost.
+      // Keep an explicit imperative from online-only admission terms; a bare
+      // ticket URL, optional signup, or a hybrid stream is not a booking gate.
+      const zoomLinkRequirement = (publicZoomOnly || virtualFromSourceSignal(ev.experience) === true)
+        ? ticketTerms.match(/(?:^|[.!?]\s+)(Register for (?:a |the )?Zoom link\.?)(?=\s*$)/i)?.[1]
+        : null;
+      const locationRsvpRequirement = /^RSVP for location$/i.test(venue)
+        && /\bRSVP here\b/i.test(description)
+        ? "RSVP to receive the event location." : null;
+      // The symposium's public application option is conditional admission,
+      // not a walk-in invitation. Its terms follow the displayed excerpt.
+      const applicationRequirement = /^Wu Tsai Human Performance Alliance Research Symposium 2026$/i.test(ev.title || "")
+        && /\bMembers of the Stanford and Alliance communities may register directly, but require an access code\.\s*Anyone else interested in performance research may apply to attend\.\s*Acceptance will be on a rolling basis\b/i.test(description)
+        ? "Stanford and Alliance community members need an access code to register. Other attendees must apply and be accepted."
+        : null;
       // Preserve the publisher's paragraph boundaries before stripHtml joins
       // them: a credit without final punctuation can precede a closure notice.
       const registrationNotice = [ev.description_text || ev.description || "", ev.ticket_cost || "", streamTerms]
@@ -4567,7 +4582,7 @@ async function fetchStanfordEvents() {
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || ((ticketRequirement || streamRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
+        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4659,6 +4674,9 @@ async function fetchStanfordEvents() {
         ...(farmVolunteerWaiver ? [farmVolunteerWaiver] : []),
         ...(ticketRequirement ? [ticketRequirement] : []),
         ...(streamRequirement ? [streamRequirement] : []),
+        ...(zoomLinkRequirement ? [zoomLinkRequirement] : []),
+        ...(locationRsvpRequirement ? [locationRsvpRequirement] : []),
+        ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
       ];
       return {

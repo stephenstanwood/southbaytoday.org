@@ -45,7 +45,8 @@ export interface SchemaEventRecord {
   costNote?: string | null;
   virtual?: boolean | null; // set at ingest from the source's own location type
   // Advance-registration gate, set at ingest from the source's own
-  // registration fields. Absent means walk-up. See eventFilters.mjs.
+  // registration fields. Absent means unconfirmed, not verified walk-up
+  // admission; explicit "none" records no registration requirement.
   registration?: "none" | "required" | "appointment-only" | "full" | "closed" | null;
   // Latest instant registration could still be open (UTC ISO), resolved at
   // ingest from the source's published deadline rule. Only present on gated

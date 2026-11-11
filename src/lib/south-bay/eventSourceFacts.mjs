@@ -66,6 +66,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SJZ's venue label contradicts its own performance description. The host's
+  // exact concert record confirms Hammer, not the outdoor Christmas venue.
+  // https://events.sjsu.edu/event/hammer-presents-cool-yule-2026
+  // Evidence: docs/qa/2026-11-11-2307z-fact-check.md.
+  {
+    date: "2026-12-01",
+    url: "https://sanjosejazz.org/events/cool-yule-hsas/",
+    facts: { venue: "Hammer Theatre Center", address: "101 Paseo de San Antonio, San Jose, CA 95113" },
+  },
+  // Preserve verified entry conditions on retained cards whose truncated
+  // descriptions omit them. Later full/closed booking notices still win.
+  // Sources: exact Stanford Localist records and current organizer pages.
+  // Evidence: docs/qa/2026-11-11-2307z-fact-check.md.
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/open-wide-the-doors-the-prison-memoirs-of-mahvash-sabet",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register for Zoom link.",
+  },
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/book-talk-changing-gender",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "RSVP to receive the event location.",
+  },
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/wu-tsai-human-performance-alliance-research-symposium-2026",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Stanford and Alliance community members need an access code to register. Other attendees must apply and be accepted.",
+  },
+  // SIR expands to Special Intensive Revision in the publisher's own body.
+  // A global Sir -> SIR rule would damage the honorific on unrelated titles.
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/the-battle-for-a-free-ballot-sir-the-election-commission-and-the-future-of-indian-democracy",
+    facts: { title: "The Battle for a Free Ballot: SIR, the Election Commission, and the Future of Indian Democracy" },
+  },
   // Localist's May–November series bounds turned this scheduled tour into a
   // clock-free exhibit on November 11. The current page and exact API instance
   // agree on November 12, 4–4:30 PM. Repair retained copies as well as ingestion;
