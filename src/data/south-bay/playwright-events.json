@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-10T21:18:53.475Z",
+    "generatedAt": "2026-11-11T01:28:12.967Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 195,
+    "eventCount": 199,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -21,7 +21,7 @@
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (6)",
+      "The Tech Interactive (10)",
       "Books Inc (6)",
       "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 10,
+        "liveCount": 10,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -423,7 +423,7 @@
       "city": "san-jose",
       "category": "music",
       "cost": null,
-      "description": "Brothers Aaron and Lawrence Shaw, performing as Black Nile, see a different Los Angeles: not Hollywood's fantasy but a city of improvisation, fresh ideas and jazz, built on deep Black and Latino roots. Born and raised in LA's Inglewood neighborhood, they came up in the city's red-hot jazz scene, rubbing shoulders with elder legends and next-gen stars alike.",
+      "description": "Female-led New York brass band Brass Queens fuse New Orleans tradition with Big Apple energy, turning every show into a nonstop party of pop sing-alongs, reggaeton, and Frenchmen Street spirit. From Brooklyn street corners to Carnegie Hall, the Met Gala, and stages with David Byrne, they’ve earned their reputation as “the hardest working band in town.”",
       "url": "https://sanjosejazz.org/events/brass-queens/",
       "source": "San Jose Jazz",
       "kidFriendly": false
@@ -506,10 +506,10 @@
       "venue": "Linden Tree Books",
       "address": "265 State St, Los Altos, CA 94022",
       "city": "los-altos",
-      "registration": "required",
+      "registration": "full",
       "category": "arts",
       "cost": "free",
-      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Nathan Hale to the store to celebrate the launch of Nathan Hale’s Hazardous Tales: The Web of War! ​Nathan will be in conversation with bestselling author Nidhi Chanani. After their conversation, Nathan and Nidhi will battle in an old-fashioned, no-holds-barred DRAW-OFF! RSVP Now » ​This event is free, but you must purchase a copy of The Web of War from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. In the summer of 1944, the Allied forces carried out the largest seaborne invasion in military history. American, British, and Canadian soldiers took to the skies and the sand, bombarding the beaches of Normandy, France in the famous operation known as D-Day. This pivotal battle turned the tides against the Nazis, but how did the French find themselves overtaken by enemy forces to begin with? How did Hitler and his Nazi ideology sweep through Germany so quickly? And how did American military service members and civilians, from generals, to war correspondents, to heroic Black soldiers, work together to defeat the Nazi government and bring an end to Hitler’s reign of terror? In The Web of War, history is in your hands! Pick your path and unravel the thrilling, shocking, gruesome, and TRUE stories of the second World War in this all-new hazardous tale.",
+      "description": "We are incredibly excited to welcome New York Times bestselling author-illustrator Nathan Hale to the store to celebrate the launch of Nathan Hale’s Hazardous Tales: The Web of War! ​Nathan will be in conversation with bestselling author Nidhi Chanani. After their conversation, Nathan and Nidhi will battle in an old-fashioned, no-holds-barred DRAW-OFF! ​This event is free, but you must purchase a copy of The Web of War from Linden Tree to enter the signing line. Books can be purchased with an event ticket, in-person at Linden Tree, or on our website. In the summer of 1944, the Allied forces carried out the largest seaborne invasion in military history. American, British, and Canadian soldiers took to the skies and the sand, bombarding the beaches of Normandy, France in the famous operation known as D-Day. This pivotal battle turned the tides against the Nazis, but how did the French find themselves overtaken by enemy forces to begin with? How did Hitler and his Nazi ideology sweep through Germany so quickly? And how did American military service members and civilians, from generals, to war correspondents, to heroic Black soldiers, work together to defeat the Nazi government and bring an end to Hitler’s reign of terror? In The Web of War, history is in your hands! Pick your path and unravel the thrilling, shocking, gruesome, and TRUE stories of the second World War in this all-new hazardous tale.",
       "url": "https://www.lindentreebooks.com/events-calendar/",
       "source": "Linden Tree Books",
       "kidFriendly": false,
@@ -1346,7 +1346,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-10T21:17:46.695Z"
+        "checkedAt": "2026-11-11T01:26:57.541Z"
       }
     },
     {
@@ -1369,7 +1369,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-10T21:17:46.696Z"
+        "checkedAt": "2026-11-11T01:26:57.542Z"
       }
     },
     {
@@ -1392,7 +1392,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-10T21:17:46.699Z"
+        "checkedAt": "2026-11-11T01:26:57.543Z"
       }
     },
     {
@@ -1415,7 +1415,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-10T21:17:46.699Z"
+        "checkedAt": "2026-11-11T01:26:57.544Z"
       }
     },
     {
@@ -1438,7 +1438,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-10T21:17:46.699Z"
+        "checkedAt": "2026-11-11T01:26:57.544Z"
       }
     },
     {
@@ -1461,7 +1461,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-10T21:17:46.700Z"
+        "checkedAt": "2026-11-11T01:26:57.544Z"
       }
     },
     {
@@ -3367,7 +3367,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.577Z"
+        "checkedAt": "2026-11-11T01:27:24.207Z"
       }
     },
     {
@@ -3391,7 +3391,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3415,7 +3415,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3439,7 +3439,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3463,7 +3463,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3487,7 +3487,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3511,7 +3511,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3535,7 +3535,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3559,7 +3559,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.580Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3600,7 +3600,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.581Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3624,7 +3624,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-10T21:18:14.581Z"
+        "checkedAt": "2026-11-11T01:27:24.209Z"
       }
     },
     {
@@ -3662,11 +3662,11 @@
       "kidFriendly": true
     },
     {
-      "id": "0d7b8aac6ccd",
+      "id": "549bc913a42e",
       "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
-      "time": "5:00PM",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "6:00PM",
       "endTime": null,
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
@@ -3718,6 +3718,74 @@
       "date": "2026-12-17",
       "displayDate": "Thu, Dec 17",
       "time": "4:30PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "38f9ee77cb10",
+      "title": "LASERS: Holiday Magic",
+      "date": "2026-12-22",
+      "displayDate": "Tue, Dec 22",
+      "time": "4:45PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "1bb48fb347ad",
+      "title": "LASERS: KPOP Demon Hunters",
+      "date": "2026-12-28",
+      "displayDate": "Mon, Dec 28",
+      "time": "4:45PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "16fb04e07000",
+      "title": "Girl Scout Program: Roller Coaster Design Challenge (Daisies)",
+      "date": "2027-01-16",
+      "displayDate": "Sat, Jan 16",
+      "time": "10:30AM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "31966d3cfe04",
+      "title": "Girl Scout Program: Home Scientist (Brownies)",
+      "date": "2027-01-16",
+      "displayDate": "Sat, Jan 16",
+      "time": "2:00PM",
       "endTime": null,
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
