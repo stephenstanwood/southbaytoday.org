@@ -1,22 +1,22 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-11T18:01:15.175Z",
+    "generatedAt": "2026-11-11T22:19:21.099Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 203,
+    "eventCount": 202,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (10)",
+      "San Jose Jazz (11)",
       "Linden Tree Books (7)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (4)",
       "Mountain Winery (1)",
-      "Children's Discovery Museum (3)",
+      "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (15)",
       "Santana Row (6)",
-      "City of Cupertino (37)",
+      "City of Cupertino (36)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 11,
+        "liveCount": 11,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -176,8 +176,8 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 3,
-        "liveCount": 3,
+        "count": 2,
+        "liveCount": 2,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 37,
-        "liveCount": 37,
+        "count": 36,
+        "liveCount": 36,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -408,6 +408,23 @@
       "cost": null,
       "description": "Noah and the Arkiteks bring Bay Area soul, blues & funk, channeling Otis Redding, Sam Cooke & Stevie Wonder with a groove all their own.",
       "url": "https://sanjosejazz.org/events/noah-the-arkiteks/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "fb62c6952d87",
+      "title": "COOL YULE: HSAS Full Ensemble & Vocal Ensemble",
+      "date": "2026-12-01",
+      "displayDate": "Tue, Dec 1",
+      "time": "7:30pm",
+      "endTime": null,
+      "venue": "Plaza de César Chávez",
+      "address": "",
+      "city": "san-jose",
+      "category": "music",
+      "cost": null,
+      "description": "The San Jose Jazz High School All Stars Full Ensemble and Vocal Ensemble open the SJSU Jazz Orchestra’s annual Cool Yule concert at the Hammer Theatre Center with a set of holiday favorites. Come hear the next generation of Bay Area jazz talent kick off the season in downtown San Jose!",
+      "url": "https://sanjosejazz.org/events/cool-yule-hsas/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -1005,23 +1022,6 @@
       "kidFriendly": true
     },
     {
-      "id": "a9a3214dddb5",
-      "title": "Team Quixilver Robotics",
-      "date": "2026-11-14",
-      "displayDate": "Sat, Nov 14",
-      "time": "10:00 am",
-      "endTime": "12:00 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "5cf49f965f57",
       "title": "Daisy Day: Design with Nature",
       "date": "2026-11-21",
@@ -1407,7 +1407,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-11T18:00:00.007Z"
+        "checkedAt": "2026-11-11T22:18:14.182Z"
       }
     },
     {
@@ -1430,7 +1430,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-11T18:00:00.008Z"
+        "checkedAt": "2026-11-11T22:18:14.184Z"
       }
     },
     {
@@ -1445,15 +1445,15 @@
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, photos with Santa, balloons, and more.Spirit of The Row Dates: December 1st, 8th, & 15th.Spirit of The Row Line Up to be announced soon!",
+      "description": "DECEMBER 1, 2026  Get in the Spirit of The Row! Join us for the first 3 Tuesdays in December from 6pm-8pm leading up to Christmas, for a live holiday show featuring local arts and community groups, Snow Showers in Park Valencia, photos with Santa, balloons, and more.Spirit of The Row Entertainment Line-Up:Tuesday, December 1• San Jose Dance Theater• Greg Farbizio’s Vocal School• Volare Studio• Santa Clara Elite Dance Team• Archbishop Mitty High School• West Valley Dance Company• AoDai Festival• Children’s Musical TheaterTuesday, December 8• The New Ballet• Harker School• The Dance Company of Los Gatos• SheNova x Tingna kpop Dance Group• Sreenidhi Mudigonda• Almaden Spirit Athletics• Grupo Folklorico Los Laureles• Dancyn Studio• Dance Expressions• St Francis High School Dance TeamsTuesday, December 15• Fantasy Dance• Presentation High School Dance Team• NorCal Dance• San Francisco Dance Company• Fusion Dance Company• Greg Farbizio’s Vocal School• Natalie Ramskov",
       "url": "https://santanarow.com/event/spirit-of-the-row/",
       "source": "Santana Row",
-      "kidFriendly": false,
+      "kidFriendly": true,
       "occurrenceEvidence": {
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-11T18:00:00.010Z"
+        "checkedAt": "2026-11-11T22:18:14.184Z"
       }
     },
     {
@@ -1476,7 +1476,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-11T18:00:00.010Z"
+        "checkedAt": "2026-11-11T22:18:14.184Z"
       }
     },
     {
@@ -1499,7 +1499,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-11T18:00:00.010Z"
+        "checkedAt": "2026-11-11T22:18:14.186Z"
       }
     },
     {
@@ -1522,25 +1522,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-11T18:00:00.010Z"
+        "checkedAt": "2026-11-11T22:18:14.186Z"
       }
-    },
-    {
-      "id": "6c530208231f",
-      "title": "Veterans Day Ceremony",
-      "date": "2026-11-11",
-      "displayDate": "Wed, Nov 11",
-      "time": "11:00 AM",
-      "endTime": "01:00 PM",
-      "venue": "Memorial Park",
-      "address": "Memorial Park, 21121 Stevens Creek Boulevard, 95014, View Map",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Cupertino’s Veterans Day Ceremony is a City-sponsored event managed by an external organization. For details, visit the event organizer's webpage.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Veterans-Day-Ceremony",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "da31818465bd",
@@ -3411,7 +3394,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.938Z"
+        "checkedAt": "2026-11-11T22:18:39.968Z"
       }
     },
     {
@@ -3435,7 +3418,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3459,7 +3442,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3483,7 +3466,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3507,7 +3490,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3531,7 +3514,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3555,7 +3538,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3579,7 +3562,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3603,7 +3586,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.970Z"
       }
     },
     {
@@ -3644,7 +3627,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.971Z"
       }
     },
     {
@@ -3668,7 +3651,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T18:00:29.942Z"
+        "checkedAt": "2026-11-11T22:18:39.971Z"
       }
     },
     {
