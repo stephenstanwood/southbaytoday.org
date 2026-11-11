@@ -8,6 +8,12 @@ const EDITS = {
     title: [
       ["Lasers: Kpop Demon Hunters", "Lasers: K-Pop Demon Hunters"],
     ],
+    description: [
+      [/\bImax\b/g, "IMAX"],
+      ["share the one of a kind experience", "share the one-of-a-kind experience"],
+      ["Juniors begin by animating their own artwork, then learning about video game design.", "Juniors begin by animating their own artwork, then learn about video game design."],
+      ["images & glasses, and experiment with sound.", "images and glasses and experiment with sound."],
+    ],
   },
   "SC County Fire Dept": {
     title: [
