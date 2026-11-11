@@ -1,72 +1,80 @@
 {
-  "generatedAt": "2026-11-10T04:19:06.763Z",
-  "weekLabel": "Nov 9 – Nov 16",
-  "weekStart": "2026-11-09",
-  "weekEnd": "2026-11-16",
+  "generatedAt": "2026-11-11T04:18:51.028Z",
+  "weekLabel": "Nov 10 – Nov 17",
+  "weekStart": "2026-11-10",
+  "weekEnd": "2026-11-17",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Campbell's week runs from Tuesday storytimes and an ESL Conversation Club at Campbell Library, plus Scott Lambridis: St. Ulphia's Dead at Books Inc. Pruneyard, to the Veterans Day Memorial at City Hall Wednesday at 9:00 AM.",
+      "summary": "Campbell marks Veterans Day with a memorial at City Hall Wednesday at 9:00 AM, then holds a Friends of the Campbell Library Used Book Sale at the library Saturday at 10:00 AM.",
       "highlights": [
         {
           "type": "event",
-          "title": "ESL Conversation Club",
-          "when": "Tue, Nov 10 · 1:30 PM",
-          "venue": "Campbell Library",
-          "category": "education",
-          "url": "https://sccl.bibliocommons.com/events/6a1a27d94dc267647dab1606"
+          "title": "Scott Lambridis: St. Ulphia's Dead",
+          "when": "Tue, Nov 10 · 7:00 PM",
+          "venue": "Books Inc. Pruneyard",
+          "category": "arts",
+          "url": "https://www.booksinc.com/pages/events"
         },
         {
           "type": "event",
-          "title": "Music & Movement Storytime",
-          "when": "Tue, Nov 10 · 10:45 AM",
-          "venue": "Campbell Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a9323931c197d11325bbacf"
+          "title": "Campbell Veterans Day Memorial",
+          "when": "Wed, Nov 11 · 9:00 AM",
+          "venue": "Campbell City Hall",
+          "category": "community",
+          "url": "https://www.campbellveteransmemorial.com/post/cvmf-newsletter-september-2026"
+        },
+        {
+          "type": "cityhall",
+          "title": "Campbell Tech Park project: traffic fix limited to crosswalks; redwoods slated for removal",
+          "when": "Mon, Nov 2",
+          "venue": null,
+          "category": "government",
+          "url": "https://pub-campbell.escribemeetings.com/"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:49.670Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:35.063Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Tuesday brings a Monthly Chat with Mayor Moore at 5:00 PM and a Pow Wow Dance Demonstration at Cupertino Library at 7:00 PM, before Wednesday's 11:00 AM Veterans Day Ceremony at Memorial Park.",
+      "summary": "Cupertino's Planning Commission is scheduled Tuesday to review Eden Housing's 251-unit N. Wolfe Road project and The Hanover Company's 363-apartment proposal on Stevens Creek Boulevard, with Mayor Moore's monthly chat at 5:00 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Homework Help for Grades K-6",
-          "when": "Tue, Nov 10 · 4:30 PM",
-          "venue": "Cupertino Library",
+          "title": "Monthly Chat with Mayor Moore",
+          "when": "Tue, Nov 10 · 5:00 PM",
+          "venue": null,
           "category": "community",
-          "url": "https://sccl.bibliocommons.com/events/6a86814fdb86e4004d866f45"
+          "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore"
+        },
+        {
+          "type": "event",
+          "title": "Veterans Day Ceremony",
+          "when": "Wed, Nov 11 · 11:00 AM",
+          "venue": "Memorial Park",
+          "category": "community",
+          "url": "https://www.cupertino.gov/Parks-Recreation/Events/Festivals/Veterans-Day-Ceremony"
         },
         {
           "type": "cityhall",
-          "title": "Cupertino agenda: $11.8M park fund for Finch Avenue property",
-          "when": "Mon, Nov 2",
+          "title": "Planning Commission to review 251-unit Eden Housing project on N. Wolfe Road",
+          "when": "Tue, Nov 10",
           "venue": null,
           "category": "government",
-          "url": "https://cupertino.legistar.com/Calendar.aspx?From=11%2F2%2F2026&To=11%2F2%2F2026"
+          "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5233&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:51.401Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:36.432Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Los Gatos has the Monday Morning Book Club on The Mountains Sing at the library at 11 AM, \"Hiding in Plain Sight: Disability and Art History\" at NUMU Saturday, and the Farmers Market at Town Park Plaza Sunday.",
+      "summary": "Saturday brings Hiding in Plain Sight: Disability and Art History at NUMU at 2:00 PM, followed Sunday by the Los Gatos Farmers Market at Town Park Plaza at 9:00 AM and a Managing Holiday Anxiety class at 11:30 AM.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Monday Morning Book Club: The Mountains Sing",
-          "when": "Mon, Nov 9 · 11:00 AM",
-          "venue": "Los Gatos Library",
-          "category": "arts",
-          "url": "https://losgatosca.libcal.com/calendars?cid=-1&t=g&d=0000-00-00&cal=-1&inc=0"
-        },
         {
           "type": "event",
           "title": "Hiding in Plain Sight: Disability and Art History",
@@ -74,15 +82,23 @@
           "venue": "NUMU (New Museum Los Gatos)",
           "category": "arts",
           "url": "https://www.numulosgatos.org/events/plain-sight"
+        },
+        {
+          "type": "event",
+          "title": "Managing Holiday Anxiety class with Linda Ikeda",
+          "when": "Sun, Nov 15 · 11:30 AM",
+          "venue": "Presbyterian Church of Los Gatos",
+          "category": "education",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSdH1d_sy3gcR_GaLONPYY4lnw9-R24Ws2DFuralX_52iy7JnQ/viewform"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:52.844Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:37.809Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Tuesday's council meeting takes up proclamations for Community Foundation Week and National Hunger and Homelessness Awareness Week plus the 2024 Community Greenhouse Gas Emissions Inventory, while the Senior Center hosts a Puzzle Swap that afternoon.",
+      "summary": "Mountain View's council meets Tuesday on proclamations for Community Foundation Week and National Hunger and Homelessness Awareness Week plus the 2024 Community Greenhouse Gas Emissions Inventory, while Thursday brings a Writer's Meet Up at Books Inc.",
       "highlights": [
         {
           "type": "event",
@@ -109,13 +125,13 @@
           "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3368&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:54.906Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:39.211Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saratoga kicks off Tuesday with the Falck Community Listening Session at the Senior Center at 1 PM, then STEM: Build with Candy at the library at 4 PM, followed by Drop-in Tech Help Thursday at 10 AM.",
+      "summary": "Saratoga's week starts with the Falck Community Listening Session at the Senior Center Tuesday at 1 PM, then Montalvo Arts Center hosts The Smithereens Thursday and Marc Broussard Friday, both at 7:30 PM.",
       "highlights": [
         {
           "type": "event",
@@ -127,29 +143,21 @@
         },
         {
           "type": "event",
-          "title": "Homework Help for Grades K-6",
-          "when": "Tue, Nov 10 · 3:00 PM",
+          "title": "Drop-in Tech Help",
+          "when": "Thu, Nov 12 · 10:00 AM",
           "venue": "Saratoga Library",
           "category": "education",
-          "url": "https://sccl.bibliocommons.com/events/6a8252f49d8416003f69bd0b"
+          "url": "https://sccl.bibliocommons.com/events/6972946ac967cb4120838571"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:56.687Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:40.605Z"
     },
     "sunnyvale": {
       "cityId": "sunnyvale",
       "cityName": "Sunnyvale",
-      "summary": "The Planning Commission is scheduled Monday to consider a 192-child preschool at 855 E. Homestead Road and a rewrite of Sunnyvale's residential parking rules, while Friday brings the Unique Boutique Holiday Craft Fair and Saturday the Farmers Market.",
+      "summary": "Sunnyvale's council meets Tuesday to consider an amended Endress+Hauser agreement for the Clean Water Facility, then Friday brings the Unique Boutique Holiday Craft Fair and a ceremonial check presentation for fire truck replacement funding.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Teen Spotlight: Financial Empowerment (Grades 3-5)",
-          "when": "Mon, Nov 9 · 6:00 PM",
-          "venue": "Sunnyvale Main Library",
-          "category": "family",
-          "url": "https://sunnyvale.libcal.com/event/17499307"
-        },
         {
           "type": "event",
           "title": "Teen Volunteer Club: Letters Against Isolation",
@@ -159,37 +167,45 @@
           "url": "https://sunnyvale.libcal.com/event/16531840"
         },
         {
+          "type": "event",
+          "title": "Ceremonial Check Presentation for Fire Truck Replacement Funding",
+          "when": "Fri, Nov 13 · 1:00 PM",
+          "venue": "Sunnyvale Fire Station Five",
+          "category": "community",
+          "url": "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/431c99d"
+        },
+        {
           "type": "council",
-          "title": "Board and Commission Interviews",
-          "when": "Mon, Nov 9",
+          "title": "Approve the Second Amendment to the Agreement with Endress+Hauser Inc. for Instrumentation and Related Services for the Clean Water Facility, Increasing the Not-to-Exceed Amount to $445,000 and Extending the Term Through October 18, 2027 (F27-066)",
+          "when": "Tue, Nov 10",
           "venue": null,
           "category": "government",
-          "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4527&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5"
+          "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4528&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:58.093Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:42.060Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San José",
-      "summary": "Council meets Tuesday on agreements for the Blossom Valley Family Center, a VTA funding agreement for adaptive traffic control, and an El Niño update on flood preparedness, while SJSU's Hugh Gillis Hall hosts Casa Feliz Monday.",
+      "summary": "Council's Tuesday agenda covers a Blossom Valley Family Center agreement and an El Niño update with flood preparedness, while Wednesday brings the 108th Veterans Day Parade at 11 AM and MOAA's parade and ceremony at noon downtown.",
       "highlights": [
         {
           "type": "event",
-          "title": "Casa Feliz: An Audio Drama About Belonging",
-          "when": "Mon, Nov 9 · 5:30 PM",
-          "venue": "Hugh Gillis Hall",
-          "category": "arts",
-          "url": "https://events.sjsu.edu/event/casa-feliz-an-audio-drama-about-belonging"
+          "title": "All Ages Storytime",
+          "when": "Tue, Nov 10 · 11:30 AM",
+          "venue": "Children's Discovery Museum",
+          "category": "family",
+          "url": "https://www.cdm.org/calendar/"
         },
         {
           "type": "event",
-          "title": "All Recovery Meeting",
-          "when": "Mon, Nov 9 · 6:15 PM",
-          "venue": "Student Union",
-          "category": "community",
-          "url": "https://events.sjsu.edu/event/all-recovery-meeting-3060"
+          "title": "SJSU Art Galleries Tuesday Night Lecture: Ryan Carrington",
+          "when": "Tue, Nov 10 · 5:00 PM",
+          "venue": "ART 133: Art Lecture Hall",
+          "category": "education",
+          "url": "https://events.sjsu.edu/event/sjsu-art-galleries-tuesday-night-lecture-ryan-carrington"
         },
         {
           "type": "council",
@@ -200,29 +216,29 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8123&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:18:59.543Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:43.506Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Council's Tuesday agenda includes action on tree maintenance agreements with West Coast Arborists and BrightView Landscape Services, while the Sci-Fi Fantasy Unbook Club meets at Mission Branch Library that evening at 5:30 PM.",
+      "summary": "The City Council's Tuesday agenda includes delegating authority to sign a $3,791,855 ten-year cQuant.io modeling software agreement for Silicon Valley Power, while Wednesday brings a Veterans Day Ceremony on St. Ignatius Lawn.",
       "highlights": [
         {
           "type": "event",
-          "title": "Forge Volunteer Hours",
-          "when": "Tue, Nov 10 · 2:30 PM",
-          "venue": "The Forge Garden",
-          "category": "community",
-          "url": "https://events.scu.edu/sustainability/event/517360-forge-volunteer-hours"
+          "title": "Sci-Fi Fantasy Unbook Club",
+          "when": "Tue, Nov 10 · 5:30 PM",
+          "venue": "Mission Branch Library",
+          "category": "arts",
+          "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/114616/"
         },
         {
           "type": "event",
-          "title": "Interactive, Accessible Course Notes and Slides with PreTeXt",
-          "when": "Tue, Nov 10 · 3:50 PM",
-          "venue": "Santa Clara University — O'Connor Hall, Room 205",
+          "title": "Brown Bag in the Humanities featuring Michelle Velasquez-Potts (Gender and Sexuality Studies)",
+          "when": "Wed, Nov 11 · 11:45 AM",
+          "venue": "Learning Commons Viewing and Taping A",
           "category": "education",
-          "url": "https://events.scu.edu/arts-and-sciences/event/525089-interactive-accessible-course-notes-and-slides-with-p"
+          "url": "https://events.scu.edu/arts-and-sciences/event/524817-brown-bag-in-the-humanities-featuring-michelle-velasq"
         },
         {
           "type": "council",
@@ -233,83 +249,83 @@
           "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5055&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:19:01.418Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:45.018Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Los Altos Library has Bilingual Mandarin Family Storytime Tuesday at 1:00 PM, Classical Guitar Open Mic Tuesday at 6:30 PM, and Toddler Storytime Thursday at 10:30 AM.",
+      "summary": "Thursday at Los Altos Library runs from Toddler Storytime at 10:30 AM through an ESL Conversation Club at 1:30 PM, Preschool Storytime at 3:30 PM, a Teen Dungeons and Dragons Social Club at 4:30 PM, and a Handcrafted Yarn & Fabric Winter Birds Craft at 6:30 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Bilingual Mandarin Family Storytime",
-          "when": "Tue, Nov 10 · 1:00 PM",
+          "title": "ESL Conversation Club",
+          "when": "Thu, Nov 12 · 1:30 PM",
           "venue": "Los Altos Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a56d18488e9bf280030f051"
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/692f74b6d8681b29004207a0"
         },
         {
           "type": "event",
-          "title": "Classical Guitar Open Mic",
-          "when": "Tue, Nov 10 · 6:30 PM",
+          "title": "Toddler Storytime",
+          "when": "Thu, Nov 12 · 10:30 AM",
           "venue": "Los Altos Library",
-          "category": "music",
-          "url": "https://sccl.bibliocommons.com/events/6a2c66a090cc4e3a790db8b5"
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6abbf8bb7c8c150075766cf7"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:19:03.116Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:47.085Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Monday brings a Stanford Palo Alto Veterans Day Celebration at MacArthur Park Restaurant & Bar at 3:00 PM and Gardener's Hour at Gamble Garden at 5:30 PM, then Tuesday's Vintage Media Lab at Rinconada Library at 10:00 AM.",
+      "summary": "Wednesday's lineup at Stanford runs from the \"Tangling the Digital: Weaving, Printmaking, Computing\" event at McMurtry Building at 1 PM to Lunchtime Recitals & Communi-Tea at Memorial Church at 12:15 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Stanford Palo Alto Veterans Day Celebration",
-          "when": "Mon, Nov 9 · 3:00 PM",
-          "venue": "MacArthur Park Restaurant & Bar",
-          "category": "community",
-          "url": "https://events.stanford.edu/event/stanford-university-palo-alto-veterans-day-celebration"
+          "title": "Tangling the Digital: Weaving, Printmaking, Computing",
+          "when": "Wed, Nov 11 · 1:00 PM",
+          "venue": "McMurtry Building",
+          "category": "arts",
+          "url": "https://events.stanford.edu/event/tangling-the-digital-weaving-printmaking-computing"
         },
         {
           "type": "event",
-          "title": "November Gardener's Hour",
-          "when": "Mon, Nov 9 · 5:30 PM",
-          "venue": "Gamble Garden",
-          "category": "outdoor",
-          "url": "https://www.gamblegarden.org/event/nov-gardeners-hour/"
+          "title": "Lunch Club Series | Beneath Tiahuanacu's Streets: Ceramic iconography and Ancient Heritage in an Aymara town",
+          "when": "Wed, Nov 11 · 12:00 PM",
+          "venue": "Building 500, Archaeology Center",
+          "category": "arts",
+          "url": "https://events.stanford.edu/event/lunch-club-series-beneath-tiahuanacus-streets-ceramic-iconography-and-ancient-heritage-in-an-aymara-town"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:19:04.966Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:49.283Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas marks Veterans Day with an event Wednesday at 9:00 AM between City Hall and the Community Center, after Tuesday library programs including Bilingual Family Storytime at 6:30 PM and Puppet Art Theater Presents Super Tommy at 7:00 PM.",
+      "summary": "Milpitas marks Veterans Day with an event at Veterans Plaza Wednesday at 9 AM, then Toddler Storytime Thursday at 10:30 AM and a Qi Gong Meditation & Exercise Class Friday at 1 PM, both at Milpitas Library.",
       "highlights": [
         {
           "type": "event",
-          "title": "Baby Bouncers Lapsit for Prewalkers",
-          "when": "Tue, Nov 10 · 11:30 AM",
-          "venue": "Milpitas Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a55bdc71006a63d00224466"
+          "title": "Milpitas Veterans Day Event",
+          "when": "Wed, Nov 11 · 9:00 AM",
+          "venue": "Veterans Plaza",
+          "category": "community",
+          "url": "https://www.milpitas.gov/1326/11084/Veterans-Day"
         },
         {
           "type": "event",
-          "title": "Homework Help for Grades K-6",
-          "when": "Tue, Nov 10 · 4:00 PM",
+          "title": "Toddler Storytime: Stories and Songs for 12-36-Month-Olds",
+          "when": "Thu, Nov 12 · 10:30 AM",
           "venue": "Milpitas Library",
           "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56ca6"
+          "url": "https://sccl.bibliocommons.com/events/6a53dbd2f213992f00c3bb17"
         }
       ],
-      "weekLabel": "Nov 9 – Nov 16",
-      "generatedAt": "2026-11-10T04:19:06.463Z"
+      "weekLabel": "Nov 10 – Nov 17",
+      "generatedAt": "2026-11-11T04:18:50.726Z"
     }
   }
 }

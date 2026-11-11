@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T04:11:04.551Z",
+  "generatedAt": "2026-11-11T04:10:43.451Z",
   "meetings": {
     "san-jose": {
       "date": "2026-11-10",
@@ -13,30 +13,30 @@
       "agendaItems": [
         {
           "title": "Agreements with Catholic Charities of Santa Clara County and U.S. Department of Housing and Urban Development for the Development of the Blossom Valley Family Center.",
-          "sequence": 44
+          "sequence": 43
         },
         {
           "title": "Funding Agreement with the Santa Clara Valley Transportation Authority for the San José Arterial Management - Adaptive Traffic Control System Deployment Project.",
-          "sequence": 45
+          "sequence": 44
         },
         {
           "title": "El Niño Update, Flood Preparedness, and Proclamation of a Local Emergency.",
-          "sequence": 50
+          "sequence": 49
         },
         {
           "title": "Actions Related to the Conditional Vacation of a Portion of Orchard Parkway. - TO BE HEARD AFTER ITEM 10.2",
-          "sequence": 51
+          "sequence": 50
         },
         {
           "title": "Actions Related to First Community Housing Stabilization.",
-          "sequence": 59
+          "sequence": 58
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-09T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -74,29 +74,59 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-09T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
-      "date": "2026-11-09",
-      "displayDate": "Mon, Nov 9",
-      "startTime": "17:00",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "startTime": "19:00",
+      "closedSessionStart": "18:00",
       "bodyName": "City Council",
-      "location": "Online and Cottonwood Conference Room, City Hall",
+      "location": "Online and Council Chambers, City Hall",
       "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4527&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4527,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4528&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4528,
       "agendaItems": [
         {
-          "title": "Board and Commission Interviews",
-          "sequence": 6
+          "title": "Approve the Second Amendment to the Agreement with Endress+Hauser Inc. for Instrumentation and Related Services for the Clean Water Facility, Increasing the Not-to-Exceed Amount to $445,000 and Extending the Term Through October 18, 2027 (F27-066)",
+          "sequence": 20
+        },
+        {
+          "title": "Silicon Valley Clean Energy (SVCE) Community Grants Award Announcement, Presented by Eric Rodríguez, Decarbonization and Community Strategies Lead, SVCE",
+          "sequence": 25
+        },
+        {
+          "title": "Appoint Applicants to the Arts Commission, Heritage Preservation Commission, and Housing and Human Services Commission",
+          "sequence": 29
+        },
+        {
+          "title": "Approve City Council Meeting Minutes of October 27, 2026",
+          "sequence": 18
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-09",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-09T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-10",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "cupertino": {
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "startTime": "15:30",
+      "bodyName": "City Council",
+      "location": "Conference Room C",
+      "closedSession": true,
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5390&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5390,
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-13",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
@@ -134,23 +164,23 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-09T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
-      "date": "2026-11-09",
-      "displayDate": "Mon, Nov 9",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
       "startTime": "17:30",
       "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21999",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21958",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
-        "observedDate": "2026-11-09",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21999"
+        "observedDate": "2026-11-16",
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21958"
       }
     },
     "milpitas": {
@@ -167,7 +197,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-09T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -184,7 +214,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-09T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -219,7 +249,7 @@
     },
     "cupertino": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "santa-clara": {
       "provider": "Legistar",
