@@ -1027,6 +1027,8 @@ const EDITS = {
     title: [
       // The act's own spelling: https://valerieamyband.com/home
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
+      // The tour's Spanish article "La" is not the Los Angeles abbreviation.
+      [/^Natalia Jimenez\. LA Jimenez$/g, "Natalia Jimenez. La Jimenez"],
     ],
     description: [
       ['"Eterna Tour 2026".', '"Eterna Tour 2026."'],
