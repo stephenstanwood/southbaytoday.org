@@ -129,7 +129,7 @@ const CORRECTIONS = [
       title: "Premier EMBA Event, Santa Clara University", endTime: "9:00 PM", category: "education",
       address: "500 El Camino Real, Santa Clara, CA 95053",
       description: "Explore Executive MBA programs and meet business-school representatives and alumni at Santa Clara University.",
-      blurb: "Meet Executive MBA programs and alumni at Santa Clara University's free Premier EMBA networking event.",
+      blurb: "Meet Executive MBA program representatives and alumni at Santa Clara University's free Premier EMBA networking event.",
     },
   },
   {
@@ -1013,12 +1013,14 @@ const CORRECTIONS = [
     },
   },
   // The staff can speak Vietnamese; the club practices beginner English.
-  // The two exact organizer records share this description. Protect their
+  // These exact organizer records share this description. Protect their
   // cached blurb without projecting additional dates or changing attendance.
-  // Evidence: docs/qa/2026-11-05-0507z-fact-check.md.
+  // Evidence: docs/qa/2026-11-05-0507z-fact-check.md and 2026-11-11-1007z-fact-check.md.
   ...[
     ["2026-11-06", "6a50271ecca66c2f00a26762"],
     ["2026-11-07", "6a751bec3f18b57d5233feb7"],
+    ["2026-11-13", "6a50271ecca66c2f00a26763"],
+    ["2026-11-14", "6a751bec3f18b57d5233feb8"],
   ].map(([date, id]) => ({
     date, url: `https://sjpl.bibliocommons.com/events/${id}`,
     aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],

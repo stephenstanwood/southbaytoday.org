@@ -1,0 +1,480 @@
+{
+  "capturedAt": "2026-11-11T10:12:32Z",
+  "sources": [
+    "https://events.sjsu.edu/api/2/events?start=2026-11-11&days=14&pp=100&page=2",
+    "https://gateway.bibliocommons.com/v2/libraries/sjpl/events?ids=6ac8104aa85a2c00337e2785,6ad917dae06996003a850ed6,6a751bec3f18b57d5233feb8,695476bebbe7a1f3ba64540c,69fb8818703c33630025ded8,6ad13d48e06996003a83cc87,6944507e293fe254002a1f34,6a7cfa34b204780029928736,69e7a8c54dacf581ff8a2b03,6a50271ecca66c2f00a26763&limit=50&page=1"
+  ],
+  "sjsu": [
+    {
+      "id": 53878361875920,
+      "title": "Fall 2026 University Scholar Series: Breaking Through the Noise",
+      "location_name": "King Library",
+      "experience": "inperson",
+      "address": "150 E San Fernando St, San Jose, CA 95112",
+      "free": false,
+      "ticket_cost": "",
+      "filters": {
+        "event_target_audience": [
+          {
+            "name": "Alumni",
+            "id": 32174665160306
+          },
+          {
+            "name": "SJSU Employees",
+            "id": 32174665163519
+          },
+          {
+            "name": "General Public",
+            "id": 32174665165098
+          },
+          {
+            "name": "Students",
+            "id": 51190117661255
+          },
+          {
+            "name": "Prospective Students",
+            "id": 32174665167030
+          },
+          {
+            "name": "Current Students",
+            "id": 32174665168187
+          },
+          {
+            "name": "Faculty",
+            "id": 43731624500269
+          },
+          {
+            "name": "Staff",
+            "id": 43731749012066
+          },
+          {
+            "name": "Undergraduate Students",
+            "id": 51190117664328
+          },
+          {
+            "name": "Graduate Students",
+            "id": 51190117666377
+          },
+          {
+            "name": "Students and Families",
+            "id": 51190117669450
+          }
+        ],
+        "event_time_zone": [
+          {
+            "name": "Pacific Time (UTC-08:00)",
+            "id": 50524445679190
+          }
+        ],
+        "event_topic": [
+          {
+            "name": "Student Success",
+            "id": 34857216567871
+          },
+          {
+            "name": "Science and Technology",
+            "id": 32174662713644
+          },
+          {
+            "name": "Artificial Intelligence",
+            "id": 45325508707422
+          },
+          {
+            "name": "Art",
+            "id": 51163580662006
+          },
+          {
+            "name": "Well-being @ SJSU",
+            "id": 51163637232040
+          },
+          {
+            "name": "Wellness",
+            "id": 51163637234089
+          },
+          {
+            "name": "Physical Wellness",
+            "id": 51163637237162
+          },
+          {
+            "name": "Mental and Emotional Wellness",
+            "id": 51163637239211
+          },
+          {
+            "name": "Supportive Services",
+            "id": 51163637242284
+          },
+          {
+            "name": "Inclusive Resources",
+            "id": 51163637243309
+          },
+          {
+            "name": "Humanities",
+            "id": 51163650177295
+          },
+          {
+            "name": "Design",
+            "id": 51163650179344
+          },
+          {
+            "name": "Politics and Society",
+            "id": 51163650189588
+          },
+          {
+            "name": "Community",
+            "id": 51163687012422
+          },
+          {
+            "name": "Diversity and Inclusion",
+            "id": 51163687015495
+          },
+          {
+            "name": "Research and Innovation",
+            "id": 51190088667389
+          }
+        ],
+        "event_types": [
+          {
+            "name": "Info Sessions, Fairs and Events",
+            "id": 48801459064507
+          }
+        ]
+      },
+      "event_instances": [
+        {
+          "event_instance": {
+            "id": 53878361875921,
+            "event_id": 53878361875920,
+            "start": "2026-11-18T12:00:00-08:00",
+            "end": "2026-11-18T13:00:00-08:00",
+            "ranking": 0.16,
+            "all_day": false,
+            "num_attending": 0
+          }
+        }
+      ],
+      "localist_url": "https://events.sjsu.edu/event/fall-2026-university-scholar-series-breaking-through-the-noise"
+    },
+    {
+      "id": 54051728112395,
+      "title": "Women's Basketball -  San Jose State vs. California Baptist",
+      "location_name": "San Jose, Calif.",
+      "experience": "inperson",
+      "address": "",
+      "free": false,
+      "ticket_cost": null,
+      "filters": {
+        "event_target_audience": [
+          {
+            "name": "Alumni",
+            "id": 32174665160306
+          },
+          {
+            "name": "SJSU Employees",
+            "id": 32174665163519
+          },
+          {
+            "name": "General Public",
+            "id": 32174665165098
+          },
+          {
+            "name": "Students",
+            "id": 51190117661255
+          },
+          {
+            "name": "Current Students",
+            "id": 32174665168187
+          },
+          {
+            "name": "Faculty",
+            "id": 43731624500269
+          },
+          {
+            "name": "Staff",
+            "id": 43731749012066
+          }
+        ],
+        "event_types": [
+          {
+            "name": "Athletics Events",
+            "id": 32174659378557
+          }
+        ]
+      },
+      "event_instances": [
+        {
+          "event_instance": {
+            "id": 54051728114444,
+            "event_id": 54051728112395,
+            "start": "2026-11-18T11:00:00-08:00",
+            "end": "2026-11-18T13:00:00-08:00",
+            "ranking": 0.16,
+            "all_day": false,
+            "num_attending": 0
+          }
+        }
+      ],
+      "localist_url": "https://events.sjsu.edu/event/womens-basketball-san-jose-state-vs-california-baptist"
+    }
+  ],
+  "library": [
+    {
+      "id": "6a50271ecca66c2f00a26763",
+      "key": "2026-11-13T16:00:00",
+      "seriesId": "6a4e9a7a6ada47280057d4fe",
+      "definition": {
+        "start": "2026-11-13T16:00",
+        "end": "2026-11-13T17:30",
+        "title": "ESL Conversation Club: Beginning (Tiếng Việt)",
+        "description": "<p>Xây dựng kỹ năng giao tiếp với những người học trình độ mới bắt đầu khác trong một môi trường chào đón và tôn trọng.&nbsp;</p>\n<p>Khóa học này sẽ sử dụng <strong>Confidence and Connections&nbsp;</strong>và<strong></strong>&nbsp;<strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>.&nbsp;Sử dụng tài nguyên điện tử này miễn phí với thẻ thư viện.<br><br>Mỗi buổi học được hướng dẫn bởi nhân viên thư viện có thể nói được tiếng Việt.<br><br><strong>Miễn phí. Phải&nbsp;đăng ký và làm bài kiểm tra xếp lớp.</strong><br><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\">ADA Yêu cầu Phương tiện để tham gia chương trình</a><br><br></p>\n<p>Build conversation skills with other beginner-level adult learners in a welcoming and respectful environment.&nbsp;&nbsp;</p>\n<p>This course will use <strong>Confidence and Connections</strong> and&nbsp;<strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>.&nbsp;Use this&nbsp;eResource for free&nbsp;with a library card.<br></p>\n<p>Each session is led by library staff who can speak Vietnamese.<br><br><strong>Free. Registration &&nbsp;placement testing&nbsp;required.<br></strong><strong></strong><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\">ADA Accommodation Requests</a><br></p>",
+        "bibIds": [],
+        "featuredImageId": "6568d90561803d36006f50fb",
+        "branchLocationId": "08",
+        "nonBranchLocationId": null,
+        "locationDetails": "2nd floor, Family Learning Center classroom",
+        "audienceIds": [
+          "5d52fbae4d791b3a003e92e3",
+          "5d65e368eb2cac50006a08ab"
+        ],
+        "languageIds": [
+          "5d52fbb909c424450063680d",
+          "5d65e5fbe6fec218adacff58"
+        ],
+        "programId": "5d65e886541a7035ae7d6886",
+        "typeIds": [
+          "5d65e9ae2f3a81f8aeaabba8"
+        ],
+        "registrationInfo": {
+          "provider": "BIBLIO_EVENTS",
+          "registrationStart": {
+            "unit": "days",
+            "date": null,
+            "time": null,
+            "ordinal": 0,
+            "windowType": null
+          },
+          "registrationEnd": {
+            "unit": "hours",
+            "date": null,
+            "time": null,
+            "ordinal": 3,
+            "windowType": "EVENT_END"
+          },
+          "enabledMethods": [],
+          "cap": 15,
+          "maxSeats": 1,
+          "scope": "ALL_REMAINING",
+          "isFull": false,
+          "instructions": null,
+          "onlineInstructions": "<p>Giấy và bút chì sẽ được cung cấp. Bạn có thể mang theo sổ tay hoặc thiết bị cá nhân để truy cập Mango Languages ​​nếu muốn.</p><p>Paper and pencils will be provided. Bring your own notebook or device to access Mango Languages if you want.</p>",
+          "instructionsToAttend": null,
+          "loginToRegister": false,
+          "waitlistEnabled": true,
+          "waitlistAutoPromote": true
+        },
+        "contact": {
+          "email": {
+            "globalValue": "tiffany.lam@sjlibrary.org",
+            "value": "tiffany.lam@sjlibrary.org",
+            "rawValue": "tiffany.lam@sjlibrary.org",
+            "contactType": "email"
+          },
+          "phone": {
+            "globalValue": "+1-408-808-3056",
+            "value": "(408) 808-3056",
+            "rawValue": "408-808-3056",
+            "contactType": "phone"
+          },
+          "name": "Tiffany Lam"
+        },
+        "isCancelled": false,
+        "isFeatured": null,
+        "partnerId": null
+      },
+      "indexStart": "2026-11-14T00:00:00Z",
+      "indexEnd": "2026-11-14T01:30:00Z",
+      "isRecurring": true,
+      "numberRegistered": 15,
+      "numberWaitlistRegistered": 0,
+      "isFull": true,
+      "registrationClosed": true
+    },
+    {
+      "id": "6a751bec3f18b57d5233feb8",
+      "key": "2026-11-14T10:30:00",
+      "seriesId": "6a73df98e30fe48459674a15",
+      "definition": {
+        "start": "2026-11-14T10:30",
+        "end": "2026-11-14T12:00",
+        "title": "ESL Conversation Club: Beginning (Tiếng Việt)",
+        "description": "<p>Xây dựng kỹ năng giao tiếp với những người học trình độ mới bắt đầu khác trong một môi trường chào đón và tôn trọng. </p>\n<p>Khóa học này sẽ sử dụng <strong>Confidence and Connections </strong>và <strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>. Sử dụng tài nguyên điện tử này miễn phí với thẻ thư viện.<br><br>Mỗi buổi học được hướng dẫn bởi nhân viên thư viện có thể nói được tiếng Việt.<br><br><strong>Miễn phí. Phải đăng ký và làm bài kiểm tra xếp lớp.</strong><br><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\">ADA Yêu cầu Phương tiện để tham gia chương trình</a><br><br></p>\n<p>Build conversation skills with other beginner-level adult learners in a welcoming and respectful environment.  </p>\n<p>This course will use <strong>Confidence and Connections</strong> and <strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>. Use this eResource for free with a library card.<br></p>\n<p>Each session is led by library staff who can speak Vietnamese.<br><br><strong>Free. Registration & placement testing required.<br></strong><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\">ADA Accommodation Requests</a></p>",
+        "partnerId": null,
+        "bibIds": [],
+        "featuredImageId": "6568d90561803d36006f50fb",
+        "branchLocationId": "08",
+        "nonBranchLocationId": null,
+        "locationDetails": "2nd floor, Family Learning Center Classroom",
+        "audienceIds": [
+          "5d52fbae4d791b3a003e92e3",
+          "5d65e368eb2cac50006a08ab"
+        ],
+        "languageIds": [
+          "5d52fbb909c424450063680d",
+          "5d65e5fbe6fec218adacff58"
+        ],
+        "programId": "5d65e886541a7035ae7d6886",
+        "typeIds": [
+          "5d65e9ae2f3a81f8aeaabba8"
+        ],
+        "isFeatured": null,
+        "registrationInfo": {
+          "registrationEnd": {
+            "ordinal": 3,
+            "unit": "hours",
+            "time": null,
+            "date": null,
+            "windowType": "EVENT_END"
+          },
+          "registrationStart": {
+            "ordinal": 0,
+            "unit": "days",
+            "time": null,
+            "date": null,
+            "windowType": null
+          },
+          "loginToRegister": false,
+          "instructionsToAttend": "",
+          "onlineInstructions": "<p>Giấy và bút chì sẽ được cung cấp. Bạn có thể mang theo sổ tay hoặc thiết bị cá nhân để truy cập Mango Languages ​​nếu muốn.</p><p>Paper and pencils will be provided. Bring your own notebook or device to access Mango Languages if you want.</p>",
+          "waitlistAutoPromote": true,
+          "waitlistEnabled": true,
+          "scope": "ALL_REMAINING",
+          "maxSeats": 1,
+          "instructions": null,
+          "cap": 15,
+          "enabledMethods": [],
+          "provider": "BIBLIO_EVENTS"
+        },
+        "contact": {
+          "email": {
+            "globalValue": "tiffany.lam@sjlibrary.org",
+            "value": "tiffany.lam@sjlibrary.org",
+            "rawValue": "tiffany.lam@sjlibrary.org",
+            "contactType": "email"
+          },
+          "phone": {
+            "globalValue": "+1-408-808-3056",
+            "value": "(408) 808-3056",
+            "rawValue": "408-808-3056",
+            "contactType": "phone"
+          },
+          "name": "Tiffany Lam"
+        },
+        "isCancelled": false
+      },
+      "indexStart": "2026-11-14T18:30:00Z",
+      "indexEnd": "2026-11-14T20:00:00Z",
+      "isRecurring": true,
+      "numberRegistered": 10,
+      "numberWaitlistRegistered": 0,
+      "isFull": false,
+      "registrationClosed": false
+    }
+  ],
+  "events": [
+    {
+      "id": "sjpl-6a50271ecca66c2f00a26763",
+      "title": "ESL Conversation Club: Beginning (Tiếng Việt)",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": "4:00 PM",
+      "endTime": "5:30 PM",
+      "venue": "Seven Trees Library",
+      "address": "3590 Cas Dr. San Jose",
+      "city": "san-jose",
+      "registration": "full",
+      "registrationClosesBy": "2026-11-13T22:30:00.000Z",
+      "category": "education",
+      "cost": "free",
+      "description": "Xây dựng kỹ năng giao tiếp với những người học trình độ mới bắt đầu khác trong một môi trường chào đón và tôn trọng. Khóa học này sẽ sử dụng Confidence and Connections và Mango Languages. Sử dụng tài nguyên điện tử này miễn phí với thẻ thư viện. Mỗi buổi học được hướng dẫn bởi nhân viên thư viện có thể nói được tiếng Việt. Miễn phí. Phải đăng ký và làm bài kiểm tra xếp lớp. Build conversation skills with other beginner-level adult learners in a welcoming and respectful environment. This course will use Confidence and Connections and Mango Languages. Use this e-resource for free with a library card. Each session is led by library staff who can speak Vietnamese. Free. Registration & placement testing required.",
+      "sourceAudiences": [
+        "Adults, ages 18+",
+        "Seniors, ages 65+"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a50271ecca66c2f00a26763",
+      "source": "San Jose Public Library",
+      "kidFriendly": false,
+      "audienceAge": "adult",
+      "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/0111d72dbf205912c61aa1a115bc101f/ELLConversationClub2023.png",
+      "blurb": "Practice beginner English conversation skills with fellow learners in Vietnamese at Seven Trees Library.",
+      "firstSeenAt": "2026-11-10T00:44:17.403Z"
+    },
+    {
+      "id": "sjpl-6a751bec3f18b57d5233feb8",
+      "title": "ESL Conversation Club: Beginning (Tiếng Việt)",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "10:30 AM",
+      "endTime": "12:00 PM",
+      "venue": "Seven Trees Library",
+      "address": "3590 Cas Dr. San Jose",
+      "city": "san-jose",
+      "registration": "required",
+      "registrationClosesBy": "2026-11-14T17:00:00.000Z",
+      "category": "education",
+      "cost": "free",
+      "description": "Xây dựng kỹ năng giao tiếp với những người học trình độ mới bắt đầu khác trong một môi trường chào đón và tôn trọng. Khóa học này sẽ sử dụng Confidence and Connections và Mango Languages. Sử dụng tài nguyên điện tử này miễn phí với thẻ thư viện. Mỗi buổi học được hướng dẫn bởi nhân viên thư viện có thể nói được tiếng Việt. Miễn phí. Phải đăng ký và làm bài kiểm tra xếp lớp. Build conversation skills with other beginner-level adult learners in a welcoming and respectful environment. This course will use Confidence and Connections and Mango Languages. Use this e-resource for free with a library card. Each session is led by library staff who can speak Vietnamese. Free. Registration & placement testing required.",
+      "sourceAudiences": [
+        "Adults, ages 18+",
+        "Seniors, ages 65+"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a751bec3f18b57d5233feb8",
+      "source": "San Jose Public Library",
+      "kidFriendly": false,
+      "audienceAge": "adult",
+      "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/0111d72dbf205912c61aa1a115bc101f/ELLConversationClub2023.png",
+      "blurb": "Practice beginner English conversation skills with fellow learners in Vietnamese at Seven Trees Library.",
+      "firstSeenAt": "2026-11-11T01:34:41.479Z"
+    },
+    {
+      "id": "sjsu-d8e1035bcf25e324",
+      "title": "Women's Basketball - San Jose State vs. California Baptist",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "11:00 AM",
+      "endTime": null,
+      "venue": null,
+      "address": "",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": null,
+      "description": "",
+      "url": "https://events.sjsu.edu/event/womens-basketball-san-jose-state-vs-california-baptist",
+      "source": "SJSU Events",
+      "image": "https://images.unsplash.com/photo-1767584413129-2ad2941b7e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBzdGFkaXVtJTIwZ2FtZXxlbnwwfDJ8fHwxNzc3MjMwNjE4fDA&ixlib=rb-4.1.0&q=80&w=400",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Watch San Jose State take on California Baptist in women's basketball.",
+      "firstSeenAt": "2026-11-10T09:00:46.684Z"
+    },
+    {
+      "id": "sjsu-db9e2d1925ce4f2a",
+      "title": "Fall 2026 University Scholar Series: Breaking Through the Noise",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "12:00 PM",
+      "endTime": null,
+      "venue": "King Library",
+      "address": "150 E San Fernando St, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "education",
+      "cost": null,
+      "description": "",
+      "url": "https://events.sjsu.edu/event/fall-2026-university-scholar-series-breaking-through-the-noise",
+      "source": "SJSU Events",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/fall-2026-university-scholar-series-breaking-through-the-noise-king-library-san-jose-1794390672566-280.webp",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Attend the University Scholar Series session titled Breaking Through the Noise at King Library, an education talk held at midday.",
+      "firstSeenAt": "2026-11-11T09:51:16.918Z"
+    }
+  ]
+}

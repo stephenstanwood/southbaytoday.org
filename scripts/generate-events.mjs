@@ -4377,7 +4377,9 @@ function parseIcalDate(dtStr) {
  * Keep the source location name and address too: away games may publish only
  * a city/state location with an empty address. Neither the publishing campus
  * nor an absent street address establishes a local destination.
- * Returns Map<localist_url, { experience, filters, free, ticket_cost, locationName, address }>.
+ * Retain every occurrence's start/end pair: a URL can repeat across dates or
+ * pages, and its latest finish must never be copied to a different session.
+ * Returns Map<localist_url, { experience, filters, free, ticket_cost, locationName, address, instances }>.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -4390,11 +4392,16 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
     for (const wrapper of data?.events ?? []) {
       const ev = wrapper?.event;
       if (!ev?.localist_url) continue;
-      map.set(ev.localist_url.replace(/\/+$/, ""), {
+      const key = ev.localist_url.replace(/\/+$/, "");
+      const instances = [...(map.get(key)?.instances || []),
+        ...(ev.event_instances || []).map(row => row?.event_instance).filter(Boolean)];
+      map.set(key, {
         experience: ev.experience, filters: ev.filters,
         free: ev.free, ticket_cost: ev.ticket_cost,
         locationName: typeof ev.location_name === "string" ? ev.location_name : "",
         address: typeof ev.address === "string" ? ev.address : "",
+        instances: [...new Map(instances.map(instance =>
+          [JSON.stringify([instance.start, instance.end, instance.all_day]), instance])).values()],
       });
     }
   }
@@ -4871,6 +4878,14 @@ async function fetchSjsuEvents() {
       if (isStudentOnlyEvent(item)) { skipped++; return null; }
       const start = parseDate(item.pubDate);
       if (!start) return null;
+      // RSS has no finish. Use only a unique, later end from the API's exact
+      // start instant; absent, all-day, conflicting or other-date ends stay unknown.
+      const occurrenceEnds = new Set((metadata?.instances || [])
+        .filter(instance => parseDate(instance.start)?.getTime() === start.getTime())
+        .map(instance => instance.all_day ? undefined : parseDate(instance.end)?.getTime()));
+      const [endMs] = occurrenceEnds;
+      const end = occurrenceEnds.size === 1 && Number.isFinite(endMs) && endMs > start.getTime()
+        ? new Date(endMs) : null;
       item.title = restoreSjsuAcronyms(item.title);
       item.description = restoreSjsuAcronyms(item.description);
       if (isAdminNonEvent(item.title, stripHtml(item.description || ""))) {
@@ -4914,7 +4929,7 @@ async function fetchSjsuEvents() {
         date: isoDate(start),
         displayDate: displayDate(start),
         time: displayTime(start),
-        endTime: null,
+        endTime: displayEndTime(start, end),
         venue,
         address,
         city,
