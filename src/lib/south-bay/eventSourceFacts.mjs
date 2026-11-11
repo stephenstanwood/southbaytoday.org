@@ -66,6 +66,46 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Localist's May–November series bounds turned this scheduled tour into a
+  // clock-free exhibit on November 11. The current page and exact API instance
+  // agree on November 12, 4–4:30 PM. Repair retained copies as well as ingestion;
+  // these bounds never create another tour or override later booking notices.
+  // Evidence: docs/qa/2026-11-11-1907z-fact-check.md.
+  {
+    dateFrom: "2026-11-11", dateThrough: "2026-11-12",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/copy-of-fulltour-denning-house-home-to-knight-hennessy-scholars"
+      && event.title === "Tour Denning House, home to Knight-Hennessy Scholars"
+      && event.venue === "Denning House"
+      && ((event.date === "2026-11-11" && event.ongoing === true && !event.time)
+        || (event.date === "2026-11-12" && event.time === "4:00 PM")),
+    facts: {
+      id: "stanford-52825303977410-2026-11-12",
+      date: "2026-11-12", displayDate: "Thu, Nov 12",
+      time: "4:00 PM", endTime: "4:30 PM", ongoing: false,
+      cost: "free", registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Registration is required; tour size is limited.",
+  },
+  // The Stanford newsletter names this local away game but omits its venue
+  // and link. SCU's season schedule links this exact organizer ticket page,
+  // which confirms Leavey Event Center, its address, and paid admission.
+  // Preserve the unknown finish and never project this onto another game.
+  // Evidence: docs/qa/2026-11-11-1907z-fact-check.md.
+  {
+    date: "2026-11-13",
+    matches: event => event.source === "City Newsletter"
+      && event.title === "Stanford Women's Basketball at Santa Clara"
+      && event.city === "santa-clara" && event.time === "7:00 PM"
+      && (!event.venue || event.venue === "Leavey Event Center")
+      && (!event.url || /^https:\/\/scubroncos\.scu\.edu\/events?\/santa-clara-womens-basketball-vs-stanford-7almkx\/?$/.test(event.url)),
+    facts: {
+      venue: "Leavey Event Center",
+      address: "500 El Camino Real, Santa Clara, CA 95053",
+      url: "https://scubroncos.scu.edu/event/santa-clara-womens-basketball-vs-stanford-7almkx",
+      cost: "paid",
+    },
+  },
   // The organizer's Event schema gives the November 17 game a 9 PM finish.
   // The RSS has no finish; do not project this time onto another game.
   // Evidence: docs/qa/2026-11-11-0507z-fact-check.md.

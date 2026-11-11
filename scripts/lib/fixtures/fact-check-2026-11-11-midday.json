@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-11-11T19:07:06Z",
+  "stanford": {
+    "id": 52825303977410,
+    "title": "Tour Denning House, home to Knight-Hennessy Scholars",
+    "first_date": "2026-05-28",
+    "last_date": "2026-11-12",
+    "description_text": "Join a free tour of Denning House and explore its treehouse-inspired architecture and art collection. Registration is required to attend a tour of Denning House.",
+    "location_name": "Denning House",
+    "address": "580 Lomita Dr, Stanford, CA 94305",
+    "experience": "inperson",
+    "free": false,
+    "localist_url": "https://events.stanford.edu/event/copy-of-fulltour-denning-house-home-to-knight-hennessy-scholars",
+    "filters": {
+      "event_audience": [
+        {
+          "name": "Students",
+          "id": 37006980803119
+        },
+        {
+          "name": "Postdocs",
+          "id": 37006980808242
+        },
+        {
+          "name": "Faculty",
+          "id": 37006980810291
+        },
+        {
+          "name": "Staff",
+          "id": 37006980812340
+        },
+        {
+          "name": "Affiliates",
+          "id": 37006980814389
+        },
+        {
+          "name": "General Public",
+          "id": 37006980816438
+        },
+        {
+          "name": "Alumni",
+          "id": 38406469627859
+        }
+      ],
+      "event_subject": [
+        {
+          "name": "Arts/Media",
+          "id": 37093209005248
+        }
+      ],
+      "event_types": [
+        {
+          "name": "Tour",
+          "id": 37952570044769
+        }
+      ]
+    },
+    "event_instances": [
+      {
+        "event_instance": {
+          "id": 52825362201674,
+          "event_id": 52825303977410,
+          "start": "2026-11-12T16:00:00-08:00",
+          "end": "2026-11-12T16:30:00-08:00",
+          "ranking": 0.22,
+          "all_day": false,
+          "num_attending": 0
+        }
+      }
+    ]
+  },
+  "ticket": {
+    "@type": "Event",
+    "name": "Santa Clara Women&apos;s Basketball vs Stanford",
+    "startDate": "2026-11-14T03:00:00.000Z",
+    "url": "https://scubroncos.scu.edu/event/santa-clara-womens-basketball-vs-stanford-7almkx",
+    "location": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Santa Clara",
+        "addressRegion": "Santa Clara",
+        "postalCode": "95053",
+        "streetAddress": "500 El Camino Real",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.3486087,
+        "longitude": -121.9367173
+      },
+      "name": "Leavey Event Center"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": 15,
+      "priceCurrency": "USD",
+      "url": "https://scubroncos.scu.edu/event/santa-clara-womens-basketball-vs-stanford-7almkx",
+      "validFrom": "2026-09-15T07:00:00.000Z",
+      "availability": "http://schema.org/OnlineOnly"
+    }
+  },
+  "events": [
+    {
+      "id": "stanford-52825303977410",
+      "title": "Tour Denning House, home to Knight-Hennessy Scholars",
+      "date": "2026-11-11",
+      "displayDate": "Wed, Nov 11",
+      "time": null,
+      "endTime": null,
+      "ongoing": true,
+      "venue": "Denning House",
+      "address": "580 Lomita Dr, Stanford, CA 94305",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "registration": "required",
+      "description": "Join a free tour of Denning House and explore its treehouse-inspired architecture and art collection.",
+      "blurb": "Tour Denning House, home to Knight-Hennessy Scholars, and see its treehouse-inspired architecture and art collection on a free guided visit.",
+      "url": "https://events.stanford.edu/event/copy-of-fulltour-denning-house-home-to-knight-hennessy-scholars",
+      "source": "Stanford Events"
+    },
+    {
+      "id": "inbound-83180ce5be564e38",
+      "title": "Stanford Women's Basketball at Santa Clara",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": null,
+      "address": "",
+      "city": "santa-clara",
+      "category": "sports",
+      "cost": null,
+      "description": "Stanford travels to take on local rival Santa Clara in an away game.",
+      "blurb": "Watch Stanford women's basketball take on local rival Santa Clara in an away game on Friday evening.",
+      "url": "",
+      "source": "City Newsletter"
+    }
+  ]
+}
