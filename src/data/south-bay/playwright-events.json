@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-11T01:28:12.967Z",
+    "generatedAt": "2026-11-11T05:36:34.286Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 199,
+    "eventCount": 203,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
-      "Linden Tree Books (5)",
+      "Linden Tree Books (7)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
@@ -21,8 +21,8 @@
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (10)",
-      "Books Inc (6)",
+      "The Tech Interactive (13)",
+      "Books Inc (5)",
       "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
     ],
@@ -92,8 +92,8 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 5,
-        "liveCount": 5,
+        "count": 7,
+        "liveCount": 7,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 15,
+        "liveCount": 15,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -284,8 +284,8 @@
         "id": "books-inc",
         "label": "Books Inc",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 5,
+        "liveCount": 5,
         "error": null,
         "sources": [
           "Books Inc"
@@ -586,6 +586,28 @@
       }
     },
     {
+      "id": "8953dacf2e98",
+      "title": "Storytime with Claire Wrenn Bobrow",
+      "date": "2026-12-06",
+      "displayDate": "Sun, Dec 6",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": null,
+      "description": "Join us for a special storytime as author Claire Wrenn Bobrow returns to Linden Tree to share her delightful new picture book, Party Pony! Not another party! Parties used to be Pony’s favorite—until every bash turned him into a work horse! Now Pony is a party pooper. How will Pony's friends show him he's worthy of a party too? For any kid who’s ever felt left out, this witty picture book is a must-have for the home or school library, and it's perfect for gifting and reading at parties. Grab your copy and join the celebration!",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-12-06"
+      }
+    },
+    {
       "id": "4f86bef9787c",
       "title": "Middle Grade Book Club: The Wish Ring Cipher",
       "date": "2026-12-06",
@@ -606,6 +628,28 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-12-06"
+      }
+    },
+    {
+      "id": "0378620788f8",
+      "title": "Storytime with Sahar Shams",
+      "date": "2026-12-13",
+      "displayDate": "Sun, Dec 13",
+      "time": "10:30am",
+      "endTime": null,
+      "venue": "Linden Tree Books",
+      "address": "265 State St, Los Altos, CA 94022",
+      "city": "los-altos",
+      "category": "arts",
+      "cost": null,
+      "description": "Join us for a special storytime as author Sahar Shams shares her festive debut picture book, What Does Santa Want for Christmas? Every year, children all around the world ask themselves what they'd like to receive from Santa. But one little boy has a different question: What would Santa wish for? Determined, Dorim sets out on a quest to craft the perfect present—but he'll need some help from his friends. With Christmas fast approaching, will they be able to make Santa's wish come true in time?",
+      "url": "https://www.lindentreebooks.com/events-calendar/",
+      "source": "Linden Tree Books",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
+        "date": "2026-12-13"
       }
     },
     {
@@ -1346,7 +1390,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-11T01:26:57.541Z"
+        "checkedAt": "2026-11-11T05:35:27.383Z"
       }
     },
     {
@@ -1369,7 +1413,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-11T01:26:57.542Z"
+        "checkedAt": "2026-11-11T05:35:27.384Z"
       }
     },
     {
@@ -1392,7 +1436,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-11T01:26:57.543Z"
+        "checkedAt": "2026-11-11T05:35:27.386Z"
       }
     },
     {
@@ -1415,7 +1459,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-11T01:26:57.544Z"
+        "checkedAt": "2026-11-11T05:35:27.386Z"
       }
     },
     {
@@ -1438,7 +1482,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-11T01:26:57.544Z"
+        "checkedAt": "2026-11-11T05:35:27.386Z"
       }
     },
     {
@@ -1461,42 +1505,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-11T01:26:57.544Z"
+        "checkedAt": "2026-11-11T05:35:27.386Z"
       }
-    },
-    {
-      "id": "4149d96f87bf",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
-    },
-    {
-      "id": "7d0462a47e52",
-      "title": "Monthly Chat with Mayor Moore",
-      "date": "2026-12-02",
-      "displayDate": "Wed, Dec 2",
-      "time": "05:00 PM",
-      "endTime": "06:00 PM",
-      "venue": "Cupertino",
-      "address": "",
-      "city": "cupertino",
-      "category": "community",
-      "cost": null,
-      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
-      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
-      "source": "City of Cupertino",
-      "kidFriendly": false
     },
     {
       "id": "6c530208231f",
@@ -1830,6 +1840,40 @@
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
       "source": "City of Cupertino",
       "kidFriendly": true
+    },
+    {
+      "id": "4149d96f87bf",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2026-11-10",
+      "displayDate": "Tue, Nov 10",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "7d0462a47e52",
+      "title": "Monthly Chat with Mayor Moore",
+      "date": "2026-12-02",
+      "displayDate": "Wed, Dec 2",
+      "time": "05:00 PM",
+      "endTime": "06:00 PM",
+      "venue": "Cupertino",
+      "address": "",
+      "city": "cupertino",
+      "category": "community",
+      "cost": null,
+      "description": "Get ready to talk about what matters most to you. Mayor Kitty Moore is hosting a Monthly Chat Series in Cupertino throughout 2026, inviting residents and local businesses to discuss any topic with one of the City’s decision-makers. These informal gatherings offer a welcoming space for meaningful conversation and community connection. Sign up to receive notifications about upcoming meetings: eNotification Sign-Up Dates and Locations Monta Vista Recreation Center: Room 5, 22601 Voss Avenue, 95014 View Map",
+      "url": "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+      "source": "City of Cupertino",
+      "kidFriendly": false
     },
     {
       "id": "743b061a5272",
@@ -3367,7 +3411,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-20",
         "date": "2026-11-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.207Z"
+        "checkedAt": "2026-11-11T05:35:51.209Z"
       }
     },
     {
@@ -3391,7 +3435,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3415,7 +3459,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3439,7 +3483,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3463,7 +3507,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3487,7 +3531,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3511,7 +3555,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3535,7 +3579,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3559,7 +3603,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.210Z"
       }
     },
     {
@@ -3600,7 +3644,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.211Z"
       }
     },
     {
@@ -3624,7 +3668,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-11T01:27:24.209Z"
+        "checkedAt": "2026-11-11T05:35:51.211Z"
       }
     },
     {
@@ -3639,8 +3683,8 @@
       "city": "san-jose",
       "category": "education",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Do you have what it takes to be a Tech Detective? Juniors and Cadettes will begin by practicing the art of forensic drawing by sketching a “suspect” as described by a “key witness.” Next, they learn about & practice codes and fingerprinting. Juniors will explore the role of DNA in forensics — what it is, what it does, and how it helps solve crimes. They then get to perform an experiment to extract real DNA, and finally use what they have learnt to identify someone from ancient DNA! This program covers all five steps required to earn the Juniors Detective badge or the Cadette Special Agent badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b3f-014a-0e52-3d08-bd957bbd685d",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3654,10 +3698,10 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "education",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Are you ready to design your own entertainment company? Juniors begin by animating their own artwork, then learning about video game design. They'll then build prototypes of roller coasters to learn the science behind the screams. Finally, Juniors make their own 3-D images & glasses, and experiment with sound. This program covers all five steps required to earn the Entertainment Technology badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b2e-17d0-7d9e-5d5d-1f379736e20f",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3673,8 +3717,8 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Return to Panem for the 50th Hunger Games! In “The Hunger Games: Sunrise on the Reaping,” young Haymitch Abernathy faces a deadly fight for survival as the Capitol doubles the number of tributes. Experience the action, suspense, and rebellion on the largest dome screen in the Bay Area in our IMAX® Dome Theater, featuring stunning visuals and powerful sound.",
+      "url": "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3690,8 +3734,8 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Join us for the return of Polar Play Days at The Tech Interactive, where we’re ready to chill out and have some STEM-tastic fun! Get ready to slip and slide your way into the coolest winter event around.",
+      "url": "https://tickets.thetech.org/events/f4a8a127-14ee-4150-ca58-24df1287e87c",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3705,10 +3749,10 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "education",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Hands-on robotics experience at The Tech Interactive where Girl Scouts explore how robots work, design and build their own creations, and learn STEM skills like sensors, problem-solving, and coding.Daisy: Learn about different robots, then brainstorm, design, and build their own robot. Brownie: Explore robot types and how robots use sensors, then design and build their own. Junior: Learn how robots work, write simple algorithms, and code a real robot. Tickets include full-day admission to The Tech Interactive, the Cities of the Future IMAX film, the relevant badge(s), and a Tech fun patch.",
+      "url": "https://tickets.thetech.org/events/019b8ba0-58ad-e7fc-e6f7-40b458a7c9e3",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3724,8 +3768,8 @@
       "city": "san-jose",
       "category": "community",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Emperor Paul Atreides faces the consequences of his reign as old allies return, terrifying new threats emerge, and betrayal lurks in every shadow. Haunted by visions of Imperial collapse and the reappearance of his long-lost love, he gets drawn into a sweeping conspiracy, with Chani at the heart of its unfolding mystery. As rebellion brews and enemies close in, Paul must confront the true cost of power and the fate of those he loves the most.",
+      "url": "https://tickets.thetech.org/events/3a7103f8-b895-1016-ff22-236b306b04af",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3739,10 +3783,10 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "arts",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "We've gathered a selection of our favorite holiday tunes and brought them to life with gorgeous laser choreography. Vibrant animations and gorgeous abstracts dance above your heads, as the music takes you away from the hustle and bustle. It might be cold outside, but it's nice and toasty under the dome. Gather up your loved ones and share the one of a kind experience that is Laser Holiday Magic.",
+      "url": "https://tickets.thetech.org/events/01a1a3be-32b9-0fc7-7ea5-14eec1399131",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3756,10 +3800,10 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "arts",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Dive into the high-energy world of Laser K-Pop Demon Hunters, a laser show designed to thrill fans of all ages. Dazzling laser effects bring the pulse-pounding music of the hit movie K-Pop Demon Hunters to life in a spectacular, unforgettable experience.",
+      "url": "https://tickets.thetech.org/events/019c0209-5293-5bea-4c9c-8ad87164827b",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3773,10 +3817,10 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "education",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Discover the thrills, science, and creativity of roller coaster design in our newest badge program. Daisies will have the opportunity to design and build their own simple roller coaster cart, construct a model of their own roller coaster, and test their creation. This program covers all three steps required to earn the Roller Coaster Design Daisy badge. Participants will receive the badge and Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b06-fc50-53d6-b671-2a493024a4d0",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3790,29 +3834,63 @@
       "venue": "The Tech Interactive",
       "address": "201 S Market St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "education",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.thetech.org/explore/upcoming-events/",
+      "description": "Science is all around us! Brownies begin by making pepper dance using the amazing properties of electricity. Next, they become kitchen chemists and use pantry items to make art with delicious treats. Then they explore properties of density and use them to blow up a balloon without breath and make their own lava lamp. Finally, Brownies will learn how science can be used to make toys and make their very own silly putty! This program covers all five steps required to earn the Home Scientist Badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/83826980-b70f-fb75-4702-2d95e2d30b67",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
     {
-      "id": "7639bf0ba2b1",
-      "title": "SCOTT LAMBRIDIS: ST. ULPHIA'S DEAD",
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "time": "7:00 PM",
+      "id": "a1620cac5870",
+      "title": "Godzilla Minus Zero",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "5:45PM",
       "endTime": null,
-      "venue": "Books Inc. Pruneyard",
-      "address": "1875 S Bascom Ave, Campbell, CA 95008",
-      "city": "campbell",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.",
+      "url": "https://tickets.thetech.org/events/01a0f89d-e192-6a33-145d-50aa1222e2db",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "1f6cf34358aa",
+      "title": "Godzilla Minus Zero",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "8:30PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.",
+      "url": "https://tickets.thetech.org/events/01a0f89d-e192-6a33-145d-50aa1222e2db",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "9a4617aa5099",
+      "title": "Godzilla Minus Zero",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "5:45PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "War reduced Japan to zero, and Godzilla plunged it into minus. Two years have passed since then, and the country has faced agonizing struggles to achieve recovery and finally reclaim its daily life. Just as humanity managed to cling to a hard-won peace, a new threat strikes, crushing hope in an instant. There is no third time. Everything ends here.",
+      "url": "https://tickets.thetech.org/events/01a0f89d-e192-6a33-145d-50aa1222e2db",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
     },
     {
       "id": "231f89eea584",
