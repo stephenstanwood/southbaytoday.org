@@ -312,13 +312,13 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "proposed",
     description:
-      "The Cupertino City Council held a study session on a new housing development at 10333 N. Wolfe Road in March 2026. If approved, this would add new residential units in North Cupertino near Apple Park and Stevens Creek.",
-    scale: "Residential",
-    developer: "TBD",
-    timeline: "Study session March 2026; approval pending",
+      "Cupertino's November 10, 2026 Planning Commission agenda lists architectural and site approval and tree-removal permit applications for a 251-unit residential development at 10333 N. Wolfe Road. Eden Housing is the applicant. The proposal includes site and trail improvements and the removal and replacement of 117 protected trees.",
+    scale: "251 residential units proposed",
+    developer: "Eden Housing (applicant)",
+    timeline: "Listed for Planning Commission review November 10, 2026",
     featured: false,
     sourceNote:
-      "Still at the study-session stage — no applicant is named in the public record yet, so \"TBD\" reflects the March 2026 agenda rather than a withheld name, and no unit count has been published. Verify current status at cupertino.legistar.com or the city's planning projects page.",
+      "Cupertino Planning Commission, November 10, 2026, item 2 / file 26-15432: applications ASA-2025-009 and TR-2025-036 name Eden Housing and 251 units. The posted agenda establishes the proposal, not an approval; minutes and action results were unavailable when checked. Source: https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5233&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
   },
 
   {
