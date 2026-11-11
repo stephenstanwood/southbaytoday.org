@@ -312,7 +312,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "proposed",
     description:
-      "Cupertino's November 10, 2026 Planning Commission agenda lists architectural and site approval and tree-removal permit applications for a 251-unit residential development at 10333 N. Wolfe Road. Eden Housing is the applicant. The proposal includes site and trail improvements and the removal and replacement of 117 protected trees.",
+      "Cupertino's November 10, 2026, Planning Commission agenda lists architectural and site approval and tree-removal permit applications for a 251-unit residential development at 10333 N. Wolfe Road. Eden Housing is the applicant. The proposal includes site and trail improvements and the removal and replacement of 117 protected trees.",
     scale: "251 residential units proposed",
     developer: "Eden Housing (applicant)",
     timeline: "Listed for Planning Commission review November 10, 2026",
