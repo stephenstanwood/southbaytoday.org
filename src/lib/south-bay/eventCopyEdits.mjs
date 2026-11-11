@@ -4,6 +4,11 @@
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
 const EDITS = {
+  "The Tech Interactive": {
+    title: [
+      ["Lasers: Kpop Demon Hunters", "Lasers: K-Pop Demon Hunters"],
+    ],
+  },
   "SC County Fire Dept": {
     title: [
       // The organizer's title clips "Hills"; its venue and address spell it out.
@@ -960,10 +965,14 @@ const EDITS = {
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
       ['to Study Human Biology."', 'to Study Human Biology"'],
     ],
+    venue: [
+      ["Nvidia Auditorium", "NVIDIA Auditorium"],
+    ],
     attendanceNote: [
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
       ["(DAAAS) in collaboration with the Center for South Asia (CSA) cordially invite the Stanford Community for", "(DAAAS), in collaboration with the Center for South Asia (CSA), cordially invites the Stanford community to"],
       ["Distinguished Lecture Featuring - ", "Distinguished Lecture featuring "],
       ["CEO of Nia Tero Reception following program", "CEO of Nia Tero. Reception following the program"],
@@ -1025,6 +1034,7 @@ const EDITS = {
   },
   "Santa Clara University": {
     title: [
+      ["Women's Basketball vs Gcu", "Women's Basketball vs GCU"],
       ["Mass of Remembrance: Uca Salvadoran Martyrs", "Mass of Remembrance: UCA Salvadoran Martyrs"],
       ["Brown Bag in the Humanities featuring:", "Brown Bag in the Humanities featuring"],
       ['"Why Don\'t They Just Come Here the Right Way?" a Day of', '"Why Don\'t They Just Come Here the Right Way?" A Day of'],
@@ -1045,6 +1055,9 @@ const EDITS = {
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
       [/November 6 - 15 \(Thu-Sat 8 PM, Sun 2 PM\)$/g, "November 6 - 15 (Thu-Sat 8 PM, Sun 2 PM)."],
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
+    ],
+    blurb: [
+      ["Meet Executive MBA programs and alumni", "Meet Executive MBA program representatives and alumni"],
     ],
   },
   "Computer History Museum": {
