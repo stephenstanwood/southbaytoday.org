@@ -81,6 +81,11 @@ const EDITS = {
     description: [
       ["how to submit a service request or complain;", "how to submit a service request or submit a complaint;"],
       ["Para mas informacion:", "Para más información:"],
+      ["bit. Ly/CE Tenant", "bit.ly/CETenant"],
+      ["hearing some instruments performed live and then see the new exhibit", "hearing some instruments played live and then seeing the new exhibit"],
+      ["Program is for children 5 and up and family members interested in South Asian music.", "The program is for children 5 and up and family members interested in South Asian music."],
+      ["the sound of the instruments performed in Afghanistan", "the sound of the instruments played in Afghanistan"],
+      ["instruments passed down from generations, which are still performed around the Bay Area.", "instruments passed down through generations, which are still played around the Bay Area."],
       ["How to Register Visit the OneInMath website", "How to register: Visit the OneInMath website"],
       ["Personal designs must be in. Stl format", "Personal designs must be in .stl format"],
       [/(\bsend an email to [\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}) (?=This program is generously sponsored\b)/g, "$1. "],
@@ -91,6 +96,7 @@ const EDITS = {
       ["interaction with Srushti who has been trained", "interaction with Srushti, who has been trained"],
       [/No registration required,$/g, "No registration required."],
       [/(closing on [A-Z][a-z]+ \d{1,2}, \d{4}) (?=The exhibit is brought to you\b)/g, "$1. "],
+      [/(Come and enjoy this exhibit),? which starts on ([A-Z][a-z]+ \d{1,2}, \d{4}), closing on ([A-Z][a-z]+ \d{1,2}, \d{4})\./g, "$1, which starts on $2, and closes on $3."],
       ["Vietnamese Language Learners are welcome to join us and practice your Vietnamese speaking skills.", "Vietnamese language learners are welcome to join us and practice their Vietnamese-speaking skills."],
       ["Please Bring Your Own Bags.", "Please bring your own bags."],
       ["Only Cash And Checks Are Accepted.", "Only cash and checks are accepted."],
@@ -606,6 +612,9 @@ const EDITS = {
     ],
   },
   "San Jose Jazz": {
+    title: [
+      ["Hsas Full Ensemble", "HSAS Full Ensemble"],
+    ],
     description: [
       ["the group endears audiences with", "the group endears itself to audiences with"],
     ],
@@ -619,6 +628,14 @@ const EDITS = {
       ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
       ["from 5:00–9:00 pm, for winter evenings", "from 5:00–9:00 pm for winter evenings"],
+      ["Spirit of The Row Entertainment Line-Up:", "Spirit of The Row entertainment lineup:"],
+      [/(Tuesday, December \d{1,2})\s*•\s*/g, "$1: "],
+      [/\s*•\s*/g, "; "],
+      [/(\w) (Tuesday, December \d{1,2}:)/g, "$1. $2"],
+      [/\b(Natalie Ramskov)$/g, "$1."],
+    ],
+    blurb: [
+      ["Watch a live holiday show of local arts and community groups, stand in Snow Showers at Park Valencia, and get photos with Santa.", "Watch a live holiday show by local arts and community groups, then catch snow showers in Park Valencia and take photos with Santa."],
     ],
   },
   "Los Altos Village Association": {
@@ -992,6 +1009,7 @@ const EDITS = {
     ],
     description: [
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
+      ["Admission Information Free admission", "Admission: Free."],
       ["(DAAAS) in collaboration with the Center for South Asia (CSA) cordially invite the Stanford Community for", "(DAAAS), in collaboration with the Center for South Asia (CSA), cordially invites the Stanford community to"],
       ["Distinguished Lecture Featuring - ", "Distinguished Lecture featuring "],
       ["CEO of Nia Tero Reception following program", "CEO of Nia Tero. Reception following the program"],
