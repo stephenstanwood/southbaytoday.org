@@ -61,6 +61,15 @@ const EDITS = {
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
     ],
     attendanceNote: [
+      // Attendance excerpts are extracted before description repairs run.
+      // Keep the reviewed grammar here as well, without restoring old limits.
+      ["first-come, first-served; capacities limited.", "first-come, first-served; capacity is limited."],
+      ["THIS IS First-come, first-served BASIS.", "Admission is on a first-come, first-served basis."],
+      ["For Teens and Adults, space limited to", "This workshop is for teens and adults. Space is limited to"],
+      [/Free, Tickets to Participate at Info Desk at (\d{1,2}(?::\d{2})? [AP]M)(?=$| [A-Z])/g, "Free. Tickets to participate are available at the information desk at $1."],
+      ["and participant must be present to get a ticket.", "and participants must be present to get a ticket."],
+      ["Supplies are provided by the nonprofit group, there is no cost to attend.", "Supplies are provided by the nonprofit group; there is no cost to attend."],
+      ["One ticket per participant, helpers/spectators do not", "One ticket per participant; helpers/spectators do not"],
       ["BY APPOINTMENT ONLY One appointment per week per person.", "By appointment only. One appointment per week per person."],
       [/^BY APPOINTMENT ONLY$/g, "By appointment only."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
@@ -662,6 +671,7 @@ const EDITS = {
       ["Intermediate Mass Black Holes", "Intermediate-Mass Black Holes"],
     ],
     attendanceNote: [
+      ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["KinderReadiness!", "Kinder Readiness!"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
       [/(For children ages \d+-\d+ and their) parent and caregivers\./g, "$1 parents and caregivers."],
