@@ -24,6 +24,12 @@ export function briefingEventWhen(event) {
     : event.date;
 }
 
+/** A listing's clock can describe an event window rather than its main activity. */
+export function briefingEventContext(event, dateLabel = event.displayDate || event.date) {
+  const e = applyVerifiedEventFacts(event);
+  return `- ${e.title}${e.venue ? ` at ${e.venue}` : ""}${dateLabel ? ` (${dateLabel})` : ""}${e.time ? ` @ ${e.time}` : ""} — ${e.category}${e.source ? `; source: ${e.source}` : ""}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 180)}` : ""}${e.attendanceNote ? `; attendance details: ${e.attendanceNote}` : ""}`;
+}
+
 /** Event refreshes can close registration after the weekly briefing is written. */
 export function refreshBriefingAvailability(path, events) {
   let briefings;
