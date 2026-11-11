@@ -66,6 +66,94 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Fresh organizer pages checked November 10. Keep these corrections tied
+  // to the exact dated occurrence; never infer a later session or reopen it.
+  // Evidence: docs/qa/2026-11-11-0207z-fact-check.md.
+  ...[
+    ["6920f111c313c23700e355a9", "1 on 1 Tech Assistance (In-Person)", "Rose Garden Library",
+      /\bappointments are highly encouraged\b/i, /\bdrop-ins can be taken\b/i],
+    ["6ab6f970129d8e0031f52185", "Holiday Bath Bombs", "East SJ Carnegie Library",
+      /\bregistration is recommended\b/i, /\bwalk-ins are welcome\b/i],
+  ].map(([sourceId, title, venue, optional, walkIn]) => ({
+    date: "2026-11-14",
+    matches: event => event.url === `https://sjpl.bibliocommons.com/events/${sourceId}`
+      && event.title === title && event.venue === venue
+      && optional.test(event.description || "") && walkIn.test(event.description || "")
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\bno\s+(?:walk|drop)-ins\b/i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    // The live page explicitly permits walk-ups. A form's closing instant
+    // cannot later close that admission path; preserve full/closed notices.
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+  })),
+  {
+    date: "2026-11-12",
+    matches: event => event.url === "https://improv.com/sanjose/event/rohan+joshi%3a+getting+there/14842703/"
+      && event.title === "Rohan Joshi: Getting There" && event.venue === "San Jose Improv",
+    facts: { cost: "paid", registration: REGISTRATION_FULL },
+    appendAttendanceNote: "Sold out. The organizer offers a waitlist.",
+  },
+  {
+    date: "2026-11-22",
+    matches: event => event.url === "https://gostanford.com/promotions/womens-volleyball-promotions"
+      && event.title === "Stanford Women's Volleyball vs. Boston College & Cooler Bag Giveaway"
+      && event.venue === "Maples Pavilion",
+    facts: {
+      description: "Stanford hosts Boston College at noon. Early arrivals can receive a Cardinal cooler bag while supplies last.",
+      blurb: "Watch Stanford host Boston College at Maples Pavilion; the cooler bag giveaway is for early arrivals while supplies last.",
+    },
+  },
+  {
+    date: "2027-02-24",
+    matches: event => event.url === "https://www.eventbrite.com/e/hands-only-cpr-and-aed-class-15-campbell-90-min-2027-tickets-2004667229648"
+      && event.title === "Hands-Only CPR and AED Class"
+      && event.venue === "Santa Clara County Fire Department Administrative Headquarters",
+    facts: { endTime: "7:30 PM", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Ages 13+. Minors need a parent or guardian's signed liability release. Open to people who live or work in County Fire's service area. This class does not provide a two-year CPR/AED certification.",
+  },
+  {
+    date: "2026-11-17",
+    matches: event => event.url === "https://events.scu.edu/graduate-business/event/516998-premier-emba-event-santa-clara-university"
+      && ["Premier Emba Event, Santa Clara University", "Premier EMBA Event, Santa Clara University"].includes(event.title)
+      && event.venue === "Santa Clara University",
+    facts: {
+      title: "Premier EMBA Event, Santa Clara University", endTime: "9:00 PM", category: "education",
+      address: "500 El Camino Real, Santa Clara, CA 95053",
+      description: "Explore Executive MBA programs and meet business-school representatives and alumni at Santa Clara University.",
+      blurb: "Meet Executive MBA programs and alumni at Santa Clara University's free Premier EMBA networking event.",
+    },
+  },
+  {
+    date: "2026-11-11",
+    matches: event => event.url === "https://svcmoaa-events.com/san-jose-veterans-day-parade"
+      && event.title === "108th Veterans Day Parade"
+      && ["Plaza de San Jose", "Downtown San Jose"].includes(event.venue),
+    // The city's permitted event window is 11 AM–2 PM; the organizer confirms
+    // the parade itself starts at noon. Neither source names Plaza de San Jose.
+    facts: {
+      venue: "Downtown San Jose", address: "Santa Clara Street & Market Street, San Jose",
+      description: "San Jose's Veterans Day parade honors people who have served or are serving. The city lists an 11 AM–2 PM event window; the organizer gives a noon parade start.",
+      blurb: "Watch the Veterans Day parade honoring those who have served in downtown San Jose.",
+    },
+    appendAttendanceNote: "The city lists an 11 AM–2 PM event window. The parade itself starts at noon.",
+  },
+  ...[
+    ["2026-12-28", "Lasers: Kpop Demon Hunters", "019c0209-5293-5bea-4c9c-8ad87164827b", "arts",
+      "A laser show at The Tech Interactive featuring music from K-Pop Demon Hunters.",
+      "Watch laser effects set to music from K-Pop Demon Hunters at The Tech Interactive."],
+    ["2026-11-14", "Girl Scout Program: Tech Detective (Juniors and Cadettes)", "019b8b3f-014a-0e52-3d08-bd957bbd685d", "education",
+      "Girl Scout Juniors and Cadettes explore forensic drawing, codes and fingerprinting. Juniors also explore DNA and extract real DNA.",
+      "Explore forensic drawing, codes and fingerprinting in a Girl Scout detective program at The Tech Interactive."],
+    ["2026-12-13", "Girl Scout Program: Robo-Designer", "019b8ba0-58ad-e7fc-e6f7-40b458a7c9e3", "education",
+      "Girl Scouts explore how robots work and design their own creations, with activities tailored to Daisy, Brownie and Junior levels.",
+      "Explore how robots work and design your own creation in a Girl Scout robotics program at The Tech Interactive."],
+  ].map(([date, title, ticketId, category, description, blurb]) => ({
+    date,
+    matches: event => event.source === "The Tech Interactive"
+      && String(event.title || "").toLowerCase() === title.toLowerCase() && event.venue === "The Tech Interactive"
+      && (event.url === "https://www.thetech.org/explore/upcoming-events/"
+        || (ticketId && event.url === `https://tickets.thetech.org/events/${ticketId}`)),
+    facts: { category, description, blurb },
+  })),
   // Dated organizer pages restore source links omitted by newsletter intake.
   // Milpitas also names the plaza and its street address. Keep occurrence
   // identity, admission and booking state unchanged; never replace a new URL.

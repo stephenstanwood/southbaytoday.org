@@ -892,6 +892,9 @@ const TITLE_FIXES = {
   "Rock EN ": "Rock en ",
   "Latinaje EN ": "Latinaje en ",
   // Source-side title-cased acronyms (regex won't catch — input wasn't ALL-CAPS)
+  "Mlis Open House": "MLIS Open House",
+  "Msidt Open House": "MSIDT Open House",
+  "Premier Emba Event": "Premier EMBA Event",
   " Pacl ": " PACL ",
   " Pacl,": " PACL,",
   "Pacl Book": "PACL Book",
@@ -970,6 +973,8 @@ const TITLE_FIXES = {
 // Correcting only the title leaves a card whose heading and description spell the
 // same person's name differently, so these run over description text as well.
 const PROPER_NOUN_FIXES = {
+  // Kepler's opening sentence has a typo; its speaker biography names Tergar.
+  "Tengar founder Yongey Mingyur Rinpoche": "Tergar founder Yongey Mingyur Rinpoche",
   // Keep already-cached spellings consistent with these first-party names.
   "Flascc": "FLASCC",
   "Px Floro": "PX Floro",
@@ -1031,6 +1036,9 @@ const PROPER_NOUN_FIXES = {
 // source tokens only: ordinary words and names such as "Ros" stay untouched.
 // Evidence: docs/qa/2026-10-17-1407-fact-check.md.
 const SOURCE_EVENT_ACRONYMS = [
+  // Keep degree names through shared title/prose cleanup, which runs after
+  // the SJSU adapter and before its dated finish/access facts are matched.
+  "MLIS", "MSIDT", "EMBA",
   // Military Officers Association of America; county's Veterans Day notice.
   "MOAA",
   // Public broadcaster named in Palo Alto City Library's screening copy.

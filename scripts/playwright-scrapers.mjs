@@ -2283,16 +2283,24 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
   await page.goto("https://www.thetech.org/explore/upcoming-events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
-    const lines = (document.body?.innerText || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
-    const out = [];
-    for (let i = 0; i < lines.length; i++) {
-      const date = lines[i];
-      if (!/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s+\d{4}\s+\d{1,2}:\d{2}/i.test(date)) continue;
-      const title = lines[i - 1];
-      const venue = lines[i + 1] && !/get tickets|plan your visit/i.test(lines[i + 1]) ? lines[i + 1] : "The Tech Interactive";
-      out.push({ title, date, venue });
-    }
-    return out;
+    // Keep each card's own description and ticket link. Body-line scraping
+    // discarded both and could mistake a film synopsis for its venue, leaving
+    // blurb generation to invent activities from a bare title.
+    return [...document.querySelectorAll("li.card-grid-item")].map((card) => {
+      const content = card.querySelector(".stack-sm-to-none");
+      const heading = content?.querySelector(".card-item-title");
+      const date = content?.querySelector("p.small.bold")?.textContent?.replace(/\s+/g, " ").trim();
+      if (!date || !/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2},\s+\d{4}\s+\d{1,2}:\d{2}/i.test(date)) return null;
+      const venue = content.querySelector("p.italic");
+      const description = [...content.querySelectorAll("p")]
+        .filter((p) => !p.matches(".small.bold, .italic"))
+        .map((p) => p.textContent.replace(/\s+/g, " ").trim()).filter(Boolean).join(" ");
+      return {
+        title: heading?.textContent?.trim(), date,
+        venue: venue?.textContent?.trim() || "The Tech Interactive",
+        description, link: heading?.querySelector("a")?.href,
+      };
+    }).filter(Boolean);
   });
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
@@ -2305,9 +2313,12 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
       venue: normalizeVenueText(r.venue, "The Tech Interactive"),
       address: "201 S Market St, San Jose, CA 95113",
       city: "san-jose",
-      url: "https://www.thetech.org/explore/upcoming-events/",
+      url: r.link || "https://www.thetech.org/explore/upcoming-events/",
       source: "The Tech Interactive",
-      category: inferCategory(r.title),
+      category: /^\s*(?:NYE\s+)?LASERS:/i.test(r.title) ? "arts"
+        : /^Girl Scout Program:/i.test(r.title) ? "education"
+        : inferCategory(r.title),
+      description: r.description || "",
       cost: "paid",
       kidFriendly: true,
     };

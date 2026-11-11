@@ -4,6 +4,13 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Harvesting Hope\s*\|\s*Community, Culture\s*&\s*Action$/i,
+    venue: /^SCU Forge Garden$/i,
+    date: "2026-11-17",
+    reason: "SCU's complete organizer record invites students, faculty and staff and gives a November 10 RSVP deadline. The empty RSS excerpt does not establish public eligibility. Withhold until public access is confirmed; this is not a cancellation.",
+    source: "https://events.scu.edu/ignatian-center/event/524988-harvesting-hope-community-culture-action",
+  }),
+  Object.freeze({
     title: /^New Faculty Research Lifecycle Workshop$/i,
     venue: /.*/,
     date: "2026-11-17",

@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import { syncBuiltinESMExports } from "node:module";
 import test from "node:test";
-import { fetchSjsuEvents } from "../generate-events.mjs";
+import { cleanTitle, fetchSjsuEvents, polishDescription } from "../generate-events.mjs";
+import { polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
@@ -24,7 +25,15 @@ test("SJSU's sparse RSS and cached publication retain open-house finishes and on
   const events = await fetchSjsuEvents();
   assert.equal(events.length, 2);
   assert.deepEqual(events.map(event => event.title), openHouses.map(event => event.title), "restore source acronyms before fact matching");
+  // Exercise the shared publication passes after the adapter. They formerly
+  // downcased these acronyms again, hiding the dated finish/access rules.
+  for (const event of events) {
+    event.title = cleanTitle(cleanTitle(event.title));
+    event.description = polishDescription(event.description);
+  }
+  assert.deepEqual(events.map(event => event.title), openHouses.map(event => event.title));
   await resolveEventBlurbs(events, { enabled: false });
+  for (const event of events) Object.assign(event, polishReviewedEventCopy(event));
   for (const actual of events) {
     assert.equal(actual.time, "5:30 PM");
     assert.equal(actual.endTime, "6:30 PM");
