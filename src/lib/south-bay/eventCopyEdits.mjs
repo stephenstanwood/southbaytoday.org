@@ -677,6 +677,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Hercule Poirot's Christmas by Agatha Christie (1938) A family reunion", "Hercule Poirot's Christmas by Agatha Christie (1938). A family reunion"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
       ["Join us as we discuss how a specific part of AI that is currently all over the news: AI enabled scam and fraud.", "Join us as we discuss a specific part of AI that is currently all over the news: AI-enabled scams and fraud."],
       ["How is AI enabling scam and fraud?", "How is AI enabling scams and fraud?"],
