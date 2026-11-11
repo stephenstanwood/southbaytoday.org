@@ -4540,9 +4540,15 @@ async function fetchStanfordEvents() {
       // can still require a ticket; a ticket URL alone does not establish that.
       const ticketTerms = stripHtml(ev.ticket_cost || "");
       const ticketRequirement = ticketTerms.match(/(?:^|[.!?]\s+)((?:free\s+)?tickets?\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?)/i)?.[1]?.trim();
+      // Localist keeps online joining instructions outside the description.
+      // Only an explicit link-by-registration instruction establishes a gate;
+      // a registration URL or an optional online part of a hybrid event does not.
+      const streamTerms = publicZoomOnly || virtualFromSourceSignal(ev.experience) === true
+        ? stripHtml(ev.stream_info || "").trim() : "";
+      const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1];
       // Preserve the publisher's paragraph boundaries before stripHtml joins
       // them: a credit without final punctuation can precede a closure notice.
-      const registrationNotice = [ev.description_text || ev.description || "", ev.ticket_cost || ""]
+      const registrationNotice = [ev.description_text || ev.description || "", ev.ticket_cost || "", streamTerms]
         .flatMap((text) => String(text).split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi))
         .map((text) => stripHtml(text).trim())
         .flatMap((text) => text.split(/(?<=[.!?])\s+/))
@@ -4550,10 +4556,11 @@ async function fetchStanfordEvents() {
       const registration = declaredRegistrationAvailability(registrationNotice)
         || declaredRegistrationAvailability(description)
         || declaredRegistrationAvailability(ticketTerms)
+        || declaredRegistrationAvailability(streamTerms)
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || ((ticketRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
+        || ((ticketRequirement || streamRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4641,6 +4648,7 @@ async function fetchStanfordEvents() {
         ...(farmVolunteerEligibility ? [farmVolunteerEligibility] : []),
         ...(farmVolunteerWaiver ? [farmVolunteerWaiver] : []),
         ...(ticketRequirement ? [ticketRequirement] : []),
+        ...(streamRequirement ? [streamRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
       ];
       return {

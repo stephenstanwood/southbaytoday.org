@@ -66,6 +66,16 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The organizer's Event schema gives the November 17 game a 9 PM finish.
+  // The RSS has no finish; do not project this time onto another game.
+  // Evidence: docs/qa/2026-11-11-0507z-fact-check.md.
+  {
+    date: "2026-11-17",
+    matches: event => event.source === "Santa Clara University"
+      && event.url === "https://events.scu.edu/bronco-athletics/event/525257-santa-clara-university-womens-basketball-vs-gcu-"
+      && event.venue === "Leavey Event Center" && event.time === "7:00 PM",
+    facts: { endTime: "9:00 PM" },
+  },
   // Fresh organizer pages checked November 10. Keep these corrections tied
   // to the exact dated occurrence; never infer a later session or reopen it.
   // Evidence: docs/qa/2026-11-11-0207z-fact-check.md.
