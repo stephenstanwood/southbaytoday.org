@@ -1166,6 +1166,23 @@ test("EVENT_START and EVENT_END ignore a leftover clock from another window type
   assert.equal(beforeEnd.getTime(), end.getTime() - 60 * 60 * 1000);
 });
 
+test("minute registration windows do not become day-long offsets", () => {
+  const start = new Date("2026-11-12T16:00:00-08:00");
+  const end = new Date("2026-11-12T17:30:00-08:00");
+  assert.equal(resolveRegistrationClosesBy(
+    biblioWindowEvent({ ordinal: 1, unit: "minutes", windowType: "EVENT_START" }),
+    start, end,
+  ).toISOString(), "2026-11-12T23:59:00.000Z");
+  assert.equal(resolveRegistrationClosesBy(
+    biblioWindowEvent({ ordinal: 30, unit: "minutes", windowType: "EVENT_END", time: "T09:45" }),
+    start, end,
+  ).toISOString(), "2026-11-13T01:00:00.000Z");
+  assert.equal(resolveRegistrationClosesBy(
+    biblioWindowEvent({ ordinal: 15, unit: "minutes", windowType: "RELATIVE" }),
+    start, end,
+  ).toISOString(), "2026-11-12T23:45:00.000Z");
+});
+
 test("STATIC windows are absolute and a missing clock reads as end of day", () => {
   const withClock = resolveRegistrationClosesBy(
     biblioWindowEvent({ date: "2026-09-18", time: "T10:00", windowType: "STATIC" }),

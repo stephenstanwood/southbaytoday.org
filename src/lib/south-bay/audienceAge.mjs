@@ -132,6 +132,13 @@ export function classifyAudienceAge(event) {
 
   const title = String(event.title || "");
   const desc = String(event.description || "").slice(0, 400);
+  // A workshop that explicitly teaches parents about their children targets
+  // adults. The children's ages describe its subject, not its attendees.
+  // Keep structured audience labels and child-friendly programs authoritative.
+  if (event.kidFriendly === false
+      && /\b(?:workshop|seminar|webinar|class|session)\s+(?:helps?\s+|for\s+|designed\s+for\s+)(?:parents?|caregivers?)\s+of\b/i.test(desc)) {
+    return "adult";
+  }
   let hay = `${title}\n${desc}`;
   for (const r of NON_AUDIENCE_AGE_PHRASES) hay = hay.replace(r, "");
   if (ACADEMIC_TALK_TITLE.test(title)) hay = hay.replace(STORYTIME_AS_SUBJECT, "");

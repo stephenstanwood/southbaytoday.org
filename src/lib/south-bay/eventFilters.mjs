@@ -736,7 +736,7 @@ function parsePtDateTime(isoDate, time) {
  *   STATIC       absolute { date, time } — used verbatim (no time → end of
  *                that PT day, the latest reading).
  *   EVENT_START  closes `ordinal` × `unit` before the instance starts
- *                (ordinal 0 = at start; SJPL teen meetings use hours).
+ *                (ordinal 0 = at start; units include minutes, hours and days).
  *   EVENT_END    same, anchored to the instance end. Both ignore a leftover
  *                `time` clock; only STATIC and RELATIVE use that field.
  *   RELATIVE     `ordinal` × `unit` before the start, at the `time` clock
@@ -779,8 +779,10 @@ export function resolveRegistrationClosesBy(ev, start, end) {
 
   const ordinal = Number.isFinite(rule.ordinal) ? rule.ordinal : 0;
   const unit = String(rule.unit || "days").toLowerCase();
-  const unitMs = unit.startsWith("hour")
-    ? 60 * 60 * 1000
+  // Bascom's chess form closes one minute before the session. Treating an
+  // unrecognized minute unit as days falsely closed it almost a day early.
+  const unitMs = unit.startsWith("minute") ? 60 * 1000
+    : unit.startsWith("hour") ? 60 * 60 * 1000
     : 24 * 60 * 60 * 1000;
   const shifted = new Date(anchor.getTime() - ordinal * unitMs);
   const clock = String(rule.time || "").replace(/^T/, "");

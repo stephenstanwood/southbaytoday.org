@@ -204,6 +204,19 @@ test("'ages 12 to 25' young-adult ranges do NOT classify as kids", () => {
   );
 });
 
+test("parent education does not turn the children's ages into an attendee restriction", () => {
+  const workshop = {
+    title: "Raising Well-Balanced Kids", kidFriendly: false,
+    description: "Childhood should be full of curiosity, play, and discovery. This interactive workshop helps parents of elementary-aged children understand what truly supports healthy development in the early years.",
+  };
+  assert.equal(classifyAudienceAge(workshop), "adult");
+  assert.equal(classifyAudienceAge({ ...workshop, sourceAudiences: ["Children"] }), "kids");
+  assert.equal(classifyAudienceAge({ ...workshop, sourceAudiences: ["All Ages"] }), "all");
+  assert.equal(classifyAudienceAge({ ...workshop, kidFriendly: true }), "kids");
+  assert.equal(classifyAudienceAge(ev("Elementary Storytime", "Parents of elementary-aged children are welcome to join their children.")), "kids");
+  assert.equal(classifyAudienceAge(ev("School Open House", "Parents of elementary-aged children are welcome.")), "kids");
+});
+
 test("lectures discussing story time are not themselves children's storytimes", () => {
   const lecture = ev(
     "WGSS Lecture: Drag Story Time as a Site of Resistance, Queer World-Making and Community Building",

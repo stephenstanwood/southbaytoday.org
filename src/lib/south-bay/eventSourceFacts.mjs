@@ -518,13 +518,19 @@ const CORRECTIONS = [
   // optional signup mandatory. Keep the source's space-available condition
   // and stop overriding when its wording or explicit availability changes.
   // Evidence: docs/qa/2026-11-09-0307z-fact-check.md (fresh exact-ID responses).
+  // November 11 recheck: the live form is ACTIVE. The known midnight-UTC
+  // deadline came from interpreting its one-minute rule as one day. Repair
+  // that stale computed closure only; later explicit booking notices win.
+  // Evidence: docs/qa/2026-11-12-0307z-fact-check.md.
   {
     date: "2026-11-12",
     matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a83721e4cb69d003e216ef3\/?$/.test(event.url || "")
       && event.venue === "Bascom Library" && event.time === "4:00 PM"
       && /\bregistration\s+(?:is\s+)?encouraged\s+but\s+not\s+required\b/i.test(event.description || "")
       && !/\bregistration\s+(?:is\s+)?(?:required|mandatory)\b|\bmust\s+(?:register|reserve|book)\b/i.test(event.description || "")
-      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+      && ![REGISTRATION_FULL, REGISTRATION_APPOINTMENT].includes(event.registration)
+      && (event.registration !== REGISTRATION_CLOSED || event.registrationClosesBy === "2026-11-12T00:00:00.000Z")
+      && !/\b(?:registration|event|program|session)\s+(?:is\s+)?(?:now\s+)?(?:closed|full)\b|\bno\s+(?:drop|walk)[-\s]?ins\b/i.test(`${event.description || ""} ${event.attendanceNote || ""}`),
     facts: {
       registration: REGISTRATION_NONE, registrationClosesBy: null,
       attendanceNote: "Registration is encouraged but not required.",

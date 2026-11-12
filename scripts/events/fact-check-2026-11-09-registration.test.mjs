@@ -55,7 +55,10 @@ test("retained cards and URL aliases preserve optional attendance without reopen
     assert.equal(event.blurb, published.blurb);
     assert.equal(applyVerifiedEventFacts({ ...published, url: published.url.replace("/events/", "/v2/events/") }).registration, "none");
     for (const registration of ["full", "closed", "appointment-only"]) {
-      const later = { ...published, registration };
+      // This fixture retains the known minute-as-day deadline. A later
+      // explicit closure must be distinguishable from that computed error.
+      const later = { ...published, registration,
+        ...(registration === "closed" ? { attendanceNote: "Registration is now closed." } : {}) };
       assert.deepEqual(applyVerifiedEventFacts(later), later);
     }
     for (const change of [
