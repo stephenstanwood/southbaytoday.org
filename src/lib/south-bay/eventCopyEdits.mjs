@@ -561,6 +561,10 @@ const EDITS = {
       ["alongside a parent/guardian • No experience", "alongside a parent/guardian. • No experience"],
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
       [/\bLego\b/g, "LEGO"],
+      ["Our volunteer will teach students to learn how to organize", "Our volunteer will teach students how to organize"],
+      ["Supplies are limited, registration required.", "Supplies are limited; registration is required."],
+      ["Sunday Crafternoon: calabazas decoradas ¡Así es!", "Sunday Crafternoon: calabazas decoradas. ¡Así es!"],
+      ["LEGO by Alexander Lowe Amazing Vehicles by Rona Skene", "LEGO by Alexander Lowe; Amazing Vehicles by Rona Skene"],
     ],
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
@@ -817,6 +821,9 @@ const EDITS = {
       ["He later worked as a researcher at the prestigious Bell Labs and holds 15 technology patents, and co-authored technical publications and books.", "He later worked as a researcher at the prestigious Bell Labs, holds 15 technology patents, and has co-authored technical publications and books."],
       ["Sowmya Renukuntla Sowmya is", "Sowmya Renukuntla: Sowmya is"],
       ["Levi Strauss & Co. On the Corporate Insights team", "Levi Strauss & Co. on the Corporate Insights team"],
+      ["Join us for a Henna program", "Join us for a henna program"],
+      ["Learn about this traditional body art, and how to apply henna to yourself.", "Learn about this traditional body art and how to apply henna to yourself."],
+      ["Henna tattoos are temporary, but can last", "Henna tattoos are temporary but can last"],
     ],
     blurb: [
       ["with a friend or new ones.", "with a friend or make new ones."],
@@ -946,6 +953,7 @@ const EDITS = {
       ["while supplies last, there's a photo booth", "while supplies last; there's a photo booth"],
       [/\b(For ages \d+(?:-\d+)?\+?), all levels welcome, \$/g, "$1. All levels are welcome. The cost is $"],
       ["All levels welcome, $", "All levels are welcome. The cost is $"],
+      ["Raindrop Plop! By", "Raindrop Plop! by"],
     ],
   },
   "SJSU Events": {

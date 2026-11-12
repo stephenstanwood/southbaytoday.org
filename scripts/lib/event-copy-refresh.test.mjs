@@ -130,6 +130,8 @@ const november11AttendanceFixture = JSON.parse(readFileSync(new URL("./fixtures/
 audits.push(november11AttendanceFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-11-post-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-11-balloon-inflators.json", import.meta.url))));
+const november12AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-afternoon.json", import.meta.url)));
+audits.push(november12AfternoonFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -146,6 +148,32 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("November 12 copy repairs preserve revised source facts, attendance and publisher scope", () => {
+  const revise = text => text.replaceAll("4 sessions", "6 sessions")
+    .replaceAll("6-12", "8-14").replaceAll("ages 7", "ages 9")
+    .replaceAll("8-10 days", "10-12 days").replaceAll("7+ days", "10+ days")
+    .replaceAll("(408) 540-3945", "(408) 555-0199")
+    .replaceAll("ask@lib.sccgov.org", "updated@example.org");
+  const suffix = " Register by December 15 at https://example.org/register; tickets cost $25.";
+  for (const row of november12AfternoonFixture.cases) {
+    const original = {
+      source: row.source, description: revise(row.refreshed) + suffix,
+      id: "updated-source-event", date: "2027-02-14", time: "4:00 PM", endTime: "5:30 PM",
+      cost: "paid", costNote: "$25", attendanceNote: "Registration required; ages 9+.",
+      venue: "Updated Branch Library", url: "https://example.org/updated",
+    };
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, description: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next.description), numbers(original.description));
+    assert.deepEqual(identifiers(next.description), identifiers(original.description));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, description: "New source wording: registration required by February 12. Tickets $30." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
+  }
+});
 
 test("attendance grammar repairs preserve changed limits, contact details and publisher scope", () => {
   const revise = text => text.replaceAll("30 participants", "42 participants")
