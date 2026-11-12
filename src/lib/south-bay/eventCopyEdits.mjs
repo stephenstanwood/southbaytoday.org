@@ -81,6 +81,13 @@ const EDITS = {
     ],
     description: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
+      ["3D Design and 3D Printing", "3D design and 3D printing"],
+      ["Phhs Game & App Makers Club", "PHHS Game & App Makers Club"],
+      ["a Chromatography Experiment.", "a chromatography experiment."],
+      ["Dray on a strip of coffee filter", "Draw on a strip of coffee filter"],
+      ["and Up Free. In-Person Registration Required.", "and up. Free. In-person registration required."],
+      ["prior to start of program at information desk.", "prior to the start of the program at the information desk."],
+      ["Users of all skill-levels welcome!", "Users of all skill levels are welcome!"],
       ["how to submit a service request or complain;", "how to submit a service request or submit a complaint;"],
       ["Para mas informacion:", "Para más información:"],
       ["bit. Ly/CE Tenant", "bit.ly/CETenant"],
@@ -911,6 +918,7 @@ const EDITS = {
   },
   "City Newsletter": {
     title: [
+      ["Pal Speaker Series:", "PAL Speaker Series:"],
       ["(Teens/Adults)", "(Teens / Adults)"],
       ["Landlord/Tenant Counseling", "Landlord / Tenant Counseling"],
       ["– Acc Men's Soccer Tournament", "– ACC Men's Soccer Tournament"],
@@ -1020,6 +1028,10 @@ const EDITS = {
     ],
     description: [
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
+      ["Jessie Wong, PhD Clinical Associate Professor, Department of Pediatrics, Stanford University \"", "Jessie Wong, PhD, Clinical Associate Professor, Department of Pediatrics, Stanford University. \""],
+      ["NO Late Seating Written By", "No late seating. Written by"],
+      ["Directed by Guest Artist", "Directed by guest artist"],
+      ["Jeffrey Lo A Stage Manager", "Jeffrey Lo. A Stage Manager"],
       [/\bRSVP Link: (https?:\/\/\S*[^\s.!?]) (?=How do the tools used to create letterforms\b)/gi, "RSVP link: $1. "],
       ["Admission Information Free admission", "Admission: Free."],
       ["(DAAAS) in collaboration with the Center for South Asia (CSA) cordially invite the Stanford Community for", "(DAAAS), in collaboration with the Center for South Asia (CSA), cordially invites the Stanford community to"],
