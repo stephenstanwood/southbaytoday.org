@@ -61,6 +61,7 @@ const EDITS = {
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
     ],
     attendanceNote: [
+      ["Tickets and participation Free.", "Tickets and participation are free."],
       // Attendance excerpts are extracted before description repairs run.
       // Keep the reviewed grammar here as well, without restoring old limits.
       ["first-come, first-served; capacities limited.", "first-come, first-served; capacity is limited."],
@@ -79,6 +80,7 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["Tickets and participation Free.", "Tickets and participation are free."],
       ["how to submit a service request or complain;", "how to submit a service request or submit a complaint;"],
       ["Para mas informacion:", "Para más información:"],
       ["bit. Ly/CE Tenant", "bit.ly/CETenant"],
