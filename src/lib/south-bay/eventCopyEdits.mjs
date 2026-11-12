@@ -944,6 +944,7 @@ const EDITS = {
       ["winter Let's Work! Program,", "winter Let's Work! program,"],
       ["Proof of residency is required, there is a limit of", "Proof of residency is required; there is a limit of"],
       ["while supplies last, there's a photo booth", "while supplies last; there's a photo booth"],
+      [/\b(For ages \d+(?:-\d+)?\+?), all levels welcome, \$/g, "$1. All levels are welcome. The cost is $"],
       ["All levels welcome, $", "All levels are welcome. The cost is $"],
     ],
   },
