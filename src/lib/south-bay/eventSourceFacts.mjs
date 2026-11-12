@@ -17,6 +17,7 @@ const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s p
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
+const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
 const LOS_ALTOS_TEEN_DND_DATES = {
   "693b4639ddf563280020736e": "2026-11-05",
   "693b4639ddf563280020736f": "2026-11-12",
@@ -73,9 +74,14 @@ const CORRECTIONS = [
   {
     date: "2026-11-11",
     matches: event => /^https:\/\/www\.ticketweb\.com\/event\/open-mic-at-the-san-san-jose-improv-tickets\/14054294(?:[/?#]|$)/.test(event?.url || "")
-      && !/\b(?:ages?\s+\d+|minimum|all ages)\b|\b\d+\s*\+/i.test(sourceText(event)),
+      // Our own retained note must not disable the correction when a later
+      // refresh reclassifies the sparse description. Other source terms still
+      // take precedence, including terms appended after this exact note.
+      && !/\b(?:ages?\s+\d+|minimum|all ages)\b|\b\d+\s*\+/i.test(sourceText({
+        ...event, attendanceNote: (event?.attendanceNote || "").replace(OPEN_MIC_ENTRY_NOTE, ""),
+      })),
     facts: { audienceAge: "adult", kidFriendly: false },
-    appendAttendanceNote: "Ages 18+. Two-item minimum purchase per person.",
+    appendAttendanceNote: OPEN_MIC_ENTRY_NOTE,
   },
   // The organizer calls this a family tradition and explicitly welcomes youth.
   // Its newsletter excerpt omits "family", so keyword inference misses it.

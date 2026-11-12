@@ -4,6 +4,7 @@ import test from "node:test";
 import { fetchInboundEvents } from "../generate-events.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { classifyAudienceAge } from "../../src/lib/south-bay/audienceAge.mjs";
 
 const { events } = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-11-night.json", import.meta.url)));
 const asInbound = event => ({
@@ -64,5 +65,30 @@ test("a dated organizer correction cannot classify another occurrence or an unre
   ]) {
     const newerTerms = { ...comedy, ...change };
     assert.deepEqual(applyVerifiedEventFacts(newerTerms), newerTerms, "new source entry terms outrank retained conditions");
+  }
+});
+
+test("Open Mic's retained entry note survives audience reclassification on later refreshes", async () => {
+  const original = events.find(event => event.city === "san-jose");
+  const event = applyVerifiedEventFacts(original);
+  const verified = { ...event };
+
+  // Refreshes revisit already corrected rows. Generic audience inference has
+  // only the sparse newsletter description, while the entry note is retained.
+  for (let refresh = 0; refresh < 3; refresh++) {
+    event.audienceAge = classifyAudienceAge(event);
+    await resolveEventBlurbs([event], { enabled: false });
+    assert.deepEqual(event, verified);
+  }
+  assert.equal(event.audienceAge, "adult");
+  assert.equal(event.attendanceNote, "Ages 18+. Two-item minimum purchase per person.");
+
+  for (const change of [
+    { sourceAudiences: ["Adults, ages 21+"] },
+    { attendanceNote: `${event.attendanceNote} All ages welcome.` },
+    { description: "Three-item minimum purchase per person." },
+  ]) {
+    const newerTerms = { ...event, ...change, audienceAge: "all" };
+    assert.deepEqual(applyVerifiedEventFacts(newerTerms), newerTerms);
   }
 });
