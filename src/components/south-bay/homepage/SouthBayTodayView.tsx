@@ -284,6 +284,7 @@ export default function SouthBayTodayView(_props: Props) {
   // otherwise the deterministic kids:false first render would clobber a
   // returning kids-mode user's preference before we ever load it.
   const prefsLoadedRef = useRef(false);
+  const [prefsReady, setPrefsReady] = useState(false);
   useEffect(() => { if (prefsLoadedRef.current) saveState(state); }, [state]);
 
   // Post-hydration refine: apply localStorage prefs + the real clock. Runs
@@ -296,6 +297,7 @@ export default function SouthBayTodayView(_props: Props) {
     // `:tomorrow` key after midnight; key-only selection otherwise leaves the
     // homepage on Monday until the next deploy.
     applyMode(stored.kids, { fetchIfMissing: false });
+    setPrefsReady(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -358,7 +360,9 @@ export default function SouthBayTodayView(_props: Props) {
   // evening cutoff or across midnight. Keys are generation-time labels only;
   // planDate is the source of truth.
   useEffect(() => {
-    if (loading) return;
+    // The mount pass still closes over the neutral adults state. Let the
+    // saved audience commit before a clock rollover can replace its cards.
+    if (!prefsReady || loading) return;
     const today = getTodayISOInPT();
     const effective = getEffectiveTime(state.kids);
     const targetDate = effective.planDate || today;
@@ -368,7 +372,7 @@ export default function SouthBayTodayView(_props: Props) {
     setPlanDateISO(next.planDate);
     if (next.city) setPlanCity(next.city);
     setWeather(next.weather);
-  }, [cards, planDateISO, nowMinutes, loading, state.kids]);
+  }, [cards, planDateISO, nowMinutes, loading, prefsReady, state.kids]);
 
   // Actions. applyMode loads the pre-generated plan for a target audience
   // mode using the real clock (today or, past the evening cutoff, tomorrow).
