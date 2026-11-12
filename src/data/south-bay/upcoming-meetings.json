@@ -1,115 +1,42 @@
 {
-  "generatedAt": "2026-11-11T04:10:43.451Z",
+  "generatedAt": "2026-11-12T04:17:57.886Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8123&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8123,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8124&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8124,
       "agendaItems": [
         {
-          "title": "Agreements with Catholic Charities of Santa Clara County and U.S. Department of Housing and Urban Development for the Development of the Blossom Valley Family Center.",
-          "sequence": 43
+          "title": "Labor Negotiations Update.",
+          "sequence": 60
         },
         {
-          "title": "Funding Agreement with the Santa Clara Valley Transportation Authority for the San José Arterial Management - Adaptive Traffic Control System Deployment Project.",
-          "sequence": 44
+          "title": "Land Use on Consent Calendar - TO BE HEARD IMMEDIATELY AFTER CONSENT",
+          "sequence": 72
         },
         {
-          "title": "El Niño Update, Flood Preparedness, and Proclamation of a Local Emergency.",
-          "sequence": 49
+          "title": "Presentation of a commendation recognizing the San José - Santa Clara Regional Wastewater Facility and its 70 years of continuous operation. (Mahan & Cohen)",
+          "sequence": 31
         },
         {
-          "title": "Actions Related to the Conditional Vacation of a Portion of Orchard Parkway. - TO BE HEARD AFTER ITEM 10.2",
-          "sequence": 50
+          "title": "Presentation of a ​proclamation declaring November 14, 2026, as Ruby Bridges Walk to School Day in the City of San José, which encourages the community to come together in a shared commitment to creating safe, welcoming, and inclusive schools and neighborhoods. (Campos)",
+          "sequence": 32
         },
         {
-          "title": "Actions Related to First Community Housing Stabilization.",
-          "sequence": 58
+          "title": "Retroactive Approval of “Free Use” of the City Hall East and West Plazas and the Janet Gray Hayes Rotunda for the Tunnel of Terror Event.",
+          "sequence": 45
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "mountain-view": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "startTime": "18:30",
-      "bodyName": "City Council",
-      "location": "Council Chambers and Video Conference",
-      "closedSession": false,
-      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3368&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
-      "legistarEventId": 3368,
-      "agendaItems": [
-        {
-          "title": "Community Foundation Week Proclamation",
-          "sequence": 5
-        },
-        {
-          "title": "National Hunger and Homelessness Awareness Week Proclamation",
-          "sequence": 6
-        },
-        {
-          "title": "Presentation of a commendation to City Manager Kimbra McCarthy, recognizing her as the first recipient of the International City/County Management Association's (ICMA) Good Governance Award",
-          "sequence": 7
-        },
-        {
-          "title": "2024 Community Greenhouse Gas Emissions Inventory",
-          "sequence": 12
-        },
-        {
-          "title": "Adobe Building Patio Tiles Replacement, Project 23-34",
-          "sequence": 13
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "startTime": "19:00",
-      "closedSessionStart": "18:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4528&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4528,
-      "agendaItems": [
-        {
-          "title": "Approve the Second Amendment to the Agreement with Endress+Hauser Inc. for Instrumentation and Related Services for the Clean Water Facility, Increasing the Not-to-Exceed Amount to $445,000 and Extending the Term Through October 18, 2027 (F27-066)",
-          "sequence": 20
-        },
-        {
-          "title": "Silicon Valley Clean Energy (SVCE) Community Grants Award Announcement, Presented by Eric Rodríguez, Decarbonization and Community Strategies Lead, SVCE",
-          "sequence": 25
-        },
-        {
-          "title": "Appoint Applicants to the Arts Commission, Heritage Preservation Commission, and Housing and Human Services Commission",
-          "sequence": 29
-        },
-        {
-          "title": "Approve City Council Meeting Minutes of October 27, 2026",
-          "sequence": 18
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -126,45 +53,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "santa-clara": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
-      "startTime": "17:00",
-      "bodyName": "City Council and Authorities Concurrent",
-      "location": "Hybrid Meeting\r\nCity Hall Council Chambers/Virtual \r\n1500 Warburton Avenue\r\nS...",
-      "closedSession": false,
-      "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=5055&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
-      "legistarEventId": 5055,
-      "agendaItems": [
-        {
-          "title": "Proclamation of November 2026 as Sikh Awareness and Appreciation Month",
-          "sequence": 19
-        },
-        {
-          "title": "Proclamation of October 9, 2026 as Hangul Day and October 3, 2026 as Korean National Foundation Day",
-          "sequence": 20
-        },
-        {
-          "title": "Board, Commissions and Committee Minutes",
-          "sequence": 23
-        },
-        {
-          "title": "Action on Amendments to Agreements with West Coast Arborists, Inc. for City Tree Maintenance and Tree Planting Services and an Agreement with BrightView Landscape Services, Inc. for Secondary Tree Maintenance Services",
-          "sequence": 25
-        },
-        {
-          "title": "Action to Authorize the Use of City Electric Forces for Public Works at 2035 White Oak Lane, 3833 Kifer Road, Scott Receiving Station, and 2215 Martin Avenue, with an Estimated Cost of $110,725",
-          "sequence": 28
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-10T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -197,24 +86,24 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
-      "date": "2026-11-10",
-      "displayDate": "Tue, Nov 10",
+      "date": "2026-12-08",
+      "displayDate": "Tue, Dec 8",
       "startTime": "19:00",
       "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://losaltosca.portal.civicclerk.com/event/2111/overview",
-      "civicClerkEventId": 2111,
+      "url": "https://losaltosca.portal.civicclerk.com/event/3219/overview",
+      "civicClerkEventId": 3219,
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "civicclerk",
-        "observedDate": "2026-11-10",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-10T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "observedDate": "2026-12-08",
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -241,11 +130,11 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "cupertino": {
       "provider": "Legistar",
@@ -253,7 +142,7 @@
     },
     "santa-clara": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "palo-alto": {
       "provider": "PrimeGov",

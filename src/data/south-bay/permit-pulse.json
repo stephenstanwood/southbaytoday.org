@@ -1,19 +1,55 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-11T04:10:47.197Z",
+      "generatedAt": "2026-11-12T04:17:58.087Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 3 – Nov 10",
+      "dateRange": "Nov 4 – Nov 11",
       "stats": {
-        "total": 475,
-        "notable": 26,
-        "newUnits": 9,
-        "totalValuation": 26120909
+        "total": 466,
+        "notable": 32,
+        "newUnits": 12,
+        "totalValuation": 17573148
       },
       "permits": [
+        {
+          "id": "2025-138465-RS",
+          "address": "1195 Britton Av #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 3 ADU - Attached",
+          "valuation": 205938,
+          "units": 1,
+          "issueDate": "2026-11-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2024-093209-RS",
+          "address": "6898 Serenity Ct #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New Detached ADU",
+          "valuation": 189658,
+          "units": 1,
+          "issueDate": "2026-11-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-120650-RS",
+          "address": "1637 Town Club Dr #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 173985,
+          "units": 1,
+          "issueDate": "2026-11-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
         {
           "id": "2026-108386-RS",
           "address": "1018 Pine Av #2",
@@ -39,15 +75,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-110120-RS",
-          "address": "15159 Rosemar Av #3",
+          "id": "2026-128879-RS",
+          "address": "434 Stroud Pl #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Garage Conversion to JADU",
-          "valuation": 82682,
+          "description": "Code Case Garage Conversion to ADU",
+          "valuation": 86553,
           "units": 1,
-          "issueDate": "2026-11-03",
+          "issueDate": "2026-11-09",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -75,63 +111,27 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-124944-RS",
-          "address": "1990 Leigh Ann Pl #2",
+          "id": "2026-130754-RS",
+          "address": "5168 Persianwood Pl #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Code Case Garage Conversion to JADU",
-          "valuation": 64739,
+          "description": "Garage Conversion to ADU",
+          "valuation": 67377,
           "units": 1,
-          "issueDate": "2026-11-03",
+          "issueDate": "2026-11-09",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2025-138925-RS",
-          "address": "2342 Kayla Ct #2",
+          "id": "2026-103048-RS",
+          "address": "593 Independence Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Attached ADU",
-          "valuation": 63190,
+          "description": "Garage Conversion to JADU",
+          "valuation": 63683,
           "units": 1,
-          "issueDate": "2026-11-04",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-122661-RS",
-          "address": "137 Cedar Ln #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 3 Garage Conversion to JADU",
-          "valuation": 58757,
-          "units": 1,
-          "issueDate": "2026-11-06",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-143690-RS",
-          "address": "1489 Fruitdale Av 26-2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "MF ADU Unit 26-2 Convert Accessory Structure to MF ADU",
-          "valuation": 54113,
-          "units": 1,
-          "issueDate": "2026-11-03",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-143665-RS",
-          "address": "1489 Fruitdale Av 25-2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "MF ADU Unit 25-2 Convert Accessory Structure to MF ADU",
-          "valuation": 52012,
-          "units": 1,
-          "issueDate": "2026-11-03",
+          "issueDate": "2026-11-09",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
