@@ -23,6 +23,7 @@ import {
   hasUnsupportedEventMilestone,
   hasUnsupportedSharedEventVenue,
   hasUnsupportedSharedEventTime,
+  hasReversedEventSequence,
   briefingEventContext,
   briefingEventWhen,
   isBriefingEventAvailable,
@@ -186,6 +187,7 @@ Important rules:
 - Only mention a day of week (Monday, Tuesday, etc.) if it appears in the data below. Do not infer or guess weekdays from dates — the day labels are already provided in parentheses. Each event has its own day; never transfer a day or time from one event to another. When two events share a clause, give each its own day ("Coffee with the Mayor Friday and a town hall Saturday") — a single trailing day word ("Coffee with the Mayor and a town hall Saturday") wrongly puts both on that day.
 - Each event's venue belongs to that event alone. Never group several events under one venue ("the library packs the week with A, B, and C") unless every one of them is listed at that venue — an event at the history museum is not a library event. A missing venue is unknown; never borrow a neighboring event's venue.
 - Each event's start time belongs to that event alone. Write "A at 11:30 AM and B at 6:30 PM", or omit the clocks; never write "A and B at 6:30 PM" unless both events explicitly start then.
+- Keep explicit sequences ("runs from A to B", "A followed by B", "A then B") in the events' actual date and start-time order. Otherwise list the events with "and" without implying an order.
 - Attendance details qualify the listing's clock. An overall event window is not the start of its parade, show, or performance. Preserve the stated distinction or omit the clocks. Different source titles for the same event do not establish separate activities.
 - Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the Next council meeting agenda, or say council will consider it "that same day", unless that item is explicitly listed in the Next council meeting data. A Zoning Administrator hearing is not a Planning Commission or City Council meeting.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
@@ -239,6 +241,9 @@ Reply with ONLY the sentence, no quotes or preamble.`;
     }
     if (hasUnsupportedSharedEventTime(text, events)) {
       found.push("it assigned one trailing start time to named events with different or unknown start times");
+    }
+    if (hasReversedEventSequence(text, events)) {
+      found.push("it put named events in a forward sequence that reverses their sourced dates and start times");
     }
     return found;
   };

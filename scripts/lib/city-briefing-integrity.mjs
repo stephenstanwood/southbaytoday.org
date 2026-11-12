@@ -210,3 +210,41 @@ export function hasUnsupportedSharedEventTime(text, events = []) {
   }
   return false;
 }
+
+/** Explicit forward sequences must not put every sourced occurrence backward. */
+export function hasReversedEventSequence(text, events = []) {
+  const startKey = (event) => {
+    const clock = normalizeClockTime(String(event?.time || ""));
+    const match = /^([1-9]|1[0-2]):([0-5]\d) (AM|PM)$/.exec(clock);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(event?.date || "") || !match) return null;
+    const minutes = (Number(match[1]) % 12 + (match[3] === "PM" ? 12 : 0)) * 60 + Number(match[2]);
+    return `${event.date}T${String(minutes).padStart(4, "0")}`;
+  };
+  const copy = String(text || "").replace(/\b([ap])\.\s*m\./gi, "$1m");
+  for (const sentence of copy.split(/[.!?;\n]+/)) {
+    const words = normalizeEventWords(sentence);
+    const named = new Map();
+    for (const event of events) {
+      const span = eventTitleSpan(words, event?.title);
+      if (!span) continue;
+      const title = normalizeEventWords(event.title);
+      if (!named.has(title)) named.set(title, { ...span, occurrences: [] });
+      named.get(title).occurrences.push(event);
+    }
+    const mentions = [...named.values()].sort((a, b) => a.start - b.start);
+    for (let i = 1; i < mentions.length; i += 1) {
+      const left = mentions[i - 1], right = mentions[i];
+      if (right.start < left.end) continue;
+      const between = words.slice(left.end, right.start);
+      const forward = /\b(?:followed by|then)(?:\s+(?:a|an|the))?\s*$/.test(between)
+        || (/\b(?:runs?|running|starts?|starting|begins?|beginning) from(?:\s+(?:a|an|the))?\s*$/.test(words.slice(0, left.start))
+          && /\bto(?:\s+(?:a|an|the))?\s*$/.test(between));
+      if (!forward) continue;
+      const starts = left.occurrences.map(startKey), nextStarts = right.occurrences.map(startKey);
+      // Unknown clocks and ambiguous recurring dates cannot prove a reversal.
+      if (starts.includes(null) || nextStarts.includes(null)) continue;
+      if (!starts.some((a) => nextStarts.some((b) => a <= b))) return true;
+    }
+  }
+  return false;
+}
