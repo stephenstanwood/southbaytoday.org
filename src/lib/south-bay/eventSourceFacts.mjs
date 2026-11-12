@@ -94,11 +94,15 @@ const CORRECTIONS = [
   },
   // This is the named poets' spoken-word performance, not a civic gathering.
   // Protect either newsletter identity and retained/cached copies alike.
+  // November 12: the organizer now reports full capacity and offers ticket-
+  // release notifications. A sparse newsletter must retain that availability.
   // https://live.stanford.edu/events/26-27season/studio/poetry-live
+  // Evidence: docs/qa/2026-11-12-1107z-fact-check.md.
   {
     date: "2027-01-14",
     url: "https://live.stanford.edu/events/26-27season/studio/poetry-live",
-    facts: { category: "arts" },
+    facts: { category: "arts", registration: REGISTRATION_FULL },
+    appendAttendanceNote: "Currently at capacity. Sign up with the organizer to be notified when tickets are released.",
   },
   // SJZ's venue label contradicts its own performance description. The host's
   // exact concert record confirms Hammer, not the outdoor Christmas venue.

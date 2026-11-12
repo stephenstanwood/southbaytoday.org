@@ -45,6 +45,7 @@ test("retained cards keep their admission, age scope, copy and later booking sta
     assert.equal(after.registration, "closed");
     assert.ok(after.attendanceNote.startsWith("Registration is now closed."));
     if (before.city === "san-jose") assert.match(after.attendanceNote, /Ages 18\+.*Two-item minimum/);
+    else if (before.city === "palo-alto") assert.match(after.attendanceNote, /Currently at capacity.*notified when tickets are released/);
     else assert.equal(after.attendanceNote, "Registration is now closed.");
     assert.deepEqual(applyVerifiedEventFacts(after), after);
   }
