@@ -66,6 +66,17 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The same TicketWeb occurrence reappeared through a sparse newsletter
+  // after the Ticketmaster adapter aged it out. Preserve its exact retained
+  // age/entry terms without carrying forward a price or booking state.
+  // Evidence: docs/qa/2026-11-12-0507z-fact-check.md.
+  {
+    date: "2026-11-11",
+    matches: event => /^https:\/\/www\.ticketweb\.com\/event\/open-mic-at-the-san-san-jose-improv-tickets\/14054294(?:[/?#]|$)/.test(event?.url || "")
+      && !/\b(?:ages?\s+\d+|minimum|all ages)\b|\b\d+\s*\+/i.test(sourceText(event)),
+    facts: { audienceAge: "adult", kidFriendly: false },
+    appendAttendanceNote: "Ages 18+. Two-item minimum purchase per person.",
+  },
   // The organizer calls this a family tradition and explicitly welcomes youth.
   // Its newsletter excerpt omits "family", so keyword inference misses it.
   // https://www.numulosgatos.org/events/festive2026
