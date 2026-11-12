@@ -1,35 +1,20 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-12T19:06:05.124Z"
+    "auditedAt": "2026-11-12T23:14:24.459Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
     "total": 1470,
     "totals": {
       "hard": 0,
-      "soft": 1,
+      "soft": 0,
       "info": 1
     },
     "byReason": {
-      "virtual-not-flagged": 1,
       "local-departure-trip": 1
     },
     "hard": [],
     "soft": [
-      {
-        "id": "sjpl-693866301e64afd01e4e227e",
-        "title": "Santa Teresa Book Club (Hybrid)",
-        "city": "san-jose",
-        "date": "2026-11-12",
-        "location": "290 International Circle San Jose",
-        "findings": [
-          {
-            "severity": "soft",
-            "reason": "virtual-not-flagged",
-            "detail": "matched /description mention/ in description"
-          }
-        ]
-      },
       {
         "id": "inbound-d1d760709f2010a5",
         "title": "The Nutcracker: San Francisco Ballet Day Trip",
@@ -48,7 +33,7 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 321,
+    "total": 329,
     "totals": {
       "hard": 0,
       "soft": 2,
