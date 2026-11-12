@@ -1009,6 +1009,7 @@ const EDITS = {
     ],
     description: [
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
+      [/\bRSVP Link: (https?:\/\/\S*[^\s.!?]) (?=How do the tools used to create letterforms\b)/gi, "RSVP link: $1. "],
       ["Admission Information Free admission", "Admission: Free."],
       ["(DAAAS) in collaboration with the Center for South Asia (CSA) cordially invite the Stanford Community for", "(DAAAS), in collaboration with the Center for South Asia (CSA), cordially invites the Stanford community to"],
       ["Distinguished Lecture Featuring - ", "Distinguished Lecture featuring "],
@@ -1089,6 +1090,7 @@ const EDITS = {
       [/ - with a focus on Zinemaking(?=$| [A-Z])/g, ", with a focus on zinemaking."],
       [/\bFood justice eco-burritos will be provided$/g, "$&."],
       ["The music of Jennifer Higdon and George Crumb Melinda Martinez Becker, mezzo-soprano • Megan Chartier, cello Margaret Halbig and Teresa McCollough, piano", "The music of Jennifer Higdon and George Crumb. Melinda Martinez Becker, mezzo-soprano; Megan Chartier, cello; Margaret Halbig and Teresa McCollough, piano."],
+      ["Shoreline Piano Trio Menghua Lin, piano • Sue-mi Shin, violin • Katie Youn, cello", "Shoreline Piano Trio: Menghua Lin, piano; Sue-mi Shin, violin; and Katie Youn, cello."],
       ["Santa Clara University, Bay Area's Univision, and the Mexican Consulate", "Santa Clara University, the Bay Area's Univision, and the Mexican Consulate"],
       ["at the Forge. Only requirements are closed-toed", "at the Forge. The only requirements are closed-toed"],
       ["By Oscar Wilde Directed by Kimberly Mohne Hill November", "By Oscar Wilde. Directed by Kimberly Mohne Hill. November"],
