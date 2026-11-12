@@ -1124,6 +1124,9 @@ const SOURCE_EVENT_ACRONYMS = [
   // social-work credential, and Center for Medieval and Early Modern Studies.
   // Preserve uppercase source forms across titles and both prose passes.
   "STAR", "SJ", "LCSW", "CMEMS",
+  // Stanford's Mathematics Research Center and diabetes-education credential.
+  // Preserve the source's uppercase spelling; do not upcase arbitrary names.
+  "MRC", "CDCES",
   // Reviewed tech/library listings name AI, SWOT analysis and autonomous
   // vehicle types. Protect the same source tokens in titles and both prose
   // passes so a refresh cannot undo the reviewed uppercase spellings.
@@ -4562,6 +4565,10 @@ async function fetchStanfordEvents() {
       const locationRsvpRequirement = /^RSVP for location$/i.test(venue)
         && /\bRSVP here\b/i.test(description)
         ? "RSVP to receive the event location." : null;
+      // Explicit instructions can follow the displayed excerpt. A ticket URL
+      // or an optional RSVP is insufficient; retain these affirmative requests
+      // from the full source body before shortening it.
+      const bodyRsvpRequirement = description.match(/(?:^|[.!?]\s+)(Please RSVP at this link to attend the event\.|If planning to attend,\s*please submit an RSVP here\.)/i)?.[1]?.trim();
       // The symposium's public application option is conditional admission,
       // not a walk-in invitation. Its terms follow the displayed excerpt.
       const applicationRequirement = /^Wu Tsai Human Performance Alliance Research Symposium 2026$/i.test(ev.title || "")
@@ -4582,7 +4589,7 @@ async function fetchStanfordEvents() {
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
+        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || bodyRsvpRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4676,6 +4683,7 @@ async function fetchStanfordEvents() {
         ...(streamRequirement ? [streamRequirement] : []),
         ...(zoomLinkRequirement ? [zoomLinkRequirement] : []),
         ...(locationRsvpRequirement ? [locationRsvpRequirement] : []),
+        ...(bodyRsvpRequirement ? [bodyRsvpRequirement] : []),
         ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
       ];

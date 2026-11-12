@@ -67,6 +67,49 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The reception is 5–5:30 PM, before the 5:30 PM lecture. Repair only the
+  // reversed cached sentence; later accurate source copy remains intact.
+  // Evidence: docs/qa/2026-11-12-1907z-fact-check.md.
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/eitner-lecture-with-m-d-usher-journey-to-the-west-buddhists-in-ancient-alexandria",
+    copyReplacements: [[/, then head to the reception at the Stanford Archaeology Center\./g,
+      ". The reception at the Stanford Archaeology Center takes place before the lecture."]],
+  },
+  // Full Stanford descriptions ask attendees to RSVP. Sparse retained cards
+  // lose that instruction; stronger full/closed/appointment notices still win.
+  // Keep the MRC source initials alongside its attendance correction because
+  // only the first dated rule applies. Evidence: the November 12 audit above.
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/mrc-public-lecture-tadashi-tokieda",
+    facts: { title: "MRC Public Lecture: Tadashi Tokieda", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Please RSVP to attend.",
+  },
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/what-is-a-public-intellectual-today-alexis-madrigal",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Please RSVP to attend.",
+  },
+  {
+    date: "2026-11-12",
+    url: "https://events.stanford.edu/event/shop-smart-eat-well-budget-friendly-grocery-tips-meal-ideas-and-label-reading-strategies",
+    copyReplacements: [[/\bCdces\b/g, "CDCES"]],
+  },
+  // The exact November 12 museum email confirms December 13 but no clock.
+  // The retained public calendar's 10 AM Quixilver session is November 14,
+  // which cannot establish December's start. Do not reuse the backfill cache.
+  // Stop matching if a later source body actually supplies the missing time.
+  // Evidence: docs/qa/2026-11-12-1907z-fact-check.md.
+  {
+    date: "2026-12-13",
+    matches: event => /^Robotics Demonstration with Team Quixilver$/i.test(event?.title || "")
+      && /^Children's Discovery Museum of San Jose(?:,|$)/i.test(event?.venue || "")
+      && /\bnewsletter gives no time\b/i.test(event?.description || ""),
+    facts: { time: null, endTime: null, attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "Demonstration time is unconfirmed. Check the activity schedule with Children's Discovery Museum before going.",
+  },
   // The same TicketWeb occurrence reappeared through a sparse newsletter
   // after the Ticketmaster adapter aged it out. Preserve its exact retained
   // age/entry terms without carrying forward a price or booking state.
