@@ -100,6 +100,46 @@
             },
             "isCancelled": false
           }
+        },
+        "6a3f10c0f56bd86e00b95e6c": {
+          "id": "6a3f10c0f56bd86e00b95e6c",
+          "key": "2026-11-14T16:30:00",
+          "indexStart": "2026-11-15T00:30:00Z",
+          "indexEnd": "2026-11-15T01:30:00Z",
+          "numberRegistered": 0,
+          "isFull": false,
+          "registrationClosed": false,
+          "definition": {
+            "start": "2026-11-14T16:30",
+            "end": "2026-11-14T17:30",
+            "title": "Language and Culture Swap",
+            "description": "<p>¿Hablas español y quieres aprender inglés?&nbsp;</p>\n<p>Speak English and want to learn Spanish? </p>\n<p>Build community with people from different linguistic and cultural backgrounds. Everyone has something to contribute! </p>\n<p>Construye comunidad con personas de diferentes antecedentes lingüísticos y culturales. ¡Todos tienen algo que aportar!&nbsp;</p>\n<hr>\n<p>In this program, Spanish-proficient participants with limited English skills will share their linguistic and cultural knowledge with English-proficient participants with limited Spanish skills and vice-versa to create a mutually enriching learning experience. </p>\n<p>En este programa, los participantes con dominio del español y habilidades limitadas en inglés compartirán sus conocimientos lingüísticos y culturales con participantes con dominio del inglés y habilidades limitadas en español, y viceversa, para crear una experiencia de aprendizaje mutuamente enriquecedora. </p>\n<hr>\n<p><br>Free. Registration requested but not&nbsp;required.<br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" data-linkindex=\"1\"><em>ADA Accommodation Requests</em></a><br></p>",
+            "branchLocationId": "22",
+            "audienceIds": [
+              "5d52fbae4d791b3a003e92e3",
+              "5d65e368eb2cac50006a08ab",
+              "5d5f0913be771f230036938d"
+            ],
+            "registrationInfo": {
+              "registrationEnd": {
+                "ordinal": 0,
+                "unit": "days",
+                "windowType": "EVENT_START"
+              },
+              "registrationStart": {
+                "ordinal": 2,
+                "unit": "weeks",
+                "windowType": "RELATIVE"
+              },
+              "waitlistEnabled": true,
+              "scope": null,
+              "maxSeats": 10,
+              "cap": 16,
+              "enabledMethods": [],
+              "provider": "BIBLIO_EVENTS"
+            },
+            "isCancelled": false
+          }
         }
       },
       "locations": {
@@ -126,6 +166,18 @@
             "street": "South First St",
             "number": "921"
           }
+        },
+        "22": {
+          "id": "22",
+          "name": "Alum Rock",
+          "address": {
+            "country": "US",
+            "zip": "95127",
+            "state": "CA",
+            "city": "San Jose",
+            "street": "Alum Rock Ave",
+            "number": "3090"
+          }
         }
       },
       "eventAudiences": {
@@ -147,6 +199,11 @@
         "5d5f0913be771f230036938d": {
           "id": "5d5f0913be771f230036938d",
           "name": "Teens, ages 12-18",
+          "imageId": null
+        },
+        "5d65e368eb2cac50006a08ab": {
+          "id": "5d65e368eb2cac50006a08ab",
+          "name": "Seniors, ages 65+",
           "imageId": null
         }
       }
@@ -205,6 +262,34 @@
       "audienceAge": "kids",
       "blurb": "Build with a huge pile of LEGO bricks and maybe get your creation displayed on the library TV.",
       "firstSeenAt": "2026-11-12T19:06:03.556Z"
+    },
+    {
+      "id": "sjpl-6a3f10c0f56bd86e00b95e6c",
+      "title": "Language and Culture Swap",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "4:30 PM",
+      "endTime": "5:30 PM",
+      "venue": "Alum Rock Library",
+      "address": "3090 Alum Rock Ave San Jose",
+      "city": "san-jose",
+      "registration": "required",
+      "registrationClosesBy": "2026-11-15T00:30:00.000Z",
+      "category": "education",
+      "cost": "free",
+      "description": "¿Hablas español y quieres aprender inglés? Speak English and want to learn Spanish? Build community with people from different linguistic and cultural backgrounds. Everyone has something to contribute! Construye comunidad con personas de diferentes antecedentes lingüísticos y culturales. ¡Todos tienen algo que aportar! In this program, Spanish-proficient participants with limited English skills will share their linguistic and cultural knowledge with English-proficient participants with limited Spanish skills and vice versa to create a mutually enriching learning experience. En este programa, los participantes con dominio del español y habilidades limitadas en inglés compartirán sus conocimientos lingüísticos y culturales con participantes con dominio del inglés y habilidades limitadas en español, y viceversa, para crear una experiencia de aprendizaje mutuamente enriquecedora. Free. Registration requested but not required.",
+      "sourceAudiences": [
+        "Adults, ages 18+",
+        "Seniors, ages 65+",
+        "Teens, ages 12-18"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/6a3f10c0f56bd86e00b95e6c",
+      "source": "San Jose Public Library",
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "blurb": "Swap English and Spanish conversation with neighbors building cross-cultural friendships at Alum Rock Library.",
+      "firstSeenAt": "2026-11-11T01:34:41.479Z"
     }
-  ]
+  ],
+  "additionalSourceCheckedAt": "2026-11-12T21:20:14Z"
 }

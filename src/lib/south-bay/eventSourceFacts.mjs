@@ -67,19 +67,22 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
-  // The exact Bascom occurrence explicitly makes signup optional despite its
-  // capped booking widget. Keep stronger later availability/instruction
+  // These exact occurrences explicitly make signup optional despite their
+  // capped booking widgets. Keep stronger later availability/instruction
   // notices, and stop matching if the organizer changes that admission text.
   // Evidence: docs/qa/2026-11-12-2107z-fact-check.md.
-  {
-    date: "2026-11-15",
-    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a85eaec69166f088b934e2e\/?$/.test(event.url || "")
-      && /\bregistration\s+(?:is\s+)?recommended\s+but\s+not\s+required\b/i.test(sourceText(event))
+  ...[
+    ["2026-11-15", "6a85eaec69166f088b934e2e", "recommended"],
+    ["2026-11-14", "6a3f10c0f56bd86e00b95e6c", "requested"],
+  ].map(([date, sourceId, wording]) => ({
+    date,
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?$/.exec(event.url || "")?.[1] === sourceId
+      && new RegExp(`\\bregistration\\s+(?:is\\s+)?${wording}\\s+but\\s+not\\s+required\\b`, "i").test(sourceText(event))
       && !/\bregistration\s+(?:is\s+)?(?:now\s+)?(?:required|mandatory|closed|full)\b|\bmust\s+(?:register|reserve|book)\b|\bno\s+(?:drop|walk)[-\s]?ins\b|\b(?:event|program|session)\s+(?:is\s+)?(?:now\s+)?full\b/i.test(sourceText(event))
       && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
-    appendAttendanceNote: "Registration is recommended but not required.",
-  },
+    appendAttendanceNote: `Registration is ${wording} but not required.`,
+  })),
   // The reception is 5–5:30 PM, before the 5:30 PM lecture. Repair only the
   // reversed cached sentence; later accurate source copy remains intact.
   // Evidence: docs/qa/2026-11-12-1907z-fact-check.md.
