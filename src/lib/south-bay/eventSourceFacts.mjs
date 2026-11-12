@@ -66,6 +66,23 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The organizer calls this a family tradition and explicitly welcomes youth.
+  // Its newsletter excerpt omits "family", so keyword inference misses it.
+  // https://www.numulosgatos.org/events/festive2026
+  // Evidence: docs/qa/2026-11-12-0507z-fact-check.md.
+  {
+    date: "2026-12-11",
+    url: "https://www.numulosgatos.org/events/festive2026",
+    facts: { kidFriendly: true },
+  },
+  // This is the named poets' spoken-word performance, not a civic gathering.
+  // Protect either newsletter identity and retained/cached copies alike.
+  // https://live.stanford.edu/events/26-27season/studio/poetry-live
+  {
+    date: "2027-01-14",
+    url: "https://live.stanford.edu/events/26-27season/studio/poetry-live",
+    facts: { category: "arts" },
+  },
   // SJZ's venue label contradicts its own performance description. The host's
   // exact concert record confirms Hammer, not the outdoor Christmas venue.
   // https://events.sjsu.edu/event/hammer-presents-cool-yule-2026
