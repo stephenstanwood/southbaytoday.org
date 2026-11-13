@@ -1108,6 +1108,10 @@ const EDITS = {
       ["awe-inspiring locations like never seen before in", "awe-inspiring locations in"],
       ["NorCal Academy of Performing Arts Presents Disney's Frozen:", "NorCal Academy of Performing Arts presents Disney's Frozen:"],
       ["The Broadway Musical Don't let winter freeze", "The Broadway Musical. Don't let winter freeze"],
+      ["Internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, Luka Sulic announces", "Luka Sulic, an internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, announces"],
+    ],
+    blurb: [
+      [/See Panchiko perform at San Jose Civic as part of their USA Spring Tour, with doors for the (\d{1,2}:\d{2} [AP]M) show\./g, "See Panchiko's $1 show at San Jose Civic on their USA Spring Tour."],
     ],
   },
   "Santa Clara University": {
