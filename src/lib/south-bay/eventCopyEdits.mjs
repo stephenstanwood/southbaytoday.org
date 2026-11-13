@@ -64,6 +64,7 @@ const EDITS = {
     ],
     attendanceNote: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
+      ["on a first come, first basis.", "on a first-come, first-served basis."],
       // Attendance excerpts are extracted before description repairs run.
       // Keep the reviewed grammar here as well, without restoring old limits.
       ["first-come, first-served; capacities limited.", "first-come, first-served; capacity is limited."],
@@ -83,6 +84,7 @@ const EDITS = {
     ],
     description: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
+      ["on a first come, first basis.", "on a first-come, first-served basis."],
       ["Registration is Required.", "Registration is required."],
       ["Acepta pagos faciles, seguros y modernos para tu negocio. Configura tus metodos de pago; Conoce las opciones mas populares; Elige la mejor solucion para tu negocio; Tips de seguridad y buenas practicas.", "Acepta pagos fáciles, seguros y modernos para tu negocio. Configura tus métodos de pago, conoce las opciones más populares y elige la mejor solución para tu negocio. Tips de seguridad y buenas prácticas."],
       ["days before program date.", "days before the program date."],
@@ -646,6 +648,14 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      [/^([A-Z][a-z]+ \d{1,2}, \d{4}) (?=Makers Market's Local Artist Street Fair\b)/g, "$1. "],
+      ["local Artists, Crafters, Designers, and Makers", "local artists, crafters, designers, and makers"],
+      ["shopping experience for every second Saturday of every month", "shopping experience on the second Saturday of every month"],
+      [/(\b\d+\+) Local Makers Handmade jewelry/g, "$1 local makers offer handmade jewelry"],
+      ["plants, and more Great food", "plants, and more. Great food"],
+      ["This IS A SIP & Stroll Event!", "This is a sip-and-stroll event!"],
+      [/Bring your kids \+ fur babies Enjoy live music by local artists (?:FREE|Free) to attend!/g, "Bring your kids + fur babies. Enjoy live music by local artists. Free to attend!"],
+      [/(from \d+\+) Makers\./g, "$1 makers."],
       [/^(November \d{1,2}, \d{4}) Skip the cooking this Thanksgiving\./g, "$1. Skip the cooking this Thanksgiving."],
       ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
@@ -727,6 +737,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Do you have...... a stuffed animal with the stuffing leaking out?... a shirt with a missing button?... a hole you want to patch?... a stain you want to cover up?", "Do you have a stuffed animal with the stuffing leaking out, a shirt with a missing button, a hole you want to patch, or a stain you want to cover up?"],
+      ["bring your own items to mend, project to work on, or practice basic stitches with our fabric scraps!", "bring your own items to mend or a project to work on, or practice basic stitches with our fabric scraps!"],
       ["Hercule Poirot's Christmas by Agatha Christie (1938) A family reunion", "Hercule Poirot's Christmas by Agatha Christie (1938). A family reunion"],
       ["Audio books, DVDs, VCDs and Blu Ray discs", "Audiobooks, DVDs, VCDs and Blu-ray discs"],
       ["Other Ongoing Friends of the Milpitas Library Sales The Book Nook We have", "Other ongoing Friends of the Milpitas Library sales include the Book Nook. We have"],
@@ -1042,6 +1054,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["We are excited to playing for you again.", "We are excited to play for you again."],
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
       ["data infrastructure that allow jobseekers", "data infrastructure that allows jobseekers"],
       ["Jessie Wong, PhD Clinical Associate Professor, Department of Pediatrics, Stanford University \"", "Jessie Wong, PhD, Clinical Associate Professor, Department of Pediatrics, Stanford University. \""],

@@ -137,6 +137,8 @@ audits.push(november12PostRefreshFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-night.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-late-night.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-2330-refresh.json", import.meta.url))));
+const november13AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-13-afternoon.json", import.meta.url)));
+audits.push(november13AfternoonFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -162,6 +164,36 @@ test("refresh excludes dissertation defenses while retaining advertised public l
     assert.equal(isPublicEvent(title, source, "A public lecture on current research.", "Clark Center"), true);
     assert.equal(isPublicEvent(`${title} — Public Lecture`, source, "", "Clark Center"), true);
     assert.equal(isPublicEvent("Public Lecture: Current Research", source, "", "Clark Center"), true);
+  }
+});
+
+test("November 13 refresh repairs retain revised attendance facts and publisher scope", () => {
+  const revise = text => text.replaceAll("November 14, 2026", "December 12, 2027")
+    .replaceAll("11 AM-6 PM", "10 AM-4 PM").replaceAll("60+", "75+").replaceAll("100+", "120+")
+    .replaceAll("2nd grade", "3rd grade").replaceAll("15 participants", "20 participants")
+    .replaceAll("7+ days", "10+ days").replaceAll("(408) 540-3945", "(650) 555-0123")
+    .replaceAll("ask@lib.sccgov.org", "updated@example.org")
+    .replaceAll("No registration is required;", "Registration is now required;")
+    .replaceAll("Murray Low", "New Director");
+  const suffix = " Register at https://example.org/new-event; tickets cost $25.";
+  for (const row of november13AfternoonFixture.cases) {
+    const original = {
+      ...row.events[0], source: row.source, [row.field]: revise(row.refreshed) + suffix,
+      date: "2027-02-14", time: "4:00 PM", endTime: "5:30 PM", registration: "required",
+      venue: "Updated Venue", address: "500 Updated Avenue", city: "san-jose", category: "education",
+      cost: "paid", costNote: "$25", url: "https://example.org/new-event",
+    };
+    const untouched = structuredClone(original);
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    assert.deepEqual(original, untouched);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, [row.field]: "New program details. Registration required; tickets $30." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
   }
 });
 
