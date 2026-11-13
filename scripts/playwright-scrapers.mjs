@@ -1008,9 +1008,10 @@ async function scrapeMontalvo(page) {
 
 // ── City Lights Theater Company ──
 
-async function scrapeCityLights(page) {
+export async function scrapeCityLights(page) {
   // City Lights lists shows as menu items with class menu-item-object-event
-  await page.goto("https://cltc.org/", { waitUntil: "networkidle", timeout: 20_000 });
+  const indexResponse = await page.goto("https://cltc.org/", { waitUntil: "networkidle", timeout: 20_000 });
+  if (indexResponse?.status() >= 400) throw new Error(`City Lights index returned HTTP ${indexResponse.status()}`);
 
   const shows = await page.evaluate(() => {
     return [...document.querySelectorAll("li.menu-item-object-event a")].map(a => ({
@@ -1020,11 +1021,20 @@ async function scrapeCityLights(page) {
   });
 
   const events = [];
+  const failures = [];
   // Visit each show page to extract date ranges
   for (const show of shows) {
     if (!show.title || !show.link) continue;
     try {
-      await page.goto(show.link, { waitUntil: "networkidle", timeout: 15_000 });
+      const response = await page.goto(show.link, { waitUntil: "networkidle", timeout: 15_000 });
+      // An explicitly removed page can leave the feed. A failed request cannot
+      // establish a removal: let the source-resilience layer retain prior rows.
+      if ([404, 410].includes(response?.status())) continue;
+      if (response?.status() >= 400) {
+        const error = new Error(`HTTP ${response.status()}`);
+        error.status = response.status();
+        throw error;
+      }
       const detail = await page.evaluate(() => {
         const text = document.body?.innerText || "";
         // Look for date ranges like "April 3 – May 3, 2026" or "March 14 - April 12"
@@ -1057,11 +1067,14 @@ async function scrapeCityLights(page) {
           });
         }
       }
-    } catch {
-      continue;
+    } catch (error) {
+      failures.push(`${show.link}: ${error.message}`);
+      if ([401, 403, 429].includes(error.status)) break;
+    } finally {
+      await page.waitForTimeout(300);
     }
-    await page.waitForTimeout(300);
   }
+  if (failures.length) throw new Error(`City Lights show-page collection incomplete: ${failures.join("; ")}`);
   return events;
 }
 

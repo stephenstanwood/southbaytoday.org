@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-13T07:30:35.045Z",
-  "eventCount": 1466,
+  "eventCount": 1467,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2038,7 +2038,7 @@
       "label": "Playwright source snapshot",
       "critical": true,
       "status": "ok",
-      "count": 197,
+      "count": 200,
       "dateCounts": {
         "2026-11-12": 5,
         "2026-11-13": 4,
@@ -2121,7 +2121,7 @@
         "2027-04-08": 1,
         "2027-04-09": 1,
         "2027-04-10": 2,
-        "2027-04-11": 1,
+        "2027-04-11": 2,
         "2027-04-13": 1,
         "2027-04-14": 1,
         "2027-04-15": 1,
@@ -2136,7 +2136,9 @@
         "2027-05-01": 1,
         "2027-05-14": 1,
         "2027-05-22": 1,
-        "2027-06-12": 1
+        "2027-06-06": 1,
+        "2027-06-12": 1,
+        "2027-08-22": 1
       },
       "error": null
     },
@@ -2224,7 +2226,7 @@
     {
       "name": "playwright-events",
       "status": "ok",
-      "count": 197,
+      "count": 200,
       "timestamp": "2026-11-13T07:24:31.154Z",
       "ageHours": 0,
       "reason": null
@@ -3219,6 +3221,27 @@
       "photoRef": "places/ChIJVbM327bMj4ARFtW3ks22e4A/photos/AV-0GLeCQ2AXAx7AX9SONzlUDA7eBEy2cZELTZWkd9HxSWE40HH3frnLljNKOhT6ftUfDFh7e4Drqr1eH2uSC87xX5u2Uxje16Gh7BIZPYhlIIyeW0tAsb8gzljVTkr_ChB4Hy76DbtkKKt2jt7duDb-ScwScc_IpWWAMSy8H3KxdUMuEsLGhvCxHrniyp9J1Ss3rVZy4LtSQNIGuCMGOV3Lx-giMa6EbH9zdkc8h2i8iB6WYZrhY8Sw7ltE3OzzDLKeeG77slE8N4X981nuxTYc9hDJH6LRcfFt96-MP4jqQlZgjYOhx5RZBgYhVqtIzNOsacFQFlhAgtNJPXM8PPYoWi95v03IuoACnIdYsgSIht-dmbl0V9deME3NJtFRqNH5fSBtK5okEmEmyochGVKOxzMxSnzSbrA",
       "blurb": "Watch City Lights Theater Company stage its production of Based on a Totally True Story.",
       "firstSeenAt": "2026-08-19T02:19:59.465Z"
+    },
+    {
+      "id": "193c9b4a1345",
+      "title": "Arsenic and Old Lace",
+      "date": "2027-04-11",
+      "displayDate": "Sun, Apr 11",
+      "time": "2:00 PM",
+      "endTime": null,
+      "venue": "City Lights Theater Company",
+      "address": "529 S Second St, San Jose, CA 95112",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://cltc.org/event/arsenic/",
+      "source": "City Lights Theater",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJVbM327bMj4ARFtW3ks22e4A/photos/AV-0GLeCQ2AXAx7AX9SONzlUDA7eBEy2cZELTZWkd9HxSWE40HH3frnLljNKOhT6ftUfDFh7e4Drqr1eH2uSC87xX5u2Uxje16Gh7BIZPYhlIIyeW0tAsb8gzljVTkr_ChB4Hy76DbtkKKt2jt7duDb-ScwScc_IpWWAMSy8H3KxdUMuEsLGhvCxHrniyp9J1Ss3rVZy4LtSQNIGuCMGOV3Lx-giMa6EbH9zdkc8h2i8iB6WYZrhY8Sw7ltE3OzzDLKeeG77slE8N4X981nuxTYc9hDJH6LRcfFt96-MP4jqQlZgjYOhx5RZBgYhVqtIzNOsacFQFlhAgtNJPXM8PPYoWi95v03IuoACnIdYsgSIht-dmbl0V9deME3NJtFRqNH5fSBtK5okEmEmyochGVKOxzMxSnzSbrA",
+      "blurb": "Watch City Lights Theater Company perform the classic dark comedy Arsenic and Old Lace.",
+      "firstSeenAt": "2026-10-14T02:20:04.429Z"
     },
     {
       "id": "01828f0f8aab",
