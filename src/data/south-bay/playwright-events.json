@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-12T23:07:58.800Z",
+    "generatedAt": "2026-11-13T03:16:18.513Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 200,
+    "eventCount": 201,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (11)",
+      "San Jose Jazz (12)",
       "Linden Tree Books (7)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 11,
-        "liveCount": 11,
+        "count": 12,
+        "liveCount": 12,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -412,13 +412,13 @@
       "kidFriendly": false
     },
     {
-      "id": "fb62c6952d87",
+      "id": "6c03b8c73442",
       "title": "COOL YULE: HSAS Full Ensemble & Vocal Ensemble",
       "date": "2026-12-01",
       "displayDate": "Tue, Dec 1",
       "time": "7:30pm",
       "endTime": null,
-      "venue": "Plaza de César Chávez",
+      "venue": "Hammer Theatre",
       "address": "",
       "city": "san-jose",
       "category": "music",
@@ -493,6 +493,23 @@
       "cost": null,
       "description": "Few drummers in jazz have collaborated as fruitfully with era-defining guitarists as Berkeley's Scott Amendola, who for this trio joins forces with the endlessly inventive guitarist Jeff Parker and bassist Paul Bryan to celebrate their new album in the second of two sets.",
       "url": "https://sanjosejazz.org/events/scott-amendola-jeff-parker-paul-bryan-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "f5c984b7082b",
+      "title": "Illumination: A Celebration of Youth Creativity",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "5pm",
+      "endTime": null,
+      "venue": "SJZ Break Room",
+      "address": "",
+      "city": "san-jose",
+      "category": "music",
+      "cost": null,
+      "description": "Bay Area Creative presents Illumination: A Celebration of Youth Creativity, a free evening showcasing the visual art, dance, and poetry of students from San José’s Franklin-McKinley School District. The event features live student performances and a Best of Show art competition with prizes for the top three artists.",
+      "url": "https://sanjosejazz.org/events/illumination-a-celebration-of-youth-creativity/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -1383,7 +1400,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-12T23:06:52.415Z"
+        "checkedAt": "2026-11-13T03:15:08.602Z"
       }
     },
     {
@@ -1406,7 +1423,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-12T23:06:52.417Z"
+        "checkedAt": "2026-11-13T03:15:08.604Z"
       }
     },
     {
@@ -1429,7 +1446,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-12T23:06:52.417Z"
+        "checkedAt": "2026-11-13T03:15:08.605Z"
       }
     },
     {
@@ -1452,7 +1469,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-12T23:06:52.420Z"
+        "checkedAt": "2026-11-13T03:15:08.607Z"
       }
     },
     {
@@ -1475,7 +1492,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-12T23:06:52.420Z"
+        "checkedAt": "2026-11-13T03:15:08.607Z"
       }
     },
     {
@@ -2114,7 +2131,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2131,7 +2148,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2148,7 +2165,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3347,7 +3364,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-12T23:07:20.574Z"
+        "checkedAt": "2026-11-13T03:15:38.782Z"
       }
     },
     {
@@ -3371,7 +3388,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.575Z"
+        "checkedAt": "2026-11-13T03:15:38.785Z"
       }
     },
     {
@@ -3395,7 +3412,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3419,7 +3436,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3443,7 +3460,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3467,7 +3484,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3491,7 +3508,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3515,7 +3532,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3556,7 +3573,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3580,7 +3597,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3604,7 +3621,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-12T23:07:20.576Z"
+        "checkedAt": "2026-11-13T03:15:38.790Z"
       }
     },
     {
@@ -3846,23 +3863,6 @@
       "kidFriendly": false
     },
     {
-      "id": "83b059d82369",
-      "title": "MIKE TRIGG: OUTAGE",
-      "date": "2026-11-12",
-      "displayDate": "Thu, Nov 12",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Palo Alto",
-      "address": "855 El Camino Real, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
-    },
-    {
       "id": "6d65e80f2968",
       "title": "ERIN EILEEN LEIGH & MASHA RUMER at Books Inc. Pruneyard",
       "date": "2026-11-14",
@@ -3902,6 +3902,23 @@
       "date": "2026-11-17",
       "displayDate": "Tue, Nov 17",
       "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "c8b6e0114239",
+      "title": "KIMBERLY BEA with THE CURSE OF THE FEATHERS",
+      "date": "2026-11-24",
+      "displayDate": "Tue, Nov 24",
+      "time": "7:00 PM",
       "endTime": null,
       "venue": "Books Inc. Mountain View",
       "address": "317 Castro St, Mountain View, CA 94041",
