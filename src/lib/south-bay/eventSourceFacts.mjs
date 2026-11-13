@@ -67,6 +67,40 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // TAPS confirms the November 12–14 performances at 8 PM and a 100-minute
+  // runtime; Localist gives this occurrence a conflicting 9:30 PM finish.
+  // Keep the confirmed curtain, withhold that finish, and allow a changed
+  // source clock through. This rule never creates another performance.
+  // https://taps.stanford.edu/ourtown/
+  // Evidence: docs/qa/2026-11-13-0007z-fact-check.md.
+  {
+    dateFrom: "2026-11-12", dateThrough: "2026-11-14",
+    matches: event => event.url === "https://events.stanford.edu/event/our-town"
+      && event.venue === "Roble Gym"
+      && event.time === "8:00 PM" && event.endTime === "9:30 PM"
+      && /\bno late seating\b/i.test(event.description || ""),
+    facts: { endTime: null },
+    appendAttendanceNote: "The calendar lists a 9:30 PM finish; Stanford TAPS lists a 100-minute runtime. Confirm the finish with the box office.",
+  },
+  // The organizer's exact November 21 offering charges $185 tuition plus a
+  // separate $10 materials fee. Repair the sparse newsletter's incomplete
+  // quote, while allowing changed prices, URLs and later occurrences through.
+  // Evidence: docs/qa/2026-11-13-0007z-fact-check.md.
+  {
+    date: "2026-11-21",
+    matches: event => /^The Magic of Drawing Workshop with Robert Dvorak$/i.test(event.title || "")
+      && event.venue === "Pacific Art League"
+      && /^One-day drawing workshop led by Robert Dvorak\. Cost is \$185\.$/.test(event.description || "")
+      && (!event.url || event.url === "https://www.pacificartleague.org/class/?eventtemplate=1554-11-21-the-magic-of-drawing-workshop")
+      && event.costNote == null,
+    facts: {
+      cost: "paid",
+      costNote: "$185 tuition + $10 materials fee",
+      url: "https://www.pacificartleague.org/class/?eventtemplate=1554-11-21-the-magic-of-drawing-workshop",
+    },
+    copyReplacements: [[/Cost is \$185\./g,
+      "Tuition is $185, plus a $10 materials fee due to the instructor at the start of class."]],
+  },
   // These exact occurrences explicitly make signup optional despite their
   // capped booking widgets. Keep stronger later availability/instruction
   // notices, and stop matching if the organizer changes that admission text.

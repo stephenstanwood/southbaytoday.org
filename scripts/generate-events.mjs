@@ -4635,9 +4635,10 @@ async function fetchStanfordEvents() {
         seriesStartIso && seriesEndIso &&
         seriesStartIso < seriesEndIso &&
         seriesStartIso <= todayIso && seriesEndIso >= todayIso &&
-        // A source-declared tour can mention an art collection and span months
-        // of sessions. Its actual occurrence still has a date and a clock.
-        !(ev.filters?.event_types || []).some(type => /^Tour$/i.test(type.name || "")) &&
+        // Tours and performances keep their individual dates and clocks. A
+        // play's guest-artist credit can trigger the exhibition word heuristic;
+        // its multi-day series bounds do not make it a walk-in exhibition.
+        !(ev.filters?.event_types || []).some(type => /^(?:Tour|Performance)$/i.test(type.name || "")) &&
         isOngoingExhibitLike(ev.title, description, venue);
       let eventDate;
       let isOngoing = false;
