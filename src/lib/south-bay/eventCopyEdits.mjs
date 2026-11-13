@@ -59,6 +59,8 @@ const EDITS = {
       ["Lego Club!", "LEGO Club!"],
       ["Friday Fun: Legos Fun", "Friday Fun: LEGO Fun"],
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
+      ["Sabor al Exito- Pagos digitales", "Sabor al Éxito - Pagos digitales"],
+      ["Clases de inglés para Hispanos - Nivel 1", "Clases de inglés para hispanos - Nivel 1"],
     ],
     attendanceNote: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
@@ -81,6 +83,12 @@ const EDITS = {
     ],
     description: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
+      ["Registration is Required.", "Registration is required."],
+      ["Acepta pagos faciles, seguros y modernos para tu negocio. Configura tus metodos de pago; Conoce las opciones mas populares; Elige la mejor solucion para tu negocio; Tips de seguridad y buenas practicas.", "Acepta pagos fáciles, seguros y modernos para tu negocio. Configura tus métodos de pago, conoce las opciones más populares y elige la mejor solución para tu negocio. Tips de seguridad y buenas prácticas."],
+      ["days before program date.", "days before the program date."],
+      [/(\b\d+ minutes) Movie trailer:/g, "$1. Movie trailer:"],
+      [/(Movie trailer: https?:\/\/\S*[^\s.!?]) (?=Free\.)/g, "$1. "],
+      ["Do you want to demonstrate your skills, or just want to learn the basics?", "Do you want to demonstrate your skills or just learn the basics?"],
       ["3D Design and 3D Printing", "3D design and 3D printing"],
       ["Phhs Game & App Makers Club", "PHHS Game & App Makers Club"],
       ["a Chromatography Experiment.", "a chromatography experiment."],
@@ -575,6 +583,7 @@ const EDITS = {
     ],
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
+      ["build reading confidence and love of books.", "build reading confidence and a love of books."],
       ["free play with Legos", "free play with LEGOs"],
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
@@ -719,6 +728,11 @@ const EDITS = {
     ],
     description: [
       ["Hercule Poirot's Christmas by Agatha Christie (1938) A family reunion", "Hercule Poirot's Christmas by Agatha Christie (1938). A family reunion"],
+      ["Audio books, DVDs, VCDs and Blu Ray discs", "Audiobooks, DVDs, VCDs and Blu-ray discs"],
+      ["Other Ongoing Friends of the Milpitas Library Sales The Book Nook We have", "Other ongoing Friends of the Milpitas Library sales include the Book Nook. We have"],
+      ["Amazon Sales We have", "Amazon sales: We have"],
+      ["Ebay Sales View our current listings on Ebay.", "eBay sales: View our current listings on eBay."],
+      ["All major Credit Cards", "All major credit cards"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
       ["Join us as we discuss how a specific part of AI that is currently all over the news: AI enabled scam and fraud.", "Join us as we discuss a specific part of AI that is currently all over the news: AI-enabled scams and fraud."],
       ["How is AI enabling scam and fraud?", "How is AI enabling scams and fraud?"],
@@ -1028,6 +1042,7 @@ const EDITS = {
     ],
     description: [
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
+      ["data infrastructure that allow jobseekers", "data infrastructure that allows jobseekers"],
       ["Jessie Wong, PhD Clinical Associate Professor, Department of Pediatrics, Stanford University \"", "Jessie Wong, PhD, Clinical Associate Professor, Department of Pediatrics, Stanford University. \""],
       ["NO Late Seating Written By", "No late seating. Written by"],
       ["Directed by Guest Artist", "Directed by guest artist"],
@@ -1097,6 +1112,7 @@ const EDITS = {
   },
   "Santa Clara University": {
     title: [
+      ["New! Ma in Social Impact Leadership Informational Session", "New! MA in Social Impact Leadership Informational Session"],
       ["Women's Basketball vs Gcu", "Women's Basketball vs GCU"],
       ["Mass of Remembrance: Uca Salvadoran Martyrs", "Mass of Remembrance: UCA Salvadoran Martyrs"],
       ["Brown Bag in the Humanities featuring:", "Brown Bag in the Humanities featuring"],
@@ -1127,6 +1143,9 @@ const EDITS = {
   "Computer History Museum": {
     description: [
       ["Postponed Due to Illness Where", "Postponed due to illness. Where"],
+    ],
+    blurb: [
+      ["an arts-category program", "a program"],
     ],
   },
 };
