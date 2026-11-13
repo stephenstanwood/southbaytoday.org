@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-12T04:17:58.087Z",
+      "generatedAt": "2026-11-13T04:29:41.971Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 4 – Nov 11",
+      "dateRange": "Nov 5 – Nov 12",
       "stats": {
-        "total": 466,
-        "notable": 32,
-        "newUnits": 12,
-        "totalValuation": 17573148
+        "total": 462,
+        "notable": 31,
+        "newUnits": 13,
+        "totalValuation": 16387249
       },
       "permits": [
         {
@@ -48,6 +48,30 @@
           "valuation": 173985,
           "units": 1,
           "issueDate": "2026-11-09",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-110619-RS",
+          "address": "119 Mosswell Ct #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 3 Detached ADU",
+          "valuation": 130357,
+          "units": 1,
+          "issueDate": "2026-11-10",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-121024-RS",
+          "address": "281 Herlong Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2-Story Attached ADU",
+          "valuation": 119802,
+          "units": 1,
+          "issueDate": "2026-11-10",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -108,30 +132,6 @@
           "valuation": 68785,
           "units": 1,
           "issueDate": "2026-11-06",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-130754-RS",
-          "address": "5168 Persianwood Pl #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 67377,
-          "units": 1,
-          "issueDate": "2026-11-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-103048-RS",
-          "address": "593 Independence Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to JADU",
-          "valuation": 63683,
-          "units": 1,
-          "issueDate": "2026-11-09",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]

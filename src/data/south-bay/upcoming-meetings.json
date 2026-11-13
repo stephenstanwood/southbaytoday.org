@@ -1,42 +1,110 @@
 {
-  "generatedAt": "2026-11-12T04:17:57.886Z",
+  "generatedAt": "2026-11-13T04:29:41.764Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8124&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8124,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8084&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8084,
       "agendaItems": [
         {
-          "title": "Labor Negotiations Update.",
-          "sequence": 60
+          "title": "Study Session - Improving Affordability for San José Residents",
+          "sequence": 18
         },
         {
-          "title": "Land Use on Consent Calendar - TO BE HEARD IMMEDIATELY AFTER CONSENT",
-          "sequence": 72
+          "title": "Improving Affordability",
+          "sequence": 27
         },
         {
-          "title": "Presentation of a commendation recognizing the San José - Santa Clara Regional Wastewater Facility and its 70 years of continuous operation. (Mahan & Cohen)",
-          "sequence": 31
+          "title": "Helping Residents Grow Their Incomes",
+          "sequence": 29
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-16",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "mountain-view": {
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "17:00",
+      "bodyName": "City Council",
+      "location": "Council Chambers and Video Conference",
+      "closedSession": false,
+      "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3369&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799",
+      "legistarEventId": 3369,
+      "agendaItems": [
+        {
+          "title": "Rengstorff Avenue Grade Separation, Design and Right-of-Way, Project 22-27 - Cooperative Agreement",
+          "sequence": 12
         },
         {
-          "title": "Presentation of a ​proclamation declaring November 14, 2026, as Ruby Bridges Walk to School Day in the City of San José, which encourages the community to come together in a shared commitment to creating safe, welcoming, and inclusive schools and neighborhoods. (Campos)",
-          "sequence": 32
+          "title": "Mixed-Use Project at 749 West El Camino Real - Modification to Approval Resolution",
+          "sequence": 9
         },
         {
-          "title": "Retroactive Approval of “Free Use” of the City Hall East and West Plazas and the Janet Gray Hayes Rotunda for the Tunnel of Terror Event.",
-          "sequence": 45
+          "title": "Residential Development Project at 901-987 North Rengstorff Avenue (Builder's Remedy) - Modification to Approval Resolution",
+          "sequence": 10
+        },
+        {
+          "title": "Civic Center Remodels (Various), Project 27-35, and Mountain View Center for the Performing Arts Second Stage Addition and Seating Improvements, Construction, Project 19-52-Professional Services Agreement",
+          "sequence": 13
+        },
+        {
+          "title": "87 East Evelyn Affordable Housing Funding Reallocation",
+          "sequence": 11
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "sunnyvale": {
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "19:00",
+      "bodyName": "City Council",
+      "location": "Online and Council Chambers, City Hall",
+      "closedSession": false,
+      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4529&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
+      "legistarEventId": 4529,
+      "agendaItems": [
+        {
+          "title": "Approve City Council Meeting Minutes of November 9, 2026 (Board and Commission Interviews)",
+          "sequence": 7
+        },
+        {
+          "title": "Adopt a Resolution Proclaiming the Existence of a Local Emergency in the City of Sunnyvale Due to the Developing 2026-2027 El Niño Event and Find the Actions Exempt from the California Environmental Quality Act (CEQA) Pursuant to CEQA Guidelines Sections 15269 and 15378(b)",
+          "sequence": 10
+        },
+        {
+          "title": "2026 Municipal Information Systems Association of California (MISAC) Awards, Presented by MISAC Lifetime Member Gaurav Garv",
+          "sequence": 13
+        },
+        {
+          "title": "Direct Staff to Prepare an Implementation Plan and Undertake California Environmental Quality Act (CEQA) Review of an Interim Housing Community at 1240 Fair Oaks Way; and Find this Action Exempt from CEQA Pursuant to CEQA Guidelines Section 15262",
+          "sequence": 15
+        },
+        {
+          "title": "Approve an Amendment to the Employment Agreement Between the City of Sunnyvale and City Attorney Rebecca Moon to Modify the City Attorney Salary and Benefits, and Adopt a Resolution Amending the Salary Resolution to Increase the City Attorney Salary Range",
+          "sequence": 17
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -53,7 +121,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-11T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -63,13 +131,29 @@
       "bodyName": "City Council Regular Meeting",
       "location": null,
       "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21958",
+      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=22032",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
         "provider": "primegov",
         "observedDate": "2026-11-16",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=21958"
+        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=22032"
+      }
+    },
+    "campbell": {
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "19:00",
+      "bodyName": "City Council Regular Session Meeting - PD EOC",
+      "location": "Campbell Police Department EOC",
+      "closedSession": false,
+      "url": "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=2d32a975-87ba-41aa-9897-6233cdfc7e72&Agenda=Agenda&lang=English",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "escribe",
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://pub-campbell.escribemeetings.com/MeetingsCalendarView.aspx/GetCalendarMeetings"
       }
     },
     "milpitas": {
@@ -86,7 +170,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-12T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -103,7 +187,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-11T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-12T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -130,11 +214,11 @@
     },
     "mountain-view": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "cupertino": {
       "provider": "Legistar",
@@ -154,7 +238,7 @@
     },
     "campbell": {
       "provider": "eScribe",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "milpitas": {
       "provider": "CivicClerk",
