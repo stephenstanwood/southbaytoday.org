@@ -935,6 +935,7 @@ const EDITS = {
       ["Pal Speaker Series:", "PAL Speaker Series:"],
       ["(Teens/Adults)", "(Teens / Adults)"],
       ["Landlord/Tenant Counseling", "Landlord / Tenant Counseling"],
+      ["Faculty/Staff Appreciation Night:", "Faculty / Staff Appreciation Night:"],
       ["– Acc Men's Soccer Tournament", "– ACC Men's Soccer Tournament"],
       [/^Celebrate Diwali by Painting Diya$/g, "Celebrate Diwali by Painting Diyas"],
       [/^Should I Start a Business\? presented by SCORE Silicon Valley$/g, "Should I Start a Business? Presented by SCORE Silicon Valley"],
