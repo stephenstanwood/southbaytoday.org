@@ -18,6 +18,7 @@ const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
+const OUR_TOWN_WAITLIST_NOTE = "Tickets sold out when checked November 12. TAPS distributes in-person waitlist numbers at the venue one hour before curtain; admission is not guaranteed.";
 const LOS_ALTOS_TEEN_DND_DATES = {
   "693b4639ddf563280020736e": "2026-11-05",
   "693b4639ddf563280020736f": "2026-11-12",
@@ -4720,6 +4721,25 @@ export function applyVerifiedEventFacts(event) {
       && /^(?:NUMU\s+)?New Museum Los Gatos(?:\s+\(NUMU\))?$/i.test(event?.venue || "")
       && /\bp\.?\s*o\.?\s+box\s+1904\b/i.test(event?.address || "")) {
     event = { ...event, address: "106 E. Main Street, Los Gatos, CA 95030" };
+  }
+  // TAPS marks this exact November 12–14 run sold out and links its in-person
+  // waitlist policy. Localist's sparse body still omits that availability.
+  // Keep this independent of the finish-time correction so neither notice
+  // masks the other. Revised source clocks, admission text or booking states
+  // pass through; this dated safeguard never creates another occurrence.
+  // https://taps.stanford.edu/ourtown/ and /waitlist/
+  // Evidence: docs/qa/2026-11-13-0107z-fact-check.md.
+  if (!event?.virtual && event?.date >= "2026-11-12" && event.date <= "2026-11-14"
+      && event.url === "https://events.stanford.edu/event/our-town"
+      && /^Main Stage \| Our Town$/i.test(event.title || "") && event.venue === "Roble Gym"
+      && event.time === "8:00 PM" && [null, undefined, "9:30 PM"].includes(event.endTime)
+      && /\bno late seating\b/i.test(event.description || "")
+      && [null, undefined, REGISTRATION_NONE, REGISTRATION_FULL, REGISTRATION_CLOSED].includes(event.registration)
+      && !/\b(?:tickets?|seats?)\s+(?:are\s+)?(?:now\s+)?(?:available|on sale)\b|\b(?:booking|registration)\s+(?:has\s+)?reopened\b|\bno longer sold out\b/i.test(sourceText(event))) {
+    event = { ...event, registration: event.registration === REGISTRATION_CLOSED ? REGISTRATION_CLOSED : REGISTRATION_FULL };
+    if (!(event.attendanceNote || "").includes(OUR_TOWN_WAITLIST_NOTE)) {
+      event.attendanceNote = [event.attendanceNote, OUR_TOWN_WAITLIST_NOTE].filter(Boolean).join(" ");
+    }
   }
   const correction = CORRECTIONS.find((c) => {
     // A range is inclusive and must have both bounds. It can protect a
