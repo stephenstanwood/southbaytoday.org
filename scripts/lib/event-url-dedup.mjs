@@ -1,3 +1,42 @@
+import { compareDuplicateAuthority } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+
+function concreteSlotKey(event) {
+  if (!event.venue || !event.date || !event.time) return null;
+  const venue = event.venue.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/^(the|a|an)\s+/, "").replace(/[^a-z0-9]/g, "").substring(0, 30);
+  const time = String(event.time).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
+  const key = `${event.date}|${venue}|${time}`;
+  try {
+    const url = new URL(event.url);
+    const match = url.pathname.match(/^\/(?:v2\/)?events\/([a-f0-9]{24})\/?$/i);
+    if (/^(?:sccl|sjpl|paloalto)\.bibliocommons\.com$/.test(url.hostname) && match) {
+      // One branch can host several programs at the same time. Its organizer
+      // assigns each occurrence an ID; shared venue/clock fields do not make
+      // different IDs duplicates. Newsletter copies retain that same identity.
+      return `${key}|${url.hostname}|${match[1].toLowerCase()}`;
+    }
+  } catch { /* Other sources keep the existing concrete-slot matching. */ }
+  return key;
+}
+
+/** Keep the authoritative copy of a concrete occurrence, preserving library IDs. */
+export function deduplicateEventSlots(events) {
+  const winners = new Map();
+  for (const event of events) {
+    const key = concreteSlotKey(event);
+    if (!key) continue;
+    const current = winners.get(key);
+    if (!current || compareDuplicateAuthority(event, current, {
+      occurrenceOnly: true,
+      includeRichness: false,
+    }) < 0) winners.set(key, event);
+  }
+  return deduplicateEventUrls(events).filter((event) => {
+    const key = concreteSlotKey(event);
+    return !key || winners.get(key) === event;
+  });
+}
+
 // Bare collection pages contain multiple occurrences. Query strings and anchors
 // may identify a specific event, so leave those on the existing detail path.
 function isCollectionUrl(raw) {

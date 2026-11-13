@@ -92,10 +92,7 @@ import {
   resolveRegistrationClosesBy,
   virtualFromSourceSignal,
 } from "../src/lib/south-bay/eventFilters.mjs";
-import {
-  compareDuplicateAuthority,
-  fuzzyDedupEvents,
-} from "../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { SLUG_TO_CITY_TOKENS } from "./social/lib/content-rules.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { fetchJson, fetchText, UA } from "./lib/http.mjs";
@@ -122,7 +119,7 @@ import {
   displayEndTime,
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
-import { deduplicateEventUrls } from "./lib/event-url-dedup.mjs";
+import { deduplicateEventSlots } from "./lib/event-url-dedup.mjs";
 import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
@@ -11229,16 +11226,7 @@ async function main() {
   // Same date+venue+time across sources: catches "SJDA listing of SJMA gala" vs
   // "SJMA's own gala listing" by collapsing to one card.
 
-  // Aggressive venue normalization: strip accents, leading article, all non-alnum.
-  // Captures "The San José Museum of Art" === "San Jose Museum of Art".
-  function normVenueKey(v) {
-    if (!v) return "";
-    return v.toLowerCase()
-      .normalize("NFD").replace(/[̀-ͯ]/g, "")
-      .replace(/^(the|a|an)\s+/, "")
-      .replace(/[^a-z0-9]/g, "")
-      .substring(0, 30);
-  }
+  // Normalize clock aliases for the later title and venue comparisons.
   function normTimeKey(t) {
     if (!t) return "";
     return String(t).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
@@ -11276,35 +11264,11 @@ async function main() {
     return richness(b) - richness(a);
   });
 
-  // Preserve the pre-sort's established source/venue behavior by default, but
-  // let dated first-party evidence replace that default inside an actual exact
-  // slot. Comparing every event globally would reorder the entire feed.
-  const exactSlotWinner = new Map();
-  for (const event of capped) {
-    if (!event.venue || !event.date || !event.time) continue;
-    const key = `${event.date}|${normVenueKey(event.venue)}|${normTimeKey(event.time)}`;
-    const current = exactSlotWinner.get(key);
-    if (!current) {
-      exactSlotWinner.set(key, event);
-      continue;
-    }
-    const authority = compareDuplicateAuthority(event, current, {
-      occurrenceOnly: true,
-      includeRichness: false,
-    });
-    if (authority < 0) exactSlotWinner.set(key, event);
-  }
-
   const seen = new Set();
   const sportsByDateVenue = new Set();
   // Detail-page identities also catch venue-less newsletter copies. Collection
   // URLs need a venue too: a store calendar can list simultaneous local events.
-  const deduped = deduplicateEventUrls(capped).filter((e) => {
-    // Cross-source date+venue+time dedup: one listing per concrete event slot
-    if (e.venue && e.date && e.time) {
-      const dvtKey = `${e.date}|${normVenueKey(e.venue)}|${normTimeKey(e.time)}`;
-      if (exactSlotWinner.get(dvtKey) !== e) return false;
-    }
+  const deduped = deduplicateEventSlots(capped).filter((e) => {
     // Sports dedup: one listing per date+venue (catches "Sharks vs Blues" + "San Jose Sharks vs St Louis Blues")
     if (e.category === "sports" && e.venue && e.date) {
       // Normalize venue: strip trailing " at <city>" / " in <city>" so "SAP Center at San Jose" == "SAP Center"

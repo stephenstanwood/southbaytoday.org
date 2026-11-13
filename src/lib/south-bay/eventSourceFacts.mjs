@@ -88,10 +88,16 @@ const CORRECTIONS = [
   {
     date: "2026-11-20",
     matches: event => !event.virtual && event.source === "Montalvo Arts Center"
-      && event.url === "https://my.montalvoarts.org/3135/3153"
+      && ["https://my.montalvoarts.org/3135/3153",
+        "https://montalvoarts.org/experience/carriage-house-concerts/pablo-cruise/"].includes(event.url)
       && event.title === "Pablo Cruise" && event.venue === "Montalvo Arts Center"
-      && event.time === "7:30 PM" && ["arts", "music"].includes(event.category),
-    facts: { category: "music" },
+      && event.time === "7:30 PM" && ["arts", "music"].includes(event.category)
+      && ["15400 Montalvo Rd, Saratoga, CA 95071", "15400 Montalvo Rd, Saratoga, CA 95070",
+        "15400 Montalvo Rd, Saratoga"].includes(event.address),
+    // The production-page fallback shares this occurrence. Its location block
+    // gives 95070; the ticketing footer's 95071 belongs to the mailing PO box.
+    // Evidence: docs/qa/2026-11-13-1307z-fact-check.md.
+    facts: { category: "music", address: "15400 Montalvo Rd, Saratoga, CA 95070" },
   },
   // Stanford explicitly tags this event PhD Defense and Everyone. Preserve
   // public eligibility and unknown admission cost; repair the arts fallback
