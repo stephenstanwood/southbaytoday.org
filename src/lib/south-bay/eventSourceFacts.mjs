@@ -68,6 +68,43 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Kepler's heading drops the final o in Choo, although its speaker bio and
+  // her publisher spell it correctly. The program starts with a 6:30 reception,
+  // followed by the 7 PM conversation and an 8 PM signing, so 8 PM is not a
+  // verified finish. Preserve revised source clocks and other appearances.
+  // https://www.keplers.org/upcoming-events-internal/karen-joy-fowler
+  // https://us.macmillan.com/author/yangszechoo
+  // Evidence: docs/qa/2026-11-13-0407z-fact-check.md.
+  {
+    date: "2027-02-24",
+    matches: event => !event.virtual
+      && event.url === "https://www.keplers.org/upcoming-events-internal/karen-joy-fowler"
+      && /^Karen Joy Fowler with Yangsze Choo?$/i.test(event.title || "")
+      && event.venue === "Kepler's Books" && event.time === "6:30 PM"
+      && [null, undefined, "8:00 PM"].includes(event.endTime),
+    facts: { title: "Karen Joy Fowler with Yangsze Choo", endTime: null },
+    copyReplacements: [[/\bYangsze Cho\b/g, "Yangsze Choo"]],
+    appendAttendanceNote: "Wine reception at 6:30 PM; conversation at 7 PM; book signing at 8 PM. The organizer does not confirm a finish time.",
+  },
+  // This partner event at the jazz venue presents visual art, dance and poetry.
+  // The exact organizer page confirms free admission, the Break Room address,
+  // and seat reservations. Do not turn the venue's identity into a music claim
+  // or overwrite later prices, venue changes or stronger booking notices.
+  // https://sanjosejazz.org/events/illumination-a-celebration-of-youth-creativity/
+  // Evidence: docs/qa/2026-11-13-0407z-fact-check.md.
+  {
+    date: "2026-12-12",
+    matches: event => !event.virtual
+      && event.url === "https://sanjosejazz.org/events/illumination-a-celebration-of-youth-creativity/"
+      && event.title === "Illumination: A Celebration of Youth Creativity"
+      && event.venue === "SJZ Break Room" && event.time === "5:00 PM"
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && [null, undefined, "", "310 S. First Street, San Jose, CA 95113"].includes(event.address)
+      && /\bvisual art, dance,? and poetry\b/i.test(event.description || "")
+      && /\bfree\b/i.test(event.description || ""),
+    facts: { category: "arts", cost: "free", address: "310 S. First Street, San Jose, CA 95113" },
+    appendAttendanceNote: "The organizer asks attendees to reserve seats, with up to four seats for additional family members.",
+  },
   // TAPS confirms the November 12–14 performances at 8 PM and a 100-minute
   // runtime; Localist gives this occurrence a conflicting 9:30 PM finish.
   // Keep the confirmed curtain, withhold that finish, and allow a changed
