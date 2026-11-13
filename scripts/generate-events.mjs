@@ -5406,62 +5406,82 @@ function stripBogusUtcOffset(str) {
   return typeof str === "string" ? str.replace(/(?:Z|\+00:00)$/, "") : str;
 }
 
-async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.events ?? [] } = {}) {
+async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.events ?? [], now = new Date() } = {}) {
   console.log("  ⏳ Montalvo Arts Center...");
   try {
-    const html = await fetchText("https://montalvoarts.org/experience/events-calendar/");
-    // Extract JSON-LD blocks from the page
-    const jsonLdMatches = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
-    const now = new Date();
-    const events = [];
+    const calendarUrl = "https://montalvoarts.org/experience/events-calendar/";
+    const parseCalendar = (html) => {
+      // Extract JSON-LD blocks from the page
+      const jsonLdMatches = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
+      const events = [];
 
-    for (const match of jsonLdMatches) {
-      let data;
-      try { data = JSON.parse(match[1]); } catch { continue; }
-      const graph = data["@graph"] || (data["@type"] ? [data] : []);
-      for (const item of graph) {
-        if (!["Event", "EventSeries"].includes(item["@type"])) continue;
-        const name = item.name;
-        const startDate = item.startDate;
-        const endDate = item.endDate;
-        const url = item.url;
-        if (!name || !startDate || !url) continue;
-        const start = parseDatePT(stripBogusUtcOffset(startDate));
-        const end = endDate ? parseDatePT(stripBogusUtcOffset(endDate)) : null;
-        // Montalvo's Project Space shows run for weeks; the performances don't.
-        // resolveRunWindow keeps the former and still drops the latter.
-        const run = resolveRunWindow(start, end, now, {
-          title: name,
-          description: item.description || "",
-          venue: "Montalvo Arts Center",
-        });
-        if (!run) continue;
-        // null means unverified. A missing offer is not evidence of either
-        // free or paid admission; a verified ticket page can supply it below.
-        const rawPrice = item.offers?.price;
-        const price = rawPrice != null && String(rawPrice).trim() !== ""
-          ? Number(rawPrice) : NaN;
-        events.push({
-          id: h("montalvo", url, startDate),
-          title: name,
-          date: isoDate(run.date),
-          displayDate: displayDate(run.date),
-          time: run.ongoing ? null : displayTime(start),
-          endTime: run.ongoing
-            ? null
-            : (end && isoDate(end) === isoDate(start) ? displayTime(end) : null),
-          ...(run.ongoing ? { ongoing: true } : {}),
-          venue: "Montalvo Arts Center",
-          address: "15400 Montalvo Rd, Saratoga",
-          city: "saratoga",
-          category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
-          cost: Number.isFinite(price) && price >= 0 ? (price === 0 ? "free" : "paid") : null,
-          description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
-          url,
-          source: "Montalvo Arts Center",
-          kidFriendly: false,
-        });
+      for (const match of jsonLdMatches) {
+        let data;
+        try { data = JSON.parse(match[1]); } catch { continue; }
+        const graph = data["@graph"] || (data["@type"] ? [data] : []);
+        for (const item of graph) {
+          if (!["Event", "EventSeries"].includes(item["@type"])) continue;
+          if (/EventCancelled$/.test(item.eventStatus || "")) continue;
+          const name = item.name;
+          const startDate = item.startDate;
+          const endDate = item.endDate;
+          const url = item.url;
+          if (!name || !startDate || !url) continue;
+          const start = parseDatePT(stripBogusUtcOffset(startDate));
+          const end = endDate ? parseDatePT(stripBogusUtcOffset(endDate)) : null;
+          // Montalvo's Project Space shows run for weeks; the performances don't.
+          // resolveRunWindow keeps the former and still drops the latter.
+          const run = resolveRunWindow(start, end, now, {
+            title: name,
+            description: item.description || "",
+            venue: "Montalvo Arts Center",
+          });
+          if (!run) continue;
+          // null means unverified. A missing offer is not evidence of either
+          // free or paid admission; a verified ticket page can supply it below.
+          const rawPrice = item.offers?.price;
+          const price = rawPrice != null && String(rawPrice).trim() !== ""
+            ? Number(rawPrice) : NaN;
+          events.push({
+            id: h("montalvo", url, startDate),
+            title: name,
+            date: isoDate(run.date),
+            displayDate: displayDate(run.date),
+            time: run.ongoing ? null : displayTime(start),
+            endTime: run.ongoing
+              ? null
+              : (end && isoDate(end) === isoDate(start) ? displayTime(end) : null),
+            ...(run.ongoing ? { ongoing: true } : {}),
+            venue: "Montalvo Arts Center",
+            address: "15400 Montalvo Rd, Saratoga",
+            city: "saratoga",
+            category: inferCategory(name, item.description || "", "", "Montalvo Arts Center"),
+            cost: Number.isFinite(price) && price >= 0 ? (price === 0 ? "free" : "paid") : null,
+            description: (item.description && item.description.trim() !== name.trim()) ? item.description : null,
+            url,
+            source: "Montalvo Arts Center",
+            kidFriendly: false,
+          });
+        }
       }
+      return events;
+    };
+
+    let events = parseCalendar(await fetchText(calendarUrl));
+    // This calendar sometimes omits one still-future show while returning 200
+    // and all its other rows (Pablo Cruise, November 13, 2026). Re-read once
+    // before accepting a loss. Match aliases by title/date/clock, since the
+    // newsletter's production URL and the ticket URL have different IDs.
+    // The second response replaces the first; never manufacture a missing row
+    // from previousEvents or override a confirmed removal on both reads.
+    const missingFuture = previousEvents.some((previous) =>
+      previous.source === "Montalvo Arts Center" && !previous.ongoing
+      && previous.date >= isoDate(now) && previous.time
+      && !events.some((event) => event.date === previous.date && event.time === previous.time
+        && (event.url === previous.url || cleanTitle(event.title) === cleanTitle(previous.title))));
+    if (missingFuture) {
+      console.log("  ↻ Montalvo: rechecking the calendar after a future occurrence disappeared");
+      events = parseCalendar(await fetchText(calendarUrl));
     }
 
     // Dedupe by URL (EventSeries and its nested Event may both appear)

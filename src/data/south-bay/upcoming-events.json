@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-13T15:47:33.692Z",
-  "eventCount": 1505,
+  "eventCount": 1506,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -1169,13 +1169,16 @@
       "label": "fetchMontalvoEvents",
       "critical": false,
       "status": "ok",
-      "count": 4,
+      "count": 5,
       "dateCounts": {
         "2026-11-13": 1,
         "2026-11-14": 1,
-        "2026-11-15": 2
+        "2026-11-15": 2,
+        "2026-11-20": 1
       },
-      "error": null
+      "error": null,
+      "recheckedAt": "2026-11-13T16:10:28.253Z",
+      "recheckReason": "Fact-check recovery: the current organizer calendar and ticket page confirm the omitted November 20 occurrence."
     },
     {
       "id": "fetchSJGiantsSchedule",
@@ -2293,6 +2296,34 @@
       "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants.",
       "photoRef": "places/ChIJVx91TrvMj4ARzWqeIcRwuXs/photos/AV-0GLd59xb3VX7nqt_rnphr7O2J8QakK39yeWhnsUIjKnHsoEgjQMEw-9sGC2K9oZH7dcDC5SL6qWoLeELw6NwXrlkEVbeu3KBwP5z7LVXadTTvOE7jtlA_rzV7G1-ki-kBlsUhJktDrFFuHn4e9KVXo7gQ9QcrkOSrhVhDQMQuU-TbXyoUtOhlUtAQq6nKlE8JH2ABsLIRY8srcN2XTEaT_pG2m7ND2ArbjwZH10ZoEfJ5XJ3wwOSo0CD2rKFpMC1Hm6Ot9qUuLx5qvtDY1p2FYEvk6B1VEOOjIr6n5kXLCKz3AD8J8g_HNMs4Q9rPOZKyAPVSn5kTZiYKaX6S-N6qqZhZaN2UD36j4x1sL7NyVmjXdO9-pHqD1_o9csTxzWO6s_ipvniK1sgCMZQzzrQhtn2d1oJxr-k",
       "firstSeenAt": "2026-10-03T02:21:40.502Z"
+    },
+    {
+      "id": "7f18b10ae11a",
+      "title": "Pablo Cruise",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95070",
+      "city": "saratoga",
+      "category": "music",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/pablo-cruise/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
+      "blurb": "See Pablo Cruise perform live at Montalvo Arts Center in Saratoga on a Friday evening.",
+      "firstSeenAt": "2026-11-13T13:09:39.115Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://montalvoarts.org/experience/carriage-house-concerts/pablo-cruise/",
+        "date": "2026-11-20",
+        "checkedAt": "2026-11-13T16:10:28.253Z",
+        "admissionSourceUrl": "https://my.montalvoarts.org/3135/3153"
+      }
     },
     {
       "id": "a322ab0c474f",
