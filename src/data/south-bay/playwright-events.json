@@ -1,16 +1,16 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-13T03:16:18.513Z",
+    "generatedAt": "2026-11-13T07:24:31.154Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 201,
+    "eventCount": 197,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (12)",
       "Linden Tree Books (7)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
-      "City Lights Theater (5)",
+      "City Lights Theater (2)",
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
@@ -22,7 +22,7 @@
       "Levi's Stadium (2)",
       "SAP Center (12)",
       "The Tech Interactive (13)",
-      "Books Inc (5)",
+      "Books Inc (4)",
       "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
     ],
@@ -125,8 +125,8 @@
         "id": "city-lights-theater",
         "label": "City Lights Theater",
         "status": "ok",
-        "count": 5,
-        "liveCount": 5,
+        "count": 2,
+        "liveCount": 2,
         "error": null,
         "sources": [
           "City Lights Theater"
@@ -284,8 +284,8 @@
         "id": "books-inc",
         "label": "Books Inc",
         "status": "ok",
-        "count": 5,
-        "liveCount": 5,
+        "count": 4,
+        "liveCount": 4,
         "error": null,
         "sources": [
           "Books Inc"
@@ -755,23 +755,6 @@
       "kidFriendly": false
     },
     {
-      "id": "c7d359f9503c",
-      "title": "The Smithereens",
-      "date": "2026-11-12",
-      "displayDate": "Thu, Nov 12",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-smithereens/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "ffa006fa203c",
       "title": "Marc Broussard",
       "date": "2026-11-13",
@@ -840,6 +823,23 @@
       "kidFriendly": true
     },
     {
+      "id": "7f18b10ae11a",
+      "title": "Pablo Cruise",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/pablo-cruise/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -870,57 +870,6 @@
       "cost": "paid",
       "description": "",
       "url": "https://cltc.org/event/true-story/",
-      "source": "City Lights Theater",
-      "kidFriendly": false
-    },
-    {
-      "id": "193c9b4a1345",
-      "title": "Arsenic and Old Lace",
-      "date": "2027-04-11",
-      "displayDate": "Sun, Apr 11",
-      "time": null,
-      "endTime": null,
-      "venue": "City Lights Theater Company",
-      "address": "529 S Second St, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://cltc.org/event/arsenic/",
-      "source": "City Lights Theater",
-      "kidFriendly": false
-    },
-    {
-      "id": "5b4b7b1f885c",
-      "title": "Dream Hou$e",
-      "date": "2027-06-06",
-      "displayDate": "Sun, Jun 6",
-      "time": null,
-      "endTime": null,
-      "venue": "City Lights Theater Company",
-      "address": "529 S Second St, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://cltc.org/event/dream-house/",
-      "source": "City Lights Theater",
-      "kidFriendly": false
-    },
-    {
-      "id": "9bc57a33ff7d",
-      "title": "Company",
-      "date": "2027-08-22",
-      "displayDate": "Sun, Aug 22",
-      "time": null,
-      "endTime": null,
-      "venue": "City Lights Theater Company",
-      "address": "529 S Second St, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://cltc.org/event/company/",
       "source": "City Lights Theater",
       "kidFriendly": false
     },
@@ -1400,7 +1349,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-13T03:15:08.602Z"
+        "checkedAt": "2026-11-13T07:23:24.788Z"
       }
     },
     {
@@ -1423,7 +1372,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-13T03:15:08.604Z"
+        "checkedAt": "2026-11-13T07:23:24.789Z"
       }
     },
     {
@@ -1446,7 +1395,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-13T03:15:08.605Z"
+        "checkedAt": "2026-11-13T07:23:24.789Z"
       }
     },
     {
@@ -1469,7 +1418,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-13T03:15:08.607Z"
+        "checkedAt": "2026-11-13T07:23:24.792Z"
       }
     },
     {
@@ -1492,7 +1441,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-13T03:15:08.607Z"
+        "checkedAt": "2026-11-13T07:23:24.792Z"
       }
     },
     {
@@ -2131,7 +2080,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2148,7 +2097,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2165,7 +2114,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3364,7 +3313,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-13T03:15:38.782Z"
+        "checkedAt": "2026-11-13T07:23:51.583Z"
       }
     },
     {
@@ -3388,7 +3337,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.785Z"
+        "checkedAt": "2026-11-13T07:23:51.583Z"
       }
     },
     {
@@ -3412,7 +3361,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3436,7 +3385,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3460,7 +3409,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3484,7 +3433,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3508,7 +3457,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3532,7 +3481,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.586Z"
       }
     },
     {
@@ -3573,7 +3522,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.587Z"
       }
     },
     {
@@ -3597,7 +3546,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.587Z"
       }
     },
     {
@@ -3621,7 +3570,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T03:15:38.790Z"
+        "checkedAt": "2026-11-13T07:23:51.587Z"
       }
     },
     {
@@ -3844,23 +3793,6 @@
       "url": "https://tickets.thetech.org/events/01a0f89d-e192-6a33-145d-50aa1222e2db",
       "source": "The Tech Interactive",
       "kidFriendly": true
-    },
-    {
-      "id": "231f89eea584",
-      "title": "WRITER'S MEET UP",
-      "date": "2026-11-12",
-      "displayDate": "Thu, Nov 12",
-      "time": "6:30 PM",
-      "endTime": "8:30 PM",
-      "venue": "Books Inc. Mountain View",
-      "address": "317 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
     },
     {
       "id": "6d65e80f2968",
