@@ -159,7 +159,9 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   ).test(evidence));
 }
 
-const CURRENT_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:(?:(?:is|are)\s+(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny|address|hold|interview)\b|(?:weighs|considers|holds|meets|reviews|addresses|interviews)\b)`, "gi");
+// Headline shorthand can omit "is": "commission slated to hear" still
+// asserts a pending hearing, which an old agenda cannot establish.
+const CURRENT_BODY_ACTION = new RegExp(String.raw`\b${CIVIC_BODY}\s+(?:(?:(?:(?:is|are)\s+)?(?:scheduled|set|expected|slated)\s+to|will|to)\s+(?:hear|consider|review|weigh|discuss|vote|decide|approve|adopt|appoint|reject|deny|address|hold|interview)\b|(?:weighs|considers|holds|meets|reviews|addresses|interviews)\b)`, "gi");
 const CURRENT_PERMIT_REQUEST = /\bseeks?\s+(?:an?\s+)?(?:use\s+)?permit\b/gi;
 const CURRENT_SESSION_PLAN = /\b(?:study|scoping)\s+session\s+(?:is\s+)?(?:scheduled|set|expected|slated)\s+(?:for|to)\b/gi;
 const CURRENT_EXTENSION_REQUEST = /\b(?:asks?|seeks?)\s+to\s+extend\b/gi;

@@ -68,6 +68,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The exact organizer pages identify these two shows as rock concerts.
+  // Montalvo's sparse calendar descriptions otherwise fall through to arts.
+  // Keep the correction scoped to the confirmed occurrences and source URLs.
+  // https://montalvoarts.org/experience/carriage-house-concerts/the-smithereens/
+  // https://my.montalvoarts.org/3135/3153
+  // Evidence: docs/qa/2026-11-13-0507z-fact-check.md.
+  {
+    date: "2026-11-12",
+    matches: event => !event.virtual && event.source === "Montalvo Arts Center"
+      && ["https://montalvoarts.org/experience/carriage-house-concerts/the-smithereens/",
+        "https://my.montalvoarts.org/3108/3151"].includes(event.url)
+      && event.title === "The Smithereens" && event.venue === "Montalvo Arts Center"
+      && event.time === "7:30 PM" && ["arts", "music"].includes(event.category)
+      && ["15400 Montalvo Rd, Saratoga, CA 95071", "15400 Montalvo Rd, Saratoga, CA 95070",
+        "15400 Montalvo Rd, Saratoga"].includes(event.address),
+    facts: { category: "music", address: "15400 Montalvo Rd, Saratoga, CA 95070" },
+  },
+  {
+    date: "2026-11-20",
+    matches: event => !event.virtual && event.source === "Montalvo Arts Center"
+      && event.url === "https://my.montalvoarts.org/3135/3153"
+      && event.title === "Pablo Cruise" && event.venue === "Montalvo Arts Center"
+      && event.time === "7:30 PM" && ["arts", "music"].includes(event.category),
+    facts: { category: "music" },
+  },
+  // Stanford explicitly tags this event PhD Defense and Everyone. Preserve
+  // public eligibility and unknown admission cost; repair the arts fallback
+  // for cached publication as well as the fresh adapter's format classifier.
+  // https://events.stanford.edu/api/2/events/54410800154180
+  {
+    date: "2026-11-13",
+    matches: event => !event.virtual && event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/phd-dissertation-defense-danielle-klinger"
+      && event.title === "PhD Dissertation Defense: Danielle Klinger"
+      && event.venue === "Clark Center" && event.time === "1:00 PM"
+      && ["arts", "education"].includes(event.category),
+    facts: { category: "education" },
+  },
   // Kepler's heading drops the final o in Choo, although its speaker bio and
   // her publisher spell it correctly. The program starts with a 6:30 reception,
   // followed by the 7 PM conversation and an 8 PM signing, so 8 PM is not a

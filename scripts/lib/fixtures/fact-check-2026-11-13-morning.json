@@ -1,0 +1,92 @@
+{
+  "sourceReview": "docs/qa/2026-11-13-0507z-fact-check.md",
+  "events": [
+    {
+      "id": "c7d359f9503c",
+      "title": "The Smithereens",
+      "date": "2026-11-12",
+      "displayDate": "Thu, Nov 12",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-smithereens/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "See The Smithereens perform on Thursday evening at Montalvo Arts Center in Saratoga."
+    },
+    {
+      "id": "montalvo-8f35583eacde19d5",
+      "title": "Pablo Cruise",
+      "date": "2026-11-20",
+      "displayDate": "Fri, Nov 20",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": null,
+      "url": "https://my.montalvoarts.org/3135/3153",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://my.montalvoarts.org/3135/3153",
+        "date": "2026-11-20",
+        "checkedAt": "2026-11-13T04:30:01.718Z"
+      },
+      "audienceAge": "all",
+      "blurb": "See Pablo Cruise perform live at Montalvo Arts Center in Saratoga on a Friday evening."
+    },
+    {
+      "id": "stanford-54410800154180-2026-11-13",
+      "title": "PhD Dissertation Defense: Danielle Klinger",
+      "date": "2026-11-13",
+      "displayDate": "Fri, Nov 13",
+      "time": "1:00 PM",
+      "endTime": null,
+      "ongoing": false,
+      "venue": "Clark Center",
+      "address": "318 Campus Drive, Stanford, CA 94305",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://events.stanford.edu/event/phd-dissertation-defense-danielle-klinger",
+      "source": "Stanford Events",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "blurb": "Attend Danielle Klinger's PhD dissertation defense at the Clark Center on Friday afternoon."
+    }
+  ],
+  "stanfordSource": {
+    "title": "PhD Dissertation Defense: Danielle Klinger",
+    "location_name": "Clark Center",
+    "address": "318 Campus Drive, Stanford, CA 94305",
+    "free": false,
+    "experience": "inperson",
+    "filters": {
+      "event_audience": [
+        {
+          "name": "Everyone",
+          "id": 37146718530202
+        }
+      ],
+      "event_types": [
+        {
+          "name": "PhD Defense",
+          "id": 40490468118962
+        }
+      ]
+    },
+    "localist_url": "https://events.stanford.edu/event/phd-dissertation-defense-danielle-klinger",
+    "description_text": ""
+  }
+}

@@ -2,6 +2,18 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { resolveAroundTownMeetingSources, recoverAroundTownMeetingAgendas, aroundTownSourceForItem, hasUnsupportedNonDisclosureClaim, hasUnsupportedMeetingAction, hasPastAgendaFutureFraming, hasUnscopedMeetingCancellation } from "./around-town-meetings.mjs";
 
+test("old agenda headlines cannot omit is to imply a still-pending hearing", () => {
+  const meeting = { city: "Sunnyvale", source: "ingest", excerpt: "Presentation on recent changes to SB 9." };
+  for (const state of ["slated", "scheduled", "set", "expected"]) {
+    const item = { date: "2026-11-04", headline: `Heritage commission ${state} to hear SB 9 changes on lot splits`,
+      summary: "The November 4 agenda listed a presentation on SB 9." };
+    assert.equal(hasPastAgendaFutureFraming(item, meeting, "2026-11-12"), true);
+    assert.equal(hasPastAgendaFutureFraming(item, meeting, item.date), false);
+    assert.equal(hasPastAgendaFutureFraming(item, { ...meeting, source: "youtube-transcript" }, "2026-11-12"), false);
+    assert.equal(hasPastAgendaFutureFraming({ ...item, headline: `The November 4 agenda listed: ${item.headline}` }, meeting, "2026-11-12"), false);
+  }
+});
+
 test("Campbell planning captions recover their own exact dated agenda, separately from Council", async () => {
   const config = { escribe: { host: "pub-campbell.escribemeetings.com" },
     planningAgenda: { baseUrl: "https://www.campbellca.gov", calendarId: "Planning-Commission-6" } };

@@ -4661,6 +4661,11 @@ async function fetchStanfordEvents() {
       // explicitly named art show or performance keeps its subject category.
       const sourceSaysConference = (ev.filters?.event_types || [])
         .some((type) => /^Conference\/Symposium$/i.test(type.name || ""));
+      // A defense is an academic presentation even when its sparse calendar
+      // body falls through to arts. Everyone remains a public audience; this
+      // format does not establish campus-only admission.
+      const sourceSaysDefense = (ev.filters?.event_types || [])
+        .some((type) => /^(?:PhD|Dissertation|Thesis) Defense$/i.test(type.name || ""));
       // A performance can have an opaque title and an academic performer bio.
       // Use Stanford's declared format and music subject before treating it
       // as education; keep explicit lectures/classes and arts classifications.
@@ -4670,7 +4675,8 @@ async function fetchStanfordEvents() {
         && !/\b(?:lectures?|workshops?|class|classes|courses?|seminars?|training)\b/i.test(ev.title || "");
       const conferenceMisreadAsArt = inferredCategory === "arts" && sourceSaysConference
         && !/\b(?:exhibit(?:ion)?|gallery|art|concert|recital|performance|film|dance)\b/i.test(ev.title || "");
-      const category = sourceSaysMusicPerformance && inferredCategory === "education"
+      const category = sourceSaysDefense ? "education"
+        : sourceSaysMusicPerformance && inferredCategory === "education"
         ? "music"
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
           ? "education" : inferredCategory;

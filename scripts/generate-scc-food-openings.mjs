@@ -176,7 +176,11 @@ const BLURB_OVERRIDES = {
   // kept reading "Saratoga" off the plaza name and writing "in Saratoga",
   // same trap as SR0881648 above.
   "SR0884724": "Gelato shop opening at El Paseo de Saratoga in San Jose.",
-  "SR0879467": "Wine bar from the team behind The Winery — 250-bottle program, live music nightly, heated patio.",
+  // The landlord confirms the concept and coming-soon status; the county
+  // confirms the site. Neither verifies a wine count or nightly live music.
+  // https://www.simon.com/mall/stanford-shopping-center/stores/cedar-and-sage
+  // https://www.paloalto.gov/Departments/Planning-Development-Services/Current-Planning/Projects/180-El-Camino-Real-Cedar-and-Sage
+  "SR0879467": "Bistro and lounge planned at Stanford Shopping Center in Palo Alto.",
   "SR0883252": "Popular Yemeni coffee chain expanding to downtown San Jose — cardamom-spiced brews and pastries.",
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
   "SR0880573": "Molly Tea opening a second South Bay location at Rivermark Plaza in Santa Clara.",
