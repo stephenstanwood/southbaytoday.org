@@ -1123,6 +1123,7 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      ["invite you to celebrate Transgender Day of Remembrance ", "invite you to the Transgender Day of Remembrance "],
       [/Stanford University\s*\/\s*(?:Slac|SLAC)\b/g, "Stanford University / SLAC"],
       ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
       [/\ba Q & A with\b/g, "a Q&A with"],

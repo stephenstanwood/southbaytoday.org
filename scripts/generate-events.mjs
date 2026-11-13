@@ -760,6 +760,10 @@ function isOffRegionUniversityEvent(title, description, venue) {
 function isPublicEvent(title, source, description, venue) {
   // Title blocklist — applies to ALL sources (not just university feeds)
   if (isBlockedEvent(title)) return false;
+  // The copy-edit policy excludes dissertation defenses unless advertised as
+  // public lectures. Public audience tags alone do not establish editorial fit.
+  if (/\bdissertation defense\b/i.test(title || "")
+    && !/\bpublic lecture\b/i.test([title, description].filter(Boolean).join(" "))) return false;
   // Always filter cancelled events regardless of source
   if (CANCELLED_PATTERN.test(title)) return false;
   // Cancellations announced in the body — the title still says "Zakir Khan

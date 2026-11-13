@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import test from "node:test";
-import { cleanTitle, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
+import { cleanTitle, isPublicEvent, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
 import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
@@ -135,6 +135,7 @@ audits.push(november12AfternoonFixture);
 const november12PostRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-post-refresh.json", import.meta.url)));
 audits.push(november12PostRefreshFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-night.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-12-late-night.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -151,6 +152,17 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("refresh excludes dissertation defenses while retaining advertised public lectures", () => {
+  const title = "PhD Dissertation Defense: Danielle Klinger";
+  for (const source of ["Stanford Events", "SJSU Events", "Santa Clara University"]) {
+    assert.equal(isPublicEvent(title, source, "", "Clark Center"), false);
+    assert.equal(isPublicEvent(title, source, "Open to everyone.", "Clark Center"), false);
+    assert.equal(isPublicEvent(title, source, "A public lecture on current research.", "Clark Center"), true);
+    assert.equal(isPublicEvent(`${title} — Public Lecture`, source, "", "Clark Center"), true);
+    assert.equal(isPublicEvent("Public Lecture: Current Research", source, "", "Clark Center"), true);
+  }
+});
 
 test("November 12 post-refresh copy repairs retain updated facts and publisher scope", () => {
   const revise = text => text.replaceAll("3–12", "4–11").replaceAll("15 participants", "20 participants")
