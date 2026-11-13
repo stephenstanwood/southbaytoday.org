@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-13T16:04:10.475Z",
+    "generatedAt": "2026-11-13T20:39:11.415Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 199,
+    "eventCount": 200,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (12)",
@@ -15,7 +15,7 @@
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (14)",
-      "Santana Row (5)",
+      "Santana Row (6)",
       "City of Cupertino (36)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
@@ -198,8 +198,8 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 5,
-        "liveCount": 5,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -1358,6 +1358,29 @@
       }
     },
     {
+      "id": "39060835fbeb",
+      "title": "Makers Market's Local Artist Street Fair",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
+      "time": "11:00 AM",
+      "endTime": "6:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "NOVEMBER 14, 2026  Makers Market’s™ Local Artist Street Fair is returning to Santana Row! We’ve rounded up the best local Artists, Crafters, Designers, and Makers for a truly unforgettable shopping experience for every second Saturday of every month from 11am-6pm!60+ Local MakersHandmade jewelry, permanent jewelry, ceramics, woodwork, apparel, leather goods, glass art, candles, local honey, apothecary, art, crochet, pet treats/products, handbags, plants, and moreGreat food + drinks in the surrounding eateries. THIS IS A SIP & STROLL EVENT!Bring your kids + fur babiesEnjoy live music by local artistsFREE to attend!Shop in store! Stroll into our brick-and-mortar shop (adjacent to the market area) for more American-made jewelry, apparel, body products, home goods and more from 100+ Makers.",
+      "url": "https://santanarow.com/event/makers-market-in-the-park/",
+      "source": "Santana Row",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-14",
+        "checkedAt": "2026-11-13T20:38:04.104Z"
+      }
+    },
+    {
       "id": "6e4bf7d9e134",
       "title": "Thanksgiving on The Row",
       "date": "2026-11-26",
@@ -1377,7 +1400,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-13T16:03:03.690Z"
+        "checkedAt": "2026-11-13T20:38:04.105Z"
       }
     },
     {
@@ -1400,7 +1423,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-13T16:03:03.691Z"
+        "checkedAt": "2026-11-13T20:38:04.105Z"
       }
     },
     {
@@ -1423,7 +1446,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-13T16:03:03.691Z"
+        "checkedAt": "2026-11-13T20:38:04.105Z"
       }
     },
     {
@@ -1446,7 +1469,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-13T16:03:03.691Z"
+        "checkedAt": "2026-11-13T20:38:04.107Z"
       }
     },
     {
@@ -1469,7 +1492,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-13T16:03:03.691Z"
+        "checkedAt": "2026-11-13T20:38:04.108Z"
       }
     },
     {
@@ -2108,7 +2131,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2125,7 +2148,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2142,7 +2165,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2159,7 +2182,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2176,7 +2199,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3341,7 +3364,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/life-surge-san-jose",
         "date": "2026-11-14",
         "time": "8:30 AM",
-        "checkedAt": "2026-11-13T16:03:27.502Z"
+        "checkedAt": "2026-11-13T20:38:31.766Z"
       }
     },
     {
@@ -3365,7 +3388,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.503Z"
+        "checkedAt": "2026-11-13T20:38:31.767Z"
       }
     },
     {
@@ -3389,7 +3412,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3413,7 +3436,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3437,7 +3460,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3461,7 +3484,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3485,7 +3508,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3509,7 +3532,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3550,31 +3573,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
-      }
-    },
-    {
-      "id": "277fc28ca3e5",
-      "title": "San Jose Sea Lions vs. Seattle Torrent",
-      "date": "2026-12-09",
-      "displayDate": "Wed, Dec 9",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
-      "source": "SAP Center",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
-        "date": "2026-12-09",
-        "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
@@ -3598,7 +3597,31 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-13T16:03:27.504Z"
+        "checkedAt": "2026-11-13T20:38:31.768Z"
+      }
+    },
+    {
+      "id": "1ebe4b5d65ca",
+      "title": "Sharks vs Canucks",
+      "date": "2026-12-14",
+      "displayDate": "Mon, Dec 14",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
+        "date": "2026-12-14",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-13T20:38:31.768Z"
       }
     },
     {
