@@ -68,6 +68,21 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The authenticated city bulletin explicitly requires registration for
+  // this adult class. Inbound extraction kept that sentence but omitted the
+  // structured gate. Stop applying it if later source copy changes the rule.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/4322dfc
+  // Evidence: docs/qa/2026-11-13-2107z-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: event => event.source === "City Newsletter"
+      && event.url === "https://sunnyvale.libcal.com/event/16353300"
+      && event.title === "Personal Emergency Preparedness"
+      && event.city === "sunnyvale" && event.time === "6:15 PM"
+      && /\bRegistration is required\./.test(event.description || ""),
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Registration is required.",
+  },
   // The exact organizer pages identify these two shows as rock concerts.
   // Montalvo's sparse calendar descriptions otherwise fall through to arts.
   // Keep the correction scoped to the confirmed occurrences and source URLs.

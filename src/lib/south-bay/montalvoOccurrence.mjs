@@ -154,6 +154,11 @@ export function parseMontalvoOccurrencePage(html) {
   // the production overview. Neither closes this occurrence.
   const unavailableText = textContent(contentForClass(body, "tn-event-detail__unavailable-text"));
   const soldOut = date && startTime && /\bsold\s+out\b/i.test(unavailableText);
+  // An online-sales refusal does not establish a sellout or cancellation.
+  // Keep the dated occurrence, but require box-office confirmation before
+  // recommending attendance. Never read the shared selector's hidden alerts.
+  const onlineUnavailable = date && startTime && !soldOut
+    && /\btickets\s+are\s+not\s+currently\s+available\s+online\b/i.test(unavailableText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {
@@ -170,6 +175,10 @@ export function parseMontalvoOccurrencePage(html) {
       attendanceNote: /\bwaitlist\b/i.test(unavailableText)
         ? "Sold out. The organizer offers a waitlist."
         : "Sold out according to the organizer's ticket page.",
+    } : {}),
+    ...(onlineUnavailable ? {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "Online tickets are not currently available. Contact the organizer's box office before going.",
     } : {}),
   };
 }

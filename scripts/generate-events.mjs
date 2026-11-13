@@ -5531,7 +5531,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
             const performance = parseMontalvoOccurrencePage(await fetchText(performanceUrl));
             if (performance?.date === event.date && performance.time === event.time) {
               detail = { ...detail, ...performance, cost: performance.costNote ? performance.cost : performance.cost || detail.cost };
-              if (performance.cost) admissionSourceUrl = performanceUrl;
+              if (performance.cost || performance.registration || performance.attendanceStatus) admissionSourceUrl = performanceUrl;
             }
           } catch { /* Keep overview facts when its linked occurrence is unavailable. */ }
         }
@@ -5543,6 +5543,7 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
           cost: detail.costNote ? detail.cost : detail.cost || event.cost,
           ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
           ...(detail.registration ? { registration: detail.registration } : {}),
+          ...(detail.attendanceStatus ? { attendanceStatus: detail.attendanceStatus } : {}),
           ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),
           kidFriendly: detail.kidFriendly ?? event.kidFriendly,
           ...(detail.sourceAudiences ? { sourceAudiences: detail.sourceAudiences } : {}),
