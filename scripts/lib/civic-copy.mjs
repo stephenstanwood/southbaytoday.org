@@ -21,6 +21,7 @@ export function polishCivicCopy(text) {
   return typeof text === "string"
     ? polishCivicModifiers(text).replace(FULL_DATE_IN_PROSE, "$1,").replace(SQUARE_FOOT_MODIFIER, "$1-square-foot ")
       .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
+      .replace("Hangul Day/Korean National Foundation Day", "Hangul Day / Korean National Foundation Day")
       .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
     : text;
 }
@@ -30,7 +31,7 @@ export function polishCivicTopic(text) {
   // Finish declarative topic sentences, leaving agenda-title fragments alone.
   // Never append punctuation to a URL or email address.
   if (typeof copy !== "string"
-    || !/^(?:The (?:agenda|consent calendar) (?:also )?(?:listed|included)\b|A revised [^.!?]+ was listed\b)/i.test(copy)
+    || !/^(?:The (?:agenda|consent calendar) (?:also )?(?:listed|included)\b|A (?:revised [^.!?]+|Council request|proclamation [^.!?]+) was listed\b)/i.test(copy)
     || /[.!?]["')\]]*$/.test(copy)
     || /[;:,—–-]\s*$/.test(copy)
     || /https?:\/\/\S+$|\b[\w.+-]+@[\w.-]+$/.test(copy)) return copy;

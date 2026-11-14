@@ -745,6 +745,8 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["(e.g. computer, reference materials, notebook)", "(e.g., a computer, reference materials, notebook)"],
+      ["Sessions at 10 a.m.-noon on the 2nd and 4th Fridays of most months September through June.", "Sessions run from 10 a.m. to noon on the 2nd and 4th Fridays of most months, September through June."],
       ["Do you have...... a stuffed animal with the stuffing leaking out?... a shirt with a missing button?... a hole you want to patch?... a stain you want to cover up?", "Do you have a stuffed animal with the stuffing leaking out, a shirt with a missing button, a hole you want to patch, or a stain you want to cover up?"],
       ["Komi Can't Communicate Available as a: Book and e Book (Libby)", "Komi Can't Communicate. Available as a book and e-book (Libby)."],
       ["bring your own items to mend, project to work on, or practice basic stitches with our fabric scraps!", "bring your own items to mend or a project to work on, or practice basic stitches with our fabric scraps!"],
@@ -1065,6 +1067,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["The Stanford Symphony Orchestra, conducted by Paul Phillips, presents their ", "The Stanford Symphony Orchestra, conducted by Paul Phillips, presents its "],
       ["We are excited to playing for you again.", "We are excited to play for you again."],
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
       ["data infrastructure that allow jobseekers", "data infrastructure that allows jobseekers"],
@@ -1152,6 +1155,7 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      ["Night 1 - November 18, 2026 Night 2 - November 19, 2026", "Night 1: November 18, 2026; Night 2: November 19, 2026."],
       ["invite you to celebrate Transgender Day of Remembrance ", "invite you to the Transgender Day of Remembrance "],
       [/Stanford University\s*\/\s*(?:Slac|SLAC)\b/g, "Stanford University / SLAC"],
       ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
