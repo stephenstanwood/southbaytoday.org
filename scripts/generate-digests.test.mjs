@@ -153,6 +153,26 @@ test("civic area copy preserves measurements, prices, existing hyphens, and non-
     "The November 3, 2026, meeting listed a 900-square-foot building.");
 });
 
+test("Campbell civic copy restores sourced transportation measures without renaming the project", () => {
+  const before = "Campbell Technology Park adds 1,368 trips. The only required mitigation is a mid-block crosswalk and an upgraded crossing on Campbell Technology Park and McGlinchey Lane.";
+  const after = "Campbell Technology Park adds 1,368 trips. Required transportation measures include a mid-block crosswalk on Campbell Technology Parkway and another at East McGlincy Lane.";
+  const headline = "Campbell Technology Park homes: traffic fixes limited to crosswalks, no vehicle mitigation";
+  const correctedHeadline = "Campbell Technology Park housing plan includes pedestrian crossing upgrades";
+  assert.equal(polishCivicCopy(before, { cityId: "campbell" }), after);
+  assert.equal(polishCivicCopy(after, { cityId: "campbell" }), after);
+  assert.equal(polishCivicModifiers(headline, { cityId: "campbell" }), correctedHeadline);
+  assert.equal(polishCivicModifiers(correctedHeadline, { cityId: "campbell" }), correctedHeadline);
+  assert.deepEqual(after.match(/\d[\d,]*/g), before.match(/\d[\d,]*/g));
+  for (const cityId of [undefined, "san-jose"]) {
+    assert.equal(polishCivicCopy(before, { cityId }), before);
+    assert.equal(polishCivicModifiers(headline, { cityId }), headline);
+  }
+  assert.equal(polishCivicCopy("Campbell Technology Park and McGlinchey Lane residents discussed 14 homes.", { cityId: "sunnyvale" }),
+    "Campbell Technology Park and McGlinchey Lane residents discussed 14 homes.");
+  assert.equal(polishCivicCopy("Campbell Technology Park and nearby streets.", { cityId: "campbell" }),
+    "Campbell Technology Park and nearby streets.");
+});
+
 test("civic modifiers keep numbers, identifiers, headline dates, and standalone terms exact", () => {
   const copy = "The fee for below market rate in-lieu fees would become a square footage-based fee. A City Council sponsored special event costs $25. See https://example.org/below-market-rate or email fee@example.org.";
   const reviewed = copy.replace("below market rate", "below-market-rate")

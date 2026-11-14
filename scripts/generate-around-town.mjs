@@ -628,8 +628,8 @@ async function main() {
 
   const topItems = deduped.slice(0, 8).map((item) => ({
     ...item,
-    headline: polishCivicModifiers(item.headline),
-    summary: polishCivicCopy(item.summary),
+    headline: polishCivicModifiers(item.headline, { cityId: item.cityId }),
+    summary: polishCivicCopy(item.summary, { cityId: item.cityId }),
   }));
 
   const output = {

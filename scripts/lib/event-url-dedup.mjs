@@ -15,6 +15,13 @@ function concreteSlotKey(event) {
       // different IDs duplicates. Newsletter copies retain that same identity.
       return `${key}|${url.hostname}|${match[1].toLowerCase()}`;
     }
+    if (/^events\.(?:stanford|sjsu)\.edu$/.test(url.hostname)
+      && /^\/event\/[^/]+\/?$/.test(url.pathname)) {
+      // Localist detail pages can name different programs sharing a museum
+      // or campus room and clock. Copies using the same organizer page still
+      // compete on authority; a different detail page preserves its program.
+      return `${key}|${url.hostname}|${url.pathname.replace(/\/$/, "")}`;
+    }
   } catch { /* Other sources keep the existing concrete-slot matching. */ }
   return key;
 }

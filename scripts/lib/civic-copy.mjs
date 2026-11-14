@@ -6,20 +6,33 @@ const FULL_DATE_IN_PROSE = /\b((?:January|February|March|April|May|June|July|Aug
 // "1,360 square feet" and "1 square foot per resident" must stay unchanged.
 const SQUARE_FOOT_MODIFIER = /\b(\d[\d,]*(?:\.\d+)?) square foot (?=(?:apartment|building|duplex|facility|home|house|office|warehouse)\b)/g;
 
+function correctCampbellTechParkCopy(text, cityId) {
+  // Campbell Tech Park MMRP (September 22, 2026), MM TRANS-1, printed p. 6:
+  // https://files.ceqanet.lci.ca.gov/310279-4/attachment/tOj7zYwWQUM8M0_NzkE-L6HSWqPEnD63mOmfrMIjFv19ogX-e1K6jaRB7AfALPtLxr5CrqKieBeqQzWj0
+  // It names Parkway / East McGlincy Lane and also requires ramps, driveway
+  // markings and access easements. Scope the two erroneous phrases to this city.
+  return cityId === "campbell"
+    ? text.replace("Campbell Technology Park homes: traffic fixes limited to crosswalks, no vehicle mitigation",
+      "Campbell Technology Park housing plan includes pedestrian crossing upgrades")
+      .replace("The only required mitigation is a mid-block crosswalk and an upgraded crossing on Campbell Technology Park and McGlinchey Lane.",
+        "Required transportation measures include a mid-block crosswalk on Campbell Technology Parkway and another at East McGlincy Lane.")
+    : text;
+}
+
 // These are compound modifiers only in the named civic phrases. Reuse them
 // for headlines without applying prose-only date commas to a heading.
-export function polishCivicModifiers(text) {
+export function polishCivicModifiers(text, { cityId } = {}) {
   return typeof text === "string"
-    ? text.replace(/\bbelow market rate (?=in-lieu fees?\b)/g, "below-market-rate ")
+    ? correctCampbellTechParkCopy(text, cityId).replace(/\bbelow market rate (?=in-lieu fees?\b)/g, "below-market-rate ")
       .replace(/\bsquare footage-based fee\b/g, "square-footage-based fee")
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
     : text;
 }
 
-export function polishCivicCopy(text) {
+export function polishCivicCopy(text, { cityId } = {}) {
   return typeof text === "string"
-    ? polishCivicModifiers(text).replace(FULL_DATE_IN_PROSE, "$1,").replace(SQUARE_FOOT_MODIFIER, "$1-square-foot ")
+    ? polishCivicModifiers(text, { cityId }).replace(FULL_DATE_IN_PROSE, "$1,").replace(SQUARE_FOOT_MODIFIER, "$1-square-foot ")
       .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
       .replace("Hangul Day/Korean National Foundation Day", "Hangul Day / Korean National Foundation Day")
       .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
