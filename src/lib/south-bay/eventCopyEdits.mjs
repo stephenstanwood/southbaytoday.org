@@ -1007,11 +1007,13 @@ const EDITS = {
     title: [
       ["Msidt Open House", "MSIDT Open House"],
       ["Mlis Open House", "MLIS Open House"],
+      [/\bUnlv\b/g, "UNLV"],
     ],
     description: [
       ["will present highlights from their their new book,", "will present highlights from their new book,"],
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
+      ["Northern Ca Network", "Northern CA Network"],
     ],
     blurb: [
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
