@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-13T04:38:01.641Z",
+  "generatedAt": "2026-11-14T04:20:01.852Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-13T04:38:01.641Z",
-    "updatedAt": "2026-11-12T14:41:05.000Z",
+    "checkedAt": "2026-11-14T04:20:01.852Z",
+    "updatedAt": "2026-11-13T14:33:30.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-10",
     "newestEligibleInspection": "2026-11-10",
@@ -74,18 +74,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
     },
     {
-      "id": "inspection-SR0886483",
-      "name": "Pho Lucky 7",
-      "address": "3730 N 1st St., Ste. 145",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0886483",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
-    },
-    {
       "id": "inspection-SR0886293",
       "name": "Casa De Theo",
       "address": "765 Lotus St",
@@ -96,6 +84,18 @@
       "status": "inspection-complete",
       "blurb": "Food business on Lotus St in San Jose.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886293-450.webp"
+    },
+    {
+      "id": "inspection-SR0886483",
+      "name": "Pho Lucky 7",
+      "address": "3730 N 1st St., Ste. 145",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0886483",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
     },
     {
       "id": "inspection-SR0882351",
@@ -154,7 +154,7 @@
       "inspectionDate": "2026-10-26",
       "sourceId": "SR0886593",
       "status": "inspection-complete",
-      "blurb": "Coffee business at 2855 Stevens Creek Blvd in Santa Clara.",
+      "blurb": "Coffee business on Stevens Creek Blvd in Santa Clara.",
       "photoRef": "places/ChIJx4KPuBDLj4ARB8HyETWCyB8/photos/AV-0GLeSmw5RjDk2Cm-89_Kqex8PZbsEFYw-QqJKgz_jB2y6GrIYzBdYX1ksJmVKFf2xRd9_nl1cLh7buaymBnXO8-ZAdhrFS9J-eW7-DYjuhWGdYLnq6dGPZAvpjEoFSMT-rbBliDoGExr5MdTrgqB3fwoD27OlN1o67tim552R4SwW6oqAhmmYqK3DIa8TNp5D8zbEnFTKaYONVc8ovVZMf-NmO3MKoHbswiHHbSEPy5pqB5n-J5deY0boZ8iIiUrOWaMJwpsGVmaSMEMxTCAQkMAG0r32EnBlzCNicuN5YZWezcQEayv12MaJ0bZs4lbrZ45lG9HfsZAVCBHdHB9rkwCGvZvVFFrTwf3HF9CRLCH-amTWBw1w1G0e3qsLkkavhwUqquYjNhWYGgcTS8uz5GY2_tY7RUWg4gut25WpNDr5"
     }
   ],
@@ -220,18 +220,6 @@
       "photoRef": "places/ChIJ5wdFOu6wj4ARKPFSgIu3C1Q/photos/AWCwydhXtpHtmzTNyIlOUFlJrg7w5elgX56T5wP5RhlR2rsFyUrWDSpWk7NjlER6Gkctlnuuz_6oMQuSLr_CqAAJ2Qw76wgUz7TntUAxOzYVOqO-lQ1BpFG4B27QFJNOaCp3zX2E4QhW_nzPKOnr38HMUK6NcRnDDU7GcXgLsXb1aBNDv1h3UUWkJXNak5Tz-9O4k3Sl31930k1VUMT91NyjbQjVVP4LRbZ5oMsiyOsVNKReWoQRULycE_yMBuVt-UW9gkY3UecFGoDW0VRzJO_vRcoHeSdxF2reRYWH7vIKLCUn74GCGt7gAG3qz1xZoM0cUlaI_bFC0tFtuiQSSJWfNl-YuzH4Dz1Gs0_qs1XFaNYbeGh1kZ6cKucKyW4s1SoinhAZ4AtOlW8jHaHczk9SFu9S6fyo7K5mtOtToX0_k84f2A"
     },
     {
-      "id": "soon-SR0885671",
-      "name": "Breakfast Club At Midtown",
-      "address": "1432 W San Carlos Ste. 80",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-11-04",
-      "status": "coming-soon",
-      "sourceId": "SR0885671",
-      "blurb": null,
-      "photoRef": "places/ChIJS128bEXLj4ARjFvsKzXDBS8/photos/AV-0GLdVlnirOt8wvwwxO3xtPRWxN8wqk8ktiUcAxVZY_lVAcFh2xhzT5LWhX5lEzBe0xS7rEsZ7CuGRcTLoScinTaa4goL9_jM9IWHSi6N0IFPRQ_iRNiGo7wRbMPdQM1p2WxLMhuWtoOtK-owtB-hvwG8RbebfnZgQm9vmtaUGYZGQhQVQ7UK3rIzg08pZe_JsMz06eb2f_jK7a30m20O32FxaADQ9jbEBPhUrerm2xTqjivS9g3u40wX4aXyEP7bKCI0q0RwhrS70a2ifB85A8UfCVCK6mxkZLRU1qV65IJp7cHc4LxQm0bK_EJNN9ZUZEoJMEShhlR-n_wdKqZNlTxagEkO9L73qXJk1COUu7mCb9FaKDW30ZyAJiV5LSklAqqOf-h5eUOnU1JUHfaumphA3xLrNutlepL5TjjZnT3XV2A"
-    },
-    {
       "id": "soon-SR0886043",
       "name": "Almaden Market",
       "address": "5965 Almaden Express Way",
@@ -244,6 +232,18 @@
       "photoRef": "places/ChIJPWbdxhgxjoARK0-XEKj3WiE/photos/AV-0GLeiKWA3g3OX70xmVy9CbdO5hUZAyy64adB_cD67Mj752286s9DqF1xt-a3dIw5ReGHRq-8fT2VaChyIIPDYnkLdfIh_fjS9ixOolOVSXbz8bSvufRht-vWVk9Y2fHElR5pGfq9uqbUQ4Q4bjPTgZgTthFolD6pUt4cU7r_v8hXfBR5hfLeq_aojLGGJQZm_5f8MW7jhxEtvnKNGyaACCaZBLhifWVtLlJnT4FYIFrEaWNN0lFvp1HsC5mQN2xZ2KQjxpV5dgUbTfOAn2O7L4MCOwKvj4Ua0ZMYD1v9Pg14dBGjUVBIlDRyZePD6bkUVGrE98M4AroRx-pLjRK87qzlPcf8_1ux0pbx_wCjhbKnDPIoFrbtxS7FYl_bHrCMosKQftA5xHwYD8uSsKCL_eLFlqT4DCh-wQH8oMA4-53ipzg"
     },
     {
+      "id": "soon-SR0885671",
+      "name": "Breakfast Club At Midtown",
+      "address": "1432 W San Carlos Ste. 80",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-11-04",
+      "status": "coming-soon",
+      "sourceId": "SR0885671",
+      "blurb": null,
+      "photoRef": "places/ChIJS128bEXLj4ARjFvsKzXDBS8/photos/AV-0GLdVlnirOt8wvwwxO3xtPRWxN8wqk8ktiUcAxVZY_lVAcFh2xhzT5LWhX5lEzBe0xS7rEsZ7CuGRcTLoScinTaa4goL9_jM9IWHSi6N0IFPRQ_iRNiGo7wRbMPdQM1p2WxLMhuWtoOtK-owtB-hvwG8RbebfnZgQm9vmtaUGYZGQhQVQ7UK3rIzg08pZe_JsMz06eb2f_jK7a30m20O32FxaADQ9jbEBPhUrerm2xTqjivS9g3u40wX4aXyEP7bKCI0q0RwhrS70a2ifB85A8UfCVCK6mxkZLRU1qV65IJp7cHc4LxQm0bK_EJNN9ZUZEoJMEShhlR-n_wdKqZNlTxagEkO9L73qXJk1COUu7mCb9FaKDW30ZyAJiV5LSklAqqOf-h5eUOnU1JUHfaumphA3xLrNutlepL5TjjZnT3XV2A"
+    },
+    {
       "id": "soon-SR0886360",
       "name": "Mendocino Farms Brokaw",
       "address": "1098 E Brokaw Rd., #10",
@@ -254,6 +254,18 @@
       "sourceId": "SR0886360",
       "blurb": "Food business planned on East Brokaw Road in San Jose.",
       "photoRef": "places/ChIJE46t_57Lj4ARq6YTDs6y0_0/photos/AV-0GLdTPkbTzr5ZK2mbHKMpHIGvIWh63gQh4C135Qonhs5WOZ7h7k3bCLGyPtVNgwh8TAiblcmTb9gJD6iWUB0h_9PbZCT8JnP_4UTOWkK5zD-XeZ0nqeiFVebvx0dyTcU7cV2scHveIWZP_W4JmlmTwkqAaue-nKQMeMbOaa_Dmf1EAmU_kjWZV36bDlKh7cI8IDYWw8GEkquQfgD5Q4cfdWzMjN9-n3hKtOKIDQnu-TAQIKXq2QNPFX8kEQT-oYtmamogeD-poywA1ZIRBpTXzz_CyUwk8bgtGrICipx8kMPVXiM6MlNH8hANPpA2LZeLAU1YaP3Y4QdJDlQ4b7t580s58uX_msfLe7-BuPGNSaYxob6JpAiSJnCAj6uizw0tXPxbZNqVMMBp9YMqdTsJW1uPFt0"
+    },
+    {
+      "id": "soon-SR0886435",
+      "name": "Ulas Enterprises",
+      "address": "14554 Big Basin Way A",
+      "cityId": "saratoga",
+      "cityName": "SARATOGA",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886435",
+      "blurb": "Food business planned on Big Basin Way in Saratoga.",
+      "photoRef": "places/ChIJrTYpGt5KjoARcrP5Cm3syJ8/photos/AV-0GLeazcWiPpZVy0ZmBT4mpjapiqhZUsGD84vU3Czs2lcc9d48BhI_cnIg66vBoIOfoyvn05GhaqGMLJJ0PBXIqeeZgLzOrFpW20z7ahelL0w9x7vZ03VJvesySHkqf6Zh5gTdUR5YuevKo2bDDgZQlZYLrCyTdOAtc9r32bapTXsRV4izUQy0hrG6uenOyI5aqOv1WBaEQCQHWg6Ep_J-nZ3iqYx37GE8mAUr2BhYpYzqmfHB6-Q7u_1G5PhKDGDG4NYTyrzkpSiN2p6JlWO9kQFn9_G3xrIvWS1yAcGnwxrD9xhidECfdeVM8e-nOgNGNG4glm9g2Q4dC6446qeFzPm9NXtdK630XyYDaBNuKJy0V1IsRODoWJTckcynEfTBsP8SHujppl-NUmlsrPi9HyCqhgs"
     },
     {
       "id": "soon-SR0886237",
@@ -290,18 +302,6 @@
       "sourceId": "SR0886514",
       "blurb": null,
       "photoRef": "places/ChIJwz19egDNj4ARrLccQACXG8w/photos/AV-0GLfCfAUSKtOA_W0XRUSTkhFxM0eXUnpCadddui7eJOLDoMCog94GspzcUyR8BL5YhAWl3PGIs_Fi-9dzNsqwznhLO4_QFjZodUhmmZOgpUbxk6DVD38Kgo6omdYGaCpqni_-jWRkoBk6SOudjePuHsXxuh3hFzIsU5XpnX7VzrsconDdTzSUAb-XaVjTCu8Dchq6TEvOB1iYnK4a7O9Zzz9WxH136a6tBB6IqZk6hlmZTVTXiRDcV8634AQc3knXJa6CuKYDjAD1CNtbCzrD8SvHzn6pVCzh9BWdO7u8Q2iP26mFLXd6ZjJ6M2s4FurqgdNaoHTWo5SKFMii2W9sRh1SSyeRKeIuitGUio_LBu_txciVPhbJ4j02HKjWRTUR45t69Hdj1N5tg8QXr-WisN9QcvpZixEnzHVe2hmT5FxlqQ"
-    },
-    {
-      "id": "soon-SR0886435",
-      "name": "Ulas Enterprises",
-      "address": "14554 Big Basin Way A",
-      "cityId": "saratoga",
-      "cityName": "SARATOGA",
-      "date": "2026-10-30",
-      "status": "coming-soon",
-      "sourceId": "SR0886435",
-      "blurb": "Food business planned on Big Basin Way in Saratoga.",
-      "photoRef": "places/ChIJrTYpGt5KjoARcrP5Cm3syJ8/photos/AV-0GLeazcWiPpZVy0ZmBT4mpjapiqhZUsGD84vU3Czs2lcc9d48BhI_cnIg66vBoIOfoyvn05GhaqGMLJJ0PBXIqeeZgLzOrFpW20z7ahelL0w9x7vZ03VJvesySHkqf6Zh5gTdUR5YuevKo2bDDgZQlZYLrCyTdOAtc9r32bapTXsRV4izUQy0hrG6uenOyI5aqOv1WBaEQCQHWg6Ep_J-nZ3iqYx37GE8mAUr2BhYpYzqmfHB6-Q7u_1G5PhKDGDG4NYTyrzkpSiN2p6JlWO9kQFn9_G3xrIvWS1yAcGnwxrD9xhidECfdeVM8e-nOgNGNG4glm9g2Q4dC6446qeFzPm9NXtdK630XyYDaBNuKJy0V1IsRODoWJTckcynEfTBsP8SHujppl-NUmlsrPi9HyCqhgs"
     }
   ]
 }

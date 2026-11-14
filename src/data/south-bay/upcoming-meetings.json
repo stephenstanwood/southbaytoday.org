@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T04:29:41.764Z",
+  "generatedAt": "2026-11-14T04:12:01.404Z",
   "meetings": {
     "san-jose": {
       "date": "2026-11-16",
@@ -28,7 +28,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-16",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -66,45 +66,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "sunnyvale": {
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
-      "startTime": "19:00",
-      "bodyName": "City Council",
-      "location": "Online and Council Chambers, City Hall",
-      "closedSession": false,
-      "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4529&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5",
-      "legistarEventId": 4529,
-      "agendaItems": [
-        {
-          "title": "Approve City Council Meeting Minutes of November 9, 2026 (Board and Commission Interviews)",
-          "sequence": 7
-        },
-        {
-          "title": "Adopt a Resolution Proclaiming the Existence of a Local Emergency in the City of Sunnyvale Due to the Developing 2026-2027 El Niño Event and Find the Actions Exempt from the California Environmental Quality Act (CEQA) Pursuant to CEQA Guidelines Sections 15269 and 15378(b)",
-          "sequence": 10
-        },
-        {
-          "title": "2026 Municipal Information Systems Association of California (MISAC) Awards, Presented by MISAC Lifetime Member Gaurav Garv",
-          "sequence": 13
-        },
-        {
-          "title": "Direct Staff to Prepare an Implementation Plan and Undertake California Environmental Quality Act (CEQA) Review of an Interim Housing Community at 1240 Fair Oaks Way; and Find this Action Exempt from CEQA Pursuant to CEQA Guidelines Section 15262",
-          "sequence": 15
-        },
-        {
-          "title": "Approve an Amendment to the Employment Agreement Between the City of Sunnyvale and City Attorney Rebecca Moon to Modify the City Attorney Salary and Benefits, and Adopt a Resolution Amending the Salary Resolution to Increase the City Attorney Salary Range",
-          "sequence": 17
-        }
-      ],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "legistar",
-        "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
@@ -121,7 +83,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-13",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-12T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+      }
+    },
+    "santa-clara": {
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "17:30",
+      "bodyName": "City Council and Authorities Concurrent",
+      "location": "Hybrid Meeting\r\nCity Hall Council Chambers/Virtual \r\n1500 Warburton Avenue\r\nS...",
+      "closedSession": false,
+      "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4894&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63",
+      "legistarEventId": 4894,
+      "agendaItems": [
+        {
+          "title": "Overview of the Santa Clara Convention Center Financial Status Reports for FY 2024/25 Quarter 4, and FY 2025/2026 Quarters 1 through 4",
+          "sequence": 7
+        },
+        {
+          "title": "Recognition of the Santa Clara Westside Little League 11U All-Star Baseball Team’s Extraordinary 2026 Season",
+          "sequence": 15
+        },
+        {
+          "title": "Board, Commissions and Committee Minutes",
+          "sequence": 17
+        },
+        {
+          "title": "Action on the Award of an Agreement for Services to Thermal Mechanical, Inc. for HVAC Restoration Services at the Senior Center Natatorium for a Not-To-Exceed Amount of $448,139, and Approval of Related Budget Amendment",
+          "sequence": 22
+        },
+        {
+          "title": "Action on a Resolution Ordering the Vacation of an Underground Electric Easement at 1550 Space Park Drive",
+          "sequence": 24
+        }
+      ],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "legistar",
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-13T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "palo-alto": {
@@ -170,7 +170,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-12T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-13T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -187,7 +187,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-12T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-13T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -218,7 +218,8 @@
     },
     "sunnyvale": {
       "provider": "Legistar",
-      "status": "ok"
+      "status": "error",
+      "detail": "fetch failed"
     },
     "cupertino": {
       "provider": "Legistar",
@@ -226,7 +227,7 @@
     },
     "santa-clara": {
       "provider": "Legistar",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "palo-alto": {
       "provider": "PrimeGov",
