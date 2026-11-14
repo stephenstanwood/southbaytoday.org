@@ -61,6 +61,8 @@ const EDITS = {
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
       ["Sabor al Exito- Pagos digitales", "Sabor al Éxito - Pagos digitales"],
       ["Clases de inglés para Hispanos - Nivel 1", "Clases de inglés para hispanos - Nivel 1"],
+      // The library's occurrence page spells the partner's name ICAN.
+      ["Vietnamese Storytime with Ican", "Vietnamese Storytime with ICAN"],
     ],
     attendanceNote: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
@@ -454,6 +456,11 @@ const EDITS = {
       ["a free design from Thingiverse or similar site.", "a free design from Thingiverse or a similar site."],
       ["Tiempo de Cuentos & Stay and Play Tiempo de Cuentos está", "Tiempo de Cuentos & Stay and Play: Tiempo de Cuentos está"],
       ["11:30 a.m. - 12:00 pm; Stay & Play:", "11:30 a.m. - 12:00 p.m.; Stay & Play:"],
+      [/\bLapsit Storytime (?=\d{1,2} to \d{1,2}:\d{2} a\.m\.)/g, "Lapsit Storytime: "],
+      [/\bIcan\b/g, "ICAN"],
+      [/\b(sjpl\.org\/storytimes) (?=Giờ kể chuyện)/g, "$1. "],
+      ["Caregivers are welcomed to join.", "Caregivers are welcome to join."],
+      ["takes the forms of seminars, workshops and roundtable discussions.", "takes the form of seminars, workshops and roundtable discussions."],
       ["English in-person at the Biblioteca Latinoamericana!", "English in person at the Biblioteca Latinoamericana!"],
       ["with other intermediate level adult learners", "with other intermediate-level adult learners"],
       ["This program is in-person at Santa Teresa Branch Library.", "This program is held in person at Santa Teresa Branch Library."],
@@ -585,6 +592,7 @@ const EDITS = {
     ],
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
+      [/\bIcan\b/g, "ICAN"],
       ["build reading confidence and love of books.", "build reading confidence and a love of books."],
       ["free play with Legos", "free play with LEGOs"],
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
@@ -738,6 +746,7 @@ const EDITS = {
     ],
     description: [
       ["Do you have...... a stuffed animal with the stuffing leaking out?... a shirt with a missing button?... a hole you want to patch?... a stain you want to cover up?", "Do you have a stuffed animal with the stuffing leaking out, a shirt with a missing button, a hole you want to patch, or a stain you want to cover up?"],
+      ["Komi Can't Communicate Available as a: Book and e Book (Libby)", "Komi Can't Communicate. Available as a book and e-book (Libby)."],
       ["bring your own items to mend, project to work on, or practice basic stitches with our fabric scraps!", "bring your own items to mend or a project to work on, or practice basic stitches with our fabric scraps!"],
       ["Hercule Poirot's Christmas by Agatha Christie (1938) A family reunion", "Hercule Poirot's Christmas by Agatha Christie (1938). A family reunion"],
       ["Audio books, DVDs, VCDs and Blu Ray discs", "Audiobooks, DVDs, VCDs and Blu-ray discs"],
@@ -873,6 +882,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["; Registrants who do not attend by", "; registrants who do not attend by"],
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
       [" *This event will be held in the ", " This event will be held in the "],
@@ -997,6 +1007,7 @@ const EDITS = {
       ["Mlis Open House", "MLIS Open House"],
     ],
     description: [
+      ["will present highlights from their their new book,", "will present highlights from their new book,"],
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
     ],
