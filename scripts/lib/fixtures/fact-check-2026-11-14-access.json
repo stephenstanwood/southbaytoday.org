@@ -1,0 +1,306 @@
+{
+  "events": [
+    {
+      "id": "sjpl-69aa040645f57dfccb18b40d",
+      "title": "Tech Mentor: One-on-One Computer Help",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "3:00 PM",
+      "endTime": "5:00 PM",
+      "venue": "East SJ Carnegie Library",
+      "address": "1102 E Santa Clara St San Jose",
+      "city": "san-jose",
+      "registration": "required",
+      "registrationClosesBy": "2026-11-18T23:00:00.000Z",
+      "category": "education",
+      "cost": "free",
+      "description": "Confused by your computer? Get personalized tech assistance. Help is available for basic tasks such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources. Registering for an appointment is optional. If you register for an appointment, it can start at any time between 3 p.m. and 4:30 p.m. Please contact Sarah Kishler at sarah.kishler@sjlibrary.org or 408-808-3075 to let us know what time you would like to come in. When there is space, walk-ins starting between 3 p.m. and 4:30 p.m. are also welcome.",
+      "sourceAudiences": [
+        "Adults, ages 18+",
+        "Seniors, ages 65+"
+      ],
+      "url": "https://sjpl.bibliocommons.com/events/69aa040645f57dfccb18b40d",
+      "source": "San Jose Public Library",
+      "kidFriendly": false,
+      "audienceAge": "adult"
+    },
+    {
+      "id": "inbound-d933a279dc1eb022",
+      "title": "Getting Organized for Genealogy - Genealogy Toolbox Class",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "1:00 PM",
+      "endTime": "3:30 PM",
+      "venue": "Central Park Library - Redwood Room",
+      "address": "Central Park Library - Redwood Room, 2635 Homestead Road, Santa Clara, CA 95051",
+      "city": "santa-clara",
+      "category": "education",
+      "cost": null,
+      "description": "A class on organizing physical and digital genealogy records, covering filing methods, digital storage, photo organization, and tech tools. Registration is required through Eventbrite.",
+      "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113739/",
+      "source": "City Newsletter",
+      "kidFriendly": false,
+      "audienceAge": "all"
+    }
+  ],
+  "source": {
+    "id": "69aa040645f57dfccb18b40d",
+    "definition": {
+      "start": "2026-11-18T15:00",
+      "end": "2026-11-18T17:00",
+      "title": "Tech Mentor: One on One Computer Help",
+      "description": "<p>Confused by your computer? Get personalized tech assistance. </p>\n<p>Help is available for basic tasks such as: </p>\n<ul><li>Printing</li><li>Using email</li><li>Connecting to WiFi</li><li>Creating documents</li><li>Accessing library resources</li></ul>\n<p>Registering for an appointment is optional. If you register for an appointment, it can start at any time between 3 p.m. to&nbsp;4:30 pm. <strong>Please contact Sarah Kishler at sarah.kishler@sjlibrary.org or 408-808-3075 to let us know what time you would like to come in</strong>. When there is space, walk-ins starting between 3 p.m. to&nbsp;4:30 p.m. are also welcome.&nbsp;</p>\n<p><a href=\"https://www.sjpl.org/ada-event-accommodation/?_gl=1*13lv65v*_ga*MTIxODI4Njk0LjE2NjY5MDUzNTQ.*_ga_G99DMMNG39*MTcxMjYwNzcyNS43OS4xLjE3MTI2MTEwOTkuMC4wLjA.*_ga_F5QPDQX1BM*MTcxMjYwNzcyNC43Ni4xLjE3MTI2MTEwOTguMC4wLjA.\" target=\"_blank\">ADA Accommodation Requests</a></p>",
+      "branchLocationId": "02",
+      "registrationInfo": {
+        "provider": "BIBLIO_EVENTS",
+        "registrationStart": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 0,
+          "windowType": null
+        },
+        "registrationEnd": {
+          "unit": "days",
+          "date": null,
+          "time": null,
+          "ordinal": 0,
+          "windowType": "EVENT_START"
+        },
+        "enabledMethods": [],
+        "cap": 4,
+        "maxSeats": 10,
+        "scope": null,
+        "isFull": false,
+        "instructions": null,
+        "onlineInstructions": "<p>Thanks for registering! Please let Sarah Kishler know at sarah.kishler@sjlibrary.org or 408-808-3075 at which time between 3 and 4:30 pm you would like to attend.&nbsp;</p>",
+        "instructionsToAttend": null,
+        "loginToRegister": false,
+        "waitlistEnabled": true,
+        "waitlistAutoPromote": false
+      }
+    },
+    "isFull": false,
+    "registrationClosed": false
+  },
+  "locations": {
+    "02": {
+      "id": "02",
+      "name": "East SJ Carnegie",
+      "coreAbsent": false,
+      "isHidden": false,
+      "imageId": "64e3d1d0d0f9343a00e86719",
+      "customUrl": "https://www.sjpl.org/locations/east-branch",
+      "hours": [
+        {
+          "timeRef": "tuesday",
+          "openTime": "T10:00",
+          "closeTime": "T19:00",
+          "id": "68a5174ad61fc9ddfaec2dde"
+        },
+        {
+          "timeRef": "wednesday",
+          "openTime": "T10:00",
+          "closeTime": "T19:00",
+          "id": "68a5174ad61fc9ddfaec2ddd"
+        },
+        {
+          "timeRef": "thursday",
+          "openTime": "T10:00",
+          "closeTime": "T19:00",
+          "id": "68a5174ad61fc9ddfaec2ddc"
+        },
+        {
+          "timeRef": "friday",
+          "openTime": "T14:00",
+          "closeTime": "T18:00",
+          "id": "68a5174ad61fc9ddfaec2ddb"
+        },
+        {
+          "timeRef": "saturday",
+          "openTime": "T10:00",
+          "closeTime": "T18:00",
+          "id": "68a5174ad61fc9ddfaec2dda"
+        },
+        {
+          "timeRef": "monday",
+          "openTime": "T14:00",
+          "closeTime": "T18:00",
+          "id": "68a5174ad61fc9ddfaec2dd9"
+        },
+        {
+          "timeRef": "sunday",
+          "openTime": "T12:00",
+          "closeTime": "T17:00",
+          "id": "68a5174ad61fc9ddfaec2dd8"
+        }
+      ],
+      "sortedHours": [
+        {
+          "day": "monday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "monday",
+              "openTime": "T14:00",
+              "closeTime": "T18:00",
+              "id": "68a5174ad61fc9ddfaec2dd9"
+            }
+          ]
+        },
+        {
+          "day": "tuesday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "tuesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a5174ad61fc9ddfaec2dde"
+            }
+          ]
+        },
+        {
+          "day": "wednesday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "wednesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a5174ad61fc9ddfaec2ddd"
+            }
+          ]
+        },
+        {
+          "day": "thursday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "thursday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a5174ad61fc9ddfaec2ddc"
+            }
+          ]
+        },
+        {
+          "day": "friday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "friday",
+              "openTime": "T14:00",
+              "closeTime": "T18:00",
+              "id": "68a5174ad61fc9ddfaec2ddb"
+            }
+          ]
+        },
+        {
+          "day": "saturday",
+          "isToday": true,
+          "hours": [
+            {
+              "timeRef": "saturday",
+              "openTime": "T10:00",
+              "closeTime": "T18:00",
+              "id": "68a5174ad61fc9ddfaec2dda"
+            }
+          ]
+        },
+        {
+          "day": "sunday",
+          "isToday": false,
+          "hours": [
+            {
+              "timeRef": "sunday",
+              "openTime": "T12:00",
+              "closeTime": "T17:00",
+              "id": "68a5174ad61fc9ddfaec2dd8"
+            }
+          ]
+        }
+      ],
+      "hoursNote": "",
+      "address": {
+        "country": "US",
+        "zip": "95116",
+        "state": "CA",
+        "city": "San Jose",
+        "street": "E Santa Clara St",
+        "number": "1102"
+      },
+      "branchContacts": [
+        {
+          "contactType": "phone",
+          "rawValue": "408-808-3075",
+          "label": null,
+          "value": "(408) 808-3075",
+          "globalValue": "+1-408-808-3075",
+          "id": "68a5174ad61fc9ddfaec2de0"
+        },
+        {
+          "contactType": "email",
+          "rawValue": "eb.sjpl@sjlibrary.org",
+          "label": null,
+          "globalValue": "eb.sjpl@sjlibrary.org",
+          "value": "eb.sjpl@sjlibrary.org",
+          "id": "68a5174ad61fc9ddfaec2ddf"
+        }
+      ],
+      "mapLocation": {
+        "centrePoint": {
+          "lng": -121.8682245,
+          "lat": 37.3464738
+        },
+        "utcOffsetNow": "-0800",
+        "timeZone": "America/Los_Angeles",
+        "isGeocoded": true
+      },
+      "facilities": [
+        {
+          "typeId": "651f1befa7d41a3500013138",
+          "id": "68a5174ad61fc9ddfaec2dd7",
+          "url": null
+        },
+        {
+          "typeId": "651f24ca9690c63c00ffca19",
+          "id": "68a5174ad61fc9ddfaec2dd6",
+          "url": null
+        },
+        {
+          "typeId": "6531af2acb391ed4418f7d30",
+          "id": "68a5174ad61fc9ddfaec2dd5",
+          "url": null
+        },
+        {
+          "typeId": "6531b6318fffe94c00c78b5a",
+          "id": "68a5174ad61fc9ddfaec2dd4",
+          "url": null
+        },
+        {
+          "typeId": "6531b6548fffe94c00c78b5e",
+          "id": "68a5174ad61fc9ddfaec2dd3",
+          "url": null
+        },
+        {
+          "typeId": "6531b6748fffe94c00c78b60",
+          "id": "68a5174ad61fc9ddfaec2dd2",
+          "url": null
+        },
+        {
+          "typeId": "66b520a814460a1fe3407388",
+          "id": "68a5174ad61fc9ddfaec2dd1",
+          "url": null
+        }
+      ],
+      "highlights": [],
+      "specialHoursIds": [
+        "691f94b6a6fedec9530a2d65",
+        "691f94d09be7c6685c2922be",
+        "691f94db9be7c6685c2922bf"
+      ],
+      "webUrl": "https://www.sjpl.org/locations/east-branch"
+    }
+  }
+}

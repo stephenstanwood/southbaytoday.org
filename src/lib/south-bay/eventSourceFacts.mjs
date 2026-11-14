@@ -70,6 +70,42 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // This dated form reserves optional appointments; the organizer explicitly
+  // admits walk-ins when space permits. Its 3 PM form cutoff does not close
+  // that separate access path. Preserve later availability restrictions and
+  // stop matching if the organizer changes its attendance instructions.
+  // https://sjpl.bibliocommons.com/v2/events/69aa040645f57dfccb18b40d
+  // Evidence: docs/qa/2026-11-14-2207z-fact-check.md.
+  {
+    date: "2026-11-18",
+    matches: event => !event.virtual && event.source === "San Jose Public Library"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69aa040645f57dfccb18b40d\/?$/.test(event.url || "")
+      && ["Tech Mentor: One on One Computer Help", "Tech Mentor: One-on-One Computer Help"].includes(event.title)
+      && event.city === "san-jose" && event.venue === "East SJ Carnegie Library"
+      && event.time === "3:00 PM" && event.endTime === "5:00 PM"
+      && /\bRegistering for an appointment is optional\./i.test(event.description || "")
+      && /\bWhen there is space, walk-ins starting between 3 p\.m\. (?:to|and)\s*4:30 p\.m\. are also welcome\./i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory|(?:now\s+)?closed)\b|\b(?:this|the)\s+(?:event|program|session)\s+is\s+(?:now\s+)?(?:closed|full)\b|\bno\s+(?:walk|drop)[-\s]?ins\b|\bmust\s+(?:register|reserve|book)\b/i.test(`${event.description || ""} ${event.attendanceNote || ""}`),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "Appointments are optional. Walk-ins may start between 3 and 4:30 PM if space is available.",
+  },
+  // The authenticated city email requires Eventbrite registration. Extraction
+  // retained that sentence but lost the structured gate used by the planner.
+  // Keep this bound to the confirmed occurrence and its existing source URL.
+  // https://www.santaclaraca.gov/Home/Components/Calendar/Event/113739/
+  // Evidence: docs/qa/2026-11-14-2207z-fact-check.md.
+  {
+    date: "2026-11-18",
+    matches: event => !event.virtual && event.source === "City Newsletter"
+      && event.url === "https://www.santaclaraca.gov/Home/Components/Calendar/Event/113739/"
+      && event.title === "Getting Organized for Genealogy - Genealogy Toolbox Class"
+      && event.city === "santa-clara" && event.venue === "Central Park Library - Redwood Room"
+      && event.time === "1:00 PM" && event.endTime === "3:30 PM"
+      && /\bRegistration is required through Eventbrite\./.test(event.description || ""),
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Registration is required through Eventbrite.",
+  },
   // The newsletter fallback omitted the organizer's free admission and hours
   // when the short calendar stopped including this market. The exact dated
   // ticket page confirms 10 AM–3 PM and asks for free registration to plan

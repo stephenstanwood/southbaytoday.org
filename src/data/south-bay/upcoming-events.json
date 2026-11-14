@@ -8925,8 +8925,8 @@
       "venue": "East SJ Carnegie Library",
       "address": "1102 E Santa Clara St San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-18T23:00:00.000Z",
+      "registration": "none",
+      "registrationClosesBy": null,
       "category": "education",
       "cost": "free",
       "description": "Confused by your computer? Get personalized tech assistance. Help is available for basic tasks such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources. Registering for an appointment is optional. If you register for an appointment, it can start at any time between 3 p.m. and 4:30 p.m. Please contact Sarah Kishler at sarah.kishler@sjlibrary.org or 408-808-3075 to let us know what time you would like to come in. When there is space, walk-ins starting between 3 p.m. and 4:30 p.m. are also welcome.",
@@ -8940,7 +8940,8 @@
       "audienceAge": "adult",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/053124cee8d0d193a209b33e748168d3/sjplbet_computerhelp.png",
       "blurb": "Get personalized help with printing, email, Wi-Fi, documents, or library resources on your computer.",
-      "firstSeenAt": "2026-11-14T21:50:28.296Z"
+      "firstSeenAt": "2026-11-14T21:50:28.296Z",
+      "attendanceNote": "Appointments are optional. Walk-ins may start between 3 and 4:30 PM if space is available."
     },
     {
       "id": "sjpl-6a7b58a64cb69d003e20197c",
@@ -24122,7 +24123,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJA5nt2n61j4AR_PaZL8-UEog/photos/AV-0GLewl9HHH4xO8KlLvmpZ165GNCWUa1UZr2TuOQkboZj7Q1dA0Mp-JFWU-X8MQ241LiwCbTceT7nwXarXZoDGFUWreCEH3drakggAvIPaGKd7J1JqYeav76wuWbc_ScNraD_GgI2pNNPlspLxafRpy_aTkMFTVsEhDKVu4yPXU90rkkXe-O3IRP5uukmG2Ifyra4kkThKnwrK5kHfbavtJ_IK1wqVghb4LXiuTajX5zdRut9wjf8hnzm2BMV8_-7kUoOOXEz8p9NsTSXiyeITVIEks1REOyJAKFyNk3qnFNxdS5dURLtbULv5Zhv9oDiKoe3cLWpR01KoC0HQ99CUGtoudPOrjKRQmn4_F1XOm5kd31fmKyCjwf06dyUfzsBBP16Vqw-xSNN50CBXVKM1qTaWZRc",
       "blurb": "Learn how to organize paper and digital genealogy records, from filing methods and photo organization to digital storage and tech tools.",
-      "firstSeenAt": "2026-11-14T21:50:28.296Z"
+      "firstSeenAt": "2026-11-14T21:50:28.296Z",
+      "registration": "required",
+      "attendanceNote": "Registration is required through Eventbrite."
     },
     {
       "id": "inbound-6c937516022452e4",
