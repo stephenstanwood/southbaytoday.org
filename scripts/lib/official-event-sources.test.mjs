@@ -444,7 +444,7 @@ test("Montalvo uses ticket-page admission and audience while null and blank cale
       <div data-tn-price-amount="20.0000"></div>` : ""}`);
   };
   try {
-    const events = await fetchMontalvoEvents();
+    const events = await fetchMontalvoEvents({ previousEvents: [] });
     assert.equal(events.length, 5);
     assert.equal(requested.length, 6);
     assert.deepEqual(events.map((event) => event.cost), ["paid", null, null, null, "free"]);

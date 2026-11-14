@@ -10675,7 +10675,7 @@ async function fetchHistorySanJoseEvents() {
   try {
     const BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15";
     const events = [];
-    const now = new Date();
+    const today = todayPT();
 
     for (let page = 1; page <= 4; page++) {
       const url = page === 1
@@ -10699,13 +10699,11 @@ async function fetchHistorySanJoseEvents() {
         // visible paragraph establishes an occurrence; reject invalid dates.
         const dateRange = parseHistorySjDateRange(block);
         if (!dateRange) continue;
-        const start = new Date(`${dateRange.startDate}T12:00:00`);
-        if (dateRange.endDate) {
-          const endDate = new Date(`${dateRange.endDate}T00:00:00`);
-          if (endDate < now) continue;
-        } else if (start < now) {
-          continue;
-        }
+        // These are Pacific calendar dates, not noon/midnight in the host's
+        // timezone. UTC refreshes must not lose today's organizer record and
+        // replace it with a differently keyed cached scrape marked JUST ADDED.
+        if ((dateRange.endDate || dateRange.startDate) < today) continue;
+        const start = parseDatePT(`${dateRange.startDate}T12:00:00`);
 
         // Extract time from <span class="eventtime">
         const timeMatch = block.match(/<span class="eventtime">\s*([\d:]+\s*[ap]m)\s*<\/span>/i);
