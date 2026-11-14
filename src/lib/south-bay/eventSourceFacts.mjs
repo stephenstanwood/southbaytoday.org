@@ -19,6 +19,8 @@ const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
 const OUR_TOWN_WAITLIST_NOTE = "Tickets sold out when checked November 12. TAPS distributes in-person waitlist numbers at the venue one hour before curtain; admission is not guaranteed.";
+const YULETIDE_NEWSLETTER_DESCRIPTION = "Pop-up holiday boutique with gifts, handmade items, vintage goods, holiday décor and specialty foods from local vendors. Runs Friday, Nov 20 and Saturday, Nov 21; no times given.";
+const YULETIDE_VERIFIED_DESCRIPTION = YULETIDE_NEWSLETTER_DESCRIPTION.replace("; no times given.", ", 10 AM–3 PM each day.");
 const LOS_ALTOS_TEEN_DND_DATES = {
   "693b4639ddf563280020736e": "2026-11-05",
   "693b4639ddf563280020736f": "2026-11-12",
@@ -68,6 +70,28 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The newsletter fallback omitted the organizer's free admission and hours
+  // when the short calendar stopped including this market. The exact dated
+  // ticket page confirms 10 AM–3 PM and asks for free registration to plan
+  // parking; it does not establish that advance registration is mandatory.
+  // Preserve changed prices, clocks, descriptions and later access notices.
+  // https://my.montalvoarts.org/3283/3284
+  // https://my.montalvoarts.org/overview/3283
+  // Evidence: docs/qa/2026-11-14-1407z-fact-check.md.
+  {
+    date: "2026-11-20",
+    matches: event => !event.virtual && event.city === "saratoga"
+      && ["City Newsletter", "Montalvo Arts Center"].includes(event.source)
+      && ["Yuletide at Montalvo Pop-Up Holiday Boutique", "Yuletide Boutique Holiday Market"].includes(event.title)
+      && /^https:\/\/my\.montalvoarts\.org\/overview\/3283\/?(?:\?promo=)?$/.test(event.url || "")
+      && event.venue === "Montalvo Arts Center" && event.time === "10:00 AM"
+      && [null, undefined, "3:00 PM"].includes(event.endTime)
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && [null, undefined, "", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
+    facts: { cost: "free", endTime: "3:00 PM" },
+    copyReplacements: [[/; no times given\.$/, ", 10 AM–3 PM each day."]],
+    appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
+  },
   // The dated ticket page and production page describe one concert. Two
   // newsletter titles and a room/building alias otherwise evade both URL
   // and title deduplication when the sparse calendar omits the direct row.
