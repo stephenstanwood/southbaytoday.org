@@ -68,6 +68,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The dated ticket page and production page describe one concert. Two
+  // newsletter titles and a room/building alias otherwise evade both URL
+  // and title deduplication when the sparse calendar omits the direct row.
+  // https://my.montalvoarts.org/3232/3246
+  // https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/
+  // Evidence: docs/qa/2026-11-14-0107z-fact-check.md.
+  {
+    date: "2026-11-13",
+    matches: event => !event.virtual && event.city === "saratoga"
+      && ["City Newsletter", "Montalvo Arts Center"].includes(event.source)
+      && ["Marc Broussard", "Marc Broussard Concert", "Marc Broussard in Concert",
+        "Bayou Soul with Marc Broussard"].includes(event.title)
+      && ["https://my.montalvoarts.org/3232/3246", "https://my.montalvoarts.org/3232/3246?promo=",
+        "https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/",
+        "https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/?promo="].includes(event.url)
+      && ["Carriage House", "Montalvo Arts Center"].includes(event.venue)
+      && event.time === "7:30 PM" && [null, undefined, "paid"].includes(event.cost),
+    facts: {
+      title: "Marc Broussard", venue: "Montalvo Arts Center",
+      address: "15400 Montalvo Rd, Saratoga, CA 95070",
+      url: "https://my.montalvoarts.org/3232/3246", category: "music", cost: "paid",
+    },
+  },
+  // The city's dated bulletin requires signup by three days before the
+  // workday; its linked organizer instructions also require email confirmation.
+  // Keep a later closed/full state and stop matching revised admission copy.
+  // https://saratoga.volunteerlocal.com/volunteer/?id=53322
+  // Evidence: docs/qa/2026-11-14-0107z-fact-check.md.
+  {
+    date: "2026-11-21",
+    matches: event => !event.virtual && event.source === "City Newsletter"
+      && event.city === "saratoga" && event.title === "Let's Work! Quarry Park Volunteer Clean-Up"
+      && event.url === "https://saratoga.volunteerlocal.com/volunteer/?id=53322"
+      && event.venue === "Quarry Park" && event.time === "9:00 AM" && event.endTime === "12:00 PM"
+      && /\bregistration closes three days before the workday or when full\b/i.test(event.description || ""),
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Sign up for this date by the Wednesday before the workday. Attend only after the City confirms your participation by email.",
+  },
   // The authenticated city bulletin explicitly requires registration for
   // this adult class. Inbound extraction kept that sentence but omitted the
   // structured gate. Stop applying it if later source copy changes the rule.

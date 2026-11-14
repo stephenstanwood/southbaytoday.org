@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-14T00:54:46.459Z",
-  "eventCount": 1508,
+  "eventCount": 1507,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -23177,7 +23177,9 @@
       "kidFriendly": false,
       "audienceAge": "kids",
       "photoRef": "places/ChIJJ16aRBhLjoAR5sPQlXt4EIw/photos/AV-0GLeu_S8XcfLinUDuJIu0ZzBiy6QFacf22aBkedBSO028NFMa7ZvmTOBXE4Qj7SciGN680XTwxMiMHppbuQipe-Z2gpYYMdlg9SDlmPI-oCuyLJEsULE4AQrIvb3rsCqfrkZQaseOMVAehsngynmv_nr7EQsGYGOpzhXthr0H1RA-Eq-ULSShScVAoCKJGFjN6OzKrrGu4T3JJry_pDQdhpfB0oVjFYWIz4kYyKUAaEyI67okmtxEye2UDLCKp2v-ig3HtSnAQZjbZ0FgGijA-xHlHzrTcjnPG8OOcOpDrJGEmPnbQydQe36CMJ_MBEM0c5LULigTlVWQoDqiOU8wjXTt3kkYcqv_kxTNGibEIcJ9juZ8G_KX5LguDZcMIuVtonvWIYVL-vipPmVlRZb2mBtMkic",
-      "firstSeenAt": "2026-11-14T00:54:46.429Z"
+      "firstSeenAt": "2026-11-14T00:54:46.429Z",
+      "registration": "required",
+      "attendanceNote": "Sign up for this date by the Wednesday before the workday. Attend only after the City confirms your participation by email."
     },
     {
       "id": "inbound-a18c318cd2bffe84",
@@ -30831,25 +30833,32 @@
       "firstSeenAt": "2026-11-09T02:25:50.900Z"
     },
     {
-      "id": "inbound-10bc8b2507cb2bf9",
-      "title": "Bayou Soul with Marc Broussard",
+      "id": "montalvo-652bc17145b37dc5",
+      "title": "Marc Broussard",
       "date": "2026-11-13",
       "displayDate": "Fri, Nov 13",
       "time": "7:30 PM",
       "endTime": null,
-      "venue": "Carriage House",
-      "address": "Carriage House, Montalvo Arts Center, 15400 Montalvo Rd, Saratoga, CA 95070",
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95070",
       "city": "saratoga",
       "category": "music",
-      "cost": null,
-      "description": "Louisiana soul, blues, and rock singer Marc Broussard performs in Montalvo's Carriage House, with special guest Cristina Vane. Tickets are available.",
-      "url": "https://my.montalvoarts.org/3232/3246?promo=",
-      "source": "City Newsletter",
+      "cost": "paid",
+      "description": null,
+      "url": "https://my.montalvoarts.org/3232/3246",
+      "source": "Montalvo Arts Center",
       "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://my.montalvoarts.org/3232/3246",
+        "date": "2026-11-13",
+        "time": "7:30 PM",
+        "checkedAt": "2026-11-14T01:10:03.948Z"
+      },
       "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1763889245414-7f6e8e2a34ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwbXVzaWMlMjBjb25jZXJ0JTIwcGVyZm9ybWFuY2V8ZW58MHwyfHx8MTc3NzIzMDYxNnww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Hear Louisiana soul, blues, and rock singer Marc Broussard in Montalvo's Carriage House, with special guest Cristina Vane.",
-      "firstSeenAt": "2026-11-14T00:54:46.429Z"
+      "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
+      "blurb": "See Marc Broussard perform live at Montalvo Arts Center in Saratoga on a Friday evening.",
+      "firstSeenAt": "2026-10-30T03:17:41.521Z"
     },
     {
       "id": "sanjosetheaters-6e218d0fe18c2baf",
@@ -31716,27 +31725,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/executive-functioning-workshop-3-turn-awareness-into-action-benson-memorial-center-209-conference-room-santa-clara-1794011962665-280.webp",
       "blurb": "Practice self-advocacy and professional communication, plan around due dates, and map out supports for an upcoming responsibility.",
       "firstSeenAt": "2026-11-13T20:46:17.589Z"
-    },
-    {
-      "id": "inbound-e55e3668a06ca1c5",
-      "title": "Marc Broussard Concert",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "7:30 PM",
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "Montalvo Arts Center, 15400 Montalvo Rd, Saratoga, CA 95070",
-      "city": "saratoga",
-      "category": "music",
-      "cost": null,
-      "description": "Louisiana singer-songwriter Marc Broussard performs a mix of blues, rock, R&B, and Southern roots music at the Carriage House.",
-      "url": "https://montalvoarts.org/experience/carriage-house-concerts/marc-broussard/?promo=",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
-      "blurb": "Hear Louisiana singer-songwriter Marc Broussard blend blues, rock, R&B, and Southern roots at the Carriage House.",
-      "firstSeenAt": "2026-08-24T12:42:53.135Z"
     },
     {
       "id": "scu-bb845d73ece1588c",

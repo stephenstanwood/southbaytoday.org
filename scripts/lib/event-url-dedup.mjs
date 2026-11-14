@@ -31,10 +31,13 @@ export function deduplicateEventSlots(events) {
       includeRichness: false,
     }) < 0) winners.set(key, event);
   }
-  return deduplicateEventUrls(events).filter((event) => {
+  // Resolve concrete-slot authority first. Otherwise URL dedup can retain an
+  // earlier newsletter copy and discard the later organizer winner, after
+  // which the slot filter discards that newsletter too and loses the event.
+  return deduplicateEventUrls(events.filter((event) => {
     const key = concreteSlotKey(event);
     return !key || winners.get(key) === event;
-  });
+  }));
 }
 
 // Bare collection pages contain multiple occurrences. Query strings and anchors
