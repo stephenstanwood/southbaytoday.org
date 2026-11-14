@@ -1,12 +1,12 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-14T04:56:41.106Z",
+    "generatedAt": "2026-11-14T09:05:10.856Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 200,
+    "eventCount": 197,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (12)",
+      "San Jose Jazz (11)",
       "Linden Tree Books (6)",
       "History San Jose (4)",
       "Montalvo Arts Center (5)",
@@ -14,9 +14,9 @@
       "ICA San José (4)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (14)",
+      "Guadalupe River Park Conservancy (13)",
       "Santana Row (6)",
-      "City of Cupertino (37)",
+      "City of Cupertino (36)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 11,
+        "liveCount": 11,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 14,
-        "liveCount": 14,
+        "count": 13,
+        "liveCount": 13,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 37,
-        "liveCount": 37,
+        "count": 36,
+        "liveCount": 36,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -326,23 +326,6 @@
     ]
   },
   "events": [
-    {
-      "id": "5d9cffa919f1",
-      "title": "Emily Day & The Cosmo Alleycats",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "Cosmo Alleycats have been a favorite of the San Francisco music scene since the band's 2010 beginning. Led by jazz vocalist Emily Day, \"one of the major singers in her field\" (Scott Yanow), the group endears audiences with inviting musicality and playful improvisation.",
-      "url": "https://sanjosejazz.org/events/emily-day-cosmo-alleycats/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "46739c748250",
       "title": "Andre Cruz & the Black Diamond Rhythm Band",
@@ -902,10 +885,10 @@
       "kidFriendly": false
     },
     {
-      "id": "3de87606c273",
+      "id": "4202503b1b94",
       "title": "We Are California Artists: Wanxin Zhang and Diane Ding",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -922,10 +905,10 @@
       "kidFriendly": false
     },
     {
-      "id": "0a12286c7ff1",
+      "id": "a753f8e3c0ea",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -942,10 +925,10 @@
       "kidFriendly": false
     },
     {
-      "id": "57419f98c06c",
+      "id": "b7ae60f8e60f",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -999,10 +982,10 @@
       "kidFriendly": true
     },
     {
-      "id": "e72f43703ab3",
+      "id": "c08830837f6f",
       "title": "Toddler Storytime",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
+      "date": "2026-11-14",
+      "displayDate": "Sat, Nov 14",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1031,30 +1014,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "a70d78ca11d3",
-      "title": "Guadalupe Gardens Workday",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "3:30 PM",
-      "endTime": "5:00 PM",
-      "venue": "Rose Garden Shed",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "Join us for an afternoon of gardening and grow your skills with guidance from our UC Master Gardener–certified Horticulturist! You'll have the chance to learn and practice a wide range of seasonal tasks, including planting, weeding, deadheading, mulching, irrigation, pruning, and more—all while giving a little love back to the beautiful Guadalupe Gardens. We suggest bringing: A full water bottle Thick work gloves Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. REGISTER HERE Please note this event may cancel in the case of inclement weather. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Rose Garden Shed (Refer to registration form for map) Time: 3:30 PM - 5:00 PM Recurring Dates: Every second and fourth Friday of the month",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Rose Garden Shed; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-13"
-      }
     },
     {
       "id": "9f60cb8f5635",
@@ -1377,7 +1336,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-14",
-        "checkedAt": "2026-11-14T04:55:35.625Z"
+        "checkedAt": "2026-11-14T09:03:36.204Z"
       }
     },
     {
@@ -1400,7 +1359,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-14T04:55:35.627Z"
+        "checkedAt": "2026-11-14T09:03:36.206Z"
       }
     },
     {
@@ -1423,7 +1382,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-14T04:55:35.627Z"
+        "checkedAt": "2026-11-14T09:03:36.206Z"
       }
     },
     {
@@ -1446,7 +1405,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-14T04:55:35.628Z"
+        "checkedAt": "2026-11-14T09:03:36.206Z"
       }
     },
     {
@@ -1469,7 +1428,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-14T04:55:35.629Z"
+        "checkedAt": "2026-11-14T09:03:36.209Z"
       }
     },
     {
@@ -1492,7 +1451,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-14T04:55:35.630Z"
+        "checkedAt": "2026-11-14T09:03:36.209Z"
       }
     },
     {
@@ -1783,25 +1742,6 @@
       "costNote": "Resident Rate: $5 Non-Resident Rate: $6 Pre-registration is required and all attending children and adults must be registered.",
       "description": "Deaf and hard of hearing children, along with their families, are invited to spend time with a Santa who understands sign language! Santa only communicates using sign language but an interpreter will be on-site to help translate for friends and family. Register Registration opens in late July. For more information, please visit the Signing Santa event page.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/Signing-Santa/Signing-Santa-Event",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "da31818465bd",
-      "title": "Join-A-Ranger: Night Hike and Flashlight Tour",
-      "date": "2026-11-13",
-      "displayDate": "Fri, Nov 13",
-      "time": "06:00 PM",
-      "endTime": "07:30 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Rd, 95014, View Map",
-      "city": "cupertino",
-      "registration": "required",
-      "category": "family",
-      "cost": "low",
-      "costNote": "$10 Resident | $13 Non-resident",
-      "description": "Enjoy a fun-filled Night Hike and Flashlight Tour of McClellan Ranch Preserve and Blackberry Farm! We will explore the woods and nature at night, learn about nocturnal animals' special adaptations, and test our heightened senses in the dark with games and activities. The hike is approximately one mile on a combination of dirt trails and paved paths. Please wear appropriate walking shoes and a warm jacket and bring a flashlight or head-lamp. All attendees must register and children must be accompanied by an adult. $10 Resident | $13 Non-resident Register",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Join-A-Ranger-Night-Hike-and-Flashlight-Tour",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -2148,7 +2088,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2165,7 +2105,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2182,7 +2122,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2199,7 +2139,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -2216,7 +2156,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3381,7 +3321,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.681Z"
+        "checkedAt": "2026-11-14T09:04:04.239Z"
       }
     },
     {
@@ -3405,7 +3345,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.241Z"
       }
     },
     {
@@ -3429,7 +3369,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3453,7 +3393,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3477,7 +3417,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3501,7 +3441,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3525,7 +3465,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3549,7 +3489,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.684Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3590,7 +3530,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.685Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
@@ -3614,7 +3554,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-14T04:56:02.685Z"
+        "checkedAt": "2026-11-14T09:04:04.242Z"
       }
     },
     {
