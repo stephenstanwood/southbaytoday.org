@@ -761,6 +761,13 @@ function parsePtDateTime(isoDate, time) {
  * 800 live events sampled. Same discipline as isFull/registrationClosed:
  * EXTERNAL per-field state is noise.
  *
+ * `scope: "ALL_REMAINING"` registers a reader for the remaining series, not
+ * just this instance. Its relative/start/end rules cannot establish an
+ * instance-based deadline: SJPL's November 14 ESL session was still accepting
+ * registrations through December 19 while its rule implied November 14 at
+ * 9 AM. Keep absolute STATIC dates, but leave other deadlines unknown and use
+ * the provider's state/live registration window instead.
+ *
  * Returns the LATEST plausible close. Callers treat `now > result` as closed.
  */
 export function resolveRegistrationClosesBy(ev, start, end) {
@@ -772,6 +779,8 @@ export function resolveRegistrationClosesBy(ev, start, end) {
   const windowType = typeof rule.windowType === "string" ? rule.windowType.toUpperCase() : null;
 
   if (windowType === "STATIC") return parsePtDateTime(rule.date, rule.time);
+
+  if (String(info.scope || "").toUpperCase() === "ALL_REMAINING") return null;
 
   const anchor = windowType === "EVENT_END" ? end || start : start;
   if (!(anchor instanceof Date) || Number.isNaN(anchor.getTime())) return null;

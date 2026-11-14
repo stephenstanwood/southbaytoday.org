@@ -1,0 +1,278 @@
+{
+  "sourceUrl": "https://sjpl.bibliocommons.com/v2/events/6a751bec3f18b57d5233feb8",
+  "window": {
+    "event": {
+      "_id": "6a751bec3f18b57d5233feb8",
+      "library_id": "sjpl",
+      "window_start": null,
+      "window_end": "2026-12-19T10:30:00",
+      "status": "ACTIVE"
+    }
+  },
+  "response": {
+    "entities": {
+      "locations": {
+        "08": {
+          "id": "08",
+          "name": "Seven Trees",
+          "coreAbsent": false,
+          "isHidden": false,
+          "imageId": "64e3d37b698898330012d5ab",
+          "customUrl": "https://www.sjpl.org/locations/seven-trees/",
+          "hours": [
+            {
+              "timeRef": "tuesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a50fbed61fc9ddfaec2bfa"
+            },
+            {
+              "timeRef": "wednesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a50fbed61fc9ddfaec2bf9"
+            },
+            {
+              "timeRef": "thursday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "68a50fbed61fc9ddfaec2bf8"
+            },
+            {
+              "timeRef": "friday",
+              "openTime": "T12:00",
+              "closeTime": "T18:00",
+              "id": "68a50fbed61fc9ddfaec2bf7"
+            },
+            {
+              "timeRef": "saturday",
+              "openTime": "T10:00",
+              "closeTime": "T18:00",
+              "id": "68a50fbed61fc9ddfaec2bf6"
+            },
+            {
+              "timeRef": "monday",
+              "openTime": "T13:00",
+              "closeTime": "T19:00",
+              "id": "68a50fbed61fc9ddfaec2bf5"
+            },
+            {
+              "timeRef": "sunday",
+              "openTime": "T12:00",
+              "closeTime": "T17:00",
+              "id": "68a50fbed61fc9ddfaec2bf4"
+            }
+          ],
+          "sortedHours": [
+            {
+              "day": "monday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T13:00",
+                  "closeTime": "T19:00",
+                  "id": "68a50fbed61fc9ddfaec2bf5"
+                }
+              ]
+            },
+            {
+              "day": "tuesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "68a50fbed61fc9ddfaec2bfa"
+                }
+              ]
+            },
+            {
+              "day": "wednesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "68a50fbed61fc9ddfaec2bf9"
+                }
+              ]
+            },
+            {
+              "day": "thursday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "68a50fbed61fc9ddfaec2bf8"
+                }
+              ]
+            },
+            {
+              "day": "friday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "friday",
+                  "openTime": "T12:00",
+                  "closeTime": "T18:00",
+                  "id": "68a50fbed61fc9ddfaec2bf7"
+                }
+              ]
+            },
+            {
+              "day": "saturday",
+              "isToday": true,
+              "hours": [
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T18:00",
+                  "id": "68a50fbed61fc9ddfaec2bf6"
+                }
+              ]
+            },
+            {
+              "day": "sunday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "sunday",
+                  "openTime": "T12:00",
+                  "closeTime": "T17:00",
+                  "id": "68a50fbed61fc9ddfaec2bf4"
+                }
+              ]
+            }
+          ],
+          "hoursNote": "",
+          "address": {
+            "country": "US",
+            "zip": "95111",
+            "state": "CA",
+            "city": "San Jose",
+            "street": "Cas Dr.",
+            "number": "3590"
+          },
+          "branchContacts": [
+            {
+              "contactType": "phone",
+              "rawValue": "408-808-3056",
+              "label": null,
+              "value": "(408) 808-3056",
+              "globalValue": "+1-408-808-3056",
+              "id": "68a50fbed61fc9ddfaec2bfc"
+            },
+            {
+              "contactType": "email",
+              "rawValue": "stmail@sjlibrary.org",
+              "label": null,
+              "globalValue": "stmail@sjlibrary.org",
+              "value": "stmail@sjlibrary.org",
+              "id": "68a50fbed61fc9ddfaec2bfb"
+            }
+          ],
+          "mapLocation": {
+            "centrePoint": {
+              "lng": -121.83326440000002,
+              "lat": 37.2849667
+            },
+            "utcOffsetNow": "-0800",
+            "timeZone": "America/Los_Angeles",
+            "isGeocoded": true
+          },
+          "facilities": [
+            {
+              "typeId": "651f1befa7d41a3500013138",
+              "id": "68a50fbed61fc9ddfaec2bf3",
+              "url": null
+            },
+            {
+              "typeId": "651f24ca9690c63c00ffca19",
+              "id": "68a50fbed61fc9ddfaec2bf2",
+              "url": null
+            },
+            {
+              "typeId": "6531af2acb391ed4418f7d30",
+              "id": "68a50fbed61fc9ddfaec2bf1",
+              "url": null
+            },
+            {
+              "typeId": "6531b4c38fffe94c00c78b2c",
+              "id": "68a50fbed61fc9ddfaec2bf0",
+              "url": null
+            },
+            {
+              "typeId": "6531b6548fffe94c00c78b5e",
+              "id": "68a50fbed61fc9ddfaec2bef",
+              "url": null
+            },
+            {
+              "typeId": "6531b6748fffe94c00c78b60",
+              "id": "68a50fbed61fc9ddfaec2bee",
+              "url": null
+            },
+            {
+              "typeId": "65c27fb2de4b6141009fece8",
+              "id": "68a50fbed61fc9ddfaec2bed",
+              "url": null
+            }
+          ],
+          "highlights": [],
+          "specialHoursIds": [
+            "691f94b6a6fedec9530a2d65",
+            "691f94d09be7c6685c2922be",
+            "691f94db9be7c6685c2922bf"
+          ],
+          "webUrl": "https://www.sjpl.org/locations/seven-trees/"
+        }
+      },
+      "events": {
+        "6a751bec3f18b57d5233feb8": {
+          "id": "6a751bec3f18b57d5233feb8",
+          "key": "2026-11-14T10:30:00",
+          "seriesId": "6a73df98e30fe48459674a15",
+          "indexStart": "2026-11-14T18:30:00Z",
+          "indexEnd": "2026-11-14T20:00:00Z",
+          "isRecurring": true,
+          "numberRegistered": 10,
+          "isFull": false,
+          "registrationClosed": false,
+          "definition": {
+            "start": "2026-11-14T10:30",
+            "end": "2026-11-14T12:00",
+            "title": "ESL Conversation Club: Beginning (Tiếng Việt)",
+            "description": "<p>Xây dựng kỹ năng giao tiếp với những người học trình độ mới bắt đầu khác trong một môi trường chào đón và tôn trọng. </p>\n<p>Khóa học này sẽ sử dụng <strong>Confidence and Connections </strong>và <strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>. Sử dụng tài nguyên điện tử này miễn phí với thẻ thư viện.<br><br>Mỗi buổi học được hướng dẫn bởi nhân viên thư viện có thể nói được tiếng Việt.<br><br><strong>Miễn phí. Phải đăng ký và làm bài kiểm tra xếp lớp.</strong><br><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\">ADA Yêu cầu Phương tiện để tham gia chương trình</a><br><br></p>\n<p>Build conversation skills with other beginner-level adult learners in a welcoming and respectful environment.  </p>\n<p>This course will use <strong>Confidence and Connections</strong> and <strong><a href=\"https://www.sjpl.org/resource/mango-languages/\" target=\"_blank\">Mango Languages</a></strong>. Use this eResource for free with a library card.<br></p>\n<p>Each session is led by library staff who can speak Vietnamese.<br><br><strong>Free. Registration & placement testing required.<br></strong><br><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\">ADA Accommodation Requests</a></p>",
+            "branchLocationId": "08",
+            "audienceIds": [
+              "5d52fbae4d791b3a003e92e3",
+              "5d65e368eb2cac50006a08ab"
+            ],
+            "typeIds": [
+              "5d65e9ae2f3a81f8aeaabba8"
+            ],
+            "isCancelled": false,
+            "registrationInfo": {
+              "registrationEnd": {
+                "ordinal": 3,
+                "unit": "hours",
+                "time": null,
+                "date": null,
+                "windowType": "EVENT_END"
+              },
+              "scope": "ALL_REMAINING",
+              "provider": "BIBLIO_EVENTS",
+              "cap": 15,
+              "maxSeats": 1,
+              "instructions": null
+            }
+          }
+        }
+      }
+    }
+  }
+}
