@@ -70,6 +70,24 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SJSU's full record explicitly offers free public admission and names the
+  // library in its organizer group. The location field loses "Library" and
+  // the clipped RSS excerpt loses the admission sentence. Protect that sparse
+  // occurrence without overwriting revised prices, places, clocks or prose.
+  // https://events.sjsu.edu/event/creative-writing-faculty-reading-5003
+  // Evidence: docs/qa/2026-11-15-1107z-fact-check.md.
+  {
+    date: "2026-11-19",
+    matches: event => !event.virtual && event.source === "SJSU Events"
+      && event.url === "https://events.sjsu.edu/event/creative-writing-faculty-reading-5003"
+      && event.title === "California Futures: Haunted Ecologies, Decolonial Relations"
+      && event.city === "san-jose" && event.time === "7:00 PM" && event.endTime == null
+      && event.address === "150 E San Fernando St, San Jose, CA 95112"
+      && ["Martin Luther King Jr.", "Dr. Martin Luther King, Jr. Library"].includes(event.venue)
+      && !event.description && !event.costNote && [null, undefined, "free"].includes(event.cost),
+    facts: { venue: "Dr. Martin Luther King, Jr. Library", cost: "free" },
+    copyReplacements: [[/\bat Martin Luther King Jr\.(?= in San Jose\b)/g, "at Dr. Martin Luther King, Jr. Library"]],
+  },
   // The exact Localist record places mandatory signup after a Registration
   // heading; its plain-text export joins the heading to the first sentence.
   // Protect the reviewed cached excerpt without freezing revised source terms.
