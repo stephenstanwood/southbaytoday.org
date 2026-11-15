@@ -58,6 +58,7 @@ const EDITS = {
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
       ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
       ["Lego Club!", "LEGO Club!"],
+      [/^Lego Engineering$/g, "LEGO Engineering"],
       ["Friday Fun: Legos Fun", "Friday Fun: LEGO Fun"],
       ["Environmental Conversations / Platicas del Medioambiente", "Environmental Conversations / Pláticas del Medioambiente"],
       ["Sabor al Exito- Pagos digitales", "Sabor al Éxito - Pagos digitales"],
@@ -628,6 +629,7 @@ const EDITS = {
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
       [/\bIcan\b/g, "ICAN"],
+      ["Lego challenges", "LEGO challenges"],
       ["build reading confidence and love of books.", "build reading confidence and a love of books."],
       ["free play with Legos", "free play with LEGOs"],
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],

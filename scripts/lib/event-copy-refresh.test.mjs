@@ -147,6 +147,7 @@ const hicapFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-
 audits.push(hicapFixture);
 const november14NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-night.json", import.meta.url)));
 audits.push(november14NightFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-morning.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
