@@ -1970,8 +1970,11 @@ const CORRECTIONS = [
   // The November 15 check finds a visible, occurrence-specific sold-out alert
   // and waitlist. Repair retained copies; freshly verified performance facts
   // outrank this cache correction, including a later reopening or new price.
+  // A newsletter alias can win deduplication while retaining an older seats-
+  // remaining sentence and booking blurb. Keep its copy consistent too.
   // Evidence: docs/qa/2026-10-31-2007-fact-check.md and
-  // docs/qa/2026-11-15-0457z-fact-check.md.
+  // docs/qa/2026-11-15-0457z-fact-check.md and
+  // docs/qa/2026-11-15-1507z-fact-check.md.
   {
     date: "2026-11-22",
     matches: (event) => /^https:\/\/my\.montalvoarts\.org\/(?:overview\/3253|3253\/3254)(?:[/?#]|$)/.test(event.url || "")
@@ -1984,6 +1987,12 @@ const CORRECTIONS = [
       costNote: "$75 per person ($70 meal + $5 fees).",
       attendanceNote: "Sold out. The organizer offers a waitlist for the 11:30 AM seating.",
     },
+    copyReplacements: [
+      [/\bSeatings at 11:30\s*am and 2:30\s*pm; reservations required, and few 11:30\s*am seats remain\./gi,
+        "The 11:30 AM seating is sold out; the organizer offers a waitlist."],
+      [/^Taste tea sandwiches, scones and petite sweets in the decorated historic Villa, with a reservation for your seating\.$/,
+        "The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist."],
+    ],
   },
   // The organizer's page and authenticated museum newsletter describe
   // storytime and looking at artworks, without a hands-on art activity.

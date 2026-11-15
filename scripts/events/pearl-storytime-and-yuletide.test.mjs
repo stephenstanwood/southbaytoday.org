@@ -44,7 +44,10 @@ test("Yuletide Tea publication retains paid seating and the subsequently verifie
   assert.equal(requiresAdvanceRegistration(actual), true);
   assert.match(actual.costNote, /\$75.*\$70.*\$5/i);
   assert.match(actual.attendanceNote, /sold out.*waitlist.*11:30/i);
-  for (const key of Object.keys(input)) if (!["cost", "registration", "attendanceNote"].includes(key)) assert.deepEqual(actual[key], input[key], key);
+  assert.match(actual.description, /11:30 AM seating is sold out.*waitlist/);
+  assert.doesNotMatch(actual.description, /seats remain/);
+  assert.equal(actual.blurb, "The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist.");
+  for (const key of Object.keys(input)) if (!["cost", "registration", "attendanceNote", "description", "blurb"].includes(key)) assert.deepEqual(actual[key], input[key], key);
   assert.deepEqual(tea, input);
   assert.deepEqual(applyVerifiedEventFacts(actual), actual);
 });
