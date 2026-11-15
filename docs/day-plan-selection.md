@@ -209,6 +209,12 @@ the latest stable Sol with max effort, verifies ChatGPT login, strips API-key
 and endpoint environment overrides, and forces the OpenAI provider with
 ChatGPT auth. A missing login or usage cap fails closed; the prior published
 plans remain intact and the three guarded retry slots remain unchanged.
+On macOS, the selector runs under a process-local Seatbelt profile that excludes
+Codex's saved thread directories. A fresh ephemeral thread can otherwise block
+before its first CLI event while following rollout links during title lookup.
+Shell snapshots are disabled for this task because their cleanup also scans
+rollouts. The selector reads the existing ChatGPT login and writes results to
+its own temporary directory.
 Each selector process has a four-minute timeout and one fresh-process retry
 for transport failures; auth failures and usage caps never trigger that retry.
 Failure logs retain the exit/timeout code, CLI event types and bounded error
