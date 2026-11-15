@@ -52,6 +52,7 @@ const EDITS = {
       [/^OneInMath: Math Program for K 3$/g, "OneInMath: Math Program for K-3"],
       ["First Thursday Robotics with Bellarmine Ftc", "First Thursday Robotics with Bellarmine FTC"],
       ["Bilingual Family Storytime/ Hora de Cuentos", "Bilingual Family Storytime / Hora de Cuentos"],
+      [/^Music and Movement with Stay&Play$/g, "Music and Movement with Stay & Play"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
