@@ -70,6 +70,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Newsletter aliases can displace the organizer's enriched workshop rows.
+  // These exact performance pages confirm separate age groups and refuse
+  // online ticket sales. That requires box-office confirmation, not a claim
+  // of sold-out or cancelled admission. Fresh performance evidence or revised
+  // source prose supersedes this dated safeguard.
+  // https://my.montalvoarts.org/3280/3281 (10 AM, ages 5–8)
+  // https://my.montalvoarts.org/3280/3282 (3 PM, ages 7–10)
+  // Evidence: docs/qa/2026-11-15-1907z-fact-check.md.
+  ...[
+    {
+      title: "For the Kids: Super Secret Gift-Making Workshop",
+      time: "10:00 AM", endTime: null, ages: "5–8", performance: "3281",
+      sourceUrl: "https://my.montalvoarts.org/overview/3280?promo=",
+      description: "Young artists make two handmade, wrapped gifts and a custom card with instructor James Green. All materials and hot cocoa are included.",
+    },
+    {
+      title: "Kids' Holiday Gift-Making Workshop (3pm session)",
+      time: "3:00 PM", endTime: "5:00 PM", ages: "7–10", performance: "3282",
+      sourceUrl: "",
+      description: "A two-hour holiday-themed art workshop for kids to design, make, decorate, and wrap a handmade gift for someone special.",
+    },
+  ].map(session => ({
+    date: "2026-11-15",
+    matches: event => !event.virtual && event.source === "City Newsletter"
+      && event.title === session.title && event.city === "saratoga"
+      && event.venue === "Montalvo Arts Center"
+      && event.address === "Montalvo Arts Center, 15400 Montalvo Rd, Saratoga, CA 95070"
+      && event.time === session.time && event.endTime === session.endTime
+      && [session.sourceUrl, `https://my.montalvoarts.org/3280/${session.performance}`].includes(event.url || "")
+      && event.description === session.description
+      && !event.occurrenceEvidence?.admissionSourceUrl,
+    facts: {
+      url: `https://my.montalvoarts.org/3280/${session.performance}`,
+      sourceAudiences: [`Children ages ${session.ages}`], audienceAge: "kids", kidFriendly: true,
+      attendanceStatus: "needs-confirmation",
+    },
+    appendAttendanceNote: `Ages ${session.ages}. Online tickets are not currently available. Contact Montalvo's box office at 408-961-5858 before going.`,
+  })),
   // SJSU's full record explicitly offers free public admission and names the
   // library in its organizer group. The location field loses "Library" and
   // the clipped RSS excerpt loses the admission sentence. Protect that sparse
