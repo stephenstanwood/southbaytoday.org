@@ -85,6 +85,23 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      // November 14 refresh: missing sentence boundaries and source grammar.
+      ["www.SJPL.org/teensReach For ages", "www.SJPL.org/teensReach. For ages"],
+      ["real world situations.", "real-world situations."],
+      ["In partnership with SJSU Department of Communication Studies This program", "In partnership with the SJSU Department of Communication Studies. This program"],
+      ['followed immediately by: Becoming an effective team player Free.', 'followed immediately by "Becoming an Effective Team Player." Free.'],
+      ['This program is immediately preceded by Interviewing with confidence: Managing your emotions in the interview process In partnership with SJSU Department of Communication Studies Free.', 'This program is immediately preceded by "Interviewing with confidence: Managing your emotions in the interview process." In partnership with the SJSU Department of Communication Studies. Free.'],
+      ["Daniel Nayeri What to Expect:", "Daniel Nayeri. What to Expect:"],
+      ["In the backdrop of World War II,", "Against the backdrop of World War II,"],
+      ["afternoon of stories and craft for children", "afternoon of stories and a craft for children"],
+      ["September --Back-to-School, October-- Halloween, November--Thanksgiving, and December--Santa/holidays", "September: Back-to-School; October: Halloween; November: Thanksgiving; and December: Santa / holidays."],
+      ["on the Third Tuesday of every month", "on the third Tuesday of every month"],
+      ["No registration required but space and supplies are limited This program", "No registration is required, but space and supplies are limited. This program"],
+      ["While supplies lasts.", "While supplies last."],
+      [/\b((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}) - Litterbug craft(?=$| [A-Z])/g, "$1: Litterbug craft."],
+      ["In-Person. Ages 5 and Up.", "In person. Ages 5 and up."],
+      [/Kits generously provided by Friends of Village Square Library(?=$| [A-Z])/g, "Kits generously provided by Friends of Village Square Library."],
+      ["Meeting once a week on Wednesdays at the Edenvale Library Branch. Spanish Language Learners come and practice your Spanish speaking skills.", "We meet once a week on Wednesdays at the Edenvale Library Branch. Spanish language learners, come and practice your Spanish-speaking skills."],
       ["Tickets and participation Free.", "Tickets and participation are free."],
       ["on a first come, first basis.", "on a first-come, first-served basis."],
       ["Registration is Required.", "Registration is required."],
@@ -745,6 +762,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["No registration required, space available on a first-come, first-served basis.", "No registration required. Space is available on a first-come, first-served basis."],
       ["(e.g. computer, reference materials, notebook)", "(e.g., a computer, reference materials, notebook)"],
       ["Sessions at 10 a.m.-noon on the 2nd and 4th Fridays of most months September through June.", "Sessions run from 10 a.m. to noon on the 2nd and 4th Fridays of most months, September through June."],
       ["Do you have...... a stuffed animal with the stuffing leaking out?... a shirt with a missing button?... a hole you want to patch?... a stain you want to cover up?", "Do you have a stuffed animal with the stuffing leaking out, a shirt with a missing button, a hole you want to patch, or a stain you want to cover up?"],
@@ -884,6 +902,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [/Registration closes on the (\d+(?:st|nd|rd|th)) week of class; Registrants who do not the (\d+(?:st|nd|rd|th)) class may be unregistered, If/g, "Registration closes in the $1 week of class. Registrants who do not attend the $2 class may be unregistered. If"],
       ["; Registrants who do not attend by", "; registrants who do not attend by"],
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
