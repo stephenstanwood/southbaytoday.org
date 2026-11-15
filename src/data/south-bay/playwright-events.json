@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-15T10:09:19.112Z",
+    "generatedAt": "2026-11-15T14:17:30.435Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 188,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (6)",
       "History San Jose (3)",
-      "Montalvo Arts Center (5)",
+      "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
@@ -114,8 +114,8 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 4,
+        "liveCount": 4,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -749,23 +749,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7860968edc69",
-      "title": "Yuletide Tea 11:30am",
-      "date": "2026-11-22",
-      "displayDate": "Sun, Nov 22",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://my.montalvoarts.org/overview/3253",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -1236,7 +1219,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-15T10:08:11.953Z"
+        "checkedAt": "2026-11-15T14:16:08.218Z"
       }
     },
     {
@@ -1259,7 +1242,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-15T10:08:11.954Z"
+        "checkedAt": "2026-11-15T14:16:08.224Z"
       }
     },
     {
@@ -1282,7 +1265,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-15T10:08:11.955Z"
+        "checkedAt": "2026-11-15T14:16:08.225Z"
       }
     },
     {
@@ -1305,7 +1288,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-15T10:08:11.957Z"
+        "checkedAt": "2026-11-15T14:16:08.228Z"
       }
     },
     {
@@ -1328,7 +1311,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-15T10:08:11.957Z"
+        "checkedAt": "2026-11-15T14:16:08.229Z"
       }
     },
     {
@@ -3164,7 +3147,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.452Z"
+        "checkedAt": "2026-11-15T14:16:38.816Z"
       }
     },
     {
@@ -3188,7 +3171,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.454Z"
+        "checkedAt": "2026-11-15T14:16:38.819Z"
       }
     },
     {
@@ -3212,7 +3195,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.454Z"
+        "checkedAt": "2026-11-15T14:16:38.819Z"
       }
     },
     {
@@ -3236,7 +3219,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3260,7 +3243,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3284,7 +3267,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3308,7 +3291,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3332,7 +3315,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3373,7 +3356,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3397,7 +3380,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
@@ -3421,7 +3404,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T10:08:41.455Z"
+        "checkedAt": "2026-11-15T14:16:38.820Z"
       }
     },
     {
