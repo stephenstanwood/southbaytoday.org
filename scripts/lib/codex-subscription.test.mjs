@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, writeFileSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { delimiter, dirname, join } from "node:path";
 import { createCodexPlanEditorial, latestStableSol, subscriptionEnvironment, SELECTION_TIMEOUT_MS, SELECTION_ATTEMPTS } from "./codex-subscription.mjs";
@@ -35,12 +35,23 @@ else process.exit(1);
 test("structured subscription execution pins auth/provider and reuses a completed result", async t => {
   const root = mkdtempSync(join(tmpdir(), "sbt-codex-")); t.after(() => rmSync(root, { recursive: true, force: true }));
   let generations = 0;
-  const editorial = createCodexPlanEditorial({ cacheRoot: root, env: { HOME: root, CODEX_API_KEY: "must-not-leak" },
-    run: (_cli, args, opts) => {
+  const cli = "/fake/codex";
+  const editorial = createCodexPlanEditorial({ cli, cacheRoot: root, env: { HOME: root, CODEX_HOME: root, CODEX_API_KEY: "must-not-leak" },
+    run: (program, args, opts) => {
       assert.equal(opts.env.CODEX_API_KEY, undefined);
+      assert.equal(opts.env.CODEX_HOME, root);
       if (args[0] === "login") return { status: 0, stdout: "", stderr: "Logged in using ChatGPT" };
       if (args[0] === "debug") return { status: 0, stdout: JSON.stringify({ models: [model("gpt-6.1-sol")] }) };
       generations++;
+      if (process.platform === "darwin") {
+        assert.equal(program, "/usr/bin/sandbox-exec");
+        assert.match(args[1], /deny file-read\* file-write\*/);
+        assert.deepEqual(args.slice(2, 8), [
+          "-D", `SESSIONS=${join(realpathSync(root), "sessions")}`,
+          "-D", `ARCHIVED_SESSIONS=${join(realpathSync(root), "archived_sessions")}`, cli, "exec",
+        ]);
+      } else assert.equal(program, cli);
+      assert.ok(args.some((arg, index) => arg === "--disable" && args[index + 1] === "shell_snapshot"));
       assert.ok(args.includes("--ignore-user-config"));
       assert.ok(args.includes('forced_login_method="chatgpt"'));
       assert.ok(args.includes('model_reasoning_effort="max"'));
