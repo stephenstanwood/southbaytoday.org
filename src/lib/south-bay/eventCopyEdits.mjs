@@ -85,6 +85,8 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      // HICAP booking hours are source facts; repair only the range connector.
+      [/\b(between (?:[1-9]|1[0-2]):[0-5]\d [AP]M) - ((?:[1-9]|1[0-2]):[0-5]\d [AP]M)(?= to set up a free one-on-one counseling appointment\b)/g, "$1 and $2"],
       // November 14 refresh: missing sentence boundaries and source grammar.
       ["www.SJPL.org/teensReach For ages", "www.SJPL.org/teensReach. For ages"],
       ["real world situations.", "real-world situations."],

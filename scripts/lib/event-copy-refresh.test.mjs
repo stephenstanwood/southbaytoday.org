@@ -7,6 +7,7 @@ import test from "node:test";
 import { cleanTitle, isPublicEvent, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
 import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
+import { libraryEventDetails } from "./library-event-details.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
 // from the repair table. The original audit and incremental evening/night reviews
@@ -142,6 +143,8 @@ audits.push(november13AfternoonFixture);
 const november13EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-13-evening.json", import.meta.url)));
 audits.push(november13EveningFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-evening.json", import.meta.url))));
+const hicapFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-hicap.json", import.meta.url)));
+audits.push(hicapFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -158,6 +161,26 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("HICAP source refresh preserves reviewed hours grammar and revised appointment facts", () => {
+  const row = hicapFixture.cases[0];
+  const description = polishDescription(libraryEventDetails({ description: hicapFixture.rawDescription }).description);
+  assert.equal(description, row.refreshed);
+  const event = { ...row.events[0], description, date: "2026-11-18", time: "10:00 AM", endTime: "12:00 PM", registration: "appointment-only" };
+  assert.deepEqual(polishReviewedEventCopy(event), { ...event, description: row.reviewed });
+
+  const revise = text => text.replaceAll("8:00 AM", "9:30 AM").replaceAll("5:00 PM", "4:15 PM")
+    .replaceAll("(408) 350-3288", "(650) 555-0123");
+  const updated = { ...event, description: revise(description), date: "2027-01-20", time: "1:00 PM", endTime: "3:00 PM", registration: "required" };
+  const repaired = polishReviewedEventCopy(updated);
+  assert.deepEqual(repaired, { ...updated, description: revise(row.reviewed) });
+  assert.deepEqual(numbers(repaired.description), numbers(updated.description));
+  assert.deepEqual(polishReviewedEventCopy(repaired), repaired);
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  const unrelated = { ...event, description: "The event runs between 8:00 AM - 5:00 PM." };
+  assert.deepEqual(polishReviewedEventCopy(unrelated), unrelated);
+});
 
 test("the SJPL team-player source repairs its sequence before companion-title punctuation", () => {
   // Normalized source wording from SJPL event 6ada82bbfee2d21deb252643, checked
