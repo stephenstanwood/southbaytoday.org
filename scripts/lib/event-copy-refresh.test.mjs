@@ -159,6 +159,19 @@ const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
 
+test("the SJPL team-player source repairs its sequence before companion-title punctuation", () => {
+  // Normalized source wording from SJPL event 6ada82bbfee2d21deb252643, checked
+  // November 14, 2026. The published feed already has the earlier typo repairs.
+  const description = polishDescription("This programs is immediately proceeded by: Interviewing with confidence: Managing your emotions in the interview process In partnership with SJSU Department of Communication Studies Free.");
+  const event = { source: "San Jose Public Library", description, date: "2026-11-18", time: "12:45 PM", endTime: "1:30 PM", registration: "none" };
+  const reviewed = {
+    ...event,
+    description: 'This program is immediately preceded by "Interviewing with confidence: Managing your emotions in the interview process." In partnership with the SJSU Department of Communication Studies. Free.',
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+});
+
 test("refresh excludes dissertation defenses while retaining advertised public lectures", () => {
   const title = "PhD Dissertation Defense: Danielle Klinger";
   for (const source of ["Stanford Events", "SJSU Events", "Santa Clara University"]) {

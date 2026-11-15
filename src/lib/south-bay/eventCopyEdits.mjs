@@ -90,7 +90,6 @@ const EDITS = {
       ["real world situations.", "real-world situations."],
       ["In partnership with SJSU Department of Communication Studies This program", "In partnership with the SJSU Department of Communication Studies. This program"],
       ['followed immediately by: Becoming an effective team player Free.', 'followed immediately by "Becoming an Effective Team Player." Free.'],
-      ['This program is immediately preceded by Interviewing with confidence: Managing your emotions in the interview process In partnership with SJSU Department of Communication Studies Free.', 'This program is immediately preceded by "Interviewing with confidence: Managing your emotions in the interview process." In partnership with the SJSU Department of Communication Studies. Free.'],
       ["Daniel Nayeri What to Expect:", "Daniel Nayeri. What to Expect:"],
       ["In the backdrop of World War II,", "Against the backdrop of World War II,"],
       ["afternoon of stories and craft for children", "afternoon of stories and a craft for children"],
@@ -516,6 +515,9 @@ const EDITS = {
       // The companion STAR-method workshop ends at 12:45 PM, when this session
       // begins (SJPL's November 4 listings, reviewed 2026-10-31).
       ["This program is immediately proceeded by:", "This program is immediately preceded by"],
+      // The source's "programs"/"proceeded" typos must be repaired first;
+      // a refreshed source has not passed through the published-copy repairs.
+      ['This program is immediately preceded by Interviewing with confidence: Managing your emotions in the interview process In partnership with SJSU Department of Communication Studies Free.', 'This program is immediately preceded by "Interviewing with confidence: Managing your emotions in the interview process." In partnership with the SJSU Department of Communication Studies. Free.'],
       ["STAR method In partnership with SJSU Department of Communication Studies Free.", "STAR method. In partnership with the SJSU Department of Communication Studies. Free."],
       ["Other accommodations can be made available with request.", "Other accommodations can be made available upon request."],
       ["3D print quality and time needed to complete prints is not guaranteed.", "3D print quality and the time needed to complete prints are not guaranteed."],
