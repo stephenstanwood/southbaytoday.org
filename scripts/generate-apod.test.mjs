@@ -15,6 +15,11 @@ const byDate = date => entries.find(entry => entry.date === date);
 const rollover = fixture("rollover.html"), image = fixture("image.html"), video = fixture("video.html");
 const latest = parseApodArticle(rollover, byDate("2026-10-21"));
 const older = parseApodArticle(image, byDate("2026-10-17"));
+const hubbleEntry = {
+  date: "2026-11-11",
+  title: "NGC 4449: Small Galaxy, Big Impact",
+  sourceUrl: "https://science.nasa.gov/image-article/apod-2026-november-11-ngc-4449-small-galaxy-big-impact/",
+};
 const generic = '<html><title>NASA Science</title><main><img src="https://science.nasa.gov/wp-content/themes/nasa-child/assets/images/nasa-logo@2x.png"></main></html>';
 const selected = archive.replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, tag => /apod-2026-october-(21|18|17)-/.test(tag) ? tag : "");
 const responses = new Map([[APOD_ARCHIVE, selected], [byDate("2026-10-21").sourceUrl, rollover],
@@ -85,6 +90,34 @@ test("landing pages, date/title/canonical mismatches and missing featured media 
   // A footer logo must not replace a missing featured image, even on a valid article.
   const noImage = rollover.replace(/<img\b[^>]*>/g, "").replace("</main>", `</main><footer>${generic}</footer>`);
   assert.throws(() => parseApodArticle(noImage, entries[0]), /image URL/);
+});
+
+test("NASA's November 11 APOD uses a Hubble galaxy asset in both sizes", () => {
+  const item = parseApodArticle(fixture("hubble-galaxy.html"), hubbleEntry);
+  assert.equal(item.date, hubbleEntry.date);
+  assert.equal(item.title, hubbleEntry.title);
+  assert.equal(item.sourceUrl, hubbleEntry.sourceUrl);
+  assert.equal(item.url, "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/galaxies/irregular/NGC%204449.jpg?w=2048&h=1320&fit=clip&crop=faces%2Cfocalpoint");
+  assert.equal(item.hdurl, "https://assets.science.nasa.gov/content/dam/science/missions/hubble/galaxies/irregular/NGC%204449.jpg");
+  assert.throws(() => validateApodItems([
+    { ...item, hdurl: item.url }, { ...older, url: item.hdurl },
+  ]), /Repeated NASA APOD image/);
+});
+
+test("Hubble assets require a dated APOD permalink and a trusted image path", () => {
+  const html = fixture("hubble-galaxy.html");
+  const item = parseApodArticle(html, hubbleEntry);
+  assert.throws(() => validateApodItems([{ ...item, sourceUrl: undefined }]), /Generic or non-APOD/);
+  assert.throws(() => validateApodItems([{ ...item, sourceUrl: item.sourceUrl.replace("november-11-", "november-10-") }]), /source\/date/);
+  for (const invalid of [
+    item.url.replace("https:", "http:"),
+    item.url.replace("assets.science.nasa.gov", "assets.science.nasa.gov.example.com"),
+    item.url.replace("assets.science.nasa.gov", "apod.nasa.gov"),
+    "https://assets.science.nasa.gov/content/dam/science/images/banner.jpg",
+    item.url.replace("NGC%204449.jpg", "nasa-logo.png"),
+  ]) {
+    assert.throws(() => validateApodItems([{ ...item, url: invalid }]), /Generic or non-APOD/);
+  }
 });
 
 test("NASA's space and nonbreaking-space teaser labels never enter explanation text", () => {

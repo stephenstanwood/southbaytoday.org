@@ -108,13 +108,17 @@ export function parseApodArticle(html, entry) {
   return item;
 }
 
-function imageKey(value) {
+function imageKey(value, hasDatedSource) {
   let url;
   try { url = new URL(value); } catch { throw Error("Missing or invalid NASA APOD image URL"); }
+  const path = url.pathname.replace(/^\/dynamicimage\/assets\//, "/content/dam/");
+  // Some dated APOD articles use images from NASA's Hubble galaxy library.
+  const hubbleGalaxy = hasDatedSource && url.origin === "https://assets.science.nasa.gov"
+    && path.startsWith("/content/dam/science/missions/hubble/galaxies/");
   if (url.protocol !== "https:" || !["assets.science.nasa.gov", "apod.nasa.gov"].includes(url.hostname)
-    || !url.pathname.includes("/apod/") || /logo|favicon|placeholder/i.test(url.pathname)
+    || (!url.pathname.includes("/apod/") && !hubbleGalaxy) || /logo|favicon|placeholder/i.test(url.pathname)
     || !/\.(?:jpe?g|png|gif|webp|avif)$/i.test(url.pathname)) throw Error("Generic or non-APOD image URL");
-  return `${url.hostname}${url.pathname.replace(/^\/dynamicimage\/assets\//, "/content/dam/")}`;
+  return `${url.hostname}${path}`;
 }
 
 export function validateApodItems(items, { startDate, endDate } = {}) {
@@ -128,11 +132,10 @@ export function validateApodItems(items, { startDate, endDate } = {}) {
     const explanation = typeof item.explanation === "string" ? item.explanation.replace(/\s+/g, " ").trim().toLowerCase() : "";
     if (title.length < 3 || /^(?:nasa(?: science)?|apod|astronomy picture of the day)$/.test(title) || titles.has(title)) throw Error("Generic or repeated NASA APOD title");
     if (explanation.length < 80 || explanations.has(explanation) || /tomorrow['’]s picture:/i.test(explanation)) throw Error("Missing, repeated or unparsed NASA APOD explanation");
-    const assets = new Set([imageKey(item.url), imageKey(item.hdurl)]);
+    const hasDatedSource = Boolean(item.sourceUrl);
+    if (hasDatedSource && articleDate(item.sourceUrl) !== item.date) throw Error("NASA APOD source/date mismatch");
+    const assets = new Set([imageKey(item.url, hasDatedSource), imageKey(item.hdurl, hasDatedSource)]);
     if ([...assets].some(asset => images.has(asset))) throw Error("Repeated NASA APOD image");
-    if (item.sourceUrl) {
-      if (articleDate(item.sourceUrl) !== item.date) throw Error("NASA APOD source/date mismatch");
-    }
     titles.add(title); explanations.add(explanation); assets.forEach(asset => images.add(asset));
   }
   return items;
