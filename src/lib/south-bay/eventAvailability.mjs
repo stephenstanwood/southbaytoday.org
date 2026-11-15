@@ -4,6 +4,23 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^129th Big Game: Stanford vs\. Cal Football$/i,
+    venue: /.*/,
+    date: "2026-11-21",
+    matches: event => /^https:\/\/tickets\.gostanford\.com\/events?\/football-at-cal-ys8n9b(?:[/?#]|$)/.test(event.url || ""),
+    reason: "Stanford's dated ticket page and football schedule place this away game at California Memorial Stadium in Berkeley. The newsletter publisher's Palo Alto address does not make it a local game.",
+    source: "https://tickets.gostanford.com/events/football-at-cal-ys8n9b",
+  }),
+  Object.freeze({
+    title: /^SimplyAnalytics Workshop$/i,
+    venue: /.*/,
+    date: "2026-11-16",
+    matches: event => event.source === "Stanford Events" && !event.description
+      && !(event.sourceAudiences || []).some(audience => /^(?:General Public|Everyone)$/i.test(audience)),
+    reason: "Stanford's full organizer record invites Stanford University community members and lists campus audiences plus Members, without General Public or Everyone. Public eligibility is unconfirmed; this is not a cancellation.",
+    source: "https://events.stanford.edu/event/simplyanalytics-2026-11-16",
+  }),
+  Object.freeze({
     title: /^Harvesting Hope\s*\|\s*Community, Culture\s*&\s*Action$/i,
     venue: /^SCU Forge Garden$/i,
     date: "2026-11-17",
@@ -317,6 +334,9 @@ export function isEventEditoriallySuppressed(event) {
   const url = String(event.url || "");
 
   return EVENT_EDITORIAL_SUPPRESSIONS.some((rule) => {
+    // An optional predicate narrows a dated hold to its reviewed stale source
+    // shape, so fresh eligibility evidence can supersede that hold.
+    if (rule.matches && !rule.matches(event)) return false;
     // A building-entry restriction does not disqualify online-only access.
     if (rule.physicalOnly && event.virtual === true) return false;
     if (rule.ids?.some((candidate) => candidate === id || url.includes(candidate.replace(/^[a-z]+-/, "")))) {

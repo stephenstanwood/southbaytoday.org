@@ -70,6 +70,59 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The sparse calendar loses a restricted physical room and the public Zoom
+  // registration instructions. Fresh source metadata is handled at intake;
+  // this protects only the reviewed cached excerpt and its original clocks.
+  // https://events.stanford.edu/event/jillian-schwedler-are-the-streets-still-talking-protests-and-evolving-repression-in-the-middle-east
+  // Evidence: docs/qa/2026-11-15-2307z-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: event => !event.virtual && event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/jillian-schwedler-are-the-streets-still-talking-protests-and-evolving-repression-in-the-middle-east"
+      && event.venue === "Encina Hall" && event.time === "4:00 PM" && event.endTime === "5:15 PM"
+      && event.description === "Although the Middle East/Swana region encompasses a diverse range of authoritarian regimes, protests are surprisingly common across much of it.",
+    facts: {
+      virtual: true, venue: "Online (Zoom)", address: "", cost: "free", registration: REGISTRATION_REQUIRED,
+      blurb: "Join Jillian Schwedler online to discuss protests and evolving repression in the Middle East.",
+    },
+    appendAttendanceNote: "Public attendance is via Zoom. In-person attendance is limited to current Stanford faculty, researchers, students, and staff. Register for the Zoom link through the organizer's event page.",
+  },
+  // A calendar card is a book celebration, not an exhibition. The exact
+  // performance confirms free member admission and unavailable online sales;
+  // neither a public ticket price nor a sellout is established. Preserve any
+  // later source prose, admission evidence or changed terms.
+  // https://my.montalvoarts.org/3294/3296
+  // Evidence: docs/qa/2026-11-15-2307z-fact-check.md.
+  {
+    date: "2026-11-15",
+    matches: event => !event.virtual && event.source === "Montalvo Arts Center"
+      && event.url === "https://my.montalvoarts.org/3294/3296"
+      && event.title === "Lucas Artists Program presents Open Access It Will Be More Beautiful Than You Can Imagine: Susan O'Malley"
+      && event.venue === "Montalvo Arts Center" && event.time === "11:00 AM" && event.endTime == null
+      && !event.description && !event.costNote && [null, undefined, "paid"].includes(event.cost)
+      && !event.occurrenceEvidence?.admissionSourceUrl,
+    facts: {
+      cost: null, costNote: "Free for Montalvo members; confirm other admission with the box office.",
+      attendanceStatus: "needs-confirmation",
+      description: "Celebrate Susan O'Malley's life and a new monograph inside Montalvo's historic villa, with artists and collaborators sharing stories, videos and projects.",
+      blurb: "Join a celebration of Susan O'Malley's life and a new book about her work in Montalvo's historic villa.",
+    },
+    appendAttendanceNote: "Free for Montalvo members. Online tickets are not currently available. Contact Montalvo's box office at 408-961-5858 before going.",
+  },
+  // Suppress this confirmed Berkeley away game from the local calendar, and
+  // remove the publisher-city fallback from its retained noindex leaf too.
+  // https://tickets.gostanford.com/events/football-at-cal-ys8n9b
+  {
+    date: "2026-11-21",
+    matches: event => event.source === "City Newsletter"
+      && event.url === "https://tickets.gostanford.com/events/football-at-cal-ys8n9b"
+      && event.title === "129th Big Game: Stanford vs. Cal Football"
+      && event.time === "4:30 PM" && (!event.venue || event.venue === "California Memorial Stadium")
+      && [null, undefined, "palo-alto"].includes(event.city),
+    facts: {
+      city: null, venue: "California Memorial Stadium", address: "2227 Piedmont Avenue, Berkeley, CA 94704", cost: "paid",
+    },
+  },
   // Newsletter aliases can displace the organizer's enriched workshop rows.
   // These exact performance pages confirm separate age groups and refuse
   // online ticket sales. That requires box-office confirmation, not a claim
@@ -1164,10 +1217,11 @@ const CORRECTIONS = [
   // Both team schedules still say TBA. The ticket shop's JSON-LD 7 PM
   // placeholder is not an announced kickoff. Reverify the team schedule
   // before releasing this dated hold; retained URLs must also lose the clock.
+  // Promotional links rotate their final id under the same event group.
   {
     date: "2026-11-28",
     matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
-      && /^https:\/\/tickets\.gostanford\.com\/(?:events?\/football-vs-smu-fauvdl|events\/69c4649c39baf6e77d7c9b7f\/(?:6ae10caa2652b89aac76ea31|6ada9e67bf5c964ef46db282))(?:[/?#]|$)/.test(event.url || ""),
+      && /^https:\/\/tickets\.gostanford\.com\/(?:events?\/football-vs-smu-fauvdl|events?\/69c4649c39baf6e77d7c9b7f(?:\/[a-f0-9]{24})?)\/?(?:[?#]|$)/.test(event.url || ""),
     facts: {
       time: null, endTime: null,
       description: "Stanford hosts SMU at Stanford Stadium on November 28. Kickoff time is TBA on Stanford's official football schedule; the ticket shop's structured clock is unconfirmed.",

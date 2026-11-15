@@ -835,6 +835,7 @@ function isPublicEvent(title, source, description, venue) {
 // Known recurring scraper typos — keyed by the bad string, value is the fix.
 // Add entries here when a source consistently sends bad data.
 const TITLE_FIXES = {
+  "Tnt Traysikel": "TNT Traysikel",
   // SJPL's recurring resume-review heading carries this spelling on refresh.
   "Interview Prepration": "Interview Preparation",
   "Hazlo tu mismo": "Hazlo tú mismo",
@@ -1492,6 +1493,7 @@ function cleanTitle(title) {
     "SASCC", "WCC", "OMAC", "SDRC",
     "IDA", // Stanford's Institute for Diversity in the Arts, not a person's name
     "ECI", // SJSU's Early Childhood Institute speaker series
+    "TNT", // TNT Traysikel, the artist collective named in Stanford's exhibition
   ]);
   {
     const letters = t.replace(/[^A-Za-z]/g, "");
@@ -4513,7 +4515,7 @@ async function fetchStanfordEvents() {
       // Zoom option remains attendable online even when experience is hybrid.
       const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
-      const campusOnlyInPerson = /\bIn-person attendance is limited to Stanford\b|^In-person (?:only )?for Stanford affiliates(?:[.;]|$)/i.test(restriction);
+      const campusOnlyInPerson = /\bIn-person attendance is limited to (?:current\s+)?Stanford\b|^In-person (?:only )?for Stanford affiliates(?:[.;]|$)/i.test(restriction);
       // Some organizers use a short two-clause eligibility field without
       // naming a streaming platform. Preserve public online access without
       // inventing Zoom or treating the affiliate-only room as public.
@@ -4524,6 +4526,10 @@ async function fetchStanfordEvents() {
       // treating a restricted physical room as publicly attendable online.
       const publicAudience = [...(ev.filters?.event_audience || []), ...(ev.filters?.event_target_audience || [])]
         .some((audience) => /^(?:General Public|Everyone)$/i.test(String(audience?.name || audience || "").trim()));
+      // "Members" is ambiguous by itself. An explicit Stanford-community
+      // invitation without public audience tags resolves this workshop's
+      // eligibility; unfamiliar tags alone still do not exclude an event.
+      if (!publicAudience && /\bOpen to all Stanford University community member\s*s\b/i.test(description)) return null;
       const publicZoomOnly = campusOnlyInPerson
         && (/\bMembers of the public are invited to participate via Zoom\b/i.test(restriction)
           || (ev.experience === "hybrid" && publicAudience
@@ -4560,7 +4566,8 @@ async function fetchStanfordEvents() {
       // a registration URL or an optional online part of a hybrid event does not.
       const streamTerms = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true
         ? stripHtml(ev.stream_info || "").trim() : "";
-      const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1];
+      const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1]
+        || streamTerms.match(/^(Register for (?:a |the )?Zoom link)(?=:\s*https:\/\/)/i)?.[1];
       // Localist also puts mandatory joining instructions in ticket_cost.
       // Keep an explicit imperative from online-only admission terms; a bare
       // ticket URL, optional signup, or a hybrid stream is not a booking gate.
