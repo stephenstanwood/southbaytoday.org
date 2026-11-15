@@ -87,6 +87,16 @@ const EDITS = {
     description: [
       // HICAP booking hours are source facts; repair only the range connector.
       [/\b(between (?:[1-9]|1[0-2]):[0-5]\d [AP]M) - ((?:[1-9]|1[0-2]):[0-5]\d [AP]M)(?= to set up a free one-on-one counseling appointment\b)/g, "$1 and $2"],
+      ["Join Nirav Sheth long time meditator as he discusses", "Join Nirav Sheth, a longtime meditator, as he discusses"],
+      ["By incorporating meditation into your daily routine you will", "By incorporating meditation into your daily routine, you will"],
+      ["Brief Bio of Nirav Sheth Nirav is", "Brief bio of Nirav Sheth: Nirav is"],
+      ["Prior to founding Stratosphere, Nirav has", "Prior to founding Stratosphere, Nirav had"],
+      ["combine volunteering with joy of the holiday season?", "combine volunteering with the joy of the holiday season?"],
+      ["prepare for the Winter holiday season.", "prepare for the winter holiday season."],
+      ["decorate the Evergreen library!", "decorate the Evergreen Library!"],
+      // Match this holiday list together; other volunteer programs use similar
+      // opening bullets. Keep revised session lengths and age limits intact.
+      [/Details and Requirements: • Must be able to commit to the full (\d+(?:\.\d+)?-hour session)\.? • Anyone under the age of (\d+) must volunteer alongside a parent\/guardian\. • No experience or special skills necessary\. We will provide decorations! • Having fines is not required to participate\.?(?=$| [A-Z])/g, "Details and requirements: You must be able to commit to the full $1. Anyone under the age of $2 must volunteer alongside a parent/guardian. No experience or special skills are necessary. We will provide decorations! Having fines is not required to participate."],
       // November 14 refresh: missing sentence boundaries and source grammar.
       ["www.SJPL.org/teensReach For ages", "www.SJPL.org/teensReach. For ages"],
       ["real world situations.", "real-world situations."],
@@ -1109,6 +1119,9 @@ const EDITS = {
       [/\bEn-Roads\b/gi, "En-ROADS"],
       ["film and dialogue with Kahlil Joseph Please join us", "film and dialogue with Kahlil Joseph. Please join us"],
       [/^Overview This one-hour CME activity\b/g, "Overview: This one-hour CME activity"],
+      [/^Overview This lecture will provide\b/g, "Overview: This lecture will provide"],
+      // The Anderson Collection source spells Asian American Art Initiative AAAI.
+      [/\bAaai\b/g, "AAAI"],
       ["Abstract Per- and polyfluoroalkyl substances", "Abstract: Per- and polyfluoroalkyl substances"],
       ["advancements in AI for biology, and relevant security", "advancements in AI for biology and relevant security"],
       [/(\bto launch a new book, "[^"]+)"\./g, '$1."'],
@@ -1132,6 +1145,7 @@ const EDITS = {
     ],
     blurb: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
+      [/\bAaai\b/g, "AAAI"],
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
@@ -1180,6 +1194,9 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      // The English department's faculty profile uses KB Brookins.
+      // https://www.scu.edu/cas/english/faculty--staff/kb-brookins/
+      ["Kb Brookins", "KB Brookins"],
       ["Night 1 - November 18, 2026 Night 2 - November 19, 2026", "Night 1: November 18, 2026; Night 2: November 19, 2026."],
       ["invite you to celebrate Transgender Day of Remembrance ", "invite you to the Transgender Day of Remembrance "],
       [/Stanford University\s*\/\s*(?:Slac|SLAC)\b/g, "Stanford University / SLAC"],
@@ -1196,6 +1213,7 @@ const EDITS = {
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
     ],
     blurb: [
+      ["Kb Brookins", "KB Brookins"],
       ["Meet Executive MBA programs and alumni", "Meet Executive MBA program representatives and alumni"],
     ],
   },

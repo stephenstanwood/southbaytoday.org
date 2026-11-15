@@ -145,6 +145,8 @@ audits.push(november13EveningFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-evening.json", import.meta.url))));
 const hicapFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-hicap.json", import.meta.url)));
 audits.push(hicapFixture);
+const november14NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-night.json", import.meta.url)));
+audits.push(november14NightFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -161,6 +163,33 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("November 14 night copy repairs preserve revised source facts and publisher scope", () => {
+  const revise = text => text.replaceAll("25 years", "30 years").replaceAll("17 years", "19 years")
+    .replaceAll("13 years", "15 years").replaceAll("$20", "$25").replaceAll("1-hour", "2-hour")
+    .replaceAll("age of 15", "age of 16").replaceAll("November 20th", "December 18th")
+    .replaceAll("10:30 am", "11:45 am");
+  const suffix = " Register at https://example.org/new-event; tickets cost $30.";
+  for (const row of november14NightFixture.cases) {
+    const original = {
+      ...row.events[0], source: row.source, [row.field]: revise(row.refreshed) + suffix,
+      date: "2027-01-20", time: "11:45 AM", endTime: "1:15 PM", registration: "required",
+      venue: "Updated Venue", address: "500 Updated Avenue", city: "san-jose", category: "education",
+      cost: "paid", costNote: "$30", url: "https://example.org/new-event",
+    };
+    const untouched = structuredClone(original);
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    assert.deepEqual(original, untouched);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, [row.field]: "Updated program details. Registration required; tickets $40." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
+  }
+});
 
 test("HICAP source refresh preserves reviewed hours grammar and revised appointment facts", () => {
   const row = hicapFixture.cases[0];
