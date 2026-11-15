@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-14T04:12:01.597Z",
+      "generatedAt": "2026-11-15T04:22:50.613Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 6 – Nov 13",
+      "dateRange": "Nov 7 – Nov 14",
       "stats": {
-        "total": 450,
-        "notable": 29,
-        "newUnits": 13,
-        "totalValuation": 15747126
+        "total": 431,
+        "notable": 26,
+        "newUnits": 14,
+        "totalValuation": 10504266
       },
       "permits": [
         {
@@ -51,6 +51,18 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
+          "id": "2026-117118-RS",
+          "address": "2373 Newhall St #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Attached ADU",
+          "valuation": 143023,
+          "units": 1,
+          "issueDate": "2026-11-12",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-110619-RS",
           "address": "119 Mosswell Ct #3",
           "category": "residential-new",
@@ -71,31 +83,31 @@
           "description": "New 2-Story Attached ADU",
           "valuation": 119802,
           "units": 1,
-          "issueDate": "2026-11-10",
+          "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-108386-RS",
-          "address": "1018 Pine Av #2",
+          "id": "2026-122071-RS",
+          "address": "361 N 10th St #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 104848,
-          "units": 0,
-          "issueDate": "2026-11-06",
+          "description": "Code Case Garage Conversion to ADU",
+          "valuation": 114348,
+          "units": 1,
+          "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-118441-RS",
-          "address": "15195 Clydelle Av #2",
+          "id": "2026-127327-RS",
+          "address": "699 Ranson Dr #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
           "description": "Attached ADU",
-          "valuation": 86904,
+          "valuation": 105024,
           "units": 1,
-          "issueDate": "2026-11-06",
+          "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -111,27 +123,15 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-112936-RS",
-          "address": "668 Curtner Av #2",
+          "id": "2026-130754-RS",
+          "address": "5168 Persianwood Pl #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",
-          "description": "Attached JADU",
-          "valuation": 80571,
+          "description": "Garage Conversion to ADU",
+          "valuation": 67377,
           "units": 1,
-          "issueDate": "2026-11-06",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-126432-RS",
-          "address": "1325 Santa Paula Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to JADU",
-          "valuation": 68785,
-          "units": 1,
-          "issueDate": "2026-11-06",
+          "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"
         }
       ]
