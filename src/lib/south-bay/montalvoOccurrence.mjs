@@ -46,6 +46,11 @@ function clock(value) {
   return `${Number(match[1])}:${match[2] || "00"} ${match[3].replace(/\./g, "").toUpperCase()}`;
 }
 
+function seatingClock(value) {
+  const label = textContent(value);
+  return /^Seating at (?:[1-9]|1[0-2])(?::[0-5]\d)?\s*[ap]\.?m\.?$/i.test(label) ? clock(label) : null;
+}
+
 function isoDateFromDetail(value) {
   const match = String(value || "").match(/\b([A-Z][a-z]{2})\s+(\d{1,2}),\s+(\d{4})\b/);
   if (!match) return null;
@@ -74,8 +79,10 @@ export function findMontalvoPerformanceUrl(html, { date, time } = {}) {
   const matches = new Set();
   for (const item of source.matchAll(/<li\b[^>]*class=["'][^"']*\btn-prod-list-item__perf-list-item\b[^"']*["'][^>]*>([\s\S]*?)<\/li>/gi)) {
     const body = item[1];
+    const listedTime = clock(textContent(contentForClass(body, "tn-prod-list-item__perf-time")))
+      || seatingClock(contentForClass(body, "tn-performance-title"));
     if (isoDateFromDetail(textContent(contentForClass(body, "tn-prod-list-item__perf-date"))) !== date
-      || clock(textContent(contentForClass(body, "tn-prod-list-item__perf-time"))) !== time) continue;
+      || listedTime !== time) continue;
     const href = body.match(/<a\b[^>]*\bhref=["']([^"']+)["']/i)?.[1];
     if (!href) continue;
     try {
@@ -126,7 +133,12 @@ export function parseMontalvoOccurrencePage(html) {
 
   const detailHtml = source.match(/<p\b[^>]*class=["'][^"']*tn-event-detail__display-time[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1];
   const detailText = textContent(detailHtml || "");
-  const startTime = clock(detailText);
+  // Dining performances put the clock in the current seating's Name field,
+  // while Date contains only the day. Never read another seating's link or
+  // the overview's multi-session marketing text as this occurrence's clock.
+  const isPerformance = /^\/\d+\/\d+\/?$/.test(canonicalTicketUrl(source)?.pathname || "");
+  const startTime = clock(detailText)
+    || (isPerformance ? seatingClock(contentForClass(body, "tn-event-detail__title")) : null);
   const date = isoDateFromDetail(detailText);
 
   const range = visibleText.match(/\bfrom\s+(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))\s*(?:to|[-–—])\s*(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))/i);

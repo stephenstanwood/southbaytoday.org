@@ -4574,6 +4574,15 @@ async function fetchStanfordEvents() {
       // or an optional RSVP is insufficient; retain these affirmative requests
       // from the full source body before shortening it.
       const bodyRsvpRequirement = description.match(/(?:^|[.!?]\s+)(Please RSVP at this link to attend the event\.|If planning to attend,\s*please submit an RSVP here\.)/i)?.[1]?.trim();
+      // Localist's plain-text export can concatenate a section heading and
+      // its first sentence ("RegistrationRegistration is required."). Read
+      // the rich-text paragraph before flattening or shortening the body.
+      // A registration link or optional signup still does not establish a gate.
+      const bodyRegistrationRequirement = String(ev.description || ev.description_text || "")
+        .split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi)
+        .map(text => stripHtml(text).trim())
+        .flatMap(text => text.split(/(?<=[.!?])\s+/))
+        .find(sentence => /^(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?$/i.test(sentence));
       // The symposium's public application option is conditional admission,
       // not a walk-in invitation. Its terms follow the displayed excerpt.
       const applicationRequirement = /^Wu Tsai Human Performance Alliance Research Symposium 2026$/i.test(ev.title || "")
@@ -4582,7 +4591,7 @@ async function fetchStanfordEvents() {
         : null;
       // Preserve the publisher's paragraph boundaries before stripHtml joins
       // them: a credit without final punctuation can precede a closure notice.
-      const registrationNotice = [ev.description_text || ev.description || "", ev.ticket_cost || "", streamTerms]
+      const registrationNotice = [ev.description || "", ev.description_text || "", ev.ticket_cost || "", streamTerms]
         .flatMap((text) => String(text).split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi))
         .map((text) => stripHtml(text).trim())
         .flatMap((text) => text.split(/(?<=[.!?])\s+/))
@@ -4594,7 +4603,7 @@ async function fetchStanfordEvents() {
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || bodyRsvpRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
+        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || bodyRsvpRequirement || bodyRegistrationRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4697,6 +4706,7 @@ async function fetchStanfordEvents() {
         ...(zoomLinkRequirement ? [zoomLinkRequirement] : []),
         ...(locationRsvpRequirement ? [locationRsvpRequirement] : []),
         ...(bodyRsvpRequirement ? [bodyRsvpRequirement] : []),
+        ...(bodyRegistrationRequirement ? [bodyRegistrationRequirement] : []),
         ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
       ];

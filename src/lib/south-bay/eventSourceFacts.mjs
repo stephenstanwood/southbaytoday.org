@@ -70,6 +70,21 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The exact Localist record places mandatory signup after a Registration
+  // heading; its plain-text export joins the heading to the first sentence.
+  // Protect the reviewed cached excerpt without freezing revised source terms.
+  // Evidence: docs/qa/2026-11-15-0457z-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: event => event.source === "Stanford Events" && event.virtual === true
+      && event.url === "https://events.stanford.edu/event/pediatric-orthopedics-and-sports-medicine-lecture-series-pediatric-lower-extremity-alignment-and-in-toeing"
+      && event.title === "Pediatric Orthopedics and Sports Medicine Lecture Series: Pediatric Lower Extremity Alignment and In-Toeing"
+      && event.time === "12:00 PM" && event.endTime === "1:00 PM"
+      && /^Overview:? ?This lecture will provide an overview of pediatric lower extremity development, helping learners distinguish physiologic variations from pathologic findings\.$/.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Registration is required.",
+  },
   // The dated page and exact Localist restricted_to field reserve in-person
   // attendance for affiliates; the public can attend online. The short source
   // excerpt omits those terms, so protect retained cards as well as fresh rows.
@@ -1934,17 +1949,22 @@ const CORRECTIONS = [
   },
   // The authenticated newsletter invites reservations. The dated 11:30 AM
   // booking page confirms a paid reserved seating: $70 meal + $5 fees.
-  // Do not infer availability from hidden "Sold Out!" template text, a
-  // booking deadline, or the price of the separate 2:30 PM seating.
-  // Evidence: docs/qa/2026-10-31-2007-fact-check.md.
+  // The November 15 check finds a visible, occurrence-specific sold-out alert
+  // and waitlist. Repair retained copies; freshly verified performance facts
+  // outrank this cache correction, including a later reopening or new price.
+  // Evidence: docs/qa/2026-10-31-2007-fact-check.md and
+  // docs/qa/2026-11-15-0457z-fact-check.md.
   {
     date: "2026-11-22",
     matches: (event) => /^https:\/\/my\.montalvoarts\.org\/(?:overview\/3253|3253\/3254)(?:[/?#]|$)/.test(event.url || "")
-      && (!event.time || event.time === "11:30 AM"),
+      && event.time === "11:30 AM"
+      && (!event.costNote || event.costNote === "$75 per person ($70 meal + $5 fees).")
+      && event.registration !== REGISTRATION_APPOINTMENT
+      && event.occurrenceEvidence?.admissionSourceUrl !== "https://my.montalvoarts.org/3253/3254",
     facts: {
-      cost: "paid", registration: REGISTRATION_REQUIRED,
+      cost: "paid", registration: REGISTRATION_FULL,
       costNote: "$75 per person ($70 meal + $5 fees).",
-      attendanceNote: "Reserve your 11:30 AM seating through the organizer's booking page.",
+      attendanceNote: "Sold out. The organizer offers a waitlist for the 11:30 AM seating.",
     },
   },
   // The organizer's page and authenticated museum newsletter describe

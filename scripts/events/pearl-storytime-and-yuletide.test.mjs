@@ -33,16 +33,18 @@ test("Pearl ticket warning does not override a resolved source or another occurr
   ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
 });
 
-test("Yuletide Tea publication retains paid seating and the reservation gate", async () => {
+test("Yuletide Tea publication retains paid seating and the subsequently verified sellout", async () => {
   const input = structuredClone(tea), published = [structuredClone(input)];
   await resolveEventBlurbs(published, { enabled: false });
   const actual = published[0];
   assert.equal(actual.cost, "paid");
-  assert.equal(actual.registration, "required");
+  // The November 15 occurrence page now shows a visible sold-out alert and
+  // waitlist, superseding the October 31 fixture's open reservation prompt.
+  assert.equal(actual.registration, "full");
   assert.equal(requiresAdvanceRegistration(actual), true);
   assert.match(actual.costNote, /\$75.*\$70.*\$5/i);
-  assert.match(actual.attendanceNote, /reserve.*seating.*organizer/i);
-  for (const key of Object.keys(input)) if (key !== "cost") assert.deepEqual(actual[key], input[key], key);
+  assert.match(actual.attendanceNote, /sold out.*waitlist.*11:30/i);
+  for (const key of Object.keys(input)) if (!["cost", "registration", "attendanceNote"].includes(key)) assert.deepEqual(actual[key], input[key], key);
   assert.deepEqual(tea, input);
   assert.deepEqual(applyVerifiedEventFacts(actual), actual);
 });
