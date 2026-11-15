@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-15T16:04:28.479Z",
+    "generatedAt": "2026-11-15T18:25:08.528Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 188,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
       "Linden Tree Books (6)",
-      "History San Jose (3)",
+      "History San Jose (2)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
@@ -103,8 +103,8 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 4,
+        "liveCount": 4,
         "error": null,
         "sources": [
           "History San Jose"
@@ -628,23 +628,6 @@
         "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
         "date": "2026-12-13"
       }
-    },
-    {
-      "id": "a18ccd8100ff",
-      "title": "History Park Heritage Holiday Tea",
-      "date": "2026-12-05",
-      "displayDate": "Sat, Dec 5",
-      "time": "11:00 am",
-      "endTime": "3:30 pm",
-      "venue": "History Park",
-      "address": "635 Phelan Ave, San Jose, CA 95112",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
     },
     {
       "id": "1f9145761e09",
@@ -1236,7 +1219,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-15T16:03:22.719Z"
+        "checkedAt": "2026-11-15T18:24:02.098Z"
       }
     },
     {
@@ -1259,7 +1242,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-15T16:03:22.719Z"
+        "checkedAt": "2026-11-15T18:24:02.099Z"
       }
     },
     {
@@ -1282,7 +1265,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-15T16:03:22.719Z"
+        "checkedAt": "2026-11-15T18:24:02.099Z"
       }
     },
     {
@@ -1305,7 +1288,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-15T16:03:22.720Z"
+        "checkedAt": "2026-11-15T18:24:02.101Z"
       }
     },
     {
@@ -1328,7 +1311,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-15T16:03:22.720Z"
+        "checkedAt": "2026-11-15T18:24:02.101Z"
       }
     },
     {
@@ -1931,7 +1914,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3164,7 +3147,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
         "date": "2026-11-15",
         "time": "6:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.218Z"
+        "checkedAt": "2026-11-15T18:24:31.632Z"
       }
     },
     {
@@ -3188,7 +3171,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.219Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3212,7 +3195,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3236,7 +3219,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3260,7 +3243,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3284,7 +3267,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3308,7 +3291,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3332,7 +3315,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3373,7 +3356,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3397,7 +3380,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {
@@ -3421,7 +3404,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-15T16:03:48.220Z"
+        "checkedAt": "2026-11-15T18:24:31.634Z"
       }
     },
     {

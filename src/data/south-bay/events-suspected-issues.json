@@ -1,20 +1,35 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-15T14:23:21.276Z"
+    "auditedAt": "2026-11-15T18:30:57.461Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
     "total": 1475,
     "totals": {
       "hard": 0,
-      "soft": 0,
+      "soft": 1,
       "info": 1
     },
     "byReason": {
+      "virtual-not-flagged": 1,
       "local-departure-trip": 1
     },
     "hard": [],
     "soft": [
+      {
+        "id": "inbound-43b87c5946a7ef9e",
+        "title": "Housing Help Center for Tenants",
+        "city": "mountain-view",
+        "date": "2026-11-19",
+        "location": "298 Escuela Ave, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
+          }
+        ]
+      },
       {
         "id": "inbound-d1d760709f2010a5",
         "title": "The Nutcracker: San Francisco Ballet Day Trip",
@@ -33,14 +48,14 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 294,
+    "total": 296,
     "totals": {
       "hard": 0,
-      "soft": 2,
+      "soft": 3,
       "info": 1
     },
     "byReason": {
-      "virtual-not-flagged": 1,
+      "virtual-not-flagged": 2,
       "unknown-slug": 1,
       "local-departure-trip": 1
     },
@@ -71,6 +86,20 @@
             "severity": "soft",
             "reason": "unknown-slug",
             "detail": "city=\"monte-sereno\" is not in the 11-city coverage map"
+          }
+        ]
+      },
+      {
+        "id": "inbound_mwi0voll_ltag49",
+        "title": "Housing Help Center for Tenants",
+        "city": "mountain-view",
+        "date": "2026-11-19T18:00:00-08:00",
+        "location": "298 Escuela Ave, Mountain View",
+        "findings": [
+          {
+            "severity": "soft",
+            "reason": "virtual-not-flagged",
+            "detail": "matched /description mention/ in description"
           }
         ]
       },
