@@ -4513,7 +4513,11 @@ async function fetchStanfordEvents() {
       // Zoom option remains attendable online even when experience is hybrid.
       const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
-      const campusOnlyInPerson = /\bIn-person attendance is limited to Stanford\b/i.test(restriction);
+      const campusOnlyInPerson = /\bIn-person attendance is limited to Stanford\b|^In-person (?:only )?for Stanford affiliates(?:[.;]|$)/i.test(restriction);
+      // Some organizers use a short two-clause eligibility field without
+      // naming a streaming platform. Preserve public online access without
+      // inventing Zoom or treating the affiliate-only room as public.
+      const publicVirtualOnly = /^In-person for Stanford affiliates;\s*virtual to (?:the )?public\.?$/i.test(restriction);
       // Public audience tags can refer only to the online portion. Some
       // organizers put the Zoom invitation in stream_info, not restricted_to.
       // Require both public eligibility and explicit Zoom access before
@@ -4524,7 +4528,7 @@ async function fetchStanfordEvents() {
         && (/\bMembers of the public are invited to participate via Zoom\b/i.test(restriction)
           || (ev.experience === "hybrid" && publicAudience
             && /\bZoom\b/i.test(stripHtml(ev.stream_info || ""))));
-      if (campusOnlyInPerson && !publicZoomOnly && ev.experience !== "virtual") return null;
+      if (campusOnlyInPerson && !publicZoomOnly && !publicVirtualOnly && ev.experience !== "virtual") return null;
       // This coffee hour has no audience tags, but its full body expressly
       // invites Stanford affiliates. Read that sentence before truncation;
       // an unrelated public coffee hour must still pass.
@@ -4554,13 +4558,13 @@ async function fetchStanfordEvents() {
       // Localist keeps online joining instructions outside the description.
       // Only an explicit link-by-registration instruction establishes a gate;
       // a registration URL or an optional online part of a hybrid event does not.
-      const streamTerms = publicZoomOnly || virtualFromSourceSignal(ev.experience) === true
+      const streamTerms = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true
         ? stripHtml(ev.stream_info || "").trim() : "";
       const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1];
       // Localist also puts mandatory joining instructions in ticket_cost.
       // Keep an explicit imperative from online-only admission terms; a bare
       // ticket URL, optional signup, or a hybrid stream is not a booking gate.
-      const zoomLinkRequirement = (publicZoomOnly || virtualFromSourceSignal(ev.experience) === true)
+      const zoomLinkRequirement = (publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true)
         ? ticketTerms.match(/(?:^|[.!?]\s+)(Register for (?:a |the )?Zoom link\.?)(?=\s*$)/i)?.[1]
         : null;
       const locationRsvpRequirement = /^RSVP for location$/i.test(venue)
@@ -4614,7 +4618,7 @@ async function fetchStanfordEvents() {
       // Localist publishes the attendance mode outright — no need to guess it
       // from the copy. Unrestricted hybrid events remain physical destinations;
       // an explicit public-only Zoom option takes precedence above.
-      const isVirtual = publicZoomOnly || virtualFromSourceSignal(ev.experience) === true;
+      const isVirtual = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true;
       // Room metadata can carry building-entry restrictions that the body and
       // generic Everyone audience omit. This verified Stanford instruction
       // requires a campus ID; it does not restrict an online-only occurrence.
@@ -4682,6 +4686,7 @@ async function fetchStanfordEvents() {
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
           ? "education" : inferredCategory;
       const attendanceNotes = [
+        ...(publicVirtualOnly ? ["Public attendance is online. In-person attendance is limited to Stanford affiliates."] : []),
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
         ...(cantorHours ? [`Museum hours: ${cantorHours.replace(/[.!?]+$/, "")}.`] : []),
         ...(visitorIdRequired ? ["Visitors must present a valid, physical government-issued photo ID and sign in at the front desk."] : []),
@@ -4708,8 +4713,8 @@ async function fetchStanfordEvents() {
         time: isOngoing ? null : displayTime(occurrence),   // no time for ongoing exhibits
         endTime: isOngoing ? null : (occurrenceEnd ? displayTime(occurrenceEnd) : null),
         ongoing: isOngoing,
-        venue: publicZoomOnly ? "Online (Zoom)" : venue,
-        address: publicZoomOnly ? "" : ev.address || "",
+        venue: publicVirtualOnly ? "Online" : publicZoomOnly ? "Online (Zoom)" : venue,
+        address: publicZoomOnly || publicVirtualOnly ? "" : ev.address || "",
         city: "palo-alto",
         ...(isVirtual ? { virtual: true } : {}),
         category,

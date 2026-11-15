@@ -70,6 +70,37 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The dated page and exact Localist restricted_to field reserve in-person
+  // attendance for affiliates; the public can attend online. The short source
+  // excerpt omits those terms, so protect retained cards as well as fresh rows.
+  // Evidence: docs/qa/2026-11-15-0207z-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/neil-rogachevsky-israels-declaration-of-independence-founding-values-and-contemporary-debates"
+      && event.time === "12:00 PM" && event.endTime === "1:15 PM",
+    facts: {
+      virtual: true, venue: "Online", address: "",
+      blurb: "Join Neil Rogachevsky online to discuss Israel's Declaration of Independence, its founding values and contemporary debates.",
+    },
+    appendAttendanceNote: "Public attendance is online. In-person attendance is limited to Stanford affiliates.",
+  },
+  // The newsletter's second-day alias lost the market's free-admission fact.
+  // The organizer's 2026 Yuletide page confirms both boutique days; preserve
+  // later pricing or scheduling changes and the separate paid tea event.
+  // Evidence: docs/qa/2026-11-15-0207z-fact-check.md.
+  {
+    date: "2026-11-21",
+    matches: event => !event.virtual && event.source === "City Newsletter"
+      && event.title === "Yuletide Boutique (Day 2)"
+      && /^https:\/\/montalvoarts\.org\/experience\/events-calendar\/yuletide\/?(?:\?promo=)?$/.test(event.url || "")
+      && event.city === "saratoga" && event.venue === "Montalvo Arts Center"
+      && event.time === "10:00 AM" && event.endTime === "3:00 PM"
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && event.description === "Second day of the Villa holiday market with handmade gifts, décor, specialty foods and vintage finds. The Vintage Treasures shop stays open Sunday, Nov. 22, with leftover items 50% off.",
+    facts: { cost: "free" },
+    appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
+  },
   // This dated form reserves optional appointments; the organizer explicitly
   // admits walk-ins when space permits. Its 3 PM form cutoff does not close
   // that separate access path. Preserve later availability restrictions and
