@@ -70,6 +70,25 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // This newsletter used a non-resolving hostname, and an older duplicate
+  // confused the page's related-concert essay with this recital's program.
+  // Repair only this dated recital and the exact unsupported program phrase;
+  // leave revised links, repertoire, clocks and admission notices intact.
+  // Evidence: docs/qa/2026-11-16-1107z-fact-check.md.
+  {
+    date: "2027-05-05",
+    matches: event => [null, undefined, "City Newsletter"].includes(event.source)
+      && event.title === "Sheku Kanneh-Mason and Benjamin Grosvenor Recital"
+      && /^Bing Concert Hall(?:, Stanford, CA(?: 94305)?)?$/.test(event.venue || "")
+      && [null, undefined, "palo-alto"].includes(event.city)
+      && [null, undefined, "https://stanfordlive.stanford.edu",
+        "https://live.stanford.edu/events/26-27season/bing-concert-hall/sheku-kanneh-mason-and-benjamin-grosvenor-recital/"].includes(event.url),
+    facts: {
+      url: "https://live.stanford.edu/events/26-27season/bing-concert-hall/sheku-kanneh-mason-and-benjamin-grosvenor-recital/",
+    },
+    copyReplacements: [[/\bperform works including Ernest Bloch's Baal Shem as part of Stanford Live's America 250 series\./g,
+      "perform a recital as part of Stanford Live's America 250 series."]],
+  },
   // Both the live calendar and detail page date this fair November 21, the
   // third Saturday. Their standing second-Saturday sentence is stale; remove
   // that clause without inventing a new monthly schedule or changing clocks.
