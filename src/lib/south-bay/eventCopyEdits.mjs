@@ -1100,6 +1100,7 @@ const EDITS = {
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
       ['to Study Human Biology."', 'to Study Human Biology"'],
+      ['as Regulators of Biological Function "', 'as Regulators of Biological Function"'],
     ],
     venue: [
       ["Nvidia Auditorium", "NVIDIA Auditorium"],
@@ -1108,6 +1109,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Middle East/Swana region", "Middle East/SWANA region"],
       ["The Stanford Symphony Orchestra, conducted by Paul Phillips, presents their ", "The Stanford Symphony Orchestra, conducted by Paul Phillips, presents its "],
       ["We are excited to playing for you again.", "We are excited to play for you again."],
       ["Sims is a monthly online research seminar", "SIMS is a monthly online research seminar"],
@@ -1152,6 +1154,7 @@ const EDITS = {
     blurb: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
       [/\bAaai\b/g, "AAAI"],
+      ["Tnt Traysikel", "TNT Traysikel"],
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
@@ -1200,6 +1203,7 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      ["Cantabile Youth Singer's", "Cantabile Youth Singers'"],
       // The English department's faculty profile uses KB Brookins.
       // https://www.scu.edu/cas/english/faculty--staff/kb-brookins/
       ["Kb Brookins", "KB Brookins"],
@@ -1229,6 +1233,14 @@ const EDITS = {
     ],
     blurb: [
       ["an arts-category program", "a program"],
+    ],
+  },
+  "Opera San José": {
+    description: [
+      // The imported preview is clipped after "destructive […]". Sentence
+      // cleanup strands its preceding initial; remove only that unfinished
+      // suffix, leaving complete or newly expanded source wording intact.
+      [/(\.) Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high[\u00ad-]?stakes days when J\.$/g, "$1"],
     ],
   },
 };

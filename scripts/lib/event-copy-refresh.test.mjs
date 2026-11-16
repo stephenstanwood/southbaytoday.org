@@ -148,6 +148,8 @@ audits.push(hicapFixture);
 const november14NightFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-14-night.json", import.meta.url)));
 audits.push(november14NightFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-morning.json", import.meta.url))));
+const november15EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-evening.json", import.meta.url)));
+audits.push(november15EveningFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -164,6 +166,43 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("November 15 evening copy repairs preserve source updates and publisher scope", () => {
+  for (const row of november15EveningFixture.cases) {
+    const revise = text => `Tickets $45. ${text.replaceAll("November", "December")}`;
+    const original = {
+      ...row.events[0], [row.field]: revise(row.refreshed),
+      date: "2027-01-20", time: "11:45 AM", endTime: "1:15 PM", registration: "required",
+      venue: "Updated Venue", address: "500 Updated Avenue", city: "san-jose", category: "education",
+      cost: "paid", costNote: "$45", url: "https://example.org/new-event",
+    };
+    const untouched = structuredClone(original);
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    assert.deepEqual(original, untouched);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, [row.field]: "Updated program details. Registration required; tickets $50." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
+  }
+});
+
+test("Doctor Atomic drops its clipped preview sentence but preserves an expanded source", () => {
+  const row = november15EveningFixture.cases.find(candidate => candidate.source === "Opera San José");
+  const raw = november15EveningFixture.operaPreview;
+  const publish = description => polishReviewedEventCopy({ source: row.source, description: polishDescription(description) }).description;
+  assert.equal(publish(raw), row.reviewed);
+  assert.equal(publish(row.refreshed), row.reviewed);
+  const complete = raw.replace("unprecedented destructive […]", "unprecedented destructive power.");
+  const normalized = polishDescription(complete);
+  assert.match(normalized, /J\. Robert Oppenheimer and his team/);
+  assert.equal(publish(complete), normalized);
+  const laterInstructions = `${row.refreshed} Tickets $45; register at https://example.org/updated.`;
+  assert.equal(polishReviewedEventCopy({ source: row.source, description: laterInstructions }).description, laterInstructions);
+});
 
 test("November 14 night copy repairs preserve revised source facts and publisher scope", () => {
   const revise = text => text.replaceAll("25 years", "30 years").replaceAll("17 years", "19 years")

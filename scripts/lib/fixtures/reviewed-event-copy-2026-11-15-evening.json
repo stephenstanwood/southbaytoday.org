@@ -1,0 +1,86 @@
+{
+  "reviewedAt": "2026-11-15",
+  "sourceEvidence": [
+    {
+      "path": "src/data/south-bay/playwright-events.json",
+      "sha256": "29102e0c78e74e33896b12685c761571b2a64117a9287586e797dc0b7c3250f8"
+    },
+    {
+      "path": "scripts/lib/fixtures/fact-check-2026-11-15-evening.json",
+      "sha256": "483dadd869ae9a9e6a40eac0d065a237fa2d3949e7ebcb89933f52e20ac13fd8"
+    }
+  ],
+  "operaPreview": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
+  "cases": [
+    {
+      "source": "Santa Clara University",
+      "field": "description",
+      "events": [
+        {
+          "id": "scu-19c86fda4d3963d8",
+          "source": "Santa Clara University",
+          "url": "https://events.scu.edu/center-for-spirituality-and-faith/event/517212-cantabile-youth-singers-concert",
+          "title": "Cantabile Youth Singers Concert"
+        }
+      ],
+      "refreshed": "Cantabile Youth Singer's November Concert",
+      "reviewed": "Cantabile Youth Singers' November Concert"
+    },
+    {
+      "source": "Opera San José",
+      "field": "description",
+      "events": [
+        {
+          "id": "c500f492f281",
+          "source": "Opera San José",
+          "url": "https://www.operasj.org/event/doctor-atomic",
+          "title": "Doctor Atomic"
+        }
+      ],
+      "refreshed": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J.",
+      "reviewed": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "description",
+      "events": [
+        {
+          "id": "stanford-54435599094545-2026-11-16",
+          "source": "Stanford Events",
+          "url": "https://events.stanford.edu/event/jillian-schwedler-are-the-streets-still-talking-protests-and-evolving-repression-in-the-middle-east",
+          "title": "Jillian Schwedler — Are the Streets Still Talking? Protests and Evolving Repression in the Middle East"
+        }
+      ],
+      "refreshed": "Although the Middle East/Swana region encompasses a diverse range of authoritarian regimes, protests are surprisingly common across much of it.",
+      "reviewed": "Although the Middle East/SWANA region encompasses a diverse range of authoritarian regimes, protests are surprisingly common across much of it."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "stanford-53816390770666-2026-11-16",
+          "source": "Stanford Events",
+          "url": "https://events.stanford.edu/event/never-gonna-give-you-up",
+          "title": "TNT Traysikel: Never Gonna Give You Up!"
+        }
+      ],
+      "refreshed": "Catch the Tnt Traysikel session \"Never Gonna Give You Up!\" at the McMurtry Building on Monday afternoon.",
+      "reviewed": "Catch the TNT Traysikel session \"Never Gonna Give You Up!\" at the McMurtry Building on Monday afternoon."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-53993186509703-2026-11-16",
+          "source": "Stanford Events",
+          "url": "https://events.stanford.edu/event/biology-seminar-series-cecilia-leal-non-lamellar-lipid-membranes-as-regulators-of-biological-function",
+          "title": "Biology Seminar Series - Cecilia Leal \"Non-Lamellar Lipid Membranes as Regulators of Biological Function \""
+        }
+      ],
+      "refreshed": "Biology Seminar Series - Cecilia Leal \"Non-Lamellar Lipid Membranes as Regulators of Biological Function \"",
+      "reviewed": "Biology Seminar Series - Cecilia Leal \"Non-Lamellar Lipid Membranes as Regulators of Biological Function\""
+    }
+  ]
+}
