@@ -680,6 +680,7 @@ const EDITS = {
       ["OA Susan O'Malley", ""],
       ["RSVP Lowrider Art Showcase", ""],
       ["The Music of ABBA", ""],
+      ["Wreath Making Workshop", ""],
     ],
   },
   "San Jose Jazz": {
@@ -1089,6 +1090,7 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
       ["Medical Humanites:", "Medical Humanities:"],
       [/\bEn-Roads\b/gi, "En-ROADS"],
       ["Fossil Fuel Phase Out Scenarios", "Fossil Fuel Phase-Out Scenarios"],
@@ -1112,6 +1114,8 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
+      ["Please join German Studies Lecture Series for", "Please join the German Studies Lecture Series for"],
       ["Middle East/Swana region", "Middle East/SWANA region"],
       ["The Stanford Symphony Orchestra, conducted by Paul Phillips, presents their ", "The Stanford Symphony Orchestra, conducted by Paul Phillips, presents its "],
       ["We are excited to playing for you again.", "We are excited to play for you again."],
