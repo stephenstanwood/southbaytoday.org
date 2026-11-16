@@ -1,0 +1,317 @@
+{
+  "checkedAt": "2026-11-16T05:11:25Z",
+  "sourceUrl": "https://gateway.bibliocommons.com/v2/libraries/sjpl/events?ids=6887e9ef639e1e9694a38292",
+  "occurrenceUrl": "https://sjpl.bibliocommons.com/events/6887e9ef639e1e9694a38292",
+  "response": {
+    "entities": {
+      "events": {
+        "6887e9ef639e1e9694a38292": {
+          "id": "6887e9ef639e1e9694a38292",
+          "key": "2026-11-19T17:00:00",
+          "seriesId": "6887ac10eea0f638de3f1507",
+          "definition": {
+            "start": "2026-11-19T17:00",
+            "end": "2026-11-19T18:00",
+            "title": "Pearl Avenue Teens Reach Meeting",
+            "description": "<p>Teens Reach is the youth council for the San José Public Library, providing a key way for young adults to build their leadership skills by developing and participating in library activities, as well as becoming library advisors and advocates.</p>\n<p>For ages 13-18.</p>\n<p>Pearl Avenue's&nbsp;Teens Reach group meets monthly on&nbsp;the third Thursday with&nbsp;socializing and fun at 4:00 pm.<br></p>\n<p>Our in-person meet up plans include:<br></p>\n<ul><li>Teen Volunteer Opportunities</li><li>Election for Advisory Board</li><li>Community Youth&nbsp;Engagement</li><li>Games & Activities</li><li>Snacks</li><li>Guest Speakers</li></ul>\n<p>Bring a friend, and learn more about what to expect with volunteering this year.<br></p>\n<p>If you are new to volunteering with the San Jose Public Library, please visit the <a href=\"https://www.sjpl.org/teensreach?_gl=1*1xw75jd*_ga*MTc0Mzc1MDkxNi4xNTk1ODc5Nzg5*_ga_G99DMMNG39*MTcxMDQ2MjAyNC4zMDIuMS4xNzEwNDYzNzYzLjAuMC4w*_ga_F5QPDQX1BM*MTcxMDQ2MjAyNC4zMDEuMS4xNzEwNDYzNzYyLjAuMC4w\">Teens Reach: Community Service</a> webpage&nbsp;or more information and be sure to create your online volunteer account (click “Sign Me Up” under Pearl Avenue Branch).<br><br></p>\n<p><a href=\"https://www.sjpl.org/ada-event-accommodation/\" target=\"_blank\" rel=\"noopener noreferrer\" data-auth=\"NotApplicable\" title=\"https://www.sjpl.org/ada-event-accommodation/\" data-linkindex=\"6\">ADA Accommodation Requests</a></p>\n<p><em></em></p>\n<p></p>",
+            "partnerId": null,
+            "bibIds": [],
+            "featuredImageId": "64950f86b35ce636008edd23",
+            "branchLocationId": "11",
+            "nonBranchLocationId": null,
+            "audienceIds": [
+              "5d5f0913be771f230036938d"
+            ],
+            "languageIds": [
+              "5d52fbb909c424450063680d"
+            ],
+            "programId": null,
+            "typeIds": [
+              "5d65e9ae2f3a81f8aeaabbb0"
+            ],
+            "registrationInfo": {
+              "provider": "BIBLIO_EVENTS",
+              "registrationStart": {
+                "unit": "days",
+                "date": "2026-01-15",
+                "time": "T12:00",
+                "ordinal": 30,
+                "windowType": "RELATIVE"
+              },
+              "registrationEnd": {
+                "unit": "days",
+                "date": null,
+                "time": null,
+                "ordinal": 0,
+                "windowType": "EVENT_START"
+              },
+              "enabledMethods": [],
+              "cap": 15,
+              "maxSeats": 2,
+              "scope": null,
+              "isFull": false,
+              "instructions": null,
+              "onlineInstructions": null,
+              "instructionsToAttend": null,
+              "loginToRegister": false,
+              "waitlistEnabled": true
+            },
+            "contact": {
+              "email": {
+                "globalValue": "laurel.papadopoulos@sjlibrary.org",
+                "value": "laurel.papadopoulos@sjlibrary.org",
+                "rawValue": "laurel.Papadopoulos@sjlibrary.org",
+                "contactType": "email"
+              },
+              "phone": {
+                "globalValue": "+1-408-808-3053",
+                "value": "(408) 808-3053",
+                "rawValue": "408-808-3053",
+                "contactType": "phone"
+              },
+              "name": "Laurel Papadopoulos"
+            },
+            "isCancelled": false,
+            "isFeatured": null
+          },
+          "indexStart": "2026-11-20T01:00:00Z",
+          "indexEnd": "2026-11-20T02:00:00Z",
+          "isRecurring": true,
+          "numberRegistered": 0,
+          "numberWaitlistRegistered": 0,
+          "isFull": false,
+          "registrationClosed": false
+        }
+      },
+      "locations": {
+        "11": {
+          "id": "11",
+          "name": "Pearl Avenue",
+          "coreAbsent": false,
+          "isHidden": false,
+          "imageId": "64e3d35bd0f9343a00e867af",
+          "customUrl": "https://www.sjpl.org/locations/pearl-avenue/",
+          "hours": [
+            {
+              "timeRef": "tuesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "65c28f5a1b80e24800b11efc"
+            },
+            {
+              "timeRef": "wednesday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "65c28f5a1b80e24800b11efb"
+            },
+            {
+              "timeRef": "thursday",
+              "openTime": "T10:00",
+              "closeTime": "T19:00",
+              "id": "65c28f5a1b80e24800b11efa"
+            },
+            {
+              "timeRef": "friday",
+              "openTime": "T14:00",
+              "closeTime": "T18:00",
+              "id": "65c28f5a1b80e24800b11ef9"
+            },
+            {
+              "timeRef": "saturday",
+              "openTime": "T10:00",
+              "closeTime": "T18:00",
+              "id": "65c28f5a1b80e24800b11ef8"
+            },
+            {
+              "timeRef": "monday",
+              "openTime": "T14:00",
+              "closeTime": "T18:00",
+              "id": "65c28f5a1b80e24800b11ef7"
+            }
+          ],
+          "sortedHours": [
+            {
+              "day": "monday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "monday",
+                  "openTime": "T14:00",
+                  "closeTime": "T18:00",
+                  "id": "65c28f5a1b80e24800b11ef7"
+                }
+              ]
+            },
+            {
+              "day": "tuesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "tuesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "65c28f5a1b80e24800b11efc"
+                }
+              ]
+            },
+            {
+              "day": "wednesday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "wednesday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "65c28f5a1b80e24800b11efb"
+                }
+              ]
+            },
+            {
+              "day": "thursday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "thursday",
+                  "openTime": "T10:00",
+                  "closeTime": "T19:00",
+                  "id": "65c28f5a1b80e24800b11efa"
+                }
+              ]
+            },
+            {
+              "day": "friday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "friday",
+                  "openTime": "T14:00",
+                  "closeTime": "T18:00",
+                  "id": "65c28f5a1b80e24800b11ef9"
+                }
+              ]
+            },
+            {
+              "day": "saturday",
+              "isToday": false,
+              "hours": [
+                {
+                  "timeRef": "saturday",
+                  "openTime": "T10:00",
+                  "closeTime": "T18:00",
+                  "id": "65c28f5a1b80e24800b11ef8"
+                }
+              ]
+            },
+            {
+              "day": "sunday",
+              "isToday": true,
+              "hours": null
+            }
+          ],
+          "address": {
+            "country": "US",
+            "zip": "95136",
+            "state": "CA",
+            "city": "San Jose",
+            "street": "Pearl Ave.",
+            "number": "4270"
+          },
+          "branchContacts": [
+            {
+              "contactType": "phone",
+              "rawValue": "408-808-3053",
+              "label": null,
+              "value": "(408) 808-3053",
+              "globalValue": "+1-408-808-3053",
+              "id": "65c28f5a1b80e24800b11efe"
+            },
+            {
+              "contactType": "email",
+              "rawValue": "pa.sjpl@sjlibrary.org",
+              "label": null,
+              "globalValue": "pa.sjpl@sjlibrary.org",
+              "value": "pa.sjpl@sjlibrary.org",
+              "id": "65c28f5a1b80e24800b11efd"
+            }
+          ],
+          "mapLocation": {
+            "centrePoint": {
+              "lng": -121.86631219999998,
+              "lat": 37.2678857
+            },
+            "utcOffsetNow": "-0800",
+            "timeZone": "America/Los_Angeles",
+            "isGeocoded": true
+          },
+          "facilities": [
+            {
+              "typeId": "6531b4c38fffe94c00c78b2c",
+              "id": "65c28f5a1b80e24800b11ef6",
+              "url": null
+            },
+            {
+              "typeId": "6531b6318fffe94c00c78b5a",
+              "id": "65c28f5a1b80e24800b11ef5",
+              "url": null
+            },
+            {
+              "typeId": "6531b6548fffe94c00c78b5e",
+              "id": "65c28f5a1b80e24800b11ef4",
+              "url": null
+            },
+            {
+              "typeId": "6531b6748fffe94c00c78b60",
+              "id": "65c28f5a1b80e24800b11ef3",
+              "url": null
+            },
+            {
+              "typeId": "65c27fb2de4b6141009fece8",
+              "id": "65c28f5a1b80e24800b11ef2",
+              "url": null
+            }
+          ],
+          "highlights": [],
+          "specialHoursIds": [
+            "691f94b6a6fedec9530a2d65",
+            "691f94d09be7c6685c2922be",
+            "691f94db9be7c6685c2922bf"
+          ],
+          "webUrl": "https://www.sjpl.org/locations/pearl-avenue/"
+        }
+      },
+      "eventAudiences": {
+        "5d5f0913be771f230036938d": {
+          "id": "5d5f0913be771f230036938d",
+          "name": "Teens, ages 12-18",
+          "imageId": null
+        }
+      }
+    }
+  },
+  "published": {
+    "id": "sjpl-6887e9ef639e1e9694a38292",
+    "title": "Pearl Avenue Teens Reach Meeting",
+    "date": "2026-11-19",
+    "displayDate": "Thu, Nov 19",
+    "time": "5:00 PM",
+    "endTime": "6:00 PM",
+    "venue": "Pearl Avenue Library",
+    "address": "4270 Pearl Ave. San Jose",
+    "city": "san-jose",
+    "registration": "required",
+    "registrationClosesBy": "2026-11-20T01:00:00.000Z",
+    "category": "education",
+    "cost": "free",
+    "description": "Teens Reach is the youth council for the San José Public Library, providing a key way for young adults to build their leadership skills by developing and participating in library activities, as well as becoming library advisors and advocates. For ages 13-18. Pearl Avenue's Teens Reach group meets monthly on the third Thursday with socializing and fun at 4:00 pm. Our in-person meetup plans include: Teen Volunteer Opportunities; Election for Advisory Board; Community Youth Engagement; Games & Activities; Snacks; Guest Speakers. Bring a friend, and learn more about what to expect with volunteering this year. If you are new to volunteering with the San Jose Public Library, please visit the Teens Reach: Community Service webpage for more information and be sure to create your online volunteer account (click \"Sign Me Up\" under Pearl Avenue Branch).",
+    "sourceAudiences": [
+      "Teens, ages 12-18"
+    ],
+    "url": "https://sjpl.bibliocommons.com/events/6887e9ef639e1e9694a38292",
+    "source": "San Jose Public Library",
+    "kidFriendly": true,
+    "audienceAge": "kids",
+    "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/e11ad2a05039ade08d4d8b6f71271a66/teensreach_logo2021.jpg",
+    "blurb": "Join the Teens Reach youth council at Pearl Avenue Library to build leadership skills by helping develop library activities, for ages 13 to 18.",
+    "firstSeenAt": "2026-11-16T04:19:44.269Z"
+  }
+}

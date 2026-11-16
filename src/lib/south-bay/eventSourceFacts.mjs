@@ -70,6 +70,23 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The exact library occurrence lists 5–6 PM, while its standing description
+  // says 4 PM. Remove the conflicting prose clock and require confirmation;
+  // neither source field establishes which start the organizer intended.
+  // Leave changed clocks, corrected prose and other occurrences untouched.
+  // Evidence: docs/qa/2026-11-16-0507z-fact-check.md.
+  {
+    date: "2026-11-19",
+    matches: event => event.source === "San Jose Public Library"
+      && event.url === "https://sjpl.bibliocommons.com/events/6887e9ef639e1e9694a38292"
+      && event.title === "Pearl Avenue Teens Reach Meeting"
+      && event.venue === "Pearl Avenue Library" && event.city === "san-jose"
+      && event.time === "5:00 PM" && event.endTime === "6:00 PM"
+      && /Pearl Avenue's Teens Reach group meets monthly on the third Thursday with socializing and fun at 4:00 pm\./.test(event.description || ""),
+    facts: { attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "The library's schedule lists 5–6 PM, but its description says 4 PM. Confirm the start with Pearl Avenue Library at 408-808-3053 before going.",
+    copyReplacements: [[/(Pearl Avenue's Teens Reach group meets monthly on the third Thursday with socializing and fun) at 4:00 pm\./g, "$1."]],
+  },
   // These dated pages explicitly display Free Event and a zero-price Offer,
   // while the API leaves ticket_cost empty and free=false. That sparse API
   // state proves neither a charge nor free admission for any other event.
