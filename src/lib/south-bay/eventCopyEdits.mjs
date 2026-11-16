@@ -87,6 +87,8 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      ["Storytime Tickets & Seating This event", "Storytime Tickets & Seating: This event"],
+      ["with a limited amount of tickets available, once", "with a limited number of tickets available once"],
       // HICAP booking hours are source facts; repair only the range connector.
       [/\b(between (?:[1-9]|1[0-2]):[0-5]\d [AP]M) - ((?:[1-9]|1[0-2]):[0-5]\d [AP]M)(?= to set up a free one-on-one counseling appointment\b)/g, "$1 and $2"],
       ["Join Nirav Sheth long time meditator as he discusses", "Join Nirav Sheth, a longtime meditator, as he discusses"],
