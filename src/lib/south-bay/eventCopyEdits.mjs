@@ -1205,6 +1205,7 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      ["Open to the Silicon Valley, hosted by SCU.", "Open to the Silicon Valley community and hosted by SCU."],
       ["Cantabile Youth Singer's", "Cantabile Youth Singers'"],
       // The English department's faculty profile uses KB Brookins.
       // https://www.scu.edu/cas/english/faculty--staff/kb-brookins/
