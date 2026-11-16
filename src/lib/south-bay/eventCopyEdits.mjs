@@ -1042,6 +1042,7 @@ const EDITS = {
       [/\b(For ages \d+(?:-\d+)?\+?), all levels welcome, \$/g, "$1. All levels are welcome. The cost is $"],
       ["All levels welcome, $", "All levels are welcome. The cost is $"],
       ["Raindrop Plop! By", "Raindrop Plop! by"],
+      [/(\b[ap]\.m\.) proceeds support Library programs and literacy\./g, "$1 Proceeds support Library programs and literacy."],
     ],
   },
   "SJSU Events": {
