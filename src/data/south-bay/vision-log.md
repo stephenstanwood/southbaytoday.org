@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-11-16 — Cycle 239: PuppyGraph and geniosAI Join Funding Highlights
+
+The tightening roadmap remains fully shipped (6/6).
+
+**PuppyGraph (Santa Clara) now leads the Tech funding list.** Its $10M Series A
+was led by Particle Future with defy.vc returning, per the
+[company post](https://www.puppygraph.com/blog/series-a) (Nov 10); some
+coverage calls it co-led, but the card follows the company. The site footer
+and contact page list 1978 Garzoni Pl, Santa Clara. Its favicon is now
+self-hosted.
+
+**geniosAI (San Jose)** came out of stealth Nov 9 with $19.1M across seed and
+Series A, led by FactSet with Zoom and General Catalyst. The BusinessWire
+release datelines San Jose; only the combined total is disclosed.
+
+**Logos:** geniosAI's icon.horse result is a grey letter placeholder, so it is
+not self-hosted; CompanyLogo's colored initial fallback stays in charge.
+Running `fetch-tech-favicons.mjs` also pulled placeholders for Armadin and
+Mojo Vision. Review each image before committing that batch.
+
+**Sweep notes:** Tech Startups' Nov 10–13 daily lists and FinSMEs' Nov 16
+front page had no other in-coverage rounds. Bharat Semi ($24M seed, Nov 15)
+keeps U.S. operations in Santa Clara but is headquartered in India, so it is
+excluded. FinSMEs archive pages returned 403 this run.
+
+---
+
 ## 2026-11-05 — Cycle 238: Palo Alto's &Truth Joins Funding Highlights
 
 The tightening roadmap remains fully shipped (6/6).

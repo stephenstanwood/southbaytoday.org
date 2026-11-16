@@ -1741,6 +1741,42 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
   // Systems (Herndon, VA), and Sante (New York); a broader search only
   // resurfaced Clockwork.io, GMI Cloud, Menos AI, PaleBlueDot AI, and Armadin,
   // all already entered.
+  // PuppyGraph's own Nov 10 post says the round was "led by Particle Future
+  // with participation from defy.vc" (some coverage says co-led; follow the
+  // company). Its site footer and contact page list 1978 Garzoni Pl, Santa
+  // Clara. ARR "grew 7x" is company-reported with no dollar figure.
+  // https://www.puppygraph.com/blog/series-a
+  {
+    id: "puppygraph-series-a",
+    name: "PuppyGraph",
+    city: "Santa Clara",
+    category: "software",
+    round: "Series A",
+    amount: "$10M",
+    date: "2026-11-10",
+    tagline:
+      "Santa Clara's PuppyGraph raised a $10M Series A led by Particle Future, with defy.vc returning, to build its graph query engine: it lets AI agents explore a company's existing databases as one connected graph without copying the data. The round follows its 1.0 release and brings total funding to $15M; AMD and Palo Alto Networks are among the customers it names.",
+    color: "#7c3aed",
+    url: "https://www.puppygraph.com",
+  },
+  // geniosAI's Nov 9 BusinessWire release carries a "San Jose, California"
+  // dateline. FactSet led; Zoom and General Catalyst participated. The
+  // release gives only the combined seed + Series A total.
+  // https://www.businesswire.com/news/home/20261109329159/en/
+  // https://www.thesaasnews.com/news/geniosai-raises-19-1m-seed-series-a/
+  {
+    id: "geniosai-seed-series-a",
+    name: "geniosAI",
+    city: "San Jose",
+    category: "fintech",
+    round: "Seed + Series A",
+    amount: "$19.1M",
+    date: "2026-11-09",
+    tagline:
+      "San Jose's geniosAI came out of stealth with $19.1M across seed and Series A rounds for an AI analysis platform built for CFO offices and investment teams, where every insight traces back to its source data, calculations and assumptions. FactSet led the round and pipes its financial data into the platform; Zoom and General Catalyst also invested. Co-founder Prabhdeep Singh is CEO.",
+    color: "#2563eb",
+    url: "https://geniosai.com",
+  },
   // &Truth's Oct 29 company release datelines Palo Alto and Singapore and
   // states "its U.S. headquarters in Palo Alto." FinSMEs covered it Nov 2;
   // use the release date. No investors are named, so the card names none.

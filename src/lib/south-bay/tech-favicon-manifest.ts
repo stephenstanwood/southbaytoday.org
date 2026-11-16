@@ -19,6 +19,7 @@ export const TECH_FAVICON_MANIFEST: Record<string, string> = {
   "palebluedot.ai": "/logos/favicons/palebluedot.ai.png",
   "parallel.ai": "/logos/favicons/parallel.ai.png",
   "proception.ai": "/logos/favicons/proception.ai.png",
+  "puppygraph.com": "/logos/favicons/puppygraph.com.png",
   "quantifind.com": "/logos/favicons/quantifind.com.png",
   "queue.inc": "/logos/favicons/queue.inc.png",
   "radixark.com": "/logos/favicons/radixark.com.png",
