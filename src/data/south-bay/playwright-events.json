@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-16T06:48:47.623Z",
+    "generatedAt": "2026-11-16T10:56:35.872Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 186,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -13,14 +13,14 @@
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
-      "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (11)",
+      "Children's Discovery Museum (1)",
+      "Guadalupe River Park Conservancy (10)",
       "Santana Row (6)",
       "City of Cupertino (34)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
-      "SAP Center (13)",
+      "SAP Center (12)",
       "The Tech Interactive (12)",
       "Books Inc (4)",
       "San Jose Museum of Art (2)",
@@ -176,8 +176,8 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 2,
-        "liveCount": 2,
+        "count": 1,
+        "liveCount": 1,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 11,
-        "liveCount": 11,
+        "count": 10,
+        "liveCount": 10,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
-        "liveCount": 13,
+        "count": 12,
+        "liveCount": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -812,10 +812,10 @@
       "kidFriendly": false
     },
     {
-      "id": "5711e2169afd",
+      "id": "855c6f007141",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -832,10 +832,10 @@
       "kidFriendly": false
     },
     {
-      "id": "040782c7cd87",
+      "id": "b5e13a0f2af2",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
+      "date": "2026-11-16",
+      "displayDate": "Mon, Nov 16",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -889,23 +889,6 @@
       "kidFriendly": true
     },
     {
-      "id": "d30dc35c0b89",
-      "title": "Toddler Storytime",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "5cf49f965f57",
       "title": "Daisy Day: Design with Nature",
       "date": "2026-11-21",
@@ -921,28 +904,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "579b457db96c",
-      "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "9:00 AM",
-      "endTime": "10:00 AM",
-      "venue": "Arena Green West - Barack Obama Blvd",
-      "address": "San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": null,
-      "description": "",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-15"
-      }
     },
     {
       "id": "5a667d47c012",
@@ -1197,7 +1158,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-16T06:47:38.824Z"
+        "checkedAt": "2026-11-16T10:55:28.914Z"
       }
     },
     {
@@ -1220,7 +1181,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-16T06:47:38.826Z"
+        "checkedAt": "2026-11-16T10:55:28.916Z"
       }
     },
     {
@@ -1243,7 +1204,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-16T06:47:38.827Z"
+        "checkedAt": "2026-11-16T10:55:28.917Z"
       }
     },
     {
@@ -1266,7 +1227,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-16T06:47:38.828Z"
+        "checkedAt": "2026-11-16T10:55:28.918Z"
       }
     },
     {
@@ -1289,7 +1250,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-16T06:47:38.831Z"
+        "checkedAt": "2026-11-16T10:55:28.921Z"
       }
     },
     {
@@ -1312,7 +1273,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-16T06:47:38.831Z"
+        "checkedAt": "2026-11-16T10:55:28.922Z"
       }
     },
     {
@@ -1915,7 +1876,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1932,7 +1893,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1949,7 +1910,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1966,7 +1927,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3148,7 +3109,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.511Z"
+        "checkedAt": "2026-11-16T10:55:59.694Z"
       }
     },
     {
@@ -3172,7 +3133,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.512Z"
+        "checkedAt": "2026-11-16T10:55:59.694Z"
       }
     },
     {
@@ -3196,7 +3157,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.512Z"
+        "checkedAt": "2026-11-16T10:55:59.694Z"
       }
     },
     {
@@ -3220,7 +3181,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.513Z"
+        "checkedAt": "2026-11-16T10:55:59.695Z"
       }
     },
     {
@@ -3244,7 +3205,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3268,7 +3229,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3292,7 +3253,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3333,7 +3294,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3357,7 +3318,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3381,7 +3342,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
     },
     {
@@ -3405,25 +3366,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T06:48:14.517Z"
+        "checkedAt": "2026-11-16T10:55:59.697Z"
       }
-    },
-    {
-      "id": "e3e03eafd591",
-      "title": "Sharks vs Predators — Hockey Fights Cancer",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "Hockey Fights Cancer Scarf Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
-      "source": "SAP Center",
-      "kidFriendly": false
     },
     {
       "id": "549bc913a42e",
