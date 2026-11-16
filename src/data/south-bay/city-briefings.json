@@ -1,54 +1,62 @@
 {
-  "generatedAt": "2026-11-15T04:30:30.007Z",
-  "weekLabel": "Nov 14 – Nov 21",
-  "weekStart": "2026-11-14",
-  "weekEnd": "2026-11-21",
+  "generatedAt": "2026-11-16T04:21:27.851Z",
+  "weekLabel": "Nov 15 – Nov 22",
+  "weekStart": "2026-11-15",
+  "weekEnd": "2026-11-22",
   "cities": {
     "campbell": {
       "cityId": "campbell",
       "cityName": "Campbell",
-      "summary": "Saturday brings the Saluting Our Veterans Gala Brunch at Orchard City Banquet Hall at 10:30 AM, with South Bay Dance Center's Coppélia at Heritage Theatre at 6:30 PM Saturday and 12:30 PM Sunday.",
+      "summary": "Campbell's Sunday has South Bay Dance Center's Coppélia at Heritage Theatre at 12:30 PM and the Campbell Farmers Market downtown at 9:00 AM, while the Planning Commission's November 10 agenda covered a 480 Chapman rezone.",
       "highlights": [
         {
           "type": "event",
-          "title": "Saluting Our Veterans Gala Brunch",
-          "when": "Sat, Nov 14 · 10:30 AM",
-          "venue": "Orchard City Banquet Hall",
-          "category": "food",
-          "url": "https://buy.stripe.com/cNi6oH5XSbIJ4ECarc3oA08"
+          "title": "South Bay Dance Center: Coppélia",
+          "when": "Sun, Nov 15 · 12:30 PM",
+          "venue": "Heritage Theatre",
+          "category": "arts",
+          "url": "https://www.heritagetheatre.org/events/south-bay-dance-center-coppelia-2026-11-15-12-30"
         },
         {
           "type": "event",
-          "title": "South Bay Dance Center: Coppélia",
-          "when": "Sat, Nov 14 · 6:30 PM",
-          "venue": "Heritage Theatre",
-          "category": "arts",
-          "url": "https://www.heritagetheatre.org/events/south-bay-dance-center-coppelia-2026-11-14-18-30"
+          "title": "Campbell Farmers Market",
+          "when": "Sun, Nov 15 · 9:00 AM",
+          "venue": "Downtown Campbell",
+          "category": "food",
+          "url": "https://uvfm.org/campbell-sundays"
+        },
+        {
+          "type": "cityhall",
+          "title": "Campbell Planning Commission agenda: rezone 480 Chapman from commercial to single-family",
+          "when": "Tue, Nov 10",
+          "venue": null,
+          "category": "government",
+          "url": "https://www.campbellca.gov/AgendaCenter/ViewFile/Agenda/_11102026-3297"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:10.729Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:06.553Z"
     },
     "cupertino": {
       "cityId": "cupertino",
       "cityName": "Cupertino",
-      "summary": "Council's Monday, November 16 agenda is an annual update on IRS Form 990 filings and the regular meeting schedule, while the Planning Commission's November 10 agenda listed Eden Housing's 251-unit project at 10333 N. Wolfe.",
+      "summary": "Council's Monday, November 16 agenda includes the annual IRS Form 990 filings update, while Cupertino Library has Painting with Yarn Monday at 4:00 PM and Toddler Storytime Tuesday at 10:30 AM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Environmental Education Center Open House",
-          "when": "Sat, Nov 14 · 11:00 AM",
-          "venue": "McClellan Ranch Preserve",
-          "category": "family",
-          "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House"
+          "title": "Painting with Yarn",
+          "when": "Mon, Nov 16 · 4:00 PM",
+          "venue": "Cupertino Library",
+          "category": "arts",
+          "url": "https://sccl.bibliocommons.com/events/6ada5ccf8a335b6ae5c9fbf8"
         },
         {
           "type": "event",
-          "title": "Baby Wearing Dance",
-          "when": "Sun, Nov 15 · 11:00 AM",
-          "venue": "Cupertino Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6a985d0e29a7dd0d67488848"
+          "title": "Ramble from Rancho to Black Mountain",
+          "when": "Mon, Nov 16 · 8:45 AM",
+          "venue": "Rancho San Antonio Preserve",
+          "category": "outdoor",
+          "url": "https://www.openspace.org/events/guided-activities/ramble-rancho-black-mountain-0"
         },
         {
           "type": "council",
@@ -59,22 +67,14 @@
           "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5376&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:12.568Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:08.764Z"
     },
     "los-gatos": {
       "cityId": "los-gatos",
       "cityName": "Los Gatos",
-      "summary": "Saturday brings NUMU's \"Hiding in Plain Sight: Disability and Art History\" at 2:00 PM, in person or on Zoom, and Sunday has the Los Gatos Farmers Market at Town Park Plaza at 9:00 AM.",
+      "summary": "Sunday brings the Los Gatos Farmers Market at Town Park Plaza at 9:00 AM, then the Tuesday Evening Book Club at Los Gatos Library on Tuesday and the Chamber Monthly Luncheon with City Manager Brian Loventhal at Nordahl Hall on Wednesday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Hiding in Plain Sight: Disability and Art History",
-          "when": "Sat, Nov 14 · 2:00 PM",
-          "venue": "NUMU (New Museum Los Gatos)",
-          "category": "arts",
-          "url": "https://www.numulosgatos.org/events/plain-sight"
-        },
         {
           "type": "event",
           "title": "Managing Holiday Anxiety Class with Linda Ikeda",
@@ -82,24 +82,24 @@
           "venue": "Presbyterian Church of Los Gatos",
           "category": "education",
           "url": "https://docs.google.com/forms/d/e/1FAIpQLSdH1d_sy3gcR_GaLONPYY4lnw9-R24Ws2DFuralX_52iy7JnQ/viewform"
+        },
+        {
+          "type": "event",
+          "title": "Los Gatos Farmers Market",
+          "when": "Sun, Nov 15 · 9:00 AM",
+          "venue": "Town Park Plaza",
+          "category": "food",
+          "url": "https://www.cafarmersmkts.com/losgatos-farmers-market/"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:14.643Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:10.636Z"
     },
     "mountain-view": {
       "cityId": "mountain-view",
       "cityName": "Mountain View",
-      "summary": "Music in-Takht plays Saturday at the Center for the Performing Arts, the farmers market runs Sunday, and council's November 17 agenda includes the Rengstorff Avenue Grade Separation cooperative agreement.",
+      "summary": "Council's Tuesday agenda covers the Rengstorff Avenue Grade Separation cooperative agreement and modifications to approval resolutions for projects at 749 West El Camino Real and 901-987 North Rengstorff Avenue, while the Farmers Market runs Sunday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Music in-Takht",
-          "when": "Sat, Nov 14 · 7:00 PM",
-          "venue": "Mountain View Center for the Performing Arts",
-          "category": "music",
-          "url": "https://tickets.mvcpa.com/eventperformances.asp?evt=795"
-        },
         {
           "type": "event",
           "title": "Token of Thanks Workshop",
@@ -107,6 +107,14 @@
           "venue": "Google Visitor Center",
           "category": "arts",
           "url": "https://go.levitate.ai/community-events/token-of-thanks?t=7185e3bd115a43b0b5d76e4ad3309424"
+        },
+        {
+          "type": "event",
+          "title": "Mountain View Farmers Market",
+          "when": "Sun, Nov 15 · 9:00 AM",
+          "venue": "Caltrain Station",
+          "category": "food",
+          "url": "https://www.cafarmersmkts.com/mountain-view-farmers-market/"
         },
         {
           "type": "council",
@@ -117,87 +125,54 @@
           "url": "https://mountainview.legistar.com/MeetingDetail.aspx?LEGID=3369&GID=344&G=37932D0B-039B-4529-B6D8-73445A1D4799"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:16.635Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:13.285Z"
     },
     "saratoga": {
       "cityId": "saratoga",
       "cityName": "Saratoga",
-      "summary": "Saturday brings the Saratoga Farmers' Market with Mayor Chuck Page at 10:00 AM and The Sarod Trilogy at Montalvo Arts Center at 7:30 PM, then Sunday's Open Mic at Saratoga Library at 10:30 AM.",
+      "summary": "Saratoga Library hosts Mandarin Storytime at 11:00 AM Tuesday, a Medicare enrollment and 2027 updates session at 1:00 PM with HICAP counselors afterward, and KidsCRAFT: Fall Leaf Suncatchers at 4:00 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Saratoga Farmers' Market with Mayor Chuck Page",
-          "when": "Sat, Nov 14 · 10:00 AM",
-          "venue": "Saratoga Farmers' Market",
-          "category": "community",
-          "url": "https://www.cafarmersmkts.com/saratoga-farmers-market"
+          "title": "Homework Help for Grades K-6",
+          "when": "Mon, Nov 16 · 3:00 PM",
+          "venue": "Saratoga Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/6a8252f49d8416003f69bd0e"
         },
         {
           "type": "event",
-          "title": "The Sarod Trilogy: Amjad Ali Khan, Amaan Ali Bangash, and Ayaan Ali Bangash",
-          "when": "Sat, Nov 14 · 7:30 PM",
-          "venue": "Montalvo Arts Center",
-          "category": "music",
-          "url": "https://montalvoarts.org/experience/carriage-house-concerts/the-sarod-trilogy/"
+          "title": "Medicare: Enrollment, 2027 Updates and Plan Review Tips",
+          "when": "Tue, Nov 17 · 1:00 PM",
+          "venue": "Saratoga Library",
+          "category": "education",
+          "url": "https://sccl.bibliocommons.com/events/6aa8bca286d84500311632cb"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:18.542Z"
-    },
-    "sunnyvale": {
-      "cityId": "sunnyvale",
-      "cityName": "Sunnyvale",
-      "summary": "Saturday brings the Sunnyvale Farmers Market on Murphy Avenue at 9:00 AM, Day 2 of the Unique Boutique Holiday Craft Fair, and the Pea & Flower Sale, before council's Tuesday agenda takes up a local emergency resolution over the El Niño event.",
-      "highlights": [
-        {
-          "type": "event",
-          "title": "Pea & Flower Sale",
-          "when": "Sat, Nov 14 · 10:00 AM",
-          "venue": "Charles Street Garden",
-          "category": "outdoor",
-          "url": null
-        },
-        {
-          "type": "event",
-          "title": "Master Gardeners: Creating Beautiful Holiday Centerpieces",
-          "when": "Sat, Nov 14 · 2:30 PM",
-          "venue": "Sunnyvale Public Library (Main)",
-          "category": "community",
-          "url": "https://sunnyvale.libcal.com/event/17544501"
-        },
-        {
-          "type": "council",
-          "title": "Adopt a Resolution Proclaiming the Existence of a Local Emergency in the City of Sunnyvale Due to the Developing 2026-2027 El Niño Event and Find the Actions Exempt from the California Environmental Quality Act (CEQA) Pursuant to CEQA Guidelines Sections 15269 and 15378(b)",
-          "when": "Tue, Nov 17",
-          "venue": null,
-          "category": "government",
-          "url": "https://sunnyvaleca.legistar.com/MeetingDetail.aspx?LEGID=4529&GID=270&G=FA76FAAA-7A74-41EA-9143-F2DB1947F9A5"
-        }
-      ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:20.610Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:15.360Z"
     },
     "san-jose": {
       "cityId": "san-jose",
       "cityName": "San José",
-      "summary": "Saturday brings the South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy at History Park at 11:00 AM and Matilda the Musical at Montgomery Theater at 2:00 PM, before Monday's council study session on improving affordability.",
+      "summary": "Sunday brings Matilda the Musical at Montgomery Theater and Marisela: Eterna Tour 2026 at San Jose Civic at 7:00 PM, then Monday's council meeting opens with a study session on Improving Affordability for San José Residents.",
       "highlights": [
         {
           "type": "event",
-          "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes)",
-          "when": "Sat, Nov 14 · 10:30 AM",
-          "venue": "The Tech Interactive",
-          "category": "education",
-          "url": "https://tickets.thetech.org/events/019b8b3f-014a-0e52-3d08-bd957bbd685d"
+          "title": "Matilda the Musical",
+          "when": "Sun, Nov 15 · 1:00 PM",
+          "venue": "Montgomery Theater",
+          "category": "family",
+          "url": "https://www.sanjose.org/theaters/events/matilda-musical"
         },
         {
           "type": "event",
-          "title": "South Bay Flashback Farewell Tour Meet and Greet with Bill Guardino and Brian Conroy",
-          "when": "Sat, Nov 14 · 11:00 AM",
-          "venue": "History Park",
-          "category": "community",
-          "url": "https://fareharbor.com/embeds/book/historysanjose/items/735277/?full-items=yes&flow=583745"
+          "title": "Toddler Storytime",
+          "when": "Sun, Nov 15 · 11:30 AM",
+          "venue": "Children's Discovery Museum",
+          "category": "family",
+          "url": "https://www.cdm.org/calendar/"
         },
         {
           "type": "council",
@@ -208,29 +183,29 @@
           "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8084&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:22.381Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:20.942Z"
     },
     "santa-clara": {
       "cityId": "santa-clara",
       "cityName": "Santa Clara",
-      "summary": "Saturday's lineup runs from the Santa Clara Farmers Market at 9 AM to a Backyard Composting Workshop at 10 AM, while the City Council's Tuesday agenda includes Convention Center financial status reports.",
+      "summary": "On Tuesday, Santa Clara's council agenda includes a Convention Center financial status overview and recognition of the Westside Little League 11U All-Star team, while Fall Crafts at Central Park Library runs at 4:00 PM.",
       "highlights": [
         {
           "type": "event",
-          "title": "Celestial Tales - Fall Chapter",
-          "when": "Sat, Nov 14 · 1:00 PM",
-          "venue": "Northside Branch Library",
-          "category": "community",
-          "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115066/"
+          "title": "Digital Archives, Liminality & Voice: Rethinking Public Scholarship through Digital Art, Performance and Pedagogy",
+          "when": "Mon, Nov 16 · 1:00 PM",
+          "venue": "St. Clare Room, Learning Commons",
+          "category": "arts",
+          "url": "https://events.scu.edu/arts-and-sciences/event/524983-digital-archives-liminality-voice-rethinking-public-s"
         },
         {
           "type": "event",
-          "title": "Make Dog Toys for Shelter Dogs with Pupcycled",
-          "when": "Sat, Nov 14 · 1:30 PM",
-          "venue": "Mission Branch Library",
-          "category": "community",
-          "url": "https://www.santaclaraca.gov/Home/Components/Calendar/Event/115024/"
+          "title": "Quantum Spin Liquids and Competing States in Kagome Antiferromagnets",
+          "when": "Mon, Nov 16 · 5:00 PM",
+          "venue": "Bergin Hall 214",
+          "category": "education",
+          "url": "https://events.scu.edu/arts-and-sciences/event/521976-quantum-spin-liquids-and-competing-states-in-kagome-a"
         },
         {
           "type": "council",
@@ -241,13 +216,13 @@
           "url": "https://santaclara.legistar.com/MeetingDetail.aspx?LEGID=4894&GID=693&G=51628CB4-1CB3-4C6E-87AA-7605356B8A63"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:24.221Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:22.184Z"
     },
     "los-altos": {
       "cityId": "los-altos",
       "cityName": "Los Altos",
-      "summary": "Sunday brings the I Am Human storytime and creative writing workshop at Linden Tree Books at 10:30 AM, then Monday's Watercolor Workshop for Adults at Los Altos Library at 7:00 PM, with supplies provided.",
+      "summary": "Los Altos Library has Monday Morning Meditation & Mindfulness at 10:30 AM and a Watercolor Workshop for Adults at 7:00 PM Monday, then Bilingual Mandarin Family Storytime Tuesday at 1:00 PM.",
       "highlights": [
         {
           "type": "event",
@@ -259,54 +234,46 @@
         },
         {
           "type": "event",
-          "title": "Falling for Stories",
-          "when": "Sun, Nov 15 · 11:30 AM",
-          "venue": "Woodland Library",
-          "category": "family",
-          "url": "https://sccl.bibliocommons.com/events/6ad1462c96ec3a003adadd8f"
+          "title": "Monday Morning Meditation & Mindfulness",
+          "when": "Mon, Nov 16 · 10:30 AM",
+          "venue": "Los Altos Library",
+          "category": "community",
+          "url": "https://sccl.bibliocommons.com/events/699dd40c1c129a205bccfe1a"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:26.059Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:24.049Z"
     },
     "palo-alto": {
       "cityId": "palo-alto",
       "cityName": "Palo Alto",
-      "summary": "Saturday brings the Downtown Palo Alto Farmers' Market at 8:00 AM and Second Saturday at Gamble Garden with timed entry from 10:00 AM, while Sunday's FOPAL Book Sale runs at Cubberley Community Center at 1:00 PM.",
+      "summary": "Sunday starts with the California Ave Farmers Market at 9:00 AM, then a Gamble Garden tour at 11:00 AM and a free Chinese Language Tour at Cantor Arts Center at 2:00 PM, which requires advance registration.",
       "highlights": [
         {
           "type": "event",
-          "title": "Second Saturday (November)",
-          "when": "Sat, Nov 14 · 10:00 AM",
+          "title": "Tour of Gamble Garden",
+          "when": "Sun, Nov 15 · 11:00 AM",
           "venue": "Gamble Garden",
-          "category": "community",
-          "url": "https://www.gamblegarden.org/event/novembersaturday/"
+          "category": "outdoor",
+          "url": "https://www.gamblegarden.org/event/gardentour-2/"
         },
         {
           "type": "event",
-          "title": "Youth Workshop: Whimsical Watercolor Mushroom",
-          "when": "Sat, Nov 14 · 3:00 PM",
-          "venue": "Pacific Art League",
+          "title": "Chinese Language Tour",
+          "when": "Sun, Nov 15 · 2:00 PM",
+          "venue": "Cantor Arts Center",
           "category": "arts",
-          "url": null
+          "url": "https://events.stanford.edu/event/copy-of-public-tour-cantor-highlights-in-chinese-4381"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:27.755Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:25.526Z"
     },
     "milpitas": {
       "cityId": "milpitas",
       "cityName": "Milpitas",
-      "summary": "Milpitas Library has the Stanford Blood Drive Sunday at 10:30 AM, then Books & Bricks Book Club for Grades 4-6 Monday at 3:30 PM and Baby Bouncers Lapsit for Prewalkers Tuesday at 11:30 AM.",
+      "summary": "Milpitas Library has Books & Bricks Book Club for Grades 4-6 at 3:30 PM Monday, Baby Bouncers Lapsit for Prewalkers at 11:30 AM Tuesday, and Bilingual Family Storytime at 6:30 PM Tuesday.",
       "highlights": [
-        {
-          "type": "event",
-          "title": "Stanford Blood Drive",
-          "when": "Sun, Nov 15 · 10:30 AM",
-          "venue": "Milpitas Library",
-          "category": "community",
-          "url": "https://sccl.bibliocommons.com/events/6ae0dc6f96ec3a003add49e3"
-        },
         {
           "type": "event",
           "title": "Books & Bricks Book Club for Grades 4-6",
@@ -314,10 +281,18 @@
           "venue": "Milpitas Library",
           "category": "family",
           "url": "https://sccl.bibliocommons.com/events/694338438b29ea2800c4c4ca"
+        },
+        {
+          "type": "event",
+          "title": "Homework Help for Grades K-6",
+          "when": "Mon, Nov 16 · 4:00 PM",
+          "venue": "Milpitas Library",
+          "category": "family",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56ca8"
         }
       ],
-      "weekLabel": "Nov 14 – Nov 21",
-      "generatedAt": "2026-11-15T04:30:29.706Z"
+      "weekLabel": "Nov 15 – Nov 22",
+      "generatedAt": "2026-11-16T04:21:27.549Z"
     }
   }
 }
