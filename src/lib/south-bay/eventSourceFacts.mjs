@@ -70,6 +70,33 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // These dated pages explicitly display Free Event and a zero-price Offer,
+  // while the API leaves ticket_cost empty and free=false. That sparse API
+  // state proves neither a charge nor free admission for any other event.
+  // Preserve revised source prose, prices, eligibility and booking notices.
+  // Evidence: docs/qa/2026-11-16-0307z-fact-check.md.
+  {
+    date: "2026-11-16",
+    matches: event => event.source === "Stanford Events"
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && [
+        {
+          url: "https://events.stanford.edu/event/an-extreme-event-community-led-social-innovation-in-times-of-crisis-in-nepal",
+          title: "An Extreme Event: Community-Led Social Innovation in Times of Crisis in Nepal",
+          venue: "Stanford Graduate School of Business", time: "5:00 PM", endTime: "6:15 PM",
+          description: "",
+        },
+        {
+          url: "https://events.stanford.edu/event/jillian-schwedler-are-the-streets-still-talking-protests-and-evolving-repression-in-the-middle-east",
+          title: "Jillian Schwedler — Are the Streets Still Talking? Protests and Evolving Repression in the Middle East",
+          venue: "Online (Zoom)", time: "4:00 PM", endTime: "5:15 PM", virtual: true,
+          description: "Although the Middle East/SWANA region encompasses a diverse range of authoritarian regimes, protests are surprisingly common across much of it.",
+        },
+      ].some(known => Object.entries(known).every(([key, value]) => key === "description"
+        ? event[key]?.toLowerCase() === value.toLowerCase()
+        : event[key] === value)),
+    facts: { cost: "free" },
+  },
   // The sparse calendar loses a restricted physical room and the public Zoom
   // registration instructions. Fresh source metadata is handled at intake;
   // this protects only the reviewed cached excerpt and its original clocks.

@@ -36,6 +36,17 @@ test("cleanVenue keeps stripping the street address ahead of the city tail", () 
   assert.equal(cleanVenue("Vasona Park 233 Blossom Hill Rd."), "Vasona Park");
 });
 
+test("cleanVenue separates Stanford postal addresses with a dotted state abbreviation", () => {
+  const venue = "Stanford Graduate School of Business";
+  for (const state of ["CA", "CA."]) {
+    const cleaned = cleanVenue(`${venue}, 643 Jane Stanford Way, Stanford, ${state} 94305`);
+    assert.equal(cleaned, venue);
+    assert.equal(cleanVenue(cleaned), venue);
+  }
+  assert.equal(cleanVenue("Stanford Way Auditorium"), "Stanford Way Auditorium");
+  assert.equal(cleanVenue("Stanford Graduate School of Business, Room 643"), "Stanford Graduate School of Business, Room 643");
+});
+
 test("cleanVenue separates a numbered El Camino Real address from the room name", () => {
   const venue = "Lucas Hall 126 (Leavey School of Business), Santa Clara University";
   assert.equal(cleanVenue(`${venue}, 500 El Camino Real`), venue);

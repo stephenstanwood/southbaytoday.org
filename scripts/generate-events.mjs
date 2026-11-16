@@ -3517,8 +3517,10 @@ function cleanVenue(raw) {
   // Gatos town calendar writes it out in full. "Civic Center Lawn 110 E. Main
   // Street" shipped as the display venue for Oktoberfest and the Art and Wine
   // Festival on 2026-08-28.
+  // Stanford is also a postal city here; organizers sometimes write "CA.".
+  // Both belong to the address tail, rather than the display venue name.
   v = v.replace(
-    /[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Street|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*(?:,?\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Sunnyvale))?(?:,?\s+CA(?:\s+\d{5})?)?\s*$/i,
+    /[,\s]+\d+\s+[A-Z][a-zA-Z\.\s]*?\b(St|Street|Ave|Avenue|Blvd|Boulevard|Rd|Road|Way|Ln|Lane|Dr|Drive|Ct|Court|Pl|Place|Hwy|Highway|Pkwy|Parkway|Cir|Circle|Ter|Terrace)\b\.?\s*(?:,?\s+(Campbell|Cupertino|Los Altos|Los Gatos|Milpitas|Mountain View|Palo Alto|San Jose|San José|Santa Clara|Saratoga|Stanford|Sunnyvale))?(?:,?\s+CA\.?(?:\s+\d{5})?)?\s*$/i,
     "",
   );
   // Remove trailing ", City, CA 9xxxx" or " City CA 9xxxx" pattern only
