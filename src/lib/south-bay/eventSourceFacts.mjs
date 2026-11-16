@@ -70,6 +70,18 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Both the live calendar and detail page date this fair November 21, the
+  // third Saturday. Their standing second-Saturday sentence is stale; remove
+  // that clause without inventing a new monthly schedule or changing clocks.
+  // Evidence: docs/qa/2026-11-16-0707z-fact-check.md.
+  {
+    date: "2026-11-21",
+    matches: event => event.source === "Santana Row"
+      && event.url === "https://santanarow.com/event/makers-market-in-the-park/"
+      && event.title === "Makers Market's Local Artist Street Fair"
+      && event.venue === "Santana Row" && event.city === "san-jose",
+    copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
+  },
   // The exact library occurrence lists 5–6 PM, while its standing description
   // says 4 PM. Remove the conflicting prose clock and require confirmation;
   // neither source field establishes which start the organizer intended.
