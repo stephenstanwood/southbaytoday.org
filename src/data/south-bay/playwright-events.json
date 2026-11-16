@@ -1,13 +1,13 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-16T02:40:43.547Z",
+    "generatedAt": "2026-11-16T06:48:47.623Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 189,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
-      "Linden Tree Books (6)",
+      "Linden Tree Books (5)",
       "History San Jose (2)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
@@ -15,12 +15,12 @@
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (11)",
-      "Santana Row (5)",
+      "Santana Row (6)",
       "City of Cupertino (34)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
-      "SAP Center (12)",
+      "SAP Center (13)",
       "The Tech Interactive (12)",
       "Books Inc (4)",
       "San Jose Museum of Art (2)",
@@ -92,8 +92,8 @@
         "id": "linden-tree-books",
         "label": "Linden Tree Books",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 5,
+        "liveCount": 5,
         "error": null,
         "sources": [
           "Linden Tree Books"
@@ -198,8 +198,8 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 5,
-        "liveCount": 5,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 13,
+        "liveCount": 13,
         "error": null,
         "sources": [
           "SAP Center"
@@ -495,28 +495,6 @@
       "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
-    },
-    {
-      "id": "367630676145",
-      "title": "I Am Human: Storytime + Creative Writing Workshop",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "10:30am",
-      "endTime": null,
-      "venue": "Linden Tree Books",
-      "address": "265 State St, Los Altos, CA 94022",
-      "city": "los-altos",
-      "category": "arts",
-      "cost": null,
-      "description": "CALLING ALL HUMANS! Join author-illustrator Laura G. Lee for a special I Am Human book launch, storytime, and creative workshop. ​Laura will begin with a reading of I Am Human and a playful conversation inspired by the book: What does it mean to be human? How are we different from AI—and how do we know? ​After the reading, participants are invited to join a hands-on writing and drawing workshop, responding to creative prompts through words and pictures, enjoying snacks, and sharing ideas. ​All ages are welcome. The workshop is especially well suited to older elementary kids, teens, and adults, while younger children are welcome to enjoy the story time portion with their families. ​Workshop RSVPs are encouraged so we can prepare enough materials.",
-      "url": "https://www.lindentreebooks.com/events-calendar/",
-      "source": "Linden Tree Books",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.lindentreebooks.com/events-calendar/",
-        "date": "2026-11-15"
-      }
     },
     {
       "id": "091680702899",
@@ -1200,6 +1178,29 @@
       }
     },
     {
+      "id": "40cbf5dce646",
+      "title": "Makers Market's Local Artist Street Fair",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "11:00 AM",
+      "endTime": "6:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "NOVEMBER 21, 2026  Makers Market’s™ Local Artist Street Fair is returning to Santana Row! We’ve rounded up the best local Artists, Crafters, Designers, and Makers for a truly unforgettable shopping experience for every second Saturday of every month from 11am-6pm!60+ Local MakersHandmade jewelry, permanent jewelry, ceramics, woodwork, apparel, leather goods, glass art, candles, local honey, apothecary, art, crochet, pet treats/products, handbags, plants, and moreGreat food + drinks in the surrounding eateries. THIS IS A SIP & STROLL EVENT!Bring your kids + fur babiesEnjoy live music by local artistsFREE to attend!Shop in store! Stroll into our brick-and-mortar shop (adjacent to the market area) for more American-made jewelry, apparel, body products, home goods and more from 100+ Makers.",
+      "url": "https://santanarow.com/event/makers-market-in-the-park/",
+      "source": "Santana Row",
+      "kidFriendly": true,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-21",
+        "checkedAt": "2026-11-16T06:47:38.824Z"
+      }
+    },
+    {
       "id": "6e4bf7d9e134",
       "title": "Thanksgiving on The Row",
       "date": "2026-11-26",
@@ -1219,7 +1220,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-16T02:39:35.074Z"
+        "checkedAt": "2026-11-16T06:47:38.826Z"
       }
     },
     {
@@ -1242,7 +1243,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-16T02:39:35.075Z"
+        "checkedAt": "2026-11-16T06:47:38.827Z"
       }
     },
     {
@@ -1265,7 +1266,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-16T02:39:35.075Z"
+        "checkedAt": "2026-11-16T06:47:38.828Z"
       }
     },
     {
@@ -1288,7 +1289,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-16T02:39:35.078Z"
+        "checkedAt": "2026-11-16T06:47:38.831Z"
       }
     },
     {
@@ -1311,7 +1312,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-16T02:39:35.078Z"
+        "checkedAt": "2026-11-16T06:47:38.831Z"
       }
     },
     {
@@ -1914,7 +1915,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1931,7 +1932,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1948,7 +1949,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1965,7 +1966,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1982,7 +1983,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3127,23 +3128,6 @@
       "kidFriendly": false
     },
     {
-      "id": "e3e03eafd591",
-      "title": "Sharks vs Predators — Hockey Fights Cancer",
-      "date": "2026-11-15",
-      "displayDate": "Sun, Nov 15",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "Hockey Fights Cancer Scarf Giveaway",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "0af32bada49a",
       "title": "Sharks vs Flames",
       "date": "2026-11-17",
@@ -3164,7 +3148,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.272Z"
+        "checkedAt": "2026-11-16T06:48:14.511Z"
       }
     },
     {
@@ -3188,7 +3172,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.272Z"
+        "checkedAt": "2026-11-16T06:48:14.512Z"
       }
     },
     {
@@ -3212,7 +3196,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.272Z"
+        "checkedAt": "2026-11-16T06:48:14.512Z"
       }
     },
     {
@@ -3236,7 +3220,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.272Z"
+        "checkedAt": "2026-11-16T06:48:14.513Z"
       }
     },
     {
@@ -3260,7 +3244,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
     },
     {
@@ -3284,7 +3268,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
     },
     {
@@ -3308,7 +3292,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
     },
     {
@@ -3349,7 +3333,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
     },
     {
@@ -3373,7 +3357,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
     },
     {
@@ -3397,8 +3381,49 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-16T02:40:04.273Z"
+        "checkedAt": "2026-11-16T06:48:14.517Z"
       }
+    },
+    {
+      "id": "1ebe4b5d65ca",
+      "title": "Sharks vs Canucks",
+      "date": "2026-12-14",
+      "displayDate": "Mon, Dec 14",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
+        "date": "2026-12-14",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-16T06:48:14.517Z"
+      }
+    },
+    {
+      "id": "e3e03eafd591",
+      "title": "Sharks vs Predators — Hockey Fights Cancer",
+      "date": "2026-11-15",
+      "displayDate": "Sun, Nov 15",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "sports",
+      "cost": "paid",
+      "description": "Hockey Fights Cancer Scarf Giveaway",
+      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-21",
+      "source": "SAP Center",
+      "kidFriendly": false
     },
     {
       "id": "549bc913a42e",
