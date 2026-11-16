@@ -100,7 +100,7 @@ import { officialSnapshotEvents, readOfficialEventSnapshot } from "./lib/officia
 import {
   midpenPreserveCity,
   midpenTrailhead,
-  midpenDetailConfirmsEvent,
+  recheckMidpenEvent,
   parseMidpenDetail,
   midpenVolunteerRegistration,
   parseMidpenListPage,
@@ -10448,8 +10448,9 @@ async function fetchMidpenEvents() {
       for (const event of omitted) {
         try {
           const detailHtml = await fetchText(normalizeMidpenOccurrenceUrl(event.url), { timeout: 25_000 });
-          if (midpenDetailConfirmsEvent(detailHtml, event, today)) {
-            events.push(event);
+          const confirmed = recheckMidpenEvent(detailHtml, event, today);
+          if (confirmed) {
+            events.push(confirmed);
             console.log(`  ↩️  Midpen: retained confirmed omitted occurrence ${event.id}`);
           }
         } catch {

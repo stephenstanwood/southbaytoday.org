@@ -255,9 +255,20 @@ export function parseMidpenDetail(html) {
 
   const dateMarkup = String(html || "").match(/event-page__event-date--start[^>]*>([^<]+)</i);
   const titleMarkup = String(html || "").match(/<h1\b[^>]*class="[^"]*card__title[^"]*"[^>]*>([\s\S]*?)<\/h1>/i);
+  // Volunteer occurrence URLs redirect to Galaxy Digital. Its own heading
+  // and single-date table must confirm the occurrence too; a registration
+  // deadline or a date mentioned in the description is not the event date.
+  const volunteerTitle = String(html || "").match(/<h1\b[^>]*class=["'][^"']*\bpanel-title\b[^"']*["'][^>]*>([\s\S]*?)<\/h1>/i);
+  const volunteerInfo = String(html || "").match(/<section\b[^>]*class=["'][^"']*\baddress-time\b[^"']*["'][^>]*>([\s\S]*?)<\/section>/i);
+  const volunteerDates = [...String(volunteerInfo?.[1] || "").matchAll(/<td\b[^>]*class=["'][^"']*\btext\b[^"']*["'][^>]*>([\s\S]*?)<\/td>/gi)]
+    .map((cell) => midpenText(cell[1]))
+    .filter((text) => /^Happens On\b/.test(text));
+  const volunteerDate = volunteerDates.length === 1
+    ? volunteerDates[0].match(/^Happens On ([A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4})$/) : null;
   return {
-    title: titleMarkup ? midpenText(titleMarkup[1]) : null,
-    date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1])) : null,
+    title: midpenText(titleMarkup?.[1] || volunteerTitle?.[1]) || null,
+    date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1]))
+      : volunteerTitle && volunteerDate ? midpenIsoDate(volunteerDate[1]) : null,
     description: paragraph?.replace(/\s+([.,;!?])/g, "$1") || null,
     meetingPlace,
     attendanceNote: attendanceNotes.length ? attendanceNotes.join(" ") : null,
@@ -274,11 +285,26 @@ export function parseMidpenDetail(html) {
  * page still names the same future activity, date and start time.
  */
 export function midpenDetailConfirmsEvent(html, event, today) {
-  if (event?.source !== "Midpen Open Space" || !event?.date || event.date < today) return false;
+  if (event?.source !== "Midpen Open Space" || !event?.date || !event.time || event.date < today) return false;
   const detail = parseMidpenDetail(html);
   return detail.title === event.title
     && detail.date === event.date
     && detail.startTime === event.time;
+}
+
+/** Recovered occurrences keep current access terms from the confirming page. */
+export function recheckMidpenEvent(html, event, today) {
+  if (!midpenDetailConfirmsEvent(html, event, today)) return null;
+  const detail = parseMidpenDetail(html);
+  const registration = midpenVolunteerUrl(event)
+    ? midpenVolunteerRegistration(detail, event) : detail.registration;
+  return {
+    ...event,
+    ...(registration ? { registration } : {}),
+    ...(detail.endTime ? { endTime: detail.endTime } : {}),
+    ...(detail.meetingPlace ? { address: midpenTrailhead(detail.meetingPlace) } : {}),
+    ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),
+  };
 }
 
 /**
