@@ -3831,7 +3831,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
     return /\b(adults?|seniors?)\b/i.test(name)
       && !/\b(kids?|children|families|teens?|all ages)\b/i.test(name);
   });
-  if (!titleSaysAdult && !sourceSaysAdult && (t.includes("story time") || t.includes("storytime") || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t))) return "family";
+  if (!titleSaysAdult && !sourceSaysAdult && (t.includes("story time") || t.includes("storytime") || /\bstories\s+(?:and|&)\s+songs\b/.test(titleLower) || t.includes("toddler") || hasBaby || t.includes("preschool") || t.includes("kids") || t.includes("children") || /\bbedtime\b/.test(titleLower) || /\bpuppet\s+show\b/.test(t))) return "family";
   // Medical/clinical procedure courses are always education, never arts — even if descriptions
   // contain "performance" (as in "procedural performance") or the venue has "theater" (OR).
   const isMedicalProcedureEvent = /\b(bronchoscopy|endoscopy|radiology|biopsy|anesthesia|cone beam ct|cbct imaging|surgical technique|clinical training|colonoscopy|laparoscopy|bronchoscop)\b/.test(t);
@@ -4195,6 +4195,11 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   // the bottom of this function — too late. Run the same matchup test first.
   const hasMatchup = titleLower.includes("vs.") || titleLower.includes(" vs ");
   if (hasMatchup && /\b(football|basketball|baseball|softball|soccer|hockey|volleyball|lacrosse|water polo|rugby)\b/.test(titleLower)) return "sports";
+  // Away fixtures may say "Soccer at Stanford" instead of "vs". The
+  // publisher's Athletics format establishes a sporting event; "University"
+  // alone must not route it to education. Do not infer this from a venue.
+  if (/^athletics$/i.test(type.trim())
+    && /\b(football|basketball|baseball|softball|soccer|hockey|volleyball|lacrosse|water polo|rugby)\b/.test(titleLower)) return "sports";
 
   // Concert program notes and performer biographies can mention research,
   // reading or a class. The performance title outranks that body wording;
@@ -4591,7 +4596,8 @@ async function fetchStanfordEvents() {
         .split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi)
         .map(text => stripHtml(text).trim())
         .flatMap(text => text.split(/(?<=[.!?])\s+/))
-        .find(sentence => /^(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?$/i.test(sentence));
+        .find(sentence => /^(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b[^.!?]*[.!?]?$/i.test(sentence)
+          || /^this\s+event\s+requires\s+(?:previous|prior|advance)\s+registration\s*[:.!]*$/i.test(sentence));
       // The symposium's public application option is conditional admission,
       // not a walk-in invitation. Its terms follow the displayed excerpt.
       const applicationRequirement = /^Wu Tsai Human Performance Alliance Research Symposium 2026$/i.test(ev.title || "")
@@ -4698,6 +4704,13 @@ async function fetchStanfordEvents() {
       // format does not establish campus-only admission.
       const sourceSaysDefense = (ev.filters?.event_types || [])
         .some((type) => /^(?:PhD|Dissertation|Thesis) Defense$/i.test(type.name || ""));
+      // Sparse exhibition titles and a speaker's conversation can fall all
+      // the way to generic community. Use their declared formats in that
+      // case, preserving more specific topics such as film, music and sport.
+      const sourceSaysExhibition = (ev.filters?.event_types || [])
+        .some((type) => /^Exhibition$/i.test(type.name || ""));
+      const sourceSaysConversation = sourceSaysLecture
+        && /\bconversation\b/i.test(ev.title || "");
       // A performance can have an opaque title and an academic performer bio.
       // Use Stanford's declared format and music subject before treating it
       // as education; keep explicit lectures/classes and arts classifications.
@@ -4707,7 +4720,8 @@ async function fetchStanfordEvents() {
         && !/\b(?:lectures?|workshops?|class|classes|courses?|seminars?|training)\b/i.test(ev.title || "");
       const conferenceMisreadAsArt = inferredCategory === "arts" && sourceSaysConference
         && !/\b(?:exhibit(?:ion)?|gallery|art|concert|recital|performance|film|dance)\b/i.test(ev.title || "");
-      const category = sourceSaysDefense ? "education"
+      const category = sourceSaysDefense || (inferredCategory === "community" && sourceSaysConversation) ? "education"
+        : inferredCategory === "community" && sourceSaysExhibition ? "arts"
         : sourceSaysMusicPerformance && inferredCategory === "education"
         ? "music"
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
@@ -5175,9 +5189,10 @@ async function fetchScuEvents() {
         ? "Santa Clara University"
         : (isRoomOnly && !namesCampus ? `Santa Clara University — ${scuLocation}` : scuLocation);
       // College and audience tags are administrative, not content genres.
-      // Keep only the explicit lecture format when RSS contains just an image.
+      // Lecture and Athletics are explicit formats, including sparse away
+      // fixtures whose titles name the university and an opponent with "at".
       const scuFormat = (item.livewhaleCategories || "").split(",")
-        .find((label) => /^lectures?$/i.test(label.trim())) || "";
+        .find((label) => /^(?:lectures?|athletics)$/i.test(label.trim())) || "";
       if (isVirtual) virtualFromSourceScu++;
       return {
         id: h("scu", item.link || item.title, item.pubDate),

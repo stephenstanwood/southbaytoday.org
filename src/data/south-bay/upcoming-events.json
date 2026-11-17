@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-17T03:23:04.270Z",
-  "eventCount": 1458,
+  "eventCount": 1457,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -20429,7 +20429,7 @@
       "venue": "Calabazas Library",
       "address": "1230 S Blaney Ave San Jose",
       "city": "san-jose",
-      "category": "community",
+      "category": "family",
       "cost": "free",
       "description": "",
       "sourceAudiences": [
@@ -20441,7 +20441,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/7b4b1cc3a081ced448e521315389b264/Cbooks.jpg",
       "blurb": "Join Mandarin stories and songs together with your family at Calabazas Library.",
-      "firstSeenAt": "2026-11-16T02:46:45.510Z"
+      "firstSeenAt": "2026-11-16T02:46:45.510Z",
+      "attendanceNote": "Free, with limited seating. Pick up tickets at the information desk 30 minutes before storytime."
     },
     {
       "id": "sjpl-6a7e0a6ed4b10d00300645bf",
@@ -20453,7 +20454,7 @@
       "venue": "Calabazas Library",
       "address": "1230 S Blaney Ave San Jose",
       "city": "san-jose",
-      "category": "community",
+      "category": "family",
       "cost": "free",
       "description": "",
       "sourceAudiences": [
@@ -20465,7 +20466,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/7b4b1cc3a081ced448e521315389b264/Cbooks.jpg",
       "blurb": "Join Mandarin stories and songs together with your family at Calabazas Library.",
-      "firstSeenAt": "2026-11-16T02:46:45.510Z"
+      "firstSeenAt": "2026-11-16T02:46:45.510Z",
+      "attendanceNote": "Free, with limited seating. Pick up tickets at the information desk 30 minutes before storytime."
     },
     {
       "id": "sjpl-6ab7009065abe8002a7c20bf",
@@ -22943,27 +22945,6 @@
       "firstSeenAt": "2026-11-14T00:54:46.429Z"
     },
     {
-      "id": "inbound-40dfe7b5b3daacd1",
-      "title": "FansGiving: Stanford Football vs. SMU",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "12:00 PM",
-      "endTime": null,
-      "venue": "Stanford Stadium",
-      "address": "Stanford Stadium, Stanford, CA",
-      "city": "palo-alto",
-      "category": "sports",
-      "cost": null,
-      "description": "Stanford's home finale against SMU is themed as Fans Giving, with ticket discounts (30% off select seats, 4-packs with parking from $60), special concessions pricing, and contests. Each ticket purchased also triggers a donated ticket for an underserved community organization. The flyer lists the start as '12 PM or 12:30 PM', so the exact time is unconfirmed.",
-      "url": "https://gostanford.com/fansgiving-at-stanford-football-vs-smu",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://gostanford.com/imgproxy/_rO_GBWxbOiADaAtrL4LFLovjgh0hfG__-c96F-mfdc/rs:fit:1200:630:0:0/g:ce:0:0/q:70/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3N0YW5mb3JkLXByb2QvMjAyNi8xMS8xNi9WdGQwV3VSTVFIeml0NU92Q09Ta3lxTDZJNWUyWEdMbElReGJ3N2huLmpwZw.jpg",
-      "blurb": "Watch Stanford host SMU in a home football game themed as Fans Giving, with ticket discounts, special concessions pricing, and contests.",
-      "firstSeenAt": "2026-11-17T03:23:04.238Z"
-    },
-    {
       "id": "eef0ef2a4e15",
       "title": "Black Nile",
       "date": "2026-11-20",
@@ -24062,7 +24043,7 @@
       "venue": "GSB Knight - Arbuckle / Cemex",
       "address": "641 Knight Way, Stanford, CA 94305",
       "city": "palo-alto",
-      "category": "community",
+      "category": "education",
       "cost": null,
       "description": "Stanford Leadership Institute and the AI@GSB Initiative invite you to a conversation on AI policy with the RT Hon Kanishka Narayan MBA '21, Minister for AI for the United Kingdom.",
       "url": "https://events.stanford.edu/event/a-conversation-with-kanishka-narayan-uk-minister-for-ai",
@@ -31876,7 +31857,7 @@
       "venue": "McMurtry Building",
       "address": "355 Roth Way, Stanford, CA 94305",
       "city": "palo-alto",
-      "category": "community",
+      "category": "arts",
       "cost": null,
       "description": "",
       "url": "https://events.stanford.edu/event/never-gonna-give-you-up",
@@ -31907,7 +31888,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54400334644448/huge/520f132aad168dc952d9726c8ec0e0634e9e6990.jpg",
       "blurb": "Watch a screening of Malês and stay for a conversation afterward at Bolivar House.",
-      "firstSeenAt": "2026-11-17T03:23:04.238Z"
+      "firstSeenAt": "2026-11-17T03:23:04.238Z",
+      "registration": "required",
+      "attendanceNote": "Advance registration is required through the form linked on Stanford's event page."
     },
     {
       "id": "sjsu-d8e1035bcf25e324",
@@ -34110,7 +34093,7 @@
       "venue": "Stanford",
       "address": "",
       "city": "palo-alto",
-      "category": "education",
+      "category": "sports",
       "cost": "",
       "description": "",
       "url": "https://events.scu.edu/bronco-athletics/event/534233-santa-clara-university-womens-soccer-at-stanford-",

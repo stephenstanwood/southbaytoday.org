@@ -70,6 +70,43 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The organizer publishes two possible clocks and says the final kickoff
+  // will be announced after November 21. Neither alternative is confirmed.
+  // The promotional URL bypasses the older ticket-shop-only SMU hold below.
+  // Evidence: docs/qa/2026-11-17-0407z-fact-check.md.
+  {
+    date: "2026-11-28",
+    url: "https://gostanford.com/fansgiving-at-stanford-football-vs-smu",
+    facts: {
+      time: null, endTime: null, attendanceStatus: "needs-confirmation",
+    },
+    appendAttendanceNote: "Stanford lists 12 PM or 12:30 PM and will announce the official kickoff after November 21. Confirm the time before going.",
+  },
+  // Keep mandatory admission terms in retained cards whose Localist copy
+  // was shortened to an empty description. Later full/closed states win.
+  {
+    date: "2026-11-17",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/males-film-screening-and-conversation"
+      && !String(event.description || "").trim(),
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Advance registration is required through the form linked on Stanford's event page.",
+  },
+  // Exact publisher formats correct the sparse copies as well as fresh
+  // ingestion. These rules establish no new occurrence, clock or price.
+  ...[
+    ["2026-11-20", "https://events.scu.edu/bronco-athletics/event/534233-santa-clara-university-womens-soccer-at-stanford-", "sports"],
+    ["2026-11-17", "https://events.stanford.edu/event/never-gonna-give-you-up", "arts"],
+    ["2026-11-17", "https://events.stanford.edu/event/a-conversation-with-kanishka-narayan-uk-minister-for-ai", "education"],
+  ].map(([date, url, category]) => ({ date, url, facts: { category } })),
+  // The two Calabazas sessions explicitly target ages 0–5. Their original
+  // Chinese paragraph requires ticket pickup 30 minutes before storytime.
+  ...["6a7e0aa9d4b10d003006460a", "6a7e0a6ed4b10d00300645bf"].map(id => ({
+    date: "2026-11-19",
+    url: `https://sjpl.bibliocommons.com/events/${id}`,
+    facts: { category: "family" },
+    appendAttendanceNote: "Free, with limited seating. Pick up tickets at the information desk 30 minutes before storytime.",
+  })),
   // This newsletter used a non-resolving hostname, and an older duplicate
   // confused the page's related-concert essay with this recital's program.
   // Repair only this dated recital and the exact unsupported program phrase;

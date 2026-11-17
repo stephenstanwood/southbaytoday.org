@@ -67,7 +67,9 @@ export function libraryEventDetails(event, entities = {}) {
       const attendanceText = paragraph
         .replace(/\bTicket\s+to\s+Ride\b/gi, "")
         .replace(/\b(?:Using\s+)?Discover\s*(?:&|and)\s*Go\s+to\s+reserve\s+(?:(?:free|reduced)(?:\s+or\s+(?:free|reduced))?\s+)?tickets\s+to\s+(?:local\s+)?museums(?:\s+and\s+attractions)?/gi, "");
-      return /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b|\b(?:registration|enrollment)\s+(?:is\s+)?(?:now\s+)?closed\b|\bthis\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?full\b|\b(?:by\s+)?appointments?\s+only\b|\b(?:one|1)\s+appointment\s+per\s+(?:week|month)\s+per\s+person\b|\bpor\s+cita\s+(?:únicamente|unicamente|previa)\b/i.test(attendanceText);
+      // SJPL's Mandarin story sessions publish their capacity and ticket
+      // pickup condition in Chinese. Preserve that original paragraph too.
+      return /\b(?:tickets?|first[-\s]come|space is limited|limited (?:space|seating))\b|\b(?:registration|enrollment)\s+(?:is\s+)?(?:now\s+)?closed\b|\bthis\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?full\b|\b(?:by\s+)?appointments?\s+only\b|\b(?:one|1)\s+appointment\s+per\s+(?:week|month)\s+per\s+person\b|\bpor\s+cita\s+(?:únicamente|unicamente|previa)\b|座位数量有限|门票将在故事时间开始前\s*\d+\s*分钟/i.test(attendanceText);
     });
   // An optional appointment must not hide the condition on walk-up access.
   // Select only that sentence, since unused booking directions can name a
