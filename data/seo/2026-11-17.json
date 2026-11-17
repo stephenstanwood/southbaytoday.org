@@ -1,0 +1,2221 @@
+{
+  "site": "https://southbaytoday.org",
+  "generatedAt": "2026-11-17T09:21:00.467Z",
+  "crawl": {
+    "sitemapUrlCount": 1960,
+    "crawled": 250,
+    "surfaces": {
+      "/robots.txt": {
+        "status": 200,
+        "bytes": 353,
+        "body": "User-agent: *\nAllow: /\n\n# Search and user-requested retrieval. These explicit groups document the\n# site's intent; the wildcard above already permits them.\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\nSitemap: https://southbaytoday.org/sitemap-index.xml\n"
+      },
+      "/llms.txt": {
+        "status": 200,
+        "bytes": 2440
+      },
+      "/rss.xml": {
+        "status": 200,
+        "bytes": 10395
+      }
+    },
+    "findings": [
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-belle-yang-between-memory-and-becoming",
+        "title": "Belle Yang: Between Memory and Becoming — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-san-jose-sea-lions-vs-toronto-sceptres",
+        "title": "San Jose Sea Lions vs. Toronto Sceptres — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-super-full-moon-on-black-mountain",
+        "title": "Super Full Moon on Black Mountain — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-taylor-tomlinson-tries-out-new-ideas",
+        "title": "Taylor Tomlinson: Tries Out New Ideas — 8:15 PM — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2027-01-22-taylor-tomlinson-tries-out-new-ideas-2",
+        "title": "Taylor Tomlinson: Tries Out New Ideas — 6:00 PM — Friday, January 22 — South Bay Today"
+      },
+      {
+        "severity": "info",
+        "code": "thin-content",
+        "message": "page has ~142 words",
+        "url": "https://southbaytoday.org/event/2027-01-22-tech-and-innovation-summit"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-fred-t-korematsu-day-of-civil-liberties-and-the-constitution",
+        "title": "Fred T. Korematsu Day of Civil Liberties and the Constitution — Saturday, January 23"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 98 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-juicebox-the-strokes-tribute-band-public-pervert-interpol-tribute-band",
+        "title": "Juicebox - The Strokes Tribute Band, Public Pervert - Interpol Tribute Band — Saturday, January 23"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-pictures-at-an-exhibition-symphony-san-jose",
+        "title": "Pictures at an Exhibition – Symphony San Jose — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-professor-brian-cox-emergence",
+        "title": "Professor Brian Cox – Emergence — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-san-jose-barracuda-vs-tucson-roadrunners",
+        "title": "San Jose Barracuda vs. Tucson Roadrunners — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-san-jose-sharks-vs-edmonton-oilers",
+        "title": "San Jose Sharks vs. Edmonton Oilers — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-santa-cruz-warriors-vs-sioux-falls-skyforce",
+        "title": "Santa Cruz Warriors vs. Sioux Falls Skyforce — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-steam-lab-saturday-build-a-bridge",
+        "title": "STEAM Lab Saturday: Build-a-Bridge! — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-the-legend-of-korra-in-concert",
+        "title": "The Legend of Korra in Concert — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-23-valerie-a-tribute-to-amy-winehouse",
+        "title": "Valerie: A Tribute to Amy Winehouse — Saturday, January 23 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-noche-de-exitos-grupo-yndio-freddys-y-terricolas",
+        "title": "Noche de Éxitos: Grupo Yndio, Freddys y Terricolas — Sunday, January 24"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 84 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-pictures-at-an-exhibition-symphony-san-jose",
+        "title": "Pictures at an Exhibition – Symphony San Jose — Sunday, January 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-san-jose-barracuda-vs-tucson-roadrunners",
+        "title": "San Jose Barracuda vs. Tucson Roadrunners — Sunday, January 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-santa-cruz-warriors-vs-sioux-falls-skyforce",
+        "title": "Santa Cruz Warriors vs. Sioux Falls Skyforce — Sunday, January 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 89 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-stanford-women-s-basketball-vs-north-carolina",
+        "title": "Stanford Women&#39;s Basketball vs. North Carolina — Sunday, January 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-taylor-tomlinson-tries-out-new-ideas",
+        "title": "Taylor Tomlinson: Tries Out New Ideas — Sunday, January 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-wild-kratts-live-2-0-activate-creature-power",
+        "title": "Wild Kratts Live! 2.0 - Activate Creature Power! — 1:00 PM — Sunday, January 24"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2027-01-24-wild-kratts-live-2-0-activate-creature-power-2",
+        "title": "Wild Kratts Live! 2.0 - Activate Creature Power! — 5:00 PM — Sunday, January 24"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 92 chars",
+        "url": "https://southbaytoday.org/event/2027-01-25-community-emergency-response-team-cert-academy-winter-2027-campbell",
+        "title": "Community Emergency Response Team (CERT) Academy - Winter 2027 Campbell — Monday, January 25"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-01-27-jazz-at-lincoln-center-presents-world-on-a-string",
+        "title": "Jazz at Lincoln Center Presents: World on a String — Wednesday, January 27"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-01-29-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, January 29 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2027-01-30-alumni-game-stanford-men-s-basketball-vs-nc-state",
+        "title": "Alumni Game: Stanford Men&#39;s Basketball vs. NC State — Saturday, January 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-30-baer-blacksmith-shop-demonstrations",
+        "title": "Baer Blacksmith Shop Demonstrations — Saturday, January 30 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2027-01-30-jubin-nautiyal-live-in-concert-bay-area",
+        "title": "Jubin Nautiyal Live in Concert – Bay Area — Saturday, January 30 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 92 chars",
+        "url": "https://southbaytoday.org/event/2027-01-30-painting-the-year-of-the-ram-ink-painting-on-canvas-teens-adults",
+        "title": "Painting the Year of the Ram: Ink Painting on Canvas (Teens / Adults) — Saturday, January 30"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-01-30-santa-cruz-warriors-vs-iowa-wolves",
+        "title": "Santa Cruz Warriors vs. Iowa Wolves — Saturday, January 30 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2027-02-03-explorer-hike-four-public-lands-loop",
+        "title": "Explorer Hike: Four Public Lands Loop — Wednesday, February 3 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2027-02-04-line-dancing-with-sandy-and-kent",
+        "title": "Line Dancing with Sandy and Kent — Thursday, February 4 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-02-05-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, February 5 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-02-06-family-storytime-celebrate-black-history-month",
+        "title": "Family Storytime: Celebrate Black History Month! — Saturday, February 6"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2027-02-06-music-and-storytelling-with-kirk-waller",
+        "title": "Music &amp; Storytelling with Kirk Waller — Saturday, February 6 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 83 chars",
+        "url": "https://southbaytoday.org/event/2027-02-07-campbell-heritage-theatre-presents-kalani-pe-a-and-taimane",
+        "title": "Campbell Heritage Theatre presents Kalani Pe&#39;a and Taimane — Sunday, February 7"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-02-07-janet-lansbury-with-ruth-whippman",
+        "title": "Janet Lansbury with Ruth Whippman — Sunday, February 7 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 97 chars",
+        "url": "https://southbaytoday.org/event/2027-02-10-black-history-month-celebration-stanford-men-s-basketball-vs-miami",
+        "title": "Black History Month Celebration: Stanford Men&#39;s Basketball vs. Miami — Wednesday, February 10"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-02-10-button-making-pop-up-for-teens",
+        "title": "Button Making Pop-up for Teens! — Wednesday, February 10 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 82 chars",
+        "url": "https://southbaytoday.org/event/2027-02-11-bilingual-family-storytime-celebrate-valentine-s-day",
+        "title": "Bilingual Family Storytime: Celebrate Valentine&#39;s Day! — Thursday, February 11"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-02-11-santa-cruz-warriors-vs-rip-city-remix",
+        "title": "Santa Cruz Warriors vs. Rip City Remix — Thursday, February 11 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-02-12-in-search-of-western-leatherwood",
+        "title": "In Search of Western Leatherwood — Friday, February 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-02-12-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, February 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-alice-in-wonderland-jr",
+        "title": "Alice in Wonderland Jr. — 2:00 PM — Saturday, February 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-alice-in-wonderland-jr-2",
+        "title": "Alice in Wonderland Jr. — 7:00 PM — Saturday, February 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-community-threads-lunar-new-year-felt-goat",
+        "title": "Community Threads: Lunar New Year Felt Goat — Saturday, February 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 90 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-family-storytime-celebrate-valentine-s-day",
+        "title": "Family Storytime: Celebrate Valentine&#39;s Day! — Saturday, February 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 95 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-football-fun-at-maples-stanford-men-s-basketball-vs-virginia-tech",
+        "title": "Football Fun at Maples: Stanford Men&#39;s Basketball vs. Virginia Tech — Saturday, February 13"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-02-13-santa-cruz-warriors-vs-rip-city-remix",
+        "title": "Santa Cruz Warriors vs. Rip City Remix — Saturday, February 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-02-14-alice-in-wonderland-jr",
+        "title": "Alice in Wonderland Jr. — 11:00 AM — Sunday, February 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2027-02-14-alice-in-wonderland-jr-2",
+        "title": "Alice in Wonderland Jr. — 3:00 PM — Sunday, February 14 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-02-17-explorer-hike-winter-in-rancho",
+        "title": "Explorer Hike: Winter in Rancho — Wednesday, February 17 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2027-02-19-join-a-ranger-night-hike-and-flashlight-tour",
+        "title": "Join-A-Ranger: Night Hike and Flashlight Tour — Friday, February 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2027-02-19-journey-usa-the-hits-of-journey",
+        "title": "Journey USA - The Hits of Journey — Friday, February 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-02-19-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, February 19 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2027-02-21-campbell-heritage-theatre-presents-chris-cagle",
+        "title": "Campbell Heritage Theatre presents Chris Cagle — Sunday, February 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2027-02-21-sesame-street-live-elmo-s-got-the-moves",
+        "title": "Sesame Street Live: Elmo&#39;s Got the Moves! — Sunday, February 21 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 71 chars",
+        "url": "https://southbaytoday.org/event/2027-02-24-hands-only-cpr-and-aed-class",
+        "title": "Hands-Only CPR and AED Class — Wednesday, February 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2027-02-24-karen-joy-fowler-with-yangsze-choo",
+        "title": "Karen Joy Fowler with Yangsze Choo — Wednesday, February 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-02-24-morning-meander-meadow-to-farm",
+        "title": "Morning Meander: Meadow to Farm — Wednesday, February 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 74 chars",
+        "url": "https://southbaytoday.org/event/2027-02-24-the-simon-and-garfunkel-story",
+        "title": "The Simon &amp; Garfunkel Story — Wednesday, February 24 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 72 chars",
+        "url": "https://southbaytoday.org/event/2027-02-26-learn-english-beyond-the-basics",
+        "title": "Learn English: Beyond the Basics — Friday, February 26 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-02-26-santa-cruz-warriors-vs-austin-spurs",
+        "title": "Santa Cruz Warriors vs. Austin Spurs — Friday, February 26 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 77 chars",
+        "url": "https://southbaytoday.org/event/2027-02-27-baer-blacksmith-shop-demonstrations",
+        "title": "Baer Blacksmith Shop Demonstrations — Saturday, February 27 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 73 chars",
+        "url": "https://southbaytoday.org/event/2027-02-27-steam-lab-saturday-robot-hand",
+        "title": "STEAM Lab Saturday: Robot Hand! — Saturday, February 27 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 85 chars",
+        "url": "https://southbaytoday.org/event/2027-02-27-yongey-mingyur-rinpoche-with-wasfia-nazreen",
+        "title": "Yongey Mingyur Rinpoche with Wasfia Nazreen — Saturday, February 27 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 76 chars",
+        "url": "https://southbaytoday.org/event/2027-02-28-santa-cruz-warriors-vs-austin-spurs",
+        "title": "Santa Cruz Warriors vs. Austin Spurs — Sunday, February 28 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2027-03-05-join-a-ranger-night-hike-and-flashlight-tour",
+        "title": "Join-A-Ranger: Night Hike and Flashlight Tour — Friday, March 5 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-03-06-concerto-for-orchestra-symphony-san-jose",
+        "title": "Concerto for Orchestra – Symphony San Jose — Saturday, March 6 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 98 chars",
+        "url": "https://southbaytoday.org/event/2027-03-06-family-concert-dave-rocha-jazz-trio-adventures-in-jazz-for-children",
+        "title": "Family concert: Dave Rocha Jazz Trio &#39;Adventures in Jazz&#39; for children — Saturday, March 6"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-03-06-fleetwood-mask-a-tribute-to-fleetwood-mac",
+        "title": "Fleetwood Mask: A Tribute to Fleetwood Mac — Saturday, March 6 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 75 chars",
+        "url": "https://southbaytoday.org/event/2027-03-06-nier-orchestra-concert-12026-yorha",
+        "title": "NieR: Orchestra Concert 12026 [YoRHa] — Saturday, March 6 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2027-03-07-concerto-for-orchestra-symphony-san-jose",
+        "title": "Concerto for Orchestra – Symphony San Jose — Sunday, March 7 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 78 chars",
+        "url": "https://southbaytoday.org/event/2027-03-07-my-very-first-symphony-symphony-san-jose",
+        "title": "My Very First Symphony – Symphony San Jose — Sunday, March 7 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 79 chars",
+        "url": "https://southbaytoday.org/event/2027-03-12-santa-cruz-warriors-vs-oklahoma-city-blue",
+        "title": "Santa Cruz Warriors vs. Oklahoma City Blue — Friday, March 12 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 80 chars",
+        "url": "https://southbaytoday.org/event/2027-03-13-peninsula-symphony-orchestra-the-planets",
+        "title": "Peninsula Symphony Orchestra: The Planets — Saturday, March 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 81 chars",
+        "url": "https://southbaytoday.org/event/2027-03-13-santa-cruz-warriors-vs-oklahoma-city-blue",
+        "title": "Santa Cruz Warriors vs. Oklahoma City Blue — Saturday, March 13 — South Bay Today"
+      },
+      {
+        "severity": "warn",
+        "code": "title-length",
+        "message": "title is 86 chars",
+        "url": "https://southbaytoday.org/event/2027-03-13-stanley-clarke-and-hiromi-with-the-publiquartet",
+        "title": "Stanley Clarke and Hiromi with the PUBLIQuartet — Saturday, March 13 — South Bay Today"
+      }
+    ]
+  },
+  "searchConsole": {
+    "available": false,
+    "reason": "no Search Console credentials — set GSC_SERVICE_ACCOUNT_JSON (raw or base64) or GSC_SERVICE_ACCOUNT_FILE",
+    "findings": []
+  },
+  "status": "COMPLETE",
+  "execution": {
+    "host": "Mini",
+    "mode": "normal",
+    "sourceBase": "33586b87ba1cab63d5b3f4a5913020c399021967",
+    "sharedLock": "Used the shared SBT lock for bounded workspace preparation and publishing.",
+    "scheduledCheckout": "Source editing and validation ran in the isolated SEO worktree."
+  },
+  "browserSearchConsole": {
+    "status": "COMPLETE",
+    "observationDate": "2026-11-17",
+    "browserHost": "Mini",
+    "visibleAccount": "stanwoodventures@gmail.com",
+    "verifiedUrlPrefixProperty": "https://southbaytoday.org/",
+    "performance": {
+      "current": {
+        "startDate": "2026-10-19",
+        "endDate": "2026-11-15",
+        "clicks": 863,
+        "impressionsDisplay": "26.6K",
+        "ctrPercent": 3.2,
+        "averagePosition": 7.6
+      },
+      "previous": {
+        "startDate": "2026-09-21",
+        "endDate": "2026-10-18",
+        "clicks": 797,
+        "impressionsDisplay": "30.1K",
+        "ctrPercent": 2.7,
+        "averagePosition": 6.6
+      },
+      "clickChangePercent": 8.3,
+      "impressionsAreRounded": true,
+      "datesVerifiedInVisibleCompareDialog": true,
+      "topQueries": [
+        {
+          "query": "los altos halloween 2026",
+          "currentClicks": 19,
+          "previousClicks": 0,
+          "currentImpressions": 126,
+          "previousImpressions": 0
+        },
+        {
+          "query": "koyote san jose",
+          "currentClicks": 7,
+          "previousClicks": 3,
+          "currentImpressions": 108,
+          "previousImpressions": 62
+        },
+        {
+          "query": "what to do in south bay today",
+          "currentClicks": 4,
+          "previousClicks": 0,
+          "currentImpressions": 13,
+          "previousImpressions": 14
+        },
+        {
+          "query": "south bay events today",
+          "currentClicks": 3,
+          "previousClicks": 5,
+          "currentImpressions": 72,
+          "previousImpressions": 78
+        },
+        {
+          "query": "sami beigi concert san jose",
+          "currentClicks": 3,
+          "previousClicks": 0,
+          "currentImpressions": 59,
+          "previousImpressions": 0
+        },
+        {
+          "query": "events in south bay today",
+          "currentClicks": 3,
+          "previousClicks": 0,
+          "currentImpressions": 28,
+          "previousImpressions": 35
+        },
+        {
+          "query": "life surge san jose",
+          "currentClicks": 2,
+          "previousClicks": 0,
+          "currentImpressions": 420,
+          "previousImpressions": 0
+        },
+        {
+          "query": "san jose events today",
+          "currentClicks": 2,
+          "previousClicks": 0,
+          "currentImpressions": 29,
+          "previousImpressions": 14
+        },
+        {
+          "query": "events south bay today",
+          "currentClicks": 2,
+          "previousClicks": 1,
+          "currentImpressions": 29,
+          "previousImpressions": 30
+        },
+        {
+          "query": "diwali events near me",
+          "currentClicks": 2,
+          "previousClicks": 0,
+          "currentImpressions": 15,
+          "previousImpressions": 1
+        }
+      ],
+      "topPages": [
+        {
+          "path": "/",
+          "currentClicks": 64,
+          "previousClicks": 59,
+          "currentImpressions": 1021,
+          "previousImpressions": 1447
+        },
+        {
+          "path": "/event/2026-10-30-a-boo-tiful-downtown-halloween",
+          "currentClicks": 25,
+          "previousClicks": 7,
+          "currentImpressions": 522,
+          "previousImpressions": 68
+        },
+        {
+          "path": "/event/2026-11-22-festival-of-lights-a-diwali-celebration",
+          "currentClicks": 20,
+          "previousClicks": 8,
+          "currentImpressions": 315,
+          "previousImpressions": 37
+        },
+        {
+          "path": "/event/2026-12-19-sami-beigi-live-in-san-jose",
+          "currentClicks": 12,
+          "previousClicks": 0,
+          "currentImpressions": 653,
+          "previousImpressions": 0
+        },
+        {
+          "path": "/event/2026-11-08-koyote",
+          "currentClicks": 12,
+          "previousClicks": 9,
+          "currentImpressions": 459,
+          "previousImpressions": 356
+        },
+        {
+          "path": "/event/2026-10-31-spooky-stroll-fancy-halloween-walk-downtown-los-gatos-treats",
+          "currentClicks": 11,
+          "previousClicks": 1,
+          "currentImpressions": 125,
+          "previousImpressions": 8
+        },
+        {
+          "path": "/event/2026-11-07-diwali-cultural-celebration",
+          "currentClicks": 11,
+          "previousClicks": 0,
+          "currentImpressions": 78,
+          "previousImpressions": 0
+        },
+        {
+          "path": "/event/2026-10-23-slash-and-sip-adult-pumpkin-carving",
+          "currentClicks": 11,
+          "previousClicks": 0,
+          "currentImpressions": 70,
+          "previousImpressions": 0
+        },
+        {
+          "path": "/events/2026-11-01",
+          "currentClicks": 11,
+          "previousClicks": 0,
+          "currentImpressions": 58,
+          "previousImpressions": 7
+        },
+        {
+          "path": "/event/2026-10-24-trunk-or-treat",
+          "currentClicks": 8,
+          "previousClicks": 0,
+          "currentImpressions": 85,
+          "previousImpressions": 0
+        }
+      ],
+      "interpretation": "Halloween and specific performers account for many visible queries. Diwali and Sami Beigi leaves are gaining demand. LIFE SURGE has 420 impressions and 2 clicks but the event has passed; do not rewrite an expired event or invent another edition. Homepage clicks rose despite fewer impressions. No evidence supports keyword, redirect or ranking churn."
+    },
+    "pageIndexing": {
+      "reportDate": "2026-11-12",
+      "indexed": 9394,
+      "notIndexed": 4712,
+      "reasons": {
+        "notFound404": 3056,
+        "noindex": 898,
+        "redirect": 46,
+        "alternateCanonical": 21,
+        "robots": 1,
+        "crawledNotIndexed": 467,
+        "discoveredNotIndexed": 222,
+        "differentCanonical": 1
+      },
+      "comparisonToPrevious": {
+        "previousReportDate": "2026-11-05",
+        "indexed": 546,
+        "notIndexed": 229
+      },
+      "sample404s": [
+        "/event/2026-08-07-knit-alongs",
+        "/event/2026-08-02-free-shakespeare-in-the-park-event",
+        "/event/2026-07-20-museum-minis-storytime-with-maria-raimundo",
+        "/event/2026-09-17-tech-mentor",
+        "/event/2026-08-08-aja-monet",
+        "/event/2026-08-19-lotus-lantern-craft",
+        "/event/2026-07-30-preschool-storytime",
+        "/event/2026-09-11-live-music",
+        "/event/2026-10-02-get-the-led-out-with-a-celebration-of-the-mighty-zep",
+        "/event/2026-09-04-little-explorers-tape-town"
+      ],
+      "finding": "All ten visible 404 examples are expired events. No blanket validation, de-indexing or redirects warranted."
+    },
+    "sitemaps": {
+      "index": "/sitemap-index.xml",
+      "status": "Success",
+      "submitted": "2026-06-10",
+      "lastRead": "2026-11-07",
+      "discoveredPages": 1911,
+      "children": [
+        {
+          "path": "/sitemap-0.xml",
+          "lastRead": "2026-11-16",
+          "status": "Success",
+          "discoveredUrls": 1657
+        },
+        {
+          "path": "/sitemap-newsletters.xml",
+          "lastRead": "2026-11-16",
+          "status": "Success",
+          "discoveredUrls": 146
+        },
+        {
+          "path": "/sitemap-plans.xml",
+          "lastRead": "2026-11-14",
+          "status": "Success",
+          "discoveredUrls": 108
+        }
+      ],
+      "actions": []
+    },
+    "coreWebVitals": {
+      "reportDate": "2026-11-08",
+      "mobile": "insufficient usage data in 90 days",
+      "desktop": "insufficient usage data in 90 days"
+    },
+    "https": {
+      "reportDate": "2026-11-15",
+      "valid": 270,
+      "invalid": 0,
+      "findings": "No issues detected in 90 days"
+    },
+    "breadcrumbs": {
+      "reportDate": "2026-11-14",
+      "valid": 250,
+      "invalid": 0
+    },
+    "eventsEnhancement": {
+      "reportDate": "2026-11-14",
+      "valid": 478,
+      "invalid": 0,
+      "nonCriticalWarnings": {
+        "performer": 478,
+        "organizer": 478,
+        "offersValidFrom": 334,
+        "offersAvailability": 305,
+        "endDate": 151,
+        "offers": 144,
+        "offersPriceCurrency": 71,
+        "offersPrice": 71,
+        "offersHighPrice": 9
+      },
+      "organizerUrlValidation": {
+        "status": "Passed",
+        "affected": 0
+      }
+    },
+    "manualActions": "No issues detected",
+    "securityIssues": "No issues detected",
+    "mutations": [],
+    "urlInspection": {
+      "status": "COMPLETE",
+      "observedAt": "2026-11-18T04:12:48.444Z",
+      "browser": "Normal signed-in Mini Brave",
+      "performed": [
+        {
+          "url": "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+          "indexed": true,
+          "lastIndexedCrawlAsDisplayed": "Nov 10, 2026, 7:25:06 AM",
+          "crawler": "Googlebot smartphone",
+          "fetch": "Successful",
+          "crawlAllowed": true,
+          "indexingAllowed": true,
+          "declaredCanonical": "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+          "googleSelectedCanonical": "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+          "https": true,
+          "validBreadcrumbs": 1,
+          "validEvents": 1,
+          "finding": "Google now shows the page as indexed following the November 10 follow-up."
+        },
+        {
+          "url": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+          "indexed": true,
+          "lastIndexedCrawlAsDisplayed": "Oct 29, 2026, 1:04:15 PM",
+          "crawler": "Googlebot smartphone",
+          "fetch": "Successful",
+          "crawlAllowed": true,
+          "indexingAllowed": true,
+          "declaredCanonical": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+          "googleSelectedCanonical": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+          "https": true,
+          "validBreadcrumbs": 1,
+          "validEvents": 1,
+          "liveTest": {
+            "testedAtAsDisplayed": "Nov 17, 2026, 8:11:53 PM",
+            "crawler": "Google Inspection Tool smartphone",
+            "fetch": "Successful",
+            "crawlAllowed": true,
+            "indexingAllowed": true,
+            "declaredCanonical": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+            "validBreadcrumbs": 1,
+            "validEvents": 1,
+            "finding": "The indexed crawl predates the organizer-link fix. Google can index the currently deployed page."
+          }
+        }
+      ],
+      "sitemapDiscovery": "Both exact URLs appear in the live sitemap-0.xml, and the GSC sitemap report shows success. The URL Inspection discovery fields showed a temporary sitemap processing message."
+    },
+    "actionsReason": "Both inspected URLs are already indexed. The Christmas Tea live test passed and the sitemap report is healthy. No indexing request, Validate fix, or sitemap submission was warranted."
+  },
+  "traffic": {
+    "generatedAt": "2026-11-17T09:20:55.114Z",
+    "completeThrough": "2026-11-16",
+    "windows": {
+      "last7": {
+        "since": "2026-11-10",
+        "until": "2026-11-16",
+        "days": 7
+      },
+      "prior7": {
+        "since": "2026-11-03",
+        "until": "2026-11-09",
+        "days": 7
+      },
+      "last30": {
+        "since": "2026-10-18",
+        "until": "2026-11-16",
+        "days": 30
+      },
+      "prior30": {
+        "since": "2026-09-18",
+        "until": "2026-10-17",
+        "days": 30
+      }
+    },
+    "traffic": {
+      "last7Days": {
+        "visitors": 4063,
+        "pageviews": 4689,
+        "previous": {
+          "visitors": 3578,
+          "pageviews": 3941
+        },
+        "changePercent": {
+          "visitors": 13.6,
+          "pageviews": 19
+        }
+      },
+      "last30Days": {
+        "visitors": 13745,
+        "pageviews": 15768,
+        "previous": {
+          "visitors": 7782,
+          "pageviews": 10826
+        },
+        "changePercent": {
+          "visitors": 76.6,
+          "pageviews": 45.6
+        }
+      }
+    },
+    "topPages": [
+      {
+        "requestPath": "/events",
+        "visitors": 1005,
+        "pageviews": 1121
+      },
+      {
+        "requestPath": "/",
+        "visitors": 463,
+        "pageviews": 523
+      },
+      {
+        "requestPath": "/events/2026-10-30",
+        "visitors": 139,
+        "pageviews": 143
+      },
+      {
+        "requestPath": "/events/2026-10-17",
+        "visitors": 126,
+        "pageviews": 126
+      },
+      {
+        "requestPath": "/events/2026-10-24",
+        "visitors": 104,
+        "pageviews": 104
+      },
+      {
+        "requestPath": "/events/2026-11-14",
+        "visitors": 99,
+        "pageviews": 103
+      },
+      {
+        "requestPath": "/events/2026-10-14",
+        "visitors": 87,
+        "pageviews": 87
+      },
+      {
+        "requestPath": "/events/2026-10-19",
+        "visitors": 85,
+        "pageviews": 86
+      },
+      {
+        "requestPath": "/events/2026-10-22",
+        "visitors": 77,
+        "pageviews": 77
+      },
+      {
+        "requestPath": "/events/2026-10-07",
+        "visitors": 75,
+        "pageviews": 75
+      },
+      {
+        "requestPath": "/events/2026-10-05",
+        "visitors": 72,
+        "pageviews": 72
+      },
+      {
+        "requestPath": "/events/2026-11-06",
+        "visitors": 69,
+        "pageviews": 72
+      }
+    ],
+    "topReferrers": [
+      {
+        "referrerHostname": "(direct / unknown)",
+        "visitors": 11941,
+        "pageviews": 13470
+      },
+      {
+        "referrerHostname": "google.com",
+        "visitors": 1183,
+        "pageviews": 1314
+      },
+      {
+        "referrerHostname": "duckduckgo.com",
+        "visitors": 164,
+        "pageviews": 188
+      },
+      {
+        "referrerHostname": "bing.com",
+        "visitors": 109,
+        "pageviews": 117
+      },
+      {
+        "referrerHostname": "search.yahoo.com",
+        "visitors": 65,
+        "pageviews": 79
+      },
+      {
+        "referrerHostname": "nextdoor.com",
+        "visitors": 27,
+        "pageviews": 28
+      },
+      {
+        "referrerHostname": "search.brave.com",
+        "visitors": 8,
+        "pageviews": 15
+      },
+      {
+        "referrerHostname": "lasmadres.metafox.app",
+        "visitors": 7,
+        "pageviews": 8
+      },
+      {
+        "referrerHostname": "com.google.android.gm",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "referrerHostname": "ecosia.org",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "referrerHostname": "gemini.google.com",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "referrerHostname": "com.google.android.googlequicksearchbox",
+        "visitors": 2,
+        "pageviews": 3
+      }
+    ],
+    "aiReferrers": [
+      {
+        "referrerHostname": "gemini.google.com",
+        "visitors": 4,
+        "pageviews": 4
+      }
+    ],
+    "topCountries": [
+      {
+        "country": "US",
+        "visitors": 3927,
+        "pageviews": 5636
+      },
+      {
+        "country": "SG",
+        "visitors": 3285,
+        "pageviews": 3394
+      },
+      {
+        "country": "CN",
+        "visitors": 1055,
+        "pageviews": 1066
+      },
+      {
+        "country": "HK",
+        "visitors": 386,
+        "pageviews": 387
+      },
+      {
+        "country": "IN",
+        "visitors": 375,
+        "pageviews": 379
+      },
+      {
+        "country": "PH",
+        "visitors": 305,
+        "pageviews": 309
+      },
+      {
+        "country": "GB",
+        "visitors": 281,
+        "pageviews": 301
+      },
+      {
+        "country": "BD",
+        "visitors": 237,
+        "pageviews": 239
+      }
+    ],
+    "notFoundPages": [
+      {
+        "requestPath": "/event/2026-11-02-reading-to-children",
+        "visitors": 13,
+        "pageviews": 13
+      },
+      {
+        "requestPath": "/event/2026-11-07-crochet-and-knitting-club",
+        "visitors": 6,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/event/2026-11-08-crochet-and-knitting-club",
+        "visitors": 6,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/event/2026-11-03-friday-crafternoons",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-11-10-knitting-crocheting-tatting-bobbin-lace-club",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-11-11-knitting-crocheting-tatting-bobbin-lace-club",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-11-12-knitting-crocheting-tatting-bobbin-lace-club",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-11-13-knitting-crocheting-tatting-bobbin-lace-club",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-11-14-knitting-crocheting-tatting-bobbin-lace-club",
+        "visitors": 5,
+        "pageviews": 5
+      },
+      {
+        "requestPath": "/event/2026-06-27-dungeons-and-dragons-summer-mini-campaign",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "requestPath": "/event/2026-07-06-summer-camp-ceramics-wheel-throwing-2",
+        "visitors": 4,
+        "pageviews": 4
+      },
+      {
+        "requestPath": "/event/2026-07-21-the-employee-dharma-handbook",
+        "visitors": 4,
+        "pageviews": 4
+      }
+    ]
+  },
+  "health": {
+    "reportGeneratedAt": "2026-11-17T09:20:53.973Z",
+    "artifacts": [
+      {
+        "name": "Events",
+        "file": "upcoming-events.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T07:35:51.180Z",
+        "ageHours": 1.7507730555555556,
+        "stale": false,
+        "itemCount": 1459,
+        "fileSizeKB": 2333,
+        "warnings": []
+      },
+      {
+        "name": "Upcoming Meetings",
+        "file": "upcoming-meetings.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:43:32.577Z",
+        "ageHours": 4.6226075,
+        "stale": false,
+        "itemCount": 10,
+        "fileSizeKB": 12,
+        "warnings": [
+          "no meeting on the calendar: saratoga"
+        ]
+      },
+      {
+        "name": "Digests",
+        "file": "digests.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:49:32.374Z",
+        "ageHours": 4.522663888888889,
+        "stale": false,
+        "itemCount": 11,
+        "fileSizeKB": 19,
+        "warnings": []
+      },
+      {
+        "name": "City Briefings",
+        "file": "city-briefings.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:51:15.477Z",
+        "ageHours": 4.494026666666667,
+        "stale": false,
+        "itemCount": 10,
+        "fileSizeKB": 13,
+        "warnings": []
+      },
+      {
+        "name": "Around Town",
+        "file": "around-town.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:50:52.547Z",
+        "ageHours": 4.500396111111111,
+        "stale": false,
+        "itemCount": 8,
+        "fileSizeKB": 6,
+        "warnings": []
+      },
+      {
+        "name": "Restaurant Radar",
+        "file": "restaurant-radar.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:51:37.245Z",
+        "ageHours": 4.48798,
+        "stale": false,
+        "itemCount": 10,
+        "fileSizeKB": 4,
+        "warnings": []
+      },
+      {
+        "name": "SCC Food Openings",
+        "file": "scc-food-openings.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:51:37.108Z",
+        "ageHours": 4.488018055555556,
+        "stale": false,
+        "itemCount": 24,
+        "fileSizeKB": 17,
+        "warnings": []
+      },
+      {
+        "name": "Permits",
+        "file": "permit-pulse.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:43:32.802Z",
+        "ageHours": 4.6225475,
+        "stale": false,
+        "itemCount": 10,
+        "fileSizeKB": 5,
+        "warnings": []
+      },
+      {
+        "name": "APOD",
+        "file": "apod.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-16T04:22:00.748Z",
+        "ageHours": 28.98145138888889,
+        "stale": false,
+        "itemCount": 12,
+        "fileSizeKB": 17,
+        "warnings": []
+      },
+      {
+        "name": "Weekend Picks",
+        "file": "weekend-picks.json",
+        "cadence": "weekly",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:51:19.065Z",
+        "ageHours": 4.49303,
+        "stale": false,
+        "itemCount": 4,
+        "fileSizeKB": 4,
+        "warnings": []
+      },
+      {
+        "name": "Spring Break Picks",
+        "file": "spring-break-picks.json",
+        "cadence": "seasonal",
+        "exists": true,
+        "generatedAt": "2026-04-14T02:12:14.623Z",
+        "ageHours": 5215.144263888889,
+        "stale": true,
+        "itemCount": 12,
+        "fileSizeKB": 7,
+        "warnings": [
+          "stale (>720h)"
+        ]
+      },
+      {
+        "name": "Photos",
+        "file": "photos.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": "2026-11-17T04:51:58.021Z",
+        "ageHours": 4.482208888888889,
+        "stale": false,
+        "itemCount": 88,
+        "fileSizeKB": 41,
+        "warnings": []
+      },
+      {
+        "name": "Curated Photos",
+        "file": "curated-photos.json",
+        "cadence": "daily",
+        "exists": true,
+        "generatedAt": null,
+        "ageHours": null,
+        "stale": false,
+        "itemCount": 139,
+        "fileSizeKB": 74,
+        "warnings": [
+          "no generatedAt timestamp"
+        ]
+      },
+      {
+        "name": "Short URLs",
+        "file": "short-urls.json",
+        "cadence": "on-demand",
+        "exists": true,
+        "generatedAt": null,
+        "ageHours": null,
+        "stale": false,
+        "itemCount": 67,
+        "fileSizeKB": 22,
+        "warnings": []
+      }
+    ],
+    "summary": {
+      "total": 14,
+      "stale": 1,
+      "warnings": 3,
+      "missing": 0
+    }
+  },
+  "crawlerSurfaces": [
+    {
+      "path": "/robots.txt",
+      "userAgent": "Googlebot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "Googlebot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "Googlebot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "Googlebot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    },
+    {
+      "path": "/robots.txt",
+      "userAgent": "bingbot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "bingbot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "bingbot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "bingbot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    },
+    {
+      "path": "/robots.txt",
+      "userAgent": "OAI-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "OAI-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "OAI-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "OAI-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    },
+    {
+      "path": "/robots.txt",
+      "userAgent": "ChatGPT-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "ChatGPT-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "ChatGPT-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "ChatGPT-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    },
+    {
+      "path": "/robots.txt",
+      "userAgent": "Claude-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "Claude-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "Claude-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "Claude-SearchBot",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    },
+    {
+      "path": "/robots.txt",
+      "userAgent": "Claude-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/robots.txt",
+      "bytes": 353,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4d1c9414f70219763a45f746f5c4f038f926ec4b4627b9e8c3607e614a9c0366",
+      "challenge": false
+    },
+    {
+      "path": "/llms.txt",
+      "userAgent": "Claude-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/llms.txt",
+      "bytes": 2440,
+      "contentType": "text/plain; charset=utf-8",
+      "sha256": "4e07de7b282b26cd8cbc84f935c8f957affbdd9a9fa88de78c7df26ddf6c2a03",
+      "challenge": false
+    },
+    {
+      "path": "/rss.xml",
+      "userAgent": "Claude-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/rss.xml",
+      "bytes": 10629,
+      "contentType": "application/xml",
+      "sha256": "4385ae0e5128868f5a90cf5226d6c630ff2f860b8a17d7a2255ba8def26f11da",
+      "challenge": false
+    },
+    {
+      "path": "/sitemap-index.xml",
+      "userAgent": "Claude-User",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/sitemap-index.xml",
+      "bytes": 340,
+      "contentType": "application/xml",
+      "sha256": "7b506b303c723cf0c9617886465bae170c634b3b675b8b35e424a43b5ae37ca6",
+      "challenge": false
+    }
+  ],
+  "liveBaseline": [
+    {
+      "path": "/",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/",
+      "bytes": 26904,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "21d75d761137ab00e4f225d44404ebb2c071ee4e06eace589a1bb1318e5538c8",
+      "challenge": false,
+      "h1": [
+        "What should we do today?"
+      ],
+      "canonical": [
+        "https://southbaytoday.org"
+      ],
+      "title": "The South Bay Today",
+      "description": "What should we do today? Day plans, events, restaurants, and parks across Campbell, Los Gatos, Mountain View, San José, Palo Alto, and six more South Bay cities.",
+      "robots": null
+    },
+    {
+      "path": "/events",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/events",
+      "bytes": 41450,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "40b4ab97e7db3f30d14e7d082d08cb3d2e92f43b496099801c26aa5098d1e91e",
+      "challenge": false,
+      "h1": [
+        "Events"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/events"
+      ],
+      "title": "South Bay Events Today &amp; This Weekend — South Bay Today",
+      "description": "Find concerts, festivals, free events, and family outings today and this weekend in San José, Santa Clara, Campbell, and nearby South Bay cities.",
+      "robots": null
+    },
+    {
+      "path": "/city/campbell",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/city/campbell",
+      "bytes": 53676,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "af6324444f0c21de17606b44640f89491376922d1f36d66cbb36b4c4b2bc9a60",
+      "challenge": false,
+      "h1": [
+        "Campbell"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/city/campbell"
+      ],
+      "title": "Campbell — South Bay Today",
+      "description": "What's happening in Campbell today: events, city council meetings, development updates, and local news.",
+      "robots": null
+    },
+    {
+      "path": "/food",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/food",
+      "bytes": 50370,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "b6fc05546ffc70a7df2e90a01752efc1cc0d85d4456655daf9a687ab2faa3c90",
+      "challenge": false,
+      "h1": [
+        "Food"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/food"
+      ],
+      "title": "South Bay Restaurants &amp; Farmers Markets — South Bay Today",
+      "description": "Find verified restaurant openings, recent final inspections, promising buildouts, and weekly farmers markets across the South Bay.",
+      "robots": null
+    },
+    {
+      "path": "/gov",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/gov",
+      "bytes": 32150,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "c51f68d336a05b4c03102d02e26af51923d888590ef9fdb4055a911e045badd8",
+      "challenge": false,
+      "h1": [
+        "Local Government"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/gov"
+      ],
+      "title": "Local Government — South Bay Today",
+      "description": "Plain-English digests of South Bay city council meetings, what's being built, and 2026 elections.",
+      "robots": null
+    },
+    {
+      "path": "/camps",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/camps",
+      "bytes": 36954,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "d251368e6c74b824c02bcad58d5ab05ede1ff3fb1cb610efc25a987af4620045",
+      "challenge": false,
+      "h1": [
+        "Summer Camps"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/camps"
+      ],
+      "title": "Summer Camps — South Bay Today",
+      "description": "South Bay summer camp directory with availability, pricing, and registration links.",
+      "robots": null
+    },
+    {
+      "path": "/tech",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/tech",
+      "bytes": 77440,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "17a0e712706e527efd9a939bad476a527584504c1b1e729814d887d725336b2d",
+      "challenge": false,
+      "h1": [
+        "Technology"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/tech"
+      ],
+      "title": "Technology — South Bay Today",
+      "description": "Silicon Valley tech news roundup — major employers, hiring, AI, and what's happening across local campuses.",
+      "robots": null
+    },
+    {
+      "path": "/newsletters",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/newsletters",
+      "bytes": 61507,
+      "contentType": "text/html",
+      "sha256": "8ffff771fb3e8ea1c6924e72bf02e71ae2fefe30cfa444f2e32823afabbdb1c5",
+      "challenge": false,
+      "h1": [
+        "The newsletter, archived."
+      ],
+      "canonical": [
+        "https://southbaytoday.org/newsletters"
+      ],
+      "title": "Newsletter archive — South Bay Today",
+      "description": "Past issues of the South Bay Today newsletter — the day's plan, what's new, what's opening, what city hall did.",
+      "robots": null
+    },
+    {
+      "path": "/newsletters/2026-11-16",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/newsletters/2026-11-16",
+      "bytes": 26670,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "1ca332a9f317e3302e134f4c2651a3fa8beb636201883556349111265228c816",
+      "challenge": false,
+      "h1": [
+        "South Bay Today — Monday, November 16, 2026"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/newsletters/2026-11-16"
+      ],
+      "title": "South Bay Today — Monday, November 16, 2026",
+      "description": "Rain and a high of 59 set the terms for Monday, so the useful options are mostly under a roof: a free Native American Heritage Month matinee at Joyce Ellington Library, a run of free library programs across San Jose…",
+      "robots": null
+    },
+    {
+      "path": "/event/2026-11-22-festival-of-lights-a-diwali-celebration",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/event/2026-11-22-festival-of-lights-a-diwali-celebration",
+      "bytes": 26742,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "e16cf3aeb6d79d345a698314176b62461a0f9f5eac74dce4549b3c76651c3875",
+      "challenge": false,
+      "h1": [
+        "Festival of Lights: A Diwali Celebration"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/event/2026-11-22-festival-of-lights-a-diwali-celebration"
+      ],
+      "title": "Festival of Lights: A Diwali Celebration — Sunday, November 22 — South Bay Today",
+      "description": "Festival of Lights: A Diwali Celebration on Sunday, November 22, 2026 at Mitchell Park Community Center in Palo Alto. Celebrate Diwali with the community…",
+      "robots": null
+    },
+    {
+      "path": "/event/2026-12-19-sami-beigi-live-in-san-jose",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/event/2026-12-19-sami-beigi-live-in-san-jose",
+      "bytes": 27246,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "112f3781d0adc5c70236cb06c4687d3d228c114f6d389a628a7632473845492b",
+      "challenge": false,
+      "h1": [
+        "Sami Beigi Live in San Jose"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/event/2026-12-19-sami-beigi-live-in-san-jose"
+      ],
+      "title": "Sami Beigi Live in San Jose — Saturday, December 19 — South Bay Today",
+      "description": "Sami Beigi Live in San Jose on Saturday, December 19, 2026 at San Jose Civic in San José. Hear Persian pop singer Sami Beigi perform live on stage at San…",
+      "robots": null
+    },
+    {
+      "path": "/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+      "bytes": 27181,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "8b01817637b431f0dfa49ba8feb60f0415dfb263270f8cdb64e55434ff4a0546",
+      "challenge": false,
+      "h1": [
+        "Cardinal Kids Day: Stanford Men's Basketball vs. Pacific"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific"
+      ],
+      "title": "Cardinal Kids Day: Stanford Men&#39;s Basketball vs. Pacific — Sunday, December 6",
+      "description": "Cardinal Kids Day: Stanford Men's Basketball vs. Pacific on Sunday, December 6, 2026 at Maples Pavilion in Palo Alto. Watch Stanford take on Pacific at a…",
+      "robots": null
+    },
+    {
+      "path": "/event/2026-12-03-pclg-christmas-tea",
+      "userAgent": "SBT-weekly-SEO/1.0",
+      "status": 200,
+      "finalUrl": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+      "bytes": 25093,
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "86bf1a243ba8a8d9c53c5bac0e6df1567ecb40eb4d5a80b9a07669c8aef63c1c",
+      "challenge": false,
+      "h1": [
+        "PCLG Christmas Tea"
+      ],
+      "canonical": [
+        "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea"
+      ],
+      "title": "PCLG Christmas Tea — Thursday, December 3 — South Bay Today",
+      "description": "PCLG Christmas Tea on Thursday, December 3, 2026 at Presbyterian Church of Los Gatos in Los Gatos. Hear the Mountain View High School Madrigal Choir in…",
+      "robots": null
+    }
+  ],
+  "sources": {
+    "generatedAt": "2026-11-17T07:35:51.180Z",
+    "eventCount": 1459,
+    "adapters": {
+      "ok": 30,
+      "empty": 14
+    },
+    "cityCounts": {
+      "san-jose": 576,
+      "los-altos": 68,
+      "santa-clara": 60,
+      "palo-alto": 353,
+      "saratoga": 77,
+      "campbell": 62,
+      "mountain-view": 45,
+      "milpitas": 51,
+      "cupertino": 86,
+      "sunnyvale": 27,
+      "los-gatos": 32,
+      "santa-cruz": 22
+    },
+    "missingPrimaryUrls": [
+      {
+        "id": "inbound-8660b93fe7f39851",
+        "title": "Two-Day Clay Gingerbread House Workshop",
+        "date": "2026-12-05",
+        "city": "palo-alto"
+      },
+      {
+        "id": "inbound-3d0b4df90d831352",
+        "title": "Mindfulness Meditation with Phuong Pham",
+        "date": "2026-12-05",
+        "city": "palo-alto"
+      },
+      {
+        "id": "inbound-aab1388675c3fb04",
+        "title": "Senior Center Book Group: Sipsworth",
+        "date": "2026-11-20",
+        "city": "sunnyvale"
+      },
+      {
+        "id": "inbound-71cf246f4d546eb6",
+        "title": "Youth Workshop: Cute Kawaii Winter Wonderland",
+        "date": "2026-12-12",
+        "city": "palo-alto"
+      }
+    ],
+    "repairEvidence": {
+      "url": "https://www.pclg.org/this-week/2026-11-11.pdf",
+      "finalUrl": "https://www.pclg.org/this-week/2026-11-11.pdf",
+      "status": 200,
+      "bytes": 1634715,
+      "sha256": "d4f4c041c0a1fc5cba4b7f95625e9b01f815b327a15ffca4052aa9d9a13b3002",
+      "checkedAt": "2026-11-17T09:25:01.079692+00:00",
+      "confirms": "Page 5: December 3 at 1:30 PM; $25 cash/check; sanctuary choir followed by Social Hall refreshments."
+    },
+    "finding": "Five source-less listings became four. PCLG's dated organizer newsletter confirms the exact December 3 occurrence. No other source URL was invented. No adapter errors; empty seasonal adapters alone do not establish outages.",
+    "coverage": "Libraries contribute 567 of 1,459 rows; San Jose and Palo Alto together contribute 929. Retain useful filters and observe reader demand before changing ranking or imposing city quotas."
+  },
+  "changes": [
+    {
+      "type": "source provenance",
+      "files": [
+        "scripts/lib/inbound-event-normalize.mjs",
+        "scripts/lib/inbound-event-normalize.test.mjs",
+        "src/data/south-bay/upcoming-events.json"
+      ],
+      "url": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+      "sourceUrl": "https://www.pclg.org/this-week/2026-11-11.pdf",
+      "details": "Restored only the published row URL. Identity, slug, schedule, admission and all other rows preserved. The narrowly scoped intake repair persists through refresh while preserving later organizer URLs and original receiving records."
+    },
+    {
+      "type": "search description accuracy",
+      "path": "/gov",
+      "before": "Plain-English digests of South Bay city council meetings, what's being built, and 2026 elections.",
+      "after": "Find upcoming council meetings, agenda links, searchable public records, and plain-English meeting summaries for 11 South Bay cities.",
+      "reason": "Matches current meetings, records and digests; no election section."
+    },
+    {
+      "type": "search description accuracy",
+      "path": "/camps",
+      "before": "South Bay summer camp directory with availability, pricing, and registration links.",
+      "after": "Compare South Bay summer camp programs by age and 2026 price, then check each operator for next season's dates and registration.",
+      "reason": "The visible page labels the completed 2026 season as a shortlist; no promise of current availability."
+    }
+  ],
+  "product": {
+    "status": "covered",
+    "surfaces": [
+      "/",
+      "/events",
+      "/city/campbell",
+      "/food",
+      "/gov",
+      "/camps",
+      "/tech",
+      "/newsletters",
+      "/newsletters/2026-11-16",
+      "current event leaves",
+      "/events/2026-12-03"
+    ],
+    "findings": [
+      "Home retains three activity/meal pairs; no added sections or ranking changes. Before nightly plan refresh, prerendered HTML carries November 16 plans; no conclusion about current hydrated plans is inferred from that static response.",
+      "Native Events hydration showed November 17 and current counts. Exact PCLG search finds the December 3 event with the verified organizer link. Controls remain above results.",
+      "Food distinguishes verified openings, final inspections and permits; no unsupported opening claim.",
+      "Government has 11 fresh digests, current meetings and clear agenda availability. Revised metadata describes those actual features.",
+      "Camps labels historical 2026 prices and completed season. Revised metadata matches that limitation.",
+      "Tech retains current employer/funding surfaces and does not restore deliberately removed components.",
+      "Newsletter archive and November 16 issue return 200 with headings, canonical and sourced local content. Historical emails were not rewritten.",
+      "Unused seasonal spring-break artifact accounts for the stale warning. No discontinued section or Home banner was introduced."
+    ],
+    "recommendation": "Retain existing calendar and city surfaces. Monitor seasonal search demand and keep search descriptions and organizer links aligned with what readers can find on the page."
+  },
+  "checks": {
+    "npmCi": "PASS",
+    "focused": {
+      "tests": 36,
+      "failures": 0,
+      "file": "scripts/lib/inbound-event-normalize.test.mjs"
+    },
+    "npmCheck": {
+      "groups": 112,
+      "tests": 2971,
+      "failures": 0
+    },
+    "astroCheck": {
+      "files": 687,
+      "errors": 0,
+      "warnings": 0,
+      "existingHints": 105
+    },
+    "build": "PASS; 2m 10s. Vercel adapter selects supported Node 24.",
+    "discoveryAudit": {
+      "outputDir": "dist/client",
+      "metrics": {
+        "sitemapUrls": 1622,
+        "htmlPagesChecked": 1621,
+        "jsonLdBlocks": 3394,
+        "eventLeafPages": 1430,
+        "ssrPagesSkipped": 3
+      },
+      "errors": [],
+      "warnings": [
+        "https://southbaytoday.org/event/2026-11-18-free-adult-esl-class awaits organizer confirmation; Event markup is intentionally omitted.",
+        "https://southbaytoday.org/event/2026-11-19-pearl-avenue-teens-reach-meeting awaits organizer confirmation; Event markup is intentionally omitted.",
+        "https://southbaytoday.org/event/2026-11-20-senior-center-book-group-sipsworth has no primary-source sameAs URL.",
+        "https://southbaytoday.org/event/2026-11-21-restore-and-explore-trail-clean-up-and-trail-tour awaits organizer confirmation; Event markup is intentionally omitted.",
+        "https://southbaytoday.org/event/2026-12-05-mindfulness-meditation-with-phuong-pham has no primary-source sameAs URL.",
+        "https://southbaytoday.org/event/2026-12-05-two-day-clay-gingerbread-house-workshop has no primary-source sameAs URL.",
+        "https://southbaytoday.org/event/2026-12-12-youth-workshop-cute-kawaii-winter-wonderland has no primary-source sameAs URL.",
+        "https://southbaytoday.org/event/2026-12-19-performance-nathan-s-fearless-five-returns awaits organizer confirmation; Event markup is intentionally omitted.",
+        "https://southbaytoday.org/newsletters is server-rendered (src/pages/newsletters/index.astro) — build-output checks skipped."
+      ]
+    },
+    "diffCheck": "PASS",
+    "rendered": "Native Mini Brave local event leaf, Events search, dated calendar, Gov and Camps rendered. All task tabs closed and slices released.",
+    "builtProof": [
+      {
+        "route": "gov",
+        "description": "Find upcoming council meetings, agenda links, searchable public records, and plain-English meeting summaries for 11 South Bay cities.",
+        "sourceUrlPresent": false,
+        "h1Count": 1
+      },
+      {
+        "route": "camps",
+        "description": "Compare South Bay summer camp programs by age and 2026 price, then check each operator for next season's dates and registration.",
+        "sourceUrlPresent": false,
+        "h1Count": 1
+      },
+      {
+        "route": "event/2026-12-03-pclg-christmas-tea",
+        "description": "PCLG Christmas Tea on Thursday, December 3, 2026 at Presbyterian Church of Los Gatos in Los Gatos. Hear the Mountain View High School Madrigal Choir in…",
+        "sourceUrlPresent": true,
+        "h1Count": 1
+      },
+      {
+        "route": "events/2026-12-03",
+        "description": "27 things happening across the South Bay on Thursday, December 3, 2026: Bear Creek Redwoods Preserve - Trail Maintenance: New Trails, Drop-in Tech Help, Toddler Storytime, and more.",
+        "sourceUrlPresent": true,
+        "h1Count": 1
+      }
+    ],
+    "modernWebGuidance": "Searched page metadata and read html guide. No modern markup/API rule needed application for the two description text changes.",
+    "nativeScreenshotRetention": "Saved native accessibility evidence for the rendered event and the Google inspections in the private run record.",
+    "closeoutLive": {
+      "status": "PASS",
+      "checkedAt": "2026-11-18T04:13:34.746102+00:00",
+      "checkedPages": [
+        "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+        "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific",
+        "https://southbaytoday.org/events/2026-12-03",
+        "https://southbaytoday.org/gov",
+        "https://southbaytoday.org/camps"
+      ],
+      "sitemapVerifiedEntries": [
+        "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+        "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific"
+      ]
+    }
+  },
+  "publication": {
+    "sourceCommit": "22bceb9d39f2a98eadc80fa2e7483bfb3a8c4387",
+    "sourcePush": "PASS under guarded workspace publish",
+    "sourceDeployment": {
+      "id": "dpl_CJwCqrpTYa9whP8wenMYquAQooJ5",
+      "status": "READY",
+      "target": "production",
+      "gitCommit": "22bceb9d39f2a98eadc80fa2e7483bfb3a8c4387",
+      "domain": "southbaytoday.org"
+    },
+    "sourceCi": [
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/stephenstanwood/southbaytoday.org/actions/runs/44056259890/job/133946310811",
+        "name": "check",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/stephenstanwood/southbaytoday.org/actions/runs/44056259898/job/133946310344",
+        "name": "policy",
+        "status": "completed"
+      }
+    ],
+    "receiptPublication": {
+      "method": "Guarded SBT workspace publish to main",
+      "scope": "The dated audit receipt only"
+    }
+  },
+  "unresolvedWork": [],
+  "watchItems": [
+    "Four missing primary-source links remain warnings.",
+    "Optional Event fields are noncritical; do not invent offers, performer or organizer facts.",
+    "Traffic growth has substantial direct/unknown and international visits. Web Analytics is not a bot census or equivalent local-reader growth."
+  ],
+  "notifications": {
+    "miloIntakeNeeded": false,
+    "reason": "Routine audit, source fixes, and completed inspections.",
+    "discordDms": 0,
+    "mentions": 0
+  },
+  "liveProof": {
+    "status": "PASS",
+    "changedSurfaces": [
+      {
+        "url": "https://southbaytoday.org/gov",
+        "status": 200,
+        "finalUrl": "https://southbaytoday.org/gov",
+        "canonical": "https://southbaytoday.org/gov",
+        "h1Count": 1,
+        "description": "Find upcoming council meetings, agenda links, searchable public records, and plain-English meeting summaries for 11 South Bay cities.",
+        "indexable": true,
+        "pclgSameAs": [],
+        "sourcePresent": false,
+        "checkedAt": "2026-11-17T09:37:33.516826+00:00"
+      },
+      {
+        "url": "https://southbaytoday.org/camps",
+        "status": 200,
+        "finalUrl": "https://southbaytoday.org/camps",
+        "canonical": "https://southbaytoday.org/camps",
+        "h1Count": 1,
+        "description": "Compare South Bay summer camp programs by age and 2026 price, then check each operator for next season's dates and registration.",
+        "indexable": true,
+        "pclgSameAs": [],
+        "sourcePresent": false,
+        "checkedAt": "2026-11-17T09:37:33.554581+00:00"
+      },
+      {
+        "url": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+        "status": 200,
+        "finalUrl": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+        "canonical": "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+        "h1Count": 1,
+        "description": "PCLG Christmas Tea on Thursday, December 3, 2026 at Presbyterian Church of Los Gatos in Los Gatos. Hear the Mountain View High School Madrigal Choir in…",
+        "indexable": true,
+        "pclgSameAs": [
+          "https://www.pclg.org/this-week/2026-11-11.pdf"
+        ],
+        "sourcePresent": true,
+        "checkedAt": "2026-11-17T09:37:33.480350+00:00"
+      },
+      {
+        "url": "https://southbaytoday.org/events/2026-12-03",
+        "status": 200,
+        "finalUrl": "https://southbaytoday.org/events/2026-12-03",
+        "canonical": "https://southbaytoday.org/events/2026-12-03",
+        "h1Count": 1,
+        "description": "27 things happening across the South Bay on Thursday, December 3, 2026: Bear Creek Redwoods Preserve - Trail Maintenance: New Trails, Drop-in Tech Help, Toddler Storytime, and more.",
+        "indexable": true,
+        "pclgSameAs": [
+          "https://www.pclg.org/this-week/2026-11-11.pdf"
+        ],
+        "sourcePresent": true,
+        "checkedAt": "2026-11-17T09:37:33.750442+00:00"
+      }
+    ]
+  },
+  "indexNow": {
+    "startedAt": "2026-11-17T09:37:57.975Z",
+    "urls": [
+      "https://southbaytoday.org/gov",
+      "https://southbaytoday.org/camps",
+      "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
+      "https://southbaytoday.org/events/2026-12-03"
+    ],
+    "urlCount": 4,
+    "notProofOfIndexing": true,
+    "status": 200,
+    "accepted": true,
+    "response": "",
+    "finishedAt": "2026-11-17T09:37:59.243Z"
+  },
+  "postDeployCrawl": {
+    "crawled": 250,
+    "sitemapUrlCount": 1876,
+    "findingCounts": {
+      "warn": 9,
+      "info": 201
+    },
+    "findingCodes": {
+      "title-length": 8,
+      "description-length": 95,
+      "thin-content": 44,
+      "og-image-missing": 1,
+      "jsonld-missing": 61,
+      "page-missing-from-sitemap": 1
+    },
+    "interpretation": "Both crawls have zero errors. The deployed date rollover excludes expired pages (including linked November 16, deliberately absent from the sitemap) and changes the rotating sample. Warning-count reduction is not credited to these fixes. Remaining descriptions/thin pages/absent schema are informational; eight long titles remain valid descriptive labels."
+  },
+  "recordedAt": "2026-11-17T09:40:51.965Z",
+  "completedAt": "2026-11-18T04:14:38.959430+00:00"
+}
