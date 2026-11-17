@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-17T20:01:02.108Z",
-  "eventCount": 1463,
+  "eventCount": 1460,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2982,7 +2982,7 @@
       "date": "2026-11-20",
       "displayDate": "Fri, Nov 20",
       "time": "10:00 AM",
-      "endTime": null,
+      "endTime": "3:00 PM",
       "venue": "Montalvo Arts Center",
       "address": "15400 Montalvo Rd, Saratoga",
       "city": "saratoga",
@@ -3002,7 +3002,8 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
       "blurb": "Browse the Yuletide Boutique holiday market at Montalvo Arts Center on a Friday morning, with an RSVP listed for the marketplace.",
-      "firstSeenAt": "2026-11-14T00:54:46.429Z"
+      "firstSeenAt": "2026-11-14T00:54:46.429Z",
+      "attendanceNote": "The organizer asks visitors to register for free to help plan parking."
     },
     {
       "id": "montalvo-a2d667f653519e8c",
@@ -3053,27 +3054,6 @@
       "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AV-0GLcrgBumLWnuQxcuqhmNpC2puLfinKoMVtcjy21QS1BgUhhhVNQxT3xpbQ-QxfoEfMM4YO1lC2EZvuPzk238g4LgG2_NYJcjRuszVjLFlLxGqt2KS-M_ybzYYqk9XNVrSXKoJiy1GfGyGjqL2CrlWHDNNsifVuK6SkL2BsGastNBNmG7vglU5hiMl16ffaU3GyLYYouHPWK8as-VxY_-bmuzveI1Szh34Q-L2cmi4C4BFfHXGlVXbnKIuTbtaeuexGInQZsWwT5_sLKesH3RtybuJhj-zqq80CJZhyKAjCVv40RIClKhnTLS1aIi8gzBX9eC0LBsFw82f0xRKV_iaxbuROj0rR-4ywgwmlUixIUUplewr6Vo4WzW4ETSbGyOKZ0mqdBaxgeAuRBcSOl5xBJak-s",
       "blurb": "Hear new faculty introduced at a special colloquium in O'Connor Hall, Room 205, at Santa Clara University on Tuesday afternoon.",
       "firstSeenAt": "2026-11-11T18:07:26.616Z"
-    },
-    {
-      "id": "scu-336591a382d1a88f",
-      "title": "Marketing Alumni Speaker Panel",
-      "date": "2026-11-19",
-      "displayDate": "Thu, Nov 19",
-      "time": "6:00 AM",
-      "endTime": null,
-      "venue": "Santa Clara University",
-      "address": "",
-      "city": "santa-clara",
-      "category": "community",
-      "cost": "",
-      "description": "",
-      "url": "https://events.scu.edu/leavey-school-of-business/event/534277-marketing-alumni-speaker-panel",
-      "source": "Santa Clara University",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJwz4wNq_Lj4ARR-PU9hShHFY/photos/AV-0GLcrgBumLWnuQxcuqhmNpC2puLfinKoMVtcjy21QS1BgUhhhVNQxT3xpbQ-QxfoEfMM4YO1lC2EZvuPzk238g4LgG2_NYJcjRuszVjLFlLxGqt2KS-M_ybzYYqk9XNVrSXKoJiy1GfGyGjqL2CrlWHDNNsifVuK6SkL2BsGastNBNmG7vglU5hiMl16ffaU3GyLYYouHPWK8as-VxY_-bmuzveI1Szh34Q-L2cmi4C4BFfHXGlVXbnKIuTbtaeuexGInQZsWwT5_sLKesH3RtybuJhj-zqq80CJZhyKAjCVv40RIClKhnTLS1aIi8gzBX9eC0LBsFw82f0xRKV_iaxbuROj0rR-4ywgwmlUixIUUplewr6Vo4WzW4ETSbGyOKZ0mqdBaxgeAuRBcSOl5xBJak-s",
-      "blurb": "Hear from a panel of marketing alumni speaking at Santa Clara University on a Thursday.",
-      "firstSeenAt": "2026-11-17T20:01:02.088Z"
     },
     {
       "id": "montalvo-8f35583eacde19d5",
@@ -20415,12 +20395,12 @@
       "time": "12:00 PM",
       "endTime": "1:00 PM",
       "ongoing": false,
-      "venue": "Stanford University",
+      "venue": "Online (Zoom)",
       "address": "",
       "city": "palo-alto",
       "virtual": true,
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "Gen Z is coming of age in a world that feels stacked against them. That's exactly why conservative media is targeting them.",
       "url": "https://events.stanford.edu/event/book-talk-good-girls-and-alpha-males",
       "source": "Stanford Events",
@@ -20428,7 +20408,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54294975125084/huge/8227d807d4d86b4bc534275de1e3a2fbb517fb23.jpg",
       "blurb": "Join an online book talk on how conservative media targets Gen Z, based on Good Girls and Alpha Males.",
-      "firstSeenAt": "2026-11-17T20:01:02.088Z"
+      "firstSeenAt": "2026-11-17T20:01:02.088Z",
+      "registration": "required",
+      "attendanceNote": "Register through Stanford's event page to join the free Zoom webinar."
     },
     {
       "id": "sjpl-6a56c67764ed854800a5753c",
@@ -31183,26 +31165,6 @@
       "firstSeenAt": "2026-09-23T03:22:11.158Z"
     },
     {
-      "id": "inbound-519d4958e93475be",
-      "title": "Stanford Wrestling vs. Virginia Tech",
-      "date": "2027-01-10",
-      "displayDate": "Sun, Jan 10",
-      "time": "12:00 PM",
-      "endTime": null,
-      "venue": "Stanford",
-      "address": "Stanford, CA",
-      "city": "palo-alto",
-      "category": "sports",
-      "cost": null,
-      "description": "Stanford wrestling hosts Virginia Tech. Cardinal Friday tickets are 50% off. The newsletter gives no start time or venue.",
-      "url": "https://tickets.gostanford.com/events/wrestling-vs-virginia-tech-gsi0lx/6af3a7c78ffe6e034770db92",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJQViY5Tm7j4ARi8P0xr1zR2g/photos/AV-0GLfmtboTvdRsYAkaUElZClwlhBMhlQdXn6fQQ2SjLMfJk7CZIDqKBG77yzbDq5MXDwl3_eDFf0epOo-OZiJ5trk9psdW_dO6FKgJT5ptbByWjpgFfXLjOtglyR8vAdMCpqCsfFV6YPU3I0lnRfrzMufuOyQEzzPraVsqdKw5jR9l-2spxMfrnVb5mwKYSBbbGHND-hvRVB9Lw0RsJRvNIHvRR0A-RG1tbGlLe5ZXt6yCGWus8vnBdIveqBTIWv19E-FOiSTVR3_tvFJ5kIX74cCWUfrlO5SUZ8sZhuSiYXDd4MQ2PrgNJJ-96zwUioaYvbGH6j_9wRCtqSC35AL92IxFwjzXnusf2zB0oEkVOUHJVCr5VYhMvmPefkWbdMZ2rj6RiRXGVjMdDKk_LOPJjJGLi1s",
-      "firstSeenAt": "2026-11-17T20:01:02.088Z"
-    },
-    {
       "id": "sanjosetheaters-e9e7114806ce2859",
       "title": "Concerto for Orchestra – Symphony San Jose",
       "date": "2027-03-06",
@@ -31301,26 +31263,6 @@
       "image": "https://images.unsplash.com/photo-1763889245414-7f6e8e2a34ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwbXVzaWMlMjBjb25jZXJ0JTIwcGVyZm9ybWFuY2V8ZW58MHwyfHx8MTc3NzIzMDYxNnww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Watch four acoustic guitarists, Roxane Elfasci, Minnie Marks, Luca Stricagnoli, and Jim Kimo West, share the stage at International Guitar Night.",
       "firstSeenAt": "2026-10-27T23:01:31.602Z"
-    },
-    {
-      "id": "inbound-f2ccdd45d1e79eaf",
-      "title": "Stanford Football vs. SMU",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "12:00 PM",
-      "endTime": null,
-      "venue": "Stanford Stadium",
-      "address": "Stanford Stadium, Stanford, CA",
-      "city": "palo-alto",
-      "category": "sports",
-      "cost": null,
-      "description": "Stanford football hosts SMU. Cardinal Friday tickets are 30% off through Nov. 28. The newsletter gives no start time.",
-      "url": "https://tickets.gostanford.com/events/football-vs-smu-fauvdl/6aee4789c9f40aa050aa2976",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2F1837bdb2-9c02-41cf-a698-39482e24e5df.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
-      "firstSeenAt": "2026-11-17T20:01:02.088Z"
     },
     {
       "id": "sanjosetheaters-d53d87ebdbbc8cb5",

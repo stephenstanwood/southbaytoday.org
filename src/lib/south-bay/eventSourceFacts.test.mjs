@@ -16,6 +16,27 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("Stanford's free online book talk retains the advance Zoom signup and later closures", async () => {
+  const event = {
+    id: "stanford-54294456348609-2026-11-18", source: "Stanford Events", date: "2026-11-18",
+    title: "Book Talk: Good Girls and Alpha Males: How Conservative Media is Targeting Gen Z",
+    url: "https://events.stanford.edu/event/book-talk-good-girls-and-alpha-males",
+    virtual: true, venue: "Stanford University", time: "12:00 PM", endTime: "1:00 PM", cost: null,
+    description: "Gen Z is coming of age in a world that feels stacked against them. That's exactly why conservative media is targeting them.",
+  };
+  for (const registration of [undefined, "full", "closed"]) {
+    const row = { ...event, registration };
+    await resolveEventBlurbs([row], { enabled: false });
+    assert.equal(row.cost, "free");
+    assert.equal(row.venue, "Online (Zoom)");
+    assert.equal(row.registration, registration || "required");
+    assert.match(row.attendanceNote, /Register through Stanford's event page/);
+    assert.deepEqual(applyVerifiedEventFacts(row), row);
+  }
+  const revised = { ...event, cost: "paid" };
+  assert.deepEqual(applyVerifiedEventFacts(revised), revised);
+});
+
 test("dated Veterans Day source links survive newsletter reingestion without changing other occurrences", async () => {
   const { normalizeInboundEventPresentation } = await import("../../../scripts/lib/inbound-event-normalize.mjs");
   const cases = [

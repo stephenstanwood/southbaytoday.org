@@ -137,13 +137,17 @@ export function parseMontalvoOccurrencePage(html) {
   // while Date contains only the day. Never read another seating's link or
   // the overview's multi-session marketing text as this occurrence's clock.
   const isPerformance = /^\/\d+\/\d+\/?$/.test(canonicalTicketUrl(source)?.pathname || "");
-  const startTime = clock(detailText)
-    || (isPerformance ? seatingClock(contentForClass(body, "tn-event-detail__title")) : null);
+  const performanceTitle = isPerformance ? textContent(contentForClass(body, "tn-event-detail__title")) : "";
+  // A market may put its visitor-hours range in this performance's Name
+  // field. Overview promos and another performance's hours are irrelevant.
+  const openingHours = performanceTitle.match(/\bOpening Hours\s+(\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?)\s*(?:to|[-–—])\s*(\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?)\s*$/i);
+  const startTime = clock(detailText) || seatingClock(performanceTitle) || (openingHours ? clock(openingHours[1]) : null);
   const date = isoDateFromDetail(detailText);
 
   const range = visibleText.match(/\bfrom\s+(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))\s*(?:to|[-–—])\s*(\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?))/i);
   const rangeStart = range ? clock(range[1]) : null;
-  const endTime = range ? clock(range[2]) : null;
+  const hasOpeningHours = openingHours && clock(openingHours[1]) === startTime;
+  const endTime = hasOpeningHours ? clock(openingHours[2]) : range ? clock(range[2]) : null;
   const prices = [...body.matchAll(/\bdata-tn-price-amount=["'](\d+(?:\.\d+)?)["']/gi)]
     .map((match) => Number(match[1])).concat(reservedSeatPrices(source));
   const audienceText = [
@@ -176,7 +180,7 @@ export function parseMontalvoOccurrencePage(html) {
   return {
     title,
     date,
-    time: rangeStart || startTime,
+    time: hasOpeningHours ? startTime : rangeStart || startTime,
     endTime,
     cost: hasPaidTickets ? "paid" : isFree ? "free" : null,
     ...(membersFree ? { costNote: "Free for Montalvo members. Check the organizer for non-member admission." } : {}),

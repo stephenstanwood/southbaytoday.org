@@ -41,6 +41,18 @@ test("a cached kickoff cannot restore FansGiving's unconfirmed start", async () 
   assert(requiresAttendanceConfirmation(event));
 });
 
+test("the new SMU ticket alias cannot bypass the dated kickoff hold", () => {
+  const event = {
+    ...prior("inbound-40dfe7b5b3daacd1"),
+    title: "Stanford Football vs. SMU",
+    url: "https://tickets.gostanford.com/events/football-vs-smu-fauvdl/6aee4789c9f40aa050aa2976",
+    time: "12:00 PM",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.time, null);
+  assert.equal(isEventTimeBackfillCandidate(fixed), false);
+});
+
 test("withholding FansGiving preserves its old URL without its invented clock", () => {
   const before = prior("inbound-40dfe7b5b3daacd1");
   const ledger = retireSlugs({ entries: [] }, [before], [], "2026-11-16", "2026-11-17T04:07:00Z");

@@ -4872,6 +4872,11 @@ function isStudentOnlyEvent(item) {
   if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
   if (STUDENT_ONLY_AUDIENCE.test(item.title || "")) return true;
   const desc = stripHtml(item.description || "");
+  // LiveWhale's marketing panel is listed under Student Organizations,
+  // with no public invitation. Public panels can carry both categories.
+  const categories = (item.livewhaleCategories || "").split(",").map(label => label.trim().toLowerCase());
+  if (categories.includes("student organizations") && /\balumni speaker panel\b/i.test(item.title || "")
+      && !categories.includes("open to the public") && !/\bopen to the (?:general )?public\b/i.test(desc)) return true;
   if (STUDENT_ONLY_DESC.test(desc)) return true;
   if (SCU_INTERNAL_DESC.test(desc)) return true;
   if (STUDENT_ONLY_AUDIENCE.test(desc)) return true;
@@ -9023,6 +9028,10 @@ function matchOutsideBusinessHours(text, re) {
   return null;
 }
 
+function isStanfordTicketEventUrl(url) {
+  return /^https:\/\/tickets\.gostanford\.com\/events\/[^/?#]+/i.test(url || "");
+}
+
 /** Try to extract a clock time string from arbitrary HTML.
  *  Strategies (in order):
  *   1. JSON-LD Event with startDate that includes a time component
@@ -9031,8 +9040,18 @@ function matchOutsideBusinessHours(text, re) {
  *   4. Visible text patterns near event-related labels ("Doors at 7 PM", "7:30 PM")
  *  Returns "H:MM AM/PM" or null.
  */
-function extractTimeFromHtml(html, eventDate) {
+function extractTimeFromHtml(html, eventDate, sourceUrl) {
   if (!html) return null;
+
+  if (isStanfordTicketEventUrl(sourceUrl)) {
+    // Stanford Athletics keeps provisional clocks in JSON-LD and datetime
+    // even when the ticket page displays only the date. Require its visible
+    // start time to agree with the exact occurrence's Pacific clock.
+    const dateAndTime = /<span\b[^>]*>\s*Date\s*&(?:amp;)?\s*time\s*<\/span>\s*<time\b[^>]*\bdatetime=["']([^"']+)["'][^>]*>([\s\S]*?)<\/time>/i.exec(html);
+    const displayedTime = dateAndTime?.[2].match(/<span\b[^>]*>\s*((?:1[0-2]|[1-9])(?::[0-5]\d)?\s*[AP]M)\s*<\/span>/i)?.[1];
+    const time = isoTimeToClockPT(dateAndTime?.[1], eventDate);
+    return time && formatHourClock(displayedTime) === time ? time : null;
+  }
 
   // 1. JSON-LD Event blocks
   const ldMatches = html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) || [];
@@ -9163,7 +9182,10 @@ async function backfillEventTimes(events) {
     const batch = candidates.slice(i, i + concurrency);
     await Promise.all(batch.map(async (e) => {
       const cacheKey = `${e.url}|${e.date}`;
-      if (Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
+      const stanfordTicket = isStanfordTicketEventUrl(e.url);
+      // Ignore legacy placeholders and let the next refresh recover a game
+      // whose organizer has now published an official start.
+      if (!stanfordTicket && Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
         cacheHits++;
         if (cache[cacheKey]) { e.time = cache[cacheKey]; recovered++; }
         return;
@@ -9174,18 +9196,20 @@ async function backfillEventTimes(events) {
           signal: AbortSignal.timeout(10_000),
           redirect: "follow",
         });
-        if (!res.ok) { cache[cacheKey] = null; failed++; return; }
-        if (!isEventTimeBackfillCandidate({ url: res.url })) {
-          cache[cacheKey] = null; failed++; return;
+        if (!res.ok || !isEventTimeBackfillCandidate({ url: res.url })
+            || (stanfordTicket && !isStanfordTicketEventUrl(res.url))) {
+          if (!stanfordTicket) cache[cacheKey] = null;
+          failed++;
+          return;
         }
         const html = await res.text();
         fetched++;
-        const time = extractTimeFromHtml(html, e.date);
-        cache[cacheKey] = time || null;
+        const time = extractTimeFromHtml(html, e.date, res.url);
+        if (!stanfordTicket) cache[cacheKey] = time || null;
         if (time) { e.time = time; recovered++; }
         else { failed++; }
       } catch {
-        cache[cacheKey] = null;
+        if (!stanfordTicket) cache[cacheKey] = null;
         failed++;
       }
     }));

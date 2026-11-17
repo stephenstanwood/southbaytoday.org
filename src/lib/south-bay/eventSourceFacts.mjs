@@ -70,6 +70,19 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The occurrence page explicitly says Free Event and directs online
+  // attendees to its Zoom registration. The API omits both from its excerpt.
+  // Preserve any revised price or current booking status.
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events" && event.virtual === true
+      && event.url === "https://events.stanford.edu/event/book-talk-good-girls-and-alpha-males"
+      && event.time === "12:00 PM" && event.endTime === "1:00 PM"
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && /^Gen Z is coming of age in a world that feels stacked against them\./.test(event.description || ""),
+    facts: { venue: "Online (Zoom)", address: "", cost: "free", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Stanford's event page to join the free Zoom webinar.",
+  },
   // The exact November 17 Bascom source explicitly makes signup optional.
   // Preserve later closures, full states and amended attendance requirements.
   // Evidence: docs/qa/2026-11-17-0507z-fact-check.md.
@@ -405,7 +418,7 @@ const CORRECTIONS = [
       && event.venue === "Montalvo Arts Center" && event.time === "10:00 AM"
       && [null, undefined, "3:00 PM"].includes(event.endTime)
       && [null, undefined, "free"].includes(event.cost) && !event.costNote
-      && [null, undefined, "", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
+      && [null, undefined, "", "RSVP Yuletide Marketplace FRI", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
     facts: { cost: "free", endTime: "3:00 PM" },
     copyReplacements: [[/; no times given\.$/, ", 10 AM–3 PM each day."]],
     appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
@@ -1348,7 +1361,7 @@ const CORRECTIONS = [
   {
     date: "2026-11-28",
     matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
-      && /^https:\/\/tickets\.gostanford\.com\/(?:events?\/football-vs-smu-fauvdl|events?\/69c4649c39baf6e77d7c9b7f(?:\/[a-f0-9]{24})?)\/?(?:[?#]|$)/.test(event.url || ""),
+      && /^https:\/\/tickets\.gostanford\.com\/events?\/(?:football-vs-smu-fauvdl|69c4649c39baf6e77d7c9b7f)(?:\/[a-f0-9]{24})?\/?(?:[?#]|$)/.test(event.url || ""),
     facts: {
       time: null, endTime: null,
       description: "Stanford hosts SMU at Stanford Stadium on November 28. Kickoff time is TBA on Stanford's official football schedule; the ticket shop's structured clock is unconfirmed.",
