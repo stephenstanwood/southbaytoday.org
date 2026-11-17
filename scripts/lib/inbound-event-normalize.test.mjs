@@ -5,6 +5,33 @@ import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
 
+test("the dated Christmas Tea retains a usable organizer source through newsletter refresh", () => {
+  const raw = {
+    id: "inbound_mwcn383x_gfgaax", cityKey: "los-gatos", title: "PCLG Christmas Tea",
+    startsAt: "2026-12-03T13:30:00-08:00", endsAt: null,
+    location: "Presbyterian Church of Los Gatos, 16575 Shannon Rd, Los Gatos, CA 95032",
+    description: "Annual Christmas Tea. Tickets are $25 (cash or check).",
+    sourceUrl: null,
+  };
+  const sourceUrl = "https://www.pclg.org/this-week/2026-11-11.pdf";
+  const original = structuredClone(raw);
+  const [restored] = fetchInboundEvents({ today: "2026-11-17", events: [raw] });
+  const [linked] = fetchInboundEvents({ today: "2026-11-17", events: [{ ...raw, sourceUrl }] });
+  assert.deepEqual(restored, linked, "the source repair must preserve identity, schedule and presentation");
+  assert.equal(restored.url, sourceUrl);
+  assert.equal(applyVerifiedEventFacts(restored).url, sourceUrl);
+  assert.deepEqual(raw, original, "preserve the received newsletter record");
+  for (const other of [
+    { ...raw, startsAt: "2027-12-03T13:30:00-08:00" },
+    { ...raw, cityKey: "palo-alto" },
+    { ...raw, location: "Another church" },
+  ]) assert.equal(normalizeInboundEventPresentation(other).url, "");
+  for (const key of ["canonicalUrl", "sourceUrl"]) {
+    const newer = "https://www.pclg.org/this-week/new-organizer-notice";
+    assert.equal(normalizeInboundEventPresentation({ ...raw, [key]: newer }).url, newer);
+  }
+});
+
 test("the two SMASH newsletter names resolve to one free family maker fair before dedup", () => {
   const raw = [
     {

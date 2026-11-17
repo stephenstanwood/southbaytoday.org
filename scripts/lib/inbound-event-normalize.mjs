@@ -159,6 +159,15 @@ export function inboundClock(value) {
 function officialOverride(event) {
   const date = String(event?.startsAt || "").slice(0, 10);
   const identity = `${event?.title || ""} ${event?.location || ""}`;
+  // The church's dated November 11 newsletter confirms this occurrence and
+  // its $25 admission. Retain any later organizer link supplied at intake.
+  // Evidence: data/seo/2026-11-17.json; source PDF page 5.
+  if (date === "2026-12-03" && event?.title === "PCLG Christmas Tea"
+      && event?.cityKey === "los-gatos"
+      && /^Presbyterian Church of Los Gatos(?:,|$)/.test(event?.location || "")
+      && !event?.canonicalUrl && !event?.sourceUrl) {
+    return { url: "https://www.pclg.org/this-week/2026-11-11.pdf" };
+  }
   if ((event?.cityKey === "sunnyvale"
       || event?.fromEmail === "sunnyvalepubliclibrary@public.govdelivery.com")
       && SUNNYVALE_ONLINE_TALKS.has(`${date}|${event?.title || ""}`)) {
