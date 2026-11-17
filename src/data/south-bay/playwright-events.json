@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-17T16:03:33.643Z",
+    "generatedAt": "2026-11-17T19:53:59.329Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 188,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -14,7 +14,7 @@
       "ICA San José (3)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (2)",
-      "Guadalupe River Park Conservancy (10)",
+      "Guadalupe River Park Conservancy (9)",
       "Santana Row (6)",
       "City of Cupertino (34)",
       "Opera San José (5)",
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 9,
+        "liveCount": 9,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -659,8 +659,8 @@
       "kidFriendly": false
     },
     {
-      "id": "90bbdb8b4373",
-      "title": "Yuletide Marketplace",
+      "id": "d14e2a279221",
+      "title": "Yuletide Boutique",
       "date": "2026-11-20",
       "displayDate": "Fri, Nov 20",
       "time": null,
@@ -693,8 +693,8 @@
       "kidFriendly": false
     },
     {
-      "id": "cdd7336cee28",
-      "title": "Wreath Making Workshop 6pm",
+      "id": "d8aecae718a1",
+      "title": "Wild-Foraged Wreath-Making Workshop",
       "date": "2026-12-02",
       "displayDate": "Wed, Dec 2",
       "time": null,
@@ -947,28 +947,6 @@
       }
     },
     {
-      "id": "4d4b799a10f8",
-      "title": "Bootcamp in the River Park with GymParty",
-      "date": "2026-11-19",
-      "displayDate": "Thu, Nov 19",
-      "time": "6:00 PM",
-      "endTime": "7:00 PM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95113, USA",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": null,
-      "description": "We are partnering with @gymparty_ to bring the finest instructors to Bootcamp in the River Park. 💯 Bootcamp workout classes are fast-paced, full-body group sessions mixing cardio and strength training into one efficient workout. The classes are designed for all levels! Our first program launches AUGUST 6, 2026 2026 Dates are as follows: 8/6, 8/20, 9/3, 9/17, 10/1, 10/15, 11/5, 11/19",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-19"
-      }
-    },
-    {
       "id": "20f169faf651",
       "title": "Volunteer in the Heritage Rose Garden!",
       "date": "2026-11-21",
@@ -1175,7 +1153,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-17T16:02:26.274Z"
+        "checkedAt": "2026-11-17T19:52:52.731Z"
       }
     },
     {
@@ -1198,7 +1176,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-17T16:02:26.274Z"
+        "checkedAt": "2026-11-17T19:52:52.731Z"
       }
     },
     {
@@ -1221,7 +1199,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T16:02:26.274Z"
+        "checkedAt": "2026-11-17T19:52:52.732Z"
       }
     },
     {
@@ -1244,7 +1222,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T16:02:26.275Z"
+        "checkedAt": "2026-11-17T19:52:52.732Z"
       }
     },
     {
@@ -1267,7 +1245,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-17T16:02:26.275Z"
+        "checkedAt": "2026-11-17T19:52:52.733Z"
       }
     },
     {
@@ -1290,7 +1268,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-17T16:02:26.275Z"
+        "checkedAt": "2026-11-17T19:52:52.733Z"
       }
     },
     {
@@ -3126,7 +3104,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.849Z"
+        "checkedAt": "2026-11-17T19:53:22.418Z"
       }
     },
     {
@@ -3150,7 +3128,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.850Z"
+        "checkedAt": "2026-11-17T19:53:22.418Z"
       }
     },
     {
@@ -3174,7 +3152,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.850Z"
+        "checkedAt": "2026-11-17T19:53:22.418Z"
       }
     },
     {
@@ -3198,7 +3176,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.851Z"
+        "checkedAt": "2026-11-17T19:53:22.419Z"
       }
     },
     {
@@ -3222,7 +3200,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.852Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3246,7 +3224,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.852Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3270,7 +3248,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.852Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3311,7 +3289,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.853Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3335,7 +3313,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.853Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3359,7 +3337,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.853Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
@@ -3383,7 +3361,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T16:02:54.853Z"
+        "checkedAt": "2026-11-17T19:53:22.420Z"
       }
     },
     {
