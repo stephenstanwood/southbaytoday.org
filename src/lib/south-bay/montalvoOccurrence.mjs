@@ -174,7 +174,7 @@ export function parseMontalvoOccurrencePage(html) {
   // Keep the dated occurrence, but require box-office confirmation before
   // recommending attendance. Never read the shared selector's hidden alerts.
   const onlineUnavailable = date && startTime && !soldOut
-    && /\btickets\s+are\s+not\s+currently\s+available\s+online\b/i.test(unavailableText);
+    && /\b(?:tickets\s+are\s+not\s+currently\s+available\s+online|this\s+event\s+is\s+not\s+currently\s+on\s+sale)\b/i.test(unavailableText);
 
   if (!title && !date && !startTime && !endTime) return null;
   return {

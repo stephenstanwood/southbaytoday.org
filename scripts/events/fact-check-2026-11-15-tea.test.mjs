@@ -6,17 +6,20 @@ import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFact
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-15-tea.json", import.meta.url)));
+const description = "Holiday tea with tea sandwiches, scones and petite sweets in the decorated historic Villa. Online tickets for the 11:30 AM seating are unavailable.";
+const blurb = "Montalvo lists Yuletide Tea at 11:30 AM. Check with the box office about tickets.";
 
-test("the real newsletter adapter cannot restore seats or booking copy for the sold-out tea", async () => {
+test("the real newsletter adapter preserves the tea's current unavailable booking state", async () => {
   const [event] = fetchInboundEvents({ today: "2026-11-15", events: [fixture.incoming] });
   assert(event);
   event.description = polishDescription(event.description);
   event.blurb = fixture.published.blurb;
   await resolveEventBlurbs([event], { enabled: false });
-  assert.equal(event.registration, "full");
-  assert.equal(event.description, fixture.description);
-  assert.equal(event.blurb, fixture.blurb);
-  assert.match(event.attendanceNote, /Sold out.*waitlist.*11:30 AM/);
+  assert.equal(event.registration, "none");
+  assert.equal(event.attendanceStatus, "needs-confirmation");
+  assert.equal(event.description, description);
+  assert.equal(event.blurb, blurb);
+  assert.match(event.attendanceNote, /Online tickets are not currently available/);
   assert.equal(event.date, "2026-11-22");
   assert.equal(event.time, "11:30 AM");
   assert.equal(event.endTime, null);
@@ -27,9 +30,12 @@ test("the real newsletter adapter cannot restore seats or booking copy for the s
 test("cached publication repairs only the stale availability clauses and is stable on repeat", async () => {
   const event = structuredClone(fixture.published);
   await resolveEventBlurbs([event], { enabled: false });
-  assert.equal(event.description, fixture.description);
-  assert.equal(event.blurb, fixture.blurb);
-  for (const key of Object.keys(fixture.published).filter(key => !["description", "blurb"].includes(key)))
+  assert.equal(event.description, description);
+  assert.equal(event.blurb, blurb);
+  assert.equal(event.registration, "none");
+  assert.equal(event.attendanceStatus, "needs-confirmation");
+  assert.match(event.attendanceNote, /Online tickets are not currently available/);
+  for (const key of Object.keys(fixture.published).filter(key => !["description", "blurb", "registration", "attendanceNote"].includes(key)))
     assert.deepEqual(event[key], fixture.published[key], key);
   const first = structuredClone(event);
   await resolveEventBlurbs([event], { enabled: false });

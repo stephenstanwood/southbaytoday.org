@@ -2199,11 +2199,9 @@ const CORRECTIONS = [
   },
   // The authenticated newsletter invites reservations. The dated 11:30 AM
   // booking page confirms a paid reserved seating: $70 meal + $5 fees.
-  // The November 15 check finds a visible, occurrence-specific sold-out alert
-  // and waitlist. Repair retained copies; freshly verified performance facts
-  // outrank this cache correction, including a later reopening or new price.
-  // A newsletter alias can win deduplication while retaining an older seats-
-  // remaining sentence and booking blurb. Keep its copy consistent too.
+  // On November 17 the exact page says the seating is not currently on sale
+  // and no longer shows a waitlist. Update stale availability copy while
+  // letting new exact-performance evidence win, including a reopening.
   // Evidence: docs/qa/2026-10-31-2007-fact-check.md and
   // docs/qa/2026-11-15-0457z-fact-check.md and
   // docs/qa/2026-11-15-1507z-fact-check.md.
@@ -2212,18 +2210,18 @@ const CORRECTIONS = [
     matches: (event) => /^https:\/\/my\.montalvoarts\.org\/(?:overview\/3253|3253\/3254)(?:[/?#]|$)/.test(event.url || "")
       && event.time === "11:30 AM"
       && (!event.costNote || event.costNote === "$75 per person ($70 meal + $5 fees).")
-      && event.registration !== REGISTRATION_APPOINTMENT
+      && ![REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED].includes(event.registration)
       && event.occurrenceEvidence?.admissionSourceUrl !== "https://my.montalvoarts.org/3253/3254",
     facts: {
-      cost: "paid", registration: REGISTRATION_FULL,
+      cost: "paid", registration: REGISTRATION_NONE, attendanceStatus: "needs-confirmation",
       costNote: "$75 per person ($70 meal + $5 fees).",
-      attendanceNote: "Sold out. The organizer offers a waitlist for the 11:30 AM seating.",
+      attendanceNote: "Online tickets are not currently available. Contact the organizer's box office before going.",
     },
     copyReplacements: [
-      [/\bSeatings at 11:30\s*am and 2:30\s*pm; reservations required, and few 11:30\s*am seats remain\./gi,
-        "The 11:30 AM seating is sold out; the organizer offers a waitlist."],
-      [/^Taste tea sandwiches, scones and petite sweets in the decorated historic Villa, with a reservation for your seating\.$/,
-        "The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist."],
+      [/\b(?:Seatings at 11:30\s*am and 2:30\s*pm; reservations required, and few 11:30\s*am seats remain|The 11:30 AM seating is sold out; the organizer offers a waitlist)\./gi,
+        "Online tickets for the 11:30 AM seating are unavailable."],
+      [/^(?:Taste tea sandwiches, scones and petite sweets in the decorated historic Villa, with a reservation for your seating|The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist|Attend the Yuletide Tea at Montalvo Arts Center on a Sunday, an arts event in Saratoga starting at 11:30 AM)\.$/,
+        "Montalvo lists Yuletide Tea at 11:30 AM. Check with the box office about tickets."],
     ],
   },
   // The organizer's page and authenticated museum newsletter describe

@@ -5613,13 +5613,18 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
             }
           } catch { /* Keep overview facts when its linked occurrence is unavailable. */ }
         }
+        // A booking refusal can hide prices on the performance page. Keep
+        // the last verified price for this exact row when the new source
+        // supplies availability but no replacement price.
+        const pricing = detail.attendanceStatus && !detail.cost && !detail.costNote ? retainedAdmission(event) : event;
+        const costNote = detail.costNote ?? pricing.costNote;
         return {
           ...event,
           title: detail.title || event.title,
           time: detail.time || event.time,
           endTime: detail.endTime || event.endTime,
-          cost: detail.costNote ? detail.cost : detail.cost || event.cost,
-          ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
+          cost: detail.costNote ? detail.cost : detail.cost || pricing.cost,
+          ...(costNote ? { costNote, attendanceNote: costNote } : {}),
           ...(detail.registration ? { registration: detail.registration } : {}),
           ...(detail.attendanceStatus ? { attendanceStatus: detail.attendanceStatus } : {}),
           ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),

@@ -28,6 +28,29 @@ test("the Montalvo adapter follows the exact seating and retains its visible sel
   assert.equal(row.occurrenceEvidence.admissionSourceUrl, "https://my.montalvoarts.org/3253/3254");
 });
 
+test("Montalvo's current not-on-sale alert carries its prior price without a sellout claim", async t => {
+  const event = fixture.montalvoPublished;
+  const ticketUrl = "https://my.montalvoarts.org/3253/3254";
+  const notOnSale = fixture.montalvoPerformance.replace(
+    /<p role="alert" class="tn-event-detail__unavailable-text">[\s\S]*?<\/p>/,
+    '<p role="alert" class="tn-event-detail__unavailable-text"><h3><em>This event is not currently on sale.</em></h3></p>',
+  );
+  t.mock.method(globalThis, "fetch", async url => {
+    if (String(url) === event.url) return new Response(fixture.montalvoOverview);
+    if (String(url) === ticketUrl) return new Response(notOnSale);
+    assert.equal(String(url), "https://montalvoarts.org/experience/events-calendar/");
+    return new Response(`<script type="application/ld+json">${JSON.stringify({ "@type": "Event", name: event.title, startDate: "2026-11-22T11:30:00+00:00", url: event.url })}</script>`);
+  });
+  const [row] = await fetchMontalvoEvents({ previousEvents: [event], now: new Date("2026-11-17T20:00:00Z") });
+  assert.equal(row.cost, "paid");
+  assert.equal(row.costNote, event.costNote);
+  assert.equal(row.attendanceStatus, "needs-confirmation");
+  assert.equal(row.registration, undefined);
+  assert.match(row.attendanceNote, /Online tickets are not currently available/);
+  assert.equal(row.occurrenceEvidence.admissionSourceUrl, ticketUrl);
+  assert.deepEqual(applyVerifiedEventFacts(row), row);
+});
+
 test("seating clocks come from the current occurrence label, with other sessions and hidden alerts excluded", () => {
   const url = "https://my.montalvoarts.org/3253/3254";
   assert.equal(findMontalvoPerformanceUrl(fixture.montalvoOverview, fixture.montalvoPublished), url);
@@ -44,11 +67,12 @@ test("seating clocks come from the current occurrence label, with other sessions
   assert.equal(parseMontalvoOccurrencePage(fixture.montalvoPerformance.replace("Seating at 11:30 am", "Another session at 11:30 am")).registration, undefined);
 });
 
-test("the cached tea keeps its sellout while later exact performance evidence wins", async () => {
+test("the cached tea carries the current booking notice and later exact performance evidence wins", async () => {
   const event = structuredClone(fixture.montalvoPublished);
   await resolveEventBlurbs([event], { enabled: false });
-  assert.equal(event.registration, "full");
-  assert.match(event.attendanceNote, /Sold out.*waitlist/);
+  assert.equal(event.registration, "none");
+  assert.equal(event.attendanceStatus, "needs-confirmation");
+  assert.match(event.attendanceNote, /Online tickets are not currently available/);
   assert.doesNotMatch(event.attendanceNote, /Reserve your/);
   assert.equal(event.costNote, fixture.montalvoPublished.costNote);
   assert.deepEqual(applyVerifiedEventFacts(event), event);
