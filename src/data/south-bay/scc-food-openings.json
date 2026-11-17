@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-16T04:21:39.747Z",
+  "generatedAt": "2026-11-17T04:51:37.108Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-16T04:21:39.747Z",
-    "updatedAt": "2026-11-15T14:38:48.000Z",
+    "checkedAt": "2026-11-17T04:51:37.108Z",
+    "updatedAt": "2026-11-16T14:31:19.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-13",
     "newestEligibleInspection": "2026-11-13",
@@ -13,6 +13,18 @@
   },
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0880584",
+      "name": "Little Caesars Pizza",
+      "address": "1581 W Campbell Ave, Ste. D, Bldg A",
+      "cityId": "campbell",
+      "cityName": "CAMPBELL",
+      "inspectionDate": "2026-11-13",
+      "sourceId": "SR0880584",
+      "status": "inspection-complete",
+      "blurb": "Pizza shop on West Campbell Avenue in Campbell.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0880584-450.webp"
+    },
     {
       "id": "inspection-SR0885777",
       "name": "Dduk Dabang",
@@ -22,7 +34,7 @@
       "inspectionDate": "2026-11-13",
       "sourceId": "SR0885777",
       "status": "inspection-complete",
-      "blurb": "Food business on S De Anza Blvd in San Jose.",
+      "blurb": "Food business on South De Anza Boulevard in San Jose.",
       "photoRef": "places/ChIJT9CM_qTNj4ARxSSblTQ4dG4/photos/AVoNoXRepKxyBvZsFDgCrpgTgiexSjn6DJh6AFYZByvhAANCutsm0QR3qx9dQ4J2rERkT9d0m2RxDJLonbQMXhDVKa0hWsUfYjqtqGPiagK9F8PZY9f39X2ybgRds5wZDamsdkqAiQ0Bx5ukknkSezyyXft_rf9oT7SR_ZAliLuo8J3Z441pPsfUbf2sP71Ve5ml13iMV6pjtyamEZKmD-3jvdfR8fw-Q-FNE72AGidfcPEecV9Wn6BhZ3iumkPcQ_C87sDn5daiPV2qSeeYJ1JrHis7jLQPpJfzuGQQNjhuMVCMwz6tSx2WRJk7Zd8BDJY8lEzRZXHWWWDQk_04QOZGzXQ4_WbdB1GYQV4zMmMCSWKRC9IPnkFb_R34uEGAuwbJwQp1wtr2gM7VKzYqyOH0DYgsuwno_73jC4Qx9CXIX4cViEds7HgQ-65bdTEpbELk"
     },
     {
@@ -34,8 +46,20 @@
       "inspectionDate": "2026-11-13",
       "sourceId": "SR0886581",
       "status": "inspection-complete",
-      "blurb": "Cinema food business on N Shoreline Blvd in Mountain View.",
+      "blurb": "Cinema on North Shoreline Boulevard in Mountain View.",
       "photoRef": "places/ChIJOYvCo1W3j4AR1LAifgk13rs/photos/AV-0GLd4XqjA0mWSBPXo4ee4hac05rdFF-DGRYokS858-oI0NoTzWDl8cFXy4qgi2yKWnMfHp9OGlOEAMyi0ZJYDyaI_jy0BveKLowkV2ZYL_6ViVdlfrER4EzL_of4iCpXxZVIU5gEQvxjbG8jYQI9Mimpp6d1Ugnt-Zk97T4qRznefaJyLsqB4EcfJs8yc03QuTOKuTgdl26cCX7PAkW_PFi2yaLgnlkpZGQlQoEgf-ANeSGuYDSmz8cE0WIbDLxmFqyW5sZQ3T44Q35sAFrrO8m3MvJdKv0rPOf1YWN4AbgoQsB1XUe9NKVvYcTnvGTQI_ktC_stpfeKDc-eDpem3CkAN5nOC6AVMUq0wRWeIVUS7ce15nv68dedY9A5B7v0oQekLGVmqPtusMhgghSmEp1e-e7U"
+    },
+    {
+      "id": "inspection-SR0882829",
+      "name": "Milk Tea Shop",
+      "address": "747 W Dana St",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "inspectionDate": "2026-11-12",
+      "sourceId": "SR0882829",
+      "status": "inspection-complete",
+      "blurb": "Milk tea shop on West Dana Street in Mountain View.",
+      "photoRef": "places/ChIJGwxVRwC3j4ARjVKaVwcgM8w/photos/AWCwydh_kDVPx4bInDgrjLds2nvZdhYj0F1HTD6iS7d-G3-W6vSjCGPrJmF1S0-OUm821MaY0pzkJ-VQQhnBLW3pK0uU6BUsWgNhxPJBiIzcBwPt8mhbxc2gfa8racW-6sagjuVk0wf4EATtLYkaG-O9ORl7CLNLdFBeijyhAZhTj97BAHyKhMt0_7cvolmuvY-9iJNvNK_EB58Os7T636FM7IdNlM_wId_RtoKk6voZ50kCnthv4ViPXkIPV4OTJln2EZq6jm5Z8aO7PXYM7ZaQ18L8ot4zU2vRDQAmPLeCFMSvkvY4GHmziRFd1oPncbLL66wCfU5BeepeMNre-PQyVgXvktcDAgVOs9koSOukounbXiaSvnrjCkrE1M7IlxVsWk61C1GoHF6KQSJRxJ19woiea9y_XA8Hxntz_6jTxyyQZErOYu8H7jIQ9NrZfg"
     },
     {
       "id": "inspection-SR0882351",
@@ -50,18 +74,6 @@
       "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
-      "id": "inspection-SR0882829",
-      "name": "Milk Tea Shop",
-      "address": "747 W Dana St",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "inspectionDate": "2026-11-12",
-      "sourceId": "SR0882829",
-      "status": "inspection-complete",
-      "blurb": "Milk tea shop on W Dana St in Mountain View.",
-      "photoRef": "places/ChIJGwxVRwC3j4ARjVKaVwcgM8w/photos/AWCwydh_kDVPx4bInDgrjLds2nvZdhYj0F1HTD6iS7d-G3-W6vSjCGPrJmF1S0-OUm821MaY0pzkJ-VQQhnBLW3pK0uU6BUsWgNhxPJBiIzcBwPt8mhbxc2gfa8racW-6sagjuVk0wf4EATtLYkaG-O9ORl7CLNLdFBeijyhAZhTj97BAHyKhMt0_7cvolmuvY-9iJNvNK_EB58Os7T636FM7IdNlM_wId_RtoKk6voZ50kCnthv4ViPXkIPV4OTJln2EZq6jm5Z8aO7PXYM7ZaQ18L8ot4zU2vRDQAmPLeCFMSvkvY4GHmziRFd1oPncbLL66wCfU5BeepeMNre-PQyVgXvktcDAgVOs9koSOukounbXiaSvnrjCkrE1M7IlxVsWk61C1GoHF6KQSJRxJ19woiea9y_XA8Hxntz_6jTxyyQZErOYu8H7jIQ9NrZfg"
-    },
-    {
       "id": "inspection-SR0884058",
       "name": "Hikalogy Cake And Desserts",
       "address": "1171 Homestead Rd. #120",
@@ -70,7 +82,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0884058",
       "status": "inspection-complete",
-      "blurb": "Cake and dessert shop on Homestead Rd in Santa Clara.",
+      "blurb": "Cake and dessert business on Homestead Road in Santa Clara.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884058-450.webp"
     },
     {
@@ -82,7 +94,7 @@
       "inspectionDate": "2026-11-10",
       "sourceId": "SR0885856",
       "status": "inspection-complete",
-      "blurb": "Cafe on Blossom Hill Rd in San Jose.",
+      "blurb": "Cafe on Blossom Hill Road in San Jose.",
       "photoRef": "places/ChIJbUW2fI8xjoARN6NWe-6XhwM/photos/AV-0GLc7N66lzBem8zTIrCl6TibU307Ks20jk6cp7M-RZhgZJqhFuS5Vh7_O1pKkt_rk9qchNHPzGL597xt3JQhs1KPPeDz_zMKe7CLQk59mGx6rTOVaamy5f81AtAgKkC1fVHxsiEgfaxoKxqzto7bGdle54yaBtFcYMQ_hex_NOGeTF96nw7zC5FRkZ8R6Bi7FLQtwmQ_Vm03OnhsTHP6AqYMyJ1O-OiSfKhNulJxdWTUhqTIrfLkS88-ISYv6N0lVTVUADgrIASgAwJCkWKlZD3C14UlmL9bZw4ZWUDlHtr4vJpRFgO4q9p8XAJ2DYdkgFzrD6k-TudYXc6bn8qMci5kupolHwOE4hLrVZt4KjT2IMRheezk-h6APVYkiwwvjKiAiOAAllqTiUaA5KpZlGg_ETHE"
     },
     {
@@ -94,7 +106,7 @@
       "inspectionDate": "2026-11-06",
       "sourceId": "SR0878199",
       "status": "inspection-complete",
-      "blurb": "Food business on E Arques Ave in Sunnyvale.",
+      "blurb": "Food business on East Arques Avenue in Sunnyvale.",
       "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
     },
     {
@@ -106,7 +118,7 @@
       "inspectionDate": "2026-11-06",
       "sourceId": "SR0881373",
       "status": "inspection-complete",
-      "blurb": "Coffee business on Camden Ave in San Jose.",
+      "blurb": "Coffee business on Camden Avenue in San Jose.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
     },
     {
@@ -130,7 +142,7 @@
       "inspectionDate": "2026-11-06",
       "sourceId": "SR0886293",
       "status": "inspection-complete",
-      "blurb": "Food business on Lotus St in San Jose.",
+      "blurb": "Food business on Lotus Street in San Jose.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886293-450.webp"
     },
     {
@@ -142,20 +154,8 @@
       "inspectionDate": "2026-11-04",
       "sourceId": "SR0881394",
       "status": "inspection-complete",
-      "blurb": "Coffee business on Middlefield Rd in Palo Alto.",
+      "blurb": "Coffee business on Middlefield Road in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
-    },
-    {
-      "id": "inspection-SR0884461",
-      "name": "Ug Tea",
-      "address": "1040 Grant Rd. #350",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "inspectionDate": "2026-10-30",
-      "sourceId": "SR0884461",
-      "status": "inspection-complete",
-      "blurb": "Tea shop on Grant Rd in Mountain View.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884461-450.webp"
     }
   ],
   "comingSoon": [
@@ -240,7 +240,7 @@
       "date": "2026-11-09",
       "status": "coming-soon",
       "sourceId": "SR0883776",
-      "blurb": null,
+      "blurb": "Food business planned on University Avenue in Palo Alto.",
       "photoRef": "places/ChIJA-9NXQC7j4ARHw3OIce4aA4/photos/Ab43m-tteBzecbMVt0r8veRwlsaIY6DZJJifGrxlZjqnHT4q7NB_Jetg49BYqHtEJ0HbhpoD7FZqqCHC7g4jOHEf8a_XRaIOTGqKdFXRem4b62fPMsnBQLkM-E1dWPOachxItXeXncyBBIiZOiBQ7z9ip1V6c_k6JBGcJPizTC0R2tKptbAB2RjagJkGRvOJ7puDKTrgxcRPrer5HsGANJ85FfcSbkvsgHr17S1u2oV9-u8VgvZYEcNjx2z79AvY73IT6t5tvAroiEH9t1Ack1FvpKNKInwdiYJeNJb-f-bCnwEI9QC1DnGXR7GRSbqm4ylskL9u70iOWLaO-4XOV723GPdwK_mN2pC9d_sTyLnpKUg58vT8cEag58szSPx4nOGoV9iEKf14OiEEPOKlRMeHTXKC-jsqow92unkpJBwfkwLwWP_8Y6MWtbaW2lIdN_-8"
     },
     {
