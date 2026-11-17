@@ -151,6 +151,8 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 const november15EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-evening.json", import.meta.url)));
 audits.push(november15EveningFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-night.json", import.meta.url))));
+const november16EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-16-evening.json", import.meta.url)));
+audits.push(november16EveningFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -167,6 +169,31 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("November 16 library copy repairs preserve revised facts, conditions and publisher scope", () => {
+  const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16")
+    .replaceAll("5 to 12", "6 to 13").replaceAll("8 AM", "9:30 AM").replaceAll("5 PM", "4:15 PM")
+    .replaceAll("(408) 350-3239", "(650) 555-0123");
+  for (const row of november16EveningFixture.cases) {
+    const original = {
+      ...row.events[0], source: row.source, [row.field]: revise(row.refreshed) + " Tickets $45. Register at https://example.org/updated.",
+      date: "2027-01-20", time: "11:45 AM", endTime: "1:15 PM", registration: "required",
+      venue: "Updated Venue", address: "500 Updated Avenue", city: "san-jose", category: "education",
+      cost: "paid", costNote: "$45",
+    };
+    const untouched = structuredClone(original);
+    const next = polishReviewedEventCopy(original);
+    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + " Tickets $45. Register at https://example.org/updated." });
+    assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
+    assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
+    assert.deepEqual(polishReviewedEventCopy(next), next);
+    assert.deepEqual(original, untouched);
+    const otherPublisher = { ...original, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+    const replacement = { ...original, [row.field]: "Previous assessment and registration are required. Se requiere una evaluación y registración previa." };
+    assert.deepEqual(polishReviewedEventCopy(replacement), replacement);
+  }
+});
 
 test("November 15 evening copy repairs preserve source updates and publisher scope", () => {
   for (const row of november15EveningFixture.cases) {
@@ -690,7 +717,7 @@ test("library demo and reading repairs preserve revised limits, contacts and pub
 
 test("markup repairs preserve revised appointments, contacts, notices and publisher scope", () => {
   const revise = text => text.replaceAll("350-3239", "350-9876")
-    .replaceAll("8 AM-5 PM", "9 AM-4 PM").replaceAll("Room 201A", "Room 302B")
+    .replaceAll("8 AM", "9 AM").replaceAll("5 PM", "4 PM").replaceAll("Room 201A", "Room 302B")
     .replaceAll("HICAP's goal is to inform and educate", "HICAP's updated goal is to inform and educate");
   const suffix = " Registration required; ages 18+; contact updated@example.org. See https://example.org/new.";
   for (const row of november7MarkupFixture.cases) {
@@ -700,7 +727,7 @@ test("markup repairs preserve revised appointments, contacts, notices and publis
       endTime: "1:00 PM", registration: "appointment-only", cost: "free",
     };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, description: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, description: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next.description), numbers(original.description));
     assert.deepEqual(identifiers(next.description), identifiers(original.description));
     assert.deepEqual(polishReviewedEventCopy(next), next);
