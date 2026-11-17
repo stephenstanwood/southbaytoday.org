@@ -140,6 +140,55 @@ test("Stanford retains a current full-capacity notice before display truncation"
   assert.equal(rows[1].registration, undefined);
 });
 
+test("Stanford reads current capacity and closure notices from the organizer's banner", async () => {
+  // The Nov 17 Estonia talk's live page and exact Localist record put this
+  // notice in custom_fields.banner_text, outside the description.
+  const tomorrow = dayPT(1);
+  const instances = [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:00:00") }];
+  const notice = "This event is at capacity. Registration form has been closed.";
+  const banners = [
+    notice,
+    "Registration form has been closed.",
+    "Registration has reopened; seats are available.",
+    "If this event is at capacity, check back for another session.",
+    "Last year's event was at capacity.",
+    "",
+  ];
+  const rows = await runWith(banners.map((banner_text, index) => localistEvent({
+    id: index + 1, instances, description_text: "A public talk.",
+    custom_fields: { banner_text },
+  })));
+  assert.equal(rows[0].registration, "full");
+  assert.equal(rows[0].attendanceNote, notice);
+  assert.equal(rows[1].registration, "closed");
+  assert.equal(rows[1].attendanceNote, banners[1]);
+  for (const row of rows.slice(2)) {
+    assert.equal(row.registration, undefined, "reopening, hypothetical and historical banners cannot close attendance");
+    assert.equal(row.attendanceNote, undefined);
+  }
+  for (const row of rows) {
+    assert.equal(row.time, "12:00 PM");
+    assert.equal(row.endTime, "1:00 PM");
+    assert.equal(row.cost, null);
+  }
+});
+
+test("Stanford preserves the food and lecture schedule after the display excerpt", async () => {
+  // Nov 16 Grand Rounds starts food service at 5; the lecture starts at 5:15.
+  const tomorrow = dayPT(1);
+  const schedule = "Food served from 5:00 p.m.; lecture 5:15–6:00 p.m.";
+  const instances = [{ start: atPT(tomorrow, "17:00:00"), end: atPT(tomorrow, "18:00:00") }];
+  const [event, ordinary] = await runWith([
+    localistEvent({ id: 1, instances, description_text: "A public lecture. ".repeat(25) + schedule }),
+    localistEvent({ id: 2, instances, description_text: "A public lecture." }),
+  ]);
+  assert.equal(event.attendanceNote, schedule);
+  assert.equal(event.time, "5:00 PM", "the event window still begins with food service");
+  assert.equal(event.endTime, "6:00 PM");
+  assert.equal(event.cost, null, "food service does not establish admission price");
+  assert.equal(ordinary.attendanceNote, undefined);
+});
+
 test("Stanford preserves a closed-RSVP notice beyond the excerpt and accepts a later reopening", async () => {
   const tomorrow = dayPT(1);
   const instances = [{ start: atPT(tomorrow, "12:00:00"), end: atPT(tomorrow, "13:30:00") }];

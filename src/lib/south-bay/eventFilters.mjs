@@ -238,7 +238,7 @@ export function declaredRegistrationAvailability(html) {
     if (/^(?:registration|enrollment)\s+is\s+(?:now\s+)?(?:full|at\s+(?:full\s+)?capacity)\b/i.test(statement)) {
       return REGISTRATION_FULL;
     }
-    if (/^(?:registration|enrollment)\s+(?:(?:is|has)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
+    if (/^(?:registration(?:\s+form)?|enrollment)\s+(?:(?:is|has(?:\s+been)?)\s+)?(?:now\s+)?closed\b/i.test(statement)) {
       return REGISTRATION_CLOSED;
     }
     // A current refusal of new RSVPs closes signup without proving the
@@ -247,7 +247,7 @@ export function declaredRegistrationAvailability(html) {
     if (/^(?:due to (?:room )?capacity limits,\s*)?we\s+can\s+no\s+longer\s+accept\s+(?:new\s+)?(?:rsvps?|registrations?|reservations?)\s*$/i.test(statement)) {
       return REGISTRATION_CLOSED;
     }
-    if (/^(?:(?:we['’]re|we are)\s+sorry\s*[,;:]\s*)?(?:this|the|our)\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?(?:full|sold[-\s]out)\b/i.test(statement)) {
+    if (/^(?:(?:we['’]re|we are)\s+sorry\s*[,;:]\s*)?(?:this|the|our)\s+(?:event|class|session|program)\s+is\s+(?:now\s+)?(?:full|sold[-\s]out|at\s+(?:full\s+)?capacity)\b/i.test(statement)) {
       return REGISTRATION_FULL;
     }
   }

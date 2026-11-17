@@ -4600,11 +4600,20 @@ async function fetchStanfordEvents() {
         : null;
       // Preserve the publisher's paragraph boundaries before stripHtml joins
       // them: a credit without final punctuation can precede a closure notice.
-      const registrationNotice = [ev.description || "", ev.description_text || "", ev.ticket_cost || "", streamTerms]
+      // Stanford's current attendance banner is separate from the body (the
+      // Nov 17 Estonia talk closes signup here). Only a direct full/closed
+      // notice establishes availability; an absent or revised banner does not.
+      const banner = stripHtml(ev.custom_fields?.banner_text || "").trim();
+      const bannerNotice = declaredRegistrationAvailability(banner) ? banner : null;
+      const registrationNotice = bannerNotice || [ev.description || "", ev.description_text || "", ev.ticket_cost || "", streamTerms]
         .flatMap((text) => String(text).split(/(?:\r?\n[\t ]*){2,}|<\/(?:p|div|li|h[1-6])\s*>|(?:<br\s*\/?>\s*){2,}/gi))
         .map((text) => stripHtml(text).trim())
         .flatMap((text) => text.split(/(?<=[.!?])\s+/))
         .find((sentence) => declaredRegistrationAvailability(sentence));
+      // A calendar window can start with food before its lecture. Keep the
+      // source's explicit schedule even when it follows the display excerpt;
+      // do not infer a replacement start clock or free admission from food.
+      const foodLectureSchedule = description.match(/\bFood served from \d{1,2}:\d{2}\s*[ap]\.m\.;\s*lecture \d{1,2}:\d{2}\s*[–—-]\s*\d{1,2}:\d{2}\s*[ap]\.m\./i)?.[0];
       const registration = declaredRegistrationAvailability(registrationNotice)
         || declaredRegistrationAvailability(description)
         || declaredRegistrationAvailability(ticketTerms)
@@ -4718,6 +4727,7 @@ async function fetchStanfordEvents() {
         ...(bodyRegistrationRequirement ? [bodyRegistrationRequirement] : []),
         ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
+        ...(foodLectureSchedule ? [foodLectureSchedule] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
