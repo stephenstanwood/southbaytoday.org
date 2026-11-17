@@ -2190,7 +2190,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|BayPiggies|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
+  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|OverDrive|iPads?|FlipaClip|DreamWorks|MacArthur|BayPiggies|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and

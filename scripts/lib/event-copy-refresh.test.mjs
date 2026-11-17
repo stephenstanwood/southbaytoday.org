@@ -7,6 +7,7 @@ import test from "node:test";
 import { cleanTitle, isPublicEvent, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
 import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
@@ -154,7 +155,8 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 const november16EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-16-evening.json", import.meta.url)));
 audits.push(november16EveningFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-morning.json", import.meta.url))));
-audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-afternoon.json", import.meta.url))));
+const november17AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-afternoon.json", import.meta.url)));
+audits.push(november17AfternoonFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -171,6 +173,18 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("Almaden's source facts and copy survive description normalization", () => {
+  const { beforeFacts, refreshed, reviewed, events } = november17AfternoonFixture.cases.find(
+    row => row.beforeFacts && row.events[0].id === "sjpl-69f10f4bfb87a3c2e2ac6fec",
+  );
+  for (const event of events) {
+    const verified = applyVerifiedEventFacts({ ...event, description: polishDescription(beforeFacts) });
+    assert.equal(verified.description, refreshed);
+    assert.deepEqual(polishReviewedEventCopy(verified), { ...verified, description: reviewed });
+    assert.equal(verified.registration, event.registration);
+  }
+});
 
 test("November 16 library copy repairs preserve revised facts, conditions and publisher scope", () => {
   const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16")

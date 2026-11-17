@@ -111,6 +111,25 @@ const EDITS = {
       ["Our fall schedule is: September: How to Write a Story October: Spooky Story November: Thank-you Letter December: Letter to Santa January: Plot and Three Little Pigs Through different writing assignments students", "The schedule covers How to Write a Story (September), Spooky Story (October), Thank-you Letter (November), Letter to Santa (December), and Plot and Three Little Pigs (January). Through different writing assignments, students"],
       ["Libby (formerly Overdrive)", "Libby (formerly OverDrive)"],
       ["non-Overdrive e-books", "non-OverDrive e-books"],
+      // Match the Almaden service list after the verified service corrections.
+      // This leaves the registration instructions and any new service list intact.
+      [
+        "Do you have questions or need assistance with technology? " +
+          "At the Almaden Branch, you can make a 30-minute appointment for assistance with: " +
+          "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; " +
+          "Finding e-books from Enki; Accessing the New York Times and/or the San Jose Mercury News online; " +
+          "Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; " +
+          "Using Discover & Go to reserve free or reduced tickets to local museums and attractions; " +
+          "Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby; " +
+          "Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more!",
+        "The Almaden Branch offers 30-minute tech help appointments. " +
+          "Get help using Libby from OverDrive to read ebooks and listen to audiobooks, finding ebooks from Enki, " +
+          "reading the New York Times and the San Jose Mercury News online, or accessing and searching Consumer Reports. " +
+          "You can also get help learning a language with Mango, connecting to Wi-Fi or a hotspot, or using Discover & Go " +
+          "to reserve free or reduced-price tickets to local museums and attractions. " +
+          "Other topics include navigating the SJPL website, checking out a 7-day pass to Great Courses through Libby, " +
+          "using the library's pay-to-print system, and working through a Digital Skills Building Pathways lesson.",
+      ],
       // NASA spells the mission InSight: https://www.jpl.nasa.gov/missions/insight/
       ["Mars Science Laboratory, In Sight, and Mars 2020", "Mars Science Laboratory, InSight, and Mars 2020"],
       ["with our volunteers Mike, Sally & Matt. Kids are also welcome to practice reading to our volunteer.", "with our volunteers Mike, Sally, and Matt. Kids are also welcome to practice reading to one of the volunteers."],
