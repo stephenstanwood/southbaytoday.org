@@ -162,6 +162,47 @@ body {
 /* Legacy hooks some pages still emit. */
 .sb-masthead-rule { display: none; }
 
+/* Compact flag — every page except Today (Masthead.tsx). Same mark,
+   wordmark, and dateline, set in one row so the page's own content clears
+   the fold. */
+.sb-header--compact {
+  padding: 14px var(--sb-gutter) 13px;
+}
+
+.sb-header--compact .sb-header-inner {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 22px;
+}
+
+.sb-header--compact .sb-brand {
+  flex-direction: row;
+  gap: 12px;
+}
+
+.sb-header--compact .sb-brand-mark {
+  width: 52px;
+  height: 52px;
+  border-width: 3px;
+  box-shadow: 0 8px 20px rgba(31, 12, 73, 0.14), 0 0 0 1px rgba(123, 47, 190, 0.12);
+}
+
+.sb-header--compact .sb-logo-the { font-size: 16px; }
+.sb-header--compact .sb-logo-south-bay { font-size: 32px; }
+.sb-header--compact .sb-logo-signal-row { margin-top: 3px; }
+
+.sb-header--compact .sb-dateline {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-left: 22px;
+  border-left: 1px solid var(--sb-line-strong);
+  text-align: left;
+}
+
+.sb-header--compact .sb-dateline-sep { display: none; }
+
 /* ── Nav tabs ── */
 .sb-nav {
   position: sticky;
@@ -770,9 +811,20 @@ body {
   .sb-dateline { flex-direction: column; gap: 2px; font-size: 10.5px; }
   .sb-dateline-sep { display: none; }
 
+  /* Compact flag on phones: mark + wordmark only. The pages that carry it
+     date themselves (the Events day bar, each event's own date). */
+  .sb-header--compact { padding: 10px var(--sb-gutter) 9px; }
+  .sb-header--compact .sb-brand { gap: 10px; }
+  .sb-header--compact .sb-brand-mark { width: 42px; height: 42px; border-width: 2px; }
+  .sb-header--compact .sb-logo-the { font-size: 13px; }
+  .sb-header--compact .sb-logo-south-bay { font-size: 27px; }
+  .sb-header--compact .sb-logo-signal-word { font-size: 9px; }
+  .sb-header--compact .sb-dateline { display: none; }
+
   .sb-nav { padding: 0 8px; }
   .sb-nav-inner { justify-content: space-between; gap: 0; }
-  .sb-tab { padding: 13px 8px 12px; font-size: 11px; letter-spacing: 0.06em; }
+  /* 12px meets the site's meta floor; all six tabs still fit from 360px. */
+  .sb-tab { padding: 13px 7px 12px; font-size: 12px; letter-spacing: 0.04em; }
   .sb-tab::after { left: 6px; right: 6px; }
 
   .sb-main { padding: 20px var(--sb-gutter) 32px; }
@@ -794,8 +846,14 @@ body {
     padding-bottom: calc(84px + env(safe-area-inset-bottom));
   }
   .sb-page-hero {
-    gap: 16px;
-    padding-bottom: 18px;
+    gap: 14px;
+    padding-bottom: 16px;
+  }
+  .sb-page-title {
+    margin: 6px 0 10px;
+  }
+  .sb-page-subtitle {
+    line-height: 1.55;
   }
   .sb-page-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -826,6 +884,13 @@ body {
   .sb-page-stats:has(> .sb-page-stat:nth-child(3):last-child) > .sb-page-stat:first-child {
     border-left: none;
   }
+}
+
+/* The narrowest phones (320–359px) keep all six tabs on screen instead of
+   clipping FOOD behind a sideways scroll. */
+@media (max-width: 359px) {
+  .sb-tab { padding: 13px 4px 12px; font-size: 11.5px; letter-spacing: 0.03em; }
+  .sb-tab::after { left: 3px; right: 3px; }
 }
 
 /* Touch: the house button clears the 40px tap-target floor. */

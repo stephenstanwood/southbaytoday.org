@@ -11722,7 +11722,7 @@ async function main() {
   // events from adult plans (e.g. "Kids Knitting") and 21+/drag/tasting
   // events from kids plans. Bias is conservative — default is "all" unless
   // the signal is strong.
-  const { classifyAudienceAge } = await import("../src/lib/south-bay/audienceAge.mjs");
+  const { audienceLabelsInviteKids, classifyAudienceAge } = await import("../src/lib/south-bay/audienceAge.mjs");
   const audienceCounts = { kids: 0, adult: 0, all: 0 };
   for (const e of collapsedEvents) {
     Object.assign(e, applyVerifiedEventFacts(e));
@@ -11731,7 +11731,10 @@ async function main() {
     // can mention ages 10–14 without restricting participation to children.
     Object.assign(e, applyVerifiedEventFacts(e));
     const tag = e.audienceAge;
-    if (e.sourceAudiences?.length && tag !== "all") e.kidFriendly = tag === "kids";
+    // The event's own audience labels decide the Kids badge. An ingest-time
+    // keyword match on "teen" counted adult-and-teen programs as kids' events.
+    const labelsInviteKids = audienceLabelsInviteKids(e.sourceAudiences);
+    if (labelsInviteKids !== null) e.kidFriendly = labelsInviteKids;
     audienceCounts[tag]++;
   }
   console.log(`   👥 audience: kids=${audienceCounts.kids} adult=${audienceCounts.adult} all=${audienceCounts.all}`);

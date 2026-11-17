@@ -93,6 +93,52 @@ export function isVerifiedOpeningRecord(record) {
     && record.openingEvidence.source.trim().length > 0;
 }
 
+// Places types that mean "somewhere to eat or drink". Text Search returns its
+// best guess for "<name> <address> <city>", which for a new business with no
+// listing is often the shopping center around it: "A New Sunrise Cafe" (463
+// Blossom Hill Rd, SR0885856) came back as Sunrise Plaza Shopping Center at
+// 620-690 Blossom Hill Rd, and its tile showed a sporting-goods sign.
+const FOOD_PLACE_TYPES = new Set([
+  "restaurant", "food", "cafe", "coffee_shop", "bakery", "bar", "pub", "wine_bar",
+  "meal_takeaway", "meal_delivery", "ice_cream_shop", "dessert_shop", "dessert_restaurant",
+  "tea_house", "juice_shop", "donut_shop", "bagel_shop", "sandwich_shop", "pizza_restaurant",
+  "fast_food_restaurant", "brunch_restaurant", "breakfast_restaurant", "confectionery",
+  "grocery_store", "supermarket", "food_store", "market", "asian_grocery_store",
+  "butcher_shop", "deli", "cafeteria", "food_court", "bar_and_grill", "brewery", "winery",
+]);
+const GENERIC_NAME_WORDS = new Set([
+  "the", "and", "new", "cafe", "café", "restaurant", "kitchen", "bar", "grill", "house",
+  "shop", "food", "foods", "market", "express", "eatery", "bistro", "company",
+]);
+
+function nameTokens(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
+    .split(/[^a-z0-9]+/)
+    .filter((word) => word.length > 2 && !GENERIC_NAME_WORDS.has(word));
+}
+
+function streetNumber(value) {
+  return /^\s*(\d+)[a-z]?\b/i.exec(String(value || ""))?.[1] ?? null;
+}
+
+/**
+ * Whether a Text Search hit can be trusted to picture this business: it must
+ * be a food or drink place, and it must agree on the street number or share a
+ * distinctive word of the name. A mall, office park or neighbor fails.
+ */
+export function placeMatchesFoodItem(item, place) {
+  if (!place) return false;
+  const types = [place.primaryType, ...(place.types || [])].filter(Boolean);
+  if (!types.some((type) => FOOD_PLACE_TYPES.has(type))) return false;
+  const itemNumber = streetNumber(item.address);
+  const placeNumber = streetNumber(place.formattedAddress);
+  if (itemNumber && placeNumber) return itemNumber === placeNumber;
+  const placeWords = new Set(nameTokens(place.displayName?.text ?? place.displayName));
+  return nameTokens(item.name).some((word) => placeWords.has(word));
+}
+
 export function foodPhotoCacheKey(item) {
   return item.sourceId || `${item.name}|${item.address || ""}|${item.cityId || ""}`;
 }

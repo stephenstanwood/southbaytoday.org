@@ -610,14 +610,6 @@ function CountSkeleton({ className = "" }: { className?: string }) {
   return <span className={`sb-skeleton sb-events-count-skel ${className}`.trim()} aria-hidden="true" />;
 }
 
-/** Hero-stat placeholder: reserves the number's line box, reads as "Loading". */
-const STAT_SKELETON = (
-  <>
-    <span className="sb-skeleton sb-events-stat-skel" aria-hidden="true" />
-    <span className="sb-events-visually-hidden">Loading</span>
-  </>
-);
-
 // ── "Add to calendar" button ───────────────────────────────────────────────
 
 function AddToCalendarButton({ event }: { event: UpcomingEvent }) {
@@ -1347,15 +1339,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         </>
       );
 
-  // Hero numbers. Upcoming counts today onward (the served feed keeps a
-  // one-day grace window for paging back, which isn't "upcoming").
-  const upcomingCount = useMemo(
-    () => upcomingEvents.reduce((n, e) => (e.date >= todayIso ? n + 1 : n), 0),
-    [upcomingEvents, todayIso],
-  );
-  const statValue = (ready: boolean, n: number): React.ReactNode =>
-    loadFailed ? "—" : ready ? n.toLocaleString("en-US") : STAT_SKELETON;
-
   // Keep the selected day in view when the rail scrolls sideways (phones).
   const railRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -1424,11 +1407,6 @@ export default function EventsView({ selectedCities, onToggleCity, onToggleAllCi
         eyebrow="South Bay / Calendar"
         title="Events"
         description="Concerts, library programs, markets, games, talks, festivals, and neighborhood things worth putting on the calendar."
-        stats={[
-          { value: statValue(feedComplete, upcomingCount), label: "Upcoming" },
-          { value: statValue(feed !== null, eventCountByDate[todayIso] ?? 0), label: "Today" },
-          { value: statValue(feedComplete, ongoingEvents.length), label: "Exhibits" },
-        ]}
       />
 
       <section className="sb-events-controls" aria-label="Find events">

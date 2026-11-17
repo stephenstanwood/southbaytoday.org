@@ -28,6 +28,14 @@ export const CITIES: CityConfig[] = [
   { id: "santa-cruz",    name: "Santa Cruz",    website: "https://www.cityofsantacruz.com",  lat: 36.9741, lon: -122.0308 },
 ];
 
+/** Cities with too few places to fill a six-card day plan (see plan-day). */
+const NO_DAY_PLAN = new Set<City>(["santa-cruz"]);
+
+/** Whether /api/plan-day builds a city-scoped plan for this city. */
+export function cityHasDayPlan(id: City): boolean {
+  return !NO_DAY_PLAN.has(id);
+}
+
 export const CITY_MAP = Object.fromEntries(
   CITIES.map((c) => [c.id, c]),
 ) as Record<City, CityConfig>;

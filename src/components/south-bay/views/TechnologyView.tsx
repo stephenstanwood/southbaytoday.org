@@ -851,20 +851,12 @@ const RAISED_2026_LABEL = formatFundingTotal(RAISED_2026_MILLIONS);
 // the "what's hot" callout never lies about what residents are actually seeing
 // in the funding list below.
 const Q1Q2_FUNDED = RECENTLY_FUNDED.filter((r) => r.date >= "2026-01-01");
-// Period label for the year-to-date funding stats — spans Q1 through the
-// quarter of the latest tracked 2026 round, derived from the data so it never
-// claims a quarter the list doesn't actually cover and never silently goes
-// stale once Q3+ rounds land. (The employment-snapshot labels elsewhere in
-// this view are a genuine static data vintage and intentionally stay
-// hardcoded — don't make those dynamic.)
-const FUNDING_PERIOD_LABEL = (() => {
-  const latestDate = Q1Q2_FUNDED.reduce(
-    (max, r) => (r.date > max ? r.date : max),
-    "2026-01-01",
-  );
-  const quarter = Math.ceil(parseInt(latestDate.slice(5, 7), 10) / 3);
-  return quarter <= 1 ? "Q1 2026" : `Q1–Q${quarter} 2026`;
-})();
+// Period label for the year-to-date funding stats. A quarter range
+// ("Q1–Q4 2026") read as a finished year while Q4 was still running, so the
+// label names the year alone: every round counted was raised in 2026. (The
+// employment-snapshot labels elsewhere in this view are a genuine static data
+// vintage and intentionally stay hardcoded — don't make those dynamic.)
+const FUNDING_PERIOD_LABEL = "2026";
 const Q1Q2_CATEGORY_COUNTS = Q1Q2_FUNDED.reduce<Record<string, number>>(
   (acc, r) => {
     acc[r.category] = (acc[r.category] ?? 0) + 1;
@@ -1458,8 +1450,6 @@ function FundingHighlightsSection({ todayIso }: { todayIso: string }) {
           </div>
           <p>
             {ROUNDS_2026} tracked rounds this year, led by {Q1Q2_TOP_CATEGORIES_NOTE}.
-            The list below keeps the latest notable announcements close without turning
-            the page into a funding archive.
           </p>
         </div>
         <ul className="tech-funded-list" role="list">

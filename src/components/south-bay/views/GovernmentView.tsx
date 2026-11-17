@@ -71,15 +71,6 @@ function formatClock(hhmm: string | null | undefined): string | null {
   return `${h12}:${m[2]} ${h >= 12 ? "PM" : "AM"}`;
 }
 
-function countMeetingsInWindow(selectedCities: Set<City>, todayIso: string): number {
-  const end = addDays(todayIso, 7);
-  return Object.entries(upcomingMeetings).filter(([cityId, meeting]) => {
-    if (!meeting?.date) return false;
-    if (!selectedCities.has(cityId as City)) return false;
-    return meeting.date >= todayIso && meeting.date <= end;
-  }).length;
-}
-
 // ── This Week in Council ───────────────────────────────────────────────────
 // Cross-city pulse of council meetings happening in the next 7 days. Helps
 // residents see at a glance which meetings to watch or attend, without
@@ -111,13 +102,22 @@ function CouncilWeekAhead({ selectedCities, todayIso }: { selectedCities: Set<Ci
 
   if (rows.length === 0) return null;
 
+  // Every city is on unless the reader narrowed the area on the Events tab
+  // (the selection carries across tabs) or arrived from a city link.
+  const picked = CITY_ORDER.filter((c) => selectedCities.has(c));
+  const weekScope = picked.length >= CITY_ORDER.length
+    ? "across the South Bay"
+    : picked.length === 1
+      ? `in ${getCityName(picked[0])}`
+      : "in the cities you picked";
+
   return (
     <section className="gov-section gov-week" aria-labelledby="gov-week-title">
       <div className="sb-section-header gov-section-head">
         <h2 id="gov-week-title" className="sb-section-title">This Week in Council</h2>
       </div>
       <p className="gov-section-blurb">
-        Council meetings in the next 7 days across {selectedCities.size === 1 ? "your city" : "your selected cities"}. Tap a row to open the agenda.
+        Council meetings in the next 7 days {weekScope}. Tap a row to open the agenda.
       </p>
       <ul className="gov-week-list" role="list">
         {rows.map(({ city, meeting }) => {
@@ -152,8 +152,11 @@ function CouncilWeekAhead({ selectedCities, todayIso }: { selectedCities: Set<Ci
                       ))}
                     </ul>
                   ) : (
+                    // Only the Legistar cities list agenda items here; the other
+                    // portals are linked, not parsed, so "not posted yet" was
+                    // false for a meeting whose agenda was already up.
                     <p className="gov-week-empty">
-                      Agenda not posted yet. Tap to check the city&apos;s calendar.
+                      Tap for the agenda on the city&apos;s site.
                     </p>
                   )}
                 </div>
@@ -262,28 +265,14 @@ export default function GovernmentView({ selectedCities, buildDayPt }: Props) {
     () => CITY_ORDER.filter((c) => selectedCities.has(c) && digests.has(c)),
     [selectedCities, digests],
   );
-  const meetingCount = useMemo(
-    () => countMeetingsInWindow(selectedCities, todayIso),
-    [selectedCities, todayIso],
-  );
-  const selectedGovCityCount = useMemo(
-    () => CITY_ORDER.filter((c) => selectedCities.has(c)).length,
-    [selectedCities],
-  );
-  const missingDigestCount = Math.max(0, selectedGovCityCount - orderedCities.length);
 
   return (
     <div className="gov-view">
       <PageHero
         eyebrow="South Bay / Civic Desk"
         title="Local Government"
-        description="Council meetings, searchable records, and plain-English summaries for the cities you follow. Built for quick civic context, not municipal scavenger hunts."
+        description="Council meetings, searchable records, and plain-English summaries from city halls across the South Bay. Built for quick civic context, not municipal scavenger hunts."
         accent="var(--sb-accent)"
-        stats={[
-          { value: meetingCount, label: "Meetings this week" },
-          { value: orderedCities.length, label: "With digests" },
-          { value: missingDigestCount, label: "Awaiting digest" },
-        ]}
       />
 
       <CouncilWeekAhead selectedCities={selectedCities} todayIso={todayIso} />

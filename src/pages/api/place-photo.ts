@@ -45,7 +45,14 @@ export const GET: APIRoute = async ({ request, clientAddress }) => {
       headers,
     });
   } catch (error) {
-    if (error instanceof Error && error.message === "Photo not found") return new Response("Photo not found", { status: 404 });
+    // A photo that is gone even after the current-photo lookup stays gone for
+    // a while; let the CDN answer repeats instead of re-asking Google.
+    if (error instanceof Error && error.message === "Photo not found") {
+      return new Response("Photo not found", {
+        status: 404,
+        headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400" },
+      });
+    }
     if (error instanceof Error && error.message === "Server config error") return new Response("Server config error", { status: 500 });
     return new Response("Photo fetch failed", { status: 502 });
   }
