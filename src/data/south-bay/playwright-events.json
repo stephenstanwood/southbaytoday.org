@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-17T07:30:16.971Z",
+    "generatedAt": "2026-11-17T11:37:41.540Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 186,
+    "eventCount": 189,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -13,7 +13,7 @@
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
-      "Children's Discovery Museum (1)",
+      "Children's Discovery Museum (2)",
       "Guadalupe River Park Conservancy (10)",
       "Santana Row (6)",
       "City of Cupertino (34)",
@@ -21,7 +21,7 @@
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (12)",
+      "The Tech Interactive (14)",
       "Books Inc (4)",
       "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
@@ -176,8 +176,8 @@
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
         "status": "ok",
-        "count": 1,
-        "liveCount": 1,
+        "count": 2,
+        "liveCount": 2,
         "error": null,
         "sources": [
           "Children's Discovery Museum"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 14,
+        "liveCount": 14,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -812,10 +812,10 @@
       "kidFriendly": false
     },
     {
-      "id": "855c6f007141",
+      "id": "6633cc038d37",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -832,10 +832,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b5e13a0f2af2",
+      "id": "eecc8492afb6",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -886,6 +886,23 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1683714",
       "source": "Mountain Winery",
+      "kidFriendly": true
+    },
+    {
+      "id": "533792b76d21",
+      "title": "All Ages Storytime",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
       "kidFriendly": true
     },
     {
@@ -1158,7 +1175,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-17T07:29:09.933Z"
+        "checkedAt": "2026-11-17T11:36:33.704Z"
       }
     },
     {
@@ -1181,7 +1198,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-17T07:29:09.934Z"
+        "checkedAt": "2026-11-17T11:36:33.704Z"
       }
     },
     {
@@ -1204,7 +1221,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T07:29:09.935Z"
+        "checkedAt": "2026-11-17T11:36:33.705Z"
       }
     },
     {
@@ -1227,7 +1244,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T07:29:09.936Z"
+        "checkedAt": "2026-11-17T11:36:33.706Z"
       }
     },
     {
@@ -1250,7 +1267,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-17T07:29:09.939Z"
+        "checkedAt": "2026-11-17T11:36:33.707Z"
       }
     },
     {
@@ -1273,7 +1290,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-17T07:29:09.939Z"
+        "checkedAt": "2026-11-17T11:36:33.707Z"
       }
     },
     {
@@ -1876,7 +1893,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1893,7 +1910,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1910,7 +1927,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1927,7 +1944,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3109,7 +3126,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.979Z"
+        "checkedAt": "2026-11-17T11:37:04.433Z"
       }
     },
     {
@@ -3133,7 +3150,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.980Z"
+        "checkedAt": "2026-11-17T11:37:04.434Z"
       }
     },
     {
@@ -3157,7 +3174,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.980Z"
+        "checkedAt": "2026-11-17T11:37:04.434Z"
       }
     },
     {
@@ -3181,7 +3198,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.981Z"
+        "checkedAt": "2026-11-17T11:37:04.434Z"
       }
     },
     {
@@ -3205,7 +3222,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3229,7 +3246,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3253,7 +3270,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3294,7 +3311,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3318,7 +3335,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3342,7 +3359,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3366,7 +3383,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-17T11:37:04.436Z"
       }
     },
     {
@@ -3502,6 +3519,40 @@
       "cost": "paid",
       "description": "Science is all around us! Brownies begin by making pepper dance using the amazing properties of electricity. Next, they become kitchen chemists and use pantry items to make art with delicious treats. Then they explore properties of density and use them to blow up a balloon without breath and make their own lava lamp. Finally, Brownies will learn how science can be used to make toys and make their very own silly putty! This program covers all five steps required to earn the Home Scientist Badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
       "url": "https://tickets.thetech.org/events/83826980-b70f-fb75-4702-2d95e2d30b67",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "2d72c4e97c54",
+      "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes)",
+      "date": "2027-01-24",
+      "displayDate": "Sun, Jan 24",
+      "time": "10:30AM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "Do you have what it takes to be a Tech Detective? Juniors and Cadettes will begin by practicing the art of forensic drawing by sketching a “suspect” as described by a “key witness.” Next, they learn about & practice codes and fingerprinting. Juniors will explore the role of DNA in forensics — what it is, what it does, and how it helps solve crimes. They then get to perform an experiment to extract real DNA, and finally use what they have learnt to identify someone from ancient DNA! This program covers all five steps required to earn the Juniors Detective badge or the Cadette Special Agent badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b3f-014a-0e52-3d08-bd957bbd685d",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "f51fffc42f0d",
+      "title": "Girl Scout Program: Amusement Innovator (Juniors)",
+      "date": "2027-01-24",
+      "displayDate": "Sun, Jan 24",
+      "time": "2:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "Are you ready to design your own entertainment company? Juniors begin by animating their own artwork, then learning about video game design. They'll then build prototypes of roller coasters to learn the science behind the screams. Finally, Juniors make their own 3-D images & glasses, and experiment with sound. This program covers all five steps required to earn the Entertainment Technology badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b2e-17d0-7d9e-5d5d-1f379736e20f",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
