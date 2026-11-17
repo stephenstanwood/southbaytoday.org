@@ -6,6 +6,15 @@
 import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
 const ART_MAKING_ACTIVITY = /\b(?:(?:make|making|create|creating)\s+(?:your\s+own\s+)?art|art[\s-]making|hands[\s-]on\s+art|(?:paint|draw)\s+(?:a|an|your|with)|(?:painting|drawing)\s+(?:activity|workshop|class))\b/i;
+const MITCHELL_PARK_STUDY_HOURS = /\bWednesday\s+12\/9(?:\s*[-–]\s*|\s+from\s+)4:00\s*PM(?:\s*[-–]\s*|\s+to\s+)8:45\s*PM\.?/i;
+const MITCHELL_PARK_STUDY_COPY = [[MITCHELL_PARK_STUDY_HOURS, "Check with Mitchell Park Library for the Wednesday 12/9 start."]];
+
+function hasMitchellParkStudyHours(event) {
+  return event.source === "Palo Alto City Library" && event.venue === "Mitchell Park Library"
+    && event.title === "Locked in: Teen Finals Study Space!"
+    && /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6afcaa4c22b92c0041aa76(?:8[def]|9[0-5])\/?$/.test(event.url || "")
+    && MITCHELL_PARK_STUDY_HOURS.test(event.description || "");
+}
 
 function museumMinisWithoutArtMaking(event) {
   return event?.date === "2026-11-16"
@@ -70,6 +79,44 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The Dec 9 occurrence header says 4:30 PM. The shared series description
+  // says 4 PM on that date. Qualify the disputed start without changing the
+  // other eight sessions or treating a later matching schedule as a conflict.
+  {
+    date: "2026-12-09",
+    matches: event => hasMitchellParkStudyHours(event) && event.time === "4:30 PM",
+    facts: { attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "Mitchell Park Library's calendar lists a 4:30 PM start on December 9, while its description says 4:00 PM. Confirm the start with the library before going.",
+    copyReplacements: MITCHELL_PARK_STUDY_COPY,
+  },
+  {
+    dateFrom: "2026-12-07", dateThrough: "2026-12-17",
+    matches: event => event.date !== "2026-12-09" && hasMitchellParkStudyHours(event),
+    copyReplacements: MITCHELL_PARK_STUDY_COPY,
+  },
+  // SJPL's eResources FAQ confirms the Boundless, CloudLibrary and Hoopla
+  // retirements. Keep the current services and the library's signup wording.
+  // https://www.sjpl.org/faq/ebooks-emedia-faqs/
+  {
+    dateFrom: "2026-11-17", dateThrough: "2026-11-19",
+    matches: event => event.source === "San Jose Public Library" && event.venue === "Almaden Library"
+      && event.title === "Digital Skills: One-On-One Tech Help for Seniors"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69f10f4bfb87a3c2e2ac6fe[cde]\/?$/.test(event.url || ""),
+    copyReplacements: [
+      [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
+      [/\bAccessing non-OverDrive e-?books and audiobooks from Boundless, Cloud\s*Library, and Enki;\s*/gi, "Finding e-books from Enki; "],
+      [/\bUsing Hoopla to read, listen and watch;\s*/gi, ""],
+      [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
+    ],
+  },
+  // The sold-out occurrence page confirms a workshop fee and supplies. It
+  // gives no price amount. Leave the waitlist and any current price intact.
+  {
+    date: "2026-12-02",
+    matches: event => event.source === "Montalvo Arts Center" && event.cost == null
+      && event.url === "https://my.montalvoarts.org/3275/3278",
+    facts: { cost: "paid" },
+  },
   // The occurrence page explicitly says Free Event and directs online
   // attendees to its Zoom registration. The API omits both from its excerpt.
   // Preserve any revised price or current booking status.

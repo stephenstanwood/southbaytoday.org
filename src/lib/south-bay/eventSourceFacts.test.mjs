@@ -16,6 +16,57 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("only the conflicting Mitchell Park study session requires start confirmation", () => {
+  const event = {
+    date: "2026-12-09", time: "4:30 PM", endTime: "8:45 PM",
+    title: "Locked in: Teen Finals Study Space!",
+    source: "Palo Alto City Library", venue: "Mitchell Park Library",
+    url: "https://paloalto.bibliocommons.com/v2/events/6afcaa4c22b92c0041aa768f",
+    description: "Tuesday 12/8- 4:30 PM-8:45 PM Wednesday 12/9- 4:00 PM-8:45 PM Thursday 12/10 - not available",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.time, event.time);
+  assert.equal(corrected.endTime, event.endTime);
+  assert.equal(requiresAttendanceConfirmation(corrected), true);
+  assert.match(corrected.attendanceNote, /4:30 PM.*4:00 PM/);
+  assert.match(corrected.description, /Tuesday 12\/8- 4:30 PM-8:45 PM Check with Mitchell Park Library.*Thursday 12\/10 - not available/);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  const sibling = { ...event, date: "2026-12-08", url: event.url.replace(/f$/, "e") };
+  const siblingCorrected = applyVerifiedEventFacts(sibling);
+  assert.equal(siblingCorrected.description, corrected.description);
+  assert.equal(requiresAttendanceConfirmation(siblingCorrected), false);
+
+  const updated = { ...event, description: event.description.replace("4:00 PM", "4:30 PM") };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+});
+
+test("Almaden tech help keeps current resources and appointment terms", () => {
+  const event = {
+    date: "2026-11-19", title: "Digital Skills: One-On-One Tech Help for Seniors",
+    source: "San Jose Public Library", venue: "Almaden Library", registration: "closed",
+    url: "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fee",
+    description: "Learning to use Libby (formerly Overdrive) to read ebooks and listen to e-audiobooks; Accessing non-Overdrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Checking out a 7-day pass to access Great Courses from Libby or Hoopla; By appointment only.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.description, "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; Finding e-books from Enki; Checking out a 7-day pass to access Great Courses from Libby; By appointment only.");
+  assert.equal(corrected.registration, "closed");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const otherLibrary = { ...event, venue: "Another Library" };
+  assert.deepEqual(applyVerifiedEventFacts(otherLibrary), otherLibrary);
+});
+
+test("Montalvo's sold-out wreath workshop keeps its waitlist and any explicit price", () => {
+  const event = {
+    date: "2026-12-02", time: "6:00 PM", source: "Montalvo Arts Center",
+    url: "https://my.montalvoarts.org/3275/3278",
+    cost: null, registration: "full", attendanceNote: "Sold out. The organizer offers a waitlist.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), { ...event, cost: "paid" });
+  const updated = { ...event, cost: "free" };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+});
+
 test("Stanford's free online book talk retains the advance Zoom signup and later closures", async () => {
   const event = {
     id: "stanford-54294456348609-2026-11-18", source: "Stanford Events", date: "2026-11-18",

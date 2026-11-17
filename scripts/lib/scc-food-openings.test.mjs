@@ -119,6 +119,18 @@ test("a sole proprietor's own name and a multiplex concession never become a res
   }
 });
 
+test("verified tenant improvements at operating businesses stay off the openings feed", () => {
+  const records = [
+    { record_id: "SR0885671", business_name: "RTI BREAKFAST CLUB AT MIDTOWN", site_location: "1432 W SAN CARLOS STE 80", city: "SAN JOSE" },
+    { record_id: "SR0885984", business_name: "RTI UME TEA", site_location: "2215 THE ALAMEDA", city: "SANTA CLARA" },
+    { record_id: "SR0886043", business_name: "RTI - ALMADEN MARKET", site_location: "5965 ALMADEN EXPRESS WY", city: "SAN JOSE" },
+  ];
+  for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
+  assert.equal(shouldSkip({
+    business_name: "E-UME TEA", site_location: "123 MAIN ST", city: "CAMPBELL",
+  }), false);
+});
+
 test("a Text Search hit pictures the business only when it is plainly that food place", () => {
   const cafe = { name: "A New Sunrise Cafe", address: "463 Blossom Hill Rd" };
   // Live hit for SR0885856, verified November 17, 2026: the mall next door.

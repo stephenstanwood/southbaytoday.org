@@ -159,6 +159,8 @@ const NAME_OVERRIDES = {
   "SR0881648": "sweetgreen",
   "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
   "SR0884719": "FujiSan Sushi @ Tawa1702",
+  "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
+  "SR0886903": "FujiSan Sushi",
   // Great Mall's own directory supplies the brand spelling and coming-soon status.
   // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice
   "SR0885853": "TH Sugarcane & Juice",
@@ -226,6 +228,11 @@ const BLURB_OVERRIDES = {
 
 // Source IDs to explicitly skip — non-public venues, existing restaurants with equipment-only permits, etc.
 const SOURCE_ID_SKIP = new Set([
+  // Tenant improvements at operating businesses. Match the permit IDs so a
+  // separate opening at another branch remains eligible.
+  "SR0885671", // https://www.bcmidtown.com/location/the-breakfast-club-at-midtown-san-jose/
+  "SR0885984", // https://www.umetea.com/en/stores (2215 The Alameda)
+  "SR0886043", // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAI7XMYNU.pdf
   // Reviewed Nov 3, 2026: a county plan-check record alone does not establish
   // a public food venue. Keep exact exclusions rather than banning LLC names.
   "SR0883235", // Rutherford Month Vista: Station 245 apartments at 245 Bush St.
