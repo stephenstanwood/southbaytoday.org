@@ -37,6 +37,7 @@ const EDITS = {
       ["We suggest bringing: A full water bottle Thick work gloves Chaperones", "We suggest bringing a full water bottle and thick work gloves. Chaperones"],
       ["UC Master Gardener–certified Horticulturist!", "UC Master Gardener–certified horticulturist!"],
       ["Address for Parking:", "Address for parking:"],
+      ["Address for parking: 438 Coleman Ave. Jose, CA 95110", "Address for parking: 438 Coleman Ave., San Jose, CA 95110"],
       ["95110 Meeting Location:", "95110; Meeting location:"],
       ["(Refer to registration form for map) Time:", "(refer to the registration form for a map); Time:"],
       [/\b(AM|PM) Recurring Dates:/g, "$1; Recurring dates:"],
