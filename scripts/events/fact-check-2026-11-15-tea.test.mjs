@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 import { fetchInboundEvents, polishDescription } from "../generate-events.mjs";
+import { weekendPickCandidates } from "../generate-weekend-picks.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
@@ -58,4 +60,19 @@ test("revised seating facts and fresh exact-performance evidence supersede the d
   assert.equal(actual.description, revised.description);
   assert.equal(actual.blurb, revised.blurb);
   assert.equal(applyVerifiedEventFacts({ ...fixture.published, registration: "closed" }).registration, "closed");
+});
+
+test("a calendar listing with unconfirmed attendance is ineligible for weekend picks", () => {
+  const unavailable = applyVerifiedEventFacts(fixture.published);
+  assert.equal(unavailable.attendanceStatus, "needs-confirmation");
+  assert.equal(isEventPublishable(unavailable), true);
+
+  const bookable = { ...unavailable, attendanceStatus: undefined, attendanceNote: undefined, registration: "required" };
+  const closed = { ...bookable, registration: "closed" };
+  const full = { ...bookable, registration: "full" };
+  const friday = { ...bookable, date: "2026-11-20" };
+  assert.deepEqual(
+    weekendPickCandidates([unavailable, closed, full, bookable, friday], "2026-11-20", "2026-11-22"),
+    [bookable],
+  );
 });

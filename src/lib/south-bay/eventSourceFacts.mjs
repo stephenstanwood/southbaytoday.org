@@ -79,6 +79,35 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The athletics announcement confirms free admission and the venue for
+  // these two home games. The campus calendar rows have neither field.
+  // https://sjsuspartans.com/news/2026/11/17/spartans-host-cbu-long-beach-state-for-community-days
+  ...[
+    ["2026-11-18", "womens-basketball-san-jose-state-vs-california-baptist"],
+    ["2026-11-21", "womens-basketball-san-jose-state-vs-long-beach-state"],
+  ].map(([date, slug]) => ({
+    date,
+    matches: event => event.source === "SJSU Events" && event.city === "san-jose" && !event.virtual
+      && event.time === "11:00 AM" && event.url === `https://events.sjsu.edu/event/${slug}`
+      && !event.venue && !event.address && !event.cost && !event.costNote,
+    facts: {
+      venue: "Provident Credit Union Event Center",
+      address: "290 S. 7th St., San Jose, CA 95112",
+      cost: "free",
+    },
+  })),
+  // The athletics schedule identifies both UNLV matches at Spartan Gym.
+  // This rule is for the Thursday 3 PM listing in the campus calendar.
+  // https://sjsuspartans.com/news/2026/11/17/this-week-in-spartan-athletics-november-17-22
+  // https://sjsuspartans.com/facilities/yosh-uchida-hallspartan-gym
+  {
+    date: "2026-11-19",
+    matches: event => event.source === "SJSU Events" && event.city === "san-jose" && !event.virtual
+      && event.time === "3:00 PM"
+      && event.url === "https://events.sjsu.edu/event/womens-volleyball-san-jose-state-vs-unlv-7924"
+      && !event.venue && !event.address,
+    facts: { venue: "Spartan Gym", address: "298 S. 4th St., San Jose, CA 95112" },
+  },
   // The Dec 9 occurrence header says 4:30 PM. The shared series description
   // says 4 PM on that date. Qualify the disputed start without changing the
   // other eight sessions or treating a later matching schedule as a conflict.

@@ -3828,3 +3828,25 @@ test("the live feed retains verified source facts and passes the copy guards", (
     .map((event) => `${event.id} ${event.title}: ${eventCopyFactConflict(event.blurb, event)}`);
   assert.deepEqual(flagged, []);
 });
+
+test("dated SJSU home-game details fill sparse calendar rows", () => {
+  const rows = [
+    ["2026-11-18", "11:00 AM", "womens-basketball-san-jose-state-vs-california-baptist", "Provident Credit Union Event Center", "free"],
+    ["2026-11-21", "11:00 AM", "womens-basketball-san-jose-state-vs-long-beach-state", "Provident Credit Union Event Center", "free"],
+    ["2026-11-19", "3:00 PM", "womens-volleyball-san-jose-state-vs-unlv-7924", "Spartan Gym", null],
+  ];
+  for (const [date, time, slug, venue, cost] of rows) {
+    const raw = {
+      date, time, source: "SJSU Events", city: "san-jose", venue: null, address: "", cost: null,
+      url: `https://events.sjsu.edu/event/${slug}`,
+    };
+    const corrected = applyVerifiedEventFacts(raw);
+    assert.equal(corrected.venue, venue);
+    assert.match(corrected.address, /San Jose, CA 95112$/);
+    assert.equal(corrected.cost, cost);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+    const revised = { ...raw, venue: "New venue", address: "New address", cost: "paid" };
+    assert.deepEqual(applyVerifiedEventFacts(revised), revised);
+  }
+});
