@@ -20,6 +20,7 @@ import {
   escribeMeetingUrl,
   escribePost,
   isClosedSessionMeeting,
+  legistarEventBodyName,
   legistarMeetingUrl,
   normalizeMeetingTime,
   onlyConfirmedMeetings,
@@ -369,10 +370,10 @@ export async function fetchNextMeeting(client, site, body) {
     // The non-public hour the entry opens with, when the start above had to be
     // moved past it. Absent on the ordinary case.
     ...(closedSessionStart ? { closedSessionStart } : {}),
-    bodyName: ev.EventBodyName,
+    bodyName: legistarEventBodyName(ev),
     location: cleanLocation(ev.EventLocation),
     closedSession: isClosedSessionMeeting({
-      bodyName: ev.EventBodyName,
+      bodyName: legistarEventBodyName(ev),
       comment: ev.EventComment,
       description: ev.EventDescription,
     }),

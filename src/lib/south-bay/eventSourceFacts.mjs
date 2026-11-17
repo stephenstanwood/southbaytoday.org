@@ -70,6 +70,21 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The exact November 17 Bascom source explicitly makes signup optional.
+  // Preserve later closures, full states and amended attendance requirements.
+  // Evidence: docs/qa/2026-11-17-0507z-fact-check.md.
+  {
+    date: "2026-11-17",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a83703f69166f088b92df1c\/?(?:[?#].*)?$/.test(event.url || "")
+      && event.title === "Bascom Teens Reach Meeting: Canned Food Drive"
+      && event.venue === "Bascom Library" && event.time === "5:00 PM"
+      && /\bregistration\s+(?:is\s+)?recommended\s+but\s+not\s+required\b/i.test(event.description || "")
+      && !/\bregistration\s+(?:is\s+)?(?:required|mandatory|closed)\b|\b(?:must|need\s+to)\s+(?:register|reserve|book)\b/i.test(event.description || "")
+      && ![REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)
+      && !/\b(?:registration|event|program|session)\s+(?:is\s+)?(?:now\s+)?(?:closed|full)\b|\bno\s+(?:drop|walk)[-\s]?ins\b/i.test(event.attendanceNote || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "Registration is recommended but not required.",
+  },
   // The organizer publishes two possible clocks and says the final kickoff
   // will be announced after November 21. Neither alternative is confirmed.
   // The promotional URL bypasses the older ticket-shop-only SMU hold below.

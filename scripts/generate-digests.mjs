@@ -605,6 +605,8 @@ async function main() {
       const meetingDateFormatted = new Date(meeting.date + "T12:00:00").toLocaleDateString("en-US", {
         year: "numeric", month: "long", day: "numeric",
       });
+      const heading = bodyLabel.toLowerCase().startsWith(`${config.cityName.toLowerCase()} `)
+        ? bodyLabel : `${config.cityName} ${bodyLabel}`;
 
       digests[config.city] = {
         city: config.city,
@@ -612,7 +614,7 @@ async function main() {
         body: bodyLabel,
         meetingDate: meetingDateFormatted,
         meetingDateIso: meeting.date,
-        title: `${config.cityName} ${bodyLabel} — ${meetingDateFormatted}`,
+        title: `${heading} — ${meetingDateFormatted}`,
         summary: enforceCityName(config.cityName, parsed.summary ?? ""),
         keyTopics: cleanKeyTopics(parsed.keyTopics ?? meeting.keywords.slice(0, 5))
           .map((t) => enforceCityName(config.cityName, t)),

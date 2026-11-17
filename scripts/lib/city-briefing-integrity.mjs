@@ -74,6 +74,24 @@ export function meetingWithinBriefingWindow(meeting, start, end) {
   return Boolean(meeting?.date && meeting.date >= start && meeting.date <= end);
 }
 
+/** Preserve the meeting's actual body when a provider files it under Council. */
+export function briefingMeetingContext(meeting, agendaLines) {
+  if (!agendaLines || !meeting?.displayDate) return "";
+  return `Next ${meeting.bodyName || "civic"} meeting (${meeting.displayDate}) agenda:\n${agendaLines}`;
+}
+
+export function briefingMeetingHighlight(meeting, item) {
+  const council = /^(?:city|town) council\b/i.test(meeting.bodyName || "");
+  return {
+    type: council ? "council" : "cityhall",
+    title: item.title.replace(/\.$/, ""),
+    when: meeting.displayDate,
+    venue: council ? null : meeting.bodyName || null,
+    category: "government",
+    url: meeting.url || null,
+  };
+}
+
 export function hasProspectiveCityHallUpgrade(text, aroundItems = []) {
   if (!CONFIRMED_ACTION.test(String(text || "")) && !COMPLETED_MEETING.test(String(text || ""))) return false;
 

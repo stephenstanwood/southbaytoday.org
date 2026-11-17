@@ -302,6 +302,17 @@ export function pickCivicClerkMeeting(events, today, { maxDays = 60 } = {}) {
 // generators must ask the city's own portal what actually convened.
 // ---------------------------------------------------------------------------
 const LEGISTAR_UA = "SouthBaySignal/1.0 (stanwood.dev; civic data aggregator)";
+
+/** EventBodyName can be a filing category; an explicitly named Corporation meeting is a separate body. */
+export function legistarEventBodyName(event) {
+  const body = String(event?.EventBodyName || "").trim();
+  // Cupertino files its Public Facilities Corporation under "City Council".
+  // Read only the explicit meeting designation, not incidental agenda prose
+  // or ordinary special/closed-session comments. Source: meeting 5376.
+  const corporation = String(event?.EventComment || "").trim()
+    .match(/^([a-z][a-z .'-]*\bPublic Facilities Corporation)\s+(?:(?:regular|special|annual)\s+)?Meeting\s*\.?$/i);
+  return /^city council$/i.test(body) && corporation ? corporation[1].trim() : body;
+}
 // Words that appear in nearly every body name and so carry no signal for
 // telling two same-day bodies apart.
 const BODY_NAME_STOPWORDS = new Set([
@@ -543,7 +554,7 @@ export async function verifyLegistarBodyOnDate(client, dateIso, recordText = "")
     const named = events
       .filter((e) => !isCancelledLegistarEvent(e))
       .map((e) => ({
-        body: String(e.EventBodyName || "").trim(), eventId: e.EventId,
+        body: legistarEventBodyName(e), eventId: e.EventId,
         sourceUrl: legistarMeetingUrl(client, dateIso, e.EventInSiteURL),
       }))
       .filter((e) => e.body);
@@ -1003,7 +1014,7 @@ export async function fetchLegistarPastMeeting({
   if (!Array.isArray(events)) return null;
 
   const candidates = events
-    .filter((event) => bodyNames.includes(event.EventBodyName) && !isCancelledLegistarEvent(event))
+    .filter((event) => bodyNames.includes(legistarEventBodyName(event)) && !isCancelledLegistarEvent(event))
     .map((event) => ({ event, date: String(event.EventDate ?? "").slice(0, 10) }))
     .filter(({ date }) => ISO_DATE.test(date) && date <= today)
     .sort((a, b) => b.date.localeCompare(a.date));

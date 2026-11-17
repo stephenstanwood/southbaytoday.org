@@ -26,6 +26,8 @@ import {
   hasReversedEventSequence,
   briefingEventContext,
   briefingEventWhen,
+  briefingMeetingContext,
+  briefingMeetingHighlight,
   isBriefingEventAvailable,
   meetingWithinBriefingWindow,
 } from "./lib/city-briefing-integrity.mjs";
@@ -173,7 +175,7 @@ async function generateBriefing(city, events, aroundItems, meetingData) {
   if (eventLines) parts.push(`Upcoming events:\n${eventLines}`);
   if (aroundLines) parts.push(`City hall highlights:\n${aroundLines}`);
   if (agendaLines && meetingData?.displayDate) {
-    parts.push(`Next council meeting (${meetingData.displayDate}) agenda:\n${agendaLines}`);
+    parts.push(briefingMeetingContext(meetingData, agendaLines));
   }
 
   const prompt = `You are the editorial voice of South Bay Signal, a hyperlocal news site for Silicon Valley residents.
@@ -189,7 +191,7 @@ Important rules:
 - Each event's start time belongs to that event alone. Write "A at 11:30 AM and B at 6:30 PM", or omit the clocks; never write "A and B at 6:30 PM" unless both events explicitly start then.
 - Keep explicit sequences ("runs from A to B", "A followed by B", "A then B") in the events' actual date and start-time order. Otherwise list the events with "and" without implying an order.
 - Attendance details qualify the listing's clock. An overall event window is not the start of its parade, show, or performance. Preserve the stated distinction or omit the clocks. Different source titles for the same event do not establish separate activities.
-- Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the Next council meeting agenda, or say council will consider it "that same day", unless that item is explicitly listed in the Next council meeting data. A Zoning Administrator hearing is not a Planning Commission or City Council meeting.
+- Each city-hall record's date and body belong only to that record. Never move a City hall highlight onto the next meeting's agenda, or say its body will consider it "that same day", unless that item is explicitly listed for that meeting. Use the supplied body name: a Public Facilities Corporation, Zoning Administrator, Planning Commission and City Council are separate bodies.
 - Match the source's framing. If a council resolution restricts "federal civil enforcement," do not narrow it to "immigration enforcement" or any other specific subtype unless the data uses that word.
 - Do not state event totals or counts, including ordinary numbers like "three events", repeat counts like "performs twice", or group-count nouns like "trio." The supplied events are a limited selection, not the full calendar; similar listings may describe the same performance. Name the programs instead; retain a number only when it belongs to an event's actual title.
 - No unsupported rankings or superlatives such as "the week's biggest development story". State the sourced project or event without ranking it.
@@ -349,14 +351,7 @@ async function main() {
         ? null
         : firstSubstantiveAgendaItem(cityMeeting?.agendaItems);
       if (leadAgendaItem) {
-        highlights.push({
-          type: "council",
-          title: leadAgendaItem.title.replace(/\.$/, ""),
-          when: cityMeeting.displayDate,
-          venue: null,
-          category: "government",
-          url: cityMeeting.url || null,
-        });
+        highlights.push(briefingMeetingHighlight(cityMeeting, leadAgendaItem));
       } else if (cityAroundItems.length) {
         highlights.push({
           type: "cityhall",
