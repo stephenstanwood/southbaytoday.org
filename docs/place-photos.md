@@ -40,6 +40,13 @@ Runtime log events distinguish the actual work:
   `source: google-places`; this older event excludes failed attempts.
 - `place-photo-venue-fallback`: an eligible official source failed, causing
   the request to continue to Google.
+- `place-photo-ref-refresh`: Google rejected an expired photo name (HTTP 400,
+  "retrieve it from Places API endpoints"), so the loader asked Place Details
+  for the place's current photos (field mask `photos` only) and, when
+  `found` is true, served the first one under the same URL. The fresh name is
+  used for that request only and never stored. Archived newsletters, shared
+  plans and food tiles keep the names they were built with, so most of these
+  come from old pages.
 
 Events contain place IDs and dimensions, without API keys or photo tokens.
 Use Vercel's request ID to join provider work to request records when diagnosing
@@ -49,6 +56,10 @@ claiming measured savings; matching historical requests to a new official
 source is an eligibility projection, not a billing result.
 
 ## Google content and refresh
+
+A photo that is still missing after that lookup (the place is gone or has no
+photos) answers 404 with `Cache-Control: public, max-age=3600, s-maxage=86400`,
+so the CDN absorbs repeat requests for a day instead of re-asking Google.
 
 The loader shares concurrent identical requests but retains no completed Google
 photos or URLs. This source expansion does not change cache TTLs or add image
