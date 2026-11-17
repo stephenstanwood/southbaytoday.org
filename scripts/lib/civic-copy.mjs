@@ -27,6 +27,7 @@ export function polishCivicModifiers(text, { cityId } = {}) {
       .replace(/\bsquare footage-based fee\b/g, "square-footage-based fee")
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
+      .replace(/\bHistoric-listed Washington Street lot\b/g, "Washington Street lot listed as historic")
     : text;
 }
 
@@ -36,6 +37,7 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
       .replace("Hangul Day/Korean National Foundation Day", "Hangul Day / Korean National Foundation Day")
       .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
+      .replace(/(\bchanges to Council Policy \d+, on how items get added to council agendas, which) was deferred\b/g, "$1 were deferred")
     : text;
 }
 
