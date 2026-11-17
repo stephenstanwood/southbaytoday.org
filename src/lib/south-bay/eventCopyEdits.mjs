@@ -1100,6 +1100,9 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      // The event's organizer spells the research center's acronym CCRMA.
+      // https://events.stanford.edu/event/ccrma-composition-for-east-asian-instruments
+      [/^Ccrma Presents:/g, "CCRMA Presents:"],
       ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
       ["Medical Humanites:", "Medical Humanities:"],
       [/\bEn-Roads\b/gi, "En-ROADS"],
@@ -1124,6 +1127,10 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      // The source has an Overview heading above its time range; HTML
+      // flattening glues them together. Retain every clock and timezone.
+      [/^Overview(?=\d{1,2}:\d{2} [AP]M\b)/g, "Overview: "],
+      ["(EST) With suicide rates", "(EST). With suicide rates"],
       ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
       ["Please join German Studies Lecture Series for", "Please join the German Studies Lecture Series for"],
       ["Middle East/Swana region", "Middle East/SWANA region"],
