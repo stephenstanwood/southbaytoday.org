@@ -65,7 +65,27 @@ export function createPhotoLoader({ fetchImpl = fetch, resize = resizeVenuePhoto
     }
 
     if (!apiKey) throw new Error("Server config error");
-    const url = new URL(`https://places.googleapis.com/v1/${photo.ref}/media`);
+    let response = await fetchGoogleMedia(photo.ref, photo, apiKey);
+    if (response.status === 400 || response.status === 404) {
+      // Photo names expire, and Google answers an expired one with 400
+      // ("retrieve it from Places API endpoints"). Archived newsletters,
+      // shared plans, and food tiles keep the name they were built with, so
+      // ask Places for this place's current first photo — an IDs-only Place
+      // Details read — and serve that under the same URL. The fresh name is
+      // used for this request only; nothing is stored.
+      await response.body?.cancel();
+      const fresh = await currentPhotoName(photo.placeId, apiKey);
+      log(JSON.stringify({ event: "place-photo-ref-refresh", placeId: photo.placeId, found: Boolean(fresh) }));
+      if (!fresh) throw new Error("Photo not found");
+      response = await fetchGoogleMedia(fresh, photo, apiKey);
+    }
+    const image = await imageBytes(response);
+    log(JSON.stringify({ event: "place-photo-upstream", source: "google-places", placeId: photo.placeId, width: photo.width, height: photo.height }));
+    return { ...image, source: "google-places" };
+  }
+
+  async function fetchGoogleMedia(ref, photo, apiKey) {
+    const url = new URL(`https://places.googleapis.com/v1/${ref}/media`);
     url.search = new URLSearchParams({ maxWidthPx: String(photo.width), maxHeightPx: String(photo.height), key: apiKey }).toString();
     let response;
     for (let attempt = 0; attempt < 2; attempt++) {
@@ -83,9 +103,22 @@ export function createPhotoLoader({ fetchImpl = fetch, resize = resizeVenuePhoto
       await response.body?.cancel();
       await new Promise((resolve) => setTimeout(resolve, 150));
     }
-    const image = await imageBytes(response);
-    log(JSON.stringify({ event: "place-photo-upstream", source: "google-places", placeId: photo.placeId, width: photo.width, height: photo.height }));
-    return { ...image, source: "google-places" };
+    return response;
+  }
+
+  /** This place's current first photo name, or null when Places has none. */
+  async function currentPhotoName(placeId, apiKey) {
+    try {
+      const response = await fetchImpl(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}`, {
+        headers: { "X-Goog-Api-Key": apiKey, "X-Goog-FieldMask": "photos" },
+        signal: AbortSignal.timeout(5000),
+      });
+      if (!response.ok) { response.body?.cancel().catch(() => {}); return null; }
+      const name = (await response.json())?.photos?.[0]?.name;
+      return typeof name === "string" && name.startsWith(`places/${placeId}/photos/`) ? name : null;
+    } catch {
+      return null;
+    }
   }
 
   return async (photo, apiKey) => {

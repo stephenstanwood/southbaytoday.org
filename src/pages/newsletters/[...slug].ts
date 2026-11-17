@@ -165,6 +165,24 @@ const ARCHIVE_STYLE = `
   }
 </style>`;
 
+// Old issues hotlink event photos from venue sites and social CDNs, and those
+// links die (a theater redesigns, an Instagram URL's signature expires). A
+// dead one becomes a quiet tile the size of the photo instead of a broken-
+// image icon. Error events don't bubble, so this listens in the capture
+// phase from <head>, before the email's images start loading.
+const ARCHIVE_IMAGE_FALLBACK = `
+<script>
+  document.addEventListener("error", function (event) {
+    var img = event.target;
+    if (!img || img.tagName !== "IMG" || img.dataset.sbtDead) return;
+    img.dataset.sbtDead = "1";
+    img.removeAttribute("srcset");
+    img.alt = "";
+    img.style.background = "linear-gradient(135deg, #f1edf8, #e9eef7)";
+    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+  }, true);
+</script>`;
+
 const ARCHIVE_BAR = `
 <header class="sbt-archive-bar">
   <a class="sbt-archive-brand" href="/" aria-label="The South Bay Today home">
@@ -212,7 +230,7 @@ function archiveMetaHtml(date: string, body: string): string {
     `<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">`,
     `<link rel="stylesheet" href="/fonts/fonts.css">`,
   );
-  const headAdditions = `\n${tags.join("\n")}${ARCHIVE_STYLE}\n`;
+  const headAdditions = `\n${tags.join("\n")}${ARCHIVE_STYLE}${ARCHIVE_IMAGE_FALLBACK}\n`;
 
   if (/<\/head>/i.test(body) && /<body[^>]*>/i.test(body)) {
     let html = body.replace(/<\/head>/i, `${headAdditions}</head>`);

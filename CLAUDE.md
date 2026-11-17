@@ -49,7 +49,8 @@ The six cards are three atomic pairs with reciprocal `pairedWithId` metadata.
 Never drop, carry forward, or manually swap one card in isolation. The full
 contract and consumer map are in `docs/day-plan-selection.md`. Chains may
 qualify, but only when the specific branch is new, distinctive, exceptionally
-well-regarded, or editorially notable; a generic branch is filler.
+well-regarded, or editorially notable; a generic branch is filler. Never restore a
+blanket chain ban.
 
 Baked blurbs drift: the 3:21 AM cron bakes `place-blurb-cache.json` wording into
 `default-plans.json`, so a cache fix that lands later the same morning leaves the

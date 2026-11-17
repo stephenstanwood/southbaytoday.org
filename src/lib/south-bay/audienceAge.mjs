@@ -118,6 +118,23 @@ const KIDS_TITLE_SIGNALS = [
   /\bfor\s+(?:school[-\s]age\s+)?(?:kids?|children|toddlers|preschoolers)\b\s*(?:[!.\)]+\s*)?$/i,
 ];
 
+// Structured audience labels that invite children (or the whole family). A
+// teen label alone marks a youth program, but "Adults + Teens" is an
+// older-audience program that admits teens — SJPL's tech help, meditation and
+// astronomy talks carried the Kids badge that way (2026-11-17).
+const YOUNG_AUDIENCE_LABEL = /\b(?:child(?:ren)?|kids?|bab(?:y|ies)|toddlers?|pre-?school(?:ers)?|tweens?|pre-?teens?|elementary|grades?\s*k\b|famil(?:y|ies)|all ages|everyone)\b/i;
+const TEEN_AUDIENCE_LABEL = /\bteens?\b/i;
+const ADULT_AUDIENCE_LABEL = /\b(?:adults?|seniors?)\b/i;
+
+/** Whether an event's own audience labels invite kids, or null without labels. */
+export function audienceLabelsInviteKids(sourceAudiences) {
+  const labels = (sourceAudiences || []).map((label) => String(label?.name ?? label));
+  if (labels.length === 0) return null;
+  if (labels.some((label) => YOUNG_AUDIENCE_LABEL.test(label))) return true;
+  return labels.some((label) => TEEN_AUDIENCE_LABEL.test(label))
+    && !labels.some((label) => ADULT_AUDIENCE_LABEL.test(label));
+}
+
 export function classifyAudienceAge(event) {
   // Structured library audience labels are the program's intended audience.
   // Prose may discuss families or childcare without inviting those audiences.

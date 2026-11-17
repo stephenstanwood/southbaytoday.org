@@ -9,6 +9,7 @@ import {
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
   normalizeComingSoonDiscovery,
+  placeMatchesFoodItem,
 } from "./scc-food-openings.mjs";
 import { cleanAddress, cleanName, shouldSkip } from "../generate-scc-food-openings.mjs";
 
@@ -104,6 +105,51 @@ test("the verified operating Holger Way Target does not reappear as coming soon"
     site_location: "95 HOLGER WY., SAN JOSE, CA 95134", city: "SAN JOSE",
     date_plan_approved: "2026-10-08T00:00:00.000",
   }), true);
+});
+
+test("a sole proprietor's own name and a multiplex concession never become a restaurant card", () => {
+  for (const record of [
+    { record_id: "SR0886761", business_name: "KONSTANTINOS PANTAZIS, A SOLE PROPRIETORSHIP", site_location: "82 E SANTA CLARA ST, SAN JOSE, CA 95113", city: "SAN JOSE" },
+    { business_name: "JANE DOE, SOLE PROPRIETOR", city: "CAMPBELL" },
+    { record_id: "SR0886581", business_name: "MOUNTAIN VIEW CINEMA 16", site_location: "1500 N SHORELINE BLVD, MOUNTAIN VIEW, CA 94043", city: "MOUNTAIN VIEW" },
+    { business_name: "CINEMARK CENTURY 20 CONCESSIONS", city: "SAN JOSE" },
+  ]) assert.equal(shouldSkip(record), true, record.business_name);
+  for (const business_name of ["CINEMA CAFE", "SOLE FOOD KITCHEN"]) {
+    assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), false, business_name);
+  }
+});
+
+test("a Text Search hit pictures the business only when it is plainly that food place", () => {
+  const cafe = { name: "A New Sunrise Cafe", address: "463 Blossom Hill Rd" };
+  // Live hit for SR0885856, verified November 17, 2026: the mall next door.
+  assert.equal(placeMatchesFoodItem(cafe, {
+    displayName: { text: "Sunrise Plaza Shopping Center" },
+    formattedAddress: "620-690 Blossom Hill Rd, San Jose, CA 95123, USA",
+    primaryType: "shopping_mall", types: ["shopping_mall", "point_of_interest", "establishment"],
+  }), false);
+  assert.equal(placeMatchesFoodItem(cafe, {
+    displayName: { text: "A New Sunrise Cafe" },
+    formattedAddress: "463 Blossom Hill Rd, San Jose, CA 95123, USA",
+    types: ["cafe", "food", "point_of_interest"],
+  }), true);
+  // Same street number at a food place counts even when the listing's name differs.
+  assert.equal(placeMatchesFoodItem({ name: "Dduk Dabang", address: "1179 S De Anza Blvd" }, {
+    displayName: { text: "떡다방 Rice Cake Cafe" },
+    formattedAddress: "1179 S De Anza Blvd, San Jose, CA 95129, USA",
+    primaryType: "dessert_shop",
+  }), true);
+  // A food place at a different number is a neighbor, not this business.
+  assert.equal(placeMatchesFoodItem({ name: "Pho Lucky 7", address: "3730 N 1st St., Ste. 145" }, {
+    displayName: { text: "Pho Lucky" }, formattedAddress: "3700 N 1st St, San Jose, CA", types: ["restaurant"],
+  }), false);
+  // No street number on either side: a distinctive shared word decides.
+  assert.equal(placeMatchesFoodItem({ name: "Ume Tea", address: null }, {
+    displayName: { text: "Ume Tea Santa Clara" }, types: ["tea_house"],
+  }), true);
+  assert.equal(placeMatchesFoodItem({ name: "The Kitchen Cafe", address: null }, {
+    displayName: { text: "Cafe Kitchen" }, types: ["cafe"],
+  }), false, "generic words alone never match");
+  assert.equal(placeMatchesFoodItem(cafe, undefined), false);
 });
 
 test("abbreviated sink and milkshake station filings remain equipment work", () => {

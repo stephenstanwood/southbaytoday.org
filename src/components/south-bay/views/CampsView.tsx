@@ -805,8 +805,6 @@ export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
   // cover. Once the last 2026 session ends it would walk a parent through
   // picking expired weeks, so off-season the tab is the directory alone.
   const [mode, setMode] = useState<"browse" | "builder">("browse");
-  const cityProgramCount = CAMPS.filter((camp) => camp.orgType === "city").length;
-  const nonprofitCount = CAMPS.filter((camp) => camp.orgType === "nonprofit").length;
 
   const verifiedDisplay = new Date(DATA_VERIFIED_AT + "T00:00:00").toLocaleDateString("en-US", {
     month: "short",
@@ -822,16 +820,10 @@ export default function CampsView({ buildDayPt }: { buildDayPt?: string }) {
         description={
           season.active
             ? "A calmer guide to city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing links back to the operator's registration page."
-            : "The 2026 season has wrapped, so this is the shortlist for next year: city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay. Every listing still links to the operator's own page, which is where new dates and registration go up first."
+            : "Summer 2026 has wrapped. Start next year's plan here: city rec programs, specialty camps, sports academies, arts programs, and STEM weeks across the South Bay, each linked to the operator's own page, where new dates and registration go up first."
         }
         note={`Links verified ${verifiedDisplay}`}
         accent="#B45309"
-        stats={[
-          { value: CAMPS.length, label: "Programs" },
-          { value: SUMMER_WEEKS.length, label: season.active ? "Summer weeks" : "Weeks in 2026" },
-          { value: cityProgramCount, label: "City-run options" },
-          { value: nonprofitCount, label: "Nonprofit options" },
-        ]}
       />
 
       {season.active && (

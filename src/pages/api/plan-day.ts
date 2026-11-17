@@ -21,7 +21,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { errJson, okJson } from "../../lib/apiHelpers";
 import { rateLimit, rateLimitResponse } from "../../lib/rateLimit";
 import { CLAUDE_SONNET, extractText, stripFences } from "../../lib/models";
-import { CITY_MAP, getCityName } from "../../lib/south-bay/cities";
+import { CITY_MAP, cityHasDayPlan, getCityName } from "../../lib/south-bay/cities";
 import { normalizeName } from "../../lib/south-bay/normalizeName";
 import { logDecision } from "../../lib/south-bay/decisionLog.mjs";
 import { hasOutOfAreaDestination, isVirtualEvent, requiresAdvanceRegistration, requiresAttendanceConfirmation } from "../../lib/south-bay/eventFilters.mjs";
@@ -219,8 +219,9 @@ interface DayCard {
 // ---------------------------------------------------------------------------
 
 // santa-cruz is in CITY_MAP for POI/event display but excluded from plan-day
-// (case-by-case picks only, not enough POIs to fill a plan).
-const VALID_CITIES = new Set(Object.keys(CITY_MAP).filter((c) => c !== "santa-cruz"));
+// (case-by-case picks only, not enough POIs to fill a plan). The city page
+// reads the same rule (cityHasDayPlan) so it never asks for one.
+const VALID_CITIES = new Set(Object.keys(CITY_MAP).filter((c) => cityHasDayPlan(c as City)));
 
 const PERMANENT_NAME_BLOCKLIST = new Set<string>([
   normalizeName("3Below Theaters"), // San Jose — closed

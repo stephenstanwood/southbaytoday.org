@@ -6,9 +6,31 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 
-import { classifyAudienceAge } from "./audienceAge.mjs";
+import { audienceLabelsInviteKids, classifyAudienceAge } from "./audienceAge.mjs";
 
 const ev = (title, description = "") => ({ title, description });
+
+test("adult-and-teen programs are not kids' events; youth and family labels are", () => {
+  // Live SJPL label sets, November 17, 2026.
+  for (const labels of [
+    ["Adults, ages 18+", "Teens, ages 12-18"],
+    ["Adults", "Seniors", "Teens (14-18)"],
+    ["Adults", "Older Adults", "Teens"],
+    ["Adults"],
+  ]) assert.equal(audienceLabelsInviteKids(labels), false, labels.join(" / "));
+  for (const labels of [
+    ["Teens, ages 12-18"],
+    ["Kids: Grades K-8"],
+    ["Young Children, ages 0-5"],
+    ["Adults", "Kids (6-11)", "Seniors", "Teens (14-18)"],
+    ["Kids: Family Events"],
+    ["Babies (under 2)", "Toddlers (18 mos. to 3 yrs)"],
+    ["Kids, ages 5-10", "Pre-Teens, ages 10-12"],
+    [{ name: "Tweens (11-13)" }],
+  ]) assert.equal(audienceLabelsInviteKids(labels), true, JSON.stringify(labels));
+  assert.equal(audienceLabelsInviteKids([]), null);
+  assert.equal(audienceLabelsInviteKids(undefined), null);
+});
 
 test("a volunteer chaperone rule does not restrict the event to children", () => {
   const supervision = "Chaperones are required for those age 15 and younger.";

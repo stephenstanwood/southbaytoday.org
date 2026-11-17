@@ -18,7 +18,7 @@
 import { Fragment, useState, useEffect, useMemo } from "react";
 import type { CSSProperties } from "react";
 import type { City } from "../../../lib/south-bay/types";
-import { CITY_MAP } from "../../../lib/south-bay/cities";
+import { CITY_MAP, cityHasDayPlan } from "../../../lib/south-bay/cities";
 import { isVirtualEvent } from "../../../lib/south-bay/eventFilters.mjs";
 import {
   startMinutes, formatTimeRange, hasNotStarted,
@@ -227,7 +227,9 @@ export default function CityPage({ cityId, cityName, data, buildDayPt }: Props) 
         </div>
 
         {/* ═══ YOUR DAY ═══ */}
-        <CityDayPlan cityId={cityId as City} cityName={cityName} readerDay={readerDay} />
+        {cityHasDayPlan(cityId as City) && (
+          <CityDayPlan cityId={cityId as City} cityName={cityName} readerDay={readerDay} />
+        )}
 
         {/* ═══ EVENTS (Today / Tomorrow / This Weekend) ═══ */}
         <CityEventsBlock

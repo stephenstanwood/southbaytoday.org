@@ -37,7 +37,10 @@ const MANUAL_OVERRIDES = {
   // Palo Alto: name in all-caps before colon in description
   "palo-alto:338 University Av": { name: "Zhangling Malatang", blurb: "Sichuan-style malatang — customizable spicy hot pot — coming to University Ave" },
   // San Jose: known blurbs for named spots
-  "san-jose:2855 Stevens Creek Bl": { blurb: "Korean BBQ chain known for tabletop charcoal grilling and premium cuts" },
+  // 2855 Stevens Creek is Westfield Valley Fair, so an address alone names
+  // dozens of tenants: an older Korean BBQ blurb here landed on Haidilao, a
+  // Chinese hot pot chain (2026-11-17). Mall addresses need `forName`.
+  "san-jose:2855 Stevens Creek Bl": { forName: /^haidilao\b/i, blurb: "Chinese hot pot chain famous for its service, down to tableside noodle pulling, building out a space at Valley Fair" },
   "san-jose:355 Santana Row": { blurb: "California seasonal cuisine with a botanical-inspired menu, opening on Santana Row" },
   "san-jose:233 W Santa Clara St": { blurb: "Historic cocktail lounge inside the Hotel De Anza, a downtown San Jose landmark since 1931" },
   "san-jose:22 N White Rd": { blurb: "Mexican tortilleria and taqueria on the east side" },
@@ -155,13 +158,16 @@ function extractName(raw) {
   s = s.replace(/^Srp\s+/i, "").trim();
 
   // Strip trailing noise: "Ti", "#A16", "#1808 Restaurant Ti", "Interior", etc.
-  s = s.replace(/\s+#\s*\d+.*$/, "").trim();
+  // Unit codes can lead with a letter: "Haidilao Landlord Work #A259".
+  s = s.replace(/\s+#\s*[A-Z]?\d+.*$/i, "").trim();
   // "Illuminated" and "Construction" are scope words, not name words: without them
   // "Scott'S Ballroom (E 100%) Illuminated Sign" shipped as "Scott's Ballroom Illuminated"
   // and "Chick-Fil-A (Bepm 100%) New Construction" shipped as "Chick-Fil-A New Construction".
   // The alternation matches leftmost, so " Illuminated Sign" goes in one pass; "Construction"
   // leaves a dangling "New" that the next replace clears.
-  s = s.replace(/\s+(Interior|Restaurant|Tenant|Improvement|Ti|Demo|Sign|Illuminated|Construction|Tbd)\b.*$/i, "").trim();
+  // "Landlord Work" is the shell built for a coming tenant, so the tenant's
+  // name is what's left: "Haidilao Landlord Work #A259" → "Haidilao".
+  s = s.replace(/\s+(Interior|Restaurant|Tenant|Improvement|Ti|Demo|Sign|Illuminated|Construction|Tbd|Landlord)\b.*$/i, "").trim();
   // Strip dangling permit words left after previous stripping (e.g. "Pollo Loco New" ← from "New Sign")
   s = s.replace(/\s+(New|Old|Existing|Remodel)\s*$/i, "").trim();
 
@@ -194,6 +200,19 @@ function extractName(raw) {
     .replace(/\bChick-Fil-A\b/gi, "Chick-fil-A");
 
   return stripBilingualSuffix(titled);
+}
+
+// The WORKDESCRIPTION for equipment work is the generic "Tenant Improvement",
+// so only FOLDERNAME says a permit swaps or adds machinery at a business that
+// is already open. "Martha's Kitchen Hvac Replacement" (2026-08-29) and
+// "Maggianos (Bem 100%) New Heat Pump Units" (2026-11-10, a $150K rooftop
+// job at a long-open restaurant) both shipped as a "New Buildout".
+const EQUIPMENT_TERMS = /\b(hvac|heat pumps?|rooftop units?|rtus?|(?:a\/?c|air conditioning) units?|mini[- ]?splits?|water heaters?|grease (?:interceptors?|traps?)|hoods?|ansul|exhaust fans?|make-?up air|fire sprinklers?|fire alarms?|boilers?|condensers?|compressors?|walk-?in (?:coolers?|freezers?)|solar(?: panels?| pv)?|ev chargers?|generators?)\b/;
+const EQUIPMENT_WORK = /\b(replacement|replace|repair|upgrade|retrofit|maintenance|new|install(?:ation)?|add(?:ition)?)\b/;
+
+export function isEquipmentOnlyPermit(folderName) {
+  const folder = String(folderName ?? "").toLowerCase();
+  return EQUIPMENT_TERMS.test(folder) && EQUIPMENT_WORK.test(folder);
 }
 
 function signalFromWork(workType) {
@@ -289,11 +308,7 @@ export async function generateRestaurantRadar({ fetchImpl = fetch, sleep, output
       // an established nonprofit soup kitchen, subtype Commercial/Industrial)
       // shipped that way on 2026-08-29. The equipment detail only ever appears
       // in FOLDERNAME, so test that instead of the work type.
-      const folderLower = String(r.FOLDERNAME ?? "").toLowerCase();
-      const isEquipmentReplacement =
-        /\b(hvac|rooftop unit|rtu|water heater|grease (?:interceptor|trap)|hood|ansul|fire sprinkler|fire alarm|boiler|condenser|compressor|walk-?in (?:cooler|freezer))\b/.test(folderLower) &&
-        /\b(replacement|replace|repair|upgrade|retrofit|maintenance)\b/.test(folderLower);
-      if (signal !== "closing" && isEquipmentReplacement) return null;
+      if (signal !== "closing" && isEquipmentOnlyPermit(r.FOLDERNAME)) return null;
 
       const rawName = r.FOLDERNAME ?? null;
       const name = extractName(rawName);
@@ -378,7 +393,7 @@ export async function generateRestaurantRadar({ fetchImpl = fetch, sleep, output
   for (const item of filtered) {
     const key = `${item.city ?? ""}:${item.address}`;
     const override = MANUAL_OVERRIDES[key];
-    if (override) {
+    if (override && (!override.forName || override.forName.test(item.name ?? ""))) {
       if (override.name) item.name = override.name;  // name override always wins
       if (override.blurb) item.blurb = item.blurb ?? override.blurb;
     }

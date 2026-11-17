@@ -441,7 +441,7 @@ function planImgFail(img){var next=img.getAttribute('data-next');if(next){img.re
 </head>
 <body>
 <a href="#main-content" class="skip-nav">Skip to content</a>
-<header class="sb-header">
+<header class="sb-header sb-header--compact">
   <div class="sb-header-inner">
     <a href="/" class="sb-brand" aria-label="The South Bay Today — home">
       <img src="/images/sbt-avatar-172.png" alt="" width="76" height="76" class="sb-brand-mark" aria-hidden="true" decoding="async">
