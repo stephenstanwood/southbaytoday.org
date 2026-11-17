@@ -4131,6 +4131,26 @@ function localistCost(ev) {
   return null;
 }
 
+// A mixed ticket range alone does not establish free public admission. Only
+// an explicit, unrestricted no-credit tier followed by a priced CE tier does.
+// Read the complete current body before truncation, and reject a conflicting
+// ticket label. Stanford's Nov 18 course uses Free–$65 for this distinction.
+function localistCreditAdmission(ev) {
+  const lines = String(ev.description || ev.description_text || "")
+    .replace(/<br\s*\/?>|<\/(?:p|div|li|h[1-6])\s*>/gi, "\n")
+    .split(/\r?\n/).map(line => stripHtml(line).trim()).filter(Boolean);
+  const index = lines.findIndex(line => /^No CE Credit(?:\s*[-–—]\s*you will not be able to obtain credit)?\s*:\s*Free\.?$/i.test(line));
+  if (index === -1) return null;
+  const credit = lines[index + 1]?.match(/^CE Credit:\s*\$(\d+(?:\.\d{1,2})?)\.?$/i);
+  if (!credit || Number(credit[1]) <= 0) return null;
+  const ticket = stripHtml(ev.ticket_cost || "").trim();
+  if (ticket) {
+    const range = ticket.match(/^Free\s*[-–—]\s*\$(\d+(?:\.\d{1,2})?)$/i);
+    if (!range || Number(range[1]) !== Number(credit[1])) return null;
+  }
+  return { cost: "free", costNote: `Free without CE credit; $${credit[1]} with CE credit.` };
+}
+
 function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
@@ -4726,6 +4746,7 @@ async function fetchStanfordEvents() {
         ? "music"
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
           ? "education" : inferredCategory;
+      const creditAdmission = localistCreditAdmission(ev);
       const attendanceNotes = [
         ...(publicVirtualOnly ? ["Public attendance is online. In-person attendance is limited to Stanford affiliates."] : []),
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
@@ -4742,6 +4763,8 @@ async function fetchStanfordEvents() {
         ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
         ...(foodLectureSchedule ? [foodLectureSchedule] : []),
+        // Static event pages display attendance notes rather than costNote.
+        ...(creditAdmission ? [creditAdmission.costNote] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
@@ -4767,7 +4790,8 @@ async function fetchStanfordEvents() {
         // 2026-09-14, and three-quarters of the feed has neither the flag nor
         // a ticket price. Only a stated price is evidence of a charge; a bare
         // ticket URL is often free registration, so it stays unknown (null).
-        cost: localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
+        cost: creditAdmission?.cost ?? localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
+        ...(creditAdmission ? { costNote: creditAdmission.costNote } : {}),
         ...(attendanceNotes.length ? { attendanceNote: attendanceNotes.join(" ") } : {}),
         ...(registration ? { registration } : {}),
         description: truncate(description),
