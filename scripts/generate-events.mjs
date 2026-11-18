@@ -119,7 +119,7 @@ import {
   displayEndTime,
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
-import { deduplicateEventSlots } from "./lib/event-url-dedup.mjs";
+import { deduplicateEventSlots, deduplicateEventUrls } from "./lib/event-url-dedup.mjs";
 import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
@@ -10795,6 +10795,56 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
   }
 }
 
+// Source-venue affinity: how many venue tokens appear in the source name.
+// Higher score means the source is the venue itself (e.g. SJMA listing
+// for an SJMA event), which we prefer to keep over an aggregator listing.
+function sourceVenueAffinity(e) {
+  const s = (e.source || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ");
+  const v = (e.venue || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ");
+  if (!s || !v) return 0;
+  const sTokens = new Set(s.split(/\s+/).filter((t) => t.length >= 3));
+  const vTokens = v.split(/\s+/).filter((t) => t.length >= 3);
+  let overlap = 0;
+  for (const t of vTokens) if (sTokens.has(t)) overlap++;
+  return overlap;
+}
+
+function compareSlotCandidates(a, b) {
+  const aff = sourceVenueAffinity(b) - sourceVenueAffinity(a);
+  if (aff !== 0) return aff;
+  const richness = (e) => {
+    let score = 0;
+    if (e.url) score += 20;
+    if (e.time) score += 2;
+    if (e.endTime) score += 1;
+    if (e.description) score += Math.min(e.description.length / 100, 5);
+    return score;
+  };
+  return richness(b) - richness(a);
+}
+
+export function capUpcomingEventSources(events) {
+  // Duplicate newsletter links and duplicate Ticketmaster listings can use the
+  // 200 slots before final deduplication. Count each copy once without changing
+  // the limits or the date order of eligible events.
+  const newsletters = events.filter((event) => event.source === "City Newsletter");
+  const tickets = events.filter((event) => event.source === "Ticketmaster");
+  const uniqueCopies = new Set([
+    ...deduplicateEventUrls(newsletters.sort(compareSlotCandidates)),
+    ...deduplicateEventSlots(tickets.sort(compareSlotCandidates)),
+  ]);
+
+  const caps = { "Santa Clara University": 25, "SJSU Events": 30, "Stanford Events": 30 };
+  const sourceCounts = new Map();
+  return events.filter((event) => {
+    const source = event.source;
+    if ((source === "City Newsletter" || source === "Ticketmaster") && !uniqueCopies.has(event)) return false;
+    const count = (sourceCounts.get(source) ?? 0) + 1;
+    sourceCounts.set(source, count);
+    return count <= (caps[source] ?? 200);
+  });
+}
+
 // ── History San Jose (WordPress HTML scrape) ──
 
 async function fetchHistorySanJoseEvents() {
@@ -11354,18 +11404,7 @@ async function main() {
   // instead. Left as-is pending Stephen's call — the fix changes the Events
   // tab's editorial mix (full 14-day SJPL coverage is ~745 events, ~38% of
   // the corpus), which is not an autonomous decision.
-  const SOURCE_CAPS = {
-    "Santa Clara University": 25,
-    "SJSU Events": 30,
-    "Stanford Events": 30,
-  };
-  const DEFAULT_CAP = 200;
-  const sourceCounts = {};
-  const capped = valid.filter((e) => {
-    const cap = SOURCE_CAPS[e.source] ?? DEFAULT_CAP;
-    sourceCounts[e.source] = (sourceCounts[e.source] || 0) + 1;
-    return sourceCounts[e.source] <= cap;
-  });
+  const capped = capUpcomingEventSources(valid);
 
   // Deduplicate by normalized title + date
   // Sports events: also deduplicate by date+venue (same game, different listing titles)
@@ -11377,38 +11416,12 @@ async function main() {
     if (!t) return "";
     return String(t).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
   }
-  // Source-venue affinity: how many venue tokens appear in the source name.
-  // Higher score means the source is the venue itself (e.g. SJMA listing
-  // for an SJMA event), which we prefer to keep over an aggregator listing.
-  function sourceVenueAffinity(e) {
-    const s = (e.source || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ");
-    const v = (e.venue || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, " ");
-    if (!s || !v) return 0;
-    const sTokens = new Set(s.split(/\s+/).filter((t) => t.length >= 3));
-    const vTokens = v.split(/\s+/).filter((t) => t.length >= 3);
-    let overlap = 0;
-    for (const t of vTokens) if (sTokens.has(t)) overlap++;
-    return overlap;
-  }
-
   // Pre-sort capped events so that within any (date, venue, time) trio, the
   // source-venue match comes first — that's the listing dedup will keep.
   // Tiebreak by richer data, especially a real URL. Newsletter duplicates can
   // differ only by sourceUrl; keep the sourceable row over a slightly longer
   // unsourced blurb.
-  capped.sort((a, b) => {
-    const aff = sourceVenueAffinity(b) - sourceVenueAffinity(a);
-    if (aff !== 0) return aff;
-    const richness = (e) => {
-      let score = 0;
-      if (e.url) score += 20;
-      if (e.time) score += 2;
-      if (e.endTime) score += 1;
-      if (e.description) score += Math.min(e.description.length / 100, 5);
-      return score;
-    };
-    return richness(b) - richness(a);
-  });
+  capped.sort(compareSlotCandidates);
 
   const seen = new Set();
   const sportsByDateVenue = new Set();

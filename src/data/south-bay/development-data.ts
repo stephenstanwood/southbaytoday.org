@@ -102,12 +102,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station, a major regional transit hub, in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000+ homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The entitled site remains largely cleared while the company reassesses the timeline. Under the development agreement, a $54M community-fund payment is triggered if construction hasn't started by July 2031.",
-    scale: "Up to 7.3M sq ft; 4,000+ housing units planned",
+      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The development agreement sets a ten-year milestone that Google can meet by substantially completing 2 million sq ft of office space and providing the related community benefits, providing the equivalent benefits without building that space, or combining both approaches.",
+    scale: "Up to 7.3M sq ft of office space and 4,000 homes planned",
     developer: "Google (Lendlease partnership ended 2023)",
     timeline: "Entitled 2021; active construction paused",
     featured: true,
-    sourceNote: "Status confirmed June 2026: Google ended the Lendlease partnership in 2023 and active construction is paused. Verify at sanjoseca.gov Downtown West page or realestate.withgoogle.com/sanjose.",
+    sourceNote: "San José's Downtown West project page gives the approved scope at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/major-development-projects/downtown-west-mixed-use-plan. Development Agreement §§ 1.117 and 2.2 define the ten-year obligation and possible extensions at https://www.sanjoseca.gov/home/showpublisheddocument/77459/637680918932500000.",
   },
 
   {
@@ -165,12 +165,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "civic",
     status: "proposed",
     description:
-      "The proposed expansion would add gates and increase concourse capacity at the south end of Terminal B at Norman Y. Mineta San José International Airport. The FAA issued a Finding of No Significant Impact and Record of Decision based on the Final Environmental Assessment (April 2023). A Major Amendment to the SJC Airport Master Plan is moving through the city's planning process in 2026.",
+      "The proposed expansion would add gates and increase concourse capacity at the south end of Terminal B at San José Mineta International Airport. The FAA issued a finding of no significant impact and record of decision in April 2023. The City Council adopted the broader Airport Master Plan amendment in May 2026.",
     scale: "Terminal B south concourse expansion",
     developer: "City of San José",
-    timeline: "In planning / environmental review",
+    timeline: "FAA environmental decision in April 2023",
     featured: false,
-    sourceNote: "Verify status at flysanjose.com/improvement and sanjoseca.gov planning records.",
+    sourceNote: "SJC lists the May 2026 master plan amendment and the Terminal B environmental decision at https://www.flysanjose.com/environmental-planning-and-review-test.",
   },
 
   {
@@ -260,18 +260,18 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "berryessa-bart-transit-village",
-    name: "Berryessa BART Transit Village",
+    name: "Berryessa BART Urban Village",
     city: "San José",
     cityId: "san-jose",
     category: "housing",
     status: "approved",
     description:
-      "Large-scale transit-oriented housing is planned around the Berryessa/North San José BART station under San José's Urban Village program. Multiple projects have received approvals for dense residential development adjacent to BART, bringing new workforce and market-rate housing to North San José.",
-    scale: "Thousands of units across multiple sites",
+      "San José adopted the Berryessa BART Urban Village Plan in June 2021. It calls for housing and commercial development across roughly 270 acres around the Berryessa/North San José BART station. Development proceeds through separate site applications.",
+    scale: "4,814 homes planned across the area",
     developer: "Various",
-    timeline: "Active approvals and construction",
+    timeline: "Urban Village Plan adopted June 2021",
     featured: false,
-    sourceNote: "Rollup of multiple Urban Village approvals near the Berryessa/North San José BART station, not one tracked development — overlaps the Milpitas BART entry. Verify at sanjoseca.gov planning records.",
+    sourceNote: "The city's plan gives the area, housing yield, and adoption date at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/citywide-planning/urban-villages/berryessa-bart.",
   },
 
   {

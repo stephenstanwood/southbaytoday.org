@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { parseBooksIncEvents } from "./booksinc-events.mjs";
+import { scrapeBooksInc } from "../playwright-scrapers.mjs";
 
 // Event fields from the live Elfsight calendar, 2026-10-22. The rendered
 // cards no longer have the regional-label line the old text regex required.
@@ -69,4 +70,28 @@ test("preserves unknown clocks for date-only schema and rejects ambiguous or mal
 
 test("an absent calendar is an error rather than an apparently quiet season", () => {
   assert.throws(() => parseBooksIncEvents(["broken JSON", '{"@type":"BreadcrumbList"}']), /no Event JSON-LD/);
+});
+
+test("the Books Inc. browser scraper reads the occurrence data on the next page", async () => {
+  const later = { ...LIVE, name: "Later book talk", startDate: "2027-02-02T19:00:00-08:00", endDate: null };
+  const eventPages = [LIVE, later].map(event => JSON.stringify(event));
+  let pageIndex = 0;
+  const calendar = {
+    goto: async () => ({ ok: () => true }),
+    waitForFunction: async (_ready, seen) => {
+      assert(!seen.includes(eventPages[pageIndex]));
+    },
+    locator: () => ({ allTextContents: async () => [eventPages[pageIndex]] }),
+    getByRole: (role, { name }) => {
+      assert.equal(role, "button");
+      assert.equal(name, "Next Events");
+      return {
+        isVisible: async () => pageIndex === 0,
+        isEnabled: async () => pageIndex === 0,
+        click: async () => { pageIndex++; },
+      };
+    },
+  };
+  const events = await scrapeBooksInc(calendar, { today: "2026-10-22" });
+  assert.deepEqual(events.map(event => event.title), [LIVE.name, later.name]);
 });

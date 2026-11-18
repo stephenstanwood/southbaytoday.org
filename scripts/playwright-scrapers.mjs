@@ -1225,10 +1225,22 @@ export async function scrapeBooksInc(page, { today = TODAY } = {}) {
   // The old text pattern expected a regional label between type and title.
   // The current cards omit it and now publish complete, offset-bearing Event
   // JSON-LD. Read that first-party calendar data after the widget hydrates.
-  await page.waitForFunction(() => [...document.querySelectorAll('script[type="application/ld+json"]')]
-    .some((script) => /"startDate"\s*:/.test(script.textContent || "")), null, { timeout: 15_000 });
-  const scripts = await page.locator('script[type="application/ld+json"]').allTextContents();
-  return parseBooksIncEvents(scripts, { today });
+  const eventScripts = new Set();
+  const nextPage = page.getByRole("button", { name: "Next Events", exact: true });
+  for (;;) {
+    await page.waitForFunction((seen) => [...document.querySelectorAll('script[type="application/ld+json"]')]
+      .some((script) => /"startDate"\s*:/.test(script.textContent || "") && !seen.includes(script.textContent)),
+    [...eventScripts], { timeout: 15_000 });
+    const scripts = await page.locator('script[type="application/ld+json"]').allTextContents();
+    for (const script of scripts) {
+      if (/"startDate"\s*:/.test(script)) eventScripts.add(script);
+    }
+    // The widget exposes only the current page in JSON-LD. Its first page
+    // can lose still-scheduled dates as earlier cards fill the page.
+    if (!await nextPage.isVisible() || !await nextPage.isEnabled()) break;
+    await nextPage.click({ timeout: 5_000 });
+  }
+  return parseBooksIncEvents([...eventScripts], { today });
 }
 
 const BN_STORES = [

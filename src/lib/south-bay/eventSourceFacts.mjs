@@ -82,6 +82,82 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The public city bulletin gives the room and address. The library's
+  // book-group schedule also gives the age requirement and admission terms.
+  // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/432e237
+  // https://sunnyvale.bibliocommons.com/v2/list/display/1629367999/2884811877
+  {
+    date: "2026-11-20",
+    title: /^Senior Center Book Group: Sipsworth$/i,
+    venue: /^Sunnyvale Senior Center\b/i,
+    facts: {
+      venue: "Sunnyvale Senior Center",
+      address: "555 E Remington Dr, Sunnyvale, CA",
+      url: "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/432e237",
+      cost: "free", registration: REGISTRATION_NONE, audienceAge: "adult",
+      description: "Discuss Simon Van Booy's novel Sipsworth in the Laurel Room at the Sunnyvale Senior Center.",
+      blurb: "Discuss Simon Van Booy's novel Sipsworth at the Sunnyvale Senior Center.",
+      attendanceNote: "Ages 50 and older. No registration or membership required.",
+    },
+  },
+  // Stanford's calendar gives the bike lot, the purchase price, and the
+  // limited window for people arriving without an appointment.
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/stanford-public-safety-bike-sale",
+    facts: {
+      venue: "Stanford Public Safety bike lot",
+      address: "343 Bonair Siding Rd, Stanford, CA 94305",
+      description: "Stanford Public Safety is selling unclaimed bicycles for $40 each at the bike lot behind its building.",
+      blurb: "Shop unclaimed bicycles for $40 each at Stanford's Public Safety bike lot.",
+    },
+    appendAttendanceNote: "Appointments are available. Walk-ins are welcome from 9:30 to 10:00 AM.",
+  },
+  // The city notice gives City Hall as the open-house venue and identifies
+  // its second-floor conference room.
+  {
+    date: "2026-12-02",
+    matches: (event) => event.source === "City Newsletter"
+      && event.title === "Corso Affordable Housing Public Art Open House"
+      && event.url === "https://www.mountainviewlot12.org/",
+    facts: {
+      venue: "Mountain View City Hall",
+      address: "500 Castro St, Mountain View, CA 94041",
+    },
+    appendAttendanceNote: "The Plaza Conference Room is on the second floor.",
+  },
+  // The university's detail page lists the campus groups invited to audition.
+  {
+    date: "2026-12-02",
+    url: "https://events.scu.edu/arts-and-sciences/event/534032-coherence-auditions",
+    facts: {
+      description: "Afternoon acting and dance auditions for Coherence at Santa Clara University.",
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "SCU invites its students, alumni, faculty, and staff to audition. Confirm eligibility with the department before going if you are outside those groups.",
+    },
+  },
+  // The museum places this ongoing exhibition in the Freidenrich Family Gallery.
+  // https://museum.stanford.edu/exhibitions/california-current-art-and-histories-bay-area
+  {
+    dateFrom: "2026-10-29",
+    dateThrough: "2028-10-23",
+    url: "https://events.stanford.edu/event/california-current-art-and-histories-from-the-bay-area-6587",
+    facts: { venue: "Cantor Arts Center" },
+  },
+  // The store calendar confirms the date and venue. The store's own RSVP
+  // page adds the finish time and names the conversation partner.
+  {
+    date: "2027-02-02",
+    matches: (event) => event.source === "Books Inc"
+      && /^Mike Chen: The Haunting of Santo Domingo Street$/i.test(event.title || "")
+      && event.venue === "Books Inc. Palo Alto",
+    facts: {
+      endTime: "8:00 PM",
+      url: "https://www.eventbrite.com/e/mike-chen-and-yangsze-choo-at-books-inc-palo-alto-tickets-2003221495418",
+      description: "Mike Chen launches The Haunting of Santo Domingo Street in conversation with Yangsze Choo, followed by a reading and audience Q&A.",
+      blurb: "Hear Mike Chen discuss his San José-set novel The Haunting of Santo Domingo Street with Yangsze Choo.",
+    },
+  },
   // Attendance is open to teens even when they cannot log volunteer hours.
   // https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48d0
   {
