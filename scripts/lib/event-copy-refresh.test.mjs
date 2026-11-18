@@ -160,6 +160,7 @@ audits.push(november17AfternoonFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-grpg.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-late-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-post-fact-check.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-night.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -599,7 +600,7 @@ test("bilingual copy repairs preserve revised hours, contacts, attendance and pu
       cost: "low", costNote: "$12", registration: "required",
     };
     const next = polishReviewedEventCopy({ ...event, description: polishDescription(event.description) });
-    assert.deepEqual(next, { ...event, description: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...event, description: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next.description), numbers(event.description));
     assert.deepEqual(identifiers(next.description), identifiers(event.description));
     assert.deepEqual(polishReviewedEventCopy(next), next);

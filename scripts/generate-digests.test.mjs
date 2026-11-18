@@ -195,6 +195,17 @@ test("Campbell civic copy restores sourced transportation measures without renam
     "Campbell Technology Park and nearby streets.");
 });
 
+test("refreshed Campbell digest keeps the reviewed transcript and fence wording", () => {
+  const summary = "The source for the November 2, 2026, Campbell City Council meeting is a video transcript, so this describes what the transcript shows was before the Council. The agenda centered on a 290-home housing development.";
+  const topic = "The proposal would increase fence/wall height to 8 ft along Highway 17. Staff described it as a 'builder's remedy' project.";
+  const reviewedSummary = "A video transcript shows what was before the Campbell City Council at its November 2, 2026, meeting. The agenda centered on a 290-home housing development.";
+  const reviewedTopic = "The proposal would increase fence and wall height to 8 ft along Highway 17. Staff described it as a \"builder's remedy\" project.";
+  assert.equal(polishCivicCopy(summary), reviewedSummary);
+  assert.equal(polishCivicTopic(topic), reviewedTopic);
+  assert.equal(polishCivicCopy(reviewedSummary), reviewedSummary);
+  assert.equal(polishCivicTopic(reviewedTopic), reviewedTopic);
+});
+
 test("civic modifiers keep numbers, identifiers, headline dates, and standalone terms exact", () => {
   const copy = "The fee for below market rate in-lieu fees would become a square footage-based fee. A City Council sponsored special event costs $25. See https://example.org/below-market-rate or email fee@example.org.";
   const reviewed = copy.replace("below market rate", "below-market-rate")

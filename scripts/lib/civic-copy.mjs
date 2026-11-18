@@ -37,6 +37,10 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace(/\bA Oct\. (?=\d{1,2}\b)/g, "An Oct. ")
       .replace("Hangul Day/Korean National Foundation Day", "Hangul Day / Korean National Foundation Day")
       .replace("take part: in-person, online, and written public comment", "take part: in person, online, and through written public comment")
+      .replace("The source for the November 2, 2026, Campbell City Council meeting is a video transcript, so this describes what the transcript shows was before the Council.",
+        "A video transcript shows what was before the Campbell City Council at its November 2, 2026, meeting.")
+      .replace("increase fence/wall height", "increase fence and wall height")
+      .replace("as a 'builder's remedy' project", "as a \"builder's remedy\" project")
       .replace(/(\bchanges to Council Policy \d+, on how items get added to council agendas, which) was deferred\b/g, "$1 were deferred")
     : text;
 }
