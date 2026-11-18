@@ -233,6 +233,8 @@ const SOURCE_ID_SKIP = new Set([
   "SR0885671", // https://www.bcmidtown.com/location/the-breakfast-club-at-midtown-san-jose/
   "SR0885984", // https://www.umetea.com/en/stores (2215 The Alameda)
   "SR0886043", // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAI7XMYNU.pdf
+  "SR0886237", // Sweetgreen, 261 Hamilton Ave: https://eservices.sccgov.org/FacilityInspection/Home/ShowDetail/PR0423462
+  "SR0886435", // Ulas Enterprises is operating as Sultan's Kebab: https://www.saratogachamber.org/dining
   // Reviewed Nov 3, 2026: a county plan-check record alone does not establish
   // a public food venue. Keep exact exclusions rather than banning LLC names.
   "SR0883235", // Rutherford Month Vista: Station 245 apartments at 245 Bush St.

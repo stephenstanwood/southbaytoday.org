@@ -79,6 +79,33 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The November 18 Eventbrite listing gives separate ticket tiers and requires ID.
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "City Newsletter" && event.venue === "Three Sisters Whiskey Bar"
+      && /^https:\/\/www\.eventbrite\.com\/e\/downtown-throwdown-san-pedro-squares-best-bartending-competition-tickets-2003843757621\/?(?:\?.*)?$/.test(event.url || ""),
+    facts: event => ({
+      audienceAge: "adult",
+      kidFriendly: false,
+      ...(event.cost == null && !event.costNote ? { cost: "low", costNote: "From $15 ($30 VIP)" } : {}),
+    }),
+    appendAttendanceNote: "Ages 21+ with valid ID. VIP admission includes samples from every competitor.",
+    copyReplacements: [
+      [/\s+Tickets are available\.$/i, ""],
+      [/^Taste cocktails from six San Pedro Square bars competing in a friendly contest, held at Three Sisters Whiskey Bar\.$/, "Watch bartenders from six San Pedro Square bars compete at Three Sisters Whiskey Bar."],
+    ],
+  },
+  // The City Lights performance page supplies the November 19 end time and address.
+  {
+    date: "2026-11-19",
+    matches: event => event.source === "City Newsletter" && event.title === "The 1940s Radio Hour"
+      && event.time === "7:30 PM" && event.url === "https://cltc.org/event/radio-hour/",
+    facts: event => ({
+      ...(event.endTime == null ? { endTime: "9:30 PM" } : {}),
+      ...(!event.address || event.address === "City Lights Theater Company"
+        ? { address: "529 S 2nd St, San Jose, CA 95112" } : {}),
+    }),
+  },
   // The athletics announcement confirms free admission and the venue for
   // these two home games. The campus calendar rows have neither field.
   // https://sjsuspartans.com/news/2026/11/17/spartans-host-cbu-long-beach-state-for-community-days

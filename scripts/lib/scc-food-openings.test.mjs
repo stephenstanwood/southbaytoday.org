@@ -124,6 +124,8 @@ test("verified tenant improvements at operating businesses stay off the openings
     { record_id: "SR0885671", business_name: "RTI BREAKFAST CLUB AT MIDTOWN", site_location: "1432 W SAN CARLOS STE 80", city: "SAN JOSE" },
     { record_id: "SR0885984", business_name: "RTI UME TEA", site_location: "2215 THE ALAMEDA", city: "SANTA CLARA" },
     { record_id: "SR0886043", business_name: "RTI - ALMADEN MARKET", site_location: "5965 ALMADEN EXPRESS WY", city: "SAN JOSE" },
+    { record_id: "SR0886237", business_name: "RTI SWEETGREEN RESTAURANT", site_location: "261 HAMILTON AVE", city: "PALO ALTO" },
+    { record_id: "SR0886435", business_name: "RTI ULAS ENTERPRISES LLC", site_location: "14554 BIG BASIN WY A.", city: "SARATOGA" },
   ];
   for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
   assert.equal(shouldSkip({

@@ -9,6 +9,18 @@ import {
 } from "./eventOccurrence.mjs";
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 
+test("withholds the December 15 HSAS listing until the performer and venue are confirmed", () => {
+  const event = {
+    title: "Spirit of the Row: HSAS Full Ensemble & Vocal Ensemble",
+    date: "2026-12-15", time: "6:00 PM", venue: "Hammer Theatre", source: "San Jose Jazz",
+    url: "https://sanjosejazz.org/events/spirit-of-the-row-hsas-full-ensemble-vocal-ensemble/",
+  };
+  assert.equal(isEventPublishable(event), false);
+  assert.equal(isEventPublishable({ ...event, venue: "Santana Row" }), false);
+  assert.equal(isEventPublishable({ ...event, date: "2026-12-08" }), true);
+  assert.equal(isEventPublishable({ ...event, title: "Spirit of the Row", venue: "Santana Row" }), true);
+});
+
 test("withholds the Music Library Association meeting while organizer eligibility, year and meeting point conflict", () => {
   const event = {
     title: "Music Library Association California Chapter Annual Meeting",

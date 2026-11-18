@@ -16,6 +16,45 @@ import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttend
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
+test("the dated Downtown Throwdown listing preserves admission terms on refresh", () => {
+  const event = {
+    date: "2026-11-18", source: "City Newsletter", venue: "Three Sisters Whiskey Bar",
+    url: "https://www.eventbrite.com/e/downtown-throwdown-san-pedro-squares-best-bartending-competition-tickets-2003843757621?aff=ebdssbdestsearch",
+    description: "Six San Pedro Square bars compete in a friendly cocktail contest. Tickets are available.",
+    blurb: "Taste cocktails from six San Pedro Square bars competing in a friendly contest, held at Three Sisters Whiskey Bar.",
+    cost: null,
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert.equal(corrected.cost, "low");
+  assert.equal(corrected.costNote, "From $15 ($30 VIP)");
+  assert.equal(corrected.audienceAge, "adult");
+  assert.equal(corrected.kidFriendly, false);
+  assert.match(corrected.attendanceNote, /21\+ with valid ID.*VIP admission includes samples/);
+  assert.doesNotMatch(corrected.description, /Tickets are available/);
+  assert.doesNotMatch(corrected.blurb, /Taste cocktails/);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  const updated = applyVerifiedEventFacts({ ...event, cost: "paid", costNote: "From $30", registration: "full" });
+  assert.equal(updated.costNote, "From $30");
+  assert.equal(updated.registration, "full");
+  const differentDate = { ...event, date: "2026-11-19" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+});
+
+test("the City Lights opening-night correction only supplies missing performance details", () => {
+  const event = {
+    date: "2026-11-19", time: "7:30 PM", source: "City Newsletter", title: "The 1940s Radio Hour",
+    url: "https://cltc.org/event/radio-hour/", address: "City Lights Theater Company", endTime: null,
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), {
+    ...event, address: "529 S 2nd St, San Jose, CA 95112", endTime: "9:30 PM",
+  });
+  const updated = { ...event, address: "Another venue address", endTime: "10:00 PM" };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+  const differentDate = { ...event, date: "2026-11-20" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+});
+
 test("only the conflicting Mitchell Park study session requires start confirmation", () => {
   const event = {
     date: "2026-12-09", time: "4:30 PM", endTime: "8:45 PM",

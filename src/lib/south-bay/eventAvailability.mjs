@@ -4,6 +4,15 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Spirit of the Row: HSAS Full Ensemble & Vocal Ensemble$/i,
+    venue: /.*/,
+    date: "2026-12-15",
+    matches: event => event.source === "San Jose Jazz"
+      && /^https:\/\/sanjosejazz\.org\/events\/spirit-of-the-row-hsas-full-ensemble-vocal-ensemble\/?(?:[?#].*)?$/.test(event.url || ""),
+    reason: "San Jose Jazz mentions Santana Row in the description and Hammer Theatre in the header. Santana Row confirms the holiday program, but its December 15 lineup omits HSAS. The ensemble's appearance and venue need confirmation.",
+    source: "https://santanarow.com/events/",
+  }),
+  Object.freeze({
     title: /^129th Big Game: Stanford vs\. Cal Football$/i,
     venue: /.*/,
     date: "2026-11-21",
