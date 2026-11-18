@@ -32,6 +32,8 @@
  *    to the civic-meetings pipeline, not the events corpus. They are dropped.
  */
 
+import { isEventExplicitlyInactive } from "../../src/lib/south-bay/eventOccurrence.mjs";
+
 /** Strip tags/entities from one Views cell. */
 export function midpenText(value) {
   return String(value || "")
@@ -265,8 +267,10 @@ export function parseMidpenDetail(html) {
     .filter((text) => /^Happens On\b/.test(text));
   const volunteerDate = volunteerDates.length === 1
     ? volunteerDates[0].match(/^Happens On ([A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4})$/) : null;
+  const title = midpenText(titleMarkup?.[1] || volunteerTitle?.[1]) || null;
   return {
-    title: midpenText(titleMarkup?.[1] || volunteerTitle?.[1]) || null,
+    title,
+    inactive: isEventExplicitlyInactive({ title }),
     date: dateMarkup ? midpenIsoDate(midpenText(dateMarkup[1]))
       : volunteerTitle && volunteerDate ? midpenIsoDate(volunteerDate[1]) : null,
     description: paragraph?.replace(/\s+([.,;!?])/g, "$1") || null,
@@ -287,7 +291,7 @@ export function parseMidpenDetail(html) {
 export function midpenDetailConfirmsEvent(html, event, today) {
   if (event?.source !== "Midpen Open Space" || !event?.date || !event.time || event.date < today) return false;
   const detail = parseMidpenDetail(html);
-  return detail.title === event.title
+  return !detail.inactive && detail.title === event.title
     && detail.date === event.date
     && detail.startTime === event.time;
 }

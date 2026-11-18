@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 
 import {
   MIDPEN_PRESERVE_CITY,
@@ -166,6 +167,27 @@ test("guided activity detail preserves a required reservation", () => {
   const html = DETAIL.replace("</body>", "<p>Reservations are required and open two weeks before the activity.</p></body>");
   assert.equal(parseMidpenDetail(html).registration, "required");
   assert.equal(parseMidpenDetail(DETAIL).registration, null);
+});
+
+test("the organizer's canceled project heading overrides a stale calendar listing", () => {
+  const prior = {
+    id: "midpen-ab148fc7be0d9c6e",
+    source: "Midpen Open Space",
+    title: "Sierra Azul Preserve - Trail Maintenance: Mt. Umunhum Trail (Pt. 6)",
+    date: "2026-11-19",
+    time: "9:30 AM",
+    venue: "Sierra Azul Preserve",
+  };
+  const calendar = `<section class="address-time"><td class="text">Happens On Nov 19, 2026</td>9:30 a.m. - 2:00 p.m.</section>`;
+  const body = `${calendar}<p>Check your email in case the project is canceled.</p>`;
+  const active = `<h1 class="panel-title">${prior.title}</h1>${body}`;
+  const canceled = `<h1 class="panel-title mt-0">CANCELED - ${prior.title}</h1>${body}`;
+  assert.equal(parseMidpenDetail(active).inactive, false);
+  assert.equal(parseMidpenDetail(canceled).inactive, true);
+  assert.equal(midpenDetailConfirmsEvent(active, prior, "2026-11-18"), true);
+  assert.equal(midpenDetailConfirmsEvent(canceled, prior, "2026-11-18"), false);
+  assert.equal(isEventPublishable(prior), false);
+  assert.equal(isEventPublishable({ ...prior, id: "midpen-other", title: prior.title.replace("6", "7") }), true);
 });
 
 test("a missing listing row survives only when its own detail page confirms the same future occurrence", () => {

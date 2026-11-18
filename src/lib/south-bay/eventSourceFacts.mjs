@@ -1461,6 +1461,28 @@ const CORRECTIONS = [
       attendanceNote: "Sold out. The organizer offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
     },
   })),
+  // TicketWeb's exact booking pages show a waitlist instead of tickets for
+  // these two performances. The Improv calendar's price and buy links lag.
+  ...[
+    ["2026-11-21", "7:00 PM", "14735723"],
+    ["2026-11-22", "6:00 PM", "14735693"],
+  ].map(([date, time, ticketId]) => ({
+    date,
+    matches: event => event.time === time && event.venue === "San Jose Improv"
+      && event.url === `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${ticketId}`,
+    facts: {
+      registration: REGISTRATION_FULL, costNote: null,
+      attendanceNote: "TicketWeb lists a waitlist. Ages 21+. Two-item minimum purchase per person.",
+    },
+  })),
+  {
+    date: "2026-11-18",
+    url: "https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/14984583",
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
+    },
+  },
   // The organizer cards omit the 18+ gate and five-session commitment. These
   // exact academy pages publish four evening classes and a Saturday skills
   // day; the listed clock below is the first class, not the entire academy.
@@ -3988,16 +4010,6 @@ const CORRECTIONS = [
     url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",
     facts: { category: "family", kidFriendly: true, endTime: "5:00 PM" },
   },
-  // October 24 is a Saturday. The dated library occurrence is authoritative;
-  // its copied first-Thursday boilerplate must not move the meeting.
-  // https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48cf
-  // Evidence: docs/qa/2026-10-20-1807-fact-check.md.
-  {
-    date: "2026-10-24",
-    url: "https://sjpl.bibliocommons.com/events/6a3d7bfbed35742f00fe48cf",
-    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48cf"],
-    copyReplacements: [[/\bCome join us the first Thursday of the month for our\b/gi, "Come join us for our"]],
-  },
   // This listing republishes a ©2000–2003 film page's "currently" claim.
   // Bravo and IFC are separate networks; no current broadcast rights were
   // verified. Remove that clause and the same page's undated "recent" office
@@ -5353,13 +5365,26 @@ export function applyVerifiedEventFacts(event) {
   // limit. Stop adding the note when either conflicting clause is corrected.
   // Evidence: docs/qa/2026-10-30-2007-fact-check.md and
   // docs/qa/2026-11-07-2207z-fact-check.md (fresh exact-ID responses).
-  const printLimitId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
-  if (event?.date && CALABAZAS_PRINT_LIMIT_DATES[printLimitId] === event.date
+  const sjplId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
+  if (event?.date && CALABAZAS_PRINT_LIMIT_DATES[sjplId] === event.date
       && /\bDesigns must print in 1 hour 45 minutes\b/i.test(event.description || "")
       && /\bhave a print time of under 45 minutes\b/i.test(event.description || "")) {
     const printLimitNote = "The library lists conflicting print-time limits (45 minutes and 1 hour 45 minutes). Confirm your design's limit with Calabazas Library at cz.sjpl@sjlibrary.org.";
     if (!(event.attendanceNote || "").includes(printLimitNote)) {
       event = { ...event, attendanceNote: [event.attendanceNote, printLimitNote].filter(Boolean).join(" ") };
+    }
+  }
+  // The library copied this cadence into the October 24 and November 21
+  // Saturday listings. Use each dated occurrence when the two disagree.
+  if (sjplId && event.date && event.venue === "Calabazas Library") {
+    const day = new Date(`${event.date}T12:00:00Z`);
+    const cadence = /\bCome join us the first Thursday of the month for our(?= monthly Calabazas Teens Reach meeting\b)/i;
+    if (Number.isFinite(day.getTime()) && (day.getUTCDay() !== 4 || day.getUTCDate() > 7)) {
+      for (const field of ["description", "blurb", "attendanceNote"]) {
+        if (cadence.test(event[field] || "")) {
+          event = { ...event, [field]: event[field].replace(cadence, "Come join us for our") };
+        }
+      }
     }
   }
   // The sparse SJSU RSS body omits the card needed to use this public lab.

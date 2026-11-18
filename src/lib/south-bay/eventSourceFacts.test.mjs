@@ -59,6 +59,26 @@ test("Wang Leehom's SAP Center listing keeps its tour subtitle and music categor
   assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
 });
 
+test("only the exact Improv show times get the verified availability notes", () => {
+  const ticketUrl = (id) => `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${id}`;
+  const show = { title: "Gianmarco Soresi", venue: "San Jose Improv", date: "2026-11-21",
+    time: "7:00 PM", url: ticketUrl("14735723"), cost: "paid", costNote: "From $31" };
+  const waitlisted = applyVerifiedEventFacts(show);
+  assert.equal(waitlisted.registration, "full");
+  assert.equal(waitlisted.costNote, null);
+  assert.match(waitlisted.attendanceNote, /waitlist.*21\+.*Two-item minimum/);
+  assert.deepEqual(applyVerifiedEventFacts(waitlisted), waitlisted);
+  const sunday = applyVerifiedEventFacts({ ...show, date: "2026-11-22", time: "6:00 PM", url: ticketUrl("14735693") });
+  assert.equal(sunday.registration, "full");
+  const late = { ...show, time: "9:30 PM", url: ticketUrl("14735713") };
+  assert.deepEqual(applyVerifiedEventFacts(late), late);
+
+  const wednesday = applyVerifiedEventFacts({ ...show, date: "2026-11-18", time: "7:30 PM", url: ticketUrl("14984583") });
+  assert.equal(requiresAttendanceConfirmation(wednesday), true);
+  assert.equal(wednesday.registration, undefined);
+  assert.equal(wednesday.costNote, "From $31");
+});
+
 test("the City Lights opening-night correction only supplies missing performance details", () => {
   const event = {
     date: "2026-11-19", time: "7:30 PM", source: "City Newsletter", title: "The 1940s Radio Hour",
@@ -1778,6 +1798,11 @@ test("October's verified workshop topic, meeting cadence and family audience sur
   assert.equal(applyVerifiedEventFacts(meeting).description,
     "Come join us for our monthly Calabazas Teens Reach meeting. No registration required.");
   assert.equal(applyVerifiedEventFacts({ ...meeting, date: "2026-11-05" }).description, meeting.description);
+  const novemberMeeting = { ...meeting, date: "2026-11-21",
+    url: "https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48d0" };
+  assert.equal(applyVerifiedEventFacts(novemberMeeting).description, applyVerifiedEventFacts(meeting).description);
+  assert.equal(applyVerifiedEventFacts(novemberMeeting).time, novemberMeeting.time);
+  assert.equal(applyVerifiedEventFacts({ ...novemberMeeting, venue: "Another Library" }).description, meeting.description);
 
   const summit = { date: "2026-10-24", title: "Child Studies Legislative Summit", time: "2:00 PM",
     url: "https://events.scu.edu/arts-and-sciences/event/521019-child-studies-legislative-summit",

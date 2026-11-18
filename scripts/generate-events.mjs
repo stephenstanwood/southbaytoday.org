@@ -10449,6 +10449,7 @@ async function fetchMidpenEvents() {
     );
 
     const events = [];
+    const listedIds = new Set();
     for (const row of covered) {
       const city = midpenPreserveCity(row.preserve);
       // Shared with the retired Playwright scraper's tests: rejects the generic
@@ -10480,10 +10481,13 @@ async function fetchMidpenEvents() {
       if (!start) continue;
 
       const title = row.title;
-      if (isBlockedEvent(title)) continue;
+      const id = h("midpen", row.path, row.date, time || "");
+      listedIds.add(id);
+      // The volunteer portal can cancel an occurrence while the overview
+      // table still lists its former title, date and time.
+      if (detail.inactive || isBlockedEvent(title)) continue;
 
       const isVolunteer = row.type === "Volunteer Project";
-      const id = h("midpen", row.path, row.date, time || "");
       // A failed detail fetch cannot erase previously verified access terms.
       const prior = previous.get(id);
       const attendanceNote = detail.attendanceNote || (detailFailed ? prior?.attendanceNote : null);
@@ -10535,7 +10539,6 @@ async function fetchMidpenEvents() {
     // disappeared on Oct 26 even though its detail page still confirmed the
     // Dec 13 activity. Recheck only a small set of omitted prior occurrences;
     // a missing, changed or unreachable detail page never retains stale data.
-    const listedIds = new Set(events.map((event) => event.id));
     const omitted = [...previous.values()].filter((event) =>
       event.source === "Midpen Open Space"
       && event.date >= today

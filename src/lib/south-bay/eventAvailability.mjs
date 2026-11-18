@@ -4,6 +4,14 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    ids: Object.freeze(["midpen-ab148fc7be0d9c6e"]),
+    title: /^Sierra Azul Preserve - Trail Maintenance: Mt\. Umunhum Trail \(Pt\. 6\)$/i,
+    venue: /^Sierra Azul Preserve$/i,
+    date: "2026-11-19",
+    reason: "Midpen's volunteer portal marks this occurrence canceled. The overview calendar can still show its old listing.",
+    source: "https://volunteer.openspace.org/need/detail/?need_id=1326256",
+  }),
+  Object.freeze({
     title: /^Enhance your Professional Development with LinkedIn Learning$/i,
     venue: /.*/,
     date: "2026-12-01",
