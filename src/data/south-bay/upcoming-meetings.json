@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T08:13:18.199Z",
+  "generatedAt": "2026-11-18T09:18:24.962Z",
   "meetings": {
     "san-jose": {
       "date": "2026-12-01",
@@ -79,6 +79,38 @@
         "provider": "Legistar council calendar",
         "observedDate": "2026-12-01",
         "sourceUrl": "https://santaclara.legistar.com/Calendar.aspx"
+      }
+    },
+    "palo-alto": {
+      "date": "2026-11-30",
+      "displayDate": "Mon, Nov 30",
+      "startTime": "17:30",
+      "bodyName": "City Council",
+      "location": "Community Meeting Room",
+      "closedSession": false,
+      "url": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "City of Palo Alto public calendar",
+        "observedDate": "2026-11-30",
+        "sourceUrl": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting"
+      }
+    },
+    "saratoga": {
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "startTime": "18:00",
+      "bodyName": "City Council",
+      "location": "City Hall, Linda Callon Conference Room",
+      "closedSession": false,
+      "url": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496",
+      "agendaItems": [],
+      "confirmation": {
+        "status": "confirmed",
+        "provider": "CivicEngage",
+        "observedDate": "2026-11-18",
+        "sourceUrl": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496"
       }
     },
     "campbell": {
@@ -170,12 +202,12 @@
       "status": "ok"
     },
     "palo-alto": {
-      "provider": "PrimeGov",
-      "status": "no-meeting"
+      "provider": "City of Palo Alto public calendar",
+      "status": "ok"
     },
     "saratoga": {
       "provider": "CivicEngage",
-      "status": "no-meeting"
+      "status": "ok"
     },
     "campbell": {
       "provider": "City of Campbell council calendar",

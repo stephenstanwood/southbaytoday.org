@@ -24,6 +24,7 @@ import {
   legistarMeetingUrl,
   normalizeMeetingTime,
   onlyConfirmedMeetings,
+  parseCivicEngageAgendaLinks,
   pickCivicClerkMeeting,
   primeGovAgendaUrl,
   ptDateISO,
@@ -461,64 +462,31 @@ const PRIMEGOV_CITIES = [
 
 // ── CivicEngage HTML scraping (Saratoga) ────────────────────────────────────
 
-async function fetchCivicEngageMeeting(baseUrl, calendarId) {
-  // CivicEngage agenda centers have a predictable HTML structure
-  // Scrape the agenda list page for the next upcoming meeting date
+export async function fetchCivicEngageMeeting(baseUrl, calendarId) {
+  // CivicEngage uses named months in headings and MMDDYYYY in agenda links.
   const url = `${baseUrl}/AgendaCenter/${calendarId}`;
   const res = await fetch(url, {
     headers: { "User-Agent": UA },
     signal: AbortSignal.timeout(15_000),
+    redirect: "error",
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const html = await res.text();
-
-  // Parse meeting dates from the HTML — CivicEngage uses data-date attributes or date strings
-  // Pattern: look for links with dates in format "MM/DD/YYYY" or agenda items with dates
   const todayIso = ptDateISO();
+  const origin = new URL(baseUrl).origin;
+  const agendas = parseCivicEngageAgendaLinks(await res.text(), { baseUrl, today: todayIso, includeUpcoming: true })
+    .filter(agenda => URL.parse(agenda.url)?.origin === origin);
+  const newest = agendas[0]?.date;
+  if (!newest) throw new Error("no dated agendas found on the council agenda page");
+  const staleDays = (Date.parse(todayIso) - Date.parse(newest)) / 86_400_000;
+  if (staleDays > 120) throw new Error(`agenda page frozen — newest posting ${newest} (${Math.round(staleDays)}d old)`);
 
-  // CivicEngage lists agendas with dates — find future ones
-  // The HTML contains rows like: <td>04/15/2026</td> or dates in agenda links
-  const datePattern = /(\d{1,2})\/(\d{1,2})\/(\d{4})/g;
-  const dates = [];
-  const allDates = [];
-  let match;
-  while ((match = datePattern.exec(html)) !== null) {
-    const [, month, day, year] = match;
-    const iso = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    allDates.push(iso);
-    if (iso >= todayIso && parseInt(year) <= new Date().getFullYear() + 1) dates.push(iso);
-  }
-
-  // Deduplicate and sort
-  const unique = [...new Set(dates)].sort();
-
-  const nextDate = unique[0];
-  if (!nextDate) {
-    // Distinguish "council is between meetings" from "this scraper has rotted".
-    // Campbell's Agenda Center froze in 2025 when the town moved to eScribe and
-    // Los Altos left the platform entirely — both returned a healthy HTTP 200
-    // and reported "none scheduled" for months before anyone noticed. (Both are
-    // now read from their real portals above; Saratoga is the last CivicEngage
-    // city.) A page whose newest date is far in the past, or that has no dates
-    // at all, is a broken source and should say so.
-    const newest = allDates.length ? allDates.slice().sort().at(-1) : null;
-    const staleDays = newest
-      ? (Date.parse(todayIso) - Date.parse(newest)) / 86_400_000
-      : null;
-    if (!newest) throw new Error("no dates parsed from agenda page (source likely JS-rendered)");
-    if (staleDays > 120) {
-      throw new Error(`agenda page frozen — newest posting ${newest} (${Math.round(staleDays)}d old)`);
-    }
-    return null;
-  }
-
-  const d = new Date(nextDate + "T12:00:00");
-  const daysOut = (d.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-  if (daysOut > 60) return null;
+  const next = agendas.findLast(({ date, label }) => date >= todayIso
+    && !isClosedSessionMeeting({ bodyName: label.replace(/\s+agenda(?:\s*\(PDF\))?$/i, "") }));
+  if (!next || (Date.parse(next.date) - Date.parse(todayIso)) / 86_400_000 > 60) return null;
 
   const meeting = {
-    date: nextDate,
-    displayDate: d.toLocaleDateString("en-US", {
+    date: next.date,
+    displayDate: new Date(`${next.date}T12:00:00Z`).toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
       timeZone: "America/Los_Angeles",
     }),
@@ -527,13 +495,12 @@ async function fetchCivicEngageMeeting(baseUrl, calendarId) {
     bodyName: "City Council",
     location: null,
     closedSession: false,
-    url: `${baseUrl}/AgendaCenter/${calendarId}`,
+    url: next.url,
     agendaItems: [],
   };
   return confirmMeeting(meeting, {
     provider: "civicengage",
-    sourceUrl: url,
-    observedDate: nextDate,
+    sourceUrl: next.url,
   });
 }
 

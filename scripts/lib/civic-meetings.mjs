@@ -1275,33 +1275,33 @@ const TRANSLATED_AGENDA =
   /\b(chinese|spanish|vietnamese|korean|tagalog|japanese|russian|arabic|farsi|hindi|punjabi|espa[nñ]ol)\b/i;
 
 /**
- * Past agenda documents linked from a CivicEngage agenda center, newest first.
+ * Agenda documents linked from a CivicEngage agenda center, newest first.
  *
  * Exported for its own sake: the translation filter is the only thing standing
  * between the digest and an unreadable PDF, and it is worth testing without a
  * network round trip.
  */
-export function parseCivicEngageAgendaLinks(html, { baseUrl, today = ptDateISO() } = {}) {
+export function parseCivicEngageAgendaLinks(html, { baseUrl, today = ptDateISO(), includeUpcoming = false } = {}) {
   const seen = new Set();
-  const translatedUrls = new Set();
+  const excludedUrls = new Set();
   const candidates = [];
   for (const match of String(html ?? "").matchAll(CIVICENGAGE_AGENDA_LINK)) {
     const [, href, month, day, year, rawLabel] = match;
     const date = `${year}-${month}-${day}`;
-    if (date > today) continue;
+    if (!includeUpcoming && date > today) continue;
     const label = rawLabel.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     const url = href.startsWith("http") ? href : `${baseUrl}${href}`;
     const accessibleLabel = match[0].match(/\baria-label="([^"]*)"/i)?.[1] ?? "";
     // The same PDF has both a descriptive title and a generic "Agenda"
-    // download link. Exclude the document after reading ALL its labels, so
-    // either link order stays safe and translations cannot use candidate slots.
-    if (TRANSLATED_AGENDA.test(`${label} ${accessibleLabel}`)) translatedUrls.add(url);
+    // download link. Check all its labels before accepting the document.
+    const labels = `${label} ${accessibleLabel}`;
+    if (TRANSLATED_AGENDA.test(labels) || /\b(?:cancel(?:led|ed|lation)|postponed)\b/i.test(labels)) excludedUrls.add(url);
     if (seen.has(url)) continue;
     seen.add(url);
     candidates.push({ url, date, label });
   }
   return candidates
-    .filter(({ url }) => !translatedUrls.has(url))
+    .filter(({ url }) => !excludedUrls.has(url))
     .sort((a, b) => b.date.localeCompare(a.date));
 }
 

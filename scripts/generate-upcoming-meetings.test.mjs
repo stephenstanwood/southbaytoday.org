@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { LEGISTAR_CITIES, fetchNextMeeting, isSubstantiveItem } from './generate-upcoming-meetings.mjs';
+import { LEGISTAR_CITIES, fetchCivicEngageMeeting, fetchNextMeeting, isSubstantiveItem } from './generate-upcoming-meetings.mjs';
 import { ptDateISO } from './lib/civic-meetings.mjs';
 import { fetchLosGatosMeeting, LOS_GATOS_MEETINGS_PAGE, losGatosScheduleUrl,
   nextLosGatosScheduleDate } from './lib/los-gatos-meetings.mjs';
@@ -102,6 +102,32 @@ test('Santa Clara upcoming meetings query the actual council and authorities bod
   assert.equal(meeting.startTime, '17:30');
   assert.equal(meeting.url, sourceUrl);
   assert.equal(meeting.confirmation.observedDate, today);
+});
+
+test('Saratoga publishes the dated agenda link and skips cancellation and translation notices', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: new Date('2026-11-18T09:07:06Z') });
+  const base = 'https://www.saratoga.ca.us';
+  const index = `${base}/AgendaCenter/City-Council-13`;
+  const agenda = '/AgendaCenter/ViewFile/Agenda/_11182026-1496';
+  const cancelled = '/AgendaCenter/ViewFile/Agenda/_11182026-1497';
+  t.mock.method(globalThis, 'fetch', async url => {
+    assert.equal(url, index);
+    return new Response(`
+      <a href="/AgendaCenter/ViewFile/Agenda/_11042026-1490">City Council Regular Meeting Agenda</a>
+      <strong aria-label="Agenda for November 18, 2026"><abbr title="November">Nov</abbr> 18, 2026</strong>
+      <a href="${cancelled}">Agenda</a>
+      <a aria-label="November 18, 2026, Notice of Cancellation" href="${cancelled}">Agenda</a>
+      <a href="/AgendaCenter/ViewFile/Agenda/_11182026-1498">City Council Meeting Chinese Agenda</a>
+      <a href="${agenda}">City Council Regular Meeting Agenda</a>
+      <a href="${agenda}">Agenda</a>
+    `);
+  });
+  const meeting = await fetchCivicEngageMeeting(base, 'City-Council-13');
+  assert.equal(meeting.date, '2026-11-18');
+  assert.equal(meeting.displayDate, 'Wed, Nov 18');
+  assert.equal(meeting.startTime, null);
+  assert.equal(meeting.url, `${base}${agenda}`);
+  assert.equal(meeting.confirmation.sourceUrl, meeting.url);
 });
 
 
