@@ -68,7 +68,7 @@ test("only the conflicting Mitchell Park study session requires start confirmati
   assert.equal(corrected.endTime, event.endTime);
   assert.equal(requiresAttendanceConfirmation(corrected), true);
   assert.match(corrected.attendanceNote, /4:30 PM.*4:00 PM/);
-  assert.match(corrected.description, /Tuesday 12\/8- 4:30 PM-8:45 PM Check with Mitchell Park Library.*Thursday 12\/10 - not available/);
+  assert.match(corrected.description, /Tuesday 12\/8- 4:30 PM-8:45 PM Wednesday, December 9: Confirm the start time with Mitchell Park Library\. Thursday 12\/10 - not available/);
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
 
   const sibling = { ...event, date: "2026-12-08", url: event.url.replace(/f$/, "e") };
@@ -82,7 +82,7 @@ test("only the conflicting Mitchell Park study session requires start confirmati
   const longDates = "Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable.";
   const longDateCorrected = applyVerifiedEventFacts({ ...event, description: longDates });
   assert.equal(requiresAttendanceConfirmation(longDateCorrected), true);
-  assert.equal(longDateCorrected.description, "Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable.");
+  assert.equal(longDateCorrected.description, "Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: Confirm the start time with Mitchell Park Library; Thursday, December 10: unavailable.");
   assert.equal(requiresAttendanceConfirmation(applyVerifiedEventFacts({ ...sibling, description: longDates })), false);
   const matchingLongDates = { ...event, description: longDates.replace("9: 4:00", "9: 4:30") };
   assert.deepEqual(applyVerifiedEventFacts(matchingLongDates), matchingLongDates);
@@ -97,6 +97,16 @@ test("Rose Garden tech help keeps conditional drop-in access for the November 19
     description: "Appointments are highly encouraged, though drop-ins can be taken if times are available.",
   };
   assert.deepEqual(applyVerifiedEventFacts(event), { ...event, registration: "none", registrationClosesBy: null });
+
+  const sourceCopy = "Sessions are 30 minutes and appointments are highly encouraged, though drop-ins can be taken on a first-come, first-served basis if times are available.";
+  const publishedCopy = "Sessions last 30 minutes, and appointments are strongly recommended. Drop-ins are welcome on a first-come, first-served basis when slots are available.";
+  const source = { ...event, description: sourceCopy, attendanceNote: sourceCopy };
+  const polished = { ...event, description: publishedCopy, attendanceNote: publishedCopy };
+  const corrected = { ...polished, registration: "none", registrationClosesBy: null };
+  assert.deepEqual(applyVerifiedEventFacts(source), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(polished), corrected);
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
   const closed = { ...event, registration: "closed" };
   assert.deepEqual(applyVerifiedEventFacts(closed), closed);
   const noWalkIns = { ...event, description: "Registration is required. No drop-ins." };

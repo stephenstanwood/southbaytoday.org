@@ -9,7 +9,7 @@ const ART_MAKING_ACTIVITY = /\b(?:(?:make|making|create|creating)\s+(?:your\s+ow
 const MITCHELL_PARK_STUDY_HOURS = /\bWednesday(?:\s+12\/9(?:\s*[-–]\s*|\s+from\s+)|,\s+December 9:\s*)4:00(?:\s*PM)?(?:\s*[-–]\s*|\s+to\s+)8:45\s*PM([.;])?/i;
 const MITCHELL_PARK_STUDY_COPY = [[
   MITCHELL_PARK_STUDY_HOURS,
-  (_match, punctuation) => `Check with Mitchell Park Library for the Wednesday 12/9 start${punctuation || "."}`,
+  (_match, punctuation) => `Wednesday, December 9: Confirm the start time with Mitchell Park Library${punctuation || "."}`,
 ]];
 
 function hasMitchellParkStudyHours(event) {
@@ -966,11 +966,18 @@ const CORRECTIONS = [
   ...[
     ["2026-11-14", "6920f111c313c23700e355a9", "1 on 1 Tech Assistance (In-Person)", "Rose Garden Library",
       /\bappointments are highly encouraged\b/i, /\bdrop-ins can be taken\b/i],
-    ["2026-11-19", "6920f0bad6833e76917eb5ea", "1 on 1 Tech Assistance / Asistencia tecnológica", "Rose Garden Library",
-      /\bappointments are highly encouraged\b/i, /\bdrop-ins can be taken\b[^.]*\bif times are available\b/i],
+    [
+      "2026-11-19", "6920f0bad6833e76917eb5ea", "1 on 1 Tech Assistance / Asistencia tecnológica", "Rose Garden Library",
+      /\bappointments are (?:highly encouraged|strongly recommended)\b/i,
+      /\bdrop-ins (?:can be taken\b[^.]*\bif times|are welcome\b[^.]*\bwhen slots) are available\b/i,
+      [[
+        "Sessions are 30 minutes and appointments are highly encouraged, though drop-ins can be taken on a first-come, first-served basis if times are available.",
+        "Sessions last 30 minutes, and appointments are strongly recommended. Drop-ins are welcome on a first-come, first-served basis when slots are available.",
+      ]],
+    ],
     ["2026-11-14", "6ab6f970129d8e0031f52185", "Holiday Bath Bombs", "East SJ Carnegie Library",
       /\bregistration is recommended\b/i, /\bwalk-ins are welcome\b/i],
-  ].map(([date, sourceId, title, venue, optional, walkIn]) => ({
+  ].map(([date, sourceId, title, venue, optional, walkIn, copyReplacements]) => ({
     date,
     matches: event => event.url === `https://sjpl.bibliocommons.com/events/${sourceId}`
       && event.title === title && event.venue === venue
@@ -980,6 +987,7 @@ const CORRECTIONS = [
     // The live page explicitly permits walk-ups. A form's closing instant
     // cannot later close that admission path; preserve full/closed notices.
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    copyReplacements,
   })),
   {
     date: "2026-11-12",
