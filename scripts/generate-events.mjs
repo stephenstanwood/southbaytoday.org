@@ -4275,6 +4275,7 @@ function parseRssItems(xml) {
       eventTimes: get("calendarEvent:EventTimes") || get("calendarEvent:eventTimes") || "",
       location: get("calendarEvent:location") || get("calendarEvent:Location") || get("location"),
       livewhaleId: get("livewhale:id"),
+      livewhaleEnd: get("livewhale:ends"),
       // Source IANA zone; never infer a physical destination from it alone.
       livewhaleTimezone: get("livewhale:timezone"),
       livewhaleCategories: get("livewhale:categories"),
@@ -5222,14 +5223,18 @@ async function fetchScuEvents() {
       // fixtures whose titles name the university and an opponent with "at".
       const scuFormat = (item.livewhaleCategories || "").split(",")
         .find((label) => /^(?:lectures?|athletics)$/i.test(label.trim())) || "";
+      const time = displayTime(start);
+      // LiveWhale publishes the occurrence's end as an RSS timestamp with a zone.
+      const end = /\b\d{2}:\d{2}:\d{2}\s+(?:[+-]\d{4}|GMT|UTC)$/i.test(item.livewhaleEnd)
+        ? parseDate(item.livewhaleEnd) : null;
       if (isVirtual) virtualFromSourceScu++;
       return {
         id: h("scu", item.link || item.title, item.pubDate),
         title: item.title,
         date: isoDate(start),
         displayDate: displayDate(start),
-        time: displayTime(start),
-        endTime: null,
+        time,
+        endTime: time ? displayEndTime(start, end) : null,
         venue,
         address: "",
         city: isVirtual ? "santa-clara" : geoCity || "santa-clara",

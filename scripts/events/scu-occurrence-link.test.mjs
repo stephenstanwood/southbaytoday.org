@@ -68,3 +68,36 @@ test("the Mass link repair requires the exact date, clock, title, venue and sour
     assert.deepEqual(applyVerifiedEventFacts(event), { ...event, url: occurrenceUrl });
   }
 });
+
+test("SCU keeps explicit RSS finish times for the matching timed occurrences", async (t) => {
+  const origin = "https://events.scu.edu";
+  const rows = [
+    ["517362", "Tue, 24 Nov 2026 22:30:00 +0000", "Wed, 25 Nov 2026 00:00:00 +0000"],
+    ["517363", "Tue, 01 Dec 2026 22:30:00 +0000", "Wed, 02 Dec 2026 00:00:00 +0000"],
+    ["517364", "Wed, 02 Dec 2026 22:30:00 +0000", ""],
+    ["517365", "Thu, 03 Dec 2026 22:30:00 +0000", "Thu, 03 Dec 2026 21:00:00 +0000"],
+    ["517366", "Fri, 04 Dec 2026 08:01:00 +0000", "Fri, 04 Dec 2026 20:00:00 +0000"],
+    ["517367", "Sat, 05 Dec 2026 22:30:00 +0000", "2026-12-06"],
+  ];
+  const xml = `<rss><channel>${rows.map(([id, start, end]) => `<item>
+    <title>Forge Volunteer Hours</title>
+    <link>${origin}/sustainability/event/${id}-forge-volunteer-hours</link>
+    <pubDate>${start}</pubDate>
+    <livewhale:ends>${end}</livewhale:ends>
+    <georss:featurename>The Forge Garden</georss:featurename>
+  </item>`).join("")}</channel></rss>`;
+  t.mock.method(globalThis, "fetch", async (url) => {
+    if (String(url) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(url), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: [] });
+  });
+  const events = await fetchScuEvents();
+  assert.deepEqual(events.map(({ date, time, endTime }) => [date, time, endTime]), [
+    ["2026-11-24", "2:30 PM", "4:00 PM"],
+    ["2026-12-01", "2:30 PM", "4:00 PM"],
+    ["2026-12-02", "2:30 PM", null],
+    ["2026-12-03", "2:30 PM", null],
+    ["2026-12-04", null, null],
+    ["2026-12-05", "2:30 PM", null],
+  ]);
+});
