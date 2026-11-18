@@ -136,6 +136,23 @@ const EDITS = {
       ["with our volunteers Mike, Sally & Matt. Kids are also welcome to practice reading to our volunteer.", "with our volunteers Mike, Sally, and Matt. Kids are also welcome to practice reading to one of the volunteers."],
       ["the i Movie app on the iPad and a full-sized Green screen", "the iMovie app on the iPad and a full-size green screen"],
       ["Join Nirav Sheth long time meditator as he discusses", "Join Nirav Sheth, a longtime meditator, as he discusses"],
+      ["Desarrolle habilidades útiles para la escuela, el trabajo y la vida diaria.", "Desarrolla habilidades útiles para la escuela, el trabajo y la vida diaria."],
+      ["Their organization is dedicated to educating writers", "The organization is dedicated to educating writers"],
+      [
+        "Topics may also include: ACT & SAT test prep; General Highschool or College advice on: choosing classes, " +
+          "joining clubs, creating study plans or career goals, how to network with teacher or professors, choosing " +
+          "and prepping for summer opportunities, resume & job application advice/help; College Application Process: " +
+          "general questions, timeline advice, college selection, essay review, interview practice; Financial Aid: " +
+          "Basic info on types of aid available and how it can help.",
+        "Topics may also include ACT and SAT test prep. Get general high school or college advice on choosing classes, " +
+          "joining clubs, making study plans or setting career goals, networking with teachers or professors, preparing " +
+          "for summer opportunities, and writing resumes or applying for jobs. Get help with general questions about " +
+          "applying to college, application timelines, choosing colleges, essay reviews, and interview practice. " +
+          "Learn what kinds of financial aid are available and how they can help.",
+      ],
+      ["This week -- Like to play games with other kids?", "Do you like playing games with other kids?"],
+      ["answering your AI questions/concerns", "addressing your questions or concerns about AI"],
+      [/ \*Cash Only$/g, " Cash only."],
       ["By incorporating meditation into your daily routine you will", "By incorporating meditation into your daily routine, you will"],
       ["Brief Bio of Nirav Sheth Nirav is", "Brief bio of Nirav Sheth: Nirav is"],
       ["Prior to founding Stratosphere, Nirav has", "Prior to founding Stratosphere, Nirav had"],
@@ -326,6 +343,7 @@ const EDITS = {
       [/\b(For more information or to make an appointment, please call the branch at \(\d{3}\) \d{3}-\d{4} or email [\w.+-]+@[\w.-]+\.[A-Za-z]{2,})(?=$| [A-Z])/g, "$1."],
       ["English speaking & conversation skills", "English-speaking & conversation skills"],
       ["English speaking skills are welcome!", "English-speaking skills are welcome!"],
+      [/^(Berryessa Branch Library presents .*?)practice their English-speaking & conversation skills used in everyday settings\. All levels of English-speaking skills are welcome!/g, "$1practice speaking English in everyday situations. Learners of all levels are welcome!"],
       ["Join us for Winter playdates", "Join us for winter playdates"],
       ["such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources such as e-books.", "such as printing, using email, connecting to Wi-Fi, creating documents, and accessing library resources such as e-books."],
       ["We will practice: Vocabulary for everyday activities; Listening Skills; Reading Skills; Speaking Skills.", "We will practice vocabulary for everyday activities, listening skills, reading skills, and speaking skills."],
@@ -696,6 +714,8 @@ const EDITS = {
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
       ["club at Almaden Library, no registration required.", "club at Almaden Library. No registration required."],
+      ["Get one-on-one help with your technology questions from the library at Almaden Library.", "Seniors can bring their technology questions to Almaden Library for one-on-one help."],
+      ["Make your own foldable sunflower fan at Pearl Avenue Library, with all supplies provided, free, and no registration required.", "Make a foldable sunflower fan at Pearl Avenue Library. Supplies are provided, and the program is free with no registration required."],
       ["Bring assigned homework to the Children's Room and work through it with volunteer coach Delaney, open to kindergarten through 5th grade.", "Students in kindergarten through 5th grade can bring assigned homework to the Children's Room and work through it with volunteer coach Delaney."],
     ],
   },
@@ -727,6 +747,9 @@ const EDITS = {
       ["Wreath Making Workshop", ""],
       [/^Wreath Making Workshop (\d{1,2}(?::\d{2})? [AP]M)$/g, "The wreath-making workshop starts at $1."],
     ],
+    blurb: [
+      ["Attend the Yuletide Tea at Montalvo Arts Center on a Sunday, an arts event in Saratoga starting at 11:30 AM.", "Montalvo Arts Center lists Yuletide Tea in Saratoga at 11:30 AM on Sunday."],
+    ],
   },
   "San Jose Jazz": {
     title: [
@@ -741,6 +764,14 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      [/^November (\d{1,2}), (\d{4}) Friday, November \1 is Black Friday, the best shopping day of the year, and Santana Row has exclusive savings for serious shoppers!/g, "Santana Row lists these Black Friday specials for Friday, November $1, $2."],
+      [
+        /Hoka – Now Open, Spend (\$\d+),? get (\$\d+) off, Spend (\$\d+),? get (\$\d+) off, Spend (\$\d+),? get (\$\d+) off on Black Friday\./g,
+        "Hoka is now open. On Black Friday, spend $1 to get $2 off, $3 to get $4 off, or $5 to get $6 off.",
+      ],
+      [/Open (\d{1,2} AM)-(\d{1,2} PM), available in-store, must be a Hoka member \(free to join\)\./g, "Hoka is open from $1 to $2. The offers are available in-store to Hoka members, and membership is free."],
+      [/everything (November \d{1,2}–\d{1,2}), in-stores\./g, "everything in stores $1."],
+      [/Yeti – Free Hat With Eligible (\$\d+) Spend\./g, "Yeti offers a free hat with an eligible $1 purchase."],
       [/^([A-Z][a-z]+ \d{1,2}, \d{4}) (?=Makers Market's Local Artist Street Fair\b)/g, "$1. "],
       ["local Artists, Crafters, Designers, and Makers", "local artists, crafters, designers, and makers"],
       ["shopping experience for every second Saturday of every month", "shopping experience on the second Saturday of every month"],
@@ -760,6 +791,7 @@ const EDITS = {
       [/\b(Natalie Ramskov)$/g, "$1."],
     ],
     blurb: [
+      ["Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.", "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."],
       ["Watch a live holiday show of local arts and community groups, stand in Snow Showers at Park Valencia, and get photos with Santa.", "Watch a live holiday show by local arts and community groups, then catch snow showers in Park Valencia and take photos with Santa."],
     ],
   },
@@ -811,6 +843,7 @@ const EDITS = {
     title: [
       [/^Lego Club$/g, "LEGO Club"],
       ["Intermediate Mass Black Holes", "Intermediate-Mass Black Holes"],
+      ["Children's Literature for Adults Bookclub", "Children's Literature for Adults Book Club"],
     ],
     attendanceNote: [
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
@@ -830,6 +863,10 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["Adults join us for our Children's Literature for Adults Book Club to discuss, reminisce, or discover for the first time a beloved children's classic.", "Join our Children's Literature for Adults Book Club to discuss a beloved children's classic, revisit an old favorite, or discover it for the first time."],
+      ["Children's Reference Desk where we will have a copy of the book available. Adults only please.", "Children's Reference Desk, where a copy of the book will be available. Adults only, please."],
+      ["email us atask@sccl.org", "email us at ask@sccl.org"],
+      ["Make fake snow! With support from Lynbrook High Wi STEM, use simple science to make fake snow.", "Use simple science to make fake snow with support from Lynbrook High WiSTEM."],
       ["Come Join us this holiday season and create a Christmas Tree with Popsicle Sticks!", "Come join us this holiday season and create a Christmas tree with Popsicle sticks!"],
       ["For Kids ages", "For kids ages"],
       ["This is not a drop off program, caregivers must stay with their children at all times.", "This is not a drop-off program; caregivers must stay with their children at all times."],
@@ -966,6 +1003,8 @@ const EDITS = {
       [/Get homework help from tutors in grades ((?:K|\d+)-\d+), with/g, "Students in grades $1 can get homework help from tutors, with"],
       [/\bLegos\b/g, "LEGOs"],
       ["get help from tutors, basic school supplies provided as space", "get help from tutors; basic school supplies are provided as space"],
+      ["Walk in with your K-6 homework and get help from tutors; basic school supplies are provided as space allows.", "Students in grades K-6 can drop in for help from tutors as space allows. Basic school supplies are provided."],
+      ["Make fake snow using simple science with Lynbrook High Wi STEM at Saratoga Library, with all ages welcome.", "Use simple science to make fake snow with Lynbrook High WiSTEM at Saratoga Library. All ages are welcome."],
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
       ["supermassive blackholes grow", "supermassive black holes grow"],
@@ -1019,6 +1058,7 @@ const EDITS = {
       ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
     ],
     blurb: [
+      ["Study for finals in the Midtown Room at Mitchell Park Library, a teen study space for focus and recharging.", "Teens can use the Midtown Room at Mitchell Park Library to study for finals and take a break."],
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
       ["and join movement activities in", "and join in movement activities in"],
       ["Join friendly trivia competition run by", "Join a friendly trivia competition run by"],
@@ -1120,6 +1160,7 @@ const EDITS = {
   "Ticketmaster": {
     title: [
       ["Uw- Milwaukee Panthers", "UW-Milwaukee Panthers"],
+      ["vs. Unlv Rebels Football", "vs. UNLV Rebels Football"],
     ],
     description: [
       ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
@@ -1144,6 +1185,15 @@ const EDITS = {
   },
   "Stanford Events": {
     title: [
+      [/^HAI Seminar the AI 100$/gi, "HAI Seminar: The AI 100"],
+      ['Gregor Steinbrügge- "Coupled Thermal-Orbital Evolution of the Galilean Satellites"', 'Gregor Steinbrügge: "Coupled Thermal-Orbital Evolution of the Galilean Satellites"'],
+      ['CMEMS: Esther von Stosch presents, "', 'CMEMS: Esther von Stosch presents "'],
+      // The calendar heading is clipped. Its event details confirm both speakers.
+      [
+        'Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead "Capturing evolution via gene transfer ' +
+          'in the gut microbiome." and Víctor R. Vázquez Marrero "Investigating how Salmonella imports and degrades dietary fiber sugar',
+        "Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead and Víctor R. Vázquez Marrero",
+      ],
       // The event's organizer spells the research center's acronym CCRMA.
       // https://events.stanford.edu/event/ccrma-composition-for-east-asian-instruments
       [/^Ccrma Presents:/g, "CCRMA Presents:"],
@@ -1171,6 +1221,10 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      [
+        /^Microbiology & Immunology Wednesday Seminar: Huang & Monack Labs - Saria A\. McKeithen–Mead "Capturing evolution via gene transfer in the gut microbiome\." and Víctor R\.$/g,
+        "The Huang and Monack labs present two talks. Saria A. McKeithen–Mead discusses gene transfer in the gut microbiome, and Víctor R. Vázquez Marrero discusses how Salmonella uses dietary fiber sugars.",
+      ],
       // The source has an Overview heading above its time range; HTML
       // flattening glues them together. Retain every clock and timezone.
       [/^Overview(?=\d{1,2}:\d{2} [AP]M\b)/g, "Overview: "],
