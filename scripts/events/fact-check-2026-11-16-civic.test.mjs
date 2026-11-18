@@ -31,7 +31,7 @@ test("the upcoming civic record carries the Corporation name and its actual sour
   assert.equal(meeting.url, corporation.EventInSiteURL);
   assert.equal(meeting.confirmation.observedDate, "2026-11-16");
   const context = briefingMeetingContext(meeting, meeting.agendaItems.map(item => item.title).join("\n"));
-  assert.match(context, /^Next Cupertino Public Facilities Corporation meeting/);
+  assert.match(context, /^Cupertino Public Facilities Corporation agenda/);
   assert.doesNotMatch(context, /council/i);
   const highlight = briefingMeetingHighlight(meeting, meeting.agendaItems[0]);
   assert.equal(highlight.type, "cityhall");
@@ -45,7 +45,17 @@ test("incidental Corporation mentions and ordinary council comments retain their
   }
   assert.equal(legistarEventBodyName({ ...corporation, EventBodyName: "Planning Commission" }), "Planning Commission");
   const council = { bodyName: "City Council and Authorities Concurrent", displayDate: "Tue, Nov 17", url: "https://santaclara.legistar.com/" };
-  assert.match(briefingMeetingContext(council, "Financial reports"), /^Next City Council and Authorities Concurrent meeting/);
   assert.equal(briefingMeetingHighlight(council, { title: "Financial reports." }).type, "council");
   assert.equal(briefingMeetingContext(council, ""), "");
+});
+
+test("a bundled council agenda gives its items a date without assigning a common session", () => {
+  const council = {
+    bodyName: "City Council and Authorities Concurrent",
+    displayDate: "Tue, Nov 17",
+    startTime: "17:30",
+  };
+  const items = "- Convention Center financial reports\n- Westside Little League recognition";
+  assert.equal(briefingMeetingContext(council, items),
+    `City Council and Authorities Concurrent agenda (Tue, Nov 17):\n${items}`);
 });

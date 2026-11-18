@@ -74,10 +74,10 @@ export function meetingWithinBriefingWindow(meeting, start, end) {
   return Boolean(meeting?.date && meeting.date >= start && meeting.date <= end);
 }
 
-/** Preserve the meeting's actual body when a provider files it under Council. */
+/** Preserve the published body name without implying every item shares a session. */
 export function briefingMeetingContext(meeting, agendaLines) {
   if (!agendaLines || !meeting?.displayDate) return "";
-  return `Next ${meeting.bodyName || "civic"} meeting (${meeting.displayDate}) agenda:\n${agendaLines}`;
+  return `${meeting.bodyName || "Civic"} agenda (${meeting.displayDate}):\n${agendaLines}`;
 }
 
 export function briefingMeetingHighlight(meeting, item) {
