@@ -1,19 +1,19 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-18T00:03:00.810Z",
+    "generatedAt": "2026-11-18T04:47:01.181Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 189,
+    "eventCount": 188,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (10)",
+      "San Jose Jazz (11)",
       "Linden Tree Books (5)",
       "History San Jose (2)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
-      "Guadalupe River Park Conservancy (9)",
+      "Guadalupe River Park Conservancy (7)",
       "Santana Row (7)",
       "City of Cupertino (34)",
       "Opera San José (5)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 11,
+        "liveCount": 11,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -190,8 +190,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 9,
-        "liveCount": 9,
+        "count": 7,
+        "liveCount": 7,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -479,6 +479,23 @@
       "cost": null,
       "description": "Bay Area Creative presents Illumination: A Celebration of Youth Creativity, a free evening showcasing the visual art, dance, and poetry of students from San José’s Franklin-McKinley School District. The event features live student performances and a Best of Show art competition with prizes for the top three artists.",
       "url": "https://sanjosejazz.org/events/illumination-a-celebration-of-youth-creativity/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false
+    },
+    {
+      "id": "b52485684d92",
+      "title": "SPIRIT OF THE ROW: HSAS Full Ensemble & Vocal Ensemble",
+      "date": "2026-12-15",
+      "displayDate": "Tue, Dec 15",
+      "time": "6pm",
+      "endTime": null,
+      "venue": "Hammer Theatre",
+      "address": "",
+      "city": "san-jose",
+      "category": "music",
+      "cost": null,
+      "description": "Holiday Nights at The Row · Tuesdays, Dec 15 · 6–8 PM\nLive holiday performances, Snow Showers in Park Valencia, photos with Santa, balloons and more!",
+      "url": "https://sanjosejazz.org/events/spirit-of-the-row-hsas-full-ensemble-vocal-ensemble/",
       "source": "San Jose Jazz",
       "kidFriendly": false
     },
@@ -940,31 +957,6 @@
       }
     },
     {
-      "id": "5608f8337efc",
-      "title": "Restore & Explore: Trail Clean Up and Trail Tour",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "9:00 AM",
-      "endTime": "11:00 AM",
-      "venue": null,
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "",
-      "attendanceNote": "The organizer's calendar does not list a meeting location. Confirm it with Guadalupe River Park Conservancy before going. Advance registration is required through Guadalupe River Park Conservancy.",
-      "attendanceStatus": "needs-confirmation",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-21"
-      }
-    },
-    {
       "id": "a51027e867ef",
       "title": "GRPC x YogaSix - Sunday Yoga in the River Park",
       "date": "2026-11-22",
@@ -1008,30 +1000,6 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
         "date": "2026-11-25"
-      }
-    },
-    {
-      "id": "920e50d27d17",
-      "title": "Guadalupe Gardens Workday",
-      "date": "2026-11-27",
-      "displayDate": "Fri, Nov 27",
-      "time": "3:30 PM",
-      "endTime": "5:00 PM",
-      "venue": "Rose Garden Shed",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "Join us for an afternoon of gardening and grow your skills with guidance from our UC Master Gardener–certified Horticulturist! You'll have the chance to learn and practice a wide range of seasonal tasks, including planting, weeding, deadheading, mulching, irrigation, pruning, and more—all while giving a little love back to the beautiful Guadalupe Gardens. We suggest bringing: A full water bottle Thick work gloves Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. REGISTER HERE Please note this event may cancel in the case of inclement weather. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Rose Garden Shed (Refer to registration form for map) Time: 3:30 PM - 5:00 PM Recurring Dates: Every second and fourth Friday of the month",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Rose Garden Shed; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-27"
       }
     },
     {
@@ -1122,7 +1090,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-18T00:01:48.721Z"
+        "checkedAt": "2026-11-18T04:45:38.437Z"
       }
     },
     {
@@ -1145,7 +1113,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-18T00:01:48.722Z"
+        "checkedAt": "2026-11-18T04:45:38.453Z"
       }
     },
     {
@@ -1168,7 +1136,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-18T00:01:48.722Z"
+        "checkedAt": "2026-11-18T04:45:38.454Z"
       }
     },
     {
@@ -1191,7 +1159,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T00:01:48.723Z"
+        "checkedAt": "2026-11-18T04:45:38.454Z"
       }
     },
     {
@@ -1214,7 +1182,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T00:01:48.723Z"
+        "checkedAt": "2026-11-18T04:45:38.455Z"
       }
     },
     {
@@ -1237,7 +1205,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-18T00:01:48.726Z"
+        "checkedAt": "2026-11-18T04:45:38.471Z"
       }
     },
     {
@@ -1260,7 +1228,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-18T00:01:48.727Z"
+        "checkedAt": "2026-11-18T04:45:38.472Z"
       }
     },
     {
@@ -3090,14 +3058,7 @@
       "description": "",
       "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
       "source": "SAP Center",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
-        "date": "2026-11-17",
-        "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.434Z"
-      }
+      "kidFriendly": false
     },
     {
       "id": "112cbb09ca0c",
@@ -3120,7 +3081,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.435Z"
+        "checkedAt": "2026-11-18T04:46:22.467Z"
       }
     },
     {
@@ -3144,7 +3105,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.435Z"
+        "checkedAt": "2026-11-18T04:46:22.469Z"
       }
     },
     {
@@ -3168,7 +3129,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.436Z"
+        "checkedAt": "2026-11-18T04:46:22.471Z"
       }
     },
     {
@@ -3192,7 +3153,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.473Z"
       }
     },
     {
@@ -3216,7 +3177,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.473Z"
       }
     },
     {
@@ -3240,7 +3201,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.474Z"
       }
     },
     {
@@ -3281,7 +3242,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.474Z"
       }
     },
     {
@@ -3305,7 +3266,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.474Z"
       }
     },
     {
@@ -3329,7 +3290,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.474Z"
       }
     },
     {
@@ -3353,7 +3314,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T00:02:26.438Z"
+        "checkedAt": "2026-11-18T04:46:22.474Z"
       }
     },
     {
@@ -3595,40 +3556,6 @@
       "kidFriendly": true
     },
     {
-      "id": "45a989c15cb1",
-      "title": "MATT O'HARA: THE FLYING DEATH",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Palo Alto",
-      "address": "855 El Camino Real, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
-    },
-    {
-      "id": "ab93b431d010",
-      "title": "ALL THINGS ROMANCE BOOK CLUB: HOLLY JOLLY DIWALI & SET THE RECORD STRAIGHT",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
-      "time": "6:00 PM",
-      "endTime": null,
-      "venue": "Books Inc. Mountain View",
-      "address": "317 Castro St, Mountain View, CA 94041",
-      "city": "mountain-view",
-      "category": "arts",
-      "cost": null,
-      "description": "",
-      "url": "https://www.booksinc.com/pages/events",
-      "source": "Books Inc",
-      "kidFriendly": false
-    },
-    {
       "id": "c8b6e0114239",
       "title": "KIMBERLY BEA with THE CURSE OF THE FEATHERS",
       "date": "2026-11-24",
@@ -3655,6 +3582,40 @@
       "venue": "Books Inc. Mountain View",
       "address": "317 Castro St, Mountain View, CA 94041",
       "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "ff8a0d7e66fa",
+      "title": "DEBBIE RAPHAEL: CARRY MY STRENGTH",
+      "date": "2027-01-28",
+      "displayDate": "Thu, Jan 28",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "ea63c669d798",
+      "title": "MIKE CHEN: THE HAUNTING OF SANTO DOMINGO STREET",
+      "date": "2027-02-02",
+      "displayDate": "Tue, Feb 2",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
       "category": "arts",
       "cost": null,
       "description": "",
