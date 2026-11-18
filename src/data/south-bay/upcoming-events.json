@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-18T00:09:16.242Z",
-  "eventCount": 1464,
+  "eventCount": 1463,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -4524,7 +4524,7 @@
       "address": "1431 Waverley Street, Palo Alto, CA, 94301",
       "city": "palo-alto",
       "category": "outdoor",
-      "cost": null,
+      "cost": "free",
       "description": "Step back in time to explore the life of Elizabeth Gamble and her gardens.",
       "url": "https://www.gamblegarden.org/event/tour-of-gamble-garden/",
       "source": "Gamble Garden",
@@ -4545,30 +4545,9 @@
       "address": "1431 Waverley Street, Palo Alto, CA, 94301",
       "city": "palo-alto",
       "category": "outdoor",
-      "cost": null,
+      "cost": "free",
       "description": "Step back in time to explore the life of Elizabeth Gamble and her gardens.",
       "url": "https://www.gamblegarden.org/event/tour-of-gamble-garden-2/",
-      "source": "Gamble Garden",
-      "kidFriendly": true,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJ0yK_PBm7j4ARbWeM5E9YaJA/photos/AV-0GLefJlsz3MPbMsoEOfTFOD2tkT42sGBYSypcSdgYFAY1sPKSyZMyfvLGOu-Iy8BG1tYk2B6bOx8KSi-aYDpkHy8QipTyitksVM8fKVhcoLZrC7pst16_y1PxtfVSFxunhx4LgDlNp9Lbun8hkmzFUeU0CLEuRoKWm24Yu74FPCLsJbzojP5hAdvkUBmXIs_E-5xtT-0yJAo1sV6hJQTMAwAT2E1GUAiHj2_p18sHD1WEe5y9Aa1Tk0qiUh-2QrRUs4iqkhnkyfVPVKWsxWmx_mOLs8Tux9c6sEe4qXIlIoPV96YaQFQqXqNBVk50piKAKc839-Z9R6HHaidCHUA8S8W89GXkuS116E1v7U9GnWEW_G2n_VcNsHJCtjuAGMnw-NjP79TPLPIm8VgPMR3ARTui8zN9fSE",
-      "blurb": "Tour Gamble Garden on Sunday morning and learn about the life of Elizabeth Gamble and her gardens.",
-      "firstSeenAt": "2026-11-18T00:09:16.219Z"
-    },
-    {
-      "id": "gamblegarden-928d496e08921c34",
-      "title": "Tour of Gamble Garden",
-      "date": "2027-01-17",
-      "displayDate": "Sun, Jan 17",
-      "time": "11:00 AM",
-      "endTime": "12:00 PM",
-      "venue": "Gamble Garden",
-      "address": "1431 Waverley Street, Palo Alto, CA, 94301",
-      "city": "palo-alto",
-      "category": "outdoor",
-      "cost": null,
-      "description": "Step back in time to explore the life of Elizabeth Gamble and her gardens.",
-      "url": "https://www.gamblegarden.org/event/tour-of-gamble-garden-3/",
       "source": "Gamble Garden",
       "kidFriendly": true,
       "audienceAge": "all",
@@ -5519,7 +5498,7 @@
       "displayDate": "Sun, Nov 22",
       "time": "4:00 PM",
       "endTime": null,
-      "venue": "Mission Santa Clara de Asis",
+      "venue": "Mission Santa Clara de Asís",
       "address": "",
       "city": "santa-clara",
       "category": "music",
@@ -5530,7 +5509,7 @@
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://events.scu.edu/live/image/gid/20/width/1260/height/630/crop/1/10993_Mission_Santa_Clara.jpg",
-      "blurb": "Hear the Cantabile Youth Singers perform their November concert at Mission Santa Clara de Asis on Sunday afternoon.",
+      "blurb": "Hear the Cantabile Youth Singers perform their November concert at Mission Santa Clara de Asís on Sunday afternoon.",
       "firstSeenAt": "2026-11-15T22:38:49.181Z"
     },
     {
@@ -20816,7 +20795,7 @@
       "time": "1:00 PM",
       "endTime": null,
       "ongoing": false,
-      "venue": "Stanford University",
+      "venue": "Online (Zoom)",
       "address": "",
       "city": "palo-alto",
       "virtual": true,
@@ -20829,7 +20808,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54507562795218/huge/865c6f5fc44730d146c8c8e842cf610106fbaca8.jpg",
       "blurb": "Join online for a Stanford Slavic Languages and Literatures talk on Ukrainian émigré poets in Prague.",
-      "firstSeenAt": "2026-11-18T00:09:16.219Z"
+      "firstSeenAt": "2026-11-18T00:09:16.219Z",
+      "registration": "required",
+      "attendanceNote": "Register through the event page to join the Zoom talk."
     },
     {
       "id": "5a667d47c012",
@@ -23755,7 +23736,8 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54311598588508/huge/6204c5634b3756bbd793ce2f587170f7e966f2e8.jpg",
       "blurb": "Join author Marie Darrieussecq for a lunch workshop on truisms, fiction, and women's writing at Pigott Hall.",
-      "firstSeenAt": "2026-11-18T00:09:16.219Z"
+      "firstSeenAt": "2026-11-18T00:09:16.219Z",
+      "attendanceNote": "The French and Italian Department asks attendees to RSVP for the lunch workshop."
     },
     {
       "id": "inbound-6b97938bd0b2a023",
@@ -24563,7 +24545,7 @@
       "address": "615 Crothers Way, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "The period between the seventh and the ninth centuries has frequently been portrayed in scholarship as \"dark\", especially because its intellectual production appears low.",
       "url": "https://events.stanford.edu/event/ptolemys-almagest",
       "source": "Stanford Events",
@@ -24571,7 +24553,8 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54412026020706/huge/701faf71d908ee02e9266ca7d4cb49563e31727f.jpg",
       "blurb": "Hear Maria Mavroudi discuss how Greek and Arabic scholars received Ptolemy's Almagest between the seventh and ninth centuries.",
-      "firstSeenAt": "2026-11-18T00:09:16.219Z"
+      "firstSeenAt": "2026-11-18T00:09:16.219Z",
+      "attendanceNote": "The event page links to Stanford's RSVP form."
     },
     {
       "id": "inbound-ec31fded982a041a",
@@ -24692,14 +24675,14 @@
       "time": "11:00 AM",
       "endTime": "1:00 PM",
       "venue": "Cambrian Branch Library",
-      "address": "Cambrian Branch Library, San José",
+      "address": "1780 Hillsdale Ave, San Jose, CA 95124",
       "city": "san-jose",
       "category": "arts",
-      "cost": null,
+      "cost": "free",
       "description": "Free community event for the branch's 20th anniversary. It opens with remarks from local leaders and includes performances, arts and crafts, giveaways, and cake.",
-      "url": "https://www.sjpl.org",
+      "url": "https://sjpl.bibliocommons.com/v2/events/6aa85f6d6059b704112a8a43",
       "source": "City Newsletter",
-      "kidFriendly": false,
+      "kidFriendly": true,
       "audienceAge": "all",
       "photoRef": "places/ChIJwQKwYmU0joARZ4El7LIGHcI/photos/AV-0GLczAmWZHEXwrYjKPYOyOpBH4wKVnokr3_BV9RaaAtubsg6TO6JfSfkhkVuaQqyymhY6rSx5I9IALmG6GOJcAjQybSdMXXyoEFF379n33HQ04yxT1wS9bkcD6nnQEcuhUnMJH2HKFQvqubhzB3kzt2l1FG8xO5ImUJTe7iiWBTcvNxHv0zqjRexRnDL0aazQPlPp5XKJ_qY2fAsGyzhm3Ty3E3oNu29thH0UJP48IrQ2MHMaezI011RSKbJQyEdXd49KK6QsHnObyVrU780zfg9Co2cHryFTDG8FSdCpuJQXhiaQGIS1lo0H3gB48IA1Cya8eL_d5clf4jYc-oDIvz4WdGYcJnsmHWVgPzgS669wdDYsILg2vH6s72CYw3TSfWx6LulyLsvSc3Qtbc9-o6C1GA",
       "blurb": "Celebrate the branch's 20th anniversary with local leaders' remarks, performances, arts and crafts, giveaways, and cake at this free community event.",
@@ -29844,7 +29827,7 @@
       "date": "2026-11-18",
       "displayDate": "Wed, Nov 18",
       "time": "5:30 PM",
-      "endTime": null,
+      "endTime": "6:30 PM",
       "venue": "Online",
       "address": "",
       "city": "santa-clara",
@@ -29858,7 +29841,9 @@
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Join an online informational session to learn about Santa Clara University's new MA in Social Impact Leadership program.",
-      "firstSeenAt": "2026-11-13T03:22:40.144Z"
+      "firstSeenAt": "2026-11-13T03:22:40.144Z",
+      "registration": "required",
+      "attendanceNote": "Register through Santa Clara University's event page to attend online."
     },
     {
       "id": "sanjosetheaters-d94dc81819a3f596",
@@ -32027,15 +32012,16 @@
       "address": "353 Jane Stanford Way, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "",
-      "url": "https://events.stanford.edu/event/hai-seminar-with-mike-wooldridge-the-ai-100",
+      "url": "https://hai.stanford.edu/events/hai-seminar-the-ai-100",
       "source": "Stanford Events",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53889452955614/huge/b2713a7e384e047f77dd433baeaa607a34c1a86a.jpg",
       "blurb": "Attend the HAI Seminar on the AI 100 at the Gates Computer Science Building on Stanford's campus.",
-      "firstSeenAt": "2026-11-18T00:09:16.219Z"
+      "firstSeenAt": "2026-11-18T00:09:16.219Z",
+      "attendanceNote": "Attend in Room 119 or use the organizer's event page to sign up for Zoom."
     },
     {
       "id": "sjsu-d8e1035bcf25e324",

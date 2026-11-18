@@ -51,6 +51,45 @@ test("a renamed Gamble family event keeps its audience from the public page when
   assert.deepEqual(waits, [10_000], "honor the source's crawl delay");
 });
 
+test("Gamble preserves explicit free public admission from the event detail", async (t) => {
+  const { events } = await scrape(t, { rows: [{ ...row, title: "Tour of Gamble Garden" }], html: `
+    <div class="tribe-events-single-event-description">
+      <p>Step back in time to explore the life of Elizabeth Gamble and her gardens.</p>
+      <h3>Registration</h3>
+      <p>Free for everyone — no membership required.</p>
+    </div>` });
+  assert.equal(events[0].cost, "free");
+  assert.equal(events[0].registration, undefined);
+});
+
+test("a Gamble detail that redirects home does not suppress other events", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-17T23:00:00Z") });
+  t.mock.method(globalThis, "fetch", async (input) => {
+    if (String(input).includes("/wp-json/tribe/events/")) {
+      return Response.json({ events: [
+        {
+          ...row,
+          id: 26178,
+          title: "Tour of Gamble Garden",
+          start_date: "2027-01-17 11:00:00",
+          end_date: "2027-01-17 12:00:00",
+          url: "https://www.gamblegarden.org/event/tour-of-gamble-garden-3/",
+        },
+        row,
+      ], total_pages: 1 });
+    }
+    if (String(input) === url) {
+      return new Response('<div class="tribe-events-single-event-description"><p>Join the garden program.</p></div>');
+    }
+    return Object.defineProperties(new Response("<h1>Gamble Garden</h1>"), {
+      redirected: { value: true },
+      url: { value: "https://www.gamblegarden.org/" },
+    });
+  });
+  const events = await fetchGambleGardenEvents({ wait: async () => {} });
+  assert.deepEqual(events.map(event => event.url), [url]);
+});
+
 test("Gamble family signals after the displayed excerpt still determine the audience", async (t) => {
   const { events, requests, waits } = await scrape(t, { rows: [{
     ...row, description: `<p>${"Explore the garden. ".repeat(20)}Welcoming families and children.</p>`, cost: "$36 – $55",

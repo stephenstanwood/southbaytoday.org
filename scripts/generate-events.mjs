@@ -95,7 +95,7 @@ import {
 import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { SLUG_TO_CITY_TOKENS } from "./social/lib/content-rules.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { fetchJson, fetchText, UA } from "./lib/http.mjs";
+import { fetchJson, fetchText, fetchWithRetry, UA } from "./lib/http.mjs";
 import { officialSnapshotEvents, readOfficialEventSnapshot } from "./lib/official-event-snapshot.mjs";
 import {
   midpenPreserveCity,
@@ -10322,10 +10322,24 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
             const key = detailUrl.href;
             if (!descriptions.has(key)) {
               await beforeRequest();
-              const html = await fetchText(key, { timeout: 20_000 });
-              descriptions.set(key, gambleGardenPageDescription(html));
+              const response = await fetchWithRetry(key, {
+                timeout: 20_000,
+                headers: { "User-Agent": UA },
+              });
+              if (!response.ok) throw new Error(String(response.status));
+              // The public calendar can retain a row whose detail redirects
+              // to the garden homepage. Withhold that occurrence until its
+              // detail returns, while keeping the rest of the calendar usable.
+              const finalUrl = response.redirected ? new URL(response.url) : detailUrl;
+              const redirectedHome = /^(?:www\.)?gamblegarden\.org$/.test(finalUrl.hostname)
+                && finalUrl.pathname === "/";
+              descriptions.set(key, redirectedHome ? null : gambleGardenPageDescription(await response.text()));
             }
             sourceDescription = descriptions.get(key);
+            if (sourceDescription === null) {
+              console.warn(`  ⚠️  Gamble Garden: skipping ${title} on ${date} (event link redirects to homepage)`);
+              continue;
+            }
           }
         }
         // Display a complete opening sentence from recovered page copy;
@@ -10344,8 +10358,9 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
         const checkIn = timedEntry
           ? sourceDescription.match(/\bAll Second Saturday guests,[^.!?]+[.!?]?/i)?.[0]?.trim()
           : null;
-        const freeSecondSaturday = secondSaturday
-          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription);
+        const freeAdmission = (secondSaturday
+          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription))
+          || /\bfree for everyone\s*[—–-]\s*no membership required\b/i.test(sourceDescription);
         const registration = declaredRegistrationAvailability(sourceDescription)
           || ((timedEntry || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription))
             ? REGISTRATION_REQUIRED : null);
@@ -10362,9 +10377,8 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           address,
           city: "palo-alto",
           category: inferCategory(title, description, "", venue),
-          // Only an explicit Second Saturday admission statement supplements
-          // API prices; free refreshments or parking do not establish entry.
-          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) || (!ev.cost && freeSecondSaturday)
+          // Supplement a missing API price with explicit public admission.
+          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) || (!ev.cost && freeAdmission)
             ? "free" : (ev.cost ? "paid" : null),
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",

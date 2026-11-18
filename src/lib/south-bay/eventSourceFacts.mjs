@@ -146,6 +146,71 @@ const CORRECTIONS = [
       && event.url === "https://my.montalvoarts.org/3275/3278",
     facts: { cost: "paid" },
   },
+  // The November 18 organizer pages carry signup instructions or admission
+  // details that were missing from the calendar API's display fields.
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events" && event.virtual === true
+      && event.url === "https://events.stanford.edu/event/slavic-languages-and-literatures-a-ukrainian-century-emigre-poets-in-prague"
+      && event.time === "1:00 PM",
+    facts: { venue: "Online (Zoom)", address: "", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through the event page to join the Zoom talk.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/truisms-fiction-and-women-writing-a-lunch-workshop-with-author-marie-darrieussecq"
+      && event.time === "12:15 PM",
+    appendAttendanceNote: "The French and Italian Department asks attendees to RSVP for the lunch workshop.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/ptolemys-almagest"
+      && event.time === "12:00 PM" && !event.cost && !event.costNote,
+    facts: { cost: "free" },
+    appendAttendanceNote: "The event page links to Stanford's RSVP form.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/hai-seminar-with-mike-wooldridge-the-ai-100"
+      && event.time === "12:00 PM" && !event.cost && !event.costNote,
+    // The organizer's current page has the Room 119 details and both signup options.
+    facts: { cost: "free", url: "https://hai.stanford.edu/events/hai-seminar-the-ai-100" },
+    appendAttendanceNote: "Attend in Room 119 or use the organizer's event page to sign up for Zoom.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Santa Clara University" && event.virtual === true
+      && event.url === "https://events.scu.edu/school-of-education-and-counseling/event/521029-new-ma-in-social-impact-leadership-informational-sess"
+      && event.time === "5:30 PM" && [null, undefined, "6:30 PM"].includes(event.endTime),
+    // LiveWhale's dated event page has the missing end time and virtual registration link.
+    facts: { endTime: "6:30 PM", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Santa Clara University's event page to attend online.",
+  },
+  {
+    date: "2026-11-21",
+    matches: event => event.id === "inbound-1c03b1a7cf3ecd53"
+      && event.source === "City Newsletter" && /^https:\/\/www\.sjpl\.org\/?$/.test(event.url || "")
+      && event.time === "11:00 AM" && event.endTime === "1:00 PM",
+    // The branch's dated listing confirms the address and activities for all ages.
+    facts: {
+      url: "https://sjpl.bibliocommons.com/v2/events/6aa85f6d6059b704112a8a43",
+      address: "1780 Hillsdale Ave, San Jose, CA 95124",
+      cost: "free",
+      kidFriendly: true,
+    },
+  },
+  {
+    date: "2026-11-22",
+    matches: event => event.source === "Santa Clara University" && event.venue === "Mission Santa Clara de Asis"
+      && event.url === "https://events.scu.edu/center-for-spirituality-and-faith/event/517212-cantabile-youth-singers-concert"
+      && event.time === "4:00 PM",
+    // https://www.cantabile.org/performances-events
+    facts: { venue: "Mission Santa Clara de Asís" },
+    copyReplacements: [[/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"]],
+  },
   // The occurrence page explicitly says Free Event and directs online
   // attendees to its Zoom registration. The API omits both from its excerpt.
   // Preserve any revised price or current booking status.
