@@ -163,6 +163,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-night.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-overnight.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-book-discussions.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-afternoon.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -958,7 +959,7 @@ test("midday copy repairs preserve publisher scope and new source information", 
   }
 });
 
-test("complete title echoes ignore accents but retain any added source information", () => {
+test("complete title echoes tolerate known accents and end punctuation", () => {
   const event = {
     id: "sjsu-996707af83523fc9", source: "SJSU Events",
     title: "Football - San José State vs. Northern Illinois",
@@ -968,6 +969,8 @@ test("complete title echoes ignore accents but retain any added source informati
   assert.equal(isTitleOnlyDescription(event.title, event.description), true);
   assert.equal(isTitleOnlyDescription("Resume", "Résumé"), false);
   assert.equal(isTitleOnlyDescription("San Jose Stories", " SAN JOSÉ  STORIES "), true);
+  assert.equal(isTitleOnlyDescription("Divorced Dad Rock Night", "Divorced Dad Rock Night!"), true);
+  assert.equal(isTitleOnlyDescription("Divorced Dad Rock Night", "Divorced Dad Rock Night! Ages 21 and up."), false);
   assert.deepEqual(polishReviewedEventCopy(event), { ...event, description: "" });
   for (const description of [
     event.description + ". Registration required; ages 12+; $25.",

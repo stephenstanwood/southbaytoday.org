@@ -714,6 +714,18 @@ const EDITS = {
       ["Individuals or groups up to 3 people can register for the program.", "Individuals or groups of up to 3 people can register for the program."],
       ["In this hands-on Green Roots Collective workshop series", "In this hands-on GreenRoots Collective workshop series"],
       ["Get ready to celebrate Thanksgiving by enjoying a Thanksgiving story and fun, Thanksgiving craft!", "Celebrate Thanksgiving with a story and a craft!"],
+      [/\bGarage Band\b/g, "GarageBand"],
+      ["Sử dụng GarageBand Thứ Bảy,", "Sử dụng GarageBand. Thứ Bảy,"],
+      ["Spin the Wheel for free prize and Giveaways; Passport Activity, ", "Spin the wheel for a free prize and giveaways. For the passport activity, "],
+      [/complete minimum of (\d+) activities to Spin the Wheel or special prize;/g, "complete at least $1 activities to spin the wheel or receive a special prize."],
+      ["special prize. Friends of Cambrian Library mini book sale; Cake, Treats, and other refreshments. Share Your Story Share", "special prize. There will also be a Friends of Cambrian Library mini book sale, plus cake, treats, and other refreshments. Share"],
+      ["hideout in a mall department store", "hide out in a mall department store"],
+      [/\bMaul of the Dead\b/gi, "Maul of the Dead"],
+      ["This show is open to a 10 years-of-age+ audience,", "This show is open to ages 10 and up,"],
+      ["Each week of STEM brings a new set of tasks to challenge us. Each week of STEM brings a new set of tasks to challenge us.", "Each week of STEM brings a new set of tasks to challenge us."],
+      [/for a prize \(while supplies last!?\)\.? Themes vary each week\. Free\. No registration required\. While supplies last\./g, "for a prize while supplies last. Themes vary each week. Free. No registration required."],
+      [/(The event will occur on Saturdays): (\d{1,2}\/\d{1,2}), and (\d{1,2}\/\d{1,2}) at (\d{1,2}:\d{2}) p\.\s*m\./g, "$1, $2 and $3, at $4 PM."],
+      ["Runtime: 1 hour 30 minutes This program", "The film runs 1 hour and 30 minutes. This program"],
     ],
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
@@ -743,6 +755,7 @@ const EDITS = {
       ["Make your own foldable sunflower fan at Pearl Avenue Library, with all supplies provided, free, and no registration required.", "Make a foldable sunflower fan at Pearl Avenue Library. Supplies are provided, and the program is free with no registration required."],
       ["Bring assigned homework to the Children's Room and work through it with volunteer coach Delaney, open to kindergarten through 5th grade.", "Students in kindergarten through 5th grade can bring assigned homework to the Children's Room and work through it with volunteer coach Delaney."],
       ["Sing songs, rhymes, and finger plays with your whole family, mixed ages welcome, in an early literacy session built around movement.", "Enjoy songs, rhymes, fingerplays, and movement with the whole family in this early literacy session. All ages are welcome."],
+      ["Watch The Peanuts Movie on a library screening", "Watch The Peanuts Movie at a library screening"],
     ],
   },
   "Linden Tree Books": {
@@ -797,6 +810,7 @@ const EDITS = {
         "Hoka is now open. On Black Friday, spend $1 to get $2 off, $3 to get $4 off, or $5 to get $6 off.",
       ],
       [/Open (\d{1,2} AM)-(\d{1,2} PM), available in-store, must be a Hoka member \(free to join\)\./g, "Hoka is open from $1 to $2. The offers are available in-store to Hoka members, and membership is free."],
+      [/\bCB2-\s*(?:Up|up) to (\d+%) off in-store\./g, "CB2 offers up to $1 off in-store."],
       [/everything (November \d{1,2}–\d{1,2}), in-stores\./g, "everything in stores $1."],
       [/Yeti – Free Hat With Eligible (\$\d+) Spend\./g, "Yeti offers a free hat with an eligible $1 purchase."],
       [/^([A-Z][a-z]+ \d{1,2}, \d{4}) (?=Makers Market's Local Artist Street Fair\b)/g, "$1. "],
@@ -833,6 +847,7 @@ const EDITS = {
     blurb: [
       ["Browse booths of local artists, crafters, designers, and makers at the street fair on Santana Row,", "Browse booths run by local artists, crafters, designers, and makers at the Santana Row street fair,"],
       ["Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.", "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."],
+      ["Shop Black Friday deals at Santana Row, where the description promises exclusive savings for shoppers starting early in the morning.", "Shop Black Friday deals at Santana Row, including early in-store savings at Hoka."],
       ["Watch a live holiday show of local arts and community groups, stand in Snow Showers at Park Valencia, and get photos with Santa.", "Watch a live holiday show by local arts and community groups, then catch snow showers in Park Valencia and take photos with Santa."],
     ],
   },
@@ -908,6 +923,9 @@ const EDITS = {
     ],
     description: [
       ...SCCLD_BOOK_DISCUSSION_EDITS,
+      [/^(Tuesday, December \d{1,2}), (\d{1,2} [AP]M) (Room \d+) Bel Canto Flutes is an all flute ensemble/g, "The concert is on $1 at $2 in $3. Bel Canto Flutes is an all-flute ensemble"],
+      ["the beauty and flexibility of the flute performing repertoire", "the beauty and flexibility of the flute with repertoire"],
+      ["antidotes about the music, composers and origins", "anecdotes about the music, its composers, and its origins"],
       ["Adults join us for our Children's Literature for Adults Book Club to discuss, reminisce, or discover for the first time a beloved children's classic.", "Join our Children's Literature for Adults Book Club to discuss a beloved children's classic, revisit an old favorite, or discover it for the first time."],
       ["Children's Reference Desk where we will have a copy of the book available. Adults only please.", "Children's Reference Desk, where a copy of the book will be available. Adults only, please."],
       ["email us atask@sccl.org", "email us at ask@sccl.org"],
@@ -1310,6 +1328,7 @@ const EDITS = {
       ["Admission Information Free admission", "Admission: Free."],
       ["(DAAAS) in collaboration with the Center for South Asia (CSA) cordially invite the Stanford Community for", "(DAAAS), in collaboration with the Center for South Asia (CSA), cordially invites the Stanford community to"],
       ["Distinguished Lecture Featuring - ", "Distinguished Lecture featuring "],
+      ["semantic search has arrived to international government data.", "semantic search is now available for international government data."],
       ["CEO of Nia Tero Reception following program", "CEO of Nia Tero. Reception following the program"],
       ["and ''protect'' childhood in Senegal", 'and "protect" childhood in Senegal'],
       [/\bEn-Roads\b/gi, "En-ROADS"],
@@ -1437,11 +1456,11 @@ const EDITS = {
 
 // Title normalization accents San José while some sources use San Jose.
 // Fold that known place-name variant, preserving other language distinctions,
-// and compare complete fields so new attendance details survive.
+// and ignore end punctuation when comparing the complete fields.
 export function isTitleOnlyDescription(title, description) {
   if (typeof title !== "string" || typeof description !== "string") return false;
   const normalize = text => text.normalize("NFC").toLowerCase()
-    .replace(/\s+/g, " ").trim()
+    .replace(/\s+/g, " ").trim().replace(/[.!?]+$/u, "").trimEnd()
     .replace(/(?<![\p{L}\p{N}_])san josé(?![\p{L}\p{N}_])/gu, "san jose");
   return Boolean(normalize(title)) && normalize(title) === normalize(description);
 }
