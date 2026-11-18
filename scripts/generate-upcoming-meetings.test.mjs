@@ -98,11 +98,13 @@ test('Santa Clara upcoming meetings query the actual council and authorities bod
     if (String(url).endsWith('/EventItems')) return Response.json([]);
     assert.match(new URL(url).searchParams.get('$filter'), /EventBodyName eq 'City Council and Authorities Concurrent'/);
     return Response.json([{ EventId: 4892, EventDate: `${today}T00:00:00`,
-      EventBodyName: body, EventTime: '5:30 PM', EventAgendaStatusName: 'Final', EventInSiteURL: sourceUrl }]);
+      EventBodyName: body, EventTime: '5:30 PM', EventAgendaStatusName: 'Final', EventInSiteURL: sourceUrl,
+      EventLocation: 'City Hall Council Chambers 1500 Warburton Avenue Santa Clara, CA 95050' }]);
   };
   const meeting = await fetchNextMeeting(config.client, config.site, config.body);
   assert.equal(meeting.bodyName, body);
   assert.equal(meeting.startTime, '17:30');
+  assert.equal(meeting.location, 'City Hall Council Chambers');
   assert.equal(meeting.url, sourceUrl);
   assert.equal(meeting.confirmation.observedDate, today);
 });
@@ -264,13 +266,23 @@ test('Palo Alto selects the first public special or regular event and checks rob
   assert.equal(totalDetails, 2);
 });
 
-test('Saratoga publishes the dated agenda link and skips cancellation and translation notices', async t => {
+test('Saratoga reads the first public session from the dated English agenda', async t => {
   t.mock.timers.enable({ apis: ['Date'], now: new Date('2026-11-18T09:07:06Z') });
   const base = 'https://www.saratoga.ca.us';
   const index = `${base}/AgendaCenter/City-Council-13`;
   const agenda = '/AgendaCenter/ViewFile/Agenda/_11182026-1496';
   const cancelled = '/AgendaCenter/ViewFile/Agenda/_11182026-1497';
-  t.mock.method(globalThis, 'fetch', async url => {
+  const calls = [];
+  let pdf = 'SARATOGA CITY COUNCIL\nREGULAR MEETING\nNovember 18, 2026\n'
+    + '5:30 PM CLOSED SESSION\nMeeting Room | 13777 Fruitvale Avenue\n'
+    + '6:00 PM JOINT SESSION\nCity Hall, Linda Callon Conference Room | 13777 Fruitvale Avenue\n'
+    + '7:00 PM REGULAR SESSION\nSaratoga Civic Theater, Council Chambers | 13777 Fruitvale Avenue\n';
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    calls.push(url);
+    if (url === `${base}${agenda}`) {
+      assert.equal(options.redirect, 'error');
+      return new Response('%PDF-1.7');
+    }
     assert.equal(url, index);
     return new Response(`
       <a href="/AgendaCenter/ViewFile/Agenda/_11042026-1490">City Council Regular Meeting Agenda</a>
@@ -282,12 +294,21 @@ test('Saratoga publishes the dated agenda link and skips cancellation and transl
       <a href="${agenda}">Agenda</a>
     `);
   });
-  const meeting = await fetchCivicEngageMeeting(base, 'City-Council-13');
+  const options = { sleep: async ms => calls.push(ms), pdfToText: async () => pdf };
+  const meeting = await fetchCivicEngageMeeting(base, 'City-Council-13', options);
+  assert.deepEqual(calls, [index, 10_000, `${base}${agenda}`]);
   assert.equal(meeting.date, '2026-11-18');
   assert.equal(meeting.displayDate, 'Wed, Nov 18');
-  assert.equal(meeting.startTime, null);
+  assert.equal(meeting.startTime, '18:00');
+  assert.equal(meeting.location, 'City Hall, Linda Callon Conference Room');
   assert.equal(meeting.url, `${base}${agenda}`);
   assert.equal(meeting.confirmation.sourceUrl, meeting.url);
+
+  pdf = pdf.replace('November 18, 2026', 'November 4, 2026');
+  const dateOnly = await fetchCivicEngageMeeting(base, 'City-Council-13', options);
+  assert.equal(dateOnly.date, '2026-11-18');
+  assert.equal(dateOnly.startTime, null);
+  assert.equal(dateOnly.location, null);
 });
 
 

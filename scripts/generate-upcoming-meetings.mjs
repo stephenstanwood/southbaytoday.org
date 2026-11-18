@@ -13,6 +13,7 @@
  */
 
 import { join, dirname, resolve } from "path";
+import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "url";
 import { writeFileAtomic } from "./lib/io.mjs";
 import {
@@ -26,6 +27,7 @@ import {
   normalizeMeetingTime,
   onlyConfirmedMeetings,
   parseCivicEngageAgendaLinks,
+  pdfTextLines,
   pickCivicClerkMeeting,
   ptDateISO,
   resolvePublicStart,
@@ -200,11 +202,10 @@ function cleanLocation(raw) {
   while (leadingAddr.test(s)) s = s.replace(leadingAddr, "").trim();
   s = s.replace(new RegExp(`^and\\s+\\d+\\s+\\S[^,]*?${streetSuffix}\\b[^,]*,\\s*`, "i"), "").trim();
 
-  // Strip trailing street addresses ("Council Chambers, City Hall, 456 W. Olive
-  // Ave., Sunnyvale, CA 94086" → "Council Chambers, City Hall"). The leading-
-  // address strip above doesn't fire when the street number sits in a later
-  // comma chunk.
-  const trailingAddr = new RegExp(`,\\s*\\d+\\s+\\S[^,]*?${streetSuffix}\\.?[\\s\\S]*$`, "i");
+  // Legistar also flattens venue and address into a single unpunctuated line.
+  // Require the city/state/ZIP tail before treating a space as the delimiter.
+  const addressSeparator = "(?:,\\s*|\\s+(?=\\d+\\s+[^,]+,\\s*[A-Z]{2}\\s+\\d{5}\\b))";
+  const trailingAddr = new RegExp(`${addressSeparator}\\d+\\s+\\S[^,]*?${streetSuffix}\\.?[\\s\\S]*$`, "i");
   s = s.replace(trailingAddr, "").trim();
   // Also strip a trailing ", City, ST zip" tail with no street number.
   s = s.replace(/,\s*[A-Za-z][A-Za-z\s]+,\s*[A-Z]{2}\s+\d{5}.*$/, "").trim();
@@ -393,7 +394,27 @@ export async function findNextCouncilMeeting(fetchPrimary, fetchCalendar) {
 
 // ── CivicEngage HTML scraping (Saratoga) ────────────────────────────────────
 
-export async function fetchCivicEngageMeeting(baseUrl, calendarId) {
+function civicEngagePublicSession(text, date) {
+  const agendaDate = new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+    month: "long", day: "numeric", year: "numeric", timeZone: "UTC",
+  });
+  const lines = text.split(/\r?\n/).map(line => line.trim());
+  const dateIndex = lines.slice(0, 12).indexOf(agendaDate);
+  if (dateIndex < 0) return {};
+
+  for (let i = dateIndex + 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (/^(?:pledge of allegiance|roll call|consent calendar|adjournment)$/i.test(line)) break;
+    const clock = line.match(/^(\d{1,2}:\d{2}\s*[AP]\.?\s*M\.?)\s+(?:joint|regular|open|study|special) (?:session|meeting)$/i)?.[1];
+    const startTime = normalizeMeetingTime(clock);
+    if (!startTime) continue;
+    const venue = lines[i + 1]?.match(/^([^|]+)\s*\|\s*\d+\s+\S/)?.[1];
+    return { startTime, location: cleanLocation(venue) };
+  }
+  return {};
+}
+
+export async function fetchCivicEngageMeeting(baseUrl, calendarId, { sleep = delay, pdfToText = pdfTextLines } = {}) {
   // CivicEngage uses named months in headings and MMDDYYYY in agenda links.
   const url = `${baseUrl}/AgendaCenter/${calendarId}`;
   const res = await fetch(url, {
@@ -415,19 +436,36 @@ export async function fetchCivicEngageMeeting(baseUrl, calendarId) {
     && !isClosedSessionMeeting({ bodyName: label.replace(/\s+agenda(?:\s*\(PDF\))?$/i, "") }));
   if (!next || (Date.parse(next.date) - Date.parse(todayIso)) / 86_400_000 > 60) return null;
 
+  let session = {};
+  try {
+    await sleep(10_000); // Saratoga requests ten seconds between requests.
+    const agenda = await fetch(next.url, {
+      headers: { "User-Agent": UA, Accept: "application/pdf" },
+      signal: AbortSignal.timeout(20_000),
+      redirect: "error",
+    });
+    if (!agenda.ok) throw Error(`HTTP ${agenda.status}`);
+    const bytes = new Uint8Array(await agenda.arrayBuffer());
+    if (new TextDecoder().decode(bytes.subarray(0, 5)) !== "%PDF-") throw Error("response is not a PDF");
+    session = civicEngagePublicSession(await pdfToText(bytes), next.date);
+  } catch (error) {
+    // The calendar still confirms the date when the agenda cannot be read.
+    console.warn(`CivicEngage agenda details unavailable for ${next.date}: ${error.message}`);
+  }
+
   const meeting = {
     date: next.date,
     displayDate: new Date(`${next.date}T12:00:00Z`).toLocaleDateString("en-US", {
       weekday: "short", month: "short", day: "numeric",
       timeZone: "America/Los_Angeles",
     }),
-    // The Agenda Center lists dates only — no posted start time to read.
     startTime: null,
     bodyName: "City Council",
     location: null,
     closedSession: false,
     url: next.url,
     agendaItems: [],
+    ...session,
   };
   return confirmMeeting(meeting, {
     provider: "civicengage",
