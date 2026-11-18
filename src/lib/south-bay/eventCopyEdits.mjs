@@ -1124,7 +1124,12 @@ const EDITS = {
       ["games and activities, sweet treat, and a keepsake photo", "games and activities, a sweet treat, and a keepsake photo"],
       ["Create sweet lasting memories", "Create sweet, lasting memories"],
       ["Explore booths, hands-on activities, live entertainment, food trucks, and connect with", "Explore booths, hands-on activities, live entertainment, and food trucks. Connect with"],
-      ["present a problem in which teams or individuals will work together", "present a problem on which teams or individuals will work together"],
+      // Use the city's plain-text event heading in the description.
+      [/^<hack> Cupertino\b/g, "Hack Cupertino"],
+      [
+        /During our opening ceremony, we will present a problem (?:in|on) which teams or individuals will work together to create an app, software, or website which will address the topic\./g,
+        "At the opening ceremony, organizers will present a challenge. Participants can work alone or in teams to build an app, other software, or a website that addresses it.",
+      ],
       ["Event Details Date:", "Event details: Date:"],
       [/(\bDate: [^.!?;]+) Time:/g, "$1; Time:"],
       [/(\bLocation: [^.!?;]+) Address:/g, "$1; Address:"],

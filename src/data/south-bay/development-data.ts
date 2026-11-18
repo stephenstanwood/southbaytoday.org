@@ -102,7 +102,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "Google's 80-acre mixed-use district next to Diridon Station, approved by the San José City Council in 2021 for up to 7.3M sq ft of office plus 4,000+ homes, parks, and retail near a major regional transit hub. Google ended its development partnership with Lendlease in 2023 and paused active construction; the entitled site remains largely cleared while the company reassesses the timeline. Under the development agreement, a $54M community-fund payment is triggered if construction hasn't started by July 2031.",
+      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station, a major regional transit hub, in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000+ homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The entitled site remains largely cleared while the company reassesses the timeline. Under the development agreement, a $54M community-fund payment is triggered if construction hasn't started by July 2031.",
     scale: "Up to 7.3M sq ft; 4,000+ housing units planned",
     developer: "Google (Lendlease partnership ended 2023)",
     timeline: "Entitled 2021; active construction paused",
@@ -165,7 +165,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "civic",
     status: "proposed",
     description:
-      "Proposed expansion of Terminal B at Norman Y. Mineta San José International Airport, adding gates and concourse capacity to the south end. The FAA issued a Finding of No Significant Impact and Record of Decision based on the Final Environmental Assessment (April 2023). A Major Amendment to the SJC Airport Master Plan is moving through the city's planning process in 2026.",
+      "The proposed expansion would add gates and increase concourse capacity at the south end of Terminal B at Norman Y. Mineta San José International Airport. The FAA issued a Finding of No Significant Impact and Record of Decision based on the Final Environmental Assessment (April 2023). A Major Amendment to the SJC Airport Master Plan is moving through the city's planning process in 2026.",
     scale: "Terminal B south concourse expansion",
     developer: "City of San José",
     timeline: "In planning / environmental review",
@@ -266,7 +266,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "approved",
     description:
-      "Large-scale transit-oriented housing development planned around the Berryessa/North San José BART station, enabled by San José's Urban Village program. Multiple projects have received approvals for dense residential development adjacent to BART, bringing new workforce and market-rate housing to North San José.",
+      "Large-scale transit-oriented housing is planned around the Berryessa/North San José BART station under San José's Urban Village program. Multiple projects have received approvals for dense residential development adjacent to BART, bringing new workforce and market-rate housing to North San José.",
     scale: "Thousands of units across multiple sites",
     developer: "Various",
     timeline: "Active approvals and construction",
