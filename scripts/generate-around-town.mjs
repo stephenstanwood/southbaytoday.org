@@ -199,6 +199,8 @@ A request for a continuance does not establish a completed delay or postponement
 
 This rule applies to BOTH the headline and summary. An older agenda cannot establish that council currently "weighs" an item or "will discuss" it, or that a hearing "is scheduled" now. Give the original date and describe what its agenda listed.
 
+Keep the total size of a housing project distinct from the number of income-restricted homes. Only give an affordable-unit count when the supplied record explicitly identifies that count. A project's description as affordable or workforce housing does not establish that every unit qualifies.
+
 KEEP: notable development projects (housing, commercial, controversial permits), policy changes affecting residents, contested votes, new programs/ordinances, zoning/land use decisions, physical changes to the city.
 
 Meeting data:
