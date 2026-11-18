@@ -346,7 +346,7 @@ export async function fetchNextMeeting(client, site, body, today = ptDateISO()) 
     const bodyName = legistarEventBodyName(event);
     const comment = event.EventComment;
     const description = event.EventDescription;
-    if (bodyName !== body || !inCouncilWindow(date, today)
+    if (event.EventBodyName?.trim() !== body || !inCouncilWindow(date, today)
       || isCancelledLegistarEvent(event) || /cancel(?:led|ed)|postponed/i.test(description ?? "")) continue;
 
     const closed = isClosedSessionMeeting({ bodyName, comment, description });
