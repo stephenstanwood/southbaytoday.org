@@ -90,13 +90,29 @@ const CORRECTIONS = [
     facts: event => ({
       audienceAge: "adult",
       kidFriendly: false,
+      blurb: "Watch bartenders from six San Pedro Square bars compete at Three Sisters Whiskey Bar.",
       ...(event.cost == null && !event.costNote ? { cost: "low", costNote: "From $15 ($30 VIP)" } : {}),
     }),
     appendAttendanceNote: "Ages 21+ with valid ID. VIP admission includes samples from every competitor.",
-    copyReplacements: [
-      [/\s+Tickets are available\.$/i, ""],
-      [/^Taste cocktails from six San Pedro Square bars competing in a friendly contest, held at Three Sisters Whiskey Bar\.$/, "Watch bartenders from six San Pedro Square bars compete at Three Sisters Whiskey Bar."],
-    ],
+    copyReplacements: [[/\s+Tickets are available\.$/i, ""]],
+  },
+  // SAP Center publishes the tour name as a subtitle. The matching ticket
+  // listing carries the full title and music category.
+  {
+    date: "2026-12-19",
+    url: "https://www.sapcenter.com/events/detail/wang-leehom",
+    aliasUrls: ["https://www.ticketmaster.com/wang-leehom-the-best-place-ii-san-jose-california-12-19-2026/event/1C006504E5E2DDE5"],
+    facts: { title: "Wang Leehom: The Best Place II World Tour", category: "music" },
+  },
+  // Keep the retired permalink accurate too. Leavey's description explicitly
+  // says Zoom, despite its offline JSON-LD label and venue-less RSS record.
+  {
+    date: "2026-12-01",
+    url: "https://events.scu.edu/leavey-school-of-business/event/533869-enhance-your-professional-development-with",
+    facts: {
+      virtual: true, address: "", photoRef: null, endTime: "1:00 PM",
+      blurb: "Santa Clara University scheduled this LinkedIn Learning webinar on Zoom.",
+    },
   },
   // The City Lights performance page supplies the November 19 end time and address.
   {

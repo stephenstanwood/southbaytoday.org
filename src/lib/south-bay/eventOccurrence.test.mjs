@@ -9,6 +9,23 @@ import {
 } from "./eventOccurrence.mjs";
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 
+test("withholds campus listings when the full organizer page corrects a sparse public feed", () => {
+  const webinar = {
+    title: "Enhance your Professional Development with LinkedIn Learning", date: "2026-12-01",
+    time: "12:00 PM", venue: "Santa Clara University", source: "Santa Clara University",
+    url: "https://events.scu.edu/leavey-school-of-business/event/533869-enhance-your-professional-development-with",
+  };
+  const studentMeeting = {
+    title: "All Recovery Meeting", date: "2026-11-23", time: "6:15 PM", venue: "Student Union",
+    source: "SJSU Events", url: "https://events.sjsu.edu/event/all-recovery-meeting-3060",
+  };
+  assert.equal(isEventPublishable(webinar), false);
+  assert.equal(isEventPublishable(studentMeeting), false);
+  assert.equal(isEventPublishable({ ...studentMeeting, date: "2026-11-30" }), false);
+  assert.equal(isEventPublishable({ ...studentMeeting, url: "https://events.sjsu.edu/event/community-recovery" }), true);
+  assert.equal(isEventPublishable({ ...webinar, date: "2026-12-02" }), true);
+});
+
 test("withholds the December 15 HSAS listing until the performer and venue are confirmed", () => {
   const event = {
     title: "Spirit of the Row: HSAS Full Ensemble & Vocal Ensemble",

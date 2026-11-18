@@ -31,13 +31,31 @@ test("the dated Downtown Throwdown listing preserves admission terms on refresh"
   assert.equal(corrected.kidFriendly, false);
   assert.match(corrected.attendanceNote, /21\+ with valid ID.*VIP admission includes samples/);
   assert.doesNotMatch(corrected.description, /Tickets are available/);
-  assert.doesNotMatch(corrected.blurb, /Taste cocktails/);
+  assert.equal(corrected.blurb, "Watch bartenders from six San Pedro Square bars compete at Three Sisters Whiskey Bar.");
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+
+  const refreshed = {
+    ...event,
+    blurb: "Taste entries from six San Pedro Square bars competing in a friendly cocktail contest, starting at Three Sisters Whiskey Bar.",
+  };
+  assert.equal(applyVerifiedEventFacts(refreshed).blurb, corrected.blurb);
 
   const updated = applyVerifiedEventFacts({ ...event, cost: "paid", costNote: "From $30", registration: "full" });
   assert.equal(updated.costNote, "From $30");
   assert.equal(updated.registration, "full");
   const differentDate = { ...event, date: "2026-11-19" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+});
+
+test("Wang Leehom's SAP Center listing keeps its tour subtitle and music category", () => {
+  const event = {
+    title: "Wang Leehom", category: "community", date: "2026-12-19", time: "8:00 PM",
+    url: "https://www.sapcenter.com/events/detail/wang-leehom",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), {
+    ...event, title: "Wang Leehom: The Best Place II World Tour", category: "music",
+  });
+  const differentDate = { ...event, date: "2026-12-20" };
   assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
 });
 

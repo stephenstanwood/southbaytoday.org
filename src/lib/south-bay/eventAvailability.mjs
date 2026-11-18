@@ -4,6 +4,22 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    title: /^Enhance your Professional Development with LinkedIn Learning$/i,
+    venue: /.*/,
+    date: "2026-12-01",
+    matches: event => /^https:\/\/events\.scu\.edu\/(?:leavey-school-of-business\/event|live\/events)\/533869(?:-[^/?#]+)?(?:[/?#]|$)/.test(event.url || ""),
+    reason: "Leavey's event description places the Graduate Business Programs careers webinar on Zoom. The RSS entry omits that description and falls back to a campus venue.",
+    source: "https://events.scu.edu/leavey-school-of-business/event/533869-enhance-your-professional-development-with",
+  }),
+  ...["2026-11-23", "2026-11-30"].map(date => Object.freeze({
+    title: /^All Recovery Meeting$/i,
+    venue: /.*/,
+    date,
+    matches: event => /^https:\/\/events\.sjsu\.edu\/event\/all-recovery-meeting-3060(?:[/?#]|$)/.test(event.url || ""),
+    reason: "SJSU's Student Wellness Center invites students to this recovery meeting. The organizer does not list public eligibility.",
+    source: "https://events.sjsu.edu/event/all-recovery-meeting-3060",
+  })),
+  Object.freeze({
     title: /^Spirit of the Row: HSAS Full Ensemble & Vocal Ensemble$/i,
     venue: /.*/,
     date: "2026-12-15",
