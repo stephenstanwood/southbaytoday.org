@@ -1,98 +1,98 @@
 {
-  "generatedAt": "2026-11-18T09:18:24.962Z",
+  "generatedAt": "2026-11-18T11:48:57.323Z",
   "meetings": {
     "san-jose": {
       "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": null,
-      "closedSession": false,
       "url": "https://sanjose.legistar.com/DepartmentDetail.aspx?G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF&GUID=ACCCCFF5-F14A-4E1A-8540-9065F45A8A90&ID=21676",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "Legistar council calendar",
+        "provider": "legistar-public-calendar",
         "observedDate": "2026-12-01",
         "sourceUrl": "https://sanjose.legistar.com/DepartmentDetail.aspx?G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF&GUID=ACCCCFF5-F14A-4E1A-8540-9065F45A8A90&ID=21676"
       }
     },
     "mountain-view": {
       "date": "2026-12-08",
-      "displayDate": "Tue, Dec 8",
       "startTime": "18:30",
       "bodyName": "City Council",
-      "location": "Council Chambers",
-      "closedSession": false,
+      "location": "Council Chambers and Video Conference",
       "url": "https://mountainview.legistar.com/Calendar.aspx",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Tue, Dec 8",
       "confirmation": {
         "status": "confirmed",
-        "provider": "Legistar council calendar",
+        "provider": "legistar-public-calendar",
         "observedDate": "2026-12-08",
         "sourceUrl": "https://mountainview.legistar.com/Calendar.aspx"
       }
     },
     "sunnyvale": {
       "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
       "startTime": "17:30",
       "bodyName": "City Council",
-      "location": "City Hall Council Chambers",
-      "closedSession": false,
+      "location": "Online and Council Chambers, City Hall",
       "url": "https://sunnyvaleca.legistar.com/Calendar.aspx",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "Legistar council calendar",
+        "provider": "legistar-public-calendar",
         "observedDate": "2026-12-01",
         "sourceUrl": "https://sunnyvaleca.legistar.com/Calendar.aspx"
       }
     },
     "cupertino": {
       "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
       "startTime": null,
       "bodyName": "City Council",
       "location": null,
-      "closedSession": false,
       "url": "https://cupertino.legistar.com/DepartmentDetail.aspx?GUID=759DE527-B7CF-4B4C-88AB-B83875AB732D&ID=22534",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "City of Cupertino council schedule",
+        "provider": "legistar-public-calendar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://www.cupertino.gov/files/assets/city/v/4/departments/documents/city-clerk/cc-resolution-no.-25-105-establishing-the-city-council-meeting-schedule-through-january-20-2027.pdf"
+        "sourceUrl": "https://cupertino.legistar.com/DepartmentDetail.aspx?GUID=759DE527-B7CF-4B4C-88AB-B83875AB732D&ID=22534"
       }
     },
     "santa-clara": {
       "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
       "startTime": "17:30",
       "bodyName": "City Council and Authorities Concurrent",
-      "location": "City Hall Council Chambers",
-      "closedSession": false,
+      "location": "City Hall Council Chambers 1500 Warburton Avenue Santa Clara, CA 95050",
       "url": "https://santaclara.legistar.com/Calendar.aspx",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "Legistar council calendar",
+        "provider": "legistar-public-calendar",
         "observedDate": "2026-12-01",
         "sourceUrl": "https://santaclara.legistar.com/Calendar.aspx"
       }
     },
     "palo-alto": {
       "date": "2026-11-30",
-      "displayDate": "Mon, Nov 30",
       "startTime": "17:30",
-      "bodyName": "City Council",
+      "bodyName": "City Council Meeting",
       "location": "Community Meeting Room",
-      "closedSession": false,
       "url": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting",
+      "closedSession": false,
       "agendaItems": [],
+      "displayDate": "Mon, Nov 30",
       "confirmation": {
         "status": "confirmed",
-        "provider": "City of Palo Alto public calendar",
+        "provider": "palo-alto-city-calendar",
         "observedDate": "2026-11-30",
         "sourceUrl": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting"
       }
@@ -100,33 +100,33 @@
     "saratoga": {
       "date": "2026-11-18",
       "displayDate": "Wed, Nov 18",
-      "startTime": "18:00",
+      "startTime": null,
       "bodyName": "City Council",
-      "location": "City Hall, Linda Callon Conference Room",
+      "location": null,
       "closedSession": false,
       "url": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496",
       "agendaItems": [],
       "confirmation": {
         "status": "confirmed",
-        "provider": "CivicEngage",
+        "provider": "civicengage",
         "observedDate": "2026-11-18",
         "sourceUrl": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496"
       }
     },
     "campbell": {
       "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
       "startTime": "19:00",
       "bodyName": "City Council Regular Meeting",
       "location": "Council Chamber",
+      "url": "https://campbellca.gov/m/calendar/event/detail/3925",
       "closedSession": false,
-      "url": "https://campbellca.gov/m/calendar/event/detail/3948",
       "agendaItems": [],
+      "displayDate": "Tue, Dec 1",
       "confirmation": {
         "status": "confirmed",
-        "provider": "City of Campbell council calendar",
+        "provider": "campbell-city-calendar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://campbellca.gov/m/calendar/event/detail/3948"
+        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F18%2F2026&endDate=01%2F17%2F2027"
       }
     },
     "milpitas": {
@@ -160,7 +160,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-17T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-18T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -182,23 +182,23 @@
   },
   "sourceHealth": {
     "san-jose": {
-      "provider": "Legistar council calendar",
+      "provider": "Legistar",
       "status": "ok"
     },
     "mountain-view": {
-      "provider": "Legistar council calendar",
+      "provider": "Legistar",
       "status": "ok"
     },
     "sunnyvale": {
-      "provider": "Legistar council calendar",
+      "provider": "Legistar",
       "status": "ok"
     },
     "cupertino": {
-      "provider": "City of Cupertino council schedule",
+      "provider": "Legistar",
       "status": "ok"
     },
     "santa-clara": {
-      "provider": "Legistar council calendar",
+      "provider": "Legistar",
       "status": "ok"
     },
     "palo-alto": {
@@ -210,7 +210,7 @@
       "status": "ok"
     },
     "campbell": {
-      "provider": "City of Campbell council calendar",
+      "provider": "eScribe",
       "status": "ok"
     },
     "milpitas": {
