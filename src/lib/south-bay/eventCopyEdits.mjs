@@ -90,6 +90,10 @@ const EDITS = {
     description: [
       ["Storytime Tickets & Seating This event", "Storytime Tickets & Seating: This event"],
       ["with a limited amount of tickets available, once", "with a limited number of tickets available once"],
+      [
+        "Interested in becoming a volunteer at the library? Start here: https://www.sjpl.org/volunteer-how-to/ No registration required.",
+        "No registration is required. If you'd like to volunteer, visit https://www.sjpl.org/volunteer-how-to/",
+      ],
       // HICAP booking hours are source facts; repair only the range connector.
       [/\b(between (?:[1-9]|1[0-2])(?::[0-5]\d)? [AP]M)\s*[-–]\s*((?:[1-9]|1[0-2])(?::[0-5]\d)? [AP]M)(?= to set up a free one-on-one counseling appointment\b)/g, "$1 and $2"],
       ["Se requiere y registración previa.", "Se requiere registración previa."],
@@ -1273,6 +1277,10 @@ const EDITS = {
       // flattening glues them together. Retain every clock and timezone.
       [/^Overview(?=\d{1,2}:\d{2} [AP]M\b)/g, "Overview: "],
       ["(EST) With suicide rates", "(EST). With suicide rates"],
+      [
+        "Graduate students of the Mechanical Engineering department will showcase team projects made for the ME218a class, Smart Product Design Fundamentals.",
+        "Graduate students in the Department of Mechanical Engineering will present team projects from ME218a, Smart Product Design Fundamentals.",
+      ],
       ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
       ['as "dark", especially because its intellectual production appears low.', 'as "dark," especially because its intellectual output appears limited.'],
       ["Please join German Studies Lecture Series for", "Please join the German Studies Lecture Series for"],
@@ -1405,6 +1413,7 @@ const EDITS = {
   },
   "Opera San José": {
     description: [
+      [/^Fiddler on the Roof: (Tradition meets revolution\b)/g, "$1"],
       // The imported preview is clipped after "destructive […]". Sentence
       // cleanup strands its preceding initial; remove only that unfinished
       // suffix, leaving complete or newly expanded source wording intact.
