@@ -2,7 +2,7 @@
 /**
  * generate-upcoming-meetings.mjs
  *
- * Queries the Legistar Web API (free, no auth) for each South Bay city's
+ * Reads official feeds and public calendars to find each South Bay city's
  * next scheduled council meeting and writes the results to
  * src/data/south-bay/upcoming-meetings.json.
  *
@@ -19,6 +19,7 @@ import {
   confirmMeeting,
   escribeMeetingUrl,
   escribePost,
+  isCancelledLegistarEvent,
   isClosedSessionMeeting,
   legistarEventBodyName,
   legistarMeetingUrl,
@@ -26,12 +27,19 @@ import {
   onlyConfirmedMeetings,
   parseCivicEngageAgendaLinks,
   pickCivicClerkMeeting,
-  primeGovAgendaUrl,
   ptDateISO,
   resolvePublicStart,
 } from "./lib/civic-meetings.mjs";
-import { overlayPaloAltoStateOfTheCity } from "./lib/palo-alto-state-of-the-city-2026.mjs";
 import { fetchLosGatosMeeting, LOS_GATOS_PROVIDER } from "./lib/los-gatos-meetings.mjs";
+import {
+  compareCouncilMeetings,
+  fetchCampbellCalendar,
+  fetchLegistarCalendar,
+  fetchPaloAltoMeeting,
+  hasCupertinoPublicBlock,
+  inCouncilWindow,
+  isCancelledCalendarSlot,
+} from "./lib/upcoming-council-calendars.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-meetings.json");
@@ -39,10 +47,16 @@ const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-mee
 const UA = "SouthBaySignal/1.0 (stanwood.dev; public civic data aggregator)";
 
 export const LEGISTAR_CITIES = [
-  { city: "san-jose",      client: "sanjose",      site: "sanjose",      body: "City Council" },
+  {
+    city: "san-jose", client: "sanjose", site: "sanjose", body: "City Council",
+    departmentCalendar: "https://sanjose.legistar.com/DepartmentDetail.aspx?G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF&GUID=ACCCCFF5-F14A-4E1A-8540-9065F45A8A90&ID=21676",
+  },
   { city: "mountain-view", client: "mountainview", site: "mountainview", body: "City Council" },
   { city: "sunnyvale",     client: "sunnyvaleca",  site: "sunnyvaleca",  body: "City Council" },
-  { city: "cupertino",     client: "cupertino",    site: "cupertino",    body: "City Council" },
+  {
+    city: "cupertino", client: "cupertino", site: "cupertino", body: "City Council",
+    departmentCalendar: "https://cupertino.legistar.com/DepartmentDetail.aspx?GUID=759DE527-B7CF-4B4C-88AB-B83875AB732D&ID=22534",
+  },
   { city: "santa-clara",   client: "santaclara",   site: "santaclara",   body: "City Council and Authorities Concurrent" },
 ];
 
@@ -313,8 +327,7 @@ async function fetchAgendaItems(client, eventId) {
   }
 }
 
-export async function fetchNextMeeting(client, site, body) {
-  const today = ptDateISO();
+export async function fetchNextMeeting(client, site, body, today = ptDateISO()) {
   const url =
     `https://webapi.legistar.com/v1/${client}/Events` +
     `?$filter=EventBodyName eq '${body}' and EventDate ge datetime'${today}T00:00:00'` +
@@ -327,138 +340,56 @@ export async function fetchNextMeeting(client, site, body) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
   const events = await res.json();
-  const ev = events.find((event) => !/cancel(?:led|ed)|postponed/i.test([
-    event.EventDescription,
-    event.EventComment,
-    event.EventAgendaStatusName,
-  ].filter(Boolean).join(" ")));
-  if (!ev) return null;
-  const dateIso = String(ev.EventDate).slice(0, 10);
-  // Noon anchor, same as every other provider here. EventDate is a naive
-  // midnight ("2026-08-25T00:00:00"), and `new Date(ev.EventDate)` reads that
-  // in the *host's* zone — from any machine east of Pacific it lands on the
-  // previous PT day and displayDate labels the meeting with a date it isn't on
-  // ("Mon, Aug 24" for Sunnyvale's Aug 25 sitting, regenerated from an Eastern
-  // laptop). The `date` field, sliced from the string, was always correct.
-  const date = new Date(`${dateIso}T12:00:00`);
+  const candidates = [];
+  for (const event of events) {
+    const date = String(event.EventDate).slice(0, 10);
+    const bodyName = legistarEventBodyName(event);
+    const comment = event.EventComment;
+    const description = event.EventDescription;
+    if (bodyName !== body || !inCouncilWindow(date, today)
+      || isCancelledLegistarEvent(event) || /cancel(?:led|ed)|postponed/i.test(description ?? "")) continue;
 
-  // Skip placeholder dates more than 60 days out (common Legistar calendar blocker)
-  const daysOut = (date.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-  if (daysOut > 60) return null;
+    const closed = isClosedSessionMeeting({ bodyName, comment, description });
+    const mixedCupertinoSession = site === "cupertino" && hasCupertinoPublicBlock(`${comment ?? ""} ${description ?? ""}`);
+    if (closed && !mixedCupertinoSession) continue;
 
-  const agendaItems = await fetchAgendaItems(client, ev.EventId);
+    // Sunnyvale may post one row covering several blocks, with the real
+    // running order in the note rather than the calendar's opening time.
+    const publicStart = resolvePublicStart({ startTime: normalizeMeetingTime(event.EventTime), comment, description });
+    const startTime = closed && !publicStart.closedSessionStart ? null : publicStart.startTime;
+    candidates.push({
+      date, bodyName, startTime, closedSession: false,
+      ...(publicStart.closedSessionStart ? { closedSessionStart: publicStart.closedSessionStart } : {}),
+      location: cleanLocation(event.EventLocation),
+      url: legistarMeetingUrl(site, date, event.EventInSiteURL),
+      legistarEventId: event.EventId,
+    });
+  }
+  const meeting = candidates.sort(compareCouncilMeetings)[0];
+  if (!meeting) return null;
 
-  // EventDate is midnight for every Legistar row; the wall clock lives in
-  // EventTime. Without it nothing downstream could tell San José's 1:30 PM
-  // council meeting from Sunnyvale's 5:30 PM one, and the 2026-08-11 email
-  // filed both under "Civic meetings tonight". EventTime is the hour the row
-  // *begins*, which for Sunnyvale is its closed session — resolvePublicStart
-  // reads the running order in EventComment and moves the start to the first
-  // block a reader can attend.
-  const { startTime, closedSessionStart } = resolvePublicStart({
-    startTime: normalizeMeetingTime(ev.EventTime),
-    comment: ev.EventComment,
-    description: ev.EventDescription,
-  });
-
-  const meeting = {
-    date: dateIso,
-    displayDate: date.toLocaleDateString("en-US", {
-      weekday: "short", month: "short", day: "numeric",
-      timeZone: "America/Los_Angeles",
+  const { date, legistarEventId } = meeting;
+  return confirmMeeting({
+    ...meeting,
+    displayDate: new Date(`${date}T12:00:00Z`).toLocaleDateString("en-US", {
+      weekday: "short", month: "short", day: "numeric", timeZone: "UTC",
     }),
-    startTime,
-    // The non-public hour the entry opens with, when the start above had to be
-    // moved past it. Absent on the ordinary case.
-    ...(closedSessionStart ? { closedSessionStart } : {}),
-    bodyName: legistarEventBodyName(ev),
-    location: cleanLocation(ev.EventLocation),
-    closedSession: isClosedSessionMeeting({
-      bodyName: legistarEventBodyName(ev),
-      comment: ev.EventComment,
-      description: ev.EventDescription,
-    }),
-    url: legistarMeetingUrl(site, dateIso, ev.EventInSiteURL),
-    legistarEventId: ev.EventId,
-    agendaItems,
-  };
-  return confirmMeeting(meeting, { provider: "legistar", sourceUrl: url, observedDate: dateIso });
+    agendaItems: await fetchAgendaItems(client, legistarEventId),
+  }, { provider: "legistar", sourceUrl: url, observedDate: date });
 }
 
-// ── PrimeGov (Palo Alto) ────────────────────────────────────────────────────
-
-// PrimeGov dateTime is a naive local wall clock ("2026-08-17T17:30:00"), so the
-// Pacific calendar date is the literal prefix. The old path fed it through
-// `new Date(...).toISOString()`, which re-reads it as UTC and rolls every
-// evening meeting forward a day — enough for last night's 5:30 PM council
-// sitting to survive the `>= today` filter and ship as the next one up.
-function primeGovPacificIso(dateTime) {
-  const iso = String(dateTime || "").slice(0, 10);
-  return /^\d{4}-\d{2}-\d{2}$/.test(iso) ? iso : "";
+// A calendar can publish an earlier session or mark a feed entry cancelled.
+// Keep the feed's agenda preview when both sources agree on the first slot.
+export async function findNextCouncilMeeting(fetchPrimary, fetchCalendar) {
+  const [feed, calendar] = await Promise.allSettled([fetchPrimary(), fetchCalendar()]);
+  const cancellations = calendar.value?.cancellations ?? [];
+  const fromFeed = feed.value && !isCancelledCalendarSlot(feed.value, cancellations) ? feed.value : null;
+  const candidates = [fromFeed, calendar.value?.meeting].filter(Boolean);
+  if (candidates.length) return candidates.sort(compareCouncilMeetings)[0];
+  const errors = [feed, calendar].filter(source => source.status === "rejected");
+  if (errors.length) throw Error(errors.map(source => source.reason.message).join(" | "));
+  return null;
 }
-
-async function fetchPrimeGovMeeting(domain, committeeId) {
-  const url = `https://${domain}/api/v2/PublicPortal/ListUpcomingMeetings`;
-  const res = await fetch(url, {
-    headers: { "User-Agent": UA, Accept: "application/json" },
-    signal: AbortSignal.timeout(15_000),
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const meetings = await res.json();
-
-  // Filter to City Council (committeeId) and future dates. PT, not UTC — same
-  // late-in-the-day off-by-one the date fields below already call out.
-  const today = ptDateISO();
-  const council = meetings
-    .filter((m) => m.committeeId === committeeId && m.title?.toLowerCase().includes("city council"))
-    // Skip canceled/postponed meetings — PrimeGov marks them in the title
-    // ("City Council Regular Meeting - CANCELED"), and without this the
-    // canceled sitting shipped as Palo Alto's next meeting. The Legistar
-    // path above has had this guard; PrimeGov was missing it.
-    .filter((m) => !/cancel(?:led|ed)|postponed/i.test(m.title || ""))
-    .filter((m) => primeGovPacificIso(m.dateTime) >= today)
-    .sort((a, b) => new Date(a.dateTime) - new Date(b.dateTime));
-
-  if (!council.length) return null;
-
-  const ev = council[0];
-  const pacificIso = primeGovPacificIso(ev.dateTime);
-  // Noon anchor, same as every other provider here: the naive timestamp would
-  // otherwise be read in the host's zone, and the horizon and display label
-  // would disagree with the date field on any machine that isn't Pacific.
-  const date = new Date(`${pacificIso}T12:00:00`);
-  const daysOut = (date.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-  if (daysOut > 60) return null;
-
-  const meeting = overlayPaloAltoStateOfTheCity({
-    date: pacificIso,
-    displayDate: date.toLocaleDateString("en-US", {
-      weekday: "short", month: "short", day: "numeric",
-      timeZone: "America/Los_Angeles",
-    }),
-    // PrimeGov dateTime is naive local ("2026-08-17T17:30:00" = 5:30 PM).
-    startTime: normalizeMeetingTime(ev.dateTime),
-    bodyName: ev.title || "City Council",
-    location: null,
-    closedSession: isClosedSessionMeeting({ bodyName: ev.title }),
-    // `Portal/Meeting?meetingId=N` is not a route PrimeGov serves: it lands on
-    // "Document Not Found" for every meeting, which is what the 2026-09-14
-    // issue's "Civic meetings tonight" link did. The portal addresses a
-    // meeting by its published HTML agenda (compiledMeetingDocumentFileId);
-    // before the agenda posts, send readers to the meeting list instead.
-    url: primeGovAgendaUrl(domain, ev) || `https://${domain}/public/portal`,
-    agendaItems: [],
-  }, ev);
-  return confirmMeeting(meeting, {
-    provider: /paloalto\.gov\/stateofthecity/i.test(meeting.url) ? "city-of-palo-alto" : "primegov",
-    sourceUrl: meeting.url,
-    observedDate: pacificIso,
-  });
-}
-
-const PRIMEGOV_CITIES = [
-  { city: "palo-alto", domain: "cityofpaloalto.primegov.com", committeeId: 9 },
-];
 
 // ── CivicEngage HTML scraping (Saratoga) ────────────────────────────────────
 
@@ -543,29 +474,23 @@ async function fetchEscribeMeeting(host) {
     const upcoming = rows
       .map((row) => ({ row, date: String(row.StartDate || "").slice(0, 10).replace(/\//g, "-") }))
       .filter(({ row, date }) =>
-        /^\d{4}-\d{2}-\d{2}$/.test(date)
-        && date >= today
+        inCouncilWindow(date, today)
         && /council/i.test(row.MeetingName || "")
-        // Executive/closed sessions aren't public business; skip them the way
-        // the Legistar path skips closed session.
         && !/executive session|closed session/i.test(row.MeetingName || "")
+        && !isClosedSessionMeeting({ bodyName: row.MeetingName, description: row.Description })
         && !/cancel(?:led|ed)|postponed/i.test(`${row.MeetingName || ""} ${row.Description || ""}`))
-      .sort((a, b) => a.date.localeCompare(b.date));
+      .map(({ row, date }) => ({
+        row, date, ...resolvePublicStart({
+          startTime: normalizeMeetingTime(row.StartDate),
+          description: row.Description,
+        }),
+      }))
+      .sort(compareCouncilMeetings);
 
     if (!upcoming.length) continue;
 
-    const { row, date } = upcoming[0];
-    const d = new Date(`${date}T12:00:00`);
-    if ((d.getTime() - Date.now()) / 86_400_000 > 60) return null;
-
-    // eScribe StartDate is "YYYY/MM/DD HH:mm:ss" in the city's local time.
-    // Campbell posts its executive session as a separate row (filtered above),
-    // but run the same public-start resolution every provider gets so a city
-    // that switches to a single blocked entry is covered the day it does.
-    const { startTime, closedSessionStart } = resolvePublicStart({
-      startTime: normalizeMeetingTime(row.StartDate),
-      description: row.Description,
-    });
+    const { row, date, startTime, closedSessionStart } = upcoming[0];
+    const d = new Date(`${date}T12:00:00Z`);
 
     const meeting = {
       date,
@@ -577,12 +502,7 @@ async function fetchEscribeMeeting(host) {
       ...(closedSessionStart ? { closedSessionStart } : {}),
       bodyName: row.MeetingName || "City Council",
       location: cleanLocation(row.Location),
-      // Closed/executive sittings are already filtered out above; recorded so
-      // the artifact says "checked and public" rather than "never looked".
-      closedSession: isClosedSessionMeeting({
-        bodyName: row.MeetingName,
-        description: row.Description,
-      }),
+      closedSession: false,
       // The calendar payload's `Url` is the SPA route
       // `MeetingsCalendarView.aspx/Meeting?Id=<guid>`, which eScribe only
       // resolves inside its calendar page — opened directly it is an ASP.NET
@@ -707,20 +627,28 @@ async function main() {
     }
   }
 
-  for (const { city, client, site, body } of LEGISTAR_CITIES) {
-    await runSource(city, "Legistar", () => fetchNextMeeting(client, site, body));
+  const today = ptDateISO();
+  for (const config of LEGISTAR_CITIES) {
+    const { city, client, site, body } = config;
+    await runSource(city, "Legistar", () => findNextCouncilMeeting(
+      () => fetchNextMeeting(client, site, body, today),
+      () => fetchLegistarCalendar(config, today, cleanLocation),
+    ));
   }
 
-  for (const { city, domain, committeeId } of PRIMEGOV_CITIES) {
-    await runSource(city, "PrimeGov", () => fetchPrimeGovMeeting(domain, committeeId));
-  }
+  // PrimeGov disallows automated collection. The city's own public event
+  // directory includes special and regular council meetings.
+  await runSource("palo-alto", "City of Palo Alto public calendar", () => fetchPaloAltoMeeting(today));
 
   for (const { city, baseUrl, calendarId } of CIVICENGAGE_CITIES) {
     await runSource(city, "CivicEngage", () => fetchCivicEngageMeeting(baseUrl, calendarId));
   }
 
   for (const { city, host } of ESCRIBE_CITIES) {
-    await runSource(city, "eScribe", () => fetchEscribeMeeting(host));
+    await runSource(city, "eScribe", () => findNextCouncilMeeting(
+      () => fetchEscribeMeeting(host),
+      () => fetchCampbellCalendar(today),
+    ));
   }
 
   for (const { city, ...config } of CIVICCLERK_CITIES) {

@@ -36,6 +36,19 @@ against the installed mutex using its existing `SBT_REPO_LOCK` and
 real contention, delayed release, timeout retention, and an old live owner
 without touching the production lock.
 
+## Upcoming council calendars
+
+The five Legistar cities and Campbell check their public calendars alongside
+the agenda feeds. A published cancellation supersedes the same slot in the
+feed. When the first public slot matches, the feed can still supply the agenda
+preview. Cupertino's schedule can confirm a meeting date while the first
+public start remains uncertain. The collector leaves the time blank until the
+public session is identified.
+
+Palo Alto reads the city's public event directory for regular and special
+meetings. It checks the city's robots policy before fetching event details.
+The directory can confirm a date when its detail page is excluded.
+
 ## Los Gatos meeting source
 
 Los Gatos's MuniCode transport fails, and its calendar/feed access is restricted.
