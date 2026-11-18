@@ -29,6 +29,7 @@ import { catSignal } from "./lib/notify.mjs";
 import { agendaTextForMeeting, recoverLegistarDigestSource, recoverPrimeGovDigestSource, recoverUnattributedMeetingAgenda } from "./lib/digest-source.mjs";
 import { hasUnsupportedMeetingAction, hasUnscopedMeetingCancellation } from "./lib/around-town-meetings.mjs";
 import {
+  escribeAgendaUrl,
   fetchCivicClerkPastMeeting,
   fetchCivicEngagePastMeeting,
   fetchEscribePastMeeting,
@@ -63,6 +64,13 @@ const CITIES = [
   // the council kept meeting (Aug 3, Aug 18), and the digest quietly reran the
   // July 7 record the whole time. `escribe` is the first-party archive.
   { city: "campbell",      stoaCity: "Campbell",      cityName: "Campbell",      schedule: "1st and 3rd Tuesday",   agendaUrl: "https://pub-campbell.escribemeetings.com/",
+    // The imported transcript has no source URL. The city's archive ties
+    // this agenda to the Nov 2 regular session and includes its recording.
+    verifiedAgenda: {
+      recordId: 7378,
+      date: "2026-11-02",
+      meetingId: "dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0",
+    },
     escribe: {
       host: "pub-campbell.escribemeetings.com",
       // Executive sessions are closed to the public; they are not city business
@@ -607,6 +615,10 @@ async function main() {
       });
       const heading = bodyLabel.toLowerCase().startsWith(`${config.cityName.toLowerCase()} `)
         ? bodyLabel : `${config.cityName} ${bodyLabel}`;
+      const verifiedAgenda = config.verifiedAgenda;
+      const verifiedAgendaUrl = verifiedAgenda && verifiedAgenda.recordId === meeting.id && verifiedAgenda.date === meeting.date
+        ? escribeAgendaUrl(config.escribe.host, verifiedAgenda.meetingId)
+        : null;
 
       digests[config.city] = {
         city: config.city,
@@ -632,6 +644,7 @@ async function main() {
         sourceUrl:
           bodySourceUrl
           ?? meeting.sourceUrl
+          ?? verifiedAgendaUrl
           ?? (config.legistar ? legistarMeetingUrl(config.legistar, meeting.date) : config.agendaUrl),
         generatedAt: parsed.generationTimestamp || new Date().toISOString(),
       };

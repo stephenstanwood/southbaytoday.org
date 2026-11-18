@@ -9,7 +9,7 @@ import { polishCivicCopy, polishCivicModifiers, polishCivicTopic } from "./lib/c
 
 const scripts = dirname(fileURLToPath(import.meta.url));
 const cities = ["campbell", "saratoga", "los-altos", "los-gatos", "san-jose", "mountain-view", "sunnyvale", "cupertino", "santa-clara", "milpitas", "palo-alto"];
-function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1,
+function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1, campbellRecord = null,
   keyTopics = ['Review of winter storm preparedness activities', 'Proposed stream corridor protection changes'],
   summary = "The agenda listed winter storm preparedness and proposed changes to stream corridor protection." } = {}) {
   const root = mkdtempSync(join(tmpdir(), "sbt-digest-source-"));
@@ -31,15 +31,20 @@ function run({ publishedDate = "2026-10-15", unavailable = false, runs = 1,
     writeFileSync(join(root, "source-mocks.mjs"), `
       import fs from 'node:fs';
       const RealDate = Date;
+      const now = ${JSON.stringify(campbellRecord ? "2026-11-16T03:40:00Z" : "2026-10-29T03:40:00Z")};
       globalThis.Date = class extends RealDate {
-        constructor(...args) { super(...(args.length ? args : ['2026-10-29T03:40:00Z'])); }
-        static now() { return new RealDate('2026-10-29T03:40:00Z').getTime(); }
+        constructor(...args) { super(...(args.length ? args : [now])); }
+        static now() { return new RealDate(now).getTime(); }
       };
       const fixture = ${JSON.stringify(fixture)};
       const prompts = [];
       globalThis.fetch = async (input, init) => {
         const url = new URL(String(input));
         if (url.hostname === 'www.stoa.works' && url.pathname === '/api/council-meetings') {
+          const campbell = ${JSON.stringify(campbellRecord)};
+          if (url.searchParams.get('city') === 'Campbell' && campbell) {
+            return Response.json({records: [campbell]});
+          }
           const records = url.searchParams.get('city') === 'Palo Alto' ? [{
             id: 215, city: 'Palo Alto', date: '2026-10-22', meetingType: 'City Council', source: 'ingest',
             title: 'Review Fiscal Year 2026 Actuals and 2027 Adopted – No Action Needed (10 min)',
@@ -107,6 +112,23 @@ test("a rerun recovers before the published-date guard instead of becoming stuck
   assert.equal(digests["palo-alto"].body, "City Council");
   assert.equal(digests["palo-alto"].carriedForward, undefined);
   assert.equal(prompts.length, 1);
+});
+
+test("the Campbell transcript keeps the verified agenda link for its record and meeting date", () => {
+  const record = {
+    id: 7378, city: "Campbell", date: "2026-11-02", meetingType: "City Council", source: "ingest",
+    title: "Campbell City Council",
+    excerpt: "Public hearing on the Campbell Technology Park project and an agreement for police recruitment advertising.",
+    fullAgendaText: "The Council considered the Campbell Technology Park project and the All Star Talent agreement.",
+    keywords: ["Campbell Technology Park", "All Star Talent"],
+  };
+  const { digests } = run({ campbellRecord: record });
+  assert.equal(digests.campbell.meetingDateIso, record.date);
+  assert.equal(digests.campbell.sourceUrl, "https://pub-campbell.escribemeetings.com/Meeting.aspx?Id=dc3aba52-7cf5-4d1a-b3d6-d8a3315e9ee0&Agenda=Agenda&lang=English");
+
+  for (const unrelated of [{ ...record, id: 7380 }, { ...record, date: "2026-11-03" }]) {
+    assert.equal(run({ campbellRecord: unrelated }).digests.campbell.sourceUrl, "https://pub-campbell.escribemeetings.com/");
+  }
 });
 
 test("unavailable sources and older recovered agendas preserve the published digest", () => {
