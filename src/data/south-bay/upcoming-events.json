@@ -4711,7 +4711,7 @@
       "address": "1431 Waverley Street, Palo Alto, CA, 94301",
       "city": "palo-alto",
       "category": "outdoor",
-      "cost": null,
+      "cost": "free",
       "description": "All ages are invited to spend a beautiful morning at Gamble Garden.",
       "url": "https://www.gamblegarden.org/event/january-saturday/",
       "source": "Gamble Garden",
@@ -4719,7 +4719,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJ0yK_PBm7j4ARbWeM5E9YaJA/photos/AV-0GLefJlsz3MPbMsoEOfTFOD2tkT42sGBYSypcSdgYFAY1sPKSyZMyfvLGOu-Iy8BG1tYk2B6bOx8KSi-aYDpkHy8QipTyitksVM8fKVhcoLZrC7pst16_y1PxtfVSFxunhx4LgDlNp9Lbun8hkmzFUeU0CLEuRoKWm24Yu74FPCLsJbzojP5hAdvkUBmXIs_E-5xtT-0yJAo1sV6hJQTMAwAT2E1GUAiHj2_p18sHD1WEe5y9Aa1Tk0qiUh-2QrRUs4iqkhnkyfVPVKWsxWmx_mOLs8Tux9c6sEe4qXIlIoPV96YaQFQqXqNBVk50piKAKc839-Z9R6HHaidCHUA8S8W89GXkuS116E1v7U9GnWEW_G2n_VcNsHJCtjuAGMnw-NjP79TPLPIm8VgPMR3ARTui8zN9fSE",
       "blurb": "Spend a Saturday morning outdoors at Gamble Garden. Visitors of all ages are welcome.",
-      "firstSeenAt": "2026-11-18T04:34:23.991Z"
+      "firstSeenAt": "2026-11-18T04:34:23.991Z",
+      "registration": "required",
+      "attendanceNote": "Reserve a free timed entry at 10 AM, 10:30 AM, or 11 AM. Check in at a Welcome Table when you arrive."
     },
     {
       "id": "gamblegarden-f338d13a82ab40c2",
@@ -8269,7 +8271,7 @@
       "venue": "Rose Garden Library",
       "address": "1580 Naglee Ave. San Jose",
       "city": "san-jose",
-      "registration": "required",
+      "registration": "none",
       "category": "education",
       "cost": "free",
       "description": "Do you need to brush up on your computer skills? Whether you need assistance putting together a Word document, Excel spreadsheet, or PowerPoint presentation, submitting an online job application or other government document, or learning a new online tool, our experienced and dedicated tech tutor can help! Sessions are 30 minutes and appointments are highly encouraged, though drop-ins can be taken on a first-come, first-served basis if times are available. Register by calling the Rose Garden Branch Library at 408-808-3070 or in person during the library's open hours. Free. Ayuda presencial para usar dispositivos digitales. Una voluntaria de la biblioteca te brindará apoyo para: Abrir una cuenta de correo electrónico; Conectarte a un punto de acceso o a una red Wi-Fi; Usar Chromebooks o computadoras; Usar Zoom; Completar formularios en línea y solicitudes de empleo. Se recomienda inscribirse. Llama para reservar una cita de 30 minutos. Gratis.",
@@ -8285,7 +8287,8 @@
       "audienceAge": "all",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/360c8dba1f811b4e3efbc6bc8dd56fc7/Volunteer%20Tech%20Mentors%20-%20Joy%20and%20Christie%202.jpg",
       "blurb": "Get one-on-one help brushing up on your computer skills at a Thursday evening session at Rose Garden Library.",
-      "firstSeenAt": "2026-11-17T03:23:04.238Z"
+      "firstSeenAt": "2026-11-17T03:23:04.238Z",
+      "registrationClosesBy": null
     },
     {
       "id": "sjpl-693c82bd8b29ea2800c3f734",
@@ -12516,7 +12519,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -12775,7 +12778,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13022,7 +13025,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13032,7 +13035,9 @@
       "audienceAge": "kids",
       "photoRef": "places/ChIJ87Nodmm6j4ARiEJRRlTJ9fQ/photos/AV-0GLdOtWih3IpIuihoxRb4W72AKcDcgVyIp_7hvpuIOzS8rzQ3IXvGRQX47aHTQiYd1eHGajdqOj-4-d4WC0xzXn1-iAGPh6Viish2zMHhZo1rYSIfLjiMoUWbp2Ls3WS9cBf04wxNt1UsrJSk5hgXowYWwlByCd8G5q9c3ooQZl05JgzQxVtx1wP7uJZhD3DfkBSVxIgGnAUL0Q0q0Rsj2h8FFPh1s4CmFNacQDS5FYmihwUocNlpx1xNrZy0YgTnhOJ-mNRRAyBFgIguaupwnWASUhDMpwX8WHyWQyy9W9fUCRtmD9cuRymETaY95_asnFg8AQAaeFrWjArOn1F6gJFqRbh3ImIJqVOGmP_wWfUMIztG6BqhtsYrTzK-ojoXkCOiNHSng1-U7agedGS2B4oBuDc",
       "blurb": "Study for finals at Mitchell Park Library's extra teen study space, with snacks on offer to keep you going.",
-      "firstSeenAt": "2026-11-17T20:01:02.088Z"
+      "firstSeenAt": "2026-11-17T20:01:02.088Z",
+      "attendanceStatus": "needs-confirmation",
+      "attendanceNote": "Mitchell Park Library's calendar lists a 4:30 PM start on December 9, while its description says 4:00 PM. Confirm the start with the library before going."
     },
     {
       "id": "paloalto-6ae912f3ede3fd91a82de376",
@@ -13230,7 +13235,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13307,7 +13312,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13358,7 +13363,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13409,7 +13414,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13462,7 +13467,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],
@@ -13540,7 +13545,7 @@
       "city": "palo-alto",
       "category": "community",
       "cost": "free",
-      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
+      "description": "Teens, do you need a place to focus, recharge and get ready for finals? Join us at the Mitchell Park Library for some extra study space (and snacks!) in the Midtown Room (first floor): Monday, December 7: 4:00-8:45 pm; Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable; Friday, December 11: 2:30-5:45 pm; Saturday, December 12: unavailable; Sunday, December 13: 3:30-5:45 pm; Monday, December 14: 4:00-8:45 pm; Tuesday, December 15: 5:00-8:45 pm; Wednesday, December 16: 4:00-8:45 pm; Thursday, December 17: 4:00-8:45 pm. This study space is open to teens only. Wishing all of our teens the best of luck during finals season!",
       "sourceAudiences": [
         "Teens (14-18)"
       ],

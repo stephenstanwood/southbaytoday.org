@@ -6,8 +6,11 @@
 import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
 const ART_MAKING_ACTIVITY = /\b(?:(?:make|making|create|creating)\s+(?:your\s+own\s+)?art|art[\s-]making|hands[\s-]on\s+art|(?:paint|draw)\s+(?:a|an|your|with)|(?:painting|drawing)\s+(?:activity|workshop|class))\b/i;
-const MITCHELL_PARK_STUDY_HOURS = /\bWednesday\s+12\/9(?:\s*[-–]\s*|\s+from\s+)4:00\s*PM(?:\s*[-–]\s*|\s+to\s+)8:45\s*PM\.?/i;
-const MITCHELL_PARK_STUDY_COPY = [[MITCHELL_PARK_STUDY_HOURS, "Check with Mitchell Park Library for the Wednesday 12/9 start."]];
+const MITCHELL_PARK_STUDY_HOURS = /\bWednesday(?:\s+12\/9(?:\s*[-–]\s*|\s+from\s+)|,\s+December 9:\s*)4:00(?:\s*PM)?(?:\s*[-–]\s*|\s+to\s+)8:45\s*PM([.;])?/i;
+const MITCHELL_PARK_STUDY_COPY = [[
+  MITCHELL_PARK_STUDY_HOURS,
+  (_match, punctuation) => `Check with Mitchell Park Library for the Wednesday 12/9 start${punctuation || "."}`,
+]];
 
 function hasMitchellParkStudyHours(event) {
   return event.source === "Palo Alto City Library" && event.venue === "Mitchell Park Library"
@@ -956,16 +959,19 @@ const CORRECTIONS = [
       && event.venue === "Leavey Event Center" && event.time === "7:00 PM",
     facts: { endTime: "9:00 PM" },
   },
-  // Fresh organizer pages checked November 10. Keep these corrections tied
-  // to the exact dated occurrence; never infer a later session or reopen it.
-  // Evidence: docs/qa/2026-11-11-0207z-fact-check.md.
+  // These library listings explicitly allow drop-ins when space permits.
+  // Keep each correction tied to its dated occurrence and current copy.
+  // Evidence: docs/qa/2026-11-11-0207z-fact-check.md and
+  // https://sjpl.bibliocommons.com/v2/events/6920f0bad6833e76917eb5ea
   ...[
-    ["6920f111c313c23700e355a9", "1 on 1 Tech Assistance (In-Person)", "Rose Garden Library",
+    ["2026-11-14", "6920f111c313c23700e355a9", "1 on 1 Tech Assistance (In-Person)", "Rose Garden Library",
       /\bappointments are highly encouraged\b/i, /\bdrop-ins can be taken\b/i],
-    ["6ab6f970129d8e0031f52185", "Holiday Bath Bombs", "East SJ Carnegie Library",
+    ["2026-11-19", "6920f0bad6833e76917eb5ea", "1 on 1 Tech Assistance / Asistencia tecnológica", "Rose Garden Library",
+      /\bappointments are highly encouraged\b/i, /\bdrop-ins can be taken\b[^.]*\bif times are available\b/i],
+    ["2026-11-14", "6ab6f970129d8e0031f52185", "Holiday Bath Bombs", "East SJ Carnegie Library",
       /\bregistration is recommended\b/i, /\bwalk-ins are welcome\b/i],
-  ].map(([sourceId, title, venue, optional, walkIn]) => ({
-    date: "2026-11-14",
+  ].map(([date, sourceId, title, venue, optional, walkIn]) => ({
+    date,
     matches: event => event.url === `https://sjpl.bibliocommons.com/events/${sourceId}`
       && event.title === title && event.venue === venue
       && optional.test(event.description || "") && walkIn.test(event.description || "")

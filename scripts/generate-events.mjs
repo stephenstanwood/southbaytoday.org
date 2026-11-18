@@ -10354,12 +10354,13 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
         // "no reservations are required" do not. Closures take precedence.
         const timedEntry = secondSaturday
           ? sourceDescription.match(/\bRegister for timed entry at [^.!?]+[.!?]?/i)?.[0]?.trim()
+            || sourceDescription.match(/(?:^|[.!?]\s+)(Register for one of \w+ timed entry slots:\s*\d[^.!?]+[.!?]?)/i)?.[1]?.trim()
           : null;
         const checkIn = timedEntry
-          ? sourceDescription.match(/\bAll Second Saturday guests,[^.!?]+[.!?]?/i)?.[0]?.trim()
+          ? sourceDescription.match(/\b(?:All Second Saturday guests,|When you arrive, stop by one of our two Welcome Tables\b)[^.!?]+[.!?]?/i)?.[0]?.trim()
           : null;
         const freeAdmission = (secondSaturday
-          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription))
+          && /\bSecond Saturday is free(?=[.!?]|$|\s+and (?:appropriate for all ages|includes)\b)/i.test(sourceDescription))
           || /\bfree for everyone\s*[—–-]\s*no membership required\b/i.test(sourceDescription);
         const registration = declaredRegistrationAvailability(sourceDescription)
           || ((timedEntry || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription))

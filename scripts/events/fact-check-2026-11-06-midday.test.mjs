@@ -95,6 +95,8 @@ test("Second Saturday follows changed admission and never turns optional signup 
   const { record } = fixture.gamble;
   const cases = [
     { body: "Second Saturday is free and appropriate for all ages. Register for timed entry at 9:00 AM or 11:30 AM.", cost: "free", registration: "required", note: /9:00 AM or 11:30 AM/ },
+    { body: "Second Saturday is free and includes activities such as:<ul><li>Storytime</li></ul> <p>All ages are welcome.</p><p>Register for one of three timed entry slots: 10:00, 10:30, or 11:00 AM. When you arrive, stop by one of our two Welcome Tables to check in.</p>", cost: "free", registration: "required", note: /10:00, 10:30, or 11:00 AM\. When you arrive.*check in/ },
+    { body: "Second Saturday is free for members. You can register for one of three timed entry slots: 10:00, 10:30, or 11:00 AM.", cost: null },
     { body: "Free parking. Optional registration provides a reminder email.", cost: null },
     { body: "Second Saturday is free and appropriate for all ages. No registration is required.", cost: "free" },
     { body: "Registration is full. Register for timed entry at 10:00 AM.", cost: null, registration: "full" },

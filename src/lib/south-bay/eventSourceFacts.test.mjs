@@ -78,6 +78,29 @@ test("only the conflicting Mitchell Park study session requires start confirmati
 
   const updated = { ...event, description: event.description.replace("4:00 PM", "4:30 PM") };
   assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+
+  const longDates = "Tuesday, December 8: 4:30-8:45 pm; Wednesday, December 9: 4:00-8:45 pm; Thursday, December 10: unavailable.";
+  const longDateCorrected = applyVerifiedEventFacts({ ...event, description: longDates });
+  assert.equal(requiresAttendanceConfirmation(longDateCorrected), true);
+  assert.equal(longDateCorrected.description, "Tuesday, December 8: 4:30-8:45 pm; Check with Mitchell Park Library for the Wednesday 12/9 start; Thursday, December 10: unavailable.");
+  assert.equal(requiresAttendanceConfirmation(applyVerifiedEventFacts({ ...sibling, description: longDates })), false);
+  const matchingLongDates = { ...event, description: longDates.replace("9: 4:00", "9: 4:30") };
+  assert.deepEqual(applyVerifiedEventFacts(matchingLongDates), matchingLongDates);
+});
+
+test("Rose Garden tech help keeps conditional drop-in access for the November 19 occurrence", () => {
+  const event = {
+    date: "2026-11-19", title: "1 on 1 Tech Assistance / Asistencia tecnológica",
+    source: "San Jose Public Library", venue: "Rose Garden Library",
+    url: "https://sjpl.bibliocommons.com/events/6920f0bad6833e76917eb5ea",
+    registration: "required", registrationClosesBy: "2026-11-20T01:00:00Z",
+    description: "Appointments are highly encouraged, though drop-ins can be taken if times are available.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), { ...event, registration: "none", registrationClosesBy: null });
+  const closed = { ...event, registration: "closed" };
+  assert.deepEqual(applyVerifiedEventFacts(closed), closed);
+  const noWalkIns = { ...event, description: "Registration is required. No drop-ins." };
+  assert.deepEqual(applyVerifiedEventFacts(noWalkIns), noWalkIns);
 });
 
 test("Almaden tech help keeps current resources and appointment terms", () => {
