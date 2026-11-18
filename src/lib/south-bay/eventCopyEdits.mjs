@@ -3,6 +3,12 @@
 // through unchanged. No event-ID lookup or historical description restore.
 // Apply after prose casing and cached/generated blurbs have been selected, so
 // raw capitalization and cache hits cannot undo an approved grammar repair.
+const SCCLD_BOOK_DISCUSSION_EDITS = [
+  ["our monthly book club meeting, as we discuss", "our monthly book club meeting to discuss"],
+  ["Space is limited, and regular/ongoing attendees do not need to register.", "Space is limited. Regular attendees do not need to register."],
+  ["to join the monthly email reminders, and to obtain permission to pick up a copy of the books.", "to receive monthly reminders and get permission to pick up copies of the books."],
+];
+
 const EDITS = {
   "The Tech Interactive": {
     title: [
@@ -883,6 +889,7 @@ const EDITS = {
       [/^cnps talk #(\d+) The birds, the bees and a magic trait:/gi, "CNPS Talk #$1: The birds, the bees, and a magic trait:"],
     ],
     attendanceNote: [
+      ...SCCLD_BOOK_DISCUSSION_EDITS,
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["KinderReadiness!", "Kinder Readiness!"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
@@ -900,6 +907,7 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ...SCCLD_BOOK_DISCUSSION_EDITS,
       ["Adults join us for our Children's Literature for Adults Book Club to discuss, reminisce, or discover for the first time a beloved children's classic.", "Join our Children's Literature for Adults Book Club to discuss a beloved children's classic, revisit an old favorite, or discover it for the first time."],
       ["Children's Reference Desk where we will have a copy of the book available. Adults only please.", "Children's Reference Desk, where a copy of the book will be available. Adults only, please."],
       ["email us atask@sccl.org", "email us at ask@sccl.org"],
