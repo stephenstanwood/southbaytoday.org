@@ -1817,6 +1817,49 @@ test("October's verified workshop topic, meeting cadence and family audience sur
   assert.equal(applyVerifiedEventFacts(otherSummit), otherSummit);
 });
 
+test("Calabazas Teens Reach copy keeps the volunteer enrollment condition", async () => {
+  const raw = {
+    date: "2026-11-21", time: "4:00 PM", endTime: "5:00 PM", venue: "Calabazas Library",
+    url: "https://sjpl.bibliocommons.com/events/6a3d7bfbed35742f00fe48d0",
+    title: "Calabazas Teens Reach Meeting",
+    description: "Come join us the first Thursday of the month for our monthly Calabazas Teens Reach meeting. You will need to be enrolled as a volunteer to log your hours. No registration required.",
+    blurb: "Meet other teen volunteers, log volunteer hours, and work on projects at this monthly Reach meeting.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.deepEqual(actual, {
+    ...raw,
+    description: raw.description.replace(" the first Thursday of the month", ""),
+    blurb: "Meet other teen volunteers and work on projects. Only enrolled library volunteers can log hours.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  const changedTerms = { ...actual, description: "All participants can log hours.", blurb: "Log volunteer hours at the meeting." };
+  assert.deepEqual(applyVerifiedEventFacts(changedTerms), changedTerms);
+});
+
+test("Stanford's ME218a showcase keeps its named meeting site and source-grounded blurb", async () => {
+  const raw = {
+    source: "Stanford Events", date: "2026-11-18", time: "7:00 PM", endTime: "9:00 PM",
+    title: "ME218a Smart Product Design Fundamentals Project Presentations",
+    url: "https://events.stanford.edu/event/me218a-smart-product-design-fundamentals-project-presentations-327",
+    venue: "Building 550, Peterson Laboratory", address: "416 Escondido Mall, Stanford, CA 94305",
+    blurb: "See the projects and talk with the students about their designs.",
+  };
+  const events = [{ ...raw }];
+  await resolveEventBlurbs(events, { enabled: false });
+  const [actual] = events;
+  assert.deepEqual(actual, {
+    ...raw,
+    venue: "Building 550, Peterson Laboratory, Grove",
+    blurb: "See graduate mechanical engineering teams demonstrate their ME218a projects in an interactive mechatronics showcase.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(actual), actual);
+  for (const other of [{ ...raw, date: "2026-11-19" }, { ...raw, venue: "Another Laboratory" }, { ...raw, virtual: true }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Panama Deception drops obsolete current claims from source and polished descriptions", async () => {
   const { polishDescription } = await import("../../../scripts/generate-events.mjs");
   const event = {

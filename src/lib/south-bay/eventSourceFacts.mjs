@@ -82,6 +82,27 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Attendance is open to teens even when they cannot log volunteer hours.
+  // https://sjpl.bibliocommons.com/v2/events/6a3d7bfbed35742f00fe48d0
+  {
+    date: "2026-11-21",
+    matches: event => event.venue === "Calabazas Library"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a3d7bfbed35742f00fe48d0\/?$/.test(event.url || "")
+      && /\benrolled as a volunteer to log your hours\b/i.test(event.description || ""),
+    facts: { blurb: "Meet other teen volunteers and work on projects. Only enrolled library volunteers can log hours." },
+  },
+  // The calendar names the Grove and describes an interactive project showcase.
+  // https://events.stanford.edu/event/me218a-smart-product-design-fundamentals-project-presentations-327
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events" && !event.virtual
+      && event.url === "https://events.stanford.edu/event/me218a-smart-product-design-fundamentals-project-presentations-327"
+      && /^Building 550, Peterson Laboratory(?:, Grove)?$/.test(event.venue || ""),
+    facts: {
+      venue: "Building 550, Peterson Laboratory, Grove",
+      blurb: "See graduate mechanical engineering teams demonstrate their ME218a projects in an interactive mechatronics showcase.",
+    },
+  },
   // The November 18 Eventbrite listing gives separate ticket tiers and requires ID.
   {
     date: "2026-11-18",
