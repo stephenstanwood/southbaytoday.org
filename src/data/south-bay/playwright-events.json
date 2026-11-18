@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-18T04:47:01.181Z",
+    "generatedAt": "2026-11-18T09:35:20.805Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 188,
+    "eventCount": 187,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (11)",
@@ -13,6 +13,7 @@
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
+      "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (7)",
       "Santana Row (7)",
       "City of Cupertino (34)",
@@ -23,7 +24,6 @@
       "The Tech Interactive (14)",
       "Books Inc (4)",
       "San Jose Museum of Art (2)",
-      "Children's Discovery Museum (2)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -175,16 +175,13 @@
       {
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
-        "status": "error",
-        "count": 2,
-        "liveCount": 0,
-        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Children's Discovery Museum",
+        "status": "ok",
+        "count": 1,
+        "liveCount": 1,
+        "error": null,
         "sources": [
           "Children's Discovery Museum"
-        ],
-        "retainedCount": 2,
-        "carriedForward": true,
-        "carryForwardReason": "scraper errored; retained previous run's events"
+        ]
       },
       {
         "id": "guadalupe-river-park",
@@ -832,10 +829,10 @@
       "kidFriendly": false
     },
     {
-      "id": "6633cc038d37",
+      "id": "8059cc16cd3b",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -852,10 +849,10 @@
       "kidFriendly": false
     },
     {
-      "id": "eecc8492afb6",
+      "id": "65d4a6753ffe",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -906,6 +903,23 @@
       "description": "",
       "url": "https://www.mountainwinery.com/events/detail?event_id=1683714",
       "source": "Mountain Winery",
+      "kidFriendly": true
+    },
+    {
+      "id": "67ae0b45f4a0",
+      "title": "Toddler Storytime",
+      "date": "2026-11-18",
+      "displayDate": "Wed, Nov 18",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
       "kidFriendly": true
     },
     {
@@ -1090,7 +1104,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-18T04:45:38.437Z"
+        "checkedAt": "2026-11-18T09:34:14.266Z"
       }
     },
     {
@@ -1113,7 +1127,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-18T04:45:38.453Z"
+        "checkedAt": "2026-11-18T09:34:14.268Z"
       }
     },
     {
@@ -1136,7 +1150,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-18T04:45:38.454Z"
+        "checkedAt": "2026-11-18T09:34:14.269Z"
       }
     },
     {
@@ -1159,7 +1173,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T04:45:38.454Z"
+        "checkedAt": "2026-11-18T09:34:14.269Z"
       }
     },
     {
@@ -1182,7 +1196,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T04:45:38.455Z"
+        "checkedAt": "2026-11-18T09:34:14.270Z"
       }
     },
     {
@@ -1205,7 +1219,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-18T04:45:38.471Z"
+        "checkedAt": "2026-11-18T09:34:14.272Z"
       }
     },
     {
@@ -1228,7 +1242,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-18T04:45:38.472Z"
+        "checkedAt": "2026-11-18T09:34:14.272Z"
       }
     },
     {
@@ -3044,23 +3058,6 @@
       "kidFriendly": false
     },
     {
-      "id": "0af32bada49a",
-      "title": "Sharks vs Flames",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "sports",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
       "id": "112cbb09ca0c",
       "title": "Three Days Grace",
       "date": "2026-11-18",
@@ -3081,7 +3078,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.467Z"
+        "checkedAt": "2026-11-18T09:34:44.654Z"
       }
     },
     {
@@ -3105,7 +3102,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.469Z"
+        "checkedAt": "2026-11-18T09:34:44.654Z"
       }
     },
     {
@@ -3129,7 +3126,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.471Z"
+        "checkedAt": "2026-11-18T09:34:44.654Z"
       }
     },
     {
@@ -3153,7 +3150,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.473Z"
+        "checkedAt": "2026-11-18T09:34:44.655Z"
       }
     },
     {
@@ -3177,7 +3174,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.473Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3201,7 +3198,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.474Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3242,7 +3239,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.474Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3266,7 +3263,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.474Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3290,7 +3287,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.474Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3314,7 +3311,31 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T04:46:22.474Z"
+        "checkedAt": "2026-11-18T09:34:44.656Z"
+      }
+    },
+    {
+      "id": "c81cbe0635e8",
+      "title": "Wang Leehom",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "SAP Center",
+      "address": "525 W Santa Clara St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.sapcenter.com/events/detail/wang-leehom",
+      "source": "SAP Center",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
+        "date": "2026-12-19",
+        "time": "8:00 PM",
+        "checkedAt": "2026-11-18T09:34:44.656Z"
       }
     },
     {
@@ -3662,40 +3683,6 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
-    },
-    {
-      "id": "533792b76d21",
-      "title": "All Ages Storytime",
-      "date": "2026-11-17",
-      "displayDate": "Tue, Nov 17",
-      "time": "11:30 am",
-      "endTime": null,
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
-      "id": "5cf49f965f57",
-      "title": "Daisy Day: Design with Nature",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "1:00 pm",
-      "endTime": "2:30 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
     },
     {
       "id": "5dd03098440a",
