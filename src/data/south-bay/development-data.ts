@@ -84,11 +84,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Formerly CityPlace Santa Clara. A large mixed-use development adjacent to Levi's Stadium planned by Related Companies. Approved by Santa Clara after years of litigation with San José. Includes office, hotel, retail, and entertainment uses across a multi-building campus.",
+      "Formerly CityPlace Santa Clara, this planned mixed-use development next to Levi's Stadium includes offices, hotels, retail, and entertainment. Santa Clara approved the project in June 2016. San José challenged the environmental review, and the cities reached a settlement in January 2018.",
     scale: "Multi-building campus",
     developer: "Related Companies",
     timeline: "TBD",
     featured: false,
+    sourceNote: "City of Santa Clara project record: https://www.santaclaraca.gov/Home/Components/BusinessDirectory/BusinessDirectory/216/2495. Joint settlement announcement: https://www.santaclaraca.gov/Home/Components/News/News/36280/3171",
   },
 
   // ── UNDER CONSTRUCTION ──────────────────────────────────────────────────
@@ -214,13 +215,13 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Mountain View City Council took up the development agreement for a mixed-use residential project at 490 East Middlefield Road on second reading at its March 24, 2026, meeting. The project adds residential units to one of Mountain View's key transit corridors, consistent with the city's goals for housing near employment centers and transit.",
+      "The Mountain View City Council approved the development agreement for a mixed-use residential project at 490 East Middlefield Road on March 24, 2026. The project adds residential units to one of Mountain View's key transit corridors, consistent with the city's goals for housing near employment centers and transit.",
     scale: "Residential + ground-floor uses",
-    developer: "TBD",
+    developer: "WTA Middlefield, LLC",
     timeline: "Approved March 2026",
     featured: false,
     sourceNote:
-      "Confirmed against Mountain View Legistar: the March 24, 2026 City Council agenda carries \"Mixed-Use Residential Development at 490 East Middlefield Road - Development Agreement (Second Reading)\" (event 3356). Developer not named on the agenda item. Verify at mountainview.legistar.com.",
+      "Mountain View City Council item 205958 names WTA Middlefield, LLC in the development agreement and records approval on March 24, 2026: https://mountainview.legistar.com/LegislationDetail.aspx?GUID=54271253-87EC-4C53-9F9E-2924DB4F7D2F&ID=7956718.",
   },
 
   {
@@ -302,24 +303,24 @@ export const DEV_PROJECTS: DevProject[] = [
     sourceNote: "Rollup of Federal Realty's ongoing Santana Row residential phases, not one tracked entitlement — tower counts and phase dates are approximate. Verify at sanjoseca.gov planning records or federalrealty.com property pages.",
   },
 
-  // ── PROPOSED ────────────────────────────────────────────────────────────
-
   {
     id: "wolfe-rd-housing-cupertino",
     name: "Wolfe Road Housing Development",
     city: "Cupertino",
     cityId: "cupertino",
     category: "housing",
-    status: "proposed",
+    status: "approved",
     description:
-      "Cupertino's November 10, 2026, Planning Commission agenda lists architectural and site approval and tree-removal permit applications for a 251-unit residential development at 10333 N. Wolfe Road. Eden Housing is the applicant. The proposal includes site and trail improvements and the removal and replacement of 117 protected trees.",
-    scale: "251 residential units proposed",
+      "Cupertino's Planning Commission voted 5–0 on November 10, 2026, to approve Eden Housing's site and tree removal permits for 251 homes at 10333 N. Wolfe Road. The plans call for 248 income-restricted homes, three manager units, trail improvements, and the removal and replacement of 117 protected trees.",
+    scale: "251 homes, including 248 planned income-restricted units",
     developer: "Eden Housing (applicant)",
-    timeline: "Listed for Planning Commission review November 10, 2026",
+    timeline: "Planning Commission approved the permits November 10, 2026",
     featured: false,
     sourceNote:
-      "Cupertino Planning Commission, November 10, 2026, item 2 / file 26-15432: applications ASA-2025-009 and TR-2025-036 name Eden Housing and 251 units. The posted agenda establishes the proposal, not an approval; minutes and action results were unavailable when checked. Source: https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5233&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "Cupertino Planning Commission item 2, file 26-15432. The city-posted November 10 transcript records the 5–0 vote at 1:50:02. The staff report gives the 248 income-restricted homes and three manager units. https://cupertino.legistar.com/MeetingDetail.aspx?GUID=5D8BA424-C1E8-42B2-8B92-4F9B2D819E8E&ID=1360740",
   },
+
+  // ── PROPOSED ────────────────────────────────────────────────────────────
 
   {
     id: "downtown-sunnyvale",

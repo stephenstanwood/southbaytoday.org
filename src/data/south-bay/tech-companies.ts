@@ -1759,11 +1759,10 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     color: "#7c3aed",
     url: "https://www.puppygraph.com",
   },
-  // geniosAI's Nov 9 BusinessWire release carries a "San Jose, California"
-  // dateline. FactSet led; Zoom and General Catalyst participated. The
-  // release gives only the combined seed + Series A total.
-  // https://www.businesswire.com/news/home/20261109329159/en/
-  // https://www.thesaasnews.com/news/geniosai-raises-19-1m-seed-series-a/
+  // geniosAI's Nov 9 release carries a "San Jose, California" dateline.
+  // FactSet led the Series A, and the release gives only the combined
+  // seed and Series A total. Zoom and General Catalyst also participated.
+  // https://geniosai.co/press/
   {
     id: "geniosai-seed-series-a",
     name: "geniosAI",
@@ -1773,7 +1772,7 @@ export const RECENTLY_FUNDED: RecentlyFunded[] = [
     amount: "$19.1M",
     date: "2026-11-09",
     tagline:
-      "San Jose's geniosAI came out of stealth with $19.1M across seed and Series A rounds for an AI analysis platform built for CFO offices and investment teams, where every insight traces back to its source data, calculations and assumptions. FactSet led the round and pipes its financial data into the platform; Zoom and General Catalyst also invested. Co-founder Prabhdeep Singh is CEO.",
+      "San Jose's geniosAI came out of stealth with $19.1M across seed and Series A rounds for an AI analysis platform built for CFO offices and investment teams, where every insight traces back to its source data, calculations and assumptions. FactSet led the Series A and provides financial data for the platform. Zoom and General Catalyst also invested. Co-founder Prabhdeep Singh is CEO.",
     color: "#2563eb",
     url: "https://geniosai.com",
   },
