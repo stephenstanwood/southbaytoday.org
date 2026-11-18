@@ -295,7 +295,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "under-construction",
     description:
-      "Federal Realty is building a six-story apartment building with 258 homes and parking on Lot 12 at Santana Row.",
+      "Federal Realty is constructing a six-story apartment building with 258 homes and parking on Lot 12 at Santana Row.",
     scale: "258 apartments in one six-story building",
     developer: "Federal Realty Investment Trust",
     timeline: "Construction underway as of November 2026",

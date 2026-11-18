@@ -759,6 +759,7 @@ const EDITS = {
     description: [
       ["OA Susan O'Malley", ""],
       ["RSVP Lowrider Art Showcase", ""],
+      ["RSVP Yuletide Marketplace FRI", ""],
       ["The Music of ABBA", ""],
       ["Wreath Making Workshop", ""],
       [/^Wreath Making Workshop (\d{1,2}(?::\d{2})? [AP]M)$/g, "The wreath-making workshop starts at $1."],
@@ -1434,8 +1435,8 @@ export function polishReviewedEventCopy(event) {
   for (const [field, edits] of Object.entries(fields)) {
     if (typeof next[field] !== "string") continue;
     for (const [before, after] of edits) {
-      // The reviewed empty descriptions were whole-field title echoes. A
-      // later substantive description mentioning that title must survive.
+      // Remove only complete placeholder descriptions. Later substantive copy
+      // can include the same phrase.
       if (after === "") {
         if (next[field] === before) next[field] = "";
       } else {
