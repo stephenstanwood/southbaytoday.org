@@ -29,6 +29,23 @@ test("JSON-LD start time wins over anything in the body copy", () => {
   assert.equal(extractTimeFromHtml(html, "2026-09-17"), "7:30 PM");
 });
 
+test("Stanford Athletics ticket placeholders need a displayed start on the same date", () => {
+  const url = "https://tickets.gostanford.com/events/football-vs-smu-fauvdl/6aee4789c9f40aa050aa2976";
+  const body = `
+    <script type="application/ld+json">{"@type":"Event","startDate":"2026-11-28T20:00:00.000Z"}</script>
+    <span class="sr-only">Date</span>
+    <time dateTime="2026-11-28T20:00:00.000Z"><span>Sat, November 28</span></time>
+    <p>Kickoff will be at 12 PM or 12:30 PM, determined after the conclusion of games on Nov. 21.</p>`;
+  assert.equal(extractTimeFromHtml(page(body), "2026-11-28", url), null);
+
+  const confirmed = body.replace(">Date<", ">Date &amp; time<")
+    .replace("20:00:00.000Z\"><span>", "20:30:00.000Z\"><span>")
+    .replace("</time>", "<span class=\"text-light\">12:30\u202fPM</span></time>");
+  assert.equal(extractTimeFromHtml(page(confirmed), "2026-11-28", url), "12:30 PM");
+  assert.equal(extractTimeFromHtml(page(confirmed), "2026-11-29", url), null);
+  assert.equal(extractTimeFromHtml(page(confirmed.replace("12:30\u202fPM", "12:00 PM")), "2026-11-28", url), null);
+});
+
 test("structured event instants use the occurrence's Pacific clock and calendar date", () => {
   // Stanford's Nov 1 Notre Dame ticket page prints 1 PM; its JSON-LD is UTC.
   // NC State's Oct 29 evening match has an Oct 30 UTC date.

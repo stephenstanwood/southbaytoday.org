@@ -9,9 +9,10 @@ import { parseMontalvoOccurrencePage } from "../../src/lib/south-bay/montalvoOcc
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-14-yuletide.json", import.meta.url)));
 
 test("the captured dated market ticket confirms free admission without inventing a booking requirement", () => {
-  const detail = parseMontalvoOccurrencePage(fixture.ticketHtml);
+  const detail = parseMontalvoOccurrencePage(`<link rel="canonical" href="${fixture.ticketUrl}">${fixture.ticketHtml}`);
   assert.equal(detail.date, "2026-11-20");
   assert.equal(detail.time, "10:00 AM");
+  assert.equal(detail.endTime, "3:00 PM");
   assert.equal(detail.cost, "free");
   assert.equal(detail.registration, undefined);
   assert.match(fixture.ticketHtml, /Opening Hours\s*10am–3pm/);
@@ -61,4 +62,12 @@ test("revised market facts and unrelated occurrences pass through without restor
     const current = { ...fixture.incoming, ...change };
     assert.deepEqual(applyVerifiedEventFacts(current), current);
   }
+});
+
+test("the organizer's sparse Friday calendar alias retains verified hours and parking RSVP", () => {
+  const row = { ...fixture.incoming, source: "Montalvo Arts Center", description: "RSVP Yuletide Marketplace FRI", endTime: null };
+  const repaired = applyVerifiedEventFacts(row);
+  assert.equal(repaired.endTime, "3:00 PM");
+  assert.match(repaired.attendanceNote, /register for free to help plan parking/);
+  assert.equal(repaired.registration, row.registration);
 });

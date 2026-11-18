@@ -95,7 +95,7 @@ import {
 import { fuzzyDedupEvents } from "../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { SLUG_TO_CITY_TOKENS } from "./social/lib/content-rules.mjs";
 import { loadEnvLocal } from "./lib/env.mjs";
-import { fetchJson, fetchText, UA } from "./lib/http.mjs";
+import { fetchJson, fetchText, fetchWithRetry, UA } from "./lib/http.mjs";
 import { officialSnapshotEvents, readOfficialEventSnapshot } from "./lib/official-event-snapshot.mjs";
 import {
   midpenPreserveCity,
@@ -2190,7 +2190,7 @@ function polishDescription(text) {
   // Keep source-supplied brand/artwork spelling intact through camel-case
   // splitting and sentence capitalization, including sentence-initial iPad.
   const sourceNames = [];
-  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|iPads?|FlipaClip|DreamWorks|MacArthur|BayPiggies|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
+  t = t.replace(/\b(?:OpenAI|ChatGPT|SketchUp|LinkedIn|OverDrive|iPads?|FlipaClip|DreamWorks|MacArthur|BayPiggies|patty chang: surfacing|JJJJ ?Jerome Ellis)\b/g,
     (name) => `\uE003${sourceNames.push(name) - 1}\uE004`);
   // Rich-text editors leak zero-width spacing into otherwise plain prose.
   // Keep word breaks, remove word-joiner/BOM noise, and leave ZWJ emoji and
@@ -4131,6 +4131,26 @@ function localistCost(ev) {
   return null;
 }
 
+// A mixed ticket range alone does not establish free public admission. Only
+// an explicit, unrestricted no-credit tier followed by a priced CE tier does.
+// Read the complete current body before truncation, and reject a conflicting
+// ticket label. Stanford's Nov 18 course uses Free–$65 for this distinction.
+function localistCreditAdmission(ev) {
+  const lines = String(ev.description || ev.description_text || "")
+    .replace(/<br\s*\/?>|<\/(?:p|div|li|h[1-6])\s*>/gi, "\n")
+    .split(/\r?\n/).map(line => stripHtml(line).trim()).filter(Boolean);
+  const index = lines.findIndex(line => /^No CE Credit(?:\s*[-–—]\s*you will not be able to obtain credit)?\s*:\s*Free\.?$/i.test(line));
+  if (index === -1) return null;
+  const credit = lines[index + 1]?.match(/^CE Credit:\s*\$(\d+(?:\.\d{1,2})?)\.?$/i);
+  if (!credit || Number(credit[1]) <= 0) return null;
+  const ticket = stripHtml(ev.ticket_cost || "").trim();
+  if (ticket) {
+    const range = ticket.match(/^Free\s*[-–—]\s*\$(\d+(?:\.\d{1,2})?)$/i);
+    if (!range || Number(range[1]) !== Number(credit[1])) return null;
+  }
+  return { cost: "free", costNote: `Free without CE credit; $${credit[1]} with CE credit.` };
+}
+
 function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
@@ -4726,6 +4746,7 @@ async function fetchStanfordEvents() {
         ? "music"
         : conferenceMisreadAsArt || (["family", "outdoor"].includes(inferredCategory) && sourceSaysLecture)
           ? "education" : inferredCategory;
+      const creditAdmission = localistCreditAdmission(ev);
       const attendanceNotes = [
         ...(publicVirtualOnly ? ["Public attendance is online. In-person attendance is limited to Stanford affiliates."] : []),
         ...(publicZoomOnly ? [`Public attendance is via Zoom. ${restriction}`] : []),
@@ -4742,6 +4763,8 @@ async function fetchStanfordEvents() {
         ...(applicationRequirement ? [applicationRequirement] : []),
         ...(registrationNotice ? [registrationNotice] : []),
         ...(foodLectureSchedule ? [foodLectureSchedule] : []),
+        // Static event pages display attendance notes rather than costNote.
+        ...(creditAdmission ? [creditAdmission.costNote] : []),
       ];
       return {
         // A series shares one Localist id across every occurrence, so scope the
@@ -4767,7 +4790,8 @@ async function fetchStanfordEvents() {
         // 2026-09-14, and three-quarters of the feed has neither the flag nor
         // a ticket price. Only a stated price is evidence of a charge; a bare
         // ticket URL is often free registration, so it stays unknown (null).
-        cost: localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
+        cost: creditAdmission?.cost ?? localistCost(ev) ?? (cantorAlwaysFree ? "free" : null),
+        ...(creditAdmission ? { costNote: creditAdmission.costNote } : {}),
         ...(attendanceNotes.length ? { attendanceNote: attendanceNotes.join(" ") } : {}),
         ...(registration ? { registration } : {}),
         description: truncate(description),
@@ -4848,6 +4872,11 @@ function isStudentOnlyEvent(item) {
   if (STUDENT_ONLY_TITLE.test(item.title || "")) return true;
   if (STUDENT_ONLY_AUDIENCE.test(item.title || "")) return true;
   const desc = stripHtml(item.description || "");
+  // LiveWhale's marketing panel is listed under Student Organizations,
+  // with no public invitation. Public panels can carry both categories.
+  const categories = (item.livewhaleCategories || "").split(",").map(label => label.trim().toLowerCase());
+  if (categories.includes("student organizations") && /\balumni speaker panel\b/i.test(item.title || "")
+      && !categories.includes("open to the public") && !/\bopen to the (?:general )?public\b/i.test(desc)) return true;
   if (STUDENT_ONLY_DESC.test(desc)) return true;
   if (SCU_INTERNAL_DESC.test(desc)) return true;
   if (STUDENT_ONLY_AUDIENCE.test(desc)) return true;
@@ -5584,13 +5613,18 @@ async function fetchMontalvoEvents({ previousEvents = readJsonFile(OUT_PATH)?.ev
             }
           } catch { /* Keep overview facts when its linked occurrence is unavailable. */ }
         }
+        // A booking refusal can hide prices on the performance page. Keep
+        // the last verified price for this exact row when the new source
+        // supplies availability but no replacement price.
+        const pricing = detail.attendanceStatus && !detail.cost && !detail.costNote ? retainedAdmission(event) : event;
+        const costNote = detail.costNote ?? pricing.costNote;
         return {
           ...event,
           title: detail.title || event.title,
           time: detail.time || event.time,
           endTime: detail.endTime || event.endTime,
-          cost: detail.costNote ? detail.cost : detail.cost || event.cost,
-          ...(detail.costNote ? { costNote: detail.costNote, attendanceNote: detail.costNote } : {}),
+          cost: detail.costNote ? detail.cost : detail.cost || pricing.cost,
+          ...(costNote ? { costNote, attendanceNote: costNote } : {}),
           ...(detail.registration ? { registration: detail.registration } : {}),
           ...(detail.attendanceStatus ? { attendanceStatus: detail.attendanceStatus } : {}),
           ...(detail.attendanceNote ? { attendanceNote: detail.attendanceNote } : {}),
@@ -8999,6 +9033,10 @@ function matchOutsideBusinessHours(text, re) {
   return null;
 }
 
+function isStanfordTicketEventUrl(url) {
+  return /^https:\/\/tickets\.gostanford\.com\/events\/[^/?#]+/i.test(url || "");
+}
+
 /** Try to extract a clock time string from arbitrary HTML.
  *  Strategies (in order):
  *   1. JSON-LD Event with startDate that includes a time component
@@ -9007,8 +9045,18 @@ function matchOutsideBusinessHours(text, re) {
  *   4. Visible text patterns near event-related labels ("Doors at 7 PM", "7:30 PM")
  *  Returns "H:MM AM/PM" or null.
  */
-function extractTimeFromHtml(html, eventDate) {
+function extractTimeFromHtml(html, eventDate, sourceUrl) {
   if (!html) return null;
+
+  if (isStanfordTicketEventUrl(sourceUrl)) {
+    // Stanford Athletics keeps provisional clocks in JSON-LD and datetime
+    // even when the ticket page displays only the date. Require its visible
+    // start time to agree with the exact occurrence's Pacific clock.
+    const dateAndTime = /<span\b[^>]*>\s*Date\s*&(?:amp;)?\s*time\s*<\/span>\s*<time\b[^>]*\bdatetime=["']([^"']+)["'][^>]*>([\s\S]*?)<\/time>/i.exec(html);
+    const displayedTime = dateAndTime?.[2].match(/<span\b[^>]*>\s*((?:1[0-2]|[1-9])(?::[0-5]\d)?\s*[AP]M)\s*<\/span>/i)?.[1];
+    const time = isoTimeToClockPT(dateAndTime?.[1], eventDate);
+    return time && formatHourClock(displayedTime) === time ? time : null;
+  }
 
   // 1. JSON-LD Event blocks
   const ldMatches = html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) || [];
@@ -9139,7 +9187,10 @@ async function backfillEventTimes(events) {
     const batch = candidates.slice(i, i + concurrency);
     await Promise.all(batch.map(async (e) => {
       const cacheKey = `${e.url}|${e.date}`;
-      if (Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
+      const stanfordTicket = isStanfordTicketEventUrl(e.url);
+      // Ignore legacy placeholders and let the next refresh recover a game
+      // whose organizer has now published an official start.
+      if (!stanfordTicket && Object.prototype.hasOwnProperty.call(cache, cacheKey)) {
         cacheHits++;
         if (cache[cacheKey]) { e.time = cache[cacheKey]; recovered++; }
         return;
@@ -9150,18 +9201,20 @@ async function backfillEventTimes(events) {
           signal: AbortSignal.timeout(10_000),
           redirect: "follow",
         });
-        if (!res.ok) { cache[cacheKey] = null; failed++; return; }
-        if (!isEventTimeBackfillCandidate({ url: res.url })) {
-          cache[cacheKey] = null; failed++; return;
+        if (!res.ok || !isEventTimeBackfillCandidate({ url: res.url })
+            || (stanfordTicket && !isStanfordTicketEventUrl(res.url))) {
+          if (!stanfordTicket) cache[cacheKey] = null;
+          failed++;
+          return;
         }
         const html = await res.text();
         fetched++;
-        const time = extractTimeFromHtml(html, e.date);
-        cache[cacheKey] = time || null;
+        const time = extractTimeFromHtml(html, e.date, res.url);
+        if (!stanfordTicket) cache[cacheKey] = time || null;
         if (time) { e.time = time; recovered++; }
         else { failed++; }
       } catch {
-        cache[cacheKey] = null;
+        if (!stanfordTicket) cache[cacheKey] = null;
         failed++;
       }
     }));
@@ -10269,10 +10322,24 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
             const key = detailUrl.href;
             if (!descriptions.has(key)) {
               await beforeRequest();
-              const html = await fetchText(key, { timeout: 20_000 });
-              descriptions.set(key, gambleGardenPageDescription(html));
+              const response = await fetchWithRetry(key, {
+                timeout: 20_000,
+                headers: { "User-Agent": UA },
+              });
+              if (!response.ok) throw new Error(String(response.status));
+              // The public calendar can retain a row whose detail redirects
+              // to the garden homepage. Withhold that occurrence until its
+              // detail returns, while keeping the rest of the calendar usable.
+              const finalUrl = response.redirected ? new URL(response.url) : detailUrl;
+              const redirectedHome = /^(?:www\.)?gamblegarden\.org$/.test(finalUrl.hostname)
+                && finalUrl.pathname === "/";
+              descriptions.set(key, redirectedHome ? null : gambleGardenPageDescription(await response.text()));
             }
             sourceDescription = descriptions.get(key);
+            if (sourceDescription === null) {
+              console.warn(`  ⚠️  Gamble Garden: skipping ${title} on ${date} (event link redirects to homepage)`);
+              continue;
+            }
           }
         }
         // Display a complete opening sentence from recovered page copy;
@@ -10291,8 +10358,9 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
         const checkIn = timedEntry
           ? sourceDescription.match(/\bAll Second Saturday guests,[^.!?]+[.!?]?/i)?.[0]?.trim()
           : null;
-        const freeSecondSaturday = secondSaturday
-          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription);
+        const freeAdmission = (secondSaturday
+          && /\bSecond Saturday is free and appropriate for all ages\b/i.test(sourceDescription))
+          || /\bfree for everyone\s*[—–-]\s*no membership required\b/i.test(sourceDescription);
         const registration = declaredRegistrationAvailability(sourceDescription)
           || ((timedEntry || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(sourceDescription))
             ? REGISTRATION_REQUIRED : null);
@@ -10309,9 +10377,8 @@ async function fetchGambleGardenEvents({ wait = (ms) => new Promise((resolve) =>
           address,
           city: "palo-alto",
           category: inferCategory(title, description, "", venue),
-          // Only an explicit Second Saturday admission statement supplements
-          // API prices; free refreshments or parking do not establish entry.
-          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) || (!ev.cost && freeSecondSaturday)
+          // Supplement a missing API price with explicit public admission.
+          cost: /\bfree\b/i.test(`${ev.cost || ""} ${title} ${apiExcerpt}`) || (!ev.cost && freeAdmission)
             ? "free" : (ev.cost ? "paid" : null),
           description,
           url: ev.url || "https://www.gamblegarden.org/events/",
@@ -11698,7 +11765,7 @@ async function main() {
   // events from adult plans (e.g. "Kids Knitting") and 21+/drag/tasting
   // events from kids plans. Bias is conservative — default is "all" unless
   // the signal is strong.
-  const { classifyAudienceAge } = await import("../src/lib/south-bay/audienceAge.mjs");
+  const { audienceLabelsInviteKids, classifyAudienceAge } = await import("../src/lib/south-bay/audienceAge.mjs");
   const audienceCounts = { kids: 0, adult: 0, all: 0 };
   for (const e of collapsedEvents) {
     Object.assign(e, applyVerifiedEventFacts(e));
@@ -11707,7 +11774,10 @@ async function main() {
     // can mention ages 10–14 without restricting participation to children.
     Object.assign(e, applyVerifiedEventFacts(e));
     const tag = e.audienceAge;
-    if (e.sourceAudiences?.length && tag !== "all") e.kidFriendly = tag === "kids";
+    // The event's own audience labels decide the Kids badge. An ingest-time
+    // keyword match on "teen" counted adult-and-teen programs as kids' events.
+    const labelsInviteKids = audienceLabelsInviteKids(e.sourceAudiences);
+    if (labelsInviteKids !== null) e.kidFriendly = labelsInviteKids;
     audienceCounts[tag]++;
   }
   console.log(`   👥 audience: kids=${audienceCounts.kids} adult=${audienceCounts.adult} all=${audienceCounts.all}`);

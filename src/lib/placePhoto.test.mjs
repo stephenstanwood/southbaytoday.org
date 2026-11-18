@@ -155,24 +155,89 @@ test("concurrent identical requests share one paid request; completed Google pho
 });
 
 test("a failed request is not retained and a later retry can recover", async () => {
-  let calls = 0;
-  const load = createPhotoLoader({ fetchImpl: async () => ++calls === 1 ? new Response(null, { status: 404 }) : image(), log: quiet });
+  let mediaCalls = 0;
+  const load = createPhotoLoader({
+    fetchImpl: async (url) => {
+      if (!String(url).includes("/media")) return Response.json({}); // place lookup: no photos
+      return ++mediaCalls === 1 ? new Response(null, { status: 404 }) : image();
+    },
+    log: quiet,
+  });
   await assert.rejects(load(request(other), "test-key"), /Photo not found/);
   assert.equal((await load(request(other), "test-key")).source, "google-places");
-  assert.equal(calls, 2);
+  assert.equal(mediaCalls, 2);
 });
 
 test("permanent Google failures are not retried; a transient failure gets the existing single retry", async () => {
   for (const status of [400, 404, 429, 503]) {
-    let calls = 0;
-    const load = createPhotoLoader({ fetchImpl: async () => ++calls === 1 ? new Response(null, { status }) : image(), log: quiet });
+    const calls = [];
+    const load = createPhotoLoader({
+      fetchImpl: async (url) => {
+        calls.push(url);
+        if (calls.length === 1) return new Response(null, { status });
+        // An expired name's place lookup finds no photos, so nothing is retried.
+        if (String(url).includes("/v1/places/another-place") && !String(url).includes("/media")) return Response.json({});
+        return image();
+      },
+      log: quiet,
+    });
+    const mediaCalls = () => calls.filter((url) => String(url).includes("/media")).length;
     if (status >= 429) {
       assert.equal((await load(request(other), "test-key")).source, "google-places");
-      assert.equal(calls, 2);
+      assert.equal(mediaCalls(), 2);
     } else {
       await assert.rejects(load(request(other), "test-key"), /Photo not found/);
-      assert.equal(calls, 1);
+      assert.equal(mediaCalls(), 1);
+      assert.equal(calls.length, 2, "one place lookup for the current photo, no second fetch of the dead name");
     }
+  }
+});
+
+test("an expired photo name is replaced by the place's current photo for that request only", async () => {
+  const fresh = "places/another-place/photos/fresh-token";
+  const calls = [];
+  const events = [];
+  const load = createPhotoLoader({
+    fetchImpl: async (url, init) => {
+      calls.push({ url: String(url), init });
+      if (String(url).includes("/photos/opaque-token/media")) {
+        return Response.json({ error: { code: 400, status: "INVALID_ARGUMENT" } }, { status: 400 });
+      }
+      if (String(url) === "https://places.googleapis.com/v1/places/another-place") {
+        return Response.json({ photos: [{ name: fresh }, { name: "places/another-place/photos/second" }] });
+      }
+      return image();
+    },
+    log: (line) => events.push(JSON.parse(line)),
+  });
+  const result = await load(request(other, 480, 480), "test-key");
+  assert.equal(result.source, "google-places");
+  assert.equal(calls.length, 3);
+  assert.equal(calls[1].init.headers["X-Goog-FieldMask"], "photos", "IDs-only lookup");
+  assert.ok(calls[2].url.startsWith(`https://places.googleapis.com/v1/${fresh}/media?`));
+  assert.ok(events.some((e) => e.event === "place-photo-ref-refresh" && e.found === true));
+  // The fresh name is not remembered: the next request starts from its own ref.
+  calls.length = 0;
+  await load(request(other, 480, 480), "test-key");
+  assert.ok(calls[0].url.includes("/photos/opaque-token/media"));
+});
+
+test("a refreshed name must belong to the same place; a gone place stays not found", async () => {
+  for (const details of [
+    () => Response.json({ photos: [{ name: "places/someone-else/photos/x" }] }),
+    () => new Response("nope", { status: 404 }),
+    () => new Response("<html>", { headers: { "Content-Type": "text/html" } }),
+  ]) {
+    let mediaCalls = 0;
+    const load = createPhotoLoader({
+      fetchImpl: async (url) => {
+        if (String(url).includes("/media")) { mediaCalls++; return new Response(null, { status: 400 }); }
+        return details();
+      },
+      log: quiet,
+    });
+    await assert.rejects(load(request(other), "test-key"), /Photo not found/);
+    assert.equal(mediaCalls, 1);
   }
 });
 

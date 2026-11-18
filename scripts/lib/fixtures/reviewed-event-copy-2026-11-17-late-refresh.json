@@ -1,0 +1,534 @@
+{
+  "reviewedAt": "2026-11-17",
+  "sourceEvidence": [
+    {
+      "path": "src/data/south-bay/upcoming-events.json",
+      "revision": "12400aa248aa0c4e1b7e38bdf4bbe51b9011d2a0",
+      "sha256": "c6406d9662b7adc09f2686006394da186b908a34e6f7dbf1ffe0f77c093bf14c"
+    },
+    {
+      "url": "https://events.stanford.edu/event/microbiology-immunology-wednesday-seminar-9282",
+      "observed": "The public heading is clipped. Event Details names both speakers, the Huang and Monack labs, and both talk topics."
+    },
+    {
+      "url": "https://events.stanford.edu/event/hai-seminar-with-mike-wooldridge-the-ai-100",
+      "observed": "The seminar listing identifies The AI 100."
+    },
+    {
+      "url": "https://sccl.bibliocommons.com/v2/events/694353901e64afd01e4fa2b5",
+      "observed": "The event description uses Book Club and joins the preceding word to the library email address."
+    },
+    {
+      "url": "https://sccl.bibliocommons.com/v2/events/6ae912e69b955d531f7c8d93",
+      "observed": "The library spells the partner name WiSTEM."
+    }
+  ],
+  "cases": [
+    {
+      "source": "Montalvo Arts Center",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "montalvo-599c757f3c31393a",
+          "title": "Yuletide Tea",
+          "url": "https://my.montalvoarts.org/overview/3253",
+          "date": "2026-11-22",
+          "venue": "Montalvo Arts Center"
+        }
+      ],
+      "refreshed": "Attend the Yuletide Tea at Montalvo Arts Center on a Sunday, an arts event in Saratoga starting at 11:30 AM.",
+      "reviewed": "Montalvo Arts Center lists Yuletide Tea in Saratoga at 11:30 AM on Sunday."
+    },
+    {
+      "source": "Santana Row",
+      "field": "description",
+      "events": [
+        {
+          "id": "cb567f877c59",
+          "title": "On Your Mark, Get Set, Shop Black Friday",
+          "url": "https://santanarow.com/event/on-your-mark-get-set-shop-black-friday/",
+          "date": "2026-11-27",
+          "venue": "Santana Row"
+        }
+      ],
+      "refreshed": "November 27, 2026 Friday, November 27 is Black Friday, the best shopping day of the year, and Santana Row has exclusive savings for serious shoppers! Black Friday Exclusive Specials: Hoka – Now Open, Spend $200 get $40 off, Spend $250, get $50 off, Spend $300, get $60 off on Black Friday. Open 7 AM-10 PM, available in-store, must be a Hoka member (free to join). Burke Williams – Wednesday, November 25–Monday, November 30. Receive an additional 5% off packages, for savings of up to 30% & a $200 H2V GC for $155. From November 5–December 31 receive up to 25% off gift card packages & a $200 H2V GC for $175. Travis Mathew – The biggest event of the season is here, the Travis Mathew Black Friday 50% Off Sale. For a limited time only, enjoy half-off savings on men's and women's apparel, including best-selling polos, outerwear, hoodies, and accessories. It's the perfect moment to elevate your wardrobe—or give the gift of comfort and style to someone special. While supplies last. Mejuri – It's an annual affair—and you're invited. Shop up to 30% off everything November 23–30, in-stores. Those pieces you've been eyeing all year? It's time to make them yours. Yeti – Free Hat With Eligible $100 Spend.",
+      "reviewed": "Santana Row lists these Black Friday specials for Friday, November 27, 2026. Black Friday Exclusive Specials: Hoka is now open. On Black Friday, spend $200 to get $40 off, $250 to get $50 off, or $300 to get $60 off. Hoka is open from 7 AM to 10 PM. The offers are available in-store to Hoka members, and membership is free. Burke Williams – Wednesday, November 25–Monday, November 30. Receive an additional 5% off packages, for savings of up to 30% & a $200 H2V GC for $155. From November 5–December 31 receive up to 25% off gift card packages & a $200 H2V GC for $175. Travis Mathew – The biggest event of the season is here, the Travis Mathew Black Friday 50% Off Sale. For a limited time only, enjoy half-off savings on men's and women's apparel, including best-selling polos, outerwear, hoodies, and accessories. It's the perfect moment to elevate your wardrobe—or give the gift of comfort and style to someone special. While supplies last. Mejuri – It's an annual affair—and you're invited. Shop up to 30% off everything in stores November 23–30. Those pieces you've been eyeing all year? It's time to make them yours. Yeti offers a free hat with an eligible $100 purchase.",
+      "tokenRepair": [
+        "November 27, 2026 Friday, November 27",
+        "November 27, 2026"
+      ]
+    },
+    {
+      "source": "Santana Row",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "cb567f877c59",
+          "title": "On Your Mark, Get Set, Shop Black Friday",
+          "url": "https://santanarow.com/event/on-your-mark-get-set-shop-black-friday/",
+          "date": "2026-11-27",
+          "venue": "Santana Row"
+        }
+      ],
+      "refreshed": "Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.",
+      "reviewed": "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fed",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fed",
+          "date": "2026-11-18",
+          "venue": "Almaden Library",
+          "registration": "closed"
+        },
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fee",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fee",
+          "date": "2026-11-19",
+          "venue": "Almaden Library",
+          "registration": "closed"
+        }
+      ],
+      "refreshed": "Get one-on-one help with your technology questions from the library at Almaden Library.",
+      "reviewed": "Seniors can bring their technology questions to Almaden Library for one-on-one help."
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "sccl-6a85008636204e08fbb56caa",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56caa",
+          "date": "2026-11-18",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cab",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cab",
+          "date": "2026-11-19",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cac",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cac",
+          "date": "2026-11-23",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cad",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cad",
+          "date": "2026-11-24",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56caf",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56caf",
+          "date": "2026-11-30",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb0",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb0",
+          "date": "2026-12-01",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb1",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb1",
+          "date": "2026-12-02",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb2",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb2",
+          "date": "2026-12-03",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb3",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb3",
+          "date": "2026-12-07",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb4",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb4",
+          "date": "2026-12-08",
+          "venue": "Milpitas Library"
+        },
+        {
+          "id": "sccl-6a85008636204e08fbb56cb5",
+          "title": "Homework Help for Grades K-6",
+          "url": "https://sccl.bibliocommons.com/events/6a85008636204e08fbb56cb5",
+          "date": "2026-12-09",
+          "venue": "Milpitas Library"
+        }
+      ],
+      "refreshed": "Walk in with your K-6 homework and get help from tutors; basic school supplies are provided as space allows.",
+      "reviewed": "Students in grades K-6 can drop in for help from tutors as space allows. Basic school supplies are provided."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-68827c7f639e1e9694a2d8b8",
+          "title": "California Writers Club - South Bay Writers Open Mic",
+          "url": "https://sjpl.bibliocommons.com/events/68827c7f639e1e9694a2d8b8",
+          "date": "2026-11-20",
+          "venue": "Willow Glen Library"
+        }
+      ],
+      "refreshed": "Are you a writer who would like to read to an audience? Join the South Bay Writers (a chapter of the California Writers Club) for a monthly gathering where anyone may attend and read for up to 10 minutes in any genre. Feedback on your work can be requested from the group, or you can just read! California Writers Club, founded in 1909, is one of the nation's oldest professional clubs for writers. Their organization is dedicated to educating writers of all levels and disciplines in the craft of writing and in the marketing of their work. Free. No registration required.",
+      "reviewed": "Are you a writer who would like to read to an audience? Join the South Bay Writers (a chapter of the California Writers Club) for a monthly gathering where anyone may attend and read for up to 10 minutes in any genre. Feedback on your work can be requested from the group, or you can just read! California Writers Club, founded in 1909, is one of the nation's oldest professional clubs for writers. The organization is dedicated to educating writers of all levels and disciplines in the craft of writing and in the marketing of their work. Free. No registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6aa425f956fe62004a2f69f8",
+          "title": "Basic Computer Course for Beginners / Computación Básica para Principiantes",
+          "url": "https://sjpl.bibliocommons.com/events/6aa425f956fe62004a2f69f8",
+          "date": "2026-11-20",
+          "venue": "Hillview Library"
+        }
+      ],
+      "refreshed": "Learn to use a computer with confidence! In this hands-on course, you'll learn the fundamentals of computers including how to use the keyboard and mouse, browse the Internet, use email, create documents, and more. Develop useful skills for school, work, and everyday life. Ideal for beginners. No prior experience required! Free. Bilingual. ¡Aprende a usar la computadora con confianza! En este curso práctico aprenderás los fundamentos de la computación, incluyendo el uso del teclado y el mouse, navegación por Internet, correo electrónico, creación de documentos y más. Desarrolle habilidades útiles para la escuela, el trabajo y la vida diaria. Ideal para principiantes. No necesitas experiencia previa. Gratis. Bilingüe.",
+      "reviewed": "Learn to use a computer with confidence! In this hands-on course, you'll learn the fundamentals of computers including how to use the keyboard and mouse, browse the Internet, use email, create documents, and more. Develop useful skills for school, work, and everyday life. Ideal for beginners. No prior experience required! Free. Bilingual. ¡Aprende a usar la computadora con confianza! En este curso práctico aprenderás los fundamentos de la computación, incluyendo el uso del teclado y el mouse, navegación por Internet, correo electrónico, creación de documentos y más. Desarrolla habilidades útiles para la escuela, el trabajo y la vida diaria. Ideal para principiantes. No necesitas experiencia previa. Gratis. Bilingüe."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6a0632ff177319280019ccf9",
+          "title": "English Language Learner (ELL) Conversation Club",
+          "url": "https://sjpl.bibliocommons.com/events/6a0632ff177319280019ccf9",
+          "date": "2026-11-20",
+          "venue": "Berryessa Library"
+        }
+      ],
+      "refreshed": "Berryessa Branch Library presents an in-person adult English Language Learner (ELL) Conversation Club. Are you looking for a place to practice your English conversation skills in a fun, welcoming and safe environment? Our English Language Learners (ELL) Conversation Club offers a respectful environment for adult learners of English to practice their English-speaking & conversation skills used in everyday settings. All levels of English-speaking skills are welcome! Free. No registration required.",
+      "reviewed": "Berryessa Branch Library presents an in-person adult English Language Learner (ELL) Conversation Club. Are you looking for a place to practice your English conversation skills in a fun, welcoming and safe environment? Our English Language Learners (ELL) Conversation Club offers a respectful environment for adult learners of English to practice speaking English in everyday situations. Learners of all levels are welcome! Free. No registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6a6cdf1688e9bf280034a2d7",
+          "title": "1-on-1 Tech Help / Trợ Giúp Kỹ Năng Máy Tính Bằng Tiếng Việt",
+          "url": "https://sjpl.bibliocommons.com/events/6a6cdf1688e9bf280034a2d7",
+          "date": "2026-11-20",
+          "venue": "Evergreen Library"
+        }
+      ],
+      "refreshed": "This event is offered in Vietnamese. Are you or your loved ones struggling with using a smartphone, downloading apps, or making video calls to see the family? Come join our Free One-on-One Tech Mentor Support sessions. We can help you with: Basic help for smartphones, tablets, and computers; Downloading and using everyday apps; Making video calls (Zoom, FaceTime, Google Meet) to stay connected; Exploring AI tools and answering your AI questions/concerns; Navigating our library website and wonderful digital resources. Note: Our support is focused on basic technology questions. Drop-ins are accepted. How to make an appointment: Priority will be given to patrons with appointments, so please book yours today! Call us at: (408) 808-3060. Email Rebecca Quan at: Rebecca.quan@sjlibrary.org. Có cô chú hay ông bà, cha mẹ mình đang gặp chút khó khăn khi dùng điện thoại thông minh, tải ứng dụng, hay muốn gọi video để gặp con cháu mà chưa biết cách không ạ? Quý vị hãy ghi danh cho người thân để họ tham gia chương trình Hỗ trợ Công nghệ 1-kèm-1 miễn phí. Chúng tôi sẽ hướng dẫn tận tình các kỹ năng sau: Sử dụng điện thoại, máy tính bảng và máy tính cơ bản; Cách tải và sử dụng các ứng dụng hữu ích; Cách gọi video (Zoom, Google Meet...) để kết nối với gia đình; Giải đáp các thắc mắc về AI mới; Cách tra cứu trang web của Thư Viện San Jose và sử dụng các tài nguyên số bổ ích. Lưu ý: Chương trình tập trung hỗ trợ các câu hỏi và thao tác công nghệ cơ bản. Chào đón quý vị tới gặp nhân viên thư viện nếu có câu hỏi đơn giản. Cách thức ghi danh: Xin ghi danh đặt hẹn trước (thư viện sẽ ưu tiên cho người có lịch hẹn): Gọi điện thoại: (408) 808-3060. Hoặc gửi email cho cô Rebecca Quan: rebecca.quan@sjlibrary.org. Hosted by Evergreen Branch. #dsb Digital Skills",
+      "reviewed": "This event is offered in Vietnamese. Are you or your loved ones struggling with using a smartphone, downloading apps, or making video calls to see the family? Come join our Free One-on-One Tech Mentor Support sessions. We can help you with: Basic help for smartphones, tablets, and computers; Downloading and using everyday apps; Making video calls (Zoom, FaceTime, Google Meet) to stay connected; Exploring AI tools and addressing your questions or concerns about AI; Navigating our library website and wonderful digital resources. Note: Our support is focused on basic technology questions. Drop-ins are accepted. How to make an appointment: Priority will be given to patrons with appointments, so please book yours today! Call us at: (408) 808-3060. Email Rebecca Quan at: Rebecca.quan@sjlibrary.org. Có cô chú hay ông bà, cha mẹ mình đang gặp chút khó khăn khi dùng điện thoại thông minh, tải ứng dụng, hay muốn gọi video để gặp con cháu mà chưa biết cách không ạ? Quý vị hãy ghi danh cho người thân để họ tham gia chương trình Hỗ trợ Công nghệ 1-kèm-1 miễn phí. Chúng tôi sẽ hướng dẫn tận tình các kỹ năng sau: Sử dụng điện thoại, máy tính bảng và máy tính cơ bản; Cách tải và sử dụng các ứng dụng hữu ích; Cách gọi video (Zoom, Google Meet...) để kết nối với gia đình; Giải đáp các thắc mắc về AI mới; Cách tra cứu trang web của Thư Viện San Jose và sử dụng các tài nguyên số bổ ích. Lưu ý: Chương trình tập trung hỗ trợ các câu hỏi và thao tác công nghệ cơ bản. Chào đón quý vị tới gặp nhân viên thư viện nếu có câu hỏi đơn giản. Cách thức ghi danh: Xin ghi danh đặt hẹn trước (thư viện sẽ ưu tiên cho người có lịch hẹn): Gọi điện thoại: (408) 808-3060. Hoặc gửi email cho cô Rebecca Quan: rebecca.quan@sjlibrary.org. Hosted by Evergreen Branch. #dsb Digital Skills"
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6add068c11bbf300684d2be5",
+          "title": "College Readiness",
+          "url": "https://sjpl.bibliocommons.com/events/6add068c11bbf300684d2be5",
+          "date": "2026-11-20",
+          "venue": "Seven Trees Library",
+          "registration": "required"
+        }
+      ],
+      "refreshed": "In this program, get personal assistance with basic college readiness and advice when preparing yourself to further your education. Our knowledgeable volunteer will provide free, one-on-one tutoring at the library. These in-person sessions can help strengthen your knowledge, goals, letter writing, and test-taking skills to improve your college application and set you up for future success! Topics may also include: ACT & SAT test prep; General Highschool or College advice on: choosing classes, joining clubs, creating study plans or career goals, how to network with teacher or professors, choosing and prepping for summer opportunities, resume & job application advice/help; College Application Process: general questions, timeline advice, college selection, essay review, interview practice; Financial Aid: Basic info on types of aid available and how it can help. Please note that no specific financial advice will be given outside of general information and best practices. Space is limited to keep interactions more personalized for each individual. Registration is recommended for a guaranteed spot.",
+      "reviewed": "In this program, get personal assistance with basic college readiness and advice when preparing yourself to further your education. Our knowledgeable volunteer will provide free, one-on-one tutoring at the library. These in-person sessions can help strengthen your knowledge, goals, letter writing, and test-taking skills to improve your college application and set you up for future success! Topics may also include ACT and SAT test prep. Get general high school or college advice on choosing classes, joining clubs, making study plans or setting career goals, networking with teachers or professors, preparing for summer opportunities, and writing resumes or applying for jobs. Get help with general questions about applying to college, application timelines, choosing colleges, essay reviews, and interview practice. Learn what kinds of financial aid are available and how they can help. Please note that no specific financial advice will be given outside of general information and best practices. Space is limited to keep interactions more personalized for each individual. Registration is recommended for a guaranteed spot."
+    },
+    {
+      "source": "Palo Alto City Library",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768d",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768d",
+          "date": "2026-12-07",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768e",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768e",
+          "date": "2026-12-08",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768f",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768f",
+          "date": "2026-12-09",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7690",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7690",
+          "date": "2026-12-11",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7691",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7691",
+          "date": "2026-12-13",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7692",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7692",
+          "date": "2026-12-14",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7693",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7693",
+          "date": "2026-12-15",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7694",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7694",
+          "date": "2026-12-16",
+          "venue": "Mitchell Park Library"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7695",
+          "title": "Locked in: Teen Finals Study Space!",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7695",
+          "date": "2026-12-17",
+          "venue": "Mitchell Park Library"
+        }
+      ],
+      "refreshed": "Study for finals in the Midtown Room at Mitchell Park Library, a teen study space for focus and recharging.",
+      "reviewed": "Teens can use the Midtown Room at Mitchell Park Library to study for finals and take a break."
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "title",
+      "events": [
+        {
+          "id": "sccl-694353901e64afd01e4fa2b5",
+          "title": "Children's Literature for Adults Bookclub",
+          "url": "https://sccl.bibliocommons.com/events/694353901e64afd01e4fa2b5",
+          "date": "2026-12-08",
+          "venue": "Cupertino Library",
+          "registration": "required"
+        }
+      ],
+      "refreshed": "Children's Literature for Adults Bookclub",
+      "reviewed": "Children's Literature for Adults Book Club"
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sccl-694353901e64afd01e4fa2b5",
+          "title": "Children's Literature for Adults Bookclub",
+          "url": "https://sccl.bibliocommons.com/events/694353901e64afd01e4fa2b5",
+          "date": "2026-12-08",
+          "venue": "Cupertino Library",
+          "registration": "required"
+        }
+      ],
+      "refreshed": "Adults join us for our Children's Literature for Adults Book Club to discuss, reminisce, or discover for the first time a beloved children's classic. Registration is required at the Cupertino Library Children's Reference Desk where we will have a copy of the book available. Adults only please. Generously sponsored by the Friends of the Cupertino Library. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us atask@sccl.org.",
+      "reviewed": "Join our Children's Literature for Adults Book Club to discuss a beloved children's classic, revisit an old favorite, or discover it for the first time. Registration is required at the Cupertino Library Children's Reference Desk, where a copy of the book will be available. Adults only, please. Generously sponsored by the Friends of the Cupertino Library. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@sccl.org.",
+      "tokenRepair": [
+        "email us atask@sccl.org",
+        "email us at ask@sccl.org"
+      ]
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-690e9a3d9b8793410094b84c",
+          "title": "Friday Fun: Board Games!",
+          "url": "https://sjpl.bibliocommons.com/events/690e9a3d9b8793410094b84c",
+          "date": "2026-11-20",
+          "venue": "Willow Glen Library"
+        }
+      ],
+      "refreshed": "This week -- Like to play games with other kids? Learn to play one of the library's games or bring your favorite to teach others! Join us every Friday at the Willow Glen Branch Library for a fun activity for kids. Activities may include arts & crafts, special performances or workshops, and board or video games. Note: 2nd Friday of every month is free play with LEGOs! All supplies will be provided. Free. No registration required.",
+      "reviewed": "Do you like playing games with other kids? Learn to play one of the library's games or bring your favorite to teach others! Join us every Friday at the Willow Glen Branch Library for a fun activity for kids. Activities may include arts & crafts, special performances or workshops, and board or video games. Note: 2nd Friday of every month is free play with LEGOs! All supplies will be provided. Free. No registration required."
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sccl-6ae912e69b955d531f7c8d93",
+          "title": "STEM: Make Fake Snow",
+          "url": "https://sccl.bibliocommons.com/events/6ae912e69b955d531f7c8d93",
+          "date": "2026-12-08",
+          "venue": "Saratoga Library"
+        }
+      ],
+      "refreshed": "Make fake snow! With support from Lynbrook High Wi STEM, use simple science to make fake snow. All ages welcome. While supplies last. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@lib.sccgov.org.",
+      "reviewed": "Use simple science to make fake snow with support from Lynbrook High WiSTEM. All ages welcome. While supplies last. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@lib.sccgov.org."
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "sccl-6ae912e69b955d531f7c8d93",
+          "title": "STEM: Make Fake Snow",
+          "url": "https://sccl.bibliocommons.com/events/6ae912e69b955d531f7c8d93",
+          "date": "2026-12-08",
+          "venue": "Saratoga Library"
+        }
+      ],
+      "refreshed": "Make fake snow using simple science with Lynbrook High Wi STEM at Saratoga Library, with all ages welcome.",
+      "reviewed": "Use simple science to make fake snow with Lynbrook High WiSTEM at Saratoga Library. All ages are welcome."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "blurb",
+      "events": [
+        {
+          "id": "sjpl-6944435f2c65973d00134d6f",
+          "title": "Friday Fun - Sunflower Fan",
+          "url": "https://sjpl.bibliocommons.com/events/6944435f2c65973d00134d6f",
+          "date": "2026-11-20",
+          "venue": "Pearl Avenue Library"
+        }
+      ],
+      "refreshed": "Make your own foldable sunflower fan at Pearl Avenue Library, with all supplies provided, free, and no registration required.",
+      "reviewed": "Make a foldable sunflower fan at Pearl Avenue Library. Supplies are provided, and the program is free with no registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6a7a3aaeb44674e2601d056d",
+          "title": "Friends of the Village Square Library Lobby Book Sale",
+          "url": "https://sjpl.bibliocommons.com/events/6a7a3aaeb44674e2601d056d",
+          "date": "2026-11-20",
+          "venue": "Village Square Library"
+        }
+      ],
+      "refreshed": "The Friends of the Village Square Library will be hosting a book sale in the front lobby area. All proceeds directly benefit Village Square Library's events and programs. *Cash Only",
+      "reviewed": "The Friends of the Village Square Library will be hosting a book sale in the front lobby area. All proceeds directly benefit Village Square Library's events and programs. Cash only."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-53700452494915-2026-11-18",
+          "title": "Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead \"Capturing evolution via gene transfer in the gut microbiome.\" and Víctor R. Vázquez Marrero \"Investigating how Salmonella imports and degrades dietary fiber sugar",
+          "url": "https://events.stanford.edu/event/microbiology-immunology-wednesday-seminar-9282",
+          "date": "2026-11-18",
+          "venue": "Clark Center"
+        }
+      ],
+      "refreshed": "Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead \"Capturing evolution via gene transfer in the gut microbiome.\" and Víctor R. Vázquez Marrero \"Investigating how Salmonella imports and degrades dietary fiber sugar",
+      "reviewed": "Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead and Víctor R. Vázquez Marrero"
+    },
+    {
+      "source": "Stanford Events",
+      "field": "description",
+      "events": [
+        {
+          "id": "stanford-53700452494915-2026-11-18",
+          "title": "Microbiology & Immunology Wednesday Seminar: Saria A. McKeithen–Mead \"Capturing evolution via gene transfer in the gut microbiome.\" and Víctor R. Vázquez Marrero \"Investigating how Salmonella imports and degrades dietary fiber sugar",
+          "url": "https://events.stanford.edu/event/microbiology-immunology-wednesday-seminar-9282",
+          "date": "2026-11-18",
+          "venue": "Clark Center"
+        }
+      ],
+      "refreshed": "Microbiology & Immunology Wednesday Seminar: Huang & Monack Labs - Saria A. McKeithen–Mead \"Capturing evolution via gene transfer in the gut microbiome.\" and Víctor R.",
+      "reviewed": "The Huang and Monack labs present two talks. Saria A. McKeithen–Mead discusses gene transfer in the gut microbiome, and Víctor R. Vázquez Marrero discusses how Salmonella uses dietary fiber sugars."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-54489142312087-2026-11-18",
+          "title": "Planetary Science and Exploration Seminar, Gregor Steinbrügge- \"Coupled Thermal-Orbital Evolution of the Galilean Satellites\"",
+          "url": "https://events.stanford.edu/event/planetary-science-and-exploration-seminar-gregor-steinbrugge-coupled-thermal-orbital-evolution-of-the-galilean-satellites",
+          "date": "2026-11-18",
+          "venue": "Mitchell Earth Sciences"
+        }
+      ],
+      "refreshed": "Planetary Science and Exploration Seminar, Gregor Steinbrügge- \"Coupled Thermal-Orbital Evolution of the Galilean Satellites\"",
+      "reviewed": "Planetary Science and Exploration Seminar, Gregor Steinbrügge: \"Coupled Thermal-Orbital Evolution of the Galilean Satellites\""
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-54095542915065-2026-11-18",
+          "title": "CMEMS: Esther von Stosch presents, \"Humans – Plants – Landscapes\"",
+          "url": "https://events.stanford.edu/event/cmems-esther-von-stosch-presents-humans-plants-landscapes",
+          "date": "2026-11-18",
+          "venue": "Building 260, Pigott Hall"
+        }
+      ],
+      "refreshed": "CMEMS: Esther von Stosch presents, \"Humans – Plants – Landscapes\"",
+      "reviewed": "CMEMS: Esther von Stosch presents \"Humans – Plants – Landscapes\""
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-53861242574667-2026-11-18",
+          "title": "HAI Seminar the AI 100",
+          "url": "https://events.stanford.edu/event/hai-seminar-with-mike-wooldridge-the-ai-100",
+          "date": "2026-11-18",
+          "venue": "Gates Computer Science Building"
+        }
+      ],
+      "refreshed": "HAI Seminar the AI 100",
+      "reviewed": "HAI Seminar: The AI 100"
+    },
+    {
+      "source": "Ticketmaster",
+      "field": "title",
+      "events": [
+        {
+          "id": "tm-Z7r9jZ1A7-tqo",
+          "title": "San Jose State Spartans Football vs. Unlv Rebels Football",
+          "url": "https://www.ticketmaster.com/san-jose-state-spartans-football-vs-unlv-rebels-football-san-jose-california-11-21-2026/event/Z7r9jZ1A7-tqo",
+          "date": "2026-11-21",
+          "venue": "CEFCU Stadium"
+        }
+      ],
+      "refreshed": "San Jose State Spartans Football vs. Unlv Rebels Football",
+      "reviewed": "San Jose State Spartans Football vs. UNLV Rebels Football"
+    }
+  ]
+}

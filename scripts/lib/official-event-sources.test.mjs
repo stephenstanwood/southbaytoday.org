@@ -1316,6 +1316,18 @@ test("internal SCU training and new-major welcomes do not exclude public faculty
   assert.equal(isStudentOnlyEvent({ title: "Faculty Recital Series", link: "https://events.scu.edu/arts-and-sciences/event/1-recital" }), false);
 });
 
+test("SCU's student-organization alumni speaker panel needs explicit public eligibility", () => {
+  const event = {
+    title: "Marketing Alumni Speaker Panel",
+    link: "https://events.scu.edu/leavey-school-of-business/event/534277-marketing-alumni-speaker-panel",
+    livewhaleCategories: "Student Organizations",
+  };
+  assert.equal(isStudentOnlyEvent(event), true);
+  assert.equal(isStudentOnlyEvent({ ...event, livewhaleCategories: "Student Organizations, Open to the Public" }), false);
+  assert.equal(isStudentOnlyEvent({ ...event, description: "This event is open to the public." }), false);
+  assert.equal(isStudentOnlyEvent({ ...event, title: "Student Art Exhibit" }), false);
+});
+
 test("SCU new-major group advising is internal while public community workshops remain eligible", () => {
   assert.equal(isStudentOnlyEvent({
     title: "New Major: Winter Group Advising - Comm Department",

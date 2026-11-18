@@ -32,6 +32,7 @@ import {
   isAddressDerivedBusinessName,
   isVerifiedOpeningRecord,
   normalizeSouthBayAddress,
+  placeMatchesFoodItem,
 } from "./lib/scc-food-openings.mjs";
 import { lookupVenuePhoto } from "../src/lib/south-bay/eventImages.mjs";
 
@@ -139,7 +140,9 @@ const FUEL_MART_PATTERNS = /\bFAST\s*FILL\b|\bGAS\s*(?:&|AND)\s*WASH\b|\bFUEL\s+
 // can only reach them with an event ticket. Same reasoning as the corporate
 // cafeteria filter. Matched against the venue name (e.g. "Levis Stadium B143",
 // "Santa Clara Convention Center Refresh").
-const VENUE_CONCESSION_PATTERNS = /\bLEVI'?S?\s+STADIUM\b|\bCONVENTION\s+CENTER\b|\bSAP\s+CENTER\b|\bPAYPAL\s+PARK\b|\bAVAYA\s+STADIUM\b|\bSHORELINE\s+AMPHITHEATRE?\b/i;
+// A numbered multiplex ("Mountain View Cinema 16", SR0886581, 2026-11-13) is a
+// movie theater's concession stand, not a place readers go to eat.
+const VENUE_CONCESSION_PATTERNS = /\bLEVI'?S?\s+STADIUM\b|\bCONVENTION\s+CENTER\b|\bSAP\s+CENTER\b|\bPAYPAL\s+PARK\b|\bAVAYA\s+STADIUM\b|\bSHORELINE\s+AMPHITHEATRE?\b|\bCINEMAS?\s+\d+\b|\bCINEMARK\b/i;
 
 // Venue/transit addresses — some concessions carry a plain food name (e.g.
 // "Bad Egg / Pizza My Heart") so only the SITE ADDRESS reveals they're inside an
@@ -156,6 +159,8 @@ const NAME_OVERRIDES = {
   "SR0881648": "sweetgreen",
   "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
   "SR0884719": "FujiSan Sushi @ Tawa1702",
+  "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
+  "SR0886903": "FujiSan Sushi",
   // Great Mall's own directory supplies the brand spelling and coming-soon status.
   // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice
   "SR0885853": "TH Sugarcane & Juice",
@@ -223,6 +228,11 @@ const BLURB_OVERRIDES = {
 
 // Source IDs to explicitly skip — non-public venues, existing restaurants with equipment-only permits, etc.
 const SOURCE_ID_SKIP = new Set([
+  // Tenant improvements at operating businesses. Match the permit IDs so a
+  // separate opening at another branch remains eligible.
+  "SR0885671", // https://www.bcmidtown.com/location/the-breakfast-club-at-midtown-san-jose/
+  "SR0885984", // https://www.umetea.com/en/stores (2215 The Alameda)
+  "SR0886043", // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAI7XMYNU.pdf
   // Reviewed Nov 3, 2026: a county plan-check record alone does not establish
   // a public food venue. Keep exact exclusions rather than banning LLC names.
   "SR0883235", // Rutherford Month Vista: Station 245 apartments at 245 Bush St.
@@ -624,6 +634,10 @@ export function shouldSkip(item) {
   if (GAS_STATION_PATTERNS.test(rawName)) return true;
   if (FUEL_MART_PATTERNS.test(rawName)) return true;
   if (VENUE_CONCESSION_PATTERNS.test(rawName)) return true;
+  // A sole proprietor files under their own legal name ("Konstantinos
+  // Pantazis, A Sole Proprietorship", SR0886761): the card would print a
+  // private person's name as the restaurant, and the real one is unknown.
+  if (/\bSOLE\s+PROPRIETOR(?:SHIP)?\b/i.test(rawName)) return true;
   if (VENUE_ADDRESS_PATTERNS.test(item.site_location ?? "")) return true;
 
   // "MFF" (Mobile Food Facility) sometimes lands in the site_location field
@@ -832,14 +846,18 @@ async function searchPlacesPhotoRef(name, address, cityId, apiKey) {
       headers: {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "places.photos",
+        "X-Goog-FieldMask": "places.photos,places.displayName,places.formattedAddress,places.types,places.primaryType",
       },
       body: JSON.stringify({ textQuery: query, maxResultCount: 1 }),
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) return null;
     const data = await res.json();
-    return data.places?.[0]?.photos?.[0]?.name || null;
+    const place = data.places?.[0];
+    // A wrong photo is worse than none (the tile falls back to an
+    // illustration), so only trust a hit that is plainly this business.
+    if (!placeMatchesFoodItem({ name, address }, place)) return null;
+    return place.photos?.[0]?.name || null;
   } catch (err) {
     console.warn(`  ⚠️  Places lookup failed for ${name}: ${err.message}`);
     return null;

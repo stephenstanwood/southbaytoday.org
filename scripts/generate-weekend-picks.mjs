@@ -13,23 +13,20 @@
 
 import { readFileSync } from "fs";
 import { writeFileAtomic } from "./lib/io.mjs";
-import { join, dirname } from "path";
+import { join, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { callClaude } from "./lib/claude.mjs";
 import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import {
+  REGISTRATION_CLOSED,
+  REGISTRATION_FULL,
+  requiresAttendanceConfirmation,
+} from "../src/lib/south-bay/eventFilters.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const EVENTS_PATH = join(__dirname, "..", "src", "data", "south-bay", "upcoming-events.json");
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "weekend-picks.json");
-
-loadEnvLocal();
-
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-if (!ANTHROPIC_API_KEY) {
-  console.error("ERROR: ANTHROPIC_API_KEY not set");
-  process.exit(1);
-}
 
 // ── Helpers ──
 
@@ -67,6 +64,21 @@ function dowOfIso(iso) {
   return new Date(iso + "T12:00:00").getDay();
 }
 
+export function weekendPickCandidates(events, start, end) {
+  // Recommendations need confirmed attendance. Keep qualified events in the
+  // calendar and filter them here before asking the model to rank picks.
+  return events.filter(
+    (e) => isEventPublishable(e)
+      && !e.ongoing
+      && !requiresAttendanceConfirmation(e)
+      && e.registration !== REGISTRATION_CLOSED
+      && e.registration !== REGISTRATION_FULL
+      && e.date >= start
+      && e.date <= end
+      && (dowOfIso(e.date) === 6 || dowOfIso(e.date) === 0)
+  );
+}
+
 function formatGroup(events, prefix) {
   return events.map((e, i) =>
     `${prefix}${i + 1}. [${e.displayDate || e.date} ${e.time || "all day"}] ${e.title} — ${cityLabel(e.city)}${e.venue ? `, ${e.venue}` : ""} (${e.cost})${e.source ? ` [${e.source}]` : ""} — ${(e.description || "").slice(0, 240)}${e.source === "Meetup" && e.blurb ? `; outing details: ${e.blurb.slice(0, 140)}` : ""}`
@@ -74,6 +86,9 @@ function formatGroup(events, prefix) {
 }
 
 async function main() {
+  loadEnvLocal();
+  if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY not set");
+
   const { events } = JSON.parse(readFileSync(EVENTS_PATH, "utf8"));
   const { start, end, label } = getWeekendRange();
 
@@ -82,13 +97,7 @@ async function main() {
   // Filter to Sat/Sun non-ongoing events. Friday is intentionally excluded —
   // the homepage card and the Events strip both describe "the weekend ahead",
   // and mixing Friday picks in starves Sat/Sun of slots.
-  const weekend = events.filter(
-    (e) => isEventPublishable(e)
-      && !e.ongoing
-      && e.date >= start
-      && e.date <= end
-      && (dowOfIso(e.date) === 6 || dowOfIso(e.date) === 0)
-  );
+  const weekend = weekendPickCandidates(events, start, end);
 
   const satEvents = weekend.filter((e) => dowOfIso(e.date) === 6);
   const sunEvents = weekend.filter((e) => dowOfIso(e.date) === 0);
@@ -293,4 +302,6 @@ Return ONLY a JSON array of 8 objects (4 S-codes ranked best-first, then 4 U-cod
   output.picks.forEach((p) => console.log(`  • ${p.title} — ${p.why}`));
 }
 
-main().catch((err) => { console.error(err); process.exit(1); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => { console.error(err); process.exit(1); });
+}

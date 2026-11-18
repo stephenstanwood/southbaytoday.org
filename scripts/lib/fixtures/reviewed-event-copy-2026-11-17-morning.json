@@ -1,0 +1,47 @@
+{
+  "reviewedAt": "2026-11-17",
+  "sourceEvidence": [
+    {
+      "path": "src/data/south-bay/upcoming-events.json",
+      "sha256": "c0a851d3f5af41a150f7a53ede55b13a215e786a6f12d771db1c489489ac2904"
+    },
+    {
+      "url": "https://events.stanford.edu/event/ccrma-composition-for-east-asian-instruments",
+      "observed": "CCRMA Presents"
+    },
+    {
+      "url": "https://events.stanford.edu/event/suicide-assessment-and-treatment-an-update-for-professionals",
+      "observed": "Overview is a heading above the unchanged PST/EST time range."
+    }
+  ],
+  "cases": [
+    {
+      "source": "Stanford Events",
+      "field": "description",
+      "events": [
+        {
+          "id": "stanford-52853945970549-2026-11-18",
+          "source": "Stanford Events",
+          "url": "https://events.stanford.edu/event/suicide-assessment-and-treatment-an-update-for-professionals",
+          "title": "Suicide Assessment and Treatment: An Update for Professionals"
+        }
+      ],
+      "refreshed": "Overview8:30 AM (PST) - 2:00 PM (PST) | 11:30 AM (EST) - 5:00 PM (EST) With suicide rates increasing by 30% in the last 2 decades, suicide remains a pressing public health challenge.",
+      "reviewed": "Overview: 8:30 AM (PST) - 2:00 PM (PST) | 11:30 AM (EST) - 5:00 PM (EST). With suicide rates increasing by 30% in the last 2 decades, suicide remains a pressing public health challenge."
+    },
+    {
+      "source": "Stanford Events",
+      "field": "title",
+      "events": [
+        {
+          "id": "stanford-54488039518167-2026-11-17",
+          "source": "Stanford Events",
+          "url": "https://events.stanford.edu/event/ccrma-composition-for-east-asian-instruments",
+          "title": "Ccrma Presents: Sound, Voice, Strings – Compositions for Traditional East Asian Instruments"
+        }
+      ],
+      "refreshed": "Ccrma Presents: Sound, Voice, Strings – Compositions for Traditional East Asian Instruments",
+      "reviewed": "CCRMA Presents: Sound, Voice, Strings – Compositions for Traditional East Asian Instruments"
+    }
+  ]
+}

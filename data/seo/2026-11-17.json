@@ -2084,6 +2084,33 @@
         "https://southbaytoday.org/event/2026-12-03-pclg-christmas-tea",
         "https://southbaytoday.org/event/2026-12-06-cardinal-kids-day-stanford-men-s-basketball-vs-pacific"
       ]
+    },
+    "closeoutValidation": {
+      "checkedAt": "2026-11-18T04:19:38.996494+00:00",
+      "mainParent": "0969e66bfe4619b0ebd879a0906f374fafec431b",
+      "node": "24",
+      "npmTests": 3078,
+      "testFailures": 0,
+      "astroTypeCheck": "PASS",
+      "build": "PASS",
+      "discoveryAudit": {
+        "status": "PASS",
+        "errors": 0,
+        "metrics": {
+          "sitemapUrls": 1716,
+          "htmlPagesChecked": 1715,
+          "jsonLdBlocks": 3582,
+          "eventLeafPages": 1524,
+          "ssrPagesSkipped": 3
+        }
+      },
+      "verifiedBuiltRoutes": [
+        "/gov",
+        "/camps",
+        "/event/2026-12-03-pclg-christmas-tea",
+        "/events/2026-12-03"
+      ],
+      "receiptOnly": true
     }
   },
   "publication": {
@@ -2217,5 +2244,5 @@
     "interpretation": "Both crawls have zero errors. The deployed date rollover excludes expired pages (including linked November 16, deliberately absent from the sitemap) and changes the rotating sample. Warning-count reduction is not credited to these fixes. Remaining descriptions/thin pages/absent schema are informational; eight long titles remain valid descriptive labels."
   },
   "recordedAt": "2026-11-17T09:40:51.965Z",
-  "completedAt": "2026-11-18T04:14:38.959430+00:00"
+  "completedAt": "2026-11-18T04:19:38.996494+00:00"
 }

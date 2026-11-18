@@ -12,6 +12,12 @@
 // build must never freeze a calendar date — see useLiveTodayLabel). Hydrated
 // pages fill the Pacific date from the hook; static pages get it from the
 // tiny inline script in BaseLayout that fills every [data-sbt-today].
+//
+// Only the Today tab wears the full stacked flag. Every other page gets the
+// same mark, wordmark, and nav in one compact row (the newspaper-site
+// pattern), so a phone sees the page's own content — the Events search,
+// filters, and list; an event's title and time — instead of a screenful of
+// header. The full flag cost 198px on a 390px phone and 212px on desktop.
 // ---------------------------------------------------------------------------
 
 import type { MouseEvent } from "react";
@@ -47,9 +53,11 @@ export default function Masthead({ activeTab = null, onNavigate }: MastheadProps
     onNavigate(tab);
   };
 
+  const compact = activeTab !== "overview";
+
   return (
     <>
-      <header className="sb-header">
+      <header className={`sb-header${compact ? " sb-header--compact" : ""}`}>
         <div className="sb-header-inner">
           <a href="/" className="sb-brand" aria-label="The South Bay Today — home">
             <img

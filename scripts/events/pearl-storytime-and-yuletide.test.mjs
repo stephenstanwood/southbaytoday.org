@@ -33,32 +33,34 @@ test("Pearl ticket warning does not override a resolved source or another occurr
   ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
 });
 
-test("Yuletide Tea publication retains paid seating and the subsequently verified sellout", async () => {
+test("Yuletide Tea publication retains paid seating and the current booking notice", async () => {
   const input = structuredClone(tea), published = [structuredClone(input)];
   await resolveEventBlurbs(published, { enabled: false });
   const actual = published[0];
   assert.equal(actual.cost, "paid");
-  // The November 15 occurrence page now shows a visible sold-out alert and
-  // waitlist, superseding the October 31 fixture's open reservation prompt.
-  assert.equal(actual.registration, "full");
-  assert.equal(requiresAdvanceRegistration(actual), true);
+  // The November 17 page replaces the old reservation and waitlist wording
+  // with a notice that the seating is not currently on sale.
+  assert.equal(actual.registration, "none");
+  assert.equal(requiresAttendanceConfirmation(actual), true);
+  assert.equal(requiresAdvanceRegistration(actual), false);
   assert.match(actual.costNote, /\$75.*\$70.*\$5/i);
-  assert.match(actual.attendanceNote, /sold out.*waitlist.*11:30/i);
-  assert.match(actual.description, /11:30 AM seating is sold out.*waitlist/);
+  assert.match(actual.attendanceNote, /Online tickets are not currently available/);
+  assert.match(actual.description, /Online tickets for the 11:30 AM seating are unavailable/);
   assert.doesNotMatch(actual.description, /seats remain/);
-  assert.equal(actual.blurb, "The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist.");
+  assert.equal(actual.blurb, "Montalvo lists Yuletide Tea at 11:30 AM. Check with the box office about tickets.");
   for (const key of Object.keys(input)) if (!["cost", "registration", "attendanceNote", "description", "blurb"].includes(key)) assert.deepEqual(actual[key], input[key], key);
   assert.deepEqual(tea, input);
   assert.deepEqual(applyVerifiedEventFacts(actual), actual);
 });
 
 test("Yuletide Tea corrections preserve later booking restrictions and unrelated records", () => {
-  for (const registration of ["full", "closed", "appointment-only"]) {
+  for (const registration of ["closed", "appointment-only"]) {
     assert.equal(applyVerifiedEventFacts({ ...tea, registration }).registration, registration);
   }
   for (const other of [
     { ...tea, date: "2027-11-22" },
     { ...tea, time: "2:30 PM" },
     { ...tea, url: "https://my.montalvoarts.org/overview/3283?promo=" },
+    { ...tea, registration: "full", occurrenceEvidence: { admissionSourceUrl: "https://my.montalvoarts.org/3253/3254" } },
   ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
 });

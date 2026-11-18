@@ -7,6 +7,7 @@ import test from "node:test";
 import { cleanTitle, isPublicEvent, polishAttendanceNote, polishDescription } from "../generate-events.mjs";
 import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { libraryEventDetails } from "./library-event-details.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
@@ -153,6 +154,12 @@ audits.push(november15EveningFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-15-night.json", import.meta.url))));
 const november16EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-16-evening.json", import.meta.url)));
 audits.push(november16EveningFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-morning.json", import.meta.url))));
+const november17AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-afternoon.json", import.meta.url)));
+audits.push(november17AfternoonFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-grpg.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-late-refresh.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-post-fact-check.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -169,6 +176,18 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("Almaden's source facts and copy survive description normalization", () => {
+  const { beforeFacts, refreshed, reviewed, events } = november17AfternoonFixture.cases.find(
+    row => row.beforeFacts && row.events[0].id === "sjpl-69f10f4bfb87a3c2e2ac6fec",
+  );
+  for (const event of events) {
+    const verified = applyVerifiedEventFacts({ ...event, description: polishDescription(beforeFacts) });
+    assert.equal(verified.description, refreshed);
+    assert.deepEqual(polishReviewedEventCopy(verified), { ...verified, description: reviewed });
+    assert.equal(verified.registration, event.registration);
+  }
+});
 
 test("November 16 library copy repairs preserve revised facts, conditions and publisher scope", () => {
   const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16")
@@ -305,7 +324,8 @@ test("refresh excludes dissertation defenses while retaining advertised public l
 
 test("November 13 refresh repairs retain revised attendance facts and publisher scope", () => {
   const revise = text => text.replaceAll("November 14, 2026", "December 12, 2027")
-    .replaceAll("11 AM-6 PM", "10 AM-4 PM").replaceAll("60+", "75+").replaceAll("100+", "120+")
+    .replaceAll("11 AM-6 PM", "10 AM-4 PM").replaceAll("11 AM to 6 PM", "10 AM to 4 PM")
+    .replaceAll("60+", "75+").replaceAll("100+", "120+")
     .replaceAll("2nd grade", "3rd grade").replaceAll("15 participants", "20 participants")
     .replaceAll("7+ days", "10+ days").replaceAll("(408) 540-3945", "(650) 555-0123")
     .replaceAll("ask@lib.sccgov.org", "updated@example.org")
@@ -321,7 +341,7 @@ test("November 13 refresh repairs retain revised attendance facts and publisher 
     };
     const untouched = structuredClone(original);
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);
@@ -1183,6 +1203,8 @@ for (const row of reviewedCases) {
         [row.field]: row.refreshed,
       };
       const untouched = structuredClone(original);
+      // Compare factual tokens after decoding a duplicated date or glued email.
+      const factText = row.tokenRepair ? row.refreshed.replace(...row.tokenRepair) : row.refreshed;
       const refresh = () => polishReviewedEventCopy({
         ...original,
         [row.field]: row.field === "description" ? polishDescription(row.refreshed)
@@ -1193,8 +1215,8 @@ for (const row of reviewedCases) {
         // Each refresh starts from source/cached copy again, not its output.
         const next = refresh();
         assert.equal(next[row.field], row.reviewed);
-        assert.deepEqual(numbers(next[row.field]), numbers(row.refreshed));
-        assert.deepEqual(identifiers(next[row.field]), identifiers(row.refreshed));
+        assert.deepEqual(numbers(next[row.field]), numbers(factText));
+        assert.deepEqual(identifiers(next[row.field]), identifiers(factText));
         assert.deepEqual({ ...next, [row.field]: null }, { ...original, [row.field]: null });
         assert.deepEqual(polishReviewedEventCopy(next), next, "approved copy remains stable");
       }

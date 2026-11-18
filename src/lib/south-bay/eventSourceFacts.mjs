@@ -6,6 +6,15 @@
 import { REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED, REGISTRATION_FULL, REGISTRATION_NONE, REGISTRATION_REQUIRED } from "./eventFilters.mjs";
 
 const ART_MAKING_ACTIVITY = /\b(?:(?:make|making|create|creating)\s+(?:your\s+own\s+)?art|art[\s-]making|hands[\s-]on\s+art|(?:paint|draw)\s+(?:a|an|your|with)|(?:painting|drawing)\s+(?:activity|workshop|class))\b/i;
+const MITCHELL_PARK_STUDY_HOURS = /\bWednesday\s+12\/9(?:\s*[-–]\s*|\s+from\s+)4:00\s*PM(?:\s*[-–]\s*|\s+to\s+)8:45\s*PM\.?/i;
+const MITCHELL_PARK_STUDY_COPY = [[MITCHELL_PARK_STUDY_HOURS, "Check with Mitchell Park Library for the Wednesday 12/9 start."]];
+
+function hasMitchellParkStudyHours(event) {
+  return event.source === "Palo Alto City Library" && event.venue === "Mitchell Park Library"
+    && event.title === "Locked in: Teen Finals Study Space!"
+    && /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6afcaa4c22b92c0041aa76(?:8[def]|9[0-5])\/?$/.test(event.url || "")
+    && MITCHELL_PARK_STUDY_HOURS.test(event.description || "");
+}
 
 function museumMinisWithoutArtMaking(event) {
   return event?.date === "2026-11-16"
@@ -70,6 +79,160 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The athletics announcement confirms free admission and the venue for
+  // these two home games. The campus calendar rows have neither field.
+  // https://sjsuspartans.com/news/2026/11/17/spartans-host-cbu-long-beach-state-for-community-days
+  ...[
+    ["2026-11-18", "womens-basketball-san-jose-state-vs-california-baptist"],
+    ["2026-11-21", "womens-basketball-san-jose-state-vs-long-beach-state"],
+  ].map(([date, slug]) => ({
+    date,
+    matches: event => event.source === "SJSU Events" && event.city === "san-jose" && !event.virtual
+      && event.time === "11:00 AM" && event.url === `https://events.sjsu.edu/event/${slug}`
+      && !event.venue && !event.address && !event.cost && !event.costNote,
+    facts: {
+      venue: "Provident Credit Union Event Center",
+      address: "290 S. 7th St., San Jose, CA 95112",
+      cost: "free",
+    },
+  })),
+  // The athletics schedule identifies both UNLV matches at Spartan Gym.
+  // This rule is for the Thursday 3 PM listing in the campus calendar.
+  // https://sjsuspartans.com/news/2026/11/17/this-week-in-spartan-athletics-november-17-22
+  // https://sjsuspartans.com/facilities/yosh-uchida-hallspartan-gym
+  {
+    date: "2026-11-19",
+    matches: event => event.source === "SJSU Events" && event.city === "san-jose" && !event.virtual
+      && event.time === "3:00 PM"
+      && event.url === "https://events.sjsu.edu/event/womens-volleyball-san-jose-state-vs-unlv-7924"
+      && !event.venue && !event.address,
+    facts: { venue: "Spartan Gym", address: "298 S. 4th St., San Jose, CA 95112" },
+  },
+  // The Dec 9 occurrence header says 4:30 PM. The shared series description
+  // says 4 PM on that date. Qualify the disputed start without changing the
+  // other eight sessions or treating a later matching schedule as a conflict.
+  {
+    date: "2026-12-09",
+    matches: event => hasMitchellParkStudyHours(event) && event.time === "4:30 PM",
+    facts: { attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "Mitchell Park Library's calendar lists a 4:30 PM start on December 9, while its description says 4:00 PM. Confirm the start with the library before going.",
+    copyReplacements: MITCHELL_PARK_STUDY_COPY,
+  },
+  {
+    dateFrom: "2026-12-07", dateThrough: "2026-12-17",
+    matches: event => event.date !== "2026-12-09" && hasMitchellParkStudyHours(event),
+    copyReplacements: MITCHELL_PARK_STUDY_COPY,
+  },
+  // SJPL's eResources FAQ confirms the Boundless, CloudLibrary and Hoopla
+  // retirements. Keep the current services and the library's signup wording.
+  // https://www.sjpl.org/faq/ebooks-emedia-faqs/
+  {
+    dateFrom: "2026-11-17", dateThrough: "2026-11-19",
+    matches: event => event.source === "San Jose Public Library" && event.venue === "Almaden Library"
+      && event.title === "Digital Skills: One-On-One Tech Help for Seniors"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69f10f4bfb87a3c2e2ac6fe[cde]\/?$/.test(event.url || ""),
+    copyReplacements: [
+      [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
+      [/\bAccessing non-OverDrive e-?books and audiobooks from Boundless, Cloud\s*Library, and Enki;\s*/gi, "Finding e-books from Enki; "],
+      [/\bUsing Hoopla to read, listen and watch;\s*/gi, ""],
+      [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
+    ],
+  },
+  // The sold-out occurrence page confirms a workshop fee and supplies. It
+  // gives no price amount. Leave the waitlist and any current price intact.
+  {
+    date: "2026-12-02",
+    matches: event => event.source === "Montalvo Arts Center" && event.cost == null
+      && event.url === "https://my.montalvoarts.org/3275/3278",
+    facts: { cost: "paid" },
+  },
+  // The November 18 organizer pages carry signup instructions or admission
+  // details that were missing from the calendar API's display fields.
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events" && event.virtual === true
+      && event.url === "https://events.stanford.edu/event/slavic-languages-and-literatures-a-ukrainian-century-emigre-poets-in-prague"
+      && event.time === "1:00 PM",
+    facts: { venue: "Online (Zoom)", address: "", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through the event page to join the Zoom talk.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/truisms-fiction-and-women-writing-a-lunch-workshop-with-author-marie-darrieussecq"
+      && event.time === "12:15 PM",
+    appendAttendanceNote: "The French and Italian Department asks attendees to RSVP for the lunch workshop.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/ptolemys-almagest"
+      && event.time === "12:00 PM" && !event.cost && !event.costNote,
+    facts: { cost: "free" },
+    appendAttendanceNote: "The event page links to Stanford's RSVP form.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events"
+      && event.url === "https://events.stanford.edu/event/hai-seminar-with-mike-wooldridge-the-ai-100"
+      && event.time === "12:00 PM" && !event.cost && !event.costNote,
+    // The organizer's current page has the Room 119 details and both signup options.
+    facts: { cost: "free", url: "https://hai.stanford.edu/events/hai-seminar-the-ai-100" },
+    appendAttendanceNote: "Attend in Room 119 or use the organizer's event page to sign up for Zoom.",
+  },
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Santa Clara University" && event.virtual === true
+      && event.url === "https://events.scu.edu/school-of-education-and-counseling/event/521029-new-ma-in-social-impact-leadership-informational-sess"
+      && event.time === "5:30 PM" && [null, undefined, "6:30 PM"].includes(event.endTime),
+    // LiveWhale's dated event page has the missing end time and virtual registration link.
+    facts: { endTime: "6:30 PM", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Santa Clara University's event page to attend online.",
+  },
+  {
+    date: "2026-11-21",
+    matches: event => event.id === "inbound-1c03b1a7cf3ecd53"
+      && event.source === "City Newsletter" && /^https:\/\/www\.sjpl\.org\/?$/.test(event.url || "")
+      && event.time === "11:00 AM" && event.endTime === "1:00 PM",
+    // The branch's dated listing confirms the address and activities for all ages.
+    facts: {
+      url: "https://sjpl.bibliocommons.com/v2/events/6aa85f6d6059b704112a8a43",
+      address: "1780 Hillsdale Ave, San Jose, CA 95124",
+      cost: "free",
+      kidFriendly: true,
+    },
+  },
+  // The newsletter links to the book in the catalog. The dated library
+  // calendar entry has the meeting details and remote attendance option.
+  {
+    date: "2026-11-17",
+    matches: event => event.id === "inbound-67b8b8e24e5ade10"
+      && event.source === "City Newsletter" && event.time === "5:00 PM"
+      && /^https:\/\/losgatos\.aspendiscovery\.org\/GroupedWork\/ca5d24b9-87aa-29c9-34cd-99b22b10a7ad-eng\/Home(?:[?#]|$)/.test(event.url || ""),
+    facts: { url: "https://losgatosca.libcal.com/event/15855709" },
+  },
+  {
+    date: "2026-11-22",
+    matches: event => event.source === "Santa Clara University" && event.venue === "Mission Santa Clara de Asis"
+      && event.url === "https://events.scu.edu/center-for-spirituality-and-faith/event/517212-cantabile-youth-singers-concert"
+      && event.time === "4:00 PM",
+    // https://www.cantabile.org/performances-events
+    facts: { venue: "Mission Santa Clara de Asís" },
+    copyReplacements: [[/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"]],
+  },
+  // The occurrence page explicitly says Free Event and directs online
+  // attendees to its Zoom registration. The API omits both from its excerpt.
+  // Preserve any revised price or current booking status.
+  {
+    date: "2026-11-18",
+    matches: event => event.source === "Stanford Events" && event.virtual === true
+      && event.url === "https://events.stanford.edu/event/book-talk-good-girls-and-alpha-males"
+      && event.time === "12:00 PM" && event.endTime === "1:00 PM"
+      && [null, undefined, "free"].includes(event.cost) && !event.costNote
+      && /^Gen Z is coming of age in a world that feels stacked against them\./.test(event.description || ""),
+    facts: { venue: "Online (Zoom)", address: "", cost: "free", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Stanford's event page to join the free Zoom webinar.",
+  },
   // The exact November 17 Bascom source explicitly makes signup optional.
   // Preserve later closures, full states and amended attendance requirements.
   // Evidence: docs/qa/2026-11-17-0507z-fact-check.md.
@@ -143,7 +306,8 @@ const CORRECTIONS = [
   },
   // Both the live calendar and detail page date this fair November 21, the
   // third Saturday. Their standing second-Saturday sentence is stale; remove
-  // that clause without inventing a new monthly schedule or changing clocks.
+  // that clause and use the explicit free-admission statement when the
+  // calendar card has left the price unlabeled.
   // Evidence: docs/qa/2026-11-16-0707z-fact-check.md.
   {
     date: "2026-11-21",
@@ -151,6 +315,9 @@ const CORRECTIONS = [
       && event.url === "https://santanarow.com/event/makers-market-in-the-park/"
       && event.title === "Makers Market's Local Artist Street Fair"
       && event.venue === "Santana Row" && event.city === "san-jose",
+    facts: event => event.cost == null && !event.costNote
+      && /(?:^|[.!]\s+|\blive music by local artists\s*)free to attend[!.]/i.test(event.description || "")
+        ? { cost: "free" } : {},
     copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
   },
   // The exact library occurrence lists 5–6 PM, while its standing description
@@ -405,7 +572,7 @@ const CORRECTIONS = [
       && event.venue === "Montalvo Arts Center" && event.time === "10:00 AM"
       && [null, undefined, "3:00 PM"].includes(event.endTime)
       && [null, undefined, "free"].includes(event.cost) && !event.costNote
-      && [null, undefined, "", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
+      && [null, undefined, "", "RSVP Yuletide Marketplace FRI", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
     facts: { cost: "free", endTime: "3:00 PM" },
     copyReplacements: [[/; no times given\.$/, ", 10 AM–3 PM each day."]],
     appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
@@ -1348,7 +1515,7 @@ const CORRECTIONS = [
   {
     date: "2026-11-28",
     matches: (event) => /\bfootball\b.*\bSMU\b/i.test(event.title || "")
-      && /^https:\/\/tickets\.gostanford\.com\/(?:events?\/football-vs-smu-fauvdl|events?\/69c4649c39baf6e77d7c9b7f(?:\/[a-f0-9]{24})?)\/?(?:[?#]|$)/.test(event.url || ""),
+      && /^https:\/\/tickets\.gostanford\.com\/events?\/(?:football-vs-smu-fauvdl|69c4649c39baf6e77d7c9b7f)(?:\/[a-f0-9]{24})?\/?(?:[?#]|$)/.test(event.url || ""),
     facts: {
       time: null, endTime: null,
       description: "Stanford hosts SMU at Stanford Stadium on November 28. Kickoff time is TBA on Stanford's official football schedule; the ticket shop's structured clock is unconfirmed.",
@@ -2186,11 +2353,9 @@ const CORRECTIONS = [
   },
   // The authenticated newsletter invites reservations. The dated 11:30 AM
   // booking page confirms a paid reserved seating: $70 meal + $5 fees.
-  // The November 15 check finds a visible, occurrence-specific sold-out alert
-  // and waitlist. Repair retained copies; freshly verified performance facts
-  // outrank this cache correction, including a later reopening or new price.
-  // A newsletter alias can win deduplication while retaining an older seats-
-  // remaining sentence and booking blurb. Keep its copy consistent too.
+  // On November 17 the exact page says the seating is not currently on sale
+  // and no longer shows a waitlist. Update stale availability copy while
+  // letting new exact-performance evidence win, including a reopening.
   // Evidence: docs/qa/2026-10-31-2007-fact-check.md and
   // docs/qa/2026-11-15-0457z-fact-check.md and
   // docs/qa/2026-11-15-1507z-fact-check.md.
@@ -2199,18 +2364,18 @@ const CORRECTIONS = [
     matches: (event) => /^https:\/\/my\.montalvoarts\.org\/(?:overview\/3253|3253\/3254)(?:[/?#]|$)/.test(event.url || "")
       && event.time === "11:30 AM"
       && (!event.costNote || event.costNote === "$75 per person ($70 meal + $5 fees).")
-      && event.registration !== REGISTRATION_APPOINTMENT
+      && ![REGISTRATION_APPOINTMENT, REGISTRATION_CLOSED].includes(event.registration)
       && event.occurrenceEvidence?.admissionSourceUrl !== "https://my.montalvoarts.org/3253/3254",
     facts: {
-      cost: "paid", registration: REGISTRATION_FULL,
+      cost: "paid", registration: REGISTRATION_NONE, attendanceStatus: "needs-confirmation",
       costNote: "$75 per person ($70 meal + $5 fees).",
-      attendanceNote: "Sold out. The organizer offers a waitlist for the 11:30 AM seating.",
+      attendanceNote: "Online tickets are not currently available. Contact the organizer's box office before going.",
     },
     copyReplacements: [
-      [/\bSeatings at 11:30\s*am and 2:30\s*pm; reservations required, and few 11:30\s*am seats remain\./gi,
-        "The 11:30 AM seating is sold out; the organizer offers a waitlist."],
-      [/^Taste tea sandwiches, scones and petite sweets in the decorated historic Villa, with a reservation for your seating\.$/,
-        "The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist."],
+      [/\b(?:Seatings at 11:30\s*am and 2:30\s*pm; reservations required, and few 11:30\s*am seats remain|The 11:30 AM seating is sold out; the organizer offers a waitlist)\./gi,
+        "Online tickets for the 11:30 AM seating are unavailable."],
+      [/^(?:Taste tea sandwiches, scones and petite sweets in the decorated historic Villa, with a reservation for your seating|The 11:30 AM holiday tea in Montalvo's historic Villa is sold out; the organizer offers a waitlist|Attend the Yuletide Tea at Montalvo Arts Center on a Sunday, an arts event in Saratoga starting at 11:30 AM)\.$/,
+        "Montalvo lists Yuletide Tea at 11:30 AM. Check with the box office about tickets."],
     ],
   },
   // The organizer's page and authenticated museum newsletter describe
@@ -5245,13 +5410,14 @@ export function applyVerifiedEventFacts(event) {
     );
   });
   if (!correction) return event;
-  const corrected = { ...event, ...correction.facts };
+  const facts = typeof correction.facts === "function" ? correction.facts(event) : correction.facts;
+  const corrected = { ...event, ...facts };
   // A verified signup requirement cannot reopen a session whose current
   // provider metadata says full/closed or replace an appointment gate. A
   // full-seat correction likewise cannot reopen an explicitly closed window.
-  if ((correction.facts?.registration === REGISTRATION_REQUIRED
+  if ((facts?.registration === REGISTRATION_REQUIRED
       && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration))
-      || (correction.facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
+      || (facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
     corrected.registration = event.registration;
   }
   // Entry conditions supplement current booking/availability notices; never

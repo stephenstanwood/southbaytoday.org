@@ -22,19 +22,6 @@
 }
 
 /* ── Loading placeholders ── */
-/* Hero stat: fills the number's line box (strong is 1em tall, line-height 1)
-   so nothing shifts when the count lands. */
-/* chrome.css styles every span in .sb-page-stat as the mono label, so pin
-   the size back to the number's (inherit strong's font-size → 1em box). */
-.sb-events-page .sb-page-stat strong .sb-events-stat-skel {
-  display: block;
-  width: 2.1em;
-  height: 1em;
-  margin: 0;
-  font-size: inherit;
-  border-radius: var(--sb-radius-xs);
-}
-
 .sb-events-count-skel {
   display: inline-block;
   vertical-align: middle;
@@ -992,30 +979,9 @@
 }
 
 /* ── Phone ── */
-@media (max-width: 680px) {
-  /* Three stats read as one row on a phone instead of 2 + an orphan. */
-  .sb-events-page .sb-page-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .sb-events-page .sb-page-stat,
-  .sb-events-page .sb-page-stat:nth-child(odd) {
-    border-left: 1px solid var(--sb-line);
-  }
-  .sb-events-page .sb-page-stat:first-child {
-    border-left: none;
-  }
-  .sb-events-page .sb-page-stat:nth-child(n+3) {
-    border-top: none;
-  }
-  .sb-events-page .sb-page-stat > span {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-  }
-}
-
 @media (max-width: 640px) {
   .sb-events-page {
-    gap: 16px;
+    gap: 14px;
   }
 
   .sb-events-controls {
@@ -1041,7 +1007,7 @@
     grid-auto-flow: column;
     grid-auto-columns: 64px;
     gap: 7px;
-    margin: 14px -12px 12px;
+    margin: 12px -12px 10px;
     padding: 2px 12px 4px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
@@ -1055,8 +1021,8 @@
     display: none;
   }
   .sb-events-date-pill {
-    min-height: 74px;
-    padding: 9px 2px;
+    min-height: 68px;
+    padding: 8px 2px;
     gap: 4px;
     scroll-snap-align: start;
   }

@@ -103,6 +103,19 @@ function monogramFor(name: string): string {
   return letter ? letter[0].toUpperCase() : "";
 }
 
+// A county filing usually names no cuisine, so the generator's honest
+// fallback is a location-only line ("Food business on Lotus Street in San
+// Jose."). The tile already prints the city and street, so keep only the
+// business type the line names, and drop it when that is just "Food business".
+function tileBlurb(blurb: string | null | undefined): string | null {
+  const text = blurb?.trim();
+  if (!text) return null;
+  const located = /^(.{2,48}?)\s+(?:planned\s+)?(?:on|at)\s+[^.]+?\s+in\s+[A-Z][\w .'-]*\.?$/.exec(text);
+  if (!located) return text;
+  const kind = located[1].trim();
+  return /^food (?:business|spot|venue)$/i.test(kind) ? null : kind;
+}
+
 function FoodTile({ item }: { item: FoodItem }) {
   const isOpen = item.status === "opened";
   const isInspection = item.status === "inspection-complete";
@@ -149,6 +162,7 @@ function FoodTile({ item }: { item: FoodItem }) {
   );
   const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
   const dateLabel = formatShortDate(isInspection ? item.inspectionDate ?? null : item.date ?? null);
+  const blurb = tileBlurb(item.blurb);
 
   return (
     <a
@@ -178,7 +192,7 @@ function FoodTile({ item }: { item: FoodItem }) {
       <span className="food-tile-body">
         {city && <span className="food-tile-city">{city}</span>}
         <span className="food-tile-name">{item.name}</span>
-        {item.blurb && <span className="food-tile-blurb">{item.blurb}</span>}
+        {blurb && <span className="food-tile-blurb">{blurb}</span>}
         {item.address && <span className="food-tile-addr">{item.address}</span>}
         {dateLabel && (
           <span className="food-tile-date">
@@ -214,6 +228,7 @@ function NewAndComingSoon() {
         <p className="food-sub">
           Verified openings, final inspections + permits
           {updated && <>{SEP}Updated {updated}</>}
+          {SEP}<a className="food-sub-link" href="/food/new">Full list</a>
         </p>
       </header>
 
@@ -477,42 +492,15 @@ function FarmersMarkets() {
 // ── View ────────────────────────────────────────────────────────────────────
 
 function FoodHero() {
-  const openings = sccFoodOpeningsJson as {
-    generatedAt: string;
-    lookbackDays?: number;
-    opened: FoodItem[];
-    inspections: FoodItem[];
-    comingSoon: FoodItem[];
-  };
-  const updated = formatUpdated(openings.generatedAt);
-  const openedCount = openings.opened?.length ?? 0;
-  const lookback = openings.lookbackDays;
-
   return (
     <PageHero
       eyebrow="South Bay / Food Desk"
       title="Food"
       description="Verified openings, recent final inspections, promising buildouts, and farmers markets across the South Bay."
-      note={`Health-permit refresh ${updated || "recently"}`}
       // --sb-coral (#F43F7C) is only ~3.4:1 on the hero background as text,
       // so the kicker uses a deeper shade of the same coral (#B8235E, ~5.8:1)
       // rather than a true red.
       accent="#B8235E"
-      stats={[
-        {
-          // A zero here is normal (an opening needs a second, cited source),
-          // so it reads as "none yet" rather than as a broken counter.
-          value: openedCount > 0 ? openedCount : <span className="food-stat-zero">0</span>,
-          label: "Verified openings",
-          note: openedCount > 0
-            ? undefined
-            : lookback
-              ? `None confirmed in the last ${lookback} days`
-              : "None confirmed yet",
-        },
-        { value: openings.inspections?.length ?? 0, label: "Final inspections" },
-        { value: openings.comingSoon?.length ?? 0, label: "Coming soon" },
-      ]}
     />
   );
 }

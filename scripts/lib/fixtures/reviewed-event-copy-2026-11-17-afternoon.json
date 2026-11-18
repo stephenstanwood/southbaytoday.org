@@ -1,0 +1,388 @@
+{
+  "reviewedAt": "2026-11-17",
+  "sourceEvidence": [
+    {
+      "path": "src/data/south-bay/upcoming-events.json",
+      "sha256": "124a6f04c97c8cc19ad65ac5dd1ec6338152a380d46e01e054a9449939a64994"
+    },
+    {
+      "url": "https://www.jpl.nasa.gov/missions/insight/",
+      "observed": "NASA spells the mission InSight."
+    },
+    {
+      "url": "https://support.apple.com/imovie",
+      "observed": "Apple spells the app iMovie."
+    },
+    {
+      "url": "https://www.overdrive.com/apps/libby",
+      "observed": "Libby publisher uses the OverDrive spelling."
+    },
+    {
+      "path": "scripts/lib/fixtures/reviewed-event-copy-2026-11-06-evening.json",
+      "observed": "The earlier Vineland class uses the same English learner level wording."
+    },
+    {
+      "path": "src/data/south-bay/upcoming-events.json",
+      "sha256": "ec233adae7eca5e133a4915364a0e008e34554ca1da692c32c68d1cb21b7bf0f",
+      "observed": "The fact-checked November 17 to 19 Almaden descriptions contain the same flattened service list."
+    },
+    {
+      "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fed",
+      "observed": "The organizer describes a 30-minute appointment at Almaden and lists the technology help topics."
+    }
+  ],
+  "cases": [
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ab70548101eb7003f32fb7d",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6ab70548101eb7003f32fb7d",
+          "title": "Mental Health Workshop: From Resilience to Kindness: Stress Management and Compassion Cultivation"
+        }
+      ],
+      "refreshed": "San Jose Public Library's Trauma Informed Resilience Oriented Care team (TIROC) presents an online workshop with Dr. Tom Bussen. The modern world can be a source of excitement, growth, and impact. It also exacerbates painful feelings of stress, uncertainty, and overload. In this workshop led by educator, lawyer, and author Dr. Tom Bussen, attendees learn scientifically validated techniques to manage stress, build resilience, and enhance compassion for others, particularly within a workplace and classroom setting. Participants to this dynamic and interactive workshop are empowered to transform stressors into opportunities for growth, to quiet the overactive mind and enhance focus and sleep quality, and to nurture greater compassion and altruism toward oneself and others. By integrating these evidence-based tools, participants gain actionable strategies to create healthier, more fulfilling lives, while fostering a thriving, productive environment in both professional and educational settings. Gain a new perspective into the benefits of meditation, combining modern research with ancient wisdom; Develop new strategies to manage stress, making it a friend over an enemy; Learn practices to cultivate more compassion, and improve mood and relationships; Practice individually and in groups, and begin to integrate these activities into your daily life. Bio: Dr. Thomas J. Bussen is an organizational behavioralist and author of four books, with a specialization in positive psychology, wellness, mindfulness, resilience, and compassion. A management professor from Miami University in Ohio, an experienced meditator and Buddhist Chaplain-in-training, he has taught meditation and wellness strategies in the USA, India, Nigeria, Nepal and Bhutan. A former Peace Corps volunteer, he has taught for most of the last decade at leading universities in Kyrgyzstan, Rwanda, and in the United States and consulted for organizations ranging from the US State Department and Transparency International to private entities. He holds an MBA and a Juris Doctor (Doctorate of Law) in International and Comparative Law from St. Louis University, and a Doctorate in Business Administration from the University of Florida.",
+      "reviewed": "San Jose Public Library's Trauma Informed Resilience Oriented Care team (TIROC) presents an online workshop with Dr. Tom Bussen. The modern world can be a source of excitement, growth, and impact. It also exacerbates painful feelings of stress, uncertainty, and overload. In this workshop led by educator, lawyer, and author Dr. Tom Bussen, attendees learn scientifically validated techniques to manage stress, build resilience, and enhance compassion for others, particularly within a workplace and classroom setting. Participants in this dynamic and interactive workshop are empowered to transform stressors into opportunities for growth, to quiet the overactive mind and enhance focus and sleep quality, and to nurture greater compassion and altruism toward oneself and others. By integrating these evidence-based tools, participants gain actionable strategies to create healthier, more fulfilling lives, while fostering a thriving, productive environment in both professional and educational settings. Gain a new perspective into the benefits of meditation, combining modern research with ancient wisdom; Develop new strategies to manage stress, making it a friend over an enemy; Learn practices to cultivate more compassion, and improve mood and relationships; Practice individually and in groups, and begin to integrate these activities into your daily life. Bio: Dr. Thomas J. Bussen is an organizational behavioralist and author of four books, with a specialization in positive psychology, wellness, mindfulness, resilience, and compassion. A management professor from Miami University in Ohio, an experienced meditator and Buddhist Chaplain-in-training, he has taught meditation and wellness strategies in the USA, India, Nigeria, Nepal and Bhutan. A former Peace Corps volunteer, he has taught for most of the last decade at leading universities in Kyrgyzstan, Rwanda, and in the United States and consulted for organizations ranging from the US State Department and Transparency International to private entities. He holds an MBA and a Juris Doctor (Doctorate of Law) in International and Comparative Law from St. Louis University, and a Doctorate in Business Administration from the University of Florida."
+    },
+    {
+      "source": "Montalvo Arts Center",
+      "field": "description",
+      "events": [
+        {
+          "id": "montalvo-a2d667f653519e8c",
+          "source": "Montalvo Arts Center",
+          "url": "https://my.montalvoarts.org/3275/3278",
+          "title": "Wild-Foraged Wreath-Making Workshop"
+        }
+      ],
+      "refreshed": "Wreath Making Workshop 6 PM",
+      "reviewed": "The wreath-making workshop starts at 6 PM."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-69444afa94297d3600a096c0",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69444afa94297d3600a096c0",
+          "title": "ELL Advanced English: Writing Club"
+        }
+      ],
+      "refreshed": "English Language Learners (ELL) can practice basic writing skills in English with our tutor in a welcoming and respectful environment for adult learners. Sessions take place on the 1st and 3rd (& 5th, if applicable) Tuesdays. Topics may include creating simple sentence structures, learning some basic grammar, and building up to writing a simple paragraph. Suggested for high beginners up to advanced English language learners. Space is limited and registration is required. Please stop by the Vineland Library or call us at (408) 808-3000 to register. Vineland's English Learning series: ELL Beginning English: A beginner program for learners with limited English skills; approximately levels 0-2; ELL Grammar and Vocabulary Club: An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Conversation Club: An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where high beginners to advanced level English language learners can learn and practice their English writing skills; approximately levels 2-4.",
+      "reviewed": "English Language Learners (ELL) can practice basic writing skills in English with our tutor in a welcoming and respectful environment for adult learners. Sessions take place on the 1st and 3rd (& 5th, if applicable) Tuesdays. Topics may include creating simple sentence structures, learning some basic grammar, and building up to writing a simple paragraph. Suggested for high beginners up to advanced English language learners. Space is limited and registration is required. Please stop by the Vineland Library or call us at (408) 808-3000 to register. Vineland's English Learning series: ELL Beginning English: A beginner program for learners with limited English skills; approximately levels 0-2; ELL Grammar and Vocabulary Club: An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Conversation Club: An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where English learners at levels from high beginner to advanced can learn and practice their English writing skills; approximately levels 2-4."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fec",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fec",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors"
+        },
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fed",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fed",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors"
+        },
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fee",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fee",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors"
+        }
+      ],
+      "refreshed": "Do you have questions or need assistance with technology? At the Almaden Branch, you can make a 30-minute appointment for assistance with: Learning to use Libby (formerly Overdrive) to read ebooks and listen to e-audiobooks; Accessing non-Overdrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Accessing the New York Times and/or the San Jose Mercury News online; Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; Using Discover & Go to reserve free or reduced tickets to local museums and attractions; Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby or Hoopla; Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more! By appointment only. One appointment per week per person. For questions, please call (408) 808-3040 or send an email to ab.sjpl@sjlibrary.org.",
+      "reviewed": "Do you have questions or need assistance with technology? At the Almaden Branch, you can make a 30-minute appointment for assistance with: Learning to use Libby (formerly OverDrive) to read ebooks and listen to e-audiobooks; Accessing non-OverDrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Accessing the New York Times and/or the San Jose Mercury News online; Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; Using Discover & Go to reserve free or reduced tickets to local museums and attractions; Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby or Hoopla; Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more! By appointment only. One appointment per week per person. For questions, please call (408) 808-3040 or send an email to ab.sjpl@sjlibrary.org."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-693c82bd8b29ea2800c3f734",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/693c82bd8b29ea2800c3f734",
+          "title": "Third Thursdays with Poetry Center San Jose"
+        }
+      ],
+      "refreshed": "Third Thursdays is a monthly Poetry program in partnership with Poetry Center San José and hosted by local poet Mighty Mike McGee! This month - Poetry Center San Jose Presents: Featured Poet: Lawrence Kelly! Lawrence Kelly is a Afro-latino spoken word poet from the Bay Area, whose work unearths raw emotional truths and uplifts those with the same struggles with mental health and identity. He's published in West Valley's Voices Magazine, Caesura Magazine, Homies, and La Raiz Magazine. He's a speaker on the Lgbt speaker's bureau and loves using his art to spread Black queer joy. Open mic to follow. Poetry Center San José 's mission is to nurture and promote diverse literary expression in our community as a means of exploring, defining, and enriching the human experience. For those under 18 years of age who may be attending, we recommend that a parent/legal guardian be with you during the program. Free. No registration required.",
+      "reviewed": "Third Thursdays is a monthly poetry program in partnership with Poetry Center San José and hosted by local poet Mighty Mike McGee! This month's featured poet is Lawrence Kelly. Lawrence Kelly is an Afro-Latino spoken word poet from the Bay Area, whose work unearths raw emotional truths and uplifts those with the same struggles with mental health and identity. He's published in West Valley's Voices Magazine, Caesura Magazine, Homies, and La Raiz Magazine. He's a speaker with the LGBT speakers bureau and loves using his art to spread Black queer joy. Open mic to follow. Poetry Center San José's mission is to nurture and promote diverse literary expression in our community as a means of exploring, defining, and enriching the human experience. For those under 18 years of age who may be attending, we recommend that a parent/legal guardian be with you during the program. Free. No registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6941d7666f926136000b4827",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6941d7666f926136000b4827",
+          "title": "Infant and Toddler Storytime"
+        }
+      ],
+      "refreshed": "Infant and Toddler Storytime invites children and their caregivers to wiggle, rhyme, and sing with diverse books, songs, and fingerplays that encourage language, play, and exploration. This program is geared for children 0 to 3 years of age and their parents/caregivers, but all children are welcome! Free, 50-person maximum. Story Time tickets required. A second event, Infant and Toddler Storytime B, will start at 11:15 for those that weren't able to make it inside for this event. Seating for Storytime is available on a first-come, first-served basis. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime. This program is developed to align with the Early Education Quality Standards.",
+      "reviewed": "Infant and Toddler Storytime invites children and their caregivers to wiggle, rhyme, and sing with diverse books, songs, and fingerplays that encourage language, play, and exploration. This program is geared for children 0 to 3 years of age and their parents/caregivers, but all children are welcome! Free, 50-person maximum. Storytime tickets are required. A second event, Infant and Toddler Storytime B, will start at 11:15 for those who couldn't get into this session. Seating for Storytime is available on a first-come, first-served basis. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime. This program is developed to align with the Early Education Quality Standards."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-694450967f0b8a3e004db32c",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/694450967f0b8a3e004db32c",
+          "title": "ELL Beginning English: The Basics"
+        }
+      ],
+      "refreshed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Beginning English program is a welcoming and respectful environment for adult learners to begin their English language journey. Participants will have the opportunity to learn & develop their speaking, listening, reading and writing skills. Suggested for beginner English language learners. The ELL Beginning English program meets weekly at the library in the library's Community Room with a trained facilitator. Free. No registration required. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where high beginners to advanced level English language learners can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where high beginners to advanced level English language learners can read aloud and practice their pronunciation; approximately levels 2-4.",
+      "reviewed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Beginning English program is a welcoming and respectful environment for adult learners to begin their English language journey. Participants will have the opportunity to learn & develop their speaking, listening, reading and writing skills. Suggested for beginner English language learners. The ELL Beginning English program meets weekly in the library's Community Room with a trained facilitator. Free. No registration required. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where English learners at levels from high beginner to advanced can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where English learners at levels from high beginner to advanced can read aloud and practice their pronunciation; approximately levels 2-4."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6944509fea69de6e001047ed",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6944509fea69de6e001047ed",
+          "title": "ELL Intermediate English: Grammar & Vocabulary Club"
+        }
+      ],
+      "refreshed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Vocabulary and Grammar Club is a welcoming and respectful environment for adult learners to learn and practice their English. Participants will have the opportunity to develop their grammar skills, expand their English vocabulary and more. Suggested for high beginner or intermediate English language learners. The ELL Grammar and Vocabulary Club meets weekly at the library in the library's Community Room with a trained facilitator. Free. No registration required. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where high beginners to advanced level English language learners can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where high beginners to advanced level English language learners can read aloud and practice their pronunciation; approximately levels 2-4.",
+      "reviewed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Vocabulary and Grammar Club is a welcoming and respectful environment for adult learners to learn and practice their English. Participants will have the opportunity to develop their grammar skills, expand their English vocabulary and more. Suggested for high beginner or intermediate English language learners. The ELL Grammar and Vocabulary Club meets weekly in the library's Community Room with a trained facilitator. Free. No registration required. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where English learners at levels from high beginner to advanced can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where English learners at levels from high beginner to advanced can read aloud and practice their pronunciation; approximately levels 2-4."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-694450aa571fb4d550be62ca",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/694450aa571fb4d550be62ca",
+          "title": "ELL Advanced English: Conversation Club"
+        }
+      ],
+      "refreshed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Conversation Club is a welcoming and respectful environment for adult learners to practice their English conversation skills. Participants will have the opportunity to practice & develop their speaking and listening skills as well as learn about American culture and common phrases/idioms. Suggested for intermediate or advanced English language learners. No registration required. The ELL Conversation Club meets weekly at the library in the library's Community Room with a trained facilitator. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where high beginners to advanced level English language learners can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where high beginners to advanced level English language learners can read aloud and practice their pronunciation; approximately levels 2-4.",
+      "reviewed": "Do you want to build your English-language skills and your confidence? The English Language Learner (ELL) Conversation Club is a welcoming and respectful environment for adult learners to practice their English conversation skills. Participants will have the opportunity to practice & develop their speaking and listening skills as well as learn about American culture and common phrases/idioms. Suggested for intermediate or advanced English language learners. No registration required. The ELL Conversation Club meets weekly in the library's Community Room with a trained facilitator. Vineland's English Learning series: ELL Beginning English: The Basics - A beginner program for learners with limited English skills; approximately levels 0-2; ELL Intermediate English: Grammar and Vocabulary Club - An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Advanced English: Conversation Club - An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where English learners at levels from high beginner to advanced can learn and practice their English writing skills; approximately levels 2-4; ELL Reading & Speaking: A program where English learners at levels from high beginner to advanced can read aloud and practice their pronunciation; approximately levels 2-4."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ab40681101eb7003f325d81",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6ab40681101eb7003f325d81",
+          "title": "Asistencia para Búsqueda de Trabajo"
+        }
+      ],
+      "refreshed": "¿Buscas apoyo para avanzar en tu carrera? ¡Estamos aquí para ayudarte! Ofrecemos asistencia gratuita en: Creación de Resume y Carta de Presentación - Destaca tus habilidades y experiencia con documentos profesionales que abran puertas. Búsqueda de Oportunidades de Empleo - Te guiamos para encontrar vacantes en los principales sitios web de trabajo. Llenado de Formularios de Solicitud - Incluye ayuda con verificación de historial laboral y otros documentos esenciales para tu contratación; Técnicas y Consejos para Entrevistas - Aprende cómo responder con confianza, qué decir, qué evitar y cómo causar una excelente impresión. Práctica para el Examen Escrito de Manejo - Prepárate con materiales y preguntas de práctica para aprobar tu examen.",
+      "reviewed": "¿Buscas apoyo para avanzar en tu carrera? ¡Estamos aquí para ayudarte! Ofrecemos asistencia gratuita en: Creación de un currículum y una carta de presentación - Destaca tus habilidades y experiencia con documentos profesionales que abran puertas. Búsqueda de Oportunidades de Empleo - Te guiamos para encontrar vacantes en los principales sitios web de trabajo. Llenado de Formularios de Solicitud - Incluye ayuda con verificación de historial laboral y otros documentos esenciales para tu contratación; Técnicas y Consejos para Entrevistas - Aprende cómo responder con confianza, qué decir, qué evitar y cómo causar una excelente impresión. Práctica para el Examen Escrito de Manejo - Prepárate con materiales y preguntas de práctica para aprobar tu examen."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6a5fb6310d65ac36004141f4",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6a5fb6310d65ac36004141f4",
+          "title": "Kids' Writing Club"
+        }
+      ],
+      "refreshed": "Join our monthly writing club, which meets on the 3rd Thursday of the month, to encourage your child to write and express themselves. Children will learn how to express themselves through writing stories and practical writing tasks like letters and thank you notes. Our fall schedule is: September: How to Write a Story October: Spooky Story November: Thank-you Letter December: Letter to Santa January: Plot and Three Little Pigs Through different writing assignments students will learn about their own voice and become more effective communicators. This program is for children in 3rd grade and up.",
+      "reviewed": "Join our monthly writing club, which meets on the 3rd Thursday of the month, to encourage your child to write and express themselves. Children will learn how to express themselves through writing stories and practical writing tasks like letters and thank you notes. The schedule covers How to Write a Story (September), Spooky Story (October), Thank-you Letter (November), Letter to Santa (December), and Plot and Three Little Pigs (January). Through different writing assignments, students will learn about their own voice and become more effective communicators. This program is for children in 3rd grade and up."
+    },
+    {
+      "source": "Palo Alto City Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768d",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768d",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768e",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768e",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa768f",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa768f",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7690",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7690",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7691",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7691",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7692",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7692",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7693",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7693",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7694",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7694",
+          "title": "Locked in: Teen Finals Study Space!"
+        },
+        {
+          "id": "paloalto-6afcaa4c22b92c0041aa7695",
+          "source": "Palo Alto City Library",
+          "url": "https://paloalto.bibliocommons.com/events/6afcaa4c22b92c0041aa7695",
+          "title": "Locked in: Teen Finals Study Space!"
+        }
+      ],
+      "refreshed": "Need a place to focus, recharge, and get ready for finals? Join us at the library for a teen study space in the Midtown Room. Monday 12/7 - 4:00 PM-8:45 PM Tuesday 12/8- 4:30 PM-8:45 PM Wednesday 12/9- 4:00 PM-8:45 PM Thursday 12/10 - not available Friday 12/11- 2:30 PM-5:45 PM Saturday 12/12- not available Sunday 12/13- 3:30 PM-5:45 PM Monday 12/14- 4:00 PM-8:45 PM Tuesday 12/15- 5:00 PM-8:45 PM Wednesday 12/16- 4:00 PM-8:45 PM Thursday 12/17-4:00 PM-8:45 PM The Midtown Room will only be opened for teens.",
+      "reviewed": "Need a place to focus, recharge, and get ready for finals? Join us at the library for a teen study space in the Midtown Room. Monday 12/7 from 4:00 PM to 8:45 PM. Tuesday 12/8 from 4:30 PM to 8:45 PM. Wednesday 12/9 from 4:00 PM to 8:45 PM. The room is unavailable on Thursday 12/10. Friday 12/11 from 2:30 PM to 5:45 PM. The room is unavailable on Saturday 12/12. Sunday 12/13 from 3:30 PM to 5:45 PM. Monday 12/14 from 4:00 PM to 8:45 PM. Tuesday 12/15 from 5:00 PM to 8:45 PM. Wednesday 12/16 from 4:00 PM to 8:45 PM. Thursday 12/17 from 4:00 PM to 8:45 PM. The Midtown Room will be open to teens only."
+    },
+    {
+      "source": "Santa Clara County Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sccl-6a08e112748daf857d58e357",
+          "source": "Santa Clara County Library",
+          "url": "https://sccl.bibliocommons.com/events/6a08e112748daf857d58e357",
+          "title": "Toddler Storytime"
+        },
+        {
+          "id": "sccl-6a08e112748daf857d58e358",
+          "source": "Santa Clara County Library",
+          "url": "https://sccl.bibliocommons.com/events/6a08e112748daf857d58e358",
+          "title": "Toddler Storytime"
+        },
+        {
+          "id": "sccl-6a08e112748daf857d58e359",
+          "source": "Santa Clara County Library",
+          "url": "https://sccl.bibliocommons.com/events/6a08e112748daf857d58e359",
+          "title": "Toddler Storytime"
+        }
+      ],
+      "refreshed": "Stories and Songs for 1-2-year-olds. This story time features lots of movement, singing, and action and is geared for very young toddlers who can no longer sit in laps! For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@sccl.org.",
+      "reviewed": "Stories and songs for ages 1 to 2. This story time features lots of movement, singing, and action and is geared for very young toddlers who can no longer sit in laps! For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@sccl.org."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ae0f1f1035faf0033df689b",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6ae0f1f1035faf0033df689b",
+          "title": "STEM Club: Modeling Asteroids"
+        }
+      ],
+      "refreshed": "Drop in every Thursday afternoon for a new STEM adventure! Intended for ages 5-10, but all families are welcome. This week, in celebration of Native American Heritage Month, we'll learn about Aaron Yazzie, a mechanical engineer who has worked on Mars Science Laboratory, In Sight, and Mars 2020 missions. Then, we'll learn about asteroids and make our own! Free. No registration is required.",
+      "reviewed": "Drop in every Thursday afternoon for a new STEM adventure! Intended for ages 5-10, but all families are welcome. This week, in celebration of Native American Heritage Month, we'll learn about Aaron Yazzie, a mechanical engineer who has worked on Mars Science Laboratory, InSight, and Mars 2020 missions. Then, we'll learn about asteroids and make our own! Free. No registration is required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-693c85b58b29ea2800c3f845",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/693c85b58b29ea2800c3f845",
+          "title": "Reading to Children"
+        },
+        {
+          "id": "sjpl-693c85b58b29ea2800c3f846",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/693c85b58b29ea2800c3f846",
+          "title": "Reading to Children"
+        }
+      ],
+      "refreshed": "Participating in the Reading to Children program is a great way for children to develop their imagination and spark a love for books, reading and learning. Children will enjoy one-on-one or small group interaction with our volunteers Mike, Sally & Matt. Kids are also welcome to practice reading to our volunteer. Free. No registration required.",
+      "reviewed": "Participating in the Reading to Children program is a great way for children to develop their imagination and spark a love for books, reading and learning. Children will enjoy one-on-one or small group interaction with our volunteers Mike, Sally, and Matt. Kids are also welcome to practice reading to one of the volunteers. Free. No registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ae92a99ebad22004549da13",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6ae92a99ebad22004549da13",
+          "title": "Create Green Screen Clips"
+        }
+      ],
+      "refreshed": "Play with green screen effects and create your own personalized clips using the i Movie app on the iPad and a full-sized Green screen. Props and materials will be provided to make your clip come to life. Recommended for ages 10-18. Free. No registration required.",
+      "reviewed": "Play with green screen effects and create your own personalized clips using the iMovie app on the iPad and a full-size green screen. Props and materials will be provided to make your clip come to life. Recommended for ages 10-18. Free. No registration required."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-6ad10c8329c3d600333025a4",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/6ad10c8329c3d600333025a4",
+          "title": "ELL Beginning English: The Basics"
+        }
+      ],
+      "refreshed": "Do you want to build your English-language skills and your confidence? English Language Learners (ELL) can increase their English skills with our tutor in a welcoming and respectful environment for adult learners. Sessions take place on the 2nd and 4th Tuesdays. Topics may include learning new vocabulary, practicing pronunciation, and basic grammar. Suggested for English language learners with little to no experience. Space is limited and registration is required. Please stop by the Vineland Library or call us at (408) 808-3000 to register. Vineland's English Learning series: ELL Beginning English: A beginner program for learners with limited English skills; approximately levels 0-2; ELL Grammar and Vocabulary Club: An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Conversation Club: An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where high beginners to advanced level English language learners can learn and practice their English writing skills; approximately levels 2-4.",
+      "reviewed": "Do you want to build your English-language skills and your confidence? English Language Learners (ELL) can increase their English skills with our tutor in a welcoming and respectful environment for adult learners. Sessions take place on the 2nd and 4th Tuesdays. Topics may include learning new vocabulary, practicing pronunciation, and basic grammar. Suggested for English language learners with little to no experience. Space is limited and registration is required. Please stop by the Vineland Library or call us at (408) 808-3000 to register. Vineland's English Learning series: ELL Beginning English: A beginner program for learners with limited English skills; approximately levels 0-2; ELL Grammar and Vocabulary Club: An intermediate program for learners that know some English but want to learn more complex English; approximately levels 2-3; ELL Conversation Club: An advanced program for learners to practice speaking and listening while also learning about American culture and idioms; approximately levels 3-4; ELL Writing Club: A program where English learners at levels from high beginner to advanced can learn and practice their English writing skills; approximately levels 2-4."
+    },
+    {
+      "source": "San Jose Public Library",
+      "field": "description",
+      "events": [
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fec",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fec",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors",
+          "date": "2026-11-17",
+          "venue": "Almaden Library",
+          "registration": "closed"
+        },
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fed",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fed",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors",
+          "date": "2026-11-18",
+          "venue": "Almaden Library",
+          "registration": "closed"
+        },
+        {
+          "id": "sjpl-69f10f4bfb87a3c2e2ac6fee",
+          "source": "San Jose Public Library",
+          "url": "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6fee",
+          "title": "Digital Skills: One-On-One Tech Help for Seniors",
+          "date": "2026-11-19",
+          "venue": "Almaden Library",
+          "registration": "closed"
+        }
+      ],
+      "refreshed": "Do you have questions or need assistance with technology? At the Almaden Branch, you can make a 30-minute appointment for assistance with: Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; Finding e-books from Enki; Accessing the New York Times and/or the San Jose Mercury News online; Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; Using Discover & Go to reserve free or reduced tickets to local museums and attractions; Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby; Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more! By appointment only. One appointment per week per person. For questions, please call (408) 808-3040 or send an email to ab.sjpl@sjlibrary.org.",
+      "reviewed": "The Almaden Branch offers 30-minute tech help appointments. Get help using Libby from OverDrive to read ebooks and listen to audiobooks, finding ebooks from Enki, reading the New York Times and the San Jose Mercury News online, or accessing and searching Consumer Reports. You can also get help learning a language with Mango, connecting to Wi-Fi or a hotspot, or using Discover & Go to reserve free or reduced-price tickets to local museums and attractions. Other topics include navigating the SJPL website, checking out a 7-day pass to Great Courses through Libby, using the library's pay-to-print system, and working through a Digital Skills Building Pathways lesson. By appointment only. One appointment per week per person. For questions, please call (408) 808-3040 or send an email to ab.sjpl@sjlibrary.org.",
+      "beforeFacts": "Do you have questions or need assistance with technology? At the Almaden Branch, you can make a 30-minute appointment for assistance with: Learning to use Libby (formerly OverDrive) to read ebooks and listen to e-audiobooks; Accessing non-OverDrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Accessing the New York Times and/or the San Jose Mercury News online; Accessing and searching Consumer Reports; Learning a new language with Mango; Connecting to Wi-Fi/hotspots; Using Discover & Go to reserve free or reduced tickets to local museums and attractions; Navigating the SJPL website; Checking out a 7-day pass to access Great Courses from Libby or Hoopla; Using the library's pay-to-print system; Walking you through a Digital Skills Building Pathways lesson; And much more! By appointment only. One appointment per week per person. For questions, please call (408) 808-3040 or send an email to ab.sjpl@sjlibrary.org."
+    }
+  ]
+}

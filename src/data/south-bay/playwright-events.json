@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-17T07:30:16.971Z",
+    "generatedAt": "2026-11-18T00:03:00.810Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 186,
+    "eventCount": 189,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (10)",
@@ -13,17 +13,17 @@
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
-      "Children's Discovery Museum (1)",
-      "Guadalupe River Park Conservancy (10)",
-      "Santana Row (6)",
+      "Guadalupe River Park Conservancy (9)",
+      "Santana Row (7)",
       "City of Cupertino (34)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
-      "The Tech Interactive (12)",
+      "The Tech Interactive (14)",
       "Books Inc (4)",
       "San Jose Museum of Art (2)",
+      "Children's Discovery Museum (2)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -175,20 +175,23 @@
       {
         "id": "children-s-discovery-museum",
         "label": "Children's Discovery Museum",
-        "status": "ok",
-        "count": 1,
-        "liveCount": 1,
-        "error": null,
+        "status": "error",
+        "count": 2,
+        "liveCount": 0,
+        "error": "unexpected empty result after retry; previous snapshot still has 2 future event(s) from Children's Discovery Museum",
         "sources": [
           "Children's Discovery Museum"
-        ]
+        ],
+        "retainedCount": 2,
+        "carriedForward": true,
+        "carryForwardReason": "scraper errored; retained previous run's events"
       },
       {
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 10,
-        "liveCount": 10,
+        "count": 9,
+        "liveCount": 9,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -198,8 +201,8 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 7,
+        "liveCount": 7,
         "error": null,
         "sources": [
           "Santana Row"
@@ -273,8 +276,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 12,
-        "liveCount": 12,
+        "count": 14,
+        "liveCount": 14,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -659,8 +662,8 @@
       "kidFriendly": false
     },
     {
-      "id": "90bbdb8b4373",
-      "title": "Yuletide Marketplace",
+      "id": "d14e2a279221",
+      "title": "Yuletide Boutique",
       "date": "2026-11-20",
       "displayDate": "Fri, Nov 20",
       "time": null,
@@ -693,8 +696,8 @@
       "kidFriendly": false
     },
     {
-      "id": "cdd7336cee28",
-      "title": "Wreath Making Workshop 6pm",
+      "id": "d8aecae718a1",
+      "title": "Wild-Foraged Wreath-Making Workshop",
       "date": "2026-12-02",
       "displayDate": "Wed, Dec 2",
       "time": null,
@@ -812,10 +815,10 @@
       "kidFriendly": false
     },
     {
-      "id": "855c6f007141",
+      "id": "6633cc038d37",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -832,10 +835,10 @@
       "kidFriendly": false
     },
     {
-      "id": "b5e13a0f2af2",
+      "id": "eecc8492afb6",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -889,23 +892,6 @@
       "kidFriendly": true
     },
     {
-      "id": "5cf49f965f57",
-      "title": "Daisy Day: Design with Nature",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "1:00 pm",
-      "endTime": "2:30 pm",
-      "venue": "Children's Discovery Museum",
-      "address": "180 Woz Way, San Jose, CA 95110",
-      "city": "san-jose",
-      "category": "family",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
-      "source": "Children's Discovery Museum",
-      "kidFriendly": true
-    },
-    {
       "id": "5a667d47c012",
       "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
       "date": "2026-11-18",
@@ -927,28 +913,6 @@
         "kind": "first-party-occurrence-page",
         "sourceUrl": "https://grpg.org/calendar/events/",
         "date": "2026-11-18"
-      }
-    },
-    {
-      "id": "4d4b799a10f8",
-      "title": "Bootcamp in the River Park with GymParty",
-      "date": "2026-11-19",
-      "displayDate": "Thu, Nov 19",
-      "time": "6:00 PM",
-      "endTime": "7:00 PM",
-      "venue": "Arena Green West",
-      "address": "N Autumn St, San Jose, CA 95113, USA",
-      "city": "san-jose",
-      "category": "outdoor",
-      "cost": null,
-      "description": "We are partnering with @gymparty_ to bring the finest instructors to Bootcamp in the River Park. 💯 Bootcamp workout classes are fast-paced, full-body group sessions mixing cardio and strength training into one efficient workout. The classes are designed for all levels! Our first program launches AUGUST 6, 2026 2026 Dates are as follows: 8/6, 8/20, 9/3, 9/17, 10/1, 10/15, 11/5, 11/19",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": false,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-19"
       }
     },
     {
@@ -1158,7 +1122,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-17T07:29:09.933Z"
+        "checkedAt": "2026-11-18T00:01:48.721Z"
       }
     },
     {
@@ -1181,7 +1145,30 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-17T07:29:09.934Z"
+        "checkedAt": "2026-11-18T00:01:48.722Z"
+      }
+    },
+    {
+      "id": "cb567f877c59",
+      "title": "On Your Mark, Get Set, Shop Black Friday",
+      "date": "2026-11-27",
+      "displayDate": "Fri, Nov 27",
+      "time": "7:00 AM",
+      "endTime": "10:00 PM",
+      "venue": "Santana Row",
+      "address": "377 Santana Row, San Jose, CA 95128",
+      "city": "san-jose",
+      "category": "community",
+      "cost": null,
+      "description": "NOVEMBER 27, 2026  Friday, November 27 is Black Friday, the best shopping day of the year, and Santana Row has exclusive savings for serious shoppers!Black Friday Exclusive Specials:HOKA – Now Open, Spend $200 get $40 off, Spend $250, get $50 off, Spend $300, get $60 off on Black Friday. Open 7AM-10 PM, available in-store, must be a HOKA member (free to join).Burke Williams – Wednesday, November 25–Monday, November 30. Receive an additional 5% off packages, for savings of up to 30% & a $200 H2V GC for $155. From November 5–December 31 receive up to 25% off gift card packages & a $200 H2V GC for $175.TravisMathew – The biggest event of the season is here, the TravisMathew Black Friday 50% Off Sale. For a limited time only, enjoy half-off savings on men’s and women’s apparel, including best-selling polos, outerwear, hoodies, and accessories. It’s the perfect moment to elevate your wardrobe—or give the gift of comfort and style to someone special. While supplies last.Mejuri – It’s an annual affair—and you’re invited. Shop up to 30% off everything November 23–30, in-stores. Those pieces you’ve been eyeing all year? It’s time to make them yours.YETI – FREE HAT WITH ELIGIBLE $100 SPEND​. Starting Black Friday through …",
+      "url": "https://santanarow.com/event/on-your-mark-get-set-shop-black-friday/",
+      "source": "Santana Row",
+      "kidFriendly": false,
+      "occurrenceEvidence": {
+        "kind": "first-party-calendar",
+        "sourceUrl": "https://www.santanarow.com/events/",
+        "date": "2026-11-27",
+        "checkedAt": "2026-11-18T00:01:48.722Z"
       }
     },
     {
@@ -1204,7 +1191,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T07:29:09.935Z"
+        "checkedAt": "2026-11-18T00:01:48.723Z"
       }
     },
     {
@@ -1227,7 +1214,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-17T07:29:09.936Z"
+        "checkedAt": "2026-11-18T00:01:48.723Z"
       }
     },
     {
@@ -1250,7 +1237,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-17T07:29:09.939Z"
+        "checkedAt": "2026-11-18T00:01:48.726Z"
       }
     },
     {
@@ -1273,7 +1260,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-17T07:29:09.939Z"
+        "checkedAt": "2026-11-18T00:01:48.727Z"
       }
     },
     {
@@ -1876,7 +1863,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1893,7 +1880,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1910,7 +1897,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1927,7 +1914,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3109,7 +3096,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-22",
         "date": "2026-11-17",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.979Z"
+        "checkedAt": "2026-11-18T00:02:26.434Z"
       }
     },
     {
@@ -3133,7 +3120,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.980Z"
+        "checkedAt": "2026-11-18T00:02:26.435Z"
       }
     },
     {
@@ -3157,7 +3144,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.980Z"
+        "checkedAt": "2026-11-18T00:02:26.435Z"
       }
     },
     {
@@ -3181,7 +3168,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.981Z"
+        "checkedAt": "2026-11-18T00:02:26.436Z"
       }
     },
     {
@@ -3205,7 +3192,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3229,7 +3216,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3253,7 +3240,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.982Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3294,7 +3281,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3318,7 +3305,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3342,7 +3329,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3366,7 +3353,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-17T07:29:40.983Z"
+        "checkedAt": "2026-11-18T00:02:26.438Z"
       }
     },
     {
@@ -3502,6 +3489,40 @@
       "cost": "paid",
       "description": "Science is all around us! Brownies begin by making pepper dance using the amazing properties of electricity. Next, they become kitchen chemists and use pantry items to make art with delicious treats. Then they explore properties of density and use them to blow up a balloon without breath and make their own lava lamp. Finally, Brownies will learn how science can be used to make toys and make their very own silly putty! This program covers all five steps required to earn the Home Scientist Badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
       "url": "https://tickets.thetech.org/events/83826980-b70f-fb75-4702-2d95e2d30b67",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "2d72c4e97c54",
+      "title": "Girl Scout Program: Tech Detective (Juniors and Cadettes)",
+      "date": "2027-01-24",
+      "displayDate": "Sun, Jan 24",
+      "time": "10:30AM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "Do you have what it takes to be a Tech Detective? Juniors and Cadettes will begin by practicing the art of forensic drawing by sketching a “suspect” as described by a “key witness.” Next, they learn about & practice codes and fingerprinting. Juniors will explore the role of DNA in forensics — what it is, what it does, and how it helps solve crimes. They then get to perform an experiment to extract real DNA, and finally use what they have learnt to identify someone from ancient DNA! This program covers all five steps required to earn the Juniors Detective badge or the Cadette Special Agent badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b3f-014a-0e52-3d08-bd957bbd685d",
+      "source": "The Tech Interactive",
+      "kidFriendly": true
+    },
+    {
+      "id": "f51fffc42f0d",
+      "title": "Girl Scout Program: Amusement Innovator (Juniors)",
+      "date": "2027-01-24",
+      "displayDate": "Sun, Jan 24",
+      "time": "2:00PM",
+      "endTime": null,
+      "venue": "The Tech Interactive",
+      "address": "201 S Market St, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "education",
+      "cost": "paid",
+      "description": "Are you ready to design your own entertainment company? Juniors begin by animating their own artwork, then learning about video game design. They'll then build prototypes of roller coasters to learn the science behind the screams. Finally, Juniors make their own 3-D images & glasses, and experiment with sound. This program covers all five steps required to earn the Entertainment Technology badge. Participants will receive the badge and a Tech fun patch at the end of the session.",
+      "url": "https://tickets.thetech.org/events/019b8b2e-17d0-7d9e-5d5d-1f379736e20f",
       "source": "The Tech Interactive",
       "kidFriendly": true
     },
@@ -3680,6 +3701,40 @@
       "kidFriendly": false,
       "blurb": "Celebrate the holidays with live music, storytelling, and drag performances; admission is free after 6 PM.",
       "attendanceNote": "Register in advance for faster check-in."
+    },
+    {
+      "id": "533792b76d21",
+      "title": "All Ages Storytime",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "time": "11:30 am",
+      "endTime": null,
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
+    },
+    {
+      "id": "5cf49f965f57",
+      "title": "Daisy Day: Design with Nature",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "1:00 pm",
+      "endTime": "2:30 pm",
+      "venue": "Children's Discovery Museum",
+      "address": "180 Woz Way, San Jose, CA 95110",
+      "city": "san-jose",
+      "category": "family",
+      "cost": "paid",
+      "description": "",
+      "url": "https://www.cdm.org/calendar/",
+      "source": "Children's Discovery Museum",
+      "kidFriendly": true
     },
     {
       "id": "5dd03098440a",
