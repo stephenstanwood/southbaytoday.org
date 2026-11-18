@@ -1,34 +1,42 @@
 {
-  "generatedAt": "2026-11-17T04:43:32.577Z",
+  "generatedAt": "2026-11-18T04:25:44.225Z",
   "meetings": {
     "san-jose": {
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
       "startTime": "13:30",
       "bodyName": "City Council",
       "location": "Hybrid Meeting - Council Chambers",
       "closedSession": false,
-      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8084&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
-      "legistarEventId": 8084,
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8124&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8124,
       "agendaItems": [
         {
-          "title": "Study Session - Improving Affordability for San José Residents",
-          "sequence": 18
+          "title": "Labor Negotiations Update.",
+          "sequence": 62
         },
         {
-          "title": "Improving Affordability",
-          "sequence": 27
+          "title": "Land Use on Consent Calendar - TO BE HEARD IMMEDIATELY AFTER CONSENT",
+          "sequence": 75
         },
         {
-          "title": "Helping Residents Grow Their Incomes",
-          "sequence": 29
+          "title": "Presentation of a commendation recognizing the San José - Santa Clara Regional Wastewater Facility and its 70 years of continuous operation. (Mahan & Cohen)",
+          "sequence": 31
+        },
+        {
+          "title": "Presentation of a ​proclamation declaring November 14, 2026, as Ruby Bridges Walk to School Day in the City of San José, which encourages the community to come together in a shared commitment to creating safe, welcoming, and inclusive schools and neighborhoods. (Campos)",
+          "sequence": 32
+        },
+        {
+          "title": "Retroactive Approval of “Free Use” of the City Hall East and West Plazas and the Janet Gray Hayes Rotunda for the Tunnel of Terror Event.",
+          "sequence": 47
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-16",
-        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-17T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -66,7 +74,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/mountainview/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-17T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "sunnyvale": {
@@ -104,29 +112,45 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "sourceUrl": "https://webapi.legistar.com/v1/sunnyvaleca/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-17T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "cupertino": {
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
-      "startTime": "19:00",
-      "bodyName": "Cupertino Public Facilities Corporation",
-      "location": "Conference Room C",
-      "closedSession": false,
-      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5376&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
-      "legistarEventId": 5376,
+      "date": "2026-11-17",
+      "displayDate": "Tue, Nov 17",
+      "startTime": "17:45",
+      "bodyName": "City Council",
+      "location": "Council Chamber",
+      "closedSession": true,
+      "url": "https://cupertino.legistar.com/MeetingDetail.aspx?LEGID=5303&GID=341&G=74359C04-A5F0-4CB2-A97A-0032996BB90E",
+      "legistarEventId": 5303,
       "agendaItems": [
         {
-          "title": "Annual Update on IRS Form 990 Filings and Regular Meeting Schedule",
-          "sequence": 10
+          "title": "Recognition of Small Business Saturday, Saturday, November 28, 2026.",
+          "sequence": 13
+        },
+        {
+          "title": "Adoption of a maximum rate schedule for Rate Period Seven (RP 7) for Recology to provide recycling, organics, and solid waste collection, recycling and organics processing services, and transport for disposal.",
+          "sequence": 21
+        },
+        {
+          "title": "Authorization to execute First Amendment to the Lease Agreement with the Cupertino Library regarding aquarium maintenance and janitorial services.",
+          "sequence": 22
+        },
+        {
+          "title": "Adoption of the 2026 Emergency Operations Plan (EOP).",
+          "sequence": 23
+        },
+        {
+          "title": "Amendments to City of Cupertino City Council Procedures Manual. (Postponed on May 5, 2026)",
+          "sequence": 28
         }
       ],
       "confirmation": {
         "status": "confirmed",
         "provider": "legistar",
-        "observedDate": "2026-11-16",
-        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
+        "observedDate": "2026-11-17",
+        "sourceUrl": "https://webapi.legistar.com/v1/cupertino/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-17T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "santa-clara": {
@@ -164,23 +188,7 @@
         "status": "confirmed",
         "provider": "legistar",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-16T00:00:00%27&$orderby=EventDate%20asc&$top=10"
-      }
-    },
-    "palo-alto": {
-      "date": "2026-11-16",
-      "displayDate": "Mon, Nov 16",
-      "startTime": "17:30",
-      "bodyName": "City Council Regular Meeting",
-      "location": null,
-      "closedSession": false,
-      "url": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=22059",
-      "agendaItems": [],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "primegov",
-        "observedDate": "2026-11-16",
-        "sourceUrl": "https://cityofpaloalto.primegov.com/Portal/Meeting?compiledMeetingDocumentFileId=22059"
+        "sourceUrl": "https://webapi.legistar.com/v1/santaclara/Events?$filter=EventBodyName%20eq%20%27City%20Council%20and%20Authorities%20Concurrent%27%20and%20EventDate%20ge%20datetime%272026-11-17T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "campbell": {
@@ -213,7 +221,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-11-17",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-16T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-17T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -230,7 +238,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-16T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-17T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -273,7 +281,7 @@
     },
     "palo-alto": {
       "provider": "PrimeGov",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "saratoga": {
       "provider": "CivicEngage",

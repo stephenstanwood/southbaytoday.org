@@ -2131,6 +2131,14 @@
           }
         },
         "diffCheck": "PASS"
+      },
+      "refreshedDataValidation": {
+        "mainParent": "d0e4f9455aae4776c60ae7f3ae76fa3ba93979b7",
+        "checkedAt": "2026-11-18T04:38:26.974745+00:00",
+        "generatedJsonInputsVerified": 21,
+        "restoredOrganizerLinkRetained": true,
+        "inboundNormalization": "PASS",
+        "scope": "Refreshed generated data only"
       }
     }
   },
@@ -2265,5 +2273,5 @@
     "interpretation": "Both crawls have zero errors. The deployed date rollover excludes expired pages (including linked November 16, deliberately absent from the sitemap) and changes the rotating sample. Warning-count reduction is not credited to these fixes. Remaining descriptions/thin pages/absent schema are informational; eight long titles remain valid descriptive labels."
   },
   "recordedAt": "2026-11-17T09:40:51.965Z",
-  "completedAt": "2026-11-18T04:23:17.517601+00:00"
+  "completedAt": "2026-11-18T04:38:26.974745+00:00"
 }

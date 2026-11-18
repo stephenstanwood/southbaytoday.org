@@ -1,55 +1,19 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-17T04:43:32.802Z",
+      "generatedAt": "2026-11-18T04:25:44.592Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 9 – Nov 16",
+      "dateRange": "Nov 10 – Nov 17",
       "stats": {
-        "total": 501,
-        "notable": 36,
-        "newUnits": 15,
-        "totalValuation": 13395410
+        "total": 383,
+        "notable": 24,
+        "newUnits": 9,
+        "totalValuation": 8578869
       },
       "permits": [
-        {
-          "id": "2025-138465-RS",
-          "address": "1195 Britton Av #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 3 ADU - Attached",
-          "valuation": 205938,
-          "units": 1,
-          "issueDate": "2026-11-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2024-093209-RS",
-          "address": "6898 Serenity Ct #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "New Detached ADU",
-          "valuation": 189658,
-          "units": 1,
-          "issueDate": "2026-11-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-120650-RS",
-          "address": "1637 Town Club Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 173985,
-          "units": 1,
-          "issueDate": "2026-11-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
         {
           "id": "2026-117118-RS",
           "address": "2373 Newhall St #2",
@@ -111,18 +75,6 @@
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
-          "id": "2026-128879-RS",
-          "address": "434 Stroud Pl #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Code Case Garage Conversion to ADU",
-          "valuation": 86553,
-          "units": 1,
-          "issueDate": "2026-11-09",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
           "id": "2026-113831-RS",
           "address": "385 Via Primavera Dr #2",
           "category": "residential-new",
@@ -133,6 +85,54 @@
           "units": 1,
           "issueDate": "2026-11-13",
           "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-130754-RS",
+          "address": "5168 Persianwood Pl #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to ADU",
+          "valuation": 67377,
+          "units": 1,
+          "issueDate": "2026-11-12",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-120626-RS",
+          "address": "2427 Forest Av #2",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Garage Conversion to JADU",
+          "valuation": 67026,
+          "units": 1,
+          "issueDate": "2026-11-12",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-122661-RS",
+          "address": "137 Cedar Ln #3",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Unit 3 Garage Conversion to JADU",
+          "valuation": 58757,
+          "units": 1,
+          "issueDate": "2026-11-12",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
+          "id": "2026-144578-CI",
+          "address": "250 Holger Wy",
+          "category": "commercial-large",
+          "categoryLabel": "Commercial Project",
+          "workType": "Tenant Improvement",
+          "description": "(Be 100%) Electrical Service Upgrade",
+          "valuation": 1990033,
+          "units": 0,
+          "issueDate": "2026-11-10",
+          "subtype": "Office"
         }
       ]
     }
