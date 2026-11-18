@@ -295,7 +295,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Federal Realty continues adding residential towers to the Santana Row mixed-use district, building on the area's established retail and dining success. New phases bring hundreds of additional apartments above ground-floor retail, reinforcing Santana Row's model as a live-work-shop walkable neighborhood.",
+      "Federal Realty continues adding residential towers to the Santana Row mixed-use district, building on the area's established retail and dining success. New phases bring hundreds of additional apartments above ground-floor retail, reinforcing Santana Row's model of a walkable neighborhood where people can live, work, and shop.",
     scale: "Multiple residential towers",
     developer: "Federal Realty Investment Trust",
     timeline: "Ongoing phases",

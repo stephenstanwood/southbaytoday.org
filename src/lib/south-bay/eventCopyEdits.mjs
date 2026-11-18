@@ -1190,6 +1190,10 @@ const EDITS = {
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
       ["Northern Ca Network", "Northern CA Network"],
+      [
+        "An evening of choral music featuring performances from the SJSU Treble Choir, Spartan Glee Club, Vocal Jazz Ensemble, and two a cappella groups The Spartones and Spartan Stellas!",
+        "The SJSU Treble Choir, Spartan Glee Club, and Vocal Jazz Ensemble perform alongside The Spartones and Spartan Stellas, two a cappella groups.",
+      ],
     ],
     blurb: [
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
