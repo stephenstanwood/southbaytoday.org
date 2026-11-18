@@ -289,18 +289,19 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "santana-row-residential",
-    name: "Santana Row Residential Expansion",
+    name: "Santana Row Lot 12",
     city: "San José",
     cityId: "san-jose",
-    category: "mixed-use",
-    status: "approved",
+    category: "housing",
+    status: "under-construction",
     description:
-      "Federal Realty continues adding residential towers to the Santana Row mixed-use district, building on the area's established retail and dining success. New phases bring hundreds of additional apartments above ground-floor retail, reinforcing Santana Row's model of a walkable neighborhood where people can live, work, and shop.",
-    scale: "Multiple residential towers",
+      "Federal Realty is building a six-story apartment building with 258 homes and parking on Lot 12 at Santana Row.",
+    scale: "258 apartments in one six-story building",
     developer: "Federal Realty Investment Trust",
-    timeline: "Ongoing phases",
+    timeline: "Construction underway as of November 2026",
     featured: false,
-    sourceNote: "Rollup of Federal Realty's ongoing Santana Row residential phases, not one tracked entitlement — tower counts and phase dates are approximate. Verify at sanjoseca.gov planning records or federalrealty.com property pages.",
+    sourceNote:
+      "Federal Realty's Q3 2026 supplemental filing lists Lot 12, its unit count, and its scope: https://www.sec.gov/Archives/edgar/data/34903/000003490326000054/frt-9302026xex991.htm. The Q3 investor presentation lists the 258 homes as underway: https://ir.federalrealty.com/static-files/0e0ded08-ffb1-4cb9-bddd-02121c814dcc.",
   },
 
   {
