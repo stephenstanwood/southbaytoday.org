@@ -254,3 +254,19 @@ test("midpenTrailhead keeps the meeting point and drops the route", () => {
   assert.equal(midpenTrailhead(""), null);
   assert.equal(midpenTrailhead(null), null);
 });
+
+test("midpenTrailhead distinguishes meeting points from highway directions", () => {
+  const route = "From southbound Highway 17, take the Bear Creek Road exit and go north to Alma Bridge Road.";
+  assert.equal(
+    midpenTrailhead(`${route} Follow Alma Bridge Rd. over the dam. Turn left into the unpaved roadside parking area at the Jones Trailhead.`),
+    "Jones Trailhead, Alma Bridge Road",
+  );
+  assert.equal(
+    midpenTrailhead(`Meet at the county boat launch parking lot next to the Lexington Reservoir Dam. ${route} Turn right into the lot.`),
+    "county boat launch parking lot next to the Lexington Reservoir Dam",
+  );
+  assert.equal(
+    midpenTrailhead("Meet at the Bald Mountain Parking Area on Mt. Umunhum Rd. Exit Highway 85 at Camden Avenue."),
+    "Bald Mountain Parking Area on Mt. Umunhum Rd.",
+  );
+});

@@ -333,7 +333,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Monthly street fair on the second Saturday with local artists, crafters, and makers. Shop handmade jewelry, ceramics, woodwork, and apparel, with live music and a sip-and-stroll.",
+      "Monthly Saturday street fair with local artists, crafters, and makers. Check Santana Row's calendar for the date. Shop handmade jewelry, ceramics, woodwork, and apparel, with live music and a sip-and-stroll.",
     url: "https://santanarow.com/events/",
     emoji: "🎨",
   },

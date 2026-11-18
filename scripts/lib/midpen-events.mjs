@@ -324,8 +324,14 @@ export function recheckMidpenEvent(html, event, today) {
 export function midpenTrailhead(meetingPlace) {
   const text = midpenText(meetingPlace).replace(/^Meet at (?:the )?/i, "");
   if (!text) return null;
+  // Midpen lists the Jones Trailhead after the drive across the dam.
+  if (/^From southbound Highway 17\b/i.test(text)
+      && /\bAlma Bridge (?:Road|Rd)\b/i.test(text)
+      && /\bparking area at the Jones Trailhead\b/i.test(text)) {
+    return "Jones Trailhead, Alma Bridge Road";
+  }
   // Split on the first sentence end that isn't inside parentheses and isn't an
-  // abbreviation the directions lean on ("Rd.", "Blvd.", "Hwy.", "Mt.").
+  // abbreviation. A street abbreviation can end the sentence before "Exit Highway".
   let depth = 0;
   for (let i = 0; i < text.length; i++) {
     const ch = text[i];
@@ -333,9 +339,12 @@ export function midpenTrailhead(meetingPlace) {
     else if (ch === ")") depth = Math.max(0, depth - 1);
     else if (ch === "." && depth === 0) {
       const before = text.slice(0, i);
-      if (/\b(?:Rd|Blvd|Ave|St|Dr|Hwy|Mt|Ln|Ct|No|Jr|Sr|approx)$/i.test(before)) continue;
       const next = text[i + 1];
       if (next && next !== " " && next !== "\n") continue;
+      if (/\b(?:Rd|Blvd|Ave|St|Dr|Hwy|Mt|Ln|Ct|No|Jr|Sr|approx)$/i.test(before)) {
+        if (/^\s+Exit (?:Highway|Hwy\.?)\s+\d/i.test(text.slice(i + 1))) return `${before}.`;
+        continue;
+      }
       return before.trim() || null;
     }
   }
