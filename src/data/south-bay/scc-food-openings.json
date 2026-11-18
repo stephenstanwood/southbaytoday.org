@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-17T04:51:37.108Z",
+  "generatedAt": "2026-11-18T04:37:05.142Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-17T04:51:37.108Z",
-    "updatedAt": "2026-11-16T14:31:19.000Z",
+    "checkedAt": "2026-11-18T04:37:05.142Z",
+    "updatedAt": "2026-11-17T14:31:21.000Z",
     "ageDays": 0,
     "newestRawInspection": "2026-11-13",
     "newestEligibleInspection": "2026-11-13",
@@ -82,7 +82,8 @@
       "inspectionDate": "2026-11-10",
       "sourceId": "SR0885856",
       "status": "inspection-complete",
-      "blurb": "Cafe on Blossom Hill Road in San Jose."
+      "blurb": "Cafe on Blossom Hill Road in San Jose.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0885856-450.webp"
     },
     {
       "id": "inspection-SR0878199",
@@ -109,18 +110,6 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
     },
     {
-      "id": "inspection-SR0886483",
-      "name": "Pho Lucky 7",
-      "address": "3730 N 1st St., Ste. 145",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0886483",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
-    },
-    {
       "id": "inspection-SR0886293",
       "name": "Casa De Theo",
       "address": "765 Lotus St",
@@ -133,6 +122,18 @@
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886293-450.webp"
     },
     {
+      "id": "inspection-SR0886483",
+      "name": "Pho Lucky 7",
+      "address": "3730 N 1st St., Ste. 145",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-06",
+      "sourceId": "SR0886483",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
+    },
+    {
       "id": "inspection-SR0881394",
       "name": "Peet's Coffee",
       "address": "3904 Middlefield Rd",
@@ -143,6 +144,18 @@
       "status": "inspection-complete",
       "blurb": "Coffee business on Middlefield Road in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
+    },
+    {
+      "id": "inspection-SR0884461",
+      "name": "Ug Tea",
+      "address": "1040 Grant Rd. #350",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "inspectionDate": "2026-10-30",
+      "sourceId": "SR0884461",
+      "status": "inspection-complete",
+      "blurb": "Tea business on Grant Road in Mountain View.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884461-450.webp"
     }
   ],
   "comingSoon": [
@@ -241,6 +254,54 @@
       "sourceId": "SR0886360",
       "blurb": "Food business planned on East Brokaw Road in San Jose.",
       "photoRef": "places/ChIJE46t_57Lj4ARq6YTDs6y0_0/photos/AV-0GLdTPkbTzr5ZK2mbHKMpHIGvIWh63gQh4C135Qonhs5WOZ7h7k3bCLGyPtVNgwh8TAiblcmTb9gJD6iWUB0h_9PbZCT8JnP_4UTOWkK5zD-XeZ0nqeiFVebvx0dyTcU7cV2scHveIWZP_W4JmlmTwkqAaue-nKQMeMbOaa_Dmf1EAmU_kjWZV36bDlKh7cI8IDYWw8GEkquQfgD5Q4cfdWzMjN9-n3hKtOKIDQnu-TAQIKXq2QNPFX8kEQT-oYtmamogeD-poywA1ZIRBpTXzz_CyUwk8bgtGrICipx8kMPVXiM6MlNH8hANPpA2LZeLAU1YaP3Y4QdJDlQ4b7t580s58uX_msfLe7-BuPGNSaYxob6JpAiSJnCAj6uizw0tXPxbZNqVMMBp9YMqdTsJW1uPFt0"
+    },
+    {
+      "id": "soon-SR0886237",
+      "name": "Sweetgreen Restaurant",
+      "address": "261 Hamilton Ave",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886237",
+      "blurb": "Restaurant planned on Hamilton Avenue in Palo Alto.",
+      "photoRef": "places/ChIJKWjVKTq7j4ARuUYobtoUXfQ/photos/AV-0GLcTNfM1N1erhRjXEgyDVxece2XgQd1fkIfONT_ZjVLKH1rMr0nk782VtI9BtW8mKh6LtGUU-dc042KkDFmVxQy5QzkGwtrOzPM61wrjEXYOqlHUWup0NI3K3QquUtzha31A6RXNn4LRndA_3G1A3inxKaEUylGAfjqk5Jo7NB3aV5ffUrfcnxVj3e-f6rTZh-Z8oiHiZfzEK7KdJ9Mf-M_gfESh8kXdJ1hEp3QdwyZPKK2P1O4U_Yi2N0jgUy7KZVuDOfVsuPCvwsk7VmYIDZSns3ZdWUj_1HHIfY-VfubvqGtJcr2yQuQjv9auDCfIrWvDc_YcIFSnQf5GBh0p4rtd8zHCFLhx-msM0AohNI6nLuNUHgRjizRVWefWODCSvwh-b0_ZhkOoN_wb6WzQ6OL67h6mBgw"
+    },
+    {
+      "id": "soon-SR0886435",
+      "name": "Ulas Enterprises",
+      "address": "14554 Big Basin Way A",
+      "cityId": "saratoga",
+      "cityName": "SARATOGA",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886435",
+      "blurb": "Food business planned on Big Basin Way in Saratoga.",
+      "photoRef": "places/ChIJrTYpGt5KjoARcrP5Cm3syJ8/photos/AV-0GLeazcWiPpZVy0ZmBT4mpjapiqhZUsGD84vU3Czs2lcc9d48BhI_cnIg66vBoIOfoyvn05GhaqGMLJJ0PBXIqeeZgLzOrFpW20z7ahelL0w9x7vZ03VJvesySHkqf6Zh5gTdUR5YuevKo2bDDgZQlZYLrCyTdOAtc9r32bapTXsRV4izUQy0hrG6uenOyI5aqOv1WBaEQCQHWg6Ep_J-nZ3iqYx37GE8mAUr2BhYpYzqmfHB6-Q7u_1G5PhKDGDG4NYTyrzkpSiN2p6JlWO9kQFn9_G3xrIvWS1yAcGnwxrD9xhidECfdeVM8e-nOgNGNG4glm9g2Q4dC6446qeFzPm9NXtdK630XyYDaBNuKJy0V1IsRODoWJTckcynEfTBsP8SHujppl-NUmlsrPi9HyCqhgs"
+    },
+    {
+      "id": "soon-SR0886411",
+      "name": "King Kong Japan",
+      "address": "1430 Monterey Rd., Unit 10",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0886411",
+      "blurb": "Food business planned on Monterey Road in San Jose.",
+      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
+    },
+    {
+      "id": "soon-SR0885275",
+      "name": "Japacurry",
+      "address": "284 S 11th St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0885275",
+      "blurb": "Food business planned on South 11th Street in San Jose.",
+      "photoRef": "places/ChIJ809xRgDNj4ARvYa8u-Lvv50/photos/AV-0GLdP2iwZHDR4CBABSsnPs04Ck6xlNnQImb7zpPpZQKTRUtWfcs4ukWjPHJloWwokAuuN-Y8ghy9p-x_0G_ozeGfDsp2q-Cn7h1aLwzVy4RV-lKS7vCLDsJGLsy8DrCvIoi1X_8kON-fPeXFh_Bae63jCFjmdbqzrF9U5D7puK60zf8MVeaJVHrKG1dnDPrX5Qy5oIeJHCGmoUjaZIKCLFYe0c-UONbIrgqz6YPVt-WdEwL7mSKenGqt5OcC76LeiyNgbxVQ0VQ6XCrKpvFKqK7dWTwQeQq6LyKDvgOHrAFxYaZ_vRv5KGa6lD4vuJeUWhPdUJkGPStyXOnTm7uK_ZA3dBBx_LpEKNWBH-hVMqnt9yaMGuCuSFtXjEtbffSxbMo1EwEFr7PVhV786OhIBFxt-C1vqAxdy_bB20bDiDaHbbg"
     }
   ]
 }
