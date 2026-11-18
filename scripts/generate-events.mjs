@@ -8097,7 +8097,8 @@ const FARMERS_MARKETS = [
   },
   {
     title: "Saratoga Farmers Market", day: 6, time: "9:00 AM", endTime: "1:00 PM",
-    venue: "West Valley College", address: "14000 Fruitvale Ave, Saratoga", city: "saratoga",
+    // Use CAFMA's Lot 3 directions for the published map destination.
+    venue: "West Valley College, Lot 3", address: "Fruitvale Ave & Career Way, Saratoga", city: "saratoga",
     url: "https://www.cafarmersmkts.com/saratoga-farmers-market", season: [1, 12],
     evidencePatterns: [/Saratoga Farmers[’']? Market/i, /Every Saturday/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
   },

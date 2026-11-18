@@ -230,29 +230,32 @@ export const DEV_PROJECTS: DevProject[] = [
     city: "San José",
     cityId: "san-jose",
     category: "housing",
-    status: "approved",
+    status: "under-construction",
     description:
-      "Santa Clara County and Abode Housing are advancing 91 units of affordable housing at 1135 East Santa Clara Street, replacing an underutilized commercial property east of downtown San José. The seven-story building (over a single-story podium) reserves 24 units for military veterans and 36 as permanent supportive housing, and uses modular construction to speed delivery. Designed by Lowney Architecture, the project is entitled and seeking expedited approvals under California's SB 35 streamlining law.",
-    scale: "91 affordable units, 7 stories",
-    developer: "Abode Housing / Santa Clara County",
-    timeline: "Entitled April 2026; SB 35 approvals in progress",
+      "Abode Housing Development is building 91 affordable homes at 1135 East Santa Clara Street in San José. The eight-story building includes 24 apartments for military veterans and 36 permanent supportive homes for people who have experienced homelessness.",
+    scale: "91 affordable units, 8 stories",
+    developer: "Abode Housing Development",
+    timeline: "Under construction as of November 2026",
     featured: false,
-    sourceNote: "Source: SF YIMBY (April 2026). Verify current status with the City of San José.",
+    sourceNote:
+      "Abode's project page gives the current construction status, building height, and unit mix: https://abode.org/housing-sites/algarve-community-apartments. San José's earlier planning record identifies an AB 2162 ministerial permit: https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/environmental-planning/environmental-review/negative-declaration-initial-studies/1135-e-santa-clara-street-algarve-development-project-h20-001.",
   },
 
   {
     id: "santa-clara-station-area-plan",
-    name: "Santa Clara Station Area Land Use Plan",
+    name: "Santa Clara Station Area Specific Plan",
     city: "Santa Clara",
     cityId: "santa-clara",
     category: "mixed-use",
     status: "proposed",
     description:
-      "Santa Clara is developing land use and design rules for the areas surrounding its major transit stations. The planning process — reviewed at a March 2026 City Council study session — will guide how transit-adjacent parcels are developed over the coming decades, with a focus on housing, walkability, and connections to VTA and future BART service.",
-    scale: "Multiple station areas",
+      "The city is drafting a plan for housing, jobs, and better walking connections around the Santa Clara Transit Station. The station serves Caltrain, Altamont Corridor Express, and VTA buses, with a BART station planned nearby.",
+    scale: "244 acres around Santa Clara Transit Station",
     developer: "City of Santa Clara",
-    timeline: "Plan in development 2026",
+    timeline: "Public environmental scoping in June 2026",
     featured: false,
+    sourceNote:
+      "The city's Specific Plan page maps the 244-acre boundary and documents the June 29, 2026 public scoping meeting: https://www.santaclaraca.gov/our-city/departments-a-f/community-development/planning-division/specific-plans/santa-clara-station-focus-area-plan.",
   },
 
   {
@@ -364,26 +367,30 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "tech-campus",
     status: "completed",
     description:
-      "Google's striking new campus at NASA Research Park in Mountain View, designed by Heatherwick Studio and BIG. Features a distinctive dragonscale solar canopy roof, indoor garden courts, and net-zero energy design. Google began using Bay View in 2022 as its newest Bay Area headquarters building.",
+      "Google opened its Bay View campus at NASA Research Park in Mountain View in 2022. Designed with Heatherwick Studio and BIG, the all-electric campus has a dragonscale solar roof, geothermal heating and cooling, and indoor garden courts.",
     scale: "1.1M sq ft",
     developer: "Google",
     timeline: "Completed 2022",
     featured: true,
+    sourceNote:
+      "Google's opening announcement documents the solar roof and geothermal system: https://blog.google/company-news/inside-google/life-at-google/bay-view-campus-grand-opening/. Google Real Estate gives the campus size: https://realestate.withgoogle.com/bayview/.",
   },
 
   {
     id: "nvidia-voyager",
-    name: "NVIDIA Voyager Campus",
+    name: "NVIDIA West Campus",
     city: "Santa Clara",
     cityId: "santa-clara",
     category: "tech-campus",
     status: "completed",
     description:
-      "NVIDIA's striking new headquarters campus in Santa Clara, anchored by the Voyager and Endeavor buildings designed by Gensler. The buildings are connected by a bridge and feature a triangular glass design that has become a visual landmark along the 101 corridor. NVIDIA moved its headquarters operations here as the company's growth accelerated.",
-    scale: "~750,000 sq ft",
+      "Gensler designed the Endeavor and Voyager buildings at NVIDIA's Santa Clara headquarters. The two buildings make up the West Campus. Voyager, the second phase, accounts for 750,000 square feet.",
+    scale: "1.25M sq ft across Endeavor and Voyager",
     developer: "NVIDIA",
-    timeline: "Completed 2022",
+    timeline: "Endeavor completed in 2017 and Voyager in 2022",
     featured: true,
+    sourceNote:
+      "NVIDIA's visitor map identifies the West Campus buildings: https://www.nvidia.com/content/dam/en-zz/Solutions/support/corp-facilities-visitor-map-2022.pdf. The development manager gives the sizes and completion years: https://www.srgnc.com/nvidia.",
   },
 
 ];
