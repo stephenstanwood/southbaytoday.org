@@ -159,6 +159,7 @@ const november17AfternoonFixture = JSON.parse(readFileSync(new URL("./fixtures/r
 audits.push(november17AfternoonFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-grpg.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-late-refresh.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-17-post-fact-check.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -323,7 +324,8 @@ test("refresh excludes dissertation defenses while retaining advertised public l
 
 test("November 13 refresh repairs retain revised attendance facts and publisher scope", () => {
   const revise = text => text.replaceAll("November 14, 2026", "December 12, 2027")
-    .replaceAll("11 AM-6 PM", "10 AM-4 PM").replaceAll("60+", "75+").replaceAll("100+", "120+")
+    .replaceAll("11 AM-6 PM", "10 AM-4 PM").replaceAll("11 AM to 6 PM", "10 AM to 4 PM")
+    .replaceAll("60+", "75+").replaceAll("100+", "120+")
     .replaceAll("2nd grade", "3rd grade").replaceAll("15 participants", "20 participants")
     .replaceAll("7+ days", "10+ days").replaceAll("(408) 540-3945", "(650) 555-0123")
     .replaceAll("ask@lib.sccgov.org", "updated@example.org")
@@ -339,7 +341,7 @@ test("November 13 refresh repairs retain revised attendance facts and publisher 
     };
     const untouched = structuredClone(original);
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);

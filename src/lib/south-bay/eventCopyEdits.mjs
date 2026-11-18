@@ -780,6 +780,19 @@ const EDITS = {
       ["This IS A SIP & Stroll Event!", "This is a sip-and-stroll event!"],
       [/Bring your kids \+ fur babies Enjoy live music by local artists (?:FREE|Free) to attend!/g, "Bring your kids + fur babies. Enjoy live music by local artists. Free to attend!"],
       [/(from \d+\+) Makers\./g, "$1 makers."],
+      [
+        /We've rounded up the best local artists, crafters, designers, and makers for a truly unforgettable shopping experience( on the second Saturday of every month)? from (\d{1,2}(?::\d{2})? [AP]M)\s*[-–]\s*(\d{1,2}(?::\d{2})? [AP]M)!/g,
+        "Browse work by local artists, crafters, designers, and makers$1 from $2 to $3.",
+      ],
+      ["pet treats/products", "pet treats and products"],
+      [
+        "Great food + drinks in the surrounding eateries. This is a sip-and-stroll event! Bring your kids + fur babies.",
+        "Bring your kids and pets to this sip-and-stroll event. Food and drinks are available at surrounding eateries.",
+      ],
+      [
+        "Free to attend! Shop in store! Stroll into our brick-and-mortar shop (adjacent to the market area) for more American-made jewelry, apparel, body products, home goods and more from",
+        "Free to attend. Visit the Makers Market shop next to the fair for American-made jewelry, apparel, body products, home goods, and more from",
+      ],
       [/^(November \d{1,2}, \d{4}) Skip the cooking this Thanksgiving\./g, "$1. Skip the cooking this Thanksgiving."],
       ["December 12, 2026 Bring your pet", "December 12, 2026. Bring your pet"],
       ["of The Row Line Up to be announced", "of The Row lineup to be announced"],
@@ -791,6 +804,7 @@ const EDITS = {
       [/\b(Natalie Ramskov)$/g, "$1."],
     ],
     blurb: [
+      ["Browse booths of local artists, crafters, designers, and makers at the street fair on Santana Row,", "Browse booths run by local artists, crafters, designers, and makers at the Santana Row street fair,"],
       ["Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.", "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."],
       ["Watch a live holiday show of local arts and community groups, stand in Snow Showers at Park Valencia, and get photos with Santa.", "Watch a live holiday show by local arts and community groups, then catch snow showers in Park Valencia and take photos with Santa."],
     ],
@@ -1117,6 +1131,7 @@ const EDITS = {
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
     ],
     description: [
+      ["Free community event for the branch's 20th anniversary.", "This free community event marks the branch's 20th anniversary."],
       [/\bCvmf\b/g, "CVMF"],
       ["against 'the Tigers'.", "against 'the Tigers.'"],
       [/(\bThe newsletter calls [A-Z][a-z]+ \d{1,2}, \d{4})(?= a (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)/g, "$1,"],
@@ -1230,6 +1245,7 @@ const EDITS = {
       [/^Overview(?=\d{1,2}:\d{2} [AP]M\b)/g, "Overview: "],
       ["(EST) With suicide rates", "(EST). With suicide rates"],
       ["Silicon Valley Ip Forum", "Silicon Valley IP Forum"],
+      ['as "dark", especially because its intellectual production appears low.', 'as "dark," especially because its intellectual output appears limited.'],
       ["Please join German Studies Lecture Series for", "Please join the German Studies Lecture Series for"],
       ["Middle East/Swana region", "Middle East/SWANA region"],
       ["The Stanford Symphony Orchestra, conducted by Paul Phillips, presents their ", "The Stanford Symphony Orchestra, conducted by Paul Phillips, presents its "],
