@@ -202,6 +202,15 @@ const CORRECTIONS = [
       kidFriendly: true,
     },
   },
+  // The newsletter links to the book in the catalog. The dated library
+  // calendar entry has the meeting details and remote attendance option.
+  {
+    date: "2026-11-17",
+    matches: event => event.id === "inbound-67b8b8e24e5ade10"
+      && event.source === "City Newsletter" && event.time === "5:00 PM"
+      && /^https:\/\/losgatos\.aspendiscovery\.org\/GroupedWork\/ca5d24b9-87aa-29c9-34cd-99b22b10a7ad-eng\/Home(?:[?#]|$)/.test(event.url || ""),
+    facts: { url: "https://losgatosca.libcal.com/event/15855709" },
+  },
   {
     date: "2026-11-22",
     matches: event => event.source === "Santa Clara University" && event.venue === "Mission Santa Clara de Asis"
@@ -297,7 +306,8 @@ const CORRECTIONS = [
   },
   // Both the live calendar and detail page date this fair November 21, the
   // third Saturday. Their standing second-Saturday sentence is stale; remove
-  // that clause without inventing a new monthly schedule or changing clocks.
+  // that clause and use the explicit free-admission statement when the
+  // calendar card has left the price unlabeled.
   // Evidence: docs/qa/2026-11-16-0707z-fact-check.md.
   {
     date: "2026-11-21",
@@ -305,6 +315,9 @@ const CORRECTIONS = [
       && event.url === "https://santanarow.com/event/makers-market-in-the-park/"
       && event.title === "Makers Market's Local Artist Street Fair"
       && event.venue === "Santana Row" && event.city === "san-jose",
+    facts: event => event.cost == null && !event.costNote
+      && /(?:^|[.!]\s+|\blive music by local artists\s*)free to attend[!.]/i.test(event.description || "")
+        ? { cost: "free" } : {},
     copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
   },
   // The exact library occurrence lists 5–6 PM, while its standing description
@@ -5397,13 +5410,14 @@ export function applyVerifiedEventFacts(event) {
     );
   });
   if (!correction) return event;
-  const corrected = { ...event, ...correction.facts };
+  const facts = typeof correction.facts === "function" ? correction.facts(event) : correction.facts;
+  const corrected = { ...event, ...facts };
   // A verified signup requirement cannot reopen a session whose current
   // provider metadata says full/closed or replace an appointment gate. A
   // full-seat correction likewise cannot reopen an explicitly closed window.
-  if ((correction.facts?.registration === REGISTRATION_REQUIRED
+  if ((facts?.registration === REGISTRATION_REQUIRED
       && [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration))
-      || (correction.facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
+      || (facts?.registration === REGISTRATION_FULL && event.registration === REGISTRATION_CLOSED)) {
     corrected.registration = event.registration;
   }
   // Entry conditions supplement current booking/availability notices; never

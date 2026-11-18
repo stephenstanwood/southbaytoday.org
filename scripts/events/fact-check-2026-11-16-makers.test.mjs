@@ -7,14 +7,15 @@ import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-16-makers.json", import.meta.url)));
 
-test("the dated Makers Market retains its confirmed clocks without the conflicting standing cadence through intake", async () => {
+test("the dated Makers Market retains its confirmed clocks and free admission through intake", async () => {
   const [event] = fetchPlaywrightEvents({ today: "2026-11-15", events: [fixture.incoming] });
   assert(event);
   event.description = polishDescription(event.description);
   await resolveEventBlurbs([event], { enabled: false });
   assert.equal(event.description, fixture.intakeDescription);
-  for (const key of ["id", "title", "date", "time", "endTime", "venue", "address", "url", "cost"])
+  for (const key of ["id", "title", "date", "time", "endTime", "venue", "address", "url"])
     assert.deepEqual(event[key], fixture.published[key], key);
+  assert.equal(event.cost, "free");
   assert.equal(event.date, "2026-11-21");
   assert.equal(new Date(`${event.date}T12:00:00Z`).getUTCDay(), 6);
   assert.equal(Math.ceil(Number(event.date.slice(-2)) / 7), 3);
@@ -50,4 +51,8 @@ test("other source identities and occurrences retain their own schedules, and re
   const revisedClock = applyVerifiedEventFacts({ ...fixture.published, time: "12:00 PM", endTime: "5:00 PM" });
   assert.equal(revisedClock.time, "12:00 PM");
   assert.equal(revisedClock.endTime, "5:00 PM");
+  assert.equal(revisedClock.cost, "free");
+  const explicitPrice = applyVerifiedEventFacts({ ...fixture.published, costNote: "$5 advance admission" });
+  assert.equal(explicitPrice.cost, null);
+  assert.equal(explicitPrice.costNote, "$5 advance admission");
 });
