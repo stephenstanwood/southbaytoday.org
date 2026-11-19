@@ -102,28 +102,27 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The development agreement sets a ten-year milestone. Google can meet it by substantially completing 2 million sq ft of office space and providing the related community benefits. It can also provide equivalent benefits without building that space or combine both approaches.",
+      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google and Lendlease ended their development partnership in 2023, and the project is on hold. The development agreement sets a ten-year milestone. Google can meet it by substantially completing at least 2 million sq ft of office space and making all required payments and contributions tied to it. It can also provide the community benefits associated with that amount of office space without building it, or combine both approaches.",
     scale: "Up to 7.3M sq ft of office space and 4,000 homes planned",
     developer: "Google (Lendlease partnership ended 2023)",
-    timeline: "Entitled 2021; active construction paused",
+    timeline: "Entitled in 2021. Project on hold.",
     featured: true,
-    sourceNote: "San José's Downtown West project page gives the approved scope at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/major-development-projects/downtown-west-mixed-use-plan. Development Agreement §§ 1.117 and 2.2 define the ten-year obligation and possible extensions at https://www.sanjoseca.gov/home/showpublisheddocument/77459/637680918932500000.",
+    sourceNote: "San José's Downtown West project page gives the approved scope at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/major-development-projects/downtown-west-mixed-use-plan. Development Agreement §§ 1.117 and 2.2 define the ten-year obligation and possible extensions at https://www.sanjoseca.gov/home/showpublisheddocument/77459/637680918932500000. Lendlease announced the end of the partnership at https://www.lendlease.com/siteassets/lendlease/shared/investor-centre/announcements/asx/2023/11/2635882.pdf.",
   },
 
   {
     id: "milpitas-transit-district",
-    name: "Milpitas BART Transit-Oriented Development",
+    name: "Milpitas Metro Specific Plan",
     city: "Milpitas",
     cityId: "milpitas",
     category: "housing",
-    status: "under-construction",
+    status: "approved",
     description:
-      "Multiple transit-oriented housing projects surrounding the Milpitas and Berryessa BART stations are in various stages of construction and completion. Early phases have delivered new apartments and retail near the stations. Later phases continue to bring mixed-income units and community amenities to this corridor.",
-    scale: "Multiple complexes, thousands of units",
+      "Milpitas's Metro Specific Plan guides development around the Milpitas BART station, where housing and shops have already opened. VTA accepted proposals in summer 2026 for mixed-use development on its 1.7-acre parcel beside the transit center.",
     developer: "Various",
-    timeline: "Phased delivery 2024–2028",
+    timeline: "Metro Specific Plan adopted February 2023",
     featured: false,
-    sourceNote: "Rollup of several separate projects around the Milpitas and Berryessa BART stations, not one tracked development — unit counts and phase dates are approximate. Verify at milpitas.gov planning records and vta.org TOD pages.",
+    sourceNote: "The plan covers multiple developments around the Milpitas station. See the city's adopted plan at https://www.milpitas.gov/371/Milpitas-Metro-Specific-Plan and VTA's separate station-parcel proposal at https://www.vta.org/projects/milpitas-transit-center-transit-oriented-development.",
   },
 
   {
@@ -132,14 +131,12 @@ export const DEV_PROJECTS: DevProject[] = [
     city: "Campbell",
     cityId: "campbell",
     category: "mixed-use",
-    status: "under-construction",
+    status: "approved",
     description:
-      "Multiple mixed-use projects are under construction along Campbell Avenue and the surrounding downtown core, continuing the revitalization of Campbell's walkable downtown. New residential units over ground-floor retail have been approved and are actively in development.",
-    scale: "Multiple parcels",
+      "Campbell has approved housing above ground-floor retail along the East Campbell Avenue corridor. The Planning Commission's February 2026 approval at 600 E. Campbell Ave. allows 90 homes and about 5,000 sq ft of ground-floor retail, with an option for up to 120 homes under the city's density bonus program.",
     developer: "Various",
-    timeline: "Ongoing through 2026–2027",
     featured: false,
-    sourceNote: "Rollup of downtown-core infill projects, not one tracked development — no single permit backs this entry. Verify active projects at campbellca.gov current developments.",
+    sourceNote: "This entry covers infill along the corridor. The February 10 Planning Commission minutes record the approval at 600 E. Campbell Ave. (PLN-2025-3): https://www.campbellca.gov/AgendaCenter/ViewFile/Agenda/_02242026-3207.",
   },
 
   {
