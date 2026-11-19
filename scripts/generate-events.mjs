@@ -4289,6 +4289,7 @@ function parseRssItems(xml) {
       georssPoint: get("georss:point"),
       georssFeatureName: get("georss:featurename"),
       // Localist-specific
+      guid: get("guid"),
       georss_point: get("georss:point"),
       s_localtime: get("s:localtime"),
       // MEC (Modern Events Calendar) WordPress plugin
@@ -5000,12 +5001,21 @@ async function fetchSjsuEvents() {
       if (!start) return null;
       // RSS has no finish. Use only a unique, later end from the API's exact
       // start instant; absent, all-day, conflicting or other-date ends stay unknown.
-      const occurrenceEnds = new Set((metadata?.instances || [])
-        .filter(instance => parseDate(instance.start)?.getTime() === start.getTime())
+      const instancesAtStart = (metadata?.instances || [])
+        .filter(instance => parseDate(instance.start)?.getTime() === start.getTime());
+      const occurrenceEnds = new Set(instancesAtStart
         .map(instance => instance.all_day ? undefined : parseDate(instance.end)?.getTime()));
       const [endMs] = occurrenceEnds;
       const end = occurrenceEnds.size === 1 && Number.isFinite(endMs) && endMs > start.getTime()
         ? new Date(endMs) : null;
+      const date = isoDate(start);
+      const time = displayTime(start);
+      // A shared page URL and a display clock cannot identify a showtime.
+      // Match the RSS instance ID and zoned timestamp to the timed API row.
+      const sourceOccurrenceId = /^tag:localist\.com,2008:EventInstance_(\d+)$/.exec(item.guid)?.[1];
+      const verifiedStart = sourceOccurrenceId && time && /\d{2}:\d{2}:\d{2} [+-]\d{4}$/.test(item.pubDate)
+        && instancesAtStart.some(instance => String(instance.id) === sourceOccurrenceId
+          && instance.all_day === false && /T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(instance.start));
       item.title = restoreSjsuAcronyms(item.title);
       item.description = restoreSjsuAcronyms(item.description);
       if (isAdminNonEvent(item.title, stripHtml(item.description || ""))) {
@@ -5046,9 +5056,9 @@ async function fetchSjsuEvents() {
       return applyVerifiedSjsuEventOverride({
         id: h("sjsu", item.link || item.title, item.pubDate),
         title: item.title,
-        date: isoDate(start),
+        date,
         displayDate: displayDate(start),
-        time: displayTime(start),
+        time,
         endTime: displayEndTime(start, end),
         venue,
         address,
@@ -5062,6 +5072,9 @@ async function fetchSjsuEvents() {
         image,
         kidFriendly: false,
         _startMs: start.getTime(),
+        ...(verifiedStart ? { _timedOccurrence: {
+          kind: "first-party-localist-instance", sourceUrl: item.link, sourceOccurrenceId, date, time,
+        } } : {}),
       });
     }).filter(Boolean);
 
@@ -5082,20 +5095,35 @@ async function fetchSjsuEvents() {
     }
     const dropIds = new Set();
     let collapsed = 0;
-    for (const [, occurrences] of byUrl) {
-      if (occurrences.length < 3) continue;
-      occurrences.sort((a, b) => a._startMs - b._startMs);
-      const keep = occurrences[0];
-      if (!isOngoingExhibitLike(keep.title, keep.description, keep.venue)) continue;
-      keep.time = null;
-      keep.endTime = null;
-      keep.ongoing = true;
-      for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
-      collapsed += occurrences.length - 1;
+    for (const [url, occurrences] of byUrl) {
+      if (occurrences.length >= 3) {
+        occurrences.sort((a, b) => a._startMs - b._startMs);
+        const keep = occurrences[0];
+        if (isOngoingExhibitLike(keep.title, keep.description, keep.venue)) {
+          keep.time = null;
+          keep.endTime = null;
+          keep.ongoing = true;
+          for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
+          collapsed += occurrences.length - 1;
+          continue;
+        }
+      }
+
+      if (!url.startsWith("https://")) continue;
+      // Pass evidence to dedup only for separately sourced same-day clocks.
+      const timed = occurrences.filter(e => e._timedOccurrence
+        && e._timedOccurrence.date === e.date && e._timedOccurrence.time === e.time
+        && e._timedOccurrence.sourceUrl === e.url);
+      for (const event of timed) {
+        if (timed.some(other => other.date === event.date && other.time !== event.time
+          && other._timedOccurrence.sourceOccurrenceId !== event._timedOccurrence.sourceOccurrenceId)) {
+          event.occurrenceEvidence = event._timedOccurrence;
+        }
+      }
     }
     const events = parsed
       .filter((e) => !dropIds.has(e.id))
-      .map(({ _startMs, ...e }) => e);
+      .map(({ _startMs, _timedOccurrence, ...e }) => e);
 
     console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${adminSkipped ? `, ${adminSkipped} front-desk kiosk rows filtered` : ""}${locationSkipped ? `, ${locationSkipped} out-of-area locations filtered` : ""}${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${venueCityFixes ? `, ${venueCityFixes} venue-vs-city corrections` : ""}${virtualFromSource ? `, ${virtualFromSource} flagged virtual by source` : ""})`);
     return events;
