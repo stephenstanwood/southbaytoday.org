@@ -47,6 +47,24 @@ test("a retired TBA game cannot keep advertising the extractor's invented kickof
   assert.equal(oldLedger.entries[0].event.time, "7:00 PM", "do not mutate the input ledger");
 });
 
+test("retired museum event pages cannot publish newsletter wrappers or an unconfirmed demonstration time", () => {
+  const demo = ev({
+    title: "Robotics Demonstration with Team Quixilver", date: "2026-12-13",
+    venue: "Children's Discovery Museum of San Jose", time: "10:00 AM",
+    url: "https://secure2.convio.net/cdm/site/R?i=newsletter-link",
+    description: "The newsletter gives no start time.", blurb: "Watch a Sunday morning demonstration.",
+  });
+  const ledger = retireSlugs({ entries: [] }, [demo], [], "2026-11-19");
+  assert.equal(ledger.entries[0].event.url, undefined);
+  const oldLedger = { entries: [{ ...ledger.entries[0], event: demo }] };
+  const { orphans } = resolveRetired(oldLedger, [], [], "2026-11-19");
+  assert.equal(orphans.length, 1);
+  assert.equal(orphans[0].event.url, null);
+  assert.equal(orphans[0].event.time, null);
+  assert.equal(orphans[0].event.blurb, null);
+  assert.match(orphans[0].event.attendanceNote, /time is unconfirmed/i);
+});
+
 test("retireSlugs records a future slug that the new run stopped publishing", () => {
   const gone = ev({ id: "a", title: "44th Annual Art & Wine Festival" });
   const kept = ev({ id: "b", title: "Book Club" });

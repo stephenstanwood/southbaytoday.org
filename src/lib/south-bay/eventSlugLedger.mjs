@@ -29,6 +29,7 @@ import { buildEventSlugs, slugifyTitle } from "./eventSlug.ts";
 import { eventPagePool } from "./eventPagePool.ts";
 import { applyVerifiedEventFacts } from "./eventSourceFacts.mjs";
 import { hasUnconfirmedStartTime, hasUnconfirmedOccurrenceDate, isEventExplicitlyInactive, isNonEventOffer, nonEventOfferNotice } from "./eventOccurrence.mjs";
+import { isTrackerUrl } from "./unwrapTrackerUrl.mjs";
 
 export const RETAIN_DAYS = 90;
 /** How far back a refresh looks for a rolling run's passed nights. */
@@ -58,6 +59,7 @@ export function snapshotEvent(e) {
   for (const f of SNAPSHOT_FIELDS) {
     if (e[f] !== undefined && e[f] !== null && e[f] !== "") out[f] = e[f];
   }
+  if (isTrackerUrl(out.url)) delete out.url;
   // Retaining an old URL must not retain a kickoff the source says is TBA.
   if (isEventExplicitlyInactive(e) || hasUnconfirmedStartTime(e) || hasUnconfirmedOccurrenceDate(e) || isNonEventOffer(e)) {
     delete out.time;
@@ -239,7 +241,10 @@ export function resolveRetired(ledger, upcomingEvents, archiveEvents, todayPt) {
     const successor = isNonEventOffer(event) || hasUnconfirmedOccurrenceDate(event)
       ? null : findSuccessor(event, live, { rolled: entry.rolled === true });
     if (successor) redirects.set(entry.slug, successor);
-    else orphans.push({ slug: entry.slug, event, retiredAt: entry.retiredAt });
+    else {
+      const published = isTrackerUrl(event.url) ? { ...event, url: null } : event;
+      orphans.push({ slug: entry.slug, event: published, retiredAt: entry.retiredAt });
+    }
   }
   return { redirects, orphans };
 }

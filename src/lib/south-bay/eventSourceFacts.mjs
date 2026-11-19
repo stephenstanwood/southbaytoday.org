@@ -1303,7 +1303,7 @@ const CORRECTIONS = [
     matches: event => /^Robotics Demonstration with Team Quixilver$/i.test(event?.title || "")
       && /^Children's Discovery Museum of San Jose(?:,|$)/i.test(event?.venue || "")
       && /\bnewsletter gives no (?:start )?time\b/i.test(event?.description || ""),
-    facts: { time: null, endTime: null, attendanceStatus: "needs-confirmation" },
+    facts: { time: null, endTime: null, blurb: null, attendanceStatus: "needs-confirmation" },
     appendAttendanceNote: "Demonstration time is unconfirmed. Check the activity schedule with Children's Discovery Museum before going.",
   },
   // The same TicketWeb occurrence reappeared through a sparse newsletter
