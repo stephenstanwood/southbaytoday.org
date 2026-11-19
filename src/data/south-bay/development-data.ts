@@ -102,7 +102,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google and Lendlease ended their development partnership in 2023, and the project is on hold. The development agreement sets a ten-year milestone. Google can meet it by substantially completing at least 2 million sq ft of office space and making all required payments and contributions tied to it. It can also provide the community benefits associated with that amount of office space without building it, or combine both approaches.",
+      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google and Lendlease ended their development partnership in 2023, and the project is on hold. The development agreement gives Google three ways to meet a ten-year milestone. Google can substantially complete at least 2 million sq ft of office space and make all required payments and contributions for that construction. Google can also provide the community benefits tied to 2 million sq ft of office space without building that space, or combine the two approaches.",
     scale: "Up to 7.3M sq ft of office space and 4,000 homes planned",
     developer: "Google (Lendlease partnership ended 2023)",
     timeline: "Entitled in 2021. Project on hold.",
@@ -118,7 +118,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "approved",
     description:
-      "Milpitas's Metro Specific Plan guides development around the Milpitas BART station, where housing and shops have already opened. VTA accepted proposals in summer 2026 for mixed-use development on its 1.7-acre parcel beside the transit center.",
+      "The city's Metro Specific Plan guides development around the Milpitas BART station, where homes have been built and shops have opened. VTA accepted proposals in summer 2026 for mixed-use development on its 1.7-acre parcel beside the transit center.",
     developer: "Various",
     timeline: "Metro Specific Plan adopted February 2023",
     featured: false,
@@ -133,7 +133,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Campbell has approved housing above ground-floor retail along the East Campbell Avenue corridor. The Planning Commission's February 2026 approval at 600 E. Campbell Ave. allows 90 homes and about 5,000 sq ft of ground-floor retail, with an option for up to 120 homes under the city's density bonus program.",
+      "Campbell has approved housing above ground-floor retail along East Campbell Avenue. In February 2026, the Planning Commission approved 90 homes and about 5,000 sq ft of ground-floor retail at 600 E. Campbell Ave. The approval includes an option for up to 120 homes under the city's density bonus program.",
     developer: "Various",
     featured: false,
     sourceNote: "This entry covers infill along the corridor. The February 10 Planning Commission minutes record the approval at 600 E. Campbell Ave. (PLN-2025-3): https://www.campbellca.gov/AgendaCenter/ViewFile/Agenda/_02242026-3207.",
