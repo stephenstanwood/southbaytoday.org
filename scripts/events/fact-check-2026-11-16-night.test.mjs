@@ -122,3 +122,9 @@ test("Mandarin children's sessions retain family category and original ticket in
     assert.equal(inferCategory("Mandarin Stories and Songs for Adults", "", "", "Calabazas Library", ["Adults, ages 18+"]), "community");
   }
 });
+
+test("Seven Trees Library board games are family programming", () => {
+  const description = "Play classic board games at Seven Trees Library. Open to all ages.";
+  assert.equal(inferCategory("Board Game Zone", description, "", "Seven Trees Library"), "family");
+  assert.equal(inferCategory("Board Game Design Class", description, "", "Seven Trees Library"), "education");
+});

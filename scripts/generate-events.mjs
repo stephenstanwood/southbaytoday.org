@@ -3717,6 +3717,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   const venueLower = venue.toLowerCase();
   const isBookstoreVenue = /\b(books?|bookshop|bookstore)\b/.test(venueLower);
   if (isBookstoreVenue) return "arts";
+  // Seven Trees Library's Board Game Zone is open play for all ages.
+  if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
   // Title-anchored overrides for terms that source-supplied category tags
   // routinely override (e.g. SJDA tags SoFA Market trivia nights "Music"
   // because the venue is music-coded; tags Marriott live-music nights
@@ -4289,6 +4291,7 @@ function parseRssItems(xml) {
       georssPoint: get("georss:point"),
       georssFeatureName: get("georss:featurename"),
       // Localist-specific
+      guid: get("guid"),
       georss_point: get("georss:point"),
       s_localtime: get("s:localtime"),
       // MEC (Modern Events Calendar) WordPress plugin
@@ -4419,7 +4422,8 @@ function parseIcalDate(dtStr) {
  * nor an absent street address establishes a local destination.
  * Retain every occurrence's start/end pair: a URL can repeat across dates or
  * pages, and its latest finish must never be copied to a different session.
- * Returns Map<localist_url, { experience, filters, free, ticket_cost, locationName, address, instances }>.
+ * Returns event metadata keyed by Localist URL, including the published room
+ * and each occurrence's start and end.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -4439,6 +4443,7 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
         experience: ev.experience, filters: ev.filters,
         free: ev.free, ticket_cost: ev.ticket_cost,
         locationName: typeof ev.location_name === "string" ? ev.location_name : "",
+        roomNumber: typeof ev.room_number === "string" ? ev.room_number : "",
         address: typeof ev.address === "string" ? ev.address : "",
         instances: [...new Map(instances.map(instance =>
           [JSON.stringify([instance.start, instance.end, instance.all_day]), instance])).values()],
@@ -5000,12 +5005,21 @@ async function fetchSjsuEvents() {
       if (!start) return null;
       // RSS has no finish. Use only a unique, later end from the API's exact
       // start instant; absent, all-day, conflicting or other-date ends stay unknown.
-      const occurrenceEnds = new Set((metadata?.instances || [])
-        .filter(instance => parseDate(instance.start)?.getTime() === start.getTime())
+      const instancesAtStart = (metadata?.instances || [])
+        .filter(instance => parseDate(instance.start)?.getTime() === start.getTime());
+      const occurrenceEnds = new Set(instancesAtStart
         .map(instance => instance.all_day ? undefined : parseDate(instance.end)?.getTime()));
       const [endMs] = occurrenceEnds;
       const end = occurrenceEnds.size === 1 && Number.isFinite(endMs) && endMs > start.getTime()
         ? new Date(endMs) : null;
+      const date = isoDate(start);
+      const time = displayTime(start);
+      // A shared page URL and a display clock cannot identify a showtime.
+      // Match the RSS instance ID and zoned timestamp to the timed API row.
+      const sourceOccurrenceId = /^tag:localist\.com,2008:EventInstance_(\d+)$/.exec(item.guid)?.[1];
+      const verifiedStart = sourceOccurrenceId && time && /\d{2}:\d{2}:\d{2} [+-]\d{4}$/.test(item.pubDate)
+        && instancesAtStart.some(instance => String(instance.id) === sourceOccurrenceId
+          && instance.all_day === false && /T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(instance.start));
       item.title = restoreSjsuAcronyms(item.title);
       item.description = restoreSjsuAcronyms(item.description);
       if (isAdminNonEvent(item.title, stripHtml(item.description || ""))) {
@@ -5036,6 +5050,10 @@ async function fetchSjsuEvents() {
       const isVirtual =
         virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;
+      // Localist carries the room separately from the building and its address.
+      const room = !isVirtual && rawSjsuLocation && rawSjsuLocation === metadata?.locationName
+        ? cleanVenue(metadata.roomNumber) : "";
+      const displayVenue = room && !venue.toLowerCase().includes(room.toLowerCase()) ? `${venue}, ${room}` : venue;
       const address = metadata?.address || "";
       // Check the original athletics title before venue-suffix cleanup can
       // erase "at UC Irvine" / "at UC Davis" and conceal an away game.
@@ -5046,11 +5064,11 @@ async function fetchSjsuEvents() {
       return applyVerifiedSjsuEventOverride({
         id: h("sjsu", item.link || item.title, item.pubDate),
         title: item.title,
-        date: isoDate(start),
+        date,
         displayDate: displayDate(start),
-        time: displayTime(start),
+        time,
         endTime: displayEndTime(start, end),
-        venue,
+        venue: displayVenue,
         address,
         city,
         ...(isVirtual ? { virtual: true } : {}),
@@ -5062,6 +5080,9 @@ async function fetchSjsuEvents() {
         image,
         kidFriendly: false,
         _startMs: start.getTime(),
+        ...(verifiedStart ? { _timedOccurrence: {
+          kind: "first-party-localist-instance", sourceUrl: item.link, sourceOccurrenceId, date, time,
+        } } : {}),
       });
     }).filter(Boolean);
 
@@ -5082,20 +5103,35 @@ async function fetchSjsuEvents() {
     }
     const dropIds = new Set();
     let collapsed = 0;
-    for (const [, occurrences] of byUrl) {
-      if (occurrences.length < 3) continue;
-      occurrences.sort((a, b) => a._startMs - b._startMs);
-      const keep = occurrences[0];
-      if (!isOngoingExhibitLike(keep.title, keep.description, keep.venue)) continue;
-      keep.time = null;
-      keep.endTime = null;
-      keep.ongoing = true;
-      for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
-      collapsed += occurrences.length - 1;
+    for (const [url, occurrences] of byUrl) {
+      if (occurrences.length >= 3) {
+        occurrences.sort((a, b) => a._startMs - b._startMs);
+        const keep = occurrences[0];
+        if (isOngoingExhibitLike(keep.title, keep.description, keep.venue)) {
+          keep.time = null;
+          keep.endTime = null;
+          keep.ongoing = true;
+          for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
+          collapsed += occurrences.length - 1;
+          continue;
+        }
+      }
+
+      if (!url.startsWith("https://")) continue;
+      // Pass evidence to dedup only for separately sourced same-day clocks.
+      const timed = occurrences.filter(e => e._timedOccurrence
+        && e._timedOccurrence.date === e.date && e._timedOccurrence.time === e.time
+        && e._timedOccurrence.sourceUrl === e.url);
+      for (const event of timed) {
+        if (timed.some(other => other.date === event.date && other.time !== event.time
+          && other._timedOccurrence.sourceOccurrenceId !== event._timedOccurrence.sourceOccurrenceId)) {
+          event.occurrenceEvidence = event._timedOccurrence;
+        }
+      }
     }
     const events = parsed
       .filter((e) => !dropIds.has(e.id))
-      .map(({ _startMs, ...e }) => e);
+      .map(({ _startMs, _timedOccurrence, ...e }) => e);
 
     console.log(`  ✅ SJSU: ${events.length} events (${skipped} student-only filtered${adminSkipped ? `, ${adminSkipped} front-desk kiosk rows filtered` : ""}${locationSkipped ? `, ${locationSkipped} out-of-area locations filtered` : ""}${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${venueCityFixes ? `, ${venueCityFixes} venue-vs-city corrections` : ""}${virtualFromSource ? `, ${virtualFromSource} flagged virtual by source` : ""})`);
     return events;
