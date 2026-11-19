@@ -267,11 +267,11 @@ export const DEV_PROJECTS: DevProject[] = [
     status: "approved",
     description:
       "San José adopted the Berryessa BART Urban Village Plan in June 2021. It calls for housing and commercial development across roughly 270 acres around the Berryessa/North San José BART station. Development proceeds through separate site applications.",
-    scale: "4,814 homes planned across the area",
+    scale: "5,100 additional homes in the adopted plan",
     developer: "Various",
     timeline: "Urban Village Plan adopted June 2021",
     featured: false,
-    sourceNote: "The city's plan gives the area, housing yield, and adoption date at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/citywide-planning/urban-villages/berryessa-bart.",
+    sourceNote: "The adopted Berryessa BART Urban Village Plan, Land Use chapter, page 23, allocates 5,100 new homes beyond the 1,416 already entitled or built at adoption, for a total capacity of 6,516. https://www.sanjoseca.gov/home/showpublisheddocument/75883/638411064623230000",
   },
 
   {
