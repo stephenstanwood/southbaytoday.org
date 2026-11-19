@@ -88,6 +88,36 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The library's screening copy repeats an outdated 100% score.
+  // https://www.rottentomatoes.com/m/paddington_2
+  {
+    date: "2026-12-06",
+    url: "https://sccl.bibliocommons.com/events/6aff4d3604009d003389b6e4",
+    facts: {},
+    copyReplacements: [[/\s*\(And is one of the few sequels to rate 100% on Rotten Tomatoes!\)/i, ""]],
+  },
+  // Casino Youth is a supporting band on this all-ages bill.
+  {
+    date: "2026-12-06",
+    matches: event => /^https:\/\/www\.ticketweb\.com\/event\/slow-joy-awannabe(?:-casino-youth)?-the-ritz-tickets\/14391974\/?(?:[?#].*)?$/.test(event.url || ""),
+    facts: { kidFriendly: false },
+  },
+  // The city's advisory supplies the street address. Cityline's event page
+  // names Block 6 Parking and specifies what families can donate for a ride.
+  // https://www.citylinesunnyvale.com/event/45188-ride-for-toys
+  {
+    date: "2026-11-21",
+    matches: event => event.source === "City Newsletter" && event.city === "sunnyvale"
+      && /^Rides? for Toys$/i.test(event.title || "")
+      && /^230 S\.? Murphy Ave(?:nue)?\b/i.test(event.address || ""),
+    facts: {
+      url: "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/4336b79",
+      venue: "Block 6 Parking",
+      address: "230 S. Murphy Ave., Sunnyvale, CA",
+      kidFriendly: true,
+      attendanceNote: "Bring a new, unwrapped toy or a gift card for a fire engine ride.",
+    },
+  },
   // The athletics schedule confirms which campus venue hosts this fixture.
   // https://sjsuspartans.com/2026-football-media-central
   // https://sjsuspartans.com/facilities/cefcu-stadium
@@ -1983,22 +2013,25 @@ const CORRECTIONS = [
   // The organizer cards omit the 18+ gate and five-session commitment. These
   // exact academy pages publish four evening classes and a Saturday skills
   // day; the listed clock below is the first class, not the entire academy.
+  // Eventbrite keeps the numeric event ID when the title slug changes.
   // Evidence: docs/qa/2026-11-07-1907z-fact-check.md.
   ...[
     {
       date: "2027-01-25",
-      url: "https://www.eventbrite.com/e/community-emergency-response-team-cert-academy-winter-2027-campbell-tickets-2003375376681",
+      ticketId: "2003375376681",
       venue: "Campbell Community Center's Orchard City Banquet Hall",
       schedule: "Evening classes: January 25 and 27, February 1 and 3, 6–9 PM. Skills day: February 6, 8 AM–12:30 PM.",
     },
     {
       date: "2027-04-05",
-      url: "https://www.eventbrite.com/e/community-emergency-response-team-cert-academy-spring-2027-los-altos-hi-tickets-2003529728351",
+      ticketId: "2003529728351",
       venue: "Los Altos Hills Town Hall",
       schedule: "Evening classes: April 5, 7, 12 and 14, 6–9 PM. Skills day: April 17, 8 AM–12:30 PM.",
     },
-  ].map(({ date, url, venue, schedule }) => ({
-    date, url,
+  ].map(({ date, ticketId, venue, schedule }) => ({
+    date,
+    matches: event => /^https:\/\/(?:www\.)?eventbrite\.com\/e\/(?:[^/?#]+-tickets-)?(\d+)\/?(?:[?#].*)?$/
+      .exec(event.url || "")?.[1] === ticketId,
     facts: {
       endTime: "9:00 PM", registration: REGISTRATION_REQUIRED,
       audienceAge: "adult", sourceAudiences: ["Adults, ages 18+"], kidFriendly: false,

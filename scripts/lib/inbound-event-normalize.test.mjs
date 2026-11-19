@@ -5,6 +5,26 @@ import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { VIRTUAL_TITLE_SIGNALS } from "../social/lib/content-rules.mjs";
 
+test("Sunnyvale's dated toy drive keeps its official link and named meeting point", () => {
+  const raw = {
+    id: "sunnyvale-toy-drive", cityKey: "sunnyvale", title: "Ride for Toys",
+    startsAt: "2026-11-21T10:00:00-08:00", endsAt: "2026-11-21T13:00:00-08:00",
+    location: "230 S. Murphy Avenue, Sunnyvale, CA (public parking nearby)", sourceUrl: null,
+  };
+  const [row] = fetchInboundEvents({ today: "2026-11-19", events: [raw] });
+  const event = applyVerifiedEventFacts(row);
+  assert.equal(event.url, "https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/4336b79");
+  assert.equal(event.venue, "Block 6 Parking");
+  assert.equal(event.address, "230 S. Murphy Ave., Sunnyvale, CA");
+  assert.equal(event.kidFriendly, true);
+  assert.match(event.attendanceNote, /unwrapped toy or a gift card/);
+  assert.deepEqual(applyVerifiedEventFacts(event), event);
+  for (const changed of [
+    { ...row, date: "2027-11-21" },
+    { ...row, address: "130 S. Murphy Avenue, Sunnyvale, CA" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+});
+
 test("the dated Christmas Tea retains a usable organizer source through newsletter refresh", () => {
   const raw = {
     id: "inbound_mwcn383x_gfgaax", cityKey: "los-gatos", title: "PCLG Christmas Tea",

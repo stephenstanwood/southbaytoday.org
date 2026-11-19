@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { eventSourceDefinitions } from "../generate-events.mjs";
 import { buildSourceHealth, eventsForSourceResult, retainFailedOptionalSources, sourceProblems } from "../lib/event-source-health.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 
 const source = () => eventSourceDefinitions().find(item => item.id === "fetchStanfordEvents");
 const observedAt = "2026-11-04T13:04:10.179Z";
@@ -80,4 +81,47 @@ test("Stanford retains the bike sale through its late walk-in window", async t =
   ]);
   t.mock.timers.setTime(Date.parse("2026-11-19T10:00:00-08:00"));
   assert.deepEqual(await source().fn(), []);
+});
+
+test("Stanford reads attendance requirements from the full source before shortening descriptions", async t => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-19T14:00:00-08:00") });
+  const occurrence = {
+    event_instances: [{ event_instance: { start: "2026-11-20T12:00:00-08:00" } }],
+  };
+  const publicTalk = "A public lecture on material history. Details follow.";
+  const affiliateUrl = "https://events.stanford.edu/event/building-evidentiary-infrastructure-during-an-active-war-lessons-from-the-ukraine-war-archive";
+  const events = [
+    {
+      ...occurrence, id: 11, title: "An online discussion", experience: "virtual",
+      address: "450 Jane Stanford Way, Stanford, CA 94305",
+      description_text: `${publicTalk}\n\n2. Sign up for the discussion to receive the meeting’s Zoom link.`,
+    },
+    {
+      ...occurrence, id: 12, title: "An in-person lecture", experience: "inperson",
+      location_name: "In person at Stanford", ticket_cost: "Free and open to the public. RSVP for location.",
+      description_text: publicTalk,
+    },
+    {
+      ...occurrence, id: 13, title: "A campus seminar", experience: "hybrid", localist_url: affiliateUrl,
+      description_text: `${publicTalk}\n\nThis event is only open to Stanford students, staff, faculty & affiliates.`,
+    },
+    {
+      ...occurrence, id: 14, title: "A public hybrid discussion", experience: "hybrid",
+      location_name: "A campus lecture room",
+      description_text: `${publicTalk}\n\n2. Sign up for the discussion to receive the meeting’s Zoom link.`,
+    },
+  ];
+  t.mock.method(globalThis, "fetch", async () => Response.json({ events: events.map(event => ({ event })) }));
+  const [online, inPerson, hybrid] = await source().fn();
+  assert.deepEqual([online.id, inPerson.id, hybrid.id], [11, 12, 14].map(id => `stanford-${id}-2026-11-20`));
+  assert.deepEqual([online.virtual, online.venue, online.address, online.registration], [true, "Online (Zoom)", "", "required"]);
+  assert.match(online.attendanceNote, /receive the Zoom link/);
+  assert.deepEqual([inPerson.venue, inPerson.registration, inPerson.cost], [null, "required", "free"]);
+  assert.match(inPerson.attendanceNote, /RSVP to receive the event location/);
+  assert.equal(hybrid.registration, undefined);
+  assert.equal(hybrid.venue, "A campus lecture room");
+  assert.equal(isEventPublishable({
+    title: "Building Evidentiary Infrastructure During an Active War: Lessons from the Ukraine War Archive",
+    source: "Stanford Events", date: "2026-11-20", url: affiliateUrl, time: "12:00 PM",
+  }), false, "the shortened retained listing must stay out of the public calendar");
 });

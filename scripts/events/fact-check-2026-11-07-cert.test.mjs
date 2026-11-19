@@ -12,7 +12,9 @@ const { occurrences } = JSON.parse(readFileSync(new URL("../lib/fixtures/fact-ch
 test("sparse organizer cards retain academy eligibility and session commitments through blurb resolution", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-07T19:07:04Z") });
   const cards = occurrences.map(({ published, sourceStart }) => ({
-    name: published.title, url: published.url, eventbrite_event_id: published.id,
+    name: published.title,
+    url: published.url.replace("-los-altos-hi-tickets-", "-losaltoshills-tickets-"),
+    eventbrite_event_id: published.id,
     start_date: sourceStart.slice(0, 10), start_time: "18:00:00", timezone: "America/Los_Angeles",
     primary_venue: { name: published.venue, address: {
       city: published.city === "campbell" ? "Campbell" : "Los Altos Hills",

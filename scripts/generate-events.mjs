@@ -4558,6 +4558,8 @@ async function fetchStanfordEvents() {
       const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
       const campusOnlyInPerson = /\bIn-person attendance is limited to (?:current\s+)?Stanford\b|^In-person (?:only )?for Stanford affiliates(?:[.;]|$)/i.test(restriction);
+      // Some hybrid listings put the restriction for both formats in the body.
+      if (/(?:^|[.!?]\s+)This event is only open to Stanford students, staff, faculty,?\s+(?:and|&)\s+affiliates[.!?](?:\s|$)/i.test(description)) return null;
       // Some organizers use a short two-clause eligibility field without
       // naming a streaming platform. Preserve public online access without
       // inventing Zoom or treating the affiliate-only room as public.
@@ -4577,6 +4579,7 @@ async function fetchStanfordEvents() {
           || (ev.experience === "hybrid" && publicAudience
             && /\bZoom\b/i.test(stripHtml(ev.stream_info || ""))));
       if (campusOnlyInPerson && !publicZoomOnly && !publicVirtualOnly && ev.experience !== "virtual") return null;
+      const isVirtual = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true;
       // This coffee hour has no audience tags, but its full body expressly
       // invites Stanford affiliates. Read that sentence before truncation;
       // an unrelated public coffee hour must still pass.
@@ -4606,18 +4609,19 @@ async function fetchStanfordEvents() {
       // Localist keeps online joining instructions outside the description.
       // Only an explicit link-by-registration instruction establishes a gate;
       // a registration URL or an optional online part of a hybrid event does not.
-      const streamTerms = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true
-        ? stripHtml(ev.stream_info || "").trim() : "";
+      const streamTerms = isVirtual ? stripHtml(ev.stream_info || "").trim() : "";
       const streamRequirement = streamTerms.match(/^(Register to (?:receive|get) (?:a|the|your) (?:Zoom|meeting|webinar) link(?: via email)?\.?)$/i)?.[1]
         || streamTerms.match(/^(Register for (?:a |the )?Zoom link)(?=:\s*https:\/\/)/i)?.[1];
       // Localist also puts mandatory joining instructions in ticket_cost.
       // Keep an explicit imperative from online-only admission terms; a bare
       // ticket URL, optional signup, or a hybrid stream is not a booking gate.
-      const zoomLinkRequirement = (publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true)
+      const zoomLinkRequirement = isVirtual
         ? ticketTerms.match(/(?:^|[.!?]\s+)(Register for (?:a |the )?Zoom link\.?)(?=\s*$)/i)?.[1]
         : null;
-      const locationRsvpRequirement = /^RSVP for location$/i.test(venue)
-        && /\bRSVP here\b/i.test(description)
+      const bodyZoomSignup = isVirtual
+        && /(?:^|[.!?]\s+)(?:\d+\.\s+)?Sign up for the discussion to receive the meeting['’]s Zoom link[.!?](?:\s|$)/i.test(description);
+      const locationRsvpRequirement = (/^RSVP for location$/i.test(venue) && /\bRSVP here\b/i.test(description))
+        || /(?:^|[.!?]\s+)RSVP for (?:the )?location[.!?]?$/i.test(ticketTerms.trim())
         ? "RSVP to receive the event location." : null;
       // Explicit instructions can follow the displayed excerpt. A ticket URL
       // or an optional RSVP is insufficient; retain these affirmative requests
@@ -4662,7 +4666,7 @@ async function fetchStanfordEvents() {
         // A mandatory booking gate can follow the display excerpt. Require
         // an affirmative statement, not optional signup or no-registration
         // language; published full/closed notices still take precedence.
-        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || locationRsvpRequirement || bodyRsvpRequirement || bodyRegistrationRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
+        || ((ticketRequirement || streamRequirement || zoomLinkRequirement || bodyZoomSignup || locationRsvpRequirement || bodyRsvpRequirement || bodyRegistrationRequirement || applicationRequirement || /(?:^|[.!?:]\s+)(?:advance\s+)?(?:reservations?|registration|rsvps?)\s+(?:(?:is|are)\s+)?required\b/i.test(description))
           ? REGISTRATION_REQUIRED : null);
       const visitorIdRequired = /\bvisitors must present a valid, physical government-issued photo ID to sign-in at the front desk\b/i.test(description);
       // The farm's minimum age and active guardian requirement follow the
@@ -4683,10 +4687,6 @@ async function fetchStanfordEvents() {
       // https://events.stanford.edu/event/page-mill-flu-covid-19-vaccination-clinic
       if (/^(?:EH&S|Page Mill):\s*Flu\s*&\s*COVID-19 Vaccination Clinic$/i.test(ev.title || "")
         && /\bwho is eligible\?\s*all students,\s*faculty,\s*staff,\s*postdocs,\s*retirees,\s*and campus affiliates are welcome to participate\b/i.test(description)) return null;
-      // Localist publishes the attendance mode outright — no need to guess it
-      // from the copy. Unrestricted hybrid events remain physical destinations;
-      // an explicit public-only Zoom option takes precedence above.
-      const isVirtual = publicZoomOnly || publicVirtualOnly || virtualFromSourceSignal(ev.experience) === true;
       // Room metadata can carry building-entry restrictions that the body and
       // generic Everyone audience omit. This verified Stanford instruction
       // requires a campus ID; it does not restrict an online-only occurrence.
@@ -4772,6 +4772,7 @@ async function fetchStanfordEvents() {
         ...(ticketRequirement ? [ticketRequirement] : []),
         ...(streamRequirement ? [streamRequirement] : []),
         ...(zoomLinkRequirement ? [zoomLinkRequirement] : []),
+        ...(bodyZoomSignup ? ["Sign up through the event page to receive the Zoom link."] : []),
         ...(locationRsvpRequirement ? [locationRsvpRequirement] : []),
         ...(bodyRsvpRequirement ? [bodyRsvpRequirement] : []),
         ...(bodyRegistrationRequirement ? [bodyRegistrationRequirement] : []),
@@ -4781,6 +4782,10 @@ async function fetchStanfordEvents() {
         // Static event pages display attendance notes rather than costNote.
         ...(creditAdmission ? [creditAdmission.costNote] : []),
       ];
+      let publishedVenue = venue;
+      if (publicZoomOnly || bodyZoomSignup) publishedVenue = "Online (Zoom)";
+      else if (isVirtual && virtualFromSourceSignal(venue) !== true) publishedVenue = "Online";
+      else if (locationRsvpRequirement && /^In person at Stanford$/i.test(venue)) publishedVenue = null;
       return {
         // A series shares one Localist id across every occurrence, so scope the
         // id to the day — otherwise Tuesday's session and Wednesday's collapse
@@ -4794,8 +4799,8 @@ async function fetchStanfordEvents() {
         time: isOngoing ? null : displayTime(occurrence),   // no time for ongoing exhibits
         endTime: isOngoing ? null : (occurrenceEnd ? displayTime(occurrenceEnd) : null),
         ongoing: isOngoing,
-        venue: publicVirtualOnly ? "Online" : publicZoomOnly ? "Online (Zoom)" : venue,
-        address: publicZoomOnly || publicVirtualOnly ? "" : ev.address || "",
+        venue: publishedVenue,
+        address: isVirtual ? "" : ev.address || "",
         city: "palo-alto",
         ...(isVirtual ? { virtual: true } : {}),
         category,
