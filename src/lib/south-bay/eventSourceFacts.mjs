@@ -1279,8 +1279,7 @@ const CORRECTIONS = [
       blurb: "Ring in the new year at the Children's Discovery Museum with ball drops at noon, 1 PM and 2 PM.",
     },
   },
-  // The date heading, celebrations index and museum calendar agree on Jan 9.
-  // The detail page's prose still says Jan 10, but its dated schedule is 10–2.
+  // The museum's current event page lists January 9 from 10 AM to 3:30 PM.
   // https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/
   // https://www.cdm.org/celebrate/
   {
@@ -1288,7 +1287,7 @@ const CORRECTIONS = [
     venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
     facts: {
       url: "https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/",
-      time: "10:00 AM", endTime: "2:00 PM",
+      time: "10:00 AM", endTime: "3:30 PM",
       description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet and Rosca de Reyes tasting.",
       blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art and Rosca de Reyes.",
     },

@@ -91,7 +91,7 @@ test("the December robotics demo cannot borrow museum opening time from the news
 test("the museum's holiday events use its public schedule and links", () => {
   const holidayRows = [
     ["Noon Year's Eve Celebration", "2026-12-31", "12:00 PM", null, "noon-years-eve"],
-    ["El Día de los Tres Reyes Magos", "2027-01-09", "10:00 AM", "2:00 PM", "el-dia-de-los-tres-reyes-magos"],
+    ["El Día de los Tres Reyes Magos", "2027-01-09", "10:00 AM", "3:30 PM", "el-dia-de-los-tres-reyes-magos"],
   ];
   const events = holidayRows.map(([title, date], index) => ({
     id: `holiday-${index}`, title, startsAt: `${date}T00:00:00-08:00`, cityKey: "san-jose",
