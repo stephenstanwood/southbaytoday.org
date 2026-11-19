@@ -7583,15 +7583,19 @@ async function fetchPaloAltoLibraryEvents() {
 
 // ── Happy Hollow Park & Zoo ──
 
-async function fetchHappyHollowEvents() {
+async function fetchHappyHollowEvents({ wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms)) } = {}) {
   console.log("  ⏳ Happy Hollow Park & Zoo...");
   try {
     // The old /events/feed/ endpoint is an empty RSS channel. Happy Hollow's
     // actual first-party dates live on its current program and benefit pages.
-    const [seniorHtml, hoorayHtml] = await Promise.all([
-      fetchText("https://happyhollow.org/seniorsafari/"),
-      fetchText("https://happyhollow.org/hh-foundation/hooray/"),
-    ]);
+    const seniorUrl = "https://happyhollow.org/seniorsafari/";
+    const hoorayUrl = "https://happyhollow.org/hh-foundation/hooray/";
+    // The park's robots.txt requests a ten-second delay between requests.
+    const crawlDelayMs = 10_000;
+    const requestOptions = { baseDelayMs: crawlDelayMs, sleep: wait };
+    const seniorHtml = await fetchText(seniorUrl, requestOptions);
+    await wait(crawlDelayMs);
+    const hoorayHtml = await fetchText(hoorayUrl, requestOptions);
     const schedule = parseHappyHollowSchedules({ seniorHtml, hoorayHtml });
     if (schedule.length === 0) throw new Error("official program pages returned no dated events");
     const today = todayPT();
@@ -7599,9 +7603,7 @@ async function fetchHappyHollowEvents() {
       .filter((entry) => entry.date >= today)
       .map((entry) => {
         const senior = entry.kind === "senior-safari";
-        const url = senior
-          ? "https://happyhollow.org/seniorsafari/"
-          : "https://happyhollow.org/hh-foundation/hooray/";
+        const url = senior ? seniorUrl : hoorayUrl;
         return {
           id: h("happyhollow", entry.kind, entry.date),
           title: entry.title,
