@@ -2015,6 +2015,8 @@ const CORRECTIONS = [
   // day; the listed clock below is the first class, not the entire academy.
   // Eventbrite keeps the numeric event ID when the title slug changes.
   // Evidence: docs/qa/2026-11-07-1907z-fact-check.md.
+  // The department's 2027 flyer specifies who can enroll.
+  // https://www.sccfd.org/wp-content/uploads/2026/10/CERT-2027_rev-compressed.pdf
   ...[
     {
       date: "2027-01-25",
@@ -2027,17 +2029,19 @@ const CORRECTIONS = [
       ticketId: "2003529728351",
       venue: "Los Altos Hills Town Hall",
       schedule: "Evening classes: April 5, 7, 12 and 14, 6–9 PM. Skills day: April 17, 8 AM–12:30 PM.",
+      description: "Adults 18 and older can take this five-session disaster preparedness course at Los Altos Hills Town Hall. Evening classes run from 6 to 9 PM on April 5, 7, 12, and 14. Skills day is April 17 from 8 AM to 12:30 PM. Registration is required, and participants must attend all five sessions to graduate.",
+      blurb: "Adults 18 and older can register for County Fire's five-session disaster preparedness academy at Los Altos Hills Town Hall.",
     },
-  ].map(({ date, ticketId, venue, schedule }) => ({
+  ].map(({ date, ticketId, venue, schedule, description, blurb }) => ({
     date,
     matches: event => /^https:\/\/(?:www\.)?eventbrite\.com\/e\/(?:[^/?#]+-tickets-)?(\d+)\/?(?:[?#].*)?$/
       .exec(event.url || "")?.[1] === ticketId,
     facts: {
       endTime: "9:00 PM", registration: REGISTRATION_REQUIRED,
       audienceAge: "adult", sourceAudiences: ["Adults, ages 18+"], kidFriendly: false,
-      description: `Five-session disaster-preparedness academy for adults ages 18+ at ${venue}. ${schedule} Registration is required; all five sessions are needed to graduate.`,
-      attendanceNote: `Ages 18+. Registration required; attend all five sessions to graduate. ${schedule} Registration preference is given to residents in County Fire's jurisdiction.`,
-      blurb: `Start County Fire's five-session CERT academy at ${venue}; ages 18+ and advance registration required.`,
+      description: description ?? `Five-session disaster-preparedness academy for adults ages 18+ at ${venue}. ${schedule} Registration is required; all five sessions are needed to graduate.`,
+      attendanceNote: `Ages 18+. Open to people who live or work in County Fire's service area. Registration required. Attend all five sessions to graduate. ${schedule} Residents get registration priority.`,
+      blurb: blurb ?? `Start County Fire's five-session CERT academy at ${venue}; ages 18+ and advance registration required.`,
     },
   })),
   // Both exact November 15 ticket instances say sold out and offer a waitlist.

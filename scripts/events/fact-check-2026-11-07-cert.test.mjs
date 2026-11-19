@@ -34,14 +34,17 @@ test("sparse organizer cards retain academy eligibility and session commitments 
     assert.equal(event.endTime, "9:00 PM", "finish is the first class, not the academy's final day");
     assert.equal(classifyAudienceAge(event), "adult");
     assert(requiresAdvanceRegistration(event), "the multi-session course cannot enter walk-up recommendations");
+    assert.match(event.attendanceNote, /live or work in County Fire's service area/);
     assert.match(event.attendanceNote, /Ages 18\+.*all five sessions to graduate/);
+    assert.match(event.attendanceNote, /Residents get registration priority/);
     assert.match(event.attendanceNote, /Skills day:/);
-    assert.match(event.blurb, /five-session CERT academy/);
+    assert.match(event.blurb, /five-session (?:CERT|disaster preparedness) academy/);
     assert.doesNotMatch(event.blurb, /Monday evenings/);
     assert.equal(event.costNote, "From $39.19", "keep the verified checkout price");
   }
   assert.match(events[0].attendanceNote, /January 25 and 27, February 1 and 3/);
   assert.match(events[1].attendanceNote, /April 5, 7, 12 and 14/);
+  assert.match(events[1].description, /Evening classes run from 6 to 9 PM on April 5, 7, 12, and 14/);
 });
 
 test("carried copy cannot restore the Monday-only claim or reopen a closed academy", async () => {
@@ -49,7 +52,7 @@ test("carried copy cannot restore the Monday-only claim or reopen a closed acade
     const event = { ...published, blurb: "Attend this all-ages course on Monday evenings." };
     await resolveEventBlurbs([event], { enabled: false });
     assert.equal(event.audienceAge, "adult");
-    assert.match(event.blurb, /ages 18\+/);
+    assert.match(event.blurb, /ages 18\+|adults 18 and older/i);
     assert.deepEqual(applyVerifiedEventFacts(event), event);
     for (const registration of ["full", "closed", "appointment-only"]) {
       assert.equal(applyVerifiedEventFacts({ ...event, registration }).registration, registration);
