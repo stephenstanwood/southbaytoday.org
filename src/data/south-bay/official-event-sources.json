@@ -1,35 +1,17 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-19T06:37:26.993Z",
+  "generatedAt": "2026-11-19T10:46:20.276Z",
   "sources": {
     "fetchLosAltosHistoryEvents": {
       "status": "ok",
       "sourceUrl": "https://www.losaltoshistory.org/events/?ical=1",
-      "observedAt": "2026-11-19T06:37:25.172Z",
-      "events": [
-        {
-          "id": "los-altos-e747e31cf7f8de07",
-          "title": "The Road I Call Home",
-          "date": "2026-11-19",
-          "displayDate": "Thu, Nov 19",
-          "time": null,
-          "endTime": null,
-          "venue": "Los Altos History Museum, 51 So. San Antonio Road",
-          "address": "",
-          "city": "los-altos",
-          "category": "arts",
-          "cost": null,
-          "description": "Appearing in the Main Gallery November 19, 2026 - January 24, 2027.",
-          "url": "https://www.losaltoshistory.org/events/the-road-call-home/",
-          "source": "Los Altos History Museum",
-          "kidFriendly": false
-        }
-      ]
+      "observedAt": "2026-11-19T10:46:18.774Z",
+      "events": []
     },
     "fetchSjJazzEvents": {
       "status": "ok",
       "sourceUrl": "https://summerfest.sanjosejazz.org/lineup",
-      "observedAt": "2026-11-19T06:37:26.993Z",
+      "observedAt": "2026-11-19T10:46:20.276Z",
       "events": []
     }
   }

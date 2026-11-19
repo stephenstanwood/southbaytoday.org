@@ -1,29 +1,29 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-19T06:37:18.801Z",
+    "generatedAt": "2026-11-19T10:46:09.527Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 195,
+    "eventCount": 190,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (11)",
       "Linden Tree Books (5)",
-      "History San Jose (2)",
+      "History San Jose (1)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (1)",
-      "Guadalupe River Park Conservancy (7)",
+      "Guadalupe River Park Conservancy (6)",
       "Santana Row (7)",
       "City of Cupertino (37)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
-      "SAP Center (13)",
-      "The Tech Interactive (14)",
+      "SAP Center (12)",
+      "The Tech Interactive (13)",
       "Books Inc (8)",
-      "San Jose Museum of Art (2)",
+      "San Jose Museum of Art (1)",
       "Peninsula Open Space Trust (2)"
     ],
     "sourceHealth": [
@@ -78,13 +78,13 @@
         "id": "sj-museum-of-art",
         "label": "SJ Museum of Art",
         "status": "error",
-        "count": 2,
+        "count": 1,
         "liveCount": 0,
         "error": "SJMA calendar returned HTTP 403",
         "sources": [
           "San Jose Museum of Art"
         ],
-        "retainedCount": 2,
+        "retainedCount": 1,
         "carriedForward": true,
         "carryForwardReason": "scraper errored; retained previous run's events"
       },
@@ -103,8 +103,8 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 2,
+        "liveCount": 2,
         "error": null,
         "sources": [
           "History San Jose"
@@ -187,8 +187,8 @@
         "id": "guadalupe-river-park",
         "label": "Guadalupe River Park",
         "status": "ok",
-        "count": 7,
-        "liveCount": 7,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Guadalupe River Park Conservancy"
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
-        "liveCount": 13,
+        "count": 12,
+        "liveCount": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -273,8 +273,8 @@
         "id": "the-tech-upcoming",
         "label": "The Tech Upcoming",
         "status": "ok",
-        "count": 14,
-        "liveCount": 14,
+        "count": 13,
+        "liveCount": 13,
         "error": null,
         "sources": [
           "The Tech Interactive"
@@ -625,23 +625,6 @@
       }
     },
     {
-      "id": "1f9145761e09",
-      "title": "Gingerbread Village Workshop",
-      "date": "2026-12-11",
-      "displayDate": "Fri, Dec 11",
-      "time": "7:00 pm",
-      "endTime": "9:00 pm",
-      "venue": "History Park, Empire Firehouse",
-      "address": "635 Phelan Ave., San José",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://historysanjose.org/programs-events/",
-      "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
       "id": "fc8e02e611b6",
       "title": "History Park Heritage Holiday",
       "date": "2026-12-19",
@@ -829,10 +812,10 @@
       "kidFriendly": false
     },
     {
-      "id": "8059cc16cd3b",
+      "id": "b05085c4d655",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -849,10 +832,10 @@
       "kidFriendly": false
     },
     {
-      "id": "65d4a6753ffe",
+      "id": "62e8d906b902",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -906,10 +889,10 @@
       "kidFriendly": true
     },
     {
-      "id": "67ae0b45f4a0",
+      "id": "505298e76b76",
       "title": "Toddler Storytime",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
+      "date": "2026-11-19",
+      "displayDate": "Thu, Nov 19",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -921,30 +904,6 @@
       "url": "https://www.cdm.org/calendar/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true
-    },
-    {
-      "id": "5a667d47c012",
-      "title": "Volunteer in the Historic Orchard with UC Master Gardeners!",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "9:30 AM",
-      "endTime": "11:30 AM",
-      "venue": "Historic Orchard",
-      "address": "",
-      "city": "san-jose",
-      "registration": "required",
-      "category": "outdoor",
-      "cost": null,
-      "description": "The Historic Orchard is a 3.3-acre site planted in 1994 and located in Guadalupe Gardens just south of Taylor Street, adjacent to the Heritage Rose Garden and River Park trails. In the 1930s and ’40s almost everyone who lived here was engaged in the business of fruit production: growing, picking, packing, canning, selling, or otherwise supporting the industry. Today, with very few orchards remaining, this is a place where adults and children can come to experience a piece of local history. Fruit harvested from the Historic Orchard is donated to Second Harvest of Silicon Valley and local shelters. Help us maintain the River Park's Historic Orchard including: - tree planting and pruning- disease diagnosis and treatment- sun scald prevention painting- sheet mulching- experimenting with different types of irrigation or ground cover- grafting for improved pollination Chaperones are required for those age 15 and younger. School groups or corporate teams must contact the Volunteer Coordinator at volunteer@grpg.org to schedule events. Register HERE Please note this event may cancel in the case of inclement weather. Restrooms are available at the Rotary PlayGarden and will require staff assistance. Address for Parking: 438 Coleman Ave. Jose, CA 95110 Meeting Location: Historic Orchard (Refer to registration form for map) Time: 9:30 AM - 11:30 AM Recurring Dates: Every Wednesday",
-      "attendanceNote": "Advance registration is required through Guadalupe River Park Conservancy. Meet at Historic Orchard; see the organizer's registration form for the meeting map. Chaperones are required for those age 15 and younger.",
-      "url": "https://grpg.org/calendar/events/",
-      "source": "Guadalupe River Park Conservancy",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://grpg.org/calendar/events/",
-        "date": "2026-11-18"
-      }
     },
     {
       "id": "20f169faf651",
@@ -1104,7 +1063,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-19T06:36:10.873Z"
+        "checkedAt": "2026-11-19T10:44:54.984Z"
       }
     },
     {
@@ -1127,7 +1086,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-19T06:36:10.876Z"
+        "checkedAt": "2026-11-19T10:44:54.989Z"
       }
     },
     {
@@ -1150,7 +1109,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-19T06:36:10.876Z"
+        "checkedAt": "2026-11-19T10:44:54.990Z"
       }
     },
     {
@@ -1173,7 +1132,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-19T06:36:10.877Z"
+        "checkedAt": "2026-11-19T10:44:54.991Z"
       }
     },
     {
@@ -1196,7 +1155,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-19T06:36:10.877Z"
+        "checkedAt": "2026-11-19T10:44:54.991Z"
       }
     },
     {
@@ -1219,7 +1178,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-19T06:36:10.879Z"
+        "checkedAt": "2026-11-19T10:44:54.993Z"
       }
     },
     {
@@ -1242,7 +1201,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-19T06:36:10.879Z"
+        "checkedAt": "2026-11-19T10:44:54.993Z"
       }
     },
     {
@@ -3129,7 +3088,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "6:30 PM",
-        "checkedAt": "2026-11-19T06:36:45.481Z"
+        "checkedAt": "2026-11-19T10:45:28.695Z"
       }
     },
     {
@@ -3153,7 +3112,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.482Z"
+        "checkedAt": "2026-11-19T10:45:28.696Z"
       }
     },
     {
@@ -3177,7 +3136,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3201,7 +3160,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3225,7 +3184,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3266,7 +3225,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3290,7 +3249,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3314,7 +3273,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3338,7 +3297,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.697Z"
       }
     },
     {
@@ -3362,7 +3321,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.698Z"
       }
     },
     {
@@ -3386,42 +3345,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T06:36:45.484Z"
+        "checkedAt": "2026-11-19T10:45:28.698Z"
       }
-    },
-    {
-      "id": "112cbb09ca0c",
-      "title": "Three Days Grace",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "7:00 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/three-days-grace",
-      "source": "SAP Center",
-      "kidFriendly": false
-    },
-    {
-      "id": "549bc913a42e",
-      "title": "Hunger Games: Sunrise on the Reaping",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "6:00PM",
-      "endTime": null,
-      "venue": "The Tech Interactive",
-      "address": "201 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "Return to Panem for the 50th Hunger Games! In “The Hunger Games: Sunrise on the Reaping,” young Haymitch Abernathy faces a deadly fight for survival as the Capitol doubles the number of tributes. Experience the action, suspense, and rebellion on the largest dome screen in the Bay Area in our IMAX® Dome Theater, featuring stunning visuals and powerful sound.",
-      "url": "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
-      "source": "The Tech Interactive",
-      "kidFriendly": true
     },
     {
       "id": "80960df68cd9",
@@ -3779,27 +3704,6 @@
       "url": "https://www.booksinc.com/pages/events",
       "source": "Books Inc",
       "kidFriendly": false
-    },
-    {
-      "id": "fe4a7a23e4bd",
-      "title": "Walk with a Naturalist: November 2026",
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "time": "12:30 PM",
-      "endTime": "1:30 PM",
-      "venue": "San Jose Museum of Art",
-      "address": "110 S Market St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "arts",
-      "cost": "paid",
-      "description": "Explore a small ocean swallowed with Shelby Hendricks through art and science. Meet in the first-floor lobby. The tour is included with museum admission and is open to all ages.",
-      "url": "https://sjmusart.org/programs-at-sjma/walk-with-a-naturalist",
-      "source": "San Jose Museum of Art",
-      "kidFriendly": true,
-      "costNote": "Tour included with museum admission",
-      "audienceAge": "all",
-      "blurb": "Explore a small ocean swallowed through art and science with Shelby Hendricks.",
-      "attendanceNote": "Advance registration is recommended. Walk-ins are welcome as space permits; each tour is limited to 20 participants."
     },
     {
       "id": "a322ab0c474f",
