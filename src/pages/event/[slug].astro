@@ -12,7 +12,7 @@ import { buildEventSlugs } from "../../lib/south-bay/eventSlug";
 import { eventPagePool } from "../../lib/south-bay/eventPagePool";
 import { resolveRetired } from "../../lib/south-bay/eventSlugLedger.mjs";
 import { eventToSchema, type SchemaEventRecord } from "../../lib/south-bay/eventSchema";
-import { isVirtualEvent, registrationLabel } from "../../lib/south-bay/eventFilters.mjs";
+import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../lib/south-bay/eventFilters.mjs";
 import { normalizeAbsoluteHttpUrl } from "../../lib/south-bay/httpUrl.mjs";
 
 interface RawEvent {
@@ -423,7 +423,7 @@ const showDesc = longDesc && longDesc !== blurb && !blurb.startsWith(longDesc.sl
         Event details <span aria-hidden="true">↗</span>
       </a>
     )}
-    {!passed && !retired && calendarUrl && (
+    {!passed && !retired && calendarUrl && !requiresAttendanceConfirmation(event) && (
       <a class="sb-btn" href={calendarUrl} rel="noopener noreferrer" data-analytics-event="Calendar add">
         Add to Google Calendar
       </a>

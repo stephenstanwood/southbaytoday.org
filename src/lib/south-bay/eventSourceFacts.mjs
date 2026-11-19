@@ -3803,6 +3803,50 @@ const CORRECTIONS = [
       attendanceNote: "$5 residents; $6 nonresidents. Preregistration is required for every attending child and adult.",
     },
   },
+  // The city's race page publishes separate starts, fees, and audiences.
+  // The age cap in the calendar description applies only to the kids' run.
+  // https://www.cupertino.gov/Parks-Recreation/Events/Big-Bunny-5K
+  {
+    date: "2027-03-06",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Big-Bunny-5K/Big-Bunny-5K-Event",
+    facts: {
+      audienceAge: "all",
+      cost: "paid",
+      costNote: "Kids’ run $30–$35. 5K $47–$60 depending on registration date and residency.",
+    },
+    appendAttendanceNote: "The 5K starts at 8:30 AM by Community Hall and costs $47–$60. The kids’ run starts at 9:30 AM on Library Field for ages 7 and under and costs $30–$35. Same-day registration runs from 7 to 8:15 AM at Community Hall.",
+  },
+  // The city provides the venue, prices and registration terms on the
+  // program page. Its separate calendar detail omits those fields.
+  // https://www.cupertino.gov/Parks-Recreation/Events/Hop-n-Hunt
+  {
+    date: "2027-03-27",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Hop-n-Hunt/Hop-n-Hunt",
+    facts: {
+      venue: "Quinlan Community Center",
+      address: "10185 North Stelling Road, Cupertino, CA 95014",
+      cost: "paid",
+      costNote: "$10 for ages 13+. $20 for ages 2–12.",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Registration starts February 9. Register each attendee ages 2 and up. Ages 2–12 cost $20 and ages 13+ cost $10. Register children under 2 if they join the activities or need their own plate of food.",
+  },
+  // The program page lists a 6 PM opening and ages 13–18. The calendar
+  // lists 6:30 PM. Disclose the conflict while the calendar shows that start.
+  // https://www.cupertino.gov/Parks-Recreation/Events/Hack-Cupertino
+  {
+    date: "2027-04-10",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Hack-Cupertino/Hack-Cupertino",
+    facts: (event) => ({
+      audienceAge: "kids",
+      description: "An overnight Cupertino hackathon for ages 13–18. Participants who are 18 must be in high school. Work on the challenge alone or in a team of up to four.",
+      blurb: "Build software overnight at Quinlan Community Center in Cupertino’s hackathon for ages 13–18.",
+      ...(event.time === "6:30 PM" ? {
+        attendanceStatus: "needs-confirmation",
+        attendanceNote: "The program page lists 5:30 PM check-in and a 6 PM opening. The calendar lists a 6:30 PM start. Both give a 10:30 AM Sunday finish. Confirm the start time with Cupertino Parks and Recreation.",
+      } : {}),
+    }),
+  },
   // The organizer's poster confirms the title, History Park, October 24 and
   // 2–6:30 PM, but supplies no program description. Its linked ticket page is
   // excluded by robots.txt. Keep copy within those verified facts rather

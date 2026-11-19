@@ -13,6 +13,56 @@ import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => {
+  const event = {
+    date: "2027-03-06",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Big-Bunny-5K/Big-Bunny-5K-Event",
+    audienceAge: "kids",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.audienceAge, "all");
+  assert.equal(fixed.cost, "paid");
+  assert.match(fixed.attendanceNote, /5K starts at 8:30 AM.*kids’ run starts at 9:30 AM.*ages 7 and under/);
+  assert.match(fixed.attendanceNote, /Same-day registration/);
+  assert(!requiresAdvanceRegistration(fixed));
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+});
+
+test("Cupertino's Hop 'n' Hunt calendar retains the published venue and admission", () => {
+  const event = {
+    date: "2027-03-27",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Hop-n-Hunt/Hop-n-Hunt",
+    venue: null,
+    address: "",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.venue, "Quinlan Community Center");
+  assert.match(fixed.address, /^10185 North Stelling Road/);
+  assert.equal(fixed.cost, "paid");
+  assert.match(fixed.costNote, /\$10 for ages 13\+.*\$20 for ages 2–12/);
+  assert.match(fixed.attendanceNote, /February 9.*children under 2/);
+  assert(requiresAdvanceRegistration(fixed));
+  assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
+  const anotherDate = { ...event, date: "2028-03-27" };
+  assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+});
+
+test("Hack Cupertino preserves the youth eligibility and discloses the conflicting start", () => {
+  const event = {
+    date: "2027-04-10",
+    url: "https://www.cupertino.gov/Parks-Recreation/Events/Hack-Cupertino/Hack-Cupertino",
+    time: "6:30 PM",
+    endTime: null,
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.audienceAge, "kids");
+  assert.equal(fixed.endTime, null);
+  assert.match(fixed.description, /ages 13–18.*18 must be in high school/);
+  assert.match(fixed.attendanceNote, /6 PM opening.*6:30 PM start.*10:30 AM Sunday finish/);
+  assert(requiresAttendanceConfirmation(fixed));
+  assert(!requiresAttendanceConfirmation(applyVerifiedEventFacts({ ...event, time: "6:00 PM" })));
+});
+
 test("the November 21 library corrections preserve actual booking limits", () => {
   const day = { date: "2026-11-21", source: "San Jose Public Library" };
   const url = id => `https://sjpl.bibliocommons.com/events/${id}`;
