@@ -195,6 +195,21 @@ const CORRECTIONS = [
     matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ab6f84dda318a10e636d249\/?$/.test(event.url || ""),
     copyReplacements: [[/\bAR Trepreneurs?\b/gi, match => /s$/i.test(match) ? "ARTrepreneurs" : "ARTrepreneur"]],
   },
+  // These published occurrences explicitly allow walk-ins while their signup
+  // panels still accept reservations. Retain any later full or closed notice.
+  ...[
+    ["2026-11-21", "6a3f10c0f56bd86e00b95e6d", "Registration is requested. Walk-ins are welcome."],
+    ["2026-11-21", "6ad91a2e29c3d60033318752", "Registration is recommended. Drop-ins are welcome."],
+    ["2026-11-19", "6a83721e4cb69d003e216ef4", "Registration is encouraged. Walk-ins are welcome."],
+  ].map(([date, id, attendanceNote]) => ({
+    date,
+    matches: event => event.registration === REGISTRATION_REQUIRED
+      && ["events", "v2/events"].some(path => event.url?.replace(/\/$/, "") === `https://sjpl.bibliocommons.com/${path}/${id}`)
+      && /\bregistration\s+(?:is\s+)?(?:encouraged|recommended|requested)(?:\s*,?\s*but\s+not\s+required|\.\s+drop-ins are also welcome)\b/i.test(event.description || "")
+      && !/\b(?:registration (?:is )?(?:now )?(?:closed|full|required)|no drop-ins|must (?:reserve|register|book))\b/i.test(event.description || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: attendanceNote,
+  })),
   // The library's title says level 1 and its description says level 0.
   // Use neutral Spanish copy while both claims persist on this occurrence.
   // https://sjpl.bibliocommons.com/v2/events/6a8e2033b204780029958a7e

@@ -42,6 +42,26 @@ test("the November 21 library corrections preserve actual booking limits", () =>
   assert.deepEqual(applyVerifiedEventFacts(english), english);
 });
 
+test("confirmed optional library signups preserve new booking limits and unrelated occurrences", () => {
+  const rows = [
+    ["2026-11-21", "6a3f10c0f56bd86e00b95e6d", "Registration requested but not required."],
+    ["2026-11-21", "6ad91a2e29c3d60033318752", "Registration is recommended. Drop-ins are also welcome."],
+    ["2026-11-19", "6a83721e4cb69d003e216ef4", "Registration encouraged but not required."],
+  ];
+  for (const [date, id, description] of rows) {
+    const event = { date, url: `https://sjpl.bibliocommons.com/events/${id}`, description,
+      registration: "required", registrationClosesBy: `${date}T18:00:00Z` };
+    const fixed = applyVerifiedEventFacts(event);
+    assert(!requiresAdvanceRegistration(fixed));
+    assert.match(fixed.attendanceNote, /welcome/);
+    assert.equal(fixed.registrationClosesBy, null);
+    assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
+    assert.equal(applyVerifiedEventFacts({ ...event, registration: "closed" }).registration, "closed");
+    assert.equal(applyVerifiedEventFacts({ ...event, date: "2026-11-20" }).registration, "required");
+    assert.equal(applyVerifiedEventFacts({ ...event, description: description + " All guests must register." }).registration, "required");
+  }
+});
+
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
