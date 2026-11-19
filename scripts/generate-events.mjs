@@ -3717,6 +3717,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   const venueLower = venue.toLowerCase();
   const isBookstoreVenue = /\b(books?|bookshop|bookstore)\b/.test(venueLower);
   if (isBookstoreVenue) return "arts";
+  // Seven Trees Library's Board Game Zone is open play for all ages.
+  if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
   // Title-anchored overrides for terms that source-supplied category tags
   // routinely override (e.g. SJDA tags SoFA Market trivia nights "Music"
   // because the venue is music-coded; tags Marriott live-music nights
@@ -4420,7 +4422,8 @@ function parseIcalDate(dtStr) {
  * nor an absent street address establishes a local destination.
  * Retain every occurrence's start/end pair: a URL can repeat across dates or
  * pages, and its latest finish must never be copied to a different session.
- * Returns Map<localist_url, { experience, filters, free, ticket_cost, locationName, address, instances }>.
+ * Returns event metadata keyed by Localist URL, including the published room
+ * and each occurrence's start and end.
  */
 async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = {}) {
   const map = new Map();
@@ -4440,6 +4443,7 @@ async function fetchLocalistMetadataMap(origin, { days = 370, maxPages = 12 } = 
         experience: ev.experience, filters: ev.filters,
         free: ev.free, ticket_cost: ev.ticket_cost,
         locationName: typeof ev.location_name === "string" ? ev.location_name : "",
+        roomNumber: typeof ev.room_number === "string" ? ev.room_number : "",
         address: typeof ev.address === "string" ? ev.address : "",
         instances: [...new Map(instances.map(instance =>
           [JSON.stringify([instance.start, instance.end, instance.all_day]), instance])).values()],
@@ -5046,6 +5050,10 @@ async function fetchSjsuEvents() {
       const isVirtual =
         virtualFromSourceSignal(metadata?.experience) === true;
       if (isVirtual) virtualFromSource++;
+      // Localist carries the room separately from the building and its address.
+      const room = !isVirtual && rawSjsuLocation && rawSjsuLocation === metadata?.locationName
+        ? cleanVenue(metadata.roomNumber) : "";
+      const displayVenue = room && !venue.toLowerCase().includes(room.toLowerCase()) ? `${venue}, ${room}` : venue;
       const address = metadata?.address || "";
       // Check the original athletics title before venue-suffix cleanup can
       // erase "at UC Irvine" / "at UC Davis" and conceal an away game.
@@ -5060,7 +5068,7 @@ async function fetchSjsuEvents() {
         displayDate: displayDate(start),
         time,
         endTime: displayEndTime(start, end),
-        venue,
+        venue: displayVenue,
         address,
         city,
         ...(isVirtual ? { virtual: true } : {}),

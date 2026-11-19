@@ -21,17 +21,22 @@ test("university concerts outrank academic program notes while music lectures st
     if (request.pathname === "/calendar.xml") return new Response(xml);
     assert.equal(request.pathname, "/api/2/events");
     return Response.json({ page: { total: 1 }, events: rows.map((_, i) => ({ event: {
-      localist_url: `${origin}/event/concert-category-${i}`, location_name: "Music Building",
-      address: "One Washington Square, San José, CA 95192", experience: "inperson", filters: {},
+      localist_url: `${origin}/event/concert-category-${i}`,
+      location_name: i === 1 ? "Music Building, Concert Hall" : "Music Building",
+      room_number: i < 3 ? "Concert Hall" : "",
+      address: "One Washington Square, San José, CA 95192", experience: i === 2 ? "virtual" : "inperson", filters: {},
       ticket_cost: "Free performance. No ticket purchase necessary.",
     } })) });
   });
   const events = await fetchSjsuEvents();
   assert.deepEqual(events.map(({ title, category }) => [title, category]), rows.map(([title, , category]) => [title, category]));
+  assert.deepEqual(events.map(event => event.venue), [
+    "Music Building, Concert Hall", "Music Building, Concert Hall", "Music Building", "Music Building",
+  ]);
+  assert.equal(events[2].virtual, true);
   for (const event of events) {
     assert.equal(event.date, "2026-11-05");
     assert.equal(event.time, "7:30 PM");
-    assert.equal(event.venue, "Music Building");
     assert.equal(event.cost, "free");
   }
 });
