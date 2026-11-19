@@ -192,15 +192,6 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
       "Stanford's explicit restricted_to field and full listing limit this class to Stanford students, faculty and staff. Keep sparse copies out of the public feed until public eligibility is confirmed.",
     source: "https://events.stanford.edu/event/bicycle-handling-skills-class",
   }),
-  ...["2026-11-20", "2026-12-18"].map(date => Object.freeze({
-    title: /^Mountain View Makers Market$/i,
-    venue: /.*/,
-    date,
-    reviewOn: "2026-11-03",
-    reason:
-      "The newsletter extraction lists 3–8 PM, while the city's 2026 vendor FAQ lists 2–8 PM. The August original is outside available receiving-account history and the current organizer page could not be fetched within its access policy. Withhold these hours until a current first-party occurrence resolves the conflict; this is not a cancellation.",
-    source: "https://econdev.mountainview.gov/home/showpublisheddocument/13299/639148679773000000",
-  })),
   Object.freeze({
     title: /^Njioma Grevious Violin Recital$/i,
     venue: /^Bing Concert Hall$/i,

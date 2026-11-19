@@ -78,10 +78,86 @@ const SJSU_NOVEMBER_METROPOLIS = {
   attendanceStatus: "needs-confirmation",
   attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
+const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
 
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The public calendar and November 18 City Hall newsletter confirm 3–8 PM
+  // on both dates. The old 2 PM start was from the vendor FAQ.
+  // https://econdev.mountainview.gov/downtown/makers-market-2026
+  ...["2026-11-20", "2026-12-18"].map(date => ({
+    date,
+    matches: event => /^Mountain View Makers Market(?: \(December\))?$/i.test(event.title || "")
+      && event.url === "https://econdev.mountainview.gov/downtown/makers-market-2026",
+    facts: {
+      title: "Mountain View Makers Market",
+      venue: "Castro Street",
+      address: "300 block of Castro Street, Mountain View, CA",
+      category: "market",
+    },
+  })),
+  // The church's public November 18 bulletin distinguishes the fair from the
+  // volunteer form. Its calendar publishes the 7 PM finish for the fair.
+  // https://www.pclg.org/this-week/2026-11-18.pdf
+  {
+    date: "2026-11-29",
+    matches: event => /^Advent Craft Faire (?:and|&) Supper$/i.test(event.title || "")
+      && /^Presbyterian Church of Los Gatos\b/i.test(event.venue || "")
+      && (event.url === PCLG_NOVEMBER_18_BULLETIN
+        || /^https:\/\/www\.signupgenius\.com\/go\/10C0E49AEA92CA5F58-67534688-advent(?:[?#].*)?$/i.test(event.url || "")),
+    facts: event => ({
+      url: PCLG_NOVEMBER_18_BULLETIN,
+      ...(event.source === "City Newsletter" && event.endTime == null ? { endTime: "7:00 PM" } : {}),
+    }),
+    copyReplacements: [[/\s*The sign-up link is for volunteers helping prepare and serve dinner\.\s*$/i, ""]],
+  },
+  {
+    date: "2026-11-28",
+    matches: event => !event.url && /^PCLG Elf Squad Holiday Decorating$/i.test(event.title || "")
+      && /^Presbyterian Church of Los Gatos\b/i.test(event.venue || ""),
+    facts: { url: PCLG_NOVEMBER_18_BULLETIN },
+  },
+  // A co-sponsor publishes the exact host, finish time and livestream RSVP.
+  // The denomination's church directory confirms the street spelling.
+  {
+    date: "2026-11-19",
+    matches: event => /^Los Gatos Interfaith Thanksgiving Service$/i.test(event.title || "")
+      && /^Los Gatos United Methodist Church\b/i.test(event.venue || ""),
+    facts: event => ({
+      venue: "Los Gatos United Methodist Church",
+      address: "111 Church St, Los Gatos, CA 95030",
+      ...(event.source === "City Newsletter" && event.endTime == null ? { endTime: "8:00 PM" } : {}),
+      url: event.url || "https://www.shirhadash.org/event/off-site-los-gatos-interfaith-thanksgiving-service.html",
+    }),
+    appendAttendanceNote: "RSVP with Congregation Shir Hadash to receive the livestream link.",
+  },
+  {
+    date: "2026-12-07",
+    matches: event => /^Community Tree Lighting Celebration$/i.test(event.title || "")
+      && /^https:\/\/www\.mountainview\.gov\/our-city\/departments\/community-services\/special-events\/community-tree-lighting-celebration\/?$/.test(event.url || "")
+      && !event.cost,
+    facts: { cost: "free" },
+  },
+  // Stanford's full webinar description establishes free admission even
+  // though the Localist price field is empty.
+  {
+    date: "2026-11-19",
+    matches: event => event.virtual === true && !event.cost
+      && event.url === "https://events.stanford.edu/event/medicare-basics",
+    facts: { cost: "free", venue: "Stanford Healthy Living" },
+  },
+  // This calendar entry is gallery visiting hours for the exhibition. The
+  // organizer's full listing names the rooms and says admission is free.
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/never-gonna-give-you-up",
+    facts: event => ({
+      venue: "McMurtry Building, Miller Discussion Room and Vitrine Gallery",
+      cost: event.cost ?? "free",
+      blurb: "See the TNT Traysikel mobile sculpture exhibition in the Miller Discussion Room and Vitrine Gallery.",
+    }),
+  },
   // The library's title says level 1 and its description says level 0.
   // Use neutral Spanish copy while both claims persist on this occurrence.
   // https://sjpl.bibliocommons.com/v2/events/6a8e2033b204780029958a7e
