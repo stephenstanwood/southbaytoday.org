@@ -79,6 +79,7 @@ const SJSU_NOVEMBER_METROPOLIS = {
   attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
 const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
+const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/events/68faeb383cbc052f00816108";
 
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
@@ -118,7 +119,7 @@ const CORRECTIONS = [
       && /^Presbyterian Church of Los Gatos\b/i.test(event.venue || ""),
     facts: { url: PCLG_NOVEMBER_18_BULLETIN },
   },
-  // A co-sponsor publishes the exact host, finish time and livestream RSVP.
+  // A co-sponsor publishes the host, finish time, free admission and livestream RSVP.
   // The denomination's church directory confirms the street spelling.
   {
     date: "2026-11-19",
@@ -127,6 +128,7 @@ const CORRECTIONS = [
     facts: event => ({
       venue: "Los Gatos United Methodist Church",
       address: "111 Church St, Los Gatos, CA 95030",
+      cost: event.cost ?? "free",
       ...(event.source === "City Newsletter" && event.endTime == null ? { endTime: "8:00 PM" } : {}),
       url: event.url || "https://www.shirhadash.org/event/off-site-los-gatos-interfaith-thanksgiving-service.html",
     }),
@@ -1819,9 +1821,37 @@ const CORRECTIONS = [
       && event.title === "Mindfulness Meditation with Phuong Pham" && event.venue === "Palo Alto Art Center"
       && ![REGISTRATION_REQUIRED, REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration),
     facts: {
+      // The library and Art Center describe the same 1–2 PM session. Sharing
+      // the library URL lets slot deduplication and retired pages find it.
+      url: PALO_ALTO_ART_CENTER_MEDITATION_URL,
       cost: "free", registration: REGISTRATION_NONE,
       attendanceNote: "No registration required. Children under 10 must be accompanied by an adult.",
     },
+  },
+  {
+    date: "2026-12-05",
+    matches: event => event.url === PALO_ALTO_ART_CENTER_MEDITATION_URL
+      && event.venue === "Art Center Meeting Room",
+    facts: { venue: "Palo Alto Art Center, Meeting Room" },
+  },
+  // The Art Center's November newsletter describes this as a workshop for
+  // families. Its subscriber links do not belong in the published listing.
+  {
+    date: "2026-12-05",
+    matches: event => event.source === "City Newsletter" && event.city === "palo-alto"
+      && event.title === "Two-Day Clay Gingerbread House Workshop" && event.venue === "Palo Alto Art Center",
+    facts: { kidFriendly: true },
+  },
+  // Pacific Art League's booking calendar lists this session at $100.
+  // https://www.pacificartleague.org/class?eventtemplate=1550-12-12-cute-kawaii-winter-wonderland-workshop-ages-712
+  {
+    date: "2026-12-12",
+    matches: event => event.source === "City Newsletter" && event.city === "palo-alto"
+      && event.title === "Youth Workshop: Cute Kawaii Winter Wonderland" && event.venue === "Pacific Art League",
+    facts: event => ({
+      url: event.url || "https://www.pacificartleague.org/class?eventtemplate=1550-12-12-cute-kawaii-winter-wonderland-workshop-ages-712",
+      ...(event.cost == null ? { cost: "paid", costNote: "$100" } : {}),
+    }),
   },
   {
     date: "2026-11-17",

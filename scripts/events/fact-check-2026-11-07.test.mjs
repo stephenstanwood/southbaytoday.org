@@ -4,9 +4,12 @@ import { fetchInboundEvents, isEventTimeBackfillCandidate } from "../generate-ev
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
-import { resolveRetired, snapshotEvent } from "../../src/lib/south-bay/eventSlugLedger.mjs";
+import { resolveRetired, retireSlugs, snapshotEvent } from "../../src/lib/south-bay/eventSlugLedger.mjs";
 import { eventPagePool } from "../../src/lib/south-bay/eventPagePool.ts";
 import { requiresAdvanceRegistration } from "../../src/lib/south-bay/eventFilters.mjs";
+import { deduplicateEventSlots } from "../lib/event-url-dedup.mjs";
+
+const meditationUrl = "https://paloalto.bibliocommons.com/events/68faeb383cbc052f00816108";
 
 // Sparse intake shapes; verified terms come from the original November city,
 // Art Center and church newsletters. No private receiving identifiers or
@@ -38,9 +41,10 @@ test("verified newsletter fees and supervision survive actual ingestion and cach
   const originals = structuredClone(events);
   await resolveEventBlurbs(events, { enabled: false });
   for (const [i, event] of events.entries()) {
-    for (const field of ["id", "title", "date", "time", "endTime", "url", "venue", "city"]) {
+    for (const field of ["id", "title", "date", "time", "endTime", "venue", "city"]) {
       assert.equal(event[field], originals[i][field], field);
     }
+    assert.equal(event.url, newsletter[i].id === "meditation" ? meditationUrl : originals[i].url);
     assert.deepEqual(applyVerifiedEventFacts(event), event);
   }
   assert.equal(events[0].cost, "paid");
@@ -53,6 +57,24 @@ test("verified newsletter fees and supervision survive actual ingestion and cach
   assert.equal(events[2].cost, "free");
   assert.equal(events[2].registration, "none");
   assert.match(events[2].attendanceNote, /Children under 10 must be accompanied by an adult/);
+});
+
+test("the Art Center meditation newsletter copy resolves to the library occurrence", () => {
+  const [copy] = fetchInboundEvents({ events: [newsletter[2]], today: "2026-11-18" });
+  const library = applyVerifiedEventFacts({
+    id: "paloalto-68faeb383cbc052f00816108", source: "Palo Alto City Library",
+    title: "Location Change: Mindfulness Meditation", city: "palo-alto",
+    date: "2026-12-05", time: "1:00 PM", endTime: "2:00 PM",
+    url: meditationUrl, venue: "Art Center Meeting Room",
+  });
+  const kept = deduplicateEventSlots([library, applyVerifiedEventFacts(copy)]);
+  assert.deepEqual(kept, [library]);
+  assert.equal(library.venue, "Palo Alto Art Center, Meeting Room");
+
+  const ledger = retireSlugs({}, [copy, library], kept, "2026-11-18");
+  const { redirects } = resolveRetired(ledger, kept, [], "2026-11-18");
+  assert.equal(redirects.get("2026-12-05-mindfulness-meditation-with-phuong-pham"),
+    "2026-12-05-location-change-mindfulness-meditation");
 });
 
 test("newsletter corrections stay on their verified date, publisher, venue and source ID", () => {

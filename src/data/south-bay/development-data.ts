@@ -353,6 +353,7 @@ export const DEV_PROJECTS: DevProject[] = [
     developer: "Peninsula Corridor Joint Powers Board",
     timeline: "Completed 2024",
     featured: true,
+    sourceNote: "Caltrain's project report documents the 51 miles from San Francisco to Tamien, the September 21, 2024 start of full electric service, and December 20 final acceptance: https://www.caltrain.com/media/34924/download. Caltrain explains the service and capacity gains at https://www.caltrain.com/projects/electrification/project-benefits.",
   },
 
   {
