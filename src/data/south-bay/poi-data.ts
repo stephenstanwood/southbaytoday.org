@@ -268,8 +268,9 @@ export const SOUTH_BAY_POIS: POI[] = [
     city: "mountain-view",
     venue: "Computer History Museum",
     category: "museum",
-    cost: "low",
-    costNote: "$20 adults / $13 kids",
+    cost: "paid",
+    // Rates and age bands: https://computerhistory.org/plan-your-visit/visitor-faq/ and https://computerhistory.org/terms-of-sale/.
+    costNote: "$21.50 adults, $16.50 students 11+, $6 ages 8–10, free ages 7 and under",
     kidFriendly: true,
     description:
       "The definitive museum of the computing revolution — from the first calculators to modern AI — right in Silicon Valley.",
@@ -593,7 +594,8 @@ export const SOUTH_BAY_POIS: POI[] = [
     venue: "Smoking Pig BBQ, San Jose",
     category: "food",
     cost: "low",
-    costNote: "Under $20",
+    // San José menu: https://order.toasttab.com/online/smokingpigbbq-sanjose4th
+    costNote: "Sandwiches under $20",
     kidFriendly: true,
     description:
       "Texas-style BBQ done right in San Jose — brisket, ribs, mac and cheese, and all the fixings.",

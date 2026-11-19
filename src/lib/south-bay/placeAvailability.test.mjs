@@ -64,3 +64,13 @@ test("unlisted places pass through unchanged", () => {
   assert.equal(applyPlaceEditorialOverride(place), place);
   assert.equal(isPlaceTemporarilyUnavailable(place), false);
 });
+
+test("the Jackie's Place closure applies only to the North First Street branch", () => {
+  assert.equal(isPlaceTemporarilyUnavailable("place:ChIJ924cgmrNj4AR_zzWa-nJdVQ"), true);
+  assert.equal(isPlaceTemporarilyUnavailable({ name: "Jackie's Place - North" }), true);
+  assert.equal(isPlaceTemporarilyUnavailable({
+    name: "Jackie's Place",
+    address: "321 South First Street, San Jose",
+    url: "https://www.jackiesplacesj.com/",
+  }), false);
+});

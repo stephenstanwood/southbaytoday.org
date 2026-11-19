@@ -25,6 +25,13 @@ export const PLACE_EDITORIAL_OVERRIDES = Object.freeze({
     reason: "The museum's official site says its galleries are closed and will reopen in September 2026.",
     source: "https://www.scu.edu/desaisset/",
   }),
+  "ChIJ924cgmrNj4AR_zzWa-nJdVQ": Object.freeze({
+    aliases: Object.freeze(["jackie's place - north"]),
+    temporarilyUnavailable: true,
+    reviewOn: "2026-12-03",
+    reason: "Visit San Jose lists the North First Street location as temporarily closed and directs diners to the South First Street location.",
+    source: "https://www.sanjose.org/listings/jackies-place-north",
+  }),
 });
 
 function barePlaceId(value) {
