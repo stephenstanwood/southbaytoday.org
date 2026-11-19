@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { scrapeCupertinoOpenCities, yearAwareDate } from "../playwright-scrapers.mjs";
+import { runInNewContext } from "node:vm";
+import { scrapeCupertinoOpenCities, scrapeHistorySJ, yearAwareDate } from "../playwright-scrapers.mjs";
 
 test("dated calendar labels retain their explicit year beside a time range", () => {
   for (const [label, expected] of [
@@ -84,6 +85,59 @@ test("Cupertino preserves all resident pricing and the required attendee registr
   assert.equal(events[0].cost, "low");
   assert.equal(events[0].costNote, pricing, "preserve both prices and their eligibility");
   assert.equal(events[0].registration, "required");
+});
+
+test("Cupertino waits for the next directory page before collecting event links", async () => {
+  const first = "https://www.cupertino.gov/Events-directory/first-event";
+  const second = "https://www.cupertino.gov/Events-directory/second-event";
+  let currentUrl;
+  let clicked = false;
+  let handlesDisposed = 0;
+  const opened = [];
+  let href = first;
+  const readLinks = (read, previous) => runInNewContext(`(${read})(previous)`, {
+    document: { querySelectorAll: () => [{ href, textContent: "22 Nov 2026" }] }, previous,
+  });
+  const page = {
+    goto: async url => { currentUrl = url; opened.push(url); },
+    waitForTimeout: async () => {},
+    locator: selector => ({ first: () => ({
+      count: async () => Number(selector.includes("#page-2")),
+      click: async () => { clicked = true; },
+    }) }),
+    evaluate: async read => currentUrl.endsWith("/Events-directory") ? readLinks(read) : {
+      title: currentUrl === first ? "First event" : "Second event",
+      slots: ["Sunday, November 22, 2026 | 05:00 PM - 07:00 PM"],
+    },
+    waitForFunction: async (read, previous) => {
+      assert.equal(clicked, true);
+      assert.equal(readLinks(read, previous), null, "the old directory still mounted after the click must not count");
+      href = second;
+      return { jsonValue: async () => readLinks(read, previous), dispose: async () => { handlesDisposed++; } };
+    },
+  };
+  const events = await scrapeCupertinoOpenCities(page, { today: "2026-11-18" });
+  assert.deepEqual(opened.slice(1), [first, second]);
+  assert.deepEqual(events.map(event => event.title), ["First event", "Second event"]);
+  assert.equal(handlesDisposed, 1);
+});
+
+test("History San Jose's browser scraper keeps the organizer's building and street address separate", async () => {
+  let currentUrl;
+  const row = {
+    title: "Gingerbread Village Workshop", date: "12/11/2026", time: "7:00 pm", endTime: "9:00 pm",
+    location: "History Park, Empire Firehouse\n635 Phelan Ave., San José\nCost: $35 General $30 Members",
+    details: "Cost: $35 General $30 Members",
+  };
+  const page = {
+    goto: async url => { currentUrl = url; return { status: () => 200 }; },
+    evaluate: async () => currentUrl.endsWith("/programs-events/") ? [row] : [],
+    waitForTimeout: async () => {},
+  };
+  const [event] = await scrapeHistorySJ(page, { today: "2026-11-18" });
+  assert.equal(event.venue, "History Park, Empire Firehouse");
+  assert.equal(event.address, "635 Phelan Ave., San José");
+  assert.equal(event.cost, "paid");
 });
 
 import {

@@ -12,6 +12,14 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://events.scu.edu/live/rss/events",
   })),
   Object.freeze({
+    title: /^Hanukkah Menorah Lighting$/i,
+    venue: /.*/,
+    date: "2026-12-04",
+    matches: event => /^https:\/\/events\.scu\.edu\/(?:center-for-spirituality-and-faith\/event|live\/events)\/533921(?:-[^/?#]+)?(?:[/?#]|$)/i.test(event.url || ""),
+    reason: "SCU's dated calendar confirms the lighting but supplies no description or public audience. Withhold until the organizer confirms public attendance.",
+    source: "https://events.scu.edu/live/rss/events",
+  }),
+  Object.freeze({
     title: /^OneInMath: Math Program for K[ -]?3(?:rd)?\b/i,
     venue: /^Village Square Library$/i,
     date: "2026-11-21",

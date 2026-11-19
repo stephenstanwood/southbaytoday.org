@@ -70,7 +70,7 @@ import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/pa
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
 import { isTitleOnlyDescription } from "../src/lib/south-bay/eventCopyEdits.mjs";
-import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange } from "./lib/history-sj.mjs";
+import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjDateRange, parseHistorySjLocation } from "./lib/history-sj.mjs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
@@ -10908,15 +10908,11 @@ async function fetchHistorySanJoseEvents() {
         // downtown events at Gonzales/Peralta Adobe. A single-line match
         // silently sent those events to the former History Park fallback.
         const locMatch = block.match(/<span class="eventlocation">\s*(.*?)\s*<\/span>/is);
-        const locationLines = (locMatch?.[1] || "").replace(/<br\s*\/?\s*>/gi, "\n")
-          .split(/\r?\n/).map(stripHtml).filter(Boolean);
-        const [venueText = "", inlineAddress = ""] = (locationLines[0] || "").split("|");
-        const venue = cleanVenue(venueText.trim());
+        const locationText = (locMatch?.[1] || "").replace(/<br\s*\/?\s*>/gi, "\n")
+          .split(/\r?\n/).map(stripHtml).join("\n");
+        const location = parseHistorySjLocation(locationText);
+        const venue = cleanVenue(location.venue);
         if (!venue) continue; // The publisher operates more than one site.
-        // Preserve the source's address line, excluding its separate price
-        // and ticket notes. A missing address is not evidence of History Park.
-        const rawAddress = inlineAddress.trim() || locationLines.slice(1).find((line) => /^\d+\s/.test(line)) || "";
-        const address = rawAddress.split(/\s+(?=Stay tuned|Tickets|Cost:|Note:|Pumpkin and carving)/i)[0].trim();
 
         events.push({
           id: h("historysj", title, isoDate(start)),
@@ -10926,7 +10922,7 @@ async function fetchHistorySanJoseEvents() {
           time,
           endTime: historySjEndTime(eventUrl, endTime),
           venue,
-          address,
+          address: location.address,
           city: "san-jose",
           category: inferCategory(title, "", ""),
           cost: inferHistorySjCost(eventCopy, eventUrl),

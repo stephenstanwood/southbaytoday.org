@@ -37,6 +37,16 @@ export function canonicalHistorySjUrl(title = "", scrapedUrl = "") {
   return CANONICAL_EVENT_URLS.get(normalizedTitle) || scrapedUrl;
 }
 
+export function parseHistorySjLocation(text = "") {
+  const [firstLine = "", ...lines] = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  // A comma before a street number separates the address. A comma before a
+  // room or building name remains part of the venue.
+  const [venue, inlineAddress] = firstLine.split(/\s*\|\s*|,\s*(?=\d+\s)/, 2);
+  const rawAddress = inlineAddress || lines.find(line => /^\d+\s/.test(line)) || "";
+  const address = rawAddress.split(/\s+(?=Stay tuned|Tickets|Cost:|Note:|Register Online|Pumpkin and carving)/i)[0].replace(/[\s,]+$/, "");
+  return { venue: venue.trim(), address };
+}
+
 /**
  * Classify only cost language the History San José listing actually publishes.
  * Missing price text stays unknown; it must never default to paid.

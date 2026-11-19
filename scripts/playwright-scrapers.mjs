@@ -34,7 +34,7 @@ import {
   REGISTRATION_REQUIRED,
   registrationFromLibCal,
 } from "../src/lib/south-bay/eventFilters.mjs";
-import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost } from "./lib/history-sj.mjs";
+import { canonicalHistorySjUrl, historySjEndTime, inferHistorySjCost, parseHistorySjLocation } from "./lib/history-sj.mjs";
 import {
   parseLindenTreeHeadingLines,
   resolveLindenTreeOffsiteVenue,
@@ -842,7 +842,7 @@ async function scrapeLindenTree(page) {
 
 // ── History San Jose ──
 
-async function scrapeHistorySJ(page) {
+export async function scrapeHistorySJ(page, { today = TODAY } = {}) {
   const allEvents = [];
   for (let p = 1; p <= 4; p++) {
     const url = p === 1
@@ -868,7 +868,7 @@ async function scrapeHistorySJ(page) {
           const dateText = dateEl?.textContent?.trim();
           const time = timeEls[0]?.textContent?.trim() || null;
           const endTime = timeEls[1]?.textContent?.trim() || null;
-          const location = locEl?.textContent?.trim() || "";
+          const location = locEl?.innerText?.trim() || "";
           const link = linkEl?.href;
 
           const details = block.textContent?.replace(/\s+/g, " ").trim() || "";
@@ -881,31 +881,14 @@ async function scrapeHistorySJ(page) {
 
       for (const r of raw) {
         const date = tryParseDate(r.date);
-        if (!date || date < TODAY) continue;
+        if (!date || date < today) continue;
         const eventUrl = canonicalHistorySjUrl(
           r.title,
           r.link || "https://historysanjose.org/programs-events/",
         );
 
-        const rawVenue = r.location?.split("|")[0]?.trim() || "";
-        // History SJ sometimes puts its full street address in the venue half
-        // of the location field. Keep the display name canonical; the address
-        // is already stored separately.
-        const venue = /^History Park(?:\s*[,|]|$)/i.test(rawVenue)
-          ? "History Park"
-          : rawVenue || "History Park";
-        // Address can contain extra newlines + appeals ("Stay tuned for ticket information!",
-        // "Cost: Free, Register Online", "Pumpkin and carving supplies included…") —
-        // strip on first newline OR on those known suffix phrases.
-        const rawAddress = r.location?.includes("|")
-          ? r.location.split("|")[1]?.trim()
-          : "635 Phelan Ave, San Jose, CA 95112";
-        const cleanedAddress = rawAddress
-          ?.split("\n")[0]
-          ?.split(/\s+(?:Stay tuned|Cost:|Register Online|Pumpkin and carving)/i)[0]
-          ?.trim()
-          ?.replace(/[\s,]+$/, "");
-        const address = cleanedAddress || "635 Phelan Ave, San Jose, CA 95112";
+        const { venue, address } = parseHistorySjLocation(r.location);
+        if (!venue) continue; // The publisher operates more than one site.
 
         allEvents.push({
           title: r.title,
@@ -1871,6 +1854,14 @@ export async function scrapeSantanaRow(page) {
   });
 }
 
+function cupertinoDirectoryLinks(previous = []) {
+  const links = [...document.querySelectorAll("a[href]")]
+    .filter(a => /\d{2}\s+[A-Z][a-z]{2}\s+20\d{2}/.test(a.textContent?.replace(/\s+/g, " ") || "")
+      && typeof a.href === "string" && a.href.startsWith("https://www.cupertino.gov/"))
+    .map(a => ({ href: a.href.split("#")[0] }));
+  return links.some(link => !previous.includes(link.href)) ? links : null;
+}
+
 export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
   const directoryUrl = "https://www.cupertino.gov/Events-directory";
   await page.goto(directoryUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
@@ -1878,28 +1869,30 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
 
   const links = [];
   const seenLinks = new Set();
-  const collectLinks = async () => {
-    const pageLinks = await page.evaluate(() => {
-      return [...document.querySelectorAll("a[href]")]
-        .map((a) => ({
-          text: a.textContent?.replace(/\s+/g, " ").trim() || "",
-          href: a.href?.split("#")[0],
-        }))
-        .filter((a) => /\d{2}\s+[A-Z][a-z]{2}\s+20\d{2}/.test(a.text) && a.href?.includes("cupertino.gov"));
-    });
-    for (const link of pageLinks) {
-      if (!link.href || seenLinks.has(link.href)) continue;
-      seenLinks.add(link.href);
-      links.push(link);
+  const waitForLinks = async (previous) => {
+    const listing = await page.waitForFunction(cupertinoDirectoryLinks, previous, { timeout: 10_000 });
+    try {
+      return await listing.jsonValue();
+    } finally {
+      await listing.dispose();
     }
   };
 
+  let pageLinks = await page.evaluate(cupertinoDirectoryLinks) || await waitForLinks([]);
   for (let pageNo = 1; pageNo <= 4; pageNo++) {
-    await collectLinks();
+    for (const link of pageLinks) {
+      if (seenLinks.has(link.href)) continue;
+      seenLinks.add(link.href);
+      links.push(link);
+    }
+    if (pageNo === 4) break;
     const next = page.locator(`a[href$="#page-${pageNo + 1}"]`).first();
     if ((await next.count()) === 0) break;
-    await next.click();
-    await page.waitForTimeout(900);
+    await next.click({ timeout: 10_000 });
+    // OpenCities keeps the previous results mounted while paging. A timeout
+    // here lets the caller retain older verified rows instead of marking a
+    // truncated collection healthy.
+    pageLinks = await waitForLinks(pageLinks.map(link => link.href));
   }
 
   const raw = [];
