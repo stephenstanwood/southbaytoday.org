@@ -3,6 +3,23 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
+  ...["2026-12-04", "2026-12-09"].map(date => Object.freeze({
+    title: /^Coherence Open Call Auditions$/i,
+    venue: /.*/,
+    date,
+    matches: event => /^https:\/\/events\.scu\.edu\/(?:(?:arts-and-sciences\/)?event|live\/events)\/534030(?:-[^/?#]+)?(?:[/?#]|$)/.test(event.url || ""),
+    reason: "SCU's full calendar description invites its students, alumni, faculty and staff to audition. The shortened listing omitted that eligibility.",
+    source: "https://events.scu.edu/live/rss/events",
+  })),
+  Object.freeze({
+    title: /^OneInMath: Math Program for K[ -]?3(?:rd)?\b/i,
+    venue: /^Village Square Library$/i,
+    date: "2026-11-21",
+    matches: event => event.time === "3:00 PM"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6af61c5c9bd80b00451901ab(?:[/?#]|$)/.test(event.url || ""),
+    reason: "Two library series list the same 3 PM class at Village Square on November 21. The organizer's fall schedule and the original library series agree on one class.",
+    source: "https://oneinmath.com/classes/",
+  }),
   Object.freeze({
     ids: Object.freeze(["midpen-ab148fc7be0d9c6e"]),
     title: /^Sierra Azul Preserve - Trail Maintenance: Mt\. Umunhum Trail \(Pt\. 6\)$/i,

@@ -1339,6 +1339,34 @@ for (const occurrence of [
   });
 }
 
+test("dated concert details survive the sparse newsletter listings", () => {
+  const stanford = {
+    id: "inbound-46189d1f46f2ac9d", date: "2027-04-03", title: "Jack West: Guitars on Life",
+    venue: "The Studio", time: "7:00 PM", url: "https://stanfordlive.stanford.edu",
+    description: "Jack West performs Guitars On Life.",
+  };
+  const stanfordResult = applyVerifiedEventFacts(stanford);
+  assert.equal(stanfordResult.time, "7:00 PM");
+  assert.match(stanfordResult.description, /James Nash.*7 PM and 9 PM/);
+  assert.equal(applyVerifiedEventFacts({ ...stanford, date: "2027-04-04" }).description, stanford.description);
+
+  const montalvo = {
+    date: "2027-04-18", title: "Saint Michael Trio: Saint Mike Has a Problem",
+    url: "https://my.montalvoarts.org/3291/3293?promo=", time: null,
+    description: "The newsletter gives no start time.",
+  };
+  const montalvoResult = applyVerifiedEventFacts(montalvo);
+  assert.equal(montalvoResult.time, "3:00 PM");
+  assert.equal(montalvoResult.cost, "paid");
+  assert.equal(montalvoResult.category, "music");
+  assert.equal(montalvoResult.venue, "Historic Villa at Montalvo Arts Center");
+  assert.equal(montalvoResult.url, "https://my.montalvoarts.org/3291/3293");
+  assert.doesNotMatch(montalvoResult.description, /newsletter|no start time/);
+  assert.deepEqual(applyVerifiedEventFacts(montalvoResult), montalvoResult);
+  const nextDay = { ...montalvo, date: "2027-04-19" };
+  assert.deepEqual(applyVerifiedEventFacts(nextDay), nextDay);
+});
+
 test("Witchy Walk-A-Bout keeps the chamber's dated source and explicit free admission", () => {
   const raw = {
     id: "inbound-7183ea81af4fa0f4", date: "2026-10-31", title: "Witchy Walk-A-Bout",

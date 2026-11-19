@@ -47,6 +47,12 @@ export function polishCivicCopy(text, { cityId } = {}) {
 
 export function polishCivicTopic(text, options) {
   let copy = polishCivicCopy(text, options);
+  // The April 21 staff report names the curb, gutter and sidewalk project
+  // whose abbreviated title came through the November 17 agenda extract.
+  // https://meetings.municode.com/adaHtmlDocument/index?cc=LOSGATOS&ip=True&me=3423e578564544c4b346a056e5fd6d16
+  if (options?.cityId === "los-gatos" && typeof copy === "string") {
+    copy = copy.replace(/\b2026 Annual Curb project\b/i, "2026 Annual Curb, Gutter, and Sidewalk Maintenance Project");
+  }
   // San José agenda item ROGC 26-404 names District 1 and Councilmember Kamei.
   // https://sanjose.legistar.com/LegislationDetail.aspx?GUID=944C7922-21AF-4970-8270-CDE7733FDE83&ID=8321451
   if (options?.cityId === "san-jose" && typeof copy === "string" && /\bHoliday Children Book Drive\b/i.test(copy)) {

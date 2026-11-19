@@ -4677,9 +4677,30 @@ const CORRECTIONS = [
     id: "inbound-46189d1f46f2ac9d",
     title: /^Jack West: Guitars on Life$/i,
     venue: /^The Studio$/i,
-    // Stanford Live confirms a guitar concert. Keep sparse newsletter rows
-    // out of the community catch-all. Evidence: 2026-10-24-1007-fact-check.md.
-    facts: { category: "music", url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/" },
+    // Stanford Live lists both performances. Retain the booked 7 PM listing
+    // and include the later option in its details.
+    facts: event => ({
+      category: "music",
+      url: "https://live.stanford.edu/events/26-27season/studio/jack-west-guitars-on-life/",
+      ...(!event.description?.trim() || /^Jack West performs Guitars on Life\.?$/i.test(event.description.trim())
+        ? { description: "Guitarists Jack West and James Nash perform at The Studio. Stanford Live lists ticketed shows at 7 PM and 9 PM." }
+        : {}),
+    }),
+  },
+  {
+    date: "2027-04-18",
+    url: "https://my.montalvoarts.org/3291/3293",
+    aliasUrls: ["https://my.montalvoarts.org/3291/3293?promo="],
+    // The dated ticket page confirms a paid 3 PM chamber concert in the Villa.
+    facts: {
+      url: "https://my.montalvoarts.org/3291/3293",
+      time: "3:00 PM",
+      cost: "paid",
+      category: "music",
+      venue: "Historic Villa at Montalvo Arts Center",
+      description: "The Saint Michael Trio performs a comic chamber music program that ranges from Beethoven to the blues. The concert takes place in the main hall of Montalvo's historic Villa.",
+      blurb: "Hear the Saint Michael Trio go from Beethoven to the blues in Montalvo's historic Villa.",
+    },
   },
   // The library's title spells saranggola correctly; its body misspells it.
   // Keep the carried attendance note and cached blurb consistent too.

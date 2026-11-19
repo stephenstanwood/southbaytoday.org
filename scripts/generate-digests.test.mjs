@@ -220,6 +220,14 @@ test("civic modifiers keep numbers, identifiers, headline dates, and standalone 
   }
 });
 
+test("Los Gatos digest restores the official name of the 2026 curb maintenance project", () => {
+  const topic = "The agenda listed a request to authorize a Certificate of Acceptance and Notice of Completion for the 2026 Annual Curb project.";
+  const corrected = polishCivicTopic(topic, { cityId: "los-gatos" });
+  assert.match(corrected, /the 2026 Annual Curb, Gutter, and Sidewalk Maintenance Project\.$/);
+  assert.equal(polishCivicTopic(corrected, { cityId: "los-gatos" }), corrected);
+  assert.equal(polishCivicTopic(topic, { cityId: "campbell" }), topic);
+});
+
 test("San José's holiday book drive keeps the district in the published agenda", () => {
   const topic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
   const corrected = polishCivicTopic(topic, { cityId: "san-jose" });

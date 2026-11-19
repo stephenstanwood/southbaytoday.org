@@ -26,6 +26,27 @@ test("withholds campus listings when the full organizer page corrects a sparse p
   assert.equal(isEventPublishable({ ...webinar, date: "2026-12-02" }), true);
 });
 
+test("withholds the exact SCU campus auditions and the duplicate Village Square class", () => {
+  const audition = {
+    title: "Coherence Open Call Auditions", date: "2026-12-04", venue: "Benson Parlor A",
+    url: "https://events.scu.edu/arts-and-sciences/event/534030-coherence-open-call-auditions",
+  };
+  assert.equal(isEventPublishable(audition), false);
+  assert.equal(isEventPublishable({ ...audition, date: "2026-12-09", url: "https://events.scu.edu/live/events/534030" }), false);
+  assert.equal(isEventPublishable({ ...audition, url: "https://example.com/public-auditions" }), true);
+
+  const classListing = {
+    title: "OneInMath: Math Program for K-3rd at Village Square Branch",
+    date: "2026-11-21", time: "3:00 PM", venue: "Village Square Library",
+    url: "https://sjpl.bibliocommons.com/v2/events/6af61c5c9bd80b00451901ab",
+  };
+  assert.equal(isEventPublishable(classListing), false);
+  assert.equal(isEventPublishable({ ...classListing, url: "https://sjpl.bibliocommons.com/events/6a7e0ffdd4b10d00300647e4" }), true);
+  assert.equal(isEventPublishable({ ...classListing, date: "2026-11-28" }), true);
+  assert.equal(isEventPublishable({ ...classListing, time: "4:00 PM" }), true);
+  assert.equal(isEventPublishable({ ...classListing, venue: "Alum Rock Library" }), true);
+});
+
 test("withholds the December 15 HSAS listing until the performer and venue are confirmed", () => {
   const event = {
     title: "Spirit of the Row: HSAS Full Ensemble & Vocal Ensemble",
