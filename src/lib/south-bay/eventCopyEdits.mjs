@@ -1316,6 +1316,9 @@ const EDITS = {
       ["Mlis Open House", "MLIS Open House"],
       [/\bUnlv\b/g, "UNLV"],
     ],
+    venue: [
+      ["560/Reading Room, 5th Floor, SJSU Special Collections & Archives", "SJSU Special Collections & Archives, Reading Room 560 (5th Floor)"],
+    ],
     description: [
       ["will present highlights from their their new book,", "will present highlights from their new book,"],
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
@@ -1496,9 +1499,14 @@ const EDITS = {
       ["NorCal Academy of Performing Arts Presents Disney's Frozen:", "NorCal Academy of Performing Arts presents Disney's Frozen:"],
       ["The Broadway Musical Don't let winter freeze", "The Broadway Musical. Don't let winter freeze"],
       ["Internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, Luka Sulic announces", "Luka Sulic, an internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, announces"],
+      [
+        /\bWay ?V is a Chinese boy band, debuting in China in January 2019 with their impressive single "Regular\." Way ?V has gained acclaim both in Asia and internationally\./g,
+        'WayV is a Chinese boy band that debuted in China in January 2019 with the single "Regular." The group has gained acclaim in Asia and beyond.',
+      ],
     ],
     blurb: [
       [/See Panchiko perform at San Jose Civic as part of their USA Spring Tour, with doors for the (\d{1,2}:\d{2} [AP]M) show\./g, "See Panchiko's $1 show at San Jose Civic on their USA Spring Tour."],
+      ["perform on their Born This Way tour stop.", "perform on their Born This Way tour."],
     ],
   },
   "Santa Clara University": {
@@ -1563,6 +1571,7 @@ const EDITS = {
         "Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity.",
         "Tradition meets revolution in Opera San José's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye the dairyman struggles to reconcile his daughters' hopes for love with the customs that hold his world together.",
       ],
+      ["Opera San Jose's new production of Fiddler on the Roof", "Opera San José's new production of Fiddler on the Roof"],
       // The imported preview is clipped after "destructive […]". Sentence
       // cleanup strands its preceding initial; remove only that unfinished
       // suffix, leaving complete or newly expanded source wording intact.

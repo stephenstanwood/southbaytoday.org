@@ -1288,8 +1288,8 @@ const CORRECTIONS = [
     facts: {
       url: "https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/",
       time: "10:00 AM", endTime: "3:30 PM", kidFriendly: true,
-      description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet and Rosca de Reyes tasting.",
-      blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art and Rosca de Reyes.",
+      description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet, and a Rosca de Reyes tasting.",
+      blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art, and a Rosca de Reyes tasting.",
     },
   },
   // The campus calendar supplies the free admission and exact occurrence.
