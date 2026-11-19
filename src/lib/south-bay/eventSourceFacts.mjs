@@ -84,6 +84,24 @@ const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SJPL lists the Joyce Ellington board-game session as Games & Family
+  // Entertainment.
+  {
+    date: "2026-11-22",
+    matches: event => event.source === "San Jose Public Library"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6aa4453c65abe8002a78720c\/?$/.test(event.url || "")
+      && /\bboard games?\b/i.test(event.description || ""),
+    facts: { category: "family" },
+  },
+  // The Cupertino storytime is for children ages 0–5. The district's
+  // "Kids: Family Events" tag refers to children and their caregivers.
+  {
+    date: "2026-12-09",
+    matches: event => event.source === "Santa Clara County Library"
+      && /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/6afe848404009d003389998f\/?$/.test(event.url || "")
+      && /\bfor children ages 0\s*[-–]\s*5\b/i.test(event.description || ""),
+    facts: { audienceAge: "kids" },
+  },
   // Stanford's dated event pages confirm free admission and distinct signup terms.
   {
     date: "2026-11-19",

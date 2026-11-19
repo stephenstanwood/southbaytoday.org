@@ -13,6 +13,30 @@ import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("dated library events follow the organizer's program type and audience", () => {
+  const game = {
+    date: "2026-11-22",
+    url: "https://sjpl.bibliocommons.com/events/6aa4453c65abe8002a78720c",
+    source: "San Jose Public Library",
+    category: "education",
+    description: "Play board games at the Joyce Ellington Branch every Sunday at 1:00 p.m.",
+  };
+  const storytime = {
+    date: "2026-12-09",
+    url: "https://sccl.bibliocommons.com/v2/events/6afe848404009d003389998f",
+    source: "Santa Clara County Library",
+    audienceAge: "all",
+    sourceAudiences: ["Kids: Family Events", "Kids: Preschoolers"],
+    description: "For children ages 0-5. Seating is limited.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(game), { ...game, category: "family" });
+  assert.deepEqual(applyVerifiedEventFacts(storytime), { ...storytime, audienceAge: "kids" });
+  const newProgram = { ...game, description: "Learn to design your own video game." };
+  assert.deepEqual(applyVerifiedEventFacts(newProgram), newProgram);
+  const newAudience = { ...storytime, description: "Open to all ages." };
+  assert.deepEqual(applyVerifiedEventFacts(newAudience), newAudience);
+});
+
 test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => {
   const event = {
     date: "2027-03-06",

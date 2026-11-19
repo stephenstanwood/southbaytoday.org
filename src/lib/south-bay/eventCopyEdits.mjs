@@ -1136,7 +1136,10 @@ const EDITS = {
         "Listen as a Santa Clara County Sheriff's Deputy reads books and shares safety tips with children ages 0-5, with limited seating.",
         "A Santa Clara County sheriff's deputy reads books and shares safety tips with children ages 0-5. Seating is limited.",
       ],
-      ["from library tech staff on a first-come basis.", "from library tech staff on a first-come, first-served basis."],
+      // Saratoga's dated listings confirm one-on-one help and walk-in order,
+      // without identifying the instructors as library staff.
+      [/^Get one-on-one help with your laptop, tablet, or phone from library tech staff on a first-come(?:, first-served)? basis\.$/g,
+        "Get one-on-one help with your laptop, tablet, or phone on a first-come, first-served basis."],
       ["with a friend or new ones.", "with a friend or make new ones."],
       ["in the Children's Room, with a friend or make new ones.", "in the Children's Room with a friend, or make new friends."],
       [/Get homework help from tutors in grades ((?:K|\d+)-\d+), with/g, "Students in grades $1 can get homework help from tutors, with"],
