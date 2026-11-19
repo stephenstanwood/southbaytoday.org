@@ -1507,6 +1507,7 @@ const EDITS = {
     venue: [
       [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
       [/^St\.(?=Clare Room\b)/g, "St. "],
+      [/^Lucas Hall Santa Clara University$/g, "Lucas Hall, Santa Clara University"],
     ],
     description: [
       ["Benson Parlor A Wed, Dec.", "Benson Parlor A. Wed, Dec."],
@@ -1514,6 +1515,8 @@ const EDITS = {
       ["Director: Pauline Locsin Faculty Advisor: David Popalisky December", "Pauline Locsin directs, with David Popalisky as faculty advisor. Performances run December"],
       [/(Performances run December \d{1,2}) - (\d{1,2}, \d{4}) \(Thu ([\d:]+ [AP]M), Fri ([\d:]+ [AP]M) & ([\d:]+ [AP]M)\)$/g, "$1–$2 (Thursday at $3 and Friday at $4 and $5)."],
       ["Open to the Silicon Valley, hosted by SCU.", "Open to the Silicon Valley community and hosted by SCU."],
+      ["Open to the Silicon Valley community and hosted by SCU. Come and find your next connection or opportunity.", "Santa Clara University hosts this networking meetup, which is open to the Silicon Valley community."],
+      ["Join Christopher Tirres for a workshop on what Catholic social teaching says about poverty and why those teachings matter today.", "Join Christopher Tirres for a workshop on how Catholic social teaching addresses poverty and why those ideas matter today."],
       ["Cantabile Youth Singer's", "Cantabile Youth Singers'"],
       // The English department's faculty profile uses KB Brookins.
       // https://www.scu.edu/cas/english/faculty--staff/kb-brookins/
@@ -1537,6 +1540,7 @@ const EDITS = {
     blurb: [
       ["Kb Brookins", "KB Brookins"],
       ["Meet Executive MBA programs and alumni", "Meet Executive MBA program representatives and alumni"],
+      ["Meet other Silicon Valley professionals at this Thursday evening networking session hosted by Santa Clara University, and look for your next connection or opportunity.", "Meet other Silicon Valley professionals at Santa Clara University's Thursday evening networking session."],
     ],
   },
   "Computer History Museum": {
