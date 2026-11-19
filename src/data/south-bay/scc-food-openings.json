@@ -1,18 +1,42 @@
 {
-  "generatedAt": "2026-11-18T04:37:05.142Z",
+  "generatedAt": "2026-11-19T04:37:26.835Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-18T04:37:05.142Z",
-    "updatedAt": "2026-11-17T14:31:21.000Z",
+    "checkedAt": "2026-11-19T04:37:26.834Z",
+    "updatedAt": "2026-11-18T14:42:42.000Z",
     "ageDays": 0,
-    "newestRawInspection": "2026-11-13",
-    "newestEligibleInspection": "2026-11-13",
+    "newestRawInspection": "2026-11-16",
+    "newestEligibleInspection": "2026-11-16",
     "eligibleStatus": "recent"
   },
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0883912",
+      "name": "Okayama Sushi",
+      "address": "565 N. 6th St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-16",
+      "sourceId": "SR0883912",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJSVYqKYXMj4ARhf3ZLKB5bPo/photos/AV-0GLfHyrg-9QvRF23ss9u1Trh0kQuKL2UKtA3FDqp0L6opgnJDqFv-OHL0dzBHpfnpXPc7rfK62kreSx01XmJwsHoP6qrRmPjTzxH8Jl-PLSWabxCi1AmBDlY_ttBmq0d1NoZ5gqECffADNqf3WWelB3hwLLBnzjJm21RdL5V0KCi8XrcQnTuXtFkz7TGOi8nhW2O2p6yk6wQFhwr58Q0R73SlW0D4yZK3pHgqLH4nP1_7OuBv-la459at-dSP7F0lET50I-suWllQ2EpH3tYxyc3g90q_IUZNc01P1cvfKqRNwa57oIWbaOeBTJT9SPqyM-pUSkQoOtdhqp0mTPSH6FJzWeOeG1tLPPSFKM4j_bzpI6hh5hAsdqy9FsFAjxdeoIl42edtHW_XKnrtbDXvtV9DgpNOAMidcCS8TRpcNtO-"
+    },
+    {
+      "id": "inspection-SR0886537",
+      "name": "Shawarmaji",
+      "address": "82-96 E Santa Clara St. K111",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-16",
+      "sourceId": "SR0886537",
+      "status": "inspection-complete",
+      "blurb": "Food business on E Santa Clara St in San Jose.",
+      "photoRef": "places/ChIJ78QiHrnLj4ARyUIdxeGWKiE/photos/AV-0GLdLAv_1ntslKhvORGrGkpAH0eSD9hPXIgHxq2aumSDXLi6vQOetVpMrkjJFDZosKgg_wrnSexPP7UGUP1oQQd07ni6EicmPgnKXMIVhpOjYtnIizsBQuL-ZmHyYwjcZGJi8XX_lABmSIeEkEMFjGIVmEbeSvEf39_gJjqp1Y9hK9w9mbPLsDqOAyQ1NsQcB4xX-z6_xxugb1GuwuhoCKICxAohxx4_eNRYH_8_OvOh91HQ5_eoWlci2-f37TCfi01xciYWIXpqCAPFkO_f8GlMzWKoJOXaXOgwnZNLcU12uA6Q5HbArXRApXbLAyTDr3J3DNTjn2-GUdL20qD-QSrO1P3jrmJBAI3G5zR97zLXIWvlMxq8gq28K173Su3d53nz8sXIrr7XN8YtX7pD-rqR8D5SNAkA"
+    },
     {
       "id": "inspection-SR0880584",
       "name": "Little Caesars Pizza",
@@ -22,7 +46,7 @@
       "inspectionDate": "2026-11-13",
       "sourceId": "SR0880584",
       "status": "inspection-complete",
-      "blurb": "Pizza shop on West Campbell Avenue in Campbell.",
+      "blurb": "Pizza business on W Campbell Ave in Campbell.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0880584-450.webp"
     },
     {
@@ -34,20 +58,8 @@
       "inspectionDate": "2026-11-13",
       "sourceId": "SR0885777",
       "status": "inspection-complete",
-      "blurb": "Food business on South De Anza Boulevard in San Jose.",
+      "blurb": "Food business on S De Anza Blvd in San Jose.",
       "photoRef": "places/ChIJT9CM_qTNj4ARxSSblTQ4dG4/photos/AVoNoXRepKxyBvZsFDgCrpgTgiexSjn6DJh6AFYZByvhAANCutsm0QR3qx9dQ4J2rERkT9d0m2RxDJLonbQMXhDVKa0hWsUfYjqtqGPiagK9F8PZY9f39X2ybgRds5wZDamsdkqAiQ0Bx5ukknkSezyyXft_rf9oT7SR_ZAliLuo8J3Z441pPsfUbf2sP71Ve5ml13iMV6pjtyamEZKmD-3jvdfR8fw-Q-FNE72AGidfcPEecV9Wn6BhZ3iumkPcQ_C87sDn5daiPV2qSeeYJ1JrHis7jLQPpJfzuGQQNjhuMVCMwz6tSx2WRJk7Zd8BDJY8lEzRZXHWWWDQk_04QOZGzXQ4_WbdB1GYQV4zMmMCSWKRC9IPnkFb_R34uEGAuwbJwQp1wtr2gM7VKzYqyOH0DYgsuwno_73jC4Qx9CXIX4cViEds7HgQ-65bdTEpbELk"
-    },
-    {
-      "id": "inspection-SR0882829",
-      "name": "Milk Tea Shop",
-      "address": "747 W Dana St",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "inspectionDate": "2026-11-12",
-      "sourceId": "SR0882829",
-      "status": "inspection-complete",
-      "blurb": "Milk tea shop on West Dana Street in Mountain View.",
-      "photoRef": "places/ChIJGwxVRwC3j4ARjVKaVwcgM8w/photos/AWCwydh_kDVPx4bInDgrjLds2nvZdhYj0F1HTD6iS7d-G3-W6vSjCGPrJmF1S0-OUm821MaY0pzkJ-VQQhnBLW3pK0uU6BUsWgNhxPJBiIzcBwPt8mhbxc2gfa8racW-6sagjuVk0wf4EATtLYkaG-O9ORl7CLNLdFBeijyhAZhTj97BAHyKhMt0_7cvolmuvY-9iJNvNK_EB58Os7T636FM7IdNlM_wId_RtoKk6voZ50kCnthv4ViPXkIPV4OTJln2EZq6jm5Z8aO7PXYM7ZaQ18L8ot4zU2vRDQAmPLeCFMSvkvY4GHmziRFd1oPncbLL66wCfU5BeepeMNre-PQyVgXvktcDAgVOs9koSOukounbXiaSvnrjCkrE1M7IlxVsWk61C1GoHF6KQSJRxJ19woiea9y_XA8Hxntz_6jTxyyQZErOYu8H7jIQ9NrZfg"
     },
     {
       "id": "inspection-SR0882351",
@@ -62,6 +74,18 @@
       "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
+      "id": "inspection-SR0882829",
+      "name": "Milk Tea Shop",
+      "address": "747 W Dana St",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "inspectionDate": "2026-11-12",
+      "sourceId": "SR0882829",
+      "status": "inspection-complete",
+      "blurb": "Milk tea shop on W Dana St in Mountain View.",
+      "photoRef": "places/ChIJGwxVRwC3j4ARjVKaVwcgM8w/photos/AWCwydh_kDVPx4bInDgrjLds2nvZdhYj0F1HTD6iS7d-G3-W6vSjCGPrJmF1S0-OUm821MaY0pzkJ-VQQhnBLW3pK0uU6BUsWgNhxPJBiIzcBwPt8mhbxc2gfa8racW-6sagjuVk0wf4EATtLYkaG-O9ORl7CLNLdFBeijyhAZhTj97BAHyKhMt0_7cvolmuvY-9iJNvNK_EB58Os7T636FM7IdNlM_wId_RtoKk6voZ50kCnthv4ViPXkIPV4OTJln2EZq6jm5Z8aO7PXYM7ZaQ18L8ot4zU2vRDQAmPLeCFMSvkvY4GHmziRFd1oPncbLL66wCfU5BeepeMNre-PQyVgXvktcDAgVOs9koSOukounbXiaSvnrjCkrE1M7IlxVsWk61C1GoHF6KQSJRxJ19woiea9y_XA8Hxntz_6jTxyyQZErOYu8H7jIQ9NrZfg"
+    },
+    {
       "id": "inspection-SR0884058",
       "name": "Hikalogy Cake And Desserts",
       "address": "1171 Homestead Rd. #120",
@@ -70,7 +94,7 @@
       "inspectionDate": "2026-11-12",
       "sourceId": "SR0884058",
       "status": "inspection-complete",
-      "blurb": "Cake and dessert business on Homestead Road in Santa Clara.",
+      "blurb": "Cake and dessert business on Homestead Rd in Santa Clara.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884058-450.webp"
     },
     {
@@ -82,7 +106,7 @@
       "inspectionDate": "2026-11-10",
       "sourceId": "SR0885856",
       "status": "inspection-complete",
-      "blurb": "Cafe on Blossom Hill Road in San Jose.",
+      "blurb": "Cafe on Blossom Hill Rd in San Jose.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0885856-450.webp"
     },
     {
@@ -94,7 +118,7 @@
       "inspectionDate": "2026-11-06",
       "sourceId": "SR0878199",
       "status": "inspection-complete",
-      "blurb": "Food business on East Arques Avenue in Sunnyvale.",
+      "blurb": "Food business on E Arques Ave in Sunnyvale.",
       "photoRef": "places/ChIJeWd8gD22j4ARAhzHtIe-rKY/photos/AVoNoXSia--f7CwEIYU1f_I-MpAK_z45FS4VLuUIrTdCjdf-YgWmfHX8hxVJus8A8XfXIsZAXl38qg0Zjbppty7PQBoQTsCGdZmTbFBeC93e2N7t9Ky9wwcU5eNyOzOpDSmajaywGerouKpmMZWkQXjwtUMcs6k6VKpJqe8ncuSIwh0VVgKZ2qNxvRy8kbdrOI3PZsNrUnYsFwgC_c6DgPEtDxVauvyKYndhsNX327znhERgakWCErU9aSIeQpcpCkOO_otZvMrJr8hlYVKzpPGt1rXg155zcTG07XR4COZuIfIaafVJ42bwjIz5oWa1y9izQyiRPxa3PmRUtRcdHre9tFitIISXa6XAtqid3fGut7t8kOA4MQZkzD1SYw_d69i_PSlP1z0IXRPjJZ1kEnd5KQer70ziTDAYqDuTyyzTBsxWsho"
     },
     {
@@ -106,20 +130,8 @@
       "inspectionDate": "2026-11-06",
       "sourceId": "SR0881373",
       "status": "inspection-complete",
-      "blurb": "Coffee business on Camden Avenue in San Jose.",
+      "blurb": "Coffee business on Camden Ave in San Jose.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
-    },
-    {
-      "id": "inspection-SR0886293",
-      "name": "Casa De Theo",
-      "address": "765 Lotus St",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0886293",
-      "status": "inspection-complete",
-      "blurb": "Food business on Lotus Street in San Jose.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886293-450.webp"
     },
     {
       "id": "inspection-SR0886483",
@@ -142,20 +154,8 @@
       "inspectionDate": "2026-11-04",
       "sourceId": "SR0881394",
       "status": "inspection-complete",
-      "blurb": "Coffee business on Middlefield Road in Palo Alto.",
+      "blurb": "Coffee business on Middlefield Rd in Palo Alto.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
-    },
-    {
-      "id": "inspection-SR0884461",
-      "name": "Ug Tea",
-      "address": "1040 Grant Rd. #350",
-      "cityId": "mountain-view",
-      "cityName": "MOUNTAIN VIEW",
-      "inspectionDate": "2026-10-30",
-      "sourceId": "SR0884461",
-      "status": "inspection-complete",
-      "blurb": "Tea business on Grant Road in Mountain View.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0884461-450.webp"
     }
   ],
   "comingSoon": [
@@ -256,6 +256,18 @@
       "photoRef": "places/ChIJE46t_57Lj4ARq6YTDs6y0_0/photos/AV-0GLdTPkbTzr5ZK2mbHKMpHIGvIWh63gQh4C135Qonhs5WOZ7h7k3bCLGyPtVNgwh8TAiblcmTb9gJD6iWUB0h_9PbZCT8JnP_4UTOWkK5zD-XeZ0nqeiFVebvx0dyTcU7cV2scHveIWZP_W4JmlmTwkqAaue-nKQMeMbOaa_Dmf1EAmU_kjWZV36bDlKh7cI8IDYWw8GEkquQfgD5Q4cfdWzMjN9-n3hKtOKIDQnu-TAQIKXq2QNPFX8kEQT-oYtmamogeD-poywA1ZIRBpTXzz_CyUwk8bgtGrICipx8kMPVXiM6MlNH8hANPpA2LZeLAU1YaP3Y4QdJDlQ4b7t580s58uX_msfLe7-BuPGNSaYxob6JpAiSJnCAj6uizw0tXPxbZNqVMMBp9YMqdTsJW1uPFt0"
     },
     {
+      "id": "soon-SR0885275",
+      "name": "Japacurry",
+      "address": "284 S 11th St",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-30",
+      "status": "coming-soon",
+      "sourceId": "SR0885275",
+      "blurb": "Food business planned on South 11th Street in San Jose.",
+      "photoRef": "places/ChIJ809xRgDNj4ARvYa8u-Lvv50/photos/AV-0GLdP2iwZHDR4CBABSsnPs04Ck6xlNnQImb7zpPpZQKTRUtWfcs4ukWjPHJloWwokAuuN-Y8ghy9p-x_0G_ozeGfDsp2q-Cn7h1aLwzVy4RV-lKS7vCLDsJGLsy8DrCvIoi1X_8kON-fPeXFh_Bae63jCFjmdbqzrF9U5D7puK60zf8MVeaJVHrKG1dnDPrX5Qy5oIeJHCGmoUjaZIKCLFYe0c-UONbIrgqz6YPVt-WdEwL7mSKenGqt5OcC76LeiyNgbxVQ0VQ6XCrKpvFKqK7dWTwQeQq6LyKDvgOHrAFxYaZ_vRv5KGa6lD4vuJeUWhPdUJkGPStyXOnTm7uK_ZA3dBBx_LpEKNWBH-hVMqnt9yaMGuCuSFtXjEtbffSxbMo1EwEFr7PVhV786OhIBFxt-C1vqAxdy_bB20bDiDaHbbg"
+    },
+    {
       "id": "soon-SR0886411",
       "name": "King Kong Japan",
       "address": "1430 Monterey Rd., Unit 10",
@@ -268,16 +280,28 @@
       "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
     },
     {
-      "id": "soon-SR0885275",
-      "name": "Japacurry",
-      "address": "284 S 11th St",
+      "id": "soon-SR0886514",
+      "name": "Habibiz Chinese",
+      "address": "262 E Santa Clara St",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
       "date": "2026-10-30",
       "status": "coming-soon",
-      "sourceId": "SR0885275",
-      "blurb": "Food business planned on South 11th Street in San Jose.",
-      "photoRef": "places/ChIJ809xRgDNj4ARvYa8u-Lvv50/photos/AV-0GLdP2iwZHDR4CBABSsnPs04Ck6xlNnQImb7zpPpZQKTRUtWfcs4ukWjPHJloWwokAuuN-Y8ghy9p-x_0G_ozeGfDsp2q-Cn7h1aLwzVy4RV-lKS7vCLDsJGLsy8DrCvIoi1X_8kON-fPeXFh_Bae63jCFjmdbqzrF9U5D7puK60zf8MVeaJVHrKG1dnDPrX5Qy5oIeJHCGmoUjaZIKCLFYe0c-UONbIrgqz6YPVt-WdEwL7mSKenGqt5OcC76LeiyNgbxVQ0VQ6XCrKpvFKqK7dWTwQeQq6LyKDvgOHrAFxYaZ_vRv5KGa6lD4vuJeUWhPdUJkGPStyXOnTm7uK_ZA3dBBx_LpEKNWBH-hVMqnt9yaMGuCuSFtXjEtbffSxbMo1EwEFr7PVhV786OhIBFxt-C1vqAxdy_bB20bDiDaHbbg"
+      "sourceId": "SR0886514",
+      "blurb": null,
+      "photoRef": "places/ChIJwz19egDNj4ARrLccQACXG8w/photos/AV-0GLfCfAUSKtOA_W0XRUSTkhFxM0eXUnpCadddui7eJOLDoMCog94GspzcUyR8BL5YhAWl3PGIs_Fi-9dzNsqwznhLO4_QFjZodUhmmZOgpUbxk6DVD38Kgo6omdYGaCpqni_-jWRkoBk6SOudjePuHsXxuh3hFzIsU5XpnX7VzrsconDdTzSUAb-XaVjTCu8Dchq6TEvOB1iYnK4a7O9Zzz9WxH136a6tBB6IqZk6hlmZTVTXiRDcV8634AQc3knXJa6CuKYDjAD1CNtbCzrD8SvHzn6pVCzh9BWdO7u8Q2iP26mFLXd6ZjJ6M2s4FurqgdNaoHTWo5SKFMii2W9sRh1SSyeRKeIuitGUio_LBu_txciVPhbJ4j02HKjWRTUR45t69Hdj1N5tg8QXr-WisN9QcvpZixEnzHVe2hmT5FxlqQ"
+    },
+    {
+      "id": "soon-SR0885628",
+      "name": "Voyager Cafe At Mershops",
+      "address": "303 Almaden Blvd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "date": "2026-10-28",
+      "status": "coming-soon",
+      "sourceId": "SR0885628",
+      "blurb": "Cafe planned at Mershops on Almaden Boulevard in San Jose.",
+      "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
     }
   ]
 }

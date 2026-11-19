@@ -1,19 +1,91 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-18T04:25:44.592Z",
+      "generatedAt": "2026-11-19T04:28:41.563Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 10 – Nov 17",
+      "dateRange": "Nov 11 – Nov 18",
       "stats": {
-        "total": 383,
-        "notable": 24,
-        "newUnits": 9,
-        "totalValuation": 8578869
+        "total": 365,
+        "notable": 28,
+        "newUnits": 15,
+        "totalValuation": 10198555
       },
       "permits": [
+        {
+          "id": "2026-138360-RS",
+          "address": "1080 Petroni Wy",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Petroni Plan 1c New Signle-Family Residence (Lot 3)",
+          "valuation": 704516,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-138365-RS",
+          "address": "6809 Almaden Rd",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Petroni Plan 1c New Single Family Residence (Lot 5)",
+          "valuation": 704516,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-138379-RS",
+          "address": "1074 Petroni Wy",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Petroni Plan 2b New Single Family Residence (Lot 4)",
+          "valuation": 668881,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-138369-RS",
+          "address": "1092 Petroni Wy",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Petroni Plan 2a Build a New Single Family Residence (Lot 1)",
+          "valuation": 668881,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2026-138381-RS",
+          "address": "6815 Almaden Rd",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Petroni Plan 2a New Single Family Residence (Lot 6)",
+          "valuation": 668881,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
+        {
+          "id": "2025-144991-RS",
+          "address": "847 Foothill Ct",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "New 2-Story SFR On Vacant Lot",
+          "valuation": 429579,
+          "units": 1,
+          "issueDate": "2026-11-16",
+          "subtype": "Single-Family"
+        },
         {
           "id": "2026-117118-RS",
           "address": "2373 Newhall St #2",
@@ -24,18 +96,6 @@
           "valuation": 143023,
           "units": 1,
           "issueDate": "2026-11-12",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-110619-RS",
-          "address": "119 Mosswell Ct #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 3 Detached ADU",
-          "valuation": 130357,
-          "units": 1,
-          "issueDate": "2026-11-10",
           "subtype": "ADU   Accessory Dwelling Unit"
         },
         {
@@ -73,66 +133,6 @@
           "units": 1,
           "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-113831-RS",
-          "address": "385 Via Primavera Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Epr Code Amnesty Legalize Attach Garage Conversion to JADU",
-          "valuation": 70368,
-          "units": 1,
-          "issueDate": "2026-11-13",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-130754-RS",
-          "address": "5168 Persianwood Pl #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to ADU",
-          "valuation": 67377,
-          "units": 1,
-          "issueDate": "2026-11-12",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-120626-RS",
-          "address": "2427 Forest Av #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Garage Conversion to JADU",
-          "valuation": 67026,
-          "units": 1,
-          "issueDate": "2026-11-12",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-122661-RS",
-          "address": "137 Cedar Ln #3",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Unit 3 Garage Conversion to JADU",
-          "valuation": 58757,
-          "units": 1,
-          "issueDate": "2026-11-12",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-144578-CI",
-          "address": "250 Holger Wy",
-          "category": "commercial-large",
-          "categoryLabel": "Commercial Project",
-          "workType": "Tenant Improvement",
-          "description": "(Be 100%) Electrical Service Upgrade",
-          "valuation": 1990033,
-          "units": 0,
-          "issueDate": "2026-11-10",
-          "subtype": "Office"
         }
       ]
     }
