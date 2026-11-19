@@ -62,3 +62,22 @@ test("a malformed Stanford response cannot masquerade as a successful empty cale
   t.mock.method(globalThis, "fetch", async () => Response.json({ message: "Temporarily unavailable" }));
   await assert.rejects(source().fn(), /no events array/);
 });
+
+test("Stanford retains the bike sale through its late walk-in window", async t => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-19T09:00:00-08:00") });
+  const sale = {
+    id: 54499076662112, title: "Stanford Public Safety Bike Sale",
+    localist_url: "https://events.stanford.edu/event/stanford-public-safety-bike-sale",
+    location_name: "Stanford Public Safety bike lot", address: "343 Bonair Siding Rd, Stanford, CA 94305",
+    description_text: "Walk-ins are welcome only during the last 30 minutes of the sale.",
+    event_instances: [{ event_instance: { start: "2026-11-19T08:00:00-08:00", end: "2026-11-19T10:00:00-08:00" } }],
+  };
+  const appointment = { ...sale, id: 54499076662113, title: "Morning studio appointment", description_text: "Arrive at the start of your appointment." };
+  t.mock.method(globalThis, "fetch", async () => Response.json({ events: [{ event: sale }, { event: appointment }] }));
+  const events = await source().fn();
+  assert.deepEqual(events.map(({ id, time, endTime }) => [id, time, endTime]), [
+    ["stanford-54499076662112-2026-11-19", "8:00 AM", "10:00 AM"],
+  ]);
+  t.mock.timers.setTime(Date.parse("2026-11-19T10:00:00-08:00"));
+  assert.deepEqual(await source().fn(), []);
+});

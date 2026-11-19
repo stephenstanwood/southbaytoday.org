@@ -1274,7 +1274,7 @@ const CORRECTIONS = [
     venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
     facts: {
       url: "https://www.cdm.org/event/noon-years-eve/",
-      time: "12:00 PM", endTime: null,
+      time: "12:00 PM", endTime: null, kidFriendly: true,
       description: "The museum opens at 9:30 AM. Ball drops take place at noon, 1 PM and 2 PM.",
       blurb: "Ring in the new year at the Children's Discovery Museum with ball drops at noon, 1 PM and 2 PM.",
     },
@@ -1287,10 +1287,45 @@ const CORRECTIONS = [
     venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
     facts: {
       url: "https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/",
-      time: "10:00 AM", endTime: "3:30 PM",
+      time: "10:00 AM", endTime: "3:30 PM", kidFriendly: true,
       description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet and Rosca de Reyes tasting.",
       blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art and Rosca de Reyes.",
     },
+  },
+  // The campus calendar supplies the free admission and exact occurrence.
+  // Stanford Medicine's own invitation supplies the audience and RSVP details.
+  // https://med.stanford.edu/anatomy/donate/agp-memorial-service.html
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/anatomical-gift-program-donor-memorial-service",
+    facts: {
+      cost: "free",
+      description: "Stanford Medicine holds a memorial service to honor donors to its Anatomical Gift Program.",
+      blurb: "Stanford Medicine invites donor families to a memorial service at Memorial Church.",
+    },
+    appendAttendanceNote: "Stanford Medicine asks donor families to RSVP. Doors open at 5:30 PM.",
+  },
+  // Visit San Jose confirms two shows but leaves its time field blank. Each
+  // official ticket page confirms its own clock. Only annotate live feed rows
+  // that still match; a missing, moved or cancelled show is never added here.
+  // https://www.sanjose.org/theaters/events/mojo-brookzz-outta-pocket-tour
+  ...[["7:00 PM", "1C006553991FB623"], ["9:45 PM", "1C0065677CAD3FF8"]].map(([time, ticketId]) => {
+    const url = `https://www.ticketmaster.com/mojo-brookzz-outta-pocket-tour-san-jose-california-02-05-2027/event/${ticketId}`;
+    const date = "2027-02-05";
+    return {
+      date,
+      matches: event => event.source === "Ticketmaster" && event.venue === "San Jose Civic"
+        && event.url === url && event.time === time,
+      facts: {
+        address: "135 West San Carlos Street, San Jose, CA 95113",
+        occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: url, date, time },
+      },
+    };
+  }),
+  {
+    date: "2027-02-06",
+    url: "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa",
+    copyReplacements: [[/\bWay V\b/g, "WayV"]],
   },
   // The exact November 12 museum email confirms December 13 but no clock.
   // The retained public calendar's 10 AM Quixilver session is November 14,

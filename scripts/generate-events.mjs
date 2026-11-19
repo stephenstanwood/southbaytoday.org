@@ -4549,6 +4549,9 @@ async function fetchStanfordEvents() {
       const seriesEndIso = isoDay(ev.last_date);
       const venue = cleanVenue(ev.location_name || "") || "Stanford University";
       const description = stripHtml(ev.description_text || ev.description || "");
+      // Keep a published late walk-in window active. Stanford's bike sale
+      // opens to walk-ins in its final 30 minutes, after the first appointment.
+      const hasLateWalkInWindow = /\bwalk[- ]ins are welcome (?:only )?during the last \d+ minutes\b/i.test(description);
       // restricted_to describes eligibility, unlike broad audience tags. Only
       // reject an explicit campus-only audience; a separately stated public
       // Zoom option remains attendable online even when experience is hybrid.
@@ -4715,10 +4718,10 @@ async function fetchStanfordEvents() {
       if (isOpenRun) {
         eventDate = now;
         isOngoing = true;
-      } else if (occurrence && occurrence >= now) {
+      } else if (occurrence && (occurrence >= now || (hasLateWalkInWindow && occurrenceEnd && occurrenceEnd > now))) {
         eventDate = occurrence;
       } else {
-        return null; // this occurrence is over and nothing is still running
+        return null; // the start passed and there is no remaining walk-in window
       }
       const inferredCategory = inferUniversityCategory(ev.title, description, "", venue);
       // A declared lecture or seminar is not children's programming or an
@@ -10886,6 +10889,12 @@ function compareSlotCandidates(a, b) {
   return richness(b) - richness(a);
 }
 
+function hasVerifiedTicketShowtime(event) {
+  const evidence = event.occurrenceEvidence;
+  return Boolean(event.time) && evidence?.kind === "first-party-occurrence-page" && evidence.sourceUrl === event.url
+    && evidence.date === event.date && evidence.time === event.time;
+}
+
 export function capUpcomingEventSources(events) {
   // Duplicate newsletter links and duplicate Ticketmaster listings can use the
   // 200 slots before final deduplication. Count each copy once without changing
@@ -10902,6 +10911,9 @@ export function capUpcomingEventSources(events) {
   return events.filter((event) => {
     const source = event.source;
     if ((source === "City Newsletter" || source === "Ticketmaster") && !uniqueCopies.has(event)) return false;
+    // Exact showtimes verified with both the venue and its official ticket
+    // seller supplement the ordinary Discovery feed's chronological slots.
+    if (source === "Ticketmaster" && hasVerifiedTicketShowtime(event)) return true;
     const count = (sourceCounts.get(source) ?? 0) + 1;
     sourceCounts.set(source, count);
     return count <= (caps[source] ?? 200);

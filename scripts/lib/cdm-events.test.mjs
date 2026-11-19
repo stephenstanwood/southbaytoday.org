@@ -100,8 +100,8 @@ test("the museum's holiday events use its public schedule and links", () => {
     description: "The newsletter gives no start time.",
   }));
   const result = fetchInboundEvents({ events, today: "2026-11-19" }).map(applyVerifiedEventFacts);
-  assert.deepEqual(result.map(({ title, date, time, endTime, url }) => [title, date, time, endTime, url]),
-    holidayRows.map(([title, date, time, endTime, slug]) => [title, date, time, endTime, `https://www.cdm.org/event/${slug}/`]));
+  assert.deepEqual(result.map(({ title, date, time, endTime, url, kidFriendly }) => [title, date, time, endTime, url, kidFriendly]),
+    holidayRows.map(([title, date, time, endTime, slug]) => [title, date, time, endTime, `https://www.cdm.org/event/${slug}/`, true]));
 });
 
 test("museum date labels reject stale, impossible and contradictory dates without annual rollover", () => {

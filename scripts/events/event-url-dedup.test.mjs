@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { parseBooksIncEvents } from "../lib/booksinc-events.mjs";
 import { deduplicateEventUrls } from "../lib/event-url-dedup.mjs";
 import { capUpcomingEventSources, cleanTitle, fetchPlaywrightEvents, stripRedundantVenueSuffix } from "../generate-events.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/booksinc-calendar-2026-11-17.json", import.meta.url)));
 const books = () => parseBooksIncEvents([JSON.stringify(fixture.events)], { today: "2026-11-03" });
@@ -67,4 +68,19 @@ test("duplicate ticket listings with different links count as one venue slot", (
   const copy = { ...earlier[0], url: "https://example.com/event/duplicate" };
   const later = { ...listing, date: "2027-01-28", venue: "San Jose Improv" };
   assert.deepEqual(capUpcomingEventSources([...earlier, copy, later]), [...earlier, later]);
+});
+
+test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose Civic", () => {
+  const earlier = Array.from({ length: 200 }, (_, i) => ({
+    source: "Ticketmaster", date: "2027-02-04", time: "7:30 PM", venue: `Venue ${i}`,
+    url: `https://example.com/event/${i}`,
+  }));
+  const shows = [["7:00 PM", "1C006553991FB623"], ["9:45 PM", "1C0065677CAD3FF8"]].map(([time, ticketId]) =>
+    applyVerifiedEventFacts({
+      source: "Ticketmaster", date: "2027-02-05", time, venue: "San Jose Civic",
+      url: `https://www.ticketmaster.com/mojo-brookzz-outta-pocket-tour-san-jose-california-02-05-2027/event/${ticketId}`,
+    }));
+  const changedTime = { ...shows[1], time: "10:00 PM" };
+  assert.deepEqual(capUpcomingEventSources([...earlier, ...shows, changedTime]), [...earlier, ...shows]);
+  assert.equal(applyVerifiedEventFacts({ ...changedTime, occurrenceEvidence: undefined }).occurrenceEvidence, undefined);
 });
