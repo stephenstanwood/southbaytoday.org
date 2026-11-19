@@ -91,11 +91,13 @@ the checked output with stale or unhealthy remote data. Dirty checkouts and
 local source/configuration commits still block publication; no force push or
 shared-checkout reset is used.
 
-The Mini uses this same publisher with its unchanged two-hour input ceiling,
-and records its success heartbeat only after the merged output passes and is
-pushed. A competing edit with older recorded inputs blocks publication even
-when the raw snapshot files collected by the Mini are fresh; it never restamps
-those older inputs or treats a successful scrape alone as recovery.
+The Mini uses this same publisher with a two-hour ceiling for all three input
+snapshots. If a merge replaces healthy output with output that fails validation,
+the Mini regenerates once under the shared lock using the merged source and
+editorial rules and its collected snapshots. Strict generation and audit run
+again, followed by a fresh Git preflight and the same publication checks. A
+second unhealthy overlap blocks publication. The success heartbeat records
+only a verified, pushed result.
 
 Copy repairs must also work on the first source pass. Hammer's Images preview
 arrives with `IMAGES` and lowercase `and performance`; its existing sentence

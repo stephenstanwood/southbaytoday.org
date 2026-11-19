@@ -17,6 +17,7 @@ import {
   RETRY_SLOT_SUPPRESSION_HOURS,
 } from "./refresh-schedule.mjs";
 import { acquireRefreshLock, WATCHDOG_LOCK_WAIT_MS } from "./refresh-lock.mjs";
+import { MINI_REQUIRED_SNAPSHOT_NAMES } from "./event-refresh-health.mjs";
 import { publishEventRefresh } from "./publish-refresh.mjs";
 
 const PREFIX = "[events-scheduled]";
@@ -195,24 +196,31 @@ try {
       runNode(repoRoot, "scripts/playwright-scrapers.mjs", lockScript, 40 * 60_000);
       runNode(repoRoot, "scripts/pull-inbound-events.mjs", lockScript, 10 * 60_000);
       runNode(repoRoot, "scripts/events/snapshot-official-sources.mjs", lockScript, 5 * 60_000);
-      runNode(repoRoot, "scripts/generate-events.mjs", lockScript, 45 * 60_000);
-      // Audit before commit: a hard virtual-not-flagged finding means an
-      // online-only event would ship with a venue, a city and a map link, so
-      // it fails the run into the rollback path below instead of landing in a
-      // report nobody opens (the 2026-08-05 CRC newsletter error).
-      runNode(repoRoot, "scripts/audit-events.mjs", lockScript, 5 * 60_000);
-      commitGeneratedData(repoRoot);
+      const generateAndCommit = () => {
+        runNode(repoRoot, "scripts/generate-events.mjs", lockScript, 45 * 60_000);
+        // Audit before every commit so a hard virtual/location finding blocks publication.
+        runNode(repoRoot, "scripts/audit-events.mjs", lockScript, 5 * 60_000);
+        commitGeneratedData(repoRoot);
+      };
+      generateAndCommit();
 
-      // Re-fetch after the long scrape. Data-only local commits can safely
-      // absorb a newer origin/main; source-ahead or dirty states fail closed.
-      // A competing editorial commit can replace the fresh output during the
-      // merge. Recheck its recorded inputs before EVERY push, using the same
-      // two-hour ceiling as this Mini run's generator, then stamp success.
-      const after = publishEventRefresh({ repoRoot, log: console.log, snapshotMaxAgeHours: 2 });
+      let sourceHead = before.originHead;
+      const after = publishEventRefresh({
+        repoRoot,
+        log: console.log,
+        snapshotMaxAgeHours: 2,
+        requiredSnapshotNames: MINI_REQUIRED_SNAPSHOT_NAMES,
+        regenerateAfterOverlap(originHead) {
+          // Use the collected inputs and the merged source and editorial rules.
+          // Strict generation revalidates the snapshots before writing the feed.
+          generateAndCommit();
+          sourceHead = originHead;
+        },
+      });
       writeJsonAtomic(statePath, {
         lastSuccessAt: new Date().toISOString(),
         head: after.head,
-        sourceHead: before.originHead,
+        sourceHead,
       });
       log(`refresh pushed successfully at HEAD=${after.head.slice(0, 12)}`);
     }
