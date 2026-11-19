@@ -6,7 +6,7 @@ import { dirname, join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { REQUIRED_SOURCE_IDS } from "./event-refresh-health.mjs";
+import { MINI_REQUIRED_SNAPSHOT_NAMES, REQUIRED_SOURCE_IDS } from "./event-refresh-health.mjs";
 import { publishEventRefresh } from "./publish-refresh.mjs";
 
 const OUTPUT = "src/data/south-bay/upcoming-events.json";
@@ -36,7 +36,7 @@ function output(id) {
     eventCount: 1,
     events: [{ id }],
     sourceHealth: REQUIRED_SOURCE_IDS.map((id) => ({ id, label: id, status: "ok", count: 1 })),
-    inputSnapshots: ["playwright-events", "inbound-events"].map((name) => ({ name, status: "ok", timestamp: now })),
+    inputSnapshots: MINI_REQUIRED_SNAPSHOT_NAMES.map((name) => ({ name, status: "ok", timestamp: now })),
   };
 }
 
@@ -60,8 +60,14 @@ function setup(t) {
   return { remote, seed, checkout, local };
 }
 
-for (const staleOverlap of [false, true]) {
-  test(`the installed scheduled CLI ${staleOverlap ? "blocks a stale merge without a heartbeat" : "normalizes source copy and publishes before its heartbeat"}`, (t) => {
+const scheduledCases = [
+  "normalizes source copy and publishes before its heartbeat",
+  "regenerates once after a stale overlap using the merged review and fresh inputs",
+  "blocks a second stale overlap without claiming success",
+];
+
+for (const [overlaps, scenario] of scheduledCases.entries()) {
+  test(`the installed scheduled CLI ${scenario}`, (t) => {
     const { remote, seed, checkout } = setup(t);
     const root = dirname(checkout);
     const statePath = join(root, "heartbeat.json");
@@ -81,28 +87,46 @@ for (const staleOverlap of [false, true]) {
       url: "https://plugin.vbotickets.com/v5.0/event.asp?eid=209941&s=79a65cd2-b50c-42b3-9e4f-8c90b2436a6d",
       description: "SJSU Dance presents IMAGES the annual Fall showcase of student choreography. and performance. Featuring new and original works created and performed by SJSU Dance Majors and Minors as well as…",
     }));
+    const reviewedPath = "scripts/reviewed-showtime.txt";
+    const reviewedTime = "4:15 PM";
+    const freshSnapshots = output("fresh").inputSnapshots;
+    for (const { name, timestamp } of freshSnapshots) {
+      put(seed, `src/data/south-bay/${name}.json`, { timestamp });
+    }
     const normalizer = new URL("../generate-events.mjs", import.meta.url).href;
-    // Replace only external collection in the disposable Git fixture. Run the
-    // real installed scheduler, normalizer, merge/push guard and heartbeat.
+    // Substitute the source fetches in the isolated Git fixture. Run the actual
+    // scheduler, copy normalizer, merge/push guard and heartbeat.
     put(seed, "scripts/generate-events.mjs", `
-      import { writeFileSync } from 'node:fs';
+      import { existsSync, readFileSync, writeFileSync } from 'node:fs';
       import { execFileSync } from 'node:child_process';
       import { polishDescription } from ${JSON.stringify(normalizer)};
       const data = ${JSON.stringify(output("fresh"))};
       data.events = ${JSON.stringify(sourceEvents)};
       for (const event of data.events) event.description = polishDescription(event.description);
       data.eventCount = data.events.length;
-      writeFileSync(${JSON.stringify(OUTPUT)}, JSON.stringify(data, null, 2) + '\\n');
-      ${staleOverlap ? `
+      for (const snapshot of data.inputSnapshots) {
+        const raw = JSON.parse(readFileSync('src/data/south-bay/' + snapshot.name + '.json', 'utf8'));
+        snapshot.timestamp = raw.timestamp;
+      }
+      const review = ${JSON.stringify(reviewedPath)};
+      const reviewedVersion = existsSync(review) ? Number(readFileSync(review, 'utf8')) : 0;
+      if (reviewedVersion) data.events[0].time = ${JSON.stringify(reviewedTime)};
+      const save = (path, data) => writeFileSync(path, JSON.stringify(data, null, 2) + '\\n');
+      save(${JSON.stringify(OUTPUT)}, data);
+      if (reviewedVersion < ${overlaps}) {
         const older = structuredClone(data);
         older.inputSnapshots.forEach(item => item.timestamp = new Date(Date.now() - 4.3 * 3600000).toISOString());
-        writeFileSync(${JSON.stringify(join(seed, OUTPUT))}, JSON.stringify(older, null, 2) + '\\n');
+        older.events[0].time = ${JSON.stringify(reviewedTime)};
+        save(${JSON.stringify(join(seed, OUTPUT))}, older);
+        writeFileSync(${JSON.stringify(join(seed, reviewedPath))}, String(reviewedVersion + 1));
         const git = (...args) => execFileSync('git', ['-C', ${JSON.stringify(seed)}, ...args]);
-        git('add', ${JSON.stringify(OUTPUT)}); git('commit', '-m', 'competing editorial output with older inputs'); git('push');
-      ` : ""}
+        git('add', ${JSON.stringify(OUTPUT)}, review);
+        git('commit', '-m', 'competing editorial output with older inputs');
+        git('push');
+      }
     `);
     for (const script of ["playwright-scrapers.mjs", "pull-inbound-events.mjs", "events/snapshot-official-sources.mjs", "audit-events.mjs"]) {
-      put(seed, `scripts/${script}`, "// External producer fixture: no network or source writes.\n");
+      put(seed, `scripts/${script}`, "// External producer fixture.\n");
     }
     commit(seed, "installed producer fixtures");
     git(seed, "push");
@@ -114,20 +138,29 @@ for (const staleOverlap of [false, true]) {
     });
     assert.ifError(result.error);
     const logs = result.stdout + result.stderr;
-    assert.equal(result.status, staleOverlap ? 1 : 0, logs);
+    assert.equal(result.status, overlaps === 2 ? 1 : 0, logs);
+    const head = git(remote, "rev-parse", "main");
+    const sourceHead = git(seed, "rev-parse", "HEAD");
     const published = JSON.parse(git(remote, "show", `main:${OUTPUT}`));
-    assert.deepEqual(published.events, sourceEvents.map(event => ({ ...event, description: expected })));
+    assert.deepEqual(published.events, sourceEvents.map((event, i) => ({
+      ...event, description: expected, time: overlaps > 0 && i === 0 ? reviewedTime : event.time,
+    })));
     const lockActions = readFileSync(lockLog, "utf8").trim().split("\n");
     assert.equal(lockActions[0], "acquire");
     assert.equal(lockActions.at(-1), "release");
-    if (staleOverlap) {
-      assert.match(logs, /resolving generated-data overlap/);
-      assert.match(logs, /event publication blocked:.*maximum 2h/);
-      assert.equal(existsSync(statePath), false, "failed merged-output validation cannot stamp success");
-      assert.equal(git(remote, "rev-parse", "main"), git(seed, "rev-parse", "HEAD"), "the local refresh stays unpublished");
+    assert.equal(logs.split("running scripts/audit-events.mjs").length - 1, overlaps ? 2 : 1);
+    assert.equal(logs.match(/regenerating once from the merged checkout/g)?.length ?? 0, overlaps ? 1 : 0);
+    git(remote, "merge-base", "--is-ancestor", sourceHead, head);
+    if (overlaps === 2) {
+      assert.match(logs, /BLOCKED: event publication blocked:.*maximum 2h/);
+      assert.equal(existsSync(statePath), false, "a second unhealthy overlap cannot stamp success");
+      assert.equal(head, sourceHead, "the two Mini generations stay unpublished");
     } else {
-      assert.match(logs, /\[events-publication\] healthy:/);
-      assert.equal(JSON.parse(readFileSync(statePath, "utf8")).head, git(remote, "rev-parse", "main"));
+      assert.ok(logs.includes("[events-publication] healthy:"), logs);
+      assert.deepEqual(published.inputSnapshots, freshSnapshots);
+      const heartbeat = JSON.parse(readFileSync(statePath, "utf8"));
+      assert.equal(heartbeat.head, head);
+      assert.equal(heartbeat.sourceHead, sourceHead);
     }
   });
 }
