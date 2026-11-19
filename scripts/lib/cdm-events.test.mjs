@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { scrapeChildrensDiscoveryMuseum, normalizePlaywrightEvent } from "../playwright-scrapers.mjs";
+import { fetchInboundEvents, isEventTimeBackfillCandidate } from "../generate-events.mjs";
+import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { parseCdmOccurrenceDate } from "./cdm-events.mjs";
 
 const programs = [
@@ -47,6 +49,59 @@ test("museum keeps dated special events and rejects unrecognized recurrence", as
   assert.deepEqual(events.map(({ title, date, time, endTime }) => ({ title, date, time, endTime })), [
     { title: "Mars Expedition with VEX Robotics", date: "2026-10-17", time: "10:30 am", endTime: "12:00 pm" },
   ]);
+});
+
+test("the iceless rink stays listed as an exhibit during its confirmed run", () => {
+  const events = [{
+    id: "rink-newsletter", title: "Sock Skating at the Children's Discovery Museum",
+    startsAt: "2026-11-21T09:30:00-08:00", cityKey: "san-jose",
+    location: "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+    sourceUrl: "https://secure2.convio.net/cdm/site/R?i=newsletter-link",
+  }];
+  const [opening] = fetchInboundEvents({ events, today: "2026-11-19" });
+  const exhibit = applyVerifiedEventFacts(opening);
+  assert.deepEqual([exhibit.date, exhibit.time, exhibit.endTime, exhibit.ongoing], ["2026-11-21", null, null, true]);
+  assert.equal(exhibit.venue, "Children's Discovery Museum, Traveling Exhibit Hall");
+  assert.equal(exhibit.url, "https://www.cdm.org/event/iceless-skating-rink/2026-11-21/");
+  const [active] = fetchInboundEvents({ events, today: "2027-01-09" });
+  assert.equal(active.id, opening.id);
+  assert.equal(active.date, "2027-01-09");
+  assert.equal(active.startDate, exhibit.date);
+  assert.equal(applyVerifiedEventFacts(active).title, exhibit.title);
+  assert.deepEqual(fetchInboundEvents({ events, today: "2027-01-10" }), []);
+  assert.equal(isEventTimeBackfillCandidate(exhibit), false);
+});
+
+test("the December robotics demo cannot borrow museum opening time from the newsletter link", () => {
+  const events = [{
+    id: "robotics-newsletter", title: "Robotics Demonstration with Team Quixilver",
+    startsAt: "2026-12-13T00:00:00-08:00", cityKey: "san-jose",
+    location: "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+    description: "The newsletter gives no start time.",
+    sourceUrl: "https://secure2.convio.net/cdm/site/R?i=newsletter-link",
+  }];
+  const [row] = fetchInboundEvents({ events, today: "2026-11-19" });
+  assert.equal(row.url, "");
+  const unconfirmed = applyVerifiedEventFacts({ ...row, time: "10:00 AM" });
+  assert.equal(unconfirmed.time, null);
+  assert.equal(unconfirmed.attendanceStatus, "needs-confirmation");
+  assert.equal(isEventTimeBackfillCandidate(unconfirmed), false);
+});
+
+test("the museum's holiday events use its public schedule and links", () => {
+  const holidayRows = [
+    ["Noon Year's Eve Celebration", "2026-12-31", "12:00 PM", null, "noon-years-eve"],
+    ["El Día de los Tres Reyes Magos", "2027-01-09", "10:00 AM", "2:00 PM", "el-dia-de-los-tres-reyes-magos"],
+  ];
+  const events = holidayRows.map(([title, date], index) => ({
+    id: `holiday-${index}`, title, startsAt: `${date}T00:00:00-08:00`, cityKey: "san-jose",
+    location: "Children's Discovery Museum of San Jose, 180 Woz Way, San Jose, CA 95110",
+    sourceUrl: "https://secure2.convio.net/cdm/site/R?i=newsletter-link",
+    description: "The newsletter gives no start time.",
+  }));
+  const result = fetchInboundEvents({ events, today: "2026-11-19" }).map(applyVerifiedEventFacts);
+  assert.deepEqual(result.map(({ title, date, time, endTime, url }) => [title, date, time, endTime, url]),
+    holidayRows.map(([title, date, time, endTime, slug]) => [title, date, time, endTime, `https://www.cdm.org/event/${slug}/`]));
 });
 
 test("museum date labels reject stale, impossible and contradictory dates without annual rollover", () => {

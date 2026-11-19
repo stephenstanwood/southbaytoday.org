@@ -57,7 +57,7 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://events.scu.edu/leavey-school-of-business/event/533869-enhance-your-professional-development-with",
   }),
   ...["2026-11-23", "2026-11-30"].map(date => Object.freeze({
-    title: /^All Recovery Meeting$/i,
+    title: /^All Recovery Meeting(?: at Student Union)?$/i,
     venue: /.*/,
     date,
     matches: event => /^https:\/\/events\.sjsu\.edu\/event\/all-recovery-meeting-3060(?:[/?#]|$)/.test(event.url || ""),

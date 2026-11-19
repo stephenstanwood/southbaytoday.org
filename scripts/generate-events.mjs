@@ -5063,7 +5063,8 @@ async function fetchSjsuEvents() {
       }
       return applyVerifiedSjsuEventOverride({
         id: h("sjsu", item.link || item.title, item.pubDate),
-        title: item.title,
+        // The RSS suffix names the building, not the building plus room.
+        title: displayVenue === venue ? item.title : stripRedundantVenueSuffix(item.title, venue),
         date,
         displayDate: displayDate(start),
         time,
@@ -10722,7 +10723,9 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
       // A verified correction must run before the past-date gate; otherwise
       // a stale newsletter can keep yesterday's garage sale listed for today.
       const presentation = normalizeInboundEventPresentation(e);
-      const dateKey = presentation.date || e.startsAt.slice(0, 10);
+      const sourceDate = presentation.date || e.startsAt.slice(0, 10);
+      const ongoing = presentation.ongoing && presentation.endDate >= today;
+      const dateKey = ongoing && sourceDate < today ? today : sourceDate;
       if (dateKey < today) { skipPast++; continue; }
       // The extractor occasionally omits cityKey even for senders it normally
       // identifies correctly. Recover only from exact official sender addresses;
@@ -10826,10 +10829,11 @@ function fetchInboundEvents({ events: suppliedEvents, today = todayPT() } = {}) 
       const image = inboundImageForEvent(e);
 
       out.push({
-        id: h("inbound", e.id, dateKey, e.title),
+        id: h("inbound", e.id, sourceDate, e.title),
         title: e.title,
         date: dateKey,
         displayDate: displayDate(startDate),
+        ...(ongoing ? { ongoing: true, startDate: sourceDate, endDate: presentation.endDate } : {}),
         time,
         endTime,
         venue: venueName,

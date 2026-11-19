@@ -16,7 +16,7 @@ const [friday, matinee, evening] = [
 
 function mockCalendar(t, rssRows, instances) {
   const items = rssRows.map(({ id, pubDate }) => `<item>
-    <title>${title}</title><link>${url}</link>
+    <title>${title} at Hammer Theater Center</title><link>${url}</link>
     <guid isPermaLink="false">tag:localist.com,2008:EventInstance_${id}</guid>
     <pubDate>${pubDate}</pubDate>
   </item>`).join("");
@@ -31,7 +31,7 @@ function mockCalendar(t, rssRows, instances) {
       page: { total: instances.length },
       events: [{
         event: {
-          localist_url: url, location_name: "Hammer Theatre Center", free: false,
+          localist_url: url, location_name: "Hammer Theater Center", room_number: "Sobrato Auditorium", free: false,
           event_instances: [{ event_instance: instance }],
         },
       }],
@@ -42,6 +42,7 @@ function mockCalendar(t, rssRows, instances) {
 test("SJSU's separately listed Saturday performances survive both duplicate passes", async t => {
   mockCalendar(t, [friday, matinee, evening], [friday, matinee, evening]);
   const events = await fetchSjsuEvents();
+  assert.ok(events.every(event => event.title === title && event.venue === "Hammer Theater Center, Sobrato Auditorium"));
   assert.deepEqual(events.map(({ date, time, endTime }) => [date, time, endTime]), [
     ["2026-11-27", "7:30 PM", "9:30 PM"],
     ["2026-11-28", "2:00 PM", "4:00 PM"],

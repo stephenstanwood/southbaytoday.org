@@ -297,6 +297,7 @@ export function normalizeInboundEventPresentation(event) {
     endTime,
     url: override?.url || detrack(event?.canonicalUrl) || detrack(event?.sourceUrl) || "",
     ...(override?.venue ? { venue: override.venue } : {}),
+    ...(verified.ongoing && verified.endDate ? { ongoing: true, endDate: verified.endDate } : {}),
     ...((override?.virtual === true || resolveVirtualFlag(event, event?.experience)) ? { virtual: true } : {}),
     ...(typeof verified.kidFriendly === "boolean" ? { kidFriendly: verified.kidFriendly } : {}),
   };

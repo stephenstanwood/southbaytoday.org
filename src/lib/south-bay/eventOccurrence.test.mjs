@@ -22,6 +22,7 @@ test("withholds campus listings when the full organizer page corrects a sparse p
   assert.equal(isEventPublishable(webinar), false);
   assert.equal(isEventPublishable(studentMeeting), false);
   assert.equal(isEventPublishable({ ...studentMeeting, date: "2026-11-30" }), false);
+  assert.equal(isEventPublishable({ ...studentMeeting, title: "All Recovery Meeting at Student Union", venue: "Student Union, Meeting Room 1B" }), false);
   assert.equal(isEventPublishable({ ...studentMeeting, url: "https://events.sjsu.edu/event/community-recovery" }), true);
   assert.equal(isEventPublishable({ ...webinar, date: "2026-12-02" }), true);
 });

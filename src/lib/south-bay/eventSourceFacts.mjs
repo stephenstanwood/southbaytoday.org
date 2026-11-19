@@ -1246,6 +1246,53 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/shop-smart-eat-well-budget-friendly-grocery-tips-meal-ideas-and-label-reading-strategies",
     copyReplacements: [[/\bCdces\b/g, "CDCES"]],
   },
+  // The museum's calendar and newsletter agree the rink opens November 21
+  // and runs through at least January 9. Its exhibit page says January 10.
+  // Use the shared window for refresh and leave the closing date out of copy.
+  // https://www.cdm.org/calendar/
+  // https://www.cdm.org/event/iceless-skating-rink/2026-11-21/
+  {
+    dateFrom: "2026-11-21", dateThrough: "2027-01-09",
+    matches: event => (event.startDate || event.date) === "2026-11-21"
+      && /^(?:Sock Skating at the Children's Discovery Museum|Iceless Skating Rink)$/i.test(event.title || "")
+      && /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i.test(event.venue || ""),
+    facts: {
+      title: "Iceless Skating Rink",
+      url: "https://www.cdm.org/event/iceless-skating-rink/2026-11-21/",
+      venue: "Children's Discovery Museum, Traveling Exhibit Hall",
+      address: "180 Woz Way, San Jose, CA 95110",
+      ongoing: true, startDate: "2026-11-21", endDate: "2027-01-09",
+      time: null, endTime: null, cost: "paid", costNote: "Included with museum admission",
+      description: "The indoor skating exhibit is next to TapeScape in the Traveling Exhibit Hall. The rink opens November 21 and is available during museum hours.",
+      blurb: "Skate indoors in socks at the Children's Discovery Museum's iceless rink, open during museum hours.",
+    },
+  },
+  // The first countdown starts at noon. The museum's 9:30 AM clock is doors.
+  // https://www.cdm.org/event/noon-years-eve/
+  {
+    date: "2026-12-31", title: /^Noon Year['’]s Eve(?: Celebration)?$/i,
+    venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
+    facts: {
+      url: "https://www.cdm.org/event/noon-years-eve/",
+      time: "12:00 PM", endTime: null,
+      description: "The museum opens at 9:30 AM. Ball drops take place at noon, 1 PM and 2 PM.",
+      blurb: "Ring in the new year at the Children's Discovery Museum with ball drops at noon, 1 PM and 2 PM.",
+    },
+  },
+  // The date heading, celebrations index and museum calendar agree on Jan 9.
+  // The detail page's prose still says Jan 10, but its dated schedule is 10–2.
+  // https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/
+  // https://www.cdm.org/celebrate/
+  {
+    date: "2027-01-09", title: /^El Día de los Tres Reyes Magos$/i,
+    venue: /^Children's Discovery Museum(?: of San Jose)?(?:,|$)/i,
+    facts: {
+      url: "https://www.cdm.org/event/el-dia-de-los-tres-reyes-magos/",
+      time: "10:00 AM", endTime: "2:00 PM",
+      description: "Celebrate Three Kings Day with singing, dance, hands-on art, a Three Kings meet-and-greet and Rosca de Reyes tasting.",
+      blurb: "Celebrate Three Kings Day at the Children's Discovery Museum with live performances, hands-on art and Rosca de Reyes.",
+    },
+  },
   // The exact November 12 museum email confirms December 13 but no clock.
   // The retained public calendar's 10 AM Quixilver session is November 14,
   // which cannot establish December's start. Do not reuse the backfill cache.
@@ -1255,7 +1302,7 @@ const CORRECTIONS = [
     date: "2026-12-13",
     matches: event => /^Robotics Demonstration with Team Quixilver$/i.test(event?.title || "")
       && /^Children's Discovery Museum of San Jose(?:,|$)/i.test(event?.venue || "")
-      && /\bnewsletter gives no time\b/i.test(event?.description || ""),
+      && /\bnewsletter gives no (?:start )?time\b/i.test(event?.description || ""),
     facts: { time: null, endTime: null, attendanceStatus: "needs-confirmation" },
     appendAttendanceNote: "Demonstration time is unconfirmed. Check the activity schedule with Children's Discovery Museum before going.",
   },

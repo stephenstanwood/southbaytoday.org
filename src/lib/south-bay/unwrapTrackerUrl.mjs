@@ -40,6 +40,7 @@ const TRACKER_PATTERNS = [
   /\blist-manage\.com\b/i,                      // Mailchimp
   /\/rts\/go2\.aspx\b/i,                        // Adestra / Upland (l.e.<brand>.com)
   /\bconnect\.cdm\.org\/site\/R\b/i,            // Convio / Blackbaud
+  /\bsecure2\.convio\.net\/cdm\/site\/R\b/i,   // Children's Discovery Museum's Convio redirect
   /\bemail\.live\.stanford\.edu\/c\//i,         // Stanford dotdigital
   /\bapp\.mail\.gostanford\.com\/e\/er\b/i,     // Stanford Athletics / Oracle Eloqua
   /\bclick\.fanmail\./i,                        // SJ Earthquakes / Marketo
