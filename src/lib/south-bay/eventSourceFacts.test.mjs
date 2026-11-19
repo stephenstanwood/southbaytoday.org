@@ -13,6 +13,35 @@ import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the November 21 library corrections preserve actual booking limits", () => {
+  const day = { date: "2026-11-21", source: "San Jose Public Library" };
+  const url = id => `https://sjpl.bibliocommons.com/events/${id}`;
+  const tech = {
+    ...day, url: url("6920f111c313c23700e355aa"), registration: "required",
+    description: "Appointments are highly encouraged, though drop-ins can be taken if times are available.",
+  };
+  assert(!requiresAdvanceRegistration(applyVerifiedEventFacts(tech)));
+  assert.equal(applyVerifiedEventFacts({ ...tech, registration: "full" }).registration, "full");
+  assert.equal(applyVerifiedEventFacts({ ...tech, description: "All appointments must be booked in advance." }).registration, "required");
+
+  const cozy = applyVerifiedEventFacts({
+    ...day, url: url("6a7a247486ec588db26fbf06"), registration: "required",
+    description: "Join this volunteer drop-in event.", blurb: "Drop in to make toys.",
+  });
+  assert(requiresAdvanceRegistration(cozy));
+  assert.doesNotMatch(cozy.description + cozy.blurb, /drop[ -]in/i);
+  assert.match(cozy.attendanceNote, /under 15.*parent or guardian/);
+
+  const english = applyVerifiedEventFacts({
+    ...day, url: url("6946ebdd2c65973d00139ebb"), registration: "full",
+    description: "Free. No registration required. Gratis. No es necesario registrarse.",
+  });
+  assert.equal(english.registration, "full");
+  assert.equal(english.description, "Free. Gratis.");
+  assert.match(english.attendanceNote, /Confirm availability/);
+  assert.deepEqual(applyVerifiedEventFacts(english), english);
+});
+
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 

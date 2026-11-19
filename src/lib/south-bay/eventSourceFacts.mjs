@@ -135,9 +135,8 @@ const CORRECTIONS = [
   {
     date: "2026-12-07",
     matches: event => /^Community Tree Lighting Celebration$/i.test(event.title || "")
-      && /^https:\/\/www\.mountainview\.gov\/our-city\/departments\/community-services\/special-events\/community-tree-lighting-celebration\/?$/.test(event.url || "")
-      && !event.cost,
-    facts: { cost: "free" },
+      && /^https:\/\/www\.mountainview\.gov\/our-city\/departments\/community-services\/special-events\/community-tree-lighting-celebration\/?$/.test(event.url || ""),
+    facts: event => ({ category: "community", cost: event.cost ?? "free" }),
   },
   // Stanford's full webinar description establishes free admission even
   // though the Localist price field is empty.
@@ -157,6 +156,44 @@ const CORRECTIONS = [
       cost: event.cost ?? "free",
       blurb: "See the TNT Traysikel mobile sculpture exhibition in the Miller Discussion Room and Vitrine Gallery.",
     }),
+  },
+  // The exact event pages show booking terms alongside the program copy.
+  // Preserve explicit full or closed status and avoid promising walk-ins
+  // where the library has marked a session full or requires signup.
+  {
+    date: "2026-11-21",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a7a247486ec588db26fbf06\/?$/.test(event.url || "")
+      && [REGISTRATION_REQUIRED, REGISTRATION_FULL, REGISTRATION_CLOSED].includes(event.registration),
+    facts: {
+      blurb: "Braid or sew used clothing into dog toys to donate to local shelters.",
+    },
+    copyReplacements: [[/\bvolunteer drop[ -]in event\b/gi, "volunteer event"]],
+    appendAttendanceNote: "Volunteers under 15 must participate with a parent or guardian.",
+  },
+  {
+    date: "2026-11-21",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6946ebdd2c65973d00139ebb\/?$/.test(event.url || "")
+      && [REGISTRATION_FULL, REGISTRATION_CLOSED].includes(event.registration),
+    facts: {
+      blurb: "Practice English in free beginner lessons at Rose Garden Library.",
+    },
+    copyReplacements: [
+      [/\s*No registration required\./gi, ""],
+      [/\s*No es necesario registrarse\./gi, ""],
+    ],
+    appendAttendanceNote: "The class description says registration is optional. Online signup is unavailable. Confirm availability with Rose Garden Library before attending.",
+  },
+  {
+    date: "2026-11-21",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6920f111c313c23700e355aa\/?$/.test(event.url || "")
+      && event.registration === REGISTRATION_REQUIRED
+      && /\bappointments are highly encouraged\b[^.!?]*\bdrop-ins can be taken\b[^.!?]*\bif times are available\b/i.test(event.description || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
+  },
+  {
+    date: "2026-11-21",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ab6f84dda318a10e636d249\/?$/.test(event.url || ""),
+    copyReplacements: [[/\bAR Trepreneurs?\b/gi, match => /s$/i.test(match) ? "ARTrepreneurs" : "ARTrepreneur"]],
   },
   // The library's title says level 1 and its description says level 0.
   // Use neutral Spanish copy while both claims persist on this occurrence.
