@@ -106,6 +106,10 @@ const EDITS = {
         "Interested in becoming a volunteer at the library? Start here: https://www.sjpl.org/volunteer-how-to/ No registration required.",
         "No registration is required. If you'd like to volunteer, visit https://www.sjpl.org/volunteer-how-to/",
       ],
+      [
+        "To learn more about Poponta, please visit: https://ja-jp.facebook.com/popontanokai/ Free, with limited capacity.",
+        "Visit https://ja-jp.facebook.com/popontanokai/ to learn more about Poponta. Admission is free, and capacity is limited.",
+      ],
       // HICAP booking hours are source facts; repair only the range connector.
       [/\b(between (?:[1-9]|1[0-2])(?::[0-5]\d)? [AP]M)\s*[-–]\s*((?:[1-9]|1[0-2])(?::[0-5]\d)? [AP]M)(?= to set up a free one-on-one counseling appointment\b)/g, "$1 and $2"],
       ["Se requiere y registración previa.", "Se requiere registración previa."],
@@ -791,6 +795,7 @@ const EDITS = {
         "Practice your English speaking in a weekly online conversation club led by a trained facilitator for adult learners.",
         "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
       ],
+      ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
       [/\bIcan\b/g, "ICAN"],
       ["Lego challenges", "LEGO challenges"],
