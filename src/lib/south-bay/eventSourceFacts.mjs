@@ -1764,35 +1764,24 @@ const CORRECTIONS = [
       attendanceNote: "Sold out. The organizer offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
     },
   })),
-  // TicketWeb's exact booking pages show a waitlist instead of tickets for
-  // these two performances. The Improv calendar's price and buy links lag.
-  ...[
-    ["2026-11-21", "7:00 PM", "14735723"],
-    ["2026-11-22", "6:00 PM", "14735693"],
-  ].map(([date, time, ticketId]) => ({
-    date,
-    matches: event => event.time === time && event.venue === "San Jose Improv"
-      && event.url === `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${ticketId}`,
-    facts: {
-      registration: REGISTRATION_FULL, costNote: null,
-      attendanceNote: "TicketWeb lists a waitlist. Ages 21+. Two-item minimum purchase per person.",
-    },
-  })),
-  // The venue's show grid lists these exact slots as waitlist on November 18.
+  // The venue's dated show links and structured offers agree these tickets
+  // were sold out with a waitlist when checked November 18 at 11:36 PM PT.
   // https://improv.com/comic/gianmarco%20soresi/
   ...[
-    ["2026-11-19", "7:30 PM", "14153314"],
+    ["2026-11-19", "9:45 PM", "14740623"],
     ["2026-11-20", "7:30 PM", "14735683"],
     ["2026-11-20", "9:45 PM", "14735703"],
+    ["2026-11-21", "7:00 PM", "14735723"],
     ["2026-11-21", "9:30 PM", "14735713"],
+    ["2026-11-22", "6:00 PM", "14735693"],
     ["2026-11-22", "8:30 PM", "14811543"],
   ].map(([date, time, ticketId]) => ({
     date,
     matches: event => event.time === time && event.venue === "San Jose Improv"
       && event.url === `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${ticketId}`,
     facts: {
-      attendanceStatus: "needs-confirmation",
-      attendanceNote: "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
+      registration: REGISTRATION_FULL, costNote: null,
+      attendanceNote: "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
     },
   })),
   {

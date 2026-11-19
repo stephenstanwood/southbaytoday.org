@@ -121,10 +121,11 @@ test("only the exact Improv show times get the verified availability notes", () 
   assert.equal(sunday.registration, "full");
   const late = { ...show, time: "9:30 PM", url: ticketUrl("14735713") };
   const venueWaitlist = applyVerifiedEventFacts(late);
-  assert.equal(requiresAttendanceConfirmation(venueWaitlist), true);
-  assert.match(venueWaitlist.attendanceNote, /Improv lists a waitlist/);
-  assert.equal(venueWaitlist.registration, undefined);
-  const selling = { ...show, date: "2026-11-19", time: "9:45 PM", url: ticketUrl("14740623") };
+  assert.match(venueWaitlist.attendanceNote, /Improv offers a waitlist/);
+  assert.equal(venueWaitlist.registration, "full");
+  const thursdayLate = applyVerifiedEventFacts({ ...show, date: "2026-11-19", time: "9:45 PM", url: ticketUrl("14740623") });
+  assert.equal(thursdayLate.registration, "full");
+  const selling = { ...show, date: "2026-11-19", time: "7:30 PM", url: ticketUrl("14153314") };
   assert.deepEqual(applyVerifiedEventFacts(selling), selling);
 
   const wednesday = applyVerifiedEventFacts({ ...show, date: "2026-11-18", time: "7:30 PM", url: ticketUrl("14984583") });
