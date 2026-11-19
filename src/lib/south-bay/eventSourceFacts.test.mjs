@@ -3714,6 +3714,28 @@ test("dated concert identities survive sparse refreshes without changing another
   assert.equal(applyVerifiedEventFacts(elsewhere), elsewhere);
 });
 
+test("the SJSU ticketed-music correction retains the verified Merry-Achi copy", () => {
+  for (const [date, time, id] of [
+    ["2026-11-27", "7:30 PM", "sjsu-45c5e8749a93e5e5"],
+    ["2026-11-28", "2:00 PM", "sjsu-0d2083d9c2184167"],
+  ]) {
+    const event = {
+      id, date, time, source: "SJSU Events",
+      title: "Hammer Presents Merry-Achi Christmas 2026",
+      venue: "Hammer Theatre Center", category: "music", cost: "paid",
+      url: "https://events.sjsu.edu/event/hammer-presents-merry-achi-christmas-2026",
+      description: "Mariachi Master Jóse Hernàndez and his Sol de Mexico have a history as rich and colorful as mariachi music itself.",
+    };
+    const reviewed = {
+      ...event,
+      description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
+      blurb: "Hear José Hernández and Mariachi Sol de México perform Merry-Achi Christmas at Hammer Theatre.",
+    };
+    assert.deepEqual(applyVerifiedEventFacts(event), reviewed);
+    assert.deepEqual(applyVerifiedEventFacts(reviewed), reviewed);
+  }
+});
+
 test("Ticketmaster artist typos are scoped to the verified show without freezing its lineup", () => {
   const raw = {
     date: "2026-11-20",

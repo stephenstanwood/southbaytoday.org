@@ -80,6 +80,10 @@ const SJSU_NOVEMBER_METROPOLIS = {
 };
 const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
 const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/events/68faeb383cbc052f00816108";
+const MERRY_ACHI_COPY = {
+  description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
+  blurb: "Hear José Hernández and Mariachi Sol de México perform Merry-Achi Christmas at Hammer Theatre.",
+};
 
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
@@ -92,13 +96,13 @@ const CORRECTIONS = [
     url: "https://events.sjsu.edu/event/football-san-jose-state-vs-ndsu",
     facts: { venue: "CEFCU Stadium", address: "1218 South 7th Street, San Jose, CA 95112", cost: "paid" },
   },
-  // Hammer lists this run as ticketed music.
+  // Hammer lists this run as ticketed music and names the performers.
   // https://hammertheatre.com/
   // https://plugin.vbotickets.com/googleeventschema/198571
   ...["2026-11-27", "2026-11-28"].map(date => ({
     date,
     url: "https://events.sjsu.edu/event/hammer-presents-merry-achi-christmas-2026",
-    facts: { category: "music", cost: "paid" },
+    facts: { category: "music", cost: "paid", ...MERRY_ACHI_COPY },
   })),
   // Fever, the promoter, supplies the age and advance ticket conditions.
   // https://feverup.com/m/415717 and https://feverup.com/m/137201
@@ -5433,10 +5437,7 @@ const CORRECTIONS = [
   ...["2026-11-27", "2026-11-28"].map((date) => ({
     date, title: /^Hammer Presents Merry-Achi Christmas 2026$/i,
     venue: /^Hammer Theatre Center$/i,
-    facts: {
-      description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
-      blurb: "Hear José Hernández and Mariachi Sol de México perform Merry-Achi Christmas at Hammer Theatre.",
-    },
+    facts: MERRY_ACHI_COPY,
   })),
   // Ticketmaster's structured lineup spells these artists correctly while its
   // Event Info text contains typos. Correct only those strings so future

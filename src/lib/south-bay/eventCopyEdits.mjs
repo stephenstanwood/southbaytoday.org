@@ -96,6 +96,11 @@ const EDITS = {
     ],
     description: [
       ["Storytime Tickets & Seating This event", "Storytime Tickets & Seating: This event"],
+      ["Best for children ages 0-8 with their caregivers; all families welcome!", "This program is best for children ages 0–8 and their caregivers. All families are welcome."],
+      ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
+      ["Storytime: 4:00-4:30 PM; Stay & Play: 4:30 PM-5:00 PM.", "Storytime runs from 4:00 to 4:30 PM. Stay & Play runs from 4:30 to 5:00 PM."],
+      ["This experience aims to set your child's curiosity of light aglow and presents 3 unique activities.", "The workshop includes 3 activities that encourage curiosity about light."],
+      ["We have a large selection to choose from, including new games and classic games that everyone of all ages can enjoy.", "Choose from a wide selection of new and classic games for all ages."],
       ["with a limited amount of tickets available, once", "with a limited number of tickets available once"],
       [
         "Interested in becoming a volunteer at the library? Start here: https://www.sjpl.org/volunteer-how-to/ No registration required.",
@@ -912,7 +917,7 @@ const EDITS = {
   "Los Altos Village Association": {
     description: [
       ["Join us Friday, October 30th for", "Join us Friday, October 30th, for"],
-      ["Date: Sunday, November 29th, 2026 Time: 6:00 p.m. Place: Downtown Los Altos, California", "Date: Sunday, November 29th, 2026; Time: 6:00 p.m.; Place: Downtown Los Altos, California"],
+      [/^Date: Sunday, November 29th, 2026;? Time: 6:00 p\.m\.;? Place: Downtown Los Altos, California\.?(?= |$)/g, "On Sunday, November 29, 2026, the parade starts at 6:00 p.m. in downtown Los Altos, California."],
     ],
   },
   "Heritage Theatre": {
