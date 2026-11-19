@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-18T22:02:39.770Z",
+    "generatedAt": "2026-11-19T02:28:12.703Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 187,
+    "eventCount": 195,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (11)",
@@ -16,13 +16,13 @@
       "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (7)",
       "Santana Row (7)",
-      "City of Cupertino (34)",
+      "City of Cupertino (38)",
       "Opera San José (5)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
       "SAP Center (12)",
       "The Tech Interactive (14)",
-      "Books Inc (4)",
+      "Books Inc (8)",
       "San Jose Museum of Art (2)",
       "Peninsula Open Space Trust (2)"
     ],
@@ -209,8 +209,8 @@
         "id": "city-of-cupertino",
         "label": "City of Cupertino",
         "status": "ok",
-        "count": 34,
-        "liveCount": 34,
+        "count": 38,
+        "liveCount": 38,
         "error": null,
         "sources": [
           "City of Cupertino"
@@ -284,8 +284,8 @@
         "id": "books-inc",
         "label": "Books Inc",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 8,
+        "liveCount": 8,
         "error": null,
         "sources": [
           "Books Inc"
@@ -1104,7 +1104,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-18T22:01:33.928Z"
+        "checkedAt": "2026-11-19T02:26:52.125Z"
       }
     },
     {
@@ -1127,7 +1127,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-18T22:01:33.930Z"
+        "checkedAt": "2026-11-19T02:26:52.127Z"
       }
     },
     {
@@ -1150,7 +1150,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-18T22:01:33.930Z"
+        "checkedAt": "2026-11-19T02:26:52.127Z"
       }
     },
     {
@@ -1173,7 +1173,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T22:01:33.931Z"
+        "checkedAt": "2026-11-19T02:26:52.127Z"
       }
     },
     {
@@ -1196,7 +1196,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-18T22:01:33.931Z"
+        "checkedAt": "2026-11-19T02:26:52.127Z"
       }
     },
     {
@@ -1219,7 +1219,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-18T22:01:33.932Z"
+        "checkedAt": "2026-11-19T02:26:52.129Z"
       }
     },
     {
@@ -1242,7 +1242,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-18T22:01:33.932Z"
+        "checkedAt": "2026-11-19T02:26:52.129Z"
       }
     },
     {
@@ -1834,6 +1834,74 @@
       "kidFriendly": false
     },
     {
+      "id": "6db668d0171e",
+      "title": "Free Home Composting Education Workshop",
+      "date": "2027-06-26",
+      "displayDate": "Sat, Jun 26",
+      "time": "10:30 AM",
+      "endTime": "12:30 PM",
+      "venue": "Cupertino",
+      "address": "Location varies per date. Please visit link.ucanr.edu/signup for up-to-date information",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
+      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "8bb7bcc19931",
+      "title": "Free Home Composting Education Workshop",
+      "date": "2027-07-31",
+      "displayDate": "Sat, Jul 31",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Cupertino",
+      "address": "Location varies per date. Please visit link.ucanr.edu/signup for up-to-date information",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
+      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "cddb54e4f85a",
+      "title": "Free Home Composting Education Workshop",
+      "date": "2027-09-25",
+      "displayDate": "Sat, Sep 25",
+      "time": "10:30 AM",
+      "endTime": "12:30 PM",
+      "venue": "Cupertino",
+      "address": "Location varies per date. Please visit link.ucanr.edu/signup for up-to-date information",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
+      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
+      "id": "c5bf27707e26",
+      "title": "Free Home Composting Education Workshop",
+      "date": "2027-10-30",
+      "displayDate": "Sat, Oct 30",
+      "time": "10:00 AM",
+      "endTime": "12:00 PM",
+      "venue": "Cupertino",
+      "address": "Location varies per date. Please visit link.ucanr.edu/signup for up-to-date information",
+      "city": "cupertino",
+      "category": "community",
+      "cost": "free",
+      "description": "The UC Cooperative Extension Composting Education Program, sponsored by the Recycling and Waste Reduction Commission of Santa Clara County, offers community classes throughout Santa Clara County that teach residents how to build compost piles and worm bins and apply the compost in their landscape. Register in advance at UCCE Composting Education Program registration, or call 408-918-4640. View additional details about these classes on the Home Compost page. Please note: Composting Basics Workshop scheduled for April 11 is canceled due to rain. Time and location change for the September 26 date.",
+      "url": "https://www.cupertino.gov/Events-directory/Free-Home-Composting-Education-Workshop",
+      "source": "City of Cupertino",
+      "kidFriendly": false
+    },
+    {
       "id": "126ef4eb854a",
       "title": "Fiddler on the Roof",
       "date": "2026-11-20",
@@ -1862,7 +1930,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1879,7 +1947,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1896,7 +1964,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1913,7 +1981,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3078,7 +3146,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/three-days-grace",
         "date": "2026-11-18",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.779Z"
+        "checkedAt": "2026-11-19T02:27:36.063Z"
       }
     },
     {
@@ -3102,7 +3170,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.779Z"
+        "checkedAt": "2026-11-19T02:27:36.064Z"
       }
     },
     {
@@ -3126,7 +3194,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.781Z"
+        "checkedAt": "2026-11-19T02:27:36.065Z"
       }
     },
     {
@@ -3150,7 +3218,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.783Z"
+        "checkedAt": "2026-11-19T02:27:36.068Z"
       }
     },
     {
@@ -3174,7 +3242,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.783Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3198,7 +3266,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.783Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3239,7 +3307,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.784Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3263,7 +3331,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.784Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3287,7 +3355,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.784Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3311,7 +3379,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.784Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3335,7 +3403,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-18T22:02:05.784Z"
+        "checkedAt": "2026-11-19T02:27:36.069Z"
       }
     },
     {
@@ -3628,10 +3696,78 @@
       "kidFriendly": false
     },
     {
+      "id": "3e5483248b2e",
+      "title": "BARBARA BOND MD: THE WRONG ONE DIED",
+      "date": "2027-01-28",
+      "displayDate": "Thu, Jan 28",
+      "time": "6:30 PM",
+      "endTime": "7:30 PM",
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
       "id": "ff8a0d7e66fa",
       "title": "DEBBIE RAPHAEL: CARRY MY STRENGTH",
       "date": "2027-01-28",
       "displayDate": "Thu, Jan 28",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "ea63c669d798",
+      "title": "MIKE CHEN: THE HAUNTING OF SANTO DOMINGO STREET",
+      "date": "2027-02-02",
+      "displayDate": "Tue, Feb 2",
+      "time": "7:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Palo Alto",
+      "address": "855 El Camino Real, Palo Alto, CA 94301",
+      "city": "palo-alto",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "93da56297de1",
+      "title": "LILLY LU: DEATH WISH",
+      "date": "2027-02-06",
+      "displayDate": "Sat, Feb 6",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Books Inc. Mountain View",
+      "address": "317 Castro St, Mountain View, CA 94041",
+      "city": "mountain-view",
+      "category": "arts",
+      "cost": null,
+      "description": "",
+      "url": "https://www.booksinc.com/pages/events",
+      "source": "Books Inc",
+      "kidFriendly": false
+    },
+    {
+      "id": "b2ba7d1bcfd8",
+      "title": "ELAINE HSIEH YU: UGLY DUMPLING",
+      "date": "2027-03-16",
+      "displayDate": "Tue, Mar 16",
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Books Inc. Palo Alto",
