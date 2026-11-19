@@ -154,7 +154,7 @@ const CORRECTIONS = [
     facts: {
       venue: "St. Clare Parish Hall", address: "941 Lexington St., Santa Clara, CA 95050",
       category: "education", cost: "free",
-      description: "Join Christopher Tirres for a workshop on what Catholic social teaching says about poverty and why those teachings matter today.",
+      description: "Join Christopher Tirres for a workshop on how Catholic social teaching addresses poverty and why those ideas matter today.",
       blurb: "Discuss Catholic social teaching on poverty with Christopher Tirres at St. Clare Parish Hall.",
     },
     appendAttendanceNote: "The organizer asks attendees to register in advance.",
@@ -2907,6 +2907,16 @@ const CORRECTIONS = [
     facts: {},
     copyReplacements: [[/,\s*then make art with\b/gi, " and explore artworks with"]],
   },
+  // Cupertino lists the room in the December 2 entry of the schedule.
+  // https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore
+  {
+    date: "2026-12-02",
+    url: "https://www.cupertino.gov/Events-directory/Monthly-Chat-with-Mayor-Moore",
+    facts: event => event.venue ? {} : {
+      venue: "Quinlan Community Center, Social Room",
+      address: "10185 N. Stelling Road, Cupertino, CA 95014",
+    },
+  },
   // The city's event body excerpt omits the separate admission panel. That
   // panel requires preregistration and prices residents/nonresidents, with
   // an explicit exemption for children under two. Do not invent a deadline.
@@ -3112,7 +3122,7 @@ const CORRECTIONS = [
     facts: { category: "music" },
   },
   // Prefer the organizer's dated registration page to its sparse calendar
-  // card: Otto Lee's room is SVLG's, and Larry Klein's sales have ended.
+  // card: Otto Lee's room is SVLG's.
   // Scope by occurrence and Eventbrite ID; tracking queries are not identity.
   // Evidence: docs/qa/2026-10-30-1307-fact-check.md (fresh ticket pages).
   {
@@ -3122,10 +3132,14 @@ const CORRECTIONS = [
   },
   {
     date: "2026-12-10",
-    matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/coffee-conversation-larry-klein-tickets-1998017392807(?:[/?#]|$)/.test(event.url || ""),
+    // The ticket page marks this date postponed and lists the replacement as TBD.
+    // https://www.eventbrite.com/e/postponed-coffee-conversation-larry-klein-tickets-1998017392807
+    matches: (event) => /^https:\/\/www\.eventbrite\.com\/e\/(?:postponed-)?coffee-conversation-larry-klein-tickets-1998017392807(?:[/?#]|$)/.test(event.url || ""),
     facts: {
+      eventStatus: "https://schema.org/EventPostponed",
       registration: REGISTRATION_CLOSED,
-      attendanceNote: "Eventbrite ticket sales were closed when checked October 30. Confirm availability with SVLG before going.",
+      description: "Silicon Valley Leadership Group postponed the conversation with Sunnyvale Mayor Larry Klein. A new date and time have yet to be announced.",
+      blurb: "Silicon Valley Leadership Group postponed this event. A new date and time have yet to be announced.",
     },
   },
   // This road match is in Phoenix, with no street address in Localist.

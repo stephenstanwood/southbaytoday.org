@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { isBriefingEventAvailable } from "../lib/city-briefing-integrity.mjs";
 
 const otto = {
@@ -16,14 +17,17 @@ const larry = {
   time: "10:00 AM", endTime: "11:00 AM", cost: "unknown", category: "community",
 };
 
-test("SVLG's dated ticket pages protect the venue and closed sales through repeated passes", () => {
+test("SVLG's dated ticket pages protect the venue and prevent publication of a postponed date", () => {
   const fixedOtto = applyVerifiedEventFacts(otto);
   assert.equal(fixedOtto.venue, "SVLG Conference Room");
   assert.deepEqual(fixedOtto, { ...otto, venue: "SVLG Conference Room" });
   const fixedLarry = applyVerifiedEventFacts(larry);
   assert.equal(fixedLarry.registration, "closed");
-  assert.match(fixedLarry.attendanceNote, /sales.*closed.*October 30.*SVLG/i);
-  assert.equal(isBriefingEventAvailable(fixedLarry), false, "closed ticketing must reach existing availability consumers");
+  assert.equal(fixedLarry.eventStatus, "https://schema.org/EventPostponed");
+  assert.match(fixedLarry.description, /postponed.*new date and time/i);
+  assert.equal(isEventPublishable(fixedLarry), false);
+  assert.equal(isBriefingEventAvailable(fixedLarry), false);
+  assert.equal(isEventPublishable(applyVerifiedEventFacts({ ...larry, url: larry.url.replace("/e/", "/e/postponed-") })), false);
   for (const [input, corrected] of [[otto, fixedOtto], [larry, fixedLarry]]) {
     assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
     assert.deepEqual(applyVerifiedEventFacts({ ...input, url: input.url.split("?")[0] + "?aff=another-source" }), { ...corrected, url: input.url.split("?")[0] + "?aff=another-source" });
