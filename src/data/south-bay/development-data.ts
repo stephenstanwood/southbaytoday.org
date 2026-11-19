@@ -102,12 +102,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google and Lendlease ended their development partnership in 2023, and the project is on hold. The development agreement gives Google three ways to meet a ten-year milestone. Google can substantially complete at least 2 million sq ft of office space and make all required payments and contributions for that construction. Google can also provide the community benefits tied to 2 million sq ft of office space without building that space, or combine the two approaches.",
-    scale: "Up to 7.3M sq ft of office space and 4,000 homes planned",
+      "The San José City Council approved Google's roughly 80-acre mixed-use district next to Diridon Station in 2021. The approval allows up to 7.3 million sq ft of office space and 5,900 homes, plus parks and retail. Google's plan proposes up to 4,000 homes. Google and Lendlease ended their development partnership in 2023, and the project is on hold. Under the development agreement, Google can meet a ten-year milestone by substantially completing at least 2 million gross sq ft of office space and making all associated payments and contributions, including community benefits. It can also provide the benefits tied to 2 million gross sq ft without building the offices, or build less and provide the benefits tied to the remaining space.",
+    scale: "Up to 7.3M sq ft of offices and 5,900 homes allowed",
     developer: "Google (Lendlease partnership ended 2023)",
     timeline: "Entitled in 2021. Project on hold.",
     featured: true,
-    sourceNote: "San José's Downtown West project page gives the approved scope at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/major-development-projects/downtown-west-mixed-use-plan. Development Agreement §§ 1.117 and 2.2 define the ten-year obligation and possible extensions at https://www.sanjoseca.gov/home/showpublisheddocument/77459/637680918932500000. Lendlease announced the end of the partnership at https://www.lendlease.com/siteassets/lendlease/shared/investor-centre/announcements/asx/2023/11/2635882.pdf.",
+    sourceNote: "San José's project page gives the planned and permitted housing figures at https://www.sanjoseca.gov/your-government/departments-offices/planning-building-code-enforcement/planning-division/major-development-projects/downtown-west-mixed-use-plan. Google's project FAQ gives the 4,000-home proposal at https://realestate.withgoogle.com/sanjose/faq/. Development Agreement §§ 1.117 and 2.2 define the ten-year obligation and possible extensions at https://www.sanjoseca.gov/home/showpublisheddocument/77459/637680918932500000. Lendlease announced the end of the partnership at https://www.lendlease.com/siteassets/lendlease/shared/investor-centre/announcements/asx/2023/11/2635882.pdf.",
   },
 
   {
@@ -178,12 +178,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "tech-campus",
     status: "under-construction",
     description:
-      "Super Micro Computer (NASDAQ: SMCI) is building a new manufacturing facility at 688 E Brokaw Road in North San José, permitted in March 2026. The $72M warm-shell build-out will expand SMCI's AI server production capacity as demand for its GPU server systems continues to climb. Supermicro has its global headquarters and major manufacturing operations across San José.",
-    scale: "$72M facility",
+      "San José issued a permit in March 2026 to complete the building shell for Supermicro at 688 E. Brokaw Road. The permit lists a valuation of $72 million for the work. Supermicro has its headquarters and manufacturing operations in San José.",
+    scale: "$72M permit valuation",
     developer: "Super Micro Computer",
     timeline: "Permitted March 2026",
     featured: false,
-    sourceNote: "Permit details from San José city permit records, March 2026. Verify permit status at sjpermits.org.",
+    sourceNote: "San José's building permit feed lists the scope and valuation under permit 2026-108908-CI at https://data.sanjoseca.gov/dataset/last-30-days-building-permits. The permit was issued March 23, 2026. Supermicro lists the address on its campus map at https://www.supermicro.com/a_images/about/map_SJ_campus.pdf.",
   },
 
   {
@@ -194,12 +194,12 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "housing",
     status: "under-construction",
     description:
-      "SummerHill Homes is redeveloping the former Los Gatos Lodge site — a historic 8.9-acre motor inn at 50 Los Gatos-Saratoga Road that closed in September 2025 — into 155 townhome-style condominiums called Solana. The project was approved unanimously by the Los Gatos Town Council in March 2025 (the town's first SB 330 streamlined application) and SummerHill closed on the $78M property in October 2025. Groundbreaking followed in November 2025. The three-story Spanish Revival buildings include 26 affordable units (16 low-income, 10 moderate-income) priced around $400K–$600K; market-rate units are expected to list around $1.5M–$2M. Each home will include solar panels, and the site includes a pedestrian path to Los Gatos High School.",
-    scale: "155 townhome condos (26 affordable), 8.9 acres",
+      "SummerHill Homes is building 155 townhome-style condominiums at the former Los Gatos Lodge site at 50 Los Gatos-Saratoga Road. The Los Gatos Town Council approved the three-story buildings in March 2025. The project includes 26 below-market-rate homes, with 16 for low-income households and 10 for moderate-income households. Each home will have solar panels.",
+    scale: "155 townhome condos (26 affordable), 8.82 acres",
     developer: "SummerHill Homes",
-    timeline: "Groundbreaking Nov 2025; move-ins expected 2027",
+    timeline: "Approved March 2025. SummerHill lists the project as coming in spring 2027.",
     featured: false,
-    sourceNote: "Sources: Los Gatan, SF YIMBY, The Real Deal (Oct 2025). Verify current sales/construction status at summerhill.com.",
+    sourceNote: "The town's SB 330 register lists the March 4, 2025 approval at https://www.losgatosca.gov/2875/Senate-Bill-SB-330. The town-posted project description gives the acreage, affordability split, and solar plans at https://www.losgatosca.gov/DocumentCenter/View/38454/Project-Description---50-Los-Gatos-Saratoga-Rd-PDF. SummerHill lists its current schedule at https://www.summerhillhomes.com/los-gatos/solana/.",
   },
 
   // ── APPROVED ────────────────────────────────────────────────────────────
@@ -273,18 +273,17 @@ export const DEV_PROJECTS: DevProject[] = [
 
   {
     id: "los-gatos-downtown-mixed-use",
-    name: "Los Gatos Downtown Mixed-Use Development",
+    name: "143 and 151 East Main Street Mixed-Use Project",
     city: "Los Gatos",
     cityId: "los-gatos",
     category: "mixed-use",
     status: "approved",
     description:
-      "Los Gatos has approved several infill mixed-use projects in its downtown core, adding residential units above ground-floor retail on Santa Cruz Avenue and adjacent streets. These smaller-scale projects preserve the town's character while adding needed housing.",
-    scale: "Multiple small parcels",
-    developer: "Various",
-    timeline: "Active development",
+      "The Los Gatos Town Council approved a four-story building at 143 and 151 East Main Street with 30 homes, six of them affordable, and 2,416 sq ft of ground-floor commercial space.",
+    scale: "30 homes and 2,416 sq ft of ground-floor commercial space",
+    timeline: "Approved May 2025",
     featured: false,
-    sourceNote: "Rollup of small downtown infill approvals along Santa Cruz Ave and adjacent streets, not one tracked development. Verify at losgatosca.gov planning records.",
+    sourceNote: "The town's Notice of Determination gives the approved scope and the May 27, 2025 decision at https://ceqanet.lci.ca.gov/2025021056/2.",
   },
 
   {
