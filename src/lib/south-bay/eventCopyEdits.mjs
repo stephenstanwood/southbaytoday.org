@@ -25,6 +25,7 @@ const EDITS = {
     title: [
       // The organizer's title clips "Hills"; its venue and address spell it out.
       [/^(Community Emergency Response Team \(CERT\) Academy - Spring \d{4} Los Altos) Hi$/g, "$1 Hills"],
+      [/^(Community Emergency Response Team \(CERT\) Academy) *- *Spring (\d{4}) LosAltosHills$/g, "$1 - Spring $2 Los Altos Hills"],
     ],
   },
   "Guadalupe River Park Conservancy": {
@@ -73,6 +74,7 @@ const EDITS = {
       ["Clases de inglés para Hispanos - Nivel 1", "Clases de inglés para hispanos - Nivel 1"],
       // The library's occurrence page spells the partner's name ICAN.
       ["Vietnamese Storytime with Ican", "Vietnamese Storytime with ICAN"],
+      ["(ELL) for Low-Intermediate/Inglés Para Intermedio Bajo (ELL)", "(ELL) for Low-Intermediate / Inglés de nivel intermedio bajo (ELL)"],
     ],
     attendanceNote: [
       ["Tickets and participation Free.", "Tickets and participation are free."],
@@ -760,6 +762,8 @@ const EDITS = {
       ["by David Talbot No registration needed.", "by David Talbot. No registration is needed."],
       [/\bAR Trepreneur(?=: Teen Craft Fair\b| (?:entrepreneur )?program\b)/g, "ARTrepreneur"],
       ["featured at this Fair have complete the ARTrepreneur", "featured at this fair have completed the ARTrepreneur"],
+      ["completed the ARTrepreneur entrepreneur program", "completed the ARTrepreneur program"],
+      ["Earthwise Pens We are a business who believes", "At Earthwise Pens, we believe"],
       ["Scheduled Vendors Fuzzy and Fluffy Fuzzy and Fluffy will be selling", "Fuzzy and Fluffy is among the scheduled vendors and will sell"],
       ["Keychain items like the mini octopus, mushroom pops, and mini chickens.", "Its keychains include mini octopuses, mushroom pops, and mini chickens."],
       ["Green Apple Boutique Welcome to Green Apple Boutique!", "Welcome to Green Apple Boutique!"],
@@ -772,6 +776,35 @@ const EDITS = {
       ["Yellowbunny Crochets Yellowbunny Crochets Logo Yellowbunny Crochets sells", "Yellowbunny Crochets sells"],
       ["Meghna's Nails Meghna's Nails Logo Meghna's nails sells handmade press on nails.", "Meghna's Nails sells handmade press-on nails."],
       ["painted with gel Polish", "painted with gel polish"],
+      [
+        "Join us for a Dungeons & Dragons session that will be built around the magical world of Mathema, where math problems are as numerous as the creatures you will encounter in this interactive and immersive adventure that will help young patrons practice math. Each session will cover different grade-level math concepts. And math problems will be customized according to the grade level(s) of participants.",
+        "Join us for a Dungeons & Dragons session set in the magical world of Mathema, where math problems are as numerous as the creatures you'll encounter. Young patrons can practice math during the interactive adventure. Each session covers different math concepts, with problems tailored to participants' grade levels.",
+      ],
+      ["Tinker CAD or SketchUp", "Tinkercad or SketchUp"],
+      ["a 3D printed giveaway upon participation.", "a 3D-printed giveaway for taking part."],
+      [
+        "This program, presented by a knowledgeable volunteer, will be a presentation on the basics of the 3D printing process and an opportunity for Q&A.",
+        "A volunteer will explain the basics of 3D printing and answer questions.",
+      ],
+      [
+        "Aprende sobre los alimentos orgánicos, los químicos que usamos diariamente, cómo afectan nuestra salud y el medio ambiente, y descubre maneras sencillas de reducir nuestro impacto ambiental.",
+        "Aprende sobre los alimentos orgánicos, los químicos que usamos diariamente y cómo afectan nuestra salud y el medio ambiente. Descubre maneras sencillas de reducir nuestro impacto ambiental.",
+      ],
+      ["marcadores Sharpie de colores, piensa en cuál es tu comida reconfortante.", "marcadores Sharpie de colores. Piensa en cuál es tu comida reconfortante."],
+      [
+        "This program was brought to you by the San Jose Legacy Youth Foundation. Part of the STEM Sundays Programming at Alviso Branch Library.",
+        "The San Jose Legacy Youth Foundation presents this program as part of STEM Sundays at Alviso Branch Library.",
+      ],
+      ["and their parents/caregiver.", "and their parents or caregivers."],
+      [
+        "English Language Learners are invited to low-intermediate friendly lessons at the Rose Garden Branch Library.",
+        "The Rose Garden Branch Library offers lessons for low-intermediate English language learners.",
+      ],
+      ["nuestras clases para intermedio bajo", "nuestras clases de nivel intermedio bajo"],
+      ["Enjoy classic anime from the past, new series from today, and make new friends!", "Watch classic anime and newer series while making new friends!"],
+      ["a new STEAM adventure, from robots to engineering to science to making.", "a new hands-on STEAM activity in robotics, engineering, or science."],
+      ["Thanksgiving themed button making activity", "Thanksgiving-themed button-making activity"],
+      ["ALL materials will be provided.", "All materials will be provided."],
       ["Knitting, crochet, embroidery, felt, or your latest fiber arts project all are welcome.", "Bring your knitting, crochet, embroidery, felting, or another fiber arts project."],
       ["Ages 8 and up, younger children are welcome with adult supervision.", "The program is for ages 8 and up. Younger children are welcome with adult supervision."],
       [
@@ -796,6 +829,12 @@ const EDITS = {
         "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
       ],
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
+      ["completed the ARTrepreneur entrepreneur program", "completed the ARTrepreneur program"],
+      ["in this hands-on kids and teens workshop.", "in this hands-on workshop for kids and teens."],
+      [
+        "Drop in for a hands-on STEAM activity, from robots to engineering to science to making, with supplies available while they last.",
+        "Drop in to explore robotics, engineering, or science through hands-on projects. Supplies are available while they last.",
+      ],
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
       [/\bIcan\b/g, "ICAN"],
       ["Lego challenges", "LEGO challenges"],
@@ -991,6 +1030,12 @@ const EDITS = {
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
     ],
     description: [
+      ["decorate sweet-smelling cinnamon ornament", "decorate a sweet-smelling cinnamon ornament"],
+      [
+        /\bWhen: (Friday, December \d+(?:st|nd|rd|th)?) Time: ([^;]+); Where: Los Altos Library – Orchard Room Who: Kids aged (\d+ to \d+) and their families (?=No registration required)/g,
+        "$1, $2, in the Orchard Room at Los Altos Library. Open to kids ages $3 and their families. ",
+      ],
+      ["Cupertino Library Knit Alongs continue in", "Cupertino Library's Knit-Alongs continue in"],
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       [
         "A Sheriff's Deputy will read books and share safety tips. Please arrive on time and seating is limited.",
@@ -1166,6 +1211,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["Staff is available to help with a variety of tech questions including:", "Staff can help with a variety of tech questions, including:"],
       [
         "Register This class run by Silicon Valley Bicycle Coalition (SVBC) in collaboration with Valley Transportation Authority (VTA) is provided to the public for at no cost with funding from 2016 Measure B courtesy of VTA.",
         "Register through the event listing. Silicon Valley Bicycle Coalition (SVBC) runs this free public class in collaboration with Valley Transportation Authority (VTA), with funding from VTA's 2016 Measure B.",
@@ -1225,6 +1271,10 @@ const EDITS = {
       ["Join friendly trivia competition run by", "Join a friendly trivia competition run by"],
       ["Kent to international music, no partner or", "Kent to international music; no partner or"],
       ["Watch dry ice turn solid to gas", "Watch dry ice turn from solid to gas"],
+      [
+        "Bring your technology questions or ongoing device problems to Rinconada Library for drop-in help on Tuesday mornings.",
+        "Bring your technology questions to Rinconada Library for drop-in help on Tuesday mornings.",
+      ],
     ],
   },
   "City of Cupertino": {
@@ -1270,6 +1320,7 @@ const EDITS = {
     ],
     blurb: [
       ["Make Advent crafts in the children's wings with all ages,", "Make Advent crafts with people of all ages in the children's wings,"],
+      ["visit Santa, Sparky, and the cookie decorating table.", "visit Santa, Sparky, and the cookie-decorating table."],
       [/\bCvmf\b/g, "CVMF"],
       [/\bImax\b/g, "IMAX"],
       ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
@@ -1286,6 +1337,11 @@ const EDITS = {
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
+      [
+        "Annual holiday toy drive where families who donate a toy get a fire truck ride around the block. Also features",
+        "Families who donate a toy at this annual holiday drive get a fire truck ride around the block. The event also features",
+      ],
+      ["a cookie decorating table, and a letters to Santa booth.", "a cookie-decorating table, and a letters-to-Santa booth."],
       [
         "The Saint Michael Trio's comic program about their \"Musical Attention Deficit Disorder,\" racing through the centuries from Beethoven to the blues.",
         "The Saint Michael Trio races through the centuries from Beethoven to the blues in a comic program about what they call \"Musical Attention Deficit Disorder.\"",
@@ -1411,6 +1467,8 @@ const EDITS = {
     description: [
       ["Queralt Solé i Barjau is Associate Professor", "Queralt Solé i Barjau is an associate professor"],
       ["Join Iajs for Bones, Borders, and Black Mirrors", "Join IAJS for Bones, Borders, and Black Mirrors"],
+      ["Cinematic Language in Horror Manga a discussion with", "Cinematic Language in Horror Manga, a discussion with"],
+      ["with the Omac & Stanford ROTC Association", "with OMAC and the Stanford ROTC Association"],
       ["For more info follow @Stanford Bicycle Project", "For more information, follow @StanfordBicycleProject on Instagram."],
       [
         /^Microbiology & Immunology Wednesday Seminar: Huang & Monack Labs - Saria A\. McKeithen–Mead "Capturing evolution via gene transfer in the gut microbiome\." and Víctor R\.$/g,
