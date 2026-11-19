@@ -24,6 +24,10 @@ export function applyVerifiedSjsuEventOverride(event) {
   // https://infocon.arma.org/
   // Evidence: docs/qa/2026-10-19-0407-fact-check.md.
   if (url === "https://events.sjsu.edu/event/ischool-at-arma-infocon-2026") return null;
+  // This calendar row supplies no location or public invitation. Its only
+  // external link is unrelated to the university, so the campus fallback
+  // would assign a venue the listing does not establish.
+  if (url === "https://events.sjsu.edu/event/thanksgiving-invitation") return null;
   if (NOVEMBER_POSTER_DATES.has(url)) {
     if (event.date !== NOVEMBER_POSTER_DATES.get(url)) return null;
     return applyVerifiedEventFacts({ ...event, url });

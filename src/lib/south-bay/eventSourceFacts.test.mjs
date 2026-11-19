@@ -199,8 +199,11 @@ test("only the exact Improv show times get the verified availability notes", () 
   assert.equal(venueWaitlist.registration, "full");
   const thursdayLate = applyVerifiedEventFacts({ ...show, date: "2026-11-19", time: "9:45 PM", url: ticketUrl("14740623") });
   assert.equal(thursdayLate.registration, "full");
-  const selling = { ...show, date: "2026-11-19", time: "7:30 PM", url: ticketUrl("14153314") };
-  assert.deepEqual(applyVerifiedEventFacts(selling), selling);
+  const thursdayEarly = applyVerifiedEventFacts({ ...show, date: "2026-11-19", time: "7:30 PM", url: ticketUrl("14153314") });
+  assert.equal(thursdayEarly.registration, "full");
+  assert.equal(thursdayEarly.costNote, null);
+  const anotherTime = { ...show, date: "2026-11-19", time: "8:30 PM", url: ticketUrl("14153314") };
+  assert.deepEqual(applyVerifiedEventFacts(anotherTime), anotherTime);
 
   const wednesday = applyVerifiedEventFacts({ ...show, date: "2026-11-18", time: "7:30 PM", url: ticketUrl("14984583") });
   assert.equal(requiresAttendanceConfirmation(wednesday), true);

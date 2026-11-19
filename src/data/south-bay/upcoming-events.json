@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-19T10:52:57.315Z",
-  "eventCount": 1480,
+  "eventCount": 1479,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -3003,13 +3003,13 @@
       "city": "san-jose",
       "category": "family",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.cdm.org/calendar/",
+      "description": "Storytime in the Wonder Cabinet Forest for children ages 4 and under.",
+      "url": "https://www.cdm.org/recurring-event/toddler-storytime/",
       "source": "Children's Discovery Museum",
       "kidFriendly": true,
       "audienceAge": "kids",
       "photoRef": "places/ChIJHyD5sa_Mj4ARURwnBwmTwTU/photos/AV-0GLdD_y7gkTd-FR098bnkqm-IGOsTxOecT__b5xxiismBNurXVWaFYhenjm2m_KR7OwdYGO2HjgrhTuERWmdCQoHKb5lw0LeT7Z8qjIe3tmov7tocEzCbIVeXEPQJ1dRPrfrtlnvjWTFxUm70ENIpGaFBPuxU18y61u6WzJ1i_UF3v1KMJDbkfoDNzqBamWdMhRcO9RrdVemNUr26NuQUCU8eUmNfpI6R7BbXhKc1FaGd4hDAKXVEFiE4Z2M5IPt0DPDGgpLmEO9KuxeY-dcJrqV9lG70yRj-tQDT7RcwT975VfT35C1spdXc88MPCsroUPYndt_CUFetWPtqZxLlH_cA6Rt2SVw-kPveeGfbkki1K1BrKKTT6KfBA8cpeXeb0xlvv-Pf5kobdwfCCX2FT_Hz2h3Wg7U",
-      "blurb": "Sit with your toddler for stories, songs, and interactive read-aloud time.",
+      "blurb": "Bring children ages 4 and under to storytime in the Wonder Cabinet Forest.",
       "firstSeenAt": "2026-11-19T10:52:57.292Z"
     },
     {
@@ -5528,16 +5528,17 @@
       "venue": "Mission Santa Clara",
       "address": "",
       "city": "santa-clara",
-      "category": "community",
-      "cost": "",
+      "category": "music",
+      "cost": "paid",
       "description": "Night 1 - December 4, 2026 Night 2 - December 5, 2026",
-      "url": "https://events.scu.edu/arts-and-sciences/event/478083-27th-annual-festival-of-lights",
+      "url": "https://scupresents.scu.edu/event/27th-annual-festival-of-lights-82x73c",
       "source": "Santa Clara University",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://events.scu.edu/live/image/gid/10/width/1260/height/630/crop/1/10697_54976757973_a4eab8cf5f_o.jpg",
-      "blurb": "Attend the annual Festival of Lights at Mission Santa Clara on a Friday evening, with the festival's two nights listed under this event.",
-      "firstSeenAt": "2026-11-19T10:52:57.292Z"
+      "blurb": "Hear Santa Clara University's Chamber Singers and Concert Choir perform at Mission Santa Clara.",
+      "firstSeenAt": "2026-11-19T10:52:57.292Z",
+      "attendanceNote": "Tickets are sold separately for each performance."
     },
     {
       "id": "sanjosetheaters-4cadd73a66f83788",
@@ -25361,8 +25362,8 @@
       "venue": "Hammer Theatre Center",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "Candlelight presents a unique concert experience featuring a diverse range of musical genres in an intimate and captivating setting.",
       "url": "https://events.sjsu.edu/event/candlelight-queen-vs-abba-1902",
       "source": "SJSU Events",
@@ -25371,7 +25372,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJxfWisLvMj4ARLNfwpDgtJyY/photos/AV-0GLchuniDG2a_Yp7dPJStXFkOVO3FxHo3-yQVuL2RBi2Y7l0anzuWZY3dAq8YLd3QZPw9BnheGaMkVe4XehxE9O9VRUoHF0LZ3zgXfnuG9T1yPlGfVdlsqpIpNrAnchLTz3LeZuQTSPNElsWqDjGfaWNTvkzGGlkXTiWBLGd5gQ1qTa_yY0s-NF4q4cGnExsOY7RP1MoVASy5H3z-7IpUGMO8KS8jM6EwL9SWgdFY57S_hsNHU4aYbGe-BzGxEfl_f6_NFNykHuNNsAYZ27q0OvJ1M_gse-gi4TXfBKu8-tMEc8MEmVMCap-pgPcvnhwXAM37P_CtyKGsxWuRKV1VOiqJrcpw1eehtEF6KlF17QLqPYoBtXkH7Py2eLB_2fWIK8atVxpWE4WZLFPXwLltglxIKPA",
       "blurb": "Hear a Candlelight concert at Hammer Theatre Center built around the title pairing of Queen and ABBA.",
-      "firstSeenAt": "2026-11-19T10:52:57.292Z"
+      "firstSeenAt": "2026-11-19T10:52:57.292Z",
+      "registration": "required",
+      "attendanceNote": "Buy tickets in advance through Fever. Ages 8 and up. An adult must accompany anyone under 16."
     },
     {
       "id": "sjsu-4306bb4779afa64b",
@@ -25383,8 +25386,8 @@
       "venue": "Hammer Theatre Center",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "Candlelight presents a unique concert experience featuring a diverse range of musical genres in an intimate and captivating setting.",
       "url": "https://events.sjsu.edu/event/candlelight-the-best-of-hans-zimmer",
       "source": "SJSU Events",
@@ -25393,7 +25396,9 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJxfWisLvMj4ARLNfwpDgtJyY/photos/AV-0GLchuniDG2a_Yp7dPJStXFkOVO3FxHo3-yQVuL2RBi2Y7l0anzuWZY3dAq8YLd3QZPw9BnheGaMkVe4XehxE9O9VRUoHF0LZ3zgXfnuG9T1yPlGfVdlsqpIpNrAnchLTz3LeZuQTSPNElsWqDjGfaWNTvkzGGlkXTiWBLGd5gQ1qTa_yY0s-NF4q4cGnExsOY7RP1MoVASy5H3z-7IpUGMO8KS8jM6EwL9SWgdFY57S_hsNHU4aYbGe-BzGxEfl_f6_NFNykHuNNsAYZ27q0OvJ1M_gse-gi4TXfBKu8-tMEc8MEmVMCap-pgPcvnhwXAM37P_CtyKGsxWuRKV1VOiqJrcpw1eehtEF6KlF17QLqPYoBtXkH7Py2eLB_2fWIK8atVxpWE4WZLFPXwLltglxIKPA",
       "blurb": "Hear a Candlelight concert of Hans Zimmer's music at Hammer Theatre Center on a Sunday evening.",
-      "firstSeenAt": "2026-11-19T10:52:57.292Z"
+      "firstSeenAt": "2026-11-19T10:52:57.292Z",
+      "registration": "required",
+      "attendanceNote": "Buy tickets in advance through Fever. Ages 8 and up. An adult must accompany anyone under 16."
     },
     {
       "id": "scu-daadf09ac7861608",
@@ -25794,8 +25799,8 @@
       "venue": "Hammer Theatre Center",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
       "url": "https://events.sjsu.edu/event/hammer-presents-merry-achi-christmas-2026",
       "source": "SJSU Events",
@@ -25816,8 +25821,8 @@
       "venue": "Hammer Theatre Center",
       "address": "101 Paseo De San Antonio, San José, CA 95113",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "music",
+      "cost": "paid",
       "description": "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
       "url": "https://events.sjsu.edu/event/hammer-presents-merry-achi-christmas-2026",
       "source": "SJSU Events",
@@ -30646,28 +30651,6 @@
       "firstSeenAt": "2026-11-19T02:35:24.038Z"
     },
     {
-      "id": "sjsu-c0d94713c6b27214",
-      "title": "Thanksgiving Invitation",
-      "date": "2026-11-25",
-      "displayDate": "Wed, Nov 25",
-      "time": "2:00 PM",
-      "endTime": "6:00 PM",
-      "venue": "San Jose State University",
-      "address": "",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "free",
-      "description": "Special Invitation For Thanksgiving Invitation",
-      "url": "https://events.sjsu.edu/event/thanksgiving-invitation",
-      "source": "SJSU Events",
-      "image": null,
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJvaE_uF7Nj4ARJF49qlouHK8/photos/AV-0GLdoboYEeSYLUj-tgxfbjgdBvyuOvPhAvgybFWWvGFCQgmgeIvA5ndYAINvEOVrSGA5DllYKAGkfv3vkROeyy-K3Qpd_rUi9ZEZ14g6Yu-gf5BxzKHGxL5nqWAY8KFr7y2SDkMy1xLA7-5eX7mirJM8qXR28SB7ndtxk2KlzU6HKK11E30ESCYNEEeFgUJcZogNFNDONuyD-q_kztIyJ-66n8bjujL3VyZmkCB34_PJYj7JFlggwh9bxj7QA8v5ufepnstMA42CUSARJNftIxvKjgBi9-9cXLTyKXiG1DtWFFVEv6iTHxYRxLaGt3N7_LsTqs10UDnEWngtwO3vIjlUooh0cZcANt-F2tsdrSTkuyqN66x7Bfd__q0hzvINp8uOTE4p80VhGztMTQCQQX6Y4qmBt09g",
-      "blurb": "Join a Thanksgiving gathering at San Jose State University on a Wednesday afternoon, open by special invitation.",
-      "firstSeenAt": "2026-11-19T10:52:57.292Z"
-    },
-    {
       "id": "inbound-1e9c9e1ee4ac2755",
       "title": "Holiday Breakfast with Danny the Dragon",
       "date": "2026-12-06",
@@ -32441,19 +32424,20 @@
       "time": "5:30 PM",
       "endTime": "7:00 PM",
       "ongoing": false,
-      "venue": "Humanities Center",
+      "venue": "Stanford Humanities Center Boardroom",
       "address": "424 Santa Teresa Street, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "",
       "url": "https://events.stanford.edu/event/the-devil-in-africa-racialized-diabolism-in-the-age-of-encounter-alexis-wells-oghoghomeh",
       "source": "Stanford Events",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54472918658773/huge/01b8ac03a5d75afe0edaa6142d361c0a221c9408.jpg",
-      "blurb": "Attend Alexis Wells-Oghoghomeh's talk, The Devil in Africa: Racialized Diabolism in the Age of Encounter, at the Humanities Center on a Thursday evening.",
-      "firstSeenAt": "2026-11-19T10:52:57.292Z"
+      "blurb": "Discuss Alexis Wells-Oghoghomeh's paper on racialized diabolism at the Stanford Humanities Center.",
+      "firstSeenAt": "2026-11-19T10:52:57.292Z",
+      "attendanceNote": "RSVP to receive the paper before the workshop."
     },
     {
       "id": "sjsu-5d9df1ad0992d22b",
@@ -32704,11 +32688,11 @@
       "displayDate": "Fri, Nov 27",
       "time": "12:30 PM",
       "endTime": "2:30 PM",
-      "venue": null,
-      "address": "",
+      "venue": "CEFCU Stadium",
+      "address": "1218 South 7th Street, San Jose, CA 95112",
       "city": "san-jose",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "",
       "url": "https://events.sjsu.edu/event/football-san-jose-state-vs-ndsu",
       "source": "SJSU Events",
@@ -34508,7 +34492,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34519,7 +34503,9 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/12/87/25/44_Edp.jpg?v=4",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-04T02:20:19.641Z"
+      "firstSeenAt": "2026-10-04T02:20:19.641Z",
+      "registration": "full",
+      "costNote": null
     },
     {
       "id": "tm-rZ7HnEZ1AfqZbN",
@@ -34534,7 +34520,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34561,7 +34547,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34588,7 +34574,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34636,7 +34622,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34663,7 +34649,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34711,7 +34697,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34760,7 +34746,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": null,
-      "attendanceNote": "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],

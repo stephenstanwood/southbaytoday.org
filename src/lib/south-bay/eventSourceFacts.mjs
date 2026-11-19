@@ -84,6 +84,58 @@ const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The athletics schedule confirms which campus venue hosts this fixture.
+  // https://sjsuspartans.com/2026-football-media-central
+  // https://sjsuspartans.com/facilities/cefcu-stadium
+  {
+    date: "2026-11-27",
+    url: "https://events.sjsu.edu/event/football-san-jose-state-vs-ndsu",
+    facts: { venue: "CEFCU Stadium", address: "1218 South 7th Street, San Jose, CA 95112", cost: "paid" },
+  },
+  // Hammer lists this run as ticketed music.
+  // https://hammertheatre.com/
+  // https://plugin.vbotickets.com/googleeventschema/198571
+  ...["2026-11-27", "2026-11-28"].map(date => ({
+    date,
+    url: "https://events.sjsu.edu/event/hammer-presents-merry-achi-christmas-2026",
+    facts: { category: "music", cost: "paid" },
+  })),
+  // Fever, the promoter, supplies the age and advance ticket conditions.
+  // https://feverup.com/m/415717 and https://feverup.com/m/137201
+  ...["candlelight-queen-vs-abba-1902", "candlelight-the-best-of-hans-zimmer"].map(slug => ({
+    date: "2026-11-29",
+    url: `https://events.sjsu.edu/event/${slug}`,
+    facts: { category: "music", cost: "paid", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Buy tickets in advance through Fever. Ages 8 and up. An adult must accompany anyone under 16.",
+  })),
+  // Stanford's event details describe a free workshop with an advance reading.
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/the-devil-in-africa-racialized-diabolism-in-the-age-of-encounter-alexis-wells-oghoghomeh",
+    facts: {
+      venue: "Stanford Humanities Center Boardroom", cost: "free",
+      blurb: "Discuss Alexis Wells-Oghoghomeh's paper on racialized diabolism at the Stanford Humanities Center.",
+    },
+    appendAttendanceNote: "RSVP to receive the paper before the workshop.",
+  },
+  // The campus calendar uses a shared description. SCU Presents supplies
+  // separate tickets for the two concerts.
+  ...[
+    ["2026-12-04", "478083", "82x73c"],
+    ["2026-12-05", "478516", "23qkn0"],
+  ].map(([date, calendarId, ticketId]) => {
+    const url = `https://scupresents.scu.edu/event/27th-annual-festival-of-lights-${ticketId}`;
+    return {
+      date,
+      url,
+      aliasUrls: [`https://events.scu.edu/arts-and-sciences/event/${calendarId}-27th-annual-festival-of-lights`],
+      facts: {
+        url, category: "music", cost: "paid",
+        blurb: "Hear Santa Clara University's Chamber Singers and Concert Choir perform at Mission Santa Clara.",
+      },
+      appendAttendanceNote: "Tickets are sold separately for each performance.",
+    };
+  }),
   // SJPL lists the Joyce Ellington board-game session as Games & Family
   // Entertainment.
   {
@@ -1783,9 +1835,10 @@ const CORRECTIONS = [
     },
   })),
   // The venue's dated show links and structured offers agree these tickets
-  // were sold out with a waitlist when checked November 18 at 11:36 PM PT.
+  // were sold out with a waitlist when checked November 19.
   // https://improv.com/comic/gianmarco%20soresi/
   ...[
+    ["2026-11-19", "7:30 PM", "14153314"],
     ["2026-11-19", "9:45 PM", "14740623"],
     ["2026-11-20", "7:30 PM", "14735683"],
     ["2026-11-20", "9:45 PM", "14735703"],
@@ -1799,7 +1852,7 @@ const CORRECTIONS = [
       && event.url === `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${ticketId}`,
     facts: {
       registration: REGISTRATION_FULL, costNote: null,
-      attendanceNote: "Sold out as of November 18. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
+      attendanceNote: "Sold out as of November 19. San Jose Improv offers a waitlist. Ages 21+. Two-item minimum purchase per person.",
     },
   })),
   {
@@ -5753,6 +5806,17 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // The museum calendar gives the clock. The linked program page supplies the
+  // room and age group, and does not advertise songs or other activities.
+  if (event?.source === "Children's Discovery Museum" && event.title === "Toddler Storytime"
+      && /^https:\/\/www\.cdm\.org\/(?:calendar|recurring-event\/toddler-storytime)\/?$/.test(event.url || "")) {
+    event = {
+      ...event,
+      url: "https://www.cdm.org/recurring-event/toddler-storytime/",
+      description: "Storytime in the Wonder Cabinet Forest for children ages 4 and under.",
+      blurb: "Bring children ages 4 and under to storytime in the Wonder Cabinet Forest.",
+    };
+  }
   // These league adapters used fixed durations to invent exact finish times.
   // Strip those values from retained/cached rows as well as fresh ingestion;
   // an endTime is a published clock, never a predicted game duration.
