@@ -166,6 +166,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-afternoon.json", import.meta.url))));
 const november18EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-evening.json", import.meta.url)));
 audits.push(november18EveningFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-late-refresh.json", import.meta.url))));
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -209,7 +210,7 @@ test("Almaden's source facts and copy survive description normalization", () => 
 });
 
 test("November 16 library copy repairs preserve revised facts, conditions and publisher scope", () => {
-  const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16")
+  const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16").replaceAll("under 15", "under 16")
     .replaceAll("5 to 12", "6 to 13").replaceAll("8 AM", "9:30 AM").replaceAll("5 PM", "4:15 PM")
     .replaceAll("(408) 350-3239", "(650) 555-0123");
   for (const row of november16EveningFixture.cases) {
@@ -221,7 +222,7 @@ test("November 16 library copy repairs preserve revised facts, conditions and pu
     };
     const untouched = structuredClone(original);
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + " Tickets $45. Register at https://example.org/updated." });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) + " Tickets $45. Register at https://example.org/updated." });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);
@@ -920,7 +921,7 @@ test("evening copy repairs preserve revised source facts, new details and publis
     const original = { source: row.source, [row.field]: revise(row.refreshed) + suffix,
       id: "revised-source-id", date: "2026-12-12", time: "4:00 PM", costNote: "$25" };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, [row.field]: revise(latestReviewedCopy(row)) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);

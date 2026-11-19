@@ -54,6 +54,7 @@ const EDITS = {
   },
   "San Jose Public Library": {
     title: [
+      ["Storytime and Parol lantern making", "Storytime and Parol Lantern Making"],
       [/^Storytime with Aac$/g, "Storytime with AAC"],
       [/^OneInMath: Math Program for K-3rd$/g, "OneInMath: Math Program for K-3"],
       [/^OneInMath: Math Program for K 3$/g, "OneInMath: Math Program for K-3"],
@@ -726,6 +727,44 @@ const EDITS = {
       [/for a prize \(while supplies last!?\)\.? Themes vary each week\. Free\. No registration required\. While supplies last\./g, "for a prize while supplies last. Themes vary each week. Free. No registration required."],
       [/(The event will occur on Saturdays): (\d{1,2}\/\d{1,2}), and (\d{1,2}\/\d{1,2}) at (\d{1,2}:\d{2}) p\.\s*m\./g, "$1, $2 and $3, at $4 PM."],
       ["Runtime: 1 hour 30 minutes This program", "The film runs 1 hour and 30 minutes. This program"],
+      ["organic foods, everyday chemicals, how they affect our health and environment, and simple ways", "organic foods, how everyday chemicals affect our health and the environment, and simple ways"],
+      [/Light refreshments and a (\$\d+(?:,\d{3})*(?:\.\d{2})?) gift card will be raffled\./g, "There will be light refreshments and a raffle for a $1 gift card."],
+      ["Want to know how your Brain works?", "Want to know how your brain works?"],
+      [
+        "This week our volunteer Emily will introduce the topic of Brain Lateralization -- Did you know you have two sides of your brain? Come for an engaging story-time style lecture about the two halves of your brain and showcase your learning through an art project at the end!",
+        "This week, volunteer Emily will introduce brain lateralization in a storytime-style talk about the two halves of the brain. Then show what you learned in an art project.",
+      ],
+      ["They will ask questions about the books being read to encourage reading comprehension.", "The reading buddy will ask questions about the books to help children understand what they read."],
+      [/(interaction with [\p{L}-]+) who has been trained/gu, "$1, who has been trained"],
+      ["Availability of Reading Buddies is on a first-come, first-served basis.", "Reading Buddies are available on a first-come, first-served basis."],
+      [/family-friendly, volunteer ((?:drop-in )?event where participants)/g, "family-friendly volunteer $1"],
+      ["Reminder: This is NOT a craft to take home. All dog toys are created for donation to local shelters!", "All dog toys made at the event go to local shelters."],
+      ["If you are here to Volunteer Away Your Fines, please be sure to bring your library card and sign in so that we can track your hour(s.)", "To take part in Volunteer Away Your Fines, bring your library card and sign in so the library can track your hours."],
+      [/Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Training and supplies will be provided\./g, "Anyone under $1 must volunteer with a parent or guardian. No experience or special skills are needed. Training and supplies will be provided."],
+      ["A signed SJPL exercise waiver is required for all participants -- to be provided on site.", "A signed SJPL exercise waiver is required for all participants. The library will provide the form on site."],
+      ["Join us for a captivating journey celebrating Filipino American History Month during our special storytime and Parol lantern making craft at the library.", "Celebrate Filipino American History Month at the library with a special storytime and a chance to make a parol lantern."],
+      ["Designs must be in an. Stl file format", "Designs must be in .stl format"],
+      ["Your. Stl file (or a link to your. Stl file", "Your .stl file (or a link to your .stl file"],
+      ["will be not accepted for print.", "will not be accepted for printing."],
+      ["o un guardian.", "o un guardián."],
+      ["the free Stop Motion app in advance.", "the free Stop Motion Studio app in advance."],
+      ["by David Talbot No registration needed.", "by David Talbot. No registration is needed."],
+      [/\bAR Trepreneur(?=: Teen Craft Fair\b| (?:entrepreneur )?program\b)/g, "ARTrepreneur"],
+      ["featured at this Fair have complete the ARTrepreneur", "featured at this fair have completed the ARTrepreneur"],
+      ["Scheduled Vendors Fuzzy and Fluffy Fuzzy and Fluffy will be selling", "Fuzzy and Fluffy is among the scheduled vendors and will sell"],
+      ["Keychain items like the mini octopus, mushroom pops, and mini chickens.", "Its keychains include mini octopuses, mushroom pops, and mini chickens."],
+      ["Green Apple Boutique Welcome to Green Apple Boutique!", "Welcome to Green Apple Boutique!"],
+      ["expand our inventory to cute stationary", "expand our inventory to cute stationery"],
+      ["Lils Creations Lils Creations features", "Lils Creations features"],
+      ["Calderon & Co Calderon & Co Logo This endeavor", "Calderon & Co's business"],
+      ["Aydraw Art Ay Draw Logo Aydraw Art crafts & creations", "Aydraw Art's crafts and creations"],
+      ["Two Tiny Potatoes Selling yarn-crafted items", "Two Tiny Potatoes sells yarn-crafted items"],
+      ["Forever Flowers Forever Flowers Logo Forever Flowers blends", "Forever Flowers blends"],
+      ["Yellowbunny Crochets Yellowbunny Crochets Logo Yellowbunny Crochets sells", "Yellowbunny Crochets sells"],
+      ["Meghna's Nails Meghna's Nails Logo Meghna's nails sells handmade press on nails.", "Meghna's Nails sells handmade press-on nails."],
+      ["painted with gel Polish", "painted with gel polish"],
+      ["Knitting, crochet, embroidery, felt, or your latest fiber arts project all are welcome.", "Bring your knitting, crochet, embroidery, felting, or another fiber arts project."],
+      ["Ages 8 and up, younger children are welcome with adult supervision.", "The program is for ages 8 and up. Younger children are welcome with adult supervision."],
     ],
     blurb: [
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
@@ -898,6 +937,7 @@ const EDITS = {
   },
   "Santa Clara County Library": {
     title: [
+      [/^Hand Embroidered Cards$/g, "Hand-Embroidered Cards"],
       [/^Lego Club$/g, "LEGO Club"],
       ["Intermediate Mass Black Holes", "Intermediate-Mass Black Holes"],
       ["Children's Literature for Adults Bookclub", "Children's Literature for Adults Book Club"],
@@ -923,6 +963,9 @@ const EDITS = {
     ],
     description: [
       ...SCCLD_BOOK_DISCUSSION_EDITS,
+      ["Local Maker and textile artist", "Local maker and textile artist"],
+      ["Step-by-step by guidance", "Step-by-step guidance"],
+      ["Hosted by Thomas Célérier - Cupertino Poet Laureate All are welcome.", "Cupertino Poet Laureate Thomas Célérier hosts the event. All are welcome."],
       [/^(Tuesday, December \d{1,2}), (\d{1,2} [AP]M) (Room \d+) Bel Canto Flutes is an all flute ensemble/g, "The concert is on $1 at $2 in $3. Bel Canto Flutes is an all-flute ensemble"],
       ["the beauty and flexibility of the flute performing repertoire", "the beauty and flexibility of the flute with repertoire"],
       ["antidotes about the music, composers and origins", "anecdotes about the music, its composers, and its origins"],
@@ -1078,6 +1121,10 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [
+        "Register This class run by Silicon Valley Bicycle Coalition (SVBC) in collaboration with Valley Transportation Authority (VTA) is provided to the public for at no cost with funding from 2016 Measure B courtesy of VTA.",
+        "Register through the event listing. Silicon Valley Bicycle Coalition (SVBC) runs this free public class in collaboration with Valley Transportation Authority (VTA), with funding from VTA's 2016 Measure B.",
+      ],
       // The finals study room's schedule arrives flattened into a paragraph.
       [/\b((?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) \d{1,2}\/\d{1,2})\s*-\s*(\d{1,2}:\d{2} [AP]M)\s*-\s*(\d{1,2}:\d{2} [AP]M)(?= [A-Z]|$)/g, "$1 from $2 to $3."],
       [/\b((?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday) \d{1,2}\/\d{1,2})\s*-\s*not available(?= [A-Z]|$)/g, "The room is unavailable on $1."],
@@ -1176,6 +1223,7 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      ["Make Advent crafts in the children's wings with all ages,", "Make Advent crafts with people of all ages in the children's wings,"],
       [/\bCvmf\b/g, "CVMF"],
       [/\bImax\b/g, "IMAX"],
       ["with proof of Mountain View or Sunnyvale address", "with proof of a Mountain View or Sunnyvale address"],
@@ -1192,6 +1240,11 @@ const EDITS = {
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
+      [
+        "The Saint Michael Trio's comic program about their \"Musical Attention Deficit Disorder,\" racing through the centuries from Beethoven to the blues.",
+        "The Saint Michael Trio races through the centuries from Beethoven to the blues in a comic program about what they call \"Musical Attention Deficit Disorder.\"",
+      ],
+      ["Jack West performs Guitars On Life.", ""],
       ["Free community event for the branch's 20th anniversary.", "This free community event marks the branch's 20th anniversary."],
       [/\bCvmf\b/g, "CVMF"],
       ["against 'the Tigers'.", "against 'the Tigers.'"],
@@ -1243,6 +1296,7 @@ const EDITS = {
       ["vs. Unlv Rebels Football", "vs. UNLV Rebels Football"],
     ],
     description: [
+      ["THE International, Award-Winning SMASH-HIT Musical The Bodyguard Is Back!", "The award-winning international musical The Bodyguard returns."],
       ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
       ["A ticket hold delivery is in effect for this event.", "A ticket delivery hold is in effect for this event."],
       ["court --hungry for a win, and out to prove it!", "court — hungry for a win and out to prove it!"],
@@ -1253,6 +1307,7 @@ const EDITS = {
       [/\. DO NOT…$/g, "."],
     ],
     blurb: [
+      ["Watch Shawn Chidiac perform stand-up comedy on his tour at the improv.", "Watch Shawn Chidiac perform stand-up on tour at the San Jose Improv."],
       ["Greedo, Kamaiyah and more, lineup subject to", "Greedo, Kamaiyah and more; lineup subject to"],
       ["Catch the Sharks host", "Watch the Sharks host"],
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
@@ -1303,6 +1358,8 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Join Iajs for Bones, Borders, and Black Mirrors", "Join IAJS for Bones, Borders, and Black Mirrors"],
+      ["For more info follow @Stanford Bicycle Project", "For more information, follow @StanfordBicycleProject on Instagram."],
       [
         /^Microbiology & Immunology Wednesday Seminar: Huang & Monack Labs - Saria A\. McKeithen–Mead "Capturing evolution via gene transfer in the gut microbiome\." and Víctor R\.$/g,
         "The Huang and Monack labs present two talks. Saria A. McKeithen–Mead discusses gene transfer in the gut microbiome, and Víctor R. Vázquez Marrero discusses how Salmonella uses dietary fiber sugars.",
@@ -1413,6 +1470,10 @@ const EDITS = {
       [/^St\.(?=Clare Room\b)/g, "St. "],
     ],
     description: [
+      ["Benson Parlor A Wed, Dec.", "Benson Parlor A. Wed, Dec."],
+      ["Benson Parlor A Open call walk-in auditions, no-prep needed.", "Benson Parlor A. These are walk-in auditions. No preparation is needed."],
+      ["Director: Pauline Locsin Faculty Advisor: David Popalisky December", "Pauline Locsin directs, with David Popalisky as faculty advisor. Performances run December"],
+      [/(Performances run December \d{1,2}) - (\d{1,2}, \d{4}) \(Thu ([\d:]+ [AP]M), Fri ([\d:]+ [AP]M) & ([\d:]+ [AP]M)\)$/g, "$1–$2 (Thursday at $3 and Friday at $4 and $5)."],
       ["Open to the Silicon Valley, hosted by SCU.", "Open to the Silicon Valley community and hosted by SCU."],
       ["Cantabile Youth Singer's", "Cantabile Youth Singers'"],
       // The English department's faculty profile uses KB Brookins.
