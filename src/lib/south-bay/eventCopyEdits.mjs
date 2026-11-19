@@ -765,8 +765,27 @@ const EDITS = {
       ["painted with gel Polish", "painted with gel polish"],
       ["Knitting, crochet, embroidery, felt, or your latest fiber arts project all are welcome.", "Bring your knitting, crochet, embroidery, felting, or another fiber arts project."],
       ["Ages 8 and up, younger children are welcome with adult supervision.", "The program is for ages 8 and up. Younger children are welcome with adult supervision."],
+      [
+        "Get ready to celebrate Thanksgiving by attending our Thanksgiving storytime at the library. Children can immerse themselves in Thanksgiving stories and festive fun. Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages. This program is geared for children of all ages and their parents/caregivers! This program is developed to align with the Early Education Quality Standards.",
+        "Celebrate Thanksgiving with stories at the library. Children of all ages and their families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy and encourage a love of reading. The program was developed to align with the Early Education Quality Standards.",
+      ],
+      ["Tech help available in English and Vietnamese.", "Tech help is available in English and Vietnamese."],
+      [
+        "Join us every Sunday at 1:00 p.m. at the Joyce Ellington Branch for a fun afternoon of board games! Choose from our large selection of games, including exciting new favorites and classic games that are fun for all ages.",
+        "Play board games at the Joyce Ellington Branch every Sunday at 1:00 p.m. Choose from a large selection of new and classic games for all ages.",
+      ],
+      ["particularly within a workplace and classroom setting", "particularly in workplaces and classrooms"],
+      ["greater compassion and altruism toward oneself and others", "greater compassion and altruism toward themselves and others"],
+      [
+        "Gain a new perspective into the benefits of meditation, combining modern research with ancient wisdom; Develop new strategies to manage stress, making it a friend over an enemy; Learn practices to cultivate more compassion, and improve mood and relationships; Practice individually and in groups, and begin to integrate these activities into your daily life.",
+        "Explore the benefits of meditation through modern research and ancient wisdom. Develop new ways to manage stress and make it work for you. Learn practices to cultivate compassion and improve your mood and relationships. Practice on your own and in groups, then begin to make these activities part of your daily life.",
+      ],
     ],
     blurb: [
+      [
+        "Practice your English speaking in a weekly online conversation club led by a trained facilitator for adult learners.",
+        "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
+      ],
       [/^Have (grades \d+-\d+) dive into\b/g, "Students in $1 can dive into"],
       [/\bIcan\b/g, "ICAN"],
       ["Lego challenges", "LEGO challenges"],
@@ -963,6 +982,14 @@ const EDITS = {
     ],
     description: [
       ...SCCLD_BOOK_DISCUSSION_EDITS,
+      [
+        "A Sheriff's Deputy will read books and share safety tips. Please arrive on time and seating is limited.",
+        "A sheriff's deputy will read books and share safety tips. Please arrive on time. Seating is limited.",
+      ],
+      [
+        "We can help you with one-on-one instruction. Please be aware that space and time are limited, and help is given on a first-come, first-served basis.",
+        "We offer one-on-one help on a first-come, first-served basis. Space and time are limited.",
+      ],
       ["Local Maker and textile artist", "Local maker and textile artist"],
       ["Step-by-step by guidance", "Step-by-step guidance"],
       ["Hosted by Thomas Célérier - Cupertino Poet Laureate All are welcome.", "Cupertino Poet Laureate Thomas Célérier hosts the event. All are welcome."],
@@ -1105,6 +1132,11 @@ const EDITS = {
       [/a Ph\.\s*D\.\s+from UC Santa Barbara investigating/gi, "a Ph.D. from UC Santa Barbara investigating"],
     ],
     blurb: [
+      [
+        "Listen as a Santa Clara County Sheriff's Deputy reads books and shares safety tips with children ages 0-5, with limited seating.",
+        "A Santa Clara County sheriff's deputy reads books and shares safety tips with children ages 0-5. Seating is limited.",
+      ],
+      ["from library tech staff on a first-come basis.", "from library tech staff on a first-come, first-served basis."],
       ["with a friend or new ones.", "with a friend or make new ones."],
       ["in the Children's Room, with a friend or make new ones.", "in the Children's Room with a friend, or make new friends."],
       [/Get homework help from tutors in grades ((?:K|\d+)-\d+), with/g, "Students in grades $1 can get homework help from tutors, with"],
@@ -1358,6 +1390,7 @@ const EDITS = {
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
     ],
     description: [
+      ["Queralt Solé i Barjau is Associate Professor", "Queralt Solé i Barjau is an associate professor"],
       ["Join Iajs for Bones, Borders, and Black Mirrors", "Join IAJS for Bones, Borders, and Black Mirrors"],
       ["For more info follow @Stanford Bicycle Project", "For more information, follow @StanfordBicycleProject on Instagram."],
       [
@@ -1510,10 +1543,17 @@ const EDITS = {
   "Opera San José": {
     description: [
       [/^Fiddler on the Roof: (Tradition meets revolution\b)/g, "$1"],
+      [
+        "Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity.",
+        "Tradition meets revolution in Opera San José's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye the dairyman struggles to reconcile his daughters' hopes for love with the customs that hold his world together.",
+      ],
       // The imported preview is clipped after "destructive […]". Sentence
       // cleanup strands its preceding initial; remove only that unfinished
       // suffix, leaving complete or newly expanded source wording intact.
       [/(\.) Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high[\u00ad-]?stakes days when J\.$/g, "$1"],
+    ],
+    blurb: [
+      ["Watch Opera San Jose's production of Fiddler on the Roof", "Watch Opera San José's production of Fiddler on the Roof"],
     ],
   },
 };
