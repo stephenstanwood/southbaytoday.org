@@ -82,6 +82,22 @@ const SJSU_NOVEMBER_METROPOLIS = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The library's title says level 1 and its description says level 0.
+  // Use neutral Spanish copy while both claims persist on this occurrence.
+  // https://sjpl.bibliocommons.com/v2/events/6a8e2033b204780029958a7e
+  {
+    date: "2026-11-21",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a8e2033b204780029958a7e\/?$/.test(event.url || "")
+      && singleCourseLevel(event.rawTitle || event.title) === 1
+      && singleCourseLevel(event.description) === 0,
+    facts: {
+      title: "Clases de inglés para hispanohablantes",
+      description: "La clase es gratuita y está dirigida a adultos cuyo primer idioma es el español. Se proporciona el material didáctico y el cupo es limitado. Para más información, escribe a marcela.guevara@sjlibrary.org.",
+      blurb: "Practica vocabulario y gramática en inglés con la voluntaria Christin.",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Para participar, debes realizar una evaluación con el especialista del programa de alfabetización y completar el formulario de inscripción.",
+  },
   // The public city bulletin gives the room and address. The library's
   // book-group schedule also gives the age requirement and admission terms.
   // https://content.govdelivery.com/accounts/CASUNNYVALE/bulletins/432e237
