@@ -20,6 +20,11 @@ const hubbleEntry = {
   title: "NGC 4449: Small Galaxy, Big Impact",
   sourceUrl: "https://science.nasa.gov/image-article/apod-2026-november-11-ngc-4449-small-galaxy-big-impact/",
 };
+const webbEntry = {
+  date: "2026-11-16",
+  title: "NGC 7129: Star Formation with Jets from Webb",
+  sourceUrl: "https://science.nasa.gov/image-article/apod-2026-november-16-ngc-7129-star-formation-with-jets-from-webb/",
+};
 const generic = '<html><title>NASA Science</title><main><img src="https://science.nasa.gov/wp-content/themes/nasa-child/assets/images/nasa-logo@2x.png"></main></html>';
 const selected = archive.replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, tag => /apod-2026-october-(21|18|17)-/.test(tag) ? tag : "");
 const responses = new Map([[APOD_ARCHIVE, selected], [byDate("2026-10-21").sourceUrl, rollover],
@@ -115,6 +120,42 @@ test("Hubble assets require a dated APOD permalink and a trusted image path", ()
     item.url.replace("assets.science.nasa.gov", "apod.nasa.gov"),
     "https://assets.science.nasa.gov/content/dam/science/images/banner.jpg",
     item.url.replace("NGC%204449.jpg", "nasa-logo.png"),
+  ]) {
+    assert.throws(() => validateApodItems([{ ...item, url: invalid }]), /Generic or non-APOD/);
+  }
+});
+
+test("NASA's November 16 featured Webb image preserves both URL forms", () => {
+  const item = parseApodArticle(fixture("webb-science.html"), webbEntry);
+  assert.equal(item.date, webbEntry.date);
+  assert.equal(item.title, webbEntry.title);
+  assert.equal(item.sourceUrl, webbEntry.sourceUrl);
+  assert.equal(item.url, "https://assets.science.nasa.gov/dynamicimage/assets/science/missions/webb/science/2026/10/weic2620a.jpg?w=1280&h=1194&fit=clip");
+  assert.equal(item.hdurl, "https://assets.science.nasa.gov/content/dam/science/missions/webb/science/2026/10/weic2620a.jpg");
+  assert.match(item.copyright, /NASA, ESA, CSA, STScI, JWST/);
+  assert.throws(() => validateApodItems([
+    { ...item, hdurl: item.url }, { ...older, url: item.hdurl },
+  ]), /Repeated NASA APOD image/);
+});
+
+test("Webb assets require the exact dated APOD article and trusted featured image paths", () => {
+  const html = fixture("webb-science.html");
+  const item = parseApodArticle(html, webbEntry);
+  assert.throws(() => parseApodArticle(html.replace('rel="canonical"', 'rel="alternate"'), webbEntry), /canonical/);
+  assert.throws(() => parseApodArticle(html.replace("November 16, 2026", "November 15, 2026"), webbEntry), /date\/title/);
+  assert.throws(() => parseApodArticle(html, { ...webbEntry, title: "A Different Webb Image" }), /date\/title/);
+  const related = html.replace('<div class="media-detail-hero__media">', '<div class="media-detail-hero__media"></div><div class="related-story">');
+  assert.throws(() => parseApodArticle(related, webbEntry), /Missing or invalid NASA APOD image URL/);
+  assert.throws(() => validateApodItems([{ ...item, sourceUrl: undefined }]), /Generic or non-APOD/);
+  assert.throws(() => validateApodItems([{ ...item, sourceUrl: item.sourceUrl.replace("november-16-", "november-15-") }]), /source\/date/);
+  for (const invalid of [
+    item.url.replace("https:", "http:"),
+    item.url.replace("assets.science.nasa.gov", "assets.science.nasa.gov.example.com"),
+    item.url.replace("assets.science.nasa.gov", "apod.nasa.gov"),
+    item.url.replace("/webb/science/", "/webb/images/"),
+    item.url.replace("/2026/10/", "/2026/13/"),
+    item.url.replace("weic2620a.jpg", "nasa-logo.png"),
+    item.hdurl.replace("weic2620a.jpg", "weic2620a.pdf"),
   ]) {
     assert.throws(() => validateApodItems([{ ...item, url: invalid }]), /Generic or non-APOD/);
   }

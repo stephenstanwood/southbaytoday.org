@@ -112,11 +112,12 @@ function imageKey(value, hasDatedSource) {
   let url;
   try { url = new URL(value); } catch { throw Error("Missing or invalid NASA APOD image URL"); }
   const path = url.pathname.replace(/^\/dynamicimage\/assets\//, "/content/dam/");
-  // Some dated APOD articles use images from NASA's Hubble galaxy library.
-  const hubbleGalaxy = hasDatedSource && url.origin === "https://assets.science.nasa.gov"
-    && path.startsWith("/content/dam/science/missions/hubble/galaxies/");
+  // Dated APOD articles can feature NASA's Hubble galaxy or dated Webb science assets.
+  const missionImage = hasDatedSource && url.origin === "https://assets.science.nasa.gov"
+    && (path.startsWith("/content/dam/science/missions/hubble/galaxies/")
+      || /^\/content\/dam\/science\/missions\/webb\/science\/\d{4}\/(?:0[1-9]|1[0-2])\/[^/]+$/.test(path));
   if (url.protocol !== "https:" || !["assets.science.nasa.gov", "apod.nasa.gov"].includes(url.hostname)
-    || (!url.pathname.includes("/apod/") && !hubbleGalaxy) || /logo|favicon|placeholder/i.test(url.pathname)
+    || (!url.pathname.includes("/apod/") && !missionImage) || /logo|favicon|placeholder/i.test(url.pathname)
     || !/\.(?:jpe?g|png|gif|webp|avif)$/i.test(url.pathname)) throw Error("Generic or non-APOD image URL");
   return `${url.hostname}${path}`;
 }
