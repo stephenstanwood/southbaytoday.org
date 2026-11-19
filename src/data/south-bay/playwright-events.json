@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-19T16:43:56.213Z",
+    "generatedAt": "2026-11-19T21:03:07.532Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 190,
+    "eventCount": 191,
     "sourceCount": 19,
     "sources": [
       "San Jose Jazz (11)",
       "Linden Tree Books (5)",
-      "History San Jose (1)",
+      "History San Jose (2)",
       "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
@@ -103,8 +103,8 @@
         "id": "history-san-jose",
         "label": "History San Jose",
         "status": "ok",
-        "count": 2,
-        "liveCount": 2,
+        "count": 4,
+        "liveCount": 4,
         "error": null,
         "sources": [
           "History San Jose"
@@ -625,6 +625,23 @@
       }
     },
     {
+      "id": "3023a2542520",
+      "title": "History Park Heritage Holiday Tea",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "11:00 am",
+      "endTime": "3:30 pm",
+      "venue": "History Park, Empire Fire House",
+      "address": "635 Phelan Ave., San José",
+      "city": "san-jose",
+      "category": "community",
+      "cost": "paid",
+      "description": "",
+      "url": "https://historysanjose.org/programs-events/",
+      "source": "History San Jose",
+      "kidFriendly": false
+    },
+    {
       "id": "fc8e02e611b6",
       "title": "History Park Heritage Holiday",
       "date": "2026-12-19",
@@ -676,23 +693,6 @@
       "kidFriendly": false
     },
     {
-      "id": "7860968edc69",
-      "title": "Yuletide Tea 11:30am",
-      "date": "2026-11-22",
-      "displayDate": "Sun, Nov 22",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/yultide-2/",
-      "source": "Montalvo Arts Center",
-      "kidFriendly": false
-    },
-    {
       "id": "d8aecae718a1",
       "title": "Wild-Foraged Wreath-Making Workshop",
       "date": "2026-12-02",
@@ -723,6 +723,23 @@
       "cost": "paid",
       "description": "",
       "url": "https://montalvoarts.org/experience/carriage-house-concerts/top-of-the-world/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
+      "id": "c6e4a63cc888",
+      "title": "A Christmas Carol",
+      "date": "2026-12-04",
+      "displayDate": "Fri, Dec 4",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://my.montalvoarts.org/3261/3262",
       "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
@@ -1063,7 +1080,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-19T16:42:49.199Z"
+        "checkedAt": "2026-11-19T21:02:00.889Z"
       }
     },
     {
@@ -1086,7 +1103,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-19T16:42:49.200Z"
+        "checkedAt": "2026-11-19T21:02:00.891Z"
       }
     },
     {
@@ -1109,7 +1126,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-19T16:42:49.200Z"
+        "checkedAt": "2026-11-19T21:02:00.891Z"
       }
     },
     {
@@ -1132,7 +1149,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-19T16:42:49.200Z"
+        "checkedAt": "2026-11-19T21:02:00.892Z"
       }
     },
     {
@@ -1155,7 +1172,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-19T16:42:49.200Z"
+        "checkedAt": "2026-11-19T21:02:00.892Z"
       }
     },
     {
@@ -1178,7 +1195,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-19T16:42:49.201Z"
+        "checkedAt": "2026-11-19T21:02:00.894Z"
       }
     },
     {
@@ -1201,7 +1218,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-19T16:42:49.201Z"
+        "checkedAt": "2026-11-19T21:02:00.894Z"
       }
     },
     {
@@ -1855,7 +1872,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1872,7 +1889,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1889,7 +1906,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1906,7 +1923,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1923,7 +1940,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3088,7 +3105,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
         "date": "2026-11-20",
         "time": "6:30 PM",
-        "checkedAt": "2026-11-19T16:43:19.159Z"
+        "checkedAt": "2026-11-19T21:02:33.777Z"
       }
     },
     {
@@ -3112,7 +3129,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.160Z"
+        "checkedAt": "2026-11-19T21:02:33.779Z"
       }
     },
     {
@@ -3136,7 +3153,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3160,7 +3177,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3184,7 +3201,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3225,7 +3242,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3249,7 +3266,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3273,7 +3290,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3297,7 +3314,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3321,7 +3338,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
@@ -3345,7 +3362,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-19T16:43:19.162Z"
+        "checkedAt": "2026-11-19T21:02:33.780Z"
       }
     },
     {
