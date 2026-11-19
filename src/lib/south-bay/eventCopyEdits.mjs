@@ -1244,6 +1244,7 @@ const EDITS = {
     blurb: [
       ["for deaf and hard of hearing families.", "for deaf and hard-of-hearing families."],
       ["and join holiday crafts with your family.", "and make holiday crafts with your family."],
+      ["Cupertino’s hackathon", "Cupertino's hackathon"],
     ],
   },
   "City Newsletter": {
@@ -1315,6 +1316,7 @@ const EDITS = {
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
       ["Northern Ca Network", "Northern CA Network"],
+      [/^Free Admission$/g, "Admission is free."],
       [
         "An evening of choral music featuring performances from the SJSU Treble Choir, Spartan Glee Club, Vocal Jazz Ensemble, and two a cappella groups The Spartones and Spartan Stellas!",
         "The SJSU Treble Choir, Spartan Glee Club, and Vocal Jazz Ensemble perform alongside The Spartones and Spartan Stellas, two a cappella groups.",
@@ -1323,6 +1325,7 @@ const EDITS = {
     blurb: [
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
       ["Catch San Jose State's men's basketball team take on", "Watch San Jose State's men's basketball team take on"],
+      ["Hear a Candlelight concert at Hammer Theatre Center built around the title pairing of Queen and ABBA.", "Hear Queen and ABBA songs in a Candlelight concert at Hammer Theatre Center."],
     ],
   },
   "Ticketmaster": {
@@ -1516,6 +1519,7 @@ const EDITS = {
       // https://www.scu.edu/cas/english/faculty--staff/kb-brookins/
       ["Kb Brookins", "KB Brookins"],
       ["Night 1 - November 18, 2026 Night 2 - November 19, 2026", "Night 1: November 18, 2026; Night 2: November 19, 2026."],
+      [/^Night 1 - ([A-Z][a-z]+ \d{1,2}, \d{4}) Night 2 - ([A-Z][a-z]+ \d{1,2}, \d{4})$/g, "Night 1 is $1. Night 2 is $2."],
       ["invite you to celebrate Transgender Day of Remembrance ", "invite you to the Transgender Day of Remembrance "],
       [/Stanford University\s*\/\s*(?:Slac|SLAC)\b/g, "Stanford University / SLAC"],
       ["a special Commemorative Mass honoring", "a special commemorative Mass honoring"],
