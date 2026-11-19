@@ -3351,16 +3351,18 @@ const CORRECTIONS = [
     },
     copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
   },
+  // The museum's December 6 program now runs until 3:30 PM.
   {
     date: "2026-12-06",
     title: /^Menorahs & Miracles(?: Hanukkah Celebration)?$/i,
     venue: /^Children's Discovery Museum of San Jose(?:,|$)/i,
     url: "https://www.cdm.org/event/menorahs-miracles/",
     facts: {
-      time: "10:00 AM", endTime: "2:00 PM",
+      time: "10:00 AM", endTime: "3:30 PM",
       url: "https://www.cdm.org/event/menorahs-miracles/",
+      description: "Play dreidel, hear the Yavneh Day School choir at 11 AM, and join a noon menorah lighting. Hanukkah storytimes follow in English, Hebrew, and Russian.",
+      blurb: "Celebrate Hanukkah with dreidel games, a noon menorah lighting, and storytime in three languages.",
     },
-    copyReplacements: [[/\s*The newsletter gives no event time, so the start is the museum's weekend opening time\./g, ""]],
   },
   ...[
     ["2026-11-08", /^Orbital Escape Robotics Demonstration$/i],

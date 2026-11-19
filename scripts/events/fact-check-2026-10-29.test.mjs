@@ -15,7 +15,7 @@ test("museum event clocks come from their own schedules and unknown clocks survi
   const venue = "Children's Discovery Museum of San Jose";
   const rows = [
     ["2026-11-01", "Día de los Muertos Celebration", "10:00 AM", "3:30 PM", "https://www.cdm.org/event/dia-de-los-muertos/"],
-    ["2026-12-06", "Menorahs & Miracles Hanukkah Celebration", "10:00 AM", "2:00 PM", "https://www.cdm.org/event/menorahs-miracles/"],
+    ["2026-12-06", "Menorahs & Miracles Hanukkah Celebration", "10:00 AM", "3:30 PM", "https://www.cdm.org/event/menorahs-miracles/"],
     ["2026-11-08", "Orbital Escape Robotics Demonstration", null, null],
     ["2026-11-11", "Deck the Tree ornament-making", null, null],
     ["2026-11-15", "Drone Programming with Python", null, null],
@@ -43,6 +43,10 @@ test("museum event clocks come from their own schedules and unknown clocks survi
     assert.equal(actual.date, date);
     assert.equal(actual.cost, null, "opening hours do not establish admission");
     assert.doesNotMatch(actual.description, /start is the museum's weekend opening time/);
+    if (title.startsWith("Menorahs & Miracles")) {
+      assert.match(actual.description, /Yavneh Day School choir at 11 AM/);
+      assert.match(actual.blurb, /noon menorah lighting/);
+    }
     if (url) assert.equal(actual.url, url);
     else {
       assert.equal(actual.attendanceStatus, "needs-confirmation");
