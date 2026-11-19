@@ -164,6 +164,8 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-overnight.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-book-discussions.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-afternoon.json", import.meta.url))));
+const november18EveningFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-18-evening.json", import.meta.url)));
+audits.push(november18EveningFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -180,6 +182,19 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("restored Ticketmaster copy drops the clipped warning and keeps ticket details", () => {
+  const { event, reviewed } = november18EveningFixture.restoredTicketmaster;
+  const repaired = { ...event, description: reviewed };
+  assert.deepEqual(polishReviewedEventCopy(event), repaired);
+  assert.deepEqual(polishReviewedEventCopy(repaired), repaired);
+  const updated = { ...event, description: event.description.replace("two days", "three days") };
+  assert.deepEqual(polishReviewedEventCopy(updated), { ...updated, description: reviewed.replace("two days", "three days") });
+  const complete = { ...event, description: event.description.replace("DO NOT…", "DO NOT purchase resale tickets.") };
+  assert.deepEqual(polishReviewedEventCopy(complete), complete);
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
 
 test("Almaden's source facts and copy survive description normalization", () => {
   const { beforeFacts, refreshed, reviewed, events } = november17AfternoonFixture.cases.find(

@@ -102,7 +102,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "on-hold",
     description:
-      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The development agreement sets a ten-year milestone that Google can meet by substantially completing 2 million sq ft of office space and providing the related community benefits, providing the equivalent benefits without building that space, or combining both approaches.",
+      "The San José City Council approved Google's 80-acre mixed-use district next to Diridon Station in 2021. The plan calls for up to 7.3M sq ft of office space, plus 4,000 homes, parks, and retail. Google ended its development partnership with Lendlease in 2023 and paused active construction. The development agreement sets a ten-year milestone. Google can meet it by substantially completing 2 million sq ft of office space and providing the related community benefits. It can also provide equivalent benefits without building that space or combine both approaches.",
     scale: "Up to 7.3M sq ft of office space and 4,000 homes planned",
     developer: "Google (Lendlease partnership ended 2023)",
     timeline: "Entitled 2021; active construction paused",

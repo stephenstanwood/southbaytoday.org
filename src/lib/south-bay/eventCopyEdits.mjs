@@ -1189,6 +1189,7 @@ const EDITS = {
       ["Senior Center lobby, no registration needed.", "Senior Center lobby. No registration needed."],
       ["Columbia Neighborhood Center Gym, no registration needed.", "Columbia Neighborhood Center Gym. No registration needed."],
       ["give a city update while you eat lunch by Table & Terrace at the Chamber luncheon.", "give a city update over lunch from Table & Terrace at the Chamber luncheon."],
+      ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
       ["Free community event for the branch's 20th anniversary.", "This free community event marks the branch's 20th anniversary."],
@@ -1248,6 +1249,8 @@ const EDITS = {
       ["Lineup* Shoreline Mafia SOB", "Lineup: Shoreline Mafia SOB"],
       ["Kai Bandz Ny Ny *Lineup subject to change", "Kai Bandz Ny Ny. Lineup subject to change."],
       ["Rock En Espanol Night Fri November 6, 9 PM 21+ A night of", "Rock En Espanol Night. Fri, November 6, 9 PM. 21+. A night of"],
+      // A restored listing can carry a clipped warning after complete ticket details.
+      [/\. DO NOT…$/g, "."],
     ],
     blurb: [
       ["Greedo, Kamaiyah and more, lineup subject to", "Greedo, Kamaiyah and more; lineup subject to"],
