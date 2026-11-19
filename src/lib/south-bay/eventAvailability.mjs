@@ -3,14 +3,26 @@
 // the source, not an automatic expiry.
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
-  ...["2026-12-04", "2026-12-09"].map(date => Object.freeze({
-    title: /^Coherence Open Call Auditions$/i,
+  ...[
+    ["2026-12-02", "534032"],
+    ["2026-12-04", "534030"],
+    ["2026-12-09", "534030"],
+  ].map(([date, calendarId]) => Object.freeze({
+    title: /^Coherence (?:Open Call )?Auditions$/i,
     venue: /.*/,
     date,
-    matches: event => /^https:\/\/events\.scu\.edu\/(?:(?:arts-and-sciences\/)?event|live\/events)\/534030(?:-[^/?#]+)?(?:[/?#]|$)/.test(event.url || ""),
+    matches: event => /^https:\/\/events\.scu\.edu\/(?:(?:arts-and-sciences\/)?event|live\/events)\/(\d+)(?:-[^/?#]+)?(?:[/?#]|$)/.exec(event.url || "")?.[1] === calendarId,
     reason: "SCU's full calendar description invites its students, alumni, faculty and staff to audition. The shortened listing omitted that eligibility.",
     source: "https://events.scu.edu/live/rss/events",
   })),
+  Object.freeze({
+    title: /^Manage Your Research Presence Online$/i,
+    venue: /.*/,
+    date: "2026-12-01",
+    matches: event => /^https:\/\/events\.scu\.edu\/(?:(?:library\/)?event|live\/events)\/513402(?:-[^/?#]+)?(?:[/?#]|$)/i.test(event.url || ""),
+    reason: "Santa Clara University Library lists faculty and graduate students as the workshop audience. Public eligibility is unconfirmed.",
+    source: "https://libguides.scu.edu/workshops",
+  }),
   Object.freeze({
     title: /^Hanukkah Menorah Lighting$/i,
     venue: /.*/,

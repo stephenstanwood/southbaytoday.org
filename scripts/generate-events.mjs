@@ -4839,16 +4839,15 @@ async function fetchStanfordEvents() {
 // paid-membership program for adults 50+ whose listings ("Tech SIG",
 // "Volunteer Luncheon Reception") are members-only.
 const STUDENT_ONLY_URL_PATHS = /\/(school-of-law|career-center|global-engagement|(?:office-of-the-)?registrar|financial-aid|residence-life|housing|student-life|orientation|commencement|human-resources|technology-training|advancement-services|teaching-and-learning|faculty-development|campus-ministry|provost|governance|lead-scholars|executive-education|osher|accounting)\//i;
-// `scuaa` = SCU Accounting Association (student club); `bva café` /
-// `bronco ventures accelerator` = SCU's internal startup accelerator program
-// (cohort-only events). Both leaked through cycle 146's broader SCU filter
-// because the title patterns are unique to those internal programs.
+// `scuaa` is the SCU Accounting Association student club. The Bronco Ventures
+// Accelerator is a cohort program. Its separate BVA Café meetup is public:
+// https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/
 // `alumni panel` is consistently a student career-prep event ("hear from
 // alumni at Firm X") — surfaced via SCU Accounting Association feed.
 // SJSU's Department Door Decorating Competition asks campus departments to
 // decorate their office doors and lists Students as its audience; it is not a
 // public outing: events.sjsu.edu/event/departemnt-door-decorating-competition.
-const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel|department door decorating competition)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbva\s+caf(?:é|e)(?=\b|$|\s)|\bbronco\s+ventures\s+accelerator\b/i;
+const STUDENT_ONLY_TITLE = /\b(board meeting|drop-in advising|office hours|spartan safe|wellness and recovery meeting|register now on handshake|sample class|performance conversations?|spark60|beyond the major|improv@work|alumni panel|department door decorating competition)\b|^workshop\s*\||\bbucky['’]?s\s+closet\b|\bsanta\s+claran\b|\bscuaa\b|\bbronco\s+ventures\s+accelerator\b/i;
 const STUDENT_ONLY_DESC = /\b(for international students|requesting classroom|register now on handshake|brown bag|forge garden)\b|\bregister\b.{0,80}\b(?:on|in)\s+handshake\b/i;
 // SCU brands students/alumni as "Broncos". Marketing language addressed to
 // "Broncos" (Free to all Broncos! / Bronco community / MBA students and alumni
@@ -5255,7 +5254,22 @@ async function fetchScuEvents() {
       };
     }).filter(Boolean);
 
-    // SCU's Localist RSS emits each occurrence of a multi-day exhibit as a
+    // LiveWhale also republishes occurrences under /live/events/ with a
+    // different item ID but the same event ID in the link. Count the owning
+    // department's copy once so duplicate rows do not consume the source cap.
+    const byOccurrence = new Map();
+    const sharedLink = /\/live\/events\//i;
+    for (const event of parsed) {
+      const sourceId = liveWhaleEventId(event.url);
+      const key = sourceId ? `${sourceId}|${event._startMs}` : event.id;
+      const existing = byOccurrence.get(key);
+      if (!existing || (sharedLink.test(existing.url) && !sharedLink.test(event.url))) {
+        byOccurrence.set(key, event);
+      }
+    }
+    const distinct = [...byOccurrence.values()];
+
+    // SCU's LiveWhale RSS emits each occurrence of a multi-day exhibit as a
     // separate item with `pubDate = T00:00:00` — displayTime() returns
     // "12:00 AM" on non-PT runtimes, slipping past the global no-time
     // exhibit-collapse rule. Mirror the SJSU URL-collapse: group by event
@@ -5264,7 +5278,7 @@ async function fetchScuEvents() {
     // separate (real two-day workshops exist).
     const byUrl = new Map();
     const collapsibleUrlPattern = /^https?:\/\/events\.scu\.edu\/.+\/event\//i;
-    for (const e of parsed) {
+    for (const e of distinct) {
       if (!e.url || !collapsibleUrlPattern.test(e.url)) continue;
       if (!byUrl.has(e.url)) byUrl.set(e.url, []);
       byUrl.get(e.url).push(e);
@@ -5282,11 +5296,12 @@ async function fetchScuEvents() {
       for (let i = 1; i < occurrences.length; i++) dropIds.add(occurrences[i].id);
       collapsed += occurrences.length - 1;
     }
-    const events = parsed
+    const events = distinct
       .filter((e) => !dropIds.has(e.id))
       .map(({ _startMs, ...e }) => e);
 
-    console.log(`  ✅ SCU: ${events.length} events (${skippedScu} student-only filtered${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${virtualFromSourceScu ? `, ${virtualFromSourceScu} flagged virtual by source` : ""})`);
+    const duplicates = parsed.length - distinct.length;
+    console.log(`  ✅ SCU: ${events.length} events (${skippedScu} student-only filtered${duplicates ? `, ${duplicates} duplicate occurrences removed` : ""}${collapsed ? `, ${collapsed} occurrences collapsed into exhibits` : ""}${virtualFromSourceScu ? `, ${virtualFromSourceScu} flagged virtual by source` : ""})`);
     return events;
   } catch (err) {
     console.log(`  ⚠️  SCU: ${err.message}`);

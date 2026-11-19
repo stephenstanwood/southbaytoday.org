@@ -136,6 +136,29 @@ const CORRECTIONS = [
       appendAttendanceNote: "Tickets are sold separately for each performance.",
     };
   }),
+  // Santa Clara University's meetup is free with registration.
+  // https://www.scu.edu/cioccacenter/bronco-ventures/bronco-venture-accelerator/bva-cafe/
+  {
+    date: "2026-11-19",
+    url: "https://events.scu.edu/ciocca-center/event/517570-bva-cafe",
+    aliasUrls: ["https://events.scu.edu/live/events/517570-bva-cafe"],
+    facts: { cost: "free", registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Register through Santa Clara University before attending.",
+  },
+  // The Markey Center verifies the hours, room, price and public invitation.
+  // https://www.scu.edu/cas/graduate-program-in-pastoral-ministries/markey-center-for-leadership-and-ministry/upcoming-events/
+  {
+    date: "2026-12-05",
+    url: "https://events.scu.edu/markey-center/event/517207-getting-to-the-root-the-church-and-the",
+    aliasUrls: ["https://events.scu.edu/live/events/517207-getting-to-the-root-the-church-and-the"],
+    facts: {
+      venue: "St. Clare Parish Hall", address: "941 Lexington St., Santa Clara, CA 95050",
+      category: "education", cost: "free",
+      description: "Join Christopher Tirres for a workshop on what Catholic social teaching says about poverty and why those teachings matter today.",
+      blurb: "Discuss Catholic social teaching on poverty with Christopher Tirres at St. Clare Parish Hall.",
+    },
+    appendAttendanceNote: "The organizer asks attendees to register in advance.",
+  },
   // SJPL lists the Joyce Ellington board-game session as Games & Family
   // Entertainment.
   {
@@ -200,15 +223,34 @@ const CORRECTIONS = [
     // https://campbellca.gov/AgendaCenter/ViewFile/Agenda/_11042026-3295
     facts: { cost: "paid" },
   },
-  {
-    date: "2026-12-03",
-    url: "https://events.scu.edu/arts-and-sciences/event/507179-choreographers-gallery-2026",
-    // https://scupresents.org/university-theatre-and-dance
-    facts: {
-      cost: "paid",
-      costNote: "Adults $14–$16. Faculty, staff, ages 62+ and ages 18 and under $10–$12. Free for SCU students.",
-    },
-  },
+  // SCU Presents lists three ticketed shows on one booking page. The two
+  // December 4 performances have separate source IDs and start times.
+  // https://scupresents.org/university-theatre-and-dance
+  // https://scupresents.scu.edu/section/choreographers-gallery-gni8
+  ...[
+    ["2026-12-03", "8:00 PM", "507179", "p0w9qm"],
+    ["2026-12-04", "7:00 PM", "507180", "2e0c31"],
+    ["2026-12-04", "9:00 PM", "507181", "kq9bav"],
+  ].map(([date, time, calendarId, ticketId]) => {
+    const slug = `${calendarId}-choreographers-gallery-2026`;
+    const url = "https://scupresents.scu.edu/section/choreographers-gallery-gni8";
+    const sourceUrls = [
+      url,
+      `https://scupresents.scu.edu/event/choreographers-gallery-${ticketId}`,
+      `https://events.scu.edu/arts-and-sciences/event/${slug}`,
+      `https://events.scu.edu/live/events/${slug}`,
+    ];
+    return {
+      date,
+      matches: event => event.time === time && sourceUrls.includes(event.url),
+      facts: {
+        url, cost: "paid",
+        costNote: "Adults $14–$16. Faculty, staff, ages 62+ and ages 18 and under $10–$12. Free for SCU students.",
+        occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: url, sourceOccurrenceId: ticketId, date, time },
+        blurb: "See Choreographers' Gallery 2026 at the Louis B. Mayer Theatre, directed by Pauline Locsin with faculty advisor David Popalisky.",
+      },
+    };
+  }),
   {
     date: "2026-12-03",
     matches: event => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6afe2cbf0ad4ed003a042e8d\/?$/.test(event.url || ""),
@@ -401,16 +443,6 @@ const CORRECTIONS = [
       address: "500 Castro St, Mountain View, CA 94041",
     },
     appendAttendanceNote: "The Plaza Conference Room is on the second floor.",
-  },
-  // The university's detail page lists the campus groups invited to audition.
-  {
-    date: "2026-12-02",
-    url: "https://events.scu.edu/arts-and-sciences/event/534032-coherence-auditions",
-    facts: {
-      description: "Afternoon acting and dance auditions for Coherence at Santa Clara University.",
-      attendanceStatus: "needs-confirmation",
-      attendanceNote: "SCU invites its students, alumni, faculty, and staff to audition. Confirm eligibility with the department before going if you are outside those groups.",
-    },
   },
   // The museum places this ongoing exhibition in the Freidenrich Family Gallery.
   // https://museum.stanford.edu/exhibitions/california-current-art-and-histories-bay-area
@@ -3911,7 +3943,7 @@ const CORRECTIONS = [
     facts: (event) => ({
       audienceAge: "kids",
       description: "An overnight Cupertino hackathon for ages 13–18. Participants who are 18 must be in high school. Work on the challenge alone or in a team of up to four.",
-      blurb: "Build software overnight at Quinlan Community Center in Cupertino’s hackathon for ages 13–18.",
+      blurb: "Build software overnight at Quinlan Community Center in Cupertino's hackathon for ages 13–18.",
       ...(event.time === "6:30 PM" ? {
         attendanceStatus: "needs-confirmation",
         attendanceNote: "The program page lists 5:30 PM check-in and a 6 PM opening. The calendar lists a 6:30 PM start. Both give a 10:30 AM Sunday finish. Confirm the start time with Cupertino Parks and Recreation.",

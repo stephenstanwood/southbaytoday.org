@@ -1,8 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { fetchScuEvents } from "../generate-events.mjs";
+import { capUpcomingEventSources, fetchScuEvents, isStudentOnlyEvent } from "../generate-events.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
+import { buildEventSlugs } from "../../src/lib/south-bay/eventSlug.ts";
 
 // The first page's Event schema is September 23. SCU's November 11 RSS
 // occurrence and its own Event schema both identify 454604, at 8 PM Pacific.
@@ -99,5 +102,82 @@ test("SCU keeps explicit RSS finish times for the matching timed occurrences", a
     ["2026-12-03", "2:30 PM", null],
     ["2026-12-04", null, null],
     ["2026-12-05", "2:30 PM", null],
+  ]);
+});
+
+test("SCU shared copies and campus programs leave room for the two ticketed festival dates", async (t) => {
+  const origin = "https://events.scu.edu";
+  const match = "505793-santa-clara-university-mens-water-polo-vs-first";
+  const friday = "Sat, 05 Dec 2026 03:30:00 +0000";
+  const saturday = "Sun, 06 Dec 2026 03:30:00 +0000";
+  const otherListings = Array.from({ length: 22 }, (_, index) => [
+    `community/event/${10000 + index}-public-event`, `Public event ${index}`, "Fri, 20 Nov 2026 18:00:00 +0000",
+  ]);
+  const rows = [
+    ...otherListings,
+    [`live/events/${match}`, "Santa Clara University Men's Water Polo vs Pepperdine", "Fri, 20 Nov 2026 19:30:00 +0000", "507102"],
+    [`bronco-athletics/event/${match}`, "Santa Clara University Men's Water Polo vs Pepperdine", "Fri, 20 Nov 2026 19:30:00 +0000", "505793"],
+    ["library/event/513402-manage-your-research-presence-online", "Manage your Research Presence Online", "Tue, 01 Dec 2026 23:00:00 +0000"],
+    ["arts-and-sciences/event/534032-coherence-auditions", "Coherence Auditions", "Wed, 02 Dec 2026 22:15:00 +0000"],
+    ["arts-and-sciences/event/478083-27th-annual-festival-of-lights", "27th Annual Festival of Lights", friday],
+    ["arts-and-sciences/event/478516-27th-annual-festival-of-lights", "27th Annual Festival of Lights", saturday],
+    [`bronco-athletics/event/${match}`, "Santa Clara University Men's Water Polo vs Pepperdine", "Mon, 07 Dec 2026 19:30:00 +0000", "505793"],
+  ];
+  const xml = `<rss><channel>${rows.map(([path, title, start, id]) => `<item>
+    <title>${title}</title><link>${origin}/${path}</link><pubDate>${start}</pubDate>
+    ${id ? `<livewhale:id>${id}</livewhale:id>` : ""}
+  </item>`).join("")}</channel></rss>`;
+  t.mock.method(globalThis, "fetch", async (input) => {
+    if (String(input) === `${origin}/live/rss/events`) return new Response(xml);
+    assert.equal(String(input), `${origin}/live/json/events?page=1`);
+    return Response.json({ meta: { total_pages: 1 }, data: [] });
+  });
+  const imported = await fetchScuEvents();
+  assert.deepEqual(imported.filter(event => event.title.includes("Pepperdine"))
+    .map(event => [event.date, event.url]), [
+    ["2026-11-20", `${origin}/bronco-athletics/event/${match}`],
+    ["2026-12-07", `${origin}/bronco-athletics/event/${match}`],
+  ]);
+  const capped = capUpcomingEventSources(imported.map(applyVerifiedEventFacts).filter(isEventPublishable));
+  assert.equal(capped.length, 25);
+  assert.deepEqual(capped.slice(-2).map(({ date, url }) => [date, url]), [
+    ["2026-12-04", "https://scupresents.scu.edu/event/27th-annual-festival-of-lights-82x73c"],
+    ["2026-12-05", "https://scupresents.scu.edu/event/27th-annual-festival-of-lights-23qkn0"],
+  ]);
+});
+
+test("BVA Café is a separate public meetup with required registration", () => {
+  const listing = {
+    title: "BVA Café", date: "2026-11-19",
+    url: "https://events.scu.edu/ciocca-center/event/517570-bva-cafe",
+  };
+  assert.equal(isStudentOnlyEvent({ title: listing.title, link: listing.url }), false);
+  assert.equal(isStudentOnlyEvent({ title: "Bronco Ventures Accelerator" }), true);
+  const corrected = applyVerifiedEventFacts(listing);
+  assert.equal(corrected.cost, "free");
+  assert.equal(corrected.registration, "required");
+});
+
+test("restoring the 9 PM Choreographers' Gallery show preserves the existing 7 PM event URL", () => {
+  const listings = [
+    ["scu-bc102b41a08b784f", "7:00 PM", "507180", "2e0c31"],
+    ["scu-9a7a71e4e4ec0e00", "9:00 PM", "507181", "kq9bav"],
+  ].map(([id, time, calendarId, ticket]) => {
+    const event = applyVerifiedEventFacts({
+      id, city: "santa-clara", venue: "Louis B. Mayer Theatre", source: "Santa Clara University",
+      title: "Choreographers' Gallery 2026", date: "2026-12-04", time,
+      url: `https://events.scu.edu/arts-and-sciences/event/${calendarId}-choreographers-gallery-2026`,
+    });
+    assert.equal(event.url, "https://scupresents.scu.edu/section/choreographers-gallery-gni8");
+    assert.equal(event.occurrenceEvidence.sourceOccurrenceId, ticket);
+    assert.equal(event.cost, "paid");
+    assert.equal(event.time, time);
+    return event;
+  });
+  const { kept } = fuzzyDedupEvents(listings);
+  assert.deepEqual(kept, listings);
+  assert.deepEqual([...buildEventSlugs(kept)].map(([slug, event]) => [slug, event.time]), [
+    ["2026-12-04-choreographers-gallery-2026", "7:00 PM"],
+    ["2026-12-04-choreographers-gallery-2026-2", "9:00 PM"],
   ]);
 });
