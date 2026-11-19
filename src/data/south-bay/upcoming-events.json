@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-19T04:35:21.739Z",
-  "eventCount": 1496,
+  "eventCount": 1494,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2393,7 +2393,7 @@
       "displayDate": "Thu, Nov 19",
       "time": "6:30 PM",
       "endTime": "8:00 PM",
-      "venue": "San Jose Public Library",
+      "venue": "Online",
       "address": "",
       "city": "san-jose",
       "virtual": true,
@@ -2421,7 +2421,7 @@
       "displayDate": "Sat, Nov 21",
       "time": "11:00 AM",
       "endTime": "12:00 PM",
-      "venue": "San Jose Public Library",
+      "venue": "Online",
       "address": "",
       "city": "san-jose",
       "virtual": true,
@@ -4589,7 +4589,7 @@
       "address": "1 W Campbell Ave, Campbell, CA 95008",
       "city": "campbell",
       "category": "arts",
-      "cost": null,
+      "cost": "paid",
       "description": "With Tchaikovsky's unforgettable score soaring through the air, immerse yourself in this mesmerizing journey where dreams, heartbreak, and redemption unfold right before your eyes.",
       "url": "https://www.heritagetheatre.org/events/world-ballet-company-swan-lake",
       "source": "Heritage Theatre",
@@ -11480,7 +11480,7 @@
     },
     {
       "id": "paloalto-6afe2cbf0ad4ed003a042e8d",
-      "title": "Winter Biking Class (Vta)",
+      "title": "Winter Biking Class (VTA)",
       "date": "2026-12-03",
       "displayDate": "Thu, Dec 3",
       "time": "6:00 PM",
@@ -23729,7 +23729,7 @@
       "displayDate": "Thu, Nov 19",
       "time": "6:00 PM",
       "endTime": "8:00 PM",
-      "venue": null,
+      "venue": "Rent Stabilization Division Community Room",
       "address": "298 Escuela Ave, Mountain View",
       "city": "mountain-view",
       "category": "community",
@@ -24089,7 +24089,7 @@
     },
     {
       "id": "stanford-54426607039058-2026-11-19",
-      "title": "Ilac: De las fosas comunes al espacio publico: la memoria de la Guerra Civil y el Franquismo en Catalunya y España",
+      "title": "ILAC: De las fosas comunes al espacio público: la memoria de la Guerra Civil y el Franquismo en Catalunya y España",
       "date": "2026-11-19",
       "displayDate": "Thu, Nov 19",
       "time": "12:00 PM",
@@ -24396,27 +24396,6 @@
       "firstSeenAt": "2026-09-05T02:19:41.097Z"
     },
     {
-      "id": "scu-c7f496ebe34b5c97",
-      "title": "21st Annual Santa Cruz Alumni Community Dinner",
-      "date": "2026-12-03",
-      "displayDate": "Thu, Dec 3",
-      "time": "6:00 PM",
-      "endTime": "9:00 PM",
-      "venue": "The Shadowbrook",
-      "address": "",
-      "city": "santa-clara",
-      "category": "food",
-      "cost": "paid",
-      "description": "Don't miss the 21st Annual Santa Cruz Alumni Community Dinner, featuring delicious food at Shadowbrook Restaurant (owned by Ted Burke '68), great company, and plenty of Bronco spirit.",
-      "url": "https://events.scu.edu/alumni-association/event/524979-21st-annual-santa-cruz-alumni-community-dinner",
-      "source": "Santa Clara University",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://events.scu.edu/live/image/gid/21/width/1260/height/630/crop/1/11133_shadowbrook_santa_cruz_dinner.png",
-      "blurb": "Join fellow Santa Cruz alumni for dinner at Shadowbrook Restaurant, owned by Ted Burke '68, at the 21st annual community gathering with Bronco spirit.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
-    },
-    {
       "id": "farmersmarket-4d60c01d586e90c0",
       "title": "Mountain View Farmers Market",
       "date": "2026-12-13",
@@ -24631,7 +24610,7 @@
       "address": "557 Escondido Mall",
       "city": "palo-alto",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "Join us for \"Two Views of the Chinese Coast,\" a talk by Kären Wigen, the Frances & Charles Field Professor in Stanford's Department of History, at the David Rumsey Map Center.",
       "url": "https://events.stanford.edu/event/two-views-of-the-chinese-coast",
       "source": "Stanford Events",
@@ -24639,7 +24618,9 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54012979351519/huge/40df9d4991e00e6914d3fc5469206ece7a8553b0.jpg",
       "blurb": "Hear Stanford history professor Kären Wigen give a talk titled \"Two Views of the Chinese Coast\" at the David Rumsey Map Center.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "registration": "required",
+      "attendanceNote": "Register for in-person seating. The livestream is available without registration."
     },
     {
       "id": "inbound-cbe7bf12fd0834c1",
@@ -29563,7 +29544,7 @@
       "address": "326 Galvez Street, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "arts",
-      "cost": null,
+      "cost": "free",
       "description": "Join Iajs for Bones, Borders, and Black Mirrors: Can Justice Outlive Colonialism?",
       "url": "https://events.stanford.edu/event/bones-borders-and-black-mirrors-can-justice-outlive-colonialism",
       "source": "Stanford Events",
@@ -29571,7 +29552,8 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54180841060880/huge/7c39d159e4565a6394515ab3c9732b9a75015e44.jpg",
       "blurb": "Attend the IAJS event \"Bones, Borders, and Black Mirrors: Can Justice Outlive Colonialism?\" at the Alumni Center.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "attendanceNote": "Stanford provides an advance registration link."
     },
     {
       "id": "midpen-b67287522a28af90",
@@ -32473,7 +32455,7 @@
       "address": "",
       "city": "santa-clara",
       "category": "arts",
-      "cost": "",
+      "cost": "paid",
       "description": "Director: Pauline Locsin Faculty Advisor: David Popalisky December 3 - 4, 2026 (Thu 8 PM, Fri 7 PM & 9 PM)",
       "url": "https://events.scu.edu/arts-and-sciences/event/507179-choreographers-gallery-2026",
       "source": "Santa Clara University",
@@ -32481,7 +32463,8 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJrT2-M6zLj4ARN6LhkjYcbpE/photos/AV-0GLfgqLUt82WE55rMlVFw86_MqsTorx_UPIPCfln1ITUO_Sj-DcL-S_X6VBoi6ZbUfBA57lMMJbih-5WSOLltgOupP-S9m7lFxQV4g-RyRJGBvX1lcD5R737Bs7XEoxb8HubXFaAlb0YINjdot0XSF9LIXcQa6L68xlsD1EdrnRkr7nyTaCW2RRNwDB0Il-fXRjj9MLlm-ZFPitzz51aQtsSPjIaPa6cogW8Kwe1f4o8oZUcDSlq4xBclcp6rWYI8BJ6vFM5H8-zENiiY6dfwlIpsi6sDmZgupBdUcrV0neNm-xu_orJC7KOwvmTaV7sKZV1LqKlE4SqB2BzBwDTyGNdU_4vaD-rKOtIa1IbCsTXFagAWgYXoE_sLMZkG4swnB9YiPPZ30JYG51xJ2Jj1NrOHnULG6SBmEq69fHbJ6UkWRA",
       "blurb": "See Choreographers' Gallery 2026 at the Louis B. Mayer Theatre, directed by Pauline Locsin with faculty advisor David Popalisky.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "costNote": "Adults $14–$16. Faculty, staff, ages 62+ and ages 18 and under $10–$12. Free for SCU students."
     },
     {
       "id": "tm-G5vYZ_onRX7DO",
@@ -32726,7 +32709,7 @@
       "address": "355 Roth Way, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "education",
-      "cost": null,
+      "cost": "free",
       "description": "",
       "url": "https://events.stanford.edu/event/studio-lecture-series-holly-herndon-mat-dryhurst",
       "source": "Stanford Events",
@@ -32734,7 +32717,8 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53747139094817/huge/931f88c02e18debcad6690347bdf8d31216d2849.jpg",
       "blurb": "Attend \"Protocol Art\" with Holly Herndon and Mat Dryhurst, an education event held at the McMurtry Building.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "attendanceNote": "Advance registration is recommended. Registered guests get priority seating."
     },
     {
       "id": "sjsu-5d9df1ad0992d22b",
@@ -33024,27 +33008,6 @@
       "photoRef": "places/ChIJ_QhGaqXMj4AR5GHCXNt35E0/photos/AV-0GLcTh89S1Z9M7vq7PsUgFKFCbGsKHxfZ_hc_uH2RYLpyQqP4T3ob0fzda7HeBnxFJm8__R1Nj9udJpVlUwiQrQuzC3HMWRFdymJsuTkf8nITISKLLuuS-JxcQ03wL7gHfmZF8ii9x1noqXMhFpzxky5o-vmQLzrRKbZEBgJt6eHa4IxbR-1kpXCvPQovadtpI48AyYC2UgjV4g_pnL4b3r2Eui63QsDgQQ8M3AUmhaMVhSPdEZcX15BmQlnc4WJfOUObscoVtwmS98b8phrWEsMNnXru5_4Rpfpxn1DrfwjYIWj26xqkIj2k3z-HyceRpZefkjPn2FXhj-FvNv2ds8A_DNBzRDOPuZAXbLZORyE_rydD2WoRVtiU8MPBh0rYaf4YQQDcBmFagoJYogxh9dYGfY5MaX1RO3OttAJS8J_fPQ",
       "blurb": "Watch dancers reinvent the holiday classic in The Hip Hop Nutcracker's touring stage show.",
       "firstSeenAt": "2026-10-14T03:12:40.375Z"
-    },
-    {
-      "id": "scu-dec7a3634a71bc4e",
-      "title": "Cocoa and Cram with Asg",
-      "date": "2026-12-03",
-      "displayDate": "Thu, Dec 3",
-      "time": "9:30 PM",
-      "endTime": "10:30 PM",
-      "venue": "Learning Commons, Library Help Desk",
-      "address": "",
-      "city": "santa-clara",
-      "category": "education",
-      "cost": "free",
-      "description": "",
-      "url": "https://events.scu.edu/library/event/534060-cocoa-and-cram-with-asg",
-      "source": "Santa Clara University",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://events.scu.edu/live/image/gid/23/width/1260/height/630/crop/1/11185_COCOA_Instagram_Post_45.png",
-      "blurb": "Stop by Cocoa and Cram with Asg at the Learning Commons, Library Help Desk, an education event for Santa Clara students.",
-      "firstSeenAt": "2026-11-19T04:35:21.733Z"
     },
     {
       "id": "tm-G5vYZ_23i5li9",
@@ -34782,7 +34745,7 @@
     },
     {
       "id": "stanford-54384217701917-2026-11-19",
-      "title": "The Transition Minerals Rush in Drc (Congo) and Indonesia: What Can We Do?",
+      "title": "The Transition Minerals Rush in DRC (Congo) and Indonesia: What Can We Do?",
       "date": "2026-11-19",
       "displayDate": "Thu, Nov 19",
       "time": "4:00 PM",
@@ -34857,7 +34820,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34868,7 +34831,8 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/12/87/25/44_Edp.jpg?v=4",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-04T02:20:19.641Z"
+      "firstSeenAt": "2026-10-04T02:20:19.641Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "tm-rZ7HnEZ1AfqZbN",
@@ -34908,7 +34872,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34919,7 +34883,8 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/13/45/52/43_Edp.jpg?v=2",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-05T02:20:05.047Z"
+      "firstSeenAt": "2026-10-05T02:20:05.047Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "tm-rZ7HnEZ1Afjgjd",
@@ -34934,7 +34899,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": "From $31",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -34945,7 +34910,8 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/13/43/08/63_Edp.jpg?v=2",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-05T02:20:05.047Z"
+      "firstSeenAt": "2026-10-05T02:20:05.047Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "tm-Z7r9jZ1A7-tqo",
@@ -35008,7 +34974,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": "From $31",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -35019,7 +34985,8 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/13/45/34/43_Edp.jpg?v=2",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-09T03:12:04.549Z"
+      "firstSeenAt": "2026-10-09T03:12:04.549Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "sjsu-db7888ab74a049f4",
@@ -35104,7 +35071,7 @@
       "category": "arts",
       "cost": "paid",
       "costNote": "From $37",
-      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "attendanceNote": "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
       "sourceAudiences": [
         "Adults, ages 21+"
       ],
@@ -35115,7 +35082,8 @@
       "audienceAge": "adult",
       "image": "https://i.ticketweb.com/i/00/13/41/25/53_Edp.jpg?v=3",
       "blurb": "Hear Gianmarco Soresi work the crowd during a stand-up set at San Jose Improv.",
-      "firstSeenAt": "2026-10-10T02:20:45.546Z"
+      "firstSeenAt": "2026-10-10T02:20:45.546Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "tm-rZ7HnEZ1AfaYPf",

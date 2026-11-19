@@ -99,6 +99,19 @@ test("a branch event still resolves to its branch", () => {
   assert.equal(got.address, "3700 Middlefield Rd Palo Alto");
 });
 
+test("the publisher's online-only flag takes precedence over a branch or library fallback", () => {
+  for (const branchLocationId of ["M", null]) {
+    const got = resolveBiblioLocation({
+      event: { definition: { isVirtual: true, branchLocationId } },
+      entities: ENTITIES,
+      libraryName: PALO_ALTO,
+    });
+    assert.equal(got.venue, "Online");
+    assert.equal(got.address, "");
+    assert.equal(got.kind, "virtual");
+  }
+});
+
 test("a branch already ending in Library is not doubled", () => {
   const got = resolveBiblioLocation({
     event: { definition: { branchLocationId: "C" } },

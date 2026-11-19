@@ -71,8 +71,8 @@ export function cleanDescription(raw, workType, subtype) {
   // suffix to a bare "FI" at the end of FOLDERNAME. The structured workType
   // already carries that information, so do not publish the fragment.
   if (/^Finish Interior$/i.test(workType ?? "")) s = s.replace(/\s+FI$/i, "");
-  // Clean up double spaces
-  s = s.replace(/\s+/g, " ").trim();
+  // Clean up the city's misspelled work label and double spaces.
+  s = s.replace(/\bsignle-family\b/gi, "single-family").replace(/\s+/g, " ").trim();
   // If empty after stripping, fall back
   if (!s) return subtype || workType || "";
   // Title-case

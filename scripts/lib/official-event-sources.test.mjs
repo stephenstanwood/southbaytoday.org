@@ -670,6 +670,14 @@ test("invitation-only coffee chats do not become public calendar destinations", 
   assert.equal(isPublicEvent("Public Coffee Chat", "Santa Clara University", "Open to the public", "Community Center"), true);
 });
 
+test("SCU feed does not advertise restricted study sessions or Capitola dinners as local events", () => {
+  const source = "Santa Clara University";
+  assert.equal(isPublicEvent("Cocoa and Cram with Asg", source, "", "Learning Commons, Library Help Desk"), false);
+  assert.equal(isPublicEvent("21st Annual Santa Cruz Alumni Community Dinner", source, "", "The Shadowbrook"), false);
+  assert.equal(isPublicEvent("Public Research Talk", source, "", "Learning Commons, Library Help Desk"), true);
+  assert.equal(isPublicEvent("Public Dance Performance", source, "", "Louis B. Mayer Theatre"), true);
+});
+
 test("Santana Row keeps each festival day's published hours", () => {
   // The October 2026 card header starts Saturday, but the daily schedule
   // includes Friday's preview. The first clock must not migrate to Saturday.

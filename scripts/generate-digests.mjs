@@ -668,9 +668,10 @@ async function main() {
 
   // Include carried-forward cards and cached summaries in the copy pass.
   for (const digest of Object.values(digests)) {
-    digest.summary = polishCivicCopy(digest.summary);
+    const options = { cityId: digest.city };
+    digest.summary = polishCivicCopy(digest.summary, options);
     if (Array.isArray(digest.keyTopics)) {
-      digest.keyTopics = digest.keyTopics.map(polishCivicTopic);
+      digest.keyTopics = digest.keyTopics.map((topic) => polishCivicTopic(topic, options));
     }
   }
   writeFileAtomic(OUT_PATH, JSON.stringify(digests, null, 2) + "\n");

@@ -220,6 +220,14 @@ test("civic modifiers keep numbers, identifiers, headline dates, and standalone 
   }
 });
 
+test("San José's holiday book drive keeps the district in the published agenda", () => {
+  const topic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
+  const corrected = polishCivicTopic(topic, { cityId: "san-jose" });
+  assert.equal(corrected, topic.replace("District 11", "District 1"));
+  assert.equal(polishCivicTopic(corrected, { cityId: "san-jose" }), corrected);
+  assert.equal(polishCivicTopic(topic, { cityId: "another-city" }), topic);
+});
+
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {
   const keyTopics = [
     "The agenda listed a proposed agreement not to exceed $165,000 for fiscal year 2026-27",

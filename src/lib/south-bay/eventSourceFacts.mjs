@@ -84,6 +84,66 @@ const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Stanford's dated event pages confirm free admission and distinct signup terms.
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/bones-borders-and-black-mirrors-can-justice-outlive-colonialism",
+    facts: { cost: "free", attendanceNote: "Stanford provides an advance registration link." },
+  },
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/studio-lecture-series-holly-herndon-mat-dryhurst",
+    facts: { cost: "free", attendanceNote: "Advance registration is recommended. Registered guests get priority seating." },
+  },
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/two-views-of-the-chinese-coast",
+    // https://appointments.library.stanford.edu/event/17680622
+    facts: event => ({
+      cost: "free",
+      registration: [REGISTRATION_FULL, REGISTRATION_CLOSED].includes(event.registration)
+        ? event.registration : REGISTRATION_REQUIRED,
+      attendanceNote: "Register for in-person seating. The livestream is available without registration.",
+    }),
+  },
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/the-transition-minerals-rush-in-drc-congo-and-indonesia-what-can-we-do",
+    facts: { title: "The Transition Minerals Rush in DRC (Congo) and Indonesia: What Can We Do?" },
+  },
+  {
+    date: "2026-11-19",
+    url: "https://events.stanford.edu/event/ilac-de-las-fosas-comunes-al-espacio-publico-la-memoria-de-la-guerra-civil-y-el-franquismo-en-catalunya-y-espana",
+    facts: { title: "ILAC: De las fosas comunes al espacio público: la memoria de la Guerra Civil y el Franquismo en Catalunya y España" },
+  },
+  // The city names the physical room and also provides a virtual option.
+  {
+    date: "2026-11-19",
+    matches: event => event.title === "Housing Help Center for Tenants"
+      && event.city === "mountain-view"
+      && /^https:\/\/www\.mountainview\.gov\/our-city\/departments\/housing\/rent-stabilization\/housing-and-eviction-prevention\/housing-and-eviction-help-center(?:#!\/)?$/.test(event.url || ""),
+    facts: { venue: "Rent Stabilization Division Community Room" },
+  },
+  {
+    date: "2026-11-19",
+    url: "https://www.heritagetheatre.org/events/world-ballet-company-swan-lake",
+    // https://campbellca.gov/AgendaCenter/ViewFile/Agenda/_11042026-3295
+    facts: { cost: "paid" },
+  },
+  {
+    date: "2026-12-03",
+    url: "https://events.scu.edu/arts-and-sciences/event/507179-choreographers-gallery-2026",
+    // https://scupresents.org/university-theatre-and-dance
+    facts: {
+      cost: "paid",
+      costNote: "Adults $14–$16. Faculty, staff, ages 62+ and ages 18 and under $10–$12. Free for SCU students.",
+    },
+  },
+  {
+    date: "2026-12-03",
+    matches: event => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6afe2cbf0ad4ed003a042e8d\/?$/.test(event.url || ""),
+    facts: { title: "Winter Biking Class (VTA)" },
+  },
   // The public calendar and November 18 City Hall newsletter confirm 3–8 PM
   // on both dates. The old 2 PM start was from the vendor FAQ.
   // https://econdev.mountainview.gov/downtown/makers-market-2026
@@ -1716,6 +1776,23 @@ const CORRECTIONS = [
     facts: {
       registration: REGISTRATION_FULL, costNote: null,
       attendanceNote: "TicketWeb lists a waitlist. Ages 21+. Two-item minimum purchase per person.",
+    },
+  })),
+  // The venue's show grid lists these exact slots as waitlist on November 18.
+  // https://improv.com/comic/gianmarco%20soresi/
+  ...[
+    ["2026-11-19", "7:30 PM", "14153314"],
+    ["2026-11-20", "7:30 PM", "14735683"],
+    ["2026-11-20", "9:45 PM", "14735703"],
+    ["2026-11-21", "9:30 PM", "14735713"],
+    ["2026-11-22", "8:30 PM", "14811543"],
+  ].map(([date, time, ticketId]) => ({
+    date,
+    matches: event => event.time === time && event.venue === "San Jose Improv"
+      && event.url === `https://www.ticketweb.com/event/gianmarco-soresi-san-jose-improv-tickets/${ticketId}`,
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "San Jose Improv lists a waitlist. Check TicketWeb for current availability. Ages 21+. Two-item minimum purchase per person.",
     },
   })),
   {

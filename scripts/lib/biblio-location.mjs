@@ -53,12 +53,16 @@ export function branchVenueName(branchName) {
  * @param {object} args.event      an entities.events entry
  * @param {object} args.entities   that page's entity stores (locations, places)
  * @param {string} args.libraryName the system name, e.g. "Palo Alto City Library"
- * @returns {{venue: string, address: string, kind: "branch"|"non-branch"|"library-fallback",
+ * @returns {{venue: string, address: string, kind: "virtual"|"branch"|"non-branch"|"library-fallback",
  *   locationDetails: string, placeName: string}}
  */
 export function resolveBiblioLocation({ event = {}, entities = {}, libraryName = "" } = {}) {
   const definition = event.definition || {};
   const locationDetails = String(definition.locationDetails ?? "").replace(/\s+/g, " ").trim();
+
+  if (definition.isVirtual === true) {
+    return { venue: "Online", address: "", kind: "virtual", locationDetails, placeName: "" };
+  }
 
   const branchId = event.branchId || definition.branchLocationId;
   const branchStore = entities.locations || entities.branches || {};

@@ -817,8 +817,14 @@ function isPublicEvent(title, source, description, venue) {
     // calendar). Public events don't address readers as "colleagues" in their
     // opening line. Title alone doesn't carry the signal — the existing SCU
     // patterns above only test against title.
-    if (source === "Santa Clara University" && description) {
-      if (/^\s*(?:dear\s+)?colleagues[,!]?\s+(?:join|please|kindly)\b/i.test(description)) return false;
+    if (source === "Santa Clara University") {
+      if (/^\s*(?:dear\s+)?colleagues[,!]?\s+(?:join|please|kindly)\b/i.test(description || "")) return false;
+      // The 9:30 PM study session requires campus access after the public library hours.
+      // https://www.scu.edu/library/policies/use/
+      if (/^Cocoa and Cram with ASG$/i.test(title) && /\bLearning Commons\b/i.test(venue || "")) return false;
+      // The venue's own site locates Shadowbrook in Capitola.
+      // https://shadowbrook-capitola.com/
+      if (/^(?:The )?Shadowbrook(?: Restaurant)?$/i.test(venue || "")) return false;
     }
     // Filter away athletic events — games played outside the South Bay
     if (isAwayGame(title)) return false;

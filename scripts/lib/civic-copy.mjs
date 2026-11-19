@@ -45,8 +45,13 @@ export function polishCivicCopy(text, { cityId } = {}) {
     : text;
 }
 
-export function polishCivicTopic(text) {
-  const copy = polishCivicCopy(text);
+export function polishCivicTopic(text, options) {
+  let copy = polishCivicCopy(text, options);
+  // San José agenda item ROGC 26-404 names District 1 and Councilmember Kamei.
+  // https://sanjose.legistar.com/LegislationDetail.aspx?GUID=944C7922-21AF-4970-8270-CDE7733FDE83&ID=8321451
+  if (options?.cityId === "san-jose" && typeof copy === "string" && /\bHoliday Children Book Drive\b/i.test(copy)) {
+    copy = copy.replace(/\bCouncil District 11\b(?= \(Kamei\))/i, "Council District 1");
+  }
   // Finish declarative topic sentences, leaving agenda-title fragments alone.
   // Never append punctuation to a URL or email address.
   if (typeof copy !== "string"
