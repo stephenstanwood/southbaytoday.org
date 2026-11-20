@@ -179,7 +179,18 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 const november19NightRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-night-refresh.json", import.meta.url)));
 audits.push(november19NightRefreshFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-late-scu.json", import.meta.url))));
-audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-branch-buddy.json", import.meta.url))));
+const branchBuddyFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-branch-buddy.json", import.meta.url)));
+audits.push(branchBuddyFixture);
+
+test("library signup advice follows availability and keeps waitlist instructions", () => {
+  const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
+  for (const registration of ["full", "closed"]) {
+    assert.equal(polishReviewedEventCopy({ source, registration, attendanceNote: refreshed }).attendanceNote, undefined);
+    const attendanceNote = `${refreshed} Ask the library about the waitlist.`;
+    assert.equal(polishReviewedEventCopy({ source, registration, attendanceNote }).attendanceNote, "Ask the library about the waitlist.");
+  }
+  assert.equal(polishReviewedEventCopy({ source, registration: "required", attendanceNote: refreshed }).attendanceNote, reviewed);
+});
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.

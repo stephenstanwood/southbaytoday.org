@@ -3722,6 +3722,10 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
   // Library tutoring belongs with educational programs across branches.
   if (/\blibrary\b/.test(venueLower) && /^homework help\b/.test(titleLower.trim())) return "education";
+  // Branch Buddy is library volunteering. Keep sessions advertised for families in Family.
+  if (/\blibrary\b/.test(venueLower) && /\bbranch buddy\b/.test(titleLower)) {
+    return /\bfor families\b/.test(titleLower) ? "family" : "community";
+  }
   // Title-anchored overrides for terms that source-supplied category tags
   // routinely override (e.g. SJDA tags SoFA Market trivia nights "Music"
   // because the venue is music-coded; tags Marriott live-music nights

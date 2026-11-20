@@ -52,6 +52,12 @@ test("both library adapters honor the captured midnight registration deadline", 
   assert.deepEqual(event, midnightWindowFixture.event);
 });
 
+test("Branch Buddy categories follow the session's advertised audience", async () => {
+  const { inferCategory } = await import("../generate-events.mjs");
+  assert.equal(inferCategory("Branch Buddy Volunteering for Families", "Training and supplies are provided.", "", "King Library"), "family");
+  assert.equal(inferCategory("Volunteer Away Your Fines as a Branch Buddy!", "Clean toys in the children's area.", "", "Bascom Library"), "community");
+});
+
 test("the captured Halloween display survives both library adapters after its midnight opening", async (t) => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-21T12:00:00Z") });
   const { fetchBiblioEvents, fetchScclEvents } = await import("../generate-events.mjs");

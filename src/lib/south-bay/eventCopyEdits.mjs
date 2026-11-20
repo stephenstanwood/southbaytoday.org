@@ -25,6 +25,7 @@ const SJPL_STORYTIME_TICKET_EDIT = [
   /Seating for [Ss]torytime is available on a first-come, first-served basis\. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./g,
   SJPL_STORYTIME_TICKET_COPY,
 ];
+const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
 
 const SCCLD_ONLINE_REGISTRATION_EDIT = [
   "Space is limited and Online Registration is required.",
@@ -130,7 +131,7 @@ const EDITS = {
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
       [
         "Please register online or ask for assistance by calling/visiting our Information Desk.",
-        "Register online. For help registering, call or visit the library's information desk.",
+        SJPL_ONLINE_SIGNUP_COPY,
       ],
       [/For questions, please call \(408\) 808-3040 or send an email to ab\.sjpl@sjlibrary\.org(?=$| [A-Z])/g, "$&."],
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
@@ -1922,6 +1923,12 @@ export function polishReviewedEventCopy(event) {
         next[field] = next[field].replaceAll(before, after);
       }
     }
+  }
+  // The library keeps this boilerplate in its description after registration fills or closes.
+  const signupNote = `${SJPL_ONLINE_SIGNUP_COPY} Space is limited.`;
+  if (next.source === "San Jose Public Library" && ["full", "closed"].includes(next.registration)
+      && next.attendanceNote?.includes(signupNote)) {
+    next.attendanceNote = next.attendanceNote.replace(signupNote, "").trim() || undefined;
   }
   return next;
 }
