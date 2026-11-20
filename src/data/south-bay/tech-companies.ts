@@ -3785,13 +3785,15 @@ export const TECH_PULSE = [
   },
   {
     value: "Google & Apple",
-    label: "Largest SCC employers",
-    note: "25K local jobs each at Googleplex & Apple Park",
+    label: "Largest employers tracked",
+    note: "About 25K jobs each across Santa Clara County",
   },
   {
     value: "Chip equipment",
     label: "Hot category",
-    note: "Applied Materials + KLA powering the AI fab boom from Santa Clara",
+    // Headquarters in company filings: https://ir.appliedmaterials.com/node/28666/ixbrl-viewer
+    // https://ir.kla.com/sec-filings/annual-reports/content/0000319201-26-000027/klac-20260630.htm
+    note: "Applied Materials in Santa Clara and KLA in Milpitas",
   },
 ];
 
