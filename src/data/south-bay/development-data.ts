@@ -328,7 +328,7 @@ export const DEV_PROJECTS: DevProject[] = [
     category: "mixed-use",
     status: "approved",
     description:
-      "Sunnyvale's adopted Downtown Specific Plan guides housing, offices, shops, and pedestrian improvements near the Sunnyvale Caltrain station. The Murphy Avenue pedestrian mall and Cityline developments are separate projects within the plan area. The city records completed housing, office, and retail projects in Block 18.",
+      "Sunnyvale's adopted Downtown Specific Plan guides development near the Sunnyvale Caltrain station, including housing, offices, shops, and pedestrian improvements. The Murphy Avenue pedestrian mall and Cityline developments are separate projects within the plan area. City records list homes, offices, and retail space among the completed developments in Block 18.",
     scale: "Multiple parcels",
     developer: "City of Sunnyvale (plan) and individual project developers",
     timeline: "First adopted in 1993, with major updates in 2003 and 2020. Project stages vary by parcel.",
