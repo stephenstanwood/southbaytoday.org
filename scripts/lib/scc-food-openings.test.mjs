@@ -189,11 +189,13 @@ test("county fencing, dishroom and misspelled cooler filings stay out of food li
   }
 });
 
-test("reviewed apartment, corporate and unverified food identities stay source-specific", () => {
+test("reviewed permit exclusions stay source-specific", () => {
   for (const record of [
     { record_id: "SR0883235", business_name: "E-RUTHERFORD MONTH VISTA LLC", city: "MOUNTAIN VIEW" },
     { record_id: "SR0886077", business_name: "1015 MARKETPLACE", city: "MOUNTAIN VIEW" },
     { record_id: "SR0885986", business_name: "ELITE MULTISERVICES", city: "SAN JOSE" },
+    { record_id: "SR0886903", business_name: "RTI - FUJISAN SUSHI", site_location: "2179 MONTEREY RD., SAN JOSE, CA 95125", city: "SAN JOSE" },
+    { record_id: "SR0881355", business_name: "E-RESTAURANT TI - ALPHA X", site_location: "1019 N SAN ANTONIO RD., LOS ALTOS, CA 94022", city: "LOS ALTOS" },
   ]) assert.equal(shouldSkip(record), true, record.record_id);
 
   // A filing entity can represent a restaurant. Do not turn these exact
@@ -201,6 +203,9 @@ test("reviewed apartment, corporate and unverified food identities stay source-s
   for (const business_name of ["1015 MARKETPLACE", "RTI ULAS ENTERPRISES LLC", "ELITE CAFE"]) {
     assert.equal(shouldSkip({ business_name, city: "SAN JOSE" }), false, business_name);
   }
+  assert.equal(shouldSkip({
+    record_id: "SR0884719", business_name: "FUJISAN SUSHI @ TAWA1702", city: "SAN JOSE",
+  }), false);
 });
 
 test("Reddit discovery dates and blurbs cannot become verified opening claims", () => {

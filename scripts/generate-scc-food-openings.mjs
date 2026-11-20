@@ -161,7 +161,6 @@ const NAME_OVERRIDES = {
   "SR0884719": "FujiSan Sushi @ Tawa1702",
   "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
   "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
-  "SR0886903": "FujiSan Sushi",
   // Great Mall's own directory supplies the brand spelling and coming-soon status.
   // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice
   "SR0885853": "TH Sugarcane & Juice",
@@ -243,6 +242,15 @@ const SOURCE_ID_SKIP = new Set([
   "SR0886077", // 1015 Marketplace: Google-owned Masa Cafe at 1015 Joaquin Rd.
   // County inspection: https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAAE2OF2E.pdf
   "SR0885986", // Elite Multiservices: no primary evidence of a public food business.
+  // FujiSan's grocery kiosk permit is at Vallarta's operating store at 2179 Monterey Rd.
+  // https://vallartasupermarkets.com/store-locations/san-jose-california/
+  // https://www.fujisansushi.com/join-us/become-a-location/grocery/
+  "SR0886903",
+  // Alpha X is a tenant-improvement filing. City records at this address show
+  // existing office and kitchen work, with no verified public Alpha X opening.
+  // https://www.losaltosca.gov/ArchiveCenter/ViewFile/Item/1875
+  // https://www.losaltosca.gov/ArchiveCenter/ViewFile/Item/1896
+  "SR0881355",
   // Target's own location and grocery pages confirm this operating store at
   // 95 Holger Way. Its October 8 plan approval is not a new grocery opening.
   // https://www.target.com/sl/san-jose-north/2581/grocery
