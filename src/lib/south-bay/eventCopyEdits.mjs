@@ -1633,6 +1633,7 @@ const EDITS = {
     blurb: [
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
       ["Catch San Jose State's men's basketball team take on", "Watch San Jose State's men's basketball team take on"],
+      [/\bat Provident Credit Union Event Center\b/g, "at the Provident Credit Union Event Center"],
       ["Hear a Candlelight concert at Hammer Theatre Center built around the title pairing of Queen and ABBA.", "Hear Queen and ABBA songs in a Candlelight concert at Hammer Theatre Center."],
       [
         "Hear Elena Manferdini speak in Inside the Dream Factory, part of the SJSU Art Galleries weekly lecture series with visiting artists and designers.",
