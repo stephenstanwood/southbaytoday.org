@@ -183,6 +183,7 @@ const branchBuddyFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-
 audits.push(branchBuddyFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-branch-buddy-clarity.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-campus-events.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-screenings-and-crafts.json", import.meta.url))));
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
@@ -1246,20 +1247,23 @@ for (const row of reviewedCases) {
       const reviewedTitle = reviewedCases.find(candidate => candidate.field === "title"
         && candidate.source === row.source && candidate.refreshed === occurrence.title)?.reviewed
         ?? occurrence.title;
+      // A later edit can link to the prior reviewed text and still replay
+      // the organizer's original spelling and punctuation through ingestion.
+      const sourceText = row.sourceText ?? row.refreshed;
       const original = {
         ...occurrence, title: reviewedTitle, source: row.source,
         date: "2026-11-01", time: "3:30 PM", endTime: "5:00 PM",
         cost: "low", costNote: "$75", attendanceNote: "Registration required; 30 tickets.",
-        [row.field]: row.refreshed,
+        [row.field]: sourceText,
       };
       const untouched = structuredClone(original);
       // Compare factual tokens after decoding a duplicated date or glued email.
-      const factText = row.tokenRepair ? row.refreshed.replace(...row.tokenRepair) : row.refreshed;
+      const factText = row.tokenRepair ? sourceText.replace(...row.tokenRepair) : sourceText;
       const refresh = () => polishReviewedEventCopy({
         ...original,
-        [row.field]: row.field === "description" ? polishDescription(row.refreshed)
-          : row.field === "title" ? cleanTitle(row.refreshed)
-          : row.field === "attendanceNote" ? polishAttendanceNote(row.refreshed) : row.refreshed,
+        [row.field]: row.field === "description" ? polishDescription(sourceText)
+          : row.field === "title" ? cleanTitle(sourceText)
+          : row.field === "attendanceNote" ? polishAttendanceNote(sourceText) : sourceText,
       });
       for (let pass = 0; pass < 3; pass++) {
         // Each refresh starts from source/cached copy again, not its output.

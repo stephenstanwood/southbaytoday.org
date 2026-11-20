@@ -25,6 +25,7 @@ const SJPL_STORYTIME_TICKET_EDIT = [
   /Seating for [Ss]torytime is available on a first-come, first-served basis\. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./g,
   SJPL_STORYTIME_TICKET_COPY,
 ];
+const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
 const SJPL_BRANCH_BUDDY_TASKS = [
   "Book cover cleaning – Use disinfecting wipes to reinvigorate dingy books.",
@@ -53,6 +54,16 @@ const EDITS = {
       ["share the one of a kind experience", "share the one-of-a-kind experience"],
       ["Juniors begin by animating their own artwork, then learning about video game design.", "Juniors begin by animating their own artwork, then learn about video game design."],
       ["images & glasses, and experiment with sound.", "images and glasses and experiment with sound."],
+      [
+        'Return to Panem for the 50th Hunger Games! In "The Hunger Games: Sunrise on the Reaping," young Haymitch Abernathy faces a deadly fight for survival as the Capitol doubles the number of tributes. Experience the action, suspense, and rebellion on the largest dome screen in the Bay Area in our IMAX Dome Theater, featuring stunning visuals and powerful sound.',
+        "Young Haymitch Abernathy fights to survive the 50th Hunger Games in Panem as the Capitol doubles the number of tributes. See the film at The Tech Interactive's IMAX Dome Theater, home to the Bay Area's largest dome screen.",
+      ],
+    ],
+    blurb: [
+      [
+        "Watch The Hunger Games: Sunrise on the Reaping, following young Haymitch Abernathy in the 50th Hunger Games.",
+        'Follow young Haymitch Abernathy through the 50th Hunger Games in "The Hunger Games: Sunrise on the Reaping."',
+      ],
     ],
   },
   "SC County Fire Dept": {
@@ -117,6 +128,10 @@ const EDITS = {
         "Tickets available at the desk 30 minutes before the program starts. All individuals (of any age) attending need a ticket and must be present to receive their ticket. " + SJPL_STORYTIME_TICKET_COPY,
         SJPL_STORYTIME_TICKET_COPY + " Everyone needs a ticket and must be present to get one.",
       ],
+      [
+        /^Tickets available at the desk 30 minutes before the program starts\. All individuals \(of any age\) attending need a ticket and must be present to receive their ticket\.$/g,
+        SJPL_DESK_TICKET_COPY,
+      ],
       ["Tickets and participation Free.", "Tickets and participation are free."],
       ["on a first come, first basis.", "on a first-come, first-served basis."],
       // Attendance excerpts are extracted before description repairs run.
@@ -143,6 +158,10 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [
+        /^Our partner, Budding Leaders, is hosting arts and crafts classes for ages 4\+ with adult help, 8\+ solo\. We will supply materials and samples and help you create beautiful artwork\. Tickets available at the desk 30 minutes before (?:the )?program starts\. All individuals \(of any age\) attending need a ticket and must be present to receive their ticket\.$/g,
+        "Budding Leaders hosts arts and crafts classes for children ages 4 and up. Children younger than 8 need adult help. Materials, samples, and help with the project are provided. " + SJPL_DESK_TICKET_COPY,
+      ],
       ["Storytime Tickets & Seating This event", "Storytime Tickets & Seating: This event"],
       ["Best for children ages 0-8 with their caregivers; all families welcome!", "This program is best for children ages 0–8 and their caregivers. All families are welcome."],
       ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
