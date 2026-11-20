@@ -4528,28 +4528,6 @@ const CORRECTIONS = [
       blurb: "Hear Irish traditional and Celtic folk music from Solas at Montalvo Arts Center.",
     },
   },
-  // The occurrence's description says 60 minutes, but its registrationInfo
-  // instructions say 30. Neither source field establishes the right pickup
-  // time. Stop applying this warning if a fresh source resolves the conflict.
-  // https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc4
-  // The November 10 occurrence repeats the same conflict in its exact record.
-  // Evidence: docs/qa/2026-10-24-0407-fact-check.md and
-  // docs/qa/2026-11-07-1807z-fact-check.md (exact gateway responses).
-  ...[
-    ["2026-10-27", "691fb8c1dff9d93e00d10dc4"],
-    ["2026-11-10", "691fb8c1dff9d93e00d10dc6"],
-  ].map(([date, id]) => ({
-    date,
-    matches: (event) => event.url === `https://sjpl.bibliocommons.com/events/${id}`
-      && /\b60 minutes\b/i.test(event.description || "")
-      && /\b30 minutes\b/i.test(event.attendanceNote || ""),
-    facts: {
-      attendanceStatus: "needs-confirmation",
-      attendanceNote: "The library's description says ticket pickup starts 60 minutes before storytime, while its signup instructions say 30 minutes. Confirm pickup timing with Willow Glen Library.",
-    },
-    copyReplacements: [[/A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime\./gi,
-      "The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime); confirm pickup timing with Willow Glen Library."]],
-  })),
   // "Reading to Children" is not evidence that children read to the volunteer.
   // Keep the source's small-group format without inventing a participant role.
   // https://sjpl.bibliocommons.com/events/6a5e86410e562e28009b31f5
@@ -6195,6 +6173,29 @@ const CORRECTIONS = [
       attendanceNote: "Register in advance for faster check-in.",
     },
   },
+  // The museum's event pages and the linked ticket forms confirm the entry terms.
+  // https://sjmusart.org/event/day-life-docent-2026
+  {
+    date: "2026-11-20",
+    matches: (event) => event.url === "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=d99e8482-8ff9-40b8-9855-85e4224a9ff8"
+      && event.time === "6:00 PM" && event.city === "san-jose",
+    facts: (event) => ({
+      registration: REGISTRATION_REQUIRED,
+      ...(event.cost == null ? { cost: "free" } : {}),
+    }),
+  },
+  // The exact 2 PM booking includes museum admission and lists a 2:40 PM end.
+  // https://sjmusart.org/event/anahita-ii-sholeh-asgary
+  {
+    date: "2026-11-21",
+    matches: (event) => event.url === "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=0bbeb4b0-5969-4bce-9821-0ba84d9f867a"
+      && event.time === "2:00 PM" && event.city === "san-jose",
+    facts: (event) => ({
+      registration: REGISTRATION_REQUIRED,
+      ...(event.cost == null ? { cost: "low", costNote: "Included with museum admission" } : {}),
+      ...(event.endTime == null ? { endTime: "2:40 PM" } : {}),
+    }),
+  },
   {
     id: "a322ab0c474f",
     date: "2026-12-04",
@@ -6250,12 +6251,29 @@ export function applyVerifiedEventFacts(event) {
         : [event.attendanceNote, spectatorNote].filter(Boolean).join(" "),
     };
   }
+  const sjplId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
+  // Willow Glen repeats the conflicting clocks in each occurrence's own text.
+  // Require both current instructions and preserve the other entry conditions.
+  // https://sjpl.bibliocommons.com/v2/events/691fb8c1dff9d93e00d10dc8
+  const pickupAt60 = /A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime\./i;
+  const pickupAt30 = /A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./i;
+  if (sjplId && event.title === "Family Storytime" && event.venue === "Willow Glen Library"
+      && pickupAt60.test(event.description || "") && pickupAt30.test(event.attendanceNote || "")) {
+    const warning = "The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime). Confirm pickup timing with Willow Glen Library.";
+    const remainingNote = event.attendanceNote.replace(pickupAt60, "").replace(pickupAt30, "").replace(/\s{2,}/g, " ").trim();
+    event = {
+      ...event,
+      attendanceStatus: "needs-confirmation",
+      description: event.description.replace(pickupAt60, warning),
+      attendanceNote: [remainingNote, "The library's description says ticket pickup starts 60 minutes before storytime. Its signup instructions say 30 minutes. Confirm pickup timing with Willow Glen Library."].filter(Boolean).join(" "),
+      ...(event.blurb ? { blurb: event.blurb.replace(pickupAt60, warning).replace(pickupAt30, "").trim() } : {}),
+    };
+  }
   // These dated Calabazas occurrences give two incompatible print limits.
   // Preserve the source text and disclose the ambiguity without selecting a
   // limit. Stop adding the note when either conflicting clause is corrected.
   // Evidence: docs/qa/2026-10-30-2007-fact-check.md and
   // docs/qa/2026-11-07-2207z-fact-check.md (fresh exact-ID responses).
-  const sjplId = /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/([a-f0-9]+)\/?(?:[?#].*)?$/.exec(event?.url || "")?.[1];
   if (event?.date && CALABAZAS_PRINT_LIMIT_DATES[sjplId] === event.date
       && /\bDesigns must print in 1 hour 45 minutes\b/i.test(event.description || "")
       && /\bhave a print time of under 45 minutes\b/i.test(event.description || "")) {

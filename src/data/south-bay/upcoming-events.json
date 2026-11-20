@@ -8859,18 +8859,19 @@
       "city": "san-jose",
       "category": "family",
       "cost": "free",
-      "description": "Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages. This program is geared for children of all ages and their parents/caregivers! Free, with limited capacity. As we navigate pandemic life, here are a few modifications to our Storytime: Seating for Storytime is available on a first-come, first-served basis. A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime. A second Storytime session will follow the first if the first session reaches the maximum capacity of 50 participants. This program is developed to align with the Early Education Quality Standards.",
+      "description": "Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages. This program is geared for children of all ages and their parents/caregivers! Free, with limited capacity. As we navigate pandemic life, here are a few modifications to our Storytime: Seating for Storytime is available on a first-come, first-served basis. The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime). Confirm pickup timing with Willow Glen Library. A second Storytime session will follow the first if the first session reaches the maximum capacity of 50 participants. This program is developed to align with the Early Education Quality Standards.",
       "sourceAudiences": [
         "Young Children, ages 0-5"
       ],
-      "attendanceNote": "Seating for Storytime is available on a first-come, first-served basis. A limited number of tickets will be distributed at the Information Desk 60 minutes prior to the start of Storytime. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime.",
+      "attendanceNote": "Seating for Storytime is available on a first-come, first-served basis. The library's description says ticket pickup starts 60 minutes before storytime. Its signup instructions say 30 minutes. Confirm pickup timing with Willow Glen Library.",
       "url": "https://sjpl.bibliocommons.com/events/691fb8c1dff9d93e00d10dc8",
       "source": "San Jose Public Library",
       "kidFriendly": true,
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/4ad1557fae587b726b74cd3dcfac221b/BiblioEvents%20Image%20Indoor.png",
       "blurb": "Gather the whole family for stories, songs, rhymes, and movement activities at Willow Glen Library.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceStatus": "needs-confirmation"
     },
     {
       "id": "sjpl-693330536724c63d00e572c5",
@@ -23932,12 +23933,12 @@
       "date": "2026-11-21",
       "displayDate": "Sat, Nov 21",
       "time": "2:00 PM",
-      "endTime": null,
+      "endTime": "2:40 PM",
       "venue": "San José Museum of Art",
       "address": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
       "city": "san-jose",
       "category": "arts",
-      "cost": null,
+      "cost": "low",
       "description": "In-gallery electroacoustic performance in which sound artist Sholeh Asgary mixes the sound of flowing water from a water clock with deconstructed Persian lamentation songs. Runs 25–40 minutes; free with museum admission. Advance registration is required and each performance is capped at 20 tickets; late entry is not allowed.",
       "url": "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=0bbeb4b0-5969-4bce-9821-0ba84d9f867a",
       "source": "City Newsletter",
@@ -23945,7 +23946,9 @@
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1761027204911-d8c4ebe2e64d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwc3R1ZGlvJTIwY3JlYXRpdmV8ZW58MHwyfHx8MTc4NTg5OTM4MHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Hear sound artist Sholeh Asgary mix flowing water from a water clock with deconstructed Persian lamentation songs in a 25–40 minute gallery performance.",
-      "firstSeenAt": "2026-11-20T18:31:26.242Z"
+      "firstSeenAt": "2026-11-20T18:31:26.242Z",
+      "registration": "required",
+      "costNote": "Included with museum admission"
     },
     {
       "id": "inbound-bf3a1bdb9a4315bb",
@@ -24025,7 +24028,7 @@
       "address": "San José Museum of Art, 110 South Market Street, San José, CA 95113",
       "city": "san-jose",
       "category": "arts",
-      "cost": null,
+      "cost": "free",
       "description": "An informative, interactive session about volunteering at SJMA, including leading gallery tours with the Docent Council or teaching in classrooms through the Let's Look at Art program. Free; registration required.",
       "url": "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=d99e8482-8ff9-40b8-9855-85e4224a9ff8",
       "source": "City Newsletter",
@@ -24033,7 +24036,8 @@
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1761027204911-d8c4ebe2e64d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwc3R1ZGlvJTIwY3JlYXRpdmV8ZW58MHwyfHx8MTc4NTg5OTM4MHww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Learn what volunteering at SJMA involves, from leading gallery tours with the Docent Council to teaching classrooms through Let's Look at Art.",
-      "firstSeenAt": "2026-11-20T18:31:26.242Z"
+      "firstSeenAt": "2026-11-20T18:31:26.242Z",
+      "registration": "required"
     },
     {
       "id": "inbound-148039e0d7bd3937",

@@ -38,7 +38,7 @@ test("a date-only newsletter alias canonicalizes after its clock is recovered, b
   assert.notEqual(later.url, morning.url);
 });
 
-test("the exact storytime's contradictory pickup fields remain a confirmation notice through cached copy", async () => {
+test("Willow Glen storytime's contradictory pickup fields remain a confirmation notice across occurrences", async () => {
   const details = libraryEventDetails(fixture.library);
   assert.match(details.description, /60 minutes/);
   assert.match(details.attendanceNote, /30 minutes/);
@@ -53,10 +53,15 @@ test("the exact storytime's contradictory pickup fields remain a confirmation no
   assert.equal(event.cost, "free");
   await resolveEventBlurbs([event], { enabled: false });
   assert.deepEqual(applyVerifiedEventFacts(event), event);
+  const later = applyVerifiedEventFacts({
+    ...input, date: "2026-11-24", url: "https://sjpl.bibliocommons.com/v2/events/691fb8c1dff9d93e00d10dc8",
+  });
+  assert.equal(later.attendanceStatus, "needs-confirmation");
+  assert.match(later.attendanceNote, /first-come, first-served.*60 minutes.*30 minutes/);
   for (const resolved of [
     { ...input, description: details.description.replace("60 minutes", "30 minutes") },
     { ...input, attendanceNote: details.attendanceNote.replace("30 minutes", "60 minutes") },
-    { ...input, date: "2027-11-10" },
+    { ...input, venue: "Another Library" },
     { ...input, url: "https://sjpl.bibliocommons.com/events/another-occurrence" },
   ]) assert.deepEqual(applyVerifiedEventFacts(resolved), resolved, "resolved or unrelated source facts must pass through");
 });

@@ -1570,7 +1570,7 @@ test("Willow Glen's conflicting pickup instructions require confirmation instead
   assert.doesNotMatch(events[0].description, /will be distributed at.*60 minutes/);
   assert.deepEqual(applyVerifiedEventFacts(events[0]), events[0]);
   for (const other of [
-    { ...raw, date: "2027-10-27" },
+    { ...raw, description: raw.description.replace("60 minutes", "30 minutes") },
     { ...raw, attendanceNote: raw.attendanceNote.replace("30 minutes", "60 minutes") },
   ]) assert.equal(applyVerifiedEventFacts(other), other, "a consistent revised source keeps its own terms");
 });
@@ -3865,6 +3865,26 @@ test("SJMA facts preserve evening starts, offsite directions, and admission cond
   const december = applyVerifiedEventFacts({ date: "2026-12-04", url: "https://sjmusart.org/event/first-fridays-december-2026" });
   assert.equal(december.title, "First Fridays: Celebrate the Holidays with Pride");
   assert.match(december.url, /celebrate-holidays-pride$/);
+
+  const docent = applyVerifiedEventFacts({
+    date: "2026-11-20", time: "6:00 PM", endTime: "7:30 PM", city: "san-jose", cost: null,
+    url: "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=d99e8482-8ff9-40b8-9855-85e4224a9ff8",
+  });
+  assert.equal(docent.cost, "free");
+  assert(requiresAdvanceRegistration(docent));
+
+  const anahita = {
+    date: "2026-11-21", time: "2:00 PM", city: "san-jose", cost: null,
+    url: "https://52102.blackbaudhosting.com/52102/tickets?tab=2&txobjid=0bbeb4b0-5969-4bce-9821-0ba84d9f867a",
+  };
+  const performance = applyVerifiedEventFacts(anahita);
+  assert.equal(performance.cost, "low");
+  assert.match(performance.costNote, /museum admission/);
+  assert.equal(performance.endTime, "2:40 PM");
+  assert(requiresAdvanceRegistration(performance));
+  assert.equal(applyVerifiedEventFacts({ ...anahita, registration: "full" }).registration, "full");
+  const otherShow = { ...anahita, time: "3:15 PM" };
+  assert.deepEqual(applyVerifiedEventFacts(otherShow), otherShow);
 });
 
 test("SJMA scraper rejects challenges and leaves unverified times and prices unknown", async () => {
