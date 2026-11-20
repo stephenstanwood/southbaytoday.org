@@ -26,6 +26,12 @@ const SJPL_STORYTIME_TICKET_EDIT = [
   SJPL_STORYTIME_TICKET_COPY,
 ];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
+const SJPL_BRANCH_BUDDY_TASKS = [
+  "Book cover cleaning – Use disinfecting wipes to reinvigorate dingy books.",
+  "Bookshelves – Dust shelves and organize library materials.",
+  "Deep cleaning computers – Use disinfecting wipes to disinfect computer mice and mouse pads and compressed air to remove any dust particles or debris.",
+  "Material inspection – Check books for torn pages, pen marks, etc.",
+].join(" ");
 
 const SCCLD_ONLINE_REGISTRATION_EDIT = [
   "Space is limited and Online Registration is required.",
@@ -846,6 +852,22 @@ const EDITS = {
       [
         "Details and Requirements: Must be able to commit to the full session; At this event, we kindly ask that only families participate as volunteers. Thank you for understanding.",
         "Volunteers must commit to the full session. The library asks that only families volunteer at this event.",
+      ],
+      [
+        `Volunteers will be responsible for: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for families interested in volunteering away their library fines.`,
+        "Volunteers will clean book covers with disinfecting wipes, dust shelves, and organize library materials. They will also use disinfecting wipes on computer mice and mouse pads, clear dust and debris with compressed air, and check books for damage such as torn pages or pen marks.",
+      ],
+      [
+        `Volunteers will be responsible for: Cleaning toys and furniture in the children's area. Other activities may include any of the following: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for anyone interested in volunteering away their library fines.`,
+        "Volunteers will clean toys and furniture in the children's area. Other tasks may include cleaning book covers with disinfecting wipes, dusting shelves, and organizing library materials. Volunteers may also use disinfecting wipes on computer mice and mouse pads, clear dust and debris with compressed air, or check books for damage such as torn pages or pen marks.",
+      ],
+      [
+        /To register, please call ([\d()-]+(?: [\d()-]+)*) or email ([\w.+-]+@sjlibrary\.org), to allow us to plan for your visit\./g,
+        "To register, call $1 or email $2 so the library can plan for your visit.",
+      ],
+      [
+        "Pre-registration required. This is a perfect opportunity for anyone interested in volunteering away their library fines.",
+        "This session requires advance registration.",
       ],
       ["A signed SJPL exercise waiver is required for all participants -- to be provided on site.", "A signed SJPL exercise waiver is required for all participants. The library will provide the form on site."],
       ["Join us for a captivating journey celebrating Filipino American History Month during our special storytime and Parol lantern making craft at the library.", "Celebrate Filipino American History Month at the library with a special storytime and a chance to make a parol lantern."],

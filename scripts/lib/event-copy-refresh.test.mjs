@@ -181,6 +181,7 @@ audits.push(november19NightRefreshFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-late-scu.json", import.meta.url))));
 const branchBuddyFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-branch-buddy.json", import.meta.url)));
 audits.push(branchBuddyFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-branch-buddy-clarity.json", import.meta.url))));
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
