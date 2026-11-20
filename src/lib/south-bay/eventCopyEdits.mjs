@@ -1490,6 +1490,12 @@ const EDITS = {
       ["Uw- Milwaukee Panthers", "UW-Milwaukee Panthers"],
       ["vs. Unlv Rebels Football", "vs. UNLV Rebels Football"],
     ],
+    attendanceNote: [
+      [
+        "TicketWeb’s calendar lists 8 PM, and Ticketmaster’s event feed lists 9 PM.",
+        "TicketWeb's calendar lists 8 PM, and Ticketmaster's event feed lists 9 PM.",
+      ],
+    ],
     description: [
       [
         /^This event is (\d+) and over\. Any ticket holder unable to present valid identification indicating that they are at least \1 years of age will not be admitted to this event\./g,
@@ -1512,6 +1518,18 @@ const EDITS = {
       ["Catch Demetri Martin's standup comedy set at", "Catch Demetri Martin's stand-up comedy set at"],
       ["Catch Suicide Silence, Emmure,", "Watch Suicide Silence, Emmure,"],
       ["Hear classic Rock En Espanol artists' music and visuals at The Ritz, 21 and up.", "Enjoy music and visuals from classic Rock En Espanol artists at The Ritz, for ages 21 and up."],
+      [
+        "Dance to 2000s hits at The Ritz in this 18-and-over party night.",
+        "Dance to 2000s hits during an 18-and-up party at The Ritz.",
+      ],
+      [
+        "Dance to goth, industrial, darkwave, and cybergoth sounds at this 21-and-over night at The Ritz.",
+        "Dance to goth, industrial, darkwave, and cybergoth during a 21-and-up night at The Ritz.",
+      ],
+      [
+        "Dance at Kawaii Rave at The Ritz, a 21-and-over night where ticket holders must show valid ID at the door.",
+        "Dance at The Ritz's Kawaii Rave, a 21-and-up event that requires valid ID at the door.",
+      ],
     ],
   },
   "Mountain Winery": {
