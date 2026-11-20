@@ -22,6 +22,9 @@
 // paired with a lunch recommendation.
 // ---------------------------------------------------------------------------
 
+// This campus showcase presents archaeology fieldwork.
+export const ARCHAEOLOGY_STUDENT_SHOWCASE = /^archaeology\s+student\s+showcase\b/i;
+
 /**
  * Patterns that match virtual/online/livestream events by title or
  * description. Matched case-insensitively. A positive match means the event

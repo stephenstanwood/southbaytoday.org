@@ -12,7 +12,12 @@ import {
 import { buildGoogleCalendarUrl } from "../../../lib/south-bay/calendarLink";
 import { todayPT, useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import { weekendIsosFrom } from "../../../lib/south-bay/timeHelpers";
-import { isVirtualEvent, registrationLabel, requiresAttendanceConfirmation } from "../../../lib/south-bay/eventFilters.mjs";
+import {
+  ARCHAEOLOGY_STUDENT_SHOWCASE,
+  isVirtualEvent,
+  registrationLabel,
+  requiresAttendanceConfirmation,
+} from "../../../lib/south-bay/eventFilters.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../../../lib/south-bay/displayText.mjs";
 import PageHero from "../PageHero";
 
@@ -279,6 +284,7 @@ function eventTextBlob(event: UpcomingEvent): string {
 }
 
 function isOngoingExhibitEvent(event: UpcomingEvent): boolean {
+  if (ARCHAEOLOGY_STUDENT_SHOWCASE.test(event.title)) return false;
   const text = eventTextBlob(event);
   if (/\b(yoga|pilates|meditation|mindfulness|workshop|training|class|course|rounds?|speaker series|guest speaker|worship|service|volunteer|volunteering|al-anon|qualtrics|upstander|storytime)\b/.test(text)) {
     return false;
@@ -287,6 +293,7 @@ function isOngoingExhibitEvent(event: UpcomingEvent): boolean {
 }
 
 function normalizedEventCategory(event: UpcomingEvent): string {
+  if (ARCHAEOLOGY_STUDENT_SHOWCASE.test(event.title)) return "education";
   const text = eventTextBlob(event);
   if (isOngoingExhibitEvent(event)) return "arts";
   if (/\b(yoga|pilates|meditation|mindfulness|wellness|al-anon|worship|volunteer|volunteering)\b/.test(text)) return "community";

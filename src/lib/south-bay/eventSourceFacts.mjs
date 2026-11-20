@@ -88,6 +88,30 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The flyer on the university's event page gives the 5–7 PM window.
+  {
+    date: "2026-12-07",
+    url: "https://events.scu.edu/arts-and-sciences/event/525021-archaeology-student-showcase",
+    aliasUrls: ["https://events.scu.edu/event/525021-archaeology-student-showcase"],
+    facts: (event) => event.time === "5:00 PM" && !event.endTime ? { endTime: "7:00 PM" } : {},
+  },
+  // The university calendar and the box office agree on tip-off. Their
+  // listed end times differ (3 PM and 2:30 PM), and the box office lists $12.
+  // https://scubroncos.scu.edu/events/santa-clara-womens-basketball-vs-uc-santa-cruz-7rw5vy
+  {
+    date: "2026-12-06",
+    url: "https://events.scu.edu/bronco-athletics/event/525252-santa-clara-university-womens-basketball-vs-uc",
+    aliasUrls: ["https://events.scu.edu/event/525252-santa-clara-university-womens-basketball-vs-uc"],
+    facts: (event) => {
+      const facts = {};
+      if (event.time === "1:00 PM" && event.endTime === "3:00 PM") facts.endTime = null;
+      if (!event.cost && !event.costNote) {
+        facts.cost = "low";
+        facts.attendanceNote = [event.attendanceNote, "The box office lists a $12 ticket."].filter(Boolean).join(" ");
+      }
+      return facts;
+    },
+  },
   // The library's screening copy repeats an outdated 100% score.
   // https://www.rottentomatoes.com/m/paddington_2
   {

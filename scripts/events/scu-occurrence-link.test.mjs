@@ -7,6 +7,64 @@ import { resolveEventBlurbs } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { buildEventSlugs } from "../../src/lib/south-bay/eventSlug.ts";
 
+const showcaseUrl = "https://events.scu.edu/arts-and-sciences/event/525021-archaeology-student-showcase";
+const basketballUrl = "https://events.scu.edu/bronco-athletics/event/525252-santa-clara-university-womens-basketball-vs-uc";
+
+test("SCU publishes the archaeology talk and basketball tip-off with verified attendance facts", async (t) => {
+  t.mock.method(globalThis, "fetch", async (input) => {
+    if (String(input) === "https://events.scu.edu/live/rss/events") {
+      return new Response(`<rss><channel>
+        <item>
+          <title>Archaeology Student Showcase</title><link>${showcaseUrl}</link>
+          <pubDate>Tue, 08 Dec 2026 01:00:00 +0000</pubDate>
+          <description>Hosted by the Department of Classics and Ancient Studies and the Department of Anthropology</description>
+          <georss:featurename>Parlors B/C, Benson Memorial Center</georss:featurename>
+          <livewhale:categories>College of Arts &amp; Sciences</livewhale:categories>
+        </item>
+        <item>
+          <title>Santa Clara University Women's Basketball vs UC Santa Cruz</title><link>${basketballUrl}</link>
+          <pubDate>Sun, 06 Dec 2026 21:00:00 +0000</pubDate>
+          <livewhale:ends>Sun, 06 Dec 2026 23:00:00 +0000</livewhale:ends>
+          <georss:featurename>Leavey Event Center</georss:featurename>
+          <livewhale:categories>Open to the Public,Athletics</livewhale:categories>
+        </item>
+        <item>
+          <title>Student Art Showcase</title><link>https://events.scu.edu/art-gallery/event/1-student-art-showcase</link>
+          <pubDate>Tue, 08 Dec 2026 01:00:00 +0000</pubDate>
+          <description>An exhibition of student artworks.</description>
+        </item>
+      </channel></rss>`);
+    }
+    assert.equal(String(input), "https://events.scu.edu/live/json/events?page=1");
+    return Response.json({ meta: { total_pages: 1 }, data: [] });
+  });
+  const events = await fetchScuEvents();
+  await resolveEventBlurbs(events, { enabled: false });
+  const [showcase, basketball, art] = events;
+  assert.deepEqual(
+    events.map(({ date, time, endTime, category, cost }) => [date, time, endTime, category, cost]),
+    [
+      ["2026-12-07", "5:00 PM", "7:00 PM", "education", ""],
+      ["2026-12-06", "1:00 PM", null, "sports", "low"],
+      ["2026-12-07", "5:00 PM", null, "arts", ""],
+    ],
+  );
+  assert.equal(showcase.venue, "Parlors B/C, Benson Memorial Center");
+  assert.equal(basketball.venue, "Leavey Event Center");
+  assert.match(basketball.attendanceNote, /\$12/);
+  assert.equal(art.attendanceNote, undefined);
+});
+
+test("SCU's verified fallback clocks and ticket price respect changed source facts", () => {
+  const rescheduled = { url: showcaseUrl, date: "2026-12-07", time: "6:00 PM", endTime: null };
+  const revisedFinish = { ...rescheduled, time: "5:00 PM", endTime: "7:30 PM" };
+  const newTicketPrice = { url: basketballUrl, date: "2026-12-06", time: "1:00 PM", endTime: null, cost: "paid" };
+  const otherDate = { ...newTicketPrice, date: "2026-12-21", endTime: "3:00 PM", cost: "" };
+  for (const row of [rescheduled, revisedFinish, newTicketPrice, otherDate]) {
+    assert.deepEqual(applyVerifiedEventFacts(row), row);
+  }
+});
+
 // The first page's Event schema is September 23. SCU's November 11 RSS
 // occurrence and its own Event schema both identify 454604, at 8 PM Pacific.
 // Evidence: docs/qa/2026-11-08-1907z-fact-check.md.

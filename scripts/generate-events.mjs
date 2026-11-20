@@ -75,6 +75,7 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createHash, createSign } from "crypto";
 import {
+  ARCHAEOLOGY_STUDENT_SHOWCASE,
   COVERED_LOCATION,
   LOCAL_DEPARTURE_TRIP,
   OUT_OF_AREA_LOCATION,
@@ -4164,10 +4165,10 @@ function isOngoingExhibitLike(title, desc = "", venue = "") {
   const cleanDesc = stripHtml(desc || "");
   const haystack = `${title || ""} ${cleanDesc} ${venue || ""}`.toLowerCase();
 
-  // A symposium can "showcase" research posters without being an art show.
+  // A symposium or archaeology showcase can present research.
   // Use the program's title, not a symposium mentioned by a real exhibition.
   // Keep multi-day symposia on their published occurrence dates and clocks.
-  if (/\bsymposium\b/i.test(title || "")) return false;
+  if (/\bsymposium\b/i.test(title || "") || ARCHAEOLOGY_STUDENT_SHOWCASE.test(title || "")) return false;
 
   // Museum tours, drawing sessions, and gallery conversations keep their
   // occurrence dates and clocks even when their series spans an exhibition.
@@ -4242,6 +4243,8 @@ function inferUniversityCategory(title, desc, type, venue = "") {
   if (FILM_SCREENING_TITLE.test(titleLower) || STARTUP_PITCH_EVENT.test(titleLower)) {
     return inferCategory(title, cleanDesc, type, venue);
   }
+
+  if (ARCHAEOLOGY_STUDENT_SHOWCASE.test(titleLower)) return "education";
 
   if (isOngoingExhibitLike(title, desc, venue)) return "arts";
   // A seminar's speaker biography may mention yoga or volunteering. Those
