@@ -1615,6 +1615,15 @@ const EDITS = {
       ["history, culture and artform of Mariachi music at SJSU's", "history, culture and art form of mariachi music at SJSU's"],
       ["Catch San Jose State's men's basketball team take on", "Watch San Jose State's men's basketball team take on"],
       ["Hear a Candlelight concert at Hammer Theatre Center built around the title pairing of Queen and ABBA.", "Hear Queen and ABBA songs in a Candlelight concert at Hammer Theatre Center."],
+      [
+        "Hear Elena Manferdini speak in Inside the Dream Factory, part of the SJSU Art Galleries weekly lecture series with visiting artists and designers.",
+        'Hear Elena Manferdini give her talk "Inside the Dream Factory" as part of the weekly SJSU Art Galleries lecture series with visiting artists and designers.',
+      ],
+      [
+        "Drop in at the AI Center for Civic and Social Good in King Library to create during open lab hours.",
+        "Drop in to explore and create at the AI Center for Civic and Social Good in King Library.",
+      ],
+      ["Hear Noelle Henderson perform her senior clarinet recital", "Hear Noelle Henderson give her senior clarinet recital"],
     ],
   },
   "Ticketmaster": {
@@ -1706,6 +1715,10 @@ const EDITS = {
     ],
     attendanceNote: [
       ["Museum hours: Mon & Fri: 11 AM–6 PM Thurs: 11 AM–8 PM Sat & Sun: 10 AM–5 PM CLOSED: Tues and Wed.", "Museum hours: Mon & Fri: 11 AM–6 PM; Thurs: 11 AM–8 PM; Sat & Sun: 10 AM–5 PM. Closed: Tues and Wed."],
+      [
+        "We welcome volunteers 10 years old and older. Those between 10 and 14 years old are required to have a guardian actively volunteering alongside them for the duration of the volunteer session.",
+        "Volunteers must be at least 10 years old. A guardian must volunteer alongside each participant aged 10 to 14 for the full session.",
+      ],
     ],
     description: [
       ["Queralt Solé i Barjau is Associate Professor", "Queralt Solé i Barjau is an associate professor"],
@@ -1762,6 +1775,10 @@ const EDITS = {
       ["to celebrate the Fall harvest", "to celebrate the fall harvest"],
       ["music, activties and light bites", "music, activities and light bites"],
       ["and outdoor Rodin Sculptures!", "and outdoor Rodin sculptures!"],
+      [
+        /Join us for casual in-gallery conversations in our special exhibition, (?:JANE|Jane)!, facilitated by our Museum Engagement Guides\./g,
+        'Museum Engagement Guides lead casual conversations in the "Jane!" exhibition.',
+      ],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
       ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
@@ -1780,6 +1797,14 @@ const EDITS = {
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
+      [
+        'Tour Cantor Arts Center\'s galleries on a guided "A Closer Look" walk that points out new details and connections in the art.',
+        "Take a guided tour of the Cantor Arts Center galleries to discover new details and connections among selected works.",
+      ],
+      [
+        "Walk through the indoor and outdoor galleries to see Rodin's sculptures with a guide.",
+        "See Rodin's work in the galleries and sculpture garden on a guided tour of Cantor Arts Center.",
+      ],
     ],
   },
   "NHL": {
