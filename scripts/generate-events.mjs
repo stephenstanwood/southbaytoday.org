@@ -9254,6 +9254,9 @@ export function isEventTimeBackfillCandidate(event) {
     const url = new URL(event.url);
     if (!/^https?:$/.test(url.protocol)) return false;
     const path = url.pathname.replace(/\/+$/, "");
+    // Stanford's ticket promotion pages list unrelated games with their own
+    // clocks. Even a cached clock from one of these pages is not event evidence.
+    if (url.hostname === "tickets.gostanford.com" && /^\/p\//i.test(path)) return false;
     // Homepages, calendars, and venue overviews describe many occurrences.
     // Their first clock time cannot establish this particular event's start.
     // Check before cache lookup: Frost's overview cached 4 PM for three dates.
@@ -10938,14 +10941,14 @@ export function deduplicateSameDaySports(events) {
 }
 
 export function capUpcomingEventSources(events) {
-  // Duplicate newsletter links and duplicate Ticketmaster listings can use the
-  // 200 slots before final deduplication. Count each copy once without changing
-  // the limits or the date order of eligible events.
+  // Count the same Ticketmaster copies the final feed will keep. Timed-entry
+  // listings can share one date, title and booking URL across dozens of API
+  // rows. Counting those copies before dedup erased later shows and games.
   const newsletters = events.filter((event) => event.source === "City Newsletter");
   const tickets = events.filter((event) => event.source === "Ticketmaster");
   const uniqueCopies = new Set([
     ...deduplicateEventUrls(newsletters.sort(compareSlotCandidates)),
-    ...deduplicateEventSlots(tickets.sort(compareSlotCandidates)),
+    ...fuzzyDedupEvents(deduplicateEventSlots(tickets.sort(compareSlotCandidates))).kept,
   ]);
 
   const caps = { "Santa Clara University": 25, "SJSU Events": 30, "Stanford Events": 30 };

@@ -2086,6 +2086,51 @@ const CORRECTIONS = [
       && event.venue === "Triton Museum of Art",
     facts: { url: "https://www.tritonmuseum.org/book-club" },
   },
+  // The city and Congregation Beth David list 10 AM. Sacred Heart lists 10:30.
+  // https://parish.sacredheartsaratoga.org/upcoming-events/
+  // https://bethdavid.mhsoftware.com/ViewList.html
+  {
+    date: "2026-11-26",
+    url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710",
+    matches: event => !event.url && event.title === "61st Annual Community Interfaith Thanksgiving Service"
+      && /^Sacred Heart Parish(?:,|$)/.test(event.venue || ""),
+    facts: { url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2710", attendanceStatus: "needs-confirmation" },
+    appendAttendanceNote: "Saratoga's calendar lists 10 AM. Sacred Heart Parish lists 10:30 AM. Confirm the start with the parish before going.",
+  },
+  {
+    date: "2026-12-03",
+    url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2711",
+    matches: event => !event.url && /^Public Art Ribbon-Cutting Ceremony(?: at the Library)?$/.test(event.title || "")
+      && /^Outside the Saratoga Library(?:,|$)/.test(event.venue || ""),
+    facts: {
+      url: "https://www.saratoga.ca.us/Calendar.aspx?EID=2711",
+      venue: "Saratoga Library", address: "13650 Saratoga Ave, Saratoga, CA 95070", endTime: "4:00 PM",
+    },
+  },
+  // The organizer lists 6–9 PM, with ticket check-in from 5 PM.
+  // https://members.saratogachamber.org/events/details/saratoga-s-holiday-wine-experience-10853
+  {
+    date: "2026-11-27",
+    matches: event => /^https:\/\/www\.eventbrite\.com\/e\/saratogas-holiday-wine-experience-tickets-2001268102768(?:[?#]|$)/.test(event.url || ""),
+    facts: {
+      time: "6:00 PM", endTime: "9:00 PM", cost: "paid", costNote: "$60 advance or $70 day-of, plus fees and tax",
+    },
+    copyReplacements: [[/; the newsletter gives no start time\./gi, "."]],
+    appendAttendanceNote: "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.",
+  },
+  // The athletics schedule verifies the first day's two games and venue.
+  // https://gostanford.com/sports/softball/schedule
+  {
+    date: "2027-02-11",
+    url: "https://tickets.gostanford.com/events/softball-demarini-invitational-day-1-4eh8bz/6afe2335840266cfd4f847cb",
+    matches: event => event.title === "Stanford Softball DeMarini Invitational Tournament"
+      && event.url === "https://tickets.gostanford.com/p/cardinal-friday",
+    facts: {
+      url: "https://tickets.gostanford.com/events/softball-demarini-invitational-day-1-4eh8bz/6afe2335840266cfd4f847cb",
+      time: "2:30 PM", venue: "Stanford Softball Stadium",
+      description: "Stanford opens the DeMarini Invitational against Minnesota at 2:30 PM, then plays Cal Poly at 5 PM.",
+    },
+  },
   {
     date: "2026-11-21",
     matches: event => /^https:\/\/www\.eventbrite\.com\/e\/triton-holiday-art-fair-tickets-1998434110220\/?(?:[?#].*)?$/.test(event.url || "")
@@ -6252,6 +6297,18 @@ const CORRECTIONS = [
 ];
 
 export function applyVerifiedEventFacts(event) {
+  // The seller omits the admission terms from Discovery API rows for this
+  // booking page. Every slot on the organizer's San José page is 21+.
+  // https://frostyschristmas.bar/san-jose/
+  if (event?.source === "Ticketmaster"
+      && /^https:\/\/www\.universe\.com\/events\/frostys-christmas-bar-san-jose-ca-tickets-PDBG10\/?(?:[?#]|$)/i.test(event.url || "")) {
+    const note = "Ages 21+. Bring a physical government-issued photo ID.";
+    event = {
+      ...event, sourceAudiences: ["Adults, ages 21+"], audienceAge: "adult", kidFriendly: false,
+      attendanceNote: event.attendanceNote?.includes(note) ? event.attendanceNote
+        : [event.attendanceNote, note].filter(Boolean).join(" "),
+    };
+  }
   // The museum calendar gives the clock. The linked program page supplies the
   // room and age group, and does not advertise songs or other activities.
   if (event?.source === "Children's Discovery Museum" && event.title === "Toddler Storytime"

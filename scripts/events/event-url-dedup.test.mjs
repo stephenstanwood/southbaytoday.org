@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { parseBooksIncEvents } from "../lib/booksinc-events.mjs";
 import { deduplicateEventUrls } from "../lib/event-url-dedup.mjs";
-import { capUpcomingEventSources, cleanTitle, deduplicateSameDaySports, fetchPlaywrightEvents, stripRedundantVenueSuffix } from "../generate-events.mjs";
+import { capUpcomingEventSources, cleanTitle, deduplicateSameDaySports, fetchPlaywrightEvents, isEventTimeBackfillCandidate, stripRedundantVenueSuffix } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/booksinc-calendar-2026-11-17.json", import.meta.url)));
@@ -70,6 +70,23 @@ test("duplicate ticket listings with different links count as one venue slot", (
   assert.deepEqual(capUpcomingEventSources([...earlier, copy, later]), [...earlier, later]);
 });
 
+test("timed-entry copies with a shared booking page leave room for later Ticketmaster events", () => {
+  const shared = { source: "Ticketmaster", city: "san-jose", date: "2026-11-25", time: "7:30 PM" };
+  const earlier = Array.from({ length: 198 }, (_, i) => ({
+    ...shared, id: `earlier-${i}`, venue: `Venue ${i}`, url: `https://example.com/event/${i}`,
+  }));
+  const timedEntry = {
+    ...shared, title: "Holiday pop-up", venue: "The Continental Bar",
+    url: "https://www.universe.com/events/holiday-pop-up-tickets",
+  };
+  const slots = ["6:00 PM", "6:15 PM", "6:30 PM"].map((time, i) => ({ ...timedEntry, time, id: `holiday-${i}` }));
+  const later = { ...shared, id: "later-show", title: "Standup", venue: "San Jose Improv", date: "2026-12-08" };
+  const kept = capUpcomingEventSources([...earlier, ...slots, later]);
+  assert.equal(kept.length, 200);
+  assert.equal(kept.filter((event) => event.url === timedEntry.url).length, 1);
+  assert.equal(kept.at(-1), later);
+});
+
 test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose Civic", () => {
   const earlier = Array.from({ length: 200 }, (_, i) => ({
     source: "Ticketmaster", date: "2027-02-04", time: "7:30 PM", venue: `Venue ${i}`,
@@ -83,6 +100,15 @@ test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose 
   const changedTime = { ...shows[1], time: "10:00 PM" };
   assert.deepEqual(capUpcomingEventSources([...earlier, ...shows, changedTime]), [...earlier, ...shows]);
   assert.equal(applyVerifiedEventFacts({ ...changedTime, occurrenceEvidence: undefined }).occurrenceEvidence, undefined);
+});
+
+test("Stanford ticket promotions cannot supply a start time for an individual game", () => {
+  const event = { date: "2027-02-19", time: null, url: "https://tickets.gostanford.com/p/cardinal-friday" };
+  assert.equal(isEventTimeBackfillCandidate(event), false);
+  assert.equal(isEventTimeBackfillCandidate({
+    ...event,
+    url: "https://tickets.gostanford.com/events/baseball-vs-rhode-island-fri-p36ckn/6affa8fc3e1cc40f43713918",
+  }), true);
 });
 
 test("same-day sports dedup retains both verified events at Maples Pavilion", () => {
