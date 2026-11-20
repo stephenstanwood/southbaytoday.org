@@ -167,6 +167,14 @@ const EDITS = {
       ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
       ["Storytime: 4:00-4:30 PM; Stay & Play: 4:30 PM-5:00 PM.", "Storytime runs from 4:00 to 4:30 PM. Stay & Play runs from 4:30 to 5:00 PM."],
       ["This experience aims to set your child's curiosity of light aglow and presents 3 unique activities.", "The workshop includes 3 activities that encourage curiosity about light."],
+      [
+        "This workshop is an adults-only craft program; all skill levels are welcome to join and sign up. Registration not required.",
+        "Adults of all skill levels are welcome. No registration is required.",
+      ],
+      [
+        "For parking, please use street parking in the neighborhood area as the library is currently sharing the elementary school's parking lot.",
+        "Please park on nearby streets while the library shares the elementary school's parking lot.",
+      ],
       ["We have a large selection to choose from, including new games and classic games that everyone of all ages can enjoy.", "Choose from a wide selection of new and classic games for all ages."],
       ["with a limited amount of tickets available, once", "with a limited number of tickets available once"],
       [
@@ -974,6 +982,7 @@ const EDITS = {
         "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
       ],
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
+      ["on a first-come basis.", "on a first-come, first-served basis."],
       ["completed the ARTrepreneur entrepreneur program", "completed the ARTrepreneur program"],
       ["in this hands-on kids and teens workshop.", "in this hands-on workshop for kids and teens."],
       [
@@ -1196,6 +1205,18 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      [
+        /Join us for the movie - "The Adventures of Tintin" (\d{4}) · (\S+) · (\d+h \d+m) Director - Steven Spielberg Featuring the voices of/g,
+        '"The Adventures of Tintin" ($1, $2, $3) was directed by Steven Spielberg and features the voices of',
+      ],
+      [
+        "Jamie Bell,(Tintin) Andy Serkis (Captain Haddock) and Daniel Craig (Sakharine).",
+        "Jamie Bell (Tintin), Andy Serkis (Captain Haddock), and Daniel Craig (Sakharine).",
+      ],
+      [
+        "for an afternoon of action, adventure and comedy in this motion capture version of the well-known Tintin series by Herge.",
+        "for an afternoon of action, adventure, and comedy in this motion-capture adaptation of Hergé's Tintin series.",
+      ],
       ["early walkers, 1s, and 2s in the Orchard Room", "early walkers and 1- and 2-year-olds in the Orchard Room"],
       [
         "A small number of strollers may be parked outside the Children's Room; no strollers in storytime, please.",
@@ -1457,6 +1478,11 @@ const EDITS = {
       [/Registration closes on the (\d+(?:st|nd|rd|th)) week of class; Registrants who do not the (\d+(?:st|nd|rd|th)) class may be unregistered, If/g, "Registration closes in the $1 week of class. Registrants who do not attend the $2 class may be unregistered. If"],
       [/(?:Please note: )?Registration closes in the (\d+(?:st|nd|rd|th)) week of class\./g, "Registration closes in the $1 week."],
       [/Registrants who do not attend the (\d+(?:st|nd|rd|th)) class may be unregistered\./g, "You may lose your spot if you miss the $1 class."],
+      [/Please note: (You may lose your spot if you miss the \d+(?:st|nd|rd|th) class\.)/g, "$1"],
+      [
+        /(\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}); Registration closes on the (\d+(?:st|nd|rd|th)) week of class\./gi,
+        "$1. Registration closes in the $2 week.",
+      ],
       ["; Registrants who do not attend by", "; registrants who do not attend by"],
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
