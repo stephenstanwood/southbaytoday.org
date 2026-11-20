@@ -1,10 +1,10 @@
 {
   "_meta": {
-    "auditedAt": "2026-11-19T21:11:52.394Z"
+    "auditedAt": "2026-11-20T01:21:53.782Z"
   },
   "upcoming": {
     "label": "upcoming-events.json",
-    "total": 1487,
+    "total": 1493,
     "totals": {
       "hard": 0,
       "soft": 1,
@@ -48,17 +48,33 @@
   },
   "inbound": {
     "label": "inbound-events.json",
-    "total": 328,
+    "total": 339,
     "totals": {
-      "hard": 0,
+      "hard": 1,
       "soft": 2,
       "info": 1
     },
     "byReason": {
       "virtual-not-flagged": 2,
+      "out-of-area": 1,
       "local-departure-trip": 1
     },
-    "hard": [],
+    "hard": [
+      {
+        "id": "inbound_mwo5i5bk_l1mipc",
+        "title": "129th Big Game: Stanford vs. Cal",
+        "city": null,
+        "date": "2026-11-21T16:30:00-08:00",
+        "location": "California Memorial Stadium, Berkeley",
+        "findings": [
+          {
+            "severity": "hard",
+            "reason": "out-of-area",
+            "detail": "location mentions \"berkeley\" with no in-area city token"
+          }
+        ]
+      }
+    ],
     "soft": [
       {
         "id": "inbound_mw3rbrog_c3718b",
