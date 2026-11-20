@@ -24,6 +24,7 @@
 // records a source error (tolerated and reported) instead of an empty success
 // the regression guard cannot tell apart from "nothing on".
 
+import { isEventExplicitlyInactive } from "../../src/lib/south-bay/eventOccurrence.mjs";
 import { stripHtml } from "./event-html.mjs";
 
 export const SAN_JOSE_THEATERS_ORIGIN = "https://www.sanjose.org";
@@ -40,6 +41,55 @@ export const SAN_JOSE_THEATER_ADDRESSES = Object.freeze({
   "Center for the Performing Arts": "255 South Almaden Boulevard, San Jose, CA 95113",
   "Montgomery Theater": "271 South Market Street, San Jose, CA 95113",
 });
+
+// Visit San Jose unpublished its 8 PM listing. The artist and official box
+// office both list the February 6 show at 7:30 PM.
+// https://www.axs.com/uk/events/1704430/wayv-tickets
+const WAYV_NOTICE = "https://weverse.io/wayv/notice/41160";
+const WAYV_OLD_URL = "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa";
+const WAYV_DATE = "2027-02-06";
+const WAYV_VENUE = "San Jose Civic";
+
+export function restoreWayvConcert(events, today) {
+  if (today > WAYV_DATE) return events;
+
+  const isWayvConcert = (event) => event.url === WAYV_OLD_URL
+    || (event.date === WAYV_DATE && event.venue === WAYV_VENUE && /\bWay ?V\b/i.test(event.title));
+  const isOldListing = (event) => event.url === WAYV_OLD_URL
+    && event.date === WAYV_DATE && event.time === "8:00 PM" && !isEventExplicitlyInactive(event);
+  // Let the theater's updated schedule or an explicit cancellation take
+  // precedence if its booking returns.
+  if (events.some((event) => event.source === "San Jose Theaters" && isWayvConcert(event) && !isOldListing(event))) {
+    return events.filter((event) => !isOldListing(event));
+  }
+
+  const time = "7:30 PM";
+  return [...events.filter((event) => !isWayvConcert(event)), {
+    id: "sanjosetheaters-c176ca6a57bad2e7",
+    title: "2026-27 WayV Concert Tour [Born This Way] In USA",
+    date: WAYV_DATE,
+    displayDate: "Sat, Feb 6",
+    time,
+    endTime: null,
+    venue: WAYV_VENUE,
+    address: SAN_JOSE_THEATER_ADDRESSES[WAYV_VENUE],
+    city: "san-jose",
+    category: "music",
+    cost: "paid",
+    description: "WayV brings the Born This Way tour to San Jose Civic.",
+    url: WAYV_NOTICE,
+    source: "WayV",
+    occurrenceEvidence: {
+      kind: "first-party-occurrence-page",
+      sourceUrl: WAYV_NOTICE,
+      date: WAYV_DATE,
+      time,
+      checkedAt: "2026-11-20T15:09:00.000Z",
+    },
+    kidFriendly: false,
+    blurb: "See WayV perform at San Jose Civic on their Born This Way tour.",
+  }];
+}
 
 const THEATER_NAMES = Object.freeze(Object.keys(SAN_JOSE_THEATER_ADDRESSES));
 

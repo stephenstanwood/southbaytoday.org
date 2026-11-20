@@ -171,6 +171,7 @@ import {
   parseTheaterEventPage,
   parseTheaterListings,
   resolveTheaterVenue,
+  restoreWayvConcert,
   theaterCategoryFromSource,
   theaterPerformances,
 } from "./lib/san-jose-theaters-events.mjs";
@@ -11384,6 +11385,15 @@ async function main() {
   allEvents.push(...oktoberfest.events);
   for (const event of oktoberfest.canonicalEvents) {
     if (!sourceNames.includes(event.source)) sourceNames.push(event.source);
+  }
+
+  const eventsWithWayv = restoreWayvConcert(allEvents, todayPT());
+  if (eventsWithWayv !== allEvents) {
+    allEvents.length = 0;
+    allEvents.push(...eventsWithWayv);
+    if (!sourceNames.includes("WayV") && eventsWithWayv.some((event) => event.source === "WayV")) {
+      sourceNames.push("WayV");
+    }
   }
 
   // Clean titles: strip calendar-artifact date prefixes, apply to all events

@@ -1,0 +1,39 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { restoreWayvConcert } from "../lib/san-jose-theaters-events.mjs";
+import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+
+const today = "2026-11-20";
+const formerListing = {
+  title: "2026-27 WayV Concert Tour [Born This Way] In USA",
+  date: "2027-02-06",
+  time: "8:00 PM",
+  venue: "San Jose Civic",
+  url: "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa",
+  source: "San Jose Theaters",
+};
+
+test("restores the source-confirmed WayV time when the theater listing vanishes or is stale", () => {
+  const other = { ...formerListing, title: "Another Concert", url: "https://www.sanjose.org/theaters/events/another-concert" };
+  for (const events of [[other], [other, formerListing]]) {
+    const [unrelated, concert] = restoreWayvConcert(events, today);
+    assert.equal(unrelated, other);
+    assert.equal(concert.id, "sanjosetheaters-c176ca6a57bad2e7");
+    assert.equal(concert.time, "7:30 PM");
+    assert.equal(concert.url, "https://weverse.io/wayv/notice/41160");
+    assert.equal(concert.occurrenceEvidence.sourceUrl, concert.url);
+    assert.equal(concert.occurrenceEvidence.date, concert.date);
+    assert.equal(concert.occurrenceEvidence.time, concert.time);
+    assert.ok(isEventPublishable(concert));
+    assert.equal(restoreWayvConcert(events, today).length, 2);
+  }
+});
+
+test("an updated or canceled theater listing takes precedence and the fallback expires", () => {
+  const updated = { ...formerListing, time: "7:30 PM" };
+  const canceled = { ...formerListing, status: "cancelled" };
+  assert.deepEqual(restoreWayvConcert([formerListing, updated], today), [updated]);
+  assert.deepEqual(restoreWayvConcert([formerListing, canceled], today), [canceled]);
+  assert.ok(!isEventPublishable(canceled));
+  assert.deepEqual(restoreWayvConcert([], "2027-02-07"), []);
+});
