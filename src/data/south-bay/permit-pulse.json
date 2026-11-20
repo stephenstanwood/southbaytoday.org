@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-19T04:28:41.563Z",
+      "generatedAt": "2026-11-20T04:15:01.230Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 11 – Nov 18",
+      "dateRange": "Nov 12 – Nov 19",
       "stats": {
-        "total": 365,
-        "notable": 28,
-        "newUnits": 15,
-        "totalValuation": 10198555
+        "total": 428,
+        "notable": 36,
+        "newUnits": 18,
+        "totalValuation": 15925375
       },
       "permits": [
         {
@@ -87,6 +87,18 @@
           "subtype": "Single-Family"
         },
         {
+          "id": "2026-120848-RS",
+          "address": "2432 Quimby Rd",
+          "category": "residential-new",
+          "categoryLabel": "New Home",
+          "workType": "New Construction",
+          "description": "Detached ADU",
+          "valuation": 175040,
+          "units": 1,
+          "issueDate": "2026-11-17",
+          "subtype": "ADU   Accessory Dwelling Unit"
+        },
+        {
           "id": "2026-117118-RS",
           "address": "2373 Newhall St #2",
           "category": "residential-new",
@@ -118,18 +130,6 @@
           "workType": "New Construction",
           "description": "Code Case Garage Conversion to ADU",
           "valuation": 114348,
-          "units": 1,
-          "issueDate": "2026-11-12",
-          "subtype": "ADU   Accessory Dwelling Unit"
-        },
-        {
-          "id": "2026-127327-RS",
-          "address": "699 Ranson Dr #2",
-          "category": "residential-new",
-          "categoryLabel": "New Home",
-          "workType": "New Construction",
-          "description": "Attached ADU",
-          "valuation": 105024,
           "units": 1,
           "issueDate": "2026-11-12",
           "subtype": "ADU   Accessory Dwelling Unit"

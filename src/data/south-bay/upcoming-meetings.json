@@ -1,20 +1,42 @@
 {
-  "generatedAt": "2026-11-19T04:28:41.346Z",
+  "generatedAt": "2026-11-20T04:15:01.033Z",
   "meetings": {
     "san-jose": {
       "date": "2026-12-01",
-      "startTime": "13:30",
       "bodyName": "City Council",
-      "location": null,
-      "url": "https://sanjose.legistar.com/DepartmentDetail.aspx?G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF&GUID=ACCCCFF5-F14A-4E1A-8540-9065F45A8A90&ID=21676",
+      "startTime": "13:30",
       "closedSession": false,
-      "agendaItems": [],
+      "location": "Hybrid Meeting - Council Chambers",
+      "url": "https://sanjose.legistar.com/MeetingDetail.aspx?LEGID=8126&GID=317&G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF",
+      "legistarEventId": 8126,
       "displayDate": "Tue, Dec 1",
+      "agendaItems": [
+        {
+          "title": "Amendment to Agreement with Repario Data, LLC for eDiscovery Software.",
+          "sequence": 42
+        },
+        {
+          "title": "Amendment to Agreement with Talty Court Reporters, Inc. for Court Reporter Services.",
+          "sequence": 43
+        },
+        {
+          "title": "Amendment to Agreement with Baker & Hostetler LLP for Cybersecurity Legal Services.",
+          "sequence": 44
+        },
+        {
+          "title": "Ordinance Repealing Amendments to Section 3.28.2030, Costs of Dental Insurance, Enacted by Ordinance No. 29904, Retroactive to Their Effective Date of June 16, 2017.",
+          "sequence": 46
+        },
+        {
+          "title": "Amendment to the Agreement with Renne Public Law Group, LLP for Labor Consulting Services.",
+          "sequence": 47
+        }
+      ],
       "confirmation": {
         "status": "confirmed",
-        "provider": "legistar-public-calendar",
+        "provider": "legistar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://sanjose.legistar.com/DepartmentDetail.aspx?G=920296E4-80BE-4CA2-A78F-32C5EFCF78AF&GUID=ACCCCFF5-F14A-4E1A-8540-9065F45A8A90&ID=21676"
+        "sourceUrl": "https://webapi.legistar.com/v1/sanjose/Events?$filter=EventBodyName%20eq%20%27City%20Council%27%20and%20EventDate%20ge%20datetime%272026-11-19T00:00:00%27&$orderby=EventDate%20asc&$top=10"
       }
     },
     "mountain-view": {
@@ -97,22 +119,6 @@
         "sourceUrl": "https://www.paloalto.gov/Events-Directory/City-Clerk/2026/113026-City-Council-Special-Meeting"
       }
     },
-    "saratoga": {
-      "date": "2026-11-18",
-      "displayDate": "Wed, Nov 18",
-      "startTime": "18:00",
-      "bodyName": "City Council",
-      "location": "City Hall, Linda Callon Conference Room",
-      "closedSession": false,
-      "url": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496",
-      "agendaItems": [],
-      "confirmation": {
-        "status": "confirmed",
-        "provider": "civicengage",
-        "observedDate": "2026-11-18",
-        "sourceUrl": "https://www.saratoga.ca.us/AgendaCenter/ViewFile/Agenda/_11182026-1496"
-      }
-    },
     "campbell": {
       "date": "2026-12-01",
       "startTime": "19:00",
@@ -126,7 +132,7 @@
         "status": "confirmed",
         "provider": "campbell-city-calendar",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F18%2F2026&endDate=01%2F17%2F2027"
+        "sourceUrl": "https://campbellca.gov/m/calendar?cat=22&startDate=11%2F19%2F2026&endDate=01%2F18%2F2027"
       }
     },
     "milpitas": {
@@ -143,7 +149,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-01",
-        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-18T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://milpitasca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-19T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-altos": {
@@ -160,7 +166,7 @@
         "status": "confirmed",
         "provider": "civicclerk",
         "observedDate": "2026-12-08",
-        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-18T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
+        "sourceUrl": "https://losaltosca.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27+and+eventDate+ge+2026-11-19T00%3A00%3A00Z&%24orderby=eventDate+asc&%24top=100"
       }
     },
     "los-gatos": {
@@ -207,7 +213,7 @@
     },
     "saratoga": {
       "provider": "CivicEngage",
-      "status": "ok"
+      "status": "no-meeting"
     },
     "campbell": {
       "provider": "eScribe",

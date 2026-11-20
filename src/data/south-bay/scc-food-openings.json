@@ -1,18 +1,42 @@
 {
-  "generatedAt": "2026-11-19T04:37:26.835Z",
+  "generatedAt": "2026-11-20T04:26:35.981Z",
   "lookbackDays": 45,
   "sourceUrl": "https://data.sccgov.org/resource/skd7-7ix3",
   "sourceHealth": {
     "status": "current",
-    "checkedAt": "2026-11-19T04:37:26.834Z",
-    "updatedAt": "2026-11-18T14:42:42.000Z",
+    "checkedAt": "2026-11-20T04:26:35.981Z",
+    "updatedAt": "2026-11-19T14:40:16.000Z",
     "ageDays": 0,
-    "newestRawInspection": "2026-11-16",
-    "newestEligibleInspection": "2026-11-16",
+    "newestRawInspection": "2026-11-17",
+    "newestEligibleInspection": "2026-11-17",
     "eligibleStatus": "recent"
   },
   "opened": [],
   "inspections": [
+    {
+      "id": "inspection-SR0882442",
+      "name": "Browned Butter Babe",
+      "address": "6178 Bollinger Rd",
+      "cityId": "san-jose",
+      "cityName": "SAN JOSE",
+      "inspectionDate": "2026-11-17",
+      "sourceId": "SR0882442",
+      "status": "inspection-complete",
+      "blurb": "Food business on Bollinger Rd in San Jose.",
+      "photoRef": "places/ChIJfU53tf-1j4AR5RjiAT8QUSo/photos/AV-0GLesqKd5sgM_abN_FGXv4wUf7ignifPDNBOi9foV6qkJsycFwqPvKREiqvSMBOfCP-ir3yI0bIw_301MvDTGlv_PSOBclyQU0KglfWuW3WTiK1NGcvm7YKWriPDVAS4SEYWZuJ07_HeQKiiTF1IGKybVi_U75n_ZZkWfWlF9umhDiJbne_PJKLX4cAX4m21YVjS0uEGKCzkxIjo-zmrbZ-jHXlyRHDDcPa5lx95t_xCxh83zI3CJsvwxuQzj75HAEvjCQl1t5DLgyDrIcl45CqtlJ6TSgsYm_PFDg3zUEHbCEDS5CIv4YJX4wekONxBDgrwBvFhlQhGlAc9N6uDWCbbI2vuCpA5Cw8QdaqErY4rQYy83sJPkHvanW-EeAEf8dA_MQLcS8LbNUnIooRJchRA9e3PwPZ_zffeVXCF3w0_RGA"
+    },
+    {
+      "id": "inspection-SR0886649",
+      "name": "Vegetarian House Vegan",
+      "address": "1026 W Evelyn Ave",
+      "cityId": "sunnyvale",
+      "cityName": "SUNNYVALE",
+      "inspectionDate": "2026-11-17",
+      "sourceId": "SR0886649",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJe-4L03q3j4ARz5ky3Hr5zRE/photos/AV-0GLcCwEdgX8Q49J2r3BMyrRTj0ioJuU9ECAFbbMpNRbV0ejqE8Rbp8zw_fhfm44pfjt-qvS8UpB6Ss-xl8-intAhMRNgWJPvPOalChc_quUIbbSkBxrpjEZFIepW7S_wV7xmGNCTHaWdEM_hPBERH0mw0eviUirj7VFne-Z20RVioUgCLnzaThcq1GpopYdm3plZ8mNl5siLmS_J88PmLCD-K5eHYCZKCd8CNacaOzZQyanGDNIKV-GZvpusEJuJLtUbQiQXjGrFhLM5Bu7PWyjJ1F6S1T-Urcze81O56ff1tYeuNlU6KAi-4Y3Ezzz5gnSoTowqtoiPffqyfEskdb3y1exjPx5zn6W8hpeG6FXUJjtGzU-81OxyHuUiYex6U7zGfRAxoCF6GQiJu_gfv4ujZV3kNNjEGBCjqSCzC3Dtr"
+    },
     {
       "id": "inspection-SR0883912",
       "name": "Okayama Sushi",
@@ -46,7 +70,7 @@
       "inspectionDate": "2026-11-13",
       "sourceId": "SR0880584",
       "status": "inspection-complete",
-      "blurb": "Pizza business on W Campbell Ave in Campbell.",
+      "blurb": "Pizza shop on W Campbell Ave in Campbell.",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0880584-450.webp"
     },
     {
@@ -62,18 +86,6 @@
       "photoRef": "places/ChIJT9CM_qTNj4ARxSSblTQ4dG4/photos/AVoNoXRepKxyBvZsFDgCrpgTgiexSjn6DJh6AFYZByvhAANCutsm0QR3qx9dQ4J2rERkT9d0m2RxDJLonbQMXhDVKa0hWsUfYjqtqGPiagK9F8PZY9f39X2ybgRds5wZDamsdkqAiQ0Bx5ukknkSezyyXft_rf9oT7SR_ZAliLuo8J3Z441pPsfUbf2sP71Ve5ml13iMV6pjtyamEZKmD-3jvdfR8fw-Q-FNE72AGidfcPEecV9Wn6BhZ3iumkPcQ_C87sDn5daiPV2qSeeYJ1JrHis7jLQPpJfzuGQQNjhuMVCMwz6tSx2WRJk7Zd8BDJY8lEzRZXHWWWDQk_04QOZGzXQ4_WbdB1GYQV4zMmMCSWKRC9IPnkFb_R34uEGAuwbJwQp1wtr2gM7VKzYqyOH0DYgsuwno_73jC4Qx9CXIX4cViEds7HgQ-65bdTEpbELk"
     },
     {
-      "id": "inspection-SR0882351",
-      "name": "Chef Zhao's Kitchen",
-      "address": "2180 W Bayshore Dr., #120",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "inspectionDate": "2026-11-12",
-      "sourceId": "SR0882351",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
-    },
-    {
       "id": "inspection-SR0882829",
       "name": "Milk Tea Shop",
       "address": "747 W Dana St",
@@ -84,6 +96,18 @@
       "status": "inspection-complete",
       "blurb": "Milk tea shop on W Dana St in Mountain View.",
       "photoRef": "places/ChIJGwxVRwC3j4ARjVKaVwcgM8w/photos/AWCwydh_kDVPx4bInDgrjLds2nvZdhYj0F1HTD6iS7d-G3-W6vSjCGPrJmF1S0-OUm821MaY0pzkJ-VQQhnBLW3pK0uU6BUsWgNhxPJBiIzcBwPt8mhbxc2gfa8racW-6sagjuVk0wf4EATtLYkaG-O9ORl7CLNLdFBeijyhAZhTj97BAHyKhMt0_7cvolmuvY-9iJNvNK_EB58Os7T636FM7IdNlM_wId_RtoKk6voZ50kCnthv4ViPXkIPV4OTJln2EZq6jm5Z8aO7PXYM7ZaQ18L8ot4zU2vRDQAmPLeCFMSvkvY4GHmziRFd1oPncbLL66wCfU5BeepeMNre-PQyVgXvktcDAgVOs9koSOukounbXiaSvnrjCkrE1M7IlxVsWk61C1GoHF6KQSJRxJ19woiea9y_XA8Hxntz_6jTxyyQZErOYu8H7jIQ9NrZfg"
+    },
+    {
+      "id": "inspection-SR0882351",
+      "name": "Chef Zhao's Kitchen",
+      "address": "2180 W Bayshore Dr., #120",
+      "cityId": "palo-alto",
+      "cityName": "PALO ALTO",
+      "inspectionDate": "2026-11-12",
+      "sourceId": "SR0882351",
+      "status": "inspection-complete",
+      "blurb": null,
+      "photoRef": "places/ChIJTamC_qi7j4ARMAC_ZB2hHMI/photos/AV-0GLf4IxYllB1Ih1qr0KKvDooNZFUWmjPO4BDf0A-HpfpPUKACX4feZcOTQVLq65KNEig48eU-yn5eS76XeaDfTpbnxGCGKEP3avh0TCXmi5JV3dKFaHciafBKMJtEza2x8Wp-Zrv7E5_tlQMXUdNCE43Kqy440GcykuPlw0-eQLcqh9ts8v0aFnKfVGSg7jIU-m6Eedc4MpP-haroSLuUDcmhBjmzTbAcoOmBhBs-7ftnedmYU-HOhyWSk68IribWi0A4v6au-ndNs_HJL2QhJwoXn8ivzV9VdxseJOQJxRDryFVdsagtlPSuDekTeiD4n2JijQzW8BvIC1Qfk-xTbQKqfzoy3QvrNiWTEHhEvku6q79d5g6WnNLrixZj0htbPhxwfJP_6pjZTxW-dBHvhUI2lBn_Unw"
     },
     {
       "id": "inspection-SR0884058",
@@ -131,34 +155,22 @@
       "sourceId": "SR0881373",
       "status": "inspection-complete",
       "blurb": "Coffee business on Camden Ave in San Jose.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881373-450.webp"
-    },
-    {
-      "id": "inspection-SR0886483",
-      "name": "Pho Lucky 7",
-      "address": "3730 N 1st St., Ste. 145",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "inspectionDate": "2026-11-06",
-      "sourceId": "SR0886483",
-      "status": "inspection-complete",
-      "blurb": null,
-      "photoRef": "places/ChIJRY2KqiTJj4AR124_EBuhiwY/photos/AV-0GLegbIpczy0Ab2fKt6bGn0OUn87mCoXnuz2un8tHGo6UNqKrc5rlR3_ZVA5sGqpDTY5NHkpJjGm0FC6yRYCNZGc2SgFaifB3oQbxdLQH3kE8BQFOjSdGpVW24Vw9MOT_Jd9CvDP97XBbf_2iYWJtbHnLXwmuNo6LTsS_yTL8kIOM_EcKOyOnxgHEBgd79c4RbYVAcLwJx0xgRmtiprHWkVLBv74QCQpy5uI9d9T_VfiAcpfRLZOY9iOnpBllHqAZzwpQ-JX9AUwo0O_24prSWxebq2zNzjGAw1DwJzrExqVrzI1FQWqdrPY1zBmOG0YPr8YXcO8by4X1hLxdV0gBbjtyAiVEfQGiZ4gzcYM21cTYQac7E0rh2LhAhyzg15EpOpLnp6J2Jxt-N7o1A19TNCRBQJgCiI13jW8Elw9w-Y4xDw"
-    },
-    {
-      "id": "inspection-SR0881394",
-      "name": "Peet's Coffee",
-      "address": "3904 Middlefield Rd",
-      "cityId": "palo-alto",
-      "cityName": "PALO ALTO",
-      "inspectionDate": "2026-11-04",
-      "sourceId": "SR0881394",
-      "status": "inspection-complete",
-      "blurb": "Coffee business on Middlefield Rd in Palo Alto.",
-      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0881394-450.webp"
+      "photoRef": "places/ChIJP38g_WO2j4AR5kDEzKWc1VU/photos/AV-0GLdkT9_HMivZgsxfTyG0UpWP8w43OxQGLKsSx5KJuBNa88MqYf3zszojcOgphW7HYtRKyWokeCD4vpERU968yLXS4QCfnmlWl07L9WHl5yeqHcNsxAWIvBeT5HosQX91QGKjWsz_NGB6a5nnyKF2qz6aL5mdoG9g7juuSsG12VcvyRIdY-oGLWBEA4lK5MasULUzqYFkllkWV7NktjMqk2V3C-R53weQCW8DKBECQxvgN08AFnxybPWy9bhRSekUvJxnTPcH3FkMn0k0RrUMGq8Ei62jhoAL8no-F_VpHUIW_xj4vq_NdDCuy-seCcUGdDDmaFwua6NhXYfhQ35vufPIDNRYR8cOjuLh4h7Dw9PrIR50O7TJezPHY9Yg_o4M4Vhv14IVcgeQlMGOxiu4UwsAO-s"
     }
   ],
   "comingSoon": [
+    {
+      "id": "soon-SR0886162",
+      "name": "Mountain View Wagyu Factory",
+      "address": "2540 W El Camino Real",
+      "cityId": "mountain-view",
+      "cityName": "MOUNTAIN VIEW",
+      "date": "2026-11-17",
+      "status": "coming-soon",
+      "sourceId": "SR0886162",
+      "blurb": "Wagyu-focused food business planned on West El Camino Real in Mountain View.",
+      "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/food-tiles/SR0886162-450.webp"
+    },
     {
       "id": "soon-SR0886903",
       "name": "FujiSan Sushi",
@@ -264,20 +276,8 @@
       "date": "2026-10-30",
       "status": "coming-soon",
       "sourceId": "SR0885275",
-      "blurb": "Food business planned on South 11th Street in San Jose.",
+      "blurb": null,
       "photoRef": "places/ChIJ809xRgDNj4ARvYa8u-Lvv50/photos/AV-0GLdP2iwZHDR4CBABSsnPs04Ck6xlNnQImb7zpPpZQKTRUtWfcs4ukWjPHJloWwokAuuN-Y8ghy9p-x_0G_ozeGfDsp2q-Cn7h1aLwzVy4RV-lKS7vCLDsJGLsy8DrCvIoi1X_8kON-fPeXFh_Bae63jCFjmdbqzrF9U5D7puK60zf8MVeaJVHrKG1dnDPrX5Qy5oIeJHCGmoUjaZIKCLFYe0c-UONbIrgqz6YPVt-WdEwL7mSKenGqt5OcC76LeiyNgbxVQ0VQ6XCrKpvFKqK7dWTwQeQq6LyKDvgOHrAFxYaZ_vRv5KGa6lD4vuJeUWhPdUJkGPStyXOnTm7uK_ZA3dBBx_LpEKNWBH-hVMqnt9yaMGuCuSFtXjEtbffSxbMo1EwEFr7PVhV786OhIBFxt-C1vqAxdy_bB20bDiDaHbbg"
-    },
-    {
-      "id": "soon-SR0886411",
-      "name": "King Kong Japan",
-      "address": "1430 Monterey Rd., Unit 10",
-      "cityId": "san-jose",
-      "cityName": "SAN JOSE",
-      "date": "2026-10-30",
-      "status": "coming-soon",
-      "sourceId": "SR0886411",
-      "blurb": "Food business planned on Monterey Road in San Jose.",
-      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
     },
     {
       "id": "soon-SR0886514",
@@ -292,16 +292,16 @@
       "photoRef": "places/ChIJwz19egDNj4ARrLccQACXG8w/photos/AV-0GLfCfAUSKtOA_W0XRUSTkhFxM0eXUnpCadddui7eJOLDoMCog94GspzcUyR8BL5YhAWl3PGIs_Fi-9dzNsqwznhLO4_QFjZodUhmmZOgpUbxk6DVD38Kgo6omdYGaCpqni_-jWRkoBk6SOudjePuHsXxuh3hFzIsU5XpnX7VzrsconDdTzSUAb-XaVjTCu8Dchq6TEvOB1iYnK4a7O9Zzz9WxH136a6tBB6IqZk6hlmZTVTXiRDcV8634AQc3knXJa6CuKYDjAD1CNtbCzrD8SvHzn6pVCzh9BWdO7u8Q2iP26mFLXd6ZjJ6M2s4FurqgdNaoHTWo5SKFMii2W9sRh1SSyeRKeIuitGUio_LBu_txciVPhbJ4j02HKjWRTUR45t69Hdj1N5tg8QXr-WisN9QcvpZixEnzHVe2hmT5FxlqQ"
     },
     {
-      "id": "soon-SR0885628",
-      "name": "Voyager Cafe At Mershops",
-      "address": "303 Almaden Blvd",
+      "id": "soon-SR0886411",
+      "name": "King Kong Japan",
+      "address": "1430 Monterey Rd., Unit 10",
       "cityId": "san-jose",
       "cityName": "SAN JOSE",
-      "date": "2026-10-28",
+      "date": "2026-10-30",
       "status": "coming-soon",
-      "sourceId": "SR0885628",
-      "blurb": "Cafe planned at Mershops on Almaden Boulevard in San Jose.",
-      "photoRef": "places/ChIJSxInvZrNj4ARmiGfPRj2mOI/photos/AV-0GLcUASzUNuPEZuOdo2GB9UasTQj9Tub1jXsmbiVR-9Xu_1V_Qsio-iLyimY-BrjQn1l1vVBEVluy18qpvACUfjjsGl4fXjYRQHc5i6trfF1a61WkbZDcDfRfIoluaY_fmti-wzQTVwuAH3sXDzNxRTHkqM2kFRL75LAQJPTrLWOPUSHys1UdkBvLd_qTuuKOm397csjegrS2QJiXg-EsuDBn-P9Fyv2ALs4w13dxj9YCITiGmcrMPnK_bbmUmBl-Ok_krOFN-AiU7e68yycpvXyOmX1u_utl1hXIGYIlltUxS1rg1oO9FJwJydVBbWc9elEuA4nTISQuK2MvNwcX-YbjtIuHsF62eMTuBaeD5JrtBgy7zPDBfDzMiX5NtCBEcnvDwbQvNSi93OYeLCh-mumuYEK6JI310KtaTEff22jEtg"
+      "sourceId": "SR0886411",
+      "blurb": "Food business planned on Monterey Road in San Jose.",
+      "photoRef": "places/ChIJ_ymLOQAxjoARjSFwGH68a1s/photos/AV-0GLca8YeP2Xs8zBf5GR7I0qYnYtmVHBj8a1j3JxcsCfkL_jq_jJLvXtozMq5QTXq7Q4M2QbI0Yt5iWe5KLvSJws77yKc4vyCOPP7wvIrGT998bMPUA5xe6Rp94Js2crO9lJXMWov-KNcNMG0ekE6lthpe9aaCE10Xr3yuoOBnc20oMoR_DtjehbIAnrMbtsllVUmYxvCW6ZmytOJDW4KXTc2-AUR1xE4apvaMR1nq6IfxXq42MSbfBdP4hrKmfsR_T9WMB4LnIFl5ugaGiEIMqK3v9oo4FU_dZNuQsgdaQrOuzVb2s4nXmL5gGSZornK7oQkv69j0WRC4DA5L7sDSnEJs3O7CkSMt0gmMGjCBUFXuhRyywKBBcdDrcVzDRrZk0wQ4SzfgVA93g5TvVNN-aEEmp1nXRxvxK6X9G7LbH7ZyvA"
     }
   ]
 }
