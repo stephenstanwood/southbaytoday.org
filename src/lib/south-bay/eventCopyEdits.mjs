@@ -20,6 +20,12 @@ const SJPL_READING_SESSION_EDITS = [
   ],
 ];
 
+const SJPL_STORYTIME_TICKET_COPY = "Seating is first come, first served. The library hands out a limited number of tickets at the information desk 30 minutes before storytime.";
+const SJPL_STORYTIME_TICKET_EDIT = [
+  /Seating for [Ss]torytime is available on a first-come, first-served basis\. A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./g,
+  SJPL_STORYTIME_TICKET_COPY,
+];
+
 const SCCLD_ONLINE_REGISTRATION_EDIT = [
   "Space is limited and Online Registration is required.",
   "Space is limited. Online registration is required.",
@@ -94,6 +100,11 @@ const EDITS = {
       ["(ELL) for Low-Intermediate/Inglés Para Intermedio Bajo (ELL)", "(ELL) for Low-Intermediate / Inglés de nivel intermedio bajo (ELL)"],
     ],
     attendanceNote: [
+      SJPL_STORYTIME_TICKET_EDIT,
+      [
+        "Tickets available at the desk 30 minutes before the program starts. All individuals (of any age) attending need a ticket and must be present to receive their ticket. " + SJPL_STORYTIME_TICKET_COPY,
+        SJPL_STORYTIME_TICKET_COPY + " Everyone needs a ticket and must be present to get one.",
+      ],
       ["Tickets and participation Free.", "Tickets and participation are free."],
       ["on a first come, first basis.", "on a first-come, first-served basis."],
       // Attendance excerpts are extracted before description repairs run.
@@ -768,9 +779,13 @@ const EDITS = {
       [/(interaction with [\p{L}-]+) who has been trained/gu, "$1, who has been trained"],
       ["Availability of Reading Buddies is on a first-come, first-served basis.", "Reading Buddies are available on a first-come, first-served basis."],
       ...SJPL_READING_SESSION_EDITS,
+      SJPL_STORYTIME_TICKET_EDIT,
       [/This intensive, (\d+-day series)/g, "This intensive $1"],
       ["Priority given to registrants followed by walk-ins.", "Registered participants have priority, followed by walk-ins."],
-      ["(sketch paper, HB pencils, and erasers) or you may bring your own.", "(sketch paper, HB pencils, and erasers), or you may bring your own."],
+      [
+        /Some art supplies will be provided \(sketch paper, HB pencils, and erasers\),? or you may bring your own\./g,
+        "The library provides some art supplies (sketch paper, HB pencils, and erasers). You may bring your own instead.",
+      ],
       [
         "Learn how to: Open an email account; Connect to Wi-Fi/hotspots; Use laptops/Chromebooks; Use Microsoft Office; Fill out simple forms online; Use social media; Navigate the SJPL website. And more!",
         "Learn to open an email account, connect to Wi-Fi or a hotspot, use laptops or Chromebooks, and work in Microsoft Office. A mentor can also help you fill out simple forms online, use social media, and navigate the SJPL website.",
@@ -1476,6 +1491,10 @@ const EDITS = {
       ["vs. Unlv Rebels Football", "vs. UNLV Rebels Football"],
     ],
     description: [
+      [
+        /^This event is (\d+) and over\. Any ticket holder unable to present valid identification indicating that they are at least \1 years of age will not be admitted to this event\./g,
+        "You must be $1 or older and show valid ID that proves your age to get in.",
+      ],
       ["THE International, Award-Winning SMASH-HIT Musical The Bodyguard Is Back!", "The award-winning international musical The Bodyguard returns."],
       ["The Washington Generals and new lineup of rivals", "The Washington Generals and a new lineup of rivals"],
       ["A ticket hold delivery is in effect for this event.", "A ticket delivery hold is in effect for this event."],
