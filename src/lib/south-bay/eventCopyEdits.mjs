@@ -655,6 +655,20 @@ const EDITS = {
       ["This is an Open Rehearsal featuring the Chinese Erhu (the Erhu is a traditional", "This is an open rehearsal featuring the Chinese erhu (the erhu is a traditional"],
       ["vocabulary as needed. Program is drop in and free. No registration needed.", "vocabulary as needed. The program is free and offered on a drop-in basis. No registration needed."],
       ["and write basic sentences Free. Registration requested,", "and write basic sentences. Free. Registration requested,"],
+      [
+        "You will: • Learn basic vocabulary • Understand simple grammar • Read simple texts and write basic sentences.",
+        "Practice using basic vocabulary and grammar, reading simple texts, and writing basic sentences.",
+      ],
+      ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
+      ["• November – Embossing Aluminum Food Charms. Recommended items to bring:", "For November's embossed aluminum food charms, consider bringing"],
+      ["• December – Felt and Beaded Patches. Recommended items to bring:", "For December's felt and beaded patches, consider bringing"],
+      [
+        "• Agosto – Paisaje de playa en collage • Septiembre – Pintura de hongos",
+        "En agosto, el proyecto es un collage de un paisaje de playa. En septiembre, el proyecto es una pintura de hongos.",
+      ],
+      ["• Octubre – Nicho de cartón. Materiales recomendados para traer:", "Para el nicho de cartón de octubre, se recomienda traer"],
+      ["• Noviembre – Dijes de aluminio con relieve. Artículos recomendados para traer:", "Para los dijes de aluminio con relieve de noviembre, se recomienda traer"],
+      ["• Diciembre – Parches de fieltro y cuentas. Artículos recomendados para traer:", "Para los parches de fieltro y cuentas de diciembre, se recomienda traer"],
       ["grammar, and dialogue. Program is drop in and free. No registration needed.", "grammar, and dialogue. The program is free and offered on a drop-in basis. No registration needed."],
       ["Free. Offered in-person, in English or", "Free. Offered in person, in English or"],
       ["Community Service webpage or more information", "Community Service webpage for more information"],
@@ -1213,6 +1227,23 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      ["All major Credit Cards", "All major credit cards"],
+      [
+        "We accept the following forms of payment: Cash & Checks; All major credit cards; Apple Pay & Google Pay; Contactless payment available.",
+        "The sale accepts cash, checks, all major credit cards, Apple Pay, and Google Pay. Contactless payments are available.",
+      ],
+      [
+        "Thursday, December 3 is members-only night. Doors open from 5:00 PM until 8:00 PM.",
+        "The members-only preview is Thursday, December 3, from 5:00 PM to 8:00 PM.",
+      ],
+      [
+        "Friday, December 4 is open to the public. Doors open from 10:00 AM until 5:00 PM. Saturday, December 5 is open to the public. Doors open from 10:00 AM until 5:00 PM.",
+        "The public sale runs Friday, December 4, from 10:00 AM to 5:00 PM and Saturday, December 5, from 10:00 AM to 5:00 PM.",
+      ],
+      [
+        "Sunday, December 6 is open to the public and is bargain day. Doors open from 10:00 AM until 4:00 PM.",
+        "Bargain Day is Sunday, December 6. The sale is open to the public from 10:00 AM to 4:00 PM.",
+      ],
       [
         /Join us for the movie - "The Adventures of Tintin" (\d{4}) · (\S+) · (\d+h \d+m) Director - Steven Spielberg Featuring the voices of/g,
         '"The Adventures of Tintin" ($1, $2, $3) was directed by Steven Spielberg and features the voices of',
@@ -1304,7 +1335,6 @@ const EDITS = {
       ["Other Ongoing Friends of the Milpitas Library Sales The Book Nook We have", "Other ongoing Friends of the Milpitas Library sales include the Book Nook. We have"],
       ["Amazon Sales We have", "Amazon sales: We have"],
       ["Ebay Sales View our current listings on Ebay.", "eBay sales: View our current listings on eBay."],
-      ["All major Credit Cards", "All major credit cards"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
       ["Join us as we discuss how a specific part of AI that is currently all over the news: AI enabled scam and fraud.", "Join us as we discuss a specific part of AI that is currently all over the news: AI-enabled scams and fraud."],
       ["How is AI enabling scam and fraud?", "How is AI enabling scams and fraud?"],
