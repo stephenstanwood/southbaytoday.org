@@ -443,6 +443,45 @@ const CORRECTIONS = [
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: attendanceNote,
   })),
+  // These dated SJPL pages give conflicting signup instructions. The program
+  // copy calls registration optional, while the signup panel labels it required.
+  ...[
+    ["6a3f10cc4407827f8aa7ada2", "Alum Rock Library"],
+    ["6a88a8afb2047800299484a3", "Alum Rock Library"],
+    ["6ac6a0e7fee2d21deb21c21a", "Bascom Library"],
+  ].map(([id, venue]) => ({
+    date: "2026-11-22",
+    matches: event => event.registration === REGISTRATION_REQUIRED
+      && ["events", "v2/events"].some(path => event.url?.replace(/\/$/, "") === `https://sjpl.bibliocommons.com/${path}/${id}`)
+      && /\bregistration (?:is )?(?:requested|recommended),? but not required\b/i.test(event.description || ""),
+    facts: { registration: REGISTRATION_NONE, registrationClosesBy: null, attendanceStatus: "needs-confirmation" },
+    copyReplacements: [[/\s*\bRegistration (?:is )?(?:requested|recommended),? but not required\./gi, ""]],
+    appendAttendanceNote: `The signup panel says registration is required. The event description says it is optional. Confirm registration with ${venue}.`,
+  })),
+  // The organizer confirms the four dated sale sessions. Only the Thursday
+  // preview requires membership, which attendees can buy at the door.
+  // https://friendsofthemilpitaslibrary.org/booksales.php
+  // https://friendsofthemilpitaslibrary.org/membership.php
+  ...[
+    ["2026-12-03", "6aece6bc30b4d5b2f42beee1"],
+    ["2026-12-04", "6aece6bc30b4d5b2f42beee2"],
+    ["2026-12-05", "6aece6bc30b4d5b2f42beee3"],
+    ["2026-12-06", "6aece6bc30b4d5b2f42beee4"],
+  ].map(([date, id]) => {
+    const preview = date === "2026-12-03";
+    return {
+      date,
+      url: `https://sccl.bibliocommons.com/events/${id}`,
+      aliasUrls: [`https://sccl.bibliocommons.com/v2/events/${id}`],
+      facts: {
+        category: "market",
+        ...(preview && { cost: "low", costNote: "$5 individual or $10 family membership for nonmembers" }),
+      },
+      ...(preview && {
+        appendAttendanceNote: "Members-only preview. Nonmembers can join at the door for $5 individually or $10 per family. Enter at the rear (east side) of the library.",
+      }),
+    };
+  }),
   // The library's title says level 1 and its description says level 0.
   // Use neutral Spanish copy while both claims persist on this occurrence.
   // https://sjpl.bibliocommons.com/v2/events/6a8e2033b204780029958a7e

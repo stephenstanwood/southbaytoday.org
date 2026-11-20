@@ -62,6 +62,44 @@ test("dated library events follow the organizer's program type and audience", ()
   assert.deepEqual(applyVerifiedEventFacts(newAudience), newAudience);
 });
 
+test("conflicting SJPL signup instructions are disclosed without a reservation badge", () => {
+  const source = "https://sjpl.bibliocommons.com";
+  for (const [path, description, venue] of [
+    ["events/6a3f10cc4407827f8aa7ada2", "Free. Registration requested, but not required.", "Alum Rock Library"],
+    ["v2/events/6a88a8afb2047800299484a3", "Free. Registration requested, but not required.", "Alum Rock Library"],
+    ["events/6ac6a0e7fee2d21deb21c21a", "Free. Registration recommended but not required.", "Bascom Library"],
+  ]) {
+    const event = { date: "2026-11-22", url: `${source}/${path}`, description,
+      registration: "required", registrationClosesBy: "2026-11-22T22:00:00.000Z" };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.equal(requiresAdvanceRegistration(fixed), false);
+    assert.equal(requiresAttendanceConfirmation(fixed), true);
+    assert.equal(fixed.registrationClosesBy, null);
+    assert.equal(fixed.description, "Free.");
+    assert.match(fixed.attendanceNote, /signup panel says registration is required.*description says it is optional/);
+    assert(fixed.attendanceNote.includes(venue));
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    for (const changed of [
+      { ...event, date: "2026-11-29" },
+      { ...event, registration: "closed" },
+      { ...event, description: "Registration required." },
+    ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+  }
+});
+
+test("Milpitas winter book sale applies the membership charge only to the preview", () => {
+  const source = "https://sccl.bibliocommons.com";
+  const preview = { date: "2026-12-03", cost: "free", category: "education",
+    url: `${source}/events/6aece6bc30b4d5b2f42beee1` };
+  const fixed = applyVerifiedEventFacts(preview);
+  assert.equal(fixed.cost, "low");
+  assert.equal(fixed.category, "market");
+  assert.match(fixed.attendanceNote, /Members-only preview.*\$5 individually or \$10 per family.*rear/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const publicSale = { ...preview, date: "2026-12-04", url: `${source}/v2/events/6aece6bc30b4d5b2f42beee2` };
+  assert.deepEqual(applyVerifiedEventFacts(publicSale), { ...publicSale, category: "market" });
+});
+
 test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => {
   const event = {
     date: "2027-03-06",
