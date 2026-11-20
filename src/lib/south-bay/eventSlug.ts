@@ -6,12 +6,15 @@
 // and acceptable for short-lived listing pages; ids stay out of URLs because
 // upstream id shapes vary by source.
 
+import { showtimeEvidenceMatchesUrl } from "./eventOccurrence.mjs";
+
 export interface SluggableEvent {
   id?: string | null;
   title?: string | null;
   date?: string | null;
   time?: string | null;
   url?: string | null;
+  source?: string | null;
   occurrenceEvidence?: {
     kind?: string;
     sourceUrl?: string;
@@ -22,8 +25,8 @@ export interface SluggableEvent {
 
 function sourcedPerformanceMinute(event: SluggableEvent): number | null {
   const evidence = event.occurrenceEvidence;
-  if (!event.url || !evidence?.kind?.startsWith("first-party")
-    || evidence.sourceUrl !== event.url || evidence.date !== event.date
+  if (!evidence?.kind?.startsWith("first-party") || !showtimeEvidenceMatchesUrl(event)
+    || evidence.date !== event.date
     || evidence.time !== event.time) return null;
   const clock = /^(1[0-2]|[1-9]):([0-5]\d) (AM|PM)$/.exec(event.time || "");
   return clock ? (Number(clock[1]) % 12 + (clock[3] === "PM" ? 12 : 0)) * 60 + Number(clock[2]) : null;

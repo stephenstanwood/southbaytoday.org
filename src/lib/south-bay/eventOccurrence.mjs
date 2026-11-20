@@ -1,6 +1,19 @@
 import { isEventEditoriallySuppressed } from "./eventAvailability.mjs";
 import { isPlaceTemporarilyUnavailable } from "./placeAvailability.mjs";
 
+export const TECH_INTERACTIVE_CALENDAR_URL = "https://www.thetech.org/explore/upcoming-events/";
+
+// The museum's calendar lists each screening while its own booking page is
+// shared by the run. Both URLs refer to the same organizer and production.
+export function showtimeEvidenceMatchesUrl(event) {
+  const sourceUrl = event.occurrenceEvidence?.sourceUrl;
+  return Boolean(event.url && (sourceUrl === event.url || (
+    event.source === "The Tech Interactive"
+    && sourceUrl === TECH_INTERACTIVE_CALENDAR_URL
+    && /^https:\/\/tickets\.thetech\.org\/events\/[0-9a-f-]+\/?$/i.test(event.url)
+  )));
+}
+
 // Most event sources already provide exact dated rows. GRPG previously had a
 // local recurrence expander, so require proof that each GRPG date was actually
 // observed on the organizer's occurrence page before it can be published.

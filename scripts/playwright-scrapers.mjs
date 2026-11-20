@@ -25,6 +25,7 @@ import { fileURLToPath } from "url";
 import { createHash } from "crypto";
 import { loadEnvLocal } from "./lib/env.mjs";
 import { classifyLibCalLocation } from "./lib/libcal-location.mjs";
+import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { libraryEventDetails } from "./lib/library-event-details.mjs";
 import { parseCdmOccurrenceDate } from "./lib/cdm-events.mjs";
 import { normalizeGuadalupeEvent } from "./lib/guadalupe-events.mjs";
@@ -55,7 +56,7 @@ import {
 } from "./lib/playwright-source-resilience.mjs";
 import { describeRefreshFailureContext } from "./lib/host-load.mjs";
 import { applyVerifiedEventFacts } from "../src/lib/south-bay/eventSourceFacts.mjs";
-import { isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import { isEventPublishable, TECH_INTERACTIVE_CALENDAR_URL } from "../src/lib/south-bay/eventOccurrence.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUT_PATH = join(__dirname, "..", "src", "data", "south-bay", "playwright-events.json");
@@ -2298,7 +2299,7 @@ export async function scrapeSapCenter(page, { today = TODAY } = {}) {
 }
 
 export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
-  await page.goto("https://www.thetech.org/explore/upcoming-events/", { waitUntil: "domcontentloaded", timeout: 30_000 });
+  await page.goto(TECH_INTERACTIVE_CALENDAR_URL, { waitUntil: "domcontentloaded", timeout: 30_000 });
   await page.waitForTimeout(2500);
   const raw = await page.evaluate(() => {
     // Keep each card's own description and ticket link. Body-line scraping
@@ -2323,15 +2324,16 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
   return raw.map((r) => {
     const date = yearAwareDate(r.date);
     if (!date || date < today || !isUsefulTitle(r.title)) return null;
+    const time = clockFromText(r.date);
     return {
       title: r.title,
       date,
-      time: clockFromText(r.date),
+      time,
       endTime: null,
       venue: normalizeVenueText(r.venue, "The Tech Interactive"),
       address: "201 S Market St, San Jose, CA 95113",
       city: "san-jose",
-      url: r.link || "https://www.thetech.org/explore/upcoming-events/",
+      url: r.link || TECH_INTERACTIVE_CALENDAR_URL,
       source: "The Tech Interactive",
       category: /^\s*(?:NYE\s+)?LASERS:/i.test(r.title) ? "arts"
         : /^Girl Scout Program:/i.test(r.title) ? "education"
@@ -2339,6 +2341,9 @@ export async function scrapeTheTechUpcoming(page, { today = TODAY } = {}) {
       description: r.description || "",
       cost: "paid",
       kidFriendly: true,
+      ...(isClockTime(time) ? { occurrenceEvidence: {
+        kind: "first-party-occurrence-page", sourceUrl: TECH_INTERACTIVE_CALENDAR_URL, date, time: normalizeClockTime(time),
+      } } : {}),
     };
   }).filter(Boolean).filter(isEventPublishable);
 }

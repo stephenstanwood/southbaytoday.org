@@ -1776,6 +1776,29 @@ const CORRECTIONS = [
         || (ticketId && event.url === `https://tickets.thetech.org/events/${ticketId}`)),
     facts: { category, description, blurb },
   })),
+  {
+    // The museum confirms both dates and the screening. MPA certificate 55924
+    // gives the PG-13 advisory. Keep the event available to readers while
+    // excluding it from recommendations for young children.
+    // https://www.thetech.org/explore/upcoming-events/
+    // https://www.filmratings.com/search-results/?search=Sunrise+on+the+Reaping
+    dateFrom: "2026-11-21", dateThrough: "2026-11-22",
+    matches: event => event.source === "The Tech Interactive"
+      && event.title === "Hunger Games: Sunrise on the Reaping" && event.venue === "The Tech Interactive"
+      && event.url === "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e",
+    facts: { category: "arts", kidFriendly: false },
+    appendAttendanceNote: "Film rated PG-13.",
+  },
+  {
+    date: "2026-11-20",
+    matches: event => event.source === "San Jose Public Library" && event.title === "Arts & Crafts Fun"
+      && event.url === "https://sjpl.bibliocommons.com/events/6a945c2bbe148200298b2dab"
+      && /ages 4\+ with adult help, 8\+ solo/i.test(event.description || "")
+      && /tickets available at the desk 30 minutes before/i.test(event.attendanceNote || event.description || ""),
+    facts: {
+      blurb: "Make art with Budding Leaders. Ages 4–7 need adult help. Every attendee needs a ticket, available in person at the desk 30 minutes before the class.",
+    },
+  },
   // Dated organizer pages restore source links omitted by newsletter intake.
   // Milpitas also names the plaza and its street address. Keep occurrence
   // identity, admission and booking state unchanged; never replace a new URL.

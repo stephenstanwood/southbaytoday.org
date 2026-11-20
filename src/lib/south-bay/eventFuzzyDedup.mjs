@@ -18,6 +18,8 @@
 // bare forms.gle RSVP link), then richness.
 // ---------------------------------------------------------------------------
 
+import { showtimeEvidenceMatchesUrl } from "./eventOccurrence.mjs";
+
 const STOP_WORDS = new Set([
   "a", "an", "the", "of", "in", "on", "at", "to", "for", "with", "by", "from",
   "and", "or", "vs", "versus", "presents", "present", "featuring", "ft", "feat",
@@ -287,7 +289,7 @@ export function fuzzyDedupEvents(events) {
         // cannot establish a separate performance (the SJMA noon fallback).
         if (e1.url && e1.url === e2.url && tm1 != null && tm2 != null && tm1 !== tm2
           && [e1, e2].every((event) => firstPartyAuthorityScore(event) > 0
-            && event.occurrenceEvidence.sourceUrl === event.url
+            && showtimeEvidenceMatchesUrl(event)
             && parseTimeMin(event.occurrenceEvidence.time) === parseTimeMin(event.time))) {
           continue;
         }

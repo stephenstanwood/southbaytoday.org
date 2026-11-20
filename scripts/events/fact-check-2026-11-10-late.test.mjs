@@ -3,8 +3,11 @@ import fs from "node:fs";
 import test from "node:test";
 import { cleanTitle, polishDescription } from "../generate-events.mjs";
 import { scrapeTheTechUpcoming } from "../playwright-scrapers.mjs";
+import { normalizeClockTime } from "../lib/clock-time.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 import { isEventPublishable } from "../../src/lib/south-bay/eventOccurrence.mjs";
+import { buildEventSlugs } from "../../src/lib/south-bay/eventSlug.ts";
 import { isBriefingEventAvailable } from "../lib/city-briefing-integrity.mjs";
 
 const { events } = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/fact-check-2026-11-10-late.json", import.meta.url)));
@@ -100,4 +103,30 @@ test("the museum adapter retains its card description and specific ticket URL wi
   assert.equal(result[0].category, "arts");
   const verified = applyVerifiedEventFacts({ ...result[0], title: cleanTitle(result[0].title) });
   assert.doesNotMatch(verified.blurb, /battle|science experience/);
+});
+
+test("the museum calendar keeps separate PG-13 screenings on a shared booking URL", async () => {
+  const link = "https://tickets.thetech.org/events/01a0f8a9-e4e2-59f2-90c5-8daebe40da6e";
+  const raw = ["5:30PM", "8:15PM"].map(clock => ({
+    title: "Hunger Games: Sunrise on the Reaping", date: `November 22, 2026 ${clock}`, link,
+  }));
+  const result = await scrapeTheTechUpcoming({
+    goto: async () => {}, waitForTimeout: async () => {}, evaluate: async () => raw,
+  }, { today: "2026-11-20" });
+  const shows = result.map((event, index) => applyVerifiedEventFacts({
+    ...event, id: index ? "a-evening" : "z-early", time: normalizeClockTime(event.time),
+  }));
+  assert.equal(shows.length, 2);
+  for (const show of shows) {
+    assert.equal(show.category, "arts");
+    assert.equal(show.kidFriendly, false);
+    assert.equal(show.attendanceNote, "Film rated PG-13.");
+    assert.equal(show.url, link);
+  }
+  assert.equal(fuzzyDedupEvents(shows).kept.length, 2);
+  assert.deepEqual([...buildEventSlugs(shows).values()].map(show => show.time), ["5:30 PM", "8:15 PM"]);
+  const wrongClock = { ...shows[1], time: "9:00 PM" };
+  assert.equal(fuzzyDedupEvents([shows[0], wrongClock]).kept.length, 1);
+  const otherBooking = "https://example.org/events/screening";
+  assert.equal(fuzzyDedupEvents(shows.map(show => ({ ...show, url: otherBooking }))).kept.length, 1);
 });
