@@ -59,9 +59,11 @@ test("verified venue, admission and acronym corrections survive retained cards a
   const events = structuredClone(fixture.events);
   await resolveEventBlurbs(events, { enabled: false });
   const jazz = events.find(event => event.source === "San Jose Jazz");
-  assert.equal(jazz.venue, "Hammer Theatre Center");
+  assert.equal(jazz.venue, "Hammer Theatre Center, Sobrato Auditorium");
   assert.equal(jazz.address, "101 Paseo de San Antonio, San Jose, CA 95113");
-  assert.equal(jazz.endTime, null, "the opening set has no confirmed finish");
+  assert.equal(jazz.url, "https://events.sjsu.edu/event/hammer-presents-cool-yule-2026");
+  assert.equal(jazz.category, "music");
+  assert.equal(jazz.endTime, null, "the retained San Jose Jazz record supplies no finish");
   assert.equal(jazz.cost, null, "conflicting free-admission copy does not establish a price");
   for (const event of events) {
     assert.deepEqual(applyVerifiedEventFacts(event), event, "corrections are idempotent");

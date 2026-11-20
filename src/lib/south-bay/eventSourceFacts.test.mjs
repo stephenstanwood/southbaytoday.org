@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs, { readFileSync } from "node:fs";
 import { syncBuiltinESMExports } from "node:module";
 import { fileURLToPath } from "node:url";
+import { deduplicateEventSlots } from "../../../scripts/lib/event-url-dedup.mjs";
 import {
   applyVerifiedEventFacts,
   copyMentionsEvent,
@@ -11,6 +12,7 @@ import {
 } from "./eventSourceFacts.mjs";
 import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
+import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
 test("The Ritz showtime conflict stays visible and out of recommendations", () => {
@@ -4197,6 +4199,7 @@ test("dated SJSU home-game details fill sparse calendar rows", () => {
     ["2026-11-18", "11:00 AM", "womens-basketball-san-jose-state-vs-california-baptist", "Provident Credit Union Event Center", "free"],
     ["2026-11-21", "11:00 AM", "womens-basketball-san-jose-state-vs-long-beach-state", "Provident Credit Union Event Center", "free"],
     ["2026-11-19", "3:00 PM", "womens-volleyball-san-jose-state-vs-unlv-7924", "Spartan Gym", null],
+    ["2026-12-02", "7:00 PM", "womens-basketball-san-jose-state-vs-pepperdine", "Provident Credit Union Event Center", null],
   ];
   for (const [date, time, slug, venue, cost] of rows) {
     const raw = {
@@ -4212,4 +4215,50 @@ test("dated SJSU home-game details fill sparse calendar rows", () => {
     const revised = { ...raw, venue: "New venue", address: "New address", cost: "paid" };
     assert.deepEqual(applyVerifiedEventFacts(revised), revised);
   }
+});
+
+test("the Cool Yule opener deduplicates to the full concert and its old link redirects", () => {
+  const opener = {
+    id: "6c03b8c73442", title: "Cool Yule: HSAS Full Ensemble & Vocal Ensemble",
+    date: "2026-12-01", time: "7:30 PM", venue: "Hammer Theatre Center", city: "san-jose",
+    url: "https://sanjosejazz.org/events/cool-yule-hsas/",
+  };
+  const hostListing = {
+    ...opener, id: "sjsu-b633beb6f4439b5a", title: "Hammer Presents Cool Yule 2026",
+    endTime: "9:00 PM", category: "arts",
+    url: "https://events.sjsu.edu/event/hammer-presents-cool-yule-2026",
+  };
+  const concert = applyVerifiedEventFacts(hostListing);
+  assert.equal(concert.category, "music");
+  assert.match(concert.description, /Jazz Orchestra.*opening set.*High School All Stars/);
+  assert.deepEqual(deduplicateEventSlots([concert, applyVerifiedEventFacts(opener)]), [concert]);
+
+  const today = "2026-11-20";
+  const ledger = retireSlugs({ entries: [] }, [opener], [concert], today);
+  const { redirects } = resolveRetired(ledger, [concert], [], today);
+  assert.equal(redirects.get("2026-12-01-cool-yule-hsas-full-ensemble-and-vocal-ensemble"), "2026-12-01-hammer-presents-cool-yule-2026");
+
+  const nextDay = { ...opener, date: "2026-12-02" };
+  assert.equal(applyVerifiedEventFacts(nextDay), nextDay);
+});
+
+test("the verified Common Ground and Rodin admission terms apply within their published runs", () => {
+  const exhibit = {
+    date: "2026-11-24", ongoing: true,
+    url: "https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground",
+  };
+  assert.equal(applyVerifiedEventFacts(exhibit).cost, "free");
+  const afterExhibit = { ...exhibit, date: "2026-12-05" };
+  assert.equal(applyVerifiedEventFacts(afterExhibit), afterExhibit);
+
+  const tour = {
+    date: "2026-11-21", cost: null,
+    url: "https://events.stanford.edu/event/copy-of-cancelled-public-tour-auguste-rodin-565",
+  };
+  const corrected = applyVerifiedEventFacts(tour);
+  assert.equal(corrected.cost, "free");
+  assert.equal(corrected.registration, "none");
+  assert.match(corrected.attendanceNote, /first come, first served/);
+  assert.equal(applyVerifiedEventFacts({ ...tour, registration: "closed" }).registration, "closed");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
 });

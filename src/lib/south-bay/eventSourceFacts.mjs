@@ -27,6 +27,7 @@ function museumMinisWithoutArtMaking(event) {
 
 const DERBY_ATTENDANCE = "12 first-come, first-served tickets. The library’s pickup instructions conflict with its 2 PM start; confirm pickup timing with Berryessa Library before going.";
 const HILLVIEW_HALLOWEEN_TIMING = "The library lists the event for 12:30–1:30 PM, but its storytime breakdown uses a conflicting AM label. Confirm the session timing with Hillview Library.";
+const COOL_YULE_URL = "https://events.sjsu.edu/event/hammer-presents-cool-yule-2026";
 const LINKEDIN_STREAM_DESCRIPTION = "Stream-processing meetup hosted by LinkedIn, focused on Apache Kafka, Apache Flink, and Change Data Capture.";
 const STANFORD_EP_ADMISSION = "In person: nurses and advanced practice providers $90; physicians $140; industry $390. Free for Stanford affiliates registering with a Stanford email; virtual attendance is free.";
 const OPEN_MIC_ENTRY_NOTE = "Ages 18+. Two-item minimum purchase per person.";
@@ -605,6 +606,17 @@ const CORRECTIONS = [
       cost: "free",
     },
   })),
+  // The campus calendar omits the home venue. Athletics gives the December 2
+  // matchup, start time, and facility, and its facility page gives the address.
+  // https://sjsuspartans.com/boxscore/9080
+  // https://sjsuspartans.com/facilities/provident-credit-union-event-center
+  {
+    date: "2026-12-02",
+    matches: event => event.source === "SJSU Events" && event.city === "san-jose" && !event.virtual
+      && event.time === "7:00 PM" && !event.venue && !event.address
+      && event.url === "https://events.sjsu.edu/event/womens-basketball-san-jose-state-vs-pepperdine",
+    facts: { venue: "Provident Credit Union Event Center", address: "290 S. 7th St., San Jose, CA 95112" },
+  },
   // The athletics schedule identifies both UNLV matches at Spartan Gym.
   // This rule is for the Thursday 3 PM listing in the campus calendar.
   // https://sjsuspartans.com/news/2026/11/17/this-week-in-spartan-athletics-november-17-22
@@ -1431,14 +1443,22 @@ const CORRECTIONS = [
     facts: { category: "arts", registration: REGISTRATION_FULL },
     appendAttendanceNote: "Currently at capacity. Sign up with the organizer to be notified when tickets are released.",
   },
-  // SJZ's venue label contradicts its own performance description. The host's
-  // exact concert record confirms Hammer, not the outdoor Christmas venue.
-  // https://events.sjsu.edu/event/hammer-presents-cool-yule-2026
-  // Evidence: docs/qa/2026-11-11-2307z-fact-check.md.
+  // San Jose Jazz describes the opening set of this concert. Both pages link
+  // to Hammer's ticket event 198572. Give both copies the same occurrence URL
+  // so calendar dedup and the retired permalink resolve to the full concert.
   {
     date: "2026-12-01",
-    url: "https://sanjosejazz.org/events/cool-yule-hsas/",
-    facts: { venue: "Hammer Theatre Center", address: "101 Paseo de San Antonio, San Jose, CA 95113" },
+    url: COOL_YULE_URL,
+    aliasUrls: ["https://sanjosejazz.org/events/cool-yule-hsas/"],
+    facts: {
+      title: "Hammer Presents Cool Yule 2026",
+      url: COOL_YULE_URL,
+      category: "music",
+      venue: "Hammer Theatre Center, Sobrato Auditorium",
+      address: "101 Paseo de San Antonio, San Jose, CA 95113",
+      description: "The San José State University Jazz Orchestra plays holiday favorites after an opening set by the San Jose Jazz High School All Stars.",
+      blurb: "Hear the SJSU Jazz Orchestra play holiday classics, with the San Jose Jazz High School All Stars opening the concert.",
+    },
   },
   // Preserve verified entry conditions on retained cards whose truncated
   // descriptions omit them. Later full/closed booking notices still win.
@@ -3824,10 +3844,20 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/touch-me-not-12th-annual-undergraduate-juried-exhibition",
     facts: { cost: "free" },
   },
+  // Both calendar pages give the same November 3–December 4 exhibition
+  // and explicitly list admission as free.
   {
-    date: "2026-11-03",
+    dateFrom: "2026-11-03", dateThrough: "2026-12-04",
     url: "https://events.sjsu.edu/event/natalie-and-james-thompson-gallery-common-ground",
+    aliasUrls: ["https://events.sjsu.edu/event/copy-of-natalie-and-james-thompson-gallery-common-ground"],
     facts: { cost: "free" },
+  },
+  // The Cantor lists this series as free and first come, first served.
+  {
+    dateFrom: "2026-11-20", dateThrough: "2027-08-28",
+    url: "https://events.stanford.edu/event/copy-of-cancelled-public-tour-auguste-rodin-565",
+    facts: event => ({ cost: event.cost || "free", registration: event.registration ?? REGISTRATION_NONE }),
+    appendAttendanceNote: "Tours are first come, first served.",
   },
   // The bookstore's title and the publisher agree on Ligon. Its calendar
   // body drops the g, and its product page independently mistypes Ligor.
