@@ -31,6 +31,11 @@ const SCCLD_ONLINE_REGISTRATION_EDIT = [
   "Space is limited. Online registration is required.",
 ];
 
+const SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT = [
+  "Due to limited space, we will begin handing out free tickets starting at 10 a.m. We look forward to seeing you there!",
+  "Space is limited. The library begins handing out free tickets at 10 a.m.",
+];
+
 const EDITS = {
   "The Tech Interactive": {
     title: [
@@ -256,6 +261,7 @@ const EDITS = {
       ["the sound of the instruments performed in Afghanistan", "the sound of the instruments played in Afghanistan"],
       ["instruments passed down from generations, which are still performed around the Bay Area.", "instruments passed down through generations, which are still played around the Bay Area."],
       ["How to Register Visit the OneInMath website", "How to register: Visit the OneInMath website"],
+      ["How to register: Visit the OneInMath website to register.", "Register on the OneInMath website."],
       ["Personal designs must be in. Stl format", "Personal designs must be in .stl format"],
       [/(\bsend an email to [\w.%+-]+@[\w.-]+\.[A-Za-z]{2,}) (?=This program is generously sponsored\b)/g, "$1. "],
       [/(\bThis program is generously sponsored by the Friends of the Almaden Branch Library)$/g, "$1."],
@@ -441,6 +447,18 @@ const EDITS = {
       ["Space is limited, no registration is required.", "Space is limited; no registration is required."],
       ["Bellarmine College Preparatory school.", "Bellarmine College Preparatory School."],
       ["high-beginning level ESL course", "high-beginning-level ESL course"],
+      [
+        "Our Tech Mentor assistance includes, but is not limited to, basic smartphone, tablet, and computer help; setting up and using email; downloading and using apps; making video calls (Zoom, FaceTime, Google Meet, etc.); browsing the internet (search engine basics, making simple searches, etc.); navigating the SJPL website and digital resources; how to use the 311 app.",
+        "A Tech Mentor can help with basic smartphone, tablet, and computer tasks. Examples include setting up and using email, downloading and using apps, making video calls with Zoom, FaceTime, or Google Meet, browsing the web, running simple searches, navigating the SJPL website and digital resources, and using the 311 app.",
+      ],
+      [
+        "Nuestra asistencia de Tech Mentor puede incluir, pero no se limita a: ayuda básica con teléfonos inteligentes, tabletas y computadoras; configurar y usar el correo electrónico; descargar y usar aplicaciones; hacer videollamadas (Zoom, FaceTime, Google Meet, etc.); navegar por internet (conceptos básicos de motores de búsqueda, hacer búsquedas simples, etc.); navegar el sitio web y los recursos digitales de SJPL; cómo usar la aplicación 311.",
+        "Un mentor tecnológico puede ayudarte con tareas básicas en teléfonos inteligentes, tabletas y computadoras. Por ejemplo, puede ayudarte a configurar y usar el correo electrónico, descargar y usar aplicaciones, hacer videollamadas con Zoom, FaceTime o Google Meet, navegar por internet, hacer búsquedas sencillas, consultar el sitio web y los recursos digitales de SJPL y usar la aplicación 311.",
+      ],
+      ["Para hacer una cita, llame al (408) 808-3033 o envíe", "Para hacer una cita, llama al (408) 808-3033 o envía"],
+      ["perform many tricks, including: riding a bike", "perform many tricks, including riding a bike"],
+      ["building with LEGO Bricks!", "building with LEGO bricks!"],
+      ["This event is recommended for children 5 and older.", "This event is recommended for children ages 5 and older."],
       ["Hong Kong style Mahjong", "Hong Kong-style Mahjong"],
       ["by the City of San Jose no cost to them", "by the City of San Jose at no cost to them"],
       ["we meet in-person", "we meet in person"],
@@ -570,6 +588,10 @@ const EDITS = {
       ["not yet walking confidently, and their caregivers.", "not yet walking confidently and their caregivers."],
       ["of each month. Free, no registration is required.", "of each month. Free. No registration is required."],
       ["ESL course is Free! ESL 501 Reading", "ESL course is free! ESL 501 Reading"],
+      [
+        "Do you want to build your English language skills and your confidence? This beginning non-credit ESL course is free! ESL 501 Reading & Writing 1. What will you learn in this class? This is a non-credit, high-beginning-level integrated ESL skills course emphasizing basic reading, writing, grammar, and vocabulary.",
+        "This free, noncredit course, ESL 501 Reading & Writing 1, is for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
+      ],
       ["Seniors interested in learning the basics or need a refresher of how to play Chinese Mahjong are welcome to", "Seniors who are interested in learning the basics of Chinese Mahjong or need a refresher are welcome to"],
       ["will also learn strategy and strengthen communications and sense of community.", "will also learn strategy, strengthen communication skills, and build a sense of community."],
       ["time. Those on waitlist will be considered for no show spots. Late arrivals", "time. Those on the waitlist will be considered for no-show spots. Late arrivals"],
@@ -904,6 +926,11 @@ const EDITS = {
       [/\bIcan\b/g, "ICAN"],
       ["Lego challenges", "LEGO challenges"],
       ["build reading confidence and love of books.", "build reading confidence and a love of books."],
+      ["Build towers, spaceships, and forts out of LEGO Bricks", "Build towers, spaceships, and forts out of LEGO bricks"],
+      [
+        "Practice doing tech tasks yourself with personalized, Spanish-language help at the Biblioteca Latinoamericana, so you can stop waiting on family for help.",
+        "Get personalized tech help in Spanish at the Biblioteca Latinoamericana and practice doing the tasks yourself.",
+      ],
       ["free play with Legos", "free play with LEGOs"],
       ["Sip tea and biscuits while chatting with neighbors at this monthly library meetup, bring your own cup.", "Have tea and biscuits while chatting with neighbors at this monthly library meetup; bring your own cup."],
       ["Sip an English-style tea service", "Enjoy an English-style tea service"],
@@ -1090,6 +1117,7 @@ const EDITS = {
     ],
     attendanceNote: [
       ...SCCLD_BOOK_DISCUSSION_EDITS,
+      SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
       ["KinderReadiness!", "Kinder Readiness!"],
       ["different themes and hands on activities.", "different themes and hands-on activities."],
@@ -1109,6 +1137,39 @@ const EDITS = {
     ],
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
+      SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      ["early walkers, 1s, and 2s in the Orchard Room", "early walkers and 1- and 2-year-olds in the Orchard Room"],
+      [
+        "A small number of strollers may be parked outside the Children's Room; no strollers in storytime, please.",
+        "Space to park strollers outside the Children's Room is limited. Please leave strollers outside during storytime.",
+      ],
+      ["on Mondays and Wednesdays from 4 p.m. - 5:30 p.m.", "on Mondays and Wednesdays from 4 to 5:30 p.m."],
+      [
+        "Please note: As a parent or caregiver, please stay near the Conference Room while your child participates in the program.",
+        "Parents and caregivers should stay near the Conference Room while their children participate.",
+      ],
+      ["Perfect for children 0-5 and their families.", "This storytime is for children ages 0 to 5 and their families."],
+      ["Room is open during library open hours.", "The room is open during regular library hours."],
+      [
+        "In December the Cupertino Library Non-Fiction book discussion will talk about Finders Keepers: a Tale of Archaeological Plunder and Obsession by Craig Childs. (2010)",
+        "In December, the Cupertino Library's nonfiction book group will discuss Craig Childs' 2010 book Finders Keepers: A Tale of Archaeological Plunder and Obsession.",
+      ],
+      [
+        "ancient artifacts from the American Southwest. Artifacts that could hold the keys to answering questions about the people who made and used them.",
+        "ancient artifacts from the American Southwest that could help answer questions about the people who made and used them.",
+      ],
+      [
+        "From lonely archeological digs in the deserts of Arizona and New Mexico, to high end art galleries and museums in New York and Boston, Childs had to not only protect the artifacts themselves, but to also himself from ruthless art smugglers, risking his life and freedom multiple times.",
+        "From archaeological digs in the deserts of Arizona and New Mexico to high-end art galleries and museums in New York and Boston, Childs had to protect the artifacts and himself from ruthless art smugglers, risking his life and freedom multiple times.",
+      ],
+      [
+        "Childs' book also brings up the difficult questions about who the past, and its archaeological finds truly belong to.",
+        "Childs' book also asks who owns the past and its archaeological finds.",
+      ],
+      [
+        "But someone who steals a precious relic from a museum collection because they believe it is sacred and rightfully belongs back where it was found is called a thief, which one of them is actually in the wrong?",
+        "Someone who takes a precious relic from a museum because they believe it is sacred and belongs where it was found is called a thief. Which one is in the wrong?",
+      ],
       ["a simple snowman for beginner's", "a simple snowman for beginners"],
       ["Early literacy focus is on picture books, flannel board stories and fingerplays and an early introduction to group dynamics and socialization.", "Picture books, flannel board stories, and fingerplays help children build early literacy skills and get used to learning in a group."],
       ["festive winter stories, songs, rhymes and dances, all to encourage the development of crucial early literacy skills.", "festive winter stories, songs, rhymes, and dances to help children build early literacy skills."],
@@ -1291,6 +1352,11 @@ const EDITS = {
       ["Make fake snow using simple science with Lynbrook High Wi STEM at Saratoga Library, with all ages welcome.", "Use simple science to make fake snow with Lynbrook High WiSTEM at Saratoga Library. All ages are welcome."],
       ["Race your team to assemble a puzzle fastest,", "Race with your team to assemble a puzzle the fastest,"],
       ["to hear stories, music, and activities in the Orchard Room.", "to hear stories and music and take part in activities in the Orchard Room."],
+      ["made for children 0-5 and their families.", "for children ages 0 to 5 and their families."],
+      [
+        "Talk through Craig Childs' book about archaeological plunder and obsession with fellow readers at the Cupertino Library non-fiction discussion.",
+        "Discuss Craig Childs' book about archaeological plunder and obsession with the nonfiction book group at Cupertino Library.",
+      ],
       ["supermassive blackholes grow", "supermassive black holes grow"],
       [/\bLego\b/g, "LEGO"],
       [/\bfourth to sixth graders\b/g, "fourth- to sixth-graders"],
@@ -1298,6 +1364,23 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [
+        /English as a Second Language \(ESL\) \/ Learn English: Beyond the Basics is an in-person (\d+)-week class with lessons on English grammar, pronunciation, and idioms\./g,
+        "The $1-week, in-person English as a Second Language (ESL) class covers grammar, pronunciation, and idioms.",
+      ],
+      [
+        "It is for adult (18 years and older) intermediate and advanced English learners who can have a conversation in English and want to improve their pronunciation and understanding.",
+        "The class is for intermediate and advanced English learners ages 18 and older who can have a conversation in English and want to improve their pronunciation and understanding.",
+      ],
+      [
+        /To register for the entire (\d+)-week series, please include your email address and make sure it is entered correctly\. Please register only once for the entire series\./g,
+        "Register once for the full $1-week series and double-check your email address.",
+      ],
+      ["No partner needed and beginners welcome!", "Beginners are welcome, and you don't need a partner."],
+      [
+        "If you register, you will get an email reminder for the program including a link to the class playlist to practice.",
+        "If you register, you'll get a reminder email with a link to the class playlist for practice.",
+      ],
       ["Staff is available to help with a variety of tech questions including:", "Staff can help with a variety of tech questions, including:"],
       [
         "Register This class run by Silicon Valley Bicycle Coalition (SVBC) in collaboration with Valley Transportation Authority (VTA) is provided to the public for at no cost with funding from 2016 Measure B courtesy of VTA.",
@@ -1313,6 +1396,8 @@ const EDITS = {
       ["This study space is only available for Teens.", "This study space is open to teens only."],
       ["will dive into the inspirations behind the book, explore how art and science collide, and dive into a fun, hands-on workshop", "will share what inspired the book, explore how art and science come together, and lead a hands-on workshop"],
       [/Registration closes on the (\d+(?:st|nd|rd|th)) week of class; Registrants who do not the (\d+(?:st|nd|rd|th)) class may be unregistered, If/g, "Registration closes in the $1 week of class. Registrants who do not attend the $2 class may be unregistered. If"],
+      [/(?:Please note: )?Registration closes in the (\d+(?:st|nd|rd|th)) week of class\./g, "Registration closes in the $1 week."],
+      [/Registrants who do not attend the (\d+(?:st|nd|rd|th)) class may be unregistered\./g, "You may lose your spot if you miss the $1 class."],
       ["; Registrants who do not attend by", "; registrants who do not attend by"],
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
@@ -1357,6 +1442,10 @@ const EDITS = {
       ["and join movement activities in", "and join in movement activities in"],
       ["Join friendly trivia competition run by", "Join a friendly trivia competition run by"],
       ["Kent to international music, no partner or", "Kent to international music; no partner or"],
+      [
+        "Learn line dancing steps with Sandy and Kent to international music; no partner or experience needed.",
+        "Learn line dancing steps to international music with Sandy and Kent. You don't need a partner or any experience.",
+      ],
       ["Watch dry ice turn solid to gas", "Watch dry ice turn from solid to gas"],
       [
         "Bring your technology questions or ongoing device problems to Rinconada Library for drop-in help on Tuesday mornings.",
@@ -1406,6 +1495,10 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      [
+        "Watch No. 24 Stanford women's volleyball host Syracuse at Maples Pavilion, the second match of a five-match homestand.",
+        "Watch No. 24 Stanford women's volleyball host Syracuse at Maples Pavilion in the second match of a five-match homestand.",
+      ],
       ["Make Advent crafts in the children's wings with all ages,", "Make Advent crafts with people of all ages in the children's wings,"],
       ["visit Santa, Sparky, and the cookie decorating table.", "visit Santa, Sparky, and the cookie-decorating table."],
       [/\bCvmf\b/g, "CVMF"],
@@ -1699,6 +1792,10 @@ const EDITS = {
       [/^Lucas Hall Santa Clara University$/g, "Lucas Hall, Santa Clara University"],
     ],
     description: [
+      [
+        "Join us for the 25th presentation of the re-enactment of Our Lady of Guadalupe presented by parishioners from our local Sacred Heart Parish, popular Teatro Corazon.",
+        "Parishioners from Sacred Heart Parish's Teatro Corazón present the 25th reenactment of the story of Our Lady of Guadalupe.",
+      ],
       ["Benson Parlor A Wed, Dec.", "Benson Parlor A. Wed, Dec."],
       ["Benson Parlor A Open call walk-in auditions, no-prep needed.", "Benson Parlor A. These are walk-in auditions. No preparation is needed."],
       ["Director: Pauline Locsin Faculty Advisor: David Popalisky December", "Pauline Locsin directs, with David Popalisky as faculty advisor. Performances run December"],
@@ -1727,6 +1824,10 @@ const EDITS = {
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
     ],
     blurb: [
+      [
+        "Watch parishioners from Sacred Heart Parish and Teatro Corazon perform their re-enactment of Our Lady of Guadalupe at Mission Santa Clara.",
+        "Watch Sacred Heart Parish's Teatro Corazón reenact the story of Our Lady of Guadalupe at Mission Santa Clara.",
+      ],
       ["Kb Brookins", "KB Brookins"],
       ["Meet Executive MBA programs and alumni", "Meet Executive MBA program representatives and alumni"],
       ["Meet other Silicon Valley professionals at this Thursday evening networking session hosted by Santa Clara University, and look for your next connection or opportunity.", "Meet other Silicon Valley professionals at Santa Clara University's Thursday evening networking session."],

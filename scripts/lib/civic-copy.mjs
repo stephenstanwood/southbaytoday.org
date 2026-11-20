@@ -23,7 +23,7 @@ function correctCampbellTechParkCopy(text, cityId) {
 // for headlines without applying prose-only date commas to a heading.
 export function polishCivicModifiers(text, { cityId } = {}) {
   return typeof text === "string"
-    ? correctCampbellTechParkCopy(text, cityId).replace(/\bbelow market rate (?=in-lieu fees?\b)/g, "below-market-rate ")
+    ? correctCampbellTechParkCopy(text, cityId).replace(/\bbelow market rate (?=in-lieu fees?\b|ownership housing requirement\b)/g, "below-market-rate ")
       .replace(/\bsquare footage-based fee\b/g, "square-footage-based fee")
       .replace(/\bCity Council sponsored special event\b/g, "City Council-sponsored special event")
       .replace(/\bHistoric-listed home\b/g, "Home listed as historic")
@@ -42,6 +42,33 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("increase fence/wall height", "increase fence and wall height")
       .replace("as a 'builder's remedy' project", "as a \"builder's remedy\" project")
       .replace(/(\bchanges to Council Policy \d+, on how items get added to council agendas, which) was deferred\b/g, "$1 were deferred")
+      .replace("The commission was asked to recommend approval to the City Council, tentatively set for December 1, 2026.",
+        "The commission was asked to recommend approval to the City Council. The council was tentatively scheduled to take up the request on December 1, 2026.")
+      .replace("for a 251-unit residential development at 10333 N. Wolfe Road, applicant Eden Housing.",
+        "for Eden Housing's proposed 251-unit residential development at 10333 N. Wolfe Road.")
+      .replace("along the western and part of the southern property lines.",
+        "along the western property line and part of the southern property line.")
+      .replace("Staff said the project would add about 1,368 net daily trips, new crosswalks near Campbell Technology Parkway and McGlincy Lane are required, and a separate city restriping project at Camden and White Oaks was discussed.",
+        "Staff said the project would add about 1,368 net daily trips and require new crosswalks near Campbell Technology Parkway and McGlincy Lane. Discussion also covered a separate city restriping project at Camden and White Oaks.")
+      .replace("one councilmember said she supported it but wants the program's effectiveness reviewed more closely.",
+        "one councilmember said she supported it but wanted the program's effectiveness reviewed more closely.")
+      .replace("Announcements: Election Day was the next day (Nov. 3; polls open 7 a.m.–8 p.m., mailed ballots must be postmarked by Nov. 3), the city has openings on boards and commissions, and a Veterans Day ceremony is set for Nov. 11 at 9 a.m. on the Orchard City Green.",
+        "Announcements covered Election Day on Nov. 3, openings on city boards and commissions, and a Veterans Day ceremony scheduled for Nov. 11 at 9 a.m. on the Orchard City Green. Poll hours were 7 a.m. to 8 p.m., and mailed ballots needed a Nov. 3 postmark.")
+      .replace("any further work it wants done on a potential annexation", "any further work it wanted done on a potential annexation")
+      .replace("Saratoga Village economic vitality update, including ideas gathered through community engagement, with Council invited to give staff additional direction; also on the agenda was a ceremonial recognition of",
+        "The agenda included a Saratoga Village economic vitality update with ideas from community engagement and an invitation for the Council to give staff additional direction. It also listed ceremonial recognition of")
+      .replace(/(?:The November 24, 2026, final agenda item was marked cancelled\.|^The agenda showed the November 24, 2026, final agenda review as cancelled\.?$)/g,
+        "The review of the final agenda for the November 24, 2026, meeting was marked canceled.")
+      .replace("to irrigate nonfunctional turfgrass, and updating the recycled water service area",
+        "to irrigate nonfunctional turfgrass and updating the recycled water service area")
+      .replace("and considering an RV permit parking program on Caribbean Drive along with studying a safe parking pilot",
+        "considering an RV permit parking program on Caribbean Drive, and studying a safe parking pilot")
+      .replace("increasing the City Attorney salary range.", "increasing the City Attorney's salary range.")
+      .replace("a 590-unit residential and 15,000 square-foot commercial mixed-use project at 2610 El Camino Real, which falls under SB 330.",
+        "a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space. The project falls under SB 330.")
+      .replace("an affordable housing proposal request for 340 Portage Avenue", "a request for affordable housing proposals at 340 Portage Avenue")
+      .replace("change its North Ventura area plan designation, to match the adjacent 2951 El Camino Real parcel and add it as a housing inventory site.",
+        "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")
     : text;
 }
 

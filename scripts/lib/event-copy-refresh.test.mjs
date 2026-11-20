@@ -176,6 +176,8 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-afternoon-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-evening-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-storytime-entry.json", import.meta.url))));
+const november19NightRefreshFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-19-night-refresh.json", import.meta.url)));
+audits.push(november19NightRefreshFixture);
 const reviewedCases = audits.flatMap((audit, auditIndex) => audit.cases.map(row => {
   // A later audit can refine the same complete text. Follow only its captured
   // before/after pair, preserving the earlier audit's original evidence.
@@ -400,9 +402,11 @@ test("November 13 evening copy repairs preserve new source facts and publisher s
       cost: "paid", costNote: "$25", attendanceNote: "Register at https://example.org/new-session.",
       url: "https://example.org/new-session",
     };
+    const revision = november19NightRefreshFixture.cases.find(candidate => candidate.source === row.source
+      && candidate.field === row.field && candidate.refreshed === row.reviewed);
     const untouched = structuredClone(original);
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, [row.field]: revise(row.reviewed) + suffix });
+    assert.deepEqual(next, { ...original, [row.field]: revise(revision?.reviewed ?? row.reviewed) + suffix });
     assert.deepEqual(numbers(next[row.field]), numbers(original[row.field]));
     assert.deepEqual(identifiers(next[row.field]), identifiers(original[row.field]));
     assert.deepEqual(polishReviewedEventCopy(next), next);
