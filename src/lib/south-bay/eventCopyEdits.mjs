@@ -128,6 +128,10 @@ const EDITS = {
       ...SJPL_READING_SESSION_EDITS,
       ["Availability of Reading Buddies is on a first-come, first-served basis.", "Sessions are available on a first-come, first-served basis."],
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
+      [
+        "Please register online or ask for assistance by calling/visiting our Information Desk.",
+        "Register online. For help registering, call or visit the library's information desk.",
+      ],
       [/For questions, please call \(408\) 808-3040 or send an email to ab\.sjpl@sjlibrary\.org(?=$| [A-Z])/g, "$&."],
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
@@ -830,6 +834,18 @@ const EDITS = {
       ["Reminder: This is NOT a craft to take home. All dog toys are created for donation to local shelters!", "All dog toys made at the event go to local shelters."],
       ["If you are here to Volunteer Away Your Fines, please be sure to bring your library card and sign in so that we can track your hour(s.)", "To take part in Volunteer Away Your Fines, bring your library card and sign in so the library can track your hours."],
       [/Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Training and supplies will be provided\./g, "Anyone under $1 must volunteer with a parent or guardian. No experience or special skills are needed. Training and supplies will be provided."],
+      [
+        /Details and Requirements: Must be able to commit to a (\d+)-minute session; Anyone under the age of (\d+) must volunteer alongside a parent\/guardian; No experience or special skills necessary; Supplies will be provided\./g,
+        "Volunteers must commit to the full $1-minute session. Anyone under $2 must volunteer with a parent or guardian. No experience or special skills are needed. The library provides supplies.",
+      ],
+      [
+        /Details and Requirements: Must be able to commit to the full session; (?=Anyone under \d+ must volunteer with a parent or guardian\.)/g,
+        "Volunteers must commit to the full session. ",
+      ],
+      [
+        "Details and Requirements: Must be able to commit to the full session; At this event, we kindly ask that only families participate as volunteers. Thank you for understanding.",
+        "Volunteers must commit to the full session. The library asks that only families volunteer at this event.",
+      ],
       ["A signed SJPL exercise waiver is required for all participants -- to be provided on site.", "A signed SJPL exercise waiver is required for all participants. The library will provide the form on site."],
       ["Join us for a captivating journey celebrating Filipino American History Month during our special storytime and Parol lantern making craft at the library.", "Celebrate Filipino American History Month at the library with a special storytime and a chance to make a parol lantern."],
       ["Designs must be in an. Stl file format", "Designs must be in .stl format"],
