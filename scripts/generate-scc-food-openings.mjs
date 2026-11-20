@@ -160,6 +160,7 @@ const NAME_OVERRIDES = {
   "SR0884144": "Qamaria Yemeni Coffee", // SCC record truncates name to "...Coffee Ti"
   "SR0884719": "FujiSan Sushi @ Tawa1702",
   "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
+  "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
   "SR0886903": "FujiSan Sushi",
   // Great Mall's own directory supplies the brand spelling and coming-soon status.
   // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice

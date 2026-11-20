@@ -71,6 +71,8 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")
       .replace("medium-density mixed use and change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.",
         "medium-density mixed use, change its North Ventura area plan designation to match the zoning of the adjacent parcel at 2951 El Camino Real, and add the Olive Avenue parcel as a housing inventory site.")
+      .replace("medium-density mixed use, change its North Ventura area plan designation to match the zoning of the adjacent parcel at 2951 El Camino Real, and add the Olive Avenue parcel as a housing inventory site.",
+        "medium-density mixed use and change its North Ventura Coordinated Area Plan designation to match the zoning of the adjacent parcel at 2951 El Camino Real. The changes would support city staff's determination to add the property to the housing inventory.")
     : text;
 }
 

@@ -693,7 +693,13 @@ export async function verifyPrimeGovBodyOnDate(domain, dateIso, recordText = "")
     const isCouncil = (m) => /^city council\b/i.test(String(m.title).trim());
     if (named.some(isCouncil)) {
       const others = named.filter((m) => !isCouncil(m)).map(toCandidate).filter((c) => c.body);
-      if (others.length === 0) return relabelIfOtherBodyMatches([], recordText);
+      if (others.length === 0) {
+        const actual = relabelIfOtherBodyMatches([], recordText);
+        if (actual.councilMet && named.length === 1) {
+          actual.sourceUrl = primeGovAgendaUrl(domain, named[0]);
+        }
+        return actual;
+      }
       // Content first: match the record against each same-day agenda's own
       // numbered items, the council's included. Name tokens alone fail both
       // ways. On 2026-09-22 Palo Alto's Council held a 5:45pm special meeting
@@ -776,9 +782,12 @@ export async function fetchPrimeGovPastMeeting({
         timeZone: "UTC", month: "long", day: "numeric", year: "numeric",
       });
       // PrimeGov's HTML <title> timestamp is UTC; the printed agenda date and
-      // the archive's naive Pacific date must agree instead.
+      // the archive's naive Pacific date must agree. The PDF/HTML template can
+      // print a leading zero on the day (e.g. "November 09, 2026").
+      const headerText = decodeAgendaText(header.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ""))
+        .replace(/\b([A-Z][a-z]+) 0([1-9]), (\d{4})\b/g, "$1 $2, $3");
       if (normalizeAgendaText(title) !== normalizeAgendaText(meeting.title)
-          || !decodeAgendaText(header.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")).includes(printedDate)) continue;
+          || !headerText.includes(printedDate)) continue;
       const items = extractPrimeGovAgendaItems(content);
       const substantive = substantiveAgendaTitles(items.map((item) => item.title));
       if (substantive.length < 2) continue;

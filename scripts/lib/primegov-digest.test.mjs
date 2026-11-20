@@ -59,6 +59,31 @@ test("PrimeGov does not accept a document for a different body or printed date",
   }
 });
 
+test("PrimeGov accepts a leading zero on the agenda's printed day", async () => {
+  const archiveRow = { ...archive.find((m) => m.id === 2906), dateTime: "2026-11-09T17:30:00" };
+  const agenda = council.replace("10/27/2026", "11/10/2026")
+    .replace("Monday, October 26, 2026", "Monday, November 09, 2026");
+  const meeting = await withFetch((url) => String(url).includes("ListArchivedMeetings")
+    ? json([archiveRow])
+    : new Response(agenda), () => fetchPrimeGovPastMeeting({ ...options, today: "2026-11-09" }));
+  assert.equal(meeting?.date, "2026-11-09");
+  assert.equal(meeting.sourceUrl, `https://${domain}/Portal/Meeting?compiledMeetingDocumentFileId=21874`);
+});
+
+test("PrimeGov gives a single Council meeting its own agenda link", async () => {
+  const row = archive.find((m) => m.id === 2906);
+  const verify = (rows, text) => withFetch(() => json(rows), () => verifyPrimeGovBodyOnDate(domain, "2026-10-26", text));
+  assert.deepEqual(await verify([row], "City Council agenda: Winter Storm Preparedness"), {
+    body: null,
+    sourceUrl: `https://${domain}/Portal/Meeting?compiledMeetingDocumentFileId=21874`,
+    councilMet: true,
+  });
+  assert.equal((await verify([row, { ...row, id: 2907 }], "City Council agenda")).sourceUrl, null);
+  assert.deepEqual(await verify([row], "Discussion and Possible Recommendation to the City Council"), {
+    body: null, sourceUrl: null, councilMet: false,
+  });
+});
+
 test("PrimeGov retains the two-substantive-item floor and skips unpublished agendas", async () => {
   const row = archive.find((m) => m.id === 2906);
   for (const candidate of [{ ...row, documentList: row.documentList.map((doc) => ({ ...doc, publishStatus: 0 })) }, row]) {
