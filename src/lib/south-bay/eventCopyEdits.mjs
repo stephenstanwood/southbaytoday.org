@@ -636,7 +636,7 @@ const EDITS = {
       ["ESL course is Free! ESL 501 Reading", "ESL course is free! ESL 501 Reading"],
       [
         "Do you want to build your English language skills and your confidence? This beginning non-credit ESL course is free! ESL 501 Reading & Writing 1. What will you learn in this class? This is a non-credit, high-beginning-level integrated ESL skills course emphasizing basic reading, writing, grammar, and vocabulary.",
-        "This free, noncredit course, ESL 501 Reading & Writing 1, is for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
+        "ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
       ],
       ["Seniors interested in learning the basics or need a refresher of how to play Chinese Mahjong are welcome to", "Seniors who are interested in learning the basics of Chinese Mahjong or need a refresher are welcome to"],
       ["will also learn strategy and strengthen communications and sense of community.", "will also learn strategy, strengthen communication skills, and build a sense of community."],
@@ -656,9 +656,31 @@ const EDITS = {
       ["vocabulary as needed. Program is drop in and free. No registration needed.", "vocabulary as needed. The program is free and offered on a drop-in basis. No registration needed."],
       ["and write basic sentences Free. Registration requested,", "and write basic sentences. Free. Registration requested,"],
       [
-        "You will: • Learn basic vocabulary • Understand simple grammar • Read simple texts and write basic sentences.",
+        /You will: • Learn basic vocabulary • Understand simple grammar • Read simple texts and write basic sentences(?:\.|(?= Free\.))/g,
         "Practice using basic vocabulary and grammar, reading simple texts, and writing basic sentences.",
       ],
+      [
+        "Grab your projects or supplies to start a new one and join us Tuesdays in the Vineland Library Community Room. All hand needle crafts welcome!",
+        "Bring a project or supplies to start a new one and join us on Tuesdays in the Vineland Library Community Room. All hand needlecrafts are welcome!",
+      ],
+      [
+        "Bilingual Hindi-English Storytime The Almaden Branch library warmly invites you to a bilingual Hindi-English Storytime for the community.",
+        "The Almaden Branch Library invites you to a bilingual Hindi-English storytime for the community.",
+      ],
+      ["This special Storytime helps children", "This special storytime helps children"],
+      ["traditional rhymes and stories from the Indian culture.", "traditional rhymes and stories from Indian culture."],
+      ["this engaging program is aimed for kids", "this program is intended for children"],
+      ["द्विभाषी हिंदी-अंग्रेज़ी कहानी समय अल्माडेन ब्रांच पुस्तकालय", "अल्माडेन ब्रांच पुस्तकालय"],
+      [
+        "ESL Listening & Speaking 1 - This is a non-credit, high-beginning-level ESL course.",
+        "ESL Listening & Speaking 1 is a noncredit course for high-beginning English learners.",
+      ],
+      [
+        "To Enroll, You Must: Complete and pass the Self-Guided Computer Assessment.",
+        "To enroll, complete and pass the Self-Guided Computer Assessment.",
+      ],
+      ["After, we'll take what we've learned to create art of our own!", "Then we'll use what we've learned to make art of our own."],
+      ["Adults, teens and children welcome.", "Adults, teens, and children are welcome."],
       ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
       ["• November – Embossing Aluminum Food Charms. Recommended items to bring:", "For November's embossed aluminum food charms, consider bringing"],
       ["• December – Felt and Beaded Patches. Recommended items to bring:", "For December's felt and beaded patches, consider bringing"],
@@ -1066,6 +1088,10 @@ const EDITS = {
   },
   "Kepler's Books": {
     description: [
+      [
+        "Kepler's is bringing Paulina Borsook to our stage along with Nerd Reich author and podcaster Gil Durán - a long-time champion of her work - in conversation with moderator Angie Coiro.",
+        "Paulina Borsook joins Nerd Reich author and podcaster Gil Durán, a longtime champion of her work, for a conversation moderated by Angie Coiro at Kepler's.",
+      ],
       ["an inspiring vision for better, human-centered, equitable technology.", "an inspiring vision for better, human-centered, and equitable technology."],
       ["challenges–and unexpected grace–of caregiving", "challenges—and unexpected grace—of caregiving"],
       ["bestselling author and beloved community member, Abraham Verghese.", "bestselling author and beloved community member Abraham Verghese."],
@@ -1481,6 +1507,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      ["Welcome to all experience levels. This will be a seated meditation session", "All experience levels are welcome. This is a seated meditation session"],
       [/\bpom (poms?)\b/g, "pom-$1"],
       [
         /English as a Second Language \(ESL\) \/ Learn English: Beyond the Basics is an in-person (\d+)-week class with lessons on English grammar, pronunciation, and idioms\./g,
