@@ -119,7 +119,7 @@ import {
   displayEndTime,
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
-import { deduplicateEventSlots, deduplicateEventUrls } from "./lib/event-url-dedup.mjs";
+import { deduplicateEventSlots, deduplicateEventTitles, deduplicateEventUrls, eventClockKey } from "./lib/event-url-dedup.mjs";
 import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
@@ -11507,11 +11507,6 @@ async function main() {
   // Same date+venue+time across sources: catches "SJDA listing of SJMA gala" vs
   // "SJMA's own gala listing" by collapsing to one card.
 
-  // Normalize clock aliases for the later title and venue comparisons.
-  function normTimeKey(t) {
-    if (!t) return "";
-    return String(t).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
-  }
   // Pre-sort capped events so that within any (date, venue, time) trio, the
   // source-venue match comes first — that's the listing dedup will keep.
   // Tiebreak by richer data, especially a real URL. Newsletter duplicates can
@@ -11519,18 +11514,9 @@ async function main() {
   // unsourced blurb.
   capped.sort(compareSlotCandidates);
 
-  const seen = new Set();
   // Detail-page identities also catch venue-less newsletter copies. Collection
   // URLs need a venue too: a store calendar can list simultaneous local events.
-  const deduped = deduplicateSameDaySports(deduplicateEventSlots(capped)).filter((e) => {
-    // Strip common venue suffixes (" — San Jose Jazz", " at SJSU", etc.) before comparing
-    const strippedTitle = e.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
-    const normTitle = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);
-    const key = `${normTitle}|${e.date}|${normTimeKey(e.time)}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  const deduped = deduplicateEventTitles(deduplicateSameDaySports(deduplicateEventSlots(capped)));
 
   // Detect true exhibits and collapse to first occurrence as ongoing.
   // Single rule: same title + same URL + no clock time + 2+ dates → gallery
@@ -11730,7 +11716,7 @@ async function main() {
       // Only dedup events with a title + date — closures and ambient entries
       // without those fields don't collide meaningfully.
       if (!e.title || !e.date) { kept.push(e); continue; }
-      const k = `${normKey(e.title)}|${e.date}|${normKey(e.venue)}|${normTimeKey(e.time)}`;
+      const k = `${normKey(e.title)}|${e.date}|${normKey(e.venue)}|${eventClockKey(e.time)}`;
       const existing = byKey.get(k);
       if (!existing) {
         byKey.set(k, { event: e, idx: kept.length });

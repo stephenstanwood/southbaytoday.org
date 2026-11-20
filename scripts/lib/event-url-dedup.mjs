@@ -1,20 +1,26 @@
 import { compareDuplicateAuthority } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 
+function libraryOccurrenceKey(url) {
+  const match = /^https?:\/\/((?:sccl|sjpl|paloalto)\.bibliocommons\.com)\/(?:v2\/)?events\/([a-f0-9]{24})\/?(?:[?#].*)?$/i.exec(url || "");
+  return match ? `${match[1].toLowerCase()}|${match[2].toLowerCase()}` : null;
+}
+
+export function eventClockKey(time) {
+  return String(time || "").split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
+}
+
 function concreteSlotKey(event) {
   if (!event.venue || !event.date || !event.time) return null;
   const venue = event.venue.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/^(the|a|an)\s+/, "").replace(/[^a-z0-9]/g, "").substring(0, 30);
-  const time = String(event.time).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
+  const time = eventClockKey(event.time);
   const key = `${event.date}|${venue}|${time}`;
+  // One branch can host multiple programs at the same time. Copies of the
+  // same library record compete on authority, while distinct IDs survive.
+  const library = libraryOccurrenceKey(event.url);
+  if (library) return `${key}|${library}`;
   try {
     const url = new URL(event.url);
-    const match = url.pathname.match(/^\/(?:v2\/)?events\/([a-f0-9]{24})\/?$/i);
-    if (/^(?:sccl|sjpl|paloalto)\.bibliocommons\.com$/.test(url.hostname) && match) {
-      // One branch can host several programs at the same time. Its organizer
-      // assigns each occurrence an ID; shared venue/clock fields do not make
-      // different IDs duplicates. Newsletter copies retain that same identity.
-      return `${key}|${url.hostname}|${match[1].toLowerCase()}`;
-    }
     if (/^events\.(?:stanford|sjsu)\.edu$/.test(url.hostname)
       && /^\/event\/[^/]+\/?$/.test(url.pathname)) {
       // Localist detail pages can name different programs sharing a museum
@@ -64,7 +70,7 @@ export function deduplicateEventUrls(events) {
   const seen = new Set();
   return events.filter((event) => {
     if (!event.url || !event.date || !event.time) return true;
-    const time = String(event.time).split(",").pop().trim().toLowerCase().replace(/\s+/g, "");
+    const time = eventClockKey(event.time);
     const identity = [event.url, event.date, time];
     if (isCollectionUrl(event.url)) {
       // Without a venue, a shared calendar cannot establish occurrence identity.
@@ -76,6 +82,20 @@ export function deduplicateEventUrls(events) {
       identity.push(event.city || "", venue);
     }
     const key = JSON.stringify(identity);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+/** Keep library records distinct even when the displayed names and times match. */
+export function deduplicateEventTitles(events) {
+  const seen = new Set();
+  return events.filter((event) => {
+    const strippedTitle = event.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
+    const title = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);
+    const key = JSON.stringify([title, event.date, eventClockKey(event.time), libraryOccurrenceKey(event.url)]);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;

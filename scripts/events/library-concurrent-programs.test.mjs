@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { deduplicateEventSlots } from "../lib/event-url-dedup.mjs";
+import { deduplicateEventSlots, deduplicateEventTitles } from "../lib/event-url-dedup.mjs";
 import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 
 const fixture = JSON.parse(fs.readFileSync(new URL("../lib/fixtures/library-concurrent-programs-2026-11-13.json", import.meta.url)));
@@ -35,4 +35,19 @@ test("other organizers retain the existing concrete-slot matching and sparse row
 test("a hostname containing bibliocommons does not establish library record identity", () => {
   const pair = fixture.pairs[0].map(event => ({ ...event, url: event.url.replace("sccl.bibliocommons.com", "sccl.bibliocommons.com.example.org") }));
   assert.equal(deduplicateEventSlots(pair).length, 1);
+});
+
+test("equal storytime titles and clocks in separate branches both reach the feed", () => {
+  const shared = { title: "Family Storytime", date: "2026-11-21", time: "11:00 AM", category: "family" };
+  const westValley = {
+    ...shared, city: "san-jose", venue: "West Valley Library", source: "San Jose Public Library",
+    url: "https://sjpl.bibliocommons.com/events/69224c2d017605530000d4e6",
+  };
+  const milpitas = {
+    ...shared, city: "milpitas", venue: "Milpitas Library", source: "Santa Clara County Library",
+    url: "https://sccl.bibliocommons.com/events/6a5be295f213992f00c548cf",
+  };
+  const mirror = { ...westValley, url: westValley.url.replace("/events/", "/v2/events/"), source: "City Newsletter" };
+  const kept = deduplicateEventTitles(deduplicateEventSlots([westValley, milpitas, mirror]));
+  assert.deepEqual(fuzzyDedupEvents(kept).kept, [westValley, milpitas]);
 });
