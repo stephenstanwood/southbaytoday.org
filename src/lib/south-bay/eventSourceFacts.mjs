@@ -1536,11 +1536,132 @@ const CORRECTIONS = [
     date: "2026-11-22",
     matches: event => event.url === "https://gostanford.com/promotions/womens-volleyball-promotions"
       && event.title === "Stanford Women's Volleyball vs. Boston College & Cooler Bag Giveaway"
-      && event.venue === "Maples Pavilion",
+      && event.venue === "Maples Pavilion" && event.time === "12:00 PM",
     facts: {
+      address: "655 Campus Drive, Stanford, CA 94305",
+      cost: "paid",
+      occurrenceEvidence: {
+        kind: "first-party-occurrence-page",
+        sourceUrl: "https://gostanford.com/promotions/womens-volleyball-promotions",
+        date: "2026-11-22",
+        time: "12:00 PM",
+      },
       description: "Stanford hosts Boston College at noon. Early arrivals can receive a Cardinal cooler bag while supplies last.",
       blurb: "Watch Stanford host Boston College at Maples Pavilion; the cooler bag giveaway is for early arrivals while supplies last.",
     },
+  },
+  {
+    date: "2026-11-22",
+    url: "https://gostanford.com/news/2026/11/19/card-cowboys-clash-in-maples",
+    facts: event => event.venue === "Maples Pavilion" && event.time === "5:00 PM" ? {
+      address: "655 Campus Drive, Stanford, CA 94305",
+      cost: "paid",
+      occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: event.url, date: event.date, time: event.time },
+    } : {},
+  },
+  // The two Improv booking pages and Broadway's dated performance schedule
+  // confirm showtimes that fell beyond Ticketmaster's ordinary refresh cap.
+  ...[
+    {
+      date: "2027-02-03", time: "8:00 PM", venue: "San Jose Improv",
+      url: "https://www.ticketweb.com/event/los-resolvedores-en-espaol-san-jose-improv-tickets/14268594",
+    },
+    {
+      date: "2027-02-04", time: "8:00 PM", venue: "San Jose Improv",
+      url: "https://www.ticketweb.com/event/shawn-chidiac-laughing-in-translation-san-jose-improv-tickets/14839683",
+    },
+    {
+      date: "2027-02-04", time: "7:30 PM", venue: "San Jose Center for the Performing Arts",
+      url: "https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-04-2027/event/1C00651FC9AA693C",
+      appendAttendanceNote: "Closed captioning is listed for this performance. Recommended for ages 13 and up.",
+    },
+  ].map(({ date, time, venue, url, appendAttendanceNote }) => ({
+    date,
+    matches: event => event.source === "Ticketmaster" && event.venue === venue
+      && event.url === url && event.time === time,
+    facts: { occurrenceEvidence: { kind: "first-party-occurrence-page", sourceUrl: url, date, time } },
+    appendAttendanceNote,
+  })),
+  // https://givethanksfestival.com/info and the festival's Front Gate shop.
+  // A Friday single-day sellout is not a whole-festival closure. The ticket
+  // guide shows the remaining ways to attend, including multi-day passes.
+  ...[
+    ["2026-11-25", "tm-Z7r9jZ1AAA_js", "Zeds Dead and Levity"],
+    ["2026-11-27", "tm-Z7r9jZ1AAA_jS", "SLANDER and Seven Lions"],
+    ["2026-11-28", "tm-Z7r9jZ1AAAb0x", "Crankdat and Wooli"],
+  ].map(([date, id, headliners]) => ({
+    date, id,
+    facts: {
+      category: "music", cost: "paid", address: "150 W San Carlos St, San Jose, CA 95113",
+      url: "https://givethanksfestival.com/tickets", audienceAge: "adult", kidFriendly: false,
+      description: `${headliners} headline this night of the electronic music festival. It runs from 6 PM to 1 AM the next morning.`,
+      blurb: `Hear ${headliners} at the Give Thanks electronic music festival.`,
+    },
+    appendAttendanceNote: date === "2026-11-27"
+      ? "Friday single-day and two-day passes are sold out. Check the official ticket guide for three-day passes. General admission is 18+ and VIP is 21+."
+      : "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability.",
+  })),
+  {
+    date: "2026-12-05",
+    id: "inbound-4d1669b803d2439d",
+    aliasUrls: ["https://www.jamsj.org/upcoming-events/kampai2026"],
+    facts: {
+      url: "https://www.jamsj.org/upcoming-events/kampai2026",
+      category: "food", cost: "paid", audienceAge: "adult", kidFriendly: false,
+    },
+    appendAttendanceNote: "Ages 21 and up. Tickets required. Space is limited.",
+  },
+  {
+    date: "2026-12-09",
+    url: "https://computerhistory.org/events/20-20-vision-is-this-the-moment-for-smart-glasses/",
+    facts: {
+      cost: "free",
+      endTime: "8:15 PM",
+      description: "Product leaders from Meta and Applied Materials discuss smart glasses, including advances in hardware and AI and the privacy questions raised by wearable cameras.",
+      blurb: "Hear product leaders from Meta and Applied Materials discuss how smart glasses work and what they mean for privacy.",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Register for the 7 PM program through the museum. The 6 PM reception is for members.",
+  },
+  {
+    date: "2026-11-20",
+    url: "https://events.stanford.edu/event/reflect-write-create",
+    facts: {
+      cost: "paid",
+      costNote: "$40",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Register through Stanford Healthy Living for the live online class.",
+  },
+  {
+    dateFrom: "2026-10-15",
+    dateThrough: "2026-12-04",
+    url: "https://events.stanford.edu/event/never-gonna-give-you-up",
+    facts: {
+      cost: "free",
+      description: "Exhibition of a mobile sculpture that brings people together through singing and storytelling. Find it in the Miller Discussion Room and Vitrine Gallery of the McMurtry Building.",
+      blurb: "See an exhibition about a mobile sculpture and the stories and songs it gathers.",
+    },
+  },
+  {
+    date: "2026-12-12",
+    matches: event => /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/6afe8547e4f7a1002c08ec05\/?$/.test(event.url || "")
+      && /limited to the first 100 families/i.test(event.description || ""),
+    appendAttendanceNote: "Space for 100 families in Room 101, with up to two adults per family. Bring a mat or blanket.",
+  },
+  {
+    date: "2026-11-23",
+    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6aa99b716059b704112aac37\/?$/.test(event.url || "")
+      && /registration recommended/i.test(event.description || "") && /followed by walk-ins/i.test(event.description || ""),
+    facts: event => [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)
+      ? {} : { registration: REGISTRATION_NONE, registrationClosesBy: null },
+    appendAttendanceNote: "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14.",
+  },
+  {
+    date: "2026-11-20",
+    matches: event => event.id === "tm-rZ7HnEZ1AfGJZ0" && event.time === "9:00 PM",
+    facts: { time: "8:00 PM" },
+    appendAttendanceNote: "Ticketmaster lists 8 PM. Check the organizer's ticket link for current entry rules and schedule.",
   },
   {
     date: "2027-02-24",
@@ -3190,8 +3311,14 @@ const CORRECTIONS = [
   },
   {
     date: "2026-11-21",
-    title: /^Holiday Bazaar$/i, venue: /^Mountain View Senior Center(?:,|$)/i,
-    facts: { cost: "free" },
+    title: /^Holiday Bazaar(?:\s*[-–—:]\s*(?:Indoor\s+)?(?:Handmade\s+)?Craft Fair)?$/i,
+    venue: /^Mountain View Senior Center(?:,|$)/i,
+    facts: {
+      category: "market",
+      cost: "free",
+      description: "Shop handmade gifts from more than 40 vendors. The fair also has local entertainment, a craft station, and a raffle. Admission is free for all ages. Most vendors take cash only.",
+      blurb: "Shop handmade gifts from more than 40 vendors at Mountain View's free holiday craft fair.",
+    },
   },
   {
     date: "2026-11-13",

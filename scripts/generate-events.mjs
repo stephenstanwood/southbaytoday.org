@@ -3726,10 +3726,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // arts). Trivia and live music are unambiguous when present in the title.
   if (/\btrivia\b/.test(titleLower)) return "community";
   if (/\blive\s+music\b/.test(titleLower)) return "music";
-  // Los Altos' Holiday Market is a vendor market; incidental live music and
-  // Santa visits in its description do not make it a concert or kids' program.
-  // Match the market title itself so a separately titled concert stays music.
-  if (/^holiday\s+market$/.test(titleLower.trim())) return "market";
+  // Holiday vendor markets often mention music and family activities in
+  // their descriptions. A separately titled concert still counts as music.
+  if (/^holiday\s+(?:market|bazaar)(?:\s*[-–—:]\s*(?:indoor\s+)?(?:handmade\s+)?craft fair)?$/.test(titleLower.trim())) return "market";
   // A ballet company's production remains performing arts even when its
   // title or score contains "symphony" (Nutcracker: Symphony of Lights).
   if (/\bballet\s+(?:presents|performs)\b/.test(titleLower)) return "arts";
@@ -10894,10 +10893,31 @@ function compareSlotCandidates(a, b) {
   return richness(b) - richness(a);
 }
 
-function hasVerifiedTicketShowtime(event) {
+function hasVerifiedEventShowtime(event) {
   const evidence = event.occurrenceEvidence;
   return Boolean(event.time) && evidence?.kind === "first-party-occurrence-page" && evidence.sourceUrl === event.url
     && evidence.date === event.date && evidence.time === event.time;
+}
+
+export function deduplicateSameDaySports(events) {
+  const slots = new Map();
+  return events.filter((event) => {
+    if (event.category !== "sports" || !event.venue || !event.date) return true;
+    const venue = event.venue.toLowerCase().replace(/\s+(at|in)\s+\w[\w\s]*$/, "")
+      .replace(/[^a-z0-9]/g, "").substring(0, 20);
+    const key = `${event.date}|${venue}`;
+    const time = hasVerifiedEventShowtime(event) ? normalizeClockTime(event.time) : null;
+    const seen = slots.get(key);
+    if (!seen) {
+      slots.set(key, new Set([time]));
+      return true;
+    }
+    // Keep the normal one-game-per-venue rule unless both occurrences have
+    // separately verified start times, such as a noon match and a 5 PM dual.
+    if (!time || seen.has(null) || seen.has(time)) return false;
+    seen.add(time);
+    return true;
+  });
 }
 
 export function capUpcomingEventSources(events) {
@@ -10918,7 +10938,7 @@ export function capUpcomingEventSources(events) {
     if ((source === "City Newsletter" || source === "Ticketmaster") && !uniqueCopies.has(event)) return false;
     // Exact showtimes verified with both the venue and its official ticket
     // seller supplement the ordinary Discovery feed's chronological slots.
-    if (source === "Ticketmaster" && hasVerifiedTicketShowtime(event)) return true;
+    if (source === "Ticketmaster" && hasVerifiedEventShowtime(event)) return true;
     const count = (sourceCounts.get(source) ?? 0) + 1;
     sourceCounts.set(source, count);
     return count <= (caps[source] ?? 200);
@@ -11483,7 +11503,7 @@ async function main() {
   const capped = capUpcomingEventSources(valid);
 
   // Deduplicate by normalized title + date
-  // Sports events: also deduplicate by date+venue (same game, different listing titles)
+  // Sports events: deduplicate same-day venue aliases with a verified-time exception.
   // Same date+venue+time across sources: catches "SJDA listing of SJMA gala" vs
   // "SJMA's own gala listing" by collapsing to one card.
 
@@ -11500,18 +11520,9 @@ async function main() {
   capped.sort(compareSlotCandidates);
 
   const seen = new Set();
-  const sportsByDateVenue = new Set();
   // Detail-page identities also catch venue-less newsletter copies. Collection
   // URLs need a venue too: a store calendar can list simultaneous local events.
-  const deduped = deduplicateEventSlots(capped).filter((e) => {
-    // Sports dedup: one listing per date+venue (catches "Sharks vs Blues" + "San Jose Sharks vs St Louis Blues")
-    if (e.category === "sports" && e.venue && e.date) {
-      // Normalize venue: strip trailing " at <city>" / " in <city>" so "SAP Center at San Jose" == "SAP Center"
-      const venueNorm = e.venue.toLowerCase().replace(/\s+(at|in)\s+\w[\w\s]*$/, "").replace(/[^a-z0-9]/g, "").substring(0, 20);
-      const svKey = `${e.date}|${venueNorm}`;
-      if (sportsByDateVenue.has(svKey)) return false;
-      sportsByDateVenue.add(svKey);
-    }
+  const deduped = deduplicateSameDaySports(deduplicateEventSlots(capped)).filter((e) => {
     // Strip common venue suffixes (" — San Jose Jazz", " at SJSU", etc.) before comparing
     const strippedTitle = e.title.replace(/\s+[—–-]+\s+.+$/, "").replace(/\s+at\s+[A-Z].+$/, "");
     const normTitle = strippedTitle.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "").substring(0, 30);

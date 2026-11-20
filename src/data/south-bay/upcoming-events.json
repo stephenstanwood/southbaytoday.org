@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-20T01:21:52.456Z",
-  "eventCount": 1493,
+  "eventCount": 1494,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2881,21 +2881,23 @@
       "date": "2026-12-09",
       "displayDate": "Wed, Dec 9",
       "time": "7:00 PM",
-      "endTime": null,
+      "endTime": "8:15 PM",
       "venue": "Computer History Museum",
       "address": "1401 N Shoreline Blvd, Mountain View",
       "city": "mountain-view",
       "category": "arts",
-      "cost": "paid",
+      "cost": "free",
       "ongoing": false,
-      "description": "Smart glasses are outpacing other wearables. The market is growing rapidly, with projected revenues of more than $5 billion this year.",
+      "description": "Product leaders from Meta and Applied Materials discuss smart glasses, including advances in hardware and AI and the privacy questions raised by wearable cameras.",
       "url": "https://computerhistory.org/events/20-20-vision-is-this-the-moment-for-smart-glasses/",
       "source": "Computer History Museum",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJm7NJkla3j4AR8vR-HWRxgOo/photos/AV-0GLct569AGkoZU4P9n1OlkqmrcYDMOshqXM5A7BWGJLMc1R2o531SS-wpKVHg5rsBQTDzN1GPZcvwd9HChFsQnwtgPoqUZXv-KZzaEQG3_462b47PH5HS5AOe4VecoQA21BRLl2gOG-CfotR2KVKaCMKN1zbuPoRT81BzZ8SlcZnx-DmtJwzyviUYTaDj5utqeOej6VfRi7IiI3iVQ4ovwbqtcFKrvgJRXwIovD9G4wXHc5tpjPRf_qrbcjOwdpT4QLLSzbUmAvlT1y6JqMxYozhR_oeVqKv9rp5f9CfYzDOjUjpRu5cbyIV2hheGHd9n4OI0XjHm6ppxEiOlALHoWHVW6c-x3pFM8SvvNNsj8z7DYY9emvJ-qLP9OoMrk0qe-2gKKHZuwF2W8Sj4RNPSU4M175_5k2g",
-      "blurb": "Hear a discussion at the Computer History Museum on why smart glasses are outpacing other wearables and where the market is headed.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "blurb": "Hear product leaders from Meta and Applied Materials discuss how smart glasses work and what they mean for privacy.",
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "registration": "required",
+      "attendanceNote": "Register for the 7 PM program through the museum. The 6 PM reception is for members."
     },
     {
       "id": "montalvo-93cce76e8788938d",
@@ -8780,8 +8782,8 @@
       "venue": "West Valley Library",
       "address": "1243 San Tomas Aquino Rd. San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-23T18:00:00.000Z",
+      "registration": "none",
+      "registrationClosesBy": null,
       "category": "family",
       "cost": "free",
       "description": "This intensive 3-day series introduces children ages 12-14 to the fundamentals of character design. By blending structural anatomy with creative \"shape language\" and storytelling, students will learn how to build characters that feel alive, consistent, and purposeful. Students are expected to attend all sessions. Free. Registration recommended. Registered participants have priority, followed by walk-ins. Some art supplies will be provided (sketch paper, HB pencils, and erasers), or you may bring your own.",
@@ -8794,7 +8796,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/a6c0d48779afa4e2d43a771d854783b1/sjplbet_craftshobbies.png",
       "blurb": "Sketch original characters in a 3-day series for ages 12-14, covering structural anatomy, shape language, and storytelling.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceNote": "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14."
     },
     {
       "id": "sjpl-6a99d789aafa610029616217",
@@ -12795,30 +12798,6 @@
       "firstSeenAt": "2026-11-17T20:01:02.088Z"
     },
     {
-      "id": "sccl-6a08e108e13d3b4603b486f4",
-      "title": "Family Storytime",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "10:30 AM",
-      "endTime": "11:00 AM",
-      "venue": "Cupertino Library",
-      "address": "",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Join us for Family Storytime for all ages in our program room! This storytime series is suitable for all ages and will feature stories, songs, rhymes and dances, all to encourage the development of crucial early literacy skills. Parents and children will listen together, learn together, and sing together. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@lib.sccgov.org.",
-      "sourceAudiences": [
-        "Kids: Family Events"
-      ],
-      "url": "https://sccl.bibliocommons.com/events/6a08e108e13d3b4603b486f4",
-      "source": "Santa Clara County Library",
-      "kidFriendly": true,
-      "audienceAge": "all",
-      "photoRef": "places/ChIJw0A7R6i1j4ARPMVjDPvu6mM/photos/AV-0GLclui3Yxd4rNHSuHNBl1WPI0UtQU_wEfb8muJsMJ26AOZOVMKb_QoZ48vT2LnEV3N9NnVsxk_IQqdKz3tIX3KBPuyQn4AiGP91f624WvmI64ZC8fqSTBoii1yu_tgMTWKJ4vkzV0cEUlnoxf_4yX1DFHsEBmZAMokbu2VrlFZuW1HdmepiVDFm-bDzHQROWQli-zxftf9bpdmFwD3uApHNNREax74m6xVaw9JnGvzvAl6TONfF_q35hUgdJOT3ylvBjCAZ-Nun_3-MZ3IGbTWt5CTkkPMvMgdLcH_hbUTAPEZIfOUaf9g57uap1Etlb8N3hJTazlUvsvvzRGMEa2_G-nu3PIqSixzliqJwjaq3N36uhuh-5HFJeeAS_ADnDboME-eW28hnhUXlCokSIpg9I2dRs",
-      "blurb": "Gather with your kids for stories, songs, rhymes, and dances at the library's storytime.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
-    },
-    {
       "id": "sccl-6afe8547e4f7a1002c08ec05",
       "title": "Winter Storytime",
       "date": "2026-12-12",
@@ -12840,7 +12819,8 @@
       "audienceAge": "all",
       "photoRef": "places/ChIJw0A7R6i1j4ARPMVjDPvu6mM/photos/AV-0GLclui3Yxd4rNHSuHNBl1WPI0UtQU_wEfb8muJsMJ26AOZOVMKb_QoZ48vT2LnEV3N9NnVsxk_IQqdKz3tIX3KBPuyQn4AiGP91f624WvmI64ZC8fqSTBoii1yu_tgMTWKJ4vkzV0cEUlnoxf_4yX1DFHsEBmZAMokbu2VrlFZuW1HdmepiVDFm-bDzHQROWQli-zxftf9bpdmFwD3uApHNNREax74m6xVaw9JnGvzvAl6TONfF_q35hUgdJOT3ylvBjCAZ-Nun_3-MZ3IGbTWt5CTkkPMvMgdLcH_hbUTAPEZIfOUaf9g57uap1Etlb8N3hJTazlUvsvvzRGMEa2_G-nu3PIqSixzliqJwjaq3N36uhuh-5HFJeeAS_ADnDboME-eW28hnhUXlCokSIpg9I2dRs",
       "blurb": "Sing along and listen to festive winter stories, songs, rhymes, and dances at a family storytime built to support early literacy.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceNote": "Space for 100 families in Room 101, with up to two adults per family. Bring a mat or blanket."
     },
     {
       "id": "sccl-6a68e7d14523092f00332633",
@@ -21621,6 +21601,65 @@
       "firstSeenAt": "2026-10-29T22:13:58.287Z"
     },
     {
+      "id": "tm-G5vYZ_oTanJ0H",
+      "title": "The Bodyguard (Touring)",
+      "date": "2027-02-04",
+      "displayDate": "Thu, Feb 4",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "San Jose Center for the Performing Arts",
+      "address": "255 Almaden Blvd.",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "description": "The award-winning international musical The Bodyguard returns.",
+      "url": "https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-04-2027/event/1C00651FC9AA693C",
+      "source": "Ticketmaster",
+      "kidFriendly": false,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJ_QhGaqXMj4AR5GHCXNt35E0/photos/AV-0GLcTh89S1Z9M7vq7PsUgFKFCbGsKHxfZ_hc_uH2RYLpyQqP4T3ob0fzda7HeBnxFJm8__R1Nj9udJpVlUwiQrQuzC3HMWRFdymJsuTkf8nITISKLLuuS-JxcQ03wL7gHfmZF8ii9x1noqXMhFpzxky5o-vmQLzrRKbZEBgJt6eHa4IxbR-1kpXCvPQovadtpI48AyYC2UgjV4g_pnL4b3r2Eui63QsDgQQ8M3AUmhaMVhSPdEZcX15BmQlnc4WJfOUObscoVtwmS98b8phrWEsMNnXru5_4Rpfpxn1DrfwjYIWj26xqkIj2k3z-HyceRpZefkjPn2FXhj-FvNv2ds8A_DNBzRDOPuZAXbLZORyE_rydD2WoRVtiU8MPBh0rYaf4YQQDcBmFagoJYogxh9dYGfY5MaX1RO3OttAJS8J_fPQ",
+      "blurb": "See the touring stage musical The Bodyguard at the San Jose Center for the Performing Arts.",
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.ticketmaster.com/the-bodyguard-touring-san-jose-california-02-04-2027/event/1C00651FC9AA693C",
+        "date": "2027-02-04",
+        "time": "7:30 PM"
+      },
+      "attendanceNote": "Closed captioning is listed for this performance. Recommended for ages 13 and up."
+    },
+    {
+      "id": "tm-rZ7HnEZ1AfOyQd",
+      "title": "Shawn Chidiac: Laughing in Translation Tour",
+      "date": "2027-02-04",
+      "displayDate": "Thu, Feb 4",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "San Jose Improv",
+      "address": "62 S Second St",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "sourceAudiences": [
+        "Adults, ages 21+"
+      ],
+      "description": "",
+      "url": "https://www.ticketweb.com/event/shawn-chidiac-laughing-in-translation-san-jose-improv-tickets/14839683",
+      "source": "Ticketmaster",
+      "kidFriendly": false,
+      "audienceAge": "adult",
+      "image": "https://i.ticketweb.com/i/00/13/43/95/33_Edp.jpg?v=2",
+      "blurb": "Watch Shawn Chidiac perform stand-up on tour at the San Jose Improv.",
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.ticketweb.com/event/shawn-chidiac-laughing-in-translation-san-jose-improv-tickets/14839683",
+        "date": "2027-02-04",
+        "time": "8:00 PM"
+      }
+    },
+    {
       "id": "paloalto-67919b1fb4127941006178bb",
       "title": "FOPAL Book Sale",
       "date": "2027-02-13",
@@ -23233,15 +23272,15 @@
       "venue": "Mountain View Senior Center",
       "address": "Mountain View Senior Center, 266 Escuela Avenue, Mountain View",
       "city": "mountain-view",
-      "category": "music",
-      "cost": null,
-      "description": "Indoor craft fair with more than 45 local vendors selling handmade gifts such as knitwear, paintings, ceramics, and jewelry. Includes a make-your-own holiday craft, a free raffle, and live music from local groups. Admission is free and all ages are welcome. Cash is recommended because many vendors may not accept cards.",
+      "category": "market",
+      "cost": "free",
+      "description": "Shop handmade gifts from more than 40 vendors. The fair also has local entertainment, a craft station, and a raffle. Admission is free for all ages. Most vendors take cash only.",
       "url": "https://www.mountainview.gov/HolidayBazaar",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1763889245414-7f6e8e2a34ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwbXVzaWMlMjBjb25jZXJ0JTIwcGVyZm9ybWFuY2V8ZW58MHwyfHx8MTc3NzIzMDYxNnww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Shop more than 45 local vendors selling knitwear, paintings, ceramics, and jewelry, then make a holiday craft and hear live music from local groups.",
+      "blurb": "Shop handmade gifts from more than 40 vendors at Mountain View's free holiday craft fair.",
       "firstSeenAt": "2026-11-20T01:21:52.433Z"
     },
     {
@@ -23522,16 +23561,17 @@
       "venue": "Japanese American Museum of San Jose",
       "address": "Japanese American Museum of San Jose, 535 N 5th St, San Jose, CA 95112",
       "city": "san-jose",
-      "category": "arts",
-      "cost": null,
+      "category": "food",
+      "cost": "paid",
       "description": "A hands-on sake tasting class led by sake sommelier Meg Kawamoto of Sake Trend, covering sake history, brewing, and label reading. Guests sample 5-6 sakes paired with snacks, and bottles are available to buy. The event is 21+, tickets are required, and space is limited.",
-      "url": "https://app.donorview.com/Event/EventInfo?prm=B0eBfDvhD6YZ4OSOSIttCcEhQF5toHBKmesC0GKiX_aVpo946fVBECrAA9fSO_MhnE81XyVJOdBWmsQU4m04D3FFOvCq7W4qAdgHoDteTSmWVMtZPTitNSGiN7nHkrCDbp5UvrncoxjMiCpc_aV2O3zcTXnUSqfnth3gCGCVsQLcKVILJqNa84jewlRWJfPvCMsA1WHDFJb5FiZO3TCyGlqBS9poMqxKLatQDOKrj97RuFlQeYu1KwKhlWlGx2js0",
+      "url": "https://www.jamsj.org/upcoming-events/kampai2026",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "adult",
       "photoRef": "places/ChIJrS08KpvMj4ARG-szUj-5o9s/photos/AV-0GLeKQw5ptb2HTqMgKsCk-7CMjqWJV8cYCjcNGJwCEcPND-6LmMPHs55jzN5iD3mcBI9NrkiGnWdiIPUSMs8q6ZqEFxjgMzPU6wJ1mihZRT5iR_L3GXKrO9seOJniHT9Ek8m2tN4yKWCQt0-pWm5JgMGfqT_ZZgOy8cQWIwjZpggbO6XVEIa1m_iefTRww4hQChkWFWqzne-uoXAbFwd7pmHuslFnQ_WQdDohv68bK17daOWOFITD2Ce33Yjdm3Eq9x-qHYKE2qDFOUz-IRm6UAreWFz-SV7DRMQCkv9eFd4UEhRxTXIRT4WQDWHruVzevBJjER5_h3VzYVNsylX9HUubpZ7YsSdAHaFzP12sl_0RhmiP0pBCHhHo3uPEi8-ZVYf-BXYD7PASu7SJ4T5LeElSh20",
       "blurb": "Taste five to six sakes paired with snacks while sommelier Meg Kawamoto covers sake history, brewing, and how to read labels.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceNote": "Ages 21 and up. Tickets required. Space is limited."
     },
     {
       "id": "inbound-faf82fec41a0a353",
@@ -26005,7 +26045,7 @@
       "city": "palo-alto",
       "virtual": true,
       "category": "education",
-      "cost": null,
+      "cost": "paid",
       "description": "Pause, reflect, and celebrate the story of your year through a blend of guided writing and creative collage.",
       "url": "https://events.stanford.edu/event/reflect-write-create",
       "source": "Stanford Events",
@@ -26013,7 +26053,10 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/45319413273571/huge/0aade3b05b56257e7ddab67e00d678a05c209e9c.jpg",
       "blurb": "Join online to write through guided prompts and make a creative collage that reflects on the story of your year.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "costNote": "$40",
+      "registration": "required",
+      "attendanceNote": "Register through Stanford Healthy Living for the live online class."
     },
     {
       "id": "inbound-02e798811380ecbc",
@@ -29578,10 +29621,10 @@
       "time": "5:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford University",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "No. 6 Stanford hosts No. 2 Oklahoma State in a dual meet. The match will also honor California combat sports figures including Daniel Cormier and Nate Diaz. Tickets are available.",
       "url": "https://gostanford.com/news/2026/11/19/card-cowboys-clash-in-maples",
       "source": "City Newsletter",
@@ -29589,7 +29632,13 @@
       "audienceAge": "all",
       "image": "https://gostanford.com/imgproxy/nRoujlpNWwRY4kA8cndx6DnB5wK3iOrxxqpcvoGD_e0/rs:fit:1980:0:0:0/g:ce:0:0/q:90/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3N0YW5mb3JkLXByb2QvMjAyNi8xMS8xOS9seVdGVHJWTExEcnlJYzBrdHhTemZFZDMxNTU1OGhlVUl0c0g4ejI2LnBuZw.png",
       "blurb": "Watch No. 6 Stanford wrestle No. 2 Oklahoma State in a dual meet that also honors Daniel Cormier and Nate Diaz.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://gostanford.com/news/2026/11/19/card-cowboys-clash-in-maples",
+        "date": "2026-11-22",
+        "time": "5:00 PM"
+      }
     },
     {
       "id": "midpen-b67287522a28af90",
@@ -29749,7 +29798,7 @@
       "title": "2000s Night",
       "date": "2026-11-20",
       "displayDate": "Fri, Nov 20",
-      "time": "9:00 PM",
+      "time": "8:00 PM",
       "endTime": null,
       "venue": "The Ritz",
       "address": "400 S 1st St",
@@ -29757,7 +29806,7 @@
       "category": "music",
       "cost": "low",
       "costNote": "From $19",
-      "attendanceNote": "Ages 18+.",
+      "attendanceNote": "Ages 18+. Ticketmaster lists 8 PM. Check the organizer's ticket link for current entry rules and schedule.",
       "sourceAudiences": [
         "Adults, ages 18+"
       ],
@@ -32667,14 +32716,14 @@
       "address": "355 Roth Way, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "arts",
-      "cost": null,
-      "description": "",
+      "cost": "free",
+      "description": "Exhibition of a mobile sculpture that brings people together through singing and storytelling. Find it in the Miller Discussion Room and Vitrine Gallery of the McMurtry Building.",
       "url": "https://events.stanford.edu/event/never-gonna-give-you-up",
       "source": "Stanford Events",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53816405171248/huge/3860ef1f64ed648cc36edd0fc99fdbc6ebda7793.jpg",
-      "blurb": "Catch the TNT Traysikel community event, titled \"Never Gonna Give You Up!\", at the McMurtry Building.",
+      "blurb": "See an exhibition about a mobile sculpture and the stories and songs it gathers.",
       "firstSeenAt": "2026-11-20T01:21:52.433Z"
     },
     {
@@ -34168,6 +34217,37 @@
       "firstSeenAt": "2026-11-19T04:35:21.733Z"
     },
     {
+      "id": "tm-rZ7HnEZ1AfaIpf",
+      "title": "Los Resolvedores (en Español)",
+      "date": "2027-02-03",
+      "displayDate": "Wed, Feb 3",
+      "time": "8:00 PM",
+      "endTime": null,
+      "venue": "San Jose Improv",
+      "address": "62 S Second St",
+      "city": "san-jose",
+      "category": "arts",
+      "cost": "paid",
+      "attendanceNote": "Ages 21+. Two-item minimum purchase per person.",
+      "sourceAudiences": [
+        "Adults, ages 21+"
+      ],
+      "description": "¡Los Resolvedores llegan en vivo! Iván Mendoza y Alex Quiroz salen del podcast para llevar toda su irreverencia al escenario en un espectáculo donde las risas están garantizadas.",
+      "url": "https://www.ticketweb.com/event/los-resolvedores-en-espaol-san-jose-improv-tickets/14268594",
+      "source": "Ticketmaster",
+      "kidFriendly": false,
+      "audienceAge": "adult",
+      "image": "https://i.ticketweb.com/i/00/12/98/44/44_Edp.jpg?v=2",
+      "blurb": "Watch podcast hosts Iván Mendoza and Alex Quiroz perform a live comedy show in Spanish at San Jose Improv.",
+      "firstSeenAt": "2026-11-19T04:35:21.733Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.ticketweb.com/event/los-resolvedores-en-espaol-san-jose-improv-tickets/14268594",
+        "date": "2027-02-03",
+        "time": "8:00 PM"
+      }
+    },
+    {
       "id": "sanjosetheaters-7cb840078758fc97",
       "title": "The Simon & Garfunkel Story",
       "date": "2027-02-24",
@@ -34978,6 +35058,33 @@
       "firstSeenAt": "2026-10-10T02:20:45.546Z"
     },
     {
+      "id": "inbound-092e15984d483ea0",
+      "title": "Stanford Women's Volleyball vs. Boston College & Cooler Bag Giveaway",
+      "date": "2026-11-22",
+      "displayDate": "Sun, Nov 22",
+      "time": "12:00 PM",
+      "endTime": null,
+      "venue": "Maples Pavilion",
+      "address": "655 Campus Drive, Stanford, CA 94305",
+      "city": "palo-alto",
+      "category": "sports",
+      "cost": "paid",
+      "description": "Stanford hosts Boston College at noon. Early arrivals can receive a Cardinal cooler bag while supplies last.",
+      "url": "https://gostanford.com/promotions/womens-volleyball-promotions",
+      "source": "City Newsletter",
+      "kidFriendly": false,
+      "blurb": "Watch Stanford host Boston College at Maples Pavilion; the cooler bag giveaway is for early arrivals while supplies last.",
+      "audienceAge": "all",
+      "image": "https://gostanford.com/imgproxy/RsHjYRY55YjU01tQQmUScCdvUIJHi7YbZVNU5sa2Skc/rs:fit:1200:630:0:0/g:ce:0:0/q:70/aHR0cHM6Ly9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3N0YW5mb3JkLXByb2QvMjAyNC8wNS8xMC8zUHlwMGc5U21Wd3VFd2FCa0FTN1R4NVE1NFdscll3V0JaN1VUT1JtLmpwZw.jpg",
+      "firstSeenAt": "2026-11-11T01:34:41.479Z",
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://gostanford.com/promotions/womens-volleyball-promotions",
+        "date": "2026-11-22",
+        "time": "12:00 PM"
+      }
+    },
+    {
       "id": "tm-rZ7HnEZ1AfaYPf",
       "title": "Psycroptic, Inferi, Cognitive, Summoning the Lich",
       "date": "2026-11-24",
@@ -35007,17 +35114,19 @@
       "time": "6:00 PM",
       "endTime": null,
       "venue": "San Jose McEnery Convention Center",
-      "address": "",
+      "address": "150 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "music",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.ticketmaster.com/give-thanks-festival-18-and-over-wednesday-san-jose-california-11-25-2026/event/Z7r9jZ1AAA_js",
+      "description": "Zeds Dead and Levity headline this night of the electronic music festival. It runs from 6 PM to 1 AM the next morning.",
+      "url": "https://givethanksfestival.com/tickets",
       "source": "Ticketmaster",
       "kidFriendly": false,
       "audienceAge": "adult",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "blurb": "Hear Zeds Dead and Levity at the Give Thanks electronic music festival.",
+      "attendanceNote": "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability."
     },
     {
       "id": "tm-G5vYZ_834Y5Qh",
@@ -35074,18 +35183,19 @@
       "time": "6:00 PM",
       "endTime": null,
       "venue": "San Jose McEnery Convention Center",
-      "address": "",
+      "address": "150 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "music",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.ticketmaster.com/give-thanks-festival-18-and-over-friday-san-jose-california-11-27-2026/event/Z7r9jZ1AAA_jS",
+      "description": "SLANDER and Seven Lions headline this night of the electronic music festival. It runs from 6 PM to 1 AM the next morning.",
+      "url": "https://givethanksfestival.com/tickets",
       "source": "Ticketmaster",
       "kidFriendly": false,
       "audienceAge": "adult",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Head to the San Jose McEnery Convention Center for the Give Thanks Festival, a community event open to guests 18 and over.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "blurb": "Hear SLANDER and Seven Lions at the Give Thanks electronic music festival.",
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceNote": "Friday single-day and two-day passes are sold out. Check the official ticket guide for three-day passes. General admission is 18+ and VIP is 21+."
     },
     {
       "id": "tm-rZ7HnEZ1AfPJoK",
@@ -35147,18 +35257,19 @@
       "time": "6:00 PM",
       "endTime": null,
       "venue": "San Jose McEnery Convention Center",
-      "address": "",
+      "address": "150 W San Carlos St, San Jose, CA 95113",
       "city": "san-jose",
-      "category": "community",
+      "category": "music",
       "cost": "paid",
-      "description": "",
-      "url": "https://www.ticketmaster.com/give-thanks-festival-18-and-over-saturday-san-jose-california-11-28-2026/event/Z7r9jZ1AAAb0x",
+      "description": "Crankdat and Wooli headline this night of the electronic music festival. It runs from 6 PM to 1 AM the next morning.",
+      "url": "https://givethanksfestival.com/tickets",
       "source": "Ticketmaster",
       "kidFriendly": false,
       "audienceAge": "adult",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Join the 18-and-over crowd at the Give Thanks Festival, a community event held at the San Jose McEnery Convention Center.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
+      "blurb": "Hear Crankdat and Wooli at the Give Thanks electronic music festival.",
+      "firstSeenAt": "2026-11-20T01:21:52.433Z",
+      "attendanceNote": "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability."
     },
     {
       "id": "tm-rZ7HnEZ1AfPJoS",
@@ -39182,48 +39293,6 @@
       "photoRef": "places/ChIJ21neJQW7j4ARlCPL950Syuw/photos/AV-0GLcBdybsOWb4gMtT7tdzgThFB2gPmfpi3HVNyX6lFyh_FDmVTc8EZf18Zdlh3nJcmG4GsKRWzm70F3lmwJ0VQlWFAdKIIOpjjKORlwN6pHF3K1KrplkA0N4BiRIAivpTQ3E8NlPCvUHPZ1Tombz6-6fqrrEeTwfuoGmzbsddIQkDYt-8mDQxS6SMe6hT8msJ91y2g87ZFjFiBz7kvk9aw6Vitl0pnKlulrIqXVl_RP3h5BfGt-tSAGs6ndbxMrMAFtfWd3F6Ozp_lWjEkUpQRycNzBMtEfxeTeD2e-wtXo_woZwxLl0ZZ1Uh83wDFso0dY824c_WEDqzweqJwQw5IJDrjl4jaFrEsUnoQn5FrMucaCRfeMsHlV8liww7iC-p02GcA6LXHb6fw23kjWjHKle8nzdm2d8",
       "blurb": "Make wearable art and holiday keepsakes from polymer clay and metal clay with your family, no experience needed, over two Saturday sessions.",
       "firstSeenAt": "2026-11-19T04:35:21.733Z"
-    },
-    {
-      "id": "inbound-b5f3f9f873966dd0",
-      "title": "Art Talk with Jim Caldwell: Preview of the de Young's Pharaoh Exhibition (In Person)",
-      "date": "2026-12-01",
-      "displayDate": "Tue, Dec 1",
-      "time": "6:00 PM",
-      "endTime": "7:00 PM",
-      "venue": "Pacific Art League",
-      "address": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": null,
-      "description": "Artist and architect Jim Caldwell previews the de Young Museum's Pharaoh exhibition, focusing on the ancient city discovered on the west bank of the Nile near Luxor.",
-      "url": "",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1761027204911-d8c4ebe2e64d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwc3R1ZGlvJTIwY3JlYXRpdmV8ZW58MHwyfHx8MTc4NTg5OTM4MHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Hear artist and architect Jim Caldwell preview the de Young's Pharaoh exhibition, including the ancient city found on the Nile's west bank near Luxor.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
-    },
-    {
-      "id": "inbound-686d92e2273e17a5",
-      "title": "Pacific Art League Gallery Open Saturday",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "12:00 PM",
-      "endTime": "4:00 PM",
-      "venue": "Pacific Art League",
-      "address": "Pacific Art League, 668 Ramona Street, Palo Alto, CA 94301",
-      "city": "palo-alto",
-      "category": "arts",
-      "cost": null,
-      "description": "The gallery is open on the Saturday after Thanksgiving for visitors to see the 105th Anniversary Exhibition. The PAL office is closed November 24-27.",
-      "url": "",
-      "source": "City Newsletter",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://images.unsplash.com/photo-1761027204911-d8c4ebe2e64d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxhcnQlMjBnYWxsZXJ5JTIwc3R1ZGlvJTIwY3JlYXRpdmV8ZW58MHwyfHx8MTc4NTg5OTM4MHww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Browse the 105th Anniversary Exhibition at the Pacific Art League gallery, open to visitors on the Saturday after Thanksgiving.",
-      "firstSeenAt": "2026-11-20T01:21:52.433Z"
     }
   ]
 }

@@ -45,3 +45,13 @@ test("a performance at a market venue keeps its own event category", () => {
   assert.equal(inferCategory("Holiday Market Concert", "Local vendor stalls", "", "State Street Market"), "music");
   assert.equal(inferCategory("Halloween Carnival", "Family activities", "", "Downtown Los Altos"), "family");
 });
+
+test("Mountain View's Holiday Bazaar is a craft market even with live music", () => {
+  assert.equal(inferCategory(
+    "Holiday Bazaar - Handmade Craft Fair",
+    "Shop handmade gifts from local vendors and hear live music.",
+    "",
+    "Mountain View Senior Center",
+  ), "market");
+  assert.equal(inferCategory("Holiday Bazaar Concert", "Live music", "", "Mountain View Senior Center"), "music");
+});

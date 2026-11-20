@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { parseBooksIncEvents } from "../lib/booksinc-events.mjs";
 import { deduplicateEventUrls } from "../lib/event-url-dedup.mjs";
-import { capUpcomingEventSources, cleanTitle, fetchPlaywrightEvents, stripRedundantVenueSuffix } from "../generate-events.mjs";
+import { capUpcomingEventSources, cleanTitle, deduplicateSameDaySports, fetchPlaywrightEvents, stripRedundantVenueSuffix } from "../generate-events.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 
 const fixture = JSON.parse(readFileSync(new URL("../lib/fixtures/booksinc-calendar-2026-11-17.json", import.meta.url)));
@@ -83,4 +83,19 @@ test("the ticket cap preserves both verified Mojo Brookzz showtimes at San Jose 
   const changedTime = { ...shows[1], time: "10:00 PM" };
   assert.deepEqual(capUpcomingEventSources([...earlier, ...shows, changedTime]), [...earlier, ...shows]);
   assert.equal(applyVerifiedEventFacts({ ...changedTime, occurrenceEvidence: undefined }).occurrenceEvidence, undefined);
+});
+
+test("same-day sports dedup retains both verified events at Maples Pavilion", () => {
+  const shared = { category: "sports", source: "City Newsletter", date: "2026-11-22", venue: "Maples Pavilion" };
+  const volleyball = {
+    ...shared, time: "12:00 PM", title: "Stanford Women's Volleyball vs. Boston College & Cooler Bag Giveaway",
+    url: "https://gostanford.com/promotions/womens-volleyball-promotions",
+  };
+  const wrestling = {
+    ...shared, time: "5:00 PM", title: "No. 6 Stanford Wrestling vs. No. 2 Oklahoma State (California Combat Night)",
+    url: "https://gostanford.com/news/2026/11/19/card-cowboys-clash-in-maples",
+  };
+  const verified = [volleyball, wrestling].map(applyVerifiedEventFacts);
+  assert.deepEqual(deduplicateSameDaySports([...verified, { ...verified[0], title: "Fan Appreciation Day" }]), verified);
+  assert.deepEqual(deduplicateSameDaySports([verified[0], wrestling]), verified.slice(0, 1));
 });

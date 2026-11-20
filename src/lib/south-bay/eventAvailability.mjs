@@ -4,6 +4,31 @@
 
 export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
   Object.freeze({
+    date: "2026-11-28",
+    title: /^Pacific Art League Gallery Open Saturday$/i,
+    venue: /^Pacific Art League(?:,|$)/i,
+    matches: (event) => event.source === "City Newsletter" && !event.url,
+    reason: "The published exhibition schedule lists other extended Saturdays and gives weekends by appointment. The extracted newsletter row has no verifiable link for public November 28 hours.",
+    source: "https://www.pacificartleague.org/105-anniversary-and-fundraiser",
+  }),
+  Object.freeze({
+    date: "2026-12-01",
+    title: /^Art Talk with Jim Caldwell: Preview of the de Young's Pharaoh Exhibition \(In Person\)$/i,
+    venue: /^Pacific Art League(?:,|$)/i,
+    matches: (event) => event.source === "City Newsletter" && !event.url,
+    reason: "The extracted newsletter row supplies no event or RSVP link. The league's public calendar does not confirm the December 1 occurrence.",
+    source: "https://www.pacificartleague.org/events",
+  }),
+  Object.freeze({
+    date: "2026-12-12",
+    title: /^Family Storytime(?: at Cupertino Library)?$/i,
+    venue: /^Cupertino Library$/i,
+    matches: (event) => event.time === "10:30 AM"
+      && /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/6a08e108e13d3b4603b486f4\/?$/.test(event.url || ""),
+    reason: "Both library pages point to Room 101 at 10:30 AM. Keep the specific Winter Storytime listing, which gives the household admission limits.",
+    source: "https://sccl.bibliocommons.com/v2/events/6afe8547e4f7a1002c08ec05",
+  }),
+  Object.freeze({
     title: /^A Christmas Carol(?: presented by Silicon Valley Shakespeare)?$/i,
     venue: /^Montalvo Arts Center$/i,
     date: "2026-12-04",
