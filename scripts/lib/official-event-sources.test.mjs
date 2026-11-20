@@ -472,6 +472,21 @@ test("library social-service referrals remain community programming despite food
   assert.equal(inferCategory("Wine Tasting", "Taste local wine.", ""), "food");
 });
 
+test("library homework tutoring stays in education across age groups and branches", () => {
+  assert.equal(inferCategory(
+    "Homework Help for Grades K-6th",
+    "Boost your child's confidence. Volunteer tutors help children with homework.",
+    "",
+    "Los Altos Library",
+  ), "education");
+  assert.equal(inferCategory(
+    "Homework Help for Grades K-5",
+    "Volunteer tutors are available after school.",
+    "",
+    "Campbell Library",
+  ), "education");
+});
+
 test("a campus reading-program omnibus cannot publish daily placeholder hours", () => {
   assert.equal(isPublicEvent("Campus Reading Program October Events!", "SJSU Events", "See flyer for locations", ""), false);
   assert.equal(isPublicEvent("Campus Reading Program November Events", "SJSU Events", "", ""), false);

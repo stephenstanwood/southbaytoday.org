@@ -3719,6 +3719,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (isBookstoreVenue) return "arts";
   // Seven Trees Library's Board Game Zone is open play for all ages.
   if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
+  // Library tutoring belongs with educational programs across branches.
+  if (/\blibrary\b/.test(venueLower) && /^homework help\b/.test(titleLower.trim())) return "education";
   // Title-anchored overrides for terms that source-supplied category tags
   // routinely override (e.g. SJDA tags SoFA Market trivia nights "Music"
   // because the venue is music-coded; tags Marriott live-music nights

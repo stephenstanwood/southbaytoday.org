@@ -229,11 +229,16 @@ test("Los Gatos digest restores the official name of the 2026 curb maintenance p
 });
 
 test("San José's holiday book drive keeps the district in the published agenda", () => {
-  const topic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
-  const corrected = polishCivicTopic(topic, { cityId: "san-jose" });
-  assert.equal(corrected, topic.replace("District 11", "District 1"));
-  assert.equal(polishCivicTopic(corrected, { cityId: "san-jose" }), corrected);
-  assert.equal(polishCivicTopic(topic, { cityId: "another-city" }), topic);
+  const topics = [
+    "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).",
+    "Council District 6 (Mulcahy) had an item seeking retroactive approval and approval of various council-sponsored events, and District 11 (Kamei) had an item seeking approval of a proclamation and a Holiday Children Book Drive event",
+  ];
+  for (const topic of topics) {
+    const corrected = polishCivicTopic(topic, { cityId: "san-jose" });
+    assert.equal(corrected, topic.replace("District 11", "District 1"));
+    assert.equal(polishCivicTopic(corrected, { cityId: "san-jose" }), corrected);
+    assert.equal(polishCivicTopic(topic, { cityId: "another-city" }), topic);
+  }
 });
 
 test("the real digest generator finishes sentence topics but preserves fragments and identifiers", () => {
