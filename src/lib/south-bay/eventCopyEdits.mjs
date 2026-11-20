@@ -1422,6 +1422,7 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [/\bpom (poms?)\b/g, "pom-$1"],
       [
         /English as a Second Language \(ESL\) \/ Learn English: Beyond the Basics is an in-person (\d+)-week class with lessons on English grammar, pronunciation, and idioms\./g,
         "The $1-week, in-person English as a Second Language (ESL) class covers grammar, pronunciation, and idioms.",
@@ -1495,6 +1496,7 @@ const EDITS = {
       ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
     ],
     blurb: [
+      [/\bpom (poms?)\b/g, "pom-$1"],
       ["Study for finals in the Midtown Room at Mitchell Park Library, a teen study space for focus and recharging.", "Teens can use the Midtown Room at Mitchell Park Library to study for finals and take a break."],
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
       ["and join movement activities in", "and join in movement activities in"],
