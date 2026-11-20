@@ -320,22 +320,21 @@ export const DEV_PROJECTS: DevProject[] = [
       "Cupertino Planning Commission item 2, file 26-15432. The city-posted November 10 transcript records the 5–0 vote at 1:50:02. The staff report gives the 248 income-restricted homes and three manager units. https://cupertino.legistar.com/MeetingDetail.aspx?GUID=5D8BA424-C1E8-42B2-8B92-4F9B2D819E8E&ID=1360740",
   },
 
-  // ── PROPOSED ────────────────────────────────────────────────────────────
-
   {
     id: "downtown-sunnyvale",
-    name: "Downtown Sunnyvale Revitalization",
+    name: "Sunnyvale Downtown Specific Plan",
     city: "Sunnyvale",
     cityId: "sunnyvale",
     category: "mixed-use",
-    status: "proposed",
+    status: "approved",
     description:
-      "Sunnyvale is pursuing multiple mixed-use redevelopment proposals along Murphy Avenue and the Mathilda corridor to create a more vibrant downtown. Plans include ground-floor retail with residential above, streetscape improvements, and better connections to the Sunnyvale Caltrain station.",
+      "Sunnyvale's adopted Downtown Specific Plan guides housing, offices, shops, and pedestrian improvements near the Sunnyvale Caltrain station. The Murphy Avenue pedestrian mall and Cityline developments are separate projects within the plan area. The city records completed housing, office, and retail projects in Block 18.",
     scale: "Multiple parcels",
-    developer: "City of Sunnyvale + private developers",
-    timeline: "In planning",
+    developer: "City of Sunnyvale (plan) and individual project developers",
+    timeline: "First adopted in 1993, with major updates in 2003 and 2020. Project stages vary by parcel.",
     featured: false,
-    sourceNote: "Rollup of the Downtown Specific Plan area's separate Murphy Ave / Mathilda proposals, not one tracked development — individual blocks are at different stages and some have already delivered, so the single \"proposed\" status is a summary. Verify parcel-level status at sunnyvale.ca.gov downtown planning records.",
+    sourceNote:
+      "Approval refers to the city plan. Staff report 23-0682 records the adoption, updates, and completed projects. The city's downtown tracker lists the status of individual projects. https://sunnyvaleca.legistar.com/LegislationDetail.aspx?FullText=1&GUID=1A4C8815-23B7-4793-8F9C-CD5D3D32915A&ID=6278496 and https://www.sunnyvale.ca.gov/business-and-development/projects-in-sunnyvale/development-projects/downtown-development",
   },
 
   // ── COMPLETED ───────────────────────────────────────────────────────────
