@@ -9,6 +9,22 @@ const SCCLD_BOOK_DISCUSSION_EDITS = [
   ["to join the monthly email reminders, and to obtain permission to pick up a copy of the books.", "to receive monthly reminders and get permission to pick up copies of the books."],
 ];
 
+const SJPL_READING_SESSION_EDITS = [
+  [
+    "Pre-registration not required. However, reading sessions are available on a first-come, first-served basis and the duration of reading sessions may be limited depending on the number of participating students.",
+    "No advance registration is required. Sessions are available on a first-come, first-served basis. Session length may depend on how many students attend.",
+  ],
+  [
+    /Pre-registration not required\. However, reading sessions are available on a first-come, first-served basis and the duration of reading sessions will be (\d+) minutes\./g,
+    "No advance registration is required. Sessions last $1 minutes and are available on a first-come, first-served basis.",
+  ],
+];
+
+const SCCLD_ONLINE_REGISTRATION_EDIT = [
+  "Space is limited and Online Registration is required.",
+  "Space is limited. Online registration is required.",
+];
+
 const EDITS = {
   "The Tech Interactive": {
     title: [
@@ -64,6 +80,7 @@ const EDITS = {
       [/^Music and Movement with Stay&Play$/g, "Music and Movement with Stay & Play"],
       ["Asistencia de búsqueda de trabajo y crear resumen (currículum)", "Asistencia para buscar trabajo y crear un resumen (currículum)"],
       [/^Tech Mentor: One on One Computer Help$/g, "Tech Mentor: One-on-One Computer Help"],
+      [/^One-On-One Reading Coach for Kids$/g, "One-on-One Reading Coach for Kids"],
       ["Drop In for TinkerCad 3D Printing", "Drop In for Tinkercad 3D Printing"],
       ["TinkerCAD Workshop for Kids", "Tinkercad Workshop for Kids"],
       ["Lego Club!", "LEGO Club!"],
@@ -92,6 +109,8 @@ const EDITS = {
       [/^BY APPOINTMENT ONLY$/g, "By appointment only."],
       ["15 minutes. (A little longer session may", "15 minutes. (A slightly longer session may"],
       ["provided there are no other participants).", "provided there are no other participants.)"],
+      ...SJPL_READING_SESSION_EDITS,
+      ["Availability of Reading Buddies is on a first-come, first-served basis.", "Sessions are available on a first-come, first-served basis."],
       ["Drop ins permitted but priority is given", "Drop-ins are permitted, but priority is given"],
       [/For questions, please call \(408\) 808-3040 or send an email to ab\.sjpl@sjlibrary\.org(?=$| [A-Z])/g, "$&."],
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
@@ -748,6 +767,28 @@ const EDITS = {
       ["They will ask questions about the books being read to encourage reading comprehension.", "The reading buddy will ask questions about the books to help children understand what they read."],
       [/(interaction with [\p{L}-]+) who has been trained/gu, "$1, who has been trained"],
       ["Availability of Reading Buddies is on a first-come, first-served basis.", "Reading Buddies are available on a first-come, first-served basis."],
+      ...SJPL_READING_SESSION_EDITS,
+      [/This intensive, (\d+-day series)/g, "This intensive $1"],
+      ["Priority given to registrants followed by walk-ins.", "Registered participants have priority, followed by walk-ins."],
+      ["(sketch paper, HB pencils, and erasers) or you may bring your own.", "(sketch paper, HB pencils, and erasers), or you may bring your own."],
+      [
+        "Learn how to: Open an email account; Connect to Wi-Fi/hotspots; Use laptops/Chromebooks; Use Microsoft Office; Fill out simple forms online; Use social media; Navigate the SJPL website. And more!",
+        "Learn to open an email account, connect to Wi-Fi or a hotspot, use laptops or Chromebooks, and work in Microsoft Office. A mentor can also help you fill out simple forms online, use social media, and navigate the SJPL website.",
+      ],
+      [
+        "Tech mentoring and computer 1-on-1 assistance. A volunteer tech mentor / computer coach will be available to help customers increase their computer skills.",
+        "A volunteer tech mentor offers 1-on-1 help with computer skills.",
+      ],
+      ["Our tech mentor is available on a drop-in schedule.", "You can drop in for help from the tech mentor."],
+      ["Do you enjoy working with knitting, crocheting, or tatting?", "Do you enjoy knitting, crocheting, or tatting?"],
+      ["all kinds of hand needle crafts", "all kinds of needlework"],
+      ["sink the 8 ball at a game of pool", "sink the 8 ball in a game of pool"],
+      [
+        /Mon\., November (\d+)rd: Buzz Off Tue\., November (\d+)th: Hovercraft Wed\., November (\d+)th: Stop Motion Animation/g,
+        "Monday, November $1: Buzz Off. Tuesday, November $2: Hovercraft. Wednesday, November $3: Stop Motion Animation.",
+      ],
+      [/Sign-in sheet available at the Info desk (\d+ minutes before the program starts)\./g, "The sign-in sheet is available at the information desk $1."],
+      ["All individuals (of any age) attending need to sign-in.", "Everyone who attends must sign in."],
       [/family-friendly, volunteer ((?:drop-in )?event where participants)/g, "family-friendly volunteer $1"],
       ["Reminder: This is NOT a craft to take home. All dog toys are created for donation to local shelters!", "All dog toys made at the event go to local shelters."],
       ["If you are here to Volunteer Away Your Fines, please be sure to bring your library card and sign in so that we can track your hour(s.)", "To take part in Volunteer Away Your Fines, bring your library card and sign in so the library can track your hours."],
@@ -771,6 +812,15 @@ const EDITS = {
       ["Lils Creations Lils Creations features", "Lils Creations features"],
       ["Calderon & Co Calderon & Co Logo This endeavor", "Calderon & Co's business"],
       ["Aydraw Art Ay Draw Logo Aydraw Art crafts & creations", "Aydraw Art's crafts and creations"],
+      ["The Fair will be held during the TeenHQ Theater Production.", "The fair takes place during the TeenHQ Theater Production."],
+      ["to fidget or imagine new, forbearing the spontaneous horrors", "to fidget or imagine new things, staving off the spontaneous horrors"],
+      ["Aydraw Art's crafts and creations take the ease- and add some style. We create practical trinkets", "Aydraw Art makes practical trinkets"],
+      ["and so much more all to inspire your creative flame!", "and more to inspire your creativity!"],
+      ["For reasonable prices add some bling", "For reasonable prices, add some bling"],
+      ["from flowers, coasters, plants and more that can be used for many different purposes.", "including flowers, coasters, and plants."],
+      ["from whales to bees to kirby", "from whales to bees to Kirby"],
+      ["Meghna's nails brings beauty in details!", "Meghna's Nails brings beauty to the details!"],
+      [/Celebrating (\d+ years of SJPL TeenHQ)$/g, "Celebrating $1."],
       ["Two Tiny Potatoes Selling yarn-crafted items", "Two Tiny Potatoes sells yarn-crafted items"],
       ["Forever Flowers Forever Flowers Logo Forever Flowers blends", "Forever Flowers blends"],
       ["Yellowbunny Crochets Yellowbunny Crochets Logo Yellowbunny Crochets sells", "Yellowbunny Crochets sells"],
@@ -855,6 +905,10 @@ const EDITS = {
       ["Listen to stories and join activities honoring", "Listen to stories and join in activities honoring"],
       ["Dress up in costume and join crafts, treats, and a parade at Berryessa Library's free Halloween party, no registration needed.", "Dress up in costume for crafts, treats, and a parade at Berryessa Library's free Halloween party. No registration needed."],
       ["a 15-20 minute session", "a 15-20-minute session"],
+      ["Watch K-3 readers pair with coaches for one-on-one practice at Reading Buddies at Joyce Ellington Library.", "Kids in grades K-3 can practice reading one-on-one with a coach at Joyce Ellington Library."],
+      ["Practice English vocabulary and grammar with volunteer instructor Mike in this Spanish-speakers' beginner class.", "Practice English vocabulary and grammar with volunteer instructor Mike in this beginner class for Spanish speakers."],
+      ["at a weekly Monday art session", "at a Monday art session"],
+      ["in the Group Study Room, in a weekly club for adult learners.", "in the Group Study Room at this weekly club for adult learners."],
       ["help brushing up your computer skills", "help brushing up on your computer skills"],
       ["Sing songs, rhymes, and fingerplays with the", "Sing songs and rhymes, and enjoy fingerplays with the"],
       ["club at Almaden Library, no registration required.", "club at Almaden Library. No registration required."],
@@ -881,8 +935,12 @@ const EDITS = {
   },
   "Kepler's Books": {
     description: [
+      ["an inspiring vision for better, human-centered, equitable technology.", "an inspiring vision for better, human-centered, and equitable technology."],
       ["challenges–and unexpected grace–of caregiving", "challenges—and unexpected grace—of caregiving"],
       ["bestselling author and beloved community member, Abraham Verghese.", "bestselling author and beloved community member Abraham Verghese."],
+    ],
+    blurb: [
+      ["Meet Timnit Gebru in conversation with Haben Girma as she discusses her book Deep Unlearning and her path as a refugee in STEM.", "Hear Timnit Gebru talk with Haben Girma about Deep Unlearning and her path as a refugee in STEM."],
     ],
   },
   "Montalvo Arts Center": {
@@ -911,6 +969,10 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      [
+        /Get in the Spirit of The Row sponsored by Lindeza! Join us for the first (\d+) Tuesdays in December from (\d+ PM)-(\d+ PM) leading up to Christmas, for a live holiday show/g,
+        "Get in the Spirit of the Row, sponsored by Lindeza! On the first $1 Tuesdays in December, from $2 to $3, enjoy a live holiday show",
+      ],
       [/^November (\d{1,2}), (\d{4}) Friday, November \1 is Black Friday, the best shopping day of the year, and Santana Row has exclusive savings for serious shoppers!/g, "Santana Row lists these Black Friday specials for Friday, November $1, $2."],
       [
         /Hoka – Now Open, Spend (\$\d+),? get (\$\d+) off, Spend (\$\d+),? get (\$\d+) off, Spend (\$\d+),? get (\$\d+) off on Black Friday\./g,
@@ -1028,8 +1090,16 @@ const EDITS = {
       ["at Woodland Library for check out.", "at Woodland Library to check out."],
       ["Join us at the Cupertino Library 3:30-4:30 PM!", "Join us at the Cupertino Library from 3:30 to 4:30 PM!"],
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
+      SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      SCCLD_ONLINE_REGISTRATION_EDIT,
+      ["a simple snowman for beginner's", "a simple snowman for beginners"],
+      ["Early literacy focus is on picture books, flannel board stories and fingerplays and an early introduction to group dynamics and socialization.", "Picture books, flannel board stories, and fingerplays help children build early literacy skills and get used to learning in a group."],
+      ["festive winter stories, songs, rhymes and dances, all to encourage the development of crucial early literacy skills.", "festive winter stories, songs, rhymes, and dances to help children build early literacy skills."],
+      ["thrillers, audio books, DVDs, CDs, and a variety of 'how to' books.", "thrillers, audiobooks, DVDs, CDs, and a variety of how-to books."],
+      [/Sign up to hear about more upcoming Book Sales at the Friends of the Campbell Library's website: Sales - Friends of the Campbell Library$/g, "Sign up for book sale updates on the Friends of the Campbell Library website."],
+      ["Paddington 2 is a sure-footed, sweet-natured family comedy which isn't set at Christmas, but which glows with so much warmth and fun that it's become a staple of festive viewing for families and the young at heart.", "Paddington 2 has become a holiday favorite for families and the young at heart, even though the comedy isn't set at Christmas."],
       ["decorate sweet-smelling cinnamon ornament", "decorate a sweet-smelling cinnamon ornament"],
       [
         /\bWhen: (Friday, December \d+(?:st|nd|rd|th)?) Time: ([^;]+); Where: Los Altos Library – Orchard Room Who: Kids aged (\d+ to \d+) and their families (?=No registration required)/g,
@@ -1187,6 +1257,8 @@ const EDITS = {
       [/a Ph\.\s*D\.\s+from UC Santa Barbara investigating/gi, "a Ph.D. from UC Santa Barbara investigating"],
     ],
     blurb: [
+      ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
+      ["Watch Paddington 2 on the library screen at a Sunday matinee, a family comedy that many families treat as holiday viewing.", "Watch Paddington 2, a family comedy that has become a holiday favorite, at the library's Sunday matinee."],
       [
         "Listen as a Santa Clara County Sheriff's Deputy reads books and shares safety tips with children ages 0-5, with limited seating.",
         "A Santa Clara County sheriff's deputy reads books and shares safety tips with children ages 0-5. Seating is limited.",
@@ -1337,6 +1409,7 @@ const EDITS = {
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
+      ["Free admission and all ages are welcome; cash is recommended because many vendors may not accept cards.", "Admission is free and all ages are welcome. Cash is recommended because many vendors may not accept cards."],
       [
         "Annual holiday toy drive where families who donate a toy get a fire truck ride around the block. Also features",
         "Families who donate a toy at this annual holiday drive get a fire truck ride around the block. The event also features",
@@ -1452,6 +1525,7 @@ const EDITS = {
       ["Applied Physics/Physics Colloquium", "Applied Physics / Physics Colloquium"],
       ['CMEMS: Alice Brooke presents, "A Pearl of Great Price"', 'CMEMS: Alice Brooke presents "A Pearl of Great Price"'],
       ['" Wormholes and the Conformal Bootstrap"', '"Wormholes and the Conformal Bootstrap"'],
+      ['" Cortical inhibitory circuits regulating brain states and sleep"', '"Cortical inhibitory circuits regulating brain states and sleep"'],
       [/^Mips Seminar\b/g, "MIPS Seminar"],
       ["Philip Deutch, Ngp Energy Technology Partners", "Philip Deutch, NGP Energy Technology Partners"],
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
@@ -1527,11 +1601,13 @@ const EDITS = {
       ["invited Alumna Dr. Daniela Ladner to present their annual Alumni Lecture.", "invited alumna Dr. Daniela Ladner to present its annual Alumni Lecture."],
       ["Day of the Dead Celebrations | Intimate Conversation w/ Rubí Tsanda Huerta.", ""],
       ["Biology Seminar Series", ""],
+      [/^Event is in Persian\.$/g, "The talk is in Persian."],
     ],
     blurb: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
       [/\bAaai\b/g, "AAAI"],
       ["Tnt Traysikel", "TNT Traysikel"],
+      ["that regulate brain states and sleep, at the Dement Seminar Series.", "that regulate brain states and sleep at the Dement Seminar Series."],
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
@@ -1622,6 +1698,10 @@ const EDITS = {
   "Computer History Museum": {
     description: [
       ["Postponed Due to Illness Where", "Postponed due to illness. Where"],
+      [
+        /Smart glasses are having a moment, surpassing all other wearables, with rapid market growth and projected revenues of more than (\$\d+(?:\.\d+)? billion) this year\./g,
+        "Smart glasses are outpacing other wearables. The market is growing rapidly, with projected revenues of more than $1 this year.",
+      ],
     ],
     blurb: [
       ["an arts-category program", "a program"],
