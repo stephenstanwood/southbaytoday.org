@@ -1793,6 +1793,14 @@ const EDITS = {
     ],
     description: [
       [
+        /^Hosted by the Department of Classics and Ancient Studies and the Department of Anthropology\.?$/g,
+        "The Department of Classics and Ancient Studies and the Department of Anthropology host the showcase.",
+      ],
+      [
+        "Join Santa Clara Women's Basketball as the Broncos take on UC Santa Cruz on Sunday, December 6, at 1:00 PM at the Leavey Center!",
+        "Santa Clara's women's basketball team hosts UC Santa Cruz at the Leavey Center on Sunday, December 6, at 1:00 PM.",
+      ],
+      [
         "Join us for the 25th presentation of the re-enactment of Our Lady of Guadalupe presented by parishioners from our local Sacred Heart Parish, popular Teatro Corazon.",
         "Parishioners from Sacred Heart Parish's Teatro Corazón present the 25th reenactment of the story of Our Lady of Guadalupe.",
       ],
@@ -1824,6 +1832,10 @@ const EDITS = {
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
     ],
     blurb: [
+      [
+        "Watch Santa Clara Women's Basketball host UC Santa Cruz at the Leavey Center, with a teddy bear donation and Daughter Date theme.",
+        "Watch Santa Clara's women's basketball team host UC Santa Cruz at the Leavey Center for the Broncos Teddy Bear Donation and Daughter Date game.",
+      ],
       [
         "Watch parishioners from Sacred Heart Parish and Teatro Corazon perform their re-enactment of Our Lady of Guadalupe at Mission Santa Clara.",
         "Watch Sacred Heart Parish's Teatro Corazón reenact the story of Our Lady of Guadalupe at Mission Santa Clara.",

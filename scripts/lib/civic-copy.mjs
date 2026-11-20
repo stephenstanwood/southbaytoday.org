@@ -82,8 +82,14 @@ export function polishCivicTopic(text, options) {
   }
   // San José agenda item ROGC 26-404 names District 1 and Councilmember Kamei.
   // https://sanjose.legistar.com/LegislationDetail.aspx?GUID=944C7922-21AF-4970-8270-CDE7733FDE83&ID=8321451
-  if (options?.cityId === "san-jose" && typeof copy === "string" && /\bHoliday Children Book Drive\b/i.test(copy)) {
-    copy = copy.replace(/\bDistrict 11\b(?= \(Kamei\))/i, "District 1");
+  if (options?.cityId === "san-jose" && typeof copy === "string") {
+    if (/\bHoliday Children Book Drive\b/i.test(copy)) {
+      copy = copy.replace(/\bDistrict 11\b(?= \(Kamei\))/i, "District 1")
+        .replace(/^Council District 6 \(Mulcahy\) had an item seeking retroactive approval and approval of various council-sponsored events, and District 1 \(Kamei\) had an item seeking approval of a proclamation and a Holiday Children Book Drive event\.?$/,
+          "Council District 6 (Mulcahy) sought approval for several council-sponsored events, including retroactive approval for some. District 1 (Kamei) sought approval for the Holiday Children Book Drive and its proclamation.");
+    }
+    copy = copy.replace(/^(Council District 9 \(Foley\) and District 7 \(Doan\) each had an item seeking retroactive approval of a Senior Symposium and a bus visit to the Vietnam Traveling Memorial Wall, respectively, as council-sponsored events using city funds and donated materials and services)$/,
+      "$1.");
   }
   // Finish declarative topic sentences, leaving agenda-title fragments alone.
   // Never append punctuation to a URL or email address.

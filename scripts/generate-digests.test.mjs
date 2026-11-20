@@ -229,13 +229,16 @@ test("Los Gatos digest restores the official name of the 2026 curb maintenance p
 });
 
 test("San José's holiday book drive keeps the district in the published agenda", () => {
-  const topics = [
-    "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).",
-    "Council District 6 (Mulcahy) had an item seeking retroactive approval and approval of various council-sponsored events, and District 11 (Kamei) had an item seeking approval of a proclamation and a Holiday Children Book Drive event",
-  ];
-  for (const topic of topics) {
+  const shortTopic = "A proclamation and council-sponsored special event for the Holiday Children Book Drive in Council District 11 (Kamei).";
+  const eventApprovals = "Council District 6 (Mulcahy) had an item seeking retroactive approval and approval of various council-sponsored events, and District 11 (Kamei) had an item seeking approval of a proclamation and a Holiday Children Book Drive event";
+  const retroactiveApprovals = "Council District 9 (Foley) and District 7 (Doan) each had an item seeking retroactive approval of a Senior Symposium and a bus visit to the Vietnam Traveling Memorial Wall, respectively, as council-sponsored events using city funds and donated materials and services";
+  for (const [topic, reviewed] of [
+    [shortTopic, shortTopic.replace("District 11", "District 1")],
+    [eventApprovals, "Council District 6 (Mulcahy) sought approval for several council-sponsored events, including retroactive approval for some. District 1 (Kamei) sought approval for the Holiday Children Book Drive and its proclamation."],
+    [retroactiveApprovals, `${retroactiveApprovals}.`],
+  ]) {
     const corrected = polishCivicTopic(topic, { cityId: "san-jose" });
-    assert.equal(corrected, topic.replace("District 11", "District 1"));
+    assert.equal(corrected, reviewed);
     assert.equal(polishCivicTopic(corrected, { cityId: "san-jose" }), corrected);
     assert.equal(polishCivicTopic(topic, { cityId: "another-city" }), topic);
   }
