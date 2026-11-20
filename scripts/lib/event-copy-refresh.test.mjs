@@ -238,6 +238,26 @@ test("Almaden's source facts and copy survive description normalization", () => 
   }
 });
 
+test("Willow Glen storytime copy preserves the pickup conflict and capacity", () => {
+  const { library, published } = JSON.parse(readFileSync(new URL("./fixtures/fact-check-2026-11-07-midday.json", import.meta.url)));
+  const details = libraryEventDetails(library);
+  const description = polishDescription([
+    "Free, with limited capacity. As we navigate pandemic life, here are a few modifications to our Storytime:",
+    details.description,
+    "A second Storytime session will follow the first if the first session reaches the maximum capacity of 50 participants.",
+  ].join(" "));
+  const verified = applyVerifiedEventFacts({ ...published, ...details, description });
+  const polished = polishReviewedEventCopy(verified);
+  assert.equal(polished.description, [
+    "Storytime is free, and space is limited. Seating for Storytime is available on a first-come, first-served basis.",
+    "The library publishes conflicting ticket pickup instructions (60 or 30 minutes before storytime). Confirm pickup timing with Willow Glen Library.",
+    "If the first session reaches 50 participants, the library will hold a second session.",
+  ].join(" "));
+  assert.equal(polished.attendanceStatus, "needs-confirmation");
+  assert.match(polished.attendanceNote, /60 minutes.*30 minutes/);
+  assert.deepEqual({ ...polished, description: verified.description }, verified);
+});
+
 test("November 16 library copy repairs preserve revised facts, conditions and publisher scope", () => {
   const revise = text => text.replaceAll("$20", "$25").replaceAll("age of 15", "age of 16").replaceAll("under 15", "under 16")
     .replaceAll("5 to 12", "6 to 13").replaceAll("8 AM", "9:30 AM").replaceAll("5 PM", "4:15 PM")

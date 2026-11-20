@@ -163,6 +163,14 @@ const EDITS = {
         "Budding Leaders hosts arts and crafts classes for children ages 4 and up. Children younger than 8 need adult help. Materials, samples, and help with the project are provided. " + SJPL_DESK_TICKET_COPY,
       ],
       ["Storytime Tickets & Seating This event", "Storytime Tickets & Seating: This event"],
+      [
+        "Free, with limited capacity. As we navigate pandemic life, here are a few modifications to our Storytime: ",
+        "Storytime is free, and space is limited. ",
+      ],
+      [
+        /A second Storytime session will follow the first if the first session reaches (?:the )?maximum capacity of (\d+) participants\./g,
+        "If the first session reaches $1 participants, the library will hold a second session.",
+      ],
       ["Best for children ages 0-8 with their caregivers; all families welcome!", "This program is best for children ages 0–8 and their caregivers. All families are welcome."],
       ["This program is geared for children of all ages and their parents/caregivers! After Storytime concludes, we invite you to Stay & Play!", "After storytime, families are invited to Stay & Play."],
       ["Storytime: 4:00-4:30 PM; Stay & Play: 4:30 PM-5:00 PM.", "Storytime runs from 4:00 to 4:30 PM. Stay & Play runs from 4:30 to 5:00 PM."],
@@ -1581,6 +1589,7 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      ["teaching classrooms through Let's Look at Art.", "teaching in classrooms through Let's Look at Art."],
       [
         "Watch No. 24 Stanford women's volleyball host Syracuse at Maples Pavilion, the second match of a five-match homestand.",
         "Watch No. 24 Stanford women's volleyball host Syracuse at Maples Pavilion in the second match of a five-match homestand.",
@@ -1603,6 +1612,14 @@ const EDITS = {
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
+      [
+        "In-gallery electroacoustic performance in which sound artist Sholeh Asgary mixes the sound of flowing water from a water clock with deconstructed Persian lamentation songs.",
+        "In this electroacoustic gallery performance, sound artist Sholeh Asgary mixes the sound of water flowing through a water clock with deconstructed Persian lamentation songs.",
+      ],
+      [
+        "Runs 25–40 minutes; free with museum admission. Advance registration is required and each performance is capped at 20 tickets; late entry is not allowed.",
+        "The 25–40-minute performance is included with museum admission. Advance registration is required. Each performance is limited to 20 tickets. Entry closes when the performance starts.",
+      ],
       ["Free admission and all ages are welcome; cash is recommended because many vendors may not accept cards.", "Admission is free and all ages are welcome. Cash is recommended because many vendors may not accept cards."],
       [
         "Annual holiday toy drive where families who donate a toy get a fire truck ride around the block. Also features",
