@@ -1657,11 +1657,28 @@ const CORRECTIONS = [
       ? {} : { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14.",
   },
+  // The public TicketWeb calendar lists 8 PM. The exact Discovery record
+  // reports 9 PM for both access and start, so do not infer a doors/show split.
+  // https://www.ticketweb.com/venue/the-ritz-san-jose-ca/460285
   {
     date: "2026-11-20",
-    matches: event => event.id === "tm-rZ7HnEZ1AfGJZ0" && event.time === "9:00 PM",
-    facts: { time: "8:00 PM" },
-    appendAttendanceNote: "Ticketmaster lists 8 PM. Check the organizer's ticket link for current entry rules and schedule.",
+    matches: event => event.id === "tm-rZ7HnEZ1AfGJZ0"
+      && (event.time === "9:00 PM" || (event.attendanceNote || "").includes("Ticketmaster lists 8 PM.")),
+    facts: { time: "8:00 PM", attendanceStatus: "needs-confirmation" },
+    copyReplacements: [[/\s*Ticketmaster lists 8 PM\. Check the organizer's ticket link for current entry rules and schedule\./g, ""]],
+    appendAttendanceNote: "TicketWeb’s calendar lists 8 PM, and Ticketmaster’s event feed lists 9 PM. Confirm the start time with The Ritz.",
+  },
+  // The organizer describes a DJ party. Discovery's $263.35 floor lacks a
+  // matching public ticket offer, so leave the listing marked as ticketed.
+  // https://www.itshouseofheavy.com/ and https://www.ticketweb.com/venue/the-ritz-san-jose-ca/460285
+  {
+    date: "2026-12-05",
+    id: "tm-rZ7HnEZ1Afu84f",
+    facts: {
+      cost: "paid", costNote: null,
+      description: "DJs play nu metal, metalcore, emo, and alt metal at The Ritz. Ages 18 and up with valid ID.",
+      blurb: "Dance to nu metal, metalcore, and emo at this DJ night at The Ritz.",
+    },
   },
   {
     date: "2027-02-24",

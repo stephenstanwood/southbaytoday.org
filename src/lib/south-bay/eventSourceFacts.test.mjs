@@ -13,6 +13,29 @@ import { eventBlurbCacheKey, resolveEventBlurbs } from "./eventBlurbs.mjs";
 import { isEventPublishable } from "./eventOccurrence.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("The Ritz showtime conflict stays visible and out of recommendations", () => {
+  const event = { id: "tm-rZ7HnEZ1AfGJZ0", date: "2026-11-20", time: "9:00 PM", attendanceNote: "Ages 18+." };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.time, "8:00 PM");
+  assert(requiresAttendanceConfirmation(fixed));
+  assert.match(fixed.attendanceNote, /^Ages 18\+\. TicketWeb.*8 PM.*Ticketmaster.*9 PM/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const previous = { ...event, time: "8:00 PM", attendanceNote: "Ages 18+. Ticketmaster lists 8 PM. Check the organizer's ticket link for current entry rules and schedule." };
+  assert.deepEqual(applyVerifiedEventFacts(previous), fixed);
+  const agreeingSource = { ...event, time: "8:00 PM" };
+  assert.deepEqual(applyVerifiedEventFacts(agreeingSource), agreeingSource);
+});
+
+test("House of Heavy describes the organizer's DJ format with no unverified price", () => {
+  const event = { id: "tm-rZ7HnEZ1Afu84f", date: "2026-12-05", cost: "paid", costNote: "From $263", blurb: "Catch heavy music acts." };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.cost, "paid");
+  assert.equal(fixed.costNote, null);
+  assert.match(fixed.description, /^DJs play .*18 and up with valid ID/);
+  assert.match(fixed.blurb, /DJ night/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+});
+
 test("dated library events follow the organizer's program type and audience", () => {
   const game = {
     date: "2026-11-22",

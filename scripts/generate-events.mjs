@@ -6870,9 +6870,14 @@ function mapTicketmasterEvent(e) {
       ? "low"
       : "paid";
 
-  const classification = e.classifications?.[0];
+  const classifications = Array.isArray(e.classifications) ? e.classifications : [];
+  const [classification] = classifications;
   const genre = classification?.genre?.name || "";
   const segment = classification?.segment?.name || "";
+  // A music listing can carry Dance/Electronic as a secondary classification.
+  // Use that source genre for club nights before the performing-arts keywords.
+  const isDanceMusic = classifications.some(item =>
+    item?.segment?.name === "Music" && item.genre?.name === "Dance/Electronic");
 
   // Drop parking-pass listings — Ticketmaster sells these as separate "events"
   // with the same title as the concert (e.g. "BTS World Tour 'Arirang' IN
@@ -6921,7 +6926,9 @@ function mapTicketmasterEvent(e) {
     city,
     // Ice Shows is the seller's performance genre. Tech CU Arena's sponsor
     // name must not turn an ice show into a technology lesson.
-    category: genre === "Ice Shows" ? "arts" : inferCategory(e.name, genre, segment, venueName),
+    category: genre === "Ice Shows" ? "arts"
+      : isDanceMusic ? "music"
+      : inferCategory(e.name, genre, segment, venueName),
     cost,
     costNote: minPrice ? `From $${Math.round(minPrice)}` : undefined,
     ...(soldOut ? { registration: REGISTRATION_FULL } : {}),

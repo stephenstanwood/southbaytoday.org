@@ -1076,6 +1076,16 @@ test("Ticketmaster ice shows are performances despite Tech CU Arena's sponsor na
   assert.equal(event.category, "arts");
 });
 
+test("Ticketmaster dance-music classifications keep club nights in Music", () => {
+  const danceMusic = { segment: { name: "Music" }, genre: { name: "Dance/Electronic" } };
+  const show = ticketmasterEvent({ name: "Satori vs Cyb3r: Goth and Industrial Dance Night" });
+  assert.equal(mapTicketmasterEvent({ ...show, classifications: [danceMusic] }).category, "music");
+  const otherMusic = { segment: { name: "Music" }, genre: { name: "Other" } };
+  assert.equal(mapTicketmasterEvent({ ...show, classifications: [otherMusic, null, danceMusic] }).category, "music");
+  const arts = { segment: { name: "Arts & Theatre" }, genre: { name: "Dance" } };
+  assert.equal(mapTicketmasterEvent({ ...show, name: "Ballet Dance Performance", classifications: [arts] }).category, "arts");
+});
+
 test("TicketWeb's explicit sold-out title reaches the existing attendance gate", () => {
   for (const name of [
     "SOLD OUT Tauren Wells: Air1 Worship Now Tour - San Jose, CA",
