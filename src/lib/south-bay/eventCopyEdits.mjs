@@ -1709,6 +1709,8 @@ const EDITS = {
       ["Combining Gwas, Genetic Perturbations", "Combining GWAS, Genetic Perturbations"],
       ['to Study Human Biology."', 'to Study Human Biology"'],
       ['as Regulators of Biological Function "', 'as Regulators of Biological Function"'],
+      // https://museum.stanford.edu/about/press-releases/jane
+      ["Gallery Conversations | Jane!", "Gallery Conversations | JANE!"],
     ],
     venue: [
       ["Nvidia Auditorium", "NVIDIA Auditorium"],
@@ -1777,8 +1779,9 @@ const EDITS = {
       ["and outdoor Rodin Sculptures!", "and outdoor Rodin sculptures!"],
       [
         /Join us for casual in-gallery conversations in our special exhibition, (?:JANE|Jane)!, facilitated by our Museum Engagement Guides\./g,
-        'Museum Engagement Guides lead casual conversations in the "Jane!" exhibition.',
+        'Museum Engagement Guides lead casual conversations in the "JANE!" exhibition.',
       ],
+      ['"Jane!" exhibition', '"JANE!" exhibition'],
       ["Curator of European Art, Patrick R. Crowley,", "Curator of European Art Patrick R. Crowley,"],
       ["and early 20th century changed the history", "and early 20th centuries changed the history"],
       ["Abstract Lithium-bearing brines", "Abstract: Lithium-bearing brines"],
@@ -1797,6 +1800,7 @@ const EDITS = {
       ["and early 20th century changed art history.", "and early 20th centuries changed art history."],
       ["live music, activities, and light bites, all welcome.", "live music, activities, and light bites. All are welcome."],
       ["music, activities, and light bites, all welcome.", "music, activities, and light bites. All are welcome."],
+      ["inside the Jane! exhibition", "inside the JANE! exhibition"],
       [
         'Tour Cantor Arts Center\'s galleries on a guided "A Closer Look" walk that points out new details and connections in the art.',
         "Take a guided tour of the Cantor Arts Center galleries to discover new details and connections among selected works.",

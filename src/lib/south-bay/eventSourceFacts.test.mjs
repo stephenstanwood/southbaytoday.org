@@ -4262,3 +4262,31 @@ test("the verified Common Ground and Rodin admission terms apply within their pu
   assert.equal(applyVerifiedEventFacts({ ...tour, registration: "closed" }).registration, "closed");
   assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
 });
+
+test("both A Closer Look tour listings use the arts filter and Cantor's walk-in terms", () => {
+  for (const [slug, time] of [["public-tour-a-closer-look", "1:00 PM"], ["copy-of-public-tour-a-closer-look", "3:00 PM"]]) {
+    const tour = {
+      date: "2026-11-21", time, category: "community", cost: "free",
+      url: `https://events.stanford.edu/event/${slug}`,
+    };
+    const corrected = applyVerifiedEventFacts(tour);
+    assert.deepEqual(corrected, {
+      ...tour, category: "arts", registration: "none", attendanceNote: "Tours are first come, first served.",
+    });
+    assert.equal(applyVerifiedEventFacts({ ...tour, registration: "closed" }).registration, "closed");
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  }
+});
+
+test("Stanford farm shifts retain advance signup and waiver requirements", () => {
+  const event = {
+    date: "2026-11-21",
+    url: "https://events.stanford.edu/event/copy-of-volunteering-at-the-stanford-educational-farm",
+    attendanceNote: "Ages 10 to 14 must volunteer alongside an adult guardian. All volunteers must complete a safety waiver on arrival.",
+  };
+  const corrected = applyVerifiedEventFacts(event);
+  assert(requiresAdvanceRegistration(corrected));
+  assert.equal(corrected.attendanceNote, "Ages 10 to 14 must volunteer alongside an adult guardian. All volunteers must register in advance and complete a safety waiver.");
+  assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+});

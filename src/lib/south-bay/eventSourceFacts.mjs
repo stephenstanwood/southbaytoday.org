@@ -3859,6 +3859,24 @@ const CORRECTIONS = [
     facts: event => ({ cost: event.cost || "free", registration: event.registration ?? REGISTRATION_NONE }),
     appendAttendanceNote: "Tours are first come, first served.",
   },
+  // Cantor lists both A Closer Look time slots as guided art tours.
+  // https://museum.stanford.edu/visit/tours-and-group-visits
+  {
+    dateFrom: "2026-11-21", dateThrough: "2026-12-31",
+    url: "https://events.stanford.edu/event/public-tour-a-closer-look",
+    aliasUrls: ["https://events.stanford.edu/event/copy-of-public-tour-a-closer-look"],
+    facts: event => ({ category: "arts", cost: event.cost || "free", registration: event.registration ?? REGISTRATION_NONE }),
+    appendAttendanceNote: "Tours are first come, first served.",
+  },
+  // The farm requires advance registration and a waiver for each volunteer.
+  // https://farm.stanford.edu/volunteering/
+  {
+    dateFrom: "2026-11-21", dateThrough: "2026-12-16",
+    url: "https://events.stanford.edu/event/copy-of-volunteering-at-the-stanford-educational-farm",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "All volunteers must register in advance and complete a safety waiver.",
+    copyReplacements: [[/\bAll volunteers must complete a safety waiver on arrival\.\s*/i, ""]],
+  },
   // The bookstore's title and the publisher agree on Ligon. Its calendar
   // body drops the g, and its product page independently mistypes Ligor.
   // Repair source and cached prose before publication, scoped to this date.
