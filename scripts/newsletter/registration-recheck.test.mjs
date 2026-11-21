@@ -174,14 +174,14 @@ test("a live closed flag (with accounting) drops the listing without a windows c
   assert.equal(calls.some((u) => u.includes("registration_windows")), false);
 });
 
-test("a closed series with a waitlist follows the library's live registration window", async () => {
-  const id = "6903916d2edc686d00f6348c";
-  const listing = { id: `sjpl-${id}`, title: "Bridge Card Game", registration: "closed" };
+test("a closed occurrence with a waitlist follows the library's live registration window", async () => {
+  const id = "6ad7bd6c901b02002cc3d710";
+  const listing = { id: `paloalto-${id}`, title: "Learn About the Muwekma Ohlone Tribe", registration: "closed" };
   const record = {
-    id, registrationClosed: true, isFull: false, numberWaitlistRegistered: 21,
-    definition: { registrationInfo: { provider: "BIBLIO_EVENTS", cap: 16, scope: "ALL_REMAINING", waitlistEnabled: true } },
+    id, registrationClosed: true, isFull: false, numberWaitlistRegistered: 10,
+    definition: { registrationInfo: { provider: "BIBLIO_EVENTS", cap: 30, scope: null, waitlistEnabled: true } },
   };
-  const gateway = { sjpl: gatewayBody([record]) };
+  const gateway = { paloalto: gatewayBody([record]) };
   const active = stubFetch({ gateway, windows: { [id]: { event: { status: "ACTIVE" } } } });
   const full = await recheckRegistrationGatedEvents([listing], { fetchImpl: active.impl, log: silent });
   assert.equal(full.events[0].registration, "full");

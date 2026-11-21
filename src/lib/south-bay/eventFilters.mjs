@@ -257,15 +257,13 @@ export function declaredRegistrationAvailability(html) {
   return null;
 }
 
-// A series can stop accepting direct registrations while its waitlist is
-// still active. Existing waitlist entries justify checking the window, but
-// they also remain on a series whose window has ended.
-export function needsBiblioSeriesWaitlistCheck(event) {
+// Direct registration can close while the waitlist is still active. Existing
+// entries justify checking the window on individual events and series alike.
+export function needsBiblioWaitlistCheck(event) {
   const info = event?.definition?.registrationInfo;
   return event?.registrationClosed === true
     && event.isFull !== true
     && info?.provider === "BIBLIO_EVENTS"
-    && info.scope === "ALL_REMAINING"
     && info.waitlistEnabled === true
     && Number.isFinite(event.numberWaitlistRegistered)
     && event.numberWaitlistRegistered > 0;
@@ -369,9 +367,8 @@ export function registrationFromBiblioCommons(ev, windowStatus = null) {
   // is what resolveRegistrationClosesBy below and the newsletter's live
   // window re-check are for.
   if (ev.registrationClosed === true && hasSeatAccounting) {
-    // Cambrian's Bridge Card Game shows "Registration full" and offers a
-    // series waitlist while the gateway says closed and isFull is false.
-    if (windowStatus === "ACTIVE" && needsBiblioSeriesWaitlistCheck(ev)) return REGISTRATION_FULL;
+    // The live window distinguishes a remaining waitlist from a closed one.
+    if (windowStatus === "ACTIVE" && needsBiblioWaitlistCheck(ev)) return REGISTRATION_FULL;
     return REGISTRATION_CLOSED;
   }
 

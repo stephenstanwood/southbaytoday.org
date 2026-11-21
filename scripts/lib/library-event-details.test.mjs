@@ -6,6 +6,34 @@ import { biblioEventOccurrence, correctSccLibraryAccessibilityContact, libraryEv
 const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
 const midnightWindowFixture = JSON.parse(readFileSync(new URL("./fixtures/sccl-teen-burton-2026-10-23.json", import.meta.url)));
 
+test("a full Alviso workshop uses the live waitlist cutoff", async () => {
+  const { deriveBiblioRegistration, inferCategory } = await import("../generate-events.mjs");
+  const event = {
+    id: "6adfcf8b035faf0033df338a",
+    isFull: true,
+    registrationClosed: true,
+    definition: { registrationInfo: {
+      provider: "BIBLIO_EVENTS", waitlistEnabled: true,
+      registrationEnd: { windowType: "EVENT_START", unit: "days", ordinal: 1 },
+    } },
+  };
+  const start = new Date("2026-11-25T18:00:00Z");
+  const end = new Date("2026-11-26T00:00:00Z");
+  const now = new Date("2026-11-25T16:00:00Z");
+  const options = status => ({
+    fetchImpl: async () => Response.json({
+      event: { status, window_end: "2026-11-25T10:00:00" },
+    }),
+  });
+  assert.deepEqual(await deriveBiblioRegistration(event, start, end, now, "sjpl", options("ACTIVE")), {
+    registration: "full", registrationClosesBy: start.toISOString(),
+  });
+  assert.deepEqual(await deriveBiblioRegistration(event, start, end, now, "sjpl", options("ENDED")), {
+    registration: "closed", registrationClosesBy: start.toISOString(),
+  });
+  assert.equal(inferCategory("Homework Club", "Help with school assignments.", "", "Joyce Ellington Library"), "education");
+});
+
 test("the district's accessibility contact correction preserves its circulation number", () => {
   const accommodation = "Request accommodations at sccld.org/accessibility 7+ days ahead. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945 or email us at ask@lib.sccgov.org.";
   const circulation = "Call (408) 540-3945 for circulation.";

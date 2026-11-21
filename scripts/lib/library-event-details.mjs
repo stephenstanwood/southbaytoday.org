@@ -16,7 +16,7 @@ export function correctSccLibraryAccessibilityContact(event) {
 }
 
 // The same resolved window that the library uses for its event listing.
-export async function fetchRegistrationWindowStatus(
+export async function fetchRegistrationWindow(
   { libraryId, eventId },
   { fetchImpl = fetch, timeoutMs = 10_000, log = console.warn } = {},
 ) {
@@ -28,11 +28,16 @@ export async function fetchRegistrationWindowStatus(
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     const status = String(data?.event?.status || "").toUpperCase();
-    return ["ACTIVE", "UPCOMING", "ENDED"].includes(status) ? status : null;
+    if (!["ACTIVE", "UPCOMING", "ENDED"].includes(status)) return null;
+    return { status, closesBy: parseDatePT(data.event.window_end) };
   } catch (error) {
     log(`registration re-check: ${libraryId}/${eventId} windows fetch failed (${error?.message || error}) — keeping feed state`);
     return null;
   }
+}
+
+export async function fetchRegistrationWindowStatus(ref, options) {
+  return (await fetchRegistrationWindow(ref, options))?.status ?? null;
 }
 
 // BiblioCommons date-only ranges include their final calendar day. A display

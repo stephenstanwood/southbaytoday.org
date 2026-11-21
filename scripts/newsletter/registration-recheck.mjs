@@ -36,7 +36,7 @@
 // ---------------------------------------------------------------------------
 
 import {
-  needsBiblioSeriesWaitlistCheck,
+  needsBiblioWaitlistCheck,
   registrationFromBiblioCommons,
   requiresAdvanceRegistration,
   REGISTRATION_CLOSED,
@@ -169,10 +169,10 @@ export async function recheckRegistrationGatedEvents(events, opts = {}) {
         return;
       }
 
-      // Gated registrations and series with a possible waitlist use the
+      // Gated registrations and events with a possible waitlist use the
       // resolved window. ENDED means even the waitlist is gone.
-      const checkSeriesWaitlist = fresh === REGISTRATION_CLOSED && needsBiblioSeriesWaitlistCheck(record);
-      const windowStatus = fresh !== REGISTRATION_CLOSED || checkSeriesWaitlist
+      const checkWaitlist = fresh === REGISTRATION_CLOSED && needsBiblioWaitlistCheck(record);
+      const windowStatus = fresh !== REGISTRATION_CLOSED || checkWaitlist
         ? await fetchRegistrationWindowStatus(ref, { fetchImpl, timeoutMs, log })
         : null;
       if (windowStatus === "ENDED") {
@@ -180,7 +180,7 @@ export async function recheckRegistrationGatedEvents(events, opts = {}) {
         replacements.set(event, null);
         return;
       }
-      if (checkSeriesWaitlist) {
+      if (checkWaitlist) {
         if (windowStatus === null) return;
         fresh = registrationFromBiblioCommons(record, windowStatus);
       }

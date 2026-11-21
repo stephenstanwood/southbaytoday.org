@@ -67,7 +67,7 @@ import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-locatio
 import {
   biblioEventOccurrence,
   correctSccLibraryAccessibilityContact,
-  fetchRegistrationWindowStatus,
+  fetchRegistrationWindow,
   libraryEventDetails,
 } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
@@ -92,7 +92,7 @@ import {
   VIRTUAL_EVENT_PATTERNS,
   declaredRegistrationAvailability,
   hasOutOfAreaDestination,
-  needsBiblioSeriesWaitlistCheck,
+  needsBiblioWaitlistCheck,
   registrationFromBiblioCommons,
   registrationFromMeetup,
   requiresAdvanceRegistration,
@@ -4045,6 +4045,7 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   // "games" / "play games" reference (teen lock-ins, board game nights, etc.) shouldn't
   // override the program type. Explicit sport names like "soccer"/"basketball" still trigger.
   const isLibraryVenue = /\b(library|libraries)\b/.test(venueLower);
+  if (isLibraryVenue && /\bhomework (?:club|help)\b/.test(titleLower)) return "education";
   const isLibraryActivityGames = isLibraryVenue ||
     /\bgames[,;]?\s*(crafts?|activities|bubbles|more|food|prizes|drinks|raffles?)/i.test(t) ||
     /\b(crafts?|activities|food|prizes|drinks|raffles?)\s+(?:and\s+)?games\b/i.test(t) ||
@@ -6481,18 +6482,30 @@ function isBiblioEventCancelled(ev) {
 // carries "required" for a window that ended before the evening refresh —
 // the Sept 1 2026 ukulele defect, where a closed 3-part series ran with a
 // "Reserve ahead" tag.
-async function deriveBiblioRegistration(ev, start, end, now, libraryId) {
+export async function deriveBiblioRegistration(ev, start, end, now, libraryId, options) {
   let registration = registrationFromBiblioCommons(ev);
-  if (registration === REGISTRATION_CLOSED && needsBiblioSeriesWaitlistCheck(ev)) {
-    const status = await fetchRegistrationWindowStatus({ libraryId, eventId: ev.id });
-    registration = registrationFromBiblioCommons(ev, status);
-  }
-  let closesBy = null;
-  if (requiresAdvanceRegistration(registration)) {
-    closesBy = resolveRegistrationClosesBy(ev, start, end);
-    if (registration !== REGISTRATION_CLOSED && closesBy && closesBy.getTime() < now.getTime()) {
+  let closesBy = requiresAdvanceRegistration(registration)
+    ? resolveRegistrationClosesBy(ev, start, end)
+    : null;
+
+  const info = ev.definition?.registrationInfo;
+  const fullWithEarlyCutoff = registration === REGISTRATION_FULL
+    && info?.provider === "BIBLIO_EVENTS" && info.waitlistEnabled === true
+    && closesBy && closesBy < start;
+  if (fullWithEarlyCutoff || (registration === REGISTRATION_CLOSED && needsBiblioWaitlistCheck(ev))) {
+    // Alviso's robotics workshop has an earlier cutoff in the gateway
+    // settings, but the library's resolved waitlist stays open until start.
+    const window = await fetchRegistrationWindow({ libraryId, eventId: ev.id }, options);
+    if (window?.status === "ACTIVE") {
+      registration = REGISTRATION_FULL;
+      closesBy = window.closesBy;
+    } else if (window?.status === "ENDED") {
       registration = REGISTRATION_CLOSED;
+      closesBy = window.closesBy ?? closesBy;
     }
+  }
+  if (registration !== REGISTRATION_CLOSED && closesBy && closesBy <= now) {
+    registration = REGISTRATION_CLOSED;
   }
   return {
     registration,

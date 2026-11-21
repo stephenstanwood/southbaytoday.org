@@ -15,6 +15,20 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("West Valley art series preserves walk-ins after its online cutoff", () => {
+  const event = {
+    date: "2026-11-25", registration: "closed", registrationClosesBy: "2026-11-23T18:00:00.000Z",
+    url: "https://sjpl.bibliocommons.com/v2/events/6abc19e7035faf0033d92bf1",
+    description: "Registration recommended. Registered participants have priority, followed by walk-ins.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.registration, "none");
+  assert.equal(fixed.registrationClosesBy, null);
+  assert.match(fixed.attendanceNote, /walk-ins if space remains/);
+  assert.equal(applyVerifiedEventFacts({ ...event, registrationClosesBy: null }).registration, "closed");
+  assert.equal(applyVerifiedEventFacts({ ...event, date: "2026-11-26" }).registration, "closed");
+});
+
 test("the Montalvo newsletter alias retains Charo's ticketed occurrence and official title", () => {
   const event = {
     date: "2026-12-05", title: "Christmas with Charo", cost: null,

@@ -1988,13 +1988,29 @@ const CORRECTIONS = [
       && /limited to the first 100 families/i.test(event.description || ""),
     appendAttendanceNote: "Space for 100 families in Room 101, with up to two adults per family. Bring a mat or blanket.",
   },
-  {
-    date: "2026-11-23",
-    matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6aa99b716059b704112aac37\/?$/.test(event.url || "")
-      && /registration recommended/i.test(event.description || "") && /followed by walk-ins/i.test(event.description || ""),
-    facts: event => [REGISTRATION_FULL, REGISTRATION_CLOSED, REGISTRATION_APPOINTMENT].includes(event.registration)
+  // The West Valley series gives walk-ins any space left after registrants.
+  // The same November 23 online cutoff appears on all three class pages.
+  ...[
+    ["2026-11-23", "6aa99b716059b704112aac37"],
+    ["2026-11-24", "6abc19e7035faf0033d92bf0"],
+    ["2026-11-25", "6abc19e7035faf0033d92bf1"],
+  ].map(([date, id]) => ({
+    date,
+    matches: event => ["events", "v2/events"].some(path => event.url?.replace(/\/$/, "") === `https://sjpl.bibliocommons.com/${path}/${id}`)
+      && /registration recommended/i.test(event.description || "") && /followed by walk-ins/i.test(event.description || "")
+      && !/\b(?:no walk-ins|registration is required)\b/i.test(event.description || ""),
+    facts: event => [REGISTRATION_FULL, REGISTRATION_APPOINTMENT].includes(event.registration)
+      || (event.registration === REGISTRATION_CLOSED && event.registrationClosesBy !== "2026-11-23T18:00:00.000Z")
       ? {} : { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14.",
+  })),
+  // Alviso's November 25 workshop requires a signed waiver and a packed lunch.
+  {
+    date: "2026-11-25",
+    url: "https://sjpl.bibliocommons.com/events/6adfcf8b035faf0033df338a",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6adfcf8b035faf0033df338a"],
+    facts: {},
+    appendAttendanceNote: "Ages 10 and up. Bring lunch and complete a signed waiver before participating.",
   },
   // The public TicketWeb calendar lists 8 PM. The exact Discovery record
   // reports 9 PM for both access and start, so do not infer a doors/show split.

@@ -6953,7 +6953,7 @@
       "venue": "Mitchell Park Library",
       "address": "3700 Middlefield Rd Palo Alto",
       "city": "palo-alto",
-      "registration": "closed",
+      "registration": "full",
       "registrationClosesBy": "2026-11-22T00:00:00.000Z",
       "category": "family",
       "cost": "free",
@@ -7871,8 +7871,8 @@
       "venue": "West Valley Library",
       "address": "1243 San Tomas Aquino Rd. San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-23T18:00:00.000Z",
+      "registration": "none",
+      "registrationClosesBy": null,
       "category": "family",
       "cost": "free",
       "description": "This intensive 3-day series introduces children ages 12-14 to the fundamentals of character design. By blending structural anatomy with creative \"shape language\" and storytelling, students will learn how to build characters that feel alive, consistent, and purposeful. Students are expected to attend all sessions. Free. Registration recommended. Registered participants have priority, followed by walk-ins. The library provides some art supplies (sketch paper, HB pencils, and erasers). You may bring your own instead.",
@@ -7885,7 +7885,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/a6c0d48779afa4e2d43a771d854783b1/sjplbet_craftshobbies.png",
       "blurb": "Sketch original characters in a 3-day series for ages 12-14, covering structural anatomy, shape language, and storytelling.",
-      "firstSeenAt": "2026-11-20T22:40:22.058Z"
+      "firstSeenAt": "2026-11-20T22:40:22.058Z",
+      "attendanceNote": "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14."
     },
     {
       "id": "sjpl-6abc199e9dbc2b002c8b2098",
@@ -8648,8 +8649,8 @@
       "venue": "West Valley Library",
       "address": "1243 San Tomas Aquino Rd. San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-23T18:00:00.000Z",
+      "registration": "none",
+      "registrationClosesBy": null,
       "category": "family",
       "cost": "free",
       "description": "This intensive 3-day series introduces children ages 12-14 to the fundamentals of character design. By blending structural anatomy with creative \"shape language\" and storytelling, students will learn how to build characters that feel alive, consistent, and purposeful. Students are expected to attend all sessions. Free. Registration recommended. Registered participants have priority, followed by walk-ins. The library provides some art supplies (sketch paper, HB pencils, and erasers). You may bring your own instead.",
@@ -8662,7 +8663,8 @@
       "audienceAge": "kids",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/a6c0d48779afa4e2d43a771d854783b1/sjplbet_craftshobbies.png",
       "blurb": "Sketch original characters in a 3-day series for ages 12-14, covering structural anatomy, shape language, and storytelling.",
-      "firstSeenAt": "2026-11-21T19:51:35.301Z"
+      "firstSeenAt": "2026-11-21T19:51:35.301Z",
+      "attendanceNote": "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14."
     },
     {
       "id": "sjpl-6a2b3d5ac7d3cd58005fc0f6",
@@ -8698,8 +8700,8 @@
       "venue": "Alviso Library",
       "address": "5050 North First St. San Jose",
       "city": "san-jose",
-      "registration": "required",
-      "registrationClosesBy": "2026-11-24T18:00:00.000Z",
+      "registration": "full",
+      "registrationClosesBy": "2026-11-25T18:00:00.000Z",
       "category": "education",
       "cost": "free",
       "description": "In this full day workshop with the Power Beans Foundation, participants will get hands-on experience building and programming robots and will learn: Robot design and engineering principles; Hands on VEX V5RC Robot Building; Programming with VEX Code; Teamwork and Collaboration skills. Participants will work in teams to build their robots, program them, and showcase their robot in a friendly competition towards the end of the program. Requirements: Lunch is scheduled in the middle from noon to 12:30 p.m. Please bring your own lunch. A signed waiver will be required before participating in this program. Copies will be emailed and available upon arrival. Participants must be ages 10 and up. Registration: Registration is required. Registered participants will receive a detailed agenda of the program. Registration opens November 4, 2026 at 9 a.m.",
@@ -8713,7 +8715,8 @@
       "audienceAge": "kids",
       "image": "https://x92cgaghviaolmmg.public.blob.vercel-storage.com/event-images/robotics-workshop-presented-by-power-beans-foundation-alviso-library-san-jose-1795290688180-280.webp",
       "blurb": "Build and program robots in a hands-on workshop with the Power Beans Foundation, working with VEX V5RC parts and VEX Code.",
-      "firstSeenAt": "2026-11-21T19:51:35.301Z"
+      "firstSeenAt": "2026-11-21T19:51:35.301Z",
+      "attendanceNote": "Ages 10 and up. Bring lunch and complete a signed waiver before participating."
     },
     {
       "id": "sjpl-6a45a6af0e851028002e983e",
@@ -18558,7 +18561,7 @@
       "venue": "Joyce Ellington Library",
       "address": "491 E. Empire St San Jose",
       "city": "san-jose",
-      "category": "community",
+      "category": "education",
       "cost": "free",
       "description": "Need help with your homework or a subject in school? Students in kindergarten through 6th grade can come to Joyce Ellington Branch Library on Wednesdays from 2 to 4 pm to get free assistance. Students can get help with their homework/school enrichment or use our Study Room as a space to work on school projects independently. Free. No registration required.",
       "sourceAudiences": [
