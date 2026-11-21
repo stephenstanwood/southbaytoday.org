@@ -330,7 +330,7 @@ test("Milpitas winter book sale applies the membership charge only to the previe
   assert.deepEqual(applyVerifiedEventFacts(publicSale), { ...publicSale, category: "market" });
 });
 
-test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => {
+test("Cupertino's Big Bunny calendar distinguishes the race start from same-day registration", () => {
   const event = {
     date: "2027-03-06",
     url: "https://www.cupertino.gov/Parks-Recreation/Events/Big-Bunny-5K/Big-Bunny-5K-Event",
@@ -339,11 +339,12 @@ test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => 
   const fixed = applyVerifiedEventFacts(event);
   assert.equal(fixed.audienceAge, "all");
   assert.equal(fixed.cost, "paid");
-  assert.match(fixed.attendanceNote, /5K starts at 8:30 AM.*kids' run starts at 9:30 AM.*ages 7 and under/);
-  assert.match(fixed.attendanceNote, /Same-day registration/);
+  assert.match(fixed.attendanceNote, /5K starts at 8:30 AM on Torre Avenue in front of Cupertino City Hall/);
+  assert.match(fixed.attendanceNote, /kids' run starts at 9:30 AM on Library Field for ages 7 and under/);
+  assert.match(fixed.attendanceNote, /Same-day registration is available from 7 to 8:15 AM at Cupertino Community Hall if spots remain/);
   assert(!requiresAdvanceRegistration(fixed));
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
-  const saved = { ...fixed, attendanceNote: fixed.attendanceNote.replace("kids' run", "kids’ run") };
+  const saved = { ...fixed, attendanceNote: "The 5K starts at 8:30 AM by Community Hall." };
   assert.deepEqual(applyVerifiedEventFacts(saved), fixed);
 });
 

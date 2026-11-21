@@ -225,6 +225,10 @@ test("refreshed San José and Santa Clara summaries keep their reviewed agenda w
     assert.equal(polishCivicCopy(before), after);
     assert.equal(polishCivicCopy(after), after);
   }
+  const proposal = "The agenda listed a proposal to establish the La Avenida Cultural District, brought by Councilmembers Ortiz, Mahan, Campos, Tordillos, and Candelas.";
+  const reviewed = "The agenda listed a proposal to establish the La Avenida Cultural District, brought by Mayor Mahan and Councilmembers Ortiz, Campos, Tordillos, and Candelas.";
+  assert.equal(polishCivicTopic(proposal, { cityId: "san-jose" }), reviewed);
+  assert.equal(polishCivicTopic(reviewed, { cityId: "san-jose" }), reviewed);
 });
 
 test("civic modifiers keep numbers, identifiers, headline dates, and standalone terms exact", () => {

@@ -4709,8 +4709,8 @@ const CORRECTIONS = [
       audienceAge: "all",
       cost: "paid",
       costNote: "Kids’ run $30–$35. 5K $47–$60 depending on registration date and residency.",
+      attendanceNote: "The 5K starts at 8:30 AM on Torre Avenue in front of Cupertino City Hall and costs $47–$60. The kids' run starts at 9:30 AM on Library Field for ages 7 and under and costs $30–$35. Same-day registration is available from 7 to 8:15 AM at Cupertino Community Hall if spots remain.",
     },
-    appendAttendanceNote: "The 5K starts at 8:30 AM by Community Hall and costs $47–$60. The kids' run starts at 9:30 AM on Library Field for ages 7 and under and costs $30–$35. Same-day registration runs from 7 to 8:15 AM at Community Hall.",
   },
   // The city provides the venue, prices and registration terms on the
   // program page. Its separate calendar detail omits those fields.

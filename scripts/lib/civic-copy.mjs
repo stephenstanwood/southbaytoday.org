@@ -101,6 +101,12 @@ export function polishCivicTopic(text, options) {
     }
     copy = copy.replace(/^(Council District 9 \(Foley\) and District 7 \(Doan\) each had an item seeking retroactive approval of a Senior Symposium and a bus visit to the Vietnam Traveling Memorial Wall, respectively, as council-sponsored events using city funds and donated materials and services)$/,
       "$1.");
+    // ROGC 26-401's memo names Mahan as mayor among the coauthors.
+    // https://sanjose.legistar.com/LegislationDetail.aspx?GUID=FB19D4A3-98DC-4079-885F-6304FD5A573B&ID=8319511
+    if (copy.includes("La Avenida Cultural District")) {
+      copy = copy.replace("Councilmembers Ortiz, Mahan, Campos, Tordillos, and Candelas",
+        "Mayor Mahan and Councilmembers Ortiz, Campos, Tordillos, and Candelas");
+    }
   }
   // Finish declarative topic sentences, leaving agenda-title fragments alone.
   // Never append punctuation to a URL or email address.
