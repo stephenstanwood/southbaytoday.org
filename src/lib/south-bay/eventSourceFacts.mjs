@@ -2639,14 +2639,21 @@ const CORRECTIONS = [
       && event.venue === "Art Center Meeting Room",
     facts: { venue: "Palo Alto Art Center, Meeting Room" },
   },
-  // The Art Center's November newsletter describes this as a workshop for
-  // families. Its subscriber links do not belong in the published listing.
-  {
+  // The Art Center's November newsletter confirms the Saturday workshops.
+  // The public city catalog supplies the fees and participant signup rules.
+  ...[
+    ["Two-Day Clay Gingerbread House Workshop", "$120", "Family Workshop: Mini Clay Gingerbread Houses"],
+    ["Two-Day Family Jewelry Making Workshop", "$90", "50453"],
+  ].map(([title, costNote, catalogSearch]) => ({
     date: "2026-12-05",
     matches: event => event.source === "City Newsletter" && event.city === "palo-alto"
-      && event.title === "Two-Day Clay Gingerbread House Workshop" && event.venue === "Palo Alto Art Center",
-    facts: { kidFriendly: true },
-  },
+      && event.title === title && event.venue === "Palo Alto Art Center",
+    facts: {
+      kidFriendly: true, cost: "paid", costNote, registration: REGISTRATION_REQUIRED,
+      url: `https://ca-paloalto.civicrec.com/CA/palo-alto-ca/catalog?filter=${encodeURIComponent(btoa(`search=${encodeURIComponent(catalogSearch)}`))}`,
+    },
+    appendAttendanceNote: "Register every participant, including at least one adult per family.",
+  })),
   // Pacific Art League's booking calendar lists this session at $100.
   // https://www.pacificartleague.org/class?eventtemplate=1550-12-12-cute-kawaii-winter-wonderland-workshop-ages-712
   {

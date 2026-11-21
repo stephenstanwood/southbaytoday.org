@@ -378,6 +378,28 @@ test("confirmed optional library signups preserve new booking limits and unrelat
   }
 });
 
+test("Palo Alto Art Center workshops keep the organizer's prices and public booking links", () => {
+  for (const [title, costNote, search] of [
+    ["Two-Day Clay Gingerbread House Workshop", "$120", "Family Workshop: Mini Clay Gingerbread Houses"],
+    ["Two-Day Family Jewelry Making Workshop", "$90", "50453"],
+  ]) {
+    const event = { title, date: "2026-12-05", city: "palo-alto", venue: "Palo Alto Art Center",
+      source: "City Newsletter", url: "", cost: null };
+    const fixed = applyVerifiedEventFacts(event);
+    const link = new URL(fixed.url);
+    assert.equal(link.hostname, "ca-paloalto.civicrec.com");
+    assert.equal(decodeURIComponent(atob(link.searchParams.get("filter"))), "search=" + search);
+    assert.equal(fixed.cost, "paid");
+    assert.equal(fixed.costNote, costNote);
+    assert.equal(fixed.registration, "required");
+    assert.match(fixed.attendanceNote, /every participant.*at least one adult/);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    assert.equal(applyVerifiedEventFacts({ ...event, registration: "full" }).registration, "full");
+    const differentDate = { ...event, date: "2026-12-06" };
+    assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+  }
+});
+
 const lost = { id: "tm-Z7r9jZ1A7x78x", date: "2026-09-05", title: "Lost 80s Live", venue: "Mountain Winery", description: "", blurb: "Sing along to a lineup of 80s cover bands." };
 const duelo = { id: "sanjosetheaters-eb92ddeb3f824327", date: "2026-09-05", title: "Grupo Duelo – Gravedad Tour 2026", venue: "San Jose Civic" };
 
