@@ -1,17 +1,17 @@
 {
   "cities": {
     "san-jose": {
-      "generatedAt": "2026-11-21T05:37:32.734Z",
+      "generatedAt": "2026-11-21T15:15:52.373Z",
       "city": "San Jose",
       "source": "data.sanjoseca.gov",
       "sourceUrl": "https://data.sanjoseca.gov/dataset/last-30-days-building-permits",
       "windowDays": 7,
-      "dateRange": "Nov 13 – Nov 20",
+      "dateRange": "Nov 14 – Nov 21",
       "stats": {
-        "total": 431,
-        "notable": 48,
-        "newUnits": 15,
-        "totalValuation": 34776083
+        "total": 457,
+        "notable": 53,
+        "newUnits": 14,
+        "totalValuation": 49210164
       },
       "permits": [
         {
@@ -88,7 +88,7 @@
         },
         {
           "id": "2026-120848-RS",
-          "address": "2432 Quimby Rd",
+          "address": "2432 Quimby Rd #2",
           "category": "residential-new",
           "categoryLabel": "New Home",
           "workType": "New Construction",

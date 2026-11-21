@@ -107,7 +107,11 @@ export function libraryEventDetails(event, entities = {}) {
   // different branch and the source may HTML-encode its paragraph breaks.
   const walkUpCaveats = text(instructions).split(/(?<=[.!?])\s+/)
     .filter((sentence) => /\b(?:drop[-\s]?ins?|walk[-\s]?ins?)\b[^.!?]*\b(?:availability|space|capacity)\b/i.test(sentence));
-  const attendanceNote = uniqueSentences([...attendanceParagraphs, ...walkUpCaveats]);
+  // Book club signup can be in the description alone. Keep the pickup
+  // instruction visible even when there is no online registration form.
+  const bookPickup = text(html).split(/(?<=[.!?])\s+/)
+    .filter((sentence) => /^sign up and pick up a copy\b/i.test(sentence));
+  const attendanceNote = uniqueSentences([...attendanceParagraphs, ...walkUpCaveats, ...bookPickup]);
   return {
     description: stripHtml(String(html).replace(/<!--[^]*?-->/g, ""), { preserveLists: true }),
     ...(sourceAudiences.length ? { sourceAudiences } : {}),

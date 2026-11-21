@@ -179,6 +179,27 @@ test("availability notices and Spanish appointments retain the organizer's atten
   assert.equal(libraryEventDetails({ definition: { description: `<p>${closure}</p>` } }).attendanceNote, closure);
 });
 
+test("book club signup and pickup survive as an attendance note without an online registration gate", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-21T12:00:00Z") });
+  const { fetchScclEvents } = await import("../generate-events.mjs");
+  const event = {
+    id: "693755986724c63d00e5f0c1",
+    definition: {
+      title: "Science Fiction and Fantasy Book Club",
+      branchLocationId: "MI",
+      start: "2026-12-14T19:00",
+      end: "2026-12-14T20:00",
+      description: "<p>Join the book club!</p><p>Sign up and pick up a copy of <a>Parable of the Talents</a> by Octavia Butler. Read it before the meeting.</p>",
+    },
+  };
+  t.mock.method(globalThis, "fetch", async () => Response.json({ entities: { events: { [event.id]: event } } }));
+  const [row] = await fetchScclEvents();
+  assert.equal(row.venue, "Milpitas Library");
+  assert.equal(row.attendanceNote, "Sign up and pick up a copy of Parable of the Talents by Octavia Butler.");
+  assert.equal(row.registration, undefined);
+  assert.equal(row.registrationClosesBy, undefined);
+});
+
 test("game names and museum-pass lesson topics do not become library admission instructions", () => {
   const games = "<p>We'll have a host of modern classics:</p><ul><li>Ticket to Ride</li><li>Catan</li></ul>";
   const museumPasses = "<ul><li>Using Discover &amp; Go to reserve free or reduced tickets to local museums and attractions</li></ul>";
