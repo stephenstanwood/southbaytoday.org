@@ -87,6 +87,30 @@ test("conflicting SJPL signup instructions are disclosed without a reservation b
   }
 });
 
+test("Alviso's November 24 reading keeps the library's story-language wording on refresh", async () => {
+  const event = {
+    date: "2026-11-24",
+    title: "Reading to Children",
+    venue: "Alviso Library",
+    url: "https://sjpl.bibliocommons.com/events/6ab40cd2da318a10e6363672",
+    description: "Our wonderful volunteer, Ning, will read stories in Mandarin or English to children and their families.",
+    blurb: "Listen to volunteer Ning read stories in Mandarin and English to children and families.",
+  };
+  const refreshed = [
+    { ...event },
+    { ...event, url: event.url.replace("/events/", "/v2/events/"), blurb: undefined },
+  ];
+  await resolveEventBlurbs(refreshed, { enabled: false });
+  for (const item of refreshed) {
+    assert.deepEqual(item, { ...event, url: item.url, blurb: event.blurb.replace("and English", "or English") });
+  }
+  for (const changed of [
+    { ...event, date: "2026-12-01" },
+    { ...event, url: "https://sjpl.bibliocommons.com/events/other-event" },
+    { ...event, description: "Volunteer Ning will read stories in Mandarin and English." },
+  ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+});
+
 test("Tully's ESL 502 listing gives the verified placement step and removes the conflicting branch directions", () => {
   const help = "We will assist you with the application and registration processes in person at the Educational Park Branch Library.";
   const steps = "Complete and pass the Self-Guided Computer Assessment. This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level.";

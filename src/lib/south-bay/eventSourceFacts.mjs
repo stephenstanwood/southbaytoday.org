@@ -458,6 +458,14 @@ const CORRECTIONS = [
     copyReplacements: [[/\s*\bRegistration (?:is )?(?:requested|recommended),? but not required\./gi, ""]],
     appendAttendanceNote: `The signup panel says registration is required. The event description says it is optional. Confirm registration with ${venue}.`,
   })),
+  // The dated Alviso listing says the volunteer reads in Mandarin or English.
+  // https://sjpl.bibliocommons.com/v2/events/6ab40cd2da318a10e6363672
+  {
+    date: "2026-11-24",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ab40cd2da318a10e6363672\/?$/.test(event.url || "")
+      && /\bNing,?\s+(?:will read|reads) stories in Mandarin or English\b/i.test(event.description || ""),
+    facts: { blurb: "Listen to volunteer Ning read stories in Mandarin or English to children and families." },
+  },
   // The college lists separate Tully and Educational Park sections. The
   // Tully event repeats the other branch's enrollment directions, and the
   // college describes Guided Self-Placement as a way to choose a class.
