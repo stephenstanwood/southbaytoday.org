@@ -121,6 +121,8 @@ const EDITS = {
       // The library's occurrence page spells the partner's name ICAN.
       ["Vietnamese Storytime with Ican", "Vietnamese Storytime with ICAN"],
       ["(ELL) for Low-Intermediate/Inglés Para Intermedio Bajo (ELL)", "(ELL) for Low-Intermediate / Inglés de nivel intermedio bajo (ELL)"],
+      ["One-On-One Tech Help (English or Tiếng Việt)", "One-on-One Tech Help (English or Tiếng Việt)"],
+      ["Wacky Wednesdays: Coffee Filter Turkey craft", "Wacky Wednesdays: Coffee Filter Turkey Craft"],
     ],
     attendanceNote: [
       SJPL_STORYTIME_TICKET_EDIT,
@@ -1112,6 +1114,42 @@ const EDITS = {
         "El personal de la biblioteca estará allí para guiarte en todo, pero serás tú quien controle la computadora.",
         "El personal de la biblioteca le guiará. Usted manejará la computadora.",
       ],
+      [
+        "They can assist you with basic tech issues, such as: Setting up an email account, composing & sending emails, using email attachments; " +
+          "Web searches and basic data entry; Learning the basics of Microsoft Word and Excel and web-based productivity software such as Google Docs; " +
+          "Using the library's pay-for-print and photocopy machines; Downloading apps on your phone or tablet; And much more!",
+        "They can help you set up an email account, write and send emails, use attachments, search the web, and enter data. " +
+          "They can also help you learn the basics of Microsoft Word, Excel, or web tools such as Google Docs, " +
+          "use the library's pay-for-print and photocopy machines, or download apps on your phone or tablet.",
+      ],
+      ["In this full day workshop with the Power Beans Foundation", "In this full-day workshop with the Power Beans Foundation"],
+      [
+        "participants will get hands-on experience building and programming robots and will learn: Robot design and engineering principles; " +
+          "Hands on VEX V5RC Robot Building; Programming with VEX Code; Teamwork and Collaboration skills. " +
+          "Participants will work in teams to build their robots, program them, and showcase their robot in a friendly competition towards the end of the program.",
+        "participants will learn the principles of robot design and engineering, along with teamwork and collaboration skills. " +
+          "Teams will build VEX V5RC robots, program them with VEX Code, and showcase them in a friendly competition near the end.",
+      ],
+      ["Registration: Registration is required. Registered participants will receive a detailed agenda of the program.", "Registration is required. Registered participants will receive a detailed agenda."],
+      ["Registration opens November 4, 2026 at 9 a.m.", "Registration opens November 4, 2026, at 9 a.m."],
+      [
+        "Storytime is a fun and interactive experience designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities",
+        "Storytime is a fun and interactive experience for a mix of ages. The whole family can take part in early literacy activities",
+      ],
+      ["one-on-one or small group interaction", "one-on-one or small-group interaction"],
+      [
+        "Earn community service credit while supporting the library by assisting with library programs, promotion, and representing the library's teen point-of-view.",
+        "Earn community service credit by helping with library programs and promotion and representing teens' perspectives.",
+      ],
+      ["Up to 5 teens at a time can use the space to utilize our", "Up to 5 teens at a time can use our"],
+      ["Each machine and other materials have limitations and time requirements.", "Equipment and materials have limits and time requirements."],
+      ["Please un-register yourself if you find you're unable to attend at a later date.", "Please cancel your registration if you can no longer attend."],
+      [
+        "Learn how to code using Swift Playgrounds. Participants will be introduced to the Swift Playgrounds app",
+        "Learn to code with Swift Playground. Participants will be introduced to the app",
+      ],
+      ["get help with their homework/school enrichment", "get help with homework or school enrichment"],
+      [/November 25 - Coffee Filter Turkey craft$/g, "On November 25, make a coffee filter turkey."],
     ],
     blurb: [
       [
@@ -1127,6 +1165,12 @@ const EDITS = {
         "Learn to crochet in a beginner-friendly club. Each week builds on the last, and the current project is a scarf.",
       ],
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
+      ["in Swift Playgrounds, with no experience required.", "in Swift Playground, with no experience required."],
+      [
+        "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
+        "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
+      ],
+      ["Practice your Spanish speaking skills with other learners", "Practice speaking Spanish with other learners"],
       ["on a first-come basis.", "on a first-come, first-served basis."],
       ["completed the ARTrepreneur entrepreneur program", "completed the ARTrepreneur program"],
       ["in this hands-on kids and teens workshop.", "in this hands-on workshop for kids and teens."],
@@ -1380,6 +1424,8 @@ const EDITS = {
         /We will meet on Monday,? December 14th at 3:30 PM in the Program Room\.( If you can attend this meeting, register online and pick up your copy of the book at the Children's Reference Desk\.)? Please read the book before our meeting\. At the meeting we will discuss the book and do a (?:Lego|LEGO) building activity\./g,
         "We'll meet on Monday, December 14, at 3:30 PM in the Program Room.$1 Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
       ],
+      ["build up your self-confidence reading to a patient and furry listener.", "build confidence by reading to a patient, furry listener."],
+      ["in person at the Children's Reference Desk, and may register", "in person at the Children's Reference Desk and may register"],
       [
         "Come practice meditation for 20 minutes and ask questions for 10 minutes with instructor Manisha.",
         "Meditate with instructor Manisha for 20 minutes, then ask questions for 10 minutes.",
