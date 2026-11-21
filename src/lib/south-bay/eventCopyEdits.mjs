@@ -28,7 +28,8 @@ const SJPL_STORYTIME_TICKET_EDIT = [
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
 // https://www.vexrobotics.com/v5/products/vexcode
-const SJPL_VEXCODE_EDIT = [/\bVEX\s*code\b/gi, "VEXcode"];
+// Description normalization can split the already-correct spelling into "VE Xcode".
+const SJPL_VEXCODE_EDIT = [/\b(?:VEX\s*code|VE Xcode)\b/gi, "VEXcode"];
 const SJPL_BRANCH_BUDDY_TASKS = [
   "Book cover cleaning – Use disinfecting wipes to reinvigorate dingy books.",
   "Bookshelves – Dust shelves and organize library materials.",
@@ -1133,6 +1134,10 @@ const EDITS = {
         "participants will learn the principles of robot design and engineering, along with teamwork and collaboration skills. " +
           "Teams will build VEX V5RC robots, program them with VEXcode, and showcase them in a friendly competition near the end.",
       ],
+      [
+        "Requirements: Lunch is scheduled in the middle from noon to 12:30 p.m. Please bring your own lunch. A signed waiver will be required before participating in this program. Copies will be emailed and available upon arrival.",
+        "Lunch is from noon to 12:30 p.m. Please bring your own lunch. Participants need a signed waiver before taking part. Copies will be emailed and available on arrival.",
+      ],
       ["Registration: Registration is required. Registered participants will receive a detailed agenda of the program.", "Registration is required. Registered participants will receive a detailed agenda."],
       ["Registration opens November 4, 2026 at 9 a.m.", "Registration opens November 4, 2026, at 9 a.m."],
       [
@@ -1170,6 +1175,10 @@ const EDITS = {
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
       ["in Swift Playgrounds, with no experience required.", "in Swift Playground, with no experience required."],
       SJPL_VEXCODE_EDIT,
+      [
+        "Make projects in the TeenHQ Maker Space, with 3D printers, a Glowforge, sewing machines, a Cricut and a button press for middle and high schoolers.",
+        "Middle and high schoolers can make projects in the TeenHQ Maker Space using 3D printers, a Glowforge, sewing machines, a Cricut, and a button press.",
+      ],
       [
         "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
         "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
@@ -1674,6 +1683,10 @@ const EDITS = {
     ],
     blurb: [
       ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
+      [
+        "Read aloud to a patient, furry listener and build reading confidence, in a program for kids who have finished grades K-5.",
+        "Kids who have finished grades K-5 can build reading confidence by reading aloud to a patient, furry listener.",
+      ],
       ["Watch Paddington 2 on the library screen at a Sunday matinee, a family comedy that many families treat as holiday viewing.", "Watch Paddington 2, a family comedy that has become a holiday favorite, at the library's Sunday matinee."],
       [
         "Listen as a Santa Clara County Sheriff's Deputy reads books and shares safety tips with children ages 0-5, with limited seating.",
