@@ -2004,6 +2004,35 @@ const CORRECTIONS = [
       ? {} : { registration: REGISTRATION_NONE, registrationClosesBy: null },
     appendAttendanceNote: "The library gives registered participants priority and then takes walk-ins if space remains. The three-day series is for ages 12 to 14.",
   })),
+  // Each Edenvale page lists the full series and the same mandatory sign-in.
+  ...[
+    ["2026-11-23", "6ac02726e06996003a80e844", "Try Buzz Off, a free STEM activity for ages 8–12."],
+    ["2026-11-24", "6ac02726e06996003a80e845", "Explore hovercrafts in this free STEM session for ages 8–12."],
+    ["2026-11-25", "6ac02726e06996003a80e846", "Try stop-motion animation in this free STEM session for ages 8–12."],
+  ].map(([date, id, blurb]) => ({
+    date,
+    url: `https://sjpl.bibliocommons.com/events/${id}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],
+    facts: { blurb },
+    appendAttendanceNote: "Space is limited. Everyone must sign in at the information desk starting 30 minutes before the program.",
+  })),
+  // King Library releases unclaimed MakerSpace reservations at 4:30 PM.
+  {
+    date: "2026-11-25",
+    url: "https://sjpl.bibliocommons.com/events/6927797a0886c5530056c25b",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6927797a0886c5530056c25b"],
+    appendAttendanceNote: "Advance registration is recommended. Walk-ins can take unclaimed spots at 4:30 PM.",
+  },
+  // The two Cupertino pages give the same in-person signup and availability contact.
+  ...[
+    ["2026-12-03", "6a80fec22c859e0086aecd41"],
+    ["2026-12-14", "693b7d1394297d36009f8651"],
+  ].map(([date, id]) => ({
+    date,
+    url: `https://sccl.bibliocommons.com/events/${id}`,
+    aliasUrls: [`https://sccl.bibliocommons.com/v2/events/${id}`],
+    appendAttendanceNote: "Children register in person at the Children's Reference Desk. Call 408-446-1677 ext. 3320 to check availability.",
+  })),
   // Alviso's November 25 workshop requires a signed waiver and a packed lunch.
   {
     date: "2026-11-25",

@@ -29,6 +29,42 @@ test("West Valley art series preserves walk-ins after its online cutoff", () => 
   assert.equal(applyVerifiedEventFacts({ ...event, date: "2026-11-26" }).registration, "closed");
 });
 
+test("Edenvale STEM sessions keep the day's activity and mandatory sign-in", () => {
+  const sessions = [
+    ["2026-11-23", "6ac02726e06996003a80e844", "Buzz Off"],
+    ["2026-11-24", "6ac02726e06996003a80e845", "hovercrafts"],
+    ["2026-11-25", "6ac02726e06996003a80e846", "stop-motion animation"],
+  ];
+  for (const [date, id, activity] of sessions) {
+    const event = {
+      date,
+      url: `https://sjpl.bibliocommons.com/v2/events/${id}`,
+      blurb: "Drop in for Buzz Off, hovercrafts, and stop-motion animation.",
+    };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.deepEqual(sessions.map(([, , name]) => fixed.blurb.includes(name)),
+      sessions.map(([, , name]) => name === activity));
+    assert.match(fixed.attendanceNote, /Space is limited\. Everyone must sign in at the information desk starting 30 minutes before/);
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    assert.equal(applyVerifiedEventFacts({ ...event, date: "2026-11-26" }).blurb, event.blurb);
+  }
+});
+
+test("upcoming library listings preserve walk-in priority and in-person signup", () => {
+  const studio = applyVerifiedEventFacts({
+    date: "2026-11-25",
+    url: "https://sjpl.bibliocommons.com/events/6927797a0886c5530056c25b",
+  });
+  assert.match(studio.attendanceNote, /Advance registration is recommended\. Walk-ins can take unclaimed spots at 4:30 PM/);
+  const reading = applyVerifiedEventFacts({
+    date: "2026-12-14", registration: "required",
+    url: "https://sccl.bibliocommons.com/v2/events/693b7d1394297d36009f8651",
+  });
+  assert.equal(reading.registration, "required");
+  assert.match(reading.attendanceNote, /in person at the Children's Reference Desk/);
+  assert.match(reading.attendanceNote, /408-446-1677 ext\. 3320/);
+});
+
 test("the Montalvo newsletter alias retains Charo's ticketed occurrence and official title", () => {
   const event = {
     date: "2026-12-05", title: "Christmas with Charo", cost: null,

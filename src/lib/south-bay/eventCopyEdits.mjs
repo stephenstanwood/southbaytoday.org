@@ -27,6 +27,8 @@ const SJPL_STORYTIME_TICKET_EDIT = [
 ];
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
+// https://www.vexrobotics.com/v5/products/vexcode
+const SJPL_VEXCODE_EDIT = [/\bVEX\s*code\b/gi, "VEXcode"];
 const SJPL_BRANCH_BUDDY_TASKS = [
   "Book cover cleaning – Use disinfecting wipes to reinvigorate dingy books.",
   "Bookshelves – Dust shelves and organize library materials.",
@@ -1123,12 +1125,13 @@ const EDITS = {
           "use the library's pay-for-print and photocopy machines, or download apps on your phone or tablet.",
       ],
       ["In this full day workshop with the Power Beans Foundation", "In this full-day workshop with the Power Beans Foundation"],
+      SJPL_VEXCODE_EDIT,
       [
         "participants will get hands-on experience building and programming robots and will learn: Robot design and engineering principles; " +
-          "Hands on VEX V5RC Robot Building; Programming with VEX Code; Teamwork and Collaboration skills. " +
+          "Hands on VEX V5RC Robot Building; Programming with VEXcode; Teamwork and Collaboration skills. " +
           "Participants will work in teams to build their robots, program them, and showcase their robot in a friendly competition towards the end of the program.",
         "participants will learn the principles of robot design and engineering, along with teamwork and collaboration skills. " +
-          "Teams will build VEX V5RC robots, program them with VEX Code, and showcase them in a friendly competition near the end.",
+          "Teams will build VEX V5RC robots, program them with VEXcode, and showcase them in a friendly competition near the end.",
       ],
       ["Registration: Registration is required. Registered participants will receive a detailed agenda of the program.", "Registration is required. Registered participants will receive a detailed agenda."],
       ["Registration opens November 4, 2026 at 9 a.m.", "Registration opens November 4, 2026, at 9 a.m."],
@@ -1166,6 +1169,7 @@ const EDITS = {
       ],
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
       ["in Swift Playgrounds, with no experience required.", "in Swift Playground, with no experience required."],
+      SJPL_VEXCODE_EDIT,
       [
         "Try hands-on STEM activities during Thanksgiving break, from Buzz Off to hovercrafts to stop motion animation, for ages 8-12, free and drop-in.",
         "Kids ages 8-12 can drop in for free STEM activities over Thanksgiving break, including Buzz Off, hovercrafts, and stop-motion animation.",
