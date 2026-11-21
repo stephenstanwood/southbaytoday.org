@@ -679,6 +679,14 @@ const EDITS = {
         "To Enroll, You Must: Complete and pass the Self-Guided Computer Assessment.",
         "To enroll, complete and pass the Self-Guided Computer Assessment.",
       ],
+      [
+        "To ensure accurate results, the GSP should be completed independently and in a quiet setting, without assistance from others.",
+        "For accurate results, complete the assessment on your own in a quiet setting.",
+      ],
+      [
+        /\bESL 502 Course Information: Starts: ([^;]+, \d{4}); Ends: ([^;]+, \d{4}); Class Days: ([^;]+); Time: (\d{1,2}:\d{2} [AP]M) [–-] (\d{1,2}:\d{2} [AP]M); Instructor: TBD\./g,
+        "ESL 502 runs from $1, through $2. Classes meet $3 from $4 to $5. The instructor is to be determined.",
+      ],
       ["After, we'll take what we've learned to create art of our own!", "Then we'll use what we've learned to make art of our own."],
       ["Adults, teens and children welcome.", "Adults, teens, and children are welcome."],
       ["• October – Cardboard Nicho. Recommended items to bring:", "For October's cardboard nicho, consider bringing"],
