@@ -51,6 +51,9 @@ export interface TechCompany {
   careersUrl?: string;
 }
 
+// Local layoff figures refer to positions in California EDD WARN notices.
+// Cite the effective dates so readers can distinguish past and scheduled cuts.
+// https://edd.ca.gov/en/jobs_and_training/layoff_services_warn/
 export const TECH_COMPANIES: TechCompany[] = [
   {
     id: "google",
@@ -80,10 +83,11 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "hardware",
     sccEmployeesK: 25,
     trend: "flat",
-    trendNote: "25K at Apple Park + SCC offices; no local WARN filing since March 2024, when 614 Santa Clara jobs went across eight sites",
+    trendNote: "About 25K local jobs. WARN notices cover 147 Cupertino and Sunnyvale positions effective Oct. 19, 2026.",
     highlights: [
       "Apple Intelligence on-device AI rolling out across iPhone, Mac, and iPad",
-      "M5 now spans iPad Pro, MacBook Air, and MacBook Pro; August 2026 Mac mini models use M6 or M5 Pro",
+      // https://www.apple.com/newsroom/2026/09/the-new-mac-mini-and-mac-studio-are-available-today/
+      "M5 spans iPad Pro, MacBook Air, and MacBook Pro. The Mac mini released in September 2026 uses M6 or M5 Pro.",
     ],
     description:
       "Consumer hardware, software, and services. One Apple Park Way, Cupertino.",
@@ -99,7 +103,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "chip",
     sccEmployeesK: 14,
     trend: "down",
-    trendNote: "14K in SCC; 996 Santa Clara jobs cut on WARN filings since July 2025, more than in any full year EDD has published",
+    trendNote: "About 14K local jobs. WARN notices cover 212 Santa Clara positions from August through November 2026, including 57 effective Nov. 15.",
     highlights: [
       // Intel's filings give the September 2025 stake, the shares still in
       // escrow in September 2026, and the NVIDIA closing date, respectively.
@@ -110,6 +114,7 @@ export const TECH_COMPANIES: TechCompany[] = [
       // Intel's July 21, 2026 announcement describes SP6 design, packaging,
       // and manufacturing collaboration. MediaTek was already a named foundry
       // customer in 2022; do not turn this into a first-ever customer claim.
+      // https://www.intc.com/news-events/press-releases/detail/1775/intel-and-fortinet-collaborate-to-advance-cybersecurity
       // https://www.intc.com/news-events/press-releases/detail/1561/intel-and-mediatek-form-foundry-partnership
       "Intel and Fortinet announced a July 2026 collaboration to develop Fortinet's SP6 security processor, combining Intel's chip design, packaging, and manufacturing capabilities",
     ],
@@ -168,7 +173,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "7K at Santa Clara HQ + SCC offices; growing with AI GPU demand",
     highlights: [
       "Blackwell GPUs now deployed across every major cloud; the next-generation Vera Rubin platform ramps through 2026, with Jensen Huang projecting $1 trillion in Blackwell and Rubin orders by 2027",
-      "Agreed September 3 to acquire Hugging Face for $12.93B; NVIDIA says the model-sharing platform will remain open and will not require NVIDIA compute",
+      // https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm
+      // https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/
+      "NVIDIA announced a deal on Sept. 3, 2026, to buy Hugging Face for about $11.9B, with up to $1B in employee retention equity. NVIDIA says the platform will remain open to other compute providers.",
     ],
     description:
       "GPUs and AI accelerators. The defining company of the current AI era. Santa Clara's crown jewel.",
@@ -187,7 +194,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "5K at SJ HQ; steady headcount as Anil Chakravarthy prepares to become CEO on Dec. 1",
     highlights: [
       "Firefly generative AI now integrated throughout Creative Cloud product line",
-      "The $20B Figma deal collapsed in 2023 under regulatory pressure and cost Adobe a $1B break fee; Figma has since gone public on the NYSE as FIG, trading well above what Adobe offered",
+      // https://www.sec.gov/Archives/edgar/data/796343/000079634324000006/adbe-20231201.htm
+      // https://www.sec.gov/Archives/edgar/data/1579878/000162828026009228/fig-20251231.htm
+      "Adobe paid a $1B termination fee after its proposed $20B Figma acquisition fell through in 2023. Figma began trading on the NYSE in July 2025.",
     ],
     description:
       "Creative software for design, video, and documents. Firefly AI reshaping how creators work.",
@@ -203,7 +212,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "fintech",
     sccEmployeesK: 5,
     trend: "down",
-    trendNote: "5K at SJ HQ; second CEO change in three years after branded checkout stalled",
+    trendNote: "About 5K local jobs. A WARN notice covers 251 positions at the San José headquarters effective Oct. 30, 2026.",
     highlights: [
       "Enrique Lores became CEO on March 1, 2026, succeeding Alex Chriss — the board moved after branded checkout, roughly half of PayPal's profit, grew just 1% in the fourth quarter",
       "Reorganized in April 2026 into three operating units, with Venmo carved out as a standalone business for the first time",
@@ -241,7 +250,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "saas",
     sccEmployeesK: 6,
     trend: "up",
-    trendNote: "6K at Santa Clara HQ; still growing on 20%+ revenue, though 208 Lawson Lane roles went on its first filings in twelve years",
+    trendNote: "About 6K local jobs. WARN notices cover 208 Lawson Lane positions in August and September 2026 and 39 scheduled for December 2026 and January 2027.",
     highlights: [
       "Now Platform AI Agents automating enterprise IT, HR, and customer workflows at scale",
       "AI agents expanding across IT, HR, customer service, and other Now Platform workflows",
@@ -261,7 +270,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "down",
     trendNote: "8K across the Sunnyvale–Mountain View campus; 477 jobs cut effective July 13, 2026, a fourth straight year of filings",
     highlights: [
-      "Cut 606 California roles in May 2026, about two-thirds of them in software development — 411 at the Silicon Valley campus that straddles Mountain View and Sunnyvale",
+      "May 2026 WARN notices cover 606 California positions effective July 13, including 411 at the Mountain View and Sunnyvale offices and 66 Mountain View home-office roles.",
       "B2B advertising and Premium subscriptions driving revenue growth for Microsoft",
     ],
     description:
@@ -315,7 +324,7 @@ export const TECH_COMPANIES: TechCompany[] = [
     category: "ecommerce",
     sccEmployeesK: 3,
     trend: "down",
-    trendNote: "3K at SJ HQ; 243 headquarters jobs cut in February 2026, its fifth January–February round since 2019",
+    trendNote: "About 3K local jobs. WARN notices cover 243 San José headquarters positions in February 2026 and 229 more in October.",
     highlights: [
       "Cut 800 jobs — 6% of the company — in February 2026, a week after agreeing to buy resale app Depop for $1.2B; 243 of those were at the San Jose headquarters",
       "Authenticity Guarantee expanding to more collectible and luxury product categories",
