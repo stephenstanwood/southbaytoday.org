@@ -15,6 +15,51 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Natalia Jiménez uses the box-office showtime and retains the listing identity", () => {
+  const event = {
+    id: "sanjosetheaters-d4ced2bfe1529bde",
+    date: "2027-02-14", time: "8:00 PM", endTime: null, venue: "San Jose Civic",
+    title: "Natalia Jiménez — La Jiménez", source: "San Jose Theaters",
+    url: "https://www.sanjose.org/theaters/events/natalia-jimenez-la-jimenez",
+  };
+  event.occurrenceEvidence = {
+    kind: "first-party-occurrence-page", date: event.date, time: event.time, sourceUrl: event.url,
+  };
+  const verified = applyVerifiedEventFacts(event);
+  assert.equal(verified.time, "7:00 PM");
+  assert.equal(verified.endTime, null);
+  assert.equal(verified.id, event.id);
+  assert.equal(verified.title, event.title);
+  assert.equal(verified.url, event.url);
+  assert.equal(verified.occurrenceEvidence.sourceUrl, event.url);
+  assert.equal(verified.occurrenceEvidence.time, verified.time);
+  assert.equal(verified.occurrenceEvidence.timeSourceUrl, "https://www.ticketmaster.com/event/1C006566BE13D9B4");
+  const updated = applyVerifiedEventFacts({ ...event, id: "updated-source-id", time: "7:00 PM" });
+  assert.deepEqual(updated, verified);
+  const differentTime = { ...event, time: "4:00 PM" };
+  assert.deepEqual(applyVerifiedEventFacts(differentTime), differentTime);
+});
+
+test("the dated Neighborhood Hands cleanup keeps the organizer's program times", () => {
+  const event = {
+    id: "94b3de5fed7c", date: "2026-11-28",
+    title: "Neighborhood Hands Bi-monthly Cleanup",
+    time: "7:45 AM", endTime: "10:30 AM", venue: "Guadalupe Gardens",
+    source: "Guadalupe River Park Conservancy", url: "https://grpg.org/calendar/events/",
+    description: "Cleanup until approximately 9:15 a.m. and a resource fair until 10:30 a.m.",
+  };
+  const verified = applyVerifiedEventFacts(event);
+  assert.equal(verified.time, event.time);
+  assert.equal(verified.endTime, "10:15 AM");
+  assert.equal(verified.id, event.id);
+  assert.equal(verified.url, event.url);
+  assert.match(verified.description, /Weather permitting, volunteers clean the park until about 9:10 a\.m\./);
+  assert.match(verified.description, /resource fair ends around 10:15 a\.m\./);
+  assert.deepEqual(applyVerifiedEventFacts(verified), verified);
+  const otherDay = { ...event, date: "2026-12-12" };
+  assert.deepEqual(applyVerifiedEventFacts(otherDay), otherDay);
+});
+
 test("West Valley art series preserves walk-ins after its online cutoff", () => {
   const event = {
     date: "2026-11-25", registration: "closed", registrationClosesBy: "2026-11-23T18:00:00.000Z",

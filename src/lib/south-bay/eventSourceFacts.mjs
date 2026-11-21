@@ -88,6 +88,41 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The Civic's linked Ticketmaster event and AXS corroborate 7 PM.
+  // Ticketmaster's 8 PM timestamp is the end of the general sale.
+  // https://www.axs.com/events/1699549/natalia-jimenez-tickets
+  {
+    date: "2027-02-14",
+    matches: (event) => event.source === "San Jose Theaters" && event.venue === "San Jose Civic"
+      && event.url === "https://www.sanjose.org/theaters/events/natalia-jimenez-la-jimenez"
+      && ["8:00 PM", "7:00 PM"].includes(event.time),
+    facts: (event) => ({
+      // The adapter hashes the listed time into its ID. Keep the same ID
+      // when the theater page itself starts listing the confirmed clock.
+      id: "sanjosetheaters-d4ced2bfe1529bde",
+      time: "7:00 PM",
+      occurrenceEvidence: {
+        ...event.occurrenceEvidence,
+        time: "7:00 PM",
+        timeSourceUrl: "https://www.ticketmaster.com/event/1C006566BE13D9B4",
+      },
+    }),
+  },
+  // Neighborhood Hands confirms November 28 and gives approximate program
+  // milestones that supersede the conservancy's calendar and copied blurb.
+  // https://www.neighborhoodhands.org/current-program.html
+  {
+    date: "2026-11-28",
+    matches: (event) => event.source === "Guadalupe River Park Conservancy"
+      && event.url === "https://grpg.org/calendar/events/"
+      && event.title === "Neighborhood Hands Bi-monthly Cleanup"
+      && event.venue === "Guadalupe Gardens" && event.time === "7:45 AM"
+      && ["10:30 AM", "10:15 AM"].includes(event.endTime),
+    facts: {
+      endTime: "10:15 AM",
+      description: "Meet at 7:45 a.m. in Guadalupe Gardens, just north of the Spring Street cul-de-sac off Coleman Avenue across from Target. Weather permitting, volunteers clean the park until about 9:10 a.m. Unhoused neighbors receive stipends. The community resource fair ends around 10:15 a.m.",
+    },
+  },
   // SCCLD's November 24 occurrence gives one discussion date, online signup,
   // and two pickup branches. The feed excerpt had read like a weekly series.
   {
