@@ -119,7 +119,7 @@ const LANDING_PAGE = `<!DOCTYPE html>
 <title>San Jose Theaters | Visit San Jose</title></head>
 <body><div ng-app="TheaterEventListingApp"></div></body></html>`;
 
-async function runWith(routes) {
+async function runWith(routes, options) {
   const original = globalThis.fetch;
   const requested = [];
   globalThis.fetch = async (url) => {
@@ -135,11 +135,55 @@ async function runWith(routes) {
     });
   };
   try {
-    return { events: await fetchSanJoseTheatersEvents(), requested };
+    return { events: await fetchSanJoseTheatersEvents(options), requested };
   } finally {
     globalThis.fetch = original;
   }
 }
+
+test("a detail timeout preserves only previously verified performances still listed by the venue", async () => {
+  const date = dayPT(5);
+  const venue = "California Theatre";
+  const listings = Array.from({ length: 5 }, (_, i) => listing({
+    title: `Concert ${i}`, slug: `concert-${i}`, start: date, venue,
+  }));
+  const url = "https://www.sanjose.org/theaters/events/concert-0";
+  const routes = { [SAN_JOSE_THEATERS_LISTINGS_URL]: JSON.stringify(listings) };
+  for (const item of listings.slice(1)) {
+    routes[`https://www.sanjose.org${item.link}`] = detailPage({
+      focus: longDate(date), time: "7:30 PM", venue,
+    });
+  }
+  const verified = {
+    id: "previous-concert", date, time: "7:30 PM", title: listings[0].title, venue, url,
+    source: "San Jose Theaters",
+    occurrenceEvidence: {
+      kind: "first-party-occurrence-page", date, time: "7:30 PM", sourceUrl: url,
+      checkedAt: "2026-11-21T13:27:14.382Z",
+    },
+  };
+  const options = { previousEvents: [
+    verified,
+    { ...verified, id: "different-date", date: dayPT(6) },
+    { ...verified, id: "unverified-clock", occurrenceEvidence: undefined },
+  ] };
+  const recovered = await runWith({ ...routes, [url]: new Error("request timeout") }, options);
+  assert.equal(recovered.events.length, 5);
+  assert.deepEqual(recovered.events.filter((event) => event.url === url), [verified]);
+
+  const removed = await runWith(routes, options);
+  assert.equal(removed.events.length, 4);
+  assert.equal(removed.events.some((event) => event.url === url), false);
+
+  const cancelled = await runWith({
+    ...routes,
+    [SAN_JOSE_THEATERS_LISTINGS_URL]: JSON.stringify([
+      { ...listings[0], title: "Concert 0 (Canceled)" }, ...listings.slice(1),
+    ]),
+    [url]: new Error("request timeout"),
+  }, options);
+  assert.equal(cancelled.events.some((event) => event.url === url), false);
+});
 
 test("published matinee and evening clocks survive downstream deduplication", async () => {
   const start = dayPT(30);

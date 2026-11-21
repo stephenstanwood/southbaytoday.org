@@ -15,6 +15,32 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the Montalvo newsletter alias retains Charo's ticketed occurrence and official title", () => {
+  const event = {
+    date: "2026-12-05", title: "Christmas with Charo", cost: null,
+    url: "https://my.montalvoarts.org/3111/3155?promo=",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(fixed.title, "Charo: Have Yourself a Cuchi Little Christmas");
+  assert.equal(fixed.url, "https://my.montalvoarts.org/3111/3155");
+  assert.equal(fixed.time, "7:30 PM");
+  assert.equal(fixed.cost, "paid");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  assert.equal(applyVerifiedEventFacts({ ...event, date: "2026-12-06" }).cost, null);
+});
+
+test("Los Altos book club pickup instructions survive the event blurb and a full registration window", () => {
+  const event = {
+    date: "2026-11-24", registration: "full",
+    url: "https://sccl.bibliocommons.com/v2/events/6adfe9fa9d27a00045538d73",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.match(fixed.blurb, /grades 6–8 discuss Stargirl/);
+  assert.match(fixed.attendanceNote, /Los Altos or Woodland Library/);
+  assert.equal(fixed.registration, "full");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+});
+
 test("visiting hours stay with an ongoing university exhibition as its date rolls", () => {
   const branner = {
     url: "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",

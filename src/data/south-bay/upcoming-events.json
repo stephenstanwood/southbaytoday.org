@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-21T15:37:55.891Z",
-  "eventCount": 1499,
+  "eventCount": 1500,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -8941,8 +8941,9 @@
       "kidFriendly": true,
       "audienceAge": "kids",
       "photoRef": "places/ChIJIz10w-6wj4ARxi32a6iumfw/photos/AV-0GLfv3fyQ4bQdshA5Sn2fJuS6jenhdwOaLzymBgCaDriB7rtk72S6pcCAN39pamEa9VoVdEp8mRtFgwkR_8R1uFYRMhIr21Hj3QEJZxk5ildfUCtO3I5tlxExz0iyN849u9ueZBF1ZQTn5AcvJvC2k8MqQaNEoAECYaTXpsN4bicTDcEjVcbySz9ikXFcIvL3oi5pUHCP6bz6uL5CnP5Tuzm7P56dk-WCNdhaaZYha5l4_TAwX7GqraBNszkPYq92UwxHeldiY9klpIupLRJc_YRyD9eansygs5RuTw_w4N63sxvaG4Y7IWERyEwxytAWDHFzKGfhNb7vJ8qPo6bvGhxbaouxE-nNRT2B3SHW9DsXA9aKnJPfLQkXmj66S3QVV421H_Qk3hniMH5gMrxYoumdIAiYv_8",
-      "blurb": "Meet other 6th, 7th, and 8th graders at Los Altos Library on Tuesday afternoons to join the To Be Read Book Club.",
-      "firstSeenAt": "2026-11-06T04:44:11.016Z"
+      "blurb": "Students in grades 6–8 discuss Stargirl at Los Altos Library.",
+      "firstSeenAt": "2026-11-06T04:44:11.016Z",
+      "attendanceNote": "Register online, then pick up Stargirl at the Children’s Reference Desk at Los Altos or Woodland Library and read it before the meeting."
     },
     {
       "id": "paloalto-6a270e7b703c3363002d2553",
@@ -33328,26 +33329,34 @@
       "firstSeenAt": "2026-10-31T03:01:05.526Z"
     },
     {
-      "id": "tm-G5vYZ_C6rSSPp",
+      "id": "sanjosetheaters-a4b99efe9909c046",
       "title": "The Carpenters Songbook: At Christmas",
       "date": "2026-11-27",
       "displayDate": "Fri, Nov 27",
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Center for the Performing Arts",
-      "address": "255 Almaden Blvd.",
+      "address": "255 South Almaden Boulevard, San Jose, CA 95113",
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "Few voices in pop history are as instantly recognizable, or as deeply loved, as Karen Carpenters.",
-      "url": "https://www.ticketmaster.com/the-carpenters-songbook-a-live-celebration-san-jose-california-11-27-2026/event/1C0064E1DECF3956",
-      "source": "Ticketmaster",
+      "description": "Few voices in pop history are as instantly recognizable, or as deeply loved, as Karen Carpenter's.",
+      "url": "https://www.sanjose.org/theaters/events/carpenters-songbook-christmas",
+      "source": "San Jose Theaters",
+      "image": null,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sanjose.org/theaters/events/carpenters-songbook-christmas",
+        "date": "2026-11-27",
+        "time": "7:00 PM",
+        "checkedAt": "2026-11-21T16:11:42.841Z"
+      },
       "kidFriendly": false,
       "attendanceNote": "ASL interpretation is available for this performance.",
       "audienceAge": "all",
       "photoRef": "places/ChIJQ0mVGDO3j4AR0-JohJl_dCY/photos/AV-0GLdRsQ2X0HdliF47MV5L6F8N9GewPqbCIkMu4x4VmkdJ9f5NKQNn0bYMO1DgLrdR0RB_666dEH15sTRhys60H1H870ptEl-KlyrhQG_xw_DL9oO_GSG6NhvQueVOi7WY4zVl80beILtzP9yjkxFKhw4Hg82p-Knsy-kBwHjuXBGeheWlLeFfGbcgTUooKE6VjuoZqlXfV9u9ih89coolnVfNz2c34mAE1RNrOi6L942SgKOQbSaXfaHAhCc0O6KOWTduLvKTgXZ8jSyO0clsaO0OdZPujysW2J0SsDHf7rlWGWFSY1mS2TYZ4-13wATep7HL4DqTKBe7iTcwIHcVEb_pbSfj_ZpuTCH3PYBiIGMP4rJXBfoks0dTBj-oN9fDfiTUXG2FdljiTE0geXxqbDnqxAE4uHA",
-      "blurb": "Hear The Carpenters Songbook: At Christmas, a Friday evening tribute to Karen Carpenter's voice, at the Center for the Performing Arts.",
-      "firstSeenAt": "2026-11-05T11:48:59.777Z"
+      "blurb": "Hear The Carpenters Songbook: At Christmas, a holiday concert celebrating the music and the instantly recognizable voice of Karen Carpenter.",
+      "firstSeenAt": "2026-11-06T13:01:19.897Z"
     },
     {
       "id": "inbound-236acc260e062786",
@@ -33419,23 +33428,23 @@
     },
     {
       "id": "inbound-9b8928a1a7f9dd1e",
-      "title": "Christmas with Charo",
+      "title": "Charo: Have Yourself a Cuchi Little Christmas",
       "date": "2026-12-05",
       "displayDate": "Sat, Dec 5",
       "time": "7:30 PM",
       "endTime": null,
       "venue": "Montalvo Arts Center",
-      "address": "Montalvo Arts Center, Carriage House, 15400 Montalvo Rd, Saratoga, CA 95070",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95070",
       "city": "saratoga",
       "category": "arts",
-      "cost": null,
-      "description": "Charo puts her own twist on the holidays in a live ticketed show in the Carriage House.",
-      "url": "https://my.montalvoarts.org/3111/3155?promo=",
+      "cost": "paid",
+      "description": "Charo's holiday show features flamenco guitar, comedy, and dancing.",
+      "url": "https://my.montalvoarts.org/3111/3155",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJ4YSL3_tKjoARpGsLdUkxppM/photos/AV-0GLcqARyWkJmOGBH4O0_p4wjRM_LLGzZ-fkB5VskSp345qCqINsThLF2VPVZyK529NleC6XAh27_ViCPZEq8SqlKB69ReDF6PKmJzm9GlZLQySOkMA3HtOW7PNxW-FaXmX6rNFCYCgvTAVe_IiAAdqxBgboYOOUlKgKr-Ob80kd60u8XEFkXZ9zLk-6UeqZEQanTagcTLZit8ngU-2eR5O_36sOosVxZE3U8WkiX9DedyzoNbiYBuc8IloHYyu_06r3MJYBeQ11WGfwvjkdKuEaMoCMjle7p6moRgaDSiAnHckC8lYQi2WujFtJShbVoNNpxJiY4og6fE2l1vlwfOdtwFAe8OPQmTupmCtTWLZBnWfX_oyFn-kftwk08PvpT5a7YN8ir9wnVYk9Dxx_Wbx4YbD-8MoynJZdTCar1CAfxXCg",
-      "blurb": "See Charo put her own twist on the holidays in a ticketed live show in Montalvo's Carriage House.",
+      "blurb": "See Charo perform flamenco guitar, comedy, and dance at Montalvo’s Carriage House Theatre.",
       "firstSeenAt": "2026-11-15T01:58:48.066Z"
     },
     {
@@ -33795,6 +33804,35 @@
       "image": "https://images.unsplash.com/photo-1767584413129-2ad2941b7e46?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxzcG9ydHMlMjBzdGFkaXVtJTIwZ2FtZXxlbnwwfDJ8fHwxNzc3MjMwNjE4fDA&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Watch the Santa Cruz Warriors face the Oklahoma City Blue at Kaiser Permanente Arena starting at 7pm.",
       "firstSeenAt": "2026-08-29T03:12:21.234Z"
+    },
+    {
+      "id": "sanjosetheaters-1af1c6c7ef24e87d",
+      "title": "Golden State Youth Orchestra Holiday Concert",
+      "date": "2026-12-06",
+      "displayDate": "Sun, Dec 6",
+      "time": "7:30 PM",
+      "endTime": null,
+      "venue": "California Theatre",
+      "address": "345 South 1st Street, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "music",
+      "cost": "paid",
+      "description": "Join Golden State Youth Orchestra for Festive Favorites, their holiday concert.",
+      "url": "https://www.sanjose.org/theaters/events/golden-state-youth-orchestra-holiday-concert",
+      "source": "San Jose Theaters",
+      "image": null,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sanjose.org/theaters/events/golden-state-youth-orchestra-holiday-concert",
+        "date": "2026-12-06",
+        "time": "7:30 PM",
+        "checkedAt": "2026-11-21T16:11:42.841Z"
+      },
+      "kidFriendly": true,
+      "audienceAge": "all",
+      "photoRef": "places/ChIJwTUa-q_Mj4ARmwd8pIYvf7c/photos/AV-0GLfY0BA0RkXbZgqxWPREsEiUqpmB8JeatTaRfJv_yIpg74CEMzyi7qOlbzcZ5JAU5gIM57Cz4XPBCfNA9bhMVLBVXeGFo5sOZAlaQURea7d7sch-QKwHFQRb8xtHaSd9_uYats10-jSdmhWOn3SPJ9voAjs39pBMH6FeVkcN_-dQH9PfkCLsVNmc-UJ9TIz6XBTXTDzsPG4GYUGdAIFQ8Eq_9YwQf70A55lKN2nG-mvxZno86XAG6VslMs2qtR4SOIXSKWC0Ya0ZxHO4oGJacsvl14FIajOBJheT7ivHgXEIX0fVvXG6ccID9cLgUYIzM1f8_p6P8-oSPPn03FyH4KvYNqf8TdHk1Ei8D-VsnsrGYBcYFIZz2CcDFrQNBs8D-gRTcwi9yRdp8p2e30U6dpoujp4ur2o",
+      "blurb": "Hear Golden State Youth Orchestra perform Festive Favorites, their holiday concert, at the California Theatre on Sunday evening.",
+      "firstSeenAt": "2026-11-04T10:59:13.854Z"
     },
     {
       "id": "inbound-0d99eef049a4cbde",
@@ -35048,25 +35086,33 @@
       "firstSeenAt": "2026-10-11T04:38:24.350Z"
     },
     {
-      "id": "tm-G5vYZ_A0KFfCq",
+      "id": "sanjosetheaters-98a7e9a78f55a42b",
       "title": "Mariachi Vargas de Tecalitlán",
       "date": "2026-11-27",
       "displayDate": "Fri, Nov 27",
       "time": "8:00 PM",
       "endTime": null,
       "venue": "San Jose Civic",
-      "address": "135 San Carlos St.",
+      "address": "135 West San Carlos Street, San Jose, CA 95113",
       "city": "san-jose",
       "category": "music",
       "cost": "paid",
       "description": "",
-      "url": "https://www.ticketmaster.com/mariachi-vargas-de-tecalitlan-san-jose-california-11-27-2026/event/1C0064591321439D",
-      "source": "Ticketmaster",
+      "url": "https://www.sanjose.org/theaters/events/mariachi-vargas-de-tecalitlan",
+      "source": "San Jose Theaters",
+      "image": null,
+      "occurrenceEvidence": {
+        "kind": "first-party-occurrence-page",
+        "sourceUrl": "https://www.sanjose.org/theaters/events/mariachi-vargas-de-tecalitlan",
+        "date": "2026-11-27",
+        "time": "8:00 PM",
+        "checkedAt": "2026-11-21T16:11:42.841Z"
+      },
       "kidFriendly": false,
       "audienceAge": "all",
       "photoRef": "places/ChIJScCHurrMj4AR3x6HUv5hclw/photos/AV-0GLfbb6hT_EBdebEYxweMGtKxB8i51197qtgykPzCBM7HC2C7-7r_yVUeeUqIX4lf1td2S_3nv_aa0e1UN5gclzxxX9J7FzWoUONp8uMHlRaB0S-BqFxaeaKl5HNPA7FrCsw1BxlXHtrV0qkjm89xvAF1-yuDXOfunNNMzA68NV3dK5YOP2b_fs8yWo5hfp8amamsVPewD2L9UsAFqgfrSkImevfAUE54f6WjA8koCpE-dg3-gEfhpLSZg2BxNXh6vf9qsNBQMHGThUnWZTD1P4kDvww7aLWifjPaF7KRxvN7TwdZ1s04k3rMynPdW4Y6O6O8Yr2cUT3ybklNUjbUujVnU4iUEXQ3uybTht83Q5gn6h1ojoLzhgsCn59PbbHvnZVwUjFfFy1XsCVDUKeVnn7RjN0",
       "blurb": "See Mariachi Vargas de Tecalitlán perform live on stage at San Jose Civic on a Friday night.",
-      "firstSeenAt": "2026-11-05T11:48:59.777Z"
+      "firstSeenAt": "2026-10-30T11:28:47.836Z"
     },
     {
       "id": "tm-rZ7HnEZ1AfPJ3d",

@@ -171,6 +171,7 @@ import {
 import {
   SAN_JOSE_THEATERS_LISTINGS_URL,
   SAN_JOSE_THEATER_ADDRESSES,
+  listingDateRange,
   listingOverlapsWindow,
   listingSkipReason,
   listingUrl,
@@ -9948,7 +9949,7 @@ function parseNaturalDateTime(monthName, day, year, time, ampm) {
 // the per-source regression guard reads as "59 shows vanished" and blocks the
 // whole refresh on, while a thrown error is skipped by that guard, absorbed by
 // the source-failure tolerance, and reported as one degraded source.
-async function fetchSanJoseTheatersEvents() {
+async function fetchSanJoseTheatersEvents({ previousEvents = readJsonFile(OUT_PATH)?.events ?? [] } = {}) {
   console.log("  ⏳ San Jose Theaters...");
   const today = todayPT();
   const horizon = isoDate(new Date(Date.now() + 180 * 24 * 60 * 60 * 1000));
@@ -9986,6 +9987,28 @@ async function fetchSanJoseTheatersEvents() {
         } catch (err) {
           failures += 1;
           console.log(`  ↳ San Jose Theaters page failed (${url || item.title}): ${err.message}`);
+          if (url && isTransientSourceError(err) && !isEventExplicitlyInactive({
+            title: item.title, description: item.field_event_description,
+          })) {
+            // The current index still lists the date and venue. Keep only
+            // exact occurrences whose clocks were verified on this detail page.
+            const { start, end, dates } = listingDateRange(item);
+            const listedDates = dates.length ? dates : start === end ? [start] : [];
+            const retained = previousEvents.filter((event) => {
+              const evidence = event.occurrenceEvidence;
+              return event.source === "San Jose Theaters" && event.url === url
+                && event.venue === item.venue && listedDates.includes(event.date)
+                && event.date >= today && event.date <= horizon
+                && event.time && !isEventExplicitlyInactive(event)
+                && evidence?.kind === "first-party-occurrence-page" && evidence.sourceUrl === url
+                && evidence.date === event.date && evidence.time === event.time
+                && Number.isFinite(Date.parse(evidence.checkedAt));
+            });
+            events.push(...retained);
+            if (retained.length) {
+              console.log(`  ↳ San Jose Theaters retained ${retained.length} previously verified performance(s) for ${url}`);
+            }
+          }
           continue;
         }
 

@@ -88,6 +88,37 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // SCCLD's November 24 occurrence gives one discussion date, online signup,
+  // and two pickup branches. The feed excerpt had read like a weekly series.
+  {
+    date: "2026-11-24",
+    url: "https://sccl.bibliocommons.com/events/6adfe9fa9d27a00045538d73",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6adfe9fa9d27a00045538d73"],
+    facts: {
+      blurb: "Students in grades 6–8 discuss Stargirl at Los Altos Library.",
+      registration: REGISTRATION_REQUIRED,
+    },
+    appendAttendanceNote: "Register online, then pick up Stargirl at the Children’s Reference Desk at Los Altos or Woodland Library and read it before the meeting.",
+  },
+  // The organizer’s series and ticket pages agree on the official title and
+  // December 5 at 7:30 PM. The roundup uses a shorter title and a promo URL.
+  {
+    date: "2026-12-05",
+    url: "https://my.montalvoarts.org/3111/3155",
+    aliasUrls: [
+      "https://my.montalvoarts.org/3111/3155?promo=",
+      "https://montalvoarts.org/experience/carriage-house-concerts/charo/",
+    ],
+    facts: (event) => ({
+      title: "Charo: Have Yourself a Cuchi Little Christmas",
+      url: "https://my.montalvoarts.org/3111/3155",
+      time: event.time ?? "7:30 PM",
+      cost: event.cost ?? "paid",
+      address: "15400 Montalvo Rd, Saratoga, CA 95070",
+      description: "Charo's holiday show features flamenco guitar, comedy, and dancing.",
+      blurb: "See Charo perform flamenco guitar, comedy, and dance at Montalvo’s Carriage House Theatre.",
+    }),
+  },
   // The university lists this as a public volunteer shift, with food boxes
   // packed for distribution by Sacred Heart Community Service.
   {
