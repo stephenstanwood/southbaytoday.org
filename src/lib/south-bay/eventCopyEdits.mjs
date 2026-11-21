@@ -453,7 +453,18 @@ const EDITS = {
       ["English speaking skills are welcome!", "English-speaking skills are welcome!"],
       [/^(Berryessa Branch Library presents .*?)practice their English-speaking & conversation skills used in everyday settings\. All levels of English-speaking skills are welcome!/g, "$1practice speaking English in everyday situations. Learners of all levels are welcome!"],
       ["Join us for Winter playdates", "Join us for winter playdates"],
-      ["such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources such as e-books.", "such as printing, using email, connecting to Wi-Fi, creating documents, and accessing library resources such as e-books."],
+      ["Join us every Wednesday for weekly playdates.", "Join us for playdates every Wednesday."],
+      [
+        "Kids get to practice early social skills like sharing, taking turns, imitation of play, and joint attention while caregivers get a chance to connect.",
+        "Children can practice sharing, taking turns, imitating others at play, and focusing together on an activity. Caregivers get a chance to connect.",
+      ],
+      ["such as: Printing; Using email; Connecting to Wi-Fi; Creating documents; Accessing library resources", "such as printing, using email, connecting to Wi-Fi, creating documents, and accessing library resources"],
+      [
+        "your tech dilemmas such as setting up an email account and sending an email, web searches, printing, etc.",
+        "common tasks such as setting up an email account, sending email, searching the web, and printing.",
+      ],
+      ["A casual beginner-friendly introduction to crocheting.", "A casual, beginner-friendly introduction to crocheting."],
+      ["Each week will build on the previous week as participants work towards creating a project.", "Each week builds on the last as participants work on a project."],
       ["We will practice: Vocabulary for everyday activities; Listening Skills; Reading Skills; Speaking Skills.", "We will practice vocabulary for everyday activities, listening skills, reading skills, and speaking skills."],
       ["our WEE Love ART program", "our Wee Love Art program"],
       ["our Wee Love ART program", "our Wee Love Art program"],
@@ -1107,6 +1118,14 @@ const EDITS = {
         "Practice your English speaking in a weekly online conversation club led by a trained facilitator for adult learners.",
         "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
       ],
+      [
+        "in a free beginning non-credit ESL Reading & Writing 1 course with Evergreen Valley College.",
+        "in Evergreen Valley College's free, noncredit ESL Reading & Writing 1 course for beginners.",
+      ],
+      [
+        "Learn to crochet in a beginner-friendly club where each week builds on the last, and the current project is a scarf.",
+        "Learn to crochet in a beginner-friendly club. Each week builds on the last, and the current project is a scarf.",
+      ],
       ["for stories, songs, and rhymes read in Japanese.", "for stories, songs, and rhymes in Japanese."],
       ["on a first-come basis.", "on a first-come, first-served basis."],
       ["completed the ARTrepreneur entrepreneur program", "completed the ARTrepreneur program"],
@@ -1350,6 +1369,13 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      // The publisher spells the Stargirl author's name Spinelli.
+      ["Stargirl by Jerry Spinellli", "Stargirl by Jerry Spinelli"],
+      [
+        "at the Los Altos Library Orchard Room, If you can attend this meeting, register online",
+        "in the Orchard Room at Los Altos Library. If you can attend, register online",
+      ],
+      ["Drop in anytime 6-8 PM to play.", "Drop in anytime from 6 to 8 p.m. to play."],
       [
         /We will meet on Monday,? December 14th at 3:30 PM in the Program Room\.( If you can attend this meeting, register online and pick up your copy of the book at the Children's Reference Desk\.)? Please read the book before our meeting\. At the meeting we will discuss the book and do a (?:Lego|LEGO) building activity\./g,
         "We'll meet on Monday, December 14, at 3:30 PM in the Program Room.$1 Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
@@ -1629,6 +1655,10 @@ const EDITS = {
   "Palo Alto City Library": {
     description: [
       ["Welcome to all experience levels. This will be a seated meditation session", "All experience levels are welcome. This is a seated meditation session"],
+      [
+        "You can learn more about Phuong here and can watch her meditation videos on the library's YouTube channel here.",
+        "See the library's event page to learn more about Phuong and find her videos on the library's YouTube channel.",
+      ],
       [
         "Join established local yoga teacher Patricia Becker as she takes us through exercises to loosen joints, improve flexibility, improve cognition, and increase strength in Rinconada Library's Embarcadero Room.",
         "Join local yoga teacher Patricia Becker in Rinconada Library's Embarcadero Room for exercises to loosen joints, improve flexibility and cognition, and build strength.",
