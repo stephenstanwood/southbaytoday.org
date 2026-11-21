@@ -1791,6 +1791,7 @@ const EDITS = {
       ["for deaf and hard of hearing families.", "for deaf and hard-of-hearing families."],
       ["and join holiday crafts with your family.", "and make holiday crafts with your family."],
       ["Cupertino’s hackathon", "Cupertino's hackathon"],
+      ["with a kids fun run too.", "with a kids' fun run too."],
     ],
   },
   "City Newsletter": {

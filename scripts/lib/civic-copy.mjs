@@ -41,6 +41,7 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "A video transcript shows what was before the Campbell City Council at its November 2, 2026, meeting.")
       .replace("increase fence/wall height", "increase fence and wall height")
       .replace("as a 'builder's remedy' project", "as a \"builder's remedy\" project")
+      .replace("state 'builder's remedy' law", "state \"builder's remedy\" law")
       .replace(/(\bchanges to Council Policy \d+, on how items get added to council agendas, which) was deferred\b/g, "$1 were deferred")
       .replace("The commission was asked to recommend approval to the City Council, tentatively set for December 1, 2026.",
         "The commission was asked to recommend approval to the City Council. The council was tentatively scheduled to take up the request on December 1, 2026.")

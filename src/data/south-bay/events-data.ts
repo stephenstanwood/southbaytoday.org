@@ -353,7 +353,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: false,
     description:
-      "Free Saturday morning yoga and Pilates in Santana Row Park with lululemon. Check-in at 8:30 AM, class at 9 AM. Bring your own mat.",
+      "Free Saturday morning yoga and Pilates in Santana Row Park with lululemon. Check in at 8:30 AM. Class starts at 9 AM. Bring your own mat.",
     url: "https://santanarow.com/events/",
     emoji: "🧘",
   },
