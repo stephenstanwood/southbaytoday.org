@@ -236,6 +236,9 @@ const SOURCE_ID_SKIP = new Set([
   "SR0886237", // Sweetgreen, 261 Hamilton Ave: https://eservices.sccgov.org/FacilityInspection/Home/ShowDetail/PR0423462
   "SR0886435", // Ulas Enterprises is operating as Sultan's Kebab: https://www.saratogachamber.org/dining
   "SR0886514", // Habibiz posts operating hours for 262 E Santa Clara St: https://habibizfood.com/contact-us/
+  // Freezn Scoopz at 4072 Monterey Rd had customer visits in October, before
+  // this plan approval. https://maps.google.com/?cid=1714788890550434867
+  "SR0885829",
   // JapaCurry lists its Naglee Park restaurant at 505 E San Carlos St. Its
   // plan record uses the nearby 7-Eleven address, 284 S 11th St.
   // https://www.japacurry.net/locations

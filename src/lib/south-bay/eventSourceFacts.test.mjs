@@ -156,12 +156,67 @@ test("Edenvale's full ESL 501 session keeps its dated hours without obsolete enr
       description: "Free noncredit class. The instructor is Michelle N. Henninger. The class meets in the Community Room.",
     });
     assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const next = {
+      ...row,
+      date: "2026-11-25",
+      url: row.url.replace(/6a07b602c6a1dc3d00d40851$/, "6a07b602c6a1dc3d00d40852"),
+    };
+    assert.deepEqual(applyVerifiedEventFacts(next), { ...fixed, date: next.date, url: next.url });
     for (const changed of [
       { ...row, registration: "required" },
       { ...row, date: "2026-11-25" },
       { ...row, url: row.url.replace(/6a07b602c6a1dc3d00d40851$/, "other-section") },
     ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
   }
+});
+
+test("the full Educational Park class keeps its bilingual overview and session hours", () => {
+  const row = {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/events/69f1138fdefec6489cc0d968",
+    time: "5:15 PM",
+    endTime: "6:45 PM",
+    registration: "full",
+    description: "Submit the registration form. Completar el formulario de inscripción.",
+    attendanceNote: "Space is limited.",
+  };
+  const fixed = applyVerifiedEventFacts(row);
+  assert.match(fixed.description, /noncredit listening and speaking class.*Curso gratuito/);
+  assert.doesNotMatch(fixed.description, /registration form|formulario de inscripción/);
+  assert.equal(fixed.attendanceNote, undefined);
+  assert.equal(fixed.time, row.time);
+  assert.equal(fixed.endTime, row.endTime);
+  assert.equal(fixed.registration, row.registration);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  for (const other of [{ ...row, date: "2026-11-25" }, { ...row, registration: "required" }]) {
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
+test("Thanksgiving corrections keep exact occurrences and later registration notices", () => {
+  const row = {
+    source: "City Newsletter",
+    city: "san-jose",
+    date: "2026-11-26",
+    title: "Thanksgiving Feast Gathering with Our Lady of Refuge",
+    address: "2165 Lucretia Avenue, San Jose",
+    url: "",
+    time: "11:30 AM",
+    endTime: "2:00 PM",
+  };
+  const fixed = applyVerifiedEventFacts(row);
+  assert.equal(fixed.url, "https://www.eventbrite.com/e/thanksgiving-feast-gathering-tickets-2004205079344");
+  assert.equal(fixed.venue, "Our Lady of Refuge");
+  assert.equal(fixed.registration, "required");
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const closed = applyVerifiedEventFacts({ ...row, registration: "closed", attendanceNote: "Registration closed." });
+  assert.equal(closed.registration, "closed");
+  assert.match(closed.attendanceNote, /^Registration closed\./);
+  for (const other of [
+    { ...row, date: "2027-11-25" },
+    { ...row, address: "2200 Lucretia Avenue, San Jose" },
+    { ...row, url: "https://example.com/a-new-organizer-notice" },
+  ]) assert.deepEqual(applyVerifiedEventFacts(other), other);
 });
 
 test("Cars and Croissants uses Santana Row's explicit spectator admission and drops its ranking claim", () => {

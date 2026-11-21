@@ -3807,7 +3807,7 @@
       "address": "1 W Campbell Ave, Campbell, CA 95008",
       "city": "campbell",
       "category": "arts",
-      "cost": null,
+      "cost": "paid",
       "description": "The current cast members of the Emmy-nominated TV show Whose Line Is It Anyway? are proud to present their new improv tour: Whose Live Anyway?",
       "url": "https://www.heritagetheatre.org/events/whose-live-anyway-presented-by-martin-media",
       "source": "Heritage Theatre",
@@ -5291,7 +5291,7 @@
       "address": "1 W Campbell Ave, Campbell, CA 95008",
       "city": "campbell",
       "category": "arts",
-      "cost": null,
+      "cost": "paid",
       "description": "",
       "url": "https://www.heritagetheatre.org/events/rob-schneider-presented-by-martin-media",
       "source": "Heritage Theatre",
@@ -8863,7 +8863,7 @@
       "city": "san-jose",
       "category": "education",
       "cost": "free",
-      "description": "Adults and seniors who are interested in learning the basics or need a refresher on how to play Taiwanese Mahjong are welcome to join this program. You'll learn while playing the game: how to set up the game tiles and understand them; the flow of the game; how to make sets during the game; how to win. Learning Mahjong improves cognitive function, helps reduce stress and creates a sense of community. Adults and seniors who are interested in learning the basics or need a refresher on how to play Chinese Mahjong are welcome to register for this program. You'll learn while playing the game: how to set up the game tiles and understand them; the flow of the game; how to make sets during the game; how to win. Learning Mahjong improves cognitive function, helps reduce stress and creates a sense of community. You will also learn strategy, strengthen communication skills, and build a sense of community. No registration needed.",
+      "description": "Adults and seniors can learn or brush up on mahjong by playing. The session covers tiles, sets, the order of play, and how to win. No registration is required.",
       "sourceAudiences": [
         "Adults, ages 18+",
         "Seniors, ages 65+"
@@ -8873,8 +8873,9 @@
       "kidFriendly": false,
       "audienceAge": "adult",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/712184dc1af6e48f1df367a0265607e1/Mahjong_Tiles_(195606345).jpg",
-      "blurb": "Learn or brush up on Taiwanese Mahjong basics with other players at Tully Library.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "blurb": "Practice mahjong with other adults at Tully Library.",
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "none"
     },
     {
       "id": "sjpl-69f10f4bfb87a3c2e2ac6fef",
@@ -8916,17 +8917,16 @@
       "registration": "full",
       "category": "education",
       "cost": "free",
-      "description": "ESL Listening & Speaking 1 is a noncredit course for high-beginning English learners. Students will learn to pronounce basic words accurately, communicate effectively, understand and use basic grammar structures, and build their foundational vocabulary. To enroll, complete and pass the Self-Guided Computer Assessment. This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level. For accurate results, complete the assessment on your own in a quiet setting. Submit the registration form. To schedule your assessment appointment, send an email to marcela.guevara@sjlibrary.org. ESL 502 runs from August 25, 2026, through December 10, 2026. Classes meet Tuesday, Wednesday, and Thursday from 5:15 PM to 6:45 PM. The instructor is to be determined. We will assist you with the application and registration processes in person at the Educational Park Branch Library. Space is limited. ESL Escucha y Conversación 1 (Curso de ESL sin crédito, nivel básico alto) Los estudiantes aprenden a pronunciar palabras básicas, a comunicarse de manera efectiva, a usar estructuras gramaticales simples y a ampliar tu vocabulario. Para inscribirte, debes: Completar y aprobar la evaluación de computadora autoguiada (No es un examen—es simplemente una evaluación para ayudarnos a colocarte en la clase de ESL más adecuada según tu nivel actual de inglés. Para obtener resultados precisos, debes completar la evaluación de forma individual y en un lugar tranquilo, sin la ayuda de otras personas). Completar el formulario de inscripción. Programar una cita para realizar la evaluación, enviando un email a: marcela.guevara@sjlibrary.org Información del Curso ESL 502: Inicio: 25 de Agosto de 2026; Finaliza: 10 de Diciembre de 2026; Días de Clase: Martes, Miércoles y Jueves; Hora: 5:15 p.m. – 6:45 p.m. Instructor: TBD. Te ayudaremos con los procesos de solicitud y registro en persona en la Biblioteca Educational Park. El espacio es limitado.",
+      "description": "Free noncredit listening and speaking class for high-beginning English learners, with practice in pronunciation, basic grammar, and everyday vocabulary. Curso gratuito de comprensión auditiva y conversación para estudiantes de inglés de nivel básico alto. Incluye práctica de pronunciación, gramática básica y vocabulario cotidiano.",
       "sourceAudiences": [
         "Adults, ages 18+"
       ],
-      "attendanceNote": "Space is limited.",
       "url": "https://sjpl.bibliocommons.com/events/69f1138fdefec6489cc0d968",
       "source": "San Jose Public Library",
       "kidFriendly": false,
       "audienceAge": "adult",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/7a1650d23f177ac4ac37c5c9a5a5ddb6/EVClogo.jpg",
-      "blurb": "Practice pronunciation, basic grammar, and everyday vocabulary at the Educational Park Library in San Jose, in a high-beginning ESL class that meets Tuesday evenings.",
+      "blurb": "Practice pronunciation, basic grammar, and everyday vocabulary in a beginning English class at Educational Park Library.",
       "firstSeenAt": "2026-11-21T03:03:12.584Z"
     },
     {
@@ -9176,12 +9176,11 @@
       "registration": "full",
       "category": "education",
       "cost": "free",
-      "description": "ESL 501 Reading & Writing 1 is a free, noncredit course for learners at the high-beginning English level. It focuses on basic reading, writing, grammar, and vocabulary, with practice in speaking, listening, and pronunciation. Students learn the meanings of common words in context, express ideas in writing using familiar phrases and sentences, understand basic grammar structures, and read simplified texts. The course runs from August 25, 2026, through December 10, 2026. Classes meet Tuesday, Wednesday, and Thursday from 10:30 AM to 12:30 PM. The instructor is Michelle N. Henninger. Complete the Guided Self-Placement assessment before classes start. It helps the college place you in a class for your English level. Get help applying and registering in person at Edenvale Branch Library. Space is limited.",
+      "description": "ESL 501 Reading & Writing 1 is a free, noncredit course for learners at the high-beginning English level. It focuses on basic reading, writing, grammar, and vocabulary, with practice in speaking, listening, and pronunciation. Students learn the meanings of common words in context, express ideas in writing using familiar phrases and sentences, understand basic grammar structures, and read simplified texts. The instructor is Michelle N. Henninger.",
       "sourceAudiences": [
         "Adults, ages 18+",
         "Seniors, ages 65+"
       ],
-      "attendanceNote": "Space is limited.",
       "url": "https://sjpl.bibliocommons.com/events/6a07b602c6a1dc3d00d40852",
       "source": "San Jose Public Library",
       "kidFriendly": false,
@@ -9224,7 +9223,7 @@
       "venue": "Joyce Ellington Library",
       "address": "491 E. Empire St San Jose",
       "city": "san-jose",
-      "category": "education",
+      "category": "family",
       "cost": "free",
       "description": "Please join us for Family Movie Club at the Joyce Ellington Branch Library as we watch Wonder, a movie that follows August Pullman, a 10-year-old boy born with facial differences, as he attends a mainstream school for the first time and inspires his classmates and community to choose kindness Families are invited to relax and enjoy this fun movie together in a welcoming community setting. Popcorn will be provided, and we will have coloring pages available for those who prefer a quiet activity during the movie. Free. No registration required. The program is sponsored by the Friends of the Joyce Ellington Library.",
       "sourceAudiences": [
@@ -9239,7 +9238,8 @@
       "audienceAge": "all",
       "image": "https://sjpl.bibliocommons.com/events/uploads/images/full/4098477fc5d6aa075322e4826d037433/Wonder.jpg",
       "blurb": "Watch Wonder, the story of 10-year-old August Pullman starting at a mainstream school, at the library's Family Movie Club.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "none"
     },
     {
       "id": "sjpl-69aa040645f57dfccb18b40e",
@@ -15818,7 +15818,7 @@
       "venue": "King Library",
       "address": "150 E San Fernando St San Jose",
       "city": "san-jose",
-      "category": "arts",
+      "category": "community",
       "cost": "free",
       "description": "Calling all teens between the ages of 13 and 18 looking for simple volunteer opportunities. It is the week after a huge theatrical production by our TeenHQ Theater program and we've made quite the mess backstage. If you are interested and looking for community service hours, we need people to: sort; label; organize; and stack. Please email Eboni at eboni.harris@sjlibrary.org if you think you can come! Free program. High school and middle school students welcome.",
       "sourceAudiences": [
@@ -26413,10 +26413,10 @@
       "time": "7:00 PM",
       "endTime": null,
       "venue": "Maples Pavilion",
-      "address": "Maples Pavilion, Stanford University, 641 Campus Drive, Stanford, CA 94305",
+      "address": "655 Campus Drive, Stanford, CA 94305",
       "city": "palo-alto",
       "category": "sports",
-      "cost": null,
+      "cost": "paid",
       "description": "Stanford women's basketball hosts Arizona State in a holiday-themed game. Early arrivals get a free holiday shirt while supplies last, and fans can bring a new, unwrapped toy for the annual Toy Drive.",
       "url": "https://tickets.gostanford.com/events/womens-basketball-vs-arizona-state-jmu0c4",
       "source": "City Newsletter",
@@ -26424,7 +26424,8 @@
       "audienceAge": "all",
       "image": "https://render.vivenu.com/image?url=https%3A%2F%2Fs3.eu-central-1.amazonaws.com%2Fyt-s3%2Feab75ad1-dcb5-47f7-a144-ad5d152bff5d.jpg&forceWebP=true&objectFit=cover&width=1920&height=1080&upscale=false",
       "blurb": "Watch Stanford women's basketball host Arizona State, and bring a new, unwrapped toy for the Toy Drive.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "required"
     },
     {
       "id": "inbound-6a7e5356fce5299d",
@@ -39841,7 +39842,7 @@
       "category": "market",
       "cost": null,
       "description": "Weekly Saturday farmers' market, held rain or shine, with a pre-Thanksgiving selection of produce, flowers, baked goods and prepared foods. Aprylle Gilbert plays live music starting at 9:30 AM, and EBT/SNAP benefits are accepted at the volunteer table.",
-      "url": "",
+      "url": "https://www.pafarmersmarket.org/",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
@@ -39898,7 +39899,7 @@
       "displayDate": "Thu, Dec 10",
       "time": "11:00 AM",
       "endTime": "2:00 PM",
-      "venue": null,
+      "venue": "Santa Clara County Government Center",
       "address": "70 W. Hedding Street, San Jose",
       "city": "san-jose",
       "category": "community",
@@ -39923,9 +39924,9 @@
       "address": "St. John the Baptist Church (Pavalkis Hall), 279 S. Main Street, Milpitas",
       "city": "milpitas",
       "category": "community",
-      "cost": null,
+      "cost": "free",
       "description": "Free Thanksgiving lunch hosted by Knights of Columbus Council 5796. Contact Lito Lavarias at (408) 655-6155.",
-      "url": "",
+      "url": "https://www.sjbparish.org/",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
@@ -39940,19 +39941,21 @@
       "displayDate": "Thu, Nov 26",
       "time": "11:30 AM",
       "endTime": "2:00 PM",
-      "venue": null,
+      "venue": "Our Lady of Refuge",
       "address": "2165 Lucretia Avenue, San Jose",
       "city": "san-jose",
       "category": "community",
       "cost": null,
-      "description": "Thanksgiving feast gathering hosted by Our Lady of Refuge. Contact Tuong Anh Nguyen at (408) 620-6929.",
-      "url": "",
+      "description": "Community Thanksgiving meal at Our Lady of Refuge. Register before attending. Seating is limited.",
+      "url": "https://www.eventbrite.com/e/thanksgiving-feast-gathering-tickets-2004205079344",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
-      "blurb": "Gather for a Thanksgiving feast hosted by Our Lady of Refuge in San Jose.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "blurb": "Register for a Thanksgiving meal at Our Lady of Refuge in San Jose.",
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "required",
+      "attendanceNote": "Seating is limited to registered guests and available on a first-come, first-served basis."
     },
     {
       "id": "inbound-2a191f17bf0666bc",
@@ -39965,15 +39968,16 @@
       "address": "St. Frances Cabrini Parish, 15333 Woodard Road, San Jose",
       "city": "san-jose",
       "category": "community",
-      "cost": null,
+      "cost": "free",
       "description": "Thanksgiving Day feast hosted by Loaves & Fishes Family Kitchen. Contact (408) 922-9085.",
-      "url": "",
+      "url": "https://www.eventbrite.com/e/thanksgiving-day-feast-tickets-2004400906067",
       "source": "City Newsletter",
       "kidFriendly": true,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Join a Thanksgiving Day feast hosted by Loaves & Fishes Family Kitchen at St. Frances Cabrini Parish.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "none"
     },
     {
       "id": "inbound-9b5194341de2df63",
@@ -39982,19 +39986,20 @@
       "displayDate": "Thu, Nov 26",
       "time": "8:30 AM",
       "endTime": null,
-      "venue": "Start line at W. Santa Clara Street at N. 1st Street",
-      "address": "Start line at W. Santa Clara Street at N. 1st Street, San Jose",
+      "venue": "Downtown San Jose",
+      "address": "W. Santa Clara Street at N. First Street, San Jose",
       "city": "san-jose",
       "category": "community",
-      "cost": null,
+      "cost": "paid",
       "description": "Thanksgiving morning run/walk through downtown San Jose. Sign-up is available online.",
-      "url": "",
+      "url": "https://www.svturkeytrot.com/general-race-info/",
       "source": "City Newsletter",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Run or walk through downtown San Jose on Thanksgiving morning at the Applied Materials Silicon Valley Turkey Trot.",
-      "firstSeenAt": "2026-11-21T03:03:12.584Z"
+      "firstSeenAt": "2026-11-21T03:03:12.584Z",
+      "registration": "required"
     }
   ]
 }

@@ -89,6 +89,74 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The November 20 county newsletter confirms these occurrences. The race
+  // organizer and meal hosts supply the venue names and admission terms.
+  ...[
+    ["Applied Materials Silicon Valley Turkey Trot", "san-jose", /W\. Santa Clara Street at N\. 1st Street/i, {
+      url: "https://www.svturkeytrot.com/general-race-info/",
+      venue: "Downtown San Jose",
+      address: "W. Santa Clara Street at N. First Street, San Jose",
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+    }],
+    ["48th Annual Free Thanksgiving Lunch with Knights of Columbus Council 5796", "milpitas", /Pavalkis Hall.*279 S\. Main/i, {
+      url: "https://www.sjbparish.org/",
+      cost: "free",
+    }],
+    ["Thanksgiving Day Feast with Loaves & Fishes Family Kitchen", "san-jose", /St\. Frances Cabrini Parish.*15333 Woodard/i, {
+      url: "https://www.eventbrite.com/e/thanksgiving-day-feast-tickets-2004400906067",
+      cost: "free", registration: REGISTRATION_NONE,
+    }],
+    ["Thanksgiving Feast Gathering with Our Lady of Refuge", "san-jose", /2165 Lucretia Ave/i, {
+      url: "https://www.eventbrite.com/e/thanksgiving-feast-gathering-tickets-2004205079344",
+      venue: "Our Lady of Refuge", registration: REGISTRATION_REQUIRED,
+      attendanceNote: "Seating is limited to registered guests and available on a first-come, first-served basis.",
+      description: "Community Thanksgiving meal at Our Lady of Refuge. Register before attending. Seating is limited.",
+      blurb: "Register for a Thanksgiving meal at Our Lady of Refuge in San Jose.",
+    }],
+  ].map(([title, city, address, { attendanceNote, ...facts }]) => ({
+    date: "2026-11-26",
+    matches: event => event.source === "City Newsletter" && event.title === title && event.city === city
+      && (address.test(event.address || "") || event.url === facts.url)
+      && (!event.url || event.url === facts.url),
+    facts: event => ({
+      ...facts,
+      ...(event.registration && facts.registration === REGISTRATION_NONE
+        ? { registration: event.registration } : {}),
+    }),
+    appendAttendanceNote: attendanceNote,
+  })),
+  {
+    date: "2026-11-21",
+    matches: event => event.source === "City Newsletter" && event.city === "palo-alto"
+      && event.title === "Downtown Palo Alto Farmers' Market" && /Gilman Street between Hamilton and Forest/i.test(event.address || ""),
+    facts: event => ({ url: event.url || "https://www.pafarmersmarket.org/" }),
+  },
+  // The supervisor's November 20 notice gives the Government Center address
+  // and the 11 AM–2 PM window. The county's public map confirms the name.
+  // https://files.santaclaracounty.gov/migrated/Main%20County%20ParkingMap.pdf
+  {
+    date: "2026-12-10",
+    matches: event => event.source === "City Newsletter" && event.city === "san-jose"
+      && event.title === "Human Rights Day Flag Raising Ceremony" && /^70 W\.? Hedding Street\b/i.test(event.address || ""),
+    facts: { venue: "Santa Clara County Government Center" },
+  },
+  // Stanford's ticket page gives the Maples Pavilion entrance and admission.
+  {
+    date: "2026-12-17",
+    url: "https://tickets.gostanford.com/events/womens-basketball-vs-arizona-state-jmu0c4",
+    facts: {
+      address: "655 Campus Drive, Stanford, CA 94305",
+      cost: "paid", registration: REGISTRATION_REQUIRED,
+    },
+  },
+  // Heritage Theatre's box office confirms paid admission for both shows.
+  ...[
+    ["2027-01-30", "https://www.heritagetheatre.org/events/rob-schneider-presented-by-martin-media"],
+    ["2027-02-06", "https://www.heritagetheatre.org/events/whose-live-anyway-presented-by-martin-media"],
+  ].map(([date, url]) => ({
+    date, url,
+    facts: event => event.cost == null ? { cost: "paid" } : {},
+  })),
   // The flyer on the university's event page gives the 5–7 PM window.
   {
     date: "2026-12-07",
@@ -485,13 +553,16 @@ const CORRECTIONS = [
     ],
   },
   // Use SJPL's dated session hours. The college's March schedule gives a
-  // different term end and finish time. SJPL marks this occurrence full but
-  // still carries enrollment directions from before the term started.
+  // different term end and finish time. SJPL marks these occurrences full but
+  // still shows enrollment directions from before the term started.
   // https://www.evc.edu/sites/default/files/2026-03/Fall-2026-Class-Schedule.pdf (section 130594)
-  {
-    date: "2026-11-24",
+  ...[
+    ["2026-11-24", "6a07b602c6a1dc3d00d40851"],
+    ["2026-11-25", "6a07b602c6a1dc3d00d40852"],
+  ].map(([date, id]) => ({
+    date,
     matches: event => event.registration === REGISTRATION_FULL
-      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a07b602c6a1dc3d00d40851\/?$/.test(event.url || ""),
+      && new RegExp(`^https://sjpl\\.bibliocommons\\.com/(?:v2/)?events/${id}/?$`).test(event.url || ""),
     facts: event => event.attendanceNote === "Space is limited." ? { attendanceNote: undefined } : {},
     copyReplacements: [
       [
@@ -515,6 +586,41 @@ const CORRECTIONS = [
         "",
       ],
     ],
+  })),
+  {
+    date: "2026-11-24",
+    matches: event => event.registration === REGISTRATION_FULL
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69f1138fdefec6489cc0d968\/?$/.test(event.url || ""),
+    facts: event => ({
+      description: "Free noncredit listening and speaking class for high-beginning English learners, with practice in pronunciation, basic grammar, and everyday vocabulary. Curso gratuito de comprensión auditiva y conversación para estudiantes de inglés de nivel básico alto. Incluye práctica de pronunciación, gramática básica y vocabulario cotidiano.",
+      blurb: "Practice pronunciation, basic grammar, and everyday vocabulary in a beginning English class at Educational Park Library.",
+      ...(event.attendanceNote === "Space is limited." ? { attendanceNote: undefined } : {}),
+    }),
+  },
+  // The library lists a backstage volunteer session after the production.
+  {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/events/6adcf7d70b801373af90ebb5",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6adcf7d70b801373af90ebb5"],
+    facts: { category: "community" },
+  },
+  // The published Mahjong Club description repeats instructions under two
+  // labels and ends with "No registration needed." Keep the shared activity.
+  {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/events/699ca8673cc3e0c9ecbb1797",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/699ca8673cc3e0c9ecbb1797"],
+    facts: {
+      registration: REGISTRATION_NONE,
+      description: "Adults and seniors can learn or brush up on mahjong by playing. The session covers tiles, sets, the order of play, and how to win. No registration is required.",
+      blurb: "Practice mahjong with other adults at Tully Library.",
+    },
+  },
+  {
+    date: "2026-11-25",
+    url: "https://sjpl.bibliocommons.com/events/6acfde9596ec3a003ada9598",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6acfde9596ec3a003ada9598"],
+    facts: { category: "family", registration: REGISTRATION_NONE },
   },
   // The organizer confirms the four dated sale sessions. Only the Thursday
   // preview requires membership, which attendees can buy at the door.

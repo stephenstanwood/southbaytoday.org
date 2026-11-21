@@ -127,6 +127,7 @@ test("verified tenant improvements at operating businesses stay off the openings
     { record_id: "SR0886237", business_name: "RTI SWEETGREEN RESTAURANT", site_location: "261 HAMILTON AVE", city: "PALO ALTO" },
     { record_id: "SR0886435", business_name: "RTI ULAS ENTERPRISES LLC", site_location: "14554 BIG BASIN WY A.", city: "SARATOGA" },
     { record_id: "SR0886514", business_name: "RTI HABIBIZ CHINESE", site_location: "262 E SANTA CLARA ST", city: "SAN JOSE" },
+    { record_id: "SR0885829", business_name: "RTI FREEZN SCOOPZ", site_location: "4072 MONTEREY RD", city: "SAN JOSE" },
   ];
   for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
   assert.equal(shouldSkip({
