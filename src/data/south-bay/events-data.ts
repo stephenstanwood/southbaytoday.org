@@ -729,7 +729,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "San Jose's beloved free holiday event features hundreds of decorated trees, nightly entertainment, and light displays in a longstanding downtown tradition.",
+      "This longtime holiday tradition in downtown San Jose features hundreds of decorated trees, nightly entertainment, and light displays. Admission is free.",
     url: "https://christmasinthepark.com",
     emoji: "🎄",
     featured: true,
