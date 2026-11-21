@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-21T07:05:03.436Z",
+    "generatedAt": "2026-11-21T11:20:30.815Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
-    "eventCount": 192,
+    "eventCount": 189,
     "sourceCount": 19,
     "sources": [
-      "San Jose Jazz (11)",
+      "San Jose Jazz (10)",
       "Linden Tree Books (4)",
       "History San Jose (2)",
-      "Montalvo Arts Center (5)",
+      "Montalvo Arts Center (4)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
@@ -20,7 +20,7 @@
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
       "Levi's Stadium (2)",
-      "SAP Center (13)",
+      "SAP Center (12)",
       "The Tech Interactive (13)",
       "Books Inc (8)",
       "San Jose Museum of Art (1)",
@@ -67,8 +67,8 @@
         "id": "san-jose-jazz",
         "label": "San Jose Jazz",
         "status": "ok",
-        "count": 11,
-        "liveCount": 11,
+        "count": 10,
+        "liveCount": 10,
         "error": null,
         "sources": [
           "San Jose Jazz"
@@ -114,8 +114,8 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 6,
-        "liveCount": 6,
+        "count": 4,
+        "liveCount": 4,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -262,8 +262,8 @@
         "id": "sap-center",
         "label": "SAP Center",
         "status": "ok",
-        "count": 13,
-        "liveCount": 13,
+        "count": 12,
+        "liveCount": 12,
         "error": null,
         "sources": [
           "SAP Center"
@@ -326,23 +326,6 @@
     ]
   },
   "events": [
-    {
-      "id": "eef0ef2a4e15",
-      "title": "Black Nile",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
-      "time": "8pm",
-      "endTime": null,
-      "venue": "SJZ Break Room",
-      "address": "",
-      "city": "san-jose",
-      "category": "music",
-      "cost": null,
-      "description": "Brothers Aaron and Lawrence Shaw, performing as Black Nile, see a different Los Angeles: not Hollywood's fantasy but a city of improvisation, fresh ideas and jazz, built on deep Black and Latino roots. Born and raised in LA's Inglewood neighborhood, they came up in the city's red-hot jazz scene, rubbing shoulders with elder legends and next-gen stars alike.",
-      "url": "https://sanjosejazz.org/events/black-nile/",
-      "source": "San Jose Jazz",
-      "kidFriendly": false
-    },
     {
       "id": "56e17290ddf8",
       "title": "Sandra & Katrina Pacheco: Music of Amalia Rodrigues",
@@ -416,14 +399,14 @@
       "title": "SJZ Break Room Jazz Jam",
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
-      "time": "5:20 PM",
-      "endTime": "9:00 PM",
+      "time": "5:20pm",
+      "endTime": null,
       "venue": "SJZ Break Room",
-      "address": "310 S First St, San Jose, CA 95113",
+      "address": "",
       "city": "san-jose",
       "category": "music",
-      "cost": "free",
-      "description": "The San Jose Jazz High School All Stars open at 5:20 PM, followed by the Michael Webster Quartet at 6:15 PM. The open jazz jam runs from 7 to 9 PM. All ages are welcome. Musicians can sign up to play.",
+      "cost": null,
+      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
       "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-3/",
       "source": "San Jose Jazz",
       "kidFriendly": false
@@ -504,11 +487,11 @@
       "time": "6pm",
       "endTime": null,
       "venue": "Plaza de César Chávez",
-      "address": "1 Paseo de San Antonio, San Jose, CA 95113",
+      "address": "",
       "city": "san-jose",
       "category": "music",
-      "cost": "free",
-      "description": "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",
+      "cost": null,
+      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
       "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
       "source": "San Jose Jazz",
       "kidFriendly": false
@@ -634,23 +617,6 @@
       "description": "",
       "url": "https://historysanjose.org/programs-events/",
       "source": "History San Jose",
-      "kidFriendly": false
-    },
-    {
-      "id": "d14e2a279221",
-      "title": "Yuletide Boutique",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
-      "time": null,
-      "endTime": null,
-      "venue": "Montalvo Arts Center",
-      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
-      "city": "saratoga",
-      "category": "arts",
-      "cost": "paid",
-      "description": "",
-      "url": "https://montalvoarts.org/yultide-3/",
-      "source": "Montalvo Arts Center",
       "kidFriendly": false
     },
     {
@@ -807,10 +773,10 @@
       "kidFriendly": false
     },
     {
-      "id": "48721a504aa6",
+      "id": "065fd8bc8501",
       "title": "Queer American Memorials at the ICA",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -827,10 +793,10 @@
       "kidFriendly": false
     },
     {
-      "id": "6818e816c6d7",
+      "id": "07d203d89536",
       "title": "Greg Ito: To Give and Take",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
       "time": null,
       "endTime": null,
       "ongoing": true,
@@ -884,10 +850,10 @@
       "kidFriendly": true
     },
     {
-      "id": "10fae9f4d09b",
+      "id": "a97bcb1f4ec9",
       "title": "Toddler Storytime",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
       "time": "11:30 am",
       "endTime": null,
       "venue": "Children's Discovery Museum",
@@ -1058,7 +1024,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-21",
-        "checkedAt": "2026-11-21T07:03:56.894Z"
+        "checkedAt": "2026-11-21T11:19:23.902Z"
       }
     },
     {
@@ -1081,7 +1047,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-21T07:03:56.895Z"
+        "checkedAt": "2026-11-21T11:19:23.904Z"
       }
     },
     {
@@ -1104,7 +1070,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-21T07:03:56.895Z"
+        "checkedAt": "2026-11-21T11:19:23.904Z"
       }
     },
     {
@@ -1127,7 +1093,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-21T07:03:56.895Z"
+        "checkedAt": "2026-11-21T11:19:23.904Z"
       }
     },
     {
@@ -1150,7 +1116,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-21T07:03:56.896Z"
+        "checkedAt": "2026-11-21T11:19:23.905Z"
       }
     },
     {
@@ -1173,7 +1139,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-21T07:03:56.897Z"
+        "checkedAt": "2026-11-21T11:19:23.906Z"
       }
     },
     {
@@ -1196,7 +1162,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-21T07:03:56.897Z"
+        "checkedAt": "2026-11-21T11:19:23.906Z"
       }
     },
     {
@@ -1901,7 +1867,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1918,7 +1884,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-6",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1935,7 +1901,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil […]",
+      "description": "The gripping intensity of John Adams's Doctor Atomic arrives in an all-new production at the California Theatre, led by visionary General Director Shawna Lucey. Chronicling the moral and emotional turmoil surrounding the Manhattan Project, this opera dramatizes the high­stakes days when J. Robert Oppenheimer and his team confronted the ethical weight of unleashing unprecedented destructive […]",
       "url": "https://www.operasj.org/event/doctor-atomic-2",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3100,7 +3066,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.721Z"
+        "checkedAt": "2026-11-21T11:19:58.382Z"
       }
     },
     {
@@ -3124,7 +3090,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.723Z"
+        "checkedAt": "2026-11-21T11:19:58.385Z"
       }
     },
     {
@@ -3148,7 +3114,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3172,7 +3138,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3213,7 +3179,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3237,7 +3203,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3261,7 +3227,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3285,7 +3251,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3309,7 +3275,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3333,7 +3299,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
     },
     {
@@ -3357,25 +3323,8 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-21T07:04:30.724Z"
+        "checkedAt": "2026-11-21T11:19:58.386Z"
       }
-    },
-    {
-      "id": "cf1c4eeca417",
-      "title": "Who Want The Smoke 2026",
-      "date": "2026-11-20",
-      "displayDate": "Fri, Nov 20",
-      "time": "6:30 PM",
-      "endTime": null,
-      "venue": "SAP Center",
-      "address": "525 W Santa Clara St, San Jose, CA 95113",
-      "city": "san-jose",
-      "category": "community",
-      "cost": "paid",
-      "description": "",
-      "url": "https://www.sapcenter.com/events/detail/who-want-the-smoke-2026",
-      "source": "SAP Center",
-      "kidFriendly": false
     },
     {
       "id": "80960df68cd9",
