@@ -12,17 +12,32 @@ const genealogy = fixture.events.find(event => event.source === "City Newsletter
 
 test("the real library adapter preserves optional appointments and conditional walk-ins after publication", async t => {
   t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-14T22:00:00Z") });
+  const laterDate = "2026-11-25";
+  const laterMentor = {
+    ...fixture.source,
+    id: "69aa040645f57dfccb18b40e",
+    definition: {
+      ...fixture.source.definition,
+      start: `${laterDate}T15:00`,
+      end: `${laterDate}T17:00`,
+    },
+  };
   t.mock.method(globalThis, "fetch", async () => Response.json({ entities: {
-    events: { [fixture.source.id]: fixture.source }, locations: fixture.locations,
+    events: { [fixture.source.id]: fixture.source, [laterMentor.id]: laterMentor },
+    locations: fixture.locations,
   } }));
-  const [ingested] = await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose");
-  const event = applyVerifiedEventFacts({ ...ingested, title: cleanTitle(ingested.title) });
-  assert.equal(requiresAdvanceRegistration(event), false);
-  assert.equal(event.registrationClosesBy, null);
-  assert.match(event.attendanceNote, /optional/);
-  assert.match(event.attendanceNote, /4:30 PM if space is available/);
-  assert.equal(event.time, "3:00 PM");
-  assert.equal(event.endTime, "5:00 PM");
+  const events = await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose");
+  assert.deepEqual(events.map(event => event.date).sort(), [mentor.date, laterDate]);
+  for (const ingested of events) {
+    assert.equal(requiresAdvanceRegistration(ingested), true);
+    const event = applyVerifiedEventFacts({ ...ingested, title: cleanTitle(ingested.title) });
+    assert.equal(requiresAdvanceRegistration(event), false);
+    assert.equal(event.registrationClosesBy, null);
+    assert.match(event.attendanceNote, /optional/);
+    assert.match(event.attendanceNote, /4:30 PM if space is available/);
+    assert.equal(event.time, "3:00 PM");
+    assert.equal(event.endTime, "5:00 PM");
+  }
 });
 
 test("cached publication repairs both access flags without changing occurrence facts", async () => {
