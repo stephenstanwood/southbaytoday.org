@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-21T07:11:41.550Z",
-  "eventCount": 1514,
+  "eventCount": 1515,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -2161,7 +2161,7 @@
       "label": "Playwright source snapshot",
       "critical": true,
       "status": "ok",
-      "count": 191,
+      "count": 192,
       "dateCounts": {
         "2026-11-20": 6,
         "2026-11-21": 7,
@@ -2192,6 +2192,7 @@
         "2026-12-18": 2,
         "2026-12-19": 4,
         "2026-12-20": 2,
+        "2026-12-21": 1,
         "2026-12-22": 3,
         "2026-12-23": 1,
         "2026-12-26": 3,
@@ -2356,7 +2357,7 @@
     {
       "name": "playwright-events",
       "status": "ok",
-      "count": 191,
+      "count": 192,
       "timestamp": "2026-11-21T07:05:03.436Z",
       "ageHours": 0,
       "reason": null
@@ -24335,19 +24336,19 @@
       "date": "2026-12-04",
       "displayDate": "Fri, Dec 4",
       "time": "5:20 PM",
-      "endTime": null,
+      "endTime": "9:00 PM",
       "venue": "SJZ Break Room",
-      "address": "",
+      "address": "310 S First St, San Jose, CA 95113",
       "city": "san-jose",
       "category": "music",
       "cost": "free",
-      "description": "San Jose Jazz presents free live music with South First Friday. This month, following sets by the SJZ U19s and the Michael Webster Group, our all-ages jazz jam brings out some of the finest amateur players in the South Bay. Grab your instrument and sign up, or just drop in anytime to hear some great jazz.",
+      "description": "The San Jose Jazz High School All Stars open at 5:20 PM, followed by the Michael Webster Quartet at 6:15 PM. The open jazz jam runs from 7 to 9 PM. All ages are welcome. Musicians can sign up to play.",
       "url": "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-3/",
       "source": "San Jose Jazz",
       "kidFriendly": false,
       "audienceAge": "all",
       "image": "https://sanjosejazz.org/wp-content/uploads/2025/04/Michael-Webster_New_Web_1920X1080jpg.jpg",
-      "blurb": "Catch free live music at South First Friday, then watch amateur players take the stage in an all-ages jazz jam.",
+      "blurb": "Hear two opening sets from 5:20 PM, then listen or sign up to play in the all-ages jazz jam from 7 to 9 PM.",
       "firstSeenAt": "2026-10-31T03:01:05.526Z"
     },
     {
@@ -32631,6 +32632,27 @@
       "image": "https://images.unsplash.com/photo-1763889245414-7f6e8e2a34ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxsaXZlJTIwbXVzaWMlMjBjb25jZXJ0JTIwcGVyZm9ybWFuY2V8ZW58MHwyfHx8MTc3NzIzMDYxNnww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Hear pianist Hélène Grimaud play Rachmaninoff followed by late sonatas by Beethoven and Schubert.",
       "firstSeenAt": "2026-09-20T14:19:40.305Z"
+    },
+    {
+      "id": "00d623750afa",
+      "title": "HSAS Big Band / U19s at Christmas in the Park",
+      "date": "2026-12-21",
+      "displayDate": "Mon, Dec 21",
+      "time": "6:00 PM",
+      "endTime": null,
+      "venue": "Plaza de César Chávez",
+      "address": "1 Paseo de San Antonio, San Jose, CA 95113",
+      "city": "san-jose",
+      "category": "music",
+      "cost": "free",
+      "description": "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",
+      "url": "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
+      "source": "San Jose Jazz",
+      "kidFriendly": false,
+      "blurb": "Hear the HSAS Big Band and SJZ U19s play holiday music at Plaza de César Chávez; admission is free.",
+      "audienceAge": "all",
+      "image": "https://sanjosejazz.org/wp-content/uploads/2026/10/BM59297-scaled.jpg",
+      "firstSeenAt": "2026-10-31T03:01:05.526Z"
     },
     {
       "id": "inbound-092e15984d483ea0",

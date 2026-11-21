@@ -55,7 +55,6 @@ const SJZ_BREAK_ROOM_2026_OCCURRENCES = [
   ["2026-11-20", "black-nile", "paid"],
   ["2026-11-21", "sandra-katrina-pacheco-music-of-amalia-rodrigues", "paid"],
   ["2026-11-25", "noah-the-arkiteks", "paid"],
-  ["2026-12-04", "sjz-break-room-jazz-jam-3", "free"],
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan", "paid"],
   ["2026-12-05", "scott-amendola-jeff-parker-paul-bryan-2", "paid"],
 ];
@@ -3673,6 +3672,18 @@ const CORRECTIONS = [
       ...(slug === "legally-blue-2" ? [[/\bblues and soul standards\b/g, "blues"]] : []),
     ],
   })),
+  // The dated detail page separates the two opening sets from the 7 PM jam.
+  // The archive card's older excerpt names a different opening act.
+  {
+    date: "2026-12-04",
+    url: "https://sanjosejazz.org/events/sjz-break-room-jazz-jam-3/",
+    facts: {
+      venue: "SJZ Break Room", address: "310 S First St, San Jose, CA 95113",
+      category: "music", cost: "free", time: "5:20 PM", endTime: "9:00 PM",
+      description: "The San Jose Jazz High School All Stars open at 5:20 PM, followed by the Michael Webster Quartet at 6:15 PM. The open jazz jam runs from 7 to 9 PM. All ages are welcome. Musicians can sign up to play.",
+      blurb: "Hear two opening sets from 5:20 PM, then listen or sign up to play in the all-ages jazz jam from 7 to 9 PM.",
+    },
+  },
   // Exact original city newsletters supply the attendance conditions that
   // the extracted descriptions omitted. Keep later closed/full metadata.
   // Evidence: docs/qa/2026-10-30-2307-fact-check.md (receiving-account originals).
@@ -3831,16 +3842,16 @@ const CORRECTIONS = [
       && !/\blive\b/i.test(event.description || ""),
     copyReplacements: [[/\blive music\b/gi, "music"]],
   },
-  // The browser index omits the venue and supporting combo. The organizer's
-  // exact occurrence page confirms the outdoor venue and free admission.
-  // Evidence: docs/qa/2026-10-30-0007-fact-check.md (fresh first-party page).
+  // San Jose Jazz confirms the date, showtime and free admission but gives its
+  // own office address. The city lists 1 Paseo de San Antonio for the park:
+  // https://www.sanjoseca.gov/Home/Components/News/News/7047/4699
   {
     date: "2026-12-21",
     url: "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
     facts: {
       title: "HSAS Big Band / U19s at Christmas in the Park",
       category: "music",
-      venue: "Plaza de César Chávez", address: "310 South First St, San Jose",
+      venue: "Plaza de César Chávez", address: "1 Paseo de San Antonio, San Jose, CA 95113",
       cost: "free",
       description: "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",
       blurb: "Hear the HSAS Big Band and SJZ U19s play holiday music at Plaza de César Chávez; admission is free.",

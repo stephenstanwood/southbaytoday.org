@@ -583,59 +583,52 @@ export async function scrapeSJJazz(page, { today = TODAY } = {}) {
   const allEvents = [];
   for (let p = 1; p <= 6; p++) {
     const url = p === 1
-      ? "https://www.sanjosejazz.org/events/"
+      ? "https://sanjosejazz.org/events/"
       : `https://sanjosejazz.org/events/page/${p}/`;
-    try {
-      const resp = await page.goto(url, { waitUntil: "networkidle", timeout: 20_000 });
-      if (!resp || resp.status() >= 400) break;
+    // Calendar cards and pagination are in the initial HTML. Surface failed
+    // pages so the source runner can retain its prior calendar on error.
+    const resp = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
+    if (!resp?.ok()) throw new Error(`San Jose Jazz calendar page ${p} returned HTTP ${resp?.status() ?? "unknown"}`);
 
-      const raw = await page.evaluate(() => {
-        const events = [];
-        // SJ Jazz uses .sjz-event divs with .sjz-event-name, .sjz-event-date, .sjz-event-hour
-        const cards = document.querySelectorAll(".sjz-event");
-        for (const card of cards) {
-          const name = card.querySelector(".sjz-event-name")?.textContent?.trim();
-          const date = card.querySelector(".sjz-event-date")?.textContent?.trim(); // "Sat, Apr 18"
-          const hour = card.querySelector(".sjz-event-hour")?.textContent?.trim()?.replace(/\s+/g, " "); // "8pm Pacific / ..."
-          // Current cards put the venue inside the clock line. Read the
-          // source's label instead of publishing the invented fallback venue.
-          const venue = card.querySelector(".sjz-event-venue, .event-place")?.textContent?.trim();
-          const description = card.querySelector(".sjz-event-excerpt")?.textContent?.trim();
-          const link = card.querySelector("a")?.href;
-          // Minutes are optional but MUST be part of the match: the old
-          // /\d+\s*[ap]m/ had no ":\d{2}" branch, so "7:30pm" failed at the
-          // "7" (followed by a colon, not am/pm) and matched the "30pm"
-          // fragment instead — the hour was silently dropped and readers saw
-          // "30:00 PM" on the card. Anchor on the hour, take minutes with it.
-          if (name && name.length > 3) events.push({ title: name, date, venue, description, link, time: hour?.match(/\d{1,2}(?::\d{2})?\s*[ap]m/i)?.[0] });
-        }
-        return events;
-      });
-
-      for (const r of raw) {
-        // SJ Jazz dates are like "Sat, Apr 18" — append current year
-        const dateStr = r.date ? `${r.date}, ${today.slice(0, 4)}` : null;
-        const date = tryParseDate(dateStr);
-        if (!date || date < today) continue;
-        allEvents.push({
-          title: r.title,
-          date,
-          time: normalizeTime(r.time),
-          endTime: null,
-          venue: r.venue || null,
-          address: "",
-          city: "san-jose",
-          url: r.link || "https://www.sanjosejazz.org/events/",
-          source: "San Jose Jazz",
-          category: "music",
-          cost: null,
-          description: r.description || "",
-          kidFriendly: false,
-        });
+    const { rows, hasNextPage } = await page.evaluate(() => {
+      const rows = [];
+      for (const card of document.querySelectorAll(".sjz-event")) {
+        const title = card.querySelector(".sjz-event-name")?.textContent?.trim();
+        const date = card.querySelector(".sjz-event-date")?.textContent?.trim();
+        const hour = card.querySelector(".sjz-event-hour")?.textContent?.trim();
+        const venue = card.querySelector(".sjz-event-venue, .event-place")?.textContent?.trim();
+        const description = card.querySelector(".sjz-event-excerpt")?.textContent?.trim();
+        const link = card.querySelector("a")?.href;
+        const time = hour?.match(/\b\d{1,2}(?::\d{2})?\s*[ap]m/i)?.[0];
+        if (title && title.length > 3) rows.push({ title, date, venue, description, link, time });
       }
-    } catch {
-      break;
+      return { rows, hasNextPage: Boolean(document.querySelector("a.next.page-link")) };
+    });
+    if (rows.length === 0 && (p > 1 || hasNextPage)) {
+      throw new Error(`San Jose Jazz calendar page ${p} contained no event cards`);
     }
+
+    for (const row of rows) {
+      // Calendar cards give the month and day without a year.
+      const date = tryParseDate(row.date ? `${row.date}, ${today.slice(0, 4)}` : null);
+      if (!date || date < today) continue;
+      allEvents.push({
+        title: row.title,
+        date,
+        time: normalizeTime(row.time),
+        endTime: null,
+        venue: row.venue || null,
+        address: "",
+        city: "san-jose",
+        url: row.link || "https://www.sanjosejazz.org/events/",
+        source: "San Jose Jazz",
+        category: "music",
+        cost: null,
+        description: row.description || "",
+        kidFriendly: false,
+      });
+    }
+    if (!hasNextPage) break;
     await page.waitForTimeout(400);
   }
   return allEvents;

@@ -95,14 +95,15 @@ test("dated jazz corrections keep showtimes, real venues and distinct admission"
 });
 
 test("jazz scraping preserves the supplied venue and musical context without making up a venue", async () => {
-  let page = 0;
   const actual = await scrapeSJJazz({
-    goto: async () => ({ status: () => ++page === 1 ? 200 : 404 }),
-    waitForTimeout: async () => {},
-    evaluate: async () => [
-      { title: "Emily Day & The Cosmo Alleycats", date: "Fri, Nov 13", time: "8pm", venue: "SJZ Break Room", description: "Led by jazz vocalist Emily Day.", link: row("81b5500edc90").url },
-      { title: "Public concert", date: "Fri, Nov 13", time: "8pm" },
-    ],
+    goto: async () => ({ ok: () => true }),
+    evaluate: async () => ({
+      rows: [
+        { title: "Emily Day & The Cosmo Alleycats", date: "Fri, Nov 13", time: "8pm", venue: "SJZ Break Room", description: "Led by jazz vocalist Emily Day.", link: row("81b5500edc90").url },
+        { title: "Public concert", date: "Fri, Nov 13", time: "8pm" },
+      ],
+      hasNextPage: false,
+    }),
   }, { today: "2026-10-30" });
   assert.equal(actual[0].venue, "SJZ Break Room");
   assert.equal(actual[0].category, "music");
