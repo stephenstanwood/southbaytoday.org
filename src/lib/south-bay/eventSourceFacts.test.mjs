@@ -1974,6 +1974,60 @@ test("the sold-out Monte Sereno CPR class retains its age limit and ticket terms
   }
 });
 
+test("November 25 Pearl Avenue Storytime qualifies pickup and keeps the confirmed ticket policy", () => {
+  const policy = "Free, with limited capacity of 50 participants. Tickets are required to enter. Seating for Storytime is available on a first-come, first-served basis.";
+  const pickupAtOpening = "A limited number of tickets will be distributed at the Information Desk when the Library opens. Try to arrive early to get your tickets.";
+  const pickupBeforeStart = "A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime.";
+  const raw = {
+    id: "sjpl-695477f8cba30d92b60b3b7e",
+    date: "2026-11-25", time: "11:00 AM", cost: "free",
+    title: "Indoor Family Storytime", venue: "Pearl Avenue Library",
+    url: "https://sjpl.bibliocommons.com/v2/events/695477f8cba30d92b60b3b7e",
+    description: policy + " " + pickupAtOpening,
+    attendanceNote: [policy, pickupAtOpening, pickupBeforeStart].join(" "),
+  };
+  const corrected = applyVerifiedEventFacts(raw);
+  assert(requiresAttendanceConfirmation(corrected));
+  assert.equal(corrected.cost, "free");
+  assert.equal(corrected.time, "11:00 AM");
+  for (const field of ["description", "attendanceNote"]) {
+    assert(corrected[field].startsWith(policy));
+    assert.match(corrected[field], /opens.*30 minutes before storytime.*Confirm the pickup time with Pearl Avenue Library/);
+    assert.doesNotMatch(corrected[field], /try to arrive early|tickets will be distributed/i);
+  }
+  assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  const agreeing = { ...raw, attendanceNote: raw.description };
+  assert.equal(applyVerifiedEventFacts(agreeing), agreeing);
+  const otherDate = { ...raw, date: "2026-12-02" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
+test("March 6 Rinconada Chair Yoga qualifies conflicting signup instructions", () => {
+  const raw = {
+    id: "paloalto-6ab8557e607483003829d149",
+    date: "2027-03-06", time: "11:00 AM", cost: "free",
+    title: "Chair Yoga with Patricia Becker", venue: "Rinconada Library",
+    url: "https://paloalto.bibliocommons.com/events/6ab8557e607483003829d149",
+    description: "Join Patricia Becker for seated exercises. Registration isn't needed but means you will receive an email reminder. Here are the dates for 2027: January 2; March 6.",
+  };
+  for (const registration of [undefined, "required", "full", "closed"]) {
+    const input = { ...raw, registration };
+    if (registration === "required") input.registrationClosesBy = "2027-03-06T19:00:00Z";
+    const corrected = applyVerifiedEventFacts(input);
+    assert(requiresAttendanceConfirmation(corrected));
+    assert.equal(corrected.registration, registration === "required" ? null : registration);
+    assert.equal(corrected.registrationClosesBy, registration === "required" ? null : undefined);
+    assert.match(corrected.attendanceNote, /registration is required.*signup is optional.*Confirm registration with Rinconada Library/);
+    assert.equal(corrected.description, "Join Patricia Becker for seated exercises. Here are the dates for 2027: January 2; March 6.");
+    assert.equal(corrected.cost, "free");
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  }
+  const agreeing = { ...raw, registration: "required", description: "Registration is required." };
+  assert.equal(applyVerifiedEventFacts(agreeing), agreeing);
+  const otherDate = { ...raw, date: "2027-05-01" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("dated festival, off-site workshop and admission repairs survive sparse blurb resolution", async () => {
   const rows = [
     { date: "2026-10-31", url: "https://www.aztecadancers.com/dia-de-muertos", time: "10:00 PM", expected: { time: "2:00 PM", endTime: "10:00 PM", cost: "free", kidFriendly: true } },
