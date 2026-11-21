@@ -37,3 +37,13 @@ test("an updated or canceled theater listing takes precedence and the fallback e
   assert.ok(!isEventPublishable(canceled));
   assert.deepEqual(restoreWayvConcert([], "2027-02-07"), []);
 });
+
+test("the republished 8 PM WayV listing keeps the artist time and discloses the conflict", () => {
+  const republished = { ...formerListing, url: `${formerListing.url}-0` };
+  const [concert] = restoreWayvConcert([republished], "2026-11-21");
+  assert.equal(concert.time, "7:30 PM");
+  assert.equal(concert.attendanceStatus, "needs-confirmation");
+  assert.match(concert.attendanceNote, /AXS list a 7:30 PM start\. Visit San Jose lists 8 PM/);
+  const updated = { ...republished, time: "7:30 PM" };
+  assert.deepEqual(restoreWayvConcert([formerListing, updated], "2026-11-21"), [updated]);
+});

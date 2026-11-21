@@ -4570,6 +4570,9 @@ async function fetchStanfordEvents() {
       // Zoom option remains attendable online even when experience is hybrid.
       const restriction = stripHtml(ev.custom_fields?.restricted_to || "").trim();
       if (/^Stanford students,\s*faculty,?\s+(?:and|&)\s+staff\.?$/i.test(restriction)) return null;
+      // The Surgery calendar marks its November 24 Grand Rounds as restricted
+      // to the department, even though the hybrid row has no audience tags.
+      if (/^Department of Surgery\.?$/i.test(restriction)) return null;
       const campusOnlyInPerson = /\bIn-person attendance is limited to (?:current\s+)?Stanford\b|^In-person (?:only )?for Stanford affiliates(?:[.;]|$)/i.test(restriction);
       // Some hybrid listings put the restriction for both formats in the body.
       if (/(?:^|[.!?]\s+)This event is only open to Stanford students, staff, faculty,?\s+(?:and|&)\s+affiliates[.!?](?:\s|$)/i.test(description)) return null;

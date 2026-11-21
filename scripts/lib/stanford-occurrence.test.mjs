@@ -111,6 +111,20 @@ test("conditional free admission never masks published paid Localist ticket tier
   assert.deepEqual(rows.map((row) => row.cost), ["paid", "paid", "free", "free", "paid", null, "free"]);
 });
 
+test("Stanford keeps department-only Grand Rounds out of the public feed", async () => {
+  const tomorrow = dayPT(1);
+  const event = {
+    title: "Professional Development Grand Rounds", location_name: "Li Ka Shing Center",
+    experience: "hybrid", filters: {},
+    instances: [{ start: atPT(tomorrow, "07:00:00"), end: atPT(tomorrow, "08:00:00") }],
+  };
+  const rows = await runWith([
+    localistEvent({ ...event, id: 1, custom_fields: { restricted_to: "Department of Surgery" } }),
+    localistEvent({ ...event, id: 2, filters: { event_audience: [{ name: "Everyone" }] } }),
+  ]);
+  assert.deepEqual(rows.map(row => row.id), [`stanford-2-${tomorrow}`]);
+});
+
 test("Stanford visitor ID requirements survive a short display excerpt", async () => {
   const tomorrow = dayPT(1);
   const [event] = await runWith([localistEvent({

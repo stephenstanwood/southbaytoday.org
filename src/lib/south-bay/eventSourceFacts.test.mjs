@@ -15,6 +15,31 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("visiting hours stay with an ongoing university exhibition as its date rolls", () => {
+  const branner = {
+    url: "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
+    date: "2026-11-21", ongoing: true,
+    attendanceNote: "Visitors must present a valid, physical government-issued photo ID.",
+  };
+  const first = applyVerifiedEventFacts(branner);
+  assert.match(first.attendanceNote, /government-issued photo ID/);
+  assert.match(first.attendanceNote, /Monday through Friday/);
+  assert.deepEqual(applyVerifiedEventFacts(first), first);
+  assert.match(applyVerifiedEventFacts({ ...branner, date: "2026-11-22" }).attendanceNote, /Monday through Friday/);
+  assert.equal(applyVerifiedEventFacts({ ...branner, ongoing: false }).attendanceNote, branner.attendanceNote);
+  assert.equal(applyVerifiedEventFacts({ ...branner, date: "2026-12-19" }).attendanceNote, branner.attendanceNote);
+});
+
+test("the Beethoven Center's December 3 concert uses verified free admission when the feed omits it", () => {
+  const concert = {
+    url: "https://events.sjsu.edu/event/noontime-concerts-at-the-beethoven-center-series-december-3",
+    date: "2026-12-03", cost: null,
+  };
+  assert.equal(applyVerifiedEventFacts(concert).cost, "free");
+  assert.equal(applyVerifiedEventFacts({ ...concert, cost: "paid" }).cost, "paid");
+  assert.equal(applyVerifiedEventFacts({ ...concert, date: "2026-12-04" }).cost, null);
+});
+
 test("Jurassic Quest follows the organizer's family format and daily hours", () => {
   const event = {
     source: "Ticketmaster",

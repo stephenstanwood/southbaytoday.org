@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-11-21T11:27:29.467Z",
-  "eventCount": 1501,
+  "eventCount": 1500,
   "sources": [
     "Stanford Events",
     "SJSU Events",
@@ -45,7 +45,8 @@
     "Books Inc",
     "San Jose Museum of Art",
     "Peninsula Open Space Trust",
-    "City Newsletter"
+    "City Newsletter",
+    "WayV"
   ],
   "sourceHealth": [
     {
@@ -4812,33 +4813,34 @@
       "firstSeenAt": "2026-09-24T09:59:14.624Z"
     },
     {
-      "id": "sanjosetheaters-ac08982eb6b06e77",
+      "id": "sanjosetheaters-c176ca6a57bad2e7",
       "title": "2026-27 WayV Concert Tour [Born This Way] In USA",
       "date": "2027-02-06",
       "displayDate": "Sat, Feb 6",
-      "time": "8:00 PM",
+      "time": "7:30 PM",
       "endTime": null,
       "venue": "San Jose Civic",
       "address": "135 West San Carlos Street, San Jose, CA 95113",
       "city": "san-jose",
       "category": "music",
       "cost": "paid",
-      "description": "WayV is a Chinese boy band that debuted in China in January 2019 with the single \"Regular.\" The group has gained acclaim in Asia and beyond.",
-      "url": "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa-0",
-      "source": "San Jose Theaters",
-      "image": null,
+      "description": "WayV brings the Born This Way tour to San Jose Civic.",
+      "url": "https://weverse.io/wayv/notice/41160",
+      "source": "WayV",
       "occurrenceEvidence": {
         "kind": "first-party-occurrence-page",
-        "sourceUrl": "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa-0",
+        "sourceUrl": "https://weverse.io/wayv/notice/41160",
         "date": "2027-02-06",
-        "time": "8:00 PM",
-        "checkedAt": "2026-11-21T11:20:59.857Z"
+        "time": "7:30 PM",
+        "checkedAt": "2026-11-20T15:09:00.000Z"
       },
       "kidFriendly": false,
+      "blurb": "See WayV perform at San Jose Civic on their Born This Way tour.",
       "audienceAge": "all",
       "photoRef": "places/ChIJScCHurrMj4AR3x6HUv5hclw/photos/AV-0GLfbb6hT_EBdebEYxweMGtKxB8i51197qtgykPzCBM7HC2C7-7r_yVUeeUqIX4lf1td2S_3nv_aa0e1UN5gclzxxX9J7FzWoUONp8uMHlRaB0S-BqFxaeaKl5HNPA7FrCsw1BxlXHtrV0qkjm89xvAF1-yuDXOfunNNMzA68NV3dK5YOP2b_fs8yWo5hfp8amamsVPewD2L9UsAFqgfrSkImevfAUE54f6WjA8koCpE-dg3-gEfhpLSZg2BxNXh6vf9qsNBQMHGThUnWZTD1P4kDvww7aLWifjPaF7KRxvN7TwdZ1s04k3rMynPdW4Y6O6O8Yr2cUT3ybklNUjbUujVnU4iUEXQ3uybTht83Q5gn6h1ojoLzhgsCn59PbbHvnZVwUjFfFy1XsCVDUKeVnn7RjN0",
-      "blurb": "Watch the Chinese boy band WayV perform live at San Jose Civic on their Born This Way tour.",
-      "firstSeenAt": "2026-11-21T11:27:29.440Z"
+      "firstSeenAt": "2026-11-19T16:50:34.216Z",
+      "attendanceStatus": "needs-confirmation",
+      "attendanceNote": "WayV and AXS list a 7:30 PM start. Visit San Jose lists 8 PM. Confirm the showtime with AXS before going."
     },
     {
       "id": "sanjosetheaters-b99e39e444bdea9b",
@@ -21645,7 +21647,8 @@
       "ongoing": true,
       "audienceAge": "all",
       "blurb": "Walk through an exhibit tracing Silicon Valley LGBTQ+ publications from 1950 to today in the Special Collections reading room.",
-      "firstSeenAt": "2026-11-21T11:27:29.440Z"
+      "firstSeenAt": "2026-11-21T11:27:29.440Z",
+      "attendanceNote": "The Special Collections reading room is open to the public Monday through Wednesday, noon to 5 PM, and by appointment."
     },
     {
       "id": "sjpl-6ad13411fee2d21deb238d86",
@@ -24958,7 +24961,7 @@
       "address": "150 E San Fernando St, San Jose, CA 95112",
       "city": "san-jose",
       "category": "music",
-      "cost": null,
+      "cost": "free",
       "description": "Performers: Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) Program: TBC All concerts take place at 12:00 and are followed by an informal coffee reception and open-house.",
       "url": "https://events.sjsu.edu/event/noontime-concerts-at-the-beethoven-center-series-december-3",
       "source": "SJSU Events",
@@ -25855,28 +25858,6 @@
       "image": "https://images.unsplash.com/photo-1770732165218-aaaf6c5f320d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5MTk0MTN8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjBldmVudCUyMGdhdGhlcmluZyUyMG91dGRvb3J8ZW58MHwyfHx8MTc3NzIzMDYxNXww&ixlib=rb-4.1.0&q=80&w=400",
       "blurb": "Hear home fire safety tips from Supervisor Abe-Koga, the City of Monte Sereno, and Santa Clara County Fire Department.",
       "firstSeenAt": "2026-11-21T03:03:12.584Z"
-    },
-    {
-      "id": "stanford-53728556259618-2026-11-24",
-      "title": "Professional Development Grand Rounds",
-      "date": "2026-11-24",
-      "displayDate": "Tue, Nov 24",
-      "time": "7:00 AM",
-      "endTime": "8:00 AM",
-      "ongoing": false,
-      "venue": "Li Ka Shing Center",
-      "address": "291 Campus Drive, Stanford, CA 94305",
-      "city": "palo-alto",
-      "category": "education",
-      "cost": null,
-      "description": "Dr. Michael Awad, Stanford Department of Surgery's new Vice Chair of Education, presents the annual Professional Development Grand Rounds.",
-      "url": "https://events.stanford.edu/event/professional-development-grand-rounds",
-      "source": "Stanford Events",
-      "kidFriendly": false,
-      "audienceAge": "all",
-      "image": "https://localist-images.azureedge.net/photos/53728560154106/huge/114e29b33a9df0f5bce34dc6f7d493f4687efb36.jpg",
-      "blurb": "Hear Dr. Michael Awad, Stanford Surgery's new Vice Chair of Education, present the annual Professional Development Grand Rounds on a Tuesday morning.",
-      "firstSeenAt": "2026-11-21T11:27:29.440Z"
     },
     {
       "id": "midpen-9c4c05e4259b9ea4",
@@ -32816,7 +32797,7 @@
       "venue": "Music Building, Concert Hall",
       "address": "One Washington Square, San José, CA 95192",
       "city": "san-jose",
-      "category": "arts",
+      "category": "music",
       "cost": "paid",
       "description": "Step beyond the edge of daylight for an evening of music inspired by darkness, mystery, and the night.",
       "url": "https://events.sjsu.edu/event/dark-night",
@@ -39332,7 +39313,7 @@
       "url": "https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
       "source": "Stanford Events",
       "kidFriendly": false,
-      "attendanceNote": "Visitors are asked to call 650-723-3408 for building and elevator access to Bowes Art & Architecture Library.",
+      "attendanceNote": "Bowes Art & Architecture Library is closed Saturdays. Check the event calendar for hours. Visitors are asked to call 650-723-3408 for building and elevator access.",
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/54002417518144/huge/15b9d62b00409f58a84bb41ef6b783485662e077.jpg",
       "blurb": "Browse photobooks and magazines tracing how early photography reshaped art history at the McMurtry Building.",
@@ -39402,7 +39383,8 @@
       "audienceAge": "all",
       "image": "https://localist-images.azureedge.net/photos/53923524240935/huge/4fff769cf5feaab3558d7c41f99a8b7ff4e0bd38.jpg",
       "blurb": "Browse the David Rumsey Map Center's decennial exhibit reflecting on ten years of its collections.",
-      "firstSeenAt": "2026-09-10T02:21:46.877Z"
+      "firstSeenAt": "2026-09-10T02:21:46.877Z",
+      "attendanceNote": "The Map Center’s drop-in hours are usually Wednesday through Friday and vary by week. Visitors need a government-issued photo ID to register at Green Library."
     },
     {
       "id": "stanford-54417960016807",
@@ -39554,7 +39536,7 @@
       "city": "palo-alto",
       "category": "arts",
       "cost": null,
-      "attendanceNote": "Visitors must present a valid, physical government-issued photo ID and sign in at the front desk.",
+      "attendanceNote": "Visitors must present a valid, physical government-issued photo ID and sign in at the front desk. View Monday through Friday during Branner Library hours.",
       "description": "",
       "url": "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
       "source": "Stanford Events",

@@ -42,20 +42,22 @@ export const SAN_JOSE_THEATER_ADDRESSES = Object.freeze({
   "Montgomery Theater": "271 South Market Street, San Jose, CA 95113",
 });
 
-// Visit San Jose unpublished its 8 PM listing. The artist and official box
-// office both list the February 6 show at 7:30 PM.
+// Visit San Jose republished its 8 PM listing under a new URL on November 21.
+// The artist and official ticket seller both list the February 6 show at 7:30 PM.
 // https://www.axs.com/uk/events/1704430/wayv-tickets
 const WAYV_NOTICE = "https://weverse.io/wayv/notice/41160";
 const WAYV_OLD_URL = "https://www.sanjose.org/theaters/events/2026-27-wayv-concert-tour-born-way-usa";
+const WAYV_REPUBLISHED_URL = `${WAYV_OLD_URL}-0`;
 const WAYV_DATE = "2027-02-06";
 const WAYV_VENUE = "San Jose Civic";
 
 export function restoreWayvConcert(events, today) {
   if (today > WAYV_DATE) return events;
 
-  const isWayvConcert = (event) => event.url === WAYV_OLD_URL
+  const isVenueListing = (event) => [WAYV_OLD_URL, WAYV_REPUBLISHED_URL].includes(event.url);
+  const isWayvConcert = (event) => isVenueListing(event)
     || (event.date === WAYV_DATE && event.venue === WAYV_VENUE && /\bWay ?V\b/i.test(event.title));
-  const isOldListing = (event) => event.url === WAYV_OLD_URL
+  const isOldListing = (event) => isVenueListing(event)
     && event.date === WAYV_DATE && event.time === "8:00 PM" && !isEventExplicitlyInactive(event);
   // Let the theater's updated schedule or an explicit cancellation take
   // precedence if its booking returns.
@@ -64,6 +66,7 @@ export function restoreWayvConcert(events, today) {
   }
 
   const time = "7:30 PM";
+  const venueTimeDiffers = events.some(isOldListing);
   return [...events.filter((event) => !isWayvConcert(event)), {
     id: "sanjosetheaters-c176ca6a57bad2e7",
     title: "2026-27 WayV Concert Tour [Born This Way] In USA",
@@ -76,6 +79,10 @@ export function restoreWayvConcert(events, today) {
     city: "san-jose",
     category: "music",
     cost: "paid",
+    ...(venueTimeDiffers ? {
+      attendanceStatus: "needs-confirmation",
+      attendanceNote: "WayV and AXS list a 7:30 PM start. Visit San Jose lists 8 PM. Confirm the showtime with AXS before going.",
+    } : {}),
     description: "WayV brings the Born This Way tour to San Jose Civic.",
     url: WAYV_NOTICE,
     source: "WayV",

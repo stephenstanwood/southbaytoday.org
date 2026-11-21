@@ -4193,8 +4193,44 @@ const CORRECTIONS = [
     dateFrom: "2026-09-21", dateThrough: "2026-12-18",
     url: "https://events.stanford.edu/event/electric-contrasts-the-art-of-the-detail-7315",
     facts: {
-      attendanceNote: "Visitors are asked to call 650-723-3408 for building and elevator access to Bowes Art & Architecture Library.",
+      attendanceNote: "Bowes Art & Architecture Library is closed Saturdays. Check the event calendar for hours. Visitors are asked to call 650-723-3408 for building and elevator access.",
     },
+  },
+  // The rolling exhibit date identifies the run. The organizer publishes a
+  // separate viewing schedule and admission instructions.
+  {
+    dateFrom: "2026-10-26", dateThrough: "2026-12-18",
+    matches: (event) => event.ongoing === true
+      && event.url === "https://events.stanford.edu/event/branner-library-book-map-exhibit-water",
+    appendAttendanceNote: "View Monday through Friday during Branner Library hours.",
+  },
+  // https://library.stanford.edu/visiting-david-rumsey-map-center
+  {
+    dateFrom: "2026-09-09", dateThrough: "2027-03-05",
+    matches: (event) => event.ongoing === true
+      && event.url === "https://events.stanford.edu/event/emergent-properties",
+    appendAttendanceNote: "The Map Center’s drop-in hours are usually Wednesday through Friday and vary by week. Visitors need a government-issued photo ID to register at Green Library.",
+  },
+  // The library confirms the reading-room hours. The general university
+  // calendar emits all-day dates, including weekends when the room is closed.
+  // https://library.sjsu.edu/sjsu-special-collections
+  {
+    dateFrom: "2026-09-15", dateThrough: "2026-12-15",
+    matches: (event) => event.ongoing === true
+      && event.url === "https://events.sjsu.edu/event/something-sensational",
+    appendAttendanceNote: "The Special Collections reading room is open to the public Monday through Wednesday, noon to 5 PM, and by appointment.",
+  },
+  // The concert's first-party page states free admission below the feed excerpt.
+  {
+    date: "2026-12-03",
+    url: "https://events.sjsu.edu/event/noontime-concerts-at-the-beethoven-center-series-december-3",
+    facts: (event) => event.cost == null ? { cost: "free" } : {},
+  },
+  // The School of Music lists this as a concert.
+  {
+    date: "2026-12-02",
+    url: "https://events.sjsu.edu/event/dark-night",
+    facts: { category: "music" },
   },
   {
     dateFrom: "2026-09-22", dateThrough: "2027-01-24",

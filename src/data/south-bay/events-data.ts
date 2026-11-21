@@ -326,7 +326,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     city: "san-jose",
     venue: "Santana Row",
     address: "377 Santana Row, San Jose",
-    category: "arts",
+    category: "market",
     recurrence: "monthly",
     days: ["saturday"],
     time: "11am – 6pm",
