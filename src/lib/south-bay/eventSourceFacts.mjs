@@ -484,6 +484,38 @@ const CORRECTIONS = [
       [/\bWe will assist you with the application and registration processes in person at the Educational Park Branch Library\.\s*/i, ""],
     ],
   },
+  // Use SJPL's dated session hours. The college's March schedule gives a
+  // different term end and finish time. SJPL marks this occurrence full but
+  // still carries enrollment directions from before the term started.
+  // https://www.evc.edu/sites/default/files/2026-03/Fall-2026-Class-Schedule.pdf (section 130594)
+  {
+    date: "2026-11-24",
+    matches: event => event.registration === REGISTRATION_FULL
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a07b602c6a1dc3d00d40851\/?$/.test(event.url || ""),
+    facts: event => event.attendanceNote === "Space is limited." ? { attendanceNote: undefined } : {},
+    copyReplacements: [
+      [
+        /\bCourse Information: Starts: August 25, 2026; Ends: December 10, 2026; Meeting Days: Tuesday, Wednesday, and Thursday; Time: 10:30 AM\s*[–-]\s*12:30 PM; Instructor: (?=Michelle N\. Henninger\.)/i,
+        "The instructor is ",
+      ],
+      [
+        /\bThe course runs from August 25, 2026, through December 10, 2026\. Classes meet Tuesday, Wednesday, and Thursday from 10:30 AM to 12:30 PM\. (?=The instructor is Michelle N\. Henninger\.)/,
+        "",
+      ],
+      [
+        /\s+Before the classes start, you must complete a Guided Self-Placement \(GSP\)\. This is not a test[—–-]it['’]s simply an assessment to help us place you in the most appropriate ESL class based on your current English level\./i,
+        "",
+      ],
+      [
+        /\s+Complete the Guided Self-Placement assessment before classes start\. It helps the college place you in a class for your English level\./,
+        "",
+      ],
+      [
+        /\s+(?:We will assist you with the application and registration process in person at the Edenvale Branch Library\.|Get help applying and registering in person at Edenvale Branch Library\.)(?: Space is limited\.)?/i,
+        "",
+      ],
+    ],
+  },
   // The organizer confirms the four dated sale sessions. Only the Thursday
   // preview requires membership, which attendees can buy at the door.
   // https://friendsofthemilpitaslibrary.org/booksales.php
@@ -905,6 +937,19 @@ const CORRECTIONS = [
       && /(?:^|[.!]\s+|\blive music by local artists\s*)free to attend[!.]/i.test(event.description || "")
         ? { cost: "free" } : {},
     copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
+  },
+  // Santana Row's December 13 detail page gives free spectator admission;
+  // reserving a space to display a vehicle is a separate action.
+  {
+    date: "2026-12-13",
+    url: "https://santanarow.com/event/cars-croissants-on-the-row/",
+    facts: event => event.cost == null && !event.costNote
+      && /\bThis event is free to attend\./i.test(event.description || "")
+        ? { cost: "free" } : {},
+    copyReplacements: [[
+      /Experience one of the world['’]s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers\./g,
+      "The show features supercars, luxury vehicles, and exotic marques.",
+    ]],
   },
   // The exact library occurrence lists 5–6 PM, while its standing description
   // says 4 PM. Remove the conflicting prose clock and require confirmation;

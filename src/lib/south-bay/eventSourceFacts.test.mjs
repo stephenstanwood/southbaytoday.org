@@ -132,6 +132,60 @@ test("Tully's ESL 502 listing gives the verified placement step and removes the 
   }
 });
 
+test("Edenvale's full ESL 501 session keeps its dated hours without obsolete enrollment directions", () => {
+  const event = {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/events/6a07b602c6a1dc3d00d40851",
+    registration: "full",
+    attendanceNote: "Space is limited.",
+    time: "10:30 AM",
+    endTime: "12:30 PM",
+  };
+  const raw = "Course Information: Starts: August 25, 2026; Ends: December 10, 2026; Meeting Days: Tuesday, Wednesday, and Thursday; Time: 10:30 AM - 12:30 PM; Instructor: Michelle N. Henninger. Before the classes start, you must complete a Guided Self-Placement (GSP). This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level. We will assist you with the application and registration process in person at the Edenvale Branch Library. Space is limited.";
+  const edited = "The course runs from August 25, 2026, through December 10, 2026. Classes meet Tuesday, Wednesday, and Thursday from 10:30 AM to 12:30 PM. The instructor is Michelle N. Henninger. Complete the Guided Self-Placement assessment before classes start. It helps the college place you in a class for your English level. Get help applying and registering in person at Edenvale Branch Library. Space is limited.";
+  for (const [path, copy] of [["/events/", raw], ["/v2/events/", edited]]) {
+    const row = {
+      ...event,
+      url: event.url.replace("/events/", path),
+      description: `Free noncredit class. ${copy.replace(/ (We will assist you|Get help applying)/, " The class meets in the Community Room. $1")}`,
+    };
+    const fixed = applyVerifiedEventFacts(row);
+    assert.deepEqual(fixed, {
+      ...row,
+      attendanceNote: undefined,
+      description: "Free noncredit class. The instructor is Michelle N. Henninger. The class meets in the Community Room.",
+    });
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    for (const changed of [
+      { ...row, registration: "required" },
+      { ...row, date: "2026-11-25" },
+      { ...row, url: row.url.replace(/6a07b602c6a1dc3d00d40851$/, "other-section") },
+    ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
+  }
+});
+
+test("Cars and Croissants uses Santana Row's explicit spectator admission and drops its ranking claim", () => {
+  const event = {
+    date: "2026-12-13",
+    url: "https://santanarow.com/event/cars-croissants-on-the-row/",
+    time: "9:00 AM",
+    endTime: "12:00 PM",
+    cost: null,
+    description: "Experience one of the world’s premier exotic car gatherings, featuring an impressive display of supercars, luxury vehicles, and exotic marques from renowned manufacturers. This event is FREE to attend. Reserve a display space to show your car.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, {
+    ...event,
+    cost: "free",
+    description: "The show features supercars, luxury vehicles, and exotic marques. This event is FREE to attend. Reserve a display space to show your car.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const differentDate = { ...event, date: "2026-12-20" };
+  assert.deepEqual(applyVerifiedEventFacts(differentDate), differentDate);
+  assert.equal(applyVerifiedEventFacts({ ...event, description: "Reserve a display space to show your car." }).cost, null);
+  assert.equal(applyVerifiedEventFacts({ ...event, cost: "paid", costNote: "$5 spectator admission" }).cost, "paid");
+});
+
 test("Milpitas winter book sale applies the membership charge only to the preview", () => {
   const source = "https://sccl.bibliocommons.com";
   const preview = { date: "2026-12-03", cost: "free", category: "education",
