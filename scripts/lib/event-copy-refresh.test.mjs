@@ -190,6 +190,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-afternoon-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-tully-esl.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-edenvale-milpitas-santana.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-20-library-evening.json", import.meta.url))));
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
@@ -727,7 +728,7 @@ test("bridge casing and STEM punctuation preserve revised facts and publisher sc
       date: "2026-12-10", time: "4:15 PM", endTime: "5:30 PM", registration: "required", cost: "paid",
     };
     const next = polishReviewedEventCopy(original);
-    assert.deepEqual(next, { ...original, description: row.reviewed + " Ages 12+; tickets $25. Register at https://example.org/revised or email updated@example.org." });
+    assert.deepEqual(next, { ...original, description: latestReviewedCopy(row) + " Ages 12+; tickets $25. Register at https://example.org/revised or email updated@example.org." });
     assert.deepEqual(numbers(next.description), numbers(original.description));
     assert.deepEqual(identifiers(next.description), identifiers(original.description));
     assert.deepEqual(polishReviewedEventCopy(next), next);

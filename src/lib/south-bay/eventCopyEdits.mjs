@@ -1043,6 +1043,36 @@ const EDITS = {
         "Gain a new perspective into the benefits of meditation, combining modern research with ancient wisdom; Develop new strategies to manage stress, making it a friend over an enemy; Learn practices to cultivate more compassion, and improve mood and relationships; Practice individually and in groups, and begin to integrate these activities into your daily life.",
         "Explore the benefits of meditation through modern research and ancient wisdom. Develop new ways to manage stress and make it work for you. Learn practices to cultivate compassion and improve your mood and relationships. Practice on your own and in groups, then begin to make these activities part of your daily life.",
       ],
+      [
+        "Participants should be familiar with bridge terminology and have experience in playing the hand as instructions or assistance will not be provided.",
+        "Participants should know bridge terminology and have experience playing a hand. No instruction or assistance will be provided.",
+      ],
+      ["Seating is limited; registration required.", "Seating is limited, and registration is required."],
+      [/Recommended for children ages (\d+) [–-] (\d+) years old\./g, "Recommended for children ages $1–$2."],
+      ["to choose kindness Families are invited", "to choose kindness. Families are invited"],
+      [
+        /Free, no registration required, all materials will be provided(?:\.|$)/g,
+        "Free. No registration is required. All materials will be provided.",
+      ],
+      [
+        "Work one-on-one with an experienced writing instructor who will help you craft and revise your PIQs that avoid common mistakes and showcase the best of who you are to the admissions team.",
+        "Work one-on-one with an experienced writing instructor to craft and revise your PIQs, avoid common mistakes, and show the admissions team your strengths.",
+      ],
+      [
+        "This workshop will be facilitated by High School volunteers with Speech & Debate experience.",
+        "High school volunteers with speech and debate experience will lead the workshop.",
+      ],
+      [
+        "¿Necesitas ayuda con tu resumen (currículum)? ¿Necesita ayuda para buscar oportunidades de empleo?",
+        "¿Necesita ayuda con su currículum o para buscar oportunidades de empleo?",
+      ],
+      ["Crear o actualizar tu resumen (currículum)", "Crear o actualizar su currículum"],
+      ["Llenar formas de solicitudes de trabajo", "Completar formularios de solicitud de empleo"],
+      ["en Serv Safe (Tarjeta para manipuladores de alimentos)", "en ServSafe (tarjeta para manipuladores de alimentos)"],
+      [
+        "El personal de la biblioteca estará allí para guiarte en todo, pero serás tú quien controle la computadora.",
+        "El personal de la biblioteca le guiará. Usted manejará la computadora.",
+      ],
     ],
     blurb: [
       [
@@ -1513,6 +1543,18 @@ const EDITS = {
       ["Learn about this traditional body art, and how to apply henna to yourself.", "Learn about this traditional body art and how to apply henna to yourself."],
       ["Henna tattoos are temporary, but can last", "Henna tattoos are temporary but can last"],
       [/a Ph\.\s*D\.\s+from UC Santa Barbara investigating/gi, "a Ph.D. from UC Santa Barbara investigating"],
+      [
+        /^([A-Z][a-z]+day, [A-Z][a-z]+ \d{1,2}), (\d{1,2}(?::\d{2})? [AP]M) (Room \d+) Join us for more creative exploration/g,
+        "$1 at $2 in $3. Join us for more creative exploration",
+      ],
+      [
+        /Or work on the prompt for the night: Mix Media Jumbo Bookmark [–-] create a (\d+ x \d+) bookmark using acrylic paint, collage, pens, markers and more\./g,
+        "Or try the evening's prompt and make a $1 mixed-media jumbo bookmark with acrylic paint, collage, pens, markers, and more.",
+      ],
+      [
+        /Supplies will be provided but you can bring your own art journal or favorite supplies Sign-up online ([A-Z][a-z]+ \d{1,2}, \d{4}) at/g,
+        "Supplies will be provided, but you can bring your own art journal or favorite supplies. Sign up online $1, at",
+      ],
     ],
     blurb: [
       ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
@@ -1637,6 +1679,10 @@ const EDITS = {
         "Learn line dancing steps to international music with Sandy and Kent. You don't need a partner or any experience.",
       ],
       ["Watch dry ice turn solid to gas", "Watch dry ice turn from solid to gas"],
+      [
+        "Sit for guided sitting and releasing meditation with Phuong Pham, then join a group sharing and Q&A session.",
+        "Join Phuong Pham for guided sitting and releasing meditation, followed by group sharing and Q&A.",
+      ],
       [
         "Bring your technology questions or ongoing device problems to Rinconada Library for drop-in help on Tuesday mornings.",
         "Bring your technology questions to Rinconada Library for drop-in help on Tuesday mornings.",
