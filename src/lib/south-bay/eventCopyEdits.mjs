@@ -1351,8 +1351,8 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       [
-        /We will meet on Monday,? December 14th at 3:30 PM in the Program Room\. Please read the book before our meeting\. At the meeting we will discuss the book and do a (?:Lego|LEGO) building activity\./g,
-        "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
+        /We will meet on Monday,? December 14th at 3:30 PM in the Program Room\.( If you can attend this meeting, register online and pick up your copy of the book at the Children's Reference Desk\.)? Please read the book before our meeting\. At the meeting we will discuss the book and do a (?:Lego|LEGO) building activity\./g,
+        "We'll meet on Monday, December 14, at 3:30 PM in the Program Room.$1 Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
       ],
       [
         "Come practice meditation for 20 minutes and ask questions for 10 minutes with instructor Manisha.",

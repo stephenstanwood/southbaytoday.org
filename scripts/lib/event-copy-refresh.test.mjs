@@ -1312,8 +1312,12 @@ test("raw Playwright source spacing and casing are repaired on the first pass", 
   }
 });
 
-test("the Books & Bricks repair handles the publisher's raw casing on the first refresh", () => {
-  const raw = "We will meet on Monday December 14th at 3:30pm in the Program Room. Please read the book before our meeting. At the meeting we will discuss the book and do a Lego building activity.";
+test("the Books & Bricks listing preserves the library's book pickup instructions on refresh", () => {
+  const raw = [
+    "We will meet on Monday December 14th at 3:30pm in the Program Room.",
+    "If you can attend this meeting, register online and pick up your copy of the book at the Children’s Reference Desk.",
+    "Please read the book before our meeting. At the meeting we will discuss the book and do a Lego building activity.",
+  ].join(" ");
   const event = {
     source: "Santa Clara County Library",
     time: "3:30 PM",
@@ -1322,10 +1326,11 @@ test("the Books & Bricks repair handles the publisher's raw casing on the first 
   };
   const reviewed = {
     ...event,
-    description: "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. Please read the book before the meeting. We'll discuss it and build with LEGO bricks. Special thanks to the Friends of Milpitas Library.",
+    description: "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. If you can attend this meeting, register online and pick up your copy of the book at the Children's Reference Desk. Please read the book before the meeting. We'll discuss it and build with LEGO bricks. Special thanks to the Friends of Milpitas Library.",
   };
   assert.deepEqual(polishReviewedEventCopy(event), reviewed);
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+  assert.equal(polishDescription("Discuss the book. Register online."), "Discuss the book.");
 });
 
 test("cache hits receive the same final repair without model generation", async (t) => {

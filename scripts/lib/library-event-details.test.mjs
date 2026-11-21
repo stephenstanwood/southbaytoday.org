@@ -1,10 +1,25 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { biblioEventOccurrence, libraryEventDetails } from "./library-event-details.mjs";
+import { biblioEventOccurrence, correctSccLibraryAccessibilityContact, libraryEventDetails } from "./library-event-details.mjs";
 
 const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
 const midnightWindowFixture = JSON.parse(readFileSync(new URL("./fixtures/sccl-teen-burton-2026-10-23.json", import.meta.url)));
+
+test("the district's accessibility contact correction preserves its circulation number", () => {
+  const accommodation = "Request accommodations at sccld.org/accessibility 7+ days ahead. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945 or email us at ask@lib.sccgov.org.";
+  const circulation = "Call (408) 540-3945 for circulation.";
+  const event = {
+    source: "Santa Clara County Library",
+    description: accommodation + " " + circulation,
+  };
+  const corrected = correctSccLibraryAccessibilityContact(event);
+  assert.equal(corrected.description, accommodation.replace("3945", "3947") + " " + circulation);
+  assert.equal(event.description, accommodation + " " + circulation);
+  assert.equal(correctSccLibraryAccessibilityContact(corrected), corrected);
+  const otherPublisher = { ...event, source: "Other library" };
+  assert.equal(correctSccLibraryAccessibilityContact(otherPublisher), otherPublisher);
+});
 
 const capturedLosGatosLibrary = {
   name: "Los Gatos Library", city: "los-gatos", urls: ["https://library.example.test/calendar"],

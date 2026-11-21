@@ -4,6 +4,17 @@
 import { stripHtml } from "./event-html.mjs";
 import { displayDate, displayTime, isoDate, parseDatePT } from "./dates.mjs";
 
+/** Correct the district's copied accessibility-form help number in display copy.
+ * https://sccld.org/accessibility/ lists 3947. Circulation still uses 3945. */
+export function correctSccLibraryAccessibilityContact(event) {
+  if (event.source !== "Santa Clara County Library" || typeof event.description !== "string") return event;
+  const description = event.description.replace(
+    /(sccld\.org\/accessibility\b[^.!?]*\.\s+If you need assistance with the form, speak with a staff member at your local library, call )\(408\) 540-3945\b/gi,
+    "$1(408) 540-3947",
+  );
+  return description === event.description ? event : { ...event, description };
+}
+
 // The same resolved window that the library uses for its event listing.
 export async function fetchRegistrationWindowStatus(
   { libraryId, eventId },

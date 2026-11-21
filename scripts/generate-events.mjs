@@ -64,7 +64,12 @@ import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-su
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-location.mjs";
-import { biblioEventOccurrence, fetchRegistrationWindowStatus, libraryEventDetails } from "./lib/library-event-details.mjs";
+import {
+  biblioEventOccurrence,
+  correctSccLibraryAccessibilityContact,
+  fetchRegistrationWindowStatus,
+  libraryEventDetails,
+} from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
 import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
@@ -1823,7 +1828,8 @@ const BOILERPLATE_SENTENCE_PATTERNS = [
   /\b(scalpers?|counterfeit tickets?)\b/i,
   /\bno ticket purchase necessary\b/i,
   /\bno (purchase|registration|tickets?) necessary\b/i,
-  /\bregister (here|now|online|today|in advance)\b/i,
+  // Some library signup sentences also tell readers where to collect the book.
+  /\bregister (here|now|online|today|in advance)\b(?!\s+and pick up\b)/i,
   /\bclick (here|the link)\b/i,
   /\bvisit (our|the) website\b/i,
   /\bsee (our|the) website\b/i,
@@ -11965,7 +11971,10 @@ async function main() {
   // old grammar later. Keep the cache fingerprint tied to the source wording
   // so punctuation alone never triggers a wholesale blurb regeneration.
   const { polishReviewedEventCopy } = await import("../src/lib/south-bay/eventCopyEdits.mjs");
-  for (const event of collapsedEvents) Object.assign(event, polishReviewedEventCopy(event));
+  for (const event of collapsedEvents) {
+    const reviewed = polishReviewedEventCopy(event);
+    Object.assign(event, correctSccLibraryAccessibilityContact(reviewed));
+  }
 
   // Final guard: remap any non-canonical categories that slipped through from
   // upstream scrapers (e.g. stale playwright-events.json from before a fix).
