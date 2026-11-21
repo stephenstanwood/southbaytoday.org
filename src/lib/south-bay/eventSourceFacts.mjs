@@ -3513,6 +3513,20 @@ const CORRECTIONS = [
       [/ ?A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./gi, ""],
     ],
   },
+  // The separately verified November 25 page repeats both pickup times.
+  // The desk, required free tickets and 50-person limit agree.
+  {
+    date: "2026-11-25",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/695477f8cba30d92b60b3b7e\/?$/.test(event.url || "")
+      && /\bwhen the library opens\b/i.test(event.description || "")
+      && /\b30 minutes prior to the start of storytime\b/i.test(event.attendanceNote || ""),
+    facts: { attendanceStatus: "needs-confirmation" },
+    copyReplacements: [
+      [/A limited number of tickets will be distributed at the Information Desk when the Library opens\.(?:\s*Try to arrive early to get your tickets\.)?/gi,
+        "The event description says ticket pickup at the Information Desk starts when the library opens. The signup instructions say 30 minutes before storytime. Confirm the pickup time with Pearl Avenue Library."],
+      [/ ?A limited number of tickets will be distributed at the Information Desk 30 minutes prior to the start of Storytime\./gi, ""],
+    ],
+  },
   // The authenticated newsletter invites reservations. The dated 11:30 AM
   // booking page confirms a paid reserved seating: $70 meal + $5 fees.
   // On November 17 the exact page says the seating is not currently on sale
@@ -5007,6 +5021,21 @@ const CORRECTIONS = [
       registration: REGISTRATION_NONE, registrationClosesBy: null,
       attendanceNote: "Registration is not required. Optional signup provides an email reminder.",
     },
+  },
+  // The March 6 signup panel labels registration required while the event
+  // description says signup only provides an optional reminder. The feed can
+  // omit the registration state when it detects that reminder language.
+  {
+    date: "2027-03-06",
+    matches: (event) => /^https:\/\/paloalto\.bibliocommons\.com\/(?:v2\/)?events\/6ab8557e607483003829d149\/?$/.test(event.url || "")
+      && /\bregistration isn['’]t needed but means you will receive an email reminder\b/i.test(event.description || ""),
+    facts: (event) => ({
+      attendanceStatus: "needs-confirmation",
+      ...(event.registration === REGISTRATION_REQUIRED
+        ? { registration: null, registrationClosesBy: null } : {}),
+    }),
+    copyReplacements: [[/\s*\bRegistration isn['’]t needed but means you will receive an email reminder\.?/gi, ""]],
+    appendAttendanceNote: "The signup panel says registration is required. The event description says signup is optional and sends an email reminder. Confirm registration with Rinconada Library.",
   },
   {
     date: "2026-12-06", url: "https://www.keplers.org/upcoming-events-internal/holiday-party-2026",
