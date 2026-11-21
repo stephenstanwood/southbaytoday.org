@@ -28,6 +28,7 @@ test("a newsletter fallback receives verified market hours after its unknown clo
   assert.equal(events.length, 1);
   assert.equal(events[0].time, null);
   await backfillVerifiedEventTimes(events, { backfill: async rows => rows.forEach(e => { e.time = "10:00 AM"; }) });
+  assert.equal(events[0].category, "market");
   assert.equal(events[0].cost, "free");
   assert.equal(events[0].endTime, "3:00 PM");
   assert.match(events[0].description, /10 AM–3 PM each day\.$/);
@@ -67,6 +68,7 @@ test("revised market facts and unrelated occurrences pass through without restor
 test("the organizer's sparse Friday calendar alias retains verified hours and parking RSVP", () => {
   const row = { ...fixture.incoming, source: "Montalvo Arts Center", description: "RSVP Yuletide Marketplace FRI", endTime: null };
   const repaired = applyVerifiedEventFacts(row);
+  assert.equal(repaired.category, "market");
   assert.equal(repaired.endTime, "3:00 PM");
   assert.match(repaired.attendanceNote, /register for free to help plan parking/);
   assert.equal(repaired.registration, row.registration);

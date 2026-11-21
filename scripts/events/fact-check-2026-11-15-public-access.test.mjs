@@ -39,6 +39,7 @@ test("cached publication preserves public online access and the second-day marke
       assert.match(event.blurb, /online/);
       assert.match(event.attendanceNote, /In-person attendance is limited to Stanford affiliates/);
     } else {
+      assert.equal(event.category, "market");
       assert.equal(event.cost, "free");
       assert.equal(event.registration, undefined, "optional parking signup is not mandatory registration");
       assert.match(event.attendanceNote, /help plan parking/);

@@ -491,9 +491,11 @@ const CORRECTIONS = [
       && /\bappointments are highly encouraged\b[^.!?]*\bdrop-ins can be taken\b[^.!?]*\bif times are available\b/i.test(event.description || ""),
     facts: { registration: REGISTRATION_NONE, registrationClosesBy: null },
   },
+  // The library's listing describes a sale by teen vendors during the show.
   {
     date: "2026-11-21",
     matches: event => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6ab6f84dda318a10e636d249\/?$/.test(event.url || ""),
+    facts: { category: "market" },
     copyReplacements: [[/\bAR Trepreneurs?\b/gi, match => /s$/i.test(match) ? "ARTrepreneurs" : "ARTrepreneur"]],
   },
   // These published occurrences explicitly allow walk-ins while their signup
@@ -1039,9 +1041,12 @@ const CORRECTIONS = [
       && event.url === "https://santanarow.com/event/makers-market-in-the-park/"
       && event.title === "Makers Market's Local Artist Street Fair"
       && event.venue === "Santana Row" && event.city === "san-jose",
-    facts: event => event.cost == null && !event.costNote
-      && /(?:^|[.!]\s+|\blive music by local artists\s*)free to attend[!.]/i.test(event.description || "")
-        ? { cost: "free" } : {},
+    facts: event => ({
+      category: "market",
+      ...(event.cost == null && !event.costNote
+        && /(?:^|[.!]\s+|\blive music by local artists\s*)free to attend[!.]/i.test(event.description || "")
+        ? { cost: "free" } : {}),
+    }),
     copyReplacements: [[/\s+(?:on the|for every) second Saturday of every month\b/gi, ""]],
   },
   // Santana Row's December 13 detail page gives free spectator admission;
@@ -1253,7 +1258,7 @@ const CORRECTIONS = [
       && event.time === "10:00 AM" && event.endTime === "3:00 PM"
       && [null, undefined, "free"].includes(event.cost) && !event.costNote
       && event.description === "Second day of the Villa holiday market with handmade gifts, décor, specialty foods and vintage finds. The Vintage Treasures shop stays open Sunday, Nov. 22, with leftover items 50% off.",
-    facts: { cost: "free" },
+    facts: { category: "market", cost: "free" },
     appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
   },
   // This dated form reserves optional appointments; the organizer explicitly
@@ -1310,7 +1315,7 @@ const CORRECTIONS = [
       && [null, undefined, "3:00 PM"].includes(event.endTime)
       && [null, undefined, "free"].includes(event.cost) && !event.costNote
       && [null, undefined, "", "RSVP Yuletide Marketplace FRI", YULETIDE_NEWSLETTER_DESCRIPTION, YULETIDE_VERIFIED_DESCRIPTION].includes(event.description),
-    facts: { cost: "free", endTime: "3:00 PM" },
+    facts: { category: "market", cost: "free", endTime: "3:00 PM" },
     copyReplacements: [[/; no times given\.$/, ", 10 AM–3 PM each day."]],
     appendAttendanceNote: "The organizer asks visitors to register for free to help plan parking.",
   },

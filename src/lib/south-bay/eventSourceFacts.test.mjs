@@ -54,8 +54,14 @@ test("dated library events follow the organizer's program type and audience", ()
     sourceAudiences: ["Kids: Family Events", "Kids: Preschoolers"],
     description: "For children ages 0-5. Seating is limited.",
   };
+  const craftFair = {
+    date: "2026-11-21",
+    url: "https://sjpl.bibliocommons.com/v2/events/6ab6f84dda318a10e636d249",
+    category: "arts",
+  };
   assert.deepEqual(applyVerifiedEventFacts(game), { ...game, category: "family" });
   assert.deepEqual(applyVerifiedEventFacts(storytime), { ...storytime, audienceAge: "kids" });
+  assert.deepEqual(applyVerifiedEventFacts(craftFair), { ...craftFair, category: "market" });
   const newProgram = { ...game, description: "Learn to design your own video game." };
   assert.deepEqual(applyVerifiedEventFacts(newProgram), newProgram);
   const newAudience = { ...storytime, description: "Open to all ages." };
