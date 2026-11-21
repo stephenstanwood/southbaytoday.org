@@ -101,7 +101,12 @@ export const TECH_COMPANIES: TechCompany[] = [
     trend: "down",
     trendNote: "14K in SCC; 996 Santa Clara jobs cut on WARN filings since July 2025, more than in any full year EDD has published",
     highlights: [
-      "The US government has held a roughly 9.9% stake since August 2025, when the Trump administration converted $8.9B of CHIPS Act grants into Intel shares; NVIDIA invested a further $5B that autumn",
+      // Intel's filings give the September 2025 stake, the shares still in
+      // escrow in September 2026, and the NVIDIA closing date, respectively.
+      // https://www.intc.com/filings-reports/all-sec-filings/content/0000050863-25-000179/intc-20250927.htm
+      // https://www.intc.com/filings-reports/all-sec-filings/content/0000050863-26-000191/intc-20260926.htm
+      // https://www.intc.com/filings-reports/all-sec-filings/xbrl_doc_only/4132
+      "Intel reported that the U.S. government held 5.8% of its shares in September 2025 after an $8.9B funding agreement. In September 2026, 132 million shares were still in escrow under the deal. NVIDIA completed a separate $5B investment in December 2025.",
       // Intel's July 21, 2026 announcement describes SP6 design, packaging,
       // and manufacturing collaboration. MediaTek was already a named foundry
       // customer in 2022; do not turn this into a first-ever customer claim.
