@@ -81,7 +81,7 @@ test("dated jazz corrections keep showtimes, real venues and distinct admission"
   for (const [id, cost, venue] of [
     ["81b5500edc90", "paid", "SJZ Break Room"],
     ["7b510d6897c4", "free", "SJZ Break Room"],
-    ["f5e39bdd207e", "free", "Plaza de César Chávez"],
+    ["f5e39bdd207e", "free", "Plaza de San José"],
   ]) {
     const source = row(id), actual = applyVerifiedEventFacts(source);
     assert.equal(actual.venue, venue); assert.equal(actual.cost, cost);

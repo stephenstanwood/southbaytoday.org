@@ -18,12 +18,12 @@ test("the sparse Christmas in the Park snapshot retains the organizer's actual b
   await resolveEventBlurbs(events, { enabled: false });
   const actual = events[0];
   assert.equal(actual.title, "HSAS Big Band / U19s at Christmas in the Park");
-  assert.equal(actual.venue, "Plaza de César Chávez");
+  assert.equal(actual.venue, "Plaza de San José");
   assert.equal(actual.address, "1 Paseo de San Antonio, San Jose, CA 95113");
   assert.equal(actual.cost, "free");
   assert.equal(actual.time, "6:00 PM", "showtime is distinct from the 5 PM doors");
   assert.equal(actual.endTime, null, "the organizer gives no closing time");
-  assert.match(actual.blurb, /HSAS.*U19s.*Plaza de César Chávez/);
+  assert.match(actual.blurb, /HSAS.*U19s.*Plaza de San José/);
   assert.doesNotMatch(actual.blurb, /San Jose Jazz venue/i);
   assert.deepEqual(applyVerifiedEventFacts(actual), actual);
   assert.equal(cleanTitle("Hsas Big Band at Christmas in the Park"), "HSAS Big Band at Christmas in the Park");

@@ -3849,19 +3849,20 @@ const CORRECTIONS = [
       && !/\blive\b/i.test(event.description || ""),
     copyReplacements: [[/\blive music\b/gi, "music"]],
   },
-  // San Jose Jazz confirms the date, showtime and free admission but gives its
-  // own office address. The city lists 1 Paseo de San Antonio for the park:
-  // https://www.sanjoseca.gov/Home/Components/News/News/7047/4699
+  // San Jose Jazz confirms the date, showtime and free admission. The city
+  // lists the park address at https://www.sanjoseca.gov/Home/Components/News/News/7047/4699.
+  // Council renamed the park on October 27 (item 26-1117). The holiday event
+  // organizer uses the new name at https://christmasinthepark.com/faqs/.
   {
     date: "2026-12-21",
     url: "https://sanjosejazz.org/events/hsas-big-band-at-christmas-in-the-park-2/",
     facts: {
       title: "HSAS Big Band / U19s at Christmas in the Park",
       category: "music",
-      venue: "Plaza de César Chávez", address: "1 Paseo de San Antonio, San Jose, CA 95113",
+      venue: "Plaza de San José", address: "1 Paseo de San Antonio, San Jose, CA 95113",
       cost: "free",
       description: "The San Jose Jazz High School All Stars Big Band and SJZ U19s perform holiday music at Christmas in the Park.",
-      blurb: "Hear the HSAS Big Band and SJZ U19s play holiday music at Plaza de César Chávez; admission is free.",
+      blurb: "Hear the HSAS Big Band and SJZ U19s play holiday music at Plaza de San José. Admission is free.",
     },
   },
   // This exact BiblioCommons record says 3–3:30 PM in its date fields but AM
