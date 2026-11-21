@@ -74,6 +74,8 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("a 590-unit residential and 15,000-square-foot commercial mixed-use project at 2610 El Camino Real",
         "a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space")
       .replace("an affordable housing proposal request for 340 Portage Avenue", "a request for affordable housing proposals at 340 Portage Avenue")
+      .replace("The agenda listed authorizing a Request for Proposals and a local funding contribution",
+        "The agenda listed a proposal to authorize a request for proposals and a local funding contribution")
       .replace("change its North Ventura area plan designation, to match the adjacent 2951 El Camino Real parcel and add it as a housing inventory site.",
         "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")
       .replace("medium-density mixed use and change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.",

@@ -47,6 +47,9 @@ const SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT = [
   "Space is limited. The library begins handing out free tickets at 10 a.m.",
 ];
 
+// https://www.scu.edu/missionchurch/
+const SCU_MISSION_NAME_EDIT = [/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"];
+
 const EDITS = {
   "The Tech Interactive": {
     title: [
@@ -83,6 +86,7 @@ const EDITS = {
     description: [
       ["Our first program launches August 6, 2026 2026 Dates are as follows:", "Our first program launches August 6, 2026. The 2026 dates are as follows:"],
       ["the Spring St. Cul de sac", "the Spring St. cul-de-sac"],
+      [" (Google Maps directions here; see red pin on map below.) ", " "],
       ["approximately 9:15 a.m., unhoused neighbors receive stipends, then everyone", "approximately 9:15 a.m.; unhoused neighbors receive stipends, and then everyone"],
       ["9:00 AM - 10:00 AM Zumba 10:15 AM - 11:15 AM Yoga", "9:00 AM - 10:00 AM: Zumba; 10:15 AM - 11:15 AM: Yoga"],
       ["In the 1930s and '40s almost", "In the 1930s and '40s, almost"],
@@ -2182,8 +2186,10 @@ const EDITS = {
     title: [
       // The act's own spelling: https://valerieamyband.com/home
       ["Valeire: A Tribute to Amy Winehouse", "Valerie: A Tribute to Amy Winehouse"],
-      // The tour's Spanish article "La" is not the Los Angeles abbreviation.
-      [/^Natalia Jimenez\. LA Jimenez$/g, "Natalia Jimenez. La Jimenez"],
+      // The venue's announcement spells the artist and tour name with accents.
+      [/^Natalia Jimenez\. La Jimenez$/gi, "Natalia Jiménez — La Jiménez"],
+      // https://www.nederlanderconcerts.com/event/luka-sulic-1
+      [/^Luka Sulic (?:of 2Cellos|\(formerly of 2Cellos\))$/gi, "Luka Sulic (formerly of 2CELLOS)"],
     ],
     description: [
       ['"Eterna Tour 2026".', '"Eterna Tour 2026."'],
@@ -2219,6 +2225,7 @@ const EDITS = {
       [/^Benson Memorial Center- (?=\S)/g, "Benson Memorial Center - "],
       [/^St\.(?=Clare Room\b)/g, "St. "],
       [/^Lucas Hall Santa Clara University$/g, "Lucas Hall, Santa Clara University"],
+      SCU_MISSION_NAME_EDIT,
     ],
     description: [
       [
@@ -2261,6 +2268,7 @@ const EDITS = {
       [/^"So, if you want to really hurt me, talk badly about my language\. Ethnic identity is twin skin to linguistic identity\. I am my language\.$/g, '"So, if you want to really hurt me, talk badly about my language. Ethnic identity is twin skin to linguistic identity. I am my language."'],
     ],
     blurb: [
+      SCU_MISSION_NAME_EDIT,
       [
         "Watch Santa Clara Women's Basketball host UC Santa Cruz at the Leavey Center, with a teddy bear donation and Daughter Date theme.",
         "Watch Santa Clara's women's basketball team host UC Santa Cruz at the Leavey Center for the Broncos Teddy Bear Donation and Daughter Date game.",

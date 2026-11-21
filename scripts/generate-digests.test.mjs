@@ -206,7 +206,7 @@ test("refreshed Campbell digest keeps the reviewed transcript and fence wording"
   assert.equal(polishCivicTopic(reviewedTopic), reviewedTopic);
 });
 
-test("refreshed San José and Santa Clara summaries keep their reviewed agenda wording", () => {
+test("refreshed council summaries keep their reviewed agenda wording", () => {
   const examples = [
     [
       "Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
@@ -219,6 +219,10 @@ test("refreshed San José and Santa Clara summaries keep their reviewed agenda w
     [
       "The project is a 590-unit residential and 15,000-square-foot commercial mixed-use project at 2610 El Camino Real.",
       "The project is a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space.",
+    ],
+    [
+      "The agenda listed authorizing a Request for Proposals and a local funding contribution for an affordable housing development at 340 Portage Avenue (Matadero Creek).",
+      "The agenda listed a proposal to authorize a request for proposals and a local funding contribution for an affordable housing development at 340 Portage Avenue (Matadero Creek).",
     ],
   ];
   for (const [before, after] of examples) {

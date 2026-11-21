@@ -194,6 +194,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-library-refresh.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-midday.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-library-logistics.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-performers.json", import.meta.url))));
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
@@ -700,6 +701,26 @@ test("SCU room spacing preserves changed venue details and publisher scope", () 
     assert.deepEqual(polishReviewedEventCopy({ ...original, venue }), { ...original, venue });
   const otherPublisher = { ...original, source: "Different publisher" };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
+test("SCU venue and blurb use the mission's published spelling", () => {
+  const event = {
+    source: "Santa Clara University", title: "Student Candlelight Mass",
+    venue: "Mission Santa Clara de Asis",
+    blurb: "Attend Wednesday evening Student Candlelight Mass at Mission Santa Clara de Asis.",
+    date: "2026-12-02", time: "8:00 PM",
+    url: "https://events.scu.edu/center-for-spirituality-and-faith/event/454607-student-candlelight-mass",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), {
+    ...event, venue: "Mission Santa Clara de Asís",
+    blurb: "Attend Wednesday evening Student Candlelight Mass at Mission Santa Clara de Asís.",
+  });
+});
+
+test("cached Luka Sulic title retains the band's spelling after normalization", () => {
+  const title = "Luka Sulic (formerly of 2CELLOS)";
+  const event = { source: "San Jose Theaters", title: cleanTitle(title) };
+  assert.deepEqual(polishReviewedEventCopy(event), { ...event, title });
 });
 
 test("afternoon copy repairs preserve revised facts, contacts, and publisher scope", () => {
