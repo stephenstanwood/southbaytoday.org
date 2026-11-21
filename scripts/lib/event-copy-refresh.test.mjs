@@ -1312,6 +1312,22 @@ test("raw Playwright source spacing and casing are repaired on the first pass", 
   }
 });
 
+test("the Books & Bricks repair handles the publisher's raw casing on the first refresh", () => {
+  const raw = "We will meet on Monday December 14th at 3:30pm in the Program Room. Please read the book before our meeting. At the meeting we will discuss the book and do a Lego building activity.";
+  const event = {
+    source: "Santa Clara County Library",
+    time: "3:30 PM",
+    registration: "required",
+    description: polishDescription(raw + " Special thanks to the Friends of Milpitas Library."),
+  };
+  const reviewed = {
+    ...event,
+    description: "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. Please read the book before the meeting. We'll discuss it and build with LEGO bricks. Special thanks to the Friends of Milpitas Library.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(event), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+});
+
 test("cache hits receive the same final repair without model generation", async (t) => {
   // Import the real resolver beside an isolated captured cache. This stays
   // valid after the October events age out of the live feed/cache.

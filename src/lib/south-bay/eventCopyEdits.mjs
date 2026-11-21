@@ -1351,7 +1351,7 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       [
-        "We will meet on Monday December 14th at 3:30 PM in the Program Room. Please read the book before our meeting. At the meeting we will discuss the book and do a LEGO building activity.",
+        /We will meet on Monday,? December 14th at 3:30 PM in the Program Room\. Please read the book before our meeting\. At the meeting we will discuss the book and do a (?:Lego|LEGO) building activity\./g,
         "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
       ],
       [
@@ -1851,6 +1851,10 @@ const EDITS = {
       ["560/Reading Room, 5th Floor, SJSU Special Collections & Archives", "SJSU Special Collections & Archives, Reading Room 560 (5th Floor)"],
     ],
     description: [
+      [
+        "Performers: Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) Program: TBC All concerts take place at 12:00 and are followed by an informal coffee reception and open-house.",
+        "Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) perform at noon, with an informal coffee reception and open house afterward. The program is still to be confirmed.",
+      ],
       ["will present highlights from their their new book,", "will present highlights from their new book,"],
       ["Tower Lawn Location Join the 500 Mile Runners", "Location: Tower Lawn. Join the 500 Mile Runners"],
       ["history, culture and artform of Mariachi music.", "history, culture and art form of mariachi music."],
@@ -1974,6 +1978,14 @@ const EDITS = {
       ],
     ],
     description: [
+      [
+        "Come to The O'Donohue Family Stanford Educational Farm to build your own seasonal, organic, flower bouquet using flowers grown on the campus farm. Follow provided directions to make your bouquet.",
+        "Make a bouquet from seasonal, organic flowers grown at the O'Donohue Family Stanford Educational Farm. Instructions are provided.",
+      ],
+      [
+        "The labyrinth is an ancient pattern found in many cultures around the world. Labyrinth designs were found on poetry, tables, and tiles that date back as far as 5000 years.",
+        "The labyrinth is an ancient pattern found in many cultures. Some designs date back as far as 5,000 years.",
+      ],
       ["Queralt Solé i Barjau is Associate Professor", "Queralt Solé i Barjau is an associate professor"],
       ["Join Iajs for Bones, Borders, and Black Mirrors", "Join IAJS for Bones, Borders, and Black Mirrors"],
       ["Cinematic Language in Horror Manga a discussion with", "Cinematic Language in Horror Manga, a discussion with"],
@@ -2045,6 +2057,10 @@ const EDITS = {
     ],
     blurb: [
       [/\bEn-Roads\b/gi, "En-ROADS"],
+      [
+        "Walk the labyrinth at Memorial Church, a pattern found in many cultures around the world, on Wednesday morning.",
+        "Walk the labyrinth at Stanford Memorial Church on Wednesday.",
+      ],
       [/\bAaai\b/g, "AAAI"],
       ["Tnt Traysikel", "TNT Traysikel"],
       ["that regulate brain states and sleep, at the Dement Seminar Series.", "that regulate brain states and sleep at the Dement Seminar Series."],
