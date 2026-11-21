@@ -1553,7 +1553,7 @@ const EDITS = {
       ],
       [
         /Supplies will be provided but you can bring your own art journal or favorite supplies Sign-up online ([A-Z][a-z]+ \d{1,2}, \d{4}) at/g,
-        "Supplies will be provided, but you can bring your own art journal or favorite supplies. Sign up online $1, at",
+        "Supplies will be provided, but you can bring your own art journal or favorite supplies. Online registration opens $1, at",
       ],
     ],
     blurb: [
