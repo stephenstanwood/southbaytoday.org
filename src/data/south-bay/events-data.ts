@@ -725,7 +725,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     address: "1 Paseo de San Antonio, San Jose, CA 95113",
     category: "community",
     recurrence: "seasonal",
-    months: [11, 12],
+    months: [11, 12, 1],
     cost: "free",
     kidFriendly: true,
     description:
