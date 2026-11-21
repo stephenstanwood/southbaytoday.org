@@ -638,6 +638,14 @@ const EDITS = {
         "Do you want to build your English language skills and your confidence? This beginning non-credit ESL course is free! ESL 501 Reading & Writing 1. What will you learn in this class? This is a non-credit, high-beginning-level integrated ESL skills course emphasizing basic reading, writing, grammar, and vocabulary.",
         "ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
       ],
+      [
+        /(and read simplified material\.) Course Information: Starts: ([^;]+, \d{4}); Ends: ([^;]+, \d{4}); Meeting Days: ([^;]+); Time: (\d{1,2}:\d{2} [AP]M) [–-] (\d{1,2}:\d{2} [AP]M); Instructor: ([^;]+?)\.(?= Before the classes start,)/g,
+        "$1 The course runs from $2, through $3. Classes meet $4 from $5 to $6. The instructor is $7.",
+      ],
+      [
+        "Before the classes start, you must complete a Guided Self-Placement (GSP). This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level. We will assist you with the application and registration process in person at the Edenvale Branch Library.",
+        "Complete the Guided Self-Placement assessment before classes start. It helps the college place you in a class for your English level. Get help applying and registering in person at Edenvale Branch Library.",
+      ],
       ["Seniors interested in learning the basics or need a refresher of how to play Chinese Mahjong are welcome to", "Seniors who are interested in learning the basics of Chinese Mahjong or need a refresher are welcome to"],
       ["will also learn strategy and strengthen communications and sense of community.", "will also learn strategy, strengthen communication skills, and build a sense of community."],
       ["time. Those on waitlist will be considered for no show spots. Late arrivals", "time. Those on the waitlist will be considered for no-show spots. Late arrivals"],
@@ -1134,6 +1142,7 @@ const EDITS = {
   },
   "Santana Row": {
     description: [
+      ["100 | OCT Cars and Croissants", "100|OCT Cars and Croissants"],
       [
         /Get in the Spirit of The Row sponsored by Lindeza! Join us for the first (\d+) Tuesdays in December from (\d+ PM)-(\d+ PM) leading up to Christmas, for a live holiday show/g,
         "Get in the Spirit of the Row, sponsored by Lindeza! On the first $1 Tuesdays in December, from $2 to $3, enjoy a live holiday show",
@@ -1183,6 +1192,7 @@ const EDITS = {
       ["Shop Black Friday savings at Santana Row, where the early 7:00 AM start gives you a head start on the stores.", "Shop at Santana Row on Black Friday. The event starts at 7:00 AM."],
       ["Shop Black Friday deals at Santana Row, where the description promises exclusive savings for shoppers starting early in the morning.", "Shop Black Friday deals at Santana Row, including early in-store savings at Hoka."],
       ["Watch a live holiday show of local arts and community groups, stand in Snow Showers at Park Valencia, and get photos with Santa.", "Watch a live holiday show by local arts and community groups, then catch snow showers in Park Valencia and take photos with Santa."],
+      ["100 | OCT Cars and Croissants", "100|OCT Cars and Croissants"],
     ],
   },
   "Los Altos Village Association": {
@@ -1261,6 +1271,10 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      [
+        "To learn more about the Community Resource Navigator program and explore services available at our other libraries, visit: Community Resource Navigators | Santa Clara County Library District",
+        "The Santa Clara County Library District's Community Resource Navigators page explains the program and lists services at other libraries.",
+      ],
       ["All major Credit Cards", "All major credit cards"],
       [
         "We accept the following forms of payment: Cash & Checks; All major credit cards; Apple Pay & Google Pay; Contactless payment available.",
