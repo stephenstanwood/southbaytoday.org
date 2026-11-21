@@ -160,7 +160,7 @@ const EDITS = {
     description: [
       [
         "Get into the rhythm of fitness with our Bollywood Dance program! Join us for this exciting volunteer-led program and learn Bollywood Dance moves for fun and fitness!",
-        "Learn Bollywood dance moves for fun and fitness in this volunteer-led program.",
+        "This volunteer-led program teaches Bollywood dance moves for fun and fitness.",
       ],
       [
         /^Our partner, Budding Leaders, is hosting arts and crafts classes for ages 4\+ with adult help, 8\+ solo\. We will supply materials and samples and help you create beautiful artwork\. Tickets available at the desk 30 minutes before (?:the )?program starts\. All individuals \(of any age\) attending need a ticket and must be present to receive their ticket\.$/g,

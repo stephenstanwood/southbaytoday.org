@@ -1389,7 +1389,7 @@ test("refreshed holiday and library listings retain reviewed copy", () => {
     description: "Get into the rhythm of fitness with our Bollywood Dance program! Join us for this exciting volunteer-led program and learn Bollywood Dance moves for fun and fitness! Walk-ins are welcome.",
   };
   assert.equal(polishReviewedEventCopy(dance).description,
-    "Learn Bollywood dance moves for fun and fitness in this volunteer-led program. Walk-ins are welcome.");
+    "This volunteer-led program teaches Bollywood dance moves for fun and fitness. Walk-ins are welcome.");
 });
 
 test("the diya title repair preserves new titles and other publishers", () => {
