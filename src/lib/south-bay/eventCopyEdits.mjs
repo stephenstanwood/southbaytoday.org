@@ -2203,6 +2203,11 @@ const EDITS = {
       ["NorCal Academy of Performing Arts Presents Disney's Frozen:", "NorCal Academy of Performing Arts presents Disney's Frozen:"],
       ["The Broadway Musical Don't let winter freeze", "The Broadway Musical. Don't let winter freeze"],
       ["Internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, Luka Sulic announces", "Luka Sulic, an internationally acclaimed cellist, composer, and former member of the global phenomenon 2CELLOS, announces"],
+      // The Civic's event page describes the set beyond the one-sentence preview.
+      [
+        /^Natalia Jiménez's international success continues to soar\.$/g,
+        'On her "La Jiménez" tour, Natalia Jiménez performs hits from her years with La Quinta Estación and her solo career.',
+      ],
       [
         /\bWay ?V is a Chinese boy band, debuting in China in January 2019 with their impressive single "Regular\." Way ?V has gained acclaim both in Asia and internationally\./g,
         'WayV is a Chinese boy band that debuted in China in January 2019 with the single "Regular." The group has gained acclaim in Asia and beyond.',

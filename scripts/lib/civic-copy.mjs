@@ -69,6 +69,10 @@ export function polishCivicCopy(text, { cityId } = {}) {
       .replace("increasing the City Attorney salary range.", "increasing the City Attorney's salary range.")
       .replace("a public hearing on a recommendation for a General Plan amendment and rezone at 400 Saratoga Avenue.",
         "a public hearing on whether to recommend amending the General Plan and rezoning 400 Saratoga Avenue.")
+      .replace("The proposal would build a five-story, 316-unit apartment building, reconfigure the existing nine-hole golf course, and dedicate land for a public park.",
+        "The proposal calls for constructing a five-story, 316-unit apartment building, reconfiguring the existing nine-hole golf course, and dedicating land for a public park.")
+      .replace("It also listed updates to Council Policy 030, on adding an item to the agenda, which had been deferred from June 1.",
+        "It also listed updates to Council Policy 030, which governs how items are added to the agenda. Consideration of those updates had been deferred from June 1.")
       .replace("a 590-unit residential and 15,000 square-foot commercial mixed-use project at 2610 El Camino Real, which falls under SB 330.",
         "a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space. The project falls under SB 330.")
       .replace("a 590-unit residential and 15,000-square-foot commercial mixed-use project at 2610 El Camino Real",
