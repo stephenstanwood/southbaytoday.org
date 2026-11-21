@@ -98,7 +98,7 @@ const CORRECTIONS = [
       blurb: "Students in grades 6–8 discuss Stargirl at Los Altos Library.",
       registration: REGISTRATION_REQUIRED,
     },
-    appendAttendanceNote: "Register online, then pick up Stargirl at the Children’s Reference Desk at Los Altos or Woodland Library and read it before the meeting.",
+    appendAttendanceNote: "Register online, then pick up Stargirl at the Children's Reference Desk at Los Altos or Woodland Library and read it before the meeting.",
   },
   // The organizer’s series and ticket pages agree on the official title and
   // December 5 at 7:30 PM. The roundup uses a shorter title and a promo URL.
@@ -116,7 +116,7 @@ const CORRECTIONS = [
       cost: event.cost ?? "paid",
       address: "15400 Montalvo Rd, Saratoga, CA 95070",
       description: "Charo's holiday show features flamenco guitar, comedy, and dancing.",
-      blurb: "See Charo perform flamenco guitar, comedy, and dance at Montalvo’s Carriage House Theatre.",
+      blurb: "Charo brings flamenco guitar, comedy, and dance to Montalvo's Carriage House Theatre.",
     }),
   },
   // The university lists this as a public volunteer shift, with food boxes
@@ -2371,7 +2371,11 @@ const CORRECTIONS = [
     facts: {
       time: "6:00 PM", endTime: "9:00 PM", cost: "paid", costNote: "$60 advance or $70 day-of, plus fees and tax",
     },
-    copyReplacements: [[/; the newsletter gives no start time\./gi, "."]],
+    copyReplacements: [
+      [/^The Saratoga Chamber of Commerce['’]s Holiday Wine Experience, a wine stroll through downtown during the holiday kickoff\./,
+        "The Saratoga Chamber of Commerce hosts a wine stroll through downtown during the holiday kickoff."],
+      [/; the newsletter gives no start time\.|, and the start time isn['’]t given in the newsletter\./gi, "."],
+    ],
     appendAttendanceNote: "Check-in opens at 5 PM at the Saratoga Chamber of Commerce, 14460 Big Basin Way. Bring photo ID and your ticket confirmation.",
   },
   // The athletics schedule verifies the first day's two games and venue.
@@ -4242,7 +4246,7 @@ const CORRECTIONS = [
     dateFrom: "2026-09-09", dateThrough: "2027-03-05",
     matches: (event) => event.ongoing === true
       && event.url === "https://events.stanford.edu/event/emergent-properties",
-    appendAttendanceNote: "The Map Center’s drop-in hours are usually Wednesday through Friday and vary by week. Visitors need a government-issued photo ID to register at Green Library.",
+    appendAttendanceNote: "The Map Center's drop-in hours are usually Wednesday through Friday and vary by week. Visitors need a government-issued photo ID to register at Green Library.",
   },
   // The library confirms the reading-room hours. The general university
   // calendar emits all-day dates, including weekends when the room is closed.
@@ -4706,7 +4710,7 @@ const CORRECTIONS = [
       cost: "paid",
       costNote: "Kids’ run $30–$35. 5K $47–$60 depending on registration date and residency.",
     },
-    appendAttendanceNote: "The 5K starts at 8:30 AM by Community Hall and costs $47–$60. The kids’ run starts at 9:30 AM on Library Field for ages 7 and under and costs $30–$35. Same-day registration runs from 7 to 8:15 AM at Community Hall.",
+    appendAttendanceNote: "The 5K starts at 8:30 AM by Community Hall and costs $47–$60. The kids' run starts at 9:30 AM on Library Field for ages 7 and under and costs $30–$35. Same-day registration runs from 7 to 8:15 AM at Community Hall.",
   },
   // The city provides the venue, prices and registration terms on the
   // program page. Its separate calendar detail omits those fields.
@@ -6851,9 +6855,11 @@ export function applyVerifiedEventFacts(event) {
   }
   // Entry conditions supplement current booking/availability notices; never
   // replace a later sold-out, closed or organizer-confirmation message.
-  if (correction.appendAttendanceNote
-      && !(corrected.attendanceNote || "").includes(correction.appendAttendanceNote)) {
-    corrected.attendanceNote = [corrected.attendanceNote, correction.appendAttendanceNote].filter(Boolean).join(" ");
+  const note = correction.appendAttendanceNote;
+  if (note && !corrected.attendanceNote?.includes(note)) {
+    // Replace a saved copy with curly apostrophes before checking for duplicates.
+    const attendance = (corrected.attendanceNote || "").replace(note.replaceAll("'", "’"), () => note);
+    corrected.attendanceNote = attendance.includes(note) ? attendance : [attendance, note].filter(Boolean).join(" ");
   }
   // Attendance notes also carry source copy and need the same verified fixes.
   for (const field of ["description", "blurb", "attendanceNote"]) {

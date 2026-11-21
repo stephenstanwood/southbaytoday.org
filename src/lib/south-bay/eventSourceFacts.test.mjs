@@ -339,10 +339,12 @@ test("Cupertino's Big Bunny calendar keeps the main race open to adults", () => 
   const fixed = applyVerifiedEventFacts(event);
   assert.equal(fixed.audienceAge, "all");
   assert.equal(fixed.cost, "paid");
-  assert.match(fixed.attendanceNote, /5K starts at 8:30 AM.*kids’ run starts at 9:30 AM.*ages 7 and under/);
+  assert.match(fixed.attendanceNote, /5K starts at 8:30 AM.*kids' run starts at 9:30 AM.*ages 7 and under/);
   assert.match(fixed.attendanceNote, /Same-day registration/);
   assert(!requiresAdvanceRegistration(fixed));
   assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const saved = { ...fixed, attendanceNote: fixed.attendanceNote.replace("kids' run", "kids’ run") };
+  assert.deepEqual(applyVerifiedEventFacts(saved), fixed);
 });
 
 test("Cupertino's Hop 'n' Hunt calendar retains the published venue and admission", () => {
