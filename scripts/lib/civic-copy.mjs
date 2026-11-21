@@ -59,13 +59,19 @@ export function polishCivicCopy(text, { cityId } = {}) {
         "The agenda included a Saratoga Village economic vitality update with ideas from community engagement and an invitation for the Council to give staff additional direction. It also listed ceremonial recognition of")
       .replace(/(?:The November 24, 2026, final agenda item was marked cancelled\.|^The agenda showed the November 24, 2026, final agenda review as cancelled\.?$)/g,
         "The review of the final agenda for the November 24, 2026, meeting was marked canceled.")
+      .replace("Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
+        "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.")
       .replace("to irrigate nonfunctional turfgrass, and updating the recycled water service area",
         "to irrigate nonfunctional turfgrass and updating the recycled water service area")
       .replace("and considering an RV permit parking program on Caribbean Drive along with studying a safe parking pilot",
         "considering an RV permit parking program on Caribbean Drive, and studying a safe parking pilot")
       .replace("increasing the City Attorney salary range.", "increasing the City Attorney's salary range.")
+      .replace("a public hearing on a recommendation for a General Plan amendment and rezone at 400 Saratoga Avenue.",
+        "a public hearing on whether to recommend amending the General Plan and rezoning 400 Saratoga Avenue.")
       .replace("a 590-unit residential and 15,000 square-foot commercial mixed-use project at 2610 El Camino Real, which falls under SB 330.",
         "a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space. The project falls under SB 330.")
+      .replace("a 590-unit residential and 15,000-square-foot commercial mixed-use project at 2610 El Camino Real",
+        "a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space")
       .replace("an affordable housing proposal request for 340 Portage Avenue", "a request for affordable housing proposals at 340 Portage Avenue")
       .replace("change its North Ventura area plan designation, to match the adjacent 2951 El Camino Real parcel and add it as a housing inventory site.",
         "change its North Ventura area plan designation to match the adjacent parcel at 2951 El Camino Real and add the Olive Avenue parcel as a housing inventory site.")

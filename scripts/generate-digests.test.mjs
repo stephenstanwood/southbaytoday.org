@@ -206,6 +206,27 @@ test("refreshed Campbell digest keeps the reviewed transcript and fence wording"
   assert.equal(polishCivicTopic(reviewedTopic), reviewedTopic);
 });
 
+test("refreshed San José and Santa Clara summaries keep their reviewed agenda wording", () => {
+  const examples = [
+    [
+      "Also listed were several council-sponsored community events seeking approval to spend city funds and accept donations, and a proposal to establish the La Avenida Cultural District.",
+      "The agenda also listed a proposal to establish the La Avenida Cultural District and requests to spend city funds and accept donations for several council-sponsored community events.",
+    ],
+    [
+      "The November 18 Planning Commission agenda listed a public hearing on a recommendation for a General Plan amendment and rezone at 400 Saratoga Avenue.",
+      "The November 18 Planning Commission agenda listed a public hearing on whether to recommend amending the General Plan and rezoning 400 Saratoga Avenue.",
+    ],
+    [
+      "The project is a 590-unit residential and 15,000-square-foot commercial mixed-use project at 2610 El Camino Real.",
+      "The project is a mixed-use project at 2610 El Camino Real with 590 residential units and 15,000 square feet of commercial space.",
+    ],
+  ];
+  for (const [before, after] of examples) {
+    assert.equal(polishCivicCopy(before), after);
+    assert.equal(polishCivicCopy(after), after);
+  }
+});
+
 test("civic modifiers keep numbers, identifiers, headline dates, and standalone terms exact", () => {
   const copy = "The fee for below market rate in-lieu fees would become a square footage-based fee. A City Council sponsored special event costs $25. See https://example.org/below-market-rate or email fee@example.org.";
   const reviewed = copy.replace("below market rate", "below-market-rate")

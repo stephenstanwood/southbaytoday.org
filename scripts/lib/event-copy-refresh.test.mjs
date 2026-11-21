@@ -1358,10 +1358,38 @@ test("new source facts and copy replace old wording without an event-ID restore"
 });
 
 test("a substantive replacement description mentioning a former title echo survives", () => {
-  for (const description of ["The Music of ABBA returns with a new ensemble. Tickets $55.", "RSVP Lowrider Art Showcase opens at 10 AM."]) {
+  for (const description of [
+    "The Music of ABBA returns with a new ensemble. Tickets $55.",
+    "RSVP Lowrider Art Showcase opens at 10 AM.",
+    "Charo Christmas returns with a new guest performer.",
+  ]) {
     const event = { source: "Montalvo Arts Center", description };
     assert.deepEqual(polishReviewedEventCopy(event), event);
   }
+});
+
+test("refreshed holiday and library listings retain reviewed copy", () => {
+  const concert = {
+    source: "Montalvo Arts Center",
+    title: "Charo Have Yourself a Cuchi Little Christmas",
+    description: "Charo Christmas",
+    date: "2026-12-05",
+    url: "https://my.montalvoarts.org/3111/3155",
+  };
+  const reviewedConcert = {
+    ...concert,
+    title: "Charo: Have Yourself a Cuchi Little Christmas",
+    description: "Charo's holiday show features flamenco guitar, comedy, and dancing.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(concert), reviewedConcert);
+  assert.deepEqual(polishReviewedEventCopy(reviewedConcert), reviewedConcert);
+
+  const dance = {
+    source: "San Jose Public Library",
+    description: "Get into the rhythm of fitness with our Bollywood Dance program! Join us for this exciting volunteer-led program and learn Bollywood Dance moves for fun and fitness! Walk-ins are welcome.",
+  };
+  assert.equal(polishReviewedEventCopy(dance).description,
+    "Learn Bollywood dance moves for fun and fitness in this volunteer-led program. Walk-ins are welcome.");
 });
 
 test("the diya title repair preserves new titles and other publishers", () => {
