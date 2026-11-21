@@ -646,6 +646,14 @@ const EDITS = {
         "Before the classes start, you must complete a Guided Self-Placement (GSP). This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level. We will assist you with the application and registration process in person at the Edenvale Branch Library.",
         "Complete the Guided Self-Placement assessment before classes start. It helps the college place you in a class for your English level. Get help applying and registering in person at Edenvale Branch Library.",
       ],
+      [
+        "Develop your English language skills by practicing speaking, listening, reading, writing, vocabulary, pronunciation, and grammar. ESL 501 Reading & Writing 1 is a free, noncredit course for high-beginning English learners. It focuses on basic reading, writing, grammar, and vocabulary.",
+        "ESL 501 Reading & Writing 1 is a free, noncredit course for learners at the high-beginning English level. It focuses on basic reading, writing, grammar, and vocabulary, with practice in speaking, listening, and pronunciation.",
+      ],
+      [
+        "Students will learn to comprehend frequently used words in context, use learned phrases and sentences to express ideas in basic writing, understand basic grammar structures, and read simplified material.",
+        "Students learn the meanings of common words in context, express ideas in writing using familiar phrases and sentences, understand basic grammar structures, and read simplified texts.",
+      ],
       ["Seniors interested in learning the basics or need a refresher of how to play Chinese Mahjong are welcome to", "Seniors who are interested in learning the basics of Chinese Mahjong or need a refresher are welcome to"],
       ["will also learn strategy and strengthen communications and sense of community.", "will also learn strategy, strengthen communication skills, and build a sense of community."],
       ["time. Those on waitlist will be considered for no show spots. Late arrivals", "time. Those on the waitlist will be considered for no-show spots. Late arrivals"],
@@ -1143,6 +1151,15 @@ const EDITS = {
   "Santana Row": {
     description: [
       ["100 | OCT Cars and Croissants", "100|OCT Cars and Croissants"],
+      [
+        "December 13, 2026. Join us on Sunday, December 13th from 9 AM-12 PM for the 100|OCT Cars and Croissants on The Row!",
+        "On Sunday, December 13, 2026, from 9 AM to noon, visit Santana Row for the 100|OCT car show.",
+      ],
+      [
+        "Whether you're a dedicated car enthusiast or simply looking for a fun morning out, enjoy the opportunity to see incredible vehicles up close, connect with fellow automotive fans, and take in the vibrant atmosphere of Santana Row.",
+        "See the cars up close and meet other enthusiasts.",
+      ],
+      ["This event is free to attend. We look forward to seeing you on the Row!", "This event is free to attend."],
       [
         /Get in the Spirit of The Row sponsored by Lindeza! Join us for the first (\d+) Tuesdays in December from (\d+ PM)-(\d+ PM) leading up to Christmas, for a live holiday show/g,
         "Get in the Spirit of the Row, sponsored by Lindeza! On the first $1 Tuesdays in December, from $2 to $3, enjoy a live holiday show",
