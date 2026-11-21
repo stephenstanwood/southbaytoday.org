@@ -174,6 +174,29 @@ test("a live closed flag (with accounting) drops the listing without a windows c
   assert.equal(calls.some((u) => u.includes("registration_windows")), false);
 });
 
+test("a closed series with a waitlist follows the library's live registration window", async () => {
+  const id = "6903916d2edc686d00f6348c";
+  const listing = { id: `sjpl-${id}`, title: "Bridge Card Game", registration: "closed" };
+  const record = {
+    id, registrationClosed: true, isFull: false, numberWaitlistRegistered: 21,
+    definition: { registrationInfo: { provider: "BIBLIO_EVENTS", cap: 16, scope: "ALL_REMAINING", waitlistEnabled: true } },
+  };
+  const gateway = { sjpl: gatewayBody([record]) };
+  const active = stubFetch({ gateway, windows: { [id]: { event: { status: "ACTIVE" } } } });
+  const full = await recheckRegistrationGatedEvents([listing], { fetchImpl: active.impl, log: silent });
+  assert.equal(full.events[0].registration, "full");
+  assert.deepEqual(full.dropped, []);
+
+  const ended = stubFetch({ gateway, windows: { [id]: { event: { status: "ENDED" } } } });
+  const closed = await recheckRegistrationGatedEvents([full.events[0]], { fetchImpl: ended.impl, log: silent });
+  assert.equal(closed.events.length, 0);
+  assert.match(closed.dropped[0].reason, /window ended/);
+
+  const unavailable = stubFetch({ gateway });
+  const unchanged = await recheckRegistrationGatedEvents(full.events, { fetchImpl: unavailable.impl, log: silent });
+  assert.equal(unchanged.events[0], full.events[0]);
+});
+
 test("a record cancelled since ingest is dropped", async () => {
   const { impl } = stubFetch({
     gateway: { sjpl: gatewayBody([ukuleleGatewayRecord({ isCancelled: true })]) },

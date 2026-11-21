@@ -52,6 +52,40 @@ test("both library adapters honor the captured midnight registration deadline", 
   assert.deepEqual(event, midnightWindowFixture.event);
 });
 
+test("library refresh checks whether a closed series still has an active waitlist", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-11-20T20:00:00-08:00") });
+  const { fetchBiblioEvents } = await import("../generate-events.mjs");
+  const event = {
+    id: "6903916d2edc686d00f6348c",
+    registrationClosed: true,
+    isFull: false,
+    numberWaitlistRegistered: 21,
+    definition: {
+      title: "Bridge Card Game",
+      start: "2026-11-24T10:15",
+      end: "2026-11-24T13:00",
+      registrationInfo: {
+        provider: "BIBLIO_EVENTS", scope: "ALL_REMAINING", cap: 16, waitlistEnabled: true,
+      },
+    },
+  };
+  let windowStatus = "ACTIVE";
+  t.mock.method(globalThis, "fetch", async (url) => {
+    const request = new URL(url);
+    if (request.hostname === "gateway.bibliocommons.com") {
+      return Response.json({ entities: { events: request.searchParams.get("page") === "1"
+        ? { [event.id]: event } : {} } });
+    }
+    assert.equal(request.href, `https://sjpl.bibliocommons.com/events/events/${event.id}/registration_windows?client_scope=events`);
+    return Response.json({ event: { status: windowStatus } });
+  });
+  for (const status of ["ACTIVE", "ENDED"]) {
+    windowStatus = status;
+    const [row] = await fetchBiblioEvents("sjpl", "San Jose Public Library", () => "san-jose");
+    assert.equal(row.registration, status === "ACTIVE" ? "full" : "closed");
+  }
+});
+
 test("Branch Buddy categories follow the session's advertised audience", async () => {
   const { inferCategory } = await import("../generate-events.mjs");
   assert.equal(inferCategory("Branch Buddy Volunteering for Families", "Training and supplies are provided.", "", "King Library"), "family");

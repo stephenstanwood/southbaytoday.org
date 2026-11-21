@@ -4,6 +4,26 @@
 import { stripHtml } from "./event-html.mjs";
 import { displayDate, displayTime, isoDate, parseDatePT } from "./dates.mjs";
 
+// The same resolved window that the library uses for its event listing.
+export async function fetchRegistrationWindowStatus(
+  { libraryId, eventId },
+  { fetchImpl = fetch, timeoutMs = 10_000, log = console.warn } = {},
+) {
+  try {
+    const response = await fetchImpl(
+      `https://${libraryId}.bibliocommons.com/events/events/${eventId}/registration_windows?client_scope=events`,
+      { headers: { accept: "application/json" }, signal: AbortSignal.timeout(timeoutMs) },
+    );
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    const status = String(data?.event?.status || "").toUpperCase();
+    return ["ACTIVE", "UPCOMING", "ENDED"].includes(status) ? status : null;
+  } catch (error) {
+    log(`registration re-check: ${libraryId}/${eventId} windows fetch failed (${error?.message || error}) — keeping feed state`);
+    return null;
+  }
+}
+
 // BiblioCommons date-only ranges include their final calendar day. A display
 // that opened at midnight must stay listed after that instant, through its
 // published end, without turning midnight into visiting hours. Timed classes

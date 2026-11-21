@@ -1052,6 +1052,16 @@ test("a counted-full event stays full even when the flag also says closed", () =
   );
 });
 
+test("an active series waitlist can make a closed BiblioCommons registration full", () => {
+  const record = biblioEvent({ provider: "BIBLIO_EVENTS", cap: 16, maxSeats: 10, registrationClosed: true });
+  record.numberWaitlistRegistered = 21;
+  Object.assign(record.definition.registrationInfo, { scope: "ALL_REMAINING", waitlistEnabled: true });
+  assert.equal(registrationFromBiblioCommons(record, "ACTIVE"), "full");
+  assert.equal(registrationFromBiblioCommons(record, "ENDED"), "closed");
+  assert.equal(registrationFromBiblioCommons(record), "closed");
+  assert.equal(registrationFromBiblioCommons({ ...record, numberWaitlistRegistered: 0 }, "ACTIVE"), "closed");
+});
+
 test("flag=false proves nothing — the ukulele instance said false while closed", () => {
   // Documents WHY resolveRegistrationClosesBy and the live re-check exist. If
   // this ever starts returning "closed", BiblioCommons fixed their flag — the

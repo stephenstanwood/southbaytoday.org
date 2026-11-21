@@ -109,6 +109,12 @@ test("still downcases shouted words that are not known acronyms", () => {
   assert.equal(cleanTitle("ANNUAL Pancake Breakfast"), "Annual Pancake Breakfast");
 });
 
+test("refresh preserves Cupertino Library's Create CU series name", () => {
+  const title = "Create CU: Jumbo Bookmarks and Open Studio";
+  assert.equal(cleanTitle(title), title);
+  assert.equal(cleanTitle("Create Cu: Jumbo Bookmarks and Open Studio"), title);
+});
+
 test("refresh preserves organizer, safety-program and mapping/tool initials", () => {
   for (const title of [
     "Community Emergency Response Team (CERT) Academy",

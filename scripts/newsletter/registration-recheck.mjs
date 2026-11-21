@@ -36,13 +36,17 @@
 // ---------------------------------------------------------------------------
 
 import {
+  needsBiblioSeriesWaitlistCheck,
   registrationFromBiblioCommons,
   requiresAdvanceRegistration,
   REGISTRATION_CLOSED,
   REGISTRATION_NONE,
 } from "../../src/lib/south-bay/eventFilters.mjs";
+import { fetchRegistrationWindowStatus } from "../lib/library-event-details.mjs";
 import { midpenVolunteerUrl, parseMidpenVolunteerAvailability } from "../lib/midpen-events.mjs";
 import { UA } from "../lib/http.mjs";
+
+export { fetchRegistrationWindowStatus };
 
 /** Library-id prefixes generate-events.mjs mints BiblioCommons ids under. */
 export const BIBLIO_LIBRARY_IDS = new Set(["sjpl", "sccl", "paloalto", "sunnyvale"]);
@@ -102,25 +106,6 @@ async function fetchFreshBiblioRecords(refs, opts) {
 }
 
 /**
- * Live registration-window status for one event: "ACTIVE", "UPCOMING",
- * "ENDED", or null when the endpoint is unreachable or says something new.
- */
-export async function fetchRegistrationWindowStatus(ref, opts = {}) {
-  const { fetchImpl = fetch, timeoutMs = DEFAULT_TIMEOUT_MS, log = console.warn } = opts;
-  try {
-    const data = await fetchJsonWithTimeout(
-      `https://${ref.libraryId}.bibliocommons.com/events/events/${ref.eventId}/registration_windows?client_scope=events`,
-      { fetchImpl, timeoutMs },
-    );
-    const status = String(data?.event?.status || "").toUpperCase();
-    return ["ACTIVE", "UPCOMING", "ENDED"].includes(status) ? status : null;
-  } catch (err) {
-    log(`registration re-check: ${ref.libraryId}/${ref.eventId} windows fetch failed (${err?.message || err}) — keeping feed state`);
-    return null;
-  }
-}
-
-/**
  * Re-verify every registration-gated listing against the live source.
  *
  * Returns { events, dropped }: `events` preserves the input order with gated
@@ -176,12 +161,7 @@ export async function recheckRegistrationGatedEvents(events, opts = {}) {
         return;
       }
 
-      const fresh = registrationFromBiblioCommons(record);
-      if (fresh === REGISTRATION_CLOSED) {
-        dropped.push({ event, reason: "registration closed at the source (live check)" });
-        replacements.set(event, null);
-        return;
-      }
+      let fresh = registrationFromBiblioCommons(record);
       if (fresh === REGISTRATION_NONE) {
         // No longer gated at all — drop the tag, keep the listing.
         const { registration, registrationClosesBy, ...rest } = event;
@@ -189,12 +169,23 @@ export async function recheckRegistrationGatedEvents(events, opts = {}) {
         return;
       }
 
-      // Still gated (required / appointment-only / full): the flags can lag
-      // the schedule, so the resolved window is the authority. ENDED means
-      // even the waitlist is gone.
-      const windowStatus = await fetchRegistrationWindowStatus(ref, { fetchImpl, timeoutMs, log });
+      // Gated registrations and series with a possible waitlist use the
+      // resolved window. ENDED means even the waitlist is gone.
+      const checkSeriesWaitlist = fresh === REGISTRATION_CLOSED && needsBiblioSeriesWaitlistCheck(record);
+      const windowStatus = fresh !== REGISTRATION_CLOSED || checkSeriesWaitlist
+        ? await fetchRegistrationWindowStatus(ref, { fetchImpl, timeoutMs, log })
+        : null;
       if (windowStatus === "ENDED") {
         dropped.push({ event, reason: "registration window ended at the source (live check)" });
+        replacements.set(event, null);
+        return;
+      }
+      if (checkSeriesWaitlist) {
+        if (windowStatus === null) return;
+        fresh = registrationFromBiblioCommons(record, windowStatus);
+      }
+      if (fresh === REGISTRATION_CLOSED) {
+        dropped.push({ event, reason: "registration closed at the source (live check)" });
         replacements.set(event, null);
         return;
       }

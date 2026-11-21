@@ -64,7 +64,7 @@ import { extractVenueFromTitle, stripRedundantVenueSuffix } from "./lib/venue-su
 import { dropUnmatchedClosers } from "./lib/bracket-balance.mjs";
 import { isClockTime, normalizeClockTime } from "./lib/clock-time.mjs";
 import { resolveBiblioLocation, formatBiblioAddress } from "./lib/biblio-location.mjs";
-import { biblioEventOccurrence, libraryEventDetails } from "./lib/library-event-details.mjs";
+import { biblioEventOccurrence, fetchRegistrationWindowStatus, libraryEventDetails } from "./lib/library-event-details.mjs";
 import { stripHtml } from "./lib/event-html.mjs";
 import { paloAltoPlayersTicketSource, paloAltoPlayersOccurrence } from "./lib/palo-alto-players-events.mjs";
 import { fetchMhpItems, MHP_CALENDAR_URL } from "./lib/mexican-heritage-plaza-events.mjs";
@@ -87,6 +87,7 @@ import {
   VIRTUAL_EVENT_PATTERNS,
   declaredRegistrationAvailability,
   hasOutOfAreaDestination,
+  needsBiblioSeriesWaitlistCheck,
   registrationFromBiblioCommons,
   registrationFromMeetup,
   requiresAdvanceRegistration,
@@ -1023,6 +1024,9 @@ const PROPER_NOUN_FIXES = {
   // SCCL's citizenship-prep listings title-case the agency acronym in both the
   // heading area and body ("128 Uscis civics questions") — 2026-10-05.
   Uscis: "USCIS",
+  // Cupertino Library names its open studio series "Create CU".
+  // https://sccl.bibliocommons.com/events/6b00e89832ce6d08d54c761a
+  "Create Cu:": "Create CU:",
   // The author's own cookbook page uses DeSpain and credits Gordon Ramsay.
   // LibCal title-cases her surname; prose polishing also splits DeSpain.
   // https://www.pyetsplate.com/cookbook
@@ -6467,8 +6471,12 @@ function isBiblioEventCancelled(ev) {
 // carries "required" for a window that ended before the evening refresh —
 // the Sept 1 2026 ukulele defect, where a closed 3-part series ran with a
 // "Reserve ahead" tag.
-function deriveBiblioRegistration(ev, start, end, now) {
+async function deriveBiblioRegistration(ev, start, end, now, libraryId) {
   let registration = registrationFromBiblioCommons(ev);
+  if (registration === REGISTRATION_CLOSED && needsBiblioSeriesWaitlistCheck(ev)) {
+    const status = await fetchRegistrationWindowStatus({ libraryId, eventId: ev.id });
+    registration = registrationFromBiblioCommons(ev, status);
+  }
   let closesBy = null;
   if (requiresAdvanceRegistration(registration)) {
     closesBy = resolveRegistrationClosesBy(ev, start, end);
@@ -6535,70 +6543,66 @@ async function fetchBiblioEvents(libraryId, libraryName, cityMapper) {
 
       // The branch/location store is per-page, so events must be mapped with
       // their own page's entities — don't hoist this out of the loop.
-      const mapped = freshEvents
-        .map((ev) => {
-          if (isBiblioEventCancelled(ev)) return null;
+      for (const ev of freshEvents) {
+        if (isBiblioEventCancelled(ev)) continue;
 
-          const occurrence = biblioEventOccurrence(ev, now);
-          if (!occurrence) return null;
-          const { start, end } = occurrence;
-          const branchId = ev.branchId || ev.definition?.branchLocationId;
-          const branchStore = entities.locations || entities.branches;
-          const branch = branchId && branchStore ? branchStore[branchId] : null;
-          const branchName = branch?.name || "";
-          const branchAddr = formatBiblioAddress(branch?.address);
-          const locationCode = ev.definition?.branchLocationId || "";
-          const city = cityMapper(branchName, branchAddr, locationCode);
-          if (!city) return null;
+        const occurrence = biblioEventOccurrence(ev, now);
+        if (!occurrence) continue;
+        const { start, end } = occurrence;
+        const branchId = ev.branchId || ev.definition?.branchLocationId;
+        const branchStore = entities.locations || entities.branches;
+        const branch = branchId && branchStore ? branchStore[branchId] : null;
+        const branchName = branch?.name || "";
+        const branchAddr = formatBiblioAddress(branch?.address);
+        const locationCode = ev.definition?.branchLocationId || "";
+        const city = cityMapper(branchName, branchAddr, locationCode);
+        if (!city) continue;
 
-          const title = ev.title || ev.definition?.title || "";
-          const desc = ev.description || ev.definition?.description || "";
-          const details = libraryEventDetails(ev, entities);
-          // BiblioCommons marks online-only library events with definition.isVirtual.
-          // Title-pattern fallbacks ("Online …", "Virtual …") miss titles like
-          // "Short Story Social" and "Learn English: Online Conversation Group"
-          // (where "Online" isn't at the start). Trust the authoritative flag.
-          const isVirtual = ev.definition?.isVirtual === true;
+        const title = ev.title || ev.definition?.title || "";
+        const desc = ev.description || ev.definition?.description || "";
+        const details = libraryEventDetails(ev, entities);
+        // BiblioCommons marks online-only library events with definition.isVirtual.
+        // Title-pattern fallbacks ("Online …", "Virtual …") miss titles like
+        // "Short Story Social" and "Learn English: Online Conversation Group"
+        // (where "Online" isn't at the start). Trust the authoritative flag.
+        const isVirtual = ev.definition?.isVirtual === true;
 
-          const { registration, registrationClosesBy } = deriveBiblioRegistration(ev, start, end, now);
+        const { registration, registrationClosesBy } = await deriveBiblioRegistration(ev, start, end, now, libraryId);
 
-          const place = resolveBiblioLocationFields({
-            libraryId,
-            libraryName,
-            title,
-            event: ev,
-            entities,
-          });
-          const displayVenue = place.venue;
+        const place = resolveBiblioLocationFields({
+          libraryId,
+          libraryName,
+          title,
+          event: ev,
+          entities,
+        });
+        const displayVenue = place.venue;
 
-          return {
-            id: `${libraryId}-${ev.id}`,
-            title,
-            ...occurrence.fields,
-            venue: displayVenue,
-            address: place.address,
-            city,
-            ...(isVirtual ? { virtual: true } : {}),
-            ...(registration !== REGISTRATION_NONE ? { registration } : {}),
-            ...(registrationClosesBy ? { registrationClosesBy } : {}),
-            // Pass the rendered venue so isIndoorVenue can detect "library" — short
-            // branch names like "Cambrian" (no "Library" suffix) used to slip past it.
-            category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue, details.sourceAudiences),
-            cost: "free",
-            ...details,
-            url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
-            source: libraryName,
-            // Prefix-only boundary on the title+desc regex — match compounds like
-            // "Storytime", "Babies", "Grades K-6". Mirrors playwright-scrapers.mjs.
-            kidFriendly: (details.sourceAudiences || []).some((a) => {
-              const name = typeof a === "string" ? a : a?.name || "";
-              return /child|teen|family|baby|toddler/i.test(name);
-            }) || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|puppet show|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + stripHtml(desc)),
-          };
-        })
-        .filter(Boolean);
-
-      results.push(...mapped);
+        results.push({
+          id: `${libraryId}-${ev.id}`,
+          title,
+          ...occurrence.fields,
+          venue: displayVenue,
+          address: place.address,
+          city,
+          ...(isVirtual ? { virtual: true } : {}),
+          ...(registration !== REGISTRATION_NONE ? { registration } : {}),
+          ...(registrationClosesBy ? { registrationClosesBy } : {}),
+          // Pass the rendered venue so isIndoorVenue can detect "library" — short
+          // branch names like "Cambrian" (no "Library" suffix) used to slip past it.
+          category: inferCategory(title, stripHtml(desc), ev.type || "", displayVenue, details.sourceAudiences),
+          cost: "free",
+          ...details,
+          url: ev.registrationUrl || `https://${libraryId}.bibliocommons.com/events/${ev.id}`,
+          source: libraryName,
+          // Prefix-only boundary on the title+desc regex — match compounds like
+          // "Storytime", "Babies", "Grades K-6". Mirrors playwright-scrapers.mjs.
+          kidFriendly: (details.sourceAudiences || []).some((a) => {
+            const name = typeof a === "string" ? a : a?.name || "";
+            return /child|teen|family|baby|toddler/i.test(name);
+          }) || /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|puppet show|ages?\s*\d|grades?\s+[K0-9])/i.test(title + " " + stripHtml(desc)),
+        });
+      }
     }
 
     console.log(`  ✅ ${libraryName}: ${results.length} events`);
@@ -6697,7 +6701,7 @@ async function fetchScclEvents() {
         // hits in current data), but mirror the handling so it stays in sync.
         const isVirtual = ev.definition?.isVirtual === true;
 
-        const { registration, registrationClosesBy } = deriveBiblioRegistration(ev, start, end, now);
+        const { registration, registrationClosesBy } = await deriveBiblioRegistration(ev, start, end, now, libraryId);
 
         allEvents.push({
           id: `${libraryId}-${ev.id}`,
