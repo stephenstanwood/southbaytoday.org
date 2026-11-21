@@ -264,6 +264,17 @@ test("an applicant-interview agenda does not establish interviews took place", (
   assert.equal(hasUnsupportedMeetingAction({ summary }, { ...agenda, source: "youtube-transcript" }), false);
 });
 
+test("an agenda's subcommittee reports do not establish that commissioners reported", () => {
+  const item = {
+    headline: "Campbell commissioners report on two permit-streamlining subcommittees",
+    summary: "The November 10 agenda listed reports from two subcommittees.",
+  };
+  const agenda = { fullAgendaText: "Planning Commission Subcommittee Reports" };
+  assert.equal(hasUnsupportedMeetingAction(item, agenda), true);
+  assert.equal(hasUnsupportedMeetingAction({ ...item, headline: "Campbell agenda listed two permit-streamlining reports" }, agenda), false);
+  assert.equal(hasUnsupportedMeetingAction(item, { fullAgendaText: "Commissioners reported on two subcommittees." }), false);
+});
+
 test("a past study-session agenda cannot be advertised as newly set for interviews", () => {
   const item = { date: "2026-10-20", headline: "Council study session set for Environmental Planning Commission applicant interviews" };
   assert.equal(hasPastAgendaFutureFraming(item, {}, "2026-10-24"), true);

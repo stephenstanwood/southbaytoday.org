@@ -15,6 +15,25 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Jurassic Quest follows the organizer's family format and daily hours", () => {
+  const event = {
+    source: "Ticketmaster",
+    venue: "Santa Clara County Fairgrounds",
+    url: "https://www.universe.com/events/jurassic-quest-san-jose-ca-santa-clara-county-fairgrounds-tickets-XGBKF2?ref=ticketmaster",
+    category: "community",
+  };
+  for (const [date, endTime] of [["2027-01-22", "6:00 PM"], ["2027-01-23", "8:00 PM"], ["2027-01-24", "5:00 PM"]]) {
+    const corrected = applyVerifiedEventFacts({ ...event, date });
+    assert.equal(corrected.category, "family");
+    assert.equal(corrected.kidFriendly, true);
+    assert.equal(corrected.endTime, endTime);
+    assert.equal(Boolean(corrected.attendanceNote), date === "2027-01-23");
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+  }
+  const otherDate = { ...event, date: "2027-01-25" };
+  assert.equal(applyVerifiedEventFacts(otherDate), otherDate);
+});
+
 test("The Ritz showtime conflict stays visible and out of recommendations", () => {
   const event = { id: "tm-rZ7HnEZ1AfGJZ0", date: "2026-11-20", time: "9:00 PM", attendanceNote: "Ages 18+." };
   const fixed = applyVerifiedEventFacts(event);

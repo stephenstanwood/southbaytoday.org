@@ -119,7 +119,7 @@ test("a sole proprietor's own name and a multiplex concession never become a res
   }
 });
 
-test("verified tenant improvements at operating businesses stay off the openings feed", () => {
+test("permits for operating food businesses and the Bothaus robotics space stay off the openings feed", () => {
   const records = [
     { record_id: "SR0885671", business_name: "RTI BREAKFAST CLUB AT MIDTOWN", site_location: "1432 W SAN CARLOS STE 80", city: "SAN JOSE" },
     { record_id: "SR0885984", business_name: "RTI UME TEA", site_location: "2215 THE ALAMEDA", city: "SANTA CLARA" },
@@ -128,6 +128,9 @@ test("verified tenant improvements at operating businesses stay off the openings
     { record_id: "SR0886435", business_name: "RTI ULAS ENTERPRISES LLC", site_location: "14554 BIG BASIN WY A.", city: "SARATOGA" },
     { record_id: "SR0886514", business_name: "RTI HABIBIZ CHINESE", site_location: "262 E SANTA CLARA ST", city: "SAN JOSE" },
     { record_id: "SR0885829", business_name: "RTI FREEZN SCOOPZ", site_location: "4072 MONTEREY RD", city: "SAN JOSE" },
+    { record_id: "SR0886386", business_name: "RTI HL PENINSULA RESTAURANT", site_location: "136 RANCH RD", city: "MILPITAS" },
+    { record_id: "SR0886326", business_name: "RTI VARAHI INDIAN CUISINE", site_location: "2095 N CAPITOL AVE SUITE # E", city: "SAN JOSE" },
+    { record_id: "SR0884388", business_name: "E-BOTHAUS", site_location: "278 CASTRO ST", city: "MOUNTAIN VIEW" },
   ];
   for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
   assert.equal(shouldSkip({

@@ -239,6 +239,9 @@ const SOURCE_ID_SKIP = new Set([
   // Freezn Scoopz at 4072 Monterey Rd had customer visits in October, before
   // this plan approval. https://maps.google.com/?cid=1714788890550434867
   "SR0885829",
+  "SR0886386", // HL Peninsula already serves diners at 136 Ranch Dr: https://www.hlpeninsula.com/locations
+  "SR0886326", // Varahi already serves diners at 2095 N Capitol Ave E: https://www.varahirestaurant.com/
+  "SR0884388", // Bothaus at 278 Castro St is a robotics space: https://www.sudo.ai/bothaus
   // JapaCurry lists its Naglee Park restaurant at 505 E San Carlos St. Its
   // plan record uses the nearby 7-Eleven address, 284 S 11th St.
   // https://www.japacurry.net/locations

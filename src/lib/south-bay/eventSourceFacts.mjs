@@ -89,6 +89,48 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The university lists this as a public volunteer shift, with food boxes
+  // packed for distribution by Sacred Heart Community Service.
+  {
+    date: "2026-12-12",
+    url: "https://events.scu.edu/alumni-association/event/533948-sacred-heart-community-services-annual-holiday",
+    aliasUrls: ["https://events.scu.edu/event/533948-sacred-heart-community-services-annual-holiday"],
+    facts: { category: "community" },
+  },
+  // The organizer lists these three daily windows, with sensory-friendly
+  // early entry from 8 to 9 AM on Saturday. https://jurassicquest.com/events/XGBKF2
+  ...[
+    ["2027-01-22", "6:00 PM"],
+    ["2027-01-23", "8:00 PM", "Saturday's 8–9 AM entry is sensory-friendly."],
+    ["2027-01-24", "5:00 PM"],
+  ].map(([date, endTime, note]) => ({
+    date,
+    matches: event => event.source === "Ticketmaster" && event.venue === "Santa Clara County Fairgrounds"
+      && /^https:\/\/www\.universe\.com\/events\/jurassic-quest-san-jose-ca-santa-clara-county-fairgrounds-tickets-XGBKF2\/?(?:[?#]|$)/.test(event.url || ""),
+    facts: {
+      category: "family", kidFriendly: true, endTime,
+      description: "See life-size dinosaurs, dig for fossils and build with bricks at the Santa Clara County Fairgrounds. Choose an entry time when buying tickets.",
+      blurb: "See life-size dinosaurs, dig for fossils and build with bricks at the Santa Clara County Fairgrounds.",
+    },
+    appendAttendanceNote: note,
+  })),
+  // SCCLD's occurrence page gives the exact Los Altos branch and 4–5 PM time.
+  {
+    id: "inbound-108cf9552f6eff9c",
+    date: "2026-11-20",
+    url: "https://sccl.bibliocommons.com/events/6adc04e8035faf0033dea44e",
+    aliasUrls: ["https://sccl.bibliocommons.com/v2/events/6adc04e8035faf0033dea44e"],
+    facts: { url: "https://sccl.bibliocommons.com/events/6adc04e8035faf0033dea44e", endTime: "5:00 PM" },
+  },
+  // The local organizers list these as book sales.
+  // https://lovethelibrary.org/2026-book-sale-dates-updated/ and https://fotsvl.org/
+  ...[
+    ["2026-11-20", "inbound-244c778f1efad894"],
+    ["2026-11-21", "inbound-ab8664a4d74f83bc"],
+    ["2026-11-22", "inbound-2e85e387f2e7727c"],
+    ["2026-11-21", "inbound-f5f7e6c23507b047"],
+    ["2026-11-22", "inbound-dbe8c81d745bff20"],
+  ].map(([date, id]) => ({ date, id, facts: { category: "market" } })),
   // The November 20 county newsletter confirms these occurrences. The race
   // organizer and meal hosts supply the venue names and admission terms.
   ...[
@@ -2317,7 +2359,9 @@ const CORRECTIONS = [
     date: "2026-11-21",
     matches: event => /^https:\/\/www\.eventbrite\.com\/e\/triton-holiday-art-fair-tickets-1998434110220\/?(?:[?#].*)?$/.test(event.url || "")
       && event.title === "Triton Holiday Art Fair" && event.venue === "Triton Museum of Art",
-    facts: { cost: "free" },
+    // The museum lists a holiday shopping fair with vendor booths.
+    // https://www.tritonmuseum.org/holidayartfair
+    facts: { cost: "free", category: "market" },
   },
   // Montalvo names this dated show Taking Tangents Tour and explicitly limits
   // entry to ages 18+ with valid photo ID. The newsletter's Shelf Help title

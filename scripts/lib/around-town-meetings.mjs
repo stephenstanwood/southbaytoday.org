@@ -109,6 +109,7 @@ const RECEIVED_PUBLIC_COMMENTS = /\bpublic comments?(?:\s+(?:were|was|also))*\s+
 const ONGOING_BODY_TALKS = /\b(?:city|council|commission|committee|board)\s+(?:(?:is|are)\s+)?in\s+(?:closed\s+)?talks\b/i;
 const DECISION_LIST = /\b(?:notable|major|key|significant)\s+decisions\s*:/i;
 const AGENDA_PLAN_CONTEXT = /\bagenda\s+(?:listed|included|scheduled)\b[^.!?;]*$/i;
+const COMMISSION_REPORT_ACTION = /\bcommissioners?\s+(?:also\s+)?report(?:ed)?\s+on\b/gi;
 // A requested continuance proposes a change; it does not establish that a
 // hearing, ordinance or rules rewrite was actually postponed or delayed.
 const COMPLETED_CONTINUANCE = /\b(?:project|proposal|application|item|hearing|review|ordinance|rules|rewrite)\s+(?:(?:was|were|is|has\s+been|had\s+been)\s+)?(pushed(?:\s+back)?|postponed|continued|rescheduled|delayed|deferred)\s+(?:to|until|for)\b/gi;
@@ -130,6 +131,10 @@ export function hasUnsupportedMeetingAction(item, meeting) {
   const commentsClaimed = RECEIVED_PUBLIC_COMMENTS.test(claim);
   const talksClaimed = ONGOING_BODY_TALKS.test(claim);
   const decisionsClaimed = DECISION_LIST.test(claim);
+  const reportClaimed = [item?.headline, item?.summary].some((value) => {
+    const text = String(value || "");
+    return [...text.matchAll(COMMISSION_REPORT_ACTION)].some((match) => !AGENDA_PLAN_CONTEXT.test(text.slice(0, match.index)));
+  });
   // Check each field separately: a qualified summary cannot excuse an
   // unqualified headline, while "the agenda listed a hearing continued to..."
   // remains an attributed description of the agenda.
@@ -139,9 +144,10 @@ export function hasUnsupportedMeetingAction(item, meeting) {
       .filter((match) => !AGENDA_PLAN_CONTEXT.test(text.slice(0, match.index)))
       .map((match) => match[1].toLowerCase());
   });
-  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed && !continuanceActions.length && !studiedClaimed) return false;
+  if (!actions.length && !progressiveActions.length && !meetingRoles.length && !commentsClaimed && !talksClaimed && !decisionsClaimed && !continuanceActions.length && !studiedClaimed && !reportClaimed) return false;
   if (meeting?.source === "youtube-transcript") return false;
   const evidence = `${meeting?.title || ""} ${agendaTextForMeeting(meeting)}`;
+  if (reportClaimed && ![...evidence.matchAll(COMMISSION_REPORT_ACTION)].length) return true;
   if (studiedClaimed && !cityStudy.test(evidence)) return true;
   const sourcedContinuances = new Set([...evidence.matchAll(COMPLETED_CONTINUANCE)].map((match) => match[1].toLowerCase()));
   if (continuanceActions.some((action) => !sourcedContinuances.has(action))) return true;
