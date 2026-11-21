@@ -605,17 +605,8 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     url: "https://odyssey.systems",
     employeesNote: "Founded by self-driving car veterans",
   },
-  {
-    id: "ampere-computing",
-    name: "Ampere Computing",
-    city: "Santa Clara",
-    category: "chip",
-    stage: "growth",
-    tagline: "Cloud-native ARM server CPUs, gaining traction in hyperscaler data centers. Acquired by SoftBank for $6.5B in November 2025.",
-    color: "#0057B8",
-    url: "https://amperecomputing.com",
-    employeesNote: "600 employees",
-  },
+  // Ampere became a wholly owned SoftBank subsidiary on November 25, 2025.
+  // https://amperecomputing.com/press/completion-of-acquisition-of-ampere-computing
   // Note: Rivos (Mountain View, RISC-V SoCs) was dropped from the spotlight.
   // Meta acquired it in late 2025 and the team now builds Meta's in-house AI
   // silicon, so it is neither a startup nor an independent growth company —
