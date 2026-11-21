@@ -671,6 +671,26 @@ const EDITS = {
       ["interview. No registration required #sjplworkscareer", "interview. No registration required. #sjplworkscareer"],
       ["interaction with our volunteer and it will be held", "interaction with our volunteer. The program will be held"],
       ["Read to Children sign, within the Children's", "Read to Children sign within the Children's"],
+      [
+        "Children will enjoy a small group interaction with our volunteer. The program will be held under the Read to Children sign within the Children's Area.",
+        "A volunteer reads to a small group under the Read to Children sign in the Children's Area.",
+      ],
+      [
+        "Groups larger than 10, please contact us before joining as space and seating are limited.",
+        "Space and seating are limited. If you're bringing a group of more than 10, contact the library before coming.",
+      ],
+      [
+        /^Family Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning\./g,
+        "Families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy skills for children of different ages.",
+      ],
+      [
+        /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\. This program is geared for children of all ages and their parents\/caregivers! To prevent overcrowding, there are two storytimes at Calabazas on Wednesday morning\. The same storytime will be held twice,/g,
+        "Children of all ages and their families can enjoy stories, songs, rhymes, fingerplays, and movement that build early literacy skills. To prevent overcrowding, Calabazas Library offers the same storytime twice on Wednesday morning,",
+      ],
+      [
+        "at 10:30 and again at 11:15 a.m. Free, with limited capacity. Tickets available at the desk 30 minutes before the program starts. All individuals (of any age) attending need a ticket and must be present to receive their ticket.",
+        `at 10:30 and again at 11:15 a.m. Free, with limited capacity. ${SJPL_DESK_TICKET_COPY}`,
+      ],
       ["and write basic sentences Lớp này sẽ", "and write basic sentences. Lớp này sẽ"],
       ["This is an Open Rehearsal featuring the Chinese Erhu (the Erhu is a traditional", "This is an open rehearsal featuring the Chinese erhu (the erhu is a traditional"],
       ["vocabulary as needed. Program is drop in and free. No registration needed.", "vocabulary as needed. The program is free and offered on a drop-in basis. No registration needed."],
@@ -868,6 +888,10 @@ const EDITS = {
       ["commit to the full session • Anyone", "commit to the full session. • Anyone"],
       ["alongside a parent/guardian • No experience", "alongside a parent/guardian. • No experience"],
       ["No experience or special skills necessary To register,", "No experience or special skills necessary. To register,"],
+      [
+        "Drop-in every last Wednesday of each month to volunteer away your library fines at a rate of $20 per hour while helping the library maintain a clean and welcoming environment. Details and Requirements: • Must be able to commit to the full session. • Anyone under the age of 15 must volunteer alongside a parent/guardian. • No experience or special skills necessary.",
+        "Drop in on the last Wednesday of each month to work off your library fines at a rate of $20 per hour while helping the library maintain a clean and welcoming environment. You must be able to stay for the full session. Anyone under 15 must volunteer with a parent or guardian. No experience or special skills are required.",
+      ],
       [/\bLego\b/g, "LEGO"],
       ["Our volunteer will teach students to learn how to organize", "Our volunteer will teach students how to organize"],
       ["Supplies are limited, registration required.", "Supplies are limited; registration is required."],
@@ -1327,6 +1351,10 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       [
+        "We will meet on Monday December 14th at 3:30 PM in the Program Room. Please read the book before our meeting. At the meeting we will discuss the book and do a LEGO building activity.",
+        "We'll meet on Monday, December 14, at 3:30 PM in the Program Room. Please read the book before the meeting. We'll discuss it and build with LEGO bricks.",
+      ],
+      [
         "Come practice meditation for 20 minutes and ask questions for 10 minutes with instructor Manisha.",
         "Meditate with instructor Manisha for 20 minutes, then ask questions for 10 minutes.",
       ],
@@ -1601,6 +1629,10 @@ const EDITS = {
   "Palo Alto City Library": {
     description: [
       ["Welcome to all experience levels. This will be a seated meditation session", "All experience levels are welcome. This is a seated meditation session"],
+      [
+        "Join established local yoga teacher Patricia Becker as she takes us through exercises to loosen joints, improve flexibility, improve cognition, and increase strength in Rinconada Library's Embarcadero Room.",
+        "Join local yoga teacher Patricia Becker in Rinconada Library's Embarcadero Room for exercises to loosen joints, improve flexibility and cognition, and build strength.",
+      ],
       [/\bpom (poms?)\b/g, "pom-$1"],
       [
         /English as a Second Language \(ESL\) \/ Learn English: Beyond the Basics is an in-person (\d+)-week class with lessons on English grammar, pronunciation, and idioms\./g,
