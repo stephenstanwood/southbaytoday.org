@@ -458,6 +458,24 @@ const CORRECTIONS = [
     copyReplacements: [[/\s*\bRegistration (?:is )?(?:requested|recommended),? but not required\./gi, ""]],
     appendAttendanceNote: `The signup panel says registration is required. The event description says it is optional. Confirm registration with ${venue}.`,
   })),
+  // The college lists separate Tully and Educational Park sections. The
+  // Tully event repeats the other branch's enrollment directions, and the
+  // college describes Guided Self-Placement as a way to choose a class.
+  // https://www.evc.edu/sites/default/files/2026-03/Fall-2026-Class-Schedule.pdf
+  // https://www.evc.edu/academics/esl/index.html
+  {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/events/6a46be4a48c98c3600a3fbb3",
+    aliasUrls: ["https://sjpl.bibliocommons.com/v2/events/6a46be4a48c98c3600a3fbb3"],
+    facts: {},
+    copyReplacements: [
+      [
+        /\bTo enroll(?:, you must:|,) complete and pass the Self-Guided Computer Assessment\. This is not a test[—–-]it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level\./i,
+        "Complete Guided Self-Placement before enrolling so the college can help you choose the right ESL level.",
+      ],
+      [/\bWe will assist you with the application and registration processes in person at the Educational Park Branch Library\.\s*/i, ""],
+    ],
+  },
   // The organizer confirms the four dated sale sessions. Only the Thursday
   // preview requires membership, which attendees can buy at the door.
   // https://friendsofthemilpitaslibrary.org/booksales.php

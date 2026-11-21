@@ -235,6 +235,12 @@ const SOURCE_ID_SKIP = new Set([
   "SR0886043", // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DAI7XMYNU.pdf
   "SR0886237", // Sweetgreen, 261 Hamilton Ave: https://eservices.sccgov.org/FacilityInspection/Home/ShowDetail/PR0423462
   "SR0886435", // Ulas Enterprises is operating as Sultan's Kebab: https://www.saratogachamber.org/dining
+  "SR0886514", // Habibiz posts operating hours for 262 E Santa Clara St: https://habibizfood.com/contact-us/
+  // JapaCurry lists its Naglee Park restaurant at 505 E San Carlos St. Its
+  // plan record uses the nearby 7-Eleven address, 284 S 11th St.
+  // https://www.japacurry.net/locations
+  // https://stgencep.sccgov.org/sccdineout/INSPECTIONREPORT_DASPD8TOY.pdf
+  "SR0885275",
   // Reviewed Nov 3, 2026: a county plan-check record alone does not establish
   // a public food venue. Keep exact exclusions rather than banning LLC names.
   "SR0883235", // Rutherford Month Vista: Station 245 apartments at 245 Bush St.

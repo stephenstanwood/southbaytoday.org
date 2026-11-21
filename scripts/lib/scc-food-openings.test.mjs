@@ -126,11 +126,18 @@ test("verified tenant improvements at operating businesses stay off the openings
     { record_id: "SR0886043", business_name: "RTI - ALMADEN MARKET", site_location: "5965 ALMADEN EXPRESS WY", city: "SAN JOSE" },
     { record_id: "SR0886237", business_name: "RTI SWEETGREEN RESTAURANT", site_location: "261 HAMILTON AVE", city: "PALO ALTO" },
     { record_id: "SR0886435", business_name: "RTI ULAS ENTERPRISES LLC", site_location: "14554 BIG BASIN WY A.", city: "SARATOGA" },
+    { record_id: "SR0886514", business_name: "RTI HABIBIZ CHINESE", site_location: "262 E SANTA CLARA ST", city: "SAN JOSE" },
   ];
   for (const record of records) assert.equal(shouldSkip(record), true, record.record_id);
   assert.equal(shouldSkip({
     business_name: "E-UME TEA", site_location: "123 MAIN ST", city: "CAMPBELL",
   }), false);
+});
+
+test("JapaCurry's unverified permit address stays off the openings feed", () => {
+  assert.equal(shouldSkip({
+    record_id: "SR0885275", business_name: "JAPACURRY", site_location: "284 S 11TH ST.", city: "SAN JOSE",
+  }), true);
 });
 
 test("a Text Search hit pictures the business only when it is plainly that food place", () => {

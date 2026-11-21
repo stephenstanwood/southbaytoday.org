@@ -87,6 +87,27 @@ test("conflicting SJPL signup instructions are disclosed without a reservation b
   }
 });
 
+test("Tully's ESL 502 listing gives the verified placement step and removes the conflicting branch directions", () => {
+  const help = "We will assist you with the application and registration processes in person at the Educational Park Branch Library.";
+  const steps = "Complete and pass the Self-Guided Computer Assessment. This is not a test—it's simply an assessment to help us place you in the most appropriate ESL class based on your current English level.";
+  for (const [path, intro] of [["events", "To Enroll, You Must:"], ["v2/events", "To enroll,"]]) {
+    const event = {
+      date: "2026-11-24", venue: "Tully Library", registration: "full",
+      url: `https://sjpl.bibliocommons.com/${path}/6a46be4a48c98c3600a3fbb3`,
+      description: `${intro} ${steps} Submit the registration form. ${help} Space is limited.`,
+      attendanceNote: `${help} Space is limited.`,
+    };
+    const fixed = applyVerifiedEventFacts(event);
+    assert.equal(fixed.description, "Complete Guided Self-Placement before enrolling so the college can help you choose the right ESL level. Submit the registration form. Space is limited.");
+    assert.equal(fixed.attendanceNote, "Space is limited.");
+    assert.equal(fixed.venue, "Tully Library");
+    assert.equal(fixed.registration, "full");
+    assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+    const other = { ...event, url: event.url.replace(/6a46be4a48c98c3600a3fbb3$/, "different-section") };
+    assert.deepEqual(applyVerifiedEventFacts(other), other);
+  }
+});
+
 test("Milpitas winter book sale applies the membership charge only to the preview", () => {
   const source = "https://sccl.bibliocommons.com";
   const preview = { date: "2026-12-03", cost: "free", category: "education",
