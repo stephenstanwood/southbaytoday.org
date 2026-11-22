@@ -365,7 +365,9 @@ export const TECH_COMPANIES: TechCompany[] = [
     trendNote: "2K at SJ HQ; revenue growth reaccelerated to 4.4% in FY26 as AI Companion adoption climbed",
     highlights: [
       "Zoom Workplace platform adds AI Companion for meeting summaries and conversation intelligence",
-      "Agreed in July 2026 to acquire Common Room, an AI go-to-market intelligence platform, pushing Zoom past meetings and into sales workflows",
+      // Zoom's July 2026 Form 10-Q gives the closing date and cash price.
+      // https://investors.zoom.us/static-files/9d9a1071-5cfd-4371-bf6f-506eed0f5cea
+      "Zoom acquired Common Room for $266.8 million on July 17, 2026, adding buyer intelligence and AI tools for sales teams to Zoom Revenue Accelerator.",
     ],
     description:
       "Video meetings and workplace collaboration. A COVID-era breakout finding its steady state.",

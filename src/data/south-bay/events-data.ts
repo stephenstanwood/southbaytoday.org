@@ -630,16 +630,12 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     address: "21000 Big Basin Way, Saratoga",
     category: "arts",
     recurrence: "monthly",
-    days: ["sunday"],
-    // The October–December 2026 program lists two sessions, with no 2pm slot.
-    // https://www.hakone.com/events
-    time: "12pm, 1pm",
-    months: [4, 5, 6, 7, 8, 9, 10, 11, 12],
+    // Session times vary by date. Hakone lists noon and 2 PM for December 6, 2026.
     cost: "paid",
     costNote: "Separate from garden admission",
     kidFriendly: true,
     description:
-      "Traditional Omote-senke tea ceremony demonstration on the first Sunday of every month, April through December. Two sessions available for guests ages 5 and up.",
+      "Traditional Omote-senke tea ceremony demonstration for guests ages 5 and up at the Cultural Exchange Center. Check Hakone's calendar for dates and session times.",
     url: "https://www.hakone.com/events",
     emoji: "🍵",
   },
@@ -683,24 +679,10 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
 
   // ── SEASONAL / ANNUAL EVENTS ───────────────────────────────────────────
 
-  {
-    id: "sj-downtown-ice-rink",
-    title: "Downtown San Jose Ice Rink",
-    city: "san-jose",
-    venue: "Circle of Palms Plaza",
-    address: "120 S Market St, San Jose",
-    category: "family",
-    recurrence: "seasonal",
-    months: [11, 12, 1],
-    cost: "paid",
-    costNote: "Check the organizer for current admission and skate-rental prices",
-    kidFriendly: true,
-    // SJDA confirms the location: https://sjdowntown.com/dticecelebration/.
-    // Season dates and prices need a current announcement; the old domain is parked.
-    description: "Seasonal outdoor ice skating at Circle of Palms Plaza, between the San Jose Museum of Art and Signia by Hilton. Check the organizer for season dates and hours.",
-    url: "https://www.skateunderthepalms.com/",
-    emoji: "⛸️",
-  },
+  // Restore Downtown Ice when the organizer posts a current season.
+  // On November 21, 2026, https://www.skateunderthepalms.com/ still showed the
+  // previous season ending February 8, 2026.
+
   {
     id: "viva-calle-sj",
     title: "Viva CalleSJ",
