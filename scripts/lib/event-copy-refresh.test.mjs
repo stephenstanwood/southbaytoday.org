@@ -227,6 +227,20 @@ test("the book sale's conflicting count stays out of refreshed descriptions and 
   assert.deepEqual(applyVerifiedEventFacts(otherSale), otherSale);
 });
 
+test("book sale copy retains updated hours and later notes from the library", () => {
+  const [bookSale] = paloAltoLibraryFixture.cases;
+  const updateHours = (text) => text.replace("9:30 AM", "10:30 AM").replace("1 PM", "2 PM");
+  const note = " Bring your own bags.";
+  const event = {
+    ...bookSale.events[0], source: bookSale.source,
+    description: polishDescription(updateHours(bookSale.refreshed) + note),
+  };
+  const reviewed = polishReviewedEventCopy(event);
+  assert.deepEqual(reviewed, { ...event, description: updateHours(bookSale.reviewed) + note });
+  const otherPublisher = { ...event, source: "Different publisher" };
+  assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
 test("Palo Alto English classes replace signup instructions after registration closes", () => {
   const [, , series] = paloAltoLibraryFixture.cases;
   const event = {

@@ -1904,6 +1904,18 @@ const EDITS = {
         "Browse $1new and gently used items across three rooms, including books, CDs, DVDs, and puzzles. Everything is sorted and reasonably priced.",
       ],
       [
+        /^Don't miss this month's (Friends of the Palo Alto Library) Book Sale! Browse ((?:over [\d,]+ )?new and gently used items) across three rooms, including books, CDs, DVDs, and puzzles\./g,
+        "At the $1 book sale, browse three rooms of $2, including books, CDs, DVDs, and puzzles.",
+      ],
+      [
+        /Saturday Hours: Bargain Room: ([\d:]+ [AP]M) [–-] ([\d:]+ [AP]M); Children's Room: ([\d:]+ [AP]M) [–-] ([\d:]+ [AP]M); Main Room: ([\d:]+ [AP]M) [–-] ([\d:]+ [AP]M)\./g,
+        "On Saturday, the Bargain Room is open from $1 to $2, the Children's Room from $3 to $4, and the Main Room from $5 to $6.",
+      ],
+      [
+        /Sunday Hours: All Rooms: ([\d:]+ [AP]M) [–-] ([\d:]+ [AP]M)\./g,
+        "On Sunday, all rooms are open from $1 to $2.",
+      ],
+      [
         /^Monthly book discussion on a graphic novel selected by the group! This program is for readers age (\d+) and up\./g,
         "The group picks a graphic novel to discuss each month. The club is open to readers ages $1 and up.",
       ],
