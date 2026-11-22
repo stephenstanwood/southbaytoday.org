@@ -48,6 +48,8 @@ export interface SBEvent {
   // operator's current published season rather than carrying forward an
   // older schedule.
   months?: number[];
+  // Inclusive Pacific ISO date ranges from an organizer's dated season.
+  seasonDates?: Array<{ startDate: string; endDate: string }>;
   // Organizer-confirmed closures and alternate locations, keyed by Pacific ISO date.
   excludedDates?: string[];
   relocations?: Record<string, { venue: string; address: string }>;
@@ -282,8 +284,14 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     recurrence: "weekly",
     days: ["thursday"],
     time: "4pm – 8pm",
-    // PCFMA's published 2026 season starts April 30 and ends October 29.
     months: [4, 5, 6, 7, 8, 9, 10],
+    seasonDates: [
+      // The 2026 market page extends the season through October 29.
+      { startDate: "2026-04-30", endDate: "2026-10-29" },
+      // PCFMA's 2027 rules, Exhibit A, give a May 5–October 7 window and Thursday hours.
+      // https://www.pcfma.org/sites/default/files/2026-11/Rules%20%26%20Regulations%202027.pdf
+      { startDate: "2027-05-05", endDate: "2027-10-07" },
+    ],
     cost: "free",
     kidFriendly: true,
     description:
@@ -980,6 +988,7 @@ export function farmersMarketsForWeek(todayPt: string) {
       market.days?.includes(WEEKDAYS[weekday])
       && (!market.months || market.months.includes(month))
       && (!market.startDate || market.startDate <= date)
+      && (!market.seasonDates || market.seasonDates.some(({ startDate, endDate }) => startDate <= date && date <= endDate))
       && !market.excludedDates?.includes(date),
     ).map((market) => {
       const relocation = market.relocations?.[date];

@@ -3737,8 +3737,9 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (/\blibrary\b/.test(venueLower) && /^community game (?:&|and) craft day$/.test(titleLower.trim())) return "community";
   // Library tutoring belongs with educational programs across branches.
   if (/\blibrary\b/.test(venueLower) && /^homework help\b/.test(titleLower.trim())) return "education";
-  // Branch Buddy is library volunteering. Keep sessions advertised for families in Family.
-  if (/\blibrary\b/.test(venueLower) && /\bbranch buddy\b/.test(titleLower)) {
+  // SJPL's fine-credit shifts are library volunteering. Keep sessions advertised for families in Family.
+  // https://sjpl.bibliocommons.com/v2/events/6984cee8cbf6405d35666d14
+  if (/\blibrary\b/.test(venueLower) && /\bbranch buddy\b|^volunteer away your fines\b/.test(titleLower)) {
     return /\bfor families\b/.test(titleLower) ? "family" : "community";
   }
   // Title-anchored overrides for terms that source-supplied category tags

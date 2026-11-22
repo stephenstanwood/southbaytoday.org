@@ -6896,6 +6896,14 @@ function staleAttendanceCopyFor(event) {
 }
 
 export function applyVerifiedEventFacts(event) {
+  // Hillview describes this craft session as open to all ages. The library's
+  // audience tags target children, but its listing explicitly welcomes adults.
+  // https://sjpl.bibliocommons.com/v2/events/69445123571fb4d550be6386
+  if (event?.source === "San Jose Public Library" && event.venue === "Hillview Library"
+      && event.title === "Saturday Fun: Arts, Crafts, and More"
+      && /\ball ages are welcome\b/i.test(event.description || "")) {
+    event = { ...event, audienceAge: "all" };
+  }
   // The seller omits the admission terms from Discovery API rows for this
   // booking page. Every slot on the organizer's San José page is 21+.
   // https://frostyschristmas.bar/san-jose/

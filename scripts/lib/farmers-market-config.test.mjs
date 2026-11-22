@@ -104,6 +104,18 @@ test("the Food calendar skips Palo Alto's holiday break and excludes monthly fai
   }
 });
 
+test("the Food calendar offers the Los Altos market only within published seasons", () => {
+  const marketId = "los-altos-village-market";
+  for (const [date, open] of [
+    ["2026-04-23", false], ["2026-04-30", true], ["2026-10-29", true],
+    ["2027-04-29", false], ["2027-05-06", true], ["2027-10-07", true],
+    ["2027-10-14", false], ["2028-05-04", false],
+  ]) {
+    const markets = farmersMarketsForWeek(date).find((day) => day.date === date)?.markets ?? [];
+    assert.equal(markets.some(({ id }) => id === marketId), open, date);
+  }
+});
+
 const santanaRow = FARMERS_MARKETS.find((m) => m.title === "Santana Row Farmers Market");
 const scheduleHtml = "Santana Row Farmers Market, every Wednesday, 4pm–8pm through September";
 

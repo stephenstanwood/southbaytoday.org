@@ -35,6 +35,17 @@ test("verified IMAX film ratings follow new showtimes in the same run", () => {
   }
 });
 
+test("Hillview's Saturday Fun stays open to all ages when the library says so", () => {
+  const event = {
+    title: "Saturday Fun: Arts, Crafts, and More", source: "San Jose Public Library",
+    venue: "Hillview Library", sourceAudiences: ["Kids, ages 5-10"], audienceAge: "kids",
+    description: "All supplies will be provided. All ages are welcome and no registration is required.",
+  };
+  assert.deepEqual(applyVerifiedEventFacts(event), { ...event, audienceAge: "all" });
+  const childProgram = { ...event, description: "A craft program for children ages 5–10." };
+  assert.deepEqual(applyVerifiedEventFacts(childProgram), childProgram);
+});
+
 test("Easy Tech Seniors retains conditional walk-ins without reopening a full class", () => {
   const program = {
     date: "2026-11-28",
