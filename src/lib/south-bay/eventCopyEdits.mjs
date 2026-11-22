@@ -1058,6 +1058,14 @@ const EDITS = {
         SJPL_BRANCH_BUDDY_TASK_COPY,
       ],
       [
+        `Every now and then, libraries need a little extra love from the communities they serve. You can volunteer away your library fines at a rate of $20 per hour while helping the library maintain a clean and welcoming environment. ${SJPL_BRANCH_BUDDY_TASK_COPY} Volunteers must commit to the full session. Anyone under 15 must volunteer with a parent or guardian.`,
+        `Help keep the library clean and welcoming. The library credits $20 toward your fines for each hour you volunteer. ${SJPL_BRANCH_BUDDY_TASK_COPY} Volunteers must commit to the full session. Anyone under 15 must volunteer with a parent or guardian.`,
+      ],
+      [
+        "Join us for a free, fun-filled program with arts, crafts & more! All supplies will be provided. All ages are welcome and no registration is required.",
+        "Drop in for free arts, crafts, and more. All supplies are provided. All ages are welcome, and no registration is required.",
+      ],
+      [
         `Volunteers will be responsible for: Cleaning toys and furniture in the children's area. Other activities may include any of the following: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for anyone interested in volunteering away their library fines.`,
         "Volunteers will clean toys and furniture in the children's area. Other tasks may include cleaning book covers with disinfecting wipes, dusting shelves, and organizing library materials. Volunteers may also use disinfecting wipes on computer mice and mouse pads, clear dust and debris with compressed air, or check books for damage such as torn pages or pen marks.",
       ],
