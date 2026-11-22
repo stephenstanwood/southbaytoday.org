@@ -1250,6 +1250,7 @@ const EDITS = {
         "Requirements: Lunch is scheduled in the middle from noon to 12:30 p.m. Please bring your own lunch. A signed waiver will be required before participating in this program. Copies will be emailed and available upon arrival.",
         "Lunch is from noon to 12:30 p.m. Please bring your own lunch. Participants need a signed waiver before taking part. Copies will be emailed and available on arrival.",
       ],
+      ["Copies will be emailed and available on arrival.", "You'll receive a copy by email. Copies will also be available when you arrive."],
       ["Registration: Registration is required. Registered participants will receive a detailed agenda of the program.", "Registration is required. Registered participants will receive a detailed agenda."],
       ["Registration opens November 4, 2026 at 9 a.m.", "Registration opens November 4, 2026, at 9 a.m."],
       [
@@ -2160,6 +2161,10 @@ const EDITS = {
       [/^(The Story of Christ's Birth:) [Ss]hort [Ff]ilm by the Chosen$/g, "$1 Short Film by The Chosen"],
     ],
     blurb: [
+      [
+        "Volunteer at the NUMU community craft table in Old Town Los Gatos, helping with set-up, breakdown and craft management during three shift options.",
+        "Take one of three volunteer shifts at the Magical Memories craft table in Old Town Los Gatos.",
+      ],
       ["teaching classrooms through Let's Look at Art.", "teaching in classrooms through Let's Look at Art."],
       [
         "Watch No. 24 Stanford women's volleyball host Syracuse at Maples Pavilion, the second match of a five-match homestand.",
@@ -2183,6 +2188,11 @@ const EDITS = {
       ["Hear violinist Rolando Morejón Reyes lead an ensemble tied to Buena Vista Social Club through Cuban rhythms.", "Hear Cuban rhythms as violinist Rolando Morejón Reyes leads an ensemble with ties to the Buena Vista Social Club."],
     ],
     description: [
+      [
+        "NUMU is seeking volunteers for its community table at the Magical Memories event, helping with set-up, breakdown, and craft management.",
+        "New Museum Los Gatos is seeking volunteers to set up, run, and take down its community craft table at Magical Memories.",
+      ],
+      ["Shifts run 12:30-2 PM, 2-4 PM, and 4-5:30 PM.", "Shifts run 12:30–2 PM, 2–4 PM, and 4–5:30 PM."],
       [
         /^Annual Christmas Tea (?:starting in the sanctuary with a performance by the Mountain View High School Madrigal Choir, (?:followed by|then)|with a performance by the Mountain View High School Madrigal Choir in the sanctuary, followed by) homemade treats in the Social Hall\./g,
         "The annual Christmas Tea begins in the sanctuary with a performance by the Mountain View High School Madrigal Choir. Homemade treats follow in the Social Hall.",

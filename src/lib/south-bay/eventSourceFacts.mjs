@@ -100,7 +100,7 @@ const CORRECTIONS = [
     date: "2026-12-13",
     url: "https://www.numulosgatos.org/events/magical-memories-2026",
     facts: { registration: REGISTRATION_REQUIRED },
-    appendAttendanceNote: "Volunteers must be 16 or older. Register for one of the three shifts on the museum’s event page.",
+    appendAttendanceNote: "Volunteers must be 16 or older. Register for one of the three shifts on the museum's event page.",
   },
   {
     // The Center for Steinbeck Studies confirms free admission and the room.

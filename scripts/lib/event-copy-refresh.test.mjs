@@ -208,6 +208,7 @@ const paloAltoLibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/revie
 audits.push(paloAltoLibraryFixture);
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-sentences.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-refresh.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-waiver-and-volunteers.json", import.meta.url))));
 
 test("the book sale's conflicting count stays out of refreshed descriptions and cached blurbs", () => {
   const [bookSale] = paloAltoLibraryFixture.cases;
