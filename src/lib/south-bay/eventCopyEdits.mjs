@@ -1900,6 +1900,13 @@ const EDITS = {
   "Palo Alto City Library": {
     description: [
       [
+        /^Monthly book discussion on a graphic novel selected by the group! This program is for readers age (\d+) and up\./g,
+        "The group picks a graphic novel to discuss each month. The club is open to readers ages $1 and up.",
+      ],
+      [/\b(USA|Translation|Sonoma County); (?=[A-Z][a-z]+ \d{1,2} - )/g, "$1. "],
+      ["Story of a Korean family separated by the war.", "The story follows a Korean family separated by the war."],
+      ["at the Palo Alto Art Center, and at other educational venues.", "at the Palo Alto Art Center and at other educational venues."],
+      [
         "Titles can be borrowed from the Palo Alto City Library and through our Link+ system - click on the links above or search in our catalog for more information.",
         "Borrow the books from Palo Alto City Library or through Link+. Search the library catalog for more information.",
       ],
