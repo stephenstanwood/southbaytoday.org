@@ -6,6 +6,7 @@
 // ---------------------------------------------------------------------------
 
 import type { City } from "../../lib/south-bay/types";
+import { MOUNTAIN_VIEW_MARKET_RELOCATIONS } from "../../lib/south-bay/marketOccurrence.mjs";
 
 export type EventCategory =
   | "market"
@@ -47,6 +48,9 @@ export interface SBEvent {
   // operator's current published season rather than carrying forward an
   // older schedule.
   months?: number[];
+  // Organizer-confirmed closures and alternate locations, keyed by Pacific ISO date.
+  excludedDates?: string[];
+  relocations?: Record<string, { venue: string; address: string }>;
   // Admission only: free=$0, low=verified under $15, paid=$15+ or price unknown.
   // Free parking, free activities, and age-based exemptions do not make admission free.
   cost: "free" | "low" | "paid";
@@ -97,6 +101,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     city: "mountain-view",
     venue: "Mountain View Caltrain Station lot",
     address: "600 W Evelyn Ave, Mountain View",
+    relocations: MOUNTAIN_VIEW_MARKET_RELOCATIONS,
     category: "market",
     recurrence: "weekly",
     days: ["sunday"],
@@ -156,7 +161,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "This year-round Sunday market on California Avenue has more than 50 vendors, including local artisans. Shop for organic produce and specialty goods.",
+      "This year-round Sunday market is on California Avenue at El Camino Real. It accepts EBT and WIC and participates in Market Match for fruits and vegetables.",
     url: "https://uvfm.org/palo-alto-sundays",
     emoji: "🥕",
   },
@@ -166,6 +171,8 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     city: "palo-alto",
     venue: "Gilman St",
     address: "Gilman St between Forest & Hamilton, Palo Alto",
+    // The operator lists December 19 as the last market and January 16 as the first after the break.
+    excludedDates: ["2026-12-26", "2027-01-02", "2027-01-09"],
     category: "market",
     recurrence: "weekly",
     days: ["saturday"],
@@ -958,6 +965,29 @@ export const EVENT_CATEGORIES: { id: EventCategory | "all"; label: string; emoji
   { id: "food",      label: "Food",      emoji: "🍽️" },
   { id: "market",    label: "Markets",   emoji: "🌽" },
 ];
+
+const WEEKDAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
+
+export function farmersMarketsForWeek(todayPt: string) {
+  const weeklyMarkets = SOUTH_BAY_EVENTS.filter((event) => event.category === "market" && event.recurrence === "weekly");
+  return Array.from({ length: 7 }, (_, offset) => {
+    const day = new Date(`${todayPt}T00:00:00Z`);
+    day.setUTCDate(day.getUTCDate() + offset);
+    const date = day.toISOString().slice(0, 10);
+    const weekday = day.getUTCDay();
+    const month = day.getUTCMonth() + 1;
+    const markets = weeklyMarkets.filter((market) =>
+      market.days?.includes(WEEKDAYS[weekday])
+      && (!market.months || market.months.includes(month))
+      && (!market.startDate || market.startDate <= date)
+      && !market.excludedDates?.includes(date),
+    ).map((market) => {
+      const relocation = market.relocations?.[date];
+      return relocation ? { ...market, ...relocation } : market;
+    });
+    return { date, weekday, markets };
+  }).filter(({ markets }) => markets.length > 0);
+}
 
 export function getEventsForCity(
   city: City | "all",

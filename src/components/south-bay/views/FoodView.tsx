@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
-import { SOUTH_BAY_EVENTS, type SBEvent } from "../../../data/south-bay/events-data";
+import { farmersMarketsForWeek } from "../../../data/south-bay/events-data";
 import PageHero from "../PageHero";
 
-const DAY_NAMES = ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"] as const;
 const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 const PT_ZONE = "America/Los_Angeles";
@@ -401,35 +400,10 @@ function PermitPulse() {
 
 function FarmersMarkets() {
   const nowMs = useMountedNow();
-  // Pin to Pacific — the markets are here, and an unpinned viewer clock rolls
-  // both the "today" ordering and the in-season month over a day early for
-  // anyone browsing from east of PT. Until mount, "today" is the day the food
-  // data was generated, so the prerendered HTML and the hydrating client agree;
-  // the viewer's real day takes over right after.
-  const [ptYear, ptMonth, ptDay] = new Date(nowMs ?? OPENINGS_SNAPSHOT_MS)
-    .toLocaleDateString("en-CA", { timeZone: PT_ZONE })
-    .split("-")
-    .map(Number);
-  const todayIdx = new Date(ptYear!, ptMonth! - 1, ptDay!).getDay();
-  const month = ptMonth!;
-
-  const markets = SOUTH_BAY_EVENTS.filter((e) => e.category === "market");
-  const inSeason = (e: SBEvent) => !e.months || e.months.includes(month);
-
-  // Bucket by day-of-week so the schedule reads like a weekly calendar.
-  const byDay: SBEvent[][] = [[], [], [], [], [], [], []];
-  for (const m of markets) {
-    if (!inSeason(m)) continue;
-    if (!m.days) continue;
-    for (const d of m.days) {
-      const idx = DAY_NAMES.indexOf(d as typeof DAY_NAMES[number]);
-      if (idx >= 0) byDay[idx].push(m);
-    }
-  }
-
-  // Re-order so today is first; trailing empty days get dropped.
-  const orderedDays = Array.from({ length: 7 }, (_, i) => (todayIdx + i) % 7);
-  const visibleDays = orderedDays.filter((d) => byDay[d].length > 0);
+  // Use the same Pacific date on the server and during hydration, then switch
+  // to the reader's Pacific date on mount.
+  const today = new Date(nowMs ?? OPENINGS_SNAPSHOT_MS).toLocaleDateString("en-CA", { timeZone: PT_ZONE });
+  const visibleDays = farmersMarketsForWeek(today);
   if (visibleDays.length === 0) return null;
 
   return (
@@ -442,18 +416,14 @@ function FarmersMarkets() {
       </header>
 
       <div className="food-market-week">
-        {visibleDays.map((dayIdx) => {
-          // Match on the actual weekday, not list position: market-free days
-          // are dropped from visibleDays, so the first card is only "Today"
-          // when today genuinely has a market. South Bay Mondays and Tuesdays
-          // never do.
-          const isToday = dayIdx === todayIdx;
-          const label = isToday ? "Today" : DAY_LABEL[dayIdx];
+        {visibleDays.map(({ date, weekday, markets }) => {
+          const isToday = date === today;
+          const label = isToday ? "Today" : DAY_LABEL[weekday];
           return (
-            <div key={dayIdx} className={`food-market-day${isToday ? " is-today" : ""}`}>
+            <div key={date} className={`food-market-day${isToday ? " is-today" : ""}`}>
               <div className="food-market-day-head"><span>{label}</span></div>
               <div className="food-market-items">
-                {byDay[dayIdx].map((m) => {
+                {markets.map((m) => {
                   const inner = (
                     <>
                       <span className="food-market-emoji" aria-hidden="true">{m.emoji ?? "🥕"}</span>

@@ -130,6 +130,7 @@ import { deduplicateEventSlots, deduplicateEventTitles, deduplicateEventUrls, ev
 import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
+  MOUNTAIN_VIEW_MARKET_RELOCATIONS,
   verifyMarketScheduleSource,
 } from "../src/lib/south-bay/marketOccurrence.mjs";
 import { findMontalvoPerformanceUrl, parseMontalvoOccurrencePage } from "../src/lib/south-bay/montalvoOccurrence.mjs";
@@ -8190,14 +8191,7 @@ const FARMERS_MARKETS = [
     title: "Mountain View Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
     venue: "Caltrain Station", address: "600 W Evelyn Ave, Mountain View", city: "mountain-view",
     url: "https://www.cafarmersmkts.com/mountain-view-farmers-market/", season: [1, 12],
-    relocations: {
-      "2026-09-20": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-      "2026-09-27": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-      "2026-10-04": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-      "2026-11-08": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-      "2026-11-29": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-      "2026-12-13": { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" },
-    },
+    relocations: MOUNTAIN_VIEW_MARKET_RELOCATIONS,
     evidencePatterns: [/Mountain View Farmers[’']? Market/i, /Sundays?,\s*9:00\s*am\s*[-–]\s*1:00\s*pm/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
   },
   {

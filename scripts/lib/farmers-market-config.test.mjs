@@ -20,6 +20,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { FARMERS_MARKETS, fetchFarmersMarketEvents } from "../generate-events.mjs";
+import { farmersMarketsForWeek } from "../../src/data/south-bay/events-data.ts";
 
 test("every projected market carries a complete, verifiable config", () => {
   assert.ok(FARMERS_MARKETS.length > 0);
@@ -74,6 +75,33 @@ test("Santa Clara suppresses the organizer's Parade of Champions closure", () =>
   const market = FARMERS_MARKETS.find((m) => m.title === "Santa Clara Farmers Market");
   assert.ok(market);
   assert.ok(market.excludedDates.includes("2026-10-03"));
+});
+
+test("the Food calendar uses the same dated Mountain View relocations as the event feed", () => {
+  const market = FARMERS_MARKETS.find((m) => m.title === "Mountain View Farmers Market");
+  for (const today of ["2026-11-23", "2026-12-07"]) {
+    const sunday = farmersMarketsForWeek(today).find(({ weekday }) => weekday === 0);
+    const listing = sunday.markets.find(({ id }) => id === "mv-castro-farmers-market");
+    assert.equal(listing.venue, market.relocations[sunday.date].venue);
+    assert.equal(listing.address, market.relocations[sunday.date].address);
+  }
+  const sunday = farmersMarketsForWeek("2026-11-30").find(({ weekday }) => weekday === 0);
+  assert.equal(sunday.markets.find(({ id }) => id === "mv-castro-farmers-market").venue, "Mountain View Caltrain Station lot");
+});
+
+test("the Food calendar skips Palo Alto's holiday break and excludes monthly fairs", () => {
+  for (const [today, downtownMarketOpen] of [
+    ["2026-12-14", true],
+    ["2026-12-21", false],
+    ["2026-12-28", false],
+    ["2027-01-04", false],
+    ["2027-01-11", true],
+  ]) {
+    const saturday = farmersMarketsForWeek(today).find(({ weekday }) => weekday === 6);
+    const ids = saturday.markets.map(({ id }) => id);
+    assert.equal(ids.includes("palo-alto-downtown-market"), downtownMarketOpen, saturday.date);
+    assert.equal(ids.includes("santana-row-makers-market"), false, saturday.date);
+  }
 });
 
 const santanaRow = FARMERS_MARKETS.find((m) => m.title === "Santana Row Farmers Market");

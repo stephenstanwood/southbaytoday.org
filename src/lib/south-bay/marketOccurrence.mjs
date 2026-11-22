@@ -1,5 +1,16 @@
 const DEFAULT_TIMEOUT_MS = 12_000;
 
+// https://www.cafarmersmkts.com/mountain-view-farmers-market
+const HOPE_STREET_LOTS = { venue: "Hope St. Lots (Lots 4 & 8)", address: "Hope St, Mountain View" };
+export const MOUNTAIN_VIEW_MARKET_RELOCATIONS = {
+  "2026-09-20": HOPE_STREET_LOTS,
+  "2026-09-27": HOPE_STREET_LOTS,
+  "2026-10-04": HOPE_STREET_LOTS,
+  "2026-11-08": HOPE_STREET_LOTS,
+  "2026-11-29": HOPE_STREET_LOTS,
+  "2026-12-13": HOPE_STREET_LOTS,
+};
+
 function decodeHtml(value) {
   return String(value || "")
     .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
