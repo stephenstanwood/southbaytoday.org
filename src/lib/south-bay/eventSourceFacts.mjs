@@ -116,11 +116,16 @@ const CORRECTIONS = [
     appendAttendanceNote: "Ages 8 and up. Guests under 16 must be accompanied by an adult.",
   },
   {
-    // The Anderson Collection describes these dates as gallery sketching.
-    // https://anderson.stanford.edu/programs-exhibitions/
+    // The museum invites all ages to sketch in the galleries.
     dateFrom: "2026-11-27", dateThrough: "2027-09-24",
     url: "https://events.stanford.edu/event/anderson-friday-drop-in-drawing",
-    facts: { category: "arts" },
+    facts: { category: "arts", kidFriendly: true },
+  },
+  {
+    // Stanford lists this as a social event on Old Union's second floor.
+    dateFrom: "2026-11-06", dateThrough: "2026-12-11",
+    url: "https://events.stanford.edu/event/office-for-military-affiliated-communities-coffee-donuts",
+    facts: { category: "community", venue: "Old Union, 2nd Floor" },
   },
   // The museum's full program description supplies the speakers and subject
   // that were lost when the iCal description was truncated for display.
