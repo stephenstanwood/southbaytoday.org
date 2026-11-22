@@ -601,9 +601,11 @@ const CORRECTIONS = [
   },
   {
     date: "2026-11-28",
-    matches: event => !event.url && /^PCLG Elf Squad Holiday Decorating$/i.test(event.title || "")
+    matches: event => (!event.url || event.url === PCLG_NOVEMBER_18_BULLETIN)
+      && /^PCLG Elf Squad Holiday Decorating$/i.test(event.title || "")
       && /^Presbyterian Church of Los Gatos\b/i.test(event.venue || ""),
-    facts: { url: PCLG_NOVEMBER_18_BULLETIN },
+    // The bulletin invites all ages to help with indoor and outdoor tasks.
+    facts: { url: PCLG_NOVEMBER_18_BULLETIN, category: "community", kidFriendly: true, audienceAge: "all" },
   },
   // A co-sponsor publishes the host, finish time, free admission and livestream RSVP.
   // The denomination's church directory confirms the street spelling.

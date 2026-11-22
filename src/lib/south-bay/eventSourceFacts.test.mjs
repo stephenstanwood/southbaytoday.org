@@ -52,6 +52,25 @@ test("Campbell's November Cinema Sunday uses its dated listing and address", () 
   assert.deepEqual(applyVerifiedEventFacts(moved), moved);
 });
 
+test("the November 28 Elf Squad workday welcomes volunteers of all ages", () => {
+  const url = "https://www.pclg.org/this-week/2026-11-18.pdf";
+  const incoming = {
+    date: "2026-11-28",
+    title: "PCLG Elf Squad Holiday Decorating",
+    venue: "Presbyterian Church of Los Gatos",
+    time: "9:00 AM",
+    category: "outdoor",
+    kidFriendly: false,
+  };
+  const expected = { ...incoming, url, category: "community", kidFriendly: true, audienceAge: "all" };
+  assert.deepEqual(applyVerifiedEventFacts(incoming), expected);
+  assert.deepEqual(applyVerifiedEventFacts({ ...incoming, url }), expected);
+  assert.deepEqual(applyVerifiedEventFacts(expected), expected);
+
+  const nextYear = { ...incoming, date: "2027-11-27" };
+  assert.equal(applyVerifiedEventFacts(nextYear), nextYear);
+});
+
 test("dated Montalvo concerts agree across the newsletter and box office", () => {
   for (const [date, title, ticketPath, programSlug] of [
     ["2026-12-10", "Irish Christmas in America", "3113/3157", "irish-christmas-2"],
