@@ -93,6 +93,7 @@ export const SOUTH_BAY_POIS: POI[] = [
       "Paved multi-use trail connecting Campbell through Los Gatos, following the creek through parks and neighborhoods.",
     why: "Easy, shaded, and peaceful — perfect for a morning walk or bike ride along the creek",
     emoji: "🚴",
+    url: "https://parks.santaclaracounty.gov/locations/los-gatos-creek-county-park",
     indoorOutdoor: "outdoor",
     photoRef: "places/ChIJk5Bi-hs2joAR6L7xwyeXAh8/photos/AU_ZVEGsltQ8TWIl6ofTtWd-aCfIbr0UtYnoqP6YtnwJMs0YrrzbgX6hSlzGAn3x-L2lf4VgxrCrh6C5jVzAvj3XBOsu82eM_E4nvtHwu9TAPXewc9GsScleLqy0LsaUC0l-yffDoYQK4qrP5_rFhOfjyY0N2u9F6rRTfdg8tw3toEB1H8u0IfSqLOybpNcdpzTnVyjKdaXHr8fJ4P_L7JOZuuNVpV0otpsOWdb0wKRprKUVkMnz9TfnAn9qJ3PXgdUZk5ASZvvanCOhLU7EUMCJmxBTMgk-S7Gl-U_hHYXPsrkLMI5cAqAdJG4W-PK1rTthL2jN_H4dRtDG8dBQO1tSqN5rT135dx6NV2wcve8yNeqDkQ--Yfm8ajs7sS0SRgy_F_VhMl88X-2M-zbZRYGk-S_Rwlu6ZP8HzSYqyQ0NjrpbLWMNHfi5EJv7hsWOcWX9",
     bestSlots: ["morning", "afternoon"],

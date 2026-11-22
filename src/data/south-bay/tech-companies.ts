@@ -689,10 +689,11 @@ export const SCC_SPOTLIGHT: SccTechSpotlight[] = [
     city: "Palo Alto",
     category: "robotics",
     stage: "startup",
-    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. NEO went into full-scale production at its Hayward factory in April 2026, priced at $20,000 or $499 a month, with first US home deliveries promised this year. US headquarters in Palo Alto.",
+    tagline: "Norwegian-founded humanoid robot company building NEO for home use and EVE for commercial deployments. NEO went into full-scale production at its Hayward factory in April 2026, priced at $20,000 or $499 a month, with first US home deliveries promised this year. Its global headquarters is in Palo Alto.",
     color: "#E11D48",
     url: "https://www.1x.tech",
-    employeesNote: "~200 employees",
+    // The factory announcement counts Hayward alone: https://www.1x.tech/discover/neo-factory
+    employeesNote: "200+ at its Hayward factory (Apr 2026)",
   },
   {
     id: "glean",

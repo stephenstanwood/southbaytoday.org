@@ -11,6 +11,23 @@ const DE_SAISSET_ID = "ChIJUVuaM6zLj4ARoQSjNyb1ebQ";
 const MIMIS_KITCHEN_ID = "ChIJWzt9SsAxjoARxdjosLm4AjE";
 const ROSE_GARDEN_MARKET_ID = "ChIJuZpNGzXLj4ARIrlguZcNUOc";
 
+test("Izzy's Brooklyn Bagels uses the shop's homepage", () => {
+  const place = applyPlaceEditorialOverride({
+    id: "ChIJ06EYWO-6j4AR5x1zss9iick",
+    url: "https://www.izzysbrooklynbagels.com/%20%20%20%20%20https://izzysbb.square.site/#4",
+  });
+  assert.equal(place.url, "https://www.izzysbrooklynbagels.com/");
+});
+
+test("the Campbell trailhead's sunset closure replaces fixed opening hours", () => {
+  const place = applyPlaceEditorialOverride({
+    id: "ChIJMZC2UwI1joAReJaK1vHSqcc",
+    hours: { sun: "08:00-19:30" },
+  });
+  assert.equal(place.hours, null);
+  assert.equal(place.url, "https://parks.santaclaracounty.gov/locations/los-gatos-creek-county-park");
+});
+
 test("MiMi's Kitchen keeps its live Blossom Hill ordering URL", () => {
   assert.deepEqual(
     applyPlaceEditorialOverride({

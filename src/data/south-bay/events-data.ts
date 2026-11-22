@@ -148,7 +148,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     title: "Palo Alto Farmers Market – California Ave",
     city: "palo-alto",
     venue: "California Ave",
-    address: "California Ave, Palo Alto",
+    address: "California Ave & El Camino Real, Palo Alto",
     category: "market",
     recurrence: "weekly",
     days: ["sunday"],

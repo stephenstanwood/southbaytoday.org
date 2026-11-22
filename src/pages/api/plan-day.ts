@@ -580,7 +580,9 @@ function openDuringBucket(
   const [winStart, winEnd] = BUCKET_TIME_WINDOWS[bucket];
   if (!hours) {
     if (isTimeSensitive(types, category)) return false;
-    // Outdoor/flexible: rough daylight band (6–21).
+    // Park and trail hours can follow sunset, so an evening recommendation
+    // needs a known opening window.
+    if (category === "outdoor" && bucket === "evening") return false;
     return winStart >= 6 && winEnd <= 22;
   }
   const ranges = openRangesOn(hours, dayKey);

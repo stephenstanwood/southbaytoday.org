@@ -82,3 +82,29 @@ test("different showtime IDs cannot repeat an activity or transfer its blurb to 
   broken.find(c => c.bucket === "afternoon")!.name = "THE DRAGON MUSICAL JR!";
   assert.ok(dayPlanPairingIssues(broken).some(issue => issue.includes("duplicate pillar activity")));
 });
+
+test("an outdoor place needs an opening window for the evening slot", async () => {
+  const base = { city: "campbell", address: "1 Main St", lat: 37.3, lng: -121.9,
+    locationPrecision: "exact" as const, kidFriendly: true, score: 60 };
+  const [morning, afternoon, evening] = ["10:00 AM", "2:00 PM", "6:00 PM"].map((eventTime, index) => ({
+    ...base, id: `event:show-${index}`, name: `Show ${index}`,
+    source: "event" as const, category: "arts", eventTime,
+  }));
+  const meals = ["Olive", "Maple", "Willow"].map(name => ({ ...base,
+    id: `place:${name}`, name: `${name} Cafe`, source: "place" as const, category: "food",
+    primaryType: "restaurant", types: ["cafe", "restaurant"], hours: { sun: "08:00-22:00" },
+  }));
+  const trail = { ...base, id: "place:trail", name: "Creek Trail", source: "place" as const,
+    category: "outdoor", score: 180 };
+  const locked = [{ candidate: morning, bucket: "morning" as const }, { candidate: afternoon, bucket: "afternoon" as const }];
+  const editorial = { provider: "codex-subscription" as const, model: "test", strict: true,
+    select: async () => JSON.stringify(["morning", "afternoon", "evening"].map(pillarBucket => ({ pillarBucket }))),
+  };
+
+  for (const [hours, expectedId] of [[null, evening.id], [{ sun: "08:00-20:00" }, trail.id]] as const) {
+    const pool = [morning, afternoon, evening, { ...trail, hours }, ...meals];
+    const { cards } = await pickPillarPairsWithClaude(pool, locked, null, "campbell", "regional", true,
+      undefined, "2026-11-22", undefined, "sun", editorial);
+    assert.equal(cards.find(card => card.bucket === "evening")?.id, expectedId);
+  }
+});

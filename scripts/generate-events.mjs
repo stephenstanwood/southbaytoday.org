@@ -8262,7 +8262,7 @@ const FARMERS_MARKETS = [
   },
   {
     title: "California Ave Farmers Market", day: 0, time: "9:00 AM", endTime: "1:00 PM",
-    venue: "California Avenue", address: "California Ave, Palo Alto", city: "palo-alto",
+    venue: "California Avenue Farmers' Market", address: "California Ave & El Camino Real, Palo Alto", city: "palo-alto",
     url: "https://uvfm.org/palo-alto-sundays", season: [1, 12],
     evidencePatterns: [/California Ave(?:nue)? Farmers[’']? Market/i, /Sundays/i, /9(?::00)?\s*(?:am|a\.m\.)\s*(?:to|[-–])\s*1(?::00)?\s*(?:pm|p\.m\.)/i],
   },
