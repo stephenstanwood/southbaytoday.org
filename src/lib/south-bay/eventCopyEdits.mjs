@@ -1900,8 +1900,8 @@ const EDITS = {
   "Palo Alto City Library": {
     description: [
       [
-        /There will be three rooms with over ([\d,]+) books, CDs, DVDs, puzzles, etc\., new & gently used, all sorted, very reasonably priced!/g,
-        "Browse over $1 new and gently used items across three rooms, including books, CDs, DVDs, and puzzles. Everything is sorted and reasonably priced.",
+        /There will be three rooms with (over [\d,]+ )?books, CDs, DVDs, puzzles, etc\., new & gently used, all sorted, very reasonably priced!/g,
+        "Browse $1new and gently used items across three rooms, including books, CDs, DVDs, and puzzles. Everything is sorted and reasonably priced.",
       ],
       [
         /^Monthly book discussion on a graphic novel selected by the group! This program is for readers age (\d+) and up\./g,
@@ -2628,6 +2628,15 @@ export function polishReviewedEventCopy(event) {
   if (next.source === "San Jose Public Library" && ["full", "closed"].includes(next.registration)
       && next.attendanceNote?.includes(signupNote)) {
     next.attendanceNote = next.attendanceNote.replace(signupNote, "").trim() || undefined;
+  }
+  // The library keeps the series signup instructions in the description
+  // after the source's occurrence-level registration window has closed.
+  if (next.source === "Palo Alto City Library" && next.title === "Learn English: Beyond the Basics"
+      && next.registration === "closed" && typeof next.description === "string") {
+    next.description = next.description.replace(
+      /\bRegister once for the full \d+-week series and double-check your email address\. Registration closes in the \d+(?:st|nd|rd|th) week\./g,
+      "Registration for this series is closed.",
+    );
   }
   // The series description lists every topic. Lead with the confirmed lesson for this occurrence.
   if (next.source === "San Jose Public Library" && next.date === "2026-11-28"

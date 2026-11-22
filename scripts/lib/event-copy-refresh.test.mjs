@@ -204,7 +204,46 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-lists.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-eligibility-and-links.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-graphic-novel-club.json", import.meta.url))));
-audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-palo-alto-library.json", import.meta.url))));
+const paloAltoLibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-palo-alto-library.json", import.meta.url)));
+audits.push(paloAltoLibraryFixture);
+
+test("the book sale's conflicting count stays out of refreshed descriptions and cached blurbs", () => {
+  const [bookSale] = paloAltoLibraryFixture.cases;
+  const event = {
+    ...bookSale.events[0], source: bookSale.source,
+    description: polishDescription(bookSale.refreshed),
+    blurb: "Browse three rooms of over 70,000 used books, CDs, DVDs, and puzzles at Cubberley Community Center.",
+  };
+  const reviewed = polishReviewedEventCopy(applyVerifiedEventFacts(event));
+  assert.deepEqual(reviewed, {
+    ...event,
+    description: bookSale.reviewed.replace("over 70,000 ", ""),
+    blurb: "Browse three rooms of used books, CDs, DVDs, and puzzles at Cubberley Community Center.",
+  });
+  assert.deepEqual(polishReviewedEventCopy(applyVerifiedEventFacts(reviewed)), reviewed);
+  const updated = { ...event, description: event.description.replace("70,000", "50,000"), blurb: undefined };
+  assert.deepEqual(applyVerifiedEventFacts(updated), updated);
+  const otherSale = { ...event, title: "Other Book Sale" };
+  assert.deepEqual(applyVerifiedEventFacts(otherSale), otherSale);
+});
+
+test("Palo Alto English classes replace signup instructions after registration closes", () => {
+  const [, , series] = paloAltoLibraryFixture.cases;
+  const event = {
+    ...series.events[0], source: series.source, description: polishDescription(series.sourceText),
+  };
+  assert.equal(polishReviewedEventCopy({ ...event, registration: "required" }).description, series.reviewed);
+  const closed = { ...event, registration: "closed" };
+  const reviewed = polishReviewedEventCopy(closed);
+  assert.deepEqual(reviewed, {
+    ...closed,
+    description: series.reviewed.replace(
+      "Register once for the full 7-week series and double-check your email address. Registration closes in the 3rd week.",
+      "Registration for this series is closed.",
+    ),
+  });
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+});
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");

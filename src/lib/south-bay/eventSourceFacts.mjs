@@ -6877,7 +6877,16 @@ const MILPITAS_QI_GONG_DATES = {
   "sccl-65baeaeff664ce330023eafb": "2026-12-11",
 };
 
-function staleAttendanceCopyFor(event) {
+const FOPAL_UNVERIFIED_COUNT = /\b(?:over\s+)?70,?000\+?\s+(?=(?:new and gently used |used )?(?:books|items)\b)/gi;
+
+function staleEventCopyFor(event) {
+  // The organizer advertises 50,000-plus items. Omit the library calendar's
+  // conflicting 70,000-item claim from both source copy and cached blurbs.
+  // https://www.fopal.org/book-sale-info
+  if (event?.source === "Palo Alto City Library"
+      && /^(?:External Event:\s*)?FOPAL Book Sale$/i.test(event.title || "")) {
+    return FOPAL_UNVERIFIED_COUNT;
+  }
   // https://grpg.org/ announced a PlayGarden closure from November 2026 until
   // further notice. Leave access unconfirmed while the volunteer calendar
   // repeats this wording. Revisit once the organizer confirms access.
@@ -7102,7 +7111,7 @@ export function applyVerifiedEventFacts(event) {
         || c.matches?.(event)
     );
   });
-  const staleCopy = staleAttendanceCopyFor(event);
+  const staleCopy = staleEventCopyFor(event);
   if (!correction && !staleCopy) return event;
   const facts = typeof correction?.facts === "function" ? correction.facts(event) : correction?.facts;
   const corrected = { ...event, ...facts };
