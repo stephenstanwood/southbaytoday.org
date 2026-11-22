@@ -15,6 +15,28 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Books Inc.'s November 24 author event uses the published book title and RSVP details", () => {
+  const incoming = {
+    date: "2026-11-24",
+    title: "KIMBERLY BEA with THE CURSE OF THE FEATHERS",
+    time: "7:00 PM",
+    endTime: null,
+    cost: null,
+    venue: "Books Inc. Mountain View",
+    url: "https://www.booksinc.com/pages/events",
+    source: "Books Inc",
+  };
+  const fixed = applyVerifiedEventFacts(incoming);
+  assert.equal(fixed.title, "Kimberly Bea with The Curse of Feathers");
+  assert.equal(fixed.endTime, "8:00 PM");
+  assert.equal(fixed.cost, "free");
+  assert.match(fixed.url, /eventbrite\.com\/e\/.*-1999730803665$/);
+  assert.match(fixed.attendanceNote, /RSVP for free/);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const anotherDate = { ...incoming, date: "2026-12-01" };
+  assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+});
+
 test("Almaden STEaM keeps this session's ticket pickup and leaves its topic open", () => {
   const event = {
     date: "2026-11-24",

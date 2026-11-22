@@ -905,6 +905,23 @@ const CORRECTIONS = [
     url: "https://events.stanford.edu/event/california-current-art-and-histories-from-the-bay-area-6587",
     facts: { venue: "Cantor Arts Center" },
   },
+  // The store's RSVP page gives the event hours and free admission.
+  // The publisher gives the book title: https://www.kensingtonbooks.com/shop/the-curse-of-feathers-deluxe-stenciled-edges/
+  {
+    date: "2026-11-24",
+    matches: (event) => event.source === "Books Inc"
+      && /^Kimberly Bea with The Curse of (?:the )?Feathers$/i.test(event.title || "")
+      && event.venue === "Books Inc. Mountain View" && event.time === "7:00 PM",
+    facts: {
+      title: "Kimberly Bea with The Curse of Feathers",
+      endTime: "8:00 PM",
+      cost: "free",
+      url: "https://www.eventbrite.com/e/kimberly-bea-with-the-curse-of-the-feathers-tickets-1999730803665",
+      description: "Kimberly Bea presents The Curse of Feathers, her fantasy retelling of the Brothers Grimm tale The Wild Swans.",
+      blurb: "Meet author Kimberly Bea at Books Inc. Mountain View as she presents The Curse of Feathers.",
+    },
+    appendAttendanceNote: "RSVP for free through the organizer's event page.",
+  },
   // The store calendar confirms the date and venue. The store's own RSVP
   // page adds the finish time and names the conversation partner.
   {
