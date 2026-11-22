@@ -1435,6 +1435,10 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       [
+        "We invite all non-walking babies (ages 0-1) and their amazing caregivers to jump into an interactive 20 minutes of catchy songs & silly rhymes; gentle movement & baby sign language; and short books perfect for little eyes.",
+        "Non-walking babies (ages 0-1) and their caregivers can join a 20-minute program with catchy songs, silly rhymes, gentle movement, baby sign language, and short books.",
+      ],
+      [
         /Baby Bouncers Lapsit \(for non-walking babies\) up to (\d+) months old\./g,
         "Baby Bouncers Lapsit (for non-walking babies up to $1 months old).",
       ],

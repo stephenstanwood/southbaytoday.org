@@ -635,7 +635,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     costNote: "Separate from garden admission",
     kidFriendly: true,
     description:
-      "Traditional Omote-senke tea ceremony demonstration for guests ages 5 and up at the Cultural Exchange Center. Check Hakone's calendar for dates and session times.",
+      "Watch a traditional Omote-senke tea ceremony at Hakone's Cultural Exchange Center. The demonstration is open to guests ages 5 and up. Check Hakone's calendar for dates and session times.",
     url: "https://www.hakone.com/events",
     emoji: "🍵",
   },
