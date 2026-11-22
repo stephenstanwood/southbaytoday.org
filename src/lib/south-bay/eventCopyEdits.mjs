@@ -54,6 +54,17 @@ const SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT = [
   "Space is limited. The library begins handing out free tickets at 10 a.m.",
 ];
 
+const SCCLD_OPEN_MIC_EDITS = [
+  [
+    "Here is your opportunity to share your musical talents in a safe, inviting community of players of all levels and ages 13+.",
+    "Share your musical talents in a safe, welcoming setting. Musicians ages 13 and up can perform at any skill level.",
+  ],
+  [
+    "Bring your guitar, ukulele, voice, or any fun instruments you have been practicing to perform in an open mic setting.",
+    "Bring your guitar, ukulele, voice, or any other instrument you've been practicing.",
+  ],
+];
+
 // https://www.scu.edu/missionchurch/
 const SCU_MISSION_NAME_EDIT = [/\bMission Santa Clara de Asis\b/g, "Mission Santa Clara de Asís"];
 
@@ -179,6 +190,7 @@ const EDITS = {
       ],
     ],
     description: [
+      ["Participants must be ages 10 and up.", "Participants must be at least 10 years old."],
       [
         /Free\. No registration required\. 11\/23 - Magnet Mazes\.?$/g,
         "Admission is free. Registration is not required. The November 23 activity is Magnet Mazes.",
@@ -624,6 +636,12 @@ const EDITS = {
       ["formularios de impuestos, etc.) Este es", "formularios de impuestos, etc.). Este es"],
       ["Advice | Information | Referral Social Workers", "Advice | Information | Referral. Social Workers"],
       ["Información | Referencia Este programa", "Información | Referencia. Este programa"],
+      ["Advice | Information | Referral.", "Advice, information, and referrals."],
+      ["Asesoramiento | Información | Referencia.", "Asesoramiento, información y referencias."],
+      [
+        "Tư Vấn / Thông Tin / Giới Thiệu Nhân Viên Xã Hội trong Thư Viện",
+        "Tư vấn, thông tin và giới thiệu. Nhân Viên Xã Hội trong Thư Viện",
+      ],
       ["No Registracion Requerida *Aviso:", "No se requiere registro. *Aviso:"],
       ["recurso que conozcamos y que puede satisfacer", "recurso que conozcamos y que pueda satisfacer"],
       ["an individual, 15-20 minute tutoring session", "an individual, 15-20-minute tutoring session"],
@@ -1507,6 +1525,7 @@ const EDITS = {
       [/^cnps talk #(\d+) The birds, the bees and a magic trait:/gi, "CNPS Talk #$1: The birds, the bees, and a magic trait:"],
     ],
     attendanceNote: [
+      ...SCCLD_OPEN_MIC_EDITS,
       ...SCCLD_BOOK_DISCUSSION_EDITS,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       ["Registration is not required but space is limited.", "Registration is not required, but space is limited."],
@@ -1528,6 +1547,7 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      ...SCCLD_OPEN_MIC_EDITS,
       [/ Sensory Notes: - Sound: /g, " "],
       [/ - (?:Visuals|Texture): /g, " "],
       SCCLD_ONLINE_REGISTRATION_EDIT,
@@ -1879,6 +1899,10 @@ const EDITS = {
   },
   "Palo Alto City Library": {
     description: [
+      [
+        "Titles can be borrowed from the Palo Alto City Library and through our Link+ system - click on the links above or search in our catalog for more information.",
+        "Borrow the books from Palo Alto City Library or through Link+. Search the library catalog for more information.",
+      ],
       ["Welcome to all experience levels. This will be a seated meditation session", "All experience levels are welcome. This is a seated meditation session"],
       [
         "You can learn more about Phuong here and can watch her meditation videos on the library's YouTube channel here.",
