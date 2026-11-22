@@ -161,6 +161,10 @@ const NAME_OVERRIDES = {
   "SR0884719": "FujiSan Sushi @ Tawa1702",
   "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
   "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
+  "SR0886085": "MIXT", // https://www.mixt.com/locations/
+  // County permit says "Teriyaki City Cafe." The plaza directory names its tenant.
+  // https://www.regencycenters.com/property/detail/90016/Snell-Branham-Plaza
+  "SR0885067": "Teriyaki City Grill",
   // The council identifies Ada's Café as the selected operator. Qualify the
   // name with the venue so the photo lookup uses the Los Altos site.
   // https://www.losaltosca.gov/Archive.aspx?ADID=1390
@@ -194,6 +198,7 @@ const BLURB_OVERRIDES = {
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
   "SR0880573": "Molly Tea opening a second South Bay location at Rivermark Plaza in Santa Clara.",
   "SR0884317": "Molly Tea's Stevens Creek location — bubble tea and snacks in Cupertino's Stevens Creek corridor.",
+  "SR0885067": "Teriyaki restaurant planned for Snell & Branham Plaza.",
   "SR0884385": "Nonprofit café that offers work and training to people with disabilities.",
   // April 2026 opened
   "SR0880717": "Dairy Queen opens on S Winchester Blvd in Campbell — ice cream, Blizzards, and fast food.",
