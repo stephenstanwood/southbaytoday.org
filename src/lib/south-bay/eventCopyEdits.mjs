@@ -1232,6 +1232,23 @@ const EDITS = {
       ["Llenado de Formularios de Solicitud -", "Llenado de formularios de solicitud -"],
       ["Técnicas y Consejos para Entrevistas -", "Técnicas y consejos para entrevistas -"],
       ["Práctica para el Examen Escrito de Manejo -", "Práctica para el examen escrito de manejo -"],
+      [
+        "Ofrecemos asistencia gratuita con las siguientes tareas. Creación de un currículum y una carta de presentación - Destaca tus habilidades y experiencia con documentos profesionales que abran puertas.",
+        "Ofrecemos asistencia gratuita para preparar un currículum y una carta de presentación que destaquen tus habilidades y experiencia.",
+      ],
+      ["Búsqueda de oportunidades de empleo - Te guiamos", "Te guiamos"],
+      [
+        "Llenado de formularios de solicitud - Incluye ayuda con la verificación del historial laboral y otros documentos esenciales para tu contratación.",
+        "Te ayudamos a completar solicitudes, verificar tu historial laboral y preparar otros documentos esenciales para tu contratación.",
+      ],
+      [
+        "Técnicas y consejos para entrevistas - Aprende cómo responder con confianza, qué decir, qué evitar y cómo causar una excelente impresión.",
+        "Recibe consejos para responder con confianza en las entrevistas y saber qué decir, qué evitar y cómo causar una excelente impresión.",
+      ],
+      [
+        "Práctica para el examen escrito de manejo - Prepárate con materiales y preguntas de práctica para aprobar tu examen.",
+        "Prepárate para el examen escrito de manejo con materiales y preguntas de práctica.",
+      ],
     ],
     blurb: [
       [
@@ -1511,6 +1528,8 @@ const EDITS = {
       SCCLD_ONLINE_REGISTRATION_EDIT,
     ],
     description: [
+      [/ Sensory Notes: - Sound: /g, " "],
+      [/ - (?:Visuals|Texture): /g, " "],
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       ["As white local conspirators", "As local white conspirators"],
