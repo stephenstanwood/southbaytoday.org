@@ -8,7 +8,7 @@ import { cleanTitle, isPublicEvent, polishAttendanceNote, polishDescription } fr
 import { isTitleOnlyDescription, polishReviewedEventCopy } from "../../src/lib/south-bay/eventCopyEdits.mjs";
 import { eventBlurbCacheKey } from "../../src/lib/south-bay/eventBlurbs.mjs";
 import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
-import { libraryEventDetails } from "./library-event-details.mjs";
+import { correctSccLibraryAccessibilityContact, libraryEventDetails } from "./library-event-details.mjs";
 
 // Full before/after copy from the reviewed feed, not expectations constructed
 // from the repair table. The original audit and incremental evening/night reviews
@@ -223,6 +223,20 @@ const latestReviewedCopy = row => reviewedCases.find(candidate => candidate.sour
 const numbers = (text) => text.match(/\d+/g);
 const identifiers = (text) => (text.match(/https?:\/\/[^\s]+|\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}/gi) || [])
   .map(value => value.replace(/[.,;!?]+$/, ""));
+
+test("Campbell screening copy survives refresh with the district's accessibility contact", () => {
+  const event = {
+    source: "Santa Clara County Library",
+    description: "The film carries a R rating. No registration is required. Free snacks will be provided while supplies last. We hope you'll join us for an afternoon of great films and community! Vehicle parking may be limited. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945, or email us at ask@lib.sccgov.org.",
+  };
+  const reviewed = polishReviewedEventCopy({ ...event, description: polishDescription(event.description) });
+  const published = correctSccLibraryAccessibilityContact(reviewed);
+  assert.deepEqual(published, {
+    ...event,
+    description: "The film is rated R. No registration is required. Free snacks are available while supplies last. Parking may be limited. To request accessibility accommodations such as ASL interpretation, submit the form at sccld.org/accessibility at least 7 days before the screening. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3947, or email us at ask@lib.sccgov.org.",
+  });
+  assert.deepEqual(polishReviewedEventCopy(published), published);
+});
 
 test("restored Ticketmaster copy drops the clipped warning and keeps ticket details", () => {
   const { event, reviewed } = november18EveningFixture.restoredTicketmaster;

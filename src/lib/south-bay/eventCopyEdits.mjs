@@ -167,6 +167,10 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [
+        /Free\. No registration required\. 11\/23 - Magnet Mazes\.?$/g,
+        "Admission is free. Registration is not required. The November 23 activity is Magnet Mazes.",
+      ],
       [/(^|[.!?] )Free, No Registration\.?$/g, "$1Free. No registration required."],
       ["These sessions are open to all adults and includes optional", "These sessions are open to all adults and include optional"],
       ["Typical agenda for this one hour as followed:", "The agenda for a typical one-hour session is as follows:"],
@@ -1434,6 +1438,11 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      ["As white local conspirators", "As local white conspirators"],
+      [
+        "Free snacks will be provided while supplies last. We hope you'll join us for an afternoon of great films and community! Vehicle parking may be limited. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event.",
+        "Free snacks are available while supplies last. Parking may be limited. To request accessibility accommodations such as ASL interpretation, submit the form at sccld.org/accessibility at least 7 days before the screening.",
+      ],
       [
         "We invite all non-walking babies (ages 0-1) and their amazing caregivers to jump into an interactive 20 minutes of catchy songs & silly rhymes; gentle movement & baby sign language; and short books perfect for little eyes.",
         "Non-walking babies (ages 0-1) and their caregivers can join a 20-minute program with catchy songs, silly rhymes, gentle movement, baby sign language, and short books.",
@@ -1605,7 +1614,7 @@ const EDITS = {
       ["How is AI enabling scam and fraud?", "How is AI enabling scams and fraud?"],
       ['tear off the mask and protect her family".', 'tear off the mask and protect her family."'],
       [/\b(Drop by the Cupertino Library Children's Room) starting at (\d{1,2}:\d{2} [ap]\.m\.) until (\d{1,2}:\d{2} [ap]\.m\.)/g, "$1 from $2 to $3"],
-      ["The film carries a R rating.", "The film carries an R rating."],
+      [/\bThe film carries an? R rating\./gi, "The film is rated R."],
       ["No Registration is required.", "No registration is required."],
       ["strong smells of glue, and the sound of fans", "strong smells of glue and the sound of fans"],
       ["If you are just here for the vibes there is no need to register!", "If you are just here for the vibes, there is no need to register!"],
@@ -1887,6 +1896,10 @@ const EDITS = {
   },
   "City of Cupertino": {
     description: [
+      [
+        /All attendees must register and children must be accompanied by an adult\. (\$\d+) Resident \| (\$\d+) Non-resident\.?$/g,
+        "Everyone must register. Children must be accompanied by an adult. Admission is $1 for residents and $2 for nonresidents.",
+      ],
       [/\. The Classroom$/g, "."],
       ["make the Valentines Day feel", "make Valentine's Day feel"],
       ["games and activities, sweet treat, and a keepsake photo", "games and activities, a sweet treat, and a keepsake photo"],
