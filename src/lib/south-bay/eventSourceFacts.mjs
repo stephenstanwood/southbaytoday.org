@@ -95,6 +95,30 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // Almaden's dated listing leaves the November 24 topic open. The age-9
+  // caregiver sentence sits in the series copy under the October 20 activity.
+  {
+    date: "2026-11-24",
+    matches: (event) => /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6a73854af213992f00c9cfe7\/?$/.test(event.url || "")
+      && /\bNov(?:ember)?\.?\s+24\s*[-–—:]\s*TBA\b/i.test(event.description || ""),
+    facts: {
+      description: "Join a hands-on STEaM activity in Almaden Library's Program Room. Check with the library for the November 24 topic and suggested ages.",
+      blurb: "Try a hands-on STEaM activity at Almaden Library. Free tickets are available starting an hour before the session while space lasts.",
+    },
+    copyReplacements: [[
+      /\bChildren younger than age 9 must be accompanied by an adult caregiver during this program\./i,
+      "Check with Almaden Library for caregiver requirements.",
+    ]],
+  },
+  // The Campbell Library occurrence gives November 29, the fifth Sunday,
+  // and the Community Room address. Its series copy names the fourth Sunday.
+  {
+    date: "2026-11-29",
+    matches: (event) => event.venue === "Campbell Library"
+      && /^https:\/\/sccl\.bibliocommons\.com\/(?:v2\/)?events\/6ada6cfffee2d21deb2520e8\/?$/.test(event.url || ""),
+    facts: (event) => ({ address: event.address || "77 Harrison Ave, Campbell, CA 95008" }),
+    copyReplacements: [[/\bCinema Sundays take place on the fourth Sunday of every month\.\s*/i, ""]],
+  },
   // The Civic's linked Ticketmaster event and AXS corroborate 7 PM.
   // Ticketmaster's 8 PM timestamp is the end of the general sale.
   // https://www.axs.com/events/1699549/natalia-jimenez-tickets

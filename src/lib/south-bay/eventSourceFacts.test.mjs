@@ -15,6 +15,43 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("Almaden STEaM keeps this session's ticket pickup and leaves its topic open", () => {
+  const event = {
+    date: "2026-11-24",
+    url: "https://sjpl.bibliocommons.com/v2/events/6a73854af213992f00c9cfe7",
+    time: "4:30 PM", endTime: "5:30 PM",
+    description: "Oct 20 - Properties of Water. Nov 24 - TBA; Dec 1 - Let's Build Parachutes.",
+    attendanceNote: "Tickets will be distributed starting 60 minutes before the program. Children younger than age 9 must be accompanied by an adult caregiver during this program.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.match(fixed.description, /Program Room.*November 24 topic/);
+  assert.doesNotMatch(fixed.description, /Properties of Water|Parachutes/);
+  assert.match(fixed.attendanceNote, /60 minutes.*Check with Almaden Library for caregiver requirements/);
+  assert.equal(fixed.time, event.time);
+  assert.equal(fixed.endTime, event.endTime);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const announced = { ...event, description: "Nov 24 - Simple Machines." };
+  assert.deepEqual(applyVerifiedEventFacts(announced), announced);
+});
+
+test("Campbell's November Cinema Sunday uses its dated listing and address", () => {
+  const event = {
+    date: "2026-11-29", time: "2:00 PM", endTime: "5:30 PM",
+    url: "https://sccl.bibliocommons.com/events/6ada6cfffee2d21deb2520e8",
+    venue: "Campbell Library", address: "",
+    description: "No registration is required. Cinema Sundays take place on the fourth Sunday of every month. Free snacks will be provided while supplies last.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.deepEqual(fixed, {
+    ...event,
+    address: "77 Harrison Ave, Campbell, CA 95008",
+    description: "No registration is required. Free snacks will be provided while supplies last.",
+  });
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const moved = { ...event, venue: "Off-site venue" };
+  assert.deepEqual(applyVerifiedEventFacts(moved), moved);
+});
+
 test("dated Montalvo concerts agree across the newsletter and box office", () => {
   for (const [date, title, ticketPath, programSlug] of [
     ["2026-12-10", "Irish Christmas in America", "3113/3157", "irish-christmas-2"],

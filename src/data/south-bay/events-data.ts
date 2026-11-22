@@ -501,12 +501,12 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     category: "food",
     recurrence: "biweekly",
     days: ["thursday"],
-    time: "10am",
+    time: "10am – 11:15am",
     cost: "free",
     kidFriendly: true,
     description:
-      "West Valley Community Services offers free access to fresh produce, meat, dairy, dry goods and canned food on the 2nd and 4th Thursdays of each month.",
-    url: "https://www.wvcommunityservices.org",
+      "West Valley Community Services offers free groceries to clients with transportation barriers. The library stop usually runs on the second and fourth Thursdays. Check the operator's calendar for holiday closures.",
+    url: "https://www.wvcommunityservices.org/mobile",
     emoji: "🥬",
   },
 
