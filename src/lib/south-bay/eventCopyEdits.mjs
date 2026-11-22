@@ -1622,10 +1622,10 @@ const EDITS = {
       ["Siblings are welcomed. September 15 October 20 November 17 December 8.", "Siblings are welcome. September 15; October 20; November 17; December 8."],
       ["A long running game of Dungeons", "A long-running game of Dungeons"],
       ["and sometimes shorter oneshots. Teen drop ins to watch the", "and sometimes shorter one-shots. Teen drop-ins to watch the"],
-      // The fact pass may already have removed the obsolete 2025 exceptions.
+      // Retain the provider and class logistics from the listing.
       [
         /\bArts Foundation\. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health\. Friday afternoons, 1-3 PM In the Auditorium(?:\.|(?= |$))/g,
-        "Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium.",
+        "Arts Foundation. Classes meet Friday afternoons from 1 to 3 PM in the auditorium.",
       ],
       ["the Flying Rooster arrives there is hope", "the Flying Rooster arrives, there is hope"],
       ["taught at a beginner to intermediate level. Regular attendance", "taught at a beginner-to-intermediate level. Regular attendance"],

@@ -4,13 +4,17 @@
 import { stripHtml } from "./event-html.mjs";
 import { displayDate, displayTime, isoDate, parseDatePT } from "./dates.mjs";
 
-/** Correct the district's copied accessibility-form help number in display copy.
- * https://sccld.org/accessibility/ lists 3947. Circulation still uses 3945. */
+/** Use the district's current contact details for help with its accessibility form. */
 export function correctSccLibraryAccessibilityContact(event) {
   if (event.source !== "Santa Clara County Library" || typeof event.description !== "string") return event;
+  // The accessibility page supplies the district-wide contact. Preserve any
+  // branch number in the copied instructions and contacts elsewhere in the event.
+  // https://sccld.org/accessibility/
   const description = event.description.replace(
-    /(sccld\.org\/accessibility\b[^.!?]*\.\s+If you need assistance with the form, speak with a staff member at your local library, call )\(408\) 540-3945\b/gi,
-    "$1(408) 540-3947",
+    /sccld\.org\/accessibility\b[^.!?]*\.\s+If you need assistance with the form, speak with a staff member at your local library, call \(408\) \d{3}-\d{4}\b(?:,? or email us at\s*ask@sccl\.org\b)?/gi,
+    (contact) => contact
+      .replace(/\(408\) 540-3945\b/g, "(408) 540-3947")
+      .replace(/\bat\s*ask@sccl\.org\b/i, "at ask@lib.sccgov.org"),
   );
   return description === event.description ? event : { ...event, description };
 }

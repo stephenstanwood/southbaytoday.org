@@ -1558,7 +1558,7 @@ test("Qi Gong schedule copy stays readable after removing the old cancellation n
   const verified = applyVerifiedEventFacts(event);
   const reviewed = {
     ...verified,
-    description: "Join us for Falun Dafa classes provided by the Classical Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium. For accessibility accommodations, see sccld.org/accessibility.",
+    description: "Join us for Falun Dafa classes provided by the Classical Arts Foundation. Classes meet Friday afternoons from 1 to 3 PM in the auditorium. For accessibility accommodations, see sccld.org/accessibility.",
   };
   assert.deepEqual(polishReviewedEventCopy(verified), reviewed);
   assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);

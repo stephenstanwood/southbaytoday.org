@@ -34,19 +34,27 @@ test("a full Alviso workshop uses the live waitlist cutoff", async () => {
   assert.equal(inferCategory("Homework Club", "Help with school assignments.", "", "Joyce Ellington Library"), "education");
 });
 
-test("the district's accessibility contact correction preserves its circulation number", () => {
-  const accommodation = "Request accommodations at sccld.org/accessibility 7+ days ahead. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945 or email us at ask@lib.sccgov.org.";
-  const circulation = "Call (408) 540-3945 for circulation.";
+test("the district's accessibility contact correction is scoped to the form", () => {
+  const accommodation = "Request accommodations at sccld.org/accessibility 7+ days ahead. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3945 or email us at ask@sccl.org.";
+  const circulation = "Call (408) 540-3945 or email us at ask@sccl.org for circulation.";
   const event = {
     source: "Santa Clara County Library",
     description: accommodation + " " + circulation,
   };
   const corrected = correctSccLibraryAccessibilityContact(event);
-  assert.equal(corrected.description, accommodation.replace("3945", "3947") + " " + circulation);
+  const currentAccommodation = accommodation.replace("3945", "3947").replace("ask@sccl.org", "ask@lib.sccgov.org");
+  assert.equal(corrected.description, currentAccommodation + " " + circulation);
   assert.equal(event.description, accommodation + " " + circulation);
   assert.equal(correctSccLibraryAccessibilityContact(corrected), corrected);
+  const branch = { ...event, description: accommodation.replace("540-3945", "866-1991") };
+  assert.equal(correctSccLibraryAccessibilityContact(branch).description, currentAccommodation.replace("540-3947", "866-1991"));
   const otherPublisher = { ...event, source: "Other library" };
   assert.equal(correctSccLibraryAccessibilityContact(otherPublisher), otherPublisher);
+});
+
+test("the library's open game and craft gathering is a community event", async () => {
+  const { inferCategory } = await import("../generate-events.mjs");
+  assert.equal(inferCategory("Community Game & Craft Day", "Learn a new game, work on a craft, and meet fellow hobbyists.", "", "Santa Teresa Library"), "community");
 });
 
 const capturedLosGatosLibrary = {
