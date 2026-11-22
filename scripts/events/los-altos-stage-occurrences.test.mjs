@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { fetchLosAltosStageEvents } from "../generate-events.mjs";
-import { deduplicateEventSlots } from "../lib/event-url-dedup.mjs";
+import { deduplicateEventSlots, deduplicateEventTitles } from "../lib/event-url-dedup.mjs";
+import { fuzzyDedupEvents } from "../../src/lib/south-bay/eventFuzzyDedup.mjs";
 
 test("Los Altos Stage Company keeps dated repeat performances after opening night", async () => {
   const pageUrl = "https://losaltosstage.org/events/joseph/";
@@ -40,7 +41,14 @@ test("Los Altos Stage Company keeps dated repeat performances after opening nigh
     ["2026-12-12", "3:00 PM"],
     ["2026-12-12", "8:00 PM"],
   ]);
-  assert.deepEqual(deduplicateEventSlots(events), events);
+  const bySlotAndTitle = deduplicateEventTitles(deduplicateEventSlots(events));
+  assert.deepEqual(fuzzyDedupEvents(bySlotAndTitle).kept, events);
+  const [matinee, evening] = events;
+  const unverifiedEvening = {
+    ...evening,
+    occurrenceEvidence: { ...evening.occurrenceEvidence, sourceUrl: "https://losaltosstage.org/calendar/" },
+  };
+  assert.equal(fuzzyDedupEvents([matinee, unverifiedEvening]).kept.length, 1);
   for (const event of events) {
     assert.equal(event.venue, "Bus Barn Theater");
     assert.equal(event.endTime, null);

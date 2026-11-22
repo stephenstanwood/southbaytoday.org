@@ -127,7 +127,7 @@ import {
 } from "./lib/dates.mjs";
 import { cleanDisplayCopy, cleanDisplayName } from "../src/lib/south-bay/displayText.mjs";
 import { deduplicateEventSlots, deduplicateEventTitles, deduplicateEventUrls, eventClockKey } from "./lib/event-url-dedup.mjs";
-import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable } from "../src/lib/south-bay/eventOccurrence.mjs";
+import { hasUnconfirmedStartTime, isEventExplicitlyInactive, isEventPublishable, isLosAltosStageCalendarUrl } from "../src/lib/south-bay/eventOccurrence.mjs";
 import {
   marketOccurrenceEvidence,
   MOUNTAIN_VIEW_MARKET_RELOCATIONS,
@@ -6483,15 +6483,16 @@ export async function deriveBiblioRegistration(ev, start, end, now, libraryId, o
     : null;
 
   const info = ev.definition?.registrationInfo;
-  const fullWithEarlyCutoff = registration === REGISTRATION_FULL
+  const hasEarlyBiblioCutoff = (registration === REGISTRATION_REQUIRED || registration === REGISTRATION_FULL)
     && info?.provider === "BIBLIO_EVENTS" && info.waitlistEnabled === true
     && closesBy && closesBy < start;
-  if (fullWithEarlyCutoff || (registration === REGISTRATION_CLOSED && needsBiblioWaitlistCheck(ev))) {
+  if (hasEarlyBiblioCutoff || (registration === REGISTRATION_CLOSED && needsBiblioWaitlistCheck(ev))) {
     // Alviso's robotics workshop has an earlier cutoff in the gateway
-    // settings, but the library's resolved waitlist stays open until start.
+    // settings. The library's resolved signup window stays open until the
+    // workshop starts, whether a regular seat or the waitlist is available.
     const window = await fetchRegistrationWindow({ libraryId, eventId: ev.id }, options);
     if (window?.status === "ACTIVE") {
-      registration = REGISTRATION_FULL;
+      if (registration === REGISTRATION_CLOSED) registration = REGISTRATION_FULL;
       closesBy = window.closesBy;
     } else if (window?.status === "ENDED") {
       registration = REGISTRATION_CLOSED;
@@ -10209,7 +10210,7 @@ async function fetchLosAltosStageEvents({ today = todayPT(), fetchImpl = fetch }
         const feedUrl = decodeHtmlAttr(html.match(/<textarea\b[^>]*\bclass=["'][^"']*\bical-url\b[^"']*["'][^>]*>([^<]*)<\/textarea>/i)?.[1]).trim();
         let showtimes;
         if (feedUrl) {
-          if (!/^https:\/\/(?:www\.)?losaltosstage\.org\/\?rhc_action=get_icalendar_events&ID=\d+$/i.test(feedUrl)) {
+          if (!isLosAltosStageCalendarUrl(feedUrl)) {
             throw new Error("Unexpected Los Altos Stage Company iCal URL");
           }
           showtimes = parseLosAltosStageOccurrences(await fetchText(feedUrl, request), pageUrl);

@@ -96,6 +96,13 @@ const MERRY_ACHI_COPY = {
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
   {
+    // The museum's volunteer signup lists three shifts for ages 16 and older.
+    date: "2026-12-13",
+    url: "https://www.numulosgatos.org/events/magical-memories-2026",
+    facts: { registration: REGISTRATION_REQUIRED },
+    appendAttendanceNote: "Volunteers must be 16 or older. Register for one of the three shifts on the museum’s event page.",
+  },
+  {
     // The Center for Steinbeck Studies confirms free admission and the room.
     // https://www.sjsu.edu/steinbeck/events-and-news/news-upcoming-events.php
     date: "2026-12-03",

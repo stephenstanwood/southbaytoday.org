@@ -6,7 +6,7 @@ import { biblioEventOccurrence, correctSccLibraryAccessibilityContact, libraryEv
 const ongoingFixture = JSON.parse(readFileSync(new URL("./fixtures/biblio-ongoing-halloween-2026.json", import.meta.url)));
 const midnightWindowFixture = JSON.parse(readFileSync(new URL("./fixtures/sccl-teen-burton-2026-10-23.json", import.meta.url)));
 
-test("a full Alviso workshop uses the live waitlist cutoff", async () => {
+test("Alviso’s workshop uses the live signup cutoff with seats open or full", async () => {
   const { deriveBiblioRegistration, inferCategory } = await import("../generate-events.mjs");
   const event = {
     id: "6adfcf8b035faf0033df338a",
@@ -29,6 +29,13 @@ test("a full Alviso workshop uses the live waitlist cutoff", async () => {
     registration: "full", registrationClosesBy: start.toISOString(),
   });
   assert.deepEqual(await deriveBiblioRegistration(event, start, end, now, "sjpl", options("ENDED")), {
+    registration: "closed", registrationClosesBy: start.toISOString(),
+  });
+  const withSeats = { ...event, isFull: false, registrationClosed: false };
+  assert.deepEqual(await deriveBiblioRegistration(withSeats, start, end, now, "sjpl", options("ACTIVE")), {
+    registration: "required", registrationClosesBy: start.toISOString(),
+  });
+  assert.deepEqual(await deriveBiblioRegistration(withSeats, start, end, now, "sjpl", options("ENDED")), {
     registration: "closed", registrationClosesBy: start.toISOString(),
   });
   assert.equal(inferCategory("Homework Club", "Help with school assignments.", "", "Joyce Ellington Library"), "education");

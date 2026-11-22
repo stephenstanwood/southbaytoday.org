@@ -3,15 +3,24 @@ import { isPlaceTemporarilyUnavailable } from "./placeAvailability.mjs";
 
 export const TECH_INTERACTIVE_CALENDAR_URL = "https://www.thetech.org/explore/upcoming-events/";
 
-// The museum's calendar lists each screening while its own booking page is
-// shared by the run. Both URLs refer to the same organizer and production.
+export function isLosAltosStageCalendarUrl(url) {
+  return /^https:\/\/(?:www\.)?losaltosstage\.org\/\?rhc_action=get_icalendar_events&ID=\d+$/i.test(url);
+}
+
 export function showtimeEvidenceMatchesUrl(event) {
   const sourceUrl = event.occurrenceEvidence?.sourceUrl;
-  return Boolean(event.url && (sourceUrl === event.url || (
-    event.source === "The Tech Interactive"
-    && sourceUrl === TECH_INTERACTIVE_CALENDAR_URL
-    && /^https:\/\/tickets\.thetech\.org\/events\/[0-9a-f-]+\/?$/i.test(event.url)
-  )));
+  if (!event.url) return false;
+  if (sourceUrl === event.url) return true;
+  // The Tech posts individual screenings in its calendar that share a booking page.
+  if (event.source === "The Tech Interactive") {
+    return sourceUrl === TECH_INTERACTIVE_CALENDAR_URL
+      && /^https:\/\/tickets\.thetech\.org\/events\/[0-9a-f-]+\/?$/i.test(event.url);
+  }
+  // The stage company's scraper checks the production page against the URL
+  // declared inside its linked iCal feed before recording each showtime.
+  return event.source === "Los Altos Stage Company"
+    && /^https:\/\/(?:www\.)?losaltosstage\.org\/events\/[^/?#]+\/?$/i.test(event.url)
+    && isLosAltosStageCalendarUrl(sourceUrl);
 }
 
 // Most event sources already provide exact dated rows. GRPG previously had a
