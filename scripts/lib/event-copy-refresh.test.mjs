@@ -206,6 +206,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-graphic-novel-club.json", import.meta.url))));
 const paloAltoLibraryFixture = JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-palo-alto-library.json", import.meta.url)));
 audits.push(paloAltoLibraryFixture);
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-sentences.json", import.meta.url))));
 
 test("the book sale's conflicting count stays out of refreshed descriptions and cached blurbs", () => {
   const [bookSale] = paloAltoLibraryFixture.cases;
@@ -239,6 +240,50 @@ test("book sale copy retains updated hours and later notes from the library", ()
   assert.deepEqual(reviewed, { ...event, description: updateHours(bookSale.reviewed) + note });
   const otherPublisher = { ...event, source: "Different publisher" };
   assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+});
+
+test("library sentence repairs survive the first source pass", () => {
+  const cases = [
+    [
+      "San Jose Public Library",
+      "Free. Registration not required. Please arrive on time.",
+      "Free. No registration is required. Please arrive on time.",
+    ],
+    [
+      "Santa Clara County Library",
+      "Calling all non-walking babies ages 0-12 months for a special storytime featuring American Sign Language along with songs and stories and fun! Please bring a blanket for your baby. After storytime please stay or join us to play with age-appropriate toys! Enjoy this socialization for babies and their grownups.",
+      "Non-walking babies ages 0-12 months can join a storytime with American Sign Language, songs, and stories. Please bring a blanket for your baby. Stay after storytime or join us for playtime with age-appropriate toys. Babies and their grownups can meet other families.",
+    ],
+    [
+      "Santa Clara County Library",
+      'Join us at Saratoga Library for "The North Pole Review," sharing the perfect way to get into the holiday spirit. All ages welcome.',
+      'Celebrate the holidays at Saratoga Library with "The North Pole Review." All ages welcome.',
+    ],
+    [
+      "Santa Clara County Library",
+      "Learn how to help your child improve sentences and how to expand their idea development when writing. For parents and caregivers with children in third grade and above.",
+      "Learn how to help your child write clearer sentences and develop their ideas. For parents and caregivers with children in third grade and above.",
+    ],
+  ];
+  for (const [source, raw, description] of cases) {
+    const event = { source, description: polishDescription(raw) };
+    const reviewed = polishReviewedEventCopy(event);
+    assert.deepEqual(reviewed, { ...event, description });
+    assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+    const otherPublisher = { ...event, source: "Different publisher" };
+    assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
+  }
+
+  const limited = { source: "San Jose Public Library", description: "Registration not required for caregivers." };
+  assert.deepEqual(polishReviewedEventCopy(limited), limited);
+  const cached = {
+    source: "Santa Clara County Library",
+    blurb: "Grab your guitar, ukulele, or voice and perform for a welcoming crowd of fellow musicians.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(cached), {
+    ...cached,
+    blurb: "Sing or play an instrument for a welcoming crowd of fellow musicians.",
+  });
 });
 
 test("Palo Alto English classes replace signup instructions after registration closes", () => {

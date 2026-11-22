@@ -60,8 +60,8 @@ const SCCLD_OPEN_MIC_EDITS = [
     "Share your musical talents in a safe, welcoming setting. Musicians ages 13 and up can perform at any skill level.",
   ],
   [
-    "Bring your guitar, ukulele, voice, or any fun instruments you have been practicing to perform in an open mic setting.",
-    "Bring your guitar, ukulele, voice, or any other instrument you've been practicing.",
+    /Bring your guitar, ukulele, voice, or (?:any fun instruments you have been practicing to perform in an open mic setting|any other instrument you've been practicing)\./g,
+    "You can sing or play guitar, ukulele, or another instrument you've been practicing.",
   ],
 ];
 
@@ -224,6 +224,7 @@ const EDITS = {
         "This workshop is an adults-only craft program; all skill levels are welcome to join and sign up. Registration not required.",
         "Adults of all skill levels are welcome. No registration is required.",
       ],
+      [/(^|[.!?] )Registration not required(?:\.|$)/g, "$1No registration is required."],
       [
         "For parking, please use street parking in the neighborhood area as the library is currently sharing the elementary school's parking lot.",
         "Please park on nearby streets while the library shares the elementary school's parking lot.",
@@ -1548,6 +1549,22 @@ const EDITS = {
     ],
     description: [
       ...SCCLD_OPEN_MIC_EDITS,
+      [
+        /Calling all non-walking babies ages (\d+-\d+) months for a special storytime featuring American Sign Language along with songs and stories and fun!/g,
+        "Non-walking babies ages $1 months can join a storytime with American Sign Language, songs, and stories.",
+      ],
+      [
+        "After storytime please stay or join us to play with age-appropriate toys! Enjoy this socialization for babies and their grownups.",
+        "Stay after storytime or join us for playtime with age-appropriate toys. Babies and their grownups can meet other families.",
+      ],
+      [
+        'Join us at Saratoga Library for "The North Pole Review," sharing the perfect way to get into the holiday spirit.',
+        'Celebrate the holidays at Saratoga Library with "The North Pole Review."',
+      ],
+      [
+        "Learn how to help your child improve sentences and how to expand their idea development when writing.",
+        "Learn how to help your child write clearer sentences and develop their ideas.",
+      ],
       [/ Sensory Notes: - Sound: /g, " "],
       [/ - (?:Visuals|Texture): /g, " "],
       SCCLD_ONLINE_REGISTRATION_EDIT,
@@ -1862,6 +1879,7 @@ const EDITS = {
         /Bring your (\d+-to-\d+-year-old) to rotate through three stations that practice fine motor skills, with no registration required\./g,
         "Bring your $1 to practice fine motor skills at three activity stations. No registration required.",
       ],
+      ["Grab your guitar, ukulele, or voice and perform for a welcoming crowd of fellow musicians.", "Sing or play an instrument for a welcoming crowd of fellow musicians."],
       ["Sing songs, play fingerplays, and share rhymes", "Sing songs, do fingerplays, and share rhymes"],
       ["Build with LEGOs or Duplos and show off your creations", "Build with LEGO or DUPLO bricks and show off your creations"],
       ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
