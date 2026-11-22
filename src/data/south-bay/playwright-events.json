@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generatedAt": "2026-11-21T19:44:43.058Z",
+    "generatedAt": "2026-11-22T00:37:30.337Z",
     "generator": "playwright-scrapers",
     "scrapersRun": 28,
     "eventCount": 189,
@@ -9,13 +9,13 @@
       "San Jose Jazz (10)",
       "Linden Tree Books (4)",
       "History San Jose (2)",
-      "Montalvo Arts Center (4)",
+      "Montalvo Arts Center (5)",
       "City Lights Theater (5)",
       "ICA San José (3)",
       "Mountain Winery (1)",
       "Children's Discovery Museum (1)",
       "Guadalupe River Park Conservancy (6)",
-      "Santana Row (7)",
+      "Santana Row (6)",
       "City of Cupertino (37)",
       "Opera San José (6)",
       "TheatreWorks Silicon Valley (65)",
@@ -114,8 +114,8 @@
         "id": "montalvo-arts-center",
         "label": "Montalvo Arts Center",
         "status": "ok",
-        "count": 4,
-        "liveCount": 4,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Montalvo Arts Center"
@@ -198,8 +198,8 @@
         "id": "santana-row",
         "label": "Santana Row",
         "status": "ok",
-        "count": 7,
-        "liveCount": 7,
+        "count": 6,
+        "liveCount": 6,
         "error": null,
         "sources": [
           "Santana Row"
@@ -688,6 +688,23 @@
       "kidFriendly": false
     },
     {
+      "id": "92bdb7ecc279",
+      "title": "Irish Christmas in America",
+      "date": "2026-12-10",
+      "displayDate": "Thu, Dec 10",
+      "time": null,
+      "endTime": null,
+      "venue": "Montalvo Arts Center",
+      "address": "15400 Montalvo Rd, Saratoga, CA 95071",
+      "city": "saratoga",
+      "category": "arts",
+      "cost": "paid",
+      "description": "",
+      "url": "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/",
+      "source": "Montalvo Arts Center",
+      "kidFriendly": false
+    },
+    {
       "id": "7b4b9e03681f",
       "title": "The 1940s Radio Hour",
       "date": "2026-12-20",
@@ -1005,29 +1022,6 @@
       }
     },
     {
-      "id": "40cbf5dce646",
-      "title": "Makers Market's Local Artist Street Fair",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "11:00 AM",
-      "endTime": "6:00 PM",
-      "venue": "Santana Row",
-      "address": "377 Santana Row, San Jose, CA 95128",
-      "city": "san-jose",
-      "category": "community",
-      "cost": null,
-      "description": "NOVEMBER 21, 2026  Makers Market’s™ Local Artist Street Fair is returning to Santana Row! We’ve rounded up the best local Artists, Crafters, Designers, and Makers for a truly unforgettable shopping experience for every second Saturday of every month from 11am-6pm!60+ Local MakersHandmade jewelry, permanent jewelry, ceramics, woodwork, apparel, leather goods, glass art, candles, local honey, apothecary, art, crochet, pet treats/products, handbags, plants, and moreGreat food + drinks in the surrounding eateries. THIS IS A SIP & STROLL EVENT!Bring your kids + fur babiesEnjoy live music by local artistsFREE to attend!Shop in store! Stroll into our brick-and-mortar shop (adjacent to the market area) for more American-made jewelry, apparel, body products, home goods and more from 100+ Makers.",
-      "url": "https://santanarow.com/event/makers-market-in-the-park/",
-      "source": "Santana Row",
-      "kidFriendly": true,
-      "occurrenceEvidence": {
-        "kind": "first-party-calendar",
-        "sourceUrl": "https://www.santanarow.com/events/",
-        "date": "2026-11-21",
-        "checkedAt": "2026-11-21T19:43:37.311Z"
-      }
-    },
-    {
       "id": "6e4bf7d9e134",
       "title": "Thanksgiving on The Row",
       "date": "2026-11-26",
@@ -1047,7 +1041,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-26",
-        "checkedAt": "2026-11-21T19:43:37.312Z"
+        "checkedAt": "2026-11-22T00:36:23.337Z"
       }
     },
     {
@@ -1070,7 +1064,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-11-27",
-        "checkedAt": "2026-11-21T19:43:37.312Z"
+        "checkedAt": "2026-11-22T00:36:23.338Z"
       }
     },
     {
@@ -1093,7 +1087,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-21T19:43:37.312Z"
+        "checkedAt": "2026-11-22T00:36:23.338Z"
       }
     },
     {
@@ -1116,7 +1110,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-01",
-        "checkedAt": "2026-11-21T19:43:37.313Z"
+        "checkedAt": "2026-11-22T00:36:23.338Z"
       }
     },
     {
@@ -1139,7 +1133,7 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-12",
-        "checkedAt": "2026-11-21T19:43:37.314Z"
+        "checkedAt": "2026-11-22T00:36:23.339Z"
       }
     },
     {
@@ -1162,93 +1156,8 @@
         "kind": "first-party-calendar",
         "sourceUrl": "https://www.santanarow.com/events/",
         "date": "2026-12-13",
-        "checkedAt": "2026-11-21T19:43:37.314Z"
+        "checkedAt": "2026-11-22T00:36:23.339Z"
       }
-    },
-    {
-      "id": "599ed394f0cf",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-11-21",
-      "displayDate": "Sat, Nov 21",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "1330abdeba6b",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-11-28",
-      "displayDate": "Sat, Nov 28",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "d2e3788b718d",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-12-05",
-      "displayDate": "Sat, Dec 5",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "a83ee95ec3a8",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-12-12",
-      "displayDate": "Sat, Dec 12",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
-    },
-    {
-      "id": "a788e5affb37",
-      "title": "Environmental Education Center Open House",
-      "date": "2026-12-19",
-      "displayDate": "Sat, Dec 19",
-      "time": "11:00 AM",
-      "endTime": "03:00 PM",
-      "venue": "McClellan Ranch Preserve",
-      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
-      "city": "cupertino",
-      "category": "family",
-      "cost": "free",
-      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
-      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
-      "source": "City of Cupertino",
-      "kidFriendly": true
     },
     {
       "id": "46499ae29bb7",
@@ -1332,6 +1241,91 @@
       "cost": "free",
       "description": "Community members are invited to visit the Baer Blacksmith Shop from 11 a.m. to 3 p.m. and learn about early Cupertino history, the craft of blacksmithing, and learn from our experienced blacksmith, who will be firing the forge to give demonstrations.",
       "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Baer-Blacksmith-Shop-Demonstrations",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "599ed394f0cf",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-11-21",
+      "displayDate": "Sat, Nov 21",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "1330abdeba6b",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-11-28",
+      "displayDate": "Sat, Nov 28",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "d2e3788b718d",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-12-05",
+      "displayDate": "Sat, Dec 5",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "a83ee95ec3a8",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-12-12",
+      "displayDate": "Sat, Dec 12",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
+      "source": "City of Cupertino",
+      "kidFriendly": true
+    },
+    {
+      "id": "a788e5affb37",
+      "title": "Environmental Education Center Open House",
+      "date": "2026-12-19",
+      "displayDate": "Sat, Dec 19",
+      "time": "11:00 AM",
+      "endTime": "03:00 PM",
+      "venue": "McClellan Ranch Preserve",
+      "address": "McClellan Ranch Preserve, 22221 McClellan Road, 95014, View Map",
+      "city": "cupertino",
+      "category": "family",
+      "cost": "free",
+      "description": "Drop by the Environmental Education Center (EEC) at McClellan Ranch Preserve every Saturday from 11 a.m. to 3 p.m. for family fun and discovery. Meet the City's animal ambassadors, explore local wildlife, engage with preserve staff and park rangers, and enjoy hands-on activities that bring nature to life.",
+      "url": "https://www.cupertino.gov/Parks-Recreation/Events/McClellan-Events/Environmental-Education-Center-Open-House",
       "source": "City of Cupertino",
       "kidFriendly": true
     },
@@ -1816,7 +1810,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-3",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1833,7 +1827,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-4",
       "source": "Opera San José",
       "kidFriendly": false
@@ -1850,7 +1844,7 @@
       "city": "san-jose",
       "category": "arts",
       "cost": "paid",
-      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the […]",
+      "description": "FIDDLER ON THE ROOF Tradition meets revolution in Opera San Jose's new production of Fiddler on the Roof. In a vibrant Jewish shtetl on the eve of upheaval, Tevye, the enduring dairyman, grapples with his daughters' dreams of love while clinging to the customs that provide his world's structural integrity. In one of America's most […]",
       "url": "https://www.operasj.org/event/fiddler-on-the-roof-5",
       "source": "Opera San José",
       "kidFriendly": false
@@ -3066,7 +3060,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-23",
         "date": "2026-11-21",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.947Z"
+        "checkedAt": "2026-11-22T00:36:58.698Z"
       }
     },
     {
@@ -3090,7 +3084,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-24",
         "date": "2026-11-23",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3114,7 +3108,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-25",
         "date": "2026-11-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3138,7 +3132,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost",
         "date": "2026-12-05",
         "time": "4:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3179,7 +3173,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-26",
         "date": "2026-12-08",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3203,7 +3197,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-1",
         "date": "2026-12-09",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3227,7 +3221,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-27",
         "date": "2026-12-11",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3251,7 +3245,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-28",
         "date": "2026-12-14",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3275,7 +3269,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/wang-leehom",
         "date": "2026-12-19",
         "time": "8:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3299,7 +3293,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/sharks-vs-kings-29",
         "date": "2026-12-26",
         "time": "7:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
@@ -3323,7 +3317,7 @@
         "sourceUrl": "https://www.sapcenter.com/events/detail/san-jose-sea-lions-vs-minnesota-frost-2",
         "date": "2026-12-27",
         "time": "1:00 PM",
-        "checkedAt": "2026-11-21T19:44:10.948Z"
+        "checkedAt": "2026-11-22T00:36:58.701Z"
       }
     },
     {
