@@ -3732,6 +3732,8 @@ function inferCategory(title, desc, type, venue = "", sourceAudiences = []) {
   if (isBookstoreVenue) return "arts";
   // Seven Trees Library's Board Game Zone is open play for all ages.
   if (/\blibrary\b/.test(venueLower) && /^board game zone$/.test(titleLower.trim())) return "family";
+  // Santa Teresa Library lists this as an open gathering for games and crafts.
+  if (/\blibrary\b/.test(venueLower) && /^community game (?:&|and) craft day$/.test(titleLower.trim())) return "community";
   // Library tutoring belongs with educational programs across branches.
   if (/\blibrary\b/.test(venueLower) && /^homework help\b/.test(titleLower.trim())) return "education";
   // Branch Buddy is library volunteering. Keep sessions advertised for families in Family.
