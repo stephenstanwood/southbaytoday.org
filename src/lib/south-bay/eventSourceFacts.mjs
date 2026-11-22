@@ -85,7 +85,7 @@ const SJSU_NOVEMBER_METROPOLIS = {
   attendanceStatus: "needs-confirmation",
   attendanceNote: "The event page lists a 6 PM finish, while the organizer's poster lists 6:30 PM. Confirm the finish with SJSU's Humanities Honors Program before going.",
 };
-const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
+export const PCLG_NOVEMBER_18_BULLETIN = "https://www.pclg.org/this-week/2026-11-18.pdf";
 const PALO_ALTO_ART_CENTER_MEDITATION_URL = "https://paloalto.bibliocommons.com/events/68faeb383cbc052f00816108";
 const MERRY_ACHI_COPY = {
   description: "José Hernández and Mariachi Sol de México present a holiday mariachi concert at Hammer Theatre.",
@@ -2816,13 +2816,21 @@ const CORRECTIONS = [
     copyReplacements: [[/\bRegistration required; \$30 resident, \$38 nonresident\./g,
       "$30 resident, $38 nonresident. The city newsletter links to activity registration."]],
   },
+  // The November 18 bulletin says the December 3 tea has sold out.
   {
     date: "2026-12-03",
     matches: (event) => event.source === "City Newsletter" && event.city === "los-gatos"
-      && event.title === "PCLG Christmas Tea" && event.venue === "Presbyterian Church of Los Gatos",
+      && event.title === "PCLG Christmas Tea" && event.venue === "Presbyterian Church of Los Gatos"
+      && (!event.url || event.url === "https://www.pclg.org/this-week/2026-11-11.pdf"
+        || event.url === PCLG_NOVEMBER_18_BULLETIN),
     facts: {
-      cost: "paid", costNote: "$25; cash or check. Tickets sold during coffee hour after Sunday worship.",
+      url: PCLG_NOVEMBER_18_BULLETIN,
+      cost: "paid",
+      costNote: "$25 per ticket.",
+      registration: REGISTRATION_FULL,
+      attendanceNote: "The church announced that tickets are sold out.",
     },
+    copyReplacements: [[/\s*\bTickets are \$25\b[^.!?]*(?:[.!?]|$)/i, ""]],
   },
   {
     date: "2026-12-05",

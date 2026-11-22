@@ -25,7 +25,7 @@ test("Sunnyvale's dated toy drive keeps its official link and named meeting poin
   ]) assert.deepEqual(applyVerifiedEventFacts(changed), changed);
 });
 
-test("the dated Christmas Tea retains a usable organizer source through newsletter refresh", () => {
+test("the dated Christmas Tea retains the latest organizer status through newsletter refresh", () => {
   const raw = {
     id: "inbound_mwcn383x_gfgaax", cityKey: "los-gatos", title: "PCLG Christmas Tea",
     startsAt: "2026-12-03T13:30:00-08:00", endsAt: null,
@@ -33,13 +33,17 @@ test("the dated Christmas Tea retains a usable organizer source through newslett
     description: "Annual Christmas Tea. Tickets are $25 (cash or check).",
     sourceUrl: null,
   };
-  const sourceUrl = "https://www.pclg.org/this-week/2026-11-11.pdf";
+  const sourceUrl = "https://www.pclg.org/this-week/2026-11-18.pdf";
   const original = structuredClone(raw);
   const [restored] = fetchInboundEvents({ today: "2026-11-17", events: [raw] });
   const [linked] = fetchInboundEvents({ today: "2026-11-17", events: [{ ...raw, sourceUrl }] });
   assert.deepEqual(restored, linked, "the source repair must preserve identity, schedule and presentation");
   assert.equal(restored.url, sourceUrl);
-  assert.equal(applyVerifiedEventFacts(restored).url, sourceUrl);
+  const corrected = applyVerifiedEventFacts(restored);
+  assert.equal(corrected.url, sourceUrl);
+  assert.equal(corrected.registration, "full");
+  const older = { ...restored, url: "https://www.pclg.org/this-week/2026-11-11.pdf" };
+  assert.deepEqual(applyVerifiedEventFacts(older), corrected);
   assert.deepEqual(raw, original, "preserve the received newsletter record");
   for (const other of [
     { ...raw, startsAt: "2027-12-03T13:30:00-08:00" },
@@ -49,6 +53,8 @@ test("the dated Christmas Tea retains a usable organizer source through newslett
   for (const key of ["canonicalUrl", "sourceUrl"]) {
     const newer = "https://www.pclg.org/this-week/new-organizer-notice";
     assert.equal(normalizeInboundEventPresentation({ ...raw, [key]: newer }).url, newer);
+    const refreshed = { ...restored, url: newer };
+    assert.equal(applyVerifiedEventFacts(refreshed), refreshed);
   }
 });
 

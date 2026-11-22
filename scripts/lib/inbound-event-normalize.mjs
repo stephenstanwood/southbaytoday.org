@@ -1,5 +1,5 @@
 import { isTrackerUrl } from "../../src/lib/south-bay/unwrapTrackerUrl.mjs";
-import { applyVerifiedEventFacts } from "../../src/lib/south-bay/eventSourceFacts.mjs";
+import { applyVerifiedEventFacts, PCLG_NOVEMBER_18_BULLETIN } from "../../src/lib/south-bay/eventSourceFacts.mjs";
 import { resolveVirtualFlag } from "../../src/lib/south-bay/eventFilters.mjs";
 
 const PT = "America/Los_Angeles";
@@ -159,14 +159,13 @@ export function inboundClock(value) {
 function officialOverride(event) {
   const date = String(event?.startsAt || "").slice(0, 10);
   const identity = `${event?.title || ""} ${event?.location || ""}`;
-  // The church's dated November 11 newsletter confirms this occurrence and
-  // its $25 admission. Retain any later organizer link supplied at intake.
-  // Evidence: data/seo/2026-11-17.json; source PDF page 5.
+  // The church's November 18 bulletin confirms this occurrence and its
+  // sold-out status. A supplied organizer link takes precedence at intake.
   if (date === "2026-12-03" && event?.title === "PCLG Christmas Tea"
       && event?.cityKey === "los-gatos"
       && /^Presbyterian Church of Los Gatos(?:,|$)/.test(event?.location || "")
       && !event?.canonicalUrl && !event?.sourceUrl) {
-    return { url: "https://www.pclg.org/this-week/2026-11-11.pdf" };
+    return { url: PCLG_NOVEMBER_18_BULLETIN };
   }
   if ((event?.cityKey === "sunnyvale"
       || event?.fromEmail === "sunnyvalepubliclibrary@public.govdelivery.com")

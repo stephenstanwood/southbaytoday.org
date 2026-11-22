@@ -52,8 +52,10 @@ test("verified newsletter fees and supervision survive actual ingestion and cach
   assert.doesNotMatch(events[0].description, /Registration required/i);
   assert.equal(requiresAdvanceRegistration(events[0]), false, "the newsletter CTA is not a mandatory advance gate");
   assert.equal(events[1].cost, "paid");
-  assert.match(events[1].costNote, /\$25; cash or check/);
-  assert.equal(requiresAdvanceRegistration(events[1]), false, "ticket sale instructions do not establish an advance-only policy");
+  assert.equal(events[1].costNote, "$25 per ticket.");
+  assert.equal(events[1].registration, "full");
+  assert.match(events[1].attendanceNote, /tickets are sold out/i);
+  assert.doesNotMatch(events[1].description, /sold after Sunday worship/i);
   assert.equal(events[2].cost, "free");
   assert.equal(events[2].registration, "none");
   assert.match(events[2].attendanceNote, /Children under 10 must be accompanied by an adult/);
