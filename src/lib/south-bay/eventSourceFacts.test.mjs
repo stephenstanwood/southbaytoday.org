@@ -46,6 +46,19 @@ test("Hillview's Saturday Fun stays open to all ages when the library says so", 
   assert.deepEqual(applyVerifiedEventFacts(childProgram), childProgram);
 });
 
+test("Give Thanks Saturday distinguishes the single-day GA sellout from VIP options", () => {
+  const event = {
+    date: "2026-11-28",
+    id: "tm-Z7r9jZ1AAAb0x",
+    attendanceNote: "General admission is 18+ and VIP is 21+. Check the official ticket guide for current availability.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.match(fixed.attendanceNote, /Saturday single-day general admission and two-day passes were sold out/);
+  assert.match(fixed.attendanceNote, /Saturday VIP and three-day passes/);
+  assert.equal(fixed.attendanceNote.match(/General admission is 18\+/g).length, 1);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+});
+
 test("Easy Tech Seniors retains conditional walk-ins without reopening a full class", () => {
   const program = {
     date: "2026-11-28",

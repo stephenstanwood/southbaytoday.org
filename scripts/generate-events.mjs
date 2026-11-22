@@ -4361,28 +4361,13 @@ function parseIcalEvents(ical) {
   const eventBlocks = unfolded.split("BEGIN:VEVENT");
   for (let i = 1; i < eventBlocks.length; i++) {
     const block = eventBlocks[i].split("END:VEVENT")[0];
-    const get = (prop) => {
-      // Capture the delimiter so we know whether the line uses parameter syntax
-      // (`PROP;PARAM=value:value`) or plain (`PROP:value`). Without this split,
-      // a DESCRIPTION body containing HTML with `class=` / `src=` before any
-      // `https://` would trip the parameter-handler and the parser would chop
-      // the description at the colon inside the URL — leaving leftover image-tag
-      // attribute fragments (`width='200' height='200' />…`) in the body.
-      const regex = new RegExp(`^${prop}([;:])(.*)`, "mi");
-      const m = block.match(regex);
-      if (!m) return "";
-      const delim = m[1];
-      let val = m[2];
-      // Only re-parse for the colon that ends the parameter list when params
-      // are actually present (delimiter was `;`).
-      if (delim === ";") {
-        const colonIdx = val.indexOf(":");
-        if (colonIdx > 0) {
-          val = val.substring(colonIdx + 1);
-        }
-      }
-      return val.trim();
+    const getAll = (prop) => {
+      // Consume any property parameters before the value starts. Colons
+      // inside a URL or description belong to the value.
+      const regex = new RegExp(`^${prop}(?:;[^:\\r\\n]*)?:(.*)`, "gmi");
+      return [...block.matchAll(regex)].map((match) => match[1].trim());
     };
+    const get = (prop) => getAll(prop)[0] ?? "";
     const summary = get("SUMMARY");
     const dtstart = get("DTSTART");
     const dtend = get("DTEND");
@@ -4394,7 +4379,12 @@ function parseIcalEvents(ical) {
 
     if (!summary) continue;
 
-    events.push({ summary, dtstart, dtend, location, description, categories, url, uid });
+    events.push({
+      summary, dtstart, dtend, location, description, categories, url, uid,
+      status: get("STATUS"),
+      rdates: getAll("RDATE").flatMap((line) => line.split(",")),
+      exdates: getAll("EXDATE").flatMap((line) => line.split(",")),
+    });
   }
   return events;
 }
@@ -10182,11 +10172,32 @@ async function fetchSouthBayMusicalTheatreEvents() {
   return events;
 }
 
-async function fetchLosAltosStageEvents() {
+function parseLosAltosStageOccurrences(ical, pageUrl) {
+  const show = parseIcalEvents(assertIcalCalendar(ical, "Los Altos Stage Company"))
+    .find((event) => event.url === pageUrl);
+  if (!show) throw new Error("The iCal feed does not identify this production");
+  if (isEventExplicitlyInactive({ status: show.status })) return [];
+
+  // Calendarize It lists repeat performances as explicit RDATE periods. Its
+  // period ends often equal the start or show midnight, so use the starts only.
+  const startTimes = [show.dtstart, ...show.rdates.map((period) => period.split("/", 1)[0])];
+  const excluded = new Set(show.exdates.map(parseIcalDate).map((date) => date?.getTime()));
+  const starts = new Set(
+    startTimes.filter((stamp) => /^\d{8}T\d{6}Z?$/i.test(stamp))
+      .map(parseIcalDate).filter(Boolean).map((date) => date.getTime()),
+  );
+  if (!starts.size) throw new Error("The iCal feed has no valid performance start");
+  return [...starts].filter((time) => !excluded.has(time)).sort((a, b) => a - b).map((time) => {
+    const start = new Date(time);
+    return { date: isoDate(start), time: displayTime(start) };
+  });
+}
+
+async function fetchLosAltosStageEvents({ today = todayPT(), fetchImpl = fetch } = {}) {
   console.log("  ⏳ Los Altos Stage Company...");
   try {
-    const items = await fetchJson("https://losaltosstage.org/wp-json/wp/v2/events?per_page=50", { timeout: 20_000 });
-    const today = todayPT();
+    const request = { timeout: 20_000, fetchImpl };
+    const items = await fetchJson("https://losaltosstage.org/wp-json/wp/v2/events?per_page=50", request);
     const events = [];
 
     for (const item of items || []) {
@@ -10194,19 +10205,27 @@ async function fetchLosAltosStageEvents() {
       const title = cleanEscapedCalendarText(item.title?.rendered || "");
       if (!pageUrl || !title || isBlockedEvent(title)) continue;
       try {
-        const html = await fetchText(pageUrl, { timeout: 20_000 });
-        const text = cleanEscapedCalendarText(html);
-        const match = text.match(/\bStart date\s+([A-Za-z]+)\s+(\d{1,2}),\s+(20\d{2})\s+(\d{1,2}:\d{2})\s*(am|pm)\b/i);
-        if (!match) continue;
-        const parsed = parseNaturalDateTime(match[1], match[2], match[3], match[4], match[5]);
-        if (!parsed || parsed.date < today) continue;
-        const start = parseDatePT(`${parsed.date}T12:00:00`);
+        const html = await fetchText(pageUrl, request);
+        const feedUrl = decodeHtmlAttr(html.match(/<textarea\b[^>]*\bclass=["'][^"']*\bical-url\b[^"']*["'][^>]*>([^<]*)<\/textarea>/i)?.[1]).trim();
+        let showtimes;
+        if (feedUrl) {
+          if (!/^https:\/\/(?:www\.)?losaltosstage\.org\/\?rhc_action=get_icalendar_events&ID=\d+$/i.test(feedUrl)) {
+            throw new Error("Unexpected Los Altos Stage Company iCal URL");
+          }
+          showtimes = parseLosAltosStageOccurrences(await fetchText(feedUrl, request), pageUrl);
+        } else {
+          const match = cleanEscapedCalendarText(html).match(/\bStart date\s+([A-Za-z]+)\s+(\d{1,2}),\s+(20\d{2})\s+(\d{1,2}:\d{2})\s*(am|pm)\b/i);
+          showtimes = match ? [parseNaturalDateTime(...match.slice(1))] : [];
+        }
+        const upcoming = showtimes.filter((slot) => slot?.time && slot.date >= today);
+        if (!upcoming.length) continue;
+
         let image = extractFirstImageUrl(contentImageHtml(html), pageUrl);
         if (!image) {
           const showPageUrl = findInternalContentPageByTitle(html, title, pageUrl);
           if (showPageUrl) {
             try {
-              const showHtml = await fetchText(showPageUrl, { timeout: 20_000 });
+              const showHtml = await fetchText(showPageUrl, request);
               image = extractFirstImageUrl(contentImageHtml(showHtml), showPageUrl);
             } catch {
               // Keep the event; image resolver will try Places/OG/cache later.
@@ -10214,14 +10233,16 @@ async function fetchLosAltosStageEvents() {
           }
         }
 
-        events.push({
-          id: h("losaltosstage", pageUrl, parsed.date, parsed.time),
+        events.push(...upcoming.map(({ date, time }) => ({
+          id: h("losaltosstage", pageUrl, date, time),
           title,
-          date: parsed.date,
-          displayDate: displayDate(start),
-          time: parsed.time,
+          date,
+          displayDate: displayDate(parseDatePT(`${date}T12:00:00`)),
+          time,
           endTime: null,
-          venue: "Los Altos Stage Company",
+          // The company lists the playhouse at this address as Bus Barn Theater.
+          // https://losaltosstage.org/single-tickets/
+          venue: "Bus Barn Theater",
           address: "97 Hillview Ave, Los Altos, CA 94022",
           city: "los-altos",
           category: "arts",
@@ -10229,9 +10250,14 @@ async function fetchLosAltosStageEvents() {
           description: "",
           url: pageUrl,
           source: "Los Altos Stage Company",
+          ...(feedUrl ? {
+            occurrenceEvidence: {
+              kind: "first-party-occurrence-page", sourceUrl: feedUrl, date, time,
+            },
+          } : {}),
           ...(image ? { image } : {}),
           kidFriendly: /\b(kid|child|family|story|youth|teen|toddler|baby|preschool|infant|lap[-\s]?sit|ages?\s*\d|grades?\s+[K0-9]|youth)\b/i.test(title),
-        });
+        })));
         await new Promise((r) => setTimeout(r, 150));
       } catch (err) {
         console.log(`  ↳ Los Altos Stage detail failed for ${title}: ${err.message}`);
@@ -12187,6 +12213,7 @@ export {
   scpShowPageUrl,
   fetchSanJoseTheatersEvents,
   fetchSouthBayMusicalTheatreEvents,
+  fetchLosAltosStageEvents,
   fetchSantaCruzWarriorsSchedule,
   fetchSharksSchedule,
   fetchEarthquakesSchedule,
