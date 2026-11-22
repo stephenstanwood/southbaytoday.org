@@ -15,6 +15,62 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("the Guadalupe volunteer series drops stale PlayGarden access without changing attendance facts", () => {
+  const roseTitle = "Volunteer in the Heritage Rose Garden!";
+  const orchardTitle = "Volunteer in the Historic Orchard with UC Master Gardeners!";
+  const shifts = [
+    ["20f169faf651", "2026-11-21", roseTitle, "Rose Garden Shed", "8:30 AM",
+      "Restrooms are available at the Rotary PlayGarden starting at 10AM. We highly recommend using the restrooms prior to volunteering."],
+    ["fc11ad3b983b", "2026-11-28", roseTitle, "Rose Garden Shed", "8:30 AM",
+      "Restrooms are available at the Rotary Play Garden starting at 10 AM. We highly recommend using the restrooms prior to volunteering."],
+    ["40073c1e84f7", "2026-11-25", orchardTitle, "Historic Orchard", "9:30 AM",
+      "Restrooms are available at the Rotary PlayGarden and will require staff assistance."],
+  ];
+
+  for (const [id, date, title, venue, time, staleCopy] of shifts) {
+    const instructions = "Chaperones are required for those age 15 and younger.";
+    const meeting = "Meet at the site shown on the registration form.";
+    const event = {
+      id, date, title, venue, time, endTime: "11:30 AM", registration: "required",
+      source: "Guadalupe River Park Conservancy", url: "https://grpg.org/calendar/events/",
+      description: [instructions, staleCopy, meeting].join(" "),
+      attendanceNote: [staleCopy, meeting].join(" "),
+    };
+    const expected = { ...event, description: [instructions, meeting].join(" "), attendanceNote: meeting };
+    assert.deepEqual(applyVerifiedEventFacts(event), expected);
+    assert.deepEqual(applyVerifiedEventFacts(expected), expected);
+    const beforeClosure = { ...event, date: "2026-10-31" };
+    assert.deepEqual(applyVerifiedEventFacts(beforeClosure), beforeClosure);
+    const otherSeries = { ...event, title: "Guadalupe Gardens Workday" };
+    assert.deepEqual(applyVerifiedEventFacts(otherSeries), otherSeries);
+    const futureShift = { ...event, date: "2026-12-02" };
+    assert.deepEqual(applyVerifiedEventFacts(futureShift), { ...expected, date: futureShift.date });
+  }
+});
+
+test("the two Milpitas Qi Gong classes keep accessibility and current notices when 2025 exceptions are dropped", () => {
+  const staleCopy = "Please note that there is no class on the following dates in 2025: August 29, September 12, November 28, and December 5.";
+  const introduction = "Classes meet in the auditorium.";
+  const accessibility = "For accessibility accommodations, use the form at sccld.org/accessibility.";
+  const currentNotice = "There is no class on December 25, 2026.";
+  for (const [sourceId, date] of [
+    ["65baeaeff664ce330023eafa", "2026-12-04"],
+    ["65baeaeff664ce330023eafb", "2026-12-11"],
+  ]) {
+    const event = {
+      id: "sccl-" + sourceId, date, time: "1:00 PM", endTime: "3:00 PM",
+      title: "Qi Gong Meditation & Exercise Class", venue: "Milpitas Library",
+      source: "Santa Clara County Library", url: "https://sccl.bibliocommons.com/events/" + sourceId,
+      description: [introduction, staleCopy, accessibility, currentNotice].join(" "),
+    };
+    const expected = { ...event, description: [introduction, accessibility, currentNotice].join(" ") };
+    assert.deepEqual(applyVerifiedEventFacts(event), expected);
+    assert.deepEqual(applyVerifiedEventFacts(expected), expected);
+    const otherEvent = { ...event, id: "sccl-other-occurrence" };
+    assert.deepEqual(applyVerifiedEventFacts(otherEvent), otherEvent);
+  }
+});
+
 test("Natalia Jiménez uses the box-office showtime and retains the listing identity", () => {
   const event = {
     id: "sanjosetheaters-d4ced2bfe1529bde",

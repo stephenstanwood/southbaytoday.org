@@ -6723,6 +6723,31 @@ const CORRECTIONS = [
   },
 ];
 
+const GRPG_RESTROOM_COPY = /\s*\bRestrooms are available at the Rotary Play\s*Garden (?:starting at 10\s*AM\.(?:\s+We highly recommend using the restrooms prior to volunteering\.)?|and will require staff assistance\.)/gi;
+const MILPITAS_QI_GONG_2025_CANCELLATIONS = /\s*\bPlease note that there is no class on the following dates in 2025: August 29, September 12, November 28, and December 5\./gi;
+const MILPITAS_QI_GONG_DATES = {
+  "sccl-65baeaeff664ce330023eafa": "2026-12-04",
+  "sccl-65baeaeff664ce330023eafb": "2026-12-11",
+};
+
+function staleAttendanceCopyFor(event) {
+  // https://grpg.org/ announced a PlayGarden closure from November 2026 until
+  // further notice. Leave access unconfirmed while the volunteer calendar
+  // repeats this wording. Revisit once the organizer confirms access.
+  if (event?.source === "Guadalupe River Park Conservancy"
+      && event.url === "https://grpg.org/calendar/events/" && event.date >= "2026-11-01"
+      && (event.title === "Volunteer in the Heritage Rose Garden!"
+        || event.title === "Volunteer in the Historic Orchard with UC Master Gardeners!")) {
+    return GRPG_RESTROOM_COPY;
+  }
+  // The two December 2026 BiblioCommons occurrences repeat a 2025 exception list.
+  if (event?.source === "Santa Clara County Library" && event.date
+      && MILPITAS_QI_GONG_DATES[event.id] === event.date) {
+    return MILPITAS_QI_GONG_2025_CANCELLATIONS;
+  }
+  return null;
+}
+
 export function applyVerifiedEventFacts(event) {
   // The seller omits the admission terms from Discovery API rows for this
   // booking page. Every slot on the organizer's San José page is 21+.
@@ -6922,8 +6947,9 @@ export function applyVerifiedEventFacts(event) {
         || c.matches?.(event)
     );
   });
-  if (!correction) return event;
-  const facts = typeof correction.facts === "function" ? correction.facts(event) : correction.facts;
+  const staleCopy = staleAttendanceCopyFor(event);
+  if (!correction && !staleCopy) return event;
+  const facts = typeof correction?.facts === "function" ? correction.facts(event) : correction?.facts;
   const corrected = { ...event, ...facts };
   // A verified signup requirement cannot reopen a session whose current
   // provider metadata says full/closed or replace an appointment gate. A
@@ -6935,7 +6961,7 @@ export function applyVerifiedEventFacts(event) {
   }
   // Entry conditions supplement current booking/availability notices; never
   // replace a later sold-out, closed or organizer-confirmation message.
-  const note = correction.appendAttendanceNote;
+  const note = correction?.appendAttendanceNote;
   if (note && !corrected.attendanceNote?.includes(note)) {
     // Replace a saved copy with curly apostrophes before checking for duplicates.
     const attendance = (corrected.attendanceNote || "").replace(note.replaceAll("'", "’"), () => note);
@@ -6944,8 +6970,13 @@ export function applyVerifiedEventFacts(event) {
   // Attendance notes also carry source copy and need the same verified fixes.
   for (const field of ["description", "blurb", "attendanceNote"]) {
     if (typeof corrected[field] !== "string") continue;
-    for (const [pattern, replacement] of correction.copyReplacements ?? []) {
+    for (const [pattern, replacement] of correction?.copyReplacements ?? []) {
       corrected[field] = corrected[field].replace(pattern, replacement);
+    }
+    if (staleCopy) {
+      const copy = corrected[field];
+      const cleaned = copy.replace(staleCopy, "");
+      if (cleaned !== copy) corrected[field] = cleaned.trimStart();
     }
   }
   return corrected;
