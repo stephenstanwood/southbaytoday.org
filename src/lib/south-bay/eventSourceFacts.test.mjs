@@ -809,6 +809,37 @@ test("Almaden tech help keeps current resources and appointment terms", () => {
   assert.deepEqual(applyVerifiedEventFacts(otherLibrary), otherLibrary);
 });
 
+test("Almaden's November 24 and 25 tech help replaces retired services for each exact occurrence", () => {
+  for (const [date, id, time, registrationClosesBy] of [
+    ["2026-11-24", "69f10f4bfb87a3c2e2ac6fef", "12:00 PM", "2026-11-17T08:00:00.000Z"],
+    ["2026-11-25", "69f10f4bfb87a3c2e2ac6ff0", "11:00 AM", "2026-11-18T08:00:00.000Z"],
+  ]) {
+    const event = {
+      id: `sjpl-${id}`, date, time, endTime: "4:00 PM",
+      title: "Digital Skills: One-On-One Tech Help for Seniors",
+      source: "San Jose Public Library", venue: "Almaden Library",
+      url: `https://sjpl.bibliocommons.com/events/${id}`,
+      registration: "closed", registrationClosesBy,
+      attendanceNote: "By appointment only. One appointment per week per person.",
+      description: "Learning to use Libby (formerly OverDrive) to read ebooks and listen to e-audiobooks; Accessing non-OverDrive e-books and audiobooks from Boundless, Cloud Library, and Enki; Using Hoopla to read, listen and watch; Checking out a 7-day pass to access Great Courses from Libby or Hoopla; By appointment only.",
+    };
+    const corrected = {
+      ...event,
+      description: "Learning to use Libby from OverDrive to read ebooks and listen to e-audiobooks; Finding e-books from Enki; Checking out a 7-day pass to access Great Courses from Libby; By appointment only.",
+    };
+    assert.deepEqual(applyVerifiedEventFacts(event), corrected);
+    assert.deepEqual(applyVerifiedEventFacts(corrected), corrected);
+    const rescheduled = { ...event, date: "2026-11-26" };
+    assert.deepEqual(applyVerifiedEventFacts(rescheduled), rescheduled);
+    const unverified = {
+      ...event,
+      id: "sjpl-69f10f4bfb87a3c2e2ac6ff1",
+      url: "https://sjpl.bibliocommons.com/events/69f10f4bfb87a3c2e2ac6ff1",
+    };
+    assert.deepEqual(applyVerifiedEventFacts(unverified), unverified);
+  }
+});
+
 test("Montalvo's sold-out wreath workshop keeps its waitlist and any explicit price", () => {
   const event = {
     date: "2026-12-02", time: "6:00 PM", source: "Montalvo Arts Center",
