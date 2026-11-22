@@ -33,7 +33,10 @@ function cupertinoPage(details) {
     goto: async url => { current = url; }, waitForTimeout: async () => {},
     locator: () => ({ first: () => ({ count: async () => 0 }) }),
     evaluate: async () => current.endsWith("Events-directory")
-      ? details.map((d, i) => ({ text: "13 Nov 2026", href: `https://www.cupertino.gov/fixture-${i}` }))
+      ? {
+          links: details.map((_, i) => ({ href: `https://www.cupertino.gov/fixture-${i}` })),
+          total: details.length,
+        }
       : details[Number(current.match(/fixture-(\d+)$/)[1])],
   };
 }

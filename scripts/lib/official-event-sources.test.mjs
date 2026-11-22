@@ -34,7 +34,7 @@ test("Cupertino drops past dated slots instead of republishing them next year", 
   const page = {
     goto: async () => {},
     waitForTimeout: async () => {},
-    evaluate: async () => evaluations++ === 0 ? [{ href: url }] : detail,
+    evaluate: async () => evaluations++ === 0 ? { links: [{ href: url }], total: null } : detail,
     locator: () => ({ first: () => ({ count: async () => 0 }) }),
   };
   const events = await scrapeCupertinoOpenCities(page, { today: "2026-10-16" });
@@ -52,7 +52,7 @@ test("Cupertino recognizes mandatory child signup without registering accompanyi
     let evaluations = 0;
     const page = {
       goto: async () => {}, waitForTimeout: async () => {},
-      evaluate: async () => evaluations++ === 0 ? [{ href: url }] : {
+      evaluate: async () => evaluations++ === 0 ? { links: [{ href: url }], total: null } : {
         title: "Monster Mash", slots: ["Saturday, October 24, 2026 | 05:00 PM - 08:00 PM"],
         description: "A Halloween party.", location: "Quinlan Community Center, Cupertino",
         cost: `$22 residents; $26 nonresidents. ${instructions}`,
@@ -71,7 +71,7 @@ test("Cupertino preserves all resident pricing and the required attendee registr
   const page = {
     goto: async () => {},
     waitForTimeout: async () => {},
-    evaluate: async () => evaluations++ === 0 ? [{ href: url }] : {
+    evaluate: async () => evaluations++ === 0 ? { links: [{ href: url }], total: null } : {
       title: "Signing Santa", slots: ["Saturday, December 12, 2026 | 10:00 AM - 12:00 PM"],
       description: "Meet a Santa who understands sign language.",
       location: "Quinlan Community Center, 10185 North Stelling Road, 95014",
@@ -87,16 +87,25 @@ test("Cupertino preserves all resident pricing and the required attendee registr
   assert.equal(events[0].registration, "required");
 });
 
-test("Cupertino waits for the next directory page before collecting event links", async () => {
+test("Cupertino waits for the next directory page to finish loading", async () => {
   const first = "https://www.cupertino.gov/Events-directory/first-event";
   const second = "https://www.cupertino.gov/Events-directory/second-event";
+  const third = "https://www.cupertino.gov/Events-directory/third-event";
   let currentUrl;
   let clicked = false;
   let handlesDisposed = 0;
   const opened = [];
-  let href = first;
-  const readLinks = (read, previous) => runInNewContext(`(${read})(previous)`, {
-    document: { querySelectorAll: () => [{ href, textContent: "22 Nov 2026" }] }, previous,
+  let readyState = "complete";
+  let hrefs = [first];
+  const readPage = (read, previous) => runInNewContext(`(${read})(previous)`, {
+    document: {
+      readyState,
+      querySelector: () => ({
+        innerText: "3 Result(s) Found",
+        querySelectorAll: () => hrefs.map(href => ({ href, textContent: "22 Nov 2026" })),
+      }),
+    },
+    previous,
   });
   const page = {
     goto: async url => { currentUrl = url; opened.push(url); },
@@ -105,21 +114,40 @@ test("Cupertino waits for the next directory page before collecting event links"
       count: async () => Number(selector.includes("#page-2")),
       click: async () => { clicked = true; },
     }) }),
-    evaluate: async read => currentUrl.endsWith("/Events-directory") ? readLinks(read) : {
-      title: currentUrl === first ? "First event" : "Second event",
+    evaluate: async read => currentUrl.endsWith("/Events-directory") ? readPage(read) : {
+      title: currentUrl.split("/").at(-1),
       slots: ["Sunday, November 22, 2026 | 05:00 PM - 07:00 PM"],
     },
     waitForFunction: async (read, previous) => {
       assert.equal(clicked, true);
-      assert.equal(readLinks(read, previous), null, "the old directory still mounted after the click must not count");
-      href = second;
-      return { jsonValue: async () => readLinks(read, previous), dispose: async () => { handlesDisposed++; } };
+      assert.equal(readPage(read, previous), null, "the previous directory page is still mounted");
+      readyState = "loading";
+      hrefs = [second];
+      assert.equal(readPage(read, previous), null, "a partially parsed directory page must not count");
+      readyState = "interactive";
+      hrefs.push(third);
+      return { jsonValue: async () => readPage(read, previous), dispose: async () => { handlesDisposed++; } };
     },
   };
   const events = await scrapeCupertinoOpenCities(page, { today: "2026-11-18" });
-  assert.deepEqual(opened.slice(1), [first, second]);
-  assert.deepEqual(events.map(event => event.title), ["First event", "Second event"]);
+  assert.deepEqual(opened.slice(1), [first, second, third]);
+  assert.deepEqual(events.map(event => event.url), [first, second, third]);
   assert.equal(handlesDisposed, 1);
+});
+
+test("Cupertino rejects a completed directory with fewer cards than the reported total", async () => {
+  const opened = [];
+  const page = {
+    goto: async url => { opened.push(url); },
+    waitForTimeout: async () => {},
+    evaluate: async () => ({
+      links: [{ href: "https://www.cupertino.gov/Events-directory/first-event" }],
+      total: 2,
+    }),
+    locator: () => ({ first: () => ({ count: async () => 0 }) }),
+  };
+  await assert.rejects(scrapeCupertinoOpenCities(page), /Cupertino directory returned 1 of 2 listed results/);
+  assert.deepEqual(opened, ["https://www.cupertino.gov/Events-directory"]);
 });
 
 test("History San Jose's browser scraper keeps the organizer's building and street address separate", async () => {
