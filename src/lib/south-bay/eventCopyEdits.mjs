@@ -1965,6 +1965,14 @@ const EDITS = {
     ],
     description: [
       [
+        /^Annual Christmas Tea (?:starting in the sanctuary with a performance by the Mountain View High School Madrigal Choir, (?:followed by|then)|with a performance by the Mountain View High School Madrigal Choir in the sanctuary, followed by) homemade treats in the Social Hall\./g,
+        "The annual Christmas Tea begins in the sanctuary with a performance by the Mountain View High School Madrigal Choir. Homemade treats follow in the Social Hall.",
+      ],
+      [
+        "Volunteers of all ages put up Christmas lights and decorations on the church campus. Warm drinks and treats are provided, with indoor and outdoor tasks.",
+        "Volunteers of all ages can help put up Christmas lights and decorations on the church campus. Tasks are available indoors and outdoors. Warm drinks and treats will be provided.",
+      ],
+      [
         "In-gallery electroacoustic performance in which sound artist Sholeh Asgary mixes the sound of flowing water from a water clock with deconstructed Persian lamentation songs.",
         "In this electroacoustic gallery performance, sound artist Sholeh Asgary mixes the sound of water flowing through a water clock with deconstructed Persian lamentation songs.",
       ],
