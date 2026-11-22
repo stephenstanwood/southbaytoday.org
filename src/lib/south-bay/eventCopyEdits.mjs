@@ -723,6 +723,30 @@ const EDITS = {
       ["time. Those on waitlist will be considered for no show spots. Late arrivals", "time. Those on the waitlist will be considered for no-show spots. Late arrivals"],
       ["letter. No registration required Parking validation for", "letter. No registration required. Parking validation for"],
       ["the program. E-newsletter signup: Get the inside", "the program. E-newsletter Signup: Get the inside"],
+      ["Calling all K-Pop fans, ages 5-17.", "Calling all K-Pop fans ages 5-17."],
+      [
+        "Join Vi who has years of experience doing and teaching others. It will be a fun cultural enrichment exercise for all that join.",
+        "Learn with Vi, who has years of experience dancing and teaching.",
+      ],
+      [
+        "Parent/legal guardian will be required to sign an Exercise Program Waiver form. Forms will be available at the Information Desk 2 days before the event and before the program begins. Must submit when they attend the program.",
+        "A parent or legal guardian must sign the Exercise Program Waiver. Forms are available at the Information Desk 2 days before the event and before class starts. Bring the signed form to class.",
+      ],
+      [
+        "Parents/guardians, are welcome to stay in the back of the room, but not required if their child knows how to contact them in case of an emergency.",
+        "Parents and guardians are welcome to stay in the back of the room. They may leave if their child knows how to reach them in an emergency.",
+      ],
+      ["Storytime: 12:30–1 p.m. Stay & Play 1–1:30 p.m.", "Storytime runs from 12:30 to 1 p.m. Stay & Play runs from 1 to 1:30 p.m."],
+      [
+        "to crochet or knit (or embroider or tat or...) and chat with other crafters making things with yarn. All hand needle crafts welcome.",
+        "for crochet, knitting, embroidery, tatting, and conversation with other crafters. All hand needlecrafts are welcome.",
+      ],
+      ["With LEGO and Duplo bricks,", "With LEGO and DUPLO bricks,"],
+      [
+        "Hooks, yarn, and basic supplies provided while supplies last.",
+        "Hooks, yarn, and other basic supplies are available while they last.",
+      ],
+      ["and why they would, or wouldn't, recommend it to others.", "and whether they'd recommend it to others and why."],
       ["at the program. E Newsletter Signup: Get the", "at the program. E-newsletter Signup: Get the"],
       ["for our monthly e Newsletter, highlighting the latest", "for our monthly e-newsletter, highlighting the latest"],
       ["This program is in-person at Educational Park", "This program is held in person at Educational Park"],
@@ -1807,7 +1831,7 @@ const EDITS = {
       ["the Flying Rooster arrives there is hope", "the Flying Rooster arrives, there is hope"],
       ["taught at a beginner to intermediate level. Regular attendance", "taught at a beginner-to-intermediate level. Regular attendance"],
       ["in the order of when the assessment is taken. Confirm assessment", "in the order in which the assessments are taken. Confirm assessment"],
-      ["their grownups. 10:30-11:00 AM Storytime: 11:00-12:00 PM Stay & Play Thank you to", "their grownups. 10:30-11:00 AM: Storytime; 11:00-12:00 PM: Stay & Play. Thank you to"],
+      ["10:30-11:00 AM Storytime: 11:00-12:00 PM Stay & Play Thank you to", "10:30-11:00 AM: Storytime; 11:00-12:00 PM: Stay & Play. Thank you to"],
       ["on: October 3rd October 10th. For", "on: October 3rd and October 10th. For"],
       ["at Once and Navalny; a father-to-be tries", "at Once and Navalny, a father-to-be tries"],
       ["wrong. MPA Rating: PG-13 104 minutes. For", "wrong. MPA Rating: PG-13. 104 minutes. For"],
@@ -1916,7 +1940,21 @@ const EDITS = {
     ],
   },
   "Palo Alto City Library": {
+    title: [
+      [/^Documentary Screening-Zora Neale Hurston: Claiming Space$/g, "Documentary Screening – Zora Neale Hurston: Claiming a Space"],
+    ],
     description: [
+      ["Ages 8–11 recommended Materials provided!", "Recommended for ages 8–11."],
+      [
+        "Join us in celebrating one of the most important American, female and Black authors in history with a screening of the PBS documentary Zora Neale Hurston: Claiming Space. While best know for her classic novel Their Eyes Were Watching God, this documentary delves deep into Hurston's work as an anthropologist and it's influence on her writing.",
+        "Join us for a screening of the PBS documentary Zora Neale Hurston: Claiming a Space, about a major Black American writer. Hurston is best known for her novel Their Eyes Were Watching God. The film explores her work as an anthropologist and how it influenced her writing.",
+      ],
+      ["From the producer: \" Raised", "From the producer: \"Raised"],
+      [
+        "produced by Randall Mac Lowry and executive produced by Cameo George",
+        "produced by Randall MacLowry and executive produced by Cameo George",
+      ],
+      [" https://www.pbs.org/wgbh/ameri... Interested in delving deeper", " Interested in delving deeper"],
       [
         /There will be three rooms with (over [\d,]+ )?books, CDs, DVDs, puzzles, etc\., new & gently used, all sorted, very reasonably priced!/g,
         "Browse $1new and gently used items across three rooms, including books, CDs, DVDs, and puzzles. Everything is sorted and reasonably priced.",
@@ -2042,6 +2080,10 @@ const EDITS = {
       ["Danièle Archambault, Ph. D. (Linguistics)", "Danièle Archambault, Ph.D. (Linguistics)"],
     ],
     blurb: [
+      [
+        "Watch the PBS documentary Zora Neale Hurston: Claiming Space, a film about the acclaimed American author, on a library screening.",
+        "Watch the PBS documentary Zora Neale Hurston: Claiming a Space at a library screening. The film explores how Hurston's work as an anthropologist informed her writing.",
+      ],
       [/\bpom (poms?)\b/g, "pom-$1"],
       [
         "Make a snow person from dough, then dress it up with felt, pipe cleaners, ribbons, and other materials, for kids ages 4 to 11.",
