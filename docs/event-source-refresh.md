@@ -14,6 +14,35 @@ therefore retains its work without blocking the scheduled event, plan or
 newsletter checkout. Publication refuses a moved remote until the review
 merges and revalidates it; the scheduled checkout's dirty guard stays intact.
 
+
+The Mini's hourly fact-check and copy-edit reviews also use isolated worktrees.
+Their live contracts in `~/.claude/scheduled-tasks/sbs-fact-check/SKILL.md`
+and `~/.claude/scheduled-tasks/sbs-copy-edit/SKILL.md` use
+`scripts/editorial/workspace.mjs` from the scheduled checkout:
+
+```bash
+node scripts/editorial/workspace.mjs prepare sbs-fact-check
+node scripts/editorial/workspace.mjs publish sbs-fact-check /absolute/prepared/worktree
+node scripts/editorial/workspace.mjs finish sbs-fact-check /absolute/prepared/worktree
+```
+
+Use `sbs-copy-edit` as the task name for the copy desk. Preparation selects a
+published revision under the existing mutex, then releases it before creating
+the checkout. All research, edits, commits and tests happen in the worktree
+returned by `prepare`. Publication takes the mutex for the clean-checkout check,
+fetch and fast-forward push. Exit 75 means another job holds the lock. The
+existing gate records a deferral and the worktree stays available for retry.
+If published main advances, merge the latest published revision **into the
+worktree**, reconcile its changes and rerun the affected checks before retrying.
+Publication protects the current source snapshots and their provenance in the
+calendar database. `finish` removes only a clean worktree whose commit is
+already on published main. A blocked or interrupted review retains its work.
+
+On November 22 the watchdog ran out of its 20-minute lock wait while fact-check
+held the shared checkout for 26 minutes. An earlier attempt deferred behind
+copy-edit. Moving the reviews into their own worktrees removes those long lock
+holds while keeping the existing schedule and publication checks.
+
 On October 27 the SEO agent stopped on a model-capacity error, and its terminal
 lock holder later ended without releasing the age-only lease. At 80 minutes
 the event runner correctly reclaimed a dead holder's expired lock, then
