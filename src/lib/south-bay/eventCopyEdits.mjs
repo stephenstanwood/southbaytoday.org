@@ -1434,6 +1434,39 @@ const EDITS = {
     description: [
       SCCLD_ONLINE_REGISTRATION_EDIT,
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
+      [
+        /Baby Bouncers Lapsit \(for non-walking babies\) up to (\d+) months old\./g,
+        "Baby Bouncers Lapsit (for non-walking babies up to $1 months old).",
+      ],
+      [
+        /The Baby Bouncers Lapsit program is a short (\d+)- to (\d+)-minute program\./g,
+        "Baby Bouncers Lapsit lasts $1 to $2 minutes.",
+      ],
+      [
+        /Calling all littles ages (\d+[-–]\d+) years old!/g,
+        "Calling all children ages $1!",
+      ],
+      [
+        "We'll have three different stations to practice and learn more about fine motor skills.",
+        "Children can practice and learn about fine motor skills at three stations.",
+      ],
+      [
+        /Level Up Readers is a TK - (\d+(?:st|nd|rd|th)) grade drop-in space where your child can read to a volunteer for (\d+) minutes\./g,
+        "Level Up Readers is a drop-in program for children in transitional kindergarten through $1 grade. Your child can read to a volunteer for $2 minutes.",
+      ],
+      [
+        /Join us every Wednesday from (\d{1,2}(?::\d{2})?)p-(\d{1,2}(?::\d{2})?)p!/g,
+        "Join us every Wednesday from $1 to $2 p.m.",
+      ],
+      [
+        /This (\d+)-(\d+)-minute storytime is suitable for babies ages (\d+) – (\d+) months \(pre-walkers\) and their caregivers to learn and play together\./g,
+        "During this $1- to $2-minute storytime, babies ages $3 to $4 months who aren't yet walking can learn and play with their caregivers.",
+      ],
+      ["the mystery of his host's murder, instead.", "the mystery of his host's murder instead."],
+      [
+        /Kids (\d+) years and older, apply your building skills and imaginations to have fun with LEGOs! Kids younger than (\d+) years, come enjoy our Duplos \(larger version of standard LEGOs\)\./gi,
+        "Kids ages $1 and up can build with LEGO bricks. Kids younger than $2 can build with larger DUPLO bricks.",
+      ],
       // The publisher spells the Stargirl author's name Spinelli.
       ["Stargirl by Jerry Spinellli", "Stargirl by Jerry Spinelli"],
       [
@@ -1694,6 +1727,12 @@ const EDITS = {
       ],
     ],
     blurb: [
+      [
+        /Bring your (\d+-to-\d+-year-old) to rotate through three stations that practice fine motor skills, with no registration required\./g,
+        "Bring your $1 to practice fine motor skills at three activity stations. No registration required.",
+      ],
+      ["Sing songs, play fingerplays, and share rhymes", "Sing songs, do fingerplays, and share rhymes"],
+      ["Build with LEGOs or Duplos and show off your creations", "Build with LEGO or DUPLO bricks and show off your creations"],
       ["Bring a torn stuffed animal, missing button, or worn patch and mend it together with fellow sewers.", "Bring a damaged stuffed animal or clothing that needs a button or patch, and mend it with others."],
       [
         "Read aloud to a patient, furry listener and build reading confidence, in a program for kids who have finished grades K-5.",
