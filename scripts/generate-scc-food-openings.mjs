@@ -161,6 +161,10 @@ const NAME_OVERRIDES = {
   "SR0884719": "FujiSan Sushi @ Tawa1702",
   "SR0883776": "Auntea Jenny", // https://aunteajenny.us/discover.html
   "SR0886162": "Wagyu Factory", // https://wagyufactory.com/project/mountain-view/
+  // The council identifies Ada's Café as the selected operator. Qualify the
+  // name with the venue so the photo lookup uses the Los Altos site.
+  // https://www.losaltosca.gov/Archive.aspx?ADID=1390
+  "SR0884385": "Ada's Café (Los Altos Community Center)",
   // Great Mall's own directory supplies the brand spelling and coming-soon status.
   // https://www.simon.com/mall/great-mall/stores/th-sugarcane-juice
   "SR0885853": "TH Sugarcane & Juice",
@@ -190,6 +194,7 @@ const BLURB_OVERRIDES = {
   "SR0883251": "Yemeni coffee and pastries in downtown San Jose — mezzanine-level location at 1 E San Fernando St.",
   "SR0880573": "Molly Tea opening a second South Bay location at Rivermark Plaza in Santa Clara.",
   "SR0884317": "Molly Tea's Stevens Creek location — bubble tea and snacks in Cupertino's Stevens Creek corridor.",
+  "SR0884385": "Nonprofit café that offers work and training to people with disabilities.",
   // April 2026 opened
   "SR0880717": "Dairy Queen opens on S Winchester Blvd in Campbell — ice cream, Blizzards, and fast food.",
   "SR0880767": "Dough Zone opens at 1875 S Bascom Ave in Campbell — Taiwanese dumplings and buns, second South Bay location.",
