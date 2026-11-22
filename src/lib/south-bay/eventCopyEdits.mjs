@@ -1900,6 +1900,10 @@ const EDITS = {
   "Palo Alto City Library": {
     description: [
       [
+        /There will be three rooms with over ([\d,]+) books, CDs, DVDs, puzzles, etc\., new & gently used, all sorted, very reasonably priced!/g,
+        "Browse over $1 new and gently used items across three rooms, including books, CDs, DVDs, and puzzles. Everything is sorted and reasonably priced.",
+      ],
+      [
         /^Monthly book discussion on a graphic novel selected by the group! This program is for readers age (\d+) and up\./g,
         "The group picks a graphic novel to discuss each month. The club is open to readers ages $1 and up.",
       ],
@@ -1939,6 +1943,10 @@ const EDITS = {
       ],
       ["Staff is available to help with a variety of tech questions including:", "Staff can help with a variety of tech questions, including:"],
       [
+        "Staff can help with a variety of tech questions, including: Learning to use Libby and/or Hoopla; Accessing library databases and services; Downloading and streaming content; Navigating the City of Palo Alto Library website; Downloading and using the new PACL app; Wi-Fi connection; Printing; Creating an email account; Basic computer skills; Installing and using common apps; And more…",
+        "Staff can show you how to use Libby or Hoopla, access library databases and services, download and stream content, navigate the City of Palo Alto Library website, and download and use the new PACL app. They can also help with Wi-Fi, printing, setting up an email account, basic computer skills, and installing and using common apps.",
+      ],
+      [
         "Register This class run by Silicon Valley Bicycle Coalition (SVBC) in collaboration with Valley Transportation Authority (VTA) is provided to the public for at no cost with funding from 2016 Measure B courtesy of VTA.",
         "Register through the event listing. Silicon Valley Bicycle Coalition (SVBC) runs this free public class in collaboration with Valley Transportation Authority (VTA), with funding from VTA's 2016 Measure B.",
       ],
@@ -1952,13 +1960,13 @@ const EDITS = {
       ["This study space is only available for Teens.", "This study space is open to teens only."],
       ["will dive into the inspirations behind the book, explore how art and science collide, and dive into a fun, hands-on workshop", "will share what inspired the book, explore how art and science come together, and lead a hands-on workshop"],
       [/Registration closes on the (\d+(?:st|nd|rd|th)) week of class; Registrants who do not the (\d+(?:st|nd|rd|th)) class may be unregistered, If/g, "Registration closes in the $1 week of class. Registrants who do not attend the $2 class may be unregistered. If"],
-      [/(?:Please note: )?Registration closes in the (\d+(?:st|nd|rd|th)) week of class\./g, "Registration closes in the $1 week."],
       [/Registrants who do not attend the (\d+(?:st|nd|rd|th)) class may be unregistered\./g, "You may lose your spot if you miss the $1 class."],
       [/Please note: (You may lose your spot if you miss the \d+(?:st|nd|rd|th) class\.)/g, "$1"],
       [
         /(\b[\w.%+-]+@[\w.-]+\.[a-z]{2,}); Registration closes on the (\d+(?:st|nd|rd|th)) week of class\./gi,
         "$1. Registration closes in the $2 week.",
       ],
+      [/(?:Please note: )?Registration closes (?:in|on) the (\d+(?:st|nd|rd|th)) week of class\./g, "Registration closes in the $1 week."],
       ["; Registrants who do not attend by", "; registrants who do not attend by"],
       [". *A detailed list of readings for each meeting", ". A detailed list of readings for each meeting"],
       [" * Unfortunately, helping you fix damaged hardware or software", " Unfortunately, helping you fix damaged hardware or software"],
