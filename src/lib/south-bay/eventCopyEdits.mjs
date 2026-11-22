@@ -38,6 +38,11 @@ const SJPL_BRANCH_BUDDY_TASKS = [
   "Deep cleaning computers – Use disinfecting wipes to disinfect computer mice and mouse pads and compressed air to remove any dust particles or debris.",
   "Material inspection – Check books for torn pages, pen marks, etc.",
 ].join(" ");
+const SJPL_BRANCH_BUDDY_TASK_COPY = "Volunteers will clean book covers with disinfecting wipes, dust shelves, and organize library materials. They will also use disinfecting wipes on computer mice and mouse pads, clear dust and debris with compressed air, and check books for damage such as torn pages or pen marks.";
+
+const SCCLD_BOOK_BUGS_DECEMBER_INTRO = "Are you a second or third grader? Do you like to read books and talk about them with other kids? Then The Book Bugs Club is for you! Our December book selection is The Storm by Cynthia Rylant. At our book club meeting, we will discuss the book and enjoy a fun craft or activity.";
+const SCCLD_BOOK_BUGS_DECEMBER_COPY = `${SCCLD_BOOK_BUGS_DECEMBER_INTRO} Please pick up a copy of the book at the Children's Desk at Los Altos Library or at Woodland Library to check out. Please read the book at home before our meeting. Space is limited. This event will take place in the Los Altos Library Orchard Room.`;
+const SCCLD_BOOK_BUGS_DECEMBER_ATTENDANCE = "Check out a copy at the Los Altos Library Children's Desk or at Woodland Library. Please read the book at home before the meeting. Space is limited. We'll meet in the Los Altos Library Orchard Room.";
 
 const SCCLD_ONLINE_REGISTRATION_EDIT = [
   "Space is limited and Online Registration is required.",
@@ -168,6 +173,10 @@ const EDITS = {
       ],
       [/For questions, please call \(408\) 808-3040 or send an email to ab\.sjpl@sjlibrary\.org(?=$| [A-Z])/g, "$&."],
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
+      [
+        "De martes a sábado. Por cita únicamente. Por favor contactar a Marlene Sanchez por correo, marlene.sanchez@sjlibrary.org o teléfono, 408.808.3033 para agendar su cita.",
+        "De martes a sábado, solo con cita previa. Para agendar su cita, comuníquese con Marlene Sanchez por correo electrónico (marlene.sanchez@sjlibrary.org) o por teléfono (408.808.3033).",
+      ],
     ],
     description: [
       [
@@ -1011,6 +1020,10 @@ const EDITS = {
         "A volunteer tech mentor offers 1-on-1 help with computer skills.",
       ],
       ["Our tech mentor is available on a drop-in schedule.", "You can drop in for help from the tech mentor."],
+      [
+        "From the basics to somewhat beyond, volunteer tech mentors are here to help with thoughtful advice and problem-solving. We will do our best to assist you with your tech dilemmas.",
+        "Volunteer tech mentors can help with basic tasks and more advanced troubleshooting.",
+      ],
       ["Do you enjoy working with knitting, crocheting, or tatting?", "Do you enjoy knitting, crocheting, or tatting?"],
       ["all kinds of hand needle crafts", "all kinds of needlework"],
       ["sink the 8 ball at a game of pool", "sink the 8 ball in a game of pool"],
@@ -1038,7 +1051,11 @@ const EDITS = {
       ],
       [
         `Volunteers will be responsible for: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for families interested in volunteering away their library fines.`,
-        "Volunteers will clean book covers with disinfecting wipes, dust shelves, and organize library materials. They will also use disinfecting wipes on computer mice and mouse pads, clear dust and debris with compressed air, and check books for damage such as torn pages or pen marks.",
+        SJPL_BRANCH_BUDDY_TASK_COPY,
+      ],
+      [
+        `Volunteers will be responsible for: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for anyone interested in volunteering away their library fines.`,
+        SJPL_BRANCH_BUDDY_TASK_COPY,
       ],
       [
         `Volunteers will be responsible for: Cleaning toys and furniture in the children's area. Other activities may include any of the following: ${SJPL_BRANCH_BUDDY_TASKS} This is a perfect opportunity for anyone interested in volunteering away their library fines.`,
@@ -1202,8 +1219,25 @@ const EDITS = {
       ],
       ["get help with their homework/school enrichment", "get help with homework or school enrichment"],
       [/November 25 - Coffee Filter Turkey craft$/g, "On November 25, make a coffee filter turkey."],
+      ["Ofrecemos asistencia gratuita en: Creación de un currículum", "Ofrecemos asistencia gratuita con las siguientes tareas. Creación de un currículum"],
+      ["Búsqueda de Oportunidades de Empleo -", "Búsqueda de oportunidades de empleo -"],
+      ["Llenado de Formularios de Solicitud -", "Llenado de formularios de solicitud -"],
+      ["Técnicas y Consejos para Entrevistas -", "Técnicas y consejos para entrevistas -"],
+      ["Práctica para el Examen Escrito de Manejo -", "Práctica para el examen escrito de manejo -"],
     ],
     blurb: [
+      [
+        "Bring your questions on printing, Word, Excel, email setup, or tech security to volunteer tech mentors who offer advice and problem-solving.",
+        "Bring your questions about printing, Word, Excel, email setup, or tech security to volunteer tech mentors.",
+      ],
+      [
+        "Work through tutoring sessions led by two high school students, Addison and Sarah, who aim to make learning enjoyable.",
+        "High school students Addison and Sarah help children practice English and math through games, creative activities, and interactive lessons.",
+      ],
+      [
+        "Drop in for open arts and crafts activities with all supplies provided, no registration needed.",
+        "Drop in for arts and crafts. All supplies are provided, and no registration is required.",
+      ],
       [
         "Practice your English speaking in a weekly online conversation club led by a trained facilitator for adult learners.",
         "A trained facilitator leads this weekly online conversation club for adults who want to practice speaking English.",
@@ -1463,6 +1497,7 @@ const EDITS = {
       ["This program is for children from grades K-8.", "This program is for children in grades K-8."],
       ["At our book club meeting we will discuss", "At our book club meeting, we will discuss"],
       ["at Woodland Library for check out.", "at Woodland Library to check out."],
+      [SCCLD_BOOK_BUGS_DECEMBER_COPY, SCCLD_BOOK_BUGS_DECEMBER_ATTENDANCE],
       ["Join us at the Cupertino Library 3:30-4:30 PM!", "Join us at the Cupertino Library from 3:30 to 4:30 PM!"],
       ["Students in Kindergarten to 8th grade", "Students in kindergarten through 8th grade"],
       SCCLD_ONLINE_REGISTRATION_EDIT,
@@ -1728,6 +1763,10 @@ const EDITS = {
       ["body rhymes, songs, very short and simple picture books.", "body rhymes, songs, and very short and simple picture books."],
       ["At our book club meeting we will discuss", "At our book club meeting, we will discuss"],
       ["at Woodland Library for check out.", "at Woodland Library to check out."],
+      [
+        SCCLD_BOOK_BUGS_DECEMBER_COPY,
+        `${SCCLD_BOOK_BUGS_DECEMBER_INTRO.replace("Then The Book Bugs Club", "Then the Book Bugs Club")} ${SCCLD_BOOK_BUGS_DECEMBER_ATTENDANCE}`,
+      ],
       // End-of-field anchors add sentence punctuation without altering an
       // address, extending a link, or cutting off later source instructions.
       [/email us at (ask@lib\.sccgov\.org|ask@sccl\.org)$/g, "email us at $1."],
