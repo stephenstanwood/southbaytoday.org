@@ -1848,12 +1848,18 @@ export async function scrapeSantanaRow(page) {
   });
 }
 
-function cupertinoDirectoryLinks(previous = []) {
-  const links = [...document.querySelectorAll("a[href]")]
+function cupertinoDirectoryPage(previous = []) {
+  // Playwright can see the first few cards while the new document is still
+  // parsing. Those cards alone do not establish that the page is complete.
+  if (document.readyState === "loading") return null;
+  const results = document.querySelector('[aria-label="Results of Search Events"]');
+  const links = [...(results ?? document).querySelectorAll("a[href]")]
     .filter(a => /\d{2}\s+[A-Z][a-z]{2}\s+20\d{2}/.test(a.textContent?.replace(/\s+/g, " ") || "")
       && typeof a.href === "string" && a.href.startsWith("https://www.cupertino.gov/"))
     .map(a => ({ href: a.href.split("#")[0] }));
-  return links.some(link => !previous.includes(link.href)) ? links : null;
+  if (!links.some(link => !previous.includes(link.href))) return null;
+  const count = results?.innerText.match(/^\s*(\d+)\s+Result\(s\) Found\s*$/im);
+  return { links, total: count ? Number(count[1]) : null };
 }
 
 export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
@@ -1863,8 +1869,8 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
 
   const links = [];
   const seenLinks = new Set();
-  const waitForLinks = async (previous) => {
-    const listing = await page.waitForFunction(cupertinoDirectoryLinks, previous, { timeout: 10_000 });
+  const waitForPage = async (previous) => {
+    const listing = await page.waitForFunction(cupertinoDirectoryPage, previous, { timeout: 10_000 });
     try {
       return await listing.jsonValue();
     } finally {
@@ -1872,21 +1878,30 @@ export async function scrapeCupertinoOpenCities(page, { today = TODAY } = {}) {
     }
   };
 
-  let pageLinks = await page.evaluate(cupertinoDirectoryLinks) || await waitForLinks([]);
+  const firstPage = await page.evaluate(cupertinoDirectoryPage) ?? await waitForPage([]);
+  let listing = firstPage;
+  let listed = 0;
   for (let pageNo = 1; pageNo <= 4; pageNo++) {
-    for (const link of pageLinks) {
+    listed += listing.links.length;
+    for (const link of listing.links) {
       if (seenLinks.has(link.href)) continue;
       seenLinks.add(link.href);
       links.push(link);
     }
-    if (pageNo === 4) break;
     const next = page.locator(`a[href$="#page-${pageNo + 1}"]`).first();
-    if ((await next.count()) === 0) break;
+    if ((await next.count()) === 0) {
+      const total = listing.total ?? firstPage.total;
+      if (total !== null && listed !== total) {
+        throw new Error(`Cupertino directory returned ${listed} of ${total} listed results`);
+      }
+      break;
+    }
+    if (pageNo === 4) break;
     await next.click({ timeout: 10_000 });
     // OpenCities keeps the previous results mounted while paging. A timeout
     // here lets the caller retain older verified rows instead of marking a
     // truncated collection healthy.
-    pageLinks = await waitForLinks(pageLinks.map(link => link.href));
+    listing = await waitForPage(listing.links.map(link => link.href));
   }
 
   const raw = [];
