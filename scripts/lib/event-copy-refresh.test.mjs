@@ -1542,3 +1542,24 @@ test("stamp club grammar follows changed schedules and stays within its supplyin
     assert.deepEqual(polishReviewedEventCopy(otherPublisher), otherPublisher);
   }
 });
+
+test("Qi Gong schedule copy stays readable after removing the old cancellation notice", () => {
+  const event = {
+    id: "sccl-65baeaeff664ce330023eafa",
+    source: "Santa Clara County Library",
+    title: "Qi Gong Meditation & Exercise Class",
+    venue: "Milpitas Library",
+    date: "2026-12-04",
+    time: "1:00 PM",
+    endTime: "3:00 PM",
+    url: "https://sccl.bibliocommons.com/events/65baeaeff664ce330023eafa",
+    description: "Join us for Falun Dafa classes provided by the Classical Arts Foundation. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health. Friday afternoons, 1-3 PM In the Auditorium Please note that there is no class on the following dates in 2025: August 29, September 12, November 28, and December 5. For accessibility accommodations, see sccld.org/accessibility.",
+  };
+  const verified = applyVerifiedEventFacts(event);
+  const reviewed = {
+    ...verified,
+    description: "Join us for Falun Dafa classes provided by the Classical Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium. For accessibility accommodations, see sccld.org/accessibility.",
+  };
+  assert.deepEqual(polishReviewedEventCopy(verified), reviewed);
+  assert.deepEqual(polishReviewedEventCopy(reviewed), reviewed);
+});

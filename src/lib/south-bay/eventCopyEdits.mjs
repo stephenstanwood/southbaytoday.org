@@ -167,6 +167,10 @@ const EDITS = {
       [/^Walk-ins may be accepted on the day of the event, though space is not guaranteed(?=$| [A-Z])/g, "$&."],
     ],
     description: [
+      [/(^|[.!?] )Free, No Registration\.?$/g, "$1Free. No registration required."],
+      ["These sessions are open to all adults and includes optional", "These sessions are open to all adults and include optional"],
+      ["Typical agenda for this one hour as followed:", "The agenda for a typical one-hour session is as follows:"],
+      ["a usar estructuras gramaticales simples y a ampliar tu vocabulario", "a usar estructuras gramaticales simples y a ampliar su vocabulario"],
       [
         "Get into the rhythm of fitness with our Bollywood Dance program! Join us for this exciting volunteer-led program and learn Bollywood Dance moves for fun and fitness!",
         "This volunteer-led program teaches Bollywood dance moves for fun and fitness.",
@@ -1618,7 +1622,11 @@ const EDITS = {
       ["Siblings are welcomed. September 15 October 20 November 17 December 8.", "Siblings are welcome. September 15; October 20; November 17; December 8."],
       ["A long running game of Dungeons", "A long-running game of Dungeons"],
       ["and sometimes shorter oneshots. Teen drop ins to watch the", "and sometimes shorter one-shots. Teen drop-ins to watch the"],
-      ["Arts Foundation. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health. Friday afternoons, 1-3 PM In the Auditorium Please note that", "Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium. Please note that"],
+      // The fact pass may already have removed the obsolete 2025 exceptions.
+      [
+        /\bArts Foundation\. Relieve Stress and anxiety; Increase energy and vitality; Improve physical health\. Friday afternoons, 1-3 PM In the Auditorium(?:\.|(?= |$))/g,
+        "Arts Foundation. Relieve stress and anxiety, increase energy and vitality, and improve physical health. Classes meet Friday afternoons from 1 to 3 PM in the auditorium.",
+      ],
       ["the Flying Rooster arrives there is hope", "the Flying Rooster arrives, there is hope"],
       ["taught at a beginner to intermediate level. Regular attendance", "taught at a beginner-to-intermediate level. Regular attendance"],
       ["in the order of when the assessment is taken. Confirm assessment", "in the order in which the assessments are taken. Confirm assessment"],
@@ -1810,6 +1818,10 @@ const EDITS = {
     ],
     blurb: [
       [/\bpom (poms?)\b/g, "pom-$1"],
+      [
+        "Make a snow person from dough, then dress it up with felt, pipe cleaners, ribbons, and other materials, for kids ages 4 to 11.",
+        "Kids ages 4 to 11 can make a snow person from dough and dress it up with felt, pipe cleaners, ribbons, and other materials.",
+      ],
       ["Study for finals in the Midtown Room at Mitchell Park Library, a teen study space for focus and recharging.", "Teens can use the Midtown Room at Mitchell Park Library to study for finals and take a break."],
       ["Sing songs, rhymes, and movement activities in", "Sing songs and rhymes, and join movement activities in"],
       ["and join movement activities in", "and join in movement activities in"],
