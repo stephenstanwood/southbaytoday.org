@@ -2203,6 +2203,38 @@ const EDITS = {
       ["at Kaiser Permanente Arena starting at 7pm.", "at Kaiser Permanente Arena starting at 7 p.m."],
     ],
   },
+  "South Bay Signal": {
+    blurb: [
+      [
+        "Browse local produce, artisan goods, and prepared foods at an open-air Sunday morning market, then eat something while you walk the stalls.",
+        "Browse stalls selling local produce, artisan goods, and prepared foods at this open-air Sunday morning market. Pick up something to eat as you go.",
+      ],
+      [
+        "Shop Sunday morning stalls for local produce, artisan goods, and prepared foods at this weekly open-air farmers market.",
+        "Shop for local produce, artisan goods, and prepared foods at this weekly open-air Sunday morning farmers market.",
+      ],
+      [
+        "Walk the open-air stalls for local produce, artisan goods, and prepared foods at this weekly Sunday morning market.",
+        "Browse open-air stalls for local produce, artisan goods, and prepared foods at this weekly Sunday morning market.",
+      ],
+      [
+        "Stock up on local produce and artisan goods, and grab a prepared bite, at the weekly Sunday morning open-air market.",
+        "Shop for local produce and artisan goods and grab something to eat at this weekly open-air Sunday morning market.",
+      ],
+      [
+        "Pick up local produce and artisan goods, and eat from the prepared food vendors, at this weekly Sunday morning market.",
+        "Shop for local produce and artisan goods and get a bite to eat at this weekly Sunday morning market.",
+      ],
+      [
+        "Stroll the open-air Sunday morning market for local produce, artisan goods, and prepared foods from weekly vendors.",
+        "Stroll through this weekly open-air Sunday morning market and browse stalls offering local produce, artisan goods, and prepared foods.",
+      ],
+      [
+        "Shop weekly stalls of local produce, artisan goods, and prepared foods at this open-air Sunday morning farmers market.",
+        "Find local produce, artisan goods, and prepared foods at this weekly open-air market on Sunday mornings.",
+      ],
+    ],
+  },
   "Stanford Events": {
     title: [
       [/^HAI Seminar the AI 100$/gi, "HAI Seminar: The AI 100"],
@@ -2326,6 +2358,10 @@ const EDITS = {
       [/^Event is in Persian\.$/g, "The talk is in Persian."],
     ],
     blurb: [
+      [
+        "Grab a donut and chat with the Office for Military-Affiliated Communities team in a relaxed Friday morning gathering with no agenda.",
+        "Chat with the Office for Military-Affiliated Communities team over a donut at this casual Friday morning gathering. There's no agenda.",
+      ],
       [/\bEn-Roads\b/gi, "En-ROADS"],
       [
         "Walk the labyrinth at Memorial Church, a pattern found in many cultures around the world, on Wednesday morning.",
