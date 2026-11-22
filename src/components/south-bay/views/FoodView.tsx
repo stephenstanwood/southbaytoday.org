@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import sccFoodOpeningsJson from "../../../data/south-bay/scc-food-openings.json";
 import restaurantRadarJson from "../../../data/south-bay/restaurant-radar.json";
 import { farmersMarketsForWeek } from "../../../data/south-bay/events-data";
+import { useTodayPT } from "../../../lib/south-bay/useTodayPT";
 import PageHero from "../PageHero";
 
 const DAY_LABEL  = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -49,9 +50,7 @@ function formatUpdated(iso: string | null | undefined): string {
   return new Date(t).toLocaleDateString("en-US", { timeZone: PT_ZONE, month: "short", day: "numeric" });
 }
 
-// When each data file was generated. Until mount, the tab measures "today"
-// and the permit window from these instead of the clock (see useMountedNow).
-const OPENINGS_SNAPSHOT_MS = Date.parse((sccFoodOpeningsJson as { generatedAt: string }).generatedAt) || 0;
+// The permit window uses the snapshot timestamp until hydration.
 const RADAR_SNAPSHOT_MS = Date.parse((restaurantRadarJson as { generatedAt: string }).generatedAt);
 
 /**
@@ -398,11 +397,8 @@ function PermitPulse() {
 
 // ── Farmers Markets ─────────────────────────────────────────────────────────
 
-function FarmersMarkets() {
-  const nowMs = useMountedNow();
-  // Use the same Pacific date on the server and during hydration, then switch
-  // to the reader's Pacific date on mount.
-  const today = new Date(nowMs ?? OPENINGS_SNAPSHOT_MS).toLocaleDateString("en-CA", { timeZone: PT_ZONE });
+function FarmersMarkets({ buildDayPt }: { buildDayPt?: string }) {
+  const today = useTodayPT(buildDayPt);
   const visibleDays = farmersMarketsForWeek(today);
   if (visibleDays.length === 0) return null;
 
@@ -475,13 +471,13 @@ function FoodHero() {
   );
 }
 
-export default function FoodView() {
+export default function FoodView({ buildDayPt }: { buildDayPt?: string }) {
   return (
     <div className="food-view">
       <FoodHero />
       <NewAndComingSoon />
       <PermitPulse />
-      <FarmersMarkets />
+      <FarmersMarkets buildDayPt={buildDayPt} />
     </div>
   );
 }

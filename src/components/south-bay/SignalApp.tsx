@@ -168,7 +168,7 @@ export default function SignalApp({ initialTab, eager, buildDayPt }: SignalAppPr
               <Government selectedCities={selectedCities} buildDayPt={buildDayPt} />
             )}
             {activeTab === "technology" && <Technology buildDayPt={buildDayPt} />}
-            {activeTab === "food" && <Food />}
+            {activeTab === "food" && <Food buildDayPt={buildDayPt} />}
             {activeTab === "camps" && <Camps buildDayPt={buildDayPt} />}
           </Suspense>
         )}
