@@ -241,6 +241,10 @@ const SOURCE_ID_SKIP = new Set([
   "SR0885829",
   "SR0886386", // HL Peninsula already serves diners at 136 Ranch Dr: https://www.hlpeninsula.com/locations
   "SR0886326", // Varahi already serves diners at 2095 N Capitol Ave E: https://www.varahirestaurant.com/
+  // The county inspected Apni Royal Kitchen at 127 Dixon Rd on September 25,
+  // before approving its tenant-improvement plan on October 28.
+  // https://eservices.sccgov.org/FacilityInspection/Home/ShowDetail/PR0330010
+  "SR0886747",
   "SR0884388", // Bothaus at 278 Castro St is a robotics space: https://www.sudo.ai/bothaus
   // JapaCurry lists its Naglee Park restaurant at 505 E San Carlos St. Its
   // plan record uses the nearby 7-Eleven address, 284 S 11th St.

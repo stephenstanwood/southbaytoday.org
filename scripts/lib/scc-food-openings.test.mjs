@@ -208,6 +208,7 @@ test("reviewed permit exclusions stay source-specific", () => {
     { record_id: "SR0885986", business_name: "ELITE MULTISERVICES", city: "SAN JOSE" },
     { record_id: "SR0886903", business_name: "RTI - FUJISAN SUSHI", site_location: "2179 MONTEREY RD., SAN JOSE, CA 95125", city: "SAN JOSE" },
     { record_id: "SR0881355", business_name: "E-RESTAURANT TI - ALPHA X", site_location: "1019 N SAN ANTONIO RD., LOS ALTOS, CA 94022", city: "LOS ALTOS" },
+    { record_id: "SR0886747", business_name: "RTI APNI ROYAL KITCHEN", site_location: "127 DIXON RD, MILPITAS, CA 95035", city: "MILPITAS" },
   ]) assert.equal(shouldSkip(record), true, record.record_id);
 
   // A filing entity can represent a restaurant. Do not turn these exact
