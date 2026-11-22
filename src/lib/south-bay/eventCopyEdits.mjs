@@ -2152,6 +2152,17 @@ const EDITS = {
     title: [
       [/^(Puppies & Pinot: Santa Paws Edition) with (\d{1,2})am-(\d{1,2})pm$/g, "$1 ($2 AM-$3 PM)"],
     ],
+    blurb: [
+      [
+        "Join the Santa Paws Edition of Puppies & Pinot at The Mountain Winery, a Saturday daytime event running 11am to 3pm.",
+        "Join the Santa Paws Edition of Puppies & Pinot at The Mountain Winery on Saturday from 11 a.m. to 3 p.m.",
+      ],
+    ],
+  },
+  "G League": {
+    blurb: [
+      ["at Kaiser Permanente Arena starting at 7pm.", "at Kaiser Permanente Arena starting at 7 p.m."],
+    ],
   },
   "Stanford Events": {
     title: [

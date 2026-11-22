@@ -156,7 +156,7 @@ export const SOUTH_BAY_EVENTS: SBEvent[] = [
     cost: "free",
     kidFriendly: true,
     description:
-      "Year-round Sunday market on California Avenue. Over 50 vendors with organic produce, specialty goods, and local artisans.",
+      "This year-round Sunday market on California Avenue has more than 50 vendors, including local artisans. Shop for organic produce and specialty goods.",
     url: "https://uvfm.org/palo-alto-sundays",
     emoji: "🥕",
   },
