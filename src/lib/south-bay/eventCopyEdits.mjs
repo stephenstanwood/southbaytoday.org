@@ -26,6 +26,7 @@ const SJPL_STORYTIME_TICKET_EDIT = [
   SJPL_STORYTIME_TICKET_COPY,
 ];
 const SJPL_DESK_TICKET_COPY = "Tickets are available at the desk 30 minutes before the program starts. Everyone attending needs a ticket and must be present to get one.";
+const SJPL_TICKETS_AND_PARTICIPATION_EDIT = ["Tickets and Participation Free.", "Tickets and Participation: Free."];
 const SJPL_ONLINE_SIGNUP_COPY = "Register online. For help registering, call or visit the library's information desk.";
 // https://www.vexrobotics.com/v5/products/vexcode
 // Description normalization can split the already-correct spelling into "VE Xcode".
@@ -142,6 +143,7 @@ const EDITS = {
         SJPL_DESK_TICKET_COPY,
       ],
       ["Tickets and participation Free.", "Tickets and participation are free."],
+      SJPL_TICKETS_AND_PARTICIPATION_EDIT,
       ["on a first come, first basis.", "on a first-come, first-served basis."],
       // Attendance excerpts are extracted before description repairs run.
       // Keep the reviewed grammar here as well, without restoring old limits.
@@ -509,7 +511,8 @@ const EDITS = {
       ["experimentos y creaciones práctica,", "experimentos y creaciones prácticas,"],
       ["ciencia, tecnología, ingeniería, y matemáticas", "ciencia, tecnología, ingeniería y matemáticas"],
       ["super easy to understand, and beginner friendly,", "super easy to understand and beginner-friendly,"],
-      ["Tickets and Participation Free.", "Tickets and Participation: Free."],
+      SJPL_TICKETS_AND_PARTICIPATION_EDIT,
+      ["Presented by Alicia, who has been practicing yoga for years.", "Alicia, who has practiced yoga for years, leads the class."],
       [/(Recommended for ages \d+-\d+) Free\. Registration Required\./g, "$1. Free. Registration required."],
       ["join us for an family Rock Painting workshop", "join us for a family rock painting workshop"],
       ["Learn the basic design in Tinkercad", "Learn the basics of design in Tinkercad"],
@@ -719,6 +722,30 @@ const EDITS = {
         "at 10:30 and again at 11:15 a.m. Free, with limited capacity. Tickets available at the desk 30 minutes before the program starts. All individuals (of any age) attending need a ticket and must be present to receive their ticket.",
         `at 10:30 and again at 11:15 a.m. Free, with limited capacity. ${SJPL_DESK_TICKET_COPY}`,
       ],
+      [
+        /^Storytime is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities such as stories, songs, rhymes, fingerplays, and movement activities\. Storytime is a fun and interactive experience for the whole family that promotes the joys of reading and learning for all ages\. This program is geared for children of all ages and their parents\/caregivers!(?= After storytime, please stay and play with us!)/g,
+        "Children of all ages and their families or caregivers can build early literacy skills through stories, songs, rhymes, fingerplays, and movement.",
+      ],
+      [
+        /(Meet other families and have fun playing with new and old friends\. Free, with limited capacity\.) Tickets available at the desk 30 minutes before (?:the )?program starts\. All individuals \(of any age\) attending need a ticket and must be present to receive their ticket\./g,
+        `$1 ${SJPL_DESK_TICKET_COPY}`,
+      ],
+      [
+        /^Music and Movement is designed to accommodate a mix of ages and invites the entire family to participate in early literacy activities through songs, rhymes, finger plays, and movement activities\. Music and Movement is a fun and interactive experience for the whole family that promotes the joys of learning for all ages\. This program is geared for children of all ages and their parents\/caregivers!/g,
+        "Children of all ages, along with their families or caregivers, can build early literacy skills through songs, rhymes, fingerplays, and movement.",
+      ],
+      [
+        /^Participating in the Reading to Children program is a great way for children to develop their imagination and spark a love for books, reading and learning\. Throughout this (\d+)-minute session, our trained volunteer or a staff member of the library will not only read to your kids but also engage with them using music, felts and finger plays\. As a result of participating in Reading to Children, your child will develop (?:their )?imagination and (?:a )?love of books and reading\./g,
+        "In this $1-minute session, a trained volunteer or library staff member reads to children and leads activities with music, felt pieces, and fingerplays to help them develop their imaginations and a love of books, reading, and learning.",
+      ],
+      ["For the best experience we recommend bringing your own mobile device", "For the best experience, we recommend bringing your own mobile device"],
+      ["an overview of SJPL's e-books collections from the library website with a focus on Libby/Overdrive", "an overview of SJPL's e-book collections on the library website, with a focus on Libby from OverDrive"],
+      ["If time allows, another app - Hoopla will be covered.", "If time allows, the session will also cover Hoopla."],
+      ["Use of controls like muting and un-muting audio or video, how to see and use the chat function.", "Learn to mute and unmute audio or video and use the chat."],
+      ["Create groups (family, emergency). Backup and sync safely.", "Create groups (family, emergency). Back up and sync safely."],
+      ["How to activate and use voice assistants Siri or Google Assistant.", "Learn to activate and use Siri or Google Assistant."],
+      ["(no program in December). Free. Class limited to ", "There is no program in December. The class is free and limited to "],
+      ["Registration Recommended. Walk-Ins welcome if space is available.", "Registration is recommended. Walk-ins are welcome if space is available."],
       ["and write basic sentences Lớp này sẽ", "and write basic sentences. Lớp này sẽ"],
       ["This is an Open Rehearsal featuring the Chinese Erhu (the Erhu is a traditional", "This is an open rehearsal featuring the Chinese erhu (the erhu is a traditional"],
       ["vocabulary as needed. Program is drop in and free. No registration needed.", "vocabulary as needed. The program is free and offered on a drop-in basis. No registration needed."],
@@ -1440,8 +1467,8 @@ const EDITS = {
       SCCLD_LOS_ALTOS_STORYTIME_TICKET_EDIT,
       ["As white local conspirators", "As local white conspirators"],
       [
-        "Free snacks will be provided while supplies last. We hope you'll join us for an afternoon of great films and community! Vehicle parking may be limited. For accessibility accommodations (e.g., ASL), please fill out the online form at sccld.org/accessibility 7+ days prior to the event.",
-        "Free snacks are available while supplies last. Parking may be limited. To request accessibility accommodations such as ASL interpretation, submit the form at sccld.org/accessibility at least 7 days before the screening.",
+        /Free snacks will be provided while supplies last\. We hope you'll join us for an afternoon of great films and community! Vehicle parking may be limited\. For accessibility accommodations \((?:e\.g\.,|ex\.) ASL\), please fill out the online form at sccld\.org\/accessibility (\d+)\+ days prior to the event\./g,
+        "Free snacks are available while supplies last. Parking may be limited. To request accessibility accommodations such as ASL interpretation, submit the form at sccld.org/accessibility at least $1 days before the screening.",
       ],
       [
         "We invite all non-walking babies (ages 0-1) and their amazing caregivers to jump into an interactive 20 minutes of catchy songs & silly rhymes; gentle movement & baby sign language; and short books perfect for little eyes.",
@@ -2025,6 +2052,10 @@ const EDITS = {
       ["560/Reading Room, 5th Floor, SJSU Special Collections & Archives", "SJSU Special Collections & Archives, Reading Room 560 (5th Floor)"],
     ],
     description: [
+      [
+        "Join the Steinbeck Center for our Fall 2026-2027 Fellow Reading starring Tracy Abeyta, Angela Frances Hui, and one of our past Fellows Rose Himber Howse. This is a free event.",
+        "The Steinbeck Center's free fall reading features 2026–2027 fellows Tracy Abeyta and Angela Frances Hui, along with past fellow Rose Himber Howse.",
+      ],
       [
         "Performers: Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) Program: TBC All concerts take place at 12:00 and are followed by an informal coffee reception and open-house.",
         "Elizabeth Dorman (fortepiano) and Dorian Bandy (violin) perform at noon, with an informal coffee reception and open house afterward. The program is still to be confirmed.",

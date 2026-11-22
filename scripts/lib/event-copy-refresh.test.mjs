@@ -197,6 +197,7 @@ audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-performers.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-library-clarity.json", import.meta.url))));
 audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-21-los-altos-storytime.json", import.meta.url))));
+audits.push(JSON.parse(readFileSync(new URL("./fixtures/reviewed-event-copy-2026-11-22-library-and-steinbeck.json", import.meta.url))));
 
 test("library signup advice follows availability and keeps waitlist instructions", () => {
   const { source, refreshed, reviewed } = branchBuddyFixture.cases.find(({ field }) => field === "attendanceNote");
@@ -236,6 +237,18 @@ test("Campbell screening copy survives refresh with the district's accessibility
     description: "The film is rated R. No registration is required. Free snacks are available while supplies last. Parking may be limited. To request accessibility accommodations such as ASL interpretation, submit the form at sccld.org/accessibility at least 7 days before the screening. If you need assistance with the form, speak with a staff member at your local library, call (408) 540-3947, or email us at ask@lib.sccgov.org.",
   });
   assert.deepEqual(polishReviewedEventCopy(published), published);
+
+  // The refresh sees the organizer's abbreviation before the display edits
+  // expand it. The source also supplies the accommodation deadline.
+  const updatedSource = {
+    ...event,
+    description: event.description.replace("(e.g., ASL)", "(ex. ASL)").replace("7+ days", "10+ days"),
+  };
+  const updated = correctSccLibraryAccessibilityContact(polishReviewedEventCopy({
+    ...updatedSource,
+    description: polishDescription(updatedSource.description),
+  }));
+  assert.deepEqual(updated, { ...published, description: published.description.replace("at least 7 days", "at least 10 days") });
 });
 
 test("restored Ticketmaster copy drops the clipped warning and keeps ticket details", () => {
