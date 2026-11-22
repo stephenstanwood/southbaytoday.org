@@ -20,6 +20,7 @@ test("county addresses retain food-court and lettered suites when removing city/
   assert.equal(cleanAddress("123 MAIN ST., UNIT C SAN JOSE CA 95112"), "123 Main St., Unit C");
   assert.equal(cleanAddress("99 E MIDDLEFIELD RD. MOUNTAIN VIEW CA 94043"), "99 E Middlefield Rd");
   assert.equal(cleanAddress("1 SAN JOSE AVE"), "1 San Jose Ave");
+  assert.equal(cleanAddress("P2020 W EL CAMINO REAL, MOUNTAIN VIEW, CA 94040"), "2020 W El Camino Real");
 });
 
 test("county business names retain meaningful trailing numbers", () => {

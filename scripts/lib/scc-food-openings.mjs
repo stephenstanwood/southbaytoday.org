@@ -200,6 +200,9 @@ export function normalizeComingSoonDiscovery(record) {
 export function normalizeSouthBayAddress(value) {
   return String(value ?? "")
     .replace(/\bDeanza\b/gi, "De Anza")
+    // County plan check SR0884037 prepends a stray P to the street number.
+    // The existing business identifies the site at https://www.solrestaurantsca.com/vive.
+    .replace(/^(\s*)P(?=2020 W EL CAMINO REAL\b)/i, "$1")
     // SCC permit typo: Flora (SR0882674, 2026-10-12) filed at "355 Santa Row".
     // There is no Santa Row in the South Bay; it's Santana Row.
     .replace(/\bSanta\s+Row\b/gi, "Santana Row")

@@ -83,6 +83,15 @@ export const EVENT_EDITORIAL_SUPPRESSIONS = Object.freeze([
     source: "https://oneinmath.com/classes/",
   }),
   Object.freeze({
+    title: /^OneInMath: Math Program for K[ -]?3(?:rd)?\b/i,
+    venue: /^Village Square Library$/i,
+    date: "2026-11-28",
+    matches: event => event.time === "3:00 PM"
+      && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/6af61c5c9bd80b00451901ac(?:[/?#]|$)/.test(event.url || ""),
+    reason: "The library lists a 3 PM class on November 28. OneInMath's fall schedule ends Village Square sessions on November 21. Withhold this occurrence pending organizer confirmation.",
+    source: "https://oneinmath.com/classes/",
+  }),
+  Object.freeze({
     ids: Object.freeze(["midpen-ab148fc7be0d9c6e"]),
     title: /^Sierra Azul Preserve - Trail Maintenance: Mt\. Umunhum Trail \(Pt\. 6\)$/i,
     venue: /^Sierra Azul Preserve$/i,

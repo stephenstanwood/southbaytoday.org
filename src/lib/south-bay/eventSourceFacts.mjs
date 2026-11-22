@@ -95,6 +95,16 @@ const MERRY_ACHI_COPY = {
 // Only the first matching correction applies. Extend an existing occurrence's
 // rule when revisiting it so newer metadata cannot mask its earlier copy repair.
 const CORRECTIONS = [
+  // The museum's full program description supplies the speakers and subject
+  // that were lost when the iCal description was truncated for display.
+  {
+    date: "2027-01-20",
+    url: "https://www.losaltoshistory.org/events/a-local-history-of-housing/",
+    facts: {
+      description: "Stanford urban studies lecturer Michael Kahan and The United Effort Organization discuss how housing policy shaped local communities and affects people looking for housing today.",
+      blurb: "Hear Michael Kahan and The United Effort Organization discuss the local effects of housing policy.",
+    },
+  },
   // Almaden's dated listing leaves the November 24 topic open. The age-9
   // caregiver sentence sits in the series copy under the October 20 activity.
   {

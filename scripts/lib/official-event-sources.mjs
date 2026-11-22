@@ -1,5 +1,5 @@
 import { isClockTime } from "./clock-time.mjs";
-import { REGISTRATION_FULL } from "../../src/lib/south-bay/eventFilters.mjs";
+import { REGISTRATION_FULL, REGISTRATION_REQUIRED } from "../../src/lib/south-bay/eventFilters.mjs";
 
 export function assertOfficialSourceResponse(body, label) {
   if (/\/\.well-known\/sgcaptcha\//i.test(String(body || ""))) {
@@ -534,6 +534,8 @@ export function parseLosAltosHistoryEventFacts(value) {
   // the iCal body. Read them before the display description is truncated.
   // An open Zoom registration does not reopen the museum's physical seats
   // or make this entire hybrid event virtual.
+  const requiresRegistration = /(?:^|[.!?]\s+)registration is required\b|\bplease register via the applicable button\b/i.test(text);
+  const hybrid = /\bboth in[- ]person and live via Zoom\b/i.test(text);
   const attendance = /\b(?:the |this )?in[- ]person (?:event|attendance) is full\b/i.test(text)
     ? {
       registration: REGISTRATION_FULL,
@@ -541,10 +543,15 @@ export function parseLosAltosHistoryEventFacts(value) {
         ? "In-person attendance is full. Register through the museum's event page to attend via Zoom."
         : "In-person attendance is full.",
     }
-    : {};
+    : requiresRegistration
+      ? {
+        registration: REGISTRATION_REQUIRED,
+        ...(hybrid ? { attendanceNote: "Register on the museum's event page for either in-person or Zoom attendance." } : {}),
+      }
+      : {};
 
   const memberPricing = text.match(
-    /\$\s*(\d+(?:\.\d{1,2})?)\s*per person\s*;\s*\$\s*(\d+(?:\.\d{1,2})?)\s*for (?:museum )?members?/i,
+    /\$\s*(\d+(?:\.\d{1,2})?)\s*(?:per person|\/\s*person)\s*[,;]\s*(?:\$\s*(\d+(?:\.\d{1,2})?)\s*for|free (?:for|to)) (?:museum )?members?\b/i,
   );
   if (memberPricing) {
     const publicPrice = Number(memberPricing[1]);
@@ -552,7 +559,9 @@ export function parseLosAltosHistoryEventFacts(value) {
       unavailable: false,
       ...attendance,
       cost: publicPrice < 25 ? "low" : "paid",
-      costNote: `$${memberPricing[1]}; $${memberPricing[2]} members`,
+      costNote: memberPricing[2]
+        ? `$${memberPricing[1]}; $${memberPricing[2]} members`
+        : `$${memberPricing[1]}; museum members free`,
     };
   }
 

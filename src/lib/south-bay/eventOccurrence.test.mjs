@@ -44,6 +44,13 @@ test("withholds the exact SCU campus auditions and the duplicate Village Square 
   assert.equal(isEventPublishable(classListing), false);
   assert.equal(isEventPublishable({ ...classListing, url: "https://sjpl.bibliocommons.com/events/6a7e0ffdd4b10d00300647e4" }), true);
   assert.equal(isEventPublishable({ ...classListing, date: "2026-11-28" }), true);
+  const extraSession = {
+    ...classListing,
+    date: "2026-11-28",
+    url: "https://sjpl.bibliocommons.com/events/6af61c5c9bd80b00451901ac",
+  };
+  assert.equal(isEventPublishable(extraSession), false);
+  assert.equal(isEventPublishable({ ...extraSession, date: "2027-01-30" }), true);
   assert.equal(isEventPublishable({ ...classListing, time: "4:00 PM" }), true);
   assert.equal(isEventPublishable({ ...classListing, venue: "Alum Rock Library" }), true);
 });

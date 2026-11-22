@@ -1046,6 +1046,21 @@ test("museum attendance notices survive biography copy without closing the Zoom 
   );
 });
 
+test("museum iCal keeps free member admission and both registration options", () => {
+  const facts = parseLosAltosHistoryEventFacts(
+    "In person and virtual. $15/person\\, free to members.\\n" +
+    `${"Speaker biography. ".repeat(20)}We will be offering the program both in person and live via Zoom. Please register via the applicable button below:`,
+  );
+  assert.deepEqual(facts, {
+    unavailable: false,
+    cost: "low",
+    costNote: "$15; museum members free",
+    registration: "required",
+    attendanceNote: "Register on the museum's event page for either in-person or Zoom attendance.",
+  });
+  assert.equal(parseLosAltosHistoryEventFacts("No registration is required.").registration, undefined);
+});
+
 test("derives Happy Hollow's published recurring and dated events", () => {
   const entries = parseHappyHollowSchedules({
     seniorHtml: "<p>The 2026 season is here! Join us the fourth Thursday of the month from May through October from 9-10 a.m.</p>",
