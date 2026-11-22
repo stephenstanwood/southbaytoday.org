@@ -12,6 +12,13 @@ const MITCHELL_PARK_STUDY_COPY = [[
   (_match, punctuation) => `Wednesday, December 9: Confirm the start time with Mitchell Park Library${punctuation || "."}`,
 ]];
 
+const ALMADEN_TECH_HELP_COPY = [
+  [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
+  [/\bAccessing non-OverDrive e-?books and audiobooks from Boundless, Cloud\s*Library, and Enki;\s*/gi, "Finding e-books from Enki; "],
+  [/\bUsing Hoopla to read, listen and watch;\s*/gi, ""],
+  [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
+];
+
 function hasMitchellParkStudyHours(event) {
   return event.source === "Palo Alto City Library" && event.venue === "Mitchell Park Library"
     && event.title === "Locked in: Teen Finals Study Space!"
@@ -1003,13 +1010,18 @@ const CORRECTIONS = [
     matches: event => event.source === "San Jose Public Library" && event.venue === "Almaden Library"
       && event.title === "Digital Skills: One-On-One Tech Help for Seniors"
       && /^https:\/\/sjpl\.bibliocommons\.com\/(?:v2\/)?events\/69f10f4bfb87a3c2e2ac6fe[cde]\/?$/.test(event.url || ""),
-    copyReplacements: [
-      [/\bLibby \(formerly OverDrive\)/gi, "Libby from OverDrive"],
-      [/\bAccessing non-OverDrive e-?books and audiobooks from Boundless, Cloud\s*Library, and Enki;\s*/gi, "Finding e-books from Enki; "],
-      [/\bUsing Hoopla to read, listen and watch;\s*/gi, ""],
-      [/\b(Checking out a 7-day pass to access Great Courses from Libby) or Hoopla\b/gi, "$1"],
-    ],
+    copyReplacements: ALMADEN_TECH_HELP_COPY,
   },
+  ...[
+    ["2026-11-24", "69f10f4bfb87a3c2e2ac6fef"],
+    ["2026-11-25", "69f10f4bfb87a3c2e2ac6ff0"],
+  ].map(([date, id]) => ({
+    date,
+    id: `sjpl-${id}`,
+    url: `https://sjpl.bibliocommons.com/events/${id}`,
+    aliasUrls: [`https://sjpl.bibliocommons.com/v2/events/${id}`],
+    copyReplacements: ALMADEN_TECH_HELP_COPY,
+  })),
   // The sold-out occurrence page confirms a workshop fee and supplies. It
   // gives no price amount. Leave the waitlist and any current price intact.
   {
