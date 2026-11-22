@@ -15,6 +15,48 @@ import { isEventPublishable } from "./eventOccurrence.mjs";
 import { resolveRetired, retireSlugs } from "./eventSlugLedger.mjs";
 import { isRegistrationClosedForDay, requiresAdvanceRegistration, requiresAttendanceConfirmation, REGISTRATION_APPOINTMENT } from "./eventFilters.mjs";
 
+test("dated Montalvo concerts agree across the newsletter and box office", () => {
+  for (const [date, title, ticketPath, programSlug] of [
+    ["2026-12-10", "Irish Christmas in America", "3113/3157", "irish-christmas-2"],
+    ["2027-01-21", "Five for Fighting with String Quartet", "3114/3159", "five-for-fighting"],
+  ]) {
+    const newsletter = {
+      date, title, time: "7:30 PM", city: "saratoga", category: "arts", venue: "Carriage House",
+      url: `https://montalvoarts.org/experience/carriage-house-concerts/${programSlug}/?promo=`,
+      blurb: 'Hear "Superman" and "100 Years" as part of the show.',
+    };
+    const ticketUrl = `https://my.montalvoarts.org/${ticketPath}`;
+    const direct = { ...newsletter, url: ticketUrl, venue: "Montalvo Arts Center", cost: "paid" };
+    const fixed = applyVerifiedEventFacts(newsletter);
+    assert.deepEqual(fixed, applyVerifiedEventFacts(direct));
+    assert.deepEqual(fixed, applyVerifiedEventFacts(fixed));
+    assert.equal(fixed.url, ticketUrl);
+    assert.equal(fixed.venue, "Carriage House Theatre");
+    assert.equal(fixed.cost, "paid");
+    assert.equal(fixed.category, "music");
+    assert.doesNotMatch(fixed.blurb, /Superman|100 Years/);
+    assert.equal(applyVerifiedEventFacts({ ...newsletter, time: "8:00 PM" }).time, "8:00 PM");
+    const anotherDate = { ...newsletter, date: "2027-12-10" };
+    assert.deepEqual(applyVerifiedEventFacts(anotherDate), anotherDate);
+  }
+});
+
+test("the Mt. Pleasant volunteer listing keeps signup uncertainty visible", () => {
+  const event = {
+    id: "sjpl-6ae233d229c3d60033331a04", date: "2026-11-25",
+    description: "Drop in to work off library fines. To register, please call 408-808-3088.",
+    blurb: "Drop in to help at Mt. Pleasant Library.",
+    attendanceNote: "Volunteers under 15 must attend with a parent or guardian.",
+  };
+  const fixed = applyVerifiedEventFacts(event);
+  assert.equal(requiresAttendanceConfirmation(fixed), true);
+  assert.match(fixed.attendanceNote, /parent or guardian.*Call 408-808-3088 to confirm signup/);
+  assert.doesNotMatch(fixed.blurb, /drop in/i);
+  assert.deepEqual(applyVerifiedEventFacts(fixed), fixed);
+  const clarified = { ...event, description: "Drop in to work off library fines. No registration required." };
+  assert.deepEqual(applyVerifiedEventFacts(clarified), clarified);
+});
+
 test("the Guadalupe volunteer series drops stale PlayGarden access without changing attendance facts", () => {
   const roseTitle = "Volunteer in the Heritage Rose Garden!";
   const orchardTitle = "Volunteer in the Historic Orchard with UC Master Gardeners!";

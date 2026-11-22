@@ -154,6 +154,45 @@ const CORRECTIONS = [
       blurb: "Charo brings flamenco guitar, comedy, and dance to Montalvo's Carriage House Theatre.",
     }),
   },
+  // The dated ticket pages confirm paid admission. The organizer's concert
+  // pages identify the theatre and distinguish artist bios from the program.
+  ...[
+    {
+      date: "2026-12-10", title: "Irish Christmas in America",
+      url: "https://my.montalvoarts.org/3113/3157",
+      programUrl: "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/",
+      description: "Fiddler Oisín Mac Diarmada produces this holiday show of traditional Irish music, dance, and storytelling.",
+      blurb: "See Irish dancers and hear traditional music and holiday stories at the Carriage House Theatre.",
+    },
+    {
+      date: "2027-01-21", title: "Five for Fighting with String Quartet",
+      url: "https://my.montalvoarts.org/3114/3159",
+      programUrl: "https://montalvoarts.org/experience/carriage-house-concerts/five-for-fighting/",
+      description: "Singer-songwriter John Ondrasik performs as Five for Fighting with a string quartet.",
+      blurb: "Hear Five for Fighting's John Ondrasik with a string quartet at the Carriage House Theatre.",
+    },
+  ].map(({ date, title, url, programUrl, description, blurb }) => ({
+    date, url,
+    aliasUrls: [`${url}?promo=`, programUrl, `${programUrl}?promo=`],
+    facts: {
+      title, url, category: "music", cost: "paid", description, blurb,
+      venue: "Carriage House Theatre", address: "15400 Montalvo Rd, Saratoga, CA 95070",
+    },
+  })),
+  // The Mt. Pleasant occurrence advertises a drop-in and gives separate
+  // signup instructions. Keep both facts visible until the library clarifies.
+  // https://sjpl.bibliocommons.com/v2/events/6ae233d229c3d60033331a04
+  {
+    date: "2026-11-25",
+    matches: event => event.id === "sjpl-6ae233d229c3d60033331a04"
+      && /\bdrop[- ]in\b/i.test(event.description || "")
+      && /\bto register, please call\b/i.test(event.description || ""),
+    facts: {
+      attendanceStatus: "needs-confirmation",
+      blurb: "Help keep Mt. Pleasant Library clean and work off library fines at $20 per hour.",
+    },
+    appendAttendanceNote: "The library calls this a drop-in and also gives a phone number and email for registration. Call 408-808-3088 to confirm signup and plan to stay for the full hour.",
+  },
   // The university lists this as a public volunteer shift, with food boxes
   // packed for distribution by Sacred Heart Community Service.
   {
@@ -3466,16 +3505,6 @@ const CORRECTIONS = [
       cost: "paid", audienceAge: "adult", registration: REGISTRATION_REQUIRED,
       attendanceNote: "For ages 50 and older. $111 for residents or $139 for nonresidents; lunch is not included. Register online, at the Senior Center, or by calling 408-730-7360.",
     },
-  },
-  // The concert page and its own ticket occurrence confirm December 10 at
-  // 7:30 PM. Preserve the music category and paid ticketing for every alias.
-  {
-    date: "2026-12-10", url: "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/",
-    aliasUrls: [
-      "https://montalvoarts.org/experience/carriage-house-concerts/irish-christmas-2/?promo=",
-      "https://my.montalvoarts.org/3113/3157",
-    ],
-    facts: { category: "music", cost: "paid" },
   },
   // The marketing page and its linked ticket occurrence agree on 7:30 PM;
   // 5:30 PM belongs to the separate pre-concert gallery exhibition. The
